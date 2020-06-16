@@ -1,0 +1,29 @@
+<messaging:emailTemplate renderUsingSystemContextWithoutSharing="true" subject="{!$Label.ISSP_Email_IataPortal} - {!$Label.ISSP_Email_AccessRejected_subject1} {!relatedTo.Portal_Application__r.Name} {!$Label.ISSP_Email_AccessRejected_subject2}"
+    recipientType="Contact"
+    language="{!CASE(relatedTo.Contact__r.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in', 'EN')}"
+    relatedToType="Portal_Application_Right__c">
+<messaging:htmlEmailBody >
+    <div style="margin:auto; width:614px; font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif; color:#004577; line-height: 200%;">
+        <p><apex:image value="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0151r0000077lEa&oid=00D2000000008TF" height="64px" width="198px"/></p>
+        <BR/>
+        <p>{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}{!$Label.ISSP_Email_Dear_Post}</p>
+        <p>
+            <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected1,'.','.<BR/>')}" escape="false"/>
+            {!relatedTo.Portal_Application__r.Name}&nbsp;
+            <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected3,'.','.<BR/>')}" escape="false"/>
+            {!$User.FirstName} {!$User.LastName}
+            <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected3_1,'.','.<BR/>')}" escape="false"/>
+            <apex:outputPanel rendered="{!relatedTo.Access_Status_Reason__c != ''}" >
+                <p>{!$Label.ISSP_Email_Rejected_Reason}</p>
+                <p>{!relatedTo.Access_Status_Reason__c}</p>
+            </apex:outputPanel>
+            <apex:outputText value="{!SUBSTITUTE($Label.ISSP_Email_AccessRejected5,'.','.<BR/>')}" escape="false"/>
+        </p>
+        <p>{!$Label.ISSP_Email_ThankYou}</p>
+        <p>{!$Label.ISSP_Email_IataService}</p>
+        <p style="font-style: italic;">{!$Label.ISSP_Email_do_not_reply}</p>
+        <BR/>
+        <p><apex:image value="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0151r000007866A&oid=00D2000000008TF" height="29px" width="614px"/></p>
+    </div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
