@@ -33,11 +33,14 @@ private class CaseProcessTypeHelperTest {
 		Case cse = new Case(
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Case','OSCAR_Communication'),
 			Subject= 'New HO Test',
+			Status='Open',
 			Region__c= 'Europe',
+			BSPCountry__c = 'Spain',
 			Closed_by_Role__c= 'Test Class User',
 			AccountId= acc.Id,
 			ContactId= con.Id,
-			CaseArea__c= 'Accreditation Process'
+			CaseArea__c= 'Accreditation Process',
+			Reason1__c = 'New HO'
 		);
 		insert cse;
 
@@ -52,27 +55,65 @@ private class CaseProcessTypeHelperTest {
 			Account__c= acc.Id
 		);
 		insert oscar;
+
+		cse.OSCAR__c = oscar.Id;
+		update cse;
 	}
 
 	@isTest static void testKPICalculation() {
 		Test.startTest();
 		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
-		oscar.Status__c = 'Closed_Rejected';
+		oscar.Status__c = 'Closed';
 		update oscar;
 
-		Case cse = new Case(
-			Id= oscar.AMS_Online_Accreditation__r.SAAM_Case__c,
-			Reason1__c= 'New HO',
-			Status= 'Closed_Rejected'
-		);
+		Case cse = [SELECT Id, Reason1__c, Status FROM Case LIMIT 1];
+		cse.Reason1__c = 'New HO';
+		cse.Status = 'Closed';
 		update cse;
-
-		cse = [SELECT Id, KPI_Calculation__c FROM Case LIMIT 1];
-		oscar = [SELECT Id, Accreditation_Process_Type__c FROM AMS_OSCAR__c LIMIT 1];
-		Case_Process_Type__mdt process = [SELECT Type__c FROM Case_Process_Type__mdt process WHERE Reason__c = 'New HO'];
-
-		System.assertNotEquals(null, cse.KPI_Calculation__c);
 		Test.stopTest();
+
+		cse = [SELECT Id, Process_Age__c, KPI_Calculation__c FROM Case LIMIT 1];
+		System.assertEquals(1, cse.KPI_Calculation__c);
+		oscar = [SELECT Id, Accreditation_Process_Type__c FROM AMS_OSCAR__c LIMIT 1];
+		System.assertEquals('Long 40d', oscar.Accreditation_Process_Type__c);
+	}
+
+	@isTest static void testKPI_FOPManagement_Passed() {
+		Test.startTest();
+		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
+		oscar.STEP40__c = 'Passed';
+		oscar.Status__c = 'Closed';
+		update oscar;
+
+		Case cse = [SELECT Id, Reason1__c, Status FROM Case LIMIT 1];
+		cse.Reason1__c = 'FoP Management';
+		cse.Status = 'Closed';
+		update cse;
+		Test.stopTest();
+
+		cse = [SELECT Id, Process_Age__c, KPI_Calculation__c FROM Case LIMIT 1];
+		System.assertEquals(1, cse.KPI_Calculation__c);
+		oscar = [SELECT Id, Accreditation_Process_Type__c FROM AMS_OSCAR__c LIMIT 1];
+		System.assertEquals('Medium 20d', oscar.Accreditation_Process_Type__c);
+	}
+
+	@isTest static void testKPI_FOPManagement_NotPassed() {
+		Test.startTest();
+		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
+		oscar.STEP40__c = 'Not Applicable';
+		oscar.Status__c = 'Closed';
+		update oscar;
+
+		Case cse = [SELECT Id, Reason1__c, Status FROM Case LIMIT 1];
+		cse.Reason1__c = 'FoP Management';
+		cse.Status = 'Closed';
+		update cse;
+		Test.stopTest();
+
+		cse = [SELECT Id, Process_Age__c, KPI_Calculation__c FROM Case LIMIT 1];
+		System.assertEquals(1, cse.KPI_Calculation__c);
+		oscar = [SELECT Id, Accreditation_Process_Type__c FROM AMS_OSCAR__c LIMIT 1];
+		System.assertEquals('Short 24h', oscar.Accreditation_Process_Type__c);
 	}
 
 }

@@ -218,6 +218,7 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
+		updateAccreditationProcessType(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 
 	}
 
@@ -5032,4 +5033,32 @@ public class AMS_OSCARTriggerHandler {
 		return false;
 	}
 
+	/*
+	 * Updates the accreditation process type field based on the custom metadata Case_Process_Type__mdt
+	 * if any relevant field in this oscar is being updated
+	 */
+	public static void updateAccreditationProcessType(list<AMS_OSCAR__c> listNew, Map<Id, AMS_OSCAR__c> mapOld) {
+		for (AMS_OSCAR__c newOscar: listNew) {
+			AMS_OSCAR__c oldOscar = mapOld.get(newOscar.Id);
+
+			// fields to verify if are changing
+			set<String> setCheckFields = CaseProcessTypeHelper.getRelevantFields(newOscar);
+			if (isUpdated(newOscar, oldOscar, setCheckFields)) {
+				//call helper function to set the value for Accreditation_Process_Type__c
+				CaseProcessTypeHelper.populateOSCARAccProcess(newOscar);
+			}
+		}
+	}
+
+	/*
+	 * True if any of the input field names is updated
+	 */
+	private static Boolean isUpdated(AMS_OSCAR__c newOscar, AMS_OSCAR__c oldOscar, set<String> setFieldNames) {
+		for (String fieldname: setFieldNames) {
+			if (newOscar.get(fieldName) != oldOscar.get(fieldName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
