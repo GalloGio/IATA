@@ -1,7 +1,8 @@
 @isTest
 private class ANG_EarlyDetectionSystemTest {
 
-	@testSetup static void setup(){
+	@testSetup 
+	static void setup(){
 
 		Test.startTest();
 
@@ -178,25 +179,23 @@ private class ANG_EarlyDetectionSystemTest {
 
 	}
 
-	@isTest static void createSMAPCaseOnEdsAlertHETest(){
+	@isTest 
+	static void createSMAPCaseOnEdsAlertHETest(){
 		assessSMAPCaseCreationOnEdsAlert(AMS_Utils.HE);
 	}
 
-	@isTest static void createSMAPCaseOnEdsAlertHOTest(){
+	@isTest 
+	static void createSMAPCaseOnEdsAlertHOTest(){
 		assessSMAPCaseCreationOnEdsAlert(AMS_Utils.HO);
 	}
 
-	@isTest static void doNotcreateSMAPCaseOnEdsAlertTest(){
+	@isTest 
+	static void doNotcreateSMAPCaseOnEdsAlertTest(){
 
 		Map<Id, Account> acctMap = new Map<Id, Account>(
-			[SELECT
-				Id
-			 FROM
-				Account
-			 WHERE
-				Location_Type__c = :AMS_Utils.AE
-			 OR
-				Location_Type__c = :AMS_Utils.BR
+			[SELECT Id
+			 FROM Account
+			 WHERE Location_Type__c IN (:AMS_Utils.AE, :AMS_Utils.BR)
 			]
 		);
 
@@ -222,18 +221,14 @@ private class ANG_EarlyDetectionSystemTest {
 		Test.stopTest();
 
 		List<Case> cseLst = new List<Case>(
-			[SELECT
-				Id
-			 FROM
-				Case
-			 WHERE
-				AccountId IN :acctMap.keySet()
-			 AND
-				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
+			[SELECT Id
+			 FROM Case
+			 WHERE AccountId IN :acctMap.keySet()
+			 	AND RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
 			]
 		);
 
-		system.assert(cseLst.isEmpty(), 'SMAP case must NOT be created for EDS Alert');
+		System.assert(cseLst.isEmpty(), 'SMAP case must NOT be created for EDS Alert');
 
 	}
 
@@ -253,15 +248,11 @@ private class ANG_EarlyDetectionSystemTest {
 					Name,
 					User_Portal_Status__c,
 					Financial_Assessment_Contact__c
-				 FROM
-					Contacts
-				 WHERE
-					Status__c = 'Active'
+				 FROM Contacts
+				 WHERE Status__c = 'Active'
 				)
-			 FROM
-				Account
-			 WHERE
-				Location_Type__c = :locationType
+			 FROM Account
+			 WHERE Location_Type__c = :locationType
 			 LIMIT 1
 			];
 
@@ -299,12 +290,9 @@ private class ANG_EarlyDetectionSystemTest {
 				Visible_on_ISS_Portal__c,
 				End_Date_of_Sales_Period__c,
 				Start_Date_of_Sales_Period__c
-			 FROM
-				Case
-			 WHERE
-				AccountId = :acct.Id
-			 AND
-				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
+			 FROM Case
+			 WHERE AccountId = :acct.Id
+			 	AND RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
 			 LIMIT 1
 			];
 
@@ -315,27 +303,25 @@ private class ANG_EarlyDetectionSystemTest {
 				Last_Day__c,
 				Remittance_Day__c,
 				Frequency_Code__c
-			 FROM
-				Operational_Calendar__c
-			 WHERE
-				ISS_Operation__c = :acct.IATA_ISO_Country__r.AMS_Settlement_System__c
+			 FROM Operational_Calendar__c
+			 WHERE ISS_Operation__c = :acct.IATA_ISO_Country__r.AMS_Settlement_System__c
 			 LIMIT 1
 			];
 
 		String expectedSubject = 'SMAP - EDS - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
 
-		system.assert(cse.Status == 'Open', 'The SMAP status must be Open');
-		system.assert(cse.Reason == 'EDS', 'The SMAP Reason must be \'EDS\'');
-		system.assert(cse.Reason1__c == 'EDS', 'The SMAP Reason1 must be \'EDS\'');
-		system.assert(cse.Subject == expectedSubject, 'The SMAP Subject must be: \'' + expectedSubject + '\'');
-		system.assert(cse.CaseArea__c == 'Agency Risk Management', 'The SMAP Case Area must be \'Agency Risk Management\'');
-		system.assert(cse.Origin == 'Risk Monitoring Engine', 'The SMAP Origin must be \'Risk Monitoring Engine\'');
-		system.assert(cse.BSPCountry__c == acct.IATA_ISO_Country__r.Name, 'The SMAP BSP Country must be \'' + acct.IATA_ISO_Country__r.Name + '\'');
-		system.assert(cse.BSP_CASS__c == 'BSP', 'The SMAP BSP Cass must be \'BSP\'');
-		system.assert(cse.Region__c == acct.Region_formula__c, 'The SMAP Region must be \'' + acct.Region_Formula__c + '\'');
-		system.assert(cse.Start_Date_of_Sales_Period__c == oc.First_Day__c, 'The SMAP Start Date of Sales Period must be \'' + oc.First_Day__c + '\'');
-		system.assert(cse.End_Date_of_Sales_Period__c == oc.Last_Day__c, 'The SMAP End Date of Sales Period must be \'' + oc.Last_Day__c + '\'');
-		system.assert(cse.Next_Remittance_Date__c == oc.Remittance_Day__c, 'The SMAP Next Remittance Date must be \'' + oc.Remittance_Day__c + '\'');
+		System.assert(cse.Status == 'Open', 'The SMAP status must be Open');
+		System.assert(cse.Reason == 'EDS', 'The SMAP Reason must be \'EDS\'');
+		System.assert(cse.Reason1__c == 'EDS', 'The SMAP Reason1 must be \'EDS\'');
+		System.assert(cse.Subject == expectedSubject, 'The SMAP Subject must be: \'' + expectedSubject + '\'');
+		System.assert(cse.CaseArea__c == 'Agency Risk Management', 'The SMAP Case Area must be \'Agency Risk Management\'');
+		System.assert(cse.Origin == 'Risk Monitoring Engine', 'The SMAP Origin must be \'Risk Monitoring Engine\'');
+		System.assert(cse.BSPCountry__c == acct.IATA_ISO_Country__r.Name, 'The SMAP BSP Country must be \'' + acct.IATA_ISO_Country__r.Name + '\'');
+		System.assert(cse.BSP_CASS__c == 'BSP', 'The SMAP BSP Cass must be \'BSP\'');
+		System.assert(cse.Region__c == acct.Region_formula__c, 'The SMAP Region must be \'' + acct.Region_Formula__c + '\'');
+		System.assert(cse.Start_Date_of_Sales_Period__c == oc.First_Day__c, 'The SMAP Start Date of Sales Period must be \'' + oc.First_Day__c + '\'');
+		System.assert(cse.End_Date_of_Sales_Period__c == oc.Last_Day__c, 'The SMAP End Date of Sales Period must be \'' + oc.Last_Day__c + '\'');
+		System.assert(cse.Next_Remittance_Date__c == oc.Remittance_Day__c, 'The SMAP Next Remittance Date must be \'' + oc.Remittance_Day__c + '\'');
 
 		List<Contact> contactLst = acct.Contacts;
 
@@ -353,7 +339,7 @@ private class ANG_EarlyDetectionSystemTest {
 
 		}
 
-		system.assert(cse.ContactId == expectedContact.Id, 'The SMAP Contact must be \'' + expectedContact.Name + '\'(' + expectedContact.Id + ')');
+		System.assert(cse.ContactId == expectedContact.Id, 'The SMAP Contact must be \'' + expectedContact.Name + '\'(' + expectedContact.Id + ')');
 
 	}
 
@@ -367,7 +353,7 @@ private class ANG_EarlyDetectionSystemTest {
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '999999999';
 		message.eventId = 'b1088137-2db8-4c69-a599-98f6f5b84a6f';
-		message.eventType = 'EDSAlert';
+		message.eventType = ANG_RME_Alert_Service.EDS_ALERT_EVENT_TYPE;
 		message.schemaVersion = 2;
 		message.eventTime = System.now();
 
@@ -387,8 +373,7 @@ private class ANG_EarlyDetectionSystemTest {
 				ANG_Triggered_Rules__c,
 				ANG_Open_Cash_Position__c,
 				ANG_Agent_current_standing__c
-			 FROM
-			 	ANG_Risk_Alert__c
+			 FROM ANG_Risk_Alert__c
 			]
 		);
 
@@ -407,7 +392,7 @@ private class ANG_EarlyDetectionSystemTest {
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.eventId = 'b1088137-2db8-4c69-a599-98f6f5b84a6f';
-		message.eventType = 'EDSAlert';
+		message.eventType = ANG_RME_Alert_Service.EDS_ALERT_EVENT_TYPE;
 		message.schemaVersion = 2;
 		message.eventTime = System.now();
 
@@ -427,8 +412,7 @@ private class ANG_EarlyDetectionSystemTest {
 				ANG_Triggered_Rules__c,
 				ANG_Open_Cash_Position__c,
 				ANG_Agent_current_standing__c
-			 FROM
-			 	ANG_Risk_Alert__c
+			 FROM ANG_Risk_Alert__c
 			]
 		);
 
@@ -448,7 +432,7 @@ private class ANG_EarlyDetectionSystemTest {
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '999999999';
 		message.eventId = 'b1088137-2db8-4c69-a599-98f6f5b84a6f';
-		message.eventType = 'EDSAlert';
+		message.eventType = ANG_RME_Alert_Service.EDS_ALERT_EVENT_TYPE;
 		message.schemaVersion = 2;
 		message.eventTime = System.now();
 
@@ -480,8 +464,6 @@ private class ANG_EarlyDetectionSystemTest {
 		agentStateLst.add(marketIntelligence);
 		agentStateLst.add(consumedRHC);
 
-		system.debug('agentStateLst: ' + agentStateLst);
-
 		message.agentStates = agentStateLst;
 
 		req.requestBody = Blob.valueOf(JSON.serialize(message));
@@ -500,8 +482,7 @@ private class ANG_EarlyDetectionSystemTest {
 				ANG_Triggered_Rules__c,
 				ANG_Open_Cash_Position__c,
 				ANG_Agent_current_standing__c
-			 FROM
-			 	ANG_Risk_Alert__c
+			 FROM ANG_Risk_Alert__c
 			]
 		);
 
@@ -509,8 +490,6 @@ private class ANG_EarlyDetectionSystemTest {
 		System.assertEquals(1, alerts.size(), 'And EDS Alert must be created');
 
 		ANG_Risk_Alert__c alert = alerts.get(0);
-
-		system.debug('ALERT: ' + alert);
 
 		System.assertEquals(alert.ANG_Open_Cash_Position__c, 12500.25, 'Open cash position must have the value: 12500,25');
 		System.assert(alert.ANG_Triggered_Rules__c.contains('edsRule_fastGrowth_decrease_L12M_P12M'), 'EDS Alert triggered rules must contain edsRule_fastGrowth_decrease_L12M_P12M');
