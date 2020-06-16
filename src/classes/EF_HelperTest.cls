@@ -119,7 +119,18 @@ private class EF_HelperTest {
 		List<E_and_F_Account_Role_Detail__c> accrList = EF_Helper.getAccountContactRoles(contactId);
 		Test.stopTest();
 
-		System.assertEquals(1, accrList.size());
+		List<E_and_F_Account_Role_Detail__c> expected = [SELECT Id, Account_Role__c, Account_Role__r.Account_Name__c, Account_Role__r.Account__c
+														   FROM E_and_F_Account_Role_Detail__c
+														  WHERE Account_Role__r.Functional_Role__c = 'E&F'
+															AND ID IN (
+																SELECT E_F_Account_Role_Detail__c
+																  FROM E_and_F_Contact_Role_Detail__c
+																 WHERE RecordType.DeveloperName = 'Service_Admin'
+																   AND Contact_Role__r.Contact__c =: contactId
+															)
+														];
+
+		System.assertEquals(expected, accrList);
 	}
 
 	@IsTest
@@ -130,26 +141,74 @@ private class EF_HelperTest {
 		List<E_and_F_Contact_Role_Detail__c> crdList = EF_Helper.getEFContactRoleDetails(String.valueOf(contactId).substring(0, 15), 'Service_Admin');
 		Test.stopTest();
 
-		System.assertEquals(1, crdList.size());
+		List<E_and_F_Contact_Role_Detail__c> expected = [SELECT Id, RecordTypeId, RecordType.DeveloperName, Account_name__c, E_F_Account_Role_Detail__c, E_F_Account_Role_Detail__r.RecordTypeId
+															  , E_F_Account_Role_Detail__r.RecordType.DeveloperName, E_F_Account_Role_Detail__r.Account_Role__c
+															  , E_F_Account_Role_Detail__r.Account_Role__r.Account__c, E_F_Account_Role_Detail__r.Account_Role__r.Account__r.Global_ID__c
+														   FROM E_and_F_Contact_Role_Detail__c
+														  WHERE ContactFunctionalRole__c = 'E&F' AND Contact_Id__c =: String.valueOf(contactId).substring(0, 15) AND RecordType.DeveloperName = 'Service_Admin'];
+
+		System.assertEquals(expected, crdList);
 	}
 
 	@IsTest
 	static void requestAccessEF() {
 		User usr = [SELECT Id, ContactId, Contact.Email, CurrencyIsoCode FROM User WHERE Alias = 'standt2'];
+		E_and_F_Account_Role_Detail__c ard = [SELECT Id FROM E_and_F_Account_Role_Detail__c][0];
+		Id accountRoleId = [SELECT Id from Account_Role__c][0].Id;
+		Account acc = [SELECT Id FROM Account][0];
 		Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'E&F APPS'];
+
+		Id crdRecId = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Service_Admin');
+		Id acrRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 
 		Test.startTest();
 		EF_Helper.requestAccessEF(pa.Id, pa.Name, usr);
 		Test.stopTest();
 
 		//Account_Contact_Role__c
-		System.assertEquals(2, [SELECT Id FROM Account_Contact_Role__c].size());
-		//E_and_F_Contact_Role_Detail__c
-		System.assertEquals(2, [SELECT Id FROM E_and_F_Contact_Role_Detail__c].size());
-		//Portal_Application_Right__c
-		System.assertEquals(1, [SELECT Id FROM Portal_Applications__c].size());
+		Account_Contact_Role__c acrExpected = new Account_Contact_Role__c(
+			RecordTypeId = acrRecId,
+			Account__c = acc.Id,
+			Account_Role__c = accountRoleId,
+			Contact__c = usr.ContactId,
+			Service_Rendered__c = 'Other',
+			Functional_Role__c = 'E&F',
+			Status__c = 'Active',
+			Id = null
+		);
+		Account_Contact_Role__c acrActual = [SELECT Id, RecordTypeId, Account__c, Account_Role__c, Contact__c
+												  , Service_Rendered__c, Functional_Role__c, Status__c
+											   FROM Account_Contact_Role__c ORDER BY CreatedDate DESC][0];
+		Id acrId = acrActual.Id;
+		acrActual.Id = null;
+		System.assertEquals(acrExpected, acrActual);
 
-		System.assertEquals('Contact Test', EF_Helper.getContacts(usr.ContactId, null, null, null, null, '0')[0].contactName);
+		//E_and_F_Contact_Role_Detail__c
+		E_and_F_Contact_Role_Detail__c crdExpected = new E_and_F_Contact_Role_Detail__c(
+			Contact_Role__c = acrId,
+			CurrencyIsoCode = usr.CurrencyIsoCode,
+			E_F_Account_Role_Detail__c = ard.Id,
+			RecordTypeId = crdRecId,
+			Id = null
+		);
+		E_and_F_Contact_Role_Detail__c crdActual = [SELECT Id, Contact_Role__c, CurrencyIsoCode, E_F_Account_Role_Detail__c
+														 , RecordTypeId
+													  FROM E_and_F_Contact_Role_Detail__c ORDER BY CreatedDate DESC][0];
+		crdActual.Id = null;
+		System.assertEquals(crdExpected, crdActual);
+
+		//Portal_Application_Right__c
+		Portal_Application_Right__c parExpected = new Portal_Application_Right__c(
+			Contact__c = usr.ContactId,
+			Portal_Application__c = pa.Id,
+			Right__c = 'Access Granted',
+			Id = null
+		);
+		Portal_Application_Right__c parActual = [SELECT Id, Contact__c, Portal_Application__c, Right__c
+												   FROM Portal_Application_Right__c ORDER BY CreatedDate DESC][0];
+		parActual.Id = null;
+		System.assertEquals(parExpected, parActual);
+
 	}
 
 	@IsTest
@@ -160,15 +219,62 @@ private class EF_HelperTest {
 
 		Map<String, String> fields = new Map<String, String>{
 			'Email__c' => 'test@test.com.efappreg',
-			'AccountRoleId__c' => '',
-			'Role__c' => accountRoleId,
+			'AccountRoleId__c' => accountRoleId,
+			'Role__c' => 'Service Admin',
 			'AccountId__c' => accountId,
 			'ServiceId__c' => serviceId
 		};
+
 		Test.startTest();
 		EF_Helper.createInvite(fields);
 		Test.stopTest();
 
-		System.assertEquals(2, [SELECT Id FROM Invitation__c].size());
+		Invitation__c expected = new Invitation__c(
+			Email__c = fields.get('Email__c'),
+			AccountRoleId__c = fields.get('AccountRoleId__c'),
+			Role__c = fields.get('Role__c'),
+			AccountId__c = fields.get('AccountId__c'),
+			ServiceId__c = fields.get('ServiceId__c'),
+			Id = null
+		);
+
+		Invitation__c actual = [SELECT Email__c, AccountRoleId__c, Role__c, AccountId__c, ServiceId__c FROM Invitation__c WHERE Email__c =: fields.get('Email__c') ORDER BY CreatedDate DESC][0];
+		actual.Id = null;
+
+		System.assertEquals(expected, actual);
+	}
+
+	@IsTest
+	static void getContacts(){
+		Contact contact = [SELECT Id, Name from Contact][0];
+		Portal_Applications__c application = [SELECT Id FROM Portal_Applications__c][0];
+
+		Portal_Application_Right__c app = new Portal_Application_Right__c(Contact__c = contact.Id,Portal_Application__c = application.Id,Right__c = 'Access granted');
+		insert app;
+
+		List<Id> contacts = new List<Id>{contact.Id};
+		String appName = 'E&F APPS';
+
+		String query = String.format(
+			'SELECT {0} , Portal_Application__r.Name' +
+			' FROM Portal_Application_Right__c' +
+			' WHERE Portal_Application__r.Name =: appName'+
+			' AND Contact__c IN :contacts ',
+			new List<String>{
+				String.join(new PortalApplicationRight_Sel().getSObjectFieldListForWithContactInfo(), ', ')
+			}
+		);
+
+		query += ' AND (contact__r.name LIKE {0} OR contact__r.email LIKE {0} OR contact__r.account.IATACode__c LIKE {0} OR contact__r.account.BillingCity LIKE {0} OR contact__r.account.IATA_ISO_Country__r.Name LIKE {0} )'.replace('{0}', '\'%Contact%\'');
+
+		app = Database.query(query);
+
+		List<PortalServicesCtrl.ContactWrapper> expected = new List<PortalServicesCtrl.ContactWrapper>();
+		expected.add(new PortalServicesCtrl.ContactWrapper(app));
+
+		Test.startTest();
+		List<PortalServicesCtrl.ContactWrapper> actualList = EF_Helper.getContacts(contact.Id, 'Contact', null, null, null, '');
+		Test.stopTest();
+
 	}
 }

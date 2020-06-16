@@ -74,8 +74,10 @@ private class EF_InvitationCtrlTest {
 		Test.startTest();
 		Portal_Applications__c pa = EF_InvitationCtrl.getService();
 		Test.stopTest();
-		
-		System.assert(true, pa != null);
+
+		Portal_Applications__c expected = [SELECT Id FROM Portal_Applications__c WHERE Name = 'E&F APPS'];
+
+		System.assertEquals(expected.Id, pa.Id);
 	}
 	
 	@IsTest
@@ -84,8 +86,12 @@ private class EF_InvitationCtrlTest {
 		Test.startTest();
 		Map<String, String> acrList = EF_InvitationCtrl.getAccountRoles(contactId);
 		Test.stopTest();
-		
-		System.assertEquals(1, acrList.size());
+
+		Account acc = [SELECT Id, Name FROM Account][0];
+		Account_Role__c accr = [SELECT Id FROM Account_Role__c][0];
+		Map<String, String> expected = new Map<String, String>{acc.Name => accr.Id+':'+acc.Id};
+
+		System.assertEquals(expected, acrList);
 	}
 
 	@IsTest
@@ -96,8 +102,8 @@ private class EF_InvitationCtrlTest {
 
 		Map<String, String> fields = new Map<String, String>{
 			'Email__c' => 'test@test.com.efappreg',
-			'AccountRoleId__c' => '',
-			'Role__c' => accountRoleId,
+			'AccountRoleId__c' => accountRoleId,
+			'Role__c' => 'Service Admin',
 			'AccountId__c' => accountId,
 			'ServiceId__c' => serviceId
 		};
@@ -105,7 +111,19 @@ private class EF_InvitationCtrlTest {
 		Test.startTest();
 		EF_InvitationCtrl.createInvite(fields);
 		Test.stopTest();
-		
-		System.assertEquals(2, [SELECT Id FROM Invitation__c].size());
+
+		Invitation__c expected = new Invitation__c(
+			Email__c = fields.get('Email__c'),
+			AccountRoleId__c = fields.get('AccountRoleId__c'),
+			Role__c = fields.get('Role__c'),
+			AccountId__c = fields.get('AccountId__c'),
+			ServiceId__c = fields.get('ServiceId__c'),
+			Id = null
+		);
+
+		Invitation__c actual = [SELECT Email__c, AccountRoleId__c, Role__c, AccountId__c, ServiceId__c FROM Invitation__c WHERE Email__c =: fields.get('Email__c') ORDER BY CreatedDate DESC][0];
+		actual.Id = null;
+
+		System.assertEquals(expected, actual);
 	}
 }
