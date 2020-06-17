@@ -22,59 +22,67 @@
 @isTest
 public class ParticipantHelperTest {
 
-	static testMethod void myUnitTest() {
-		List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
+	private static final Id RECORDTYPE_HQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+	private static final Id RECORDTYPE_BR =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+	private static final Id RECORDTYPE_AG =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	private static final Id RECORDTYPE_LOCAL_GROUP =  RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups');
 
-		//Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-		/*User testUser = New User(
-			Alias = 'standt', Email='standarduser@testorg.com',
-			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-			LocaleSidKey='en_US', ProfileId = testProfile.Id,
-			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-			License_Cost_Center__c = 'ISF005CH01'
-		);*/
+	private static User adminUser;
+	private static IATA_ISO_Country__c country1;
+	private static IATA_ISO_Country__c country2;
+	private static Account hqAccount;
+	private static Contact contact;
 
-		//insert testUser;
+	@TestSetup
+	static void makeData(){
+		List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 1 ];
+		System.assert(!users.isEmpty());
+		adminuser = users[0];
 
 		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
-		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = users[0].Id);
+		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = adminuser.Id);
 		insert psa;
 
-
-
-		//List<User> users = new List<User>();
-		//users.add(new User(FirstName='babbo', LastName='natale', Alias='bnatale', Email='bnatale@gmail.com'));
-		//insert users;
-
-		Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-		Id rtBr =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
-		Id rtAG =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-
-
-		system.runAs(users[0]){
-
+		system.runAs(adminuser){
 			List<IATA_ISO_Country__c>isocs = new List<IATA_ISO_Country__c>();
 			isocs.add(new IATA_ISO_Country__c(
-				Name='Italy', Country_Manager__c=users[0].id, ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'
+				Name='Italy', Country_Manager__c=adminuser.id, ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'
 			));
 			isocs.add(new IATA_ISO_Country__c(
-				Name='France', Country_Manager__c=users[0].id, ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France'
+				Name='France', Country_Manager__c=adminuser.id, ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France'
 			));
 			insert isocs;
 
-			Account hq = new Account(Name='Lufthansa', RecordTypeId = rtHQ, IATA_ISO_Country__c = isocs[0].Id);
-			insert hq;
-			Account branch = new Account(Name='Lufthansa', RecordTypeId = rtBr, IATA_ISO_Country__c = isocs[0].Id, ParentId=hq.id);
-			insert branch;
-			Account agency = new Account(Name='Lufthansa', RecordTypeId = rtAG, IATA_ISO_Country__c = isocs[0].Id, ParentId=hq.id);
-			insert agency;
+			hqAccount = new Account(Name='Lufthansa', RecordTypeId = RECORDTYPE_HQ, IATA_ISO_Country__c = isocs[0].Id);
+			insert hqAccount;
+			Account branch = new Account(Name='Lufthansa', RecordTypeId = RECORDTYPE_BR, IATA_ISO_Country__c = isocs[0].Id, ParentId=hqAccount.id);
+			Account agency = new Account(Name='Lufthansa', RecordTypeId = RECORDTYPE_AG, IATA_ISO_Country__c = isocs[0].Id, ParentId=hqAccount.id);
+			insert new list<Account>{branch, agency};
 
-			Contact cont = new Contact(AccountId=agency.id, FirstName='Complete', LastName='Contact', Email='myCompany@test.com', Title='Director', APJC_Participant__c = false);
-			insert cont;
+			contact = new Contact(AccountId=agency.id, FirstName='Complete', LastName='Contact', Email='myCompany@test.com', Title='Director', APJC_Participant__c = false);
+			insert contact;
+		}
+	}
+
+	private static void loadVars() {
+		List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 1 ];
+		adminUser = users[0];
+
+		List<IATA_ISO_Country__c> listCountries = [SELECT Name, Country_Manager__c, ISO_Code__c, Region__c, ISS_Office_Location__c FROM IATA_ISO_Country__c];
+		country1 = listCountries[0];
+		country2 = listCountries[1];
+
+		hqAccount = [SELECT Name, RecordTypeId, IATA_ISO_Country__c, ParentId FROM Account WHERE RecordTypeId = :RECORDTYPE_HQ];
+
+		contact = [SELECT AccountId, FirstName, LastName, Email, Title, APJC_Participant__c FROM Contact LIMIT 1];
+	}
+
+	static testMethod void testInsertParticipant() {
+		loadVars();
+
+		system.runAs(adminuser){
 
 			Test.startTest();
-
-			Id rtLocalGroup =  RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups');
 
 			List<LocalGovernance__c> localGovernanceList = new List<LocalGovernance__c>();
 
@@ -82,9 +90,9 @@ public class ParticipantHelperTest {
 				lg.Name = 'Name';
 				lg.Cargo_Passenger__c = 'BSP';
 				lg.Local_Governance_type__c = 'APJC';
-				lg.Country__c = isocs[0].Id;
+				lg.Country__c = country1.Id;
 				lg.Active__c = true;
-				lg.RecordTypeId = rtLocalGroup;
+				lg.RecordTypeId = RECORDTYPE_LOCAL_GROUP;
 
 			localGovernanceList.add(lg);
 
@@ -92,52 +100,132 @@ public class ParticipantHelperTest {
 				lg2.Name = 'DifferentName';
 				lg2.Cargo_Passenger__c = 'CASS';
 				lg2.Local_Governance_type__c = 'APJC';
-				lg2.Country__c = isocs[1].Id;
+				lg2.Country__c = country2.Id;
 				lg2.Active__c = true;
-
-				lg2.RecordTypeId = rtLocalGroup;
+				lg2.RecordTypeId = RECORDTYPE_LOCAL_GROUP;
 
 			localGovernanceList.add(lg2);
 
 			insert localGovernanceList;
 
-				Participant__c part = new Participant__c();
-					part.Contact__c = cont.Id;
-					part.Local_Governance__c = lg.Id;
-					part.Participant_Type__c = '5 Representative';
-					part.Head_Quartier__c = hq.Id;
-					part.Local_Group_Type__c = 'APJC';
-				insert part;
+			Participant__c part = new Participant__c();
+				part.Contact__c = contact.Id;
+				part.Local_Governance__c = lg.Id;
+				part.Participant_Type__c = '5 Representative';
+				part.Head_Quartier__c = hqAccount.Id;
+				part.Local_Group_Type__c = 'APJC';
+			insert part;
+			Test.stopTest();
 
-				// check that the Contact was flagged
-				cont = [SELECT Id, APJC_Participant__c FROM Contact WHERE Id = :cont.Id];
-				system.assertEquals(true, cont.APJC_Participant__c);
+			// check that the Contact was flagged
+			contact = [SELECT Id, APJC_Participant__c FROM Contact WHERE Id = :contact.Id];
+			system.assertEquals(true, contact.APJC_Participant__c);
+		}
 
-				update part;
+	}
 
-				// create a second participant for lg2, same contact
-				Participant__c part2 = new Participant__c();
-					part2.Contact__c = cont.Id;
-					part2.Local_Governance__c = lg2.Id;
-					part2.Participant_Type__c = '5 Representative';
-					part2.Head_Quartier__c = hq.Id;
-					part2.Local_Group_Type__c = 'APJC';
-				insert part2;
+	static testMethod void testDeleteParticipant() {
+		loadVars();
 
-				// delete the first participant and check that the flag on the contact was NOT reset
-				delete part;
+		system.runAs(adminuser){
 
-				cont = [SELECT Id, APJC_Participant__c FROM Contact WHERE Id = :cont.Id];
-				system.assertEquals(true, cont.APJC_Participant__c);
+			List<LocalGovernance__c> localGovernanceList = new List<LocalGovernance__c>();
+			
+			LocalGovernance__c lg = new LocalGovernance__c();
+			lg.Name = 'Name';
+			lg.Cargo_Passenger__c = 'BSP';
+			lg.Local_Governance_type__c = 'APJC';
+			lg.Country__c = country1.Id;
+			lg.Active__c = true;
+			lg.RecordTypeId = RECORDTYPE_LOCAL_GROUP;
+			
+			localGovernanceList.add(lg);
+			
+			LocalGovernance__c lg2 = new LocalGovernance__c();
+			lg2.Name = 'DifferentName';
+			lg2.Cargo_Passenger__c = 'CASS';
+			lg2.Local_Governance_type__c = 'APJC';
+			lg2.Country__c = country2.Id;
+			lg2.Active__c = true;
+			lg2.RecordTypeId = RECORDTYPE_LOCAL_GROUP;
+			
+			localGovernanceList.add(lg2);
+			
+			insert localGovernanceList;
+			
+			
+			Test.startTest();
+			Participant__c part = new Participant__c();
+			part.Contact__c = contact.Id;
+			part.Local_Governance__c = lg.Id;
+			part.Participant_Type__c = '5 Representative';
+			part.Head_Quartier__c = hqAccount.Id;
+			part.Local_Group_Type__c = 'APJC';
 
-				// delete the second participant and check that the flag on the contact was reset this time
-				delete part2;
+			// create a second participant for lg2, same contact
+			Participant__c part2 = new Participant__c();
+				part2.Contact__c = contact.Id;
+				part2.Local_Governance__c = lg2.Id;
+				part2.Participant_Type__c = '5 Representative';
+				part2.Head_Quartier__c = hqAccount.Id;
+				part2.Local_Group_Type__c = 'APJC';
 
-				cont = [SELECT Id, APJC_Participant__c FROM Contact WHERE Id = :cont.Id];
-				system.assertEquals(false, cont.APJC_Participant__c);
+			insert new list<Participant__c>{part, part2};
 
-		   }
+			// delete the first participant and check that the flag on the contact was NOT reset
+			delete part;
+			Test.stopTest();
 
-		Test.stopTest();
+			contact = [SELECT Id, APJC_Participant__c FROM Contact WHERE Id = :contact.Id];
+			system.assertEquals(true, contact.APJC_Participant__c);
+
+		}
+	}
+
+	static testMethod void testUndeleteParticipant() {
+		loadVars();
+
+		system.runAs(adminuser){
+
+			List<LocalGovernance__c> localGovernanceList = new List<LocalGovernance__c>();
+			
+			LocalGovernance__c lg = new LocalGovernance__c();
+			lg.Name = 'Name';
+			lg.Cargo_Passenger__c = 'BSP';
+			lg.Local_Governance_type__c = 'APJC';
+			lg.Country__c = country1.Id;
+			lg.Active__c = true;
+			lg.RecordTypeId = RECORDTYPE_LOCAL_GROUP;
+			
+			localGovernanceList.add(lg);
+			
+			LocalGovernance__c lg2 = new LocalGovernance__c();
+			lg2.Name = 'DifferentName';
+			lg2.Cargo_Passenger__c = 'CASS';
+			lg2.Local_Governance_type__c = 'APJC';
+			lg2.Country__c = country2.Id;
+			lg2.Active__c = true;
+			lg2.RecordTypeId = RECORDTYPE_LOCAL_GROUP;
+			
+			localGovernanceList.add(lg2);
+			
+			insert localGovernanceList;
+			
+			Participant__c part = new Participant__c();
+			part.Contact__c = contact.Id;
+			part.Local_Governance__c = lg.Id;
+			part.Participant_Type__c = '5 Representative';
+			part.Head_Quartier__c = hqAccount.Id;
+			part.Local_Group_Type__c = 'APJC';
+
+			insert part;
+			
+			Test.startTest();
+			delete part;
+			undelete part;
+			Test.stopTest();
+
+		}
+
 	}
 }

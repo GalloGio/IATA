@@ -158,7 +158,7 @@
         <fullName>ActionButtonLink__c</fullName>
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos; &amp;&amp; NOT(ISBLANK(Product__c)), 
-  						&apos;/iec/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c, 
+  						&apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c, 
 						IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos; &amp;&amp; NOT(ISBLANK(PortalService__c)),
 									IF (  PortalService__r.Requestable__c ,
 													&apos;manage-service?serviceId=&apos; + PortalService__r.Id + &apos;&amp;openRequestService=true&apos;,
@@ -800,7 +800,7 @@
         <fullName>InformationButtonLink__c</fullName>
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos; &amp;&amp; NOT(ISBLANK(Product__c)), 
-					&apos;/iec/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c,
+					&apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c,
 					IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos; &amp;&amp; NOT(ISBLANK(PortalService__c)), 
 						 &apos;manage-service?serviceId=&apos; + PortalService__r.Id, &apos;&apos;
     )
@@ -963,9 +963,9 @@
                     <label>IATA</label>
                 </value>
                 <value>
-                    <fullName>Infrastructure Partner</fullName>
+                    <fullName>Airport</fullName>
                     <default>false</default>
-                    <label>Infrastructure Partner</label>
+                    <label>Airport</label>
                 </value>
                 <value>
                     <fullName>Internal Use</fullName>
@@ -996,6 +996,12 @@
                     <fullName>General Public</fullName>
                     <default>false</default>
                     <label>General Public</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure Partner</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Infrastructure Partner</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1434,6 +1440,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -1467,10 +1477,6 @@
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1858,6 +1864,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Association</fullName>
                 <default>false</default>
             </values>
@@ -1891,10 +1901,6 @@
             </values>
             <values>
                 <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
             <values>

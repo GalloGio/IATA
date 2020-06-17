@@ -2,7 +2,7 @@ global class WSSidraLite {
 
 	public class SidraLiteException extends Exception{}
 	public class ShowConfirmationException extends Exception{}
-
+	public class ShowOnGoingNonComplianceConfirmationException extends Exception {}
 	/**
 		This method returns a Case with all data needed for SIDRA Lite process, including related objects
 	**/
@@ -18,7 +18,7 @@ global class WSSidraLite {
 				Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c,
 				OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
 				OSCAR__r.Step26__c, OSCAR__r.Step35__c, Oscar__r.Step44__c, GDI_Premium__c, Short_Payment_Amount__c, IATA_Charges__c, Agency_Fees__c, BusinessHoursId,
-				Account.ANG_IsNewGenAgency__c, Financial_Review_Result__c, Assessment_Performed_Date__c,
+				Account.ANG_IsNewGenAgency__c, Financial_Review_Result__c, Assessment_Performed_Date__c, Financial_Review_Type__c, CreatedDate, IFAP_Financial_Year__c,
 				(Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,
 					FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,
 					FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c,
@@ -87,6 +87,8 @@ global class WSSidraLite {
 				return createDummyCaseFirstNonCompliance(parentCase);
 			}
 		}catch (ShowConfirmationException e) {
+			throw e;
+		}catch (ShowOnGoingNonComplianceConfirmationException e) {
 			throw e;
 		}catch (Exception e) {
 			throw new SidraLiteException(e.getMessage());
@@ -320,6 +322,31 @@ global class WSSidraLite {
 
 		} catch (Exception e) {
 			System.debug('tried to change Termination date Manual Entry in case ' + caseId + ': ' + e.getMessage());
+		}
+	}
+
+	/**
+	 * Used for multicountry agents when there is an on going 
+	 * non compliance process that was started from a different IFAP case
+	 * 
+	 */
+	webservice static Id processNonComplianceOnDifferentIfap(Id caseId){
+		try {
+
+			Case cse = queryCase(caseId);
+
+			Case onGoingNonComplianceIFAP = ANG_MulticountryHelper.fetchIFAPWithOnGoingNonCompliance(cse);
+
+			String result = ANG_MulticountryHelper.processNonComplianceOnDifferentIfap(onGoingNonComplianceIFAP.Id);
+
+			if(result != AMS_Utils.SUCCESS){
+				throw new SidraLiteException(result);
+			}
+
+			return onGoingNonComplianceIFAP.Id;
+
+		} catch (Exception e){
+			throw new SidraLiteException(e.getMessage());
 		}
 	}
 

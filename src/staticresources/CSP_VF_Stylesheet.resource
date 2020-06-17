@@ -1,3 +1,7 @@
+body, div.container {
+    background-color: rgb(240, 242, 245);
+    background-image:none;
+}
 .pbBody {
     padding: 10px !important;
 }

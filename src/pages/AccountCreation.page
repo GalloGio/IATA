@@ -1,0 +1,24 @@
+<apex:page standardController="Account" showHeader="false" sidebar="false" standardStylesheets="false" lightningStylesheets="true">
+
+    <apex:slds />
+
+    <apex:stylesheet value="{!$Resource.CSP_Stylesheet}"/>
+
+    <apex:includeLightning />
+
+    <apex:includeScript value="/lightning/lightning.out.js" />
+
+    <div id="LightningComponentid" />    
+
+    <script>
+        $Lightning.use("c:AccountCreationApp", function() {
+            $Lightning.createComponent("c:AccountCreationCmp",
+            { 
+            },
+            "LightningComponentid",
+            function(cmp) {
+                console.log('Display Lightning component in visualforce page');
+            });
+        });
+    </script>
+</apex:page>

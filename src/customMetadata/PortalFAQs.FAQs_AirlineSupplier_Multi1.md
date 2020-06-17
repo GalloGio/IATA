@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">Ground Handler;Caterer;Consultancy Firm;Fuel Supplier;Maintenance;Repair;Overhaul;Security</value>
+        <value xsi:type="xsd:string">Ground Handler;Caterer;Consultancy Firm;Fuel Supplier;Maintenance;Repair;Overhaul;Security;General Public</value>
     </values>
     <values>
         <field>Account_Sector__c</field>

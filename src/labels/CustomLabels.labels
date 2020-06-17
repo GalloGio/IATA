@@ -38,6 +38,13 @@
         <value>Active</value>
     </labels>
     <labels>
+        <fullName>AMP_Services_Invoiced</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMP Services Invoiced</shortDescription>
+        <value>Invoiced</value>
+    </labels>
+    <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -176,6 +183,13 @@
         <protected>false</protected>
         <shortDescription>AMS DQ Review State or City</shortDescription>
         <value>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Select_From_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Select From List</shortDescription>
+        <value>If possible select your city from the suggestion list</value>
     </labels>
     <labels>
         <fullName>AMS_DQ_Street_Compulsory</fullName>
@@ -515,6 +529,14 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
         <value>Code Assignment</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CONFIRM_CONVERSION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CONFIRM_CONVERSION</shortDescription>
+        <value>Confirm Conversion</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</fullName>
@@ -995,6 +1017,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP50</shortDescription>
         <value>Confirm Financial Security Information</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP51</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP51</shortDescription>
+        <value>Confirm full hierarchy conversion to GoStandard</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
@@ -2624,6 +2653,28 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>Account:</value>
     </labels>
     <labels>
+        <fullName>AccountContextActivationEmailBody</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the Customer creation process for the Account {1} has been sucessfully completed.
+
+Best Regards,
+
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>AccountContextActivationEmailSubject</fullName>
+        <categories>Account Context Activation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountContextActivationEmailSubject</shortDescription>
+        <value>Customer creation process for Account {0}</value>
+    </labels>
+    <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3323,6 +3374,28 @@ Through this online service, you can manage your endorsement process directly on
 If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
+        <fullName>COVID_19_eComm_Home_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID-19 eComm Home Page</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+    </labels>
+    <labels>
+        <fullName>COVID_Updates_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COVID Updates Service</shortDescription>
+        <value>This service is your reference guide for the latest IATA updates related to the impact of COVID-19 on all IATA BSP and CASS operations.</value>
+    </labels>
+    <labels>
+        <fullName>CSL_L2_Got_It</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSL_L2_Got_It</shortDescription>
+        <value>Got it</value>
+    </labels>
+    <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3420,6 +3493,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Add User</value>
     </labels>
     <labels>
+        <fullName>CSP_Age_Verification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Age Verification</shortDescription>
+        <value>You must be over 13.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Airline_Changes_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3455,6 +3535,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Assign New Service</shortDescription>
         <value>Assign New Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarkDocAddToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Add to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarkDocRemToolTip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>Remove from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_BookmarksTabLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_BookmarksTabLabel</shortDescription>
+        <value>My Bookmarks</value>
     </labels>
     <labels>
         <fullName>CSP_Branch_Offices</fullName>
@@ -3503,6 +3607,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Breadcrumb_Home_Title</shortDescription>
         <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_Service_TIPReports</shortDescription>
+        <value>TIP Reports</value>
     </labels>
     <labels>
         <fullName>CSP_Breadcrumb_Services_Title</fullName>
@@ -3632,6 +3744,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_CaseNumber</shortDescription>
         <value>Case Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CaseSearchPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseSearchPlaceholder</shortDescription>
+        <value>Search for Cases</value>
     </labels>
     <labels>
         <fullName>CSP_Case_Currency</fullName>
@@ -3772,6 +3892,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Complete Your Profile</value>
     </labels>
     <labels>
+        <fullName>CSP_Complete_Profile_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Complete Profile LMS</shortDescription>
+        <value>Complete Your Training Profile</value>
+    </labels>
+    <labels>
         <fullName>CSP_Confirm_Deny_User_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3856,6 +3984,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Create New Account</value>
     </labels>
     <labels>
+        <fullName>CSP_Create_New_User_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create New User Label</shortDescription>
+        <value>Create New User</value>
+    </labels>
+    <labels>
         <fullName>CSP_Create_Password</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3926,6 +4062,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Deny Access</value>
     </labels>
     <labels>
+        <fullName>CSP_DocumentBookmarkAdded</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkAdded</shortDescription>
+        <value>Document Added to My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentBookmarkRemoved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentBookmarkRemoved</shortDescription>
+        <value>Document #doc Removed from My Bookmarks</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DocumentType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DocumentType</shortDescription>
+        <value>Document Type</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3990,6 +4150,70 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1</shortDescription>
+        <value>Thank you for registering to the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1a</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1a</shortDescription>
+        <value>We have found an existing IATA Customer Portal user with the personal email you are trying to register with:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1b</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1b</shortDescription>
+        <value>We have found an existing IATA Customer Portal user with the email you are trying to register with:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1c</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1c</shortDescription>
+        <value>Contact Login email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1d</shortDescription>
+        <value>Contact Personal email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1e</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1e</shortDescription>
+        <value>If you still have access to the Login email above, please login to the portal using this Login email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1f</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1f</shortDescription>
+        <value>If you do not have access to the Login email address above, please create a new user in our IATA Customer Portal with your current individual work email address as login. If you do not have an individual work email address please click</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1g</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1g</shortDescription>
+        <value>to finalize your registration with the Personal email above. Your previous user above will be deactivated and your training record will be transferred to your new user.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1h</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1h</shortDescription>
+        <value>by clicking here.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email_Confirmation_Body_Part_2</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4004,6 +4228,42 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Email Confirmation Body Part 3</shortDescription>
         <value>For security reasons, this link is valid for 8 hours. After the time limit has expired, you will have to resubmit your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 3 LMS</shortDescription>
+        <value>For security reasons, this link is valid for 8 hours. After this time you would need to resubmit your request to access your training account.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 1</shortDescription>
+        <value>If you are still working for {!ExistingContactAccount}, please login to the portal using the username above.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 2</shortDescription>
+        <value>Please click on this</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 3</shortDescription>
+        <value>to confirm that you still have access to this personal email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 4</shortDescription>
+        <value>The user associated with your work email will then be merged with the existing user associated with this personal email address. Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Domain_Error_Message</fullName>
@@ -4027,6 +4287,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Email Header Image</shortDescription>
         <value>CSP Email Header Image</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Header_Image_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Header Image LMS</shortDescription>
+        <value>CSP Email Header Image LMS</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Here</fullName>
@@ -4077,12 +4345,28 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Thanks for being part of IATA.</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Signature_Part_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Signature Part 1 LMS</shortDescription>
+        <value>Thank you again for your interest in IATA Training!</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email_Signature_Part_2</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Signature Part 2</shortDescription>
         <value>IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Signature_Part_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Signature Part 2 LMS</shortDescription>
+        <value>Your IATA Training team</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Welcome_Part_1</fullName>
@@ -4307,12 +4591,36 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Your account has been created successfully. You can now discover the standard features within the Portal. Some other features require further details, please complete your Profile for full access.</value>
     </labels>
     <labels>
+        <fullName>CSP_First_Login_Desc_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Desc LMS</shortDescription>
+        <value>Your basic account has been created. In order to access all features (including IATA Training) please complete your Profile.&lt;br&gt;&lt;b&gt;(make sure pop-ups are enabled)&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_First_Login_Desc_LMS_IE</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Desc LMS</shortDescription>
+        <value>In order to get the full Training experience please log back in using a browser such as Google Chrome (please note Internet Explorer is no longer supported)</value>
+    </labels>
+    <labels>
         <fullName>CSP_First_Login_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Title</shortDescription>
         <value>Welcome on board</value>
+    </labels>
+    <labels>
+        <fullName>CSP_First_Login_Title_IE</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Title</shortDescription>
+        <value>Welcome to the IATA Customer Portal</value>
     </labels>
     <labels>
         <fullName>CSP_ForYou</fullName>
@@ -4392,6 +4700,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Grant_User_Access_Title</shortDescription>
         <value>Grant Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Have_Read_Terms</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Have_Read_Terms</shortDescription>
+        <value>I have read and agree to the following terms:</value>
     </labels>
     <labels>
         <fullName>CSP_Home_WelcomeTitle</fullName>
@@ -4496,6 +4812,66 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Invalid email</value>
     </labels>
     <labels>
+        <fullName>CSP_L1_First_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_First_Name</shortDescription>
+        <value>First Name (Given Names)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_Last_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_Last_Name</shortDescription>
+        <value>Last Name (Family Name)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_LoginEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login Email</shortDescription>
+        <value>Login Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_PersonalEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Personal Email</shortDescription>
+        <value>Personal Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_Phone_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_Phone_LMS</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_TrainingEmail_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_TrainingEmail_LMS</shortDescription>
+        <value>Existing IATA Training username (if any)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_TrainingUser_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_TrainingUser_LMS</shortDescription>
+        <value>Existing IATA Training User ID (if any)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L1_WorkPhone_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L1_WorkPhone_LMS</shortDescription>
+        <value>Work Phone</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Account_Information</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4529,6 +4905,14 @@ If you are already CNS Endorsed, you can use this service to update information 
 Your company may have an account in IATA, so please check it first before creating a new one.</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Additional_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Additional_Details</shortDescription>
+        <value>Additional Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Address_Not_Found_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4560,6 +4944,14 @@ Please click Next Step button to confirm that your address is correct</value>
         <protected>false</protected>
         <shortDescription>CSP_L2_Back_to_Account_Selection</shortDescription>
         <value>Back to Company Account Info</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Additional_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Additional_Details</shortDescription>
+        <value>Back to Additional Details</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Back_to_Business_Address_Information</fullName>
@@ -4599,7 +4991,7 @@ Please click Next Step button to confirm that your address is correct</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Banner_Title</shortDescription>
-        <value>Profile Completion &amp; Account Selection</value>
+        <value>Account Selection &amp; Additional Details</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Business_Address_Information</fullName>
@@ -4610,12 +5002,28 @@ Please click Next Step button to confirm that your address is correct</value>
         <value>Business Address Information</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Business_Address_Information_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information_LMS</shortDescription>
+        <value>Shipping Address</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Business_Address_Information_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Business_Address_Information_Message</shortDescription>
-        <value>Please fill out your business address information.</value>
+        <value>Please provide the business address of your work location.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Business_Address_Information_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information_Message_LMS</shortDescription>
+        <value>Please enter your shipping address so we can send you study material and/or course certificates. Please note that we cannot ship to PO Box addresses.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Category</fullName>
@@ -4763,6 +5171,14 @@ You can easily create a company account in two steps</value>
         <value>We can now offer you more personalized experience based on your profile. You can also take a look at any service &amp; training provided from IATA</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Details_Saved_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Message_LMS</shortDescription>
+        <value>You are now ready to access IATA Training Services.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Details_Saved_Service_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4811,6 +5227,14 @@ You can easily create a company account in two steps</value>
         <value>We&apos;ve built the IATA Customer Portal so that it tailors the IATA products and services specifically for you. For us to be able to do that, we&apos;d like to know you and your organization a bit better.</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_EmailValidationDescri_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Personal Email</shortDescription>
+        <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email to access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Email_Address</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4843,6 +5267,14 @@ You can easily create a company account in two steps</value>
         <value>Go to Homepage</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Go_To_Homepage_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Homepage_LMS</shortDescription>
+        <value>Back to Homepage</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Go_To_Profile</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4859,6 +5291,14 @@ You can easily create a company account in two steps</value>
         <value>Go Back to Service</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Go_To_Service_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Service_LMS</shortDescription>
+        <value>Access IATA Training</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Go_To_Topic</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4873,6 +5313,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_L2_IATA_Codes</shortDescription>
         <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_IdAlready_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_IdAlready_LMS</shortDescription>
+        <value>The input user Id is already being used.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Is_PO_Box_Address</fullName>
@@ -4929,6 +5377,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_L2_Next_Confirmation</shortDescription>
         <value>Next Step / Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Step</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Step</shortDescription>
+        <value>Next Step</value>
     </labels>
     <labels>
         <fullName>CSP_L2_No</fullName>
@@ -5019,6 +5475,14 @@ You can easily create a company account in two steps</value>
         <value>Add your personal details to let IATA suggest personalized content and services</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Profile_Details_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details_Message</shortDescription>
+        <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email to access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Profile_Incomplete</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5032,7 +5496,15 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Profile_Incomplete_Message</shortDescription>
-        <value>But it is saved as a draft, you can continue later. Are you sure you want to quit?</value>
+        <value>Are you sure you want to quit?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_RegistrationFailed_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_RegistrationFailed_LMS</shortDescription>
+        <value>Your registration failed. An Error Occurred -</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Registration_Error_Message</fullName>
@@ -5049,6 +5521,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_L2_Registration_Error_Title</shortDescription>
         <value>Something went wrong</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Registration_Failed_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Registration_Failed_LMS</shortDescription>
+        <value>Your registration failed.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Requested_Modal_Cancel</fullName>
@@ -5203,6 +5683,30 @@ You can easily create a company account in two steps</value>
         <value>Submit</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_SucessUpdateOnly_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
+        <value>Successfully updated your profile information.&lt;br/&gt;Please continue to use your email [Email] to login to the IATA customer portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_SucessUpdate_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
+        <value>From now, please &lt;b&gt;only use your current Work Email [Email]&lt;/b&gt; to login to the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_SucessUpdate_Title_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
+        <value>Successfully updated your profile information.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5219,6 +5723,38 @@ You can easily create a company account in two steps</value>
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_VAT_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VAT_Number</shortDescription>
+        <value>VAT Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_VerificationToP1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VerificationToP1_LMS</shortDescription>
+        <value>We have sent a verification email to</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_VerificationToP2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VerificationToP2_LMS</shortDescription>
+        <value>. Please check your email inbox (including the junk, clutter etc… folders) and follow the instructions to complete your Training registration.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_VerificationToP3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_VerificationToP3_LMS</shortDescription>
+        <value>Please Log out from this user and Log In with the user above.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Website</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5227,12 +5763,456 @@ You can easily create a company account in two steps</value>
         <value>Website</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Work_Location</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Work_Location</shortDescription>
+        <value>Country/Territory of your work location</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Yes</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Yes</shortDescription>
         <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Back_to_Email_Validation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Back_to_Email_Validation_LMS</shortDescription>
+        <value>Back to Email Validation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_CompleteInformation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Complete Information</shortDescription>
+        <value>Your new account will be created shortly.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Confirmation_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Confirmation_Message_LMS</shortDescription>
+        <value>You&apos;re just one step from updating your profile! If the information is correct please click Submit. If you need to edit any information please click on Go back to edit.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ContactSupport_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_ContactSupport_LMS</shortDescription>
+        <value>Contact Support</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_EmailInformation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Infoermation</shortDescription>
+        <value>Email information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Email_Validation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Validation</shortDescription>
+        <value>Email addresses</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainNameMatch_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing Contact</shortDescription>
+        <value>Another active user is already using the userID and username you entered. Please check that the username and userID you entered are correct.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainUserId_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Profile Training section</shortDescription>
+        <value>Another active user is already using the userID. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainUserMatch_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing Contact</shortDescription>
+        <value>Another active user is already using the userID and username you entered.  Upon confirmation your training record from your previous user will be migrated to the user you are currently logged in with.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainUser_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_ExistTrainUser_LMS</shortDescription>
+        <value>Another active user is already using the userID and username you entered. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistingContact_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing Contact</shortDescription>
+        <value>The personal email you have provided is already used with this login email [Existing_email]. In order to ensure the data integrity of your training record, personal and work emails must be unique. Please check that the personal email address you provided is correct.&lt;ul&gt;&lt;li&gt;If the above personal email address is correct and [Email] is your current work email, please click save/next (once) to merge your training account. Your merged login will be [Email]. &lt;/li&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistingContact_LMS2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing Contact</shortDescription>
+        <value>&lt;li&gt;If the above personal email address is correct but [Existing_email] is your current work email, please click cancel and log back in using this work email instead. Please &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;contact us&lt;/a&gt; quoting both work emails if you wish to merge your training record.&lt;/li&gt;&lt;li&gt;If you work for more than one organization and both work emails are relevant/valid, please only input your personal email on the user where most of the training will happen.&lt;/li&gt;&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistingUser_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing User</shortDescription>
+        <value>The Work email you have provided is already associated with an existing user. Please check that the work email address you provided is correct. If so please click next. Once you confirm you have access to this work email address, the user you are currently logged in with (associated with your personal email) will be merged with the existing user associated with your work email address. From now on you will only be able to login with your work email address.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Have_Work_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Have_Work_Email</shortDescription>
+        <value>Do you have an individual Work Email Address?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Header_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Header_Title</shortDescription>
+        <value>Training Profile Completion &amp; Email Validation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_HomePage_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP homepage</shortDescription>
+        <value>Homepage</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_IsPersonalEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Is Personal Email</shortDescription>
+        <value>Is your Login Email your Personal Email?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_IsReversedEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_IsReversedEmail_LMS</shortDescription>
+        <value>Your Login email below ought to be your work email, while your personal email should show in the field underneath. Is it the case? If not we will switch them for you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_LoginEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login Email</shortDescription>
+        <value>Login Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_NewLoginEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Profile New Login Email</shortDescription>
+        <value>New Login Email:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Next_Confirmation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Next_Confirmation_LMS</shortDescription>
+        <value>Next / Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F4_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F4_LMS</shortDescription>
+        <value>Successfully updated your profile information.&lt;br/&gt;From now, please use your Work Email [Email] to login to the IATA Customer Portal. Your Personal Email [PersonalEmail] has been stored as additional email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F5_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F5_LMS</shortDescription>
+        <value>Please note that your Login Email has been changed to your Work Email. From now, please use your Work Email to Login to the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F6_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F6_LMS</shortDescription>
+        <value>Please note that we have merged your accounts. From now, please only use your Work Email to login to the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F7_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F7_LMS</shortDescription>
+        <value>Please note that we have transferred all past data to the current user.  &lt;b&gt;From now, please only use your current Work Email [work_email] to login to the IATA Customer Portal&lt;/b&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Note</shortDescription>
+        <value>Please note that your Login Email. From now, please use your Work Email to Login to the IATA Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_NumericError_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_NumericError_LMS</shortDescription>
+        <value>Inserted value must contain only numbers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_PersonalEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Personal Email</shortDescription>
+        <value>Personal Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Phone_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Username</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ProfileUpdate_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Profile Update</shortDescription>
+        <value>Profile Update</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ProvideWorkEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Work Email</shortDescription>
+        <value>Please provide your individual work email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Salutation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Salutation_LMS</shortDescription>
+        <value>Salutation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_StillWorkingP1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Still Working</shortDescription>
+        <value>If you are still working for</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_StillWorkingP2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Still Working P2</shortDescription>
+        <value>please click login button to the portal using the email above.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Title_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Title_LMS</shortDescription>
+        <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_TrainValidationDescri_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Training Validation Description</shortDescription>
+        <value>Your new account will be created shortly.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Training_Information_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Training Information</shortDescription>
+        <value>Your Training Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Training_Validation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Training Validation</shortDescription>
+        <value>Welcome to IATA Training!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_UpdatingProfileInitialMessage_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Profile Updating Initial Message</shortDescription>
+        <value>Gathering Registration information.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_UpdatingProfileP1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Profile Updating P1</shortDescription>
+        <value>Updating your profile information.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_UpdatingProfileP2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Profile Updating P1</shortDescription>
+        <value>Your previous email has been stored as your Personal Email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_UserId_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Username</shortDescription>
+        <value>User Id</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Username_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Username</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_VerificationMailTitle_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Verification Mail Title</shortDescription>
+        <value>Verification Mail</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_WorkEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Work Email</shortDescription>
+        <value>Login Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_WorkPhone_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Username</shortDescription>
+        <value>Work Phone</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Zip_Mandatory_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Is Personal Email</shortDescription>
+        <value>Please input &apos;0000&apos; if your address has no postal code.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_haveTrainingUser_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Is Personal Email</shortDescription>
+        <value>Have you already been registered for an IATA Training course in the past (and you know your credentials) and would like to maintain your training record?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LMS_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP LMS Privacy Policy</shortDescription>
+        <value>I understand and agree to the &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/training-terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Training T&amp;Cs&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L_LoginEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login Email</shortDescription>
+        <value>Login Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L_PersonalEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Personal Email</shortDescription>
+        <value>Personal Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L_Phone_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L_Phone_LMS</shortDescription>
+        <value>Business Phone</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L_TrainingEmail_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L_TrainingEmail_LMS</shortDescription>
+        <value>IATA Training Username (YAS)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L_TrainingUser_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L_TrainingUser_LMS</shortDescription>
+        <value>IATA Training UserID (YAS)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L_WorkPhone_LMS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L_WorkPhone_LMS</shortDescription>
+        <value>Personal Phone</value>
     </labels>
     <labels>
         <fullName>CSP_LastUpdate</fullName>
@@ -5346,6 +6326,13 @@ You can easily create a company account in two steps</value>
         <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
     </labels>
     <labels>
+        <fullName>CSP_MainCategories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MainCategories</shortDescription>
+        <value>Main Categories</value>
+    </labels>
+    <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5439,12 +6426,44 @@ You can easily create a company account in two steps</value>
         <value>Next</value>
     </labels>
     <labels>
+        <fullName>CSP_Next_EmailValidation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Next_EmailValidation_LMS</shortDescription>
+        <value>Next / Email Validation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Next_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Next_LMS</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
         <fullName>CSP_NoAccount</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSPISSP_IATA_NOT_Found_NoAccount</shortDescription>
         <value>No related Account to display.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText1</shortDescription>
+        <value>There is nothing in your bookmarks for now</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoBookmarksText2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoBookmarksText2</shortDescription>
+        <value>But when you have, you’ll view the most recent ones with their basic details in this area.</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -5640,7 +6659,7 @@ You can easily create a company account in two steps</value>
         <value>I agree with IATA&apos;s
 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
  and
-&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
@@ -5781,6 +6800,78 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
         <value>You are trying to register with an existing user, please change the email or click login button to go to the login page</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>The Work email you have provided is already associated with an existing user. Please use your own work email address and not a shared email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F4_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>If this is your own work email address please send us a scanned copy of your passport via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and quote the work email address above in your support message so we can assist. In the meantime if you&apos;d like to proceed without a work email address, change your above answer to &apos;No&apos; to continue. (Please note, without a work email address, we won&apos;t be able to bill your organization, and you may miss out on a discount)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>The Personal email you have provided is already associated with an existing user whose name is different from yours. Please use your own Personal email address and not a shared email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>If this is your own Personal email address please send us a scanned copy of the passport page showing your full name (or other government-issued identity document) via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and &lt;b&gt;quote the Personal email address above in your support message&lt;/b&gt; so we can assist. For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>&lt;b&gt;This email will not be updated when you click on the save button.&lt;/b&gt;&lt;br&gt; If this is your own Personal email address please send us a scanned copy of your passport via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and quote the Personal email address above in your support message so we can assist. In the meantime simply click ‘cancel’ below to go back to your profile page.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_Work_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing work Message</shortDescription>
+        <value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to this work email address, the user you are currently logged in with (associated with your personal email) will be merged with the existing user associated with your work email address. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_Work_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing work Message</shortDescription>
+        <value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click next. Once you confirm you have access to the above email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_Work_Message_LMS_F8</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing work Message</shortDescription>
+        <value>The individual work email above is already in use as personal email with user [Existing_email]. Please logout and update the personal email associated with this other user prior to adding the above work email to this user. If you’d like to proceed anyway, change your second answer above to ‘No’ to continue. (Please note, without a work email address, we won’t be able to bill your organization, and you may miss out on a discount)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_Work_Message_LMS_Profile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing work Message</shortDescription>
+        <value>The email you have provided is already associated with an existing user. Please check that the email address you provided is correct. If so please click save. Once you confirm you have access to the above Personal email address, we will merge your training accounts. From then on, please continue to login with [Email] only.</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Retry_Message</fullName>
@@ -6129,6 +7220,94 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Service Access</value>
     </labels>
     <labels>
+        <fullName>CSP_Service_TIPReports_AmazonType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_AmazonType</shortDescription>
+        <value>Amazon File</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoAccess</shortDescription>
+        <value>You do not have access to TIP Reports service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_NoReports</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_NoReports</shortDescription>
+        <value>There are no reports available.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_PBIType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_PBIType</shortDescription>
+        <value>Power BI</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextAction</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextAction</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileName</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileName</shortDescription>
+        <value>File Name/ Report Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextFileType</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextFileType</shortDescription>
+        <value>File Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextOpen</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextOpen</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_TextPostedDate</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_TextPostedDate</shortDescription>
+        <value>Posted Date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_TIPReports_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_TIPReports_Title</shortDescription>
+        <value>Transparency in Payments (TIP) - Reports</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_Accept_Terms</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_Accept_Terms</shortDescription>
+        <value>Accept</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AccessRequested</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6369,6 +7548,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Task</value>
     </labels>
     <labels>
+        <fullName>CSP_Terms_Updated_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Terms_Updated_Message</shortDescription>
+        <value>As part of our regular updates, we&apos;re making a few changes to our terms. We encourage you to read the documents in full.</value>
+    </labels>
+    <labels>
         <fullName>CSP_ThanksFeedback</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6383,6 +7570,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Track</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Track</shortDescription>
+        <value>Track</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Training_Section</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Profile Training section</shortDescription>
+        <value>Training Details</value>
     </labels>
     <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
@@ -6451,6 +7654,86 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_User_Creation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_User_Creation</shortDescription>
+        <value>User Creation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_3_LMS</shortDescription>
+        <value>Thank you for your interest in IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LMS verification email</shortDescription>
+        <value>&lt;p&gt;Thank you for choosing IATA Training. In order to validate your [Email] email address please click on this &lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;. This way IATA Training will be able to maintain your lifelong training record.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_PE_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_PE_1_LMS</shortDescription>
+        <value>Many thanks for updating your profile.&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_PE_2_F5_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_PE_2_F5_LMS</shortDescription>
+        <value>Please click this link to &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;validate your email address&lt;/a&gt;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;From now on you will only be able to login with [Email].&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_PE_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_PE_2_LMS</shortDescription>
+        <value>Please click this link to &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;validate your email address&lt;/a&gt;&lt;/b&gt; in order to complete the merging of your previous Training profile (login email [ExistingEmail]) to your current one.&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;From now on you will only be able to login with [Email].&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_1_F4_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_1_F4_LMS</shortDescription>
+        <value>Please &lt;b&gt;ensure that you are logged out from your IATA Customer Portal account&lt;/b&gt;, and then click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this email [Email].&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_1_LMS</shortDescription>
+        <value>Please click on this &lt;b&gt;&lt;a href=&quot;[URL]&quot; target=&quot;_blank&quot;&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this email [Email].&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_2_LMS</shortDescription>
+        <value>The Training record associated with your personal email [personalEmail] will be merged with the one associated with your work email [LoginEmail]. From now, please only use this work email to login to the IATA customer portal.&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_3_LMS</shortDescription>
+        <value>Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Email_Subject</fullName>
@@ -6732,7 +8015,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -6871,6 +8154,35 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Company name</value>
     </labels>
     <labels>
+        <fullName>CompleteThisField</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CompleteThisField</shortDescription>
+        <value>Complete this field</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailBody</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The compliance approval for case number {1} failed concerning the following account {2}. Please check with compliance team, and once you are ready to try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>ComplianceProcessEmailSubject</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComplianceProcessEmailSubject</shortDescription>
+        <value>Compliance Approval - {0}</value>
+    </labels>
+    <labels>
         <fullName>ConfirmSendRecycleBin</fullName>
         <categories>pop-up, modal, alert, confirm</categories>
         <language>en_US</language>
@@ -6909,6 +8221,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Contact Direct Sales to order</value>
     </labels>
     <labels>
+        <fullName>Contact_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Account</shortDescription>
+        <value>Contact Account</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Email</shortDescription>
+        <value>Contact Email</value>
+    </labels>
+    <labels>
         <fullName>Contact_Information</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6921,6 +8247,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Contact Name</shortDescription>
         <value>Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Username</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Username</shortDescription>
+        <value>Contact Username</value>
     </labels>
     <labels>
         <fullName>Control_Total_Percentage_Owners_And_Subsidiaries</fullName>
@@ -8135,6 +9468,14 @@ This service is free of charge.</value>
         <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
     </labels>
     <labels>
+        <fullName>EFComplianceReview</fullName>
+        <categories>Account Context Activation Compliance</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EFComplianceReview</shortDescription>
+        <value>E&amp;F Compliance Review</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9160,6 +10501,19 @@ Once your IATA EasyPay accounts are opened, you can use this service to:
         <value>https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681r00000BTmVA&amp;operationContext=DELIVERY&amp;contentId=05T1r00000dOEHZ&amp;page=0&amp;d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&amp;oid=00D2000000008TF&amp;dpt=null&amp;viewId=</value>
     </labels>
     <labels>
+        <fullName>IATA_Global_Delivery_Center_Address</fullName>
+        <categories>ISSP,_AMS_PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_Global_Delivery_Center_Address</shortDescription>
+        <value>IATA Global Delivery Center (GDC) &lt;br/&gt;
+Attn: Participation Department &lt;br/&gt;
+Torre Europa &lt;br/&gt;
+Paseo de la Castellana, 95, 4th floor &lt;br/&gt;
+28046 Madrid &lt;br/&gt;
+Spain</value>
+    </labels>
+    <labels>
         <fullName>IATA_Store_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9345,6 +10699,39 @@ Please go to Service Mgmt page for the list of active ICCS participations.</valu
         <protected>false</protected>
         <shortDescription>ICCS Additional Codes Number</shortDescription>
         <value>Number of Additional codes to create</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Button_Help_Text</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Button Help Text</shortDescription>
+        <value>&lt;p&gt;&lt;strong&gt;Multi Countries Adhoc SI:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for a selection of countries and participations saving you the time of repeating the line change. The instruction will be applicable to each country/participation selected individually. You can make the selection of participations by first clicking “Expanding All”.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Adhoc SI by Currency:&lt;/strong&gt; This feature will allow you to submit adhoc instructions for all the countries/participation with a same currency (sales currency) and based on the instruction lines can be cumulative. Participations have been regrouped by Currency to make it easier.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Creation_Not_Allowed</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Creation Not Allowed</shortDescription>
+        <value>Ad-hoc instructions can&apos;t be created after currency instructions</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_SI_by_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc SI by Currency</shortDescription>
+        <value>Adhoc SI by Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Adhoc_Selection_error</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Adhoc Selection error</shortDescription>
+        <value>Please select one or more participations first in order to complete a multi countries Adhoc SI</value>
     </labels>
     <labels>
         <fullName>ICCS_Agreement_Label</fullName>
@@ -9558,12 +10945,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Client testimonial</value>
     </labels>
     <labels>
+        <fullName>ICCS_Clone_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Clone SI</shortDescription>
+        <value>Clone as {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Clone_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Clone SI Link</shortDescription>
         <value>Copy &amp; Edit SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Collapse_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Collapse All</shortDescription>
+        <value>Collapse All</value>
     </labels>
     <labels>
         <fullName>ICCS_Comment_Label</fullName>
@@ -9606,12 +11009,28 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>Create AdHoc SI</value>
     </labels>
     <labels>
+        <fullName>ICCS_Create_Currency_SI_Link</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Currency SI Link</shortDescription>
+        <value>Create Currency SI</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Create_Future_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Create Future SI Link</shortDescription>
         <value>Create Future AdHoc SI</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Create_Mass_Currency_Header</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Create Mass Currency Header</shortDescription>
+        <value>Please, select a currency to apply the new Settlement Instruction</value>
     </labels>
     <labels>
         <fullName>ICCS_Created_Date_Label</fullName>
@@ -9636,6 +11055,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Currency Label</shortDescription>
         <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Currency_SI_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Currency SI created</shortDescription>
+        <value>Your Currency Settlement Instruction was successfully created</value>
     </labels>
     <labels>
         <fullName>ICCS_CycleMgmt_AdHoc_Header</fullName>
@@ -9750,6 +11177,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <value>E&amp;F</value>
     </labels>
     <labels>
+        <fullName>ICCS_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Edit SI</shortDescription>
+        <value>Edit {0} Settlement Instruction</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Edit_SI_Link</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -9836,6 +11271,14 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Endpoint Username PROD</shortDescription>
         <value>7r48aodfie7aim0aqd153tckrn</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Expand_All</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Expand All</shortDescription>
+        <value>Expand All</value>
     </labels>
     <labels>
         <fullName>ICCS_Expected_Deadline</fullName>
@@ -9940,6 +11383,22 @@ Please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in orde
         <protected>false</protected>
         <shortDescription>ICCS Headquarter Branch</shortDescription>
         <value>Headquarter - Branch</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned</shortDescription>
+        <value>*The amount notification hasn&apos;t been received yet.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Helptext_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS HelpText For Preassigned With Amount</shortDescription>
+        <value>**The amount shown is not the final one, there are still amount notifications to be received.</value>
     </labels>
     <labels>
         <fullName>ICCS_Hide_Child_Codes</fullName>
@@ -10319,6 +11778,14 @@ Has read only access over different features of the service.</value>
         <value>Fields marked with (*) are mandatory</value>
     </labels>
     <labels>
+        <fullName>ICCS_Mandatory_Instruction_Line</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mandatory Instruction Line</shortDescription>
+        <value>It is mandatory to have at least one instruction line</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Mandatory_Uploads_Message</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -10333,6 +11800,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS Marked for Deletion Label</shortDescription>
         <value>Marked for Deletion</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Mass_Edit_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Mass Edit SI</shortDescription>
+        <value>Mass Edit {0} Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ICCS_Membership_Status</fullName>
@@ -10365,6 +11840,14 @@ Has read only access over different features of the service.</value>
         <protected>false</protected>
         <shortDescription>ICCS More About Link</shortDescription>
         <value>ICCS Communications</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Multi_Countries_Adhoc_SI</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Multi Countries Adhoc SI</shortDescription>
+        <value>Multi Countries Adhoc SI</value>
     </labels>
     <labels>
         <fullName>ICCS_Multiple_Signatories_Change_Message</fullName>
@@ -10435,6 +11918,14 @@ Has read only access over different features of the service.</value>
 2. New set of Standard Settlement Instructions (download form)
 &lt;br/&gt;&lt;br/&gt;
 If you have any question, please submit them through the comments section after submitting your case.</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_No_Currencies_Available</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS No Currencies Available</shortDescription>
+        <value>No currencies available to create Currency SIs</value>
     </labels>
     <labels>
         <fullName>ICCS_No_Editable_Cycle_Message</fullName>
@@ -10927,6 +12418,22 @@ After verification, if all documents are compliant, you will receive a confirmat
         <value>Role</value>
     </labels>
     <labels>
+        <fullName>ICCS_SI_Successfully_Created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI Successfully Created</shortDescription>
+        <value>Your {0} Settlement Instruction was successfully created</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_SI_deleted</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS SI deleted</shortDescription>
+        <value>The Settlement Instruction has been successfully deleted</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Save_Action</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -11073,6 +12580,14 @@ Additional benefits of using ICCS:
         <value>ICCS Service Users</value>
     </labels>
     <labels>
+        <fullName>ICCS_Settlement_Instructions_created</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Settlement Instructions created</shortDescription>
+        <value>Your Settlement Instructions were successfully created</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Show_Child_Codes</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
@@ -11125,12 +12640,46 @@ The last line of the SI&apos;s must be &quot;Balance&quot;
 The sum of percentage cannot exceed 100%</value>
     </labels>
     <labels>
+        <fullName>ICCS_Si_Create_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for creating a Currency SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Create_Currency_Warning</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Create Currency Warning</shortDescription>
+        <value>Please note once a Currency Instruction is submitted, it will lock the participations with the currency selected under this new payment instruction. Further changes (for this cycle) will only be possible by submitting another Currency Instruction. 
+
+Any change of instruction for a specific country line under a currency instruction will not be possible.</value>
+    </labels>
+    <labels>
         <fullName>ICCS_Si_Create_Future</fullName>
         <categories>ISSP,ICCS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Si Create Future</shortDescription>
         <value>Kindly keep in mind the following rules for creating a future Adhoc SI:
+&lt;br/&gt;
+The last line of the SI&apos;s must be &quot;Balance&quot;
+&lt;br/&gt;
+The sum of percentage cannot exceed 100%</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Si_Edit_Currency</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Si Edit Currency</shortDescription>
+        <value>Kindly keep in mind the following rules for editing your Currency SI:
 &lt;br/&gt;
 The last line of the SI&apos;s must be &quot;Balance&quot;
 &lt;br/&gt;
@@ -11167,6 +12716,38 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICCS Start Date Label</shortDescription>
         <value>Start Date</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received</shortDescription>
+        <value>Status: Amount Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Not_Received_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Not Received With Amount</shortDescription>
+        <value>Status: Partial Amount Notification Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassigned</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned</shortDescription>
+        <value>Status: Amount Notification Not Received</value>
+    </labels>
+    <labels>
+        <fullName>ICCS_Status_For_Preassigned_With_Amount</fullName>
+        <categories>ISSP,ICCS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICCS Status For Preassigned With Amount</shortDescription>
+        <value>Status: Partial Amount Notification Received</value>
     </labels>
     <labels>
         <fullName>ICCS_Subject_Label</fullName>
@@ -11410,7 +12991,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000HmC0&amp;oid=00D2000000008TF&amp;lastMod=1587048852000</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -12048,6 +13629,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_Course2</shortDescription>
         <value>Course 2:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Covid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Covid</shortDescription>
+        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
@@ -15130,6 +16718,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>IFAP Please Contact CS</shortDescription>
         <value>Please contact &lt;a href=&quot;http://www.iata.org/cs&quot;&gt;IATA Customer Support&lt;/a&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>IFAP_PortalCase_Service_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFAP PortalCase Service Description</shortDescription>
+        <value>Please upload your financial review documents</value>
     </labels>
     <labels>
         <fullName>IFAP_Portal_URL_default_value</fullName>
@@ -19251,6 +20847,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Domestic</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Download_PASS_PDF_Copy</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Download_PASS_PDF_Copy</shortDescription>
+        <value>Download Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Download_PDF_Copy</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -19274,6 +20877,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Agency Accreditation Branch Abroad Office Draft Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Email_Branch_PASS_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Email_Branch_PASS_Subject</shortDescription>
+        <value>Branch Office Draft Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Email_Branch_Subject</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -19288,6 +20898,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Email Change Subject</shortDescription>
         <value>Change of Agency details - Draft request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Email_HO_PASS_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Email_HO_PASS_Subject</shortDescription>
+        <value>Head Office Draft Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Email_HO_Subject</fullName>
@@ -19839,6 +21456,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Company Type &amp; Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_First_Page_Summary_Header_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS First Page Summary Header PASS</shortDescription>
+        <value>Type &amp; Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Form</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -20255,6 +21880,21 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>2. Company Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS LeftNav Section2 PASS</shortDescription>
+        <value>2. Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_PASS_Branch</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section2_PASS_Branch</shortDescription>
+        <value>2. Branch Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section3</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -20296,6 +21936,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section3_Cargo_Intermediary</shortDescription>
         <value>3. Intermediary Owners</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section3_PASS_Branch</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section3_PASS_Branch</shortDescription>
+        <value>3. Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section4</fullName>
@@ -20561,12 +22208,28 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Please enter the Legal Name and Physical &amp; Correspondence address of the Agency to be accredited in your local language.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Local_Details_Please_Enter_PASS</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Local_Details_Please_Enter_PASS</shortDescription>
+        <value>Please enter the Legal Name and Physical &amp; Correspondence address in your local language.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Local_Details_Title</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Local Details Title</shortDescription>
         <value>Agency Details in Local language</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Title_PASS_BRANCH</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Local_Details_Title_PASS_BRANCH</shortDescription>
+        <value>Details in Local language</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Aggregator</fullName>
@@ -21146,7 +22809,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NOC StepD ProgressBar</shortDescription>
-        <value>D. Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_StepD_ProgressBar_CNS</fullName>
@@ -21698,6 +23361,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>There are no companies listed as current owners of your Company.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_No_Company_Owners_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_No_Company_Owners_PASS</shortDescription>
+        <value>There are no companies listed as current owners of your company.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21929,7 +23600,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepA</shortDescription>
-        <value>A. Select Type of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Select Type of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_StepB_message</fullName>
@@ -21945,7 +23616,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_StepC</shortDescription>
-        <value>C. Details of Change</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Details of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Summary_Current_Ownership</fullName>
@@ -22193,6 +23864,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>You don&apos;t have any pending Agency endorsement applications.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_No_Pending_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_No_Pending_PASS</shortDescription>
+        <value>You don&apos;t have any pending PASS applications.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_No_Requirements</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22389,6 +24068,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Passenger Sales - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_PAX_PASS_BRANCH</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION PAX PASS BRANCH</shortDescription>
+        <value>for a Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_OPTION_PAX_PASS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION PAX PASS HO</shortDescription>
+        <value>for a New Head Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_PAX_SA</fullName>
         <categories>ISSP,AMS</categories>
         <language>en_US</language>
@@ -22419,6 +24114,171 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Ownership Update</shortDescription>
         <value>You can update your Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Admin</fullName>
+        <categories>ISSP,AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Admin</shortDescription>
+        <value>PASS Admin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Application</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Application</shortDescription>
+        <value>Company Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION3</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION3</shortDescription>
+        <value>SECTION 3 - Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION3_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION3_2</shortDescription>
+        <value>3.2 Summary of Ownership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1</shortDescription>
+        <value>If your organization/company is fully-or partially-owned by one or more people, please enter their details here as owners, partners or stakeholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularity traded in an over-the-counter market or government-owned company).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2</shortDescription>
+        <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3</shortDescription>
+        <value>Select at least one Authorised Signatory and one PASS Contact.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION4</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION4</shortDescription>
+        <value>SECTION 4 - Payment Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION4_Q1</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION4_Q1</shortDescription>
+        <value>A separate user access is needed in PASS for this branch:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION4_Q2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION4_Q2</shortDescription>
+        <value>The Head Office will also have access in PASS to this branch:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3</shortDescription>
+        <value>PASS billing payment will be done via</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4</shortDescription>
+        <value>Bilateral (direct payment to the airlines)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Branch_Government_Owned_Company</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Branch_Government_Owned_Company</shortDescription>
+        <value>Government-owned company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Contact</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Contact</shortDescription>
+        <value>PASS Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_Email_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_Email_Description</shortDescription>
+        <value>Thank you for creating your application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_HO_ReadOnly_SECTION1</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PASS HO ReadOnly SECTION1</shortDescription>
+        <value>Section 1- Identification of Location for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_HO_ReadOnly_SECTION2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PASS HO ReadOnly SECTION2</shortDescription>
+        <value>SECTION 2 - Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_SECTION_1</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PASS SECTION 1</shortDescription>
+        <value>Section 1 – Identification of Location for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_SECTION_2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PASS SECTION 2</shortDescription>
+        <value>Section 2 - Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_SECTION_2_1_text_1</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PASS SECTION 2 1 text 1</shortDescription>
+        <value>If your office is fully - or partially - owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an &apos;over-the-counter&apos; market).
+Enter the names and titles for the directors or officers of a corporation, and the details of the managers.
+Select at least one Authorised Signatory and PASS Contact, and choose the and Portal Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PASS_User</fullName>
+        <categories>ISSP,AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PASS_User</shortDescription>
+        <value>PASS User</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_PAX_Company</fullName>
@@ -22671,6 +24531,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>SECTION 1 - Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Title_PASS_BRANCH</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS STEP 3_1 Title PASS BRANCH</shortDescription>
+        <value>SECTION 1 - Head Office Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_2_Title</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22685,6 +24553,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS STEP 3_2 Title New</shortDescription>
         <value>SECTION 2 - Identification of Company Location for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_2_Title_PASS_BRANCH</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_2_Title_PASS_BRANCH</shortDescription>
+        <value>SECTION 2 - Identification of Branch Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Sales_Instructions</fullName>
@@ -22885,6 +24761,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Company.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Intro_Accred_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Intro_Accred_PASS</shortDescription>
+        <value>Please note that online applications must be submitted by an Authorised Signatory of the Company.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22899,6 +24782,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro New</shortDescription>
         <value>Welcome to the online application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Intro_PASS</shortDescription>
+        <value>Welcome to the online IATA PASS application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Minor_Changes</fullName>
@@ -23003,6 +24893,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 SAA New</shortDescription>
         <value>IATA Online Agency Accreditation / IFACP Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_SAA_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_SAA_PASS</shortDescription>
+        <value>IATA Postal Accounts Settlement System</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Specific_Sales_Activity</fullName>
@@ -23131,6 +25028,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>A. Select Operation Type &amp; Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_ProgressBar_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 ProgressBar PASS</shortDescription>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Review the Checklist</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_Separate_Application</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -23163,6 +25068,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Application for Approval as an IATA Passenger / Cargo Sales Agent / IFACP Forwarder</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_Title_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title PASS</shortDescription>
+        <value>Application for Approval as an IATA Passenger/Cargo Sales Agent/PASS Participant</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_Two_Weeks_Expiry</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -23177,6 +25090,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 Check List</shortDescription>
         <value>Check List for</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step2_Check_List_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step2 Check List PASS</shortDescription>
+        <value>Check List</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step2_Instructions</fullName>
@@ -23201,6 +25122,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step2 ProgressBar</shortDescription>
         <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Review Country Requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step2_ProgressBar_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step2 ProgressBar PASS</shortDescription>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Complete Application Form</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_3_1_Title</fullName>
@@ -23358,6 +25287,14 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Companies New</shortDescription>
+        <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Companies_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Companies_PASS</shortDescription>
         <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
@@ -24072,6 +26009,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Complete Application Form</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_ProgressBar_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 ProgressBar PASS</shortDescription>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;C&lt;/span&gt;Upload Files</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_Save_Anytime</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24094,6 +26039,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step4 ProgressBar</shortDescription>
         <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Upload Files</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step4_ProgressBar_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step4 ProgressBar PASS</shortDescription>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step4_Upload_Continue</fullName>
@@ -24141,7 +26094,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step5_ProgressBar_Validate_Data</shortDescription>
-        <value>E. Validate details</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Validate details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
@@ -24301,6 +26254,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Application for Approval as an Import Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepsAll_PASS_Participant_Title</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepsAll PASS Participant Title</shortDescription>
+        <value>Application for approval as a PASS Participant</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepsAll_Passenger_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -24343,6 +26304,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Submit IATA</shortDescription>
         <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TC_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS TC PASS</shortDescription>
+        <value>I hereby certify that the foregoing statements, including statements made in any attachments hereto, are true and correct to the best of my knowledge and belief, and that I am authorized by the firm identified in Section 1 to make these statements and file this document.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
@@ -24403,6 +26372,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Top</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Trade_Reg_Number_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Trade Reg Number PASS</shortDescription>
+        <value>Trade Registration Number</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Trained_Staff_Name</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -24441,6 +26418,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP AMS Update Agency New</shortDescription>
         <value>Update Company details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Update_Agency_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Update Agency PASS</shortDescription>
+        <value>Update details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Update_HO_details</fullName>
@@ -24527,6 +26512,21 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Please select agencies from at least 2 BSPs</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Validation_PASS_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Validation_PASS_Admin</shortDescription>
+        <value>Please designate at least one PASS Admin.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_PASS_User</fullName>
+        <categories>ISSP,AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Validation_PASS_User</shortDescription>
+        <value>Please verify any Person who may have PASS Admin and PASS User checked, a Person can be only one of them.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Validation_Percent_Ownership</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24565,6 +26565,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP AMS Validation Portal Admin</shortDescription>
         <value>Please select who should be the Portal Administrator for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Validation_Portal_Admin_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Validation Portal Admin</shortDescription>
+        <value>Please select who should be the Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_View_Branch_details</fullName>
@@ -25432,14 +27440,6 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Authorized_Signatory</shortDescription>
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_BANK_DETAILS_MC_BLOCK</fullName>
-        <categories>ISSP, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
-        <value>In order to notify IATA of a change of bank account details please contact us</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
@@ -26408,6 +28408,13 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
+        <value>Are you sure you want to withdraw the selected countries?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
         <categories>ISSP AP</categories>
         <language>en_US</language>
@@ -26556,8 +28563,9 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
-Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
+        <value>The balances on the customer portal are updated the next business day after IATA’s account has been credited. The day IATA’s account is credited depends on the form of payment of your choice. The billing data shown in ICE is provided to IATA by third parties with 24 hour intervals and delays outside of IATA’s control might occur. 
+
+In case of an airline suspension resulting in an adjusted billing amount, the agents may rely on the amounts contained in ICE and in case of any discrepancies, those can be resolved through a later payment by or to the agent.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
@@ -28376,7 +30384,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected1</shortDescription>
-        <value>We regret to inform you that your request to access</value>
+        <value>This is an important message affecting your access to services in the IATA Customer Portal. Your request to access</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected2</fullName>
@@ -28384,14 +30392,21 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected2</shortDescription>
-        <value>Service has been rejected by your company administrator,</value>
+        <value>has been deactivated. For additional information, you can refer to your main user or raise a query to the IATA Customer Service team,</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected3</shortDescription>
-        <value>Please, refer to your administrator for any further inquiries on this matter.</value>
+        <value>has been rejected by your company administrator,</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_AccessRejected3_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected3.1</shortDescription>
+        <value>.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected4</fullName>
@@ -28408,6 +30423,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_AccessRejected4_CNS</shortDescription>
         <value>Service has been rejected by your CNS Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_AccessRejected5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected5</shortDescription>
+        <value>For additional information, you can refer to your company administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_AccessRejected_subject1</fullName>
@@ -28731,6 +30753,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for creating your draft Voluntary Relinquishment online form.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_PASS_Process</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_PASS_Process</shortDescription>
+        <value>You can access any ongoing applications by clicking the link below and logging into the portal with your email address:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>
         <categories>ISSP, AMS, Email</categories>
         <language>en_US</language>
@@ -28745,6 +30774,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP Email Draft Process2</shortDescription>
         <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Draft_Process_PASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Draft_Process_PASS</shortDescription>
+        <value>Thank you for creating your application for approval</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_GiveUsFeedback</fullName>
@@ -29097,7 +31133,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message. Please do not respond to this email.</value>
+        <value>This is a system generated message. Please do not reply.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
@@ -30784,6 +32820,14 @@ this is the tiess topic help</value>
         <value>Loading IATAN Agent details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_Loading_PASS_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Loading PASS Details</shortDescription>
+        <value>Loading Freight Forwarder details...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Loading_Travel_Agency_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -31929,6 +33973,176 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP Owner Name</shortDescription>
         <value>Owner Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASSLink_PS_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASSLink_PS_Description</shortDescription>
+        <value>If your registration has been approved,  please click here to access the PASS Platform.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Administrators</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Administrators</shortDescription>
+        <value>If more than 2 new PASS administrators need to be created, please provide details.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Administrators_Rec</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Administrators Rec</shortDescription>
+        <value>Recommendation: Each Airline/GSSA should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Agent</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Agent</shortDescription>
+        <value>PASS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Agreement</shortDescription>
+        <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
+Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+&lt;br/&gt;
+&lt;br/&gt;
+Please download, complete and upload the PASS agreement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Airline_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Airline_Checklist</shortDescription>
+        <value>Link of Airline Joining Checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_BankMandate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS BankMandate</shortDescription>
+        <value>The participant needs to provide a Bank Account Mandate to IATA, so that the PASS proceedings can be settled. Please upload Bank Account Mandate of the local bank account and in the ISS country and currency of settlement as a scanned document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Checklist</shortDescription>
+        <value>While completing your application, please refer to the Checklist for the details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Download_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Download_Documents</shortDescription>
+        <value>Please download the documents using the links below:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help Admin</shortDescription>
+        <value>With access to all functions and permissions in PASS and responsible for granting specific access rights to the company&apos;s other PASS users.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Help_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Help User</shortDescription>
+        <value>With access to different functions and permissions, as granted and authorized by the company&apos;s PASS Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_NewUsers</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS NewUsers</shortDescription>
+        <value>New PASS Users</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_New_Admins</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS New Admins</shortDescription>
+        <value>Extra new PASS administrators</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_PS_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_PS_Description</shortDescription>
+        <value>Please click here to complete the PASS registration process. PASS is a global digital platform to simplify billing and settlement between airlines and postal operators. For further information, visit www.iata.org/pass.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Agreement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
+        <value>Link of Participation Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_AgreementTerms</shortDescription>
+        <value>Participation Agreement and Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Participation_Checklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
+        <value>Link of participation checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_And_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_And_Conditions</shortDescription>
+        <value>By submitting the present Application and pressing &quot;Accept terms and conditions&quot; below, the undersigned hereby confirms on behalf o the PASS Participant that all the information provided herein is correct and complete, that I have read and hereby acknowledge the terms and conditions contained in the Participation Agreement and the Terms of Use, and that I have enquired and am aware of the local laws and regulations as may apply to the operations of the PASS Participant in the applicable jurisdictions in regard to mail and postal activities.
+&lt;/br&gt;
+&lt;/br&gt;
+I, undersigned, hereby represents and declare that I am duty authorized to submit this application on behalfand in the name of the PASS Participant, and that I am duly authorized to submit this Application on behalf and in the name of the PASS Participant, and that I am duly authorized to bind the PASS Participant and enter on its behalf into the Participation Agreement and abide by the Terms of Use.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Conditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Conditions</shortDescription>
+        <value>By agreeing with the Terms and Conditions, the Company representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the participation in IATA Settlement Systems as per PASS Program.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Terms_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Terms_Use</shortDescription>
+        <value>Link of Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_TextAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS TextAreas</shortDescription>
+        <value>First Name, Last Name, Email;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PASS Users</shortDescription>
+        <value>If it&apos;s necessary to create PASS Users, please provide details.</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
@@ -33392,6 +35606,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Requirements</shortDescription>
         <value>requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Requirements_PASS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Requirements PASS</shortDescription>
+        <value>Requirements</value>
     </labels>
     <labels>
         <fullName>ISSP_Reset_Password</fullName>
@@ -34885,10 +37107,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TD_Description</shortDescription>
-        <value>&lt;b&gt;IATA Treasury Dashboard&lt;/b&gt;
-&lt;/BR&gt;
-&lt;/BR&gt;
-The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
+        <value>The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
 The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
@@ -35301,7 +37520,7 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_TOULink</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>ISSP_TOULinkText</fullName>
@@ -36151,6 +38370,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>IfapSubmissionOfDocsOK</shortDescription>
         <value>Submission of the documents successfully completed!</value>
+    </labels>
+    <labels>
+        <fullName>Important_Delivery_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Important_Delivery_Information</shortDescription>
+        <value>IMPORTANT DELIVERY INFORMATION:</value>
     </labels>
     <labels>
         <fullName>Industry_Activities</fullName>
@@ -37209,7 +39435,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.
+msgWarnProductNotCompliant:- We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
@@ -37629,6 +39855,13 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <value>Mark as read</value>
     </labels>
     <labels>
+        <fullName>MedAire_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MedAire_Service_Description</shortDescription>
+        <value>The AVSEC Insight POC is an online tool developed with MedAire Inc, under a proof of concept phase, for the purposes of providing a baseline of security information for industry. It is designed to support airline security risk assessment activity in terms of location and airspace security.</value>
+    </labels>
+    <labels>
         <fullName>Media</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -38014,7 +40247,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_CSP_Troubleshooting</fullName>
@@ -38160,6 +40393,22 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_Missing_Mandatory_Fields</shortDescription>
         <value>To request access to FRED+ the mandatory fields &quot;Salutation&quot;, &quot;Job Title&quot; and &quot;Mobile Phone&quot; need to be filled. To update these field proceed to the &quot;My Profile&quot; section of this page.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_RegistrationProcess</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId FRED RegistrationProcess</shortDescription>
+        <value>Verifiers should NOT use this form. Instead, please refer to the FAQ section for registration instructions.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_RegistrationProcess_URL</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId FRED RegistrationProcess URL</shortDescription>
+        <value>https://www.iata.org/fred#tab-5</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_0</fullName>
@@ -38655,7 +40904,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_64</shortDescription>
-        <value>13.1	In the event any terms contained in this Agreement conflict with the terms contained in IATA&apos;s General Terms of Use for its public website (located at https://www.iata.org/Pages/terms.aspx), the terms contained in this Agreement will govern.</value>
+        <value>13.1	In the event any terms contained in this Agreement conflict with the terms contained in IATA&apos;s General Terms of Use for its public website (located at https://www.iata.org/en/terms), the terms contained in this Agreement will govern.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_7</fullName>
@@ -38687,7 +40936,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Troubleshooting</fullName>
@@ -38740,7 +40989,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId GADM Terms of Use Link</shortDescription>
-        <value>https://www.iata.org/en/terms/</value>
+        <value>https://iata.my.salesforce.com/sfc/p/2000000008TF/a/5J000000Pod4/CvLQa0iBGUytIDj8yLmqm5aayxO6rFacAwytZRQvY5s</value>
     </labels>
     <labels>
         <fullName>OneId_GADM_Troubleshooting</fullName>
@@ -38847,7 +41096,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_ISSP_Troubleshooting</fullName>
@@ -39299,7 +41548,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Terms of Use Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>OneId_Thank_you_Fred_Access_Request</fullName>
@@ -41343,6 +43592,25 @@ Remittance date: {4}
         <value>SIS</value>
     </labels>
     <labels>
+        <fullName>SISCaseDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SISCaseDescription</shortDescription>
+        <value>Account legal name: 
+{0}
+
+E&amp;F main contact: 
+{1} {2}
+{3}
+
+Address (business):
+Street {4}
+Zip/Postal Code  {5}
+City  {6}	
+State/Province {7}	
+Country {8}</value>
+    </labels>
+    <labels>
         <fullName>SISHelpDesk_ExistingPriorityMapping</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41398,6 +43666,28 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>Salutation</shortDescription>
         <value>Salutation</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailBody</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+The SAP process failed concerning the following account {1}. Please, try to activate the account again please relaunch the activation flow.
+
+Best regards
+
+Automated process from a new account activation</value>
+    </labels>
+    <labels>
+        <fullName>SapProcessEmailSubject</fullName>
+        <categories>Account Context Activation SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SapProcessEmailSubject</shortDescription>
+        <value>SAP Process - {0}</value>
     </labels>
     <labels>
         <fullName>Save</fullName>
@@ -41473,6 +43763,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Select</shortDescription>
         <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>SelectAnOption</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectAnOption</shortDescription>
+        <value>Select an option</value>
     </labels>
     <labels>
         <fullName>SelectRequiredMessage</fullName>
@@ -41652,6 +43949,35 @@ title,Title,Name</value>
         <value>https://api.signaturit.com/v3/</value>
     </labels>
     <labels>
+        <fullName>SisProcessCaseSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessCaseSubject</shortDescription>
+        <value>SIS E&amp;F Customer Creation</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailBody</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailBody</shortDescription>
+        <value>Dear {0},
+
+Please note the SIS Code request for case number  {1} has not been completed for the Account  {2}. If any further information is required, please check with the GDC-Participation Team.
+
+Best Regards
+SF Workflow Process</value>
+    </labels>
+    <labels>
+        <fullName>SisProcessEmailSubject</fullName>
+        <categories>Account Context Activation SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SisProcessEmailSubject</shortDescription>
+        <value>SIS Approval - {0}</value>
+    </labels>
+    <labels>
         <fullName>SiteTitle</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -41783,6 +44109,22 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
         <value>005w0000003XCG8</value>
+    </labels>
+    <labels>
+        <fullName>TC_CSP_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TC_CSP_Privacy_Policy</shortDescription>
+        <value>Privacy Policy</value>
+    </labels>
+    <labels>
+        <fullName>TC_CSP_Terms_of_Use</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TC_CSP_Terms_of_Use</shortDescription>
+        <value>Terms of Use</value>
     </labels>
     <labels>
         <fullName>TECH_GDPR_Community_Name</fullName>
@@ -42116,7 +44458,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Treasury Dashboard Terms of Use URL</shortDescription>
-        <value>https://www.iata.org/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>Treasury_Dashboard_User_Guide</fullName>
@@ -42797,7 +45139,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>csp_Footer_Legal_URL</shortDescription>
-        <value>https://www.iata.org/Pages/terms.aspx</value>
+        <value>https://www.iata.org/en/terms</value>
     </labels>
     <labels>
         <fullName>csp_Footer_Linkedin_URL</fullName>
@@ -42883,7 +45225,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Is your query an emergency?</value>
+        <value>Is your query an emergency? Emergency queries are only replied to in English.</value>
     </labels>
     <labels>
         <fullName>csp_LastLoginDate</fullName>
@@ -43482,6 +45824,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>select role</shortDescription>
         <value>Select your role</value>
+    </labels>
+    <labels>
+        <fullName>issue_with_iata</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>issue with iata help text</shortDescription>
+        <value>Tick this box if the issue described by the account is related to an issue caused by IATA</value>
     </labels>
     <labels>
         <fullName>label_custom_price</fullName>

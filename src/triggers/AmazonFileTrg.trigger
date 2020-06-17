@@ -21,5 +21,7 @@ trigger AmazonFileTrg on AmazonFile__c (
 		if(Trigger.isUpdate) {
 			AmazonFileTrgHelper.checkApprover(Trigger.new, Trigger.oldMap);
 		}
+		//INC543431
+		AmazonFileTrgHelper.setCaseFromsObjectId(Trigger.new);
 	}
 }

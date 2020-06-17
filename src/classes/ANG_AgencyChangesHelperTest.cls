@@ -1,7 +1,9 @@
 @isTest
 public class ANG_AgencyChangesHelperTest {
 
-	 @testSetup static void testSetup(){
+	@testSetup 
+	static void testSetup(){
+		Test.startTest();
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
 		insert ctry ;
@@ -53,6 +55,7 @@ public class ANG_AgencyChangesHelperTest {
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
 		insert pa;
 
+		Test.stopTest();
 	}
 
 
@@ -963,8 +966,253 @@ public class ANG_AgencyChangesHelperTest {
 		System.assertEquals(1,parentAccountDestination);
 
 		Test.stopTest();
+	}
 
+	@isTest
+	static void performChangeOfHierarchy_McAcquiredByStandard() {
+		insert new ANG_AgencyChangesConfig__c(Name = 'Change~Hierarchy',
+			TCA_Sanity_check__c = 'CHH', 
+			TCA_Application_withdrawal__c = 'CWD', 
+			TCA_Manager_approval__c = 'HCF',
+			TC_Hierarchy__c = true,
+			Valid_Accreditation_Models__c = 'ALL');
+		
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		
+		Account GE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+		Account HE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 HE GB', GE1.Id, GE1.Id, AMS_Utils.HE, gb, '10000001');
+		Account AE1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', HE1.Id, GE1.Id, AMS_Utils.AE, gb, '10000002');
 
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		
+		Account newParentES = new Account(IATA_ISO_Country__c = gb.id,
+			ANG_IEP_Status__c = null,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c = '12345679',
+			Name = 'Account newParent',
+			Short_Name__c = 'Account newParent',
+			Category__c = 'IATA Passenger Sales Agent',
+			Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.HE,
+			Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		insert newParentES;
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			GE1, HE1, AE1
+		});
+		
+		Contact contact = new Contact(AccountId = GE1.id,
+			Firstname = 'teste2', 
+			Lastname='test2', 
+			Email = 'testGE2@test.com');
+
+		insert contact;
+
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+
+		insert new List<Agency_Authorization__c>{
+			new Agency_Authorization__c(Account__c = HE1.Id, 
+				ANG_FormOfPayment_ID__c = 'CA', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRT),
+
+			new Agency_Authorization__c(Account__c = newParentES.Id, 
+				ANG_FormOfPayment_ID__c = 'CA', 
+				Status__c = 'Active', 
+				RecordTypeId = formOfPaymentRT)
+		};
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = HE1.id,
+			New_parent__c = newParentES.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
+			Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			AccountId = HE1.Id,
+			ContactId = contact.Id,
+			Reason = 'Product Inquiry',
+			Type = 'Case',
+			subject = 'Changes - WEBER VOYAGES SARL',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Changes',
+			Type_of_customer__c = 'IATA Travel Agent',
+			BSPCountry__c = 'US',
+			Account_Concerned__c = HE1.Id,
+			Region__c = 'Europe');
+
+		insert oscarCase;
+
+		loadCredentials();
+
+		insert new AmazonFile__c(Full_Name_Unique__c = 'Attachment Required',
+			Case__c = oscarCase.Id);
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(IATAcode__c = HE1.IATAcode__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
+			Branch_Office_Country__c = HE1.IATA_ISO_Country__c,
+			Location_Class__c = HE1.Location_Class__c,
+			Location_Type__c = HE1.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			ISSP_AMS_GDS_with_signed_contract__c = 'ABAC');
+
+		insert stagingArea;
+
+		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, 
+			Financial_interest__c = 100, 
+			AMS_Pax_Accreditation_Form__c = stagingArea.Id, 
+			Company__c = HE1.Id, 
+			First_name__c = 'NameToUse1', 
+			Last_name__c = 'Last1', 
+			Job_title__c = 'ABC1', 
+			Mobile__c = '+4112345671', 
+			Phone__c = '3424322341', 
+			Email__c = 'unique@email1.com', 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+
+		Test.startTest();
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		oscar.Change_of_Hierarchy_Scenario__c = AMS_Utils.MULTICOUNTRY_LOCATIONS_ACQUIRED_BY_STANDARD;
+		update oscar;
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+		oscar.Backup_In_Progress__c = false;
+		update oscar;
+
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+
+		Agency_Authorization__c movedAuthorization = [SELECT Id, Status__c
+													FROM Agency_Authorization__c
+													WHERE Account__r.Name = 'MC Account 1 HE GB'
+													LIMIT 1];
+
+		System.assertEquals('Active', movedAuthorization.Status__c, 'Cash forms of payment should be the same of the new Parent after approval');
+	}
+
+	@isTest 
+	static void performChangeOfHierarchy_BSPSplit() {
+		insert new ANG_AgencyChangesConfig__c(Name = 'MulticountryToStandardConversion', 
+			TCA_Sanity_check__c = 'CNV', 
+			TCA_Application_withdrawal__c = 'CWD', 
+			TCA_Manager_approval__c = 'CVF',
+			TC_Hierarchy__c = false,
+			Valid_Accreditation_Models__c = 'Cash',
+			TC_Conversion__c = true);
+		
+		IATA_ISO_Country__c pt = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('PT'));
+		IATA_ISO_Country__c gb = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('GB'));
+		IATA_ISO_Country__c fr = ANG_TestDataHelper.insertBspAndIsoCountry(ANG_TestDataHelper.COUNTRY_INFORMATION.get('FR'));
+		
+		Account ac1 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 GE PT', (Id) null, (Id) null, AMS_Utils.GE, pt, '10000000');
+
+		Account ac2 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 HE GB', ac1.Id, ac1.Id, AMS_Utils.HE, gb, '10000001');
+		Account ac4 = ANG_TestDataHelper.createMulticountryAccount('MC Account 1 HE FR', ac1.Id, ac1.Id, AMS_Utils.HE, fr, '10000003');
+		insert new List<Account>{ ac2, ac4};
+
+		Account ac3 = ANG_TestDataHelper.insertMulticountryAccount('MC Account 1 AE GB', ac2.Id, ac1.Id, AMS_Utils.AE, gb, '10000002');
+
+		ANG_TestDataHelper.insertHierarchy(new List<Account>{
+			ac1, ac2, ac3, ac4
+		});
+
+		Contact contact = new Contact(AccountId = ac1.id,
+			Firstname = 'teste2', 
+			Lastname='test2', 
+			Email = 'testGE2@test.com');
+
+		insert contact;
+
+		insert new Agency_Authorization__c(Account__c = ac4.Id, 
+			ANG_FormOfPayment_ID__c = 'CA', 
+			Status__c = 'Non-Active', 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment'));
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ac4.id,
+			New_parent__c = ac4.id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
+			Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			AccountId = ac4.Id,
+			ContactId = contact.Id,
+			Reason = 'Product Inquiry',
+			Type = 'Case',
+			subject = 'Changes - WEBER VOYAGES SARL',
+			CaseArea__c = 'Accreditation Process',
+			Reason1__c = 'Changes',
+			Type_of_customer__c = 'IATA Travel Agent',
+			BSPCountry__c = 'US',
+			Account_Concerned__c = ac4.Id,
+			Region__c = 'Europe');
+
+		insert oscarCase;
+
+		loadCredentials();
+
+		insert new AmazonFile__c(Full_Name_Unique__c = 'Attachment Required',
+			Case__c = oscarCase.Id);
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(IATAcode__c = ac4.IATAcode__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes'),
+			Branch_Office_Country__c = ac4.IATA_ISO_Country__c,
+			Location_Class__c = ac4.Location_Class__c,
+			Location_Type__c = ac4.Location_Type__c,
+			SAAM_Case__c = oscarCase.Id,
+			ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
+			ISSP_AMS_GDS_with_signed_contract__c = 'ABAC');
+
+		insert stagingArea;
+
+		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, 
+			Financial_interest__c = 100, 
+			AMS_Pax_Accreditation_Form__c = stagingArea.Id, 
+			Company__c = ac4.Id, 
+			First_name__c = 'NameToUse1', 
+			Last_name__c = 'Last1', 
+			Job_title__c = 'ABC1', 
+			Mobile__c = '+4112345671', 
+			Phone__c = '3424322341', 
+			Email__c = 'unique@email1.com', 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+
+		Test.startTest();
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		oscar.Change_of_Hierarchy_Scenario__c = AMS_Utils.MULTICOUNTRY_BSP_SPLIT;
+		update oscar;
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+		oscar.Backup_In_Progress__c = false;
+		update oscar;
+
+        Test.stopTest();
+
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+		
+	
+		System.assertEquals('Active', [SELECT Id, Status__c, Account__r.Name FROM Agency_Authorization__c LIMIT 1].Status__c, 'Cash forms of payment should be active after approval');
 	}
 
 	@isTest static void performChangeOfFields(){
@@ -2788,7 +3036,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 		update oscar;
 
-		Test.startTest();
 
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
@@ -2815,6 +3062,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert att;
 
+		Test.startTest();
+		
 		oscar.ANG_FA_Opt_out__c = 'Opt-Out';
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		oscar.STEP15__c = AMS_Utils.PASSED;

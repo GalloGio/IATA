@@ -210,7 +210,6 @@ private class ISSP_HomepageTest {
 		insert conList;
 
 		User newUser2 = ISSP_ObjectFactory.createPortalUser(con2);
-		con2.OwnerId = newUser2.Id;
 		update con2;
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
 		insert app;
@@ -219,15 +218,12 @@ private class ISSP_HomepageTest {
 
 		User newUser3 = ISSP_ObjectFactory.createPortalUser(con3);
 		con3.OwnerId = newUser3.Id;
-		update con3;
 
 		User newUser4 = ISSP_ObjectFactory.createPortalUser(con4);
 		con4.OwnerId = newUser4.Id;
-		update con4;
 
 		User newUser5 = ISSP_ObjectFactory.createPortalBasicAirlineUser(con5);
 		con5.OwnerId = newUser5.Id;
-		update con5;
 
 		update conList;
 

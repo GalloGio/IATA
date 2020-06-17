@@ -23,17 +23,12 @@ global class FinancialSecurityExpiredBatchOthers implements Database.Batchable<s
 		// Get the ID of the AsyncApexJob representing this batch job
 		// from Database.BatchableContext.
 		// Query the AsyncApexJob object to retrieve the current job's information.
-		AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :BC.getJobId()];
+		AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedById FROM AsyncApexJob WHERE Id = :BC.getJobId()];
 		// Send an email to the Apex job's submitter notifying of job completion.
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		List<String> toAddresses = new String[] {a.CreatedBy.Email};
-		List<FSBatch_Alert__c> fsb = [SELECT Email__c from FSBatch_Alert__c];
 
-		for (FSBatch_Alert__c fs : fsb){
-				//toAddresses.add(fs.Email__c);
-				}
-
-		mail.setToAddresses(toAddresses);
+		mail.setTargetObjectId(a.CreatedById);
+		mail.setSaveAsActivity(false);
 		mail.setSubject('FinancialSecurityExpiredBatchOthers ' + a.Status);
 		mail.setPlainTextBody('The batch Apex job processed ' + a.TotalJobItems + ' batches with ' + a.NumberOfErrors + ' failures.');
 

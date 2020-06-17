@@ -5,6 +5,7 @@ public with sharing class CSP_Utils {
 		public String selfRegistrationUrl {get;set;}
 	}
 
+	public class portalException extends Exception{}
 	@AuraEnabled
 	public static LoginConfig getAuthConfig(){
 		Id networkId = Network.getNetworkId();
@@ -395,8 +396,60 @@ public with sharing class CSP_Utils {
 		public String url { get; set; }
 		@AuraEnabled
 		public String recordsString { get; set; }
-
 	}
+
+	public class searchDetailsWrapper {
+		@AuraEnabled
+		public String searchInput {get; set;}
+		@AuraEnabled
+		public String firstLetter {get; set;}
+		@AuraEnabled
+		public String sortField {get; set;}
+		@AuraEnabled
+		public String sortDirection {get; set;}
+		@AuraEnabled
+		public Integer requestedPage {get; set;}
+	}
+
+
+	//trigger mechanism to generate the portal notifications of the new document version
+	//@param cvId: Content Version Id of the new version that was released
+	//Class covered in: PortalDocumentsCtrlTest	
+	@AuraEnabled
+	public static void triggerUserNotification(string cvId){
+		try{
+
+			if(string.isEmpty(cvId)){
+				return;
+			}
+			//To trigger the notification, the notify_users_date__c value needs to be larger than the createdDate,
+			//hence the current datetime being sent
+			update new contentVersion(
+				id=cvId,
+				notify_users_date__c=system.now()
+			);
+		}catch(Exception e){
+			//send email w/ errors
+			List<String> emailAddresses = new List<String>();
+			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){ 
+				emailAddresses.add(supportEmail.Support_Email__c);
+				//add more email addresses if needed
+			}
+
+			if (!emailAddresses.isEmpty()){
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setToAddresses(emailAddresses);    
+				mail.setSubject('ERROR - User has an issue triggering the Portal Notification Generation');
+				mail.setPlainTextBody('The user '+Userinfo.getName()+' id: '+Userinfo.getUserId()+' had the following error while triggering the notification generation for a new available version on the' + system.now() + '\n\nERRORS:\n' +e.getMessage());
+				Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+			}
+			
+			throw new portalException(Label.ISSP_ANG_GenericError);
+
+		}
+
+	}	
+
 
 
 }

@@ -33,7 +33,6 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_FAQReachUsBanner_Text
     };
 
-    @track showButton = false;
     @track supportReachUsURL;
     @track data;
     @track columns;
@@ -43,7 +42,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     ];
     @track casesListUrl;
 
-    @track homePageLocal = true;
+    @track homePageLocal = false;
     @api
     get homePage() {
         return this.homePageLocal;
@@ -99,20 +98,22 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 this.cardBodyContent = "cardBodyContentSmall";
                 this.rowHeight = "rowHeight";
                 this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 130, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
-                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 130, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 120, cellAttributes: { class: { fieldName: 'statusClass' } } }
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url',typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             }
             
         });
         
-        isAdmin().then(result1 => {
-            checkIfIsAirlineUser().then(result2=>{
-                this.showButton = (result1 && result2 && this.homePageLocal);
-            });
-        });
 
+    }
+
+    get showReachUs(){
+        return this.homePageLocal && !this.loading;
+    }
+    get showTopReachUs(){
+        return this.dataRecords & this.homePageLocal && !this.loading;
     }
 	
     redirectToSupport(event) {

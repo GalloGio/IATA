@@ -1,4 +1,4 @@
-<aura:component controller="Invite_User_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+<aura:component controller="Invite_User_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="public">
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
     <aura:attribute name="invitation" type="SObject" default="{ 'sobjectType': 'Invitation__c' }" />

@@ -2,7 +2,7 @@
  - Created by ppop on 8/8/2019.
  -->
 
-<aura:component description="GADM_HomePageContainer" controller="GADM_HomePageContainer_CTRL">
+<aura:component description="GADM_HomePageContainer" controller="GADM_HomePageContainer_CTRL" access="public">
     <aura:attribute name="objectIds" type="Set"/>
     <aura:attribute name="initialized" type="boolean"/>
     <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}"/>

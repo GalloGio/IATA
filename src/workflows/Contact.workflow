@@ -378,6 +378,11 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Contact.HasOptedOutOfEmail</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
         <description>Send a renewal Email if the contact has an IDCard that meets the reminder criteria</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

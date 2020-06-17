@@ -1,4 +1,4 @@
-<aura:component description="Data_Submission_Detail">
+ <aura:component description="Data_Submission_Detail" access="public" >
 
     <aura:attribute name="data" type="Object[]" description="Data submission record to display" />
     <aura:attribute name="userTimeZone" type="String" default=""/>

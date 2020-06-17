@@ -146,7 +146,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
@@ -158,6 +158,7 @@
         <externalId>false</externalId>
         <label>Financial Review First Quarter</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -166,6 +167,7 @@
         <externalId>false</externalId>
         <label>Financial Review Second Quarter</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -174,6 +176,7 @@
         <externalId>false</externalId>
         <label>Financial Review Third Quarter</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -184,6 +187,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IATA code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -194,6 +198,7 @@
         <externalId>false</externalId>
         <label>ANG_Location_Type_Conversion</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -226,6 +231,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>AMS_Process_Detail</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -238,6 +244,7 @@
         <relationshipLabel>Hierarchy Account Selections</relationshipLabel>
         <relationshipName>Hierarchy_Account_Selections</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -249,6 +256,7 @@ IF(NOT(ISBLANK(Account__r.ParentId)),Account__r.ParentId,
 Account__c))</formula>
         <label>HOId</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -262,6 +270,7 @@ Account__c))</formula>
         <relationshipLabel>Hierarchy Account Selections</relationshipLabel>
         <relationshipName>AMS_Process_Detail</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -269,9 +278,11 @@ Account__c))</formula>
     <nameField>
         <displayFormat>PD-{00000}</displayFormat>
         <label>Hierarchy Account Selection</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Hierarchy Account Selections</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Agency_Involved</fullName>
         <active>true</active>

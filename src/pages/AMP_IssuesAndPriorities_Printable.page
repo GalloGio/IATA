@@ -41,7 +41,7 @@
             </tr> -->
             <tr class="headerRow" >
                 <th class="headerRow" ><div>Name</div></th>
-                <th class="headerRow" style="{!if(recordTypeName =='Agency_WW_HQ','', 'display:None;')}"><div>Division</div></th>
+                <th class="headerRow" style="{!if(OR(recordTypeName =='Agency_WW_HQ',recordTypeName =='IATA_Airline'),'', 'display:None;')}"><div>Division</div></th>
                 <th class="headerRow" ><div>Source</div></th>
                 <th class="headerRow" ><div>Description</div></th>
                 <th class="headerRow" ><div>Importance</div></th>
@@ -50,15 +50,13 @@
                 <th class="headerRow" ><div>Regional</div></th>
                 <th class="headerRow" ><div>Local</div></th>
                 <th class="headerRow" ><div>Issue with IATA</div></th>
-                <th class="headerRow" ><div>Visible to all IATA</div></th>
-
             </tr>
         </thead>
 
         <apex:repeat value="{!lsIssuesAndPriorities}" var="i">
             <tr class="dataRow" >
                 <td class="dataCell " >{!i.Name}</td>
-                <td class="dataCell "  style="{!if(recordTypeName =='Agency_WW_HQ','', 'display:None;')}">{!i.Division__c}</td>
+                <td class="dataCell "  style="{!if(OR(recordTypeName =='Agency_WW_HQ',recordTypeName =='IATA_Airline'),'', 'display:None;')}">{!i.Division__c}</td>
                 <td class="dataCell " >{!i.AM_Source_Text__c}</td>
                 <td class="dataCell " >{!i.Details__c}</td>
                 <td class="dataCell " >{!i.AM_Level_of_importance__c}</td>
@@ -67,7 +65,6 @@
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Regional__c}"/></td>
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Local__c}"/></td>
                 <td class="dataCell " ><apex:outputField value="{!i.AM_Issue_with_IATA__c}"/></td>
-                <td class="dataCell " ><apex:outputField value="{!i.AM_Public__c}"/></td>
             </tr>
         </apex:repeat>
 

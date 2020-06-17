@@ -1,4 +1,4 @@
-<aura:component controller="AWW_AccountPlanCtrl">
+<aura:component controller="AWW_AccountPlanCtrl" access="public">
     <aura:attribute name="header" type="String" default="New"/>
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="record" type="Objective__c"/>

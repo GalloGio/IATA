@@ -1,4 +1,4 @@
-<aura:component controller="AMP_AccountNewsFeedExtension">
+<aura:component controller="AMP_AccountNewsFeedExtension" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/>

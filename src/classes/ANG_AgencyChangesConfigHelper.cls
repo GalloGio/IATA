@@ -1,6 +1,6 @@
 public class ANG_AgencyChangesConfigHelper{
 
-	private static String CONVERSION_STANDARD_TO_MULTICOUNTRY = 'Conversion Multicountry';
+	private static String CONVERSION = 'Conversion';
 
 	public class ChangesConfig {
 		public ANG_AgencyChangesConfig__c config;
@@ -42,16 +42,16 @@ public class ANG_AgencyChangesConfigHelper{
 	}
 
 	public static ChangesConfig getConfig(AMS_OSCAR__c oscar, String accreditationModel) {
+		Boolean isSingleBspToCashConversion = (oscar.Process__c == AMS_Utils.NGCHANGES && AMS_Utils.pickListContains(oscar.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT));
 
 		ChangesConfig c = null;
 
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES'){
 			return null;
 		}
-		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
-			c = getConfig(CONVERSION_STANDARD_TO_MULTICOUNTRY, accreditationModel);
-		}
-		else{
+		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || isSingleBspToCashConversion){
+			c = getConfig(CONVERSION, isSingleBspToCashConversion ? AMS_Utils.ACCREDITATIONMODEL_CASH : accreditationModel);
+		} else {
 			c = getConfig(oscar.ANG_Type_Of_Change__c, accreditationModel);
 		}
 
@@ -76,17 +76,6 @@ public class ANG_AgencyChangesConfigHelper{
 			}
 		}
 		return null;
-	}
-
-	public static List<String> getFieldSetsToMigrate(Map<String, String> config) {
-
-		if (config.get('Fields to Migrate') != null) {
-			system.debug('FieldSetsToMigrate: ' + config.get('Fields to Migrate').split(';'));
-			return config.get('Fields to Migrate').split(';');
-		}
-
-		return null;
-
 	}
 
 	public static void setNotApplicableSteps(ANG_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {

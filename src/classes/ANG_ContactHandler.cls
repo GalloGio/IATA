@@ -6,8 +6,6 @@ public class ANG_ContactHandler {
 	public Map<Id, Contact> newMap = (Map<Id,Contact>) Trigger.newMap;
 	public Map<Id, Contact> oldMap = (Map<Id,Contact>) Trigger.oldMap;
 
-	public void ANG_ContactHandler(){}
-
 	public void handleBeforeUpdate() {
 		checkAccountHierarchy();
 	}

@@ -20,13 +20,17 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Origin NOT_IN</value>
+        <value xsi:type="xsd:string">Origin NOT_IN, OwnerID !=</value>
     </values>
     <values>
         <field>Origin__c</field>
         <value xsi:type="xsd:string">Internal Case
 Voicemail
 IATA Internal User</value>
+    </values>
+    <values>
+        <field>OwnerID__c</field>
+        <value xsi:type="xsd:string">00520000001GoTQAA0</value>
     </values>
     <values>
         <field>Reason1__c</field>

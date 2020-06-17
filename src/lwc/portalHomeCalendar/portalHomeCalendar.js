@@ -2,7 +2,6 @@ import { LightningElement, track } from 'lwc';
 import getInitialMonthPage from '@salesforce/apex/PortalCalendarCtrl.getInitialMonthPage';
 import getNextMonth from '@salesforce/apex/PortalCalendarCtrl.getNextMonth';
 import getPreviousMonth from '@salesforce/apex/PortalCalendarCtrl.getPreviousMonth';
-import goToOldPortalCalendar from '@salesforce/apex/PortalCalendarCtrl.goToOldPortalCalendar';
 import isAirlineOrAgencyUser from '@salesforce/apex/PortalCalendarCtrl.isAirlineOrAgencyUser';
 
 //custom labels
@@ -41,6 +40,8 @@ export default class PortalHomeCalendar extends LightningElement {
 
     @track showCalendar = false;
 
+    calendarPage='/ISSP_OperationalCalendar';
+
     connectedCallback() {
 
         isAirlineOrAgencyUser({})
@@ -76,10 +77,7 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     goToOldPortalCalendarJS(){
-        goToOldPortalCalendar({})
-        .then(results => {
-            window.open(results, "_self");
-        });
+        window.open(this.calendarPage, "_self");
     }
 
     getInitialMonth(){
@@ -195,14 +193,30 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     updateEventClassName(data) {
+        
         if (data.lstWeeks) {
             data.lstWeeks.forEach(w => {
                 if (w.lstDays) {
                     w.lstDays.forEach(d => {
+                        let lstEventDots=[];
                         if (d.lstEvents) {
                             d.lstEvents.forEach(e => {
                                 e.className = `eventDot ${e.className}`;
+                                let eventTitle = e.title ? e.title.substr(0,e.title.indexOf('-')) : '';
+                                
+
+                                let foundEvent = false;
+                                lstEventDots.forEach(j =>{
+                                    if(j.className === e.className){
+                                        foundEvent = true;
+                                    }
+                                });
+
+                                if(!foundEvent){
+                                    lstEventDots.push({className : e.className, title: eventTitle});
+                                }
                             });
+                            d.singleLstEvents = lstEventDots;
                         }                        
                     });
                 }
