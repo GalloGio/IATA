@@ -27,7 +27,12 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 	if(Trigger.isAfter && Trigger.isInsert) {  
 		
 		List<Id> atts = new List<Id>();
-		
+		List<String> VALID_RT = new list<String>{
+					'CasesEurope', 'Cases_Global', 'CasesAmericas', 'CasesMENA', 'ExternalCasesIDFSglobal',	
+					'Cases_China_North_Asia', 'ComplaintIDFS', 'Inter_DPCs', 'Invoicing_Collection_Cases',
+					 'Cases_SIS_Help_Desk', 'InternalCasesEuropeSCE', 'CS_Process_IDFS_ISS', 'ID_Card_Application'
+				};
+			
 		for(Attachment t : Trigger.new) {
 			if(t.ParentId.getSObjectType() == Case.SObjectType){
 				atts.add(t.ParentId);
@@ -36,7 +41,8 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 		
 		if(atts.size()>0){
 
-			List<Case> caseList = [select id,Status, ClosedDate from Case where id IN: atts AND Status = 'Closed' AND (RecordType.Name = 'IDFS Airline Participation Process'  OR (ClosedDate=LAST_N_DAYS:14 AND Origin != 'Chat'))];
+			List<Case> caseList = [select id,Status, ClosedDate from Case where id IN: atts AND Status = 'Closed'
+			 AND RecordType.DeveloperName IN : VALID_RT AND ClosedDate=LAST_N_DAYS:14 AND Origin != 'Chat'];
 
 			if(caseList.size() > 0){
 				for(case c: caseList){
