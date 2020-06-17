@@ -309,10 +309,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 										this.handleNext(null);
 									}
 									if(pageParams.lms !== '' && pageParams.lms !== undefined){
-                                        this.registrationForm.lmsRedirectFrom = pageParams.lms;
-                                        this.registrationForm.lmsCourse = pageParams.RelayState;
-                                        this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
-                                    }
+										this.registrationForm.lmsRedirectFrom = pageParams.lms;
+										this.registrationForm.lmsCourse = pageParams.RelayState;
+										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
+									}
                    				}
                             this.isLoading = false;
                             }
