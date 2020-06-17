@@ -235,15 +235,15 @@
                     <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}" collapsible="false">
                         <apex:outputText rendered="{!apcountryisocode='EC'}">
                             <div>
-                            Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
+                                Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
                                 <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Kindly indicate if your airline holds such legal forms and is consequently compliant with the legal Ecuadorian requirements:&nbsp;</apex:outputLabel>
-                            <apex:inputField value="{!newForm.Ecuador_Legal_Forms_requirements__c}" label=""/>
-                            <div style="margin-left:20px;margin-top:5px;line-height:20px">
-                                - Local Air Operator Certficate/Certificado de Transportador A?reo: <b>ON-line Carriers</b><br/>
-                                - Local Comercialization permit/ Permiso de comercializaci?n: <b>OFF-line carriers</b><br/>
-                                - Legal Constitution of the Airline or its GSA (including shareholding details)<br/>
+                                <apex:inputField value="{!newForm.Ecuador_Legal_Forms_requirements__c}" label=""/>
+                                <div style="margin-left:20px;margin-top:5px;line-height:20px">
+                                    - Local Air Operator Certficate/Certificado de Transportador A?reo: <b>ON-line Carriers</b><br/>
+                                    - Local Comercialization permit/ Permiso de comercializaci?n: <b>OFF-line carriers</b><br/>
+                                    - Legal Constitution of the Airline or its GSA (including shareholding details)<br/>
+                                </div>
                             </div>
-                            </div>    
                         </apex:outputText>
                        
                         <apex:pageBlockSectionItem helpText="The EDRPOU must belong to the beneficiary account holder indicated in the bank mandate." rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
@@ -309,84 +309,6 @@
                             <apex:outputLink value="{!urlItem.Download_URL__c}" target="_blank">{!urlItem.Link_label__c}</apex:outputLink>
                         </apex:dataList>
                         
-                    </apex:pageBlockSection>
-                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}" collapsible="false">
-                        <apex:outputText rendered="{!apcountryisocode='EC'}">
-                            <div>
-                            Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
-                                <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Kindly indicate if your airline holds such legal forms and is consequently compliant with the legal Ecuadorian requirements:&nbsp;</apex:outputLabel>
-                            <apex:inputField value="{!newForm.Ecuador_Legal_Forms_requirements__c}" label=""/>
-                            <div style="margin-left:20px;margin-top:5px;line-height:20px">
-                                - Local Air Operator Certficate/Certificado de Transportador A?reo: <b>ON-line Carriers</b><br/>
-                                - Local Comercialization permit/ Permiso de comercializaci?n: <b>OFF-line carriers</b><br/>
-                            - Legal Constitution of the Airline or its GSA (including shareholding details)<br/>
-                            </div>
-                            </div>
-                        </apex:outputText>
-
-                        <apex:pageBlockSectionItem helpText="The EDRPOU must belong to the beneficiary account holder indicated in the bank mandate." rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
-                            <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Beneficiary Registration Code/ Local Registration Number (EDRPOU)</apex:outputLabel>
-                            <apex:inputField value="{!newForm.BSP_UA_LocalReg_Number_EDRPOU__c}" label=""/>
-                        </apex:pageBlockSectionItem>
-
-                        <apex:pageBlockSectionItem rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
-                            <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Bank Code (MFO)</apex:outputLabel>
-                            <apex:inputField value="{!newForm.BSP_UA_BankCode_MFO__c}" label=""/>
-                        </apex:pageBlockSectionItem>
-
-                        <apex:outputText rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
-                            In addition the following Agreements are mandatory to be submitted to the IATA local office in Ukraine:
-                            <br/><br/>
-                            <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
-                            <br/><br/>
-                            (1) IATA-Carrier Agreement (If the Airline has its own Representative office in Ukraine)<br/>
-                            OR<br/><br/>
-                            IATA-Carrier-GSA Agreement (If the Airline has a GSA as its representative in Ukraine)<br/><br/>
-                            (2) IATA-Carrier BG Agreement<br/><br/>
-
-                            The documents must be submitted in [ Word format ] to onatskya@iata.org, cc: kostyuky@iata.org and gogenkoi@iata.org.
-                            <br/><br/>
-                            Please click here to download the form(s):&nbsp;
-
-                        </apex:outputText>
-
-                        <apex:outputText rendered="{!AND(apcountryisocode='KR', strLOB='BSP')}">
-                            For BSP Korea, Airlines who wish to impose ticket capping for travel agents must inform the ETSPs/GDSs directly.<br/><br/>
-                            Alternatively, an Airline may avail of an optional service called Airline Capping Network.<br/>
-                            The form is to be sent to selcs@iata.org.
-                            <br/><br/>
-                            Click here for further details and to download the form.
-                        </apex:outputText>
-
-                        <apex:outputText rendered="{!apcountryisocode='PE'}">
-                            For {!strLOB} Peru, the Disclaimer in Spanish must be signed by the applicant and included in the joining package / documents.
-                            <br/><br/>
-                            Please click here to download the disclaimer form:&nbsp;
-                        </apex:outputText>
-
-                        <apex:outputText rendered="{!apcountryisocode='RU'}">
-                            <div style="margin-bottom:30px;line-height:16px">
-                            <apex:pageBlockSectionItem >
-                                <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Is there is a &ldquo;Double Tax avoiding Treaty&ldquo; between Russia and the Airline's country of Registration?&nbsp;</apex:outputLabel>
-                                <apex:inputField value="{!newForm.BSP_Russia_Double_Tax_avoiding_Treaty__c}" label=""/>
-                            </apex:pageBlockSectionItem>
-                            <div style="margin-left:20px">
-                                (a) If <b>Yes</b>, please enclose your 'Certificate of Residence' which should be issued in accordance with Russian Tax  code regulation.  For more clarification on this document, you may contact IATA MOW office through the customer portal.<br/><br/>
-                                (b) If <b>No</b>, then your airline will need to participate in BSP Russia through a local GSA.
-                            </div>
-                            </div>
-                            <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
-                            <br/><br/>
-
-                            Airlines who intend to use a local bank account for settlements must include the Company Card Draft in the joining package/documents.  The document must be submitted in [ Word format ].
-                            <br/><br/>
-                            Please click here to download the form:&nbsp;
-                        </apex:outputText>
-
-                        <apex:dataList value="{!urlList}" var="urlItem">
-                            <apex:outputLink value="{!urlItem.Download_URL__c}" target="_blank">{!urlItem.Link_label__c}</apex:outputLink>
-                        </apex:dataList>
-
                     </apex:pageBlockSection>
 
                     <!-- Agreements BSP -->
