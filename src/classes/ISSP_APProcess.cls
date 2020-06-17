@@ -822,7 +822,8 @@ global without sharing class ISSP_APProcess {
 						'Contact_Resp_L_Name__c,Contact_Resp_Email__c,ANG_Enable_NewGen__c,Id,Receive_HOT_files__c,Default_Commission_Rate__c,'+
 						'Hot_files_delivery_format__c,Submitted_to_IATA__c,VAT_Tax_number_in_your_home_country__c,Online_carrier_in_the_BSP_country__c,Colombia_City_selection__c,'+
 						'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c, Type_of_Change_Requested__c,'+
-						'Colombia_City_percentage__c,Case__c,Type__c,RecordTypeId,Accept_terms_and_conditions__c,Desired_commencment_date__c,Contact_Resp_Salutation__c,Contact_Resp_Phone__c,Type_of_Settlement__c';
+						'Colombia_City_percentage__c,Case__c,Type__c,RecordTypeId,Accept_terms_and_conditions__c,Desired_commencment_date__c,Contact_Resp_Salutation__c,Contact_Resp_Phone__c,Type_of_Settlement__c,'+
+						'BSP_Russia_Double_Tax_avoiding_Treaty__c';
 		if(isBSP){
 			queryString += ',Type_of_participation_desired__c,ETSP_Contact_Salutation__c,ETSP_Contact_F_Name__c,ETSP_Contact_L_Name__c,ETSP_Contact_Job_Title__c,ETSP_Contact_Address__c,ETSP_Contact_Email__c,'+
 			'ETSP_Contact_Phone__c,	ETSP_Contact_Fax__c,BSPLink_ASD_China_Contact__c,BSPLink_ASD_China_Contact_L_Name__c,'+
