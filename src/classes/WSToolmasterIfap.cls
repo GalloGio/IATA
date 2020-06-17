@@ -219,10 +219,6 @@ public class WSToolmasterIfap {
 						'WSToolmasterIfap.processPWCdocumentsGXAResponse_element'}
 						);
 						response_x = response_map_x.get('response_x');
-						System.debug('this::: ' + this);
-						System.debug('request_x::: ' + request_x);
-						System.debug('endpoint_x::: ' + endpoint_x);
-						System.debug('response_x::: ' + response_x.processPWCdocumentsGXAReturn);
 						return response_x.processPWCdocumentsGXAReturn;
 				}
 				public String mergeAllPDFForCase(String confName,String caseNumber,String mergedFileName) {
