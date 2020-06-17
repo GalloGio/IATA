@@ -99,7 +99,7 @@
                                             </apex:actionRegion>
                                         </div>
                                     </div>
-                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && isGSSAUser== true)) && strAreaType=='Airline Joining'}">
+                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && isGSSAUser== true))}">
                                         <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
                                             <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
                                             <div class="col-sm-10">

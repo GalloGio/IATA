@@ -860,4 +860,10 @@ public class AmazonFileTrgHelper {
 		}
 
 	}
+
+	public static void setCaseFromsObjectId(list<AmazonFile__c> listNewAF) {
+		for(AmazonFile__c af:listNewAF)
+			if(string.isNotBlank(af.sObject_Id__c) && string.isBlank(af.Case__c) && af.sObject_Id__c.startsWith('500'))
+				af.case__c = af.sObject_Id__c;
+	}
 }
