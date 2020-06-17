@@ -177,6 +177,15 @@ public class PortalServicesCtrlTest {
 			user_portal_status__c='Approved Admin'
 		);
 
+		Contact c5 = new Contact (
+			LastName = 'ContactTest5',
+			FirstName = 'Name',
+			accountId = a4.id,
+			Birthdate = Date.today(),
+			email='ContactTest4@portalservices.test',
+			user_portal_status__c='Approved Admin'
+		);
+
 		Contact c21 = new Contact (
 			LastName = 'ContactTest2.1',
 			FirstName = 'Name',
@@ -185,7 +194,7 @@ public class PortalServicesCtrlTest {
 			user_portal_status__c='Approved Admin'
 		);
 
-		insert new List<Contact>{c,c2,c3,c4,c21};
+		insert new List<Contact>{c,c2,c3,c4,c5,c21};
 
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(
 				Portal_Application__c = easyPay1.id,
@@ -232,7 +241,7 @@ public class PortalServicesCtrlTest {
 		Contact__c = c4.Id
 		);
 
-	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7,appRight8};
+	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7};
 
 
 	ISSP_CS__c cs= new ISSP_CS__c(
@@ -364,21 +373,21 @@ public class PortalServicesCtrlTest {
 
 		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest3'];
 
-		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
 
-		System.runAs(portalUser) {
-			Test.StartTest();
+        System.runAs(portalUser) {
+            Test.StartTest();
 
-			List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
-			System.assertEquals(lstResults.size() >= 0, true);
+            List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
+            System.assertEquals(lstResults.size() >= 0, true);
 
-			Test.StopTest();
-		}
-	}
+            Test.StopTest();
+        }
+    }
 
-	@isTest
-	public static void PortalServicesCtrlTest_getServiceInformation() {
-		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
+    @isTest
+    public static void PortalServicesCtrlTest_getServiceInformation() {
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
 
 		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
 
@@ -840,6 +849,64 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 	//WMO-736 - ACAMBAS: End
 
 	@isTest
+	public static void PortalServicesCtrlTest_verifyL3DataNegative() {
+
+		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+		List<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+		Term_and_Condition__c tos = new Term_and_Condition__c(NewGenApp_PortalService__c = portalServicelist.get(0).id, Is_Latest__c = true, Status__c = 'Final', Effective_Start_Date__c = Date.today());
+		insert tos;
+		Term_and_Condition_Acceptance__c tosAccept = new Term_and_Condition_Acceptance__c(Is_Accepted__c = true, Term_Condition__c = tos.Id, Contact__c = c.Id);
+		insert tosAccept;
+
+		System.runAs(portalUser) {
+
+			Test.StartTest();
+			String result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
+
+			String id = ServiceTermsAndConditionsUtils.getPortalServiceId('serviceTest3');
+			system.assert(portalServicelist.get(0).id == id);
+			Test.StopTest();
+		}
+	}
+	@isTest
+	public static void PortalServicesCtrlTest_verifyL3DataPositive() {
+
+		Contact c = [select id,email,firstname,lastname,name, accountId from contact where lastName = 'ContactTest5'];
+
+		Account_Role__c accRole = new Account_Role__c(Account__c = c.accountId);
+		insert accRole;
+
+		Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
+		Account_Contact_Role__c acr = new Account_Contact_Role__c(Account_Role__c = accRole.Id, Contact__c = c.Id, Service_Rendered__c = 'Other', RecordTypeId = accContactRole_RT);
+		insert acr;
+
+		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c(Account_Contact_Role__c = acr.Id, RecordTypeId = RECTYPE_Trainee_YASContDet);
+		insert tcrd;
+
+		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+		List<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+		Term_and_Condition__c tos = new Term_and_Condition__c(NewGenApp_PortalService__c = portalServicelist.get(0).id, Is_Latest__c = true, Status__c = 'Final', Effective_Start_Date__c = Date.today());
+		insert tos;
+		Term_and_Condition_Acceptance__c tosAccept = new Term_and_Condition_Acceptance__c(Is_Accepted__c = true, Term_Condition__c = tos.Id, Contact__c = c.Id);
+		insert tosAccept;
+
+		System.runAs(portalUser) {
+
+			Test.StartTest();
+			String result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
+
+			String id = ServiceTermsAndConditionsUtils.getPortalServiceId('serviceTest3');
+			system.assert(portalServicelist.get(0).id == id);
+			Test.StopTest();
+		}
+	}
+
+	@isTest
 	public static void getPortalServiceDetailsEFTest() {
 		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
 
@@ -850,3 +917,4 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		}
 	}
 }
+

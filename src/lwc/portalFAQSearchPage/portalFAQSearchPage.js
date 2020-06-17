@@ -13,6 +13,7 @@ export default class PortalFAQSearchPage extends LightningElement {
             if(pageParams.id1 !== undefined) this.article.id1 = pageParams.id1;
             if(pageParams.id2 !== undefined) this.article.id2 = pageParams.id2;
             if(pageParams.q !== undefined) this.article.q = pageParams.q;
+            if(pageParams.article !== undefined) this.article.UrlName = pageParams.article;
         }
     }
 }

@@ -128,6 +128,7 @@ export default class PortalLogin extends LightningElement {
                     config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                     config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
+                    config.selfRegistrationUrl += '?startURL='+ this._pageParams.startURL;
 
                     this.isLoginDisabled = !config.isUsernamePasswordEnabled;
                     this.showLoginForm = config.isUsernamePasswordEnabled;

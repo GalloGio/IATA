@@ -59,16 +59,16 @@ import CSP_L1_Last_Name                         from '@salesforce/label/c.CSP_L1
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
-	/* ==============================================================================================================*/
-	/* Attributes
-	/* ==============================================================================================================*/
+    /* ==============================================================================================================*/
+    /* Attributes
+    /* ==============================================================================================================*/
 
-	@track isSelfRegistrationEnabled = false;
-	@track isRegistrationComplete = false;
-	@track displayContactForm = false;
-	@track displayTermsAndUsage = false;
-	@track userCountry = "";
-	@track userCountryCode = "";
+    @track isSelfRegistrationEnabled = false;
+    @track isRegistrationComplete = false;
+    @track displayContactForm = false;
+    @track displayTermsAndUsage = false;
+    @track userCountry = "";
+    @track userCountryCode = "";
     @track selectedCountryFlag = "";
 	@track isSanctioned = false;
 	@track isLoading = true;
@@ -87,7 +87,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		"language" : "",
 		"selectedCustomerType" : "",
 		"termsAndUsage" : false,
-		"termsAndUsageIds" : ""
+		"termsAndUsageIds" : "",
+		"lmsRedirectFrom" : "",
+		"lmsCourse" : ""
 	};
 	@track errorMessage = "";
 	@track displayError = false;
@@ -285,42 +287,49 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
 										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
 										this.gcsPortalServiceId = gcsPortalServiceId;
-							
+
 										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
 											var tcs = JSON.parse(JSON.stringify(result2));
-			
+
 											var tcIds = [];
-							
+
 											for(let i = 0; i < tcs.length; i++){
 												tcIds.push(tcs[i].id);
 											}
 											this.registrationForm.termsAndUsageIds = tcIds.join();
 										});
 									});
-
-									if(pageParams.email !== undefined){
-										this.registrationForm.email = decodeURIComponent(pageParams.email);
-										//this.isEmailFieldReadOnly = true;
-										//this.displayContactForm = true;
-										//this._initializePhoneInput();
-										this.handleNext(null);
-										return;
+									if(this._pageParams.email !== undefined){
+										this.registrationForm.email = decodeURIComponent(this._pageParams.email);
+										this.handleNext();
 									}
-
 								}
+								if(this._pageParams.startURL){
 
+									let sURL = this._pageParams.startURL;
+
+									let prmstr = sURL.substring(sURL.lastIndexOf('?') + 1);
+
+									let paramsMap = prmstr ? decodeURIComponent('{"' + prmstr.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') : '{}';
+									let paramsReturn = JSON.parse(paramsMap);
+
+									if(paramsReturn.lms){
+										this.registrationForm.lmsRedirectFrom = paramsReturn.lms;
+										this.registrationForm.lmsCourse = paramsReturn.RelayState;
+										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
+									}
+                                }
 								this.isLoading = false;
-							}
-						}
-
+                            }
+                        }
 					})
 					.catch(error => {
                         console.error('Error: ', JSON.parse(JSON.stringify(error)));
 						this.isLoading = false;
 					});
 				}
-			});
 
+			});
 		}.bind(this));
 
 	}
@@ -404,8 +413,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email}).then(result => {
-							var userInfo = JSON.parse(JSON.stringify(result));
+						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
+							let userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;
 							if(userInfo.hasExistingContact == true){
@@ -469,7 +478,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			customerType : JSON.stringify(this.selectedMetadataCustomerType),
 			contactId : contactId,
 			accountId : accountId,
-			urlParams : this._pageParams
+			urlParams : this._pageParams,
+			userInfo : JSON.stringify(this.userInfo)
 		}).then(result => {
 			var dataAux = JSON.parse(JSON.stringify(result));
 

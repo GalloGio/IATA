@@ -375,8 +375,8 @@ private class ANG_AccountTriggerHandlerTest {
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
-		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
-
+		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RHC_Amount_Provisional__c);
+		System.assertEquals(200, rhcList[0].ANG_RME_Amount__c);
 	}
 
 	static testMethod void test_updateRHCInformation_OptIN_OptOUT_ALT() {
@@ -449,8 +449,8 @@ private class ANG_AccountTriggerHandlerTest {
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
-		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
-
+		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RHC_Amount_Provisional__c);
+		System.assertEquals(200, rhcList[0].ANG_RME_Amount__c);
 	}
 
 	static testMethod void test_updateRHCInformation_OptIN_OptOUT_2() {
@@ -533,7 +533,8 @@ private class ANG_AccountTriggerHandlerTest {
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
-		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
+		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RHC_Amount_Provisional__c);
+		System.assertEquals(200, rhcList[0].ANG_RME_Amount__c);
 	}
 
 	@isTest static void test_CreateIEPOscars() {

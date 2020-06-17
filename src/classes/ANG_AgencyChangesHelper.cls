@@ -520,7 +520,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 				if (parentAccountLeftAlone != null)
-					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(oscar.Id, parentAccountLeftAlone, true));
+					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(oscar.Id, parentAccountLeftAlone, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.GeLeftAlone));
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
 				Map<Id,Account> hierarchyAccs;
@@ -1997,9 +1997,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Account currentAcc = toReturn.accountsMap.get(accId);
 
-			if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accId) ||
-				(currentAcc.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(currentAcc.Top_Parent__c)))
-				currentAcc.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(currentAcc.Top_Parent__c == null ? accId : currentAcc.Top_Parent__c);
+			if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accId)) currentAcc.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accId);
 			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
 
 			if (oldNewOwnersByOscar != null) {

@@ -181,6 +181,36 @@
             <field>Parent_Account__c.Services_Rendered_Country__c</field>
             <table>AMS_Agencies_relationhip__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Parent_Account__c.Status__c</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Child_Account__c.Status__c</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Parent_Account__c.Location_Class__c</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Child_Account__c.Location_Class__c</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Newgen_Relation__c</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Child_Account__c.RecordType</field>
+            <table>AMS_Agencies_relationhip__c</table>
+        </columns>
         <masterLabel>AMS Agencies relationships</masterLabel>
     </sections>
 </ReportType>

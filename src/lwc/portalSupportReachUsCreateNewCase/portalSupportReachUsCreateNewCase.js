@@ -541,7 +541,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     + this.description;
                 this.caseInitiated.Subject = this.subject;
 
-                if (this.agentProfile) {
+                if (this.agentProfile && this.childComponent) {
                     record.IATAcode__c = this.childComponent.title;
                 }
 

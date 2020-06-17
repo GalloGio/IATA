@@ -5,6 +5,9 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+
 
 //import labels
 import aboutlb from '@salesforce/label/c.CSP_About';
@@ -834,18 +837,44 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         if (openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData) {
-                if (appFullUrlData !== 'undefined') {
-                    myUrl = appFullUrlData;
-                }
-                //is this link a requestable Service?
-                if (requestable === "true") {
-                    //stop the spinner
-                    this.toggleSpinner();
-                    //open new tab with the redirection
-                    window.open(myUrl);
-                } else {
-                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
-                    window.open(myUrl);
+
+                if (!myUrl.startsWith('/')) {
+                    if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
+                        getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
+                            .then(serviceId => {
+                                verifyCompleteL3Data({serviceId: recordId})
+                                .then(result => {
+                                    if(result !== 'not_complete'){
+                                        window.open(result);
+                                    }
+                                    else{
+                                        navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+                                    }
+                                    this.toggleSpinner();
+                                })
+                                .catch(error => {
+                                    this.error = error;
+                                });
+                            })
+                            .catch(error => {
+                                this.error = error;
+                        });
+
+                    }
+                }else{
+                    if (appFullUrlData !== 'undefined') {
+                        myUrl = appFullUrlData;
+                    }
+                    //is this link a requestable Service?
+                    if (requestable === "true") {
+                        //stop the spinner
+                        this.toggleSpinner();
+                        //open new tab with the redirection
+                        window.open(myUrl);
+                    } else {
+                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+                        window.open(myUrl);
+                    }
                 }
             } else {
                 window.open(myUrl,"_self");

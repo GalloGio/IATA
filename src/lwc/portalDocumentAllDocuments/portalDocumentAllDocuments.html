@@ -1,0 +1,68 @@
+<template>
+    <div class="slds-grid slds-wrap slds-gutters_direct-small slds-m-top_medium">
+        <!-- DOCUMENTS CATEGORIES / FILTERS -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-4 slds-m-bottom--x-small" >
+            <c-portal-documents-filters document-object={documentObject} onhighlightfilter={handleHighlightFilter} onfilter={handleFilter}></c-portal-documents-filters>
+        </div>
+        
+        <!-- RESULTS BY DOCUMENT CATEGORY -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4">
+
+             <div class="slds-p-bottom--x-small">                
+                <c-portal-search-box onsearchword={filterInputChange}></c-portal-search-box>
+            </div> 
+        
+            <div if:true={loading} class="spinnerContainer">
+                <lightning-spinner class="background-superLightGray" size="medium"></lightning-spinner>
+            </div>
+            
+            <div if:false={loading}>
+                <div class="slds-col slds-size_1-of-1">
+                    <!-- DOCUMENTS -->
+                    <div class="slds-grid slds-wrap slds-gutters_medium">
+                        <div class="slds-col slds-size_1-of-1">
+                            <template for:each={categories} for:item="keyValue" for:index="keyValueIndex">
+                                <div key={keyValue.apiName}>
+                                    <c-portal-documents-category document-object={keyValue} onfilter={handleFilter} oncategoryfilter={categoryFilter} onshowcategory={showCategory}></c-portal-documents-category>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- NO RESULTS -->
+                    <div if:true={hasNoResults}>    
+                        <div  class="slds-align_absolute-center slds-col slds-grid slds-size_full slds-p-around_x-large slds-wrap customCardWhite">
+                            <span class="circle slds-grid">
+                                <img class="slds-col slds-align_absolute-center" src={searchIconNoResultsUrl}/>
+                            </span>
+                            <div if:false={searchMode} class="slds-col slds-grid slds-wrap slds-size_full" >
+
+                                <span class="slds-col slds-m-top--medium slds-p-around_small slds-size--1-of-1 slds-text-align--center text-darkGray text-medium text-bold">
+                                    {label.CSP_Search_TypeIn_text1}
+                                </span>
+                                <span class="slds-size--1-of-1 slds-text-align--center text-xxsmall">
+                                    {label.CSP_Search_TypeIn_text2}
+                                </span>           
+                                <span class="slds-size--1-of-1 slds-text-align--center text-xxsmall">
+                                    {label.CSP_Search_TypeIn_text3}
+                                </span>           
+                            </div>
+                            
+                            <div if:true={searchMode} class="slds-col slds-grid slds-wrap slds-size_full" >
+                                <span class="slds-col slds-m-top--medium slds-p-around_small slds-size--1-of-1 slds-text-align--center text-darkGray text-medium text-bold">
+                                    {label.CSP_Search_NoResults_text1}
+                                </span>
+                                <span class="slds-size--1-of-1 slds-text-align--center text-xxsmall">
+                                    {label.CSP_Search_NoResults_text2} <b>"{searchText}"</b>.
+                                </span>
+                            </div>
+                        </div>
+                        <!-- REACH US BANNER -->
+                        <div class="slds-p-vertical_medium">
+                            <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

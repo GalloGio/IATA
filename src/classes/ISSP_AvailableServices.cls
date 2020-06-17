@@ -790,7 +790,13 @@ public with sharing class ISSP_AvailableServices{
 				app.ANG_Portal_Service_Role__c = portalServiceRole;
 			}
 		}
-		insert app;
+		//TA-INC554581
+		if(applicationName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
+			app.Application_uniqueness_for_contact__c = contactId.left(15) + applicationId.left(15);
+			upsert app Application_uniqueness_for_contact__c;
+		}
+		else
+			insert app;
 
 		if(applicationName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
 			Portal_Application_Right__c appForNotification = [select Id, Top_Account__c, Contact__r.FirstName, Contact__r.LastName, ANG_Portal_Service_Role__c from Portal_Application_Right__c where id =: app.Id];

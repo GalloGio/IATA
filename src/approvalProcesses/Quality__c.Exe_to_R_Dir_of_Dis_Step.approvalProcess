@@ -37,14 +37,6 @@
         <submitter>rodriguezja@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>trentinog@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>vitel@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
         <field>Owner</field>
