@@ -788,7 +788,8 @@ public with sharing class PortalServicesCtrl {
 			this.status = status;
 			this.isAdmin=isAdmin;
 			this.isServiceAdmin = false;
-			String contactId = String.valueOf(user.ContactId).left(15); //to be sure that it as the same length as the formula field
+			this.userContactId = user.ContactId;
+			String contactId = String.valueOf(userContactId).left(15); //to be sure that it as the same length as the formula field
 			if(recordService.Name.equals('E&F APPS')){
 				List<E_and_F_Contact_Role_Detail__c> serviceList = [SELECT Id FROM E_and_F_Contact_Role_Detail__c WHERE Contact_Id__c =: contactId AND ContactFunctionalRole__c = 'E&F' AND RecordTypeId =: PortalServicesCtrl.SERVICE_ADMIN_EF_ID];
 				this.isServiceAdmin = !serviceList.isEmpty();
