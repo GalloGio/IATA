@@ -71,11 +71,12 @@
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Settlement instructions & Bank Accounts information" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions') && !managePASS}" collapsible="false">
-                        <apex:pageBlockSectionItem >
+                        <apex:pageBlockSectionItem>
                             <apex:outputLabel value="Please indicate which type of settlement you want to use for this market" styleclass="ap-required"/>
-                            <apex:inputField value="{!newForm.Type_of_Settlement__c}" >
+                            <apex:selectList value="{!newForm.Type_of_Settlement__c}" size="1">
+                                <apex:selectOptions value="{!listTypesOfSettlement}"/>
                                 <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
-                            </apex:inputField>
+                            </apex:selectList>
                         </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
 

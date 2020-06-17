@@ -481,6 +481,8 @@ global without sharing class ISSP_APProcess {
 
 			retrieveCountryRequirements(apcountryisocode, strLoB );
 			this.ICCSProductCountry = retrieveICCSProductCountry(strLoB, isocountry);
+			this.newForm.Type_of_Settlement__c = 'Local Bank';
+
 			apCountry = countryRequirement.Name;  //Used for country display on Country Reqs pages
 
 			if(apcountryisocode == 'CN') {
@@ -1955,6 +1957,17 @@ global without sharing class ISSP_APProcess {
 		}
 
 		return cass_airlines;
+	}
+
+	// list option for the input box Type_of_Settlement__c
+	public List<SelectOption> getListTypesOfSettlement() {
+		List<SelectOption> listOption = new List<SelectOption>();
+		for( Schema.PicklistEntry pickListVal : AP_Process_Form__c.Type_of_Settlement__c.getDescribe().getPicklistValues()){
+			if (this.ICCSProductCountry!=null || pickListVal.getValue()=='Local Bank') {
+				listOption.add(new SelectOption(pickListVal.getValue(), pickListVal.getLabel()));
+			}
+		}
+		return listOption;
 	}
 
 	// Initialize setCon and return a list of records
