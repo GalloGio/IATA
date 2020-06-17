@@ -9,9 +9,9 @@ public without sharing class EF_Helper {
 	}
 
 	public static List<E_and_F_Account_Role_Detail__c> getAccountContactRoles(Id contactId) {
-		String query = 'SELECT Id, Account_Role__c, Account_Role__r.Account_Name__c, Account_Role__r.Account__c FROM E_and_F_Account_Role_Detail__c WHERE Account_Role__r.Functional_Role__c = \'E&F\'';
+		String query = 'SELECT Id, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.Name FROM E_and_F_Account_Role_Detail__c WHERE Account_Role__r.Functional_Role__c = \'E&F\'';
 		if(String.isNotBlank(contactId)) query += ' AND ID IN (SELECT E_F_Account_Role_Detail__c FROM E_and_F_Contact_Role_Detail__c WHERE RecordType.DeveloperName = \'Service_Admin\' AND Contact_Role__r.Contact__c =: contactId)';
-
+		query += ' ORDER BY Account_Role__r.Account__r.Name ASC';
 		return Database.query(query);
 	}
 

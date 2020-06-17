@@ -523,6 +523,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						mail.setTargetObjectId(supportEmail.Support_User_Id__c);
 						mail.setSubject('AMS_AgencyRegulationAutoRenewal.sendEmailAlert failure');
 						mail.setPlainTextBody(errorMsg);
+						mail.setSaveAsActivity(false);
 						mails.add(mail);
 					}
 					if (!mails.isEmpty()){

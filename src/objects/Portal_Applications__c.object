@@ -471,6 +471,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <default>false</default>
                     <label>Cargo Agent</label>
                 </value>
+                <value>
+                    <fullName>Postal Service</fullName>
+                    <default>false</default>
+                    <label>Postal Service</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -1414,6 +1419,10 @@ IF(OR(
             <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
             <values>
                 <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>

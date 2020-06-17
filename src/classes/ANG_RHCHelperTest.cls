@@ -29,36 +29,6 @@ private class ANG_RHCHelperTest {
 
 		Date operationDate = Date.today();
 
-		//Calendars for BSP1
-		List<Operational_Calendar__c> opCalanderList = new List<Operational_Calendar__c>();
-		Operational_Calendar__c opCalendar1 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(5), Frequency_code__c = 'W',
-			ISS_operation__c = settlement.id, Last_day__c = operationDate.addDays(10));
-		opCalanderList.add(opCalendar1);
-		Operational_Calendar__c opCalendar2 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(11), Frequency_code__c = 'W',
-			ISS_operation__c = settlement.id, Last_day__c = operationDate.addDays(18));
-		opCalanderList.add(opCalendar2);
-		Operational_Calendar__c opCalendar3 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(1), Frequency_code__c = 'D',
-			ISS_operation__c = settlement.id, Last_day__c = operationDate.addDays(2));
-		opCalanderList.add(opCalendar3);
-		Operational_Calendar__c opCalendar4 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(3), Frequency_code__c = 'D',
-			ISS_operation__c = settlement.id, Last_day__c = operationDate.addDays(4));
-		opCalanderList.add(opCalendar4);
-
-		//Calendars for BSP2
-		Operational_Calendar__c opCalendar5 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(5), Frequency_code__c = 'W',
-			ISS_operation__c = settlement2.id, Last_day__c = operationDate.addDays(10));
-		opCalanderList.add(opCalendar5);
-		Operational_Calendar__c opCalendar6 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(11), Frequency_code__c = 'W',
-			ISS_operation__c = settlement2.id, Last_day__c = operationDate.addDays(18));
-		opCalanderList.add(opCalendar6);
-		Operational_Calendar__c opCalendar7 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(1), Frequency_code__c = 'D',
-			ISS_operation__c = settlement2.id, Last_day__c = operationDate.addDays(2));
-		opCalanderList.add(opCalendar7);
-		Operational_Calendar__c opCalendar8 = new Operational_Calendar__c(First_Day__c = operationDate.addDays(3), Frequency_code__c = 'D',
-			ISS_operation__c = settlement2.id, Last_day__c = operationDate.addDays(4));
-		opCalanderList.add(opCalendar8);
-		insert opCalanderList;
-
 		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
 		ctry.add(new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', AMS_Settlement_System__c = settlement.id, ANG_Enable_NewGen__c = true));
 		ctry.add(new IATA_ISO_Country__c(Name = 'WW', ISO_Code__c = 'WW', AMS_Settlement_System__c = settlement2.id, ANG_Enable_NewGen__c = true));
@@ -145,27 +115,9 @@ private class ANG_RHCHelperTest {
 		List<ANG_RHC_Information__c> rhcinformationList =
 				[SELECT id, ANG_CashCondition__c, ANG_AccountId__c,ANG_RHC_Amount_Equals_FS__c, ANG_Financial_Security__c,
 					ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c,ANG_RHC_Amount_Forecasted__c,
-					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Forecasted_RHC_Effective_date__c, ANG_Minimum_Financial_Security__c
+					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c
 				FROM ANG_RHC_Information__c];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcinformationList);
-
-		Test.stopTest();
-
-		List<ANG_RHC_Information__c> rhcUpdated = [SELECT Id, ANG_Forecasted_RHC_Effective_date__c, ANG_RHC_Amount_Forecasted__c, ANG_AccountId__r.IATACode__c
-												  FROM ANG_RHC_Information__c];
-
-		System.debug('__[ANG_RHCHelperTest - testRHCinformation_calculateRHCAmount] List<ANG_RHC_Information__c>:' +
-			[SELECT Id, ANG_Forecasted_RHC_Effective_date__c, ANG_RHC_Amount_Forecasted__c FROM ANG_RHC_Information__c]);
-
-		for(ANG_RHC_Information__c rhc : rhcUpdated){
-			if(rhc.ANG_AccountId__r.IATACode__c == '1234562')
-				System.assertEquals(Date.today().addDays(5), rhc.ANG_Forecasted_RHC_Effective_date__c);
-			else if(rhc.ANG_AccountId__r.IATACode__c == '1234569')
-				System.assertEquals(Date.today().addDays(1), rhc.ANG_Forecasted_RHC_Effective_date__c);
-
-		}
-
-
 	}
 }

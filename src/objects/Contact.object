@@ -3215,13 +3215,14 @@ Received from AIMS and needed in synchronization file but never displayed and up
     </fields>
     <fields>
         <fullName>Additional_Email__c</fullName>
+        <caseSensitive>true</caseSensitive>
         <description>Input additional emails for contact</description>
         <externalId>false</externalId>
         <label>Additional Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Email</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>AgencyShare_Confirmation__c</fullName>
