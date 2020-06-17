@@ -8981,7 +8981,7 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_ContactNotFound</name>
     </customLabels>
     <customLabels>
-        <label>Continuer...</label>
+        <label>Continuer</label>
         <name>IDCard_Continue_Button</name>
     </customLabels>
     <customLabels>
@@ -9981,7 +9981,7 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>IDCard_CheckBox</name>
     </customLabels>
     <customLabels>
-        <label>Continuer</label>
+        <label>Continuer...</label>
         <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>
