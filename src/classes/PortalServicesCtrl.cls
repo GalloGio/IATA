@@ -1077,9 +1077,7 @@ public with sharing class PortalServicesCtrl {
 		List<Portal_Application_Right__c> psaToUpdate = new List<Portal_Application_Right__c>();
 
 		// Retrieve Portal Application Rights for Service ID and Contact IDs
-		List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate,Contact__c
-													 FROM Portal_Application_Right__c
-													 WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+		List<Portal_Application_Right__c> psaList = EF_Helper.getPortalApplicationRights(serviceId, contactIds);
 
 		if(psaList == null || psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError + ' EMPTY');
@@ -1095,7 +1093,7 @@ public with sharing class PortalServicesCtrl {
 		// Records to update
 		if(psaToUpdate != null && !psaToUpdate.isEmpty()) {
 			try {
-				update psaToUpdate;
+				EF_Helper.updatePortalApplicationRights(psaToUpdate);
 			} catch(Exception e) {
 				System.debug(loggingLevel.ERROR, '____ [cls PortalServicesCtrl - massDenyAccess] e - ' + e);
 				throw new portalServiceException(Label.ISSP_ANG_GenericError);

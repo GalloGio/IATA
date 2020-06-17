@@ -137,5 +137,15 @@ public without sharing class EF_Helper {
 		insert i;
 	}
 
+	public static List<Portal_Application_Right__c> getPortalApplicationRights(Id serviceId, List<Id> contactIds) {
+		return [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate,Contact__c
+				  FROM Portal_Application_Right__c
+				 WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+	}
+
+	public static void updatePortalApplicationRights(List<Portal_Application_Right__c> psaToUpdate) {
+		update psaToUpdate;
+	}
+
 	private class PortalServiceException extends Exception {}
 }
