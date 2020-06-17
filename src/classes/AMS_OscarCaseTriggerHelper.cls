@@ -447,6 +447,8 @@ public class AMS_OscarCaseTriggerHelper {
 					newCaseSubject = 'New Head Entity - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
 				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY)
 					newCaseSubject = 'Accreditation Type - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.Name;
+				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGCONVERSIONMCTOST)
+					newCaseSubject = 'Accreditation Type - GoStandard - ' + oscars.get(c.Oscar__c).Account__r.Name;
 				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.MCAE)
 					newCaseSubject = 'New Associate Entity - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
 				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWAE)

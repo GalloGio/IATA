@@ -35,11 +35,16 @@ private class ANG_CreateAccountDetails_Test {
 
 	 @isTest static void testCreateAccountDetailsSuccess() {
 
+		// NEWGEN-5208 - The service will now also send the INT_011 request
+		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+        customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
+        insert customsettings;
+
 		Test.startTest();
 
 		RestRequest req = new RestRequest();
-		req.requestBody = Blob.valueOf('{"offerId":"test123"}');
-		RestResponse res = new RestResponse();
+		req.requestBody = Blob.valueOf('{"offerId":"test123", "offerExchangeRateDate" : "2019-01-01"}');
+		RestResponse res = new RestResponse(); 
 
 		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
 		req.addParameter('accountType', 'Agency');
@@ -180,7 +185,20 @@ private class ANG_CreateAccountDetails_Test {
 
 		ANG_CreateAccountDetails.doPost();
 
-
+		// Empty date
+		req.requestBody = Blob.valueOf('{"offerId":"dsadsad", "offerExchangeRateDate": ""}');
+		res = new RestResponse();
+		
+		req.requestURI = '/account-create-details/12345678/gdi-create-offer';
+		req.addParameter('accountType', 'Agency');
+		req.addParameter('caller', 'GDI');
+		req.httpMethod = 'POST';
+		
+		RestContext.request = req;
+		RestContext.response = res;
+		
+		ANG_CreateAccountDetails.doPost();
+		
 		//Invalid body
 		req = new RestRequest();
 

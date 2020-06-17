@@ -25,7 +25,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		Contact_Roles__c contactRole = createContactRoles('1');
 		Contact_Roles__c contactRole2 = createContactRoles('2');
-
+		Test.startTest();
 		Account acc1 = createAccount('acc1 active', System.today()-5, System.today()+5, '1001');
 		Account_Role__c ar1 = createAccountRole(acc1.Id);
 		ar1.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
@@ -93,6 +93,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		//IN PROGRESS
 		createProducConfiguration(prodActive, System.today()+10,System.today()+20);
+		Test.stopTest();
 
 		//--------------WITHOUT DATES-----------------------
 		//ACTIVE

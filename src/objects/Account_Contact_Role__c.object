@@ -154,7 +154,7 @@
     </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -186,7 +186,7 @@
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -346,7 +346,7 @@
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -498,6 +498,11 @@
                     <label>IFTP</label>
                 </value>
                 <value>
+                    <fullName>Medaire</fullName>
+                    <default>false</default>
+                    <label>Medaire</label>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
@@ -617,6 +622,10 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -676,6 +685,10 @@
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -743,6 +756,10 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -808,6 +825,14 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -828,6 +853,14 @@
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -863,6 +896,10 @@
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

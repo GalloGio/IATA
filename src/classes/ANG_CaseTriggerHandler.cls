@@ -1,5 +1,12 @@
 public class ANG_CaseTriggerHandler {
 
+	private static final Set<String> MULTICOUNTRY_CREATE_PROCESS_DETAIL_REVIEW_TYPES = new Set<String>{
+		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL,
+		AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC
+	};
+
+	private static final String CASE_REASON_FINANCIAL_SECURITY_TOKEN = 'Financial Security';
+
 	public List<Case> triggerNew = (List<Case>) Trigger.new;
 	public List<Case> triggerOld = (List<Case>) Trigger.old;
 
@@ -69,8 +76,8 @@ public class ANG_CaseTriggerHandler {
 					&& ifapStatus.contains(c.status))
 				)
 			){
-				//Skip updating the financial result on the account  considering the following scenario:
-				if(c.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL && c.Exception_Approved_on__c != NULL){
+				//Skip updating the financial result on the multicountry account considering the following scenario
+				if(AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(c.Financial_Review_Type__c) && c.Exception_Approved_on__c != null){
 					//A Financial Review is done on a multicountry key hierarchy and an exception is raised to evaluate
 					//if the consequences should be applied or not. If the exception is approved,
 					//it means that the consequences of the new Financial Assessment result
@@ -108,9 +115,12 @@ public class ANG_CaseTriggerHandler {
 				}
 				if(a.Financial_Review_Result__c != c.Financial_Review_Result__c){
 					a.Financial_Review_Result__c = c.Financial_Review_Result__c;
-					a.Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, a.Assessment_Performed_Date__c);
 					updateAcct = true;
 					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
+				}
+				if(a.Assessment_Performed_Date__c != c.Assessment_Performed_Date__c){
+					a.Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, a.Assessment_Performed_Date__c);
+					updateAcct = true;
 				}
 				if(updateAcct) toUpdate.add(a);
 			}
@@ -154,15 +164,16 @@ public class ANG_CaseTriggerHandler {
 		List<Case> casesToRunFsCurrencyValidationsLst = new List<Case>();
 
 		for(Case cse : caseLst){
-			if(cse.RecordTypeId == AMS_Utils.RECTYPE_IFAP && cse.Financial_Review_Type__c == AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL){
-				if(Trigger.isInsert && Trigger.isAfter){
+			if(cse.RecordTypeId == AMS_Utils.RECTYPE_IFAP && AMS_Utils.MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
+				if(Trigger.isInsert && Trigger.isAfter && MULTICOUNTRY_CREATE_PROCESS_DETAIL_REVIEW_TYPES.contains(cse.Financial_Review_Type__c)){
+					//Only create the Process Detail record for "Multicountry Annual" and "Multicountry Adhoc" financial review types
 					pdLst.add(new AMS_Process_Detail__c(Case__c = cse.Id, RecordTypeId = financialReviewPdRecordTypeId));
 				}
 				if(shouldRunFsCurrencyValidations(cse, caseOldMap)){
 					casesToRunFsCurrencyValidationsLst.add(cse);
 				}
-				}
-			else if(cse.RecordTypeId == AMS_Utils.RECTYPE_SAAM && String.isNotBlank(cse.Reason1__c) && cse.Reason1__c.contains('Financial Security') &&
+			}
+			else if(cse.RecordTypeId == AMS_Utils.RECTYPE_SAAM && String.isNotBlank(cse.Reason1__c) && cse.Reason1__c.contains(CASE_REASON_FINANCIAL_SECURITY_TOKEN) &&
 							cse.Account_Location_Type__c == AMS_Utils.GE && shouldRunFsCurrencyValidations(cse, caseOldMap)){
 				casesToRunFsCurrencyValidationsLst.add(cse);
 			}

@@ -9,6 +9,7 @@ global class ANG_AmendFS implements Process.Plugin {
 		datetime  ExpiryDate      = (Datetime)  request.inputParameters.get('ExpiryDate');
 		boolean UnlimitedValidity = (boolean) request.inputParameters.get('UnlimitedValidity');
 		string  FSValidationCase  = (string)  request.inputParameters.get('FSValidationCase');
+		Date validityStartDate = (Date) request.inputParameters.get('ValidityStartDate');
 
 		string sResult = 'KO';
 		string sMessage = '';
@@ -17,9 +18,10 @@ global class ANG_AmendFS implements Process.Plugin {
 
 		try{
 			//Get FS to Clone
-			Financial_Security__c fs = [select
-				id,name, Financial_Institution__c, Region__c, Account__c, Reception_Case__c, Expiry_Date__c, Security_Type__c
-				from Financial_Security__c where id = :FSToCloneId];
+			Financial_Security__c fs = [SELECT id, name, Financial_Institution__c, Region__c, Account__c, Reception_Case__c,
+											Expiry_Date__c, Security_Type__c
+										FROM Financial_Security__c
+										WHERE id = :FSToCloneId];
 
 			//Create new FS by cloning the old one.
 			//Set the new amount equal to the value provided in input
@@ -40,7 +42,15 @@ global class ANG_AmendFS implements Process.Plugin {
 				}
 				fsCloned.Financial_Security_Validation_Case__c = listCase[0].Id;
 			}
+
+			if(validityStartDate != null){
+				fsCloned.Validity_Start_Date__c = validityStartDate;
+			}
+
 			insert fsCloned;
+
+			//Reset FS converted Amount Flag
+			FinancialSecurityUtil.convertedAmountUpdateFlag = false;
 
 			CreatedFSId = fsCloned.Id;
 
@@ -84,7 +94,8 @@ global class ANG_AmendFS implements Process.Plugin {
 			new Process.PluginDescribeResult.InputParameter('ExpiryDate', Process.PluginDescribeResult.ParameterType.DATETIME, true),
 			new Process.PluginDescribeResult.InputParameter('UnlimitedValidity', Process.PluginDescribeResult.ParameterType.BOOLEAN, true),
 			new Process.PluginDescribeResult.InputParameter('FSToCloneId', Process.PluginDescribeResult.ParameterType.STRING, true),
-			new Process.PluginDescribeResult.InputParameter('FSValidationCase', Process.PluginDescribeResult.ParameterType.STRING, true)
+			new Process.PluginDescribeResult.InputParameter('FSValidationCase', Process.PluginDescribeResult.ParameterType.STRING, true),
+			new Process.PluginDescribeResult.InputParameter('ValidityStartDate', Process.PluginDescribeResult.ParameterType.DATE, false)
 		};
 
 		result.outputParameters = new List<Process.PluginDescribeResult.OutputParameter> {

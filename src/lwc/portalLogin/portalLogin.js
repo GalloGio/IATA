@@ -156,6 +156,7 @@ export default class PortalLogin extends LightningElement {
                     config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                     config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
+                    config.selfRegistrationUrl += '?startURL='+ this.startURL;
 
                     //todo remove this part - for testing only.
                     //config.isUsernamePasswordEnabled = false;
@@ -302,7 +303,7 @@ export default class PortalLogin extends LightningElement {
                 this.isLoading = false;
                 return;
             }else{
-                login({username: this.email, password: this.password, landingPage: this.startURL, relayState: this.relayState }).then(result => {
+                login({username: this.email, password: this.password, landingPage: encodeURIComponent(this.startURL), relayState: this.relayState }).then(result => {
                     var response = JSON.parse(JSON.stringify(result));
                     if(response.isSuccess == true){
                         navigateToPage(response.sessionUrl, {});

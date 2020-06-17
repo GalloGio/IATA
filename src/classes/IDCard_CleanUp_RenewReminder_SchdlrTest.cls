@@ -12,7 +12,6 @@ private class IDCard_CleanUp_RenewReminder_SchdlrTest {
 
 
 	static testMethod void renewalConfirmaton() {
-		Test.startTest();
 		/*
 		//get list of Contacts from IDCards who has ID Cards that meet expirey date -60 -30 0 +30
 		Date last60D = date.today().addDays(-60);
@@ -45,16 +44,22 @@ private class IDCard_CleanUp_RenewReminder_SchdlrTest {
 		IDCardTestData testData = new IDCardTestData();
 		insert testData.IDCards_IDCardApplications[3];
 		Contact contactsID = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
-		List<Contact> contactsScope = [Select id, SendIDCardRenewalNotice__c from Contact where Id = :contactsID.id];
+		Account acc = testData.IDCard_Accounts[0];
+		List<Contact> contactsScope = [Select id, VER_Number_2__c, SendIDCardRenewalNotice__c from Contact where Id = :contactsID.id];
 		ID_Card__c idcard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], contactsScope[0]);
 		idcard.valid_To_Date__c = date.today();
 		idcard.Card_Status__c = 'Valid ID Card';
 		upsert idcard;
-		IDCard_RenewalReminder_Batch bc = new IDCard_RenewalReminder_Batch();
+		Set<String> vernumbers = new Set<String>();
+		for (Contact c : contactsScope){
+			vernumbers.add(c.VER_Number_2__c);
+        }
+        Test.startTest();
+        IDCard_RenewalReminder_Batch bc = new IDCard_RenewalReminder_Batch();
 
-		bc.ContactScope = contactsScope;
-		Database.executeBatch(bc, 15);
-		Test.stopTest();
+        bc.vernumbers = vernumbers;
+        Database.executeBatch(bc, 15);
+        Test.stopTest();
 	}
 
 	static testMethod void cleanUp() {
