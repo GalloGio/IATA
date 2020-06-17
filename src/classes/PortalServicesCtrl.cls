@@ -1108,9 +1108,7 @@ public with sharing class PortalServicesCtrl {
 	@AuraEnabled(cacheable=false)
 	public static Boolean denyAccess(String contactId,string serviceId, String reason, Boolean isFromContactTable) {
 
-		List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
-													 FROM Portal_Application_Right__c
-													 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
+		List<Portal_Application_Right__c> psaList = EF_Helper.getPortalApplicationRights(serviceId, new List<String>{contactId});
 
 		if(psaList == null || psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
@@ -1122,7 +1120,7 @@ public with sharing class PortalServicesCtrl {
 			psa.Access_Status_Reason__c = reason;
 
 			try {
-				update psa;
+				EF_Helper.updatePortalApplicationRights(new List<Portal_Application_Right__c>{psa});
 				return true;
 			} catch(Exception e) {
 				throw new portalServiceException(Label.ISSP_ANG_GenericError);
