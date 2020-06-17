@@ -27,6 +27,7 @@ public with sharing class PortalProfileCtrl {
 	PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
 	PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
 	PRIVATE STATIC FINAL STRING LABEL_IDCARD = System.label.CSP_Id_Card;
+	PRIVATE STATIC FINAL STRING LABEL_BASICS_TRAINING = System.label.CSP_Training_Section;
 
 	PRIVATE STATIC FINAL STRING LABEL_EN_IDCARD = 'ID Card';
 	PRIVATE STATIC FINAL STRING LABEL_EN_BASICS = 'Basics';
@@ -36,6 +37,8 @@ public with sharing class PortalProfileCtrl {
 	PRIVATE STATIC FINAL STRING LABEL_EN_ACCESSIBILITY = 'Portal Accessibility';
 	PRIVATE STATIC FINAL STRING LABEL_EN_PROFESSIONAL = 'Professional';
 	PRIVATE STATIC FINAL STRING LABEL_EN_PRIVACYMANAGEMENTTITLE = 'Subscriptions & Privacy';
+	PRIVATE STATIC FINAL STRING LABEL_EN_BASICS_TRAINING = 'Training';
+	
 	PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
 	PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
 	PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTLINK = System.label.CSP_Profile_PrivacyManagement_Link;
@@ -330,8 +333,8 @@ public static Contact contactInfo = new Contact();
 		Integer requestedPageAux = integer.valueof(requestedPage);
 
 		String baseQuery = 'SELECT Id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,'+
-						   'IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax ' +
-						   'FROM Account ';
+							'IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax ' +
+							'FROM Account ';
 		/*String baseQueryCount = 'SELECT COUNT() ' +
 								'FROM Account ';*/
 		String conditionsQuery = 'WHERE (Id = \'' + myContact.AccountId +'\' OR ParentId = \'' + myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) ' +
@@ -491,6 +494,21 @@ public static Contact contactInfo = new Contact();
 		lstfw3.add(new FieldWrapper('Authorization',false,true));
 		lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true,LABEL_EN_ACCESSIBILITY));
 
+		//TRAINING DETAILS CARD
+		List<Training_Contact_Role_Details__c> trainingList = [SELECT Id
+					FROM Training_Contact_Role_Details__c
+					WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
+					AND Account_Contact_Role__r.Contact_Role_Name__c = 'Trainee'];
+
+		//we are only expecting to have a unique account contact role with contact role name equal to trainee
+		if(!trainingList.isEmpty()){
+			List<FieldWrapper> lstfw3_1 = new List<FieldWrapper>();
+			fw = new FieldWrapper('TRAINING',true,true,true);
+			fw.isTrainingInfo = true;
+			lstfw3_1.add(fw);
+			lstCardWrapper.add(new CardWrapper(LABEL_BASICS_TRAINING, lstfw3_1, true, LABEL_EN_BASICS_TRAINING)); //ADDED NEEDS TO BE REVIEWED BY FERNANDO MOUZINHO
+		}
+
 		//PROFESSIONAL CARD
 		List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
 		fw = new FieldWrapper('Membership_Function__c',false,true,true);
@@ -567,7 +585,6 @@ public static Contact contactInfo = new Contact();
 		};
 
 	}
-
 
 	public static List<CardWrapper> AccountFields() { return getFieldsByRecordType();}
 
@@ -756,6 +773,9 @@ public static Contact contactInfo = new Contact();
 
 		@AuraEnabled
 		public Boolean isIdCardInfo;
+
+		@AuraEnabled
+		public Boolean isTrainingInfo;
 
 		@AuraEnabled
 		public Boolean isContactServices;
