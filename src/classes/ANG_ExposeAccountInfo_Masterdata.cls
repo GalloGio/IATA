@@ -350,7 +350,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				if(this.RHCInfo == null){
 					Decimal totalFsConverted = String.isBlank(sBSPCurrency)
 						? acc.Guaranteed_amount__c
-						: ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode);
+						: ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c, sBSPCurrency);
 
 					this.RHCInfo = new RHCInfoClass(
 						null,
