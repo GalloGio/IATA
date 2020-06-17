@@ -521,6 +521,7 @@ global without sharing class ISSP_APProcess {
 					}
 					if(String.isBlank(newForm.GSSA_Code__c)){
 						newForm.GSSA_Code__c = hqAccount.IATACode__c;
+						newForm.GSSA_Code__c = con.Account.IATACode__c;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Address__c)){
 						newForm.GSSA_HQ_Address__c = con.Account.BillingStreet + ', ' + con.Account.BillingCity + ', ' + con.Account.BillingState + ', ' + con.Account.BillingPostalCode + ', ' +  con.Account.BillingCountry;
