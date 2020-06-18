@@ -58,7 +58,6 @@ public with sharing class IDCARD_VFEmailTemplateKeyAccController {
 		}
 
 		catch (Exception ex) {
-			System.debug(loggingLevel.ERROR, '____ [cls IDCARD_VFEmailTemplateKeyAccController - constructor] ERROR - ' + ex.getMessage());
 			signature = ex.getMessage();
 		}
 
@@ -82,7 +81,6 @@ public with sharing class IDCARD_VFEmailTemplateKeyAccController {
 				if(nextReplacePosInit > -1){
 					Integer nextReplacePosEnd = finalText.indexOf('}')+1;
 					String fieldToReplace = finalText.substring(nextReplacePosInit, nextReplacePosEnd);
-					System.debug(fieldToReplace);
 
 					finalText = replaceField(finalText, fieldToReplace, idCardApp, contactAux);
 				}else{
