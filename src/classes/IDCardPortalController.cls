@@ -88,18 +88,14 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 			// INC183592
 			if (System.currentPageReference().getParameters().containsKey('Terminated')){
 				system.debug(('--------> ' + System.currentPageReference().getParameters().containsKey('Terminated')));
-				
 				accountStatusTerminated = true;
 			} else {
 				accountStatusTerminated = false;
 			}
-				system.debug('accountStatusTerminated: ' + accountStatusTerminated);
-		   
+				system.debug('accountStatusTerminated: ' + accountStatusTerminated);		   
 		}
-		system.debug('**** PORTAL CONTROLLER 6***** ' + verNumber);
-		// check to see if the language was stored in a cookie
-		system.debug('**** PORTAL CONTROLLER 7***** ' + verNumber);
 
+		// check to see if the language was stored in a cookie
 		showPopup = false;
 		selectedAction = '';
 		Account[] accounts = [Select Short_Name__c, ID_Card_KeyAccount_features__c,  Name, Legal_name__c, 
@@ -154,23 +150,17 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 			if (action == IDCardUtil.APPLICATIONTYPE_RENEWAL && isRenewable == false)
 				return null;
 
-
 			// pass ID Card Application Id
-			ID_Card_Application__c idCardApp = new ID_Card_Application__c();
-			
+			ID_Card_Application__c idCardApp = new ID_Card_Application__c();			
 			String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
-			String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
-			
+			String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');			
 			String feature = theAccount.ID_Card_KeyAccount_features__c;
-			system.debug('theAccount.ID_Card_KeyAccount_features__c: ' + theAccount.ID_Card_KeyAccount_features__c);
 			if (feature == null)feature = '';
 			if (theAccount != null && theAccount.IDCard_Key_Account__c && !feature.contains(IDCardUtil.Key_Account_Feature_Allow_Personnal_Purchase)) {
 				idCardApp.RecordTypeId = singleKAIDCAppId;
 				idCardApp.Application_Status__c = 'Temp' ;
 			} else
 				idCardApp.RecordTypeId = defaultIDCApp;
-			//idCardApp.RecordTypeId =defaultIDCApp;
-
 
 			idCardApp.Type_of_application__c = action;
 			idCardApp.IATA_Code__c = IATACodeLocation;
@@ -183,7 +173,6 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 			idCardApp.UIR__c = selected.UIR__c;
 			idCardApp.Renewal_From_Replace__c = reissueRenewableClicked;
 			insert idCardApp;
-
 			
 			system.debug('idCardApp.Id ' + idCardApp.Id);
 			system.debug('selected.Account.IATACode__c ' + selected.Account.IATACode__c);
