@@ -93,7 +93,7 @@ public with sharing class IDCARD_VFEmailTemplateKeyAccController {
 		}
 		catch(Exception e){
 			//Something went wrong, just return unmodified text
-			System.debug(loggingLevel.Debug, '[cls IDCARD_VFEmailTemplateController - processText] errorMessage - ' + e.getMessage());
+			System.debug(loggingLevel.Debug, '[cls IDCARD_VFEmailTemplateKeyAccController - processText] errorMessage - ' + e.getMessage());
 			return text;
 		}		
 
