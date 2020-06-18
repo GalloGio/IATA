@@ -1,6 +1,15 @@
 @isTest
 public class ISSP_ANG_RHC_Test {
 
+	@testSetup
+	static void setup() {
+		insert new ISSP_CS__c(
+			Name = ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD_PATH_CS_NAME, 
+			value__c = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1',
+			defaultValue__c = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1'
+		);
+	}
+
 	public static testMethod void test1() {
 				Portal_Applications__c s1 = new Portal_Applications__c (
 				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
