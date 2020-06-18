@@ -537,13 +537,13 @@ public with sharing class IDCARD_VFEmailTemplateController {
 			if(field == '{!ID_Card__c.Package_of_Travel_Professionals_Course_2__c}') returnText = caseAux.Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_2__c != null ? caseAux.Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_2__c : '';
 			if(field == '{!ID_Card__c.ID_Card_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.ID_Card_Fee__c != null && caseAux.Related_ID_Card_Application__r.ID_Card_Fee__c != 0 )
-				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee__c.setScale(2));
+					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
 			if(field == '{!ID_Card__c.Physical_Card_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.Physical_Card_Fee__c != null && caseAux.Related_ID_Card_Application__r.Physical_Card_Fee__c != 0 )
-				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Physical_Card_Fee__c.setScale(2));
+					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Physical_Card_Fee__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
@@ -561,13 +561,13 @@ public with sharing class IDCARD_VFEmailTemplateController {
 			}
 			if(field == '{!ID_Card__c.Applicable_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c != null && caseAux.Related_ID_Card_Application__r.Applicable_Fee__c != 0 )
-				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c.setScale(2));
+					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
 			if(field == '{!ID_Card__c.ID_Card_Fee_Discount__c}'){
 				if(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != null && caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != 0 )
-				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.setScale(2));
+					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
@@ -625,13 +625,13 @@ public with sharing class IDCARD_VFEmailTemplateController {
 			}
 			if(field == '{!ID_Card__c.Applicable_Fee__c}'){
 				if(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c != null && caseAux.Related_ID_Card_Application__r.Applicable_Fee__c != 0 )
-				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c.setScale(2));
+					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.Applicable_Fee__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
 			if(field == '{!ID_Card__c.ID_Card_Fee_Discount__c}'){
 				if(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != null && caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c != 0 )
-				returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.setScale(2));
+					returnText = String.valueOf(caseAux.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c.setScale(2));
 				else
 					returnText = String.valueOf(Decimal.valueOf('0').setScale(2));
 			}
