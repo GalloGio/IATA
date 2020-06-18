@@ -308,20 +308,20 @@ private class ANG_EarlyDetectionSystemTest {
 			 LIMIT 1
 			];
 
-		String expectedSubject = 'SMAP - EDS - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
+		String expectedSubject = ANG_RHCAlertTriggerHandler.SMAP_EDS_SUBJECT_PREFIX + ' - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
 
-		System.assert(cse.Status == 'Open', 'The SMAP status must be Open');
-		System.assert(cse.Reason == 'EDS', 'The SMAP Reason must be \'EDS\'');
-		System.assert(cse.Reason1__c == 'EDS', 'The SMAP Reason1 must be \'EDS\'');
-		System.assert(cse.Subject == expectedSubject, 'The SMAP Subject must be: \'' + expectedSubject + '\'');
-		System.assert(cse.CaseArea__c == 'Agency Risk Management', 'The SMAP Case Area must be \'Agency Risk Management\'');
-		System.assert(cse.Origin == 'Risk Monitoring Engine', 'The SMAP Origin must be \'Risk Monitoring Engine\'');
-		System.assert(cse.BSPCountry__c == acct.IATA_ISO_Country__r.Name, 'The SMAP BSP Country must be \'' + acct.IATA_ISO_Country__r.Name + '\'');
-		System.assert(cse.BSP_CASS__c == 'BSP', 'The SMAP BSP Cass must be \'BSP\'');
-		System.assert(cse.Region__c == acct.Region_formula__c, 'The SMAP Region must be \'' + acct.Region_Formula__c + '\'');
-		System.assert(cse.Start_Date_of_Sales_Period__c == oc.First_Day__c, 'The SMAP Start Date of Sales Period must be \'' + oc.First_Day__c + '\'');
-		System.assert(cse.End_Date_of_Sales_Period__c == oc.Last_Day__c, 'The SMAP End Date of Sales Period must be \'' + oc.Last_Day__c + '\'');
-		System.assert(cse.Next_Remittance_Date__c == oc.Remittance_Day__c, 'The SMAP Next Remittance Date must be \'' + oc.Remittance_Day__c + '\'');
+		System.assertEquals(AMS_Utils.OPEN, cse.Status, 'The SMAP status must be Open');
+		System.assertEquals(AMS_Utils.CASE_REASON_EDS, cse.Reason, 'The SMAP Reason must be \'EDS\'');
+		System.assertEquals(AMS_Utils.CASE_REASON_EDS, cse.Reason1__c, 'The SMAP Reason1 must be \'EDS\'');
+		System.assertEquals(expectedSubject, cse.Subject, 'The SMAP Subject must be: \'' + expectedSubject + '\'');
+		System.assertEquals(AMS_Utils.CASE_AREA_AGENCY_RISK_MANAGEMENT, cse.CaseArea__c, 'The SMAP Case Area must be \'Agency Risk Management\'');
+		System.assertEquals(AMS_Utils.CASE_ORIGIN_RISK_MONITORING_ENGINE, cse.Origin, 'The SMAP Origin must be \'Risk Monitoring Engine\'');
+		System.assertEquals(acct.IATA_ISO_Country__r.Name, cse.BSPCountry__c, 'The SMAP BSP Country must be \'' + acct.IATA_ISO_Country__r.Name + '\'');
+		System.assertEquals(ANG_Risk_Helper.CASE_BSP, cse.BSP_CASS__c, 'The SMAP BSP Cass must be \'BSP\'');
+		System.assertEquals(acct.Region_formula__c, cse.Region__c, 'The SMAP Region must be \'' + acct.Region_Formula__c + '\'');
+		System.assertEquals(oc.First_Day__c, cse.Start_Date_of_Sales_Period__c, 'The SMAP Start Date of Sales Period must be \'' + oc.First_Day__c + '\'');
+		System.assertEquals(oc.Last_Day__c, cse.End_Date_of_Sales_Period__c, 'The SMAP End Date of Sales Period must be \'' + oc.Last_Day__c + '\'');
+		System.assertEquals(oc.Remittance_Day__c, cse.Next_Remittance_Date__c, 'The SMAP Next Remittance Date must be \'' + oc.Remittance_Day__c + '\'');
 
 		List<Contact> contactLst = acct.Contacts;
 
@@ -339,7 +339,7 @@ private class ANG_EarlyDetectionSystemTest {
 
 		}
 
-		System.assert(cse.ContactId == expectedContact.Id, 'The SMAP Contact must be \'' + expectedContact.Name + '\'(' + expectedContact.Id + ')');
+		System.assertEquals(expectedContact.Id, cse.ContactId, 'The SMAP Contact must be \'' + expectedContact.Name + '\'(' + expectedContact.Id + ')');
 
 	}
 

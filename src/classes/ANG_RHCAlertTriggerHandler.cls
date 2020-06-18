@@ -1365,7 +1365,6 @@ public class ANG_RHCAlertTriggerHandler{
 		smapCase.BSPCountry__c = acct.IATA_ISO_Country__r.Name;
 		smapCase.Visible_on_ISS_Portal__c = false;
 
-		system.debug('SMAPCASE BSP COUNTRY: ' + acct.IATA_ISO_Country__r.Name);
 		assignCaseSalesPeriod(smapCase, acct.Id, operationCalMap);
 		assignCaseContact(smapCase, acct.Id, contactsPerAccountMap);
 		smapCase.setOptions(dmlOpts);
