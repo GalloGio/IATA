@@ -315,7 +315,6 @@ td.MultipleAgentsLabels{
                                     <apex:commandLink onclick="getSelectedContact('{!NewApp}');" id="btn1" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="Msgs" rendered="true">
                                         <span>{!$Label.IDCard_Match_IsNotTheAgent}</span>
                                     </apex:commandLink>
-                                    <!--<apex:commandButton onclick="getSelectedContact('{!NewApp}');" value="{!$Label.IDCard_Match_IsNotTheAgent}" id="btn1"  rerender="Msgs" rendered="true" />-->
                                 </td>
                             </tr>
                             <tr>
@@ -323,7 +322,6 @@ td.MultipleAgentsLabels{
                                     <apex:commandLink onclick="getSelectedContact('RRR');" id="btn11" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="Msgs" rendered="true">
                                         <span>{!$Label.IDCard_Match_IsTheAgent}</span>
                                     </apex:commandLink>
-                                    <!--<apex:commandButton onclick="getSelectedContact('RRR');" value="{!$Label.IDCard_Match_IsTheAgent}" id="btn11" rerender="Msgs" rendered="true" />-->
                                 </td>
                             </tr>
                         </table>
