@@ -111,7 +111,7 @@
 										</apex:pageblockSectionItem>
 									</apex:pageblockSection>
 								</apex:pageBlock>
-								<apex:commandButton value="Continue..." action="{!next}" styleClass="closeButton" rerender="popup">
+								<apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="closeButton" rerender="popup">
 								</apex:commandButton>
 							</apex:outputPanel>
 						</apex:outputPanel>
