@@ -110,14 +110,15 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 	static void test_Renewal(){
 		Contact c = [SELECT Id FROM Contact LIMIT 1];
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
-
-		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Template_Type__c = 'Renewal Notice', Template_Language__c = 'English', Signature_Details__c = '{!ID_Card__c.Fee}');
-
+		
+		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Template_Type__c = 'Renewal Notice', Body_Section_1__c = 'Template Body Renewal', Template_Language__c = 'English', Signature_Details__c = '{!ID_Card__c.Fee}');
+		
 		Test.startTest();
 		ctrl.isRenewal = true;
 		ctrl.myId = c.Id;
 
 		Test.stopTest();
+		System.assertEquals(ctrl.emailBody1, 'Template Body Renewal');
 
 	}
 
@@ -126,7 +127,7 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		Case c = [SELECT Id FROM Case WHERE RecordTypeId = :massApplication LIMIT 1];
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
 
-		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template Approval', Template_Language__c = 'English', Signature_Details__c = '{!ID_Card_Application__c.IATA_Code__c}');
+		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template Approval', Template_Language__c = 'English', Body_Section_1__c = 'Template Body ApprovalConfirm', Signature_Details__c = '{!ID_Card_Application__c.IATA_Code__c}');
 
 		Test.startTest();
 		ctrl.isRenewal = false;
@@ -134,6 +135,8 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		ctrl.myId = c.Id;
 
 		Test.stopTest();
+        
+		System.assertEquals(ctrl.emailBody1, 'Template Body ApprovalConfirm');
 
 	}
 
@@ -146,7 +149,7 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
 
-		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English', Template_Type__c = 'Confirmation Email', Template_Language__c = 'English', Text_4__c = '[!2]a[2]', Signature_Details__c = '[!2]{!ID_Card_Application__c.IATA_Code__c}[2]');
+		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English', Template_Type__c = 'Confirmation Email', Template_Language__c = 'English', Body_Section_1__c = 'Template Body v2CC', Text_4__c = '[!2]a[2]', Signature_Details__c = '[!2]{!ID_Card_Application__c.IATA_Code__c}[2]');
 
 		Test.startTest();
 		ctrl.isRenewal = false;
@@ -156,6 +159,8 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		ctrl.myId = c.Id;
 
 		Test.stopTest();
+        
+		System.assertEquals(ctrl.emailBody1, 'Template Body v2CC');
 
 	}
 
@@ -164,7 +169,7 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		Case c = [SELECT Id FROM Case WHERE RecordTypeId = :singleApplication LIMIT 1];
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
 
-		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English Cheque', Template_Type__c = 'Confirmation Email Cheque', Template_Language__c = 'English', Text_4__c = '[!2]a[2]', Signature_Details__c = '{!ID_Card_Application__c.IATA_Code__c}');
+		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English Cheque', Template_Type__c = 'Confirmation Email Cheque', Template_Language__c = 'English', Body_Section_1__c = 'Template Body v2Cheque', Text_4__c = '[!2]a[2]', Signature_Details__c = '{!ID_Card_Application__c.IATA_Code__c}');
 
 		Test.startTest();
 		ctrl.isRenewal = false;
@@ -174,6 +179,8 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		ctrl.myId = c.Id;
 
 		Test.stopTest();
+
+		System.assertEquals(ctrl.emailBody1, 'Template Body v2Cheque');
 
 	}
 
@@ -186,7 +193,7 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
 
-		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English - Mass', Template_Type__c = 'Mass Confirmation Email', Template_Language__c = 'English', Text_3__c = '[!2]a[2]', Signature_Details__c = '[!2]{!ID_Card_Application__c.IATA_Code__c}[2]');
+		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English - Mass', Template_Type__c = 'Mass Confirmation Email', Template_Language__c = 'English', Body_Section_1__c = 'Template Body v3CC', Text_3__c = '[!2]a[2]', Signature_Details__c = '[!2]{!ID_Card_Application__c.IATA_Code__c}[2]');
 
 		Test.startTest();
 		ctrl.isRenewal = false;
@@ -194,6 +201,8 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		ctrl.myId = c.Id;
 
 		Test.stopTest();
+
+		System.assertEquals(ctrl.emailBody1, 'Template Body v3CC');
 
 	}
 
@@ -202,7 +211,7 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		Case c = [SELECT Id FROM Case WHERE RecordTypeId = :massApplication LIMIT 1];
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
 
-		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English Cheque - Mass', Template_Type__c = 'Mass Confirmation Email Cheque', Template_Language__c = 'English', Text_3__c = '[!2]a[2]', Signature_Details__c = '{!ID_Card_Application__c.IATA_Code__c}');
+		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Name = 'ID Card Email Template English Cheque - Mass', Template_Type__c = 'Mass Confirmation Email Cheque', Template_Language__c = 'English', Body_Section_1__c = 'Template Body v3Cheque', Text_3__c = '[!2]a[2]', Signature_Details__c = '{!ID_Card_Application__c.IATA_Code__c}');
 
 		Test.startTest();
 		ctrl.isRenewal = false;
@@ -210,6 +219,8 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 		ctrl.myId = c.Id;
 
 		Test.stopTest();
+
+		System.assertEquals(ctrl.emailBody1, 'Template Body v3Cheque');
 
 	}
 
