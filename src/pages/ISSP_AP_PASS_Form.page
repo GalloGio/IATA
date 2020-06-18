@@ -150,18 +150,14 @@
                         <apex:pageBlockSection columns="2" >
                             <apex:outputText label="Operation specified" value="{!newCase.Reason1__c}"/>
                             <apex:outputText label="AOC Name" value="{!strParentAOCName}"/>
-                            <apex:outputText rendered="{!!isGSSAUser}" label="Trading Name of the Airline" value="{!strParentTradeName}"/>
                             <apex:outputText label="Airline Designator Code (2 character code)" value="{!strParentDesignator}"/>
                             <apex:outputText label="Airline Prefix Code (3 digit code)" value="{!strParentIATACode}"/>
-                            <apex:outputText rendered="{!!isGSSAUser}" label="IATA Member Airline?" value="{!strParentMembershipStatus}"/>
                             <apex:outputText rendered="{!!isGSSAUser}" label="Registered Airline Address (Head Office)" value="{0}<br/>{1}<br/>{2}" escape="false" style="width:50%">
                                 <apex:param value="{!strParentBillingStreet}"/>
                                 <apex:param value="{!strParentBillingCity},&nbsp;{!strParentBillingCode}"/>
                                 <apex:param value="{!strParentBillingState},&nbsp;{!strParentBillingCountry}"/>
                             </apex:outputText>
                             <apex:outputText >&nbsp;</apex:outputText>
-
-                            <apex:inputField label="VAT/Tax Registration number of the Airline's Home Country / Head Office" value="{!newForm.VAT_Tax_number_in_your_home_country__c}" rendered="{!NOT(apcountryisocode='BR') && !isGSSAUser}"/>
                         </apex:pageBlockSection>
                         <apex:pageBlockSection columns="2" rendered="{!!isGSSAUser}">
                             <div class="aplabel">
