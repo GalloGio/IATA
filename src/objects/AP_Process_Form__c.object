@@ -3204,6 +3204,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_4__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Hot_files_delivery_format__c</fullName>
         <description>Delivery format</description>
         <externalId>false</externalId>
@@ -17455,7 +17466,8 @@ OR(
   OR(
     HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
     HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
-    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
         <errorDisplayField>HOT_File_Recipient_Remove_Email_1__c</errorDisplayField>
@@ -17470,7 +17482,8 @@ OR(
   OR(
     HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
     HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
-    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
         <errorDisplayField>HOT_File_Recipient_Remove_Email_2__c</errorDisplayField>
@@ -17485,10 +17498,27 @@ OR(
   OR(
     HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
     HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
-    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
         <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email4</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_4__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_4__c</errorDisplayField>
         <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
     </validationRules>
     <validationRules>
