@@ -23,6 +23,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Other_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Other Conditions</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Reason__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
@@ -62,6 +70,7 @@
         <columns>KPI_Reference_Field__c</columns>
         <columns>Reason__c</columns>
         <columns>Record_Type__c</columns>
+        <columns>Other_Conditions__c</columns>
         <filterScope>Everything</filterScope>
         <label>All w details</label>
         <language>en_US</language>
