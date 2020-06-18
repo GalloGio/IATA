@@ -150,18 +150,14 @@
                         <apex:pageBlockSection columns="2" >
                             <apex:outputText label="Operation specified" value="{!newCase.Reason1__c}"/>
                             <apex:outputText label="AOC Name" value="{!strParentAOCName}"/>
-                            <apex:outputText rendered="{!!isGSSAUser}" label="Trading Name of the Airline" value="{!strParentTradeName}"/>
                             <apex:outputText label="Airline Designator Code (2 character code)" value="{!strParentDesignator}"/>
                             <apex:outputText label="Airline Prefix Code (3 digit code)" value="{!strParentIATACode}"/>
-                            <apex:outputText rendered="{!!isGSSAUser}" label="IATA Member Airline?" value="{!strParentMembershipStatus}"/>
                             <apex:outputText rendered="{!!isGSSAUser}" label="Registered Airline Address (Head Office)" value="{0}<br/>{1}<br/>{2}" escape="false" style="width:50%">
                                 <apex:param value="{!strParentBillingStreet}"/>
                                 <apex:param value="{!strParentBillingCity},&nbsp;{!strParentBillingCode}"/>
                                 <apex:param value="{!strParentBillingState},&nbsp;{!strParentBillingCountry}"/>
                             </apex:outputText>
                             <apex:outputText >&nbsp;</apex:outputText>
-
-                            <apex:inputField label="VAT/Tax Registration number of the Airline's Home Country / Head Office" value="{!newForm.VAT_Tax_number_in_your_home_country__c}" rendered="{!NOT(apcountryisocode='BR') && !isGSSAUser}"/>
                         </apex:pageBlockSection>
                         <apex:pageBlockSection columns="2" rendered="{!!isGSSAUser}">
                             <div class="aplabel">
@@ -233,7 +229,7 @@
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="HQ Office State" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:outputLabel value="HQ Office State"/>  
                                     <apex:inputField value="{!newForm.GSSA_HQ_State__c}" />
                                 </apex:pageBlockSectionItem>
 
@@ -248,7 +244,7 @@
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="VAT Id" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:outputLabel value="VAT Id"/>  
                                     <apex:inputField value="{!newForm.GSSA_VAT_Id__c}" />
                                 </apex:pageBlockSectionItem>
 
@@ -281,7 +277,7 @@
                                     <apex:inputField value="{!newForm.GSSA_Contact_Phone__c}" label=""/>
                                 </apex:pageBlockSectionItem>
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Fax Number" style="color:#a31717; font-weight: bold !important;"/>
+                                    <apex:outputLabel value="Fax Number"/>
                                     <apex:inputField value="{!newForm.GSSA_Contact_FAX__c}" label=""/>
                                 </apex:pageBlockSectionItem>
                                 <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
@@ -316,12 +312,6 @@
                                 </apex:pageBlockSectionItem>
                                 <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" />
                                 <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <div class="aplabel">
-                                    Email address for validation notifications (up to 2 allowed)
-                                </div>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:inputField label="Email 1" value="{!newForm.CASS_Corrections_Email_1__c}"/>
-                                <apex:inputField label="Email 2" value="{!newForm.CASS_Corrections_Email_2__c}"/>
                             </apex:pageBlockSection>
                         </apex:pageBlockSection>
 
@@ -356,110 +346,29 @@
                                 <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" label=""/>
                             </apex:pageBlockSectionItem>
                         </apex:pageBlockSection>
-                        <span id="nav_six"></span>
-                        <apex:pageBlockSection title="5. Report Options" columns="1">
-                            <apex:facet name="header">
-                                <apex:outputpanel >
-                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'6','5')}.  Report Options"/>
-                                </apex:outputpanel>
-                            </apex:facet>
+                        <span id="nav_six"></span>   
 
-                            <apex:pageBlockSection columns="2" id="hotFilesSection">
-                                <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="HOT files"/>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Does your Company wish to receive HOT files?" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:outputPanel >
-                                        <apex:selectList size="1" value="{!newForm.Receive_HOT_files__c}" onChange="showHideHotFilesPreferenceMethod();">
-                                            <apex:selectoption itemLabel="YES" itemValue="YES"/>  
-                                            <apex:selectoption itemLabel="NO" itemValue="NO"/>
-                                        </apex:selectList>
-                                    </apex:outputPanel>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem rendered="{!showHotFilesPreference}">
-                                    <apex:outputLabel value="* HOT files receipt preference?" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:selectList size="1" value="{!newForm.Hot_files_delivery_format__c}" onChange="showHideHotFilesPreferenceMethod();">
-                                        <apex:selectoption itemLabel="--None--" itemValue=""/>
-                                        <apex:selectoption itemLabel="Download Only" itemValue="Download only"/>  
-                                        <apex:selectoption itemLabel="E-mail and Download" itemValue="E-mail and Download"/>
-                                    </apex:selectList>
-                                </apex:pageBlockSectionItem>
-
-                                <div class="aplabel" style="display:{!IF(showHotFilesEmail == true,'block','none')}">
-                                    &nbsp;Please list at least one email address for distribution of the HOT file
-                                </div>
-
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:pageBlockSectionItem rendered="{!showHotFilesEmail}">
-                                    <apex:outputLabel value="* Email 1" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.HOT_File_Recipient_Email_1__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:inputField label="Email 2" value="{!newForm.HOT_File_Recipient_Email_2__c}" rendered="{!showHotFilesEmail}"/>
-                                <apex:inputField label="Email 3" value="{!newForm.HOT_File_Recipient_Email_3__c}" rendered="{!showHotFilesEmail}"/>
-                                <apex:inputField label="Email 4" value="{!newForm.HOT_File_Recipient_Email_4__c}" rendered="{!showHotFilesEmail}"/>
-                            </apex:pageBlockSection>
-
-                            <apex:pageBlockSection columns="2" id="pdfReportsSection">
-                                <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="PDF files"/>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Does your Company wish to receive PDF Reports?" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:outputPanel >
-                                        <apex:selectList size="1" value="{!newForm.Receive_PDF_Reports__c}" onChange="showHidePdfReportsPreferenceMethod();">
-                                            <apex:selectoption itemLabel="YES" itemValue="YES"/>  
-                                            <apex:selectoption itemLabel="NO" itemValue="NO"/>
-                                        </apex:selectList>
-                                    </apex:outputPanel>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem rendered="{!showPdfReportsPreference}">
-                                    <apex:outputLabel value="* PDF Report receipt preference" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.PDF_Report_Delivery_Format__c}" label="" onChange="showHidePdfReportsPreferenceMethod();"/>
-                                </apex:pageBlockSectionItem>
-                                <div class="aplabel" style="display:{!IF(showPdfReportsEmail == true,'block','none')}">
-                                    Please list at least one email address for distribution of invoice as PDF file/Corrections
-                                </div>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:pageBlockSectionItem rendered="{!showPdfReportsEmail}">
-                                    <apex:outputLabel value="* Email 1" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.PDF_File_Recipient_Email_1__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:inputField label="Email 2" value="{!newForm.PDF_File_Recipient_Email_2__c}" rendered="{!showPdfReportsEmail}"/>
-                                <apex:inputField label="Email 3" value="{!newForm.PDF_File_Recipient_Email_3__c}" rendered="{!showPdfReportsEmail}"/>
-                                <apex:inputField label="Email 4" value="{!newForm.PDF_File_Recipient_Email_2__c}" rendered="{!showPdfReportsEmail}"/>
-                            </apex:pageBlockSection>
-
-                            <apex:pageBlockSection columns="2">
-                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="Additional Questions"/>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Does your Company wish to receive XLS reports?" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.Receive_XLS_Reports__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem rendered="{!isPASSGSSA}">
-                                    <apex:outputLabel value="* Accept Online Corrections" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.Accept_Online_Corrections__c}" />
-                                </apex:pageBlockSectionItem>
-                            </apex:pageBlockSection>
-                        </apex:pageBlockSection>
                         <span id="nav_seven"></span>
                         <apex:pageBlockSection title="6. Usernames and System functionality required" columns="2" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
-                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'7','6')}.  Usernames and System functionality required"/>
+                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'6','6')}.  Usernames and System functionality required"/>
                                 </apex:outputpanel>
                             </apex:facet>
                         </apex:pageBlockSection>
-                        <apex:outputText >
-                            <div class="aplabel">The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</div>
-                        </apex:outputText>
+
+                        <apex:outputText value="{!$Label.ISSP_AP_PASS_CompanyActivities}" style="font-weight:bold"/>
 
                         <table style="margin-top:30px; border-collapse: collapse">
                             <tr class="aplabel">
                                 <td style="font-size: 120%;" colspan="2">New Administrators</td>
                             </tr>
-                            <tr class="aplabel">
-                                <td colspan="2">Please provide the Name and E-mail address of each Airline/GSSA staff that will act as administrator for PASS.</td>
+                            <tr>
+                                <td colspan="2">
+                                    <apex:outputText value="{!$Label.ISSP_AP_PASS_CompanyAdmin}" style="font-weight:bold"/> 
+                                </td>
                             </tr>
+                            <apex:outputText value="{!$Label.ISSP_AP_PASS_CompanyActivities}" style="font-weight:bold"/>
                             <tr>
                                 <td style="padding-bottom:15px">
                                     <apex:pageBlockSection columns="1">
@@ -511,9 +420,11 @@
                             <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_PASS_Help_Admin}" 
                                         html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:inputField label="{!$Label.ISSP_PASS_New_Admins}" value="{!newForm.CASSLink_Extra_New_Users__c}" style="width:50%" html-placeholder="{!$Label.ISSP_PASS_TextAreas}"/>
+                            
                             <apex:outputText >
-                                <div class="aplabel">{!$Label.ISSP_PASS_Administrators_Rec}</div>
+                                <div class="aplabel">{!$Label.ISSP_AP_PASS_CompanyRecomendation}</div>
                             </apex:outputText>
+                            
                         </apex:pageBlockSection>
 
                         <apex:pageBlockSection columns="1">
