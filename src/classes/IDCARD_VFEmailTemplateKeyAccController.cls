@@ -58,6 +58,7 @@ public with sharing class IDCARD_VFEmailTemplateKeyAccController {
 		}
 
 		catch (Exception ex) {
+			System.debug(loggingLevel.ERROR, '____ [cls IDCARD_VFEmailTemplateKeyAccController - constructor] ERROR - ' + ex.getMessage());
 			signature = ex.getMessage();
 		}
 
