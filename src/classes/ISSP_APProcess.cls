@@ -520,7 +520,6 @@ global without sharing class ISSP_APProcess {
 						newForm.GSSA_VAT_Id__c = '';
 					}
 					if(String.isBlank(newForm.GSSA_Code__c)){
-						newForm.GSSA_Code__c = hqAccount.IATACode__c;
 						newForm.GSSA_Code__c = con.Account.IATACode__c;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Address__c)){
