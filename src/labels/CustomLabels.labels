@@ -14020,6 +14020,30 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <value>Yes</value>
     </labels>
     <labels>
+        <fullName>IDCard_errMsg_Account_Rule</fullName>
+        <categories>IDCARD</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_errMsg_Account_Rule</shortDescription>
+        <value>Your account has specific rule for ID card purchase.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_errMsg_MoreDetails</fullName>
+        <categories>IDCARD</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_errMsg_MoreDetails</shortDescription>
+        <value>Please contact your key contact for more details</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_errMsg_NoContact</fullName>
+        <categories>IDCARD</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_errMsg_NoContact</shortDescription>
+        <value>However no key contact assigned...</value>
+    </labels>
+    <labels>
         <fullName>IDCard_error_20_hours_required</fullName>
         <language>en_US</language>
         <protected>false</protected>

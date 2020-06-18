@@ -147,10 +147,10 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 				String features = theAccount.ID_Card_KeyAccount_features__c;
 				if (!isKeyContactForIATAode(IATACodeLocation) && features != null && features.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
 					List <Managed_Agency__c> ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false LIMIT 1];
-					errMsg = 'Your account has specific rule for ID card purchase.';
+					errMsg = Label.IDCard_errMsg_Account_Rule;
 
-					if (ma.isEmpty()) errMsg += ' However no key contact assigned...';
-					else errMsg += ' Please contact your key contact for more details (' + ma[0].Contact__r.Name + ': ' + ma[0].Contact__r.IDcard_Email__c + ').';
+					if (ma.isEmpty()) errMsg += ' ' + Label.IDCard_errMsg_NoContact;
+					else errMsg += ' ' + Label.IDCard_errMsg_MoreDetails + ' (' + ma[0].Contact__r.Name + ': ' + ma[0].Contact__r.IDcard_Email__c + ').';
 
 					ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, errMsg ));
 					hasError = true;
