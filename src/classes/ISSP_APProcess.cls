@@ -453,12 +453,7 @@ global without sharing class ISSP_APProcess {
 				vHQAccountId = newCase.Account_Concerned__r.Top_Parent__c;
 			}
 
-
-			if(isPassAirline && isGSSAUser){
-				retrieveHQAccountDetails(con.AccountId);
-			}else{
 				retrieveHQAccountDetails(vHQAccountId);
-			}
 
 			if (isGSSAUser){  //For GSSA display Airline details
 				strGSSAName = newCase.Account.Name;
@@ -735,12 +730,6 @@ global without sharing class ISSP_APProcess {
 									break;
 								}
 							}
-							if(isPASSGSSA){
-								if(newForm.Accept_Online_Corrections__c==null){
-									allfieldsfilled = false;
-								}
-							}
-							
 					}else {
 						allfieldsfilled = true;
 					}
@@ -829,7 +818,7 @@ global without sharing class ISSP_APProcess {
 			'Fin_Adm_Contact_Job_Title__c,Fin_Adm_Contact_Phone__c,Fin_Adm_Contact_Email__c,Fin_Adm_Contact_Address__c,Fin_Adm_Contact_Zip_Code__c,Fin_Adm_Contact_City__c,Fin_Adm_Contact_Country__c';
 		}
 		if(isPassAirline){
-			queryString += ',CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
+			queryString += ',Type_of_participation_desired__c,CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
 			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Corrections_Email_1__c,CASS_Corrections_Email_2__c,GSSA_Legal_Name__c,'+
 			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
 			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
@@ -1043,6 +1032,7 @@ global without sharing class ISSP_APProcess {
 		String description;
 
 		 if(isGSSAUser) {
+			newForm.Type_of_participation_desired__c = 'PASS Participation via GSSA';
 			if(strOperationType=='Airline Joining') {
 				vGSSAAccountId = con.AccountId;
 				vHQAccountId = cassairlineid; //For Joining selected AL in list is a HQ Account Id
@@ -1093,6 +1083,7 @@ global without sharing class ISSP_APProcess {
 
 		if(!isPassAirline){
 			isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+			newForm.Type_of_participation_desired__c = 'PASS Participation Direct';
 			if (isocountry!=null) {
 				newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
 				newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
@@ -1149,6 +1140,9 @@ global without sharing class ISSP_APProcess {
 						newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
 																				hqAccount.Airline_Prefix__c,
 																				apCountryisocode, airlineList[0].Name, airlineList[0].Id);
+						if(isPassAirline){
+							newCase.accountid = con.AccountId;
+						}
 					}
 				}
 			} else {
@@ -1656,7 +1650,7 @@ global without sharing class ISSP_APProcess {
 			}
 		}
 		if(isPassAirline){
-			listMandatoryFiles.add('FormOfAuthorization');
+			listMandatoryFiles.add('PASS Agreement');
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;
@@ -1750,9 +1744,20 @@ global without sharing class ISSP_APProcess {
 								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
 								ORDER BY ISO_Country_formula__c];
 					}
+					if(strLOB == AMS_Utils.passParticipation || dupLoB == AMS_Utils.passParticipation){
+						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason AND Services_Rendered_Status__c='Active'
+								ORDER BY ISO_Country_formula__c];
+					}
 				} else {
 					System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
 
+					if(strLOB == AMS_Utils.passParticipation || dupLoB == AMS_Utils.passParticipation){
+						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason AND Services_Rendered_Status__c='Active'
+								ORDER BY ISO_Country_formula__c];
+					}
+					else{
 					isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
 								WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
 								ORDER BY ISO_Country_formula__c];
