@@ -603,7 +603,7 @@ private class AMS_AccreditationContactControllerTest
 			Type='Domestic Agent',
 			Sector__c = 'Travel Agent',
 			IATA_ISO_Country__c = chinaCountry.id,
-			IATAcode__c = '12345672',
+			IATAcode__c = '12345673',
 			RecordTypeId = accRtId
 		);
 

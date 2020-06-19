@@ -177,7 +177,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 								  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
 								  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'SA', ParentId = BR1.Id);
 
-		SA4 = new Account(RecordTypeId = rtAgency, Name = 'Beach Travels SA4', IATAcode__c = '7654323', IATA_ISO_Country__c = portugal.id,
+		SA4 = new Account(RecordTypeId = rtAgency, Name = 'Beach Travels SA4', IATAcode__c = '7654327', IATA_ISO_Country__c = portugal.id,
 								  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
 								  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'SA', ParentId = HO1.Id);
 

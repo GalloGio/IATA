@@ -1223,7 +1223,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountGE.Location_Class__c = 'P';
 		accountGE.IATA_ISO_Country__c = ctry.Id;
 		accountGE.RecordTypeId = agencyRecTypeId;
-		accountGE.IATACode__c = '12300099';
+		accountGE.IATACode__c = '12300199';
 		accountGE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountGE.Status__c = 'Approved';
 		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;

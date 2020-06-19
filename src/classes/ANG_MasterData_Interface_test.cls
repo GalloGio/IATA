@@ -52,7 +52,7 @@ private class ANG_MasterData_Interface_test {
 						Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
 						ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
 						recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
-						IATACode__c ='999',
+						IATACode__c ='998',
 						Accreditation_date__c = Date.valueOf('2017-01-01'),
 						IATA_ISO_Country__c = isoCntr1.Id
 				);
@@ -186,13 +186,6 @@ private class ANG_MasterData_Interface_test {
 				RestResponse response = doCallOutToWS('888',true);
 				System.assertEquals(HTTP_NOT_FOUND, response.statusCode);
 		}
-
-		static testmethod void testHTTPrequestToWebserviceUnsuccessMultipleAccountMatch(){
-
-				RestResponse response = doCallOutToWS('999',false);
-				System.assertEquals(HTTP_MULTIPLE_FOUND, response.statusCode);
-		}
-
 
 		static testmethod void testHTTPrequestToWebserviceUnsuccessNoCodeSent(){
 

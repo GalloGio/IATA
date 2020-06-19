@@ -263,6 +263,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, BillingState = 'Quebec'
 					, BillingCountry = 'Canada'
 					, BillingPostalCode = 'H3G 1T4'
+					, IATACode__c = '000'+ acctNumber
 					);
 		if (accountRecTypeId!=null) {
 			newAccount.RecordTypeId = accountRecTypeId;

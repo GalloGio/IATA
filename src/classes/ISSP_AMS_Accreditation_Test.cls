@@ -108,7 +108,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Location_Type__c = 'HO',
 			IATA_ISO_Country__c = country.Id,
 			RecordTypeId = rtIdBr,
-			IATACode__c = '100',
+			IATACode__c = '000001',
 			ANG_FA_Opt_out__c = true,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
 			Email__c = 'qwe@dse.pt',
@@ -121,7 +121,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = AMS_Utils.SECTOR_PASSENGER,
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '1000000',
+			IATACode__c = '000002',
 			IATA_ISO_Country__c = country.Id);
 
 		Account parentAccountCargo = new Account(
@@ -130,7 +130,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = 'Cargo_Agent',
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '1000000',
+			IATACode__c = '000003',
 			IATA_ISO_Country__c = country.Id);
 
 		Account parentAccIcc = new Account(
@@ -139,7 +139,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = AMS_Utils.SECTOR_PASSENGER,
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '100',
+			IATACode__c = '000004',
 			Status__c = 'Terminated'
 		);
 
@@ -149,7 +149,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = 'Travel Agent',
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '100'
+			IATACode__c = '000005'
 		);
 
 		Account cashParentAcc = new Account(
