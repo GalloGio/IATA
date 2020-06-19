@@ -308,28 +308,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 										//this._initializePhoneInput();
 										this.handleNext(null);
 									}
-									if(pageParams.startURL !== ''){
-
-										let prmstr = decodeURIComponent(pageParams.startURL);
-
-										prmstr = prmstr.replace('/csportal/s/?','');
-                                        
-										let paramsReturn = {};
-
-										if(prmstr !== undefined && prmstr !== null && prmstr !== ''){
-											let prmarr = prmstr.split("&");
-											for ( let i = 0; i < prmarr.length; i++) {
-												let tmparr = prmarr[i].split("=");
-												paramsReturn[tmparr[0]] = tmparr[1];
-											}
-										}
-
-										if(paramsReturn.lms !== '' && paramsReturn.lms !== undefined){
-											this.registrationForm.lmsRedirectFrom = paramsReturn.lms;
-											this.registrationForm.lmsCourse = paramsReturn.RelayState;
-											this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
-										}
-                                    }
+									if(pageParams.lms !== '' && pageParams.lms !== undefined){
+										this.registrationForm.lmsRedirectFrom = pageParams.lms;
+										this.registrationForm.lmsCourse = pageParams.RelayState;
+										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
+									}
                    				}
                             this.isLoading = false;
                             }
