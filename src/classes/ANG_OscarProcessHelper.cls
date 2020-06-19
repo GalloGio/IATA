@@ -2094,13 +2094,25 @@ global class ANG_OscarProcessHelper {
 	 * Bulkified process to send email 
 	 * PCI Renewal Cases & Annual Revalidation notifications
 	 */
-	private static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea){
-
+	public static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea){
 		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
 		if(!mailsToSend.isEmpty()) {
-			if(!Test.isRunningTest()) Messaging.sendEmail(emailsToSend);
+			if(!Test.isRunningTest()){
+				List<Messaging.SendEmailResult> results = Messaging.sendEmail(emailsToSend, false); //it allows delivery of the messages that don't have errors (false).
+				if(!results.isEmpty()){
+					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: ';
+					Integer msgNbr;
+					for(Messaging.SendEmailResult sendResult : results){
+						if(!sendResult.isSuccess()) {
+							errorMsg =+ sendResult.getErrors()[msgNbr] + '\n' ;
+						}
+						msgNbr++;
+					}
+					TransformationHelper.sendEmailSupport('Send Email for PCI Renewal Cases & Annual Revalidation notifications Failed', errorMsg);
+				}
+			}
+			
 			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
-
 			for(Id oscarCommCaseId : mailsToSend.keySet()){
 				for(Messaging.SingleEmailMessage mail : mailsToSend.get(oscarCommCaseId)){
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
