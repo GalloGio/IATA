@@ -3,8 +3,6 @@
  *
  */
 
-
-
 /**
  * Generates a URL with set of params
  * @param {object} baseUrl - landing page
@@ -33,6 +31,16 @@ const navigateToPage = (baseURl, paramsObject) => {
 	window.location.href = assembleUrl(baseURl, paramsObject);
 };
 
+/**
+ * Open a URL and set of params on a new page
+ * @param {object} baseUrl - landing page
+ * @param {object} paramsObject - Object containing the parameters to be incapsulated
+ */
+const navigateToNewPage = (baseURl, paramsObject) => {
+
+	window.open(assembleUrl(baseURl, paramsObject),"_blank");
+};
+
 const getParamsFromPage = () => {
 	let prmstr = window.location.search.substr(1).toString();
 
@@ -50,6 +58,7 @@ const getPageName = () => {
 
 export {
 	navigateToPage,
+	navigateToNewPage,
 	getParamsFromPage,
 	getPageName
 };

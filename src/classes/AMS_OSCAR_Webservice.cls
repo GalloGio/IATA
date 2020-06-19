@@ -653,12 +653,23 @@ global class AMS_OSCAR_Webservice {
 			return 'New Accredited Agent';
 	}
 
-
 	webservice static String executeMcToStSplitBatch(String oscarId) {
 		try {
 			update new AMS_OSCAR__c(Id = oscarId, Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_IN_PROGRESS);
 			Id accountGE = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id = :oscarId].Account__c;
-			ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch((Id) oscarId, accountGE, false);
+			ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch((Id) oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.Normal);
+			Database.executeBatch(myBatchObject, 1);
+		} catch (Exception ex) {
+			return AMS_Utils.errorMessageBeautifyer(ex);
+		}
+		
+		return '';
+	}
+
+	webservice static String executeMcToStSplitBatchOnIncompleteCase(String oscarId) {
+		try {
+			Id accountGE = [SELECT Account__c FROM AMS_OSCAR__c WHERE Id = :oscarId].Account__c;
+			ANG_SplitMcHierarchyIntoStandardBatch myBatchObject = new ANG_SplitMcHierarchyIntoStandardBatch((Id) oscarId, accountGE, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.FinishExecution);
 			Database.executeBatch(myBatchObject, 1);
 		} catch (Exception ex) {
 			return AMS_Utils.errorMessageBeautifyer(ex);

@@ -55,6 +55,10 @@
         <value xsi:type="xsd:string">Postal_Service</value>
     </values>
     <values>
+        <field>Partial_List_Order__c</field>
+        <value xsi:type="xsd:string">1</value>
+    </values>
+    <values>
         <field>Placeholder_Custom_Label__c</field>
         <value xsi:nil="true"/>
     </values>

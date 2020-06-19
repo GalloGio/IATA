@@ -302,6 +302,22 @@ When MS sets “In Progress”, trigger to fire</description>
         </valueSet>
     </fields>
     <label>Remote Invocation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Integration_Transaction_ID__c</columns>
+        <columns>Internal_ID__c</columns>
+        <columns>Request_Type__c</columns>
+        <columns>Source__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Detail__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>RI-{0000}</displayFormat>
         <label>Remove Invocation Name</label>

@@ -418,7 +418,7 @@ private class ANG_MulticountryRHCTest {
 			 	ANG_AccountId__c = :accountGE.Id
 			];
 
-		System.assertNotEquals(rhcInfo.ANG_RHC_Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c, 'RHC Amount must NOT be effective yet');
+		System.assertEquals(rhcInfo.ANG_RHC_Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c, 'RHC Amount must be effective yet');
 
 		Test.startTest();
 
@@ -496,13 +496,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(1000000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -561,13 +559,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(571429, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -626,13 +622,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(1285714, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -691,13 +685,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(10000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -756,13 +748,11 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(90000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
 	}
 
 	@isTest
@@ -772,7 +762,7 @@ private class ANG_MulticountryRHCTest {
 		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = [SELECT Id
 																	FROM AMS_Country_Specific_Attribute__c
 																	WHERE RecordTypeId = :recId];
-		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 10000;
+		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 1000;
 		update amsCountrySpecificAttr;
 
 		Financial_Institution__c fi = [SELECT Id FROM Financial_Institution__c LIMIT 1];
@@ -829,7 +819,6 @@ private class ANG_MulticountryRHCTest {
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 
 		System.assertEquals(9000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
-		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
+		System.assertEquals(9000, rhcInfo.ANG_RHC_Amount__c);
 	}
-
 }

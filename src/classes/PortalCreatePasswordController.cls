@@ -55,6 +55,13 @@ public without sharing class PortalCreatePasswordController {
 				startUrl = EncodingUtil.urlDecode(landingPage, 'UTF-8');
 			}
 
+			//YAS Reg -
+			String lmsParam = params.lms.toLowerCase();
+			if(lmsParam.indexOf('yas') != -1){
+				urlParams.put('lms', 'yas');
+				urlParams.put('lmsCourse', params.lmsCourse);
+			}
+
 			//check if the start URL already has parameters
 			String s = startUrl.contains('?') ? '&' : '?';
 			startUrl += s + CSP_Utils.assembleParams(urlParams);

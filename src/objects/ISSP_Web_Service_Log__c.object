@@ -495,29 +495,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>KAVItoda</fullName>
-        <columns>NAME</columns>
-        <columns>Success__c</columns>
-        <columns>Error_Message__c</columns>
-        <columns>User__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>System__c</field>
-            <operation>equals</operation>
-            <value>Standards Setting Workspace</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>2/13/2020 12:00 AM,TODAY</value>
-        </filters>
-        <label>. mgo - KAVI</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IATAAdmins</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>SAP_syncCustomerWithSAP1</fullName>
         <columns>NAME</columns>
         <columns>Error_Code__c</columns>
@@ -631,6 +608,29 @@
         </filters>
         <label>05/07/2018_logs</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>mgo_BSP</fullName>
+        <columns>NAME</columns>
+        <columns>Success__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>User__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System__c</field>
+            <operation>equals</operation>
+            <value>BSPLink</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>YESTERDAY,TODAY</value>
+        </filters>
+        <label>. mgo - BSP</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAAdmins</group>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>today_logs</fullName>

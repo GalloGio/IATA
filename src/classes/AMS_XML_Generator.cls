@@ -172,13 +172,14 @@ public with sharing class AMS_XML_Generator {
 		Map<Id,String> changeCodeCaseNumber = new Map<Id,String>();
 		Set<Id> setOscarID = new Set<ID>();
 
-		for(Agency_Applied_Change_code__c aacc: agencies){            
+		for(Agency_Applied_Change_code__c aacc: agencies){
 
 			if(aacc.OSCAR__c <> null && aacc.OSCAR__r.Oscar_Communication_Case_Id__c <> null){
 				changeCodeCaseNumber.put(aacc.Id,aacc.OSCAR__r.Oscar_Communication_Case_Id__c);
 			}
-			else if(aacc.OSCAR__c <> null)
+			else if(aacc.OSCAR__c <> null) {
 				changeCodeOscarMap.put(aacc.OSCAR__c,aacc.Id);
+			}
 
 			if(gdiOrGdnChangeCode.contains(aacc.Change_Code__c)){
 				setOscarID.add(aacc.OSCAR__c);
@@ -186,8 +187,13 @@ public with sharing class AMS_XML_Generator {
 
 		}
 
-		for(Case c: [Select Id, CaseNumber from Case where RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM and OSCAR__c in: changeCodeOscarMap.Values() and ( ParentId = null or Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]){
-			changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.Id);
+		for (Case c : [SELECT Id, OSCAR__c
+					   FROM Case
+					   WHERE RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
+						   AND OSCAR__c IN :changeCodeOscarMap.keySet()
+						   AND (ParentId = null
+								OR Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]) {
+			changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c), c.Id);
 		}
 
 		/*NEWGEN-3267 END*/
@@ -254,8 +260,8 @@ public with sharing class AMS_XML_Generator {
 
 		}
 
-		system.debug('--------- doc: ' + doc.toXmlString());        
-		return doc.toXmlString();   
+		System.debug(LoggingLevel.DEBUG, '____ [cls AMS_XML_Generator - getAgencySalesOrder] doc - ' + doc.toXmlString());
+		return doc.toXmlString();
 
 	}
 

@@ -10,7 +10,7 @@ public with sharing class EF_InvitationCtrl {
 
 		List<E_and_F_Account_Role_Detail__c> accountRoles = EF_Helper.getAccountContactRoles(contactId);
 		for(E_and_F_Account_Role_Detail__c role : accountRoles) {
-			accountToRoles.put(role.Account_Role__r.Account_Name__c, role.Account_Role__c+':'+role.Account_Role__r.Account__c);
+			accountToRoles.put(role.Account_Role__r.Account__r.Name, role.Account_Role__c+':'+role.Account_Role__r.Account__c);
 		}
 		return accountToRoles;
 	}
