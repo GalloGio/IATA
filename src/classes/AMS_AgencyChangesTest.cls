@@ -22,6 +22,9 @@ public class AMS_AgencyChangesTest {
 
 
 	public static void init2Hierarchies(boolean isPax){
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
 															TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,

@@ -10,6 +10,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 	private static Contact C1;
 
 	private static void getUpdatedAccountData(){
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		List<Account> accs = [SELECT Id, Name, IATAcode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, ParentId, Status__c FROM Account];
 
 		for(Account acc: accs){
