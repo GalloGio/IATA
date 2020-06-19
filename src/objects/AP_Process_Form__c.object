@@ -17604,8 +17604,7 @@ OR(
         <active>true</active>
         <description>BSP cases for Minor changes must have a Desired commencement date in more than 3 months</description>
         <errorConditionFormula>AND(
-  RecordType.DeveloperName = &apos;BSP_Change&apos;,
-  ISPICKVAL(Case__r.Reason1__c,&apos;Minor database changes&apos;),
+  INCLUDES(Type_of_Change_Requested__c, &quot;Voluntary Withdrawal&quot;),
   Desired_commencment_date__c &lt; ADDMONTHS(TODAY(),3)
 )</errorConditionFormula>
         <errorDisplayField>Desired_commencment_date__c</errorDisplayField>
