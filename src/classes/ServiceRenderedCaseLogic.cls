@@ -274,6 +274,7 @@ public class ServiceRenderedCaseLogic {
 
 					if(c.reason1__c.startsWith(AMS_Utils.passParticipation)){
 						sr.Services_Rendered_Type__c = AMS_Utils.passAirlineCaseReason;
+                		sr.Services_Rendered_to_Airline__c = c.Account_Concerned__c;
 					}
 
 					services.add(sr);
