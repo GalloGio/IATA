@@ -378,16 +378,11 @@ private class AMS_OSCARTriggerHandlerTest {
 		AMS_OSCARTriggerHandler.MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Process__c = 'PROCESS',
-			Account__c = account.Id
+			Account__c = account.Id,
+			Oscar_Communication_Case_Id__c = cse.Id
 		);
-		insert oscar;
-		
 		Test.startTest();
-		cse.OSCAR__c = oscar.Id;
-		update cse;
-
-		oscar.Oscar_Communication_Case_Id__c = cse.Id;
-		update oscar;
+		insert oscar;
 		Test.stopTest();
 
 		AMS_OSCAR__c result = [SELECT Id, Promotions__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];
