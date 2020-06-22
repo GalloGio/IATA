@@ -229,6 +229,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -293,6 +294,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -371,6 +373,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -404,6 +407,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre2.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -484,6 +488,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -557,6 +562,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -606,6 +612,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre2.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -678,6 +685,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -757,6 +765,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -839,6 +848,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -921,6 +931,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1003,6 +1014,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1070,6 +1082,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1130,7 +1143,7 @@ public class  AmsIataCodeGeneratorTest
 				 ag.Category__c = '';
 				 insert ag;
 
-				 AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= ag.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
+				 AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c= ag.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
 				 insert owner1;
 
 				 AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(account__c=ag.Id, Segment__c = p1.Id);
@@ -1175,7 +1188,7 @@ public class  AmsIataCodeGeneratorTest
 				 ag2.Sector__c = 'Cargo Agent';
 				 insert ag2;
 
-				 AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
+				 AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
 				 insert owner2;
 
 				 AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ag2.Id);
@@ -1256,6 +1269,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1325,6 +1339,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre2.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1386,6 +1401,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1455,6 +1471,7 @@ public class  AmsIataCodeGeneratorTest
 						Email__c= 'owner.test@test.com',
 						Phone__c= '123456789',
 						Financial_interest__c= 100,
+						Agency_Owner__c= true,
 						AMS_Pax_Accreditation_Form__c= accre.Id,
 						RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 				);
@@ -1537,14 +1554,37 @@ public class  AmsIataCodeGeneratorTest
 				AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c, First_name__c='Joan',
 						Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91),
 						RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
-				insert ac;
+		/*** WMO-492 ***/
+		AMS_Accreditation_Contact__c owner1 = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = oscar2.AMS_Online_Accreditation__c,
+			Name= 'test owner',
+			First_name__c= 'test',
+			Last_name__c = 'owner',
+			Email__c= 'owner.test@test.com',
+			Phone__c= '123456789',
+			Agency_owner__c= true,
+			Financial_interest__c= 100,
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+		);
+		insert new List<AMS_Accreditation_Contact__c> {ac, owner1};
 				oscar2.STEP6__c = 'Passed';
 				update oscar2;
 				AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,account1Br.Cass_Number__c);
 				AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c, First_name__c='Joan',
 						Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91),
 						RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
-				insert ac2;
+		AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = oscar3.AMS_Online_Accreditation__c,
+			Name= 'test owner',
+			First_name__c= 'test',
+			Last_name__c = 'owner',
+			Email__c= 'owner.test@test.com',
+			Phone__c= '123456789',
+			Agency_owner__c= true,
+			Financial_interest__c= 100,
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+		);
+		insert new List<AMS_Accreditation_Contact__c> {ac2, owner2};
 				oscar3.STEP6__c = 'Passed';
 				update oscar3;
 
@@ -1676,7 +1716,19 @@ public class  AmsIataCodeGeneratorTest
 				AMS_Accreditation_Contact__c ac2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan',
 						Last_name__c='Wylde', Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = (Date.today()+91),
 						RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
-				insert ac2;
+		/*** WMO-492 ***/
+		AMS_Accreditation_Contact__c owner1 = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = accreditationObj.Id,
+			Name= 'test owner',
+			First_name__c= 'test',
+			Last_name__c = 'owner',
+			Email__c= 'owner.test@test.com',
+			Phone__c= '123456789',
+			Agency_owner__c= true,
+			Financial_interest__c= 100,
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+		);
+		insert new List<AMS_Accreditation_Contact__c> {ac2, owner1};
 
 				oscar2.STEP6__c = 'Passed';
 				update oscar2;
@@ -1697,7 +1749,19 @@ public class  AmsIataCodeGeneratorTest
 				AMS_Accreditation_Contact__c ac3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accreditationObj.Id, First_name__c='Joan',
 						Last_name__c ='Wylde', Phone__c ='323562762', Email__c ='jw@email.com', Valid_Until__c = (Date.today()+91),
 						RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff'), Type_Of_Certificate__c = 'DGR');
-				insert ac3;
+		/*** WMO-492 ***/
+		AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = accreditationObj.Id,
+			Name= 'test owner',
+			First_name__c= 'test',
+			Last_name__c = 'owner',
+			Email__c= 'owner.test@test.com',
+			Phone__c= '123456789',
+			Agency_owner__c= true,
+			Financial_interest__c= 100,
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+		);
+		insert new List<AMS_Accreditation_Contact__c> {ac3, owner2};
 
 				oscar3.STEP6__c = 'Passed';
 				update oscar3;

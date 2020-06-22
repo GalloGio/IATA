@@ -367,13 +367,25 @@ public class AMS_OSCAR_TestDataFactory
 
 		Id trainedStaff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
 
+		AMS_Accreditation_Contact__c ownerct = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = stagingArea.Id,
+			Name= 'test owner',
+			First_name__c= 'test',
+			Last_name__c = 'owner',
+			Email__c= 'owner.test@test.com',
+			Phone__c= '123456789',
+			Agency_owner__c= true,
+			Financial_interest__c= 100,
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+		);
+
 		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Bugs', Last_name__c='Bunny', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGR, RecordTypeId=trainedStaff);
 
 		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Greg', Last_name__c='Plitt', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGA, RecordTypeId=trainedStaff);
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
 
-		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
+		insert new List<AMS_Accreditation_Contact__c>{ownerct, acontact1,acontact2,acontact3};
 
 	}
 
