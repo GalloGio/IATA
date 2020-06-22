@@ -190,11 +190,11 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				}
 
 				if(pageParams !== undefined && pageParams.lmsCourse !== undefined ){
-					this.contactInfo.lmsCourse =  pageParams.lmsCourse.replace(new RegExp('%40_%40','g'),'%26');
+					this.contactInfo.lmsCourse =  pageParams.lmsCourse.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
 				}
 
 				if(pageParams !== undefined && pageParams.RelayState !== undefined ){
-					this.contactInfo.lmsCourse =  pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26');
+					this.contactInfo.lmsCourse =  pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
 				}
 
 				if(pageParams !== undefined && pageParams.firstLogin !== undefined ){
