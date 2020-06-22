@@ -1761,6 +1761,7 @@ global without sharing class ISSP_APProcess {
 								ORDER BY ISO_Country_formula__c];
 				}
 			}
+			}
 
 			options.add(new SelectOption('', '--None--'));
 			if(strAreaType=='Airline Joining') {
