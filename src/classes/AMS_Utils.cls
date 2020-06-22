@@ -154,6 +154,7 @@ public without sharing class AMS_Utils {
 	public static final String customerTypePass   = 'Postal_Operator' ;
 	public static final String passParticipation  = 'PASS' ;
 	public static final String passAirlineCaseReason = 'PASS Participation';
+	public static final String passGSSACaseReason = 'PASS Participation via GSSA';
 	public static final String passCountryCaseReason = 'PASS Country';
 	public static final String passAggregatorCaseReason = 'PASS Country Aggregator';
 	public static final String passIATAMultipleCountries = 'Multiple';

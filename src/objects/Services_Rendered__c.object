@@ -388,6 +388,11 @@
                     <label>PASS Participation</label>
                 </value>
                 <value>
+                    <fullName>PASS Participation via GSSA</fullName>
+                    <default>false</default>
+                    <label>PASS Participation via GSSA</label>
+                </value>
+                <value>
                     <fullName>PASS Country</fullName>
                     <default>false</default>
                     <label>PASS Country</label>
