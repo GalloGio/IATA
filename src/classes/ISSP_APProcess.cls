@@ -1752,15 +1752,15 @@ global without sharing class ISSP_APProcess {
 				} else {
 					if(strLOB == AMS_Utils.passParticipation || dupLoB == AMS_Utils.passParticipation){
 						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason AND Services_Rendered_Status__c='Active'
+								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c=:AMS_Utils.passGSSACaseReason  AND Services_Rendered_Status__c='Active'
 								ORDER BY ISO_Country_formula__c];
 					}
 					else{
 					isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
 								WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
 								ORDER BY ISO_Country_formula__c];
+					}
 				}
-			}
 			}
 
 			options.add(new SelectOption('', '--None--'));
