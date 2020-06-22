@@ -133,23 +133,23 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 					}
 				}
 
-				if(!pwcResponse.originalFileName.contains('.xml')){
-					if(pwcResponse.originalFileName != null){
-						AmazonFile__c amazonFile = getAmazonFile( pwcResponse.originalFileName, 0, caseId, IdToXml.get(caseId).caseNumber, true);
-						if ( amazonFile != null ) {
-							this.setAmazonFilesToInsert.put(amazonFile.Full_Name_Unique__c, amazonFile);
-							}
+				if(pwcResponse.originalFileName != null && !pwcResponse.originalFileName.contains('.xml')){
+					AmazonFile__c amazonFile = getAmazonFile( pwcResponse.originalFileName, 0, caseId, IdToXml.get(caseId).caseNumber, true);
+					if ( amazonFile != null ) {
+						this.setAmazonFilesToInsert.put(amazonFile.Full_Name_Unique__c, amazonFile);
 					}
-					else {
-						for(String fileName : pwcResponse.originalFileNames){
+				}
+				else if(pwcResponse.originalFileNames != null){
+					for(String fileName : pwcResponse.originalFileNames){
+						if(!fileName.contains('.xml')){
 							AmazonFile__c amazonFile = getAmazonFile( fileName, 0, caseId, IdToXml.get(caseId).caseNumber, false);
 							if ( amazonFile != null ) {
 								this.setAmazonFilesToInsert.put(amazonFile.Full_Name_Unique__c, amazonFile);
 							}
 						}
 					}
-
 				}
+				
 				//  TransformationHelper.sendEmailSupport('SALVATORE DEBUG', 'amazonFile ' + amazonFile);
 				system.debug(LoggingLevel.ERROR,'########### can delete file '+pwcResponse.originalFileName);
 				System.debug(LoggingLevel.ERROR, '     ----> (IfapProcessResultsBatch) SUCCESS ON ' + label + ' '+objType+': '+so.Id);
