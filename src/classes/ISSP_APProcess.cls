@@ -3379,7 +3379,8 @@ global without sharing class ISSP_APProcess {
 	public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
 		List<Services_Rendered__c> serviceRenderedList=[SELECT Id
 														FROM Services_Rendered__c
-														WHERE Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason
+														WHERE (Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason
+														OR Services_Rendered_Type__c=:AMS_Utils.passGSSACaseReason)
 														AND (Services_Rendered_By__r.Id=:accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:accountId)];
 
 		if(serviceRenderedList.size()>0){

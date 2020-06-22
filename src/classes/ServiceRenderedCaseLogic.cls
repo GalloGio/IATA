@@ -286,7 +286,12 @@ public class ServiceRenderedCaseLogic {
 					}
 
 					if(c.reason1__c.startsWith(AMS_Utils.passParticipation)){
-						sr.Services_Rendered_Type__c = AMS_Utils.passAirlineCaseReason;
+						if(c.Type_of_customer__c.startsWith('GSA') || c.Type_of_customer__c.startsWith('GSSA')){
+							sr.Services_Rendered_Type__c = AMS_Utils.passGSSACaseReason;
+						}
+						else{
+							sr.Services_Rendered_Type__c = AMS_Utils.passAirlineCaseReason;
+						}
 					}
 
 					services.add(sr);
