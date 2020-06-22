@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">IATAN Passenger Sales Agent (US only);Travel Service Intermediaries-TSI (USA Only)</value>
+        <value xsi:type="xsd:string">IATAN Passenger Sales Agent (USA Only);Travel Service Intermediaries-TSI (USA Only)</value>
     </values>
     <values>
         <field>Account_Sector__c</field>
