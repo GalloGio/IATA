@@ -1764,8 +1764,6 @@ global without sharing class ISSP_APProcess {
 								ORDER BY ISO_Country_formula__c];
 					}
 				} else {
-					System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
-
 					if(strLOB == AMS_Utils.passParticipation || dupLoB == AMS_Utils.passParticipation){
 						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
 								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason AND Services_Rendered_Status__c='Active'
