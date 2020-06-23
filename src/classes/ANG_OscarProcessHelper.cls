@@ -2101,7 +2101,7 @@ global class ANG_OscarProcessHelper {
 				List<Messaging.SendEmailResult> results = Messaging.sendEmail(emailsToSend, false); //it allows delivery of the messages that don't have errors (false).
 				if(!results.isEmpty()){
 					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: ';
-					Integer msgNbr;
+					Integer msgNbr = 0;
 					for(Messaging.SendEmailResult sendResult : results){
 						if(!sendResult.isSuccess()) {
 							errorMsg =+ sendResult.getErrors()[msgNbr] + '\n' ;
