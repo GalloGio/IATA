@@ -1664,7 +1664,7 @@ global without sharing class ISSP_APProcess {
 			}
 		}
 		if(isPassAirline){
-			listMandatoryFiles.add('PASS Agreement');
+			listMandatoryFiles.add('PASSAgreement');
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;
