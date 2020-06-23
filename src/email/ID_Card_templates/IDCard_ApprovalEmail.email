@@ -1,0 +1,32 @@
+<messaging:emailTemplate subject="Confirmation of ID Card Application" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+
+
+<html>
+<body>
+<font face="arial">
+<table>
+<tr align ="center"><td align="center"><apex:image url="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF&lastMod=1389346115000"/></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+
+<tr><td><c:IDCARD_VFEmailTemplate CID="{!relatedTo.Id}" isRenew="false" isApprovalConfirm="true"/></td></tr>
+
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+</table>
+</font>
+</body>
+</html>
+
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
