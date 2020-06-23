@@ -84,7 +84,7 @@
                             <div class="aplabel">
                                 <apex:outputText value="{!$Label.ISSP_PASS_Agreement}" escape="false" styleclass="aplabel"/>
                             </div>
-                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=FormOfAuthorization"
+                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=PASSAgreement"
                                 height="190px" width="100%" scrolling="false" rendered="true"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
