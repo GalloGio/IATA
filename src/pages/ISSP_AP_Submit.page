@@ -232,7 +232,16 @@
                             src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market"/>
                     </apex:pageBlockSection>
 
-                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}" collapsible="false">
+                    <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'),AND(apcountryisocode='IL', strLOB='BSP'))}" collapsible="false">
+                        <apex:outputText rendered="{!apcountryisocode='IL'}">
+                            Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:<br/><br/>
+                            <div style="padding-left:50px;padding-bottom:30px; font-weight:bold">
+                                IATA Israel<br/>
+                                Trade Tower Building, 8th Floor 25 Hamereed Street<br/>
+                                Tel Aviv, ISRAEL
+                            </div>
+                            Please click here to download the form(s):&nbsp;
+                        </apex:outputText>
                         <apex:outputText rendered="{!apcountryisocode='EC'}">
                             <div>
                                 Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
@@ -308,7 +317,11 @@
                         <apex:dataList value="{!urlList}" var="urlItem">
                             <apex:outputLink value="{!urlItem.Download_URL__c}" target="_blank">{!urlItem.Link_label__c}</apex:outputLink>
                         </apex:dataList>
-                        
+
+                        <apex:outputPanel rendered="{!apcountryisocode='IL'}">
+                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=8&reqRequired=Mandatory&reqName=BSP Israel Disclaimer&reqDescription=&reqIdentifier=BSP_Israel_Disclaimer"
+                                height="190px" width="100%" scrolling="false"/>
+                        </apex:outputPanel>
                     </apex:pageBlockSection>
 
                     <!-- Agreements BSP -->

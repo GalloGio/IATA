@@ -1673,6 +1673,9 @@ global without sharing class ISSP_APProcess {
 				listMandatoryFiles.add('FormOfApplicationAndConcurrence');
 			}
 		}
+		if (isBSP && apcountryisocode=='IL') {
+			listMandatoryFiles.add('BSP_Israel_Disclaimer');
+		}
 		if (isICH && strAreaType=='Airline Joining') {
 			listMandatoryFiles.add('SignedICHForm');
 			if (!getIsSISMember() && getShowISPAForm()) {
