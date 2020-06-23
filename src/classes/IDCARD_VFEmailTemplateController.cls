@@ -247,18 +247,20 @@ public with sharing class IDCARD_VFEmailTemplateController {
 			//Renewal Email Stuff
 			else {
 
+				// get last ID Card
+				ID_Card__c idcard = [SELECT Valid_To_Date__c, Related_Contact__r.Account.IDCard_Key_Account__c,FirstName__c,LastName__c,
+									Agency_IATA_Code__c,Name_on_ID_Card__c,Date_of_Birth__c,VER_Number__c, Card_Type__c, Related_Contact__c
+									FROM ID_Card__c WHERE VER_Number__c = :myID
+									AND Valid_To_Date__c != null
+									ORDER BY Valid_To_Date__c DESC LIMIT 1];
+									
 				//get related Contact
 				cc = [ SELECT ID_Card_Preferred_Language__c, VER_Number__c, Name, Date_of_Birth__c, Id,
 								AccountId, Account.type, Account.BillingStreet, Account.BillingCity, Account.IATACode__c,
 								Account.BillingCountry, Account.Name, Account.Short_Name__c
-								FROM Contact WHERE Id = :myID ];
+								FROM Contact WHERE Id = :idcard.Related_Contact__c ];
 				String contactID = cc.Id;
-				// get last ID Card
-				ID_Card__c idcard = [SELECT Valid_To_Date__c, Related_Contact__r.Account.IDCard_Key_Account__c,FirstName__c,LastName__c,
-									Agency_IATA_Code__c,Name_on_ID_Card__c,Date_of_Birth__c,VER_Number__c, Card_Type__c
-									FROM ID_Card__c WHERE Related_Contact__r.Id = :contactID
-									AND Valid_To_Date__c != null
-									ORDER BY Valid_To_Date__c DESC LIMIT 1];
+				
 
 				//set expiry date of last IDCard
 				expDate = idcard.Valid_To_Date__c;

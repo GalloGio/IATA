@@ -108,14 +108,14 @@ public with sharing class IDCARD_VFEmailTemplateControllerTest {
 
 	@IsTest
 	static void test_Renewal(){
-		Contact c = [SELECT Id FROM Contact LIMIT 1];
+		Contact c = [SELECT Id,VER_Number_2__c FROM Contact LIMIT 1];
 		IDCARD_VFEmailTemplateController ctrl = new IDCARD_VFEmailTemplateController();
 		
 		insert new EmailTemplate__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'ID_Card_Application'), Template_Type__c = 'Renewal Notice', Body_Section_1__c = 'Template Body Renewal', Template_Language__c = 'English', Signature_Details__c = '{!ID_Card__c.Fee}');
 		
 		Test.startTest();
 		ctrl.isRenewal = true;
-		ctrl.myId = c.Id;
+		ctrl.myId = c.VER_Number_2__c;
 
 		Test.stopTest();
 		System.assertEquals(ctrl.emailBody1, 'Template Body Renewal');
