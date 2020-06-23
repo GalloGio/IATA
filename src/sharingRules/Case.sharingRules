@@ -386,6 +386,19 @@
             <value>ISS Portal PwC,ISS Portal PwC for IATA user</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>R_S_access_to_SEDA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>R&amp;S access to SEDA</label>
+        <sharedTo>
+            <group>R_S_roles</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SEDA</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>APCS</fullName>
         <accessLevel>Edit</accessLevel>
