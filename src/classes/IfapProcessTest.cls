@@ -529,13 +529,14 @@ public class IfapProcessTest {
 		String jsonCase =
 				'{'+
 				'"caseNumber": "'+ ifap.CaseNumber+'",'+
-				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+ifap.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>' + expectedPoints + '</FinancialCriteriaTotalScore> <Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
+				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+ifap.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - Update Financial Security</GFAStatus> <FinancialCriteriaTotalScore>' + expectedPoints + '</FinancialCriteriaTotalScore> <Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
 				'"success":true'+
 				'}';
 
 		jsonLst.add(jsonCase);
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(jsonLst,',')+ ']}';
+		IfapToolManager.testJsonResultsGxA = '{ "responses": [{"success":true,"caseNumber":"123","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>123</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>ERR</FinancialCriteriaTotalScore><FinancialSecurity><Amount>120</Amount><Currency_x>EUR</Currency_x></FinancialSecurity><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>","message":"tyu"}]}';
 
 		//Test the batch
 		Test.startTest();
@@ -549,11 +550,11 @@ public class IfapProcessTest {
 		system.assertEquals(caseReturned.Financial_Assessment_Points__c, expectedPoints);
 		system.assertEquals(caseReturned.Financial_Review_Result__c, expectedFAResult);
 		system.assertEquals(caseReturned.Assessment_Performed_Date__c, System.today());
-		system.assertEquals(true, batch.errors.isEmpty());
+		system.assertEquals(1, batch.errors.size());
 	}
 
 	@isTest static void multicountryFinancialAssessmentResults70PointsTest(){
-		multicountryFinancialAssessmentResults(70, AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION);
+		multicountryFinancialAssessmentResults(70, AMS_Utils.FA_RESULT_UNSATISFACTORY_UPDATE_FS);
 	}
 
 	@isTest static void multicountryFinancialAssessmentResults50PointsTest(){
