@@ -28423,6 +28423,14 @@ This service is free of charge.</value>
         <value>Use the link below to download the application form, sign it and upload it.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Voluntary_Withdrawal_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AP Voluntary Withdrawal Disclaimer</shortDescription>
+        <value>Voluntary Withdrawal will happen in selected date but the other changes will take place immediately.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_APrequest_AdminEmail1</fullName>
         <categories>Portal</categories>
         <language>en_US</language>

@@ -163,6 +163,10 @@
                         <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
                     </apex:pageBlockSectionItem>
 
+                    <apex:pageBlockSectionItem rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Voluntary Withdrawal')=true && CONTAINS(newForm.Type_of_Change_Requested__c, ';')=true}">
+                        <apex:outputText styleclass="aplabel" value="{!$Label.ISSP_AP_Voluntary_Withdrawal_Disclaimer}" />
+                    </apex:pageBlockSectionItem>
+
                     <script>findMakeRows();</script>
                 </apex:pageBlockSection>
 
