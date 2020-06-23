@@ -2,6 +2,7 @@
 private class CaseProcessTypeHelperTest {
 
 	@testSetup static void setup() {
+
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 			Name= 'Portugal',
 			ISO_Code__c= 'PT',
@@ -60,7 +61,8 @@ private class CaseProcessTypeHelperTest {
 		update cse;
 	}
 
-	@isTest static void testKPICalculation() {
+	@isTest 
+	static void testKPICalculation() {
 		Test.startTest();
 		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
 		oscar.Status__c = 'Closed';
@@ -78,7 +80,8 @@ private class CaseProcessTypeHelperTest {
 		System.assertEquals('Long 40d', oscar.Accreditation_Process_Type__c);
 	}
 
-	@isTest static void testKPI_FOPManagement_Passed() {
+	@isTest 
+	static void testKPI_FOPManagement_Passed() {
 		Test.startTest();
 		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
 		oscar.STEP40__c = 'Passed';

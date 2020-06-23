@@ -37,38 +37,52 @@ public with sharing class CaseProcessTypeHelper {
 		return mapRTsToReasons;
 	}
 
-	// list of all Oscar fields used in the custom meta
-	private static List<String> listOscarFields = null;
+	// list of all Oscar and Account fields used in the custom meta
+	private static map<String,List<String>> mapRelatedFields = null;
 
 	/**
-	 *  Method to populate setOscarFields
+	 *  Method to populate mapRelatedFields, a collection of all fields for the related object OSCAR and Account
+	 * in the field Other_Conditions__c
 	 */
-	private static List<String> getListOscarFields() {
-		if (listOscarFields==null) {
+	private static map<String,List<String>> getRelatedFields() {
+		if (mapRelatedFields==null) {
 			Set<String> setOscarFields = new Set<String>{'Case_Reason__c'};
-			for(Case_Process_Type__mdt process : [SELECT Other_Conditions__c FROM Case_Process_Type__mdt]) {
-				setOscarFields.addAll(extractOscarFieldNames(process.Other_Conditions__c));
+			Set<String> setAccountFields = new Set<String>();
+			for(Case_Process_Type__mdt process : [SELECT Other_Conditions__c, KPI_Reference_Field__c FROM Case_Process_Type__mdt]) {
+				// possible field used in KPI_Reference_Field__c
+				list<String> parts = process.KPI_Reference_Field__c.split('[.]');
+				if (parts.size() == 2 && parts[0] == 'AMS_Oscar__c') {
+					setOscarFields.add(parts[1]);
+				}
+				// More possible fields used in Other_Conditions__c
+				String condition = process.Other_Conditions__c;
+				setOscarFields.addAll(extractRelatedFields(condition, 'OSCAR__r'));
+				setAccountFields.addAll(extractRelatedFields(condition, 'Account'));
 			}
-			listOscarFields = new List<String>(setOscarFields);
+			mapRelatedFields = new map<String,List<String>>();
+			mapRelatedFields.put('OSCAR__r', new list<String>(setOscarFields));
+			mapRelatedFields.put('Account', new list<String>(setAccountFields));
 		}
-		return listOscarFields;
+		return mapRelatedFields;
 	}
 
 	/**
-	 * Get a list of field names starting by 'OSCAR__r.' in the input string
-	 * Used to extract the oscar field names in the custom metadata Case_Process_Type__mdt
+	 * From the input condition extracts all fields for a specific relation name
+	 * Example: in condition: 'Oscar__r.Name IN ('name') AND Account.Id IN ('12345678')'
+	 * Its result when we look for the relation name Oscar__r will be: {'Name'}
+	 * and for the 'Account' relation: {'Id'}
 	 */
-	private static list<String> extractOscarFieldNames(String condition) {
-		list<String> listFieldNames = new list<String>();
+	private static set<String> extractRelatedFields(String condition, String relationName) {
+		set<String> setFieldNames = new set<String>();
 		if (String.isNotBlank(condition)) {
 			for (String part: condition.split(' ')) {
-				if (part.startsWithIgnoreCase('OSCAR__r.')) {
-					String oscarFieldName = part.replace('OSCAR__r.','');
-					listFieldNames.add(oscarFieldName);
+				if (part.startsWithIgnoreCase(relationName + '.')) {
+					String fieldName = part.replace( relationName + '.','');
+					setFieldNames.add(fieldName);
 				}
 			}
 		}
-		return listFieldNames;
+		return setFieldNames;
 	}
 
 	/*
@@ -93,11 +107,11 @@ public with sharing class CaseProcessTypeHelper {
 			Boolean beingClosed = cse.IsClosed && !oldRecord.IsClosed;
 			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
 			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
+			//if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
 				casesToProcess.add(cse);
 				accountIds.add(cse.AccountId);
 				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
-			}
+			//}
 		}
 
 		if(casesToProcess.isEmpty()) {
@@ -105,7 +119,7 @@ public with sharing class CaseProcessTypeHelper {
 		}
 
 		/* US Accounts must be excluded */
-		Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c FROM Account WHERE Id IN :accountIds]);
+		Map<Id,Account> mapAccounts = getMapAccount(accountIds);
 		Map<Id, AMS_OSCAR__c> mapOscars = getMapOscar(oscarIds);
 
 		for(Case cse : casesToProcess) {
@@ -116,6 +130,7 @@ public with sharing class CaseProcessTypeHelper {
 
 			AMS_OSCAR__c oscar = mapOscars.get(cse.OSCAR__c); //WMO-564 - ACAMBAS
 			cse.OSCAR__r = oscar;
+			cse.Account = acc;
 			Case_Process_Type__mdt process = getRightProcess(cse);
 			if (process!=null) {
 				calculateKPI(cse, oscar, process);
@@ -129,14 +144,30 @@ public with sharing class CaseProcessTypeHelper {
 	 */
 	private static map<Id,AMS_OSCAR__c> getMapOscar(Set<Id> oscarIds) {
 		if (oscarIds.isEmpty()) return new map<Id,AMS_OSCAR__c>();
-		set<String> setOscarFields = new set<String>(getListOscarFields());
+		set<String> setOscarFields = new set<String>(getRelatedFields().get('OSCAR__r'));
 		setOscarFields.add('Id');
-		setOscarFields.add('KPI_Aux1__c');
 		List<String> listFields = new List<String>(setOscarFields);
 		String query = 'SELECT ' + String.join(listFields,',') + ' FROM AMS_OSCAR__c';
 		query += ' WHERE Id IN (\'' + String.join(new list<Id>(oscarIds),'\',\'') + '\')';
 		list<AMS_OSCAR__c> listOscar = Database.query(query);
 		return new map<Id,AMS_OSCAR__c>(listOscar);
+	}
+
+	/**
+	* Creates a map of Account records based on the input Ids
+	* Fields in the SELECT are based on those used in the Custom metadata Case_Process_Type__mdt
+	*/
+	private static map<Id,Account> getMapAccount(Set<Id> accountIds) {
+		if (accountIds.isEmpty()) return new map<Id,Account>();
+		set<String> setAccountFields = new set<String>(getRelatedFields().get('Account'));
+		setAccountFields.add('Id');
+		setAccountFields.add('IATA_ISO_Country__c');
+		setAccountFields.add('IATA_ISO_Country__r.ISO_Code__c');
+		List<String> listFields = new List<String>(setAccountFields);
+		String query = 'SELECT ' + String.join(listFields,',') + ' FROM Account';
+		query += ' WHERE Id IN (\'' + String.join(new list<Id>(accountIds),'\',\'') + '\')';
+		list<Account> listAccount = Database.query(query);
+		return new map<Id,Account>(listAccount);
 	}
 
 	/**
@@ -232,20 +263,19 @@ public with sharing class CaseProcessTypeHelper {
 	 * Returns a set of oscar field names which are important to recalculate the Accreditation_Process_Type__c
 	 * These fields are basically avery field used in the Case_Process_Type__mdt record used for the input oscar
 	 */
-	public static set<String> getRelevantFields(AMS_OSCAR__c oscar) {
-		set<String> setFields = new set<String>();
+	 public static set<String> getRelevantFields(AMS_OSCAR__c oscar) {
+		 // Case_Reason__c is always a relevant field
+		set<String> setFields = new set<String>{'Case_Reason__c'};
 		list<Case_Process_Type__mdt> listProcess = getMapRTsToReasons().get(CASE_RT_OSCAR).get(oscar.Case_Reason__c);
 		if (listProcess!=null) {
-			//case reason is used to find the right list of possible Case_Process_Type__mdt
-			setFields.add('Case_Reason__c');
 			// other possible fields are inside Other_Conditions__c
 			for (Case_Process_Type__mdt process: listProcess) {
-				setFields.addAll(extractOscarFieldNames(process.Other_Conditions__c));
+				setFields.addAll(extractRelatedFields(process.Other_Conditions__c, 'OSCAR__r'));
 			}
 		}
 		return setFields;
 	}
-
+	
 	/*
 	 *  Method used to calculate KPI field, it uses the custom metadata type Case_Process_Type__mdt to calculate the value
 	 *  KPI_Reference_Field__c, this field has the API Name of a Case field that matters to calculate the KPI for a specific process
@@ -253,6 +283,9 @@ public with sharing class CaseProcessTypeHelper {
 	 *  reference value then KPI will be 0 otherwise it will be 1
 	 */
 	private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {
+		System.debug('*** calculateKPI cse ' + cse);
+		System.debug('*** calculateKPI oscar ' + oscar);
+		System.debug('*** calculateKPI process ' + process);
 		//WMO-564 - ACAMBAS: Begin
 		List<String> refFieldList = process.KPI_Reference_Field__c.split('\\.');
 		Integer recordValue;
