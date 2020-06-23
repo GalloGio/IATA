@@ -23,7 +23,7 @@
 <tr></tr>
 
 <td colspan="1" rowspan="1">
-<c:IDCARD_VFEmailTemplate CID="{!relatedTo.Id}" isRenew="true"/>
+<c:IDCARD_VFEmailTemplate CID="{!relatedTo.VER_Number_2__c}" isRenew="true"/>
 </td>
 
 <tr></tr>
