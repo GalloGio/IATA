@@ -1109,6 +1109,7 @@ global without sharing class ISSP_APProcess {
 		//AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
 		if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
 			String countryConcerned='';
+			newForm.Type_of_participation_desired__c = 'PASS Participation Direct';
 			if(!selectedPASSCountries.isEmpty()) {
 				if(selectedPASSCountries.size()==1){//if there is only one selected country, there won't be child cases, so the field IFAP_Country_ISO__c is going to be populated
 					newCase.IFAP_Country_ISO__c=selectedPASSCountries[0].getValue();
