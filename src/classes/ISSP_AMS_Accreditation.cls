@@ -1730,9 +1730,13 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 				} else if (con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates') {
 					if(isCNSAgency && communityName=='CNS'){
-						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
-						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
-						options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_COMMERCIAL, Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR));
+						if(hqAccount.Location_Class__c == 'C'){
+							options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR));
+							options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_INDEPEND, Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR));
+						}else if(hqAccount.Location_Class__c == 'R'){
+							options.add(new SelectOption(AMS_Utils.TYPE_CNS_HO, Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO));
+							options.add(new SelectOption(AMS_Utils.TYPE_CNS_BR_COMMERCIAL, Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR));
+						}
 					}else{
 						if (!isocountry.Disable_non_IATA_Cargo_Agents__c) {
 							options.add(new SelectOption(AMS_Utils.TYPE_CASS_ASSOC_BRANCH, Label.ISSP_AMS_OPTION_CASS_ASSOC_BRANCH));
@@ -6470,6 +6474,11 @@ public without sharing class ISSP_AMS_Accreditation {
 									AND CASS_contact__c = true];
 
 		if(isCNSAgency){
+			
+			if(amsOfficeType == 'Branch' && newForm.Branch_Office_Email__c == null){
+				newForm.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
 
 			Integer numberOfOffices = 0;
 			Integer numberOfWarehouse = 0;
@@ -6510,7 +6519,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 
 				if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
-					if(isCNSAgency){
+					if(isCNSAgency && newCase.Reason1__c == 'New Commercial BR' && newCase.Reason1__c == 'New BR / IP'){
 						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Federal_EIN_Error_Message));
 					}else{
 						newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
@@ -6965,89 +6974,89 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 			if(!isCNSAgency){
-			if (!isocountry.EACP_Country__c) {
+				if (!isocountry.EACP_Country__c) {
 
-				if (newForm.Does_the_air_transportation_which_your__c == null) {
-					newForm.Does_the_air_transportation_which_your__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Does_the_air_transportation_which_your__c == null) {
+						newForm.Does_the_air_transportation_which_your__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Does_the_air_transportation_which_your__c == 'Yes' && newForm.State_the_percentage_of_your_gross__c == null) {
-					newForm.State_the_percentage_of_your_gross__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (newForm.Does_your_firm_sell_air_cargo__c == null) {
-					newForm.Does_your_firm_sell_air_cargo__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Does_the_air_transportation_which_your__c == 'Yes' && newForm.State_the_percentage_of_your_gross__c == null) {
+						newForm.State_the_percentage_of_your_gross__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+					if (newForm.Does_your_firm_sell_air_cargo__c == null) {
+						newForm.Does_your_firm_sell_air_cargo__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Does_your_firm_sell_air_cargo__c == 'Yes' && newForm.What_percentage_of_your_sales__c == null) {
-					newForm.What_percentage_of_your_sales__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Does_your_firm_sell_air_cargo__c == 'Yes' && newForm.What_percentage_of_your_sales__c == null) {
+						newForm.What_percentage_of_your_sales__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Is_your_firm_acting_as_agent_for_surface__c == 'Yes' && newForm.Rail__c == null && newForm.Steamship__c == null && newForm.Trucking__c == null) {
-					newForm.Rail__c.addError('Please fill in at least one of the fields: "Rail" , "Steamship" , "Trucking"');
-					newForm.Steamship__c.addError('Please fill in at least one of the fields: "Rail" , "Steamship" , "Trucking"');
-					newForm.Trucking__c.addError('Please fill in at least one of the fields: "Rail" , "Steamship" , "Trucking"');
-					errorFound = true;
-				}
+					if (newForm.Is_your_firm_acting_as_agent_for_surface__c == 'Yes' && newForm.Rail__c == null && newForm.Steamship__c == null && newForm.Trucking__c == null) {
+						newForm.Rail__c.addError('Please fill in at least one of the fields: "Rail" , "Steamship" , "Trucking"');
+						newForm.Steamship__c.addError('Please fill in at least one of the fields: "Rail" , "Steamship" , "Trucking"');
+						newForm.Trucking__c.addError('Please fill in at least one of the fields: "Rail" , "Steamship" , "Trucking"');
+						errorFound = true;
+					}
 
-				if (newForm.Is_your_firm_affiliated_directly__c == 'Yes' && !isocountry.EACP_Country__c && newForm.Provide_details__c == null) {
-					newForm.Provide_details__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Is_your_firm_affiliated_directly__c == 'Yes' && !isocountry.EACP_Country__c && newForm.Provide_details__c == null) {
+						newForm.Provide_details__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Does_your_firm_now_share_or_intend__c == null) {
-					newForm.Does_your_firm_now_share_or_intend__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Does_your_firm_now_share_or_intend__c == null) {
+						newForm.Does_your_firm_now_share_or_intend__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Does_your_firm_now_share_or_intend__c == 'Yes' && newForm.Explain_fully_stating_name__c == null) {
-					newForm.Explain_fully_stating_name__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Does_your_firm_now_share_or_intend__c == 'Yes' && newForm.Explain_fully_stating_name__c == null) {
+						newForm.Explain_fully_stating_name__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Does_your_firm_operate_a_cargo_cartage__c == 'Yes' && newForm.Does_your_firm_use_its_own_vehicles__c == null) {
-					newForm.Does_your_firm_use_its_own_vehicles__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Does_your_firm_operate_a_cargo_cartage__c == 'Yes' && newForm.Does_your_firm_use_its_own_vehicles__c == null) {
+						newForm.Does_your_firm_use_its_own_vehicles__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Is_there_any_relationship__c == 'Yes' && !isocountry.EACP_Country__c && newForm.Give_full_details__c == null) {
-					newForm.Give_full_details__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.Is_there_any_relationship__c == 'Yes' && !isocountry.EACP_Country__c && newForm.Give_full_details__c == null) {
+						newForm.Give_full_details__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.ISSP_AMS_Is_Applicant_Parent__c == null) {
-					newForm.ISSP_AMS_Is_Applicant_Parent__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.ISSP_AMS_Is_Applicant_Parent__c == null) {
+						newForm.ISSP_AMS_Is_Applicant_Parent__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.ISSP_AMS_Business_Activities__c == null) {
-					newForm.ISSP_AMS_Business_Activities__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.ISSP_AMS_Business_Activities__c == null) {
+						newForm.ISSP_AMS_Business_Activities__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes' && newForm.ISSP_AMS_State_Names_Addresses__c == null) {
-					newForm.ISSP_AMS_State_Names_Addresses__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-			} else {
-				if (newForm.Is_your_firm_handling_Dangerous_Goods__c == null) {
-					newForm.Is_your_firm_handling_Dangerous_Goods__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes' && newForm.ISSP_AMS_State_Names_Addresses__c == null) {
+						newForm.ISSP_AMS_State_Names_Addresses__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+				} else {
+					if (newForm.Is_your_firm_handling_Dangerous_Goods__c == null) {
+						newForm.Is_your_firm_handling_Dangerous_Goods__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.ISSP_AMS_Amount_of_credit_requested__c == null) {
-					newForm.ISSP_AMS_Amount_of_credit_requested__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.ISSP_AMS_Amount_of_credit_requested__c == null) {
+						newForm.ISSP_AMS_Amount_of_credit_requested__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Has_your_form_ever_held_CASS_Assoc_etc__c == null) {
-					newForm.Has_your_form_ever_held_CASS_Assoc_etc__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
+					if (newForm.Has_your_form_ever_held_CASS_Assoc_etc__c == null) {
+						newForm.Has_your_form_ever_held_CASS_Assoc_etc__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 				}
-			}
 			}
 
 			if (newForm.ISSP_AMS_Number_of_Years_Traded__c == null && (isocountry.EACP_Country__c || isCNSAgency)) {
@@ -7113,26 +7122,26 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if (newForm.Has_your_firm_ever_held_a_Cargo_Agency__c == 'Yes') {
 				if(!isCNSAgency) {
-				if (newForm.IATA_Agents_Numeric_Code__c == null) {
-					newForm.IATA_Agents_Numeric_Code__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
+					if (newForm.IATA_Agents_Numeric_Code__c == null) {
+						newForm.IATA_Agents_Numeric_Code__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 
-				if (newForm.Date_issued__c == null) {
-					newForm.Date_issued__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
+					if (newForm.Date_issued__c == null) {
+						newForm.Date_issued__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+	
+					if (newForm.Name_under_which_it_was_issued__c == null) {
+						newForm.Name_under_which_it_was_issued__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
+	
+					if (newForm.Reason_for_cancellation__c == null) {
+						newForm.Reason_for_cancellation__c.addError(Label.ISSP_YouMustEnter);
+						errorFound = true;
+					}
 				}
-
-				if (newForm.Name_under_which_it_was_issued__c == null) {
-					newForm.Name_under_which_it_was_issued__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-
-				if (newForm.Reason_for_cancellation__c == null) {
-					newForm.Reason_for_cancellation__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-			}
 				else {
 					if(newForm.CASS_USA_Account_Number__c == '' || newForm.CASS_USA_Account_Number__c == null){
 						newForm.CASS_USA_Account_Number__c.addError(Label.ISSP_YouMustEnter);
@@ -7227,15 +7236,15 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 			if(!isCNSAgency) {
-			if (newForm.ISSP_AMS_Registered_Capital__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY)) {
-				newForm.ISSP_AMS_Registered_Capital__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
+				if (newForm.ISSP_AMS_Registered_Capital__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY)) {
+					newForm.ISSP_AMS_Registered_Capital__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
 
-			if (newForm.ISSP_AMS_Min_Paidup_capital__c == null) {
-				newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
+				if (newForm.ISSP_AMS_Min_Paidup_capital__c == null) {
+					newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
 		
 			}
 
