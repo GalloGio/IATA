@@ -1,18 +1,22 @@
+/**
+ * Created by ukaya01 on 29/07/2019.
+ */
+
+
 /* ==============================================================================================================*/
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
 import { LightningElement, track, wire}         from 'lwc';
 import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
-import { getUserInfo }                          from 'c/ipInfo';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
+import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
-import isRestricted                             from '@salesforce/apex/IpInfo.isLocationRestricted';
 import isGuest                                  from '@salesforce/user/isGuest';
 import getGCSServiceId                          from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
@@ -21,6 +25,8 @@ import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndCon
 /* External Resources
 /* ==============================================================================================================*/
 import PhoneFormatter16                         from '@salesforce/resourceUrl/PhoneFormatter16';
+import PhoneFormatter                           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
+import PhoneFormatterS                          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
 
 /* ==============================================================================================================*/
 /* Custom Labels
@@ -56,38 +62,37 @@ import CSP_L1_Last_Name                         from '@salesforce/label/c.CSP_L1
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
-	/* ==============================================================================================================*/
-	/* Attributes
-	/* ==============================================================================================================*/
+    /* ==============================================================================================================*/
+    /* Attributes
+    /* ==============================================================================================================*/
 
-	@track isSelfRegistrationEnabled = false;
-	@track isRegistrationComplete = false;
-	@track displayContactForm = false;
-	@track displayTermsAndUsage = false;
-	@track userCountry = "";
-	@track userCountryCode = "";
-	@track selectedCountryFlag = "";
+    @track isSelfRegistrationEnabled = false;
+    @track isRegistrationComplete = false;
+    @track displayContactForm = false;
+    @track displayTermsAndUsage = false;
+    @track userCountry = "";
+    @track userCountryCode = "";
+    @track selectedCountryFlag = "";
 	@track isSanctioned = false;
 	@track isLoading = true;
 	@track config = {};
 	@track userInfo = {}
-	@track registrationForm = {
-		"email" : "",
-		"salutation" : "",
-		"firstName" : "",
-		"lastName" : "",
-		"country" : "",
-		"phone" : "",
-		"sector" : "",
-		"category" : "",
-		"extraChoice" : "",
-		"language" : "",
-		"selectedCustomerType" : "",
-		"termsAndUsage" : false,
-		"termsAndUsageIds" : "",
-		"lmsRedirectFrom" : "",
-		"lmsCourse" : ""
-	};
+	@track registrationForm = { "email" : "",
+								"salutation" : "",
+								"firstName" : "",
+								"lastName" : "",
+								"country" : "",
+								"phone" : "",
+								"sector" : "",
+								"category" : "",
+								"extraChoice" : "",
+								"language" : "",
+								"selectedCustomerType" : "",
+								"termsAndUsage" : false,
+								"termsAndUsageIds" : "",
+								"lmsRedirectFrom" : "",
+								"lmsCourse" : ""
+							  };
 	@track errorMessage = "";
 	@track displayError = false;
 	@track displaySubmitError = false;
@@ -95,6 +100,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track isFrozen = false;
 	@track countryOptions = [];
 	@track languageOptions = [];
+	//@track phoneInitialized = false;
 	@track isSelfRegistrationDisabled = false;
 	@track salutation = { label : "", options : [], display : false };
 	@track sector = { label : "", options : [], display : false };
@@ -104,8 +110,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
 	cancelIcon = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
 	@track jsLoaded = false;
-	phoneRegExp = /^\(?[+]\)?([()\d]*)$/
-	@track rerender = false;
+    phoneRegExp = /^\(?[+]\)?([()\d]*)$/
+    @track rerender = false;
 	@track gcsPortalServiceId;
 
 
@@ -153,7 +159,11 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	}
 
 	get displayToU(){
-		return (this.displayContactForm || this.displayTermsAndUsage);
+		if(this.displayContactForm || this.displayTermsAndUsage){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	@track selectedCustomerType = null;
@@ -163,9 +173,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@wire(getCustomerTypePicklists, {leaf:'$selectedCustomerType'})
 	getPickLists({ error, data }){
 		if (data) {
-			let result = JSON.parse(JSON.stringify(data));
+			var result = JSON.parse(JSON.stringify(data));
 
-			let that = this;
+			var that = this;
 
 			this.sector = { label : "", options : [], display : false};
 			this.category = { label : "", options : [], display : false};
@@ -173,8 +183,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 			result.forEach(function (data) {
 
-				let opts = [];
-				let obj = {};
+				var opts = [];
+				var obj = {};
 
 				data.picklistOptions.forEach(function (data) {
 						opts.push({ 'label': data.label, 'value': data.key });
@@ -193,20 +203,23 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 				}
 
 			});
+			this.isLoading = false;
 		} else if (error) {
-			console.error('error: ', JSON.parse(JSON.stringify(error)));
+			var result = JSON.parse(JSON.stringify(error));
+            console.info('error: ', result);
+			this.isLoading = false;
 		}
-		this.isLoading = false;
-	}
+	};
 
 	@wire(getMetadataCustomerType, {customerTypeKey:'$selectedCustomerType'})
 	getCustomerType({ error, data }) {
 		if (data) {
-			let result = JSON.parse(JSON.stringify(data));
+			var result = JSON.parse(JSON.stringify(data));
 			this.selectedMetadataCustomerType = result;
 
 		} else if (error) {
-			console.error('error: ', error);
+			var result = JSON.parse(JSON.stringify(error));
+            console.info('error: ', error);
 		}
 	}
 
@@ -216,28 +229,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	connectedCallback() {
 
-		// get user IP and Location from ipinfo.io
-		// check if country or region is restricted
-		// and redirect to sanction country page if it is
-		getUserInfo()
-		.then(locationData => {
-			this.userCountryCode = locationData.country; //used later on the _initializePhoneInput
-			return isRestricted({ location : locationData });
-		})
-		.then(restricted => {
-			if(restricted) navigateToPage(CSP_PortalPath + 'restricted-login');
-		});
-		//no need to catch because nothing happens if it fails
+		const RegistrationUtilsJs = new RegistrationUtils();
 
-		this._pageParams = getParamsFromPage();
-
-		const utils = new RegistrationUtils();
-
-		utils.checkUserIsSystemAdmin().then(result=> {
-			if(!result && !isGuest){
-				let startUrl = this._pageParams.startURL;
-				delete this._pageParams.startURL;
-				navigateToPage(startUrl ? startUrl : CSP_PortalPath,this._pageParams);
+		RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
+			if(result == false && isGuest == false){
+				navigateToPage(CSP_PortalPath,{});
+				return;
 			}
 		});
 
@@ -255,72 +252,81 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		]).then(function(){
 			this.jsLoaded = true;
 
-			//getConfig
-			getConfig().then(result => {
-				let config = JSON.parse(JSON.stringify(result));
-
-				this.config = config;
-				this._formatCountryOptions(config.countryInfo.countryList);
-				this.languageOptions = config.languageList;
-				this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
-				if(this.isSelfRegistrationEnabled == false){
-					this.isSelfRegistrationDisabled = true;
-					this.isLoading = false;
+			RegistrationUtilsJs.getUserLocation().then(result=> {
+				this.isSanctioned = result.isRestricted;
+				this.userCountryCode = result.countryCode;
+				this.userCountry = result.countryId;
+				this.registrationForm.country = result.countryId;
+				if(this.isSanctioned == true){
+					//navigate to error page
+					navigateToPage(CSP_PortalPath + 'restricted-login');
 				}else{
-					//check localStorage
-					if (localStorage != undefined && localStorage.length > 0) {
-						this._restoreState();
-					}else{
 
-						if(this._pageParams){
-							if(this._pageParams.language){
-								this.registrationForm.language = this._pageParams.language.toLowerCase();;
-							}
+					//getConfig
+					getConfig().then(result => {
+						var config = JSON.parse(JSON.stringify(result));
 
-							getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
-								var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-								this.gcsPortalServiceId = gcsPortalServiceId;
+						this.config = config;
+						this._formatCountryOptions(config.countryInfo.countryList);
+						this.languageOptions = config.languageList;
+						this.isSelfRegistrationEnabled = config.isSelfRegistrationEnabled;
+						if(this.isSelfRegistrationEnabled == false){
+							this.isSelfRegistrationDisabled = true;
+							this.isLoading = false;
+							return;
+						}else{
+							//check localStorage
+							if (localStorage != undefined && localStorage.length > 0) {
+								this._restoreState();
+							}else{
 
-								getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
-									var tcs = JSON.parse(JSON.stringify(result2));
-
-									var tcIds = [];
-
-									for(let i = 0; i < tcs.length; i++){
-										tcIds.push(tcs[i].id);
+								let pageParams = getParamsFromPage();
+								if(pageParams !== undefined){
+									if(pageParams.language !== undefined){
+										this.registrationForm.language = pageParams.language.toLowerCase();
 									}
-									this.registrationForm.termsAndUsageIds = tcIds.join();
-								});
-							});
 
-							if(this._pageParams.email !== undefined){
-								this.registrationForm.email = decodeURIComponent(this._pageParams.email);
-								this.handleNext();
-							}
-						}
-						if(this._pageParams.startURL){
-
-							let sURL = this._pageParams.startURL;
-							console.info('sURL: '+sURL);
-							let prmstr = sURL.substring(sURL.lastIndexOf('?') + 1);
-
-							let	paramsMap = prmstr ? decodeURIComponent('{"' + prmstr.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"') + '"}') : '{}';
-							let paramsReturn = JSON.parse(paramsMap);
-
-							if(paramsReturn.lms){
-								this.registrationForm.lmsRedirectFrom = paramsReturn.lms;
-								this.registrationForm.lmsCourse = paramsReturn.RelayState;
-								this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
-							}
-						}
-					}
+									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
+										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
+										this.gcsPortalServiceId = gcsPortalServiceId;
+							
+										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
+											var tcs = JSON.parse(JSON.stringify(result2));
+			
+											var tcIds = [];
+							
+											for(let i = 0; i < tcs.length; i++){
+												tcIds.push(tcs[i].id);
+											}
+											this.registrationForm.termsAndUsageIds = tcIds.join();
+										});
+									});
+									if(pageParams.email !== undefined){
+										this.registrationForm.email = decodeURIComponent(pageParams.email);
+										//this.isEmailFieldReadOnly = true;
+										//this.displayContactForm = true;
+										//this._initializePhoneInput();
+										this.handleNext(null);
+									}
+									if(pageParams.lms !== '' && pageParams.lms !== undefined){
+										this.registrationForm.lmsRedirectFrom = pageParams.lms;
+										this.registrationForm.lmsCourse = pageParams.RelayState;
+										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
+									}
+                   				}
+                            this.isLoading = false;
+                            }
+                        }
+					})
+					.catch(error => {
+						console.info('Error: ', JSON.parse(JSON.stringify(error)));
+						this.isLoading = false;
+					});
 				}
-			})
-			.catch(error => {
-				console.error('Error: ', error);
-				this.isLoading = false;
-			});
+         	});
+
 		}.bind(this));
+
 	}
 
 	/* ==============================================================================================================*/
@@ -329,7 +335,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleFormKeyPress(event){
 		if(event.keyCode === 13){
-			let submitButton = this.template.querySelector('[data-id="submitButton"]');
+			var submitButton = this.template.querySelector('[data-id="submitButton"]');
 			if(submitButton){
 				if(submitButton.disabled == false){
 					this.handleSubmit();
@@ -340,15 +346,22 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleNavigateToLogin() {
 
-		if(this.userInfo.hasExistingUser && this.registrationForm.email){
-			this._pageParams.email = this.registrationForm.email;
-			this._pageParams.redirect = 1;
+		if(this.userInfo.hasExistingUser){
+			if(this.userInfo.hasExistingUser == true && this.registrationForm.email.length > 0){
+				let params = {};
+				params.email = this.registrationForm.email;
+				params.redirect = 1;
+				navigateToPage(CSP_PortalPath + 'login',params);
+			}else{
+				navigateToPage(CSP_PortalPath + 'login');
+			}
+		}else{
+			navigateToPage(CSP_PortalPath + 'login');
 		}
 
-		navigateToPage(CSP_PortalPath + 'login', this._pageParams);
 	}
 
-	handleChangeEmail(){
+	handleChangeEmail(event){
 		this.isEmailFieldReadOnly = false;
 		this.displayContactForm = false;
 		this.displayTermsAndUsage = false;
@@ -358,7 +371,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleEmailChange(event) {
 		this.registrationForm.email = event.target.value;
-		let nextBtn = this.template.querySelector('[data-id="nextButton"]');
+		var nextBtn = this.template.querySelector('[data-id="nextButton"]');
 		this._showEmailValidationError(false, "");
 
 		if (this.registrationForm.email !== '' && this.registrationForm.email !== null && this.registrationForm.email.length > 0) {
@@ -371,29 +384,28 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			nextBtn.disabled = true;
 		}
 
-		if(event.keyCode === 13 && !nextBtn.disabled){
+		if(event.keyCode === 13 && nextBtn.disabled == false){
 			this.handleNext();
 		}
 
 	}
 
 
-	handleNext(){
+	handleNext(event){
 
 		this.isLoading = true;
 		const RegistrationUtilsJs = new RegistrationUtils();
 
 		RegistrationUtilsJs.checkEmailIsValid(`${this.registrationForm.email}`).then(result=> {
 
-			if(!result){
+			if(result == false){
 				this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 				this.isLoading = false;
 			}else{
 				let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
 				RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
-
 					if(result == 'true'){
-						//disposable email alert!
+					   //disposable email alert!
 						this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 						this.isLoading = false;
 					}else{
@@ -403,12 +415,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
+						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => { 
 							let userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;
-							if(userInfo.hasExistingContact){
-								if(userInfo.hasExistingUser){
+							if(userInfo.hasExistingContact == true){
+								if(userInfo.hasExistingUser == true){
 									//display message of existing user
 									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
 									this.isLoading = false;
@@ -419,14 +431,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 									this.isLoading = false;
 								}
 							}else{
-								if(userInfo.hasExistingUser){
+								if(userInfo.hasExistingUser == true){
 									//display message of existing user
 									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
 									this.isLoading = false;
 								}else{
-									if(userInfo.isEmailAddressAvailable){
+									if(userInfo.isEmailAddressAvailable == true){
 											//show form
-										if(this.userCountry){
+										if(this.userCountry != ""){
 											this.registrationForm.country = this.userCountry;
 										}
 
@@ -444,7 +456,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							}
 						})
 						.catch(error => {
-							console.error('Error: ', error);
+                            console.info('Error: ', error);
 							this.isLoading = false;
 						});
 					}
@@ -453,36 +465,37 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		});
 	}
 
-	handleSubmit(){
+	handleSubmit(event){
 
 		this.isLoading = true;
-		if(this.registrationForm.phone.length < 5){
-			this.registrationForm.phone = "";
-		}
+        if(this.registrationForm.phone.length < 5){
+            this.registrationForm.phone = "";
+        }
 
-		let contactId = this.userInfo.contactId;
-		let accountId = this.userInfo.accountId;
+		var contactId = this.userInfo.contactId;
+		var accountId = this.userInfo.accountId;
 
-		register({
-			registrationForm : JSON.stringify(this.registrationForm),
-			customerType : JSON.stringify(this.selectedMetadataCustomerType),
-			contactId : contactId,
-			accountId : accountId,
-			userInfo : JSON.stringify(this.userInfo),
-			urlParams : this._pageParams
-		}).then(result => {
-			let dataAux = JSON.parse(JSON.stringify(result));
+		register({ registrationForm : JSON.stringify(this.registrationForm),
+				   customerType : JSON.stringify(this.selectedMetadataCustomerType),
+				   contactId : contactId,
+				   accountId : accountId,
+				   userInfo : JSON.stringify(this.userInfo)
+				 }).then(result => {
+			var dataAux = JSON.parse(JSON.stringify(result));
 
 			if(dataAux.isSuccess == true){
 				//todo: show success message
 				this.isRegistrationComplete = true;
+				this.isLoading = false;
 			}else{
+				this.isLoading = false;
 				this._showSubmitError(true, 'Error Creating User');
 			}
 
-			this.isLoading = false;
 		})
-		.catch(() => {
+		.catch(error => {
+			var dataAux = JSON.parse(JSON.stringify(error));
+            console.info(dataAux);
 			this._showSubmitError(true, 'Error Creating User');
 			this.isLoading = false;
 		});
@@ -496,8 +509,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleInputValueChange(event){
 		//todo: dynamic input change checker
-		let inputName = event.target.name;
-		let inputValue = event.target.value;
+		var inputName = event.target.name;
+		var inputValue = event.target.value;
 		this.registrationForm[inputName] = inputValue;
 		//todo: if input is required => clear submit error message
 		this.template.querySelector('[data-id="' + inputName + 'Div"]').classList.remove('slds-has-error');
@@ -511,48 +524,48 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	}
 
-	handlePhoneInputChange(event){
-		this.rerender = false;
-		let inputValue = event.target.value;
-		if(inputValue == ""){
-			inputValue = this.selectedCountryFlag;
-		}
-		let isValid = this.phoneRegExp.test(inputValue);
-		if(isValid == false){
-			inputValue = inputValue.replace(/[^0-9()+]|(?!^)\+/g, '');
-		}
-		this.registrationForm.phone = inputValue;
-		this.selectedCountryFlag = this.selectedCountryFlag;
-		this.rerender = true;
-	}
+    handlePhoneInputChange(event){
+        this.rerender = false;
+        var inputValue = event.target.value;
+        if(inputValue == ""){
+            inputValue = this.selectedCountryFlag;
+        }
+        var isValid = this.phoneRegExp.test(inputValue);
+        if(isValid == false){
+            inputValue = inputValue.replace(/[^0-9()+]|(?!^)\+/g, '');
+        }
+        this.registrationForm.phone = inputValue;
+        this.selectedCountryFlag = this.selectedCountryFlag;
+        this.rerender = true;
+    }
 
-	handlePhoneInputCountryChange(){
-		let input = this.template.querySelector('[data-id="phone"]');
-		let iti = window.intlTelInputGlobals.getInstance(input);
-		let selectedCountry = iti.getSelectedCountryData();
-		let countryCode = "";
+    handlePhoneInputCountryChange(){
+        let input = this.template.querySelector('[data-id="phone"]');
+        let iti = window.intlTelInputGlobals.getInstance(input);
+        let selectedCountry = iti.getSelectedCountryData();
+        let countryCode = "";
 
-		if(selectedCountry.dialCode !== undefined){
-			countryCode = "+" + selectedCountry.dialCode;
-		}else{
-			countryCode = this.selectedCountryFlag;
-		}
-		let inputValue = this.registrationForm.phone;
-		let currentPhoneValue = this.registrationForm.phone;
-		//check if previous flag selection exists to prevent overriding phone value on page refresh due to language change
-		let newPhoneValue = "";
-		if(this.selectedCountryFlag){
-			if(currentPhoneValue.includes(this.selectedCountryFlag)){
-				newPhoneValue = currentPhoneValue.replace(this.selectedCountryFlag, countryCode);
-			}else{
-				newPhoneValue = countryCode;
-			}
-		}else{
-			newPhoneValue = countryCode;
-		}
-		this.selectedCountryFlag = countryCode;
-		this.registrationForm.phone = newPhoneValue;
-	}
+        if(selectedCountry.dialCode !== undefined){
+            countryCode = "+" + selectedCountry.dialCode;
+        }else{
+            countryCode = this.selectedCountryFlag;
+        }
+        let inputValue = this.registrationForm.phone;
+        let currentPhoneValue = this.registrationForm.phone;
+        //check if previous flag selection exists to prevent overriding phone value on page refresh due to language change
+        let newPhoneValue = "";
+        if(this.selectedCountryFlag){
+            if(currentPhoneValue.includes(this.selectedCountryFlag)){
+                newPhoneValue = currentPhoneValue.replace(this.selectedCountryFlag, countryCode);
+            }else{
+                newPhoneValue = countryCode;
+            }
+        }else{
+            newPhoneValue = countryCode;
+        }
+        this.selectedCountryFlag = countryCode;
+        this.registrationForm.phone = newPhoneValue;
+    }
 
 	handleSalutationChange(event){
 		this.registrationForm.salutation = event.target.value;
@@ -680,8 +693,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 		this.isLoading = true;
 		this.registrationForm.language = event.detail;
-		let search = location.search;
-		let param = new RegExp('language=[^&$]*', 'i');
+		var search = location.search;
+		var param = new RegExp('language=[^&$]*', 'i');
 		if(~search.indexOf('language')){
 			search = search.replace(param, 'language=' + this.registrationForm.language );
 		}else{
@@ -702,7 +715,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 				selectedMetadataCustomerType : this.selectedMetadataCustomerType,
 				userCountry : this.userCountry,
 				userCountryCode : this.userCountryCode,
-				selectedCountryFlag : this.selectedCountryFlag,
+                selectedCountryFlag : this.selectedCountryFlag,
 				isRegistrationComplete : this.isRegistrationComplete,
 				userInfo : this.userInfo
 			};
@@ -723,7 +736,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	/* ==============================================================================================================*/
 
 	_showEmailValidationError(state, message){
-		let emailDiv = this.template.querySelector('[data-id="emailDiv"]');
+		var emailDiv = this.template.querySelector('[data-id="emailDiv"]');
 		this.errorMessage = message;
 		this.displayError = state;
 
@@ -760,20 +773,20 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			email = "";
 		}
 
-		this.registrationForm = {
-			"email" : email,
-			"firstName" : "",
-			"lastName" : "",
-			"country" : "",
-			"phone" : "",
-			"sector" : "",
-			"category" : "",
-			"extraChoice" : "",
-			"language" : this.registrationForm.language,
-			"selectedCustomerType" : "",
-			"termsAndUsage" : false,
-			"termsAndUsageIds" : ""
-		};
+		this.registrationForm = { "email" : email,
+								  "salutation" : "",
+								  "firstName" : "",
+								  "lastName" : "",
+								  "country" : "",
+								  "phone" : "",
+								  "sector" : "",
+								  "category" : "",
+								  "extraChoice" : "",
+								  "language" : this.registrationForm.language,
+								  "selectedCustomerType" : "",
+								  "termsAndUsage" : false,
+								  "termsAndUsageIds" : ""
+								};
 
 		this.selectedCustomerType = null;
 		this.selectedMetadataCustomerType = null;
@@ -795,7 +808,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this.selectedMetadataCustomerType = registrationState.selectedMetadataCustomerType;
 		this.userCountry = registrationState.userCountry;
 		this.userCountryCode = registrationState.userCountryCode;
-		this.selectedCountryFlag = registrationState.selectedCountryFlag;
+        this.selectedCountryFlag = registrationState.selectedCountryFlag;
 		this.isRegistrationComplete = registrationState.isRegistrationComplete;
 		this.userInfo = registrationState.userInfo;
 		if(this.isRegistrationComplete == false){
@@ -830,7 +843,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		}
 
 		await (this.template.querySelector('[data-id="submitButton"]'));
-		let submitButton = this.template.querySelector('[data-id="submitButton"]');
+		var submitButton = this.template.querySelector('[data-id="submitButton"]');
 		if(isValid == true){
 			if(submitButton.disabled == true){
 				submitButton.classList.remove('containedButtonDisabled');
@@ -847,7 +860,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	/*
 	async _renderSubmitButton(state){
 		await (this.template.querySelector('[data-id="submitButton"]'));
-		let submitButton = this.template.querySelector('[data-id="submitButton"]');
+		var submitButton = this.template.querySelector('[data-id="submitButton"]');
 		if(state == true){
 			submitButton.classList.remove('containedButtonDisabled');
 			submitButton.classList.add('containedButtonLogin');
@@ -865,13 +878,13 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	async _initializePhoneInput(){
 
-		await(this.jsLoaded);
+		await(this.jsLoaded == true);
 		await(this.template.querySelector('[data-id="phone"]'));
 
-		let input = this.template.querySelector('[data-id="phone"]');
-		let countryCode = this.userCountryCode;
+		var input = this.template.querySelector('[data-id="phone"]');
+		var countryCode = this.userCountryCode;
 
-		let iti = window.intlTelInput(input,{
+        var iti = window.intlTelInput(input,{
 			initialCountry: countryCode,
 			preferredCountries: [countryCode],
 			placeholderNumberType : "FIXED_LINE",
@@ -879,14 +892,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			/*autoPlaceholder : "aggressive"*/
 		});
 
-		let selectedCountryData = iti.getSelectedCountryData();
+        var selectedCountryData = iti.getSelectedCountryData();
 
-		if(!this.selectedCountryFlag){
-			this.selectedCountryFlag = "+" + selectedCountryData.dialCode;
-			this.registrationForm.phone = "+" + selectedCountryData.dialCode;
-		}
+        if(!this.selectedCountryFlag){
+            this.selectedCountryFlag = "+" + selectedCountryData.dialCode;
+            this.registrationForm.phone = "+" + selectedCountryData.dialCode;
+        }
 
-		input.addEventListener("countrychange", this.handlePhoneInputCountryChange.bind(this));
+        input.addEventListener("countrychange", this.handlePhoneInputCountryChange.bind(this));
 	}
 
 }

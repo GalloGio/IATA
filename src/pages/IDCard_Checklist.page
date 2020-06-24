@@ -5,6 +5,40 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>IATA/IATAN ID Card Online Platform</title>
+
+<style type="text/css">
+    .customPopup {
+        background-color: white;
+        border-style: solid;
+        border-width: 2px;
+        top: 50%;
+        left: 50%;
+        margin-left: -154px;
+        font-size: 11pt;
+        padding-left: 3px;
+        padding-right: 3px;
+        position: fixed;
+        z-index: 9999;
+        width: 300px;
+        height: 150px;
+        color: #000;
+    } 
+
+    .continueButton {
+        float: right;
+    }
+    .labelStyle {
+        color: black;
+        line-height: 27px;
+        width: 700px;
+    }
+    .checkBoxStyle{
+        padding-top: 60px;
+        padding-bottom: 40px;
+        text-align: center;
+    }
+</style>
+
 </head> 
 <body> 
    
@@ -13,8 +47,16 @@
 	      function getSelectedApplicationType(type)
 	      {           
 	           next(type);        
-	      }
-	
+          }
+
+          function hidePopup(){
+                $('[id$=popup]').css('display', 'none');
+                      }
+          function showPopup(){
+                $('[id$=popup]').css('display', 'block');
+          }
+
+
 	    $(document).ready(function () {     
 	       if (!({!isProofEmploymentOptionActive})  && $('#proofEmploymentOption'))
 	            $('div').remove('#proofEmploymentOption');        
@@ -56,6 +98,14 @@
           
          <div class="background">
      <!---- BREAD CRUMB ---->   
+
+        <apex:outputPanel id="popup" style="display:none">
+            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block">
+                <apex:commandButton value="X" title="Close the popup" onclick="hidePopup(); return false;" styleClass="continueButton" />
+                <div class="checkBoxStyle">{!$Label.IDCard_CheckBox}</div>             
+                <apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="continueButton" />                             
+            </apex:outputPanel> 
+        </apex:outputPanel>
      <br/>
           <div>
             <ul class="crumbsbkgd">
@@ -96,7 +146,7 @@
                         <div id="proofEmploymentOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="proofEmploymentOptionChkBox" value="{!isProofEmploymentOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_CheckList_ProofEmploymentOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -110,7 +160,7 @@
                         <div id="pictureOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="pictureOptionChkBox" value="{!isPictureOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_Checklist_PictureOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -124,7 +174,7 @@
                         <div id="creditCardOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="creditCardOptionChkBox" value="{!isCreditCardOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_CheckList_PaymentInformationOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -138,7 +188,7 @@
                         <div id="pictureOptionRecurring">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="pictureOptionChkBoxRecurring" value="{!isPictureOptionRecurringChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_Checklist_PictureOptionTitle} (Optional)</div></td>
                                 </tr>
                                 <tr>
@@ -152,7 +202,7 @@
                         <div id="proofNameOption">
                             <table class="checklistTable">
                                 <tr>
-                                    <td class="checklistTableChk"><apex:inputCheckbox id="proofNameOptionChkBox" value="{!isProofNameOptionChecked}" /></td>
+                                    <td class="checklistTableChk"></td>
                                     <td><div class="ChecklistItemHeader">{!$Label.IDCard_CheckList_ProofNameChangeOptionTitle}</div></td>
                                 </tr>
                                 <tr>
@@ -188,11 +238,11 @@
                                          <!--<apex:commandButton id="btnBack1"   value="{!$Label.IDCard_Back}" action="{!back}" style="width:100px; position:relative; top:15px;" />-->
                                      </td>
                                      <td >
-                                        <apex:commandLink action="{!next}" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;" rerender="ErrorMsgs">
+                                         <!-- Show and hide popup is made by css because commandLink was not supporting language change with the popup open-->
+                                         <apex:commandLink  onclick="showPopup(); return false;" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;">
                                             <span>{!$Label.ID_Card_Next_button}</span>
-                                        </apex:commandLink>
-                                        <!--<apex:commandButton id="btnNext2" style="width:100px; position:relative; top:15px;" value="{!$Label.ID_Card_Next_button}" action="{!next}"  rerender="ErrorMsgs" />-->
-                                    </td>
+                                        </apex:commandLink> 
+                                     </td>
                                 </tr>
                             </table>
                         </div>
