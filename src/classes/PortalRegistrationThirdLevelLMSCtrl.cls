@@ -132,6 +132,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				}
 			}
 
+			Boolean toInsACR = false;
+			Id auxContId = con.Id;
 			if(acrOld != null && acrOld.Id != null){
 				//swap Account Contact Roles between the new contact and the existing one
 				acr = acrOld;
@@ -139,13 +141,22 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				acr.Contact__c = con.Id;
 				update acr;
 
-				acrNew.Contact__c = regParam.existingTrainingId;
-				update acrNew;
+				if(acrNew != null && acrNew.Id != null){
+					acrNew.Contact__c = regParam.existingTrainingId;
+					update acrNew;
+				}else{
+					auxContId = regParam.existingTrainingId;
+					toInsACR = true;
+				}
 			}else if(acrNew != null && acrNew.Id != null){
 				acr = acrNew;
 			}else{
+				toInsACR = true;
+			}
+
+			if(toInsACR){
 				acr.Account_Role__c = ar.Id;
-				acr.Contact__c = con.Id;
+				acr.Contact__c = auxContId;
 				acr.Contact_Role_Name__c = 'Trainee';
 				acr.Functional_Role__c =  'Training';
 				acr.RecordTypeId = PortalRegistrationThirdLevelLMSCtrl.RECTYPE_Master_AccContRole;
@@ -236,6 +247,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			ycd.Street2__c = (regParam.sStreet2 != null) ? regParam.sStreet2 : '';
 			ycd.Postal_Code__c = (regParam.sZipCode != null && regParam.sZipCode != '') ? regParam.sZipCode : '00000';
 			ycd.Country_Reference__c = (regParam.sCountryId != null && regParam.sCountryId != '') ? regParam.sCountryId : null;
+			ycd.Country__c = (regParam.sCountryName != null && regParam.sCountryName != '') ? regParam.sCountryName : null;
 			ycd.City_Reference__c = (regParam.sCityId != null && regParam.sCityId != '') ? regParam.sCityId : null;
 			ycd.City_Name__c = (regParam.sCity != null && regParam.sCity != '') ? regParam.sCity : null;
 			ycd.OwnerId = loggedUser.Id;
@@ -328,6 +340,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			extraValues.add(contactInfo.serviceid);
 			extraValues.add(contactInfo.street2);
 			extraValues.add(contactInfo.existingTrainingId);
+			extraValues.add(contactInfo.countryName);
 
 			//Inactivate the registering Contact
 			//Need to liberate the additional email 1st to empty in order not to give duplicate error
@@ -854,7 +867,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
 
 		Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
-		Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
+		Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullName, roundThreshold);
 
 		if(compareResult >= 0 || compareResultReverse >= 0){
 			bRes = true;
@@ -1051,6 +1064,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		public String serviceid {get;set;}
 		public String sStreet2 {get;set;}
 		public String existingTrainingId {get;set;}
+		public String sCountryName {get;set;}
 
 		public RegistrationParamsWrapper(List<String> extraValues){
 			this.sUsername = extraValues[0];
@@ -1067,6 +1081,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			this.serviceid = extraValues[11];
 			this.sStreet2 = extraValues[12];
 			this.existingTrainingId = extraValues[13];
+			this.sCountryName = extraValues[14];
 		}
 
 	}

@@ -71,8 +71,6 @@ import CSP_L2_SucessUpdate_Title_LMS from '@salesforce/label/c.CSP_L2_SucessUpda
 export default class PortalRegistrationConfirmationLMS extends LightningElement {
 	/* Images */
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
-
-	// TO DO : find an image for error
 	errorIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
 
 	@api contactInfo;
@@ -269,7 +267,8 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.localAddress.isPoBox,
 			this.localContactInfo.serviceid,
 			this.localAddress.street2,
-			this.localContactInfo.existingTrainingId
+			this.localContactInfo.existingTrainingId,
+			this.localAddress.countryName
 		];
 
 		//Move address info into ContactInfo

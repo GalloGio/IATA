@@ -1,5 +1,7 @@
 trigger AccountRoleTrigger on Account_Role__c (before insert, after insert, before update, after update, after delete) {
 
+	if (!AMS_TriggerExecutionManager.checkExecution(Account_Role__c.getSObjectType(), 'AccountRoleTrigger')) { return; }
+
 	AccountRoleHandler handler = new AccountRoleHandler();
 
 	if(trigger.isBefore){
