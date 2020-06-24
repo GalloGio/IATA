@@ -9297,6 +9297,10 @@
         <name>IDCard_CaseStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard CheckBox --></label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard CheckList Credit Card And Checque Payment Information --></label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</name>
     </customLabels>
@@ -9455,6 +9459,10 @@
     <customLabels>
         <label><!-- IDCard_ContactNotFound --></label>
         <name>IDCard_ContactNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Continue --></label>
+        <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Continue Button --></label>
@@ -10249,6 +10257,18 @@
         <name>IDCard_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_errMsg_Account_Rule --></label>
+        <name>IDCard_errMsg_Account_Rule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_MoreDetails --></label>
+        <name>IDCard_errMsg_MoreDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_NoContact --></label>
+        <name>IDCard_errMsg_NoContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
     </customLabels>
@@ -10553,6 +10573,10 @@
         <name>ID_Card_Invalid_Promotion_Code_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID Card Invalid Promotion Code 3 --></label>
+        <name>ID_Card_Invalid_Promotion_Code_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Invalid VER --></label>
         <name>ID_Card_Invalid_VER</name>
     </customLabels>
@@ -10587,6 +10611,10 @@
     <customLabels>
         <label><!-- ID Card Package Travel Professionals 2 --></label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Photo --></label>
+        <name>ID_Card_Photo</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Photo Disclaimer --></label>
@@ -25447,6 +25475,10 @@
     <customLabels>
         <label><!-- Total_Cost --></label>
         <name>Total_Cost</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total_Discount --></label>
+        <name>Total_Discount</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>
