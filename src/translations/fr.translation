@@ -9302,6 +9302,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CaseStatus</name>
     </customLabels>
     <customLabels>
+        <label>J’ai lu la liste des documents requis.</label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
         <label>Le paiement par virement bancaireest accepté pour votre pays</label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</name>
     </customLabels>
@@ -9480,6 +9484,10 @@ Documents acceptés pour consultant indépendant du Voyage / entrepreneur / cour
         <label>&lt;h2&gt; Nous n&apos;avons pas trouvé de carte d&apos;identité existant basé sur les informations personnelles que vous avez fournies en page de connexion.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
 Veuillez, si c&apos;est la première fois que vous faites une demande de carte d&apos;identité , confirmer que les details de l&apos;Agence sont bonne et cliquez sur &quot;Appliquer pour une première carte d&apos;identité&quot;, ou &quot;retour à la page de connexion&quot; et entrez une information personnelle correcte. &lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</label>
         <name>IDCard_ContactNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Continuer...</label>
+        <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>
         <label>Continuer</label>
@@ -10280,6 +10288,18 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>IDCard_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_errMsg_Account_Rule --></label>
+        <name>IDCard_errMsg_Account_Rule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_MoreDetails --></label>
+        <name>IDCard_errMsg_MoreDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_NoContact --></label>
+        <name>IDCard_errMsg_NoContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
     </customLabels>
@@ -10478,14 +10498,6 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>ID_Card_Change_Photo_Button</name>
     </customLabels>
     <customLabels>
-        <label>J’ai lu la liste des documents requis.</label>
-        <name>IDCard_CheckBox</name>
-    </customLabels>
-    <customLabels>
-        <label>Continuer...</label>
-        <name>IDCard_Continue</name>
-    </customLabels>
-    <customLabels>
         <label>Veuillez confirmer le remplacement de la Carte</label>
         <name>ID_Card_Confirm_Replacement</name>
     </customLabels>
@@ -10598,6 +10610,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>ID_Card_Invalid_Promotion_Code_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID Card Invalid Promotion Code 3 --></label>
+        <name>ID_Card_Invalid_Promotion_Code_3</name>
+    </customLabels>
+    <customLabels>
         <label>VER# invalide</label>
         <name>ID_Card_Invalid_VER</name>
     </customLabels>
@@ -10632,6 +10648,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
     <customLabels>
         <label>&lt;br&gt; Veuillez sélectionner votre cours ici:</label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Photo --></label>
+        <name>ID_Card_Photo</name>
     </customLabels>
     <customLabels>
         <label>Veuillez noter que la photo affichée ou téléchargée sera imprimée tel quel et qu&apos;aucune modification ne sera faite. IATA se dégage de toute responsabilité dans le cas où un fournisseur ne parvient pas à reconnaître le titulaire de la Carte sur la base de la photo.</label>
@@ -25543,6 +25563,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Total_Cost</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total_Discount --></label>
+        <name>Total_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total Price --></label>
         <name>Total_Price</name>
     </customLabels>
@@ -35720,7 +35744,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Fichiers</label>
             <name>Contacts</name>
         </sections>
         <sections>
