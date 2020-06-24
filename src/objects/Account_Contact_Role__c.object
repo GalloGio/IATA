@@ -346,7 +346,7 @@
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -857,6 +857,10 @@
             </values>
             <values>
                 <fullName>Medaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
                 <default>false</default>
             </values>
             <values>

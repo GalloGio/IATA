@@ -269,7 +269,7 @@
                 <leftValueReference>myVariable_current.Portal_Application__r.Name</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>Training Platform (LMS)</stringValue> 
+                    <stringValue>Training Platform (LMS)</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -479,7 +479,7 @@
                 <leftValueReference>myVariable_current.Portal_Application__r.Name</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>Training Platform (LMS)</stringValue> 
+                    <stringValue>Training Platform (LMS)</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -884,7 +884,7 @@
         <object>Portal_Application_Right__c</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
