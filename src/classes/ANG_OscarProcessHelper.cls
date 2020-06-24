@@ -2100,15 +2100,15 @@ global class ANG_OscarProcessHelper {
 			if(!Test.isRunningTest()){
 				List<Messaging.SendEmailResult> results = Messaging.sendEmail(emailsToSend, false); //it allows delivery of the messages that don't have errors (false).
 				if(!results.isEmpty()){
-					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: ';
-					Integer msgNbr = 0;
+					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: \n';
+					Boolean sendErrors = false;
 					for(Messaging.SendEmailResult sendResult : results){
 						if(!sendResult.isSuccess()) {
-							errorMsg =+ sendResult.getErrors()[msgNbr] + '\n' ;
+							errorMsg = errorMsg + ' \n' + sendResult.getErrors()[0].getMessage() + ' - STATUS: ' + sendResult.getErrors()[0].getStatusCode() + ' - Object Id: ' +  sendResult.getErrors()[0].getTargetObjectId() + ' \n';
+							sendErrors = true;
 						}
-						msgNbr++;
 					}
-					TransformationHelper.sendEmailSupport('Send Email for PCI Renewal Cases & Annual Revalidation notifications Failed', errorMsg);
+					if(sendErrors) TransformationHelper.sendEmailSupport('Send Email for PCI Renewal Cases & Annual Revalidation notifications Failed', errorMsg);
 				}
 			}
 			
