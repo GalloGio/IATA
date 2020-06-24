@@ -35,6 +35,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -250,15 +254,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>atakee@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>auragh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

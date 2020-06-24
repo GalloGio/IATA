@@ -286,4 +286,16 @@ private class AmazonFileTrgHelperTest {
 
 		update files;
 	}
+
+	@isTest static void test_Case_Id_Populated_From_SObjectId() {
+		loadCredentials();
+
+		Case case1 =  initializeCase();
+
+		Test.startTest();
+		AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', sObject_Id__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+		insert AmzFile;
+		system.assert(([select case__c from AmazonFile__c where id=:AmzFile.Id].case__c) == case1.Id);
+		Test.stopTest();
+	}
 }

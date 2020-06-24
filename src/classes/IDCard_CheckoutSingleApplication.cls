@@ -71,38 +71,36 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'We failed to contact your manager. Please contact IATA or your manager to validate your application1 '));
 			return ;
 		}
-		List<String> toRecipients = new List<String>();
-		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-		system.debug('[IDCard_CheckoutSingleApplication]Emailing');
-		/*for(Contact c :keyContact)
-			toRecipients.add(c.Email);*/
-		for (Managed_agency__c c : managedAccountList ) {
-			if (!c.Delegate__c && String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IsEmailBounced && String.isNotBlank(c.Contact__r.Email) && !c.Contact__r.Email.endsWithIgnoreCase('.inactive')) {
-				keyContactEmail = c.Contact__r.IDCard_Email__c;
-				email.setTargetObjectId(c.Contact__r.Id);
-			}
-
-			if(String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IDCard_Email__c.endsWithIgnoreCase('.inactive'))
-				toRecipients.add(c.Contact__r.IDCard_Email__c);
-		}
 
 		String language = getSelectedLanguage();
 		List<EmailTemplate> ets = new List<EmailTemplate>();
-
-		if (language == 'fr') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationFR'];
-		if (language == 'es') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationES'];
-		if (language == 'en_US') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_Application'];
-
-		if ( ets.size() > 0 && toRecipients.size() > 0) {
+		if (language == 'fr') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationFRv2'];
+		if (language == 'es') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationESv2'];
+		if (language == 'en_US') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_Applicationv2'];
+		
+		if ( ets.size() > 0 ) {
 			EmailTemplate et = ets.get(0);
-			system.debug('[IDCard_CheckoutSingleApplication]Email find recipeint and template');
-			email.setToAddresses(toRecipients);
-			email.setWhatId(idCardApplication.Id);
-			email.setTreatTargetObjectAsRecipient(false);
+			List<Messaging.SingleEmailMessage> lstEmails = new List<Messaging.SingleEmailMessage>();
+			system.debug('[IDCard_CheckoutSingleApplication]Emailing');
 
-			email.setTemplateId(et.Id);
+			for (Managed_agency__c c : managedAccountList ) {
+				if (!c.Delegate__c && String.isNotBlank(c.Contact__r.IDCard_Email__c)) {
+					keyContactEmail = c.Contact__r.IDCard_Email__c;
+				}
+
+				if (String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IsEmailBounced && String.isNotBlank(c.Contact__r.Email) && !c.Contact__r.Email.endsWithIgnoreCase('.inactive')) {
+					Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+					email.setTargetObjectId(c.Contact__r.Id);
+					email.setToAddresses(new List<String>{c.Contact__r.Email});
+					email.setWhatId(idCardApplication.Id);
+					email.setTreatTargetObjectAsRecipient(false);
+					email.setTemplateId(et.Id);
+					lstEmails.add(email);
+				}
+			}
+			
 			try {
-				Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+				Messaging.sendEmail(lstEmails);
 				system.debug('[IDCard_CheckoutSingleApplication]Send email OK');
 				return;
 			} catch (EmailException e) {
