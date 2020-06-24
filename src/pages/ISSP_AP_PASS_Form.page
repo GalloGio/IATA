@@ -190,13 +190,6 @@
                             </apex:pageBlockSectionItem>
                             <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" style="color:#a31717; font-weight: bold !important;" />
                             <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                            <div class="aplabel">
-                                Email address for validation notifications (up to 2 allowed)
-                            </div>
-                            <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                            <apex:inputField label="Email 1" value="{!newForm.CASS_Corrections_Email_1__c}" style="color:#a31717; font-weight: bold !important;"/>
-                            <apex:inputField label="Email 2" value="{!newForm.CASS_Corrections_Email_2__c}"/>
-                            
                         </apex:pageBlockSection>
                         <span id="nav_four"></span>
                         <apex:pageBlockSection rendered="{!isGSSAUser}" title="4. Participant Information (GSSA)" columns="1" >
@@ -352,7 +345,7 @@
                         <apex:pageBlockSection title="6. Usernames and System functionality required" columns="2" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
-                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'6','6')}.  Usernames and System functionality required"/>
+                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'6','5')}.  Usernames and System functionality required"/>
                                 </apex:outputpanel>
                             </apex:facet>
                         </apex:pageBlockSection>
