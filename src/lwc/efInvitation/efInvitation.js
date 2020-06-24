@@ -148,7 +148,8 @@ export default class EF_Invitation extends LightningElement {
 						variant: 'success'
 					})
 				)
-				if(this.isCommunity) window.setTimeout(function() {that.cancel()}, 2000);
+				that.cancel();
+				// if(this.isCommunity) window.setTimeout(function() {that.cancel()}, 2000);
 			}
 			).catch(error => {
 				console.error(`error: ${error.body.message}`);
