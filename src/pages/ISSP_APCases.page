@@ -433,7 +433,7 @@
                       <apex:outputLabel value="{!$Label.ISSP_AP_Select_Form_of_Payment_in_HOT}"/>
                     </div>
                     <div>
-                      <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" title="Form of Payment" id="HotTypePaymentSelect">
+                      <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" title="{!$Label.ISSP_AP_From_of_Payment}" id="HotTypePaymentSelect">
                         <apex:selectOption itemValue="CC" itemLabel="CC"/>
                         <apex:selectOption itemValue="EP" itemLabel="EP"/>
                       </apex:selectList>

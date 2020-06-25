@@ -412,7 +412,7 @@
                 <apex:outputPanel id="ReportOptionsFields" rendered="{!CONTAINS(newForm.Type_of_Change_Requested__c, 'Report Options')=true}">
                     <apex:pageBlockSection collapsible="false" columns="1" title="Report Options">
                         <tr><td colspan="4" class="aplabel">
-                            Please select at least one of the options below to be modified:
+                            {!$Label.ISSP_AP_Report_Options_Header}
                         </td></tr>
 
                         <apex:pageBlockSectionItem >
@@ -459,13 +459,13 @@
                             </apex:selectList>
                         </apex:pageBlockSectionItem>
 
-                        <apex:outputText value="Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base."
+                        <apex:outputText value="{!$Label.ISSP_AP_Report_Options_HOT_Files_Not_Required}"
                             rendered="{!HOTFilesNotRequired}"/>
 
-                        <apex:outputText value="Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base."
+                        <apex:outputText value="{!$Label.ISSP_AP_Report_Options_PDF_Files_Not_Required}"
                             rendered="{!PDFFilesNotRequired}"/>
 
-                        <apex:outputText value="Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change."
+                        <apex:outputText value="{!$Label.ISSP_AP_Report_Options_Add_Emails}"
                             rendered="{!HOTandPDFFilesEmails}"/>
                         <apex:pageBlockSectionItem rendered="{!HOTandPDFFilesEmails}">
                             <apex:outputLabel value="Email 1" styleclass="ap-required"/>
@@ -475,7 +475,7 @@
                         <apex:inputField value="{!newform.HOT_File_Recipient_Email_3__c}" label="Email 3" rendered="{!HOTandPDFFilesEmails}"/>
                         <apex:inputField value="{!newform.HOT_File_Recipient_Email_4__c}" label="Email 4" rendered="{!HOTandPDFFilesEmails}"/>
 
-                        <apex:outputText value="Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only."
+                        <apex:outputText value="{!$Label.ISSP_AP_Report_Options_Remove_Emails}"
                             rendered="{!HOTandPDFFilesEmails}"/>
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_1__c}" label="Email To Remove 1" rendered="{!HOTandPDFFilesEmails}"/>
                         <apex:inputField value="{!newform.HOT_File_Recipient_Remove_Email_2__c}" label="Email To Remove 2" rendered="{!HOTandPDFFilesEmails}"/>
@@ -489,7 +489,7 @@
                             </apex:inputField>
                         </apex:pageBlockSectionItem>
 
-                        <apex:outputText value="Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library."
+                        <apex:outputText value="{!$Label.ISSP_AP_Report_Options_Excel_Selected}"
                             rendered="{!ExcelSelectedYes}"/>
 
                     </apex:pageBlockSection>

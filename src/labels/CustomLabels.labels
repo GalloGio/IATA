@@ -28408,6 +28408,14 @@ This service is free of charge.</value>
         <value>One or more country/territory must be selected.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Form_of_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Form_of_Payment</shortDescription>
+        <value>Form of Payment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Israel_Submit_Address</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -28424,6 +28432,54 @@ Tel Aviv, ISRAEL</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Israel_Submit_Disclaimer</shortDescription>
         <value>Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Add_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Add_Emails</shortDescription>
+        <value>Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Excel_Selected</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Excel_Selected</shortDescription>
+        <value>Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_HOT_Files_Not_Required</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_HOT_Files_Not_Required</shortDescription>
+        <value>Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Header</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Header</shortDescription>
+        <value>Please select at least one of the options below to be modified:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_PDF_Files_Not_Required</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_PDF_Files_Not_Required</shortDescription>
+        <value>Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Remove_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Remove_Emails</shortDescription>
+        <value>Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only.</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Select_Countries_Territories</fullName>
