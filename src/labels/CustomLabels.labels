@@ -28375,6 +28375,87 @@ This service is free of charge.</value>
         <shortDescription>ISSP_AP_Cases</shortDescription>
         <value>Airline Participation</value>
     </labels>
+        <fullName>ISSP_AP_Countries_Territories</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Countries_Territories</shortDescription>
+        <value>Countries/Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Countries_to_optin</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Countries_to_optin</shortDescription>
+        <value>Countries/Territories to Opt-In:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Error_No_Countries_available</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Error_No_Countries_available</shortDescription>
+        <value>There are no countries/territories available for this type of Form of payment.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Error_No_Country_selected</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Error_No_Country_selected</shortDescription>
+        <value>One or more country/territory must be selected.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Israel_Submit_Address</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Israel_Submit_Address</shortDescription>
+        <value>IATA Israel&lt;br/&gt;
+Trade Tower Building, 8th Floor 25 Hamereed Street&lt;br/&gt;
+Tel Aviv, ISRAEL</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Israel_Submit_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Israel_Submit_Disclaimer</shortDescription>
+        <value>Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Select_Countries_Territories</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Select_Countries_Territories</shortDescription>
+        <value>Select Countries/Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Select_Form_of_Payment_in_HOT</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Select_Form_of_Payment_in_HOT</shortDescription>
+        <value>Select form of payment in HOT:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Stock_Management_Add_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Stock_Management_Add_Emails</shortDescription>
+        <value>Please list below the email addresses that you want to ADD for distribution of the CASSLink Stock Management system. Please note that you can keep up until 3 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Stock_Management_Remove_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Stock_Management_Remove_Emails</shortDescription>
+        <value>Please list below any email addresses that you want to REMOVE from the distribution.</value>
+    </labels>
     <labels>
         <fullName>ISSP_AP_Form</fullName>
         <categories>ISSP Case list page</categories>

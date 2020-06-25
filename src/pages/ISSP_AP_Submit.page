@@ -234,11 +234,9 @@
 
                     <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'),AND(apcountryisocode='IL', strLOB='BSP'))}" collapsible="false">
                         <apex:outputText rendered="{!apcountryisocode='IL'}">
-                            Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:<br/><br/>
+                            {!$Label.ISSP_AP_Israel_Submit_Disclaimer}<br/><br/>
                             <div style="padding-left:50px;padding-bottom:30px; font-weight:bold">
-                                IATA Israel<br/>
-                                Trade Tower Building, 8th Floor 25 Hamereed Street<br/>
-                                Tel Aviv, ISRAEL
+                                <apex:outputText value="{!$Label.ISSP_AP_Israel_Submit_Address}" escape="false"/>
                             </div>
                             Please click here to download the form(s):&nbsp;
                         </apex:outputText>

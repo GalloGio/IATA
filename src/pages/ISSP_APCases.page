@@ -309,7 +309,7 @@
             <strong>The effective date is incorrect.</strong>
           </div>
           <div class="alert alert-danger" id="countriesErrorMsg" style ="display: none">
-            <strong>One or more country/territory must be selected.</strong>
+            <strong>{!$Label.ISSP_AP_Error_No_Country_selected}</strong>
           </div>
           <div class="alert alert-danger" id="hotTypeErrorMsg" style ="display: none">
             <strong>You must select a type of payment.</strong>
@@ -321,7 +321,7 @@
             <strong>You have currently Opted-Out from IATA EasyPay in all your BSP Operations.</strong>
           </div>
           <div class="alert alert-warning" id="HOTPaymentMsg" style="display: none">
-            <strong>There are no countries/territories available for this type of Form of payment.</strong>
+            <strong>{!$Label.ISSP_AP_Error_No_Countries_available}</strong>
           </div>
           <div class="alert alert-success" id="requestSentMsg" style="display: none">
             <strong>Your request has been sent.</strong>
@@ -358,7 +358,7 @@
                   <div class="customTable" style="margin-left: 15px;">
                     <div>
                         <apex:outputPanel id="coutriesInLabel" style="display: none">
-                        <apex:outputLabel value="Countries/Territories to Opt-In: "/>
+                        <apex:outputLabel value="{!$Label.ISSP_AP_Countries_to_optin}"/>
                         </apex:outputPanel>
                         <apex:outputPanel id="coutriesOutLabel" style="display: none">
                         <apex:outputLabel value="Countries to Opt-Out: "/>
@@ -368,7 +368,7 @@
                         <apex:outputPanel id="coutriesIn" style="display: none">
                         <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
-                        title="Countries/Territories">
+                        title="{!$Label.ISSP_AP_Countries_Territories}">
                             <apex:selectOptions value="{!countriesIn}" />
                         </apex:selectList>
                         </apex:outputPanel>
@@ -376,7 +376,7 @@
                                             <apex:outputPanel id="coutriesOut" style="display: none">
                         <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
-                        title="Countries/Territories">
+                        title="{!$Label.ISSP_AP_Countries_Territories}">
                                                     <apex:selectOptions value="{!countriesOut}" />
                         </apex:selectList>
                         </apex:outputPanel>
@@ -396,7 +396,7 @@
                 <div class="row" id="optPayment" style="display: none">
                   <div class="customTable" style="margin-left: 15px;">
                     <div>
-                      <apex:outputLabel value="Select form of payment in HOT:"/>
+                      <apex:outputLabel value="{!$Label.ISSP_AP_Select_Form_of_Payment_in_HOT}"/>
                     </div>
                     <div>
                       <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" id="optPaymentSelect">
@@ -416,12 +416,12 @@
                 <div class="row">
                   <div class="customTable" style="margin-left: 15px;">
                     <div>
-                      <apex:outputLabel value="Select Countries/Territories:"/>
+                      <apex:outputLabel value="{!$Label.ISSP_AP_Select_Countries_Territories}"/>
                     </div>
                     <div>
                       <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesHotList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
-                        title="Countries/Territories">
+                        title="{!$Label.ISSP_AP_Countries_Territories}">
                         <apex:selectOptions value="{!HOTCountries}" />
                       </apex:selectList>
                     </div>
@@ -430,7 +430,7 @@
                 <div class="row">
                   <div class="customTable" style="margin-left: 15px;">
                     <div>
-                      <apex:outputLabel value="Select form of payment in HOT:"/>
+                      <apex:outputLabel value="{!$Label.ISSP_AP_Select_Form_of_Payment_in_HOT}"/>
                     </div>
                     <div>
                       <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" title="Form of Payment" id="HotTypePaymentSelect">
