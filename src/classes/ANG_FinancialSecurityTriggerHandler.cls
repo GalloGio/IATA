@@ -178,7 +178,6 @@ public class ANG_FinancialSecurityTriggerHandler{
 		//Reset fsToUpdateConvertedAmountSet
 		fsToUpdateConvertedAmountSet = new Set<Financial_Security__c>();
 		if(!FinancialSecurityUtil.convertedAmountUpdateFlag){
-			System.debug('JR Debug fsToUpdateConvertedAmountSet - ENTROU: ' + fsToUpdateConvertedAmountSet);
 			for(Financial_Security__c fs : fsLst){
 				if((!Trigger.isExecuting || (!Trigger.isDelete && !Trigger.newMap.containsKey(fs.Id))) && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
 					fsToUpdateConvertedAmountSet.add(new Financial_Security__c(
