@@ -8837,7 +8837,7 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GxA Link</shortDescription>
-        <value>https://myassessor2-stage.pwc.ch/Iata/InitiateSingleSignOn</value>
+        <value>https://preprod-customer-portal-iata.cs109.force.com/csportal/idp/login?app=0sp0Q000000003y&isdtp=p1</value>
     </labels>
     <labels>
         <fullName>GxA_Link_Label</fullName>
