@@ -1097,7 +1097,6 @@ global without sharing class ISSP_APProcess {
 
 		if(!isPassAirline){
 			isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
-			newForm.Type_of_participation_desired__c = 'PASS Participation Direct';
 			if (isocountry!=null) {
 				newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
 				newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
