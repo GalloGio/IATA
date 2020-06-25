@@ -818,6 +818,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Additional_Financial_Security_needed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Inform_Amounts_Due_Addit_Fin_Security__c</field>
             </layoutItems>
             <layoutItems>
