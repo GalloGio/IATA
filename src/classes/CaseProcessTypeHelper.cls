@@ -118,13 +118,14 @@ public with sharing class CaseProcessTypeHelper {
 			return;
 		}
 
-		/* US Accounts must be excluded */
 		Map<Id,Account> mapAccounts = getMapAccount(accountIds);
 		Map<Id, AMS_OSCAR__c> mapOscars = getMapOscar(oscarIds);
 
 		for(Case cse : casesToProcess) {
 			Account acc = mapAccounts.get(cse.AccountId);
-			if(String.isNotBlank(acc.IATA_ISO_Country__c) && acc.IATA_ISO_Country__r.ISO_Code__c == 'US') {
+			/* US Accounts must be excluded */
+			if(String.isNotBlank(acc.IATA_ISO_Country__c) && acc.IATA_ISO_Country__r.ISO_Code__c == 'US' &&
+				acc.Recordtype.DeveloperName == 'IATA_Agency' && acc.CNS_Agency__c == false) {
 				continue;
 			}
 
@@ -163,6 +164,7 @@ public with sharing class CaseProcessTypeHelper {
 		setAccountFields.add('Id');
 		setAccountFields.add('IATA_ISO_Country__c');
 		setAccountFields.add('IATA_ISO_Country__r.ISO_Code__c');
+		setAccountFields.add('Recordtype.DeveloperName');
 		List<String> listFields = new List<String>(setAccountFields);
 		String query = 'SELECT ' + String.join(listFields,',') + ' FROM Account';
 		query += ' WHERE Id IN (\'' + String.join(new list<Id>(accountIds),'\',\'') + '\')';
