@@ -14,13 +14,13 @@
 
 	<style>
 		:root {
-			--ice-add-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/add.png')}");
-			--ice-attachment-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachment.png')}");
-			--ice-attachmenthover-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachmenthover.png')}");
-			--ice-close-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/close.png')}");
-			--ice-download-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/download.png')}");
-			--ice-print-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/print.png')}");
-			--ice-searchColored-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/searchColored.png')}");
+			--ice-add-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/add.svg')}");
+			--ice-attachment-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachment.svg')}");
+			--ice-attachmenthover-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachmenthover.svg')}");
+			--ice-close-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/close.svg')}");
+			--ice-download-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/download.svg')}");
+			--ice-print-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/print.svg')}");
+			--ice-searchColored-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/searchColored.svg')}");
 		}
 		@font-face {
 			font-family: 'Aktiv Grotesk';
@@ -263,7 +263,7 @@
 																	</td>
 																	<td class="ICE-TableBody"></td>
 																</tr>
-																<tr class="collapse-{!wrapperSummary.ref} collapse">
+																<tr class="ICE-expanded-detail collapse-{!wrapperSummary.ref} collapse">
 																	<td colspan="1"></td>
 																	<td colspan="5" style="padding: 0px;">
 																		<table class="table table-hover table-condensed ICE-expanded-table">
@@ -437,7 +437,7 @@
 																	</td>
 																	<td class="ICE-TableBody"></td>
 																</tr>
-																<tr class="collapse-{!wrapperLocation.code} collapse">
+																<tr class="ICE-expanded-detail collapse-{!wrapperLocation.code} collapse">
 																	<td colspan="1"></td>
 																	<td colspan="5" style="padding: 0px;">
 																		<table class="table table-hover table-condensed ICE-expanded-table">
@@ -579,7 +579,7 @@
 							</div>
 							<div class="row">
 								<span>
-									<apex:image styleclass="ICE-ICElogo" value="{!URLFOR($Resource.ISSP_AccountStatements, 'img/AccStatementsIcon.png')}"/>
+									<apex:image styleclass="ICE-ICElogo" value="{!URLFOR($Resource.ISSP_AccountStatements, 'img/AccStatementsIcon.svg')}"/>
 								</span>
 								<span class="ICE-MainTitle">{!$Label.ISSP_Account_Statements_Title}</span>
 							</div>

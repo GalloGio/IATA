@@ -187,7 +187,7 @@ global class ISSP_Ctrl_AccountStatements {
 		// find calendar keys in input Statements
 		map<String,Operational_Calendar__c> mapCalendars = new map<String,Operational_Calendar__c>();
 		for (Account_Statement__c statement: listStatements) {
-			String key = statement.Operation__c + statement.Period__c;
+			String key = statement.Operation__c + '_' + statement.Period__c;
 			mapCalendars.put(key, null);
 		}
 		// populate the returning map with each calendar per key
@@ -195,7 +195,7 @@ global class ISSP_Ctrl_AccountStatements {
 				[SELECT Id, Settlement_Day__c, Operation_Period_code__c
 				FROM Operational_Calendar__c
 				WHERE RecordType.DeveloperName = 'ISS_Calendar'
-				AND Operation_Period_code__c IN :mapCalendars.keyset()]) {
+				AND ExternalId__c IN :mapCalendars.keyset()]) {
 			mapCalendars.put(calendar.Operation_Period_code__c, calendar);
 		}
 		return mapCalendars;
