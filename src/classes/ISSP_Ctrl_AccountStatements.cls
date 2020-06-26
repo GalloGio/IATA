@@ -143,6 +143,7 @@ global class ISSP_Ctrl_AccountStatements {
 			FROM Account_Statement__c
 			WHERE Account__c in :listAccount
 			AND Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
+			AND (NOT Period__c LIKE '%E')
 			ORDER BY Remittance_Date__c desc, Operation__c ASC
 		];
 
@@ -234,6 +235,7 @@ global class ISSP_Ctrl_AccountStatements {
 				from Account_Statement__c
 				Where Account__c in :listAccount
 				and Remittance_Date__c <= TODAY
+				AND (NOT Period__c LIKE '%E')
 				group by Remittance_Date__c
 				order by Remittance_Date__c desc
 				limit 3
