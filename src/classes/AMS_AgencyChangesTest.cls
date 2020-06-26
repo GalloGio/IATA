@@ -121,12 +121,12 @@ public class AMS_AgencyChangesTest {
 		ID rtOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
 		for(Account acc : new List<Account>{HO1, BR1, BR2, BR3}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Owner_Account__c = OwnersAccount.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Owner_Account__c = OwnersAccount.Id));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
 		}
 		for(Account acc : new List<Account>{HO2, BR4, BR5, BR6}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW3.Id, Owner_Account__c = OwnersAccount.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW4.Id, Owner_Account__c = OwnersAccount.Id));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW3.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW4.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
 		}
 
 		insert roles;
@@ -330,8 +330,8 @@ public class AMS_AgencyChangesTest {
 		//system.assertEquals(8,changecodes.size(), 'Change of Ownership S1: when the change is finalized owners OW1 and OW2 should be deactivated for all the hierarchy');
 
 		for(Account acc : new List<Account>{HO1, BR1, BR2, BR3}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Percentage__c= 50));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Percentage__c= 50));
 		}
 
 		// After finalization the new owners should be applied to all the agencies involved
