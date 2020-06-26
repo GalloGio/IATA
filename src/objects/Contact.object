@@ -20449,7 +20449,7 @@ NOT(ISPICKVAL(CEO_CFO__c,&apos;&apos;))</errorConditionFormula>
         <description>Internal Users can&apos;t change Portal Status to Administrator.</description>
         <errorConditionFormula>AND( 
 ISPICKVAL( $User.UserType , &quot;Standard&quot;), 
-ISPICKVAL( Account.Sector__c, &quot;General Public&quot;), 
+Account.Is_General_Public_Account__c,
 ISPICKVAL( User_Portal_Status__c, &quot;Approved Admin&quot;),
 $Profile.Name &lt;&gt; &quot;System Administrator&quot;
 )</errorConditionFormula>
