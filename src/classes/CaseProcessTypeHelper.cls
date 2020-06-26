@@ -107,11 +107,11 @@ public with sharing class CaseProcessTypeHelper {
 			Boolean beingClosed = cse.IsClosed && !oldRecord.IsClosed;
 			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
 			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-			//if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
+			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
 				casesToProcess.add(cse);
 				accountIds.add(cse.AccountId);
 				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
-			//}
+			}
 		}
 
 		if(casesToProcess.isEmpty()) {
