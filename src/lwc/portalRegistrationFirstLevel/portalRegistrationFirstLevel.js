@@ -62,16 +62,16 @@ import CSP_L1_Last_Name                         from '@salesforce/label/c.CSP_L1
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
-	/* ==============================================================================================================*/
-	/* Attributes
-	/* ==============================================================================================================*/
+    /* ==============================================================================================================*/
+    /* Attributes
+    /* ==============================================================================================================*/
 
-	@track isSelfRegistrationEnabled = false;
-	@track isRegistrationComplete = false;
-	@track displayContactForm = false;
-	@track displayTermsAndUsage = false;
-	@track userCountry = "";
-	@track userCountryCode = "";
+    @track isSelfRegistrationEnabled = false;
+    @track isRegistrationComplete = false;
+    @track displayContactForm = false;
+    @track displayTermsAndUsage = false;
+    @track userCountry = "";
+    @track userCountryCode = "";
     @track selectedCountryFlag = "";
 	@track isSanctioned = false;
 	@track isLoading = true;
@@ -89,7 +89,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								"language" : "",
 								"selectedCustomerType" : "",
 								"termsAndUsage" : false,
-								"termsAndUsageIds" : ""
+								"termsAndUsageIds" : "",
+								"lmsRedirectFrom" : "",
+								"lmsCourse" : ""
 							  };
 	@track errorMessage = "";
 	@track displayError = false;
@@ -274,14 +276,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							return;
 						}else{
 							//check localStorage
-							if (localStorage.length > 0) {
+							if (localStorage != undefined && localStorage.length > 0) {
 								this._restoreState();
 							}else{
 
 								let pageParams = getParamsFromPage();
 								if(pageParams !== undefined){
 									if(pageParams.language !== undefined){
-										this.registrationForm.language = pageParams.language.toLowerCase();;
+										this.registrationForm.language = pageParams.language.toLowerCase();
 									}
 
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
@@ -299,29 +301,29 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 											this.registrationForm.termsAndUsageIds = tcIds.join();
 										});
 									});
-
 									if(pageParams.email !== undefined){
 										this.registrationForm.email = decodeURIComponent(pageParams.email);
 										//this.isEmailFieldReadOnly = true;
 										//this.displayContactForm = true;
 										//this._initializePhoneInput();
 										this.handleNext(null);
-										return;
 									}
-
-								}
-
-								this.isLoading = false;
-							}
-						}
-
+									if(pageParams.lms !== '' && pageParams.lms !== undefined){
+										this.registrationForm.lmsRedirectFrom = pageParams.lms;
+										this.registrationForm.lmsCourse = pageParams.RelayState;
+										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
+									}
+                   				}
+                            this.isLoading = false;
+                            }
+                        }
 					})
 					.catch(error => {
-                        console.info('Error: ', JSON.parse(JSON.stringify(error)));
+						console.info('Error: ', JSON.parse(JSON.stringify(error)));
 						this.isLoading = false;
 					});
 				}
-			});
+         	});
 
 		}.bind(this));
 
@@ -413,8 +415,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email}).then(result => {
-							var userInfo = JSON.parse(JSON.stringify(result));
+						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => { 
+							let userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;
 							if(userInfo.hasExistingContact == true){
@@ -476,7 +478,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		register({ registrationForm : JSON.stringify(this.registrationForm),
 				   customerType : JSON.stringify(this.selectedMetadataCustomerType),
 				   contactId : contactId,
-				   accountId : accountId
+				   accountId : accountId,
+				   userInfo : JSON.stringify(this.userInfo)
 				 }).then(result => {
 			var dataAux = JSON.parse(JSON.stringify(result));
 

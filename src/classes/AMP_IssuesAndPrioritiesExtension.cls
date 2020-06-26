@@ -77,11 +77,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		if(this.sortOrder == ' Details__c DESC') this.sortOrder = ' Details__c ASC';
 		else this.sortOrder = ' Details__c DESC';
 	}
-	public void sortByPublic() {
-		if(this.sortOrder == ' AM_Public__c DESC') this.sortOrder = ' AM_Public__c ASC';
-		else this.sortOrder = ' AM_Public__c DESC';
-		lsIssuesAndPriorities = getIssuesAndPriorities();
-	}
 	public void sortByLocal() {
 		if(this.sortOrder == ' AM_Local__c DESC') this.sortOrder = ' AM_Local__c ASC';
 		else this.sortOrder = ' AM_Local__c DESC';
@@ -231,21 +226,18 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 			newIssue = new Objective__c();
 			newIssue.Account__c = accountId;
 			newIssue.RecordTypeId = this.objectiveRecordTypeId;
-			//newIssue.Name = 'new issue or priority';
+			newIssue.AM_Public__c = true;
 			//insert newIssue;
 			List<Objective__c> newList = new List<Objective__c>();
 			newList.add(newIssue);
 			newList.addAll(lsIssuesAndPriorities);
 			lsIssuesAndPriorities.clear();
 			lsIssuesAndPriorities.addAll(newList);
-			//lsIssuesAndPriorities.add(newIssue);
-			//lsIssuesAndPriorities.clear();
 
 			isEditMode = true;
 			isNewLine = true;
 			IdConcerned = null;
 			sortOrder = ' CreatedDate ASC ';
-			//lsIssuesAndPriorities = getIssuesAndPriorities();
 
 		} catch(Exception e) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));

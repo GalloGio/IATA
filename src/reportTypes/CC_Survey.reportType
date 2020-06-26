@@ -78,6 +78,11 @@
             <field>LastModifiedDate</field>
             <table>Currency_Center_Survey__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sales_Period__c</field>
+            <table>Currency_Center_Survey__c</table>
+        </columns>
         <masterLabel>Currency Center Survey</masterLabel>
     </sections>
     <sections>
@@ -99,6 +104,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Country_Name__c</field>
+            <table>Currency_Center_Survey__c.Currency_Center_Survey__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sales_Period__c</field>
             <table>Currency_Center_Survey__c.Currency_Center_Survey__r</table>
         </columns>
         <masterLabel>Currency Center Survey</masterLabel>

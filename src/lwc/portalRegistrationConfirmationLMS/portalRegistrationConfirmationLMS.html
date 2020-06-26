@@ -1,0 +1,181 @@
+<template>
+	<lightning-layout multiple-rows vertical-align="stretch">
+
+		<div class="IEFixDisplayContainer">
+			
+			<lightning-layout-item size="12" class="topLabel IEFixDisplay">
+				<div class="stepText">
+					{labels.CSP_L3_Confirmation_Message_LMS}
+				</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
+
+			<!------------------------------------------      Personal Details      -------------------------------------------->
+			<lightning-layout-item size="6" class="IEFixDisplay">
+				<div class="sectionTitle">{labels.CSP_L2_Profile_Details}</div>
+				<div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
+			</lightning-layout-item>
+
+			<div class="profileContainer">
+			
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+			
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="dataLabel">{labels.CSP_L2_Title}</div>
+					<div class="dataValue">{contactInfo.Salutation}</div>
+				</lightning-layout-item>
+			</div>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="dataLabel">{labels.CSP_L2_Date_of_Birth}</div>
+					<div class="dataValue">
+						<lightning-formatted-date-time value={contactInfo.Birthdate}
+						year="numeric" month="2-digit" day="2-digit"></lightning-formatted-date-time>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+			
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<div class="profileItem">
+				<lightning-layout-item size="12" class="leftItem">
+					<div class="dataLabel">{labels.CSP_L3_LoginEmail_LMS}</div>
+					<div class="dataValue">{contactInfo.Email}</div>
+				</lightning-layout-item>
+			</div>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<div class="profileItem">
+				<lightning-layout-item size="12" class="rightItem">
+					<div class="dataLabel">{labels.CSP_L3_PersonalEmail_LMS}</div>
+					<div class="dataValue">{contactInfo.Additional_Email__c}</div>
+				</lightning-layout-item>
+			</div>
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<template if:true={trainingInfoVisibility}>
+				<div class="profileItem"> 
+					<lightning-layout-item size="6" class="leftItem">
+						<div class="dataLabel">{labels.CSP_L_TrainingEmail_LMS}</div>
+						<div class="dataValue">{contactInfo.Username}</div>
+					</lightning-layout-item>
+				</div>
+
+				<div class="profileItem"> 
+					<lightning-layout-item size="6" class="rightItem">
+						<div class="dataLabel">{labels.CSP_L_TrainingUser_LMS}</div>
+						<div class="dataValue">{contactInfo.UserId}</div>
+					</lightning-layout-item>
+				</div>
+			
+				<lightning-layout-item padding="around-small" size="12">
+				</lightning-layout-item>
+			</template>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="dataLabel">{labels.CSP_L_Phone_LMS}</div>
+					<div class="dataValue">{contactInfo.Phone}</div>
+				</lightning-layout-item>
+			</div>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="dataLabel">{labels.CSP_L_WorkPhone_LMS}</div>
+					<div class="dataValue">{contactInfo.OtherPhone}</div>
+				</lightning-layout-item>
+			</div>
+			</div>
+	
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
+
+			<lightning-layout-item size="12" class="IEFixDisplay">
+				<template if:true={displayToS}>
+					<div style="display: flex;justify-content: center;align-items: start;">
+						<div style="display: flex; align-items: center;justify-content: center;">
+							<div style="max-width:20px; padding-left:5px;">
+								<lightning-input type="checkbox" variant="label-hidden" checked={tos}
+									onchange={handleToSChange} class="registerCheckBox"></lightning-input>
+							</div>
+						</div>
+						<div class="text-small" style="margin-left:12px; width:100%;">
+							<lightning-formatted-rich-text value={labels.CSP_LMS_Privacy_Policy}
+								class="text-xsmall text-gray"></lightning-formatted-rich-text>
+						</div>
+					</div>
+				</template>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+
+
+			<div class="buttonsContainer">
+				<lightning-layout-item size="6" class="backButtonWrapper">
+					<div class="text-xxsmall">
+						<lightning-button variant="base"
+							label={labels.CSP_L2_Back_to_Edit}
+							title={labels.CSP_L2_Back_to_Edit}
+							onclick={toProfileDetails}
+							class="blueCustomButtonLinkSmall"
+							icon-name="utility:back" 
+							icon-position="left">
+						</lightning-button>
+					</div>
+				</lightning-layout-item>
+		
+				<lightning-layout-item size="6">
+					<lightning-button disabled data-id="submitButton" class="slds-float_right containedButton customBtn" 
+					label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
+					</lightning-button>
+				</lightning-layout-item>
+			</div>
+
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+
+		</div>
+	</lightning-layout>
+
+	<template id="SuccessModal" if:true={openSuccessModal}>
+		<c-portal-registration-generic-modal icon={successIcon} title={successModalTitle}
+			message={successModalMessage} button1-label=""
+			button2-label={labels.CSP_L2_Go_To_Service_LMS} 
+			onbuttontwoaction={goToService}>
+		</c-portal-registration-generic-modal>
+	</template>
+
+	<template if:true={openVerificationMailSuccessModal}>
+		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}
+			button1-label="" button2-label={labels.CSP_L2_Go_To_Homepage_LMS} 
+			onbuttontwoaction={button1Action}>
+		</c-portal-registration-generic-modal>
+	</template>
+
+	<template if:true={openVerificationMailSuccessModalLogOut}>
+		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}
+			button1-label="" button2-label={labels.CSP_LogOut} 
+			onbuttontwoaction={button2ActionLogOut}>
+		</c-portal-registration-generic-modal>
+	</template>
+
+	<template if:true={openErrorModal}>
+		<c-portal-registration-generic-modal icon={errorIcon} title={errorModalTitle} message={errorModalMessage}
+			button1-label={labels.CSP_L2_Go_To_Homepage_LMS} button2-label={labels.CSP_L2_Go_To_Service_LMS}
+			onbuttononeaction={button1Action} onbuttontwoaction={closeErrorModal}>
+		</c-portal-registration-generic-modal>
+	</template>
+
+</template>

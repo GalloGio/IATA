@@ -7,4 +7,5 @@
     <style>none</style>
     <subject>IATA Customer Portal - Access to  granted</subject>
     <type>visualforce</type>
+    <uiType>Aloha</uiType>
 </EmailTemplate>
