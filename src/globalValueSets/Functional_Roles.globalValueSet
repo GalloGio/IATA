@@ -6,15 +6,21 @@
         <label>E&amp;F</label>
     </customValue>
     <customValue>
+        <fullName>MedAire</fullName>
+        <default>false</default>
+        <label>MedAire</label>
+    </customValue>
+    <customValue>
         <fullName>Training</fullName>
         <default>false</default>
         <label>Training</label>
     </customValue>
     <customValue>
-        <fullName>MedAire</fullName>
+        <fullName>One Source</fullName>
         <default>false</default>
-        <label>MedAire</label>
+        <label>One Source</label>
     </customValue>
+    <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

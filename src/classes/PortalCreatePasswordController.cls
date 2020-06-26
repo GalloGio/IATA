@@ -52,14 +52,15 @@ public without sharing class PortalCreatePasswordController {
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result     = PortalRegistrationFirstLevelCtrl.register(params, password);
 
 		String startUrl = Label.CSP_PortalPath;
+		if(params.sourceService != null && params.sourceService != '')  startUrl +='manage-service';
 		if(result.isSuccess == true){
 			try{
-				//YAS Reg -
-				String lmsParam = ((String)params.lms).toLowerCase();
-				if(lmsParam.indexOf('yas') != -1){
-					startUrl += '?firstLogin=true&lms=yas&lmsCourse='+(String)params.lmsCourse;
-				} else
-					if(result.isGeneralPublicAccount == true) startUrl += '?firstLogin=true';
+				if(result.isGeneralPublicAccount == true) startUrl += '?firstLogin=true';
+				if(params.sourceService != null && params.sourceService != ''){
+					if(startUrl.containsIgnoreCase('?')) startUrl += '&serviceId='+params.sourceService+'%26startService=true';
+					else startUrl += '?serviceId='+params.sourceService+'%26startService=true';
+				} 
+				
 
 				System.PageReference pageRef = Site.login(result.username, password, startUrl);
 				result.message = pageRef.getUrl();

@@ -16,8 +16,9 @@ import saveLoginLabel               from '@salesforce/label/c.CSP_Save_Login';
 import changePasswordInfoLabel      from '@salesforce/label/c.CSP_Reset_Password_Info_1';
 import changePasswordInfo2Label     from '@salesforce/label/c.CSP_Reset_Password_Info_2';
 import errorMessageLabel            from '@salesforce/label/c.CSP_Create_Password_Error';
-import getParameters                from '@salesforce/apex/portalCreatePasswordController.getParameters';
-import createUser                   from '@salesforce/apex/portalCreatePasswordController.createUserAndSetPassword';
+import getParameters                from '@salesforce/apex/PortalCreatePasswordController.getParameters';
+import createUser                   from '@salesforce/apex/PortalCreatePasswordController.createUserAndSetPassword';
+import { getQueryParameters } 		from "c/cwUtilities";
 
 export default class PortalCreatePassword extends LightningElement {
     @track email             = "";
@@ -186,6 +187,8 @@ export default class PortalCreatePassword extends LightningElement {
     handleSavePassword(){
         this.changeIsLoading();
         if(this.buttonDisabled == false){
+            let sourceService = getQueryParameters().sourceService;
+            if(sourceService) this.registrationParams.sourceService = sourceService;
             createUser({ paramStr : JSON.stringify(this.registrationParams), password : this.password }).then(result => {
                  if(result.isSuccess == true){
                     navigateToPage(result.message, {});

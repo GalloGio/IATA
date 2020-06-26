@@ -165,6 +165,17 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+	<fields>
+        <fullName>Ops_Hierarchy_Group__c</fullName>
+        <description>The Ops Hierarchy Group name, to avoid modifying Legal Hierarchy but still be able to group companies for One Source purposes.</description>
+        <externalId>false</externalId>
+        <label>Ops Hierarchy Group</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Portal_Service__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -176,6 +187,17 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+	<fields>
+        <fullName>Relationship_Name__c</fullName>
+        <description>Name of relationship, used in filters in onesource project. It describes the Name of Operational Hierarchy</description>
+        <externalId>false</externalId>
+        <label>Relationship Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Relationship_Status__c</fullName>

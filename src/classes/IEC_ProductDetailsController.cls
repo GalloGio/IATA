@@ -1,6 +1,6 @@
 /******************************************************************************************************************
  *  IEC_ProductDetailsController: IEC_ProductDetails page Controller                                              *
- *  Author: David Daboué - CGI                                                                                    *
+ *  Author: David Daboué - CGI                                                                                    *        
  ******************************************************************************************************************/
 public with sharing class IEC_ProductDetailsController extends IEC_PageController
 {
@@ -21,13 +21,15 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 	public List<EComProduct_DTO> lstRelatedProducts {get;set;}
 
-	//Available Discounts for the product
+	//Available Discounts for the product 
 	public List<PriceDetail_DTO> discounts{get;set;}
 
 	public String selectedTopic{get;set;}
 	public String selectedTopicLabel{get;set;}
 
 	public String currencyCode {get;set;}
+
+	public String facilityId {get;set;}
 
 	/*** ENHCS-2018-7 ***/
 	public String productWrapper {
@@ -130,6 +132,14 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			Date dt = Date.today();
 
 			System.debug('product: ' + product);
+			if(product.isRemoteValidation == true){
+				facilityId = (pageParams.containsKey('fid')) ? pageParams.get('fid') : null;
+				if(facilityId == null) { addErrorMessage(product.ProductName +' needs to be related to a valid facility.'); }
+				else {
+					List<ICG_Account_Role_Detail__c> facilities = [Select id, RecordType.Developername from ICG_Account_Role_Detail__c where id =:facilityId];
+					if (facilities.isEmpty() || !Label.icg_available_rv_recordtypes.contains(facilities[0].RecordType.Developername)) addErrorMessage(product.ProductName +' needs to be related to a valid facility.');
+				}
+			}
 
 			if(product.ProductInfoId != null)
 			{

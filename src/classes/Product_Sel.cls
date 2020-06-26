@@ -85,7 +85,8 @@ public class Product_Sel extends Selector
 			Product2.Accepted_Payment_Methods__c,
 			Product2.ProductAudience__c,
 			Product2.ProductCategory__c,
-			Product2.imagefile__c
+			Product2.imagefile__c,
+			Product2.Smart_Facility_Remote_Validation__c
 
 
 
@@ -775,7 +776,7 @@ public class Product_Sel extends Selector
 		Product_Sel exe = new Product_Sel();
 		String SOQL = ' select Id, Name, IEC_Static_Cart_Quantity__c, Line_of_Business__c, Is_Electronic_Product__c, IsNewRelease__c, Short_Title__c, Keywords__c, Family, Charge_Shipping__c, SAP_Material_Number__c, Edition__c, Media__c, Language__c, Effective_From__c, Effective_To__c, Short_Description__c, Description'
 					+ '      , Sell_through_eCommerce__c, Inventory_Status__c, Expected_Availability_Date__c, Product_Segment__c, Category_Group__c, SAP_Media_Code__c, Display_Price__c,Image__c'
-					+ '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c, Refinement_Language__c '
+					+ '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c, Refinement_Language__c, Smart_Facility_Remote_Validation__c '
 					+ ((!includeBOM) ? '' : ', (select Related_Product__c, Related_Product__r.Name, Related_Product__r.Media__c, Related_Product__r.Edition__c' +
 													', Related_Product__r.Effective_From__c, Related_Product__r.Effective_To__c, Related_Product__r.SAP_Material_Number__c, Related_Product__r.Short_Description__c' +
 											  ' from Product_BOM__r order by Related_Product__r.Name)')
@@ -1015,7 +1016,7 @@ public class Product_Sel extends Selector
 
 		String SOQL = ' select Id, Name, IEC_Static_Cart_Quantity__c, Line_of_Business__c, Is_Electronic_Product__c, IsNewRelease__c, Short_Title__c, Keywords__c, Family, Charge_Shipping__c, SAP_Material_Number__c, Edition__c, Media__c, Language__c, Effective_From__c, Effective_To__c, Short_Description__c, Description'
 					+ '      , Sell_through_eCommerce__c, Inventory_Status__c, Expected_Availability_Date__c, Product_Segment__c, Category_Group__c, SAP_Media_Code__c, Display_Price__c,Image__c'
-					+ '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c, Refinement_Language__c '
+					+ '      , Hide_Effective_To_Date_in_eCommerce__c, Is_Quantity_Integer__c, Mega_Menu__c, Refinement_Language__c, Smart_Facility_Remote_Validation__c '
 					+ ((!includeBOM) ? '' : ', (select Related_Product__c, Related_Product__r.Name, Related_Product__r.Media__c, Related_Product__r.Edition__c' +
 													', Related_Product__r.Effective_From__c, Related_Product__r.Effective_To__c, Related_Product__r.SAP_Material_Number__c, Related_Product__r.Short_Description__c' +
 											  ' from Product_BOM__r order by Related_Product__r.Name)')

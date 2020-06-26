@@ -74,12 +74,3 @@
   top: 8px;
   left: 8px;
 }
-.customCardBorder{
-  padding: 2rem;
-}
-
-@media screen and (max-width: 769px) {
-  .customCardBorder {
-    padding: 0.75rem;
-  }
-}

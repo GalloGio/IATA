@@ -19,7 +19,10 @@ public class OrderItem_Svc_Test
 	List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
 	List<Order> lstOrder = TestDataGenerator.generateOrder(1, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, true);
 	List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 2, true);
-
+	
+    Product2 pr = [Select id, Smart_Facility_Remote_Validation__c from Product2 where Id IN (Select Product2Id from PriceBookEntry where Id =:lstOrderItem[0].PriceBookEntryId) limit 1];
+    pr.Smart_Facility_Remote_Validation__c = true;
+    update pr;
 	//*** test
 	lstOrderItem[0].IEC_Is_Paid__c = true;
 	update lstOrderItem[0];

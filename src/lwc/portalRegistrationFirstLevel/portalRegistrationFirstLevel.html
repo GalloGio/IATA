@@ -13,7 +13,7 @@
                     <c-portal-custom-card-container>
 
                         <span slot="cardTitle" data-id="snackbar">
-                            <span class="text-medium">{labels.CSP_User_Creation}</span>
+                            <span class="text-medium">{labels.OneId_Account_Creation}</span>
                         </span>
 
                         <span slot="cardBody">
@@ -30,7 +30,7 @@
                                                 <div style="flex: 1;">
                                                     <span><img src={exclamationIcon}></span>
                                                 </div>
-                                                <div style="flex: 15;"> 
+                                                <div style="flex: 15;">
                                                     {labels.CSP_Unexcepted_Error} {labels.CSP_Troubleshooting_Info} <a style="color: #fff; text-decoration: underline;" href={config.troubleShootingUrl}>{labels.CSP_Troubleshooting}</a>
                                                 </div>
                                                 <div style="flex: 1;">
@@ -40,7 +40,8 @@
                                             <div style="height:40px;"></div>
                                         </div>
 
-                                        <!------------------------------------------      E-Mail      ------------------------------------------- -->
+
+                                        <!------------------------------------------      E-Mail      --------------------------------------------->
                                         <lightning-layout-item size="12">
                                             <div class="formElementContainer">
                                                 <div class="formLabelContainer">
@@ -74,7 +75,7 @@
                                                 </div>
                                             </div>
                                         </lightning-layout-item>
-                                        <!------------------------------------------      Next Button      ------------------------------------------- -->
+                                        <!------------------------------------------      Next Button      --------------------------------------------->
                                         <template if:false={displayToU}>
                                             <lightning-layout-item size="12">
                                                 <div style="height:8px;"></div>
@@ -82,40 +83,13 @@
                                             </lightning-layout-item>
                                         </template>
                                         <template if:true={displayContactForm}>
-                                            <!------------------------------------------      Salutation      ------------------------------------------- -->
+                                            <!------------------------------------------      First Name      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
                                                             <abbr class="slds-required" title="required">*</abbr>
-                                                            {salutation.label}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="12">
-                                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                                    <lightning-combobox class="" placeholder=" "
-                                                                        name="salutationCbx" label="" required
-                                                                        variant="label-hidden"
-                                                                        value={registrationForm.salutation}
-                                                                        options={salutation.options}
-                                                                        onchange={handleSalutationChange}
-                                                                        message-when-value-missing=" ">
-                                                    </lightning-combobox>
-                                                </div>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="12">
-                                                <div class="formElementSpacer">
-                                                </div>
-                                            </lightning-layout-item>
-                                            <!------------------------------------------      First Name      ------------------------------------------- -->
-                                            <lightning-layout-item size="12">
-                                                <div class="formElementContainer">
-                                                    <div class="formLabelContainer">
-                                                        <div style="width:100%;" class="text-xxsmall">
-                                                            <abbr class="slds-required" title="required">*</abbr>
-                                                            {labels.CSP_L1_First_Name}
+                                                            {config.contactLabelMap.FirstName}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -132,13 +106,13 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Last Name      ------------------------------------------- -->
+                                            <!------------------------------------------      Last Name      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
                                                             <abbr class="slds-required" title="required">*</abbr>
-                                                            {labels.CSP_L1_Last_Name}
+                                                            {config.contactLabelMap.LastName}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -155,12 +129,12 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Country      ------------------------------------------- -->
+                                            <!------------------------------------------      Country      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
-                                                            {labels.CSP_L2_Country}
+                                                            {config.contactLabelMap.Country__c}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,7 +154,7 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Phone      ------------------------------------------- -->
+                                            <!------------------------------------------      Phone      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -200,7 +174,7 @@
                                                 <div class="formElementSpacer">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      Customer Type      ------------------------------------------- -->
+                                            <!------------------------------------------      Customer Type      --------------------------------------------->
                                             <!-- Sector -->
                                             <template if:true={sector.display}>
                                                 <lightning-layout-item size="12">
@@ -264,7 +238,7 @@
                                             </template>
 
                                             <!-- Category -->
-                                            <!--template if:true={category.display}>
+                                            <template if:true={category.display}>
                                                 <lightning-layout-item size="12">
                                                     <div class="formElementContainer">
                                                         <div class="formLabelContainer">
@@ -292,9 +266,9 @@
                                                     <div class="formElementSpacer">
                                                     </div>
                                                 </lightning-layout-item>
-                                            </template-->
+                                            </template>
 
-                                            <!------------------------------------------      Preferred Portal Language      ------------------------------------------- -->
+                                            <!------------------------------------------      Preferred Portal Language      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -319,27 +293,28 @@
                                             </lightning-layout-item>
                                         </template>
                                         <template if:true={displayToU}>
-                                            <!------------------------------------------      Terms of Use      ------------------------------------------- -->
-
+                                            <!------------------------------------------      Terms of Use      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div style="height:54px;">
                                                 </div>
                                             </lightning-layout-item>
-
                                             <lightning-layout-item size="12">
-                                                <c-portal-services-terms-and-conditions
-                                                    portal-service-id={gcsPortalServiceId}
-                                                    language={registrationForm.language}
-                                                    onacceptancechanged={tcAcceptanceChanged}>
-                                                </c-portal-services-terms-and-conditions>
+                                                <div style="display: flex;justify-content: center;align-items: start;">
+                                                    <div style="display: flex; align-items: center;justify-content: center;">
+                                                        <div style="max-width:20px; padding-left:5px;" >
+                                                            <lightning-input type="checkbox" variant="label-hidden" checked={registrationForm.termsAndUsage} onchange={handleTouChange} class="registerCheckBox"></lightning-input>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-small" style="margin-left:12px; width:100%;">
+                                                        <lightning-formatted-rich-text value={labels.CSP_Privacy_Policy} class="text-small text-gray"></lightning-formatted-rich-text>
+                                                    </div>
+                                                </div>
                                             </lightning-layout-item>
-
                                             <lightning-layout-item size="12">
                                                 <div style="height:60px;">
                                                 </div>
                                             </lightning-layout-item>
-
-                                            <!------------------------------------------      Submit Button      ------------------------------------------- -->
+                                            <!------------------------------------------      Submit Button      --------------------------------------------->
                                             <lightning-layout-item size="12">
                                                 <div>
                                                     <lightning-button disabled data-id="submitButton" class="containedButtonDisabled" onclick={handleSubmit} label={labels.CSP_Submit}></lightning-button>

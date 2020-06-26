@@ -11,6 +11,7 @@ import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
 import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
+import { getQueryParameters } 					from "c/cwUtilities";
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
@@ -18,8 +19,6 @@ import register                                 from '@salesforce/apex/PortalReg
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
 import isGuest                                  from '@salesforce/user/isGuest';
-import getGCSServiceId                          from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
-import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
 
 /* ==============================================================================================================*/
 /* External Resources
@@ -33,11 +32,11 @@ import PhoneFormatterS                          from '@salesforce/resourceUrl/In
 /* ==============================================================================================================*/
 import Login                                    from '@salesforce/label/c.Login';
 import CSP_Email                                from '@salesforce/label/c.CSP_Email';
-import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description';
+import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description'
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_Next                                 from '@salesforce/label/c.CSP_Next';
-import CSP_User_Creation                        from '@salesforce/label/c.CSP_User_Creation';
+import OneId_Account_Creation                   from '@salesforce/label/c.OneId_Account_Creation';
 import CSP_Registration_Existing_User_Message   from '@salesforce/label/c.CSP_Registration_Existing_User_Message';
 import CSP_Privacy_Policy                       from '@salesforce/label/c.CSP_Privacy_Policy';
 import CSP_Check_Email                          from '@salesforce/label/c.CSP_Check_Email';
@@ -51,34 +50,26 @@ import CSP_Troubleshooting_Info                 from '@salesforce/label/c.CSP_Tr
 import CSP_Troubleshooting                      from '@salesforce/label/c.CSP_Troubleshooting';
 import CSP_Unexcepted_Error                     from '@salesforce/label/c.CSP_Unexcepted_Error';
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
-import CSP_L2_Title								from '@salesforce/label/c.CSP_L2_Title';
-import ISSP_Registration_MR						from '@salesforce/label/c.ISSP_Registration_MR';
-import ISSP_Registration_MRS					from '@salesforce/label/c.ISSP_Registration_MRS';
-import ISSP_Registration_MS						from '@salesforce/label/c.ISSP_Registration_MS';
-import CSP_L2_Country                           from '@salesforce/label/c.CSP_L2_Country';
-import CSP_L1_First_Name                        from '@salesforce/label/c.CSP_L1_First_Name';
-import CSP_L1_Last_Name                         from '@salesforce/label/c.CSP_L1_Last_Name';
 
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
 
-    /* ==============================================================================================================*/
-    /* Attributes
-    /* ==============================================================================================================*/
+	/* ==============================================================================================================*/
+	/* Attributes
+	/* ==============================================================================================================*/
 
-    @track isSelfRegistrationEnabled = false;
-    @track isRegistrationComplete = false;
-    @track displayContactForm = false;
-    @track displayTermsAndUsage = false;
-    @track userCountry = "";
-    @track userCountryCode = "";
+	@track isSelfRegistrationEnabled = false;
+	@track isRegistrationComplete = false;
+	@track displayContactForm = false;
+	@track displayTermsAndUsage = false;
+	@track userCountry = "";
+	@track userCountryCode = "";
     @track selectedCountryFlag = "";
 	@track isSanctioned = false;
 	@track isLoading = true;
 	@track config = {};
 	@track userInfo = {}
 	@track registrationForm = { "email" : "",
-								"salutation" : "",
 								"firstName" : "",
 								"lastName" : "",
 								"country" : "",
@@ -88,10 +79,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								"extraChoice" : "",
 								"language" : "",
 								"selectedCustomerType" : "",
-								"termsAndUsage" : false,
-								"termsAndUsageIds" : "",
-								"lmsRedirectFrom" : "",
-								"lmsCourse" : ""
+								"termsAndUsage" : false
 							  };
 	@track errorMessage = "";
 	@track displayError = false;
@@ -102,7 +90,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track languageOptions = [];
 	//@track phoneInitialized = false;
 	@track isSelfRegistrationDisabled = false;
-	@track salutation = { label : "", options : [], display : false };
 	@track sector = { label : "", options : [], display : false };
 	@track category = { label : "", options : [], display : false };
 	@track extraQuestion = { label : "", options : [], display : false };
@@ -112,14 +99,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track jsLoaded = false;
     phoneRegExp = /^\(?[+]\)?([()\d]*)$/
     @track rerender = false;
-	@track gcsPortalServiceId;
 
-
-	tcAcceptanceChanged(event){
-		var detail = event.detail;
-		this.registrationForm.termsAndUsage = detail;
-		this._checkForMissingFields();
-	}
 
 	_labels = {
 		Login,
@@ -128,7 +108,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		CSP_Change_Email,
 		CSP_Invalid_Email,
 		CSP_Next,
-		CSP_User_Creation,
+		OneId_Account_Creation,
 		CSP_Registration_Existing_User_Message,
 		CSP_Privacy_Policy,
 		CSP_Check_Email,
@@ -141,14 +121,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		CSP_Troubleshooting_Info,
 		CSP_Troubleshooting,
 		CSP_Unexcepted_Error,
-		CSP_PortalPath,
-		CSP_L2_Title,
-		ISSP_Registration_MR,
-		ISSP_Registration_MRS,
-		ISSP_Registration_MS,
-		CSP_L2_Country,
-		CSP_L1_First_Name,
-		CSP_L1_Last_Name
+		CSP_PortalPath
 	}
 
 	get labels() {
@@ -238,14 +211,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			}
 		});
 
-		let salutationList = [];
-		salutationList.push({ label: '', value: '' });
-		salutationList.push({ label: this.labels.ISSP_Registration_MR, value: 'Mr.' });
-		salutationList.push({ label: this.labels.ISSP_Registration_MRS, value: 'Mrs.' });
-		salutationList.push({ label: this.labels.ISSP_Registration_MS, value: 'Ms.' });
-		this.salutation.options = salutationList;
-		this.salutation.label = this.labels.CSP_L2_Title;
-
 		Promise.all([
 			loadScript(this, PhoneFormatter16 + '/PhoneFormatter/build/js/intlTelInput.js'),
 			loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css')
@@ -276,54 +241,39 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							return;
 						}else{
 							//check localStorage
-							if (localStorage != undefined && localStorage.length > 0) {
+							if (localStorage.length > 0) {
 								this._restoreState();
 							}else{
 
 								let pageParams = getParamsFromPage();
 								if(pageParams !== undefined){
 									if(pageParams.language !== undefined){
-										this.registrationForm.language = pageParams.language.toLowerCase();
+										this.registrationForm.language = pageParams.language.toLowerCase();;
 									}
 
-									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
-										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-										this.gcsPortalServiceId = gcsPortalServiceId;
-							
-										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
-											var tcs = JSON.parse(JSON.stringify(result2));
-			
-											var tcIds = [];
-							
-											for(let i = 0; i < tcs.length; i++){
-												tcIds.push(tcs[i].id);
-											}
-											this.registrationForm.termsAndUsageIds = tcIds.join();
-										});
-									});
 									if(pageParams.email !== undefined){
 										this.registrationForm.email = decodeURIComponent(pageParams.email);
 										//this.isEmailFieldReadOnly = true;
 										//this.displayContactForm = true;
 										//this._initializePhoneInput();
 										this.handleNext(null);
+										return;
 									}
-									if(pageParams.lms !== '' && pageParams.lms !== undefined){
-										this.registrationForm.lmsRedirectFrom = pageParams.lms;
-										this.registrationForm.lmsCourse = pageParams.RelayState;
-										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
-									}
-                   				}
-                            this.isLoading = false;
-                            }
-                        }
+
+								}
+
+								this.isLoading = false;
+							}
+						}
+
+
 					})
 					.catch(error => {
-						console.info('Error: ', JSON.parse(JSON.stringify(error)));
+                        console.info('Error: ', JSON.parse(JSON.stringify(error)));
 						this.isLoading = false;
 					});
 				}
-         	});
+			});
 
 		}.bind(this));
 
@@ -415,8 +365,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
 						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => { 
-							let userInfo = JSON.parse(JSON.stringify(result));
+						getUserInformationFromEmail({ email : this.registrationForm.email}).then(result => {
+							var userInfo = JSON.parse(JSON.stringify(result));
 
 							this.userInfo = userInfo;
 							if(userInfo.hasExistingContact == true){
@@ -475,11 +425,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
 
+		if(getQueryParameters().sourceService){
+			this.registrationForm.sourceService = getQueryParameters().sourceService;
+		}
+
 		register({ registrationForm : JSON.stringify(this.registrationForm),
 				   customerType : JSON.stringify(this.selectedMetadataCustomerType),
 				   contactId : contactId,
-				   accountId : accountId,
-				   userInfo : JSON.stringify(this.userInfo)
+				   accountId : accountId
 				 }).then(result => {
 			var dataAux = JSON.parse(JSON.stringify(result));
 
@@ -567,13 +520,17 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
         this.registrationForm.phone = newPhoneValue;
     }
 
-	handleSalutationChange(event){
-		this.registrationForm.salutation = event.target.value;
+	handleTouChange(event){
+		var inputValue = event.target.checked;
+		this.registrationForm.termsAndUsage = inputValue;
 		this._checkForMissingFields();
+
 	}
 
 
 	handleSectorChange(event){
+
+		this.isLoading = true;
 
 		if(this.selectedCustomerType == event.target.value){
 			this._checkForMissingFields();
@@ -774,7 +731,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		}
 
 		this.registrationForm = { "email" : email,
-								  "salutation" : "",
 								  "firstName" : "",
 								  "lastName" : "",
 								  "country" : "",
@@ -784,8 +740,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								  "extraChoice" : "",
 								  "language" : this.registrationForm.language,
 								  "selectedCustomerType" : "",
-								  "termsAndUsage" : false,
-								  "termsAndUsageIds" : ""
+								  "termsAndUsage" : false
 								};
 
 		this.selectedCustomerType = null;
@@ -832,11 +787,13 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			}
 		}else{
 			if(form.email.length < 1 || form.firstName.length < 1 || form.lastName.length < 1 || form.language.length < 1
-				|| form.termsAndUsage != true || form.sector.length < 1 || form.salutation.length < 1){
+				|| form.termsAndUsage != true || form.sector.length < 1){
 					isValid = false;
 			}
 
 			if(form.sector == 'General_Public_Sector' && form.extraChoice.length < 1){
+				isValid = false;
+			}else if(form.sector != 'General_Public_Sector' && form.category.length < 1){
 				isValid = false;
 			}
 
