@@ -165,6 +165,7 @@ public with sharing class CaseProcessTypeHelper {
 		setAccountFields.add('IATA_ISO_Country__c');
 		setAccountFields.add('IATA_ISO_Country__r.ISO_Code__c');
 		setAccountFields.add('Recordtype.DeveloperName');
+		setAccountFields.add('CNS_Agency__c');
 		List<String> listFields = new List<String>(setAccountFields);
 		String query = 'SELECT ' + String.join(listFields,',') + ' FROM Account';
 		query += ' WHERE Id IN (\'' + String.join(new list<Id>(accountIds),'\',\'') + '\')';
