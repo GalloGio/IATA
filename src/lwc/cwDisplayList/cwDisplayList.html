@@ -1,0 +1,62 @@
+<template>
+    <div if:true={facility}>
+        <p class={titleCss}>
+            <b>{title}</b>
+            <!-- Icon Temporary Disabled-->
+            <!--<img if:false={facility.listAccCert} class="img-company-type" src={icons.cargoCompanyType} alt="type"/> -->
+            <template if:true={editMode}>
+                <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable hidden" variant="error" data-item="editable" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable" title="Edit" data-item="editable" onclick={showInput} size="x-small"></lightning-icon>
+            </template>
+        </p>
+        <template if:true={isTitleFacilityPageType}>
+            <template if:false={facility.listAccCert}>
+                <hr class="yellow-underline mt-1">
+            </template>
+            <template if:true={facility.listAccCert}>
+                <hr class="yellow-underline mt-2">
+            </template>
+        </template>
+
+        <div class="responsive-padding-left">
+            <div class="row">
+                <!-- Loop commodities  -->
+                <lightning-layout class="row-no-margin">
+                    <template for:each={cargoComodities} for:item="currentCommodity">
+                        <div key={currentCommodity.key} class={itemCssClass}>
+                            <lightning-layout-item class={itemLayoutCssClass}
+                                data-id={currentCommodity.dataKey} onclick={setActiveCargo}>
+                                <section data-name="stamp-popover" data-item={currentCommodity.key} class="slds-popover_hide slds-nubbin_top-left popover-custom"
+                                    role="dialog">
+                                    <div class="slds-popover__body">
+                                        <template if:true={currentCommodity.validated}>
+                                             <span class="text-left text-black">
+                                                <b>{label.information_validated_by}:</b><br />
+                                                <template iterator:verification={currentCommodity.validatedCommodities}>
+                                                    <template if:false={verification.last}>&#8226; {verification.value}<br key={verification.value}/></template>
+                                                    <template if:true={verification.last}>&#8226; {verification.value}</template>
+                                                </template>
+                    
+                                            </span>
+                                        </template>
+                                        <template if:false={currentCommodity.validated}>
+                                            <template if:true={currentCommodity.checked}>
+                                                <span class="text-left text-black">{label.information_not_verified}</span>
+                                            </template>
+                                        </template>
+
+                                    </div>
+                                </section>
+                                <div data-tosca={currentCommodity.key} class={currentCommodity.cssClass}>
+                                    <img data-item={currentCommodity.key} key={currentCommodity.key} onmouseover={showPopover} onmouseleave={hidePopover} src={currentCommodity.iconSrc} class="width-20">
+                                    <span data-item={currentCommodity.key} key={currentCommodity.key} onmouseover={showPopover} onmouseleave={hidePopover} class={currentCommodity.itemSpanClass}>{currentCommodity.name}</span>
+                                </div> 
+                            </lightning-layout-item>
+                        </div>
+                    </template>
+                </lightning-layout>
+
+            </div>
+        </div>
+    </div>
+</template>

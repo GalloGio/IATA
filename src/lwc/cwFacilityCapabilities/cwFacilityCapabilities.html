@@ -1,0 +1,831 @@
+<template>
+	<template if:false={dataInformed}>
+		<div class="spinner-div">
+			<c-cw-spinner width="25%" position="position-absolute"></c-cw-spinner>
+		</div>
+	</template>
+
+	<template if:true={showSpinner}>
+		<div class="spinner-div">
+			<c-cw-spinner width="25%" position="position-absolute"></c-cw-spinner>
+		</div>
+	</template>
+
+	<template if:false={showSpinner}>
+		<template if:true={dataInformed}>
+			<div class="flip-device hidden with-100">
+				<div class="col-12 col-no-padding texttry visible-xs text-center">
+					<h4 class="bg-yellow-transparent pt-2"><b>{label.please_rotate_device}</b> <img src={rotate}
+							width="50" /></h4>
+				</div>
+			</div>
+
+			<!-- SuperCategory -->
+			<template iterator:currentsupercategory={data.superCategories}>
+				<div key={currentsupercategory.value.key}>
+					<div key={currentsupercategory.value.label} class="row m-0 p-0 mt-4 mb-1 mr-2">
+						<div key={currentsupercategory.value.label}>
+							<h4><b>{currentsupercategory.value.label}</b></h4>
+							<hr class="yellow-underline mb-2">
+						</div>
+					</div>
+				</div>
+
+				<!-- Sections -->
+				<template iterator:currentsection={currentsupercategory.value.sections}>
+					<div key={currentsection.value.label} class="row m-0 p-0 mt-1 mb-1 mr-2 pl-4">
+						<div key={currentsection.value.label}>
+							<h5 data-item={currentsection.value.key} class={cargoHandlingCss} onclick={toggleSection}
+								data-key={currentsection.value.label} data-section="content">
+								<b>{currentsection.value.label}</b>
+								<img src={chevrondown} class="icon btn-icon margin-icon" width="20px"
+									data-key={currentsection.value.label} data-section="content">
+							</h5>
+							<c-cw-simple-tooltip item-id={currentsection.value.key} tooltip-object={tooltipObject}
+								tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+						</div>
+						
+						<div key={currentsection.value.label} data-key={currentsection.value.label} data-section="content"
+							class={collapsedOrnot}>
+
+							<template iterator:currentcapability={currentsection.value.capabilities}>
+
+								<!-- Capability Loop Start -->
+								<div key={currentcapability.value.name} class="capability"
+									if:true={currentcapability.value.show_capability}>
+
+									<!-- Header Start -->
+									<div class="row capability-header">
+										<div class="col-3" if:true={editMode}>
+											<p class="slds-truncate" title={currentcapability.value.label}>
+												{currentcapability.value.label}
+											</p>
+										</div>
+										<div class="col-8" if:false={editMode}>
+											<p class="slds-truncate" title={currentcapability.value.label}>
+												{currentcapability.value.label}
+											</p>
+										</div>
+
+										<!-- Edit Mode Start -->
+										<div class="col-6 text-right fontw-inherit col-no-padding" if:true={editMode}>
+											<div class="row">{label.display_in_public_site}</div>
+											<div class="row">
+												<lightning-input data-key={currentcapability.value.name} name="Summary"
+													type="checkbox" label="Summary"
+													checked={currentcapability.value.check_summary}
+													onchange={handleChangeChecks}>
+												</lightning-input>
+												<lightning-input data-key={currentcapability.value.name} name="Details"
+													type="checkbox" label="Details"
+													checked={currentcapability.value.check_detail}
+													onchange={handleChangeChecks}>
+												</lightning-input>
+
+												<div class={cargoHandlingCapabilitiesCss} role="alert"></div>
+												<template if:true={currentcapability.value.first_load_check}>
+													<template if:false={currentcapability.value.check_summary}>
+														<template if:true={currentcapability.value.check_detail}>
+															<div class="ml-1 alert text-truncate" role="alert">
+																<img src={warning} class='width-15 pb-1' />
+																&nbsp;{label.summary_no_display_public}
+															</div>
+														</template>
+													</template>
+													<template if:true={currentcapability.value.check_summary}>
+														<template if:false={currentcapability.value.check_detail}>
+															<div class="ml-1 alert text-truncate" role="alert">
+																<img src={warning} class='width-15 pb-1' />
+																&nbsp;{label.detail_no_display_public}
+															</div>
+														</template>
+													</template>
+													<template if:false={currentcapability.value.check_detail}>
+														<template if:false={currentcapability.value.check_summary}>
+															<div class="ml-1 alert text-truncate" role="alert">
+																<img src={warning} class='width-15 pb-1' />
+																<b>&nbsp;{label.entire_section_no_display_public}</b>
+															</div>
+														</template>
+													</template>
+												</template>
+											</div>
+										</div>
+										<!-- Edit Mode End -->
+
+										<div class="col-3 text-right fontw-inherit">
+											<div class="hidden-sm">
+
+												<template if:true={currentcapability.first}>
+													<button class="collapsible-button no-collapsed-button capitalize"
+														onclick={toggleContent}
+														if:true={currentcapability.value.show_summary}
+														data-section={currentcapability.value.name} data-action="summary"
+														data-tosca="section_toggle_summary">
+														<img src={summaryIcon} />{label.summary_capabilities}
+													</button>
+												</template>
+
+												<template if:false={currentcapability.first}>
+													<button class="collapsible-button collapsed-button capitalize"
+														onclick={toggleContent}
+														if:true={currentcapability.value.show_summary}
+														data-section={currentcapability.value.name} data-action="summary"
+														data-tosca="section_toggle_summary">
+														<img src={summaryIcon} />{label.summary_capabilities}
+													</button>
+												</template>
+
+												<button if:true={currentcapability.value.show_detail}
+													class="collapsible-button collapsed-button" onclick={toggleContent}
+													data-section={currentcapability.value.name} data-action="detail"
+													data-tosca="section_toggle_detail">
+													<img src={detailIcon} />{label.detail}
+												</button>
+											</div>
+
+											<div class="visible-sm ">
+												<div>
+													<template if:true={currentcapability.first}>
+														<button
+															class="collapsible-button no-collapsed-button width-100 capitalize p-1"
+															onclick={toggleContent}
+															if:true={currentcapability.value.show_summary}
+															data-section={currentcapability.value.name}
+															data-action="summary" data-tosca="section_toggle_summary">
+															{label.summary_capabilities}
+														</button>
+													</template>
+													<template if:false={currentcapability.first}>
+														<button
+															class="collapsible-button collapsed-button width-100 capitalize p-1"
+															onclick={toggleContent}
+															if:true={currentcapability.value.show_summary}
+															data-section={currentcapability.value.name}
+															data-action="summary" data-tosca="section_toggle_summary">
+															{label.summary_capabilities}
+														</button>
+													</template>
+													<div class="visible-xs">
+														<button if:true={currentcapability.value.show_detail}
+															class="collapsible-button collapsed-button width-100 mt-1 p-1"
+															onclick={toggleFlipDevice}
+															data-section={currentcapability.value.name} data-action="detail">
+															{label.detail}
+														</button>
+													</div>
+													<div class="hidden-xs">
+														<button if:true={currentcapability.value.show_detail}
+															class="collapsible-button collapsed-button width-100 mt-1 p-1"
+															onclick={toggleContent}
+															data-section={currentcapability.value.name} data-action="detail">
+															{label.detail}
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- Header End -->
+
+									<!-- Summary Start -->
+									<template if:true={currentcapability.first}>
+										<div class="capability-summary no-collapsed"
+											data-section={currentcapability.value.name} data-action="summary">
+											<div class="row">
+											<div class="row col-10">
+
+												<template for:each={currentcapability.value.summary} for:item="item">
+													<div key={item} class="offset-md-1 col-md-5 col-sm-12">
+
+														<div if:true={item.contains}
+															class="row-inline commodity-active pb-1">
+															<img src={checkedGreenIcon} width="20px">
+															<span class="pl-2">{item.label}</span>
+														</div>
+														<div if:false={item.contains}
+															class="row-inline disabled-filter commodity-inactive pb-1">
+															<img src={checkedGreenIcon} width="20px"><span
+																class="pl-2">{item.label}</span>
+														</div>
+
+													</div>
+												</template>
+
+											</div>		
+											<template if:true={isPrivateArea}>
+												<template if:true={isStationManager}>								
+													<div if:true={currentcapability.value.isEditableRecordType} class="col-2 col-no-padding-right text-right">
+														<button title={label.icg_capab_magmnt_enable} class="btn btn-primary-yellow"
+															onclick={enableOptions} if:true={disableOptions}
+															data-section={currentcapability.value.name} data-action="detail"
+															data-tosca="enable-button-summary">{label.icg_capab_magmnt_enable}
+														</button>
+													</div>
+												</template>
+											</template>
+											</div>
+										</div>
+									</template>
+									<template if:false={currentcapability.first}>
+										<div class="capability-summary collapsed"
+											data-section={currentcapability.value.name} data-action="summary">
+											<div class="row col-12">
+
+												<template for:each={currentcapability.value.summary} for:item="item">
+													<div key={item} class="offset-md-1 col-md-5 col-sm-12">
+
+														<div if:true={item.contains}
+															class="row-inline commodity-active pb-1">
+															<img src={checkedGreenIcon} width="20px">
+															<span class="pl-2">{item.label}</span>
+														</div>
+														<div if:false={item.contains}
+															class="row-inline disabled-filter commodity-inactive pb-1">
+															<img src={checkedGreenIcon} width="20px"><span
+																class="pl-2">{item.label}</span>
+														</div>
+
+													</div>
+												</template>
+
+											</div>
+										</div>
+									</template>
+
+									<!-- Summary End -->
+
+									<!-- Details Start -->
+									<div class="hidden-xs">
+										<div class="capability-summary collapsed"
+											data-section={currentcapability.value.name} data-action="detail">
+											<div class="col-12">
+
+												<template if:true={currentCategory.hasRows}
+													for:each={currentcapability.value.categories} for:item="currentCategory"
+													for:index="categoryIndex">
+													<div key={currentCategory.value} if:true={currentCategory.rows.length}
+														class="row row-custom table-scroll">
+
+														<table class="table table-striped table-custom pb-45">
+															<thead>
+
+																<template if:true={currentCategory.columns.length}
+																	iterator:currentheader={currentCategory.columns}>
+
+																	<tr key={currentheader.value.name}>
+
+																		<template
+																			iterator:currentfield={currentheader.value}>
+																			<template if:false={currentheader.last}>
+																				<template
+																					if:false={currentfield.value.label.length}>
+																					<th key={currentfield.value.name}
+																						scope="col"
+																						colspan={currentfield.value.colspan}
+																						class="box-shadow-none">
+																					</th>
+																				</template>
+																				<template
+																					if:true={currentfield.value.label.length}>
+																					<th key={currentfield.value.name}
+																						scope="col"
+																						colspan={currentfield.value.colspan}>
+																						{currentfield.value.label}
+																					</th>
+																				</template>
+																			</template>
+																			<template if:true={currentheader.last}>
+
+																				<th if:true={currentfield.first}
+																					key={currentfield.value.name}
+																					scope="col"
+																					colspan={currentfield.value.colspan}
+																					class="first-column">
+																					<p>
+																						<c-cw-html-tag-generator
+																							label={label} is-header="true"
+																							item={currentCategory}
+																							property-name="label"
+																							aux-type={currentCategory.auxType}>
+																						</c-cw-html-tag-generator>
+																					</p>
+																				</th>
+
+																				<template if:true={editMode}>
+																					<template if:true={isPrivateArea}>
+																						<template if:true={currentCategory.isEditableRecordType}>
+																							<template if:true={isStationManager}>
+																								<template if:false={currentfield.value.isformula}>
+																									<th if:false={currentfield.first}
+																									key={currentfield.value.name}
+																									scope="col"
+																									colspan={currentfield.value.colspan}>
+																									{currentfield.value.label}
+																									</th>
+																								</template>
+																							</template>
+																							<template if:false={isStationManager}>
+																									<th if:false={currentfield.first}
+																									key={currentfield.value.name}
+																									scope="col"
+																									colspan={currentfield.value.colspan}>
+																									{currentfield.value.label}
+																									</th>
+																							</template>
+																						</template>
+																						<template if:false={currentCategory.isEditableRecordType}>
+																							<th if:false={currentfield.first}
+																								key={currentfield.value.name}
+																								scope="col"
+																								colspan={currentfield.value.colspan}>
+																								{currentfield.value.label}
+																							</th>
+																						</template>	
+																					</template>
+																					<template if:false={isPrivateArea}>
+																						<th if:false={currentfield.first}
+																							key={currentfield.value.name}
+																							scope="col"
+																							colspan={currentfield.value.colspan}>
+																							{currentfield.value.label}
+																						</th>
+																					</template>	
+																																								
+																				</template>
+																				<template if:false={editMode}>
+																					<th if:false={currentfield.first}
+																					key={currentfield.value.name}
+																					scope="col"
+																					colspan={currentfield.value.colspan}>
+																					{currentfield.value.label}
+																					</th>
+																				</template>
+
+
+																			</template>
+
+																		</template>
+
+																		<template if:true={currentheader.last}>
+
+																			<th if:false={editMode}
+																				key={currentheader.value.name} scope="col"
+																				class="photo-colum-head">
+																				{label.photos}</th>
+																			<th if:false={editMode} key={currentheader.value.name} scope="col"
+																				class="certifications-stamp"></th>
+
+																			<template if:true={editMode}>
+																				<th if:false={currentcapability.value.isEditableRecordType}
+																					key={currentheader.value.name} scope="col" class="photo-colum-head">
+																					{label.manage_photos}</th>
+																				<template if:true={isPrivateArea}>
+																					<template if:true={isStationManager}>
+																						<th if:true={currentcapability.value.isEditableRecordType}
+																							key={currentheader.value.name} scope="col" class="photo-colum-head">
+																							Upload obligation documentation</th>
+																						</template>
+																				</template>	
+																				<th key={currentheader.value.name} scope="col"
+																					class="certifications-stamp"></th>
+																				<template if:true={isPrivateArea}>
+																					<template if:true={isStationManager}>
+																						<th if:true={currentcapability.value.isEditableRecordType}>
+
+																							<button title={label.icg_capab_magmnt_disable} class="btn btn-primary-blue"
+																								onclick={enableOptions} if:false={disableOptions}
+																								data-tosca="disable-buttons">{label.icg_capab_magmnt_disable}
+																							</button>
+
+																							<button title={label.icg_capab_magmnt_enable} class="btn btn-primary-yellow"
+																								onclick={enableOptions} if:true={disableOptions}
+																								data-tosca="enable-buttons">{label.icg_capab_magmnt_enable}
+																							</button>
+																						</th>
+																					</template> 
+																				</template>	
+																				
+																			</template>
+																		</template>
+																	</tr>
+																</template>
+															</thead>
+
+															<tbody if:true={currentCategory.columns}>
+																<template for:each={currentCategory.rows} for:item="row"
+																	for:index="rowIndex">
+																	<tr key={row.Id} >
+
+																		<template if:true={currentCategory.columns.length}
+																			iterator:currentheader={currentCategory.columns}>
+																			<template if:true={currentheader.last}>
+																				<template
+																					iterator:currentfield={currentheader.value}>
+																					
+																					<td if:true={currentfield.first}
+																						key={currentfield.value.name}
+																						class="text-left row-separator first-column-width">
+
+																						<b>
+																							<c-cw-html-tag-generator if:false={editMode}
+																								label={label}
+																								row-index={rowIndex}
+																								item={row}
+																								property-name={currentfield.value.name}
+																								aux-type={currentCategory.auxType}>
+																							</c-cw-html-tag-generator>
+
+																							<c-cw-capabilities-manager-inputs if:true={editMode}
+																								row-index={rowIndex} category-index={categoryIndex} item={row}
+																								property-name={currentfield.value.name}
+																								aux-type={currentCategory.auxType}
+																								type={currentfield.value.type} values={currentfield.value.values}
+																								edit-mode=false onfieldupdated={addFieldToList}>
+																							</c-cw-capabilities-manager-inputs>
+
+																						</b>
+																					</td>
+
+																					<template if:true={editMode}>
+																						<template if:true={isPrivateArea}>
+																							<template if:true={isStationManager}>			
+																								<template if:true={currentCategory.isEditableRecordType}>																																							<template if:true={currentCategory.isEditableRecordType}>
+																									<template if:false={currentfield.value.isformula}>
+																										<td if:false={currentfield.first}
+																											key={currentfield.value.name}
+																											class="row-separator max-width-400">
+
+																											<c-cw-capabilities-manager-inputs
+																												row-index={rowIndex} category-index={categoryIndex} item={row}
+																												property-name={currentfield.value.name}
+																												type={currentfield.value.type} values={currentfield.value.values}
+																												max-characters="20" edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
+																											</c-cw-capabilities-manager-inputs>	
+
+																										</td>
+																										</template>
+																									</template>
+																								</template>	
+																								<template if:false={currentCategory.isEditableRecordType}>
+																									<td if:false={currentfield.first}
+																										key={currentfield.value.name}
+																										class="row-separator max-width-400">
+			
+																										<c-cw-html-tag-generator 
+																										label={label}
+																										row-index={rowIndex} item={row}
+																										property-name={currentfield.value.name}
+																										max-characters="20">
+																										</c-cw-html-tag-generator>
+			
+																									</td>
+																								</template>
+																							</template>
+																							<template if:false={isStationManager}>
+																								<td if:false={currentfield.first}
+																									key={currentfield.value.name}
+																									class="row-separator max-width-400">
+
+																									<c-cw-html-tag-generator
+																									label={label}
+																									row-index={rowIndex} item={row}
+																									property-name={currentfield.value.name}
+																									max-characters="20">
+																									</c-cw-html-tag-generator>
+																								</td>
+																							</template>
+																						</template>
+																						<template if:false={isPrivateArea}>
+																							<td if:false={currentfield.first}
+																									key={currentfield.value.name}
+																									class="row-separator max-width-400">
+		
+																									<c-cw-html-tag-generator
+																									label={label}
+																									row-index={rowIndex} item={row}
+																									property-name={currentfield.value.name}
+																									max-characters="20">
+																									</c-cw-html-tag-generator>		
+		
+																								</td>
+																						</template>
+																						
+																					</template>
+
+																					<template if:false={editMode}>
+																						<td if:false={currentfield.first}
+																						key={currentfield.value.name}
+																						class="row-separator max-width-400">
+
+																						<c-cw-html-tag-generator
+																							label={label}
+																							row-index={rowIndex} item={row}
+																							property-name={currentfield.value.name}
+																							max-characters="20">
+																						</c-cw-html-tag-generator>
+
+																						</td>
+																					</template>
+
+																				</template>
+																			</template>
+																		</template>
+
+																		<template if:true={editMode}>
+																			<template if:true={isPrivateArea}>
+																				<template if:true={isStationManager}>
+																					<td if:true={currentCategory.isEditableRecordType} class="row-separator"
+																						data-super-categories-index={currentsupercategory.index}
+																						data-section-index={currentsection.index}
+																						data-capability-index={currentcapability.index}
+																						data-category-index={categoryIndex}
+																						data-row-index={rowIndex}
+																						onclick={setRowClicked}>
+																					<lightning-file-upload 
+																							label=""
+																							name="fileUploader"
+																							accept={acceptedDocumentsFormats}
+																							record-id={recordId}
+																							onuploadfinished={handleUploadDocumentFinished}
+																							disabled={row.isNotEditable}
+																							multiple>
+																						</lightning-file-upload>
+																					</td>
+																					<td if:false={currentCategory.isEditableRecordType} class="row-separator photo-colum" 
+																					data-super-categories-index={currentsupercategory.index}
+																					data-section-index={currentsection.index}
+																					data-capability-index={currentcapability.index}
+																					data-category-index={categoryIndex}
+																					data-row-index={rowIndex}
+																					onclick={setRowClicked}>
+
+																					<button if:true={row.photosAvailable}
+																						class="p-0 bg-transp border-0"
+																						data-tosca="edit_photos">
+																						<img src={infoIcon} width="20px"
+																							data-super-category-index={currentsupercategory.index}
+																							data-section-index={currentsection.index}
+																							data-capability-index={currentcapability.index}
+																							data-category-index={categoryIndex}
+																							data-row-index={rowIndex}
+																							onclick={openModalEditPhotos} />
+																					</button>
+
+																					<button if:false={row.photosAvailable}
+																						disabled
+																						class="p-0 bg-transp border-0 disabled-filter">
+																						<img src={infoIcon} width="20px" />
+																					</button>
+																					</td>
+																				</template>
+																				<template if:false={isStationManager}>
+																					<td if:false={currentCategory.isEditableRecordType} class="row-separator photo-colum" 
+																						data-super-categories-index={currentsupercategory.index}
+																						data-section-index={currentsection.index}
+																						data-capability-index={currentcapability.index}
+																						data-category-index={categoryIndex}
+																						data-row-index={rowIndex}
+																						onclick={setRowClicked}>
+
+																						<button if:true={row.photosAvailable}
+																							class="p-0 bg-transp border-0"
+																							data-tosca="edit_photos">
+																							<img src={infoIcon} width="20px"
+																								data-super-category-index={currentsupercategory.index}
+																								data-section-index={currentsection.index}
+																								data-capability-index={currentcapability.index}
+																								data-category-index={categoryIndex}
+																								data-row-index={rowIndex}
+																								onclick={openModalEditPhotos} />
+																						</button>
+
+																						<button if:false={row.photosAvailable}
+																							disabled
+																							class="p-0 bg-transp border-0 disabled-filter">
+																							<img src={infoIcon} width="20px" />
+																						</button>
+																					</td>
+																				</template>
+																			</template>	
+																			<template if:false={isPrivateArea}>
+																				<template if:false={currentCategory.isEditableRecordType}>
+																					<td  class="row-separator photo-colum" 
+																					data-super-categories-index={currentsupercategory.index}
+																					data-section-index={currentsection.index}
+																					data-capability-index={currentcapability.index}
+																					data-category-index={categoryIndex}
+																					data-row-index={rowIndex}
+																					onclick={setRowClicked}>
+
+																						<button if:true={row.photosAvailable}
+																							class="p-0 bg-transp border-0"
+																							data-tosca="edit_photos">
+																							<img src={infoIcon} width="20px"
+																								data-super-category-index={currentsupercategory.index}
+																								data-section-index={currentsection.index}
+																								data-capability-index={currentcapability.index}
+																								data-category-index={categoryIndex}
+																								data-row-index={rowIndex}
+																								onclick={openModalEditPhotos} />
+																						</button>
+
+																						<button if:false={row.photosAvailable}
+																							disabled
+																							class="p-0 bg-transp border-0 disabled-filter">
+																							<img src={infoIcon} width="20px" />
+																						</button>
+																					</td>
+																				</template>
+																			</template>															
+																		</template>
+																		<template if:false={editMode}>
+																			<td class="row-separator photo-colum" 
+																				data-super-categories-index={currentsupercategory.index}
+																				data-section-index={currentsection.index}
+																				data-capability-index={currentcapability.index}
+																				data-category-index={categoryIndex}
+																				data-row-index={rowIndex}
+																				onclick={setRowClicked}>
+
+																					<button if:true={row.photosAvailable}
+																						class="p-0 bg-transp border-0"
+																						data-tosca="edit_photos">
+																						<img src={infoIcon} width="20px"
+																							data-super-category-index={currentsupercategory.index}
+																							data-section-index={currentsection.index}
+																							data-capability-index={currentcapability.index}
+																							data-category-index={categoryIndex}
+																							data-row-index={rowIndex}
+																							onclick={openModalEditPhotos} />
+																					</button>
+
+																					<button if:false={row.photosAvailable}
+																						disabled
+																						class="p-0 bg-transp border-0 disabled-filter">
+																						<img src={infoIcon} width="20px" />
+																					</button>
+																			</td>
+																		</template>
+																		<td class="certifications-stamp">
+																			<div class="stamp-inline">
+																				<template for:each={row.certifications}
+																					for:item="cert">
+																					<img key={cert.id} width="35px"
+																						src={cert.src}
+																						onmouseover={showHideStampHover}
+																						onmousemove={showHideStampHover}
+																						onmouseout={showHideStampHover}
+																						data-name={cert.name}
+																						data-issue-date={cert.issueDate}
+																						data-expiration-date={cert.expirationDate}>
+																				</template>
+																			</div>
+																		</td>
+
+																		<template if:true={editMode}>
+																			<template if:true={row.isEditableRecordType}>
+																			<td class="cell-buttons">
+																				
+																					<template if:true={row.isAssigned}>
+										
+																						<button title={label.remove} hidden={disableOptions} class="btn btn-primary ml-1" data-action="Remove"
+																						data-super-categories-index={currentsupercategory.index}
+																						data-section-index={currentsection.index}
+																						data-capability-index={currentcapability.index}
+																						data-category-index={categoryIndex}
+																						data-row-index={rowIndex}
+																						onclick={actionsCapability}>{label.remove}</button>
+																					</template>
+					
+																					<template if:false={row.isAssigned}>
+																						<button title="Add capability" hidden={disableOptions} class="btn btn-primary-blue" data-action="Certify"
+																							data-super-categories-index={currentsupercategory.index}
+																							data-section-index={currentsection.index}
+																							data-capability-index={currentcapability.index}
+																							data-category-index={categoryIndex}
+																							data-row-index={rowIndex}
+																						onclick={actionsCapability}>{label.add}</button>
+																					</template>
+
+																			</td>
+																			</template>
+																		</template>
+																	</tr>
+																</template>
+															</tbody>
+														</table>
+													</div>
+
+												</template>
+
+											</div>
+										</div>
+									</div>
+									<!-- Details End -->
+
+								</div><!-- Capability Loop End -->
+
+							</template>
+
+						</div>
+
+					</div>
+					
+				</template>
+				
+			</template>
+
+			<template if:true={modalEditPhotos}>
+				<div class="slds-m-around_xx-large">
+					<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+						aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+						<div class="slds-modal__container">
+							<header class="slds-modal__header slds-modal__header_empty">
+								<lightning-button-icon icon-name="utility:close" onclick={closeModalEditPhotos}
+									alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+								</lightning-button-icon>
+							</header>
+
+							<div class="slds-modal__content text-center overflow-hidden" id="modal-edit-photos">
+
+								<div class="row">
+									<template if:true={editMode}>
+										<table class="m-auto table table-striped">
+											<thead>
+												<tr>
+													<th>{label.display_publicly}</th>
+													<th>{label.description}</th>
+													<th>{label.file_name}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template for:each={photosRow.photos} for:item="photo"
+													for:index="photoIndex">
+													<tr key={photo.url}>
+														<td>
+
+															<div if:true={photo.visible} class="commodity-active">
+																<img src={checkedBlueIcon} width="20px"
+																	onclick={toggleVisibilityPhoto} data-src={photo.url}
+																	data-id={photo.id}>
+															</div>
+
+															<div if:false={photo.visible}
+																class="disabled-filter commodity-inactive">
+																<img src={checkedBlueIcon} width="20px"
+																	onclick={toggleVisibilityPhoto} data-src={photo.url}
+																	data-id={photo.id}>
+															</div>
+														</td>
+														<td>{photo.label}</td>
+														<td class="certifications-stamp">
+															<div>
+																<ul class="enlarge">
+																	<li>
+																		{label.photo} {photoIndex}
+																		<span class="tooltip-img">
+																			<img src={photo.url}>
+																		</span>
+																	</li>
+																</ul>
+															</div>
+														</td>
+													</tr>
+												</template>
+											</tbody>
+										</table>
+									</template>
+
+									<template if:false={adminMode}>
+										<lightning-carousel disable-auto-scroll>
+											<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
+												<lightning-carousel-image if:true={photo.visible} key={photo.id}
+													src={photo.url} header={photoIndex} description={photo.label}>
+												</lightning-carousel-image>
+											</template>
+										</lightning-carousel>
+									</template>
+								</div>
+
+							</div>
+						</div>
+					</section>
+					<div class="slds-backdrop slds-backdrop_open"></div>
+				</div>
+			</template>
+
+			<section data-name="stamp-popover"
+				class="slds-popover slds-nubbin_top-right popover-custom-facility-capabilities hidden" role="dialog">
+				<div class="slds-popover__body">
+					<span if:true={dataHoverInfoStamp}>
+						<p>{label.capability_validated_by}: <b>{dataHoverInfoStamp.name}</b></p>
+						<p>{label.issue_date}: <b>{dataHoverInfoStamp.issueDate}</b></p>
+						<p>{label.expiration_date}: <b>{dataHoverInfoStamp.expirationDate}</b></p>
+					</span>
+				</div>
+			</section>
+
+		</template>
+	</template>	
+</template>

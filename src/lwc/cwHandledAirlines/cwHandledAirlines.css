@@ -1,0 +1,84 @@
+.itemBase {
+    border: solid 1px black;
+    margin: 2px;
+    z-index: 10;
+    color: blue;
+ 
+}
+
+.row-flex {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0px;
+    justify-content: center;
+}
+
+.itemBase:hover {
+    border: none 2px rgb(70, 71, 70);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.itemSelectedPrivate {
+    border: blue;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+    font-weight: normal;
+    /* opacity: 0; */
+}
+
+.itemSelected {
+    border: black;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+    font-weight: normal;
+    color: black;
+    /* opacity: 0; */
+}
+
+.itemLetter {
+    border: blue;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+    font-weight: bold;
+    color: blue;
+    /* opacity: 0; */
+}
+
+.itemUnselected {
+    border: grey;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+    /* transition: opacity .5s linear;
+    opacity: 1; */
+}
+.breadlink{
+    cursor: pointer;
+    color: blue;
+}
+.letterSelected{
+    font-weight:900;
+}
+.backnext {
+    color: blue;
+}
+.pl-15{
+    padding-left: 15px;
+}
+
+.border-card {
+  border: 1px solid #d9d9d9;
+  padding: 5px 10px 10px 10px;
+}
+
+.filter-grey-100-operating{
+    -webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+}

@@ -1,0 +1,15 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="nameList" type="String" description="title for table" access="global" />
+    <apex:outputPanel rendered="{!NOT(stationManagersContactRoleDetails.empty)}">
+        <p style="margin-top: 25px; line-height: 1.8rem;">{!nameList}:</p>
+        <ul>
+            <apex:repeat value="{!stationManagersContactRoleDetails}" var="crd">
+                <li>{!crd.Account_Contact_Role__r.Contact__r.Name}, {!crd.Account_Contact_Role__r.Contact__r.Email}</li>
+            </apex:repeat>
+        </ul>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!stationManagersContactRoleDetails.empty}">
+        <p style="line-height: 1.8rem; color: #1e32fa; font-weight: 600;">ATTENTION: {!stationDetails.Name} currently has no Station Manager.</p>
+    </apex:outputPanel>
+</apex:component>

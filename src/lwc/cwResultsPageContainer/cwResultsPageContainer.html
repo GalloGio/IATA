@@ -1,0 +1,116 @@
+<template>
+    <div class="container container-search">
+        <div class="col-12 col-no-padding breadcrumbs-search hidden-sm width-100">     
+            <div class="bg-search-section">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href={urlICGHomePage} class="text-white">{label.home}</a>
+                        </li>
+                        <li aria-current="page" class="breadcrumb-item active capitalize"><b>{label.search}</b></li>
+                    </ol>
+                </nav>
+            </div> 
+            <br />    
+        </div>
+        
+
+        <!--VISIBLE RESPONSIVE VERSION-->
+        <div class="visible-sm fixed-filter">
+            <div class="row">
+                <div class="col-6 inline-flex">
+                    <div class="col-3 align-self-center">
+                        <a class="p-1-5"><img src={sortblue} class="filter-grey-100 width-30"/></a>
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <span class="big-blue-span">{titlefilter}</span>
+                    <img width="50px" onclick={responsivefilter} src={openarrow}
+                        class="img-fluid icoresponsivepalfilter cursor-pt p-2-5">
+                </div>
+            </div>
+        </div>
+
+        <div class="row blue-bg-responsive">
+            <div class="col-lg-3 col-xl-2 col-md-4 col-sm-12 filter-panel filter-panel-hide">
+                <c-cw-results-page-search-bar certifications={certifications} onsearch={getRecordsFromEngine} 
+                onfiltercountchange ={hanldeFilterCountChange} onclicksearch={responsivefilter} initial-search={initialSearch} 
+                initial-load-performed={initialLoadPerformed} custom-location-filter={customLocationFilter}>
+                </c-cw-results-page-search-bar>
+            </div>
+
+            <div class="col-lg-9 col-xl-10 col-md-8 col-sm-12 col-xs-12 results-filter-panel">
+                <div class="row-no-margin hidden-xs map-results-sm mb-3">
+                        <!--VIEW SELECTOR-->
+                        <div class={combostyle}
+                        onmouseleave={closeViewTypeCombo}>
+                        <div id="viewtypebox" class="viewtypebox col-12 bg-yellow-transparent p-0"
+                            onmouseleave={closeViewTypeCombo}>
+                            <div id="selectedtype" class="selectedtype" data-tosca="selectedType"
+                                onmouseover={openViewTypeCombo}>
+                                <template if:true={isHybrid}>
+                                    <table>
+                                        <tr data-tosca="hybrid">
+                                            <td class="text-black text-center">
+                                                <p><b>{label.hybrid_view}</b></p>
+                                            </td>
+                                            <td><img data-tosca="collapsearrow" src={collapsearrow} class={collapseArrowStyle} /></td>
+                                        </tr>
+                                    </table>
+                                </template>
+                                <template if:true={isCondensed}>
+                                    <table>
+                                        <tr data-tosca="condensed">
+                                            <td class="text-black text-center">
+                                                <p><b>{label.condensed_list}</b></p>
+                                            </td>
+                                            <td><img data-tosca="collapsearrow" src={collapsearrow} class={collapseArrowStyle} /></td>
+                                        </tr>
+                                    </table>
+                                </template>
+                                <template if:true={isDetailed}>
+                                    <table>
+                                        <tr data-tosca="detailed">
+                                            <td class="text-black text-center">
+                                                <p class="company-name-text font-size-13"><b>{label.detailed_list}</b></p>
+                                            </td>
+                                            <td><img data-tosca="collapsearrow" src={collapsearrow} class={collapseArrowStyle} /></td>
+                                        </tr>
+                                    </table>
+                                </template>
+                                </div>
+                                <div id="viewtypecombo" class="viewtypecombo" if:true={showTypeCombo}>
+                                    <table id="viewtypetable" class="viewtypetable">
+                                        <tr onclick={setHybridView} class="item-viewtype-bar">                                           
+                                            <td class="text-black text-justify pl-2">
+                                                <p data-tosca="sethybrid">{label.hybrid_view}</p>
+                                            </td>
+                                        </tr>
+                                        <tr onclick={setCondensedView} class="item-viewtype-bar">
+                                            <td class="text-black text-justify pl-2">
+                                                <p data-tosca="setcondensed">{label.condensed_list}</p>
+                                            </td>
+                                        </tr>
+                                        <tr onclick={setDetailedView} class="item-viewtype-bar">
+                                            <td class="text-black text-justify pl-2">
+                                                <p data-tosca="setdetail">Detail List</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div></div></div>
+                        <!--END OF VIEW SELECTOR-->
+                        <template if:true={renderMap}>
+                                <c-cw-google-map-container label={label} map-options={mapOptions} map-options-center={mapOptionsCenter} map-data={mapData} width="100%" height="600px" collapsed-height="300px"
+                                collapsed-width ="100%" collapsed="true" company-type-filter={companyTypeFilter} onfilterbylatlong={filterByLatLong}></c-cw-google-map-container>
+                        </template>        
+                    <br />
+                </div>               
+                    <c-cw-search-result-wrapper lst-results={results} is-detailed={isDetailed} map-data={mapData} onfilterctype={setCompanyTypeFilter} is-loading={isLoading}></c-cw-search-result-wrapper>
+                <template if:true={notLoadingAndHasValues}>
+                    <div class="text-center"><c-cw-pagination page-numbers={numberOfPages} selected-page={selectedPage} onnext={nextpage} onprevious={previouspage} ongotopage={gotopage} is-loading={isLoading}></c-cw-pagination></div>
+                </template>                
+            </div>
+            
+        </div>
+    </div>
+</template>

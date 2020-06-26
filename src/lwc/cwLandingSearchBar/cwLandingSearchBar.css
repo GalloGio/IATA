@@ -1,0 +1,140 @@
+.searchtypebox {
+    cursor: pointer;
+    /*width:20%;*/
+    float: left;
+}
+
+.selectedtype {
+    background-color: #ffc90d;
+    padding: 2px 10px 0px 10px;
+}
+
+.selectedtype-responsive {
+    background-color: transparent;
+    padding: 10px;
+}
+
+.searchtypecombo {
+    background-color: #ffc90db3;
+    position: absolute !important;
+    /*width: 30%;*/
+    width: 150%;
+}
+
+.searchtypecombo-responsive {
+    background-color: #ffc90d;
+    position: absolute !important;
+    z-index: 50;
+    width: 100%;
+    /*width: 30%;*/
+}
+
+.searchbox {
+    padding: 30px;
+    /*width: 70%;*/
+}
+
+.searchboxdiv {
+    display: inline-block;
+    z-index: 30;
+}
+
+
+.searchbutton {
+    /*width:30%;*/
+    background-color: #FFFFFF;
+    /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+}
+
+.searchbuttonimg {
+    width: 48px;
+    padding: 5px;
+    display: inline-block;
+}
+
+input,
+select,
+textarea,
+button {
+    border: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+input[type="text"] {
+    font-size: 21px;
+}
+
+ ::-webkit-input-placeholder {
+    font-size: 21px;
+}
+
+ ::-moz-placeholder {
+    font-size: 21px;
+}
+
+ :-ms-input-placeholder {
+    font-size: 21px;
+}
+
+ ::placeholder {
+    font-size: 21px;
+}
+
+.cellpadding {
+    padding: 5px;
+}
+
+.item-searchby-bar:hover {
+    background-color: #ffc90d !important;
+    color: #1E32FA !important;
+}
+
+.find-your-cargo {
+    color: white;
+    text-align: left;
+    padding-bottom: 1px
+}
+
+.padding-logo-search {
+    padding: 85px 0px 65px 0px;
+}
+
+.padding-logo-search-resp {
+    padding: 85px 0px 65px 0px;
+}
+
+.width-60p {
+    width: 60%;
+}
+
+.padding-search-by {
+    padding: 7.5px 3px;
+}
+
+.width-18 {
+    width: 18px;
+}
+
+.width-32 {
+    width: 32px;
+}
+.isDisabled {
+    cursor: default;
+}
+
+.ig-r{
+    z-index: 30;
+}

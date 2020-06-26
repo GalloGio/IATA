@@ -1,0 +1,50 @@
+.slds-pill {
+    background-color: #1e32fa;
+    color: #fff;
+    font-size: .8rem;
+    margin: 2px 4px;
+    align-items: inherit;
+}
+
+.slds-button_success:hover {
+    background-color: rgb(4, 132, 75) !important;
+    border-color: rgb(4, 132, 75) !important;
+}
+
+.title p {
+    font-size: 1.5rem;
+}
+
+.btn-icon {
+    cursor: pointer;
+}
+
+.icon {
+    margin: 0px 5px;
+    width: 15px;
+    max-width: 15px;
+}
+
+.div-marginTop {
+    margin-top: 5px;
+}
+
+.bg-light-grey{
+    background-color: #f3f3f3;
+}
+
+.minwidthbutton{
+    min-width:120px;
+}
+
+.btn-primary:after {
+    border-width: 0 0 12px 12px;
+}
+
+.btn-primary-blue:after {
+    border-width: 0 0 12px 12px;
+}
+
+.btn{
+    min-height: 29px !important;
+}

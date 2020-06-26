@@ -1,0 +1,12 @@
+.table-action-btn .btn-primary:after {
+    border-width: 0 0 12px 12px;
+}
+
+.table-action-btn .btn-primary-blue:after {
+    border-width: 0 0 12px 12px;
+}
+
+.table-action-btn .btn {
+    min-height: 24px !important;
+    font-size: 0.7333333333rem;
+}

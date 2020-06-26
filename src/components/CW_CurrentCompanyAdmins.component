@@ -1,0 +1,7 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <p style="margin-top: 25px; line-height: 1.8rem;">Current Company Admins:</p>
+    <ul>
+        <li>"List Company Admins"</li>
+    </ul>
+</apex:component>

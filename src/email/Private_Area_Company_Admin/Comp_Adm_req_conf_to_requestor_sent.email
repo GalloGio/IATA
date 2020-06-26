@@ -1,0 +1,20 @@
+<messaging:emailTemplate subject="A request to become Company Admin for the below Operational Hierarchies has been sent" relatedToType="ICG_Contact_Role_Detail__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" contactRoleDetailData="{!relatedTo.Id}"> </c:CW_HelloUser>   
+                    
+                    <p style="line-height: 1.8rem;">A request to become Company Admin for the below Operational Hierarchies has been sent to your company Admin / IATA  for approval.</p>
+                    
+                    <c:CW_OperationalHierarchy contactRoleDetailData="{!relatedTo.Id}"> </c:CW_OperationalHierarchy>   
+                    
+                    <p style="line-height: 1.8rem;">We will notify you as soon as the request has been approved.</p>
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

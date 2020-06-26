@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Company Admin Approved: Notification to Requestor</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification Company Admin Approved to Requestor</name>
+    <style>none</style>
+    <subject>Your request to become Company Admin for the below Operational Hierarchies has been approved</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

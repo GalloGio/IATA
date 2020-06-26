@@ -1,0 +1,70 @@
+<template>
+    <lightning-layout-item size="12" class="IEFixDisplay">
+        <div class="sectionSubTitle">{label.account_information}</div>
+    </lightning-layout-item>
+    <div class="companyInfoContainer col-12">
+        <!------------------------------------------      Company Information Row 1    -------------------------------------------->
+        <div class="row mb-2">
+            <div class="col-4">
+                <div class="dataLabel">{label.sector}</div>
+                <div class="dataValue">{account.sector}</div>
+            </div>
+            <div class="col-4">
+                <div class="dataLabel">{label.category}</div>
+                <div class="dataValue">{account.category}</div>
+            </div>
+        </div>
+        <!------------------------------------------      Company Information Row 2    -------------------------------------------->
+        <div class="row mb-2">
+            <div class="col-4">
+                <div class="dataLabel">{label.legal_name}</div>
+                <div class="dataValue">{account.legalname}</div>
+            </div>
+            <div class="col-4">
+                <div class="dataLabel">{label.trade_name}</div>
+                <div class="dataValue">{account.tradename}</div>
+            </div>
+        </div>
+        <!------------------------------------------      Company Information Row 3    -------------------------------------------->
+        <div class="row mb-2">
+            <div class="col-4">
+                <div class="dataLabel">{label.phone}</div>
+                <div class="dataValue">{account.phone}</div>
+            </div>
+            <div class="col-4">
+                <div class="dataLabel">{label.email}</div>
+                <div class="dataValue">{account.email}</div>
+            </div>
+            <div class="col-4">
+                <div class="dataLabel">{label.website}</div>
+                <div class="dataValue">{account.website}</div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------      Address Form      -------------------------------------------->
+    <lightning-layout-item size="12" class="IEFixDisplay">
+        <div class="sectionSubTitle">{label.account_bussiness_address_info}</div>
+        <div class="sectionDescription">{label.icg_please_fill_account_bussiness_addess}.</div>
+    </lightning-layout-item>
+
+    <c-portal-address-form 
+        country-id={countryId}
+        address={localAddress}
+        onsetvalidationstatus={setValidationStatus}
+        onstartloading={startLoading}
+        onstoploading={stopLoading}
+        disabled-country="true">
+    </c-portal-address-form>
+
+    <div class="row mt-3">
+        <div class="col-6 text-left m-auto">
+            <span class="backbutton" onclick={goBack} data-substep="yes"><b>{label.back}</b></span>
+        </div>
+    
+        <div class="col-6 text-right m-auto">												
+            <lightning-layout-item class="width-100">
+                <button data-tosca="selectrtypeandname" class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-id="nextButton" disabled={isNextButtonDisabled} onclick={goNext}>{nextButtonLabel} </button>
+            </lightning-layout-item>
+        </div>
+    </div>
+</template>

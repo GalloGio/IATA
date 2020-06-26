@@ -1,0 +1,36 @@
+.facility-select {
+
+  padding: 8px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px;
+  border: 2px solid #1E32FA;
+}
+.facility-select option:first-child {
+    color: #aaa
+}
+/* CAUTION: IE hackery ahead */
+select::-ms-expand { 
+    display: none; /* remove default arrow on ie10 and ie11 */
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width:0\0) {
+    select {
+        background:none\9;
+        padding: 5px\9;
+    } 
+}
+
+@media (max-width: 992px) {
+    .selector-fac{
+        margin-top: 20px;
+    }
+}

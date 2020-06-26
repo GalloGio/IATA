@@ -1,0 +1,30 @@
+<template>
+    <div class="text-center">
+        <!-- For responsive  -->
+        <div class="visible-md">
+            <div class="row mt-2">       
+                <div class="btn text-center col-3 arrow-section padding-t-25" onclick={previousHandler}>
+                    <lightning-icon  icon-name="utility:chevronleft" alternative-text="Prev" class="width-30"></lightning-icon>
+                </div>              
+                <div class="swipediv text-center col-6">
+                    <img class="width-83" src={certImageUrl}> 
+                </div>
+                <div class="btn text-center col-3 arrow-section padding-t-25" onclick={nextHandler}>
+                    <lightning-icon  icon-name="utility:chevronright" alternative-text="Next" class="width-30"></lightning-icon>
+                </div>
+            </div>
+            <div  class="m-t-20 swipediv row slds-align_absolute-center">
+                <div class="text-center col-md-6 line-height-32">
+                    <p class="h5"><font color="black"><b>{accRoleDetailName}</b></font> in <span><b>{accRoleDetailCity}</b></span> {label.received}: </p>
+                    <p class="h5"><span><b> {certificationName}</b></span></p>
+                </div>
+            </div>
+            <div class="m-t-20 m-b-20 row slds-align_absolute-center">
+                <div class="text-center col-md-4">
+                    <a class="btn btn-primary btn-latest-icg-updates-custom link-button text-center text-white" onclick={handleMoreClicked}>{buttonText}</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>

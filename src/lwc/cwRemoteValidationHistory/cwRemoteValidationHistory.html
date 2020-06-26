@@ -1,0 +1,46 @@
+<template>
+	<div class="row col-12 bg-grey m-auto pt-2 pb-2">
+        <div class="col-4 m-auto text-right">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white"><lightning-icon icon-name="utility:search" size="x-small"></lightning-icon></div>
+                </div>
+                <input type="text" value={textFilter} onkeyup={filterRemoteValidations} class="form-control border-left-none" placeholder="Search">
+            </div>
+        </div>
+        <div class="col-4 text-right">
+            <template if:true={hasItem}>
+				<a href="javascript:{}"  data-tosca="pending-station-approvals-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-60 mb--15" /></a>
+            </template>
+        </div>
+    </div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">{label.station}</th>
+				<th scope="col">{label.address}</th>
+				<th scope="col">{label.date}</th>
+				<th scope="col">{label.request_by}</th>
+				<th scope="col">{label.status}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<template for:each={pastRemoteValidations} for:item="remoteValidation">
+				<tr key={remoteValidation.Id}>
+					<td>
+						<p if:true={remoteValidation.Station__r.Name}><a class="text-blue blueLink" onclick={goToFacilityPage} id-station={remoteValidation.Station__r.Id}>{remoteValidation.Station__r.Name}</a></p>
+					</td>
+					<td><p if:true={remoteValidation.Station__r.Street_Nr_FOR__c}>{remoteValidation.Station__r.Street_Nr_FOR__c}, {remoteValidation.Station__r.Postal_Code_FOR__c}, {remoteValidation.Station__r.City_FOR__c}, {remoteValidation.Station__r.State_Province_FOR__c}</p></td>
+					<td><p if:true={remoteValidation.Order.EffectiveDate}>{remoteValidation.Order.EffectiveDate}</p></td>
+					<td><p if:true={remoteValidation.Order.CreatedBy.Name}>{remoteValidation.Order.CreatedBy.Name}</p></td>
+					<td><p if:true={remoteValidation.Order.Remote_Validation_Status__c}>{remoteValidation.Order.Remote_Validation_Status__c}</p></td>
+				</tr>
+			</template>
+		</tbody>
+	</table>
+    <template if:false={hasItem}>
+        <c-cw-grid-empty-message></c-cw-grid-empty-message>
+    </template>
+	<c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+</template>

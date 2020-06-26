@@ -1,0 +1,70 @@
+<template>
+    <div class="col-12 text-center">
+        <c-cw-spinner width="25%" if:false={loaded} position="position-relative"></c-cw-spinner>
+    </div>
+    <template if:true={loaded} for:each={superCategories} for:item="currentSuperCategory"
+        for:index="superCategoryIndex">
+
+        <div key={currentSuperCategory} class={parentclass}>
+            <button class="collapsible active col-no-padding">
+                <img src={chevronup} class={mainCollapseImg} key={currentSuperCategory} />
+                <label class={labelSize}>{currentSuperCategory.label}</label>
+                <template if:true={isSearchBar}>
+                    <hr class="yellow-underline mt-2">
+                </template>
+                <template if:false={isSearchBar}>
+                    <hr class="hidden-md yellow-underline-100">
+                </template>
+            </button>
+
+            <div key={currentSuperCategory}>
+                <template for:each={currentSuperCategory.sections} for:item="currentSection" for:index="sectionIndex">
+                    <template if:true={currentSection.isVisible}>
+                        <div key={currentSection} class="bg-grey pb-3">
+                            <div class={parentdivwhite}>
+                                <div class={localpanel} key={currentSection}>
+                                    <template for:each={currentSection.capabilityRT} for:item="currentCapabilityRT"
+                                        for:index="currentCapabilityRTIndex">
+                                        <template if:true={currentCapabilityRT.isVisible}>
+                                            <div data-tosca={currentCapabilityRT.name} class={gsiteclass}
+                                                key={currentCapabilityRT}>
+                                                <template if:false={isSearchBar}>
+                                                    <button data-item={currentCapabilityRT.name}
+                                                        class="collapsible active sectionLabel" key={currentSection}>
+                                                        <p class={titlesize} key={currentCapabilityRT}>
+                                                            <img src={chevrondown} class="expand-without-position"
+                                                                key={currentSection} />
+                                                            &nbsp;&nbsp;{currentCapabilityRT.label}</p>
+                                                        <hr class={hrmargin} key={currentCapabilityRT}>
+                                                    </button>
+                                                </template>
+                                                <template if:true={isSearchBar}>
+                                                    <button data-item={currentCapabilityRT.name}
+                                                        class="collapsible active sectionLabel" key={currentSection}>
+                                                        <img src={chevrondown} class={mainCollapseImg}
+                                                            key={currentSection} />
+                                                        <label class={labelSize}>{currentCapabilityRT.label}</label>
+                                                        <hr class={hrmargin} key={currentCapabilityRT}>
+                                                    </button>
+                                                </template>
+                                                <template if:true={currentCapabilityRT.label}>
+                                                    <div class="content max-height-100 hiddenSection"
+                                                        key={currentCapabilityRT}>
+                                                        <c-cw-facility-capability-form-section label={label}
+                                                            capability={currentCapabilityRT} siteclass={siteclass}>
+                                                        </c-cw-facility-capability-form-section>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </template>
+
+</template>

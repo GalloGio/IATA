@@ -1,0 +1,57 @@
+<apex:component access="global" controller="CW_EmailTemplateData">
+<!-- Begin Default Content REMOVE THIS -->
+    <div style="background-color: black; width: 100%; color: white; font-family: aktiv-grotesk, sans-serif; padding: 20px 0px 20px 20px;">
+        <div style="display: flex; width: 100%; padding: 10px">
+            <div style="width: 75%;">
+                <p style="line-height: 1.8rem;">International Air Transport Association (IATA)</p>
+                <p style="line-height: 1.8rem;">800 Square Victoria, Montreal, H4Z 1m1, Canada</p>
+            </div>
+            <div style="width: 25%; display: flex;">
+                <div style="width: 20%; margin-top: 20px;">
+                    <a title="Twitter" href="https://www.twitter.com" target="_blank">
+                        <img src="{!communityUrlForResources}resource/ICG_Resources/icons/twitter-black.png" alt="Twitter"
+                        style="width: 18px; height: auto; max-height: 18px; background-color: white; padding: 5px;"/>
+                    </a>
+                </div>
+                <div style="width: 20%; margin-top: 20px;">
+                    <a title="facebook" href="https://www.facebook.com" target="_blank">
+                        <img src="{!communityUrlForResources}resource/ICG_Resources/icons/facebook-black.png" alt="facebook"
+                        style="width: 18px; height: auto; max-height: 18px; background-color: white; padding: 5px;"/>
+                    </a>
+                </div>
+                <div style="width: 20%; margin-top: 20px;">
+                    <a title="linkedin" href="https://www.linkedin.com" target="_blank">
+                        <img src="{!communityUrlForResources}resource/ICG_Resources/icons/linkedin-black.png" alt="linkedin"
+                        style="width: 18px; height: auto; max-height: 18px; background-color: white; padding: 5px;"/>
+                    </a>
+                </div>
+                <div style="width: 20%; margin-top: 20px;">
+                    <a title="Youtube" href="https://www.youtube.com" target="_blank">
+                        <img src="{!communityUrlForResources}resource/ICG_Resources/icons/youtube-black.png" alt="Youtube"
+                        style="width: 18px; height: auto; max-height: 18px; background-color: white; padding: 5px;"/>
+                    </a>
+                </div>
+                <div style="width: 20%; margin: auto;">
+
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; padding: 10px; text-align: center; display: contents;">
+            <h2>We represent, lead and serve the airline industry</h2>
+        </div>
+        <div style="display: flex; width: 100%; padding: 10px;">
+            <div style="width: 50%; margin: auto;">
+                <p style="line-height: 1.8rem;">@ Copyright 2020. All right reserved.</p>
+            </div>
+            <div style="width: 50%; display: flex;">
+                <div style="width: 50%; text-align: center; margin: auto;">
+                    <p style="line-height: 1.8rem;"><a style="color:white;" href="">Privacy</a> | <a style="color:white;" href="">Legal</a></p>
+                </div>
+                <div style="width: 50%; text-align: center; margin: auto;">
+                    <img src="{!communityUrlForResources}resource/ICG_Resources/icons/iata-logo-other.png" alt="IATA Logo" width="100" />
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- End Default Content REMOVE THIS -->
+</apex:component>

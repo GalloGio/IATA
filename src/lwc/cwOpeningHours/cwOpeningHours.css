@@ -1,0 +1,28 @@
+:host {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.icon {
+  margin: 0px 5px;
+  width: 15px;
+  max-width: 15px;
+}
+
+.btn-icon {
+  cursor: pointer;
+}
+
+.font-size-sm {
+  font-size: 0.75rem !important;
+}
+
+.txt-center{
+  text-align: center;
+}

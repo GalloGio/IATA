@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Object to host all the params needed for ICG project, that can change between environments and do not have to be deployed.</description>
+    <enableFeeds>false</enableFeeds>
+    <label>ICG Environment Variables</label>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>EXPIRING_VALIDATION_DAYS__c</fullName>
+        <description>Days to consider that a Certification for a facility is going to expire. If we write 60, then all the certifications that expire in less than 60 days are considered expiring validations.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Days to consider that a Certification for a facility is going to expire. If we write 60, then all the certifications that expire in less than 60 days are considered expiring validations.</inlineHelpText>
+        <label>Expiring Validation Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Google_Maps_Key_OneSource__c</fullName>
+        <description>Google Maps api key</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Google Maps api key</inlineHelpText>
+        <label>Google Maps Key of OneSource project</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>InternalRequestURL__c</fullName>
+        <externalId>false</externalId>
+        <label>InternalRequestURL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Beta_Org__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Set to true when the One Source community is shown to the public but you want to hide Join Now and Login functions</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to true when the One Source community is shown to the public but you want to hide Join Now and Login functions</inlineHelpText>
+        <label>Is Beta Org</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

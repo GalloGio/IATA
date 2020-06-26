@@ -1,0 +1,45 @@
+<template >
+    <template if:true={result}>
+        <div class={backGroundStyle}>
+                <h3 class="text-center bg-blue title-h3">{title}</h3>
+                <div class="slds-col slds-size_12-of-12"> 
+                    <template if:true={isCertificationResults} for:each={certificationMapInfo} for:item="certificationMap"> 
+                        <lightning-layout-item  key={certificationMap.row} padding="around-small">
+                            <div class="slds-grid slds-wrap slds-grid_align-center slds_align_absolute_center">
+                                <template key={certificationMap.row} for:each={certificationMap.data} for:item="certification">
+                                    <div data-item={certification.Id} key={certification.Id} class="text-center slds-col slds-size_4-of-12">                                       
+                                        <c-cw-certification data-item={certification.Id} key={certification.Id} certification={certification} onselected={getCertificationDetail}  ></c-cw-certification> 
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </div>
+                <div class="px-2 " >
+                    <template if:false={selectedCertification} >
+                        <div class="text-center certs-text"> <p>{certificationEmptyText}</p></div>                 
+                    </template>
+                </div>
+            
+                <template if:true={selectedCertification} >
+                    <template if:true={shouldBeOpen} >
+                        <div class={textStyle}>
+                            <c-cw-text-container key={selectedCertification.Id}
+                                                title={selectedCertification.Name}
+                                                button-url={selectedCertification.link__c}
+                                                title-color="text-white"
+                                                backgroundcolor="bg-blue"
+                                                text={selectedCertification.Description__c}
+                                                text-color="text-white"
+                                                button-text={label.btn_learn_more}
+                                                button-text-two={label.btn_show_certified_entities}
+                                                close-button="X"
+                                                button-color="btn btn-primary link-button btn-blue"
+                                                onclosetextcontainer={handleTextContainerClose}> 
+                            </c-cw-text-container>
+                        </div>
+                    </template>
+                </template>
+        </div>
+    </template>
+</template>

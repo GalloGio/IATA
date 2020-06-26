@@ -1,0 +1,107 @@
+<template>
+    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-8 col-xs-12 pt-1 pb-1">
+
+        <div class="header text-truncate">
+            <div class="text-truncate">
+                <template if:false={hideExpandibleButton}>
+                    <img if:false={showContent} src={chevrondown} class="icon btn-icon" onclick={showHideContent}>
+                    <img if:true={showContent} src={chevronup} class="icon btn-icon" onclick={showHideContent}>
+                </template>
+                {title}
+                <hr class={underlineClass}>
+            </div>
+        </div>
+
+        <div if:true={showContent} class="col-12 content">
+            <template if:true={days}>
+
+                <div class="row">
+                    <div class="col-4 pl-1">
+                        <!-- <lightning-icon icon-name="utility:clock" size="xx-small"></lightning-icon> -->
+                    </div>
+                    <div class="col-3">
+                        <p class="font-size-sm">{label.icg_from}</p>
+                    </div>
+                    <div class="col-3">
+                        <p class="font-size-sm">{label.icg_to}</p>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+
+                <template for:each={days} for:item="currentDay">
+                    <div key={currentDay.name} class="row">
+
+                        <div class="col-4 pl-1">
+                            <p class="font-size-sm">
+                                {currentDay.label}
+                            </p>
+                        </div>
+
+                        <template if:false={editMode}>
+                            <template if:false={currentDay.empty}>
+                                <template if:false={currentDay.open}>
+                                    <div class={closedColorClass}>{label.closed}</div>
+                                </template>
+                                <template if:true={currentDay.open}>
+                                    <div class="col-3 font-size-sm">{currentDay.startAtPretty}</div>
+                                    <div class="col-3 font-size-sm">{currentDay.endAtPretty}</div>
+                                </template>
+                            </template>
+                        </template>
+
+
+                        <template if:true={editMode}>
+                            <template if:false={currentDay.open}>
+                                <div class="col-6 font-size-sm txt-center">{label.closed}</div>
+                            </template>
+                            <template if:true={currentDay.open}>
+                                <div class="col-3 font-size-sm">
+                                    <c-cw-html-select-with-selected-value attrib-name={currentDay.startAtKey}
+                                        attrib-class="form-control-sm m-0 p-0" items={timeValues}
+                                        selected-value={currentDay.startAt} onchange={handleChangeHour}>
+                                    </c-cw-html-select-with-selected-value>
+                                </div>
+                                <div class="col-3 font-size-sm">
+                                    <c-cw-html-select-with-selected-value attrib-name={currentDay.endAtKey}
+                                        attrib-class="form-control-sm m-0 p-0" items={timeValues}
+                                        selected-value={currentDay.endAt} onchange={handleChangeHour}>
+                                    </c-cw-html-select-with-selected-value>
+                                </div>
+                            </template>
+                        </template>
+
+                        <div class="col-2 font-size-sm">
+
+                            <template if:true={editMode}>
+                                <img if:true={currentDay.open} src={checkedIcon} class="icon btn-icon"
+                                    onclick={handleChangeOpenCloseDay} data-key={currentDay.openKey} data-value="false"
+                                    title="Open">
+
+                                <img if:false={currentDay.open} src={uncheckedIcon} class="icon btn-icon"
+                                    onclick={handleChangeOpenCloseDay} data-key={currentDay.openKey} data-value="true"
+                                    title={label.close}>
+                            </template>
+
+                            <template if:false={editMode}>
+                                <template if:false={currentDay.empty}>
+                                    <template if:false={currentDay.defaultHour}>
+                                        <img if:true={currentDay.open} src={checkedIcon} class="icon" title="Open">
+                                    </template>
+                                </template>
+
+                            </template>
+
+                        </div>
+
+                    </div>
+                </template>
+
+            </template>
+        </div>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+        </template>
+
+    </div>
+</template>

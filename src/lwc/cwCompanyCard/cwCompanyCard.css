@@ -1,0 +1,32 @@
+.companyIconBox {
+	border: 2px solid grey;
+	height: 100%;
+	width: 100%;
+	min-height: 80px;
+	min-width: 80px;
+	line-height: 80px;
+	text-align: center;
+}
+
+.companyIconBox-no-border {
+	height: 100%;
+	width: 100%;
+	min-width: 80px;
+	text-align: center;
+}
+
+.padding {
+	padding: 0px 2px;
+}
+
+.title {
+	font-size: 1.2rem;
+}
+
+.max-height-73 {
+	max-height: 73px;
+}
+
+.width-27 {
+	width: 27px;
+}

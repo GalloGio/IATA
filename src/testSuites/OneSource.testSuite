@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexTestSuite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <testClassName>CW_AccountDetailCarouselTest</testClassName>
+    <testClassName>CW_AccountDetailCertificationListTest</testClassName>
+    <testClassName>CW_AdvancedSearchTest</testClassName>
+    <testClassName>CW_BatchNotifyCertificationExpiryTest</testClassName>
+    <testClassName>CW_CapabilityConflictControllerTest</testClassName>
+    <testClassName>CW_CertificationSectionTest</testClassName>
+    <testClassName>CW_CertificationsManagerControllerTest</testClassName>
+    <testClassName>CW_CreateFacilityControllerTest</testClassName>
+    <testClassName>CW_FacilityCapabilitiesControllerTest</testClassName>
+    <testClassName>CW_FacilityContactInfoControllerTest</testClassName>
+    <testClassName>CW_HandledAirlinesControllerTEST</testClassName>
+    <testClassName>CW_ICGAccountRoleDetailCertTriggerTest</testClassName>
+    <testClassName>CW_ICGAccountRoleDetail_Handler_Test</testClassName>
+    <testClassName>CW_LandingSearchBarControllerTest</testClassName>
+    <testClassName>CW_NotificationsControllerTest</testClassName>
+    <testClassName>CW_PersonalSettingsControllerTest</testClassName>
+    <testClassName>CW_PrivateAreaControllerTest</testClassName>
+    <testClassName>CW_RemoteValidationsControllerTest</testClassName>
+    <testClassName>CW_ResultsPageSearchBarController_Test</testClassName>
+    <testClassName>CW_ScheduleAuditsControllerTest</testClassName>
+    <testClassName>CW_ScheduleNotifyCertificationExpiryTest</testClassName>
+    <testClassName>CW_SearchEngineTest</testClassName>
+    <testClassName>CW_StationManagersTest</testClassName>
+    <testClassName>CW_TestDataFactory</testClassName>
+    <testClassName>CW_UtilitiesTest</testClassName>
+</ApexTestSuite>

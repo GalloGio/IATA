@@ -1,0 +1,126 @@
+<template>
+    <div class="text-center">
+        <h2 class="p-3"> {title} </h2>
+        <div class="hidden-md">
+            <template if:true={isaccCertificationResults}>
+                <lightning-layout multiple-rows="true" class="slds-align_absolute-center space ">
+                    <lightning-layout-item padding="around-small" size="10" class="bg-blue">
+                        <div class="slds-grid slds-gutters slds-grid--vertical-align-center">
+                            <div class="btn slds-col slds-size_1-of-12 arrow-section" onclick={previousHandler}>
+                                <lightning-icon icon-name="utility:chevronleft" alternative-text="Prev" variant="inverse" class="width-30"></lightning-icon>
+                            </div>
+                            <div class="slds-carousel slds-size_10-of-12">
+                                <div class="slds-carousel__stage without-border">
+                                    <template if:true={positionCarousel}>
+                                        <div class={positionCarousel}>
+                                            <template if:true={resultsList}>
+                                                <template for:each={resultsList} for:item="indicator">
+                                                    <div data-item={indicator.Id} key={indicator.Id} role="tabpanel"
+                                                        class={indicator.panelClass} aria-hidden={indicator.hidden}>
+                                                        <div class="slds-carousel__panel-action slds-text-link_reset without-border cursor-txt"
+                                                            tabindex={indicator.tabindex}>
+                                                            <div
+                                                                class="slds-col slds-grid slds-gutters slds-align_absolute-center col-no-padding-left cursor-txt">
+                                                                <div
+                                                                    class="slds-col slds-size_2-of-12 slds-align_absolute-center cer">
+                                                                    <img src={indicator.image}
+                                                                        class="slds-icon_container_circle bg-white-radiant"
+                                                                        width="80px">
+                                                                </div>
+                                                                <div class="slds-col slds-size_6-of-12 txt">
+                                                                    <pre class="h5 text-left formatedText slds-truncate">
+                                                                        <font color="white">{indicator.accName}</font>, <span><b>{indicator.city}</b></span>
+                                                                    </pre>
+                                                                    <pre class="h5 text-left formatedText slds-truncate"><span>
+                                                                            <b>{indicator.certName}</b></span></pre>
+                                                                </div>
+                                                                <div data-item={indicator.Id}
+                                                                    class="slds-col slds-size_3-of-12 slds-align_absolute-center">
+                                                                    <a data-item={indicator.Id}
+                                                                        class="btn btn-primary btn-latest-icg-updates-custom link-button slds-align_absolute-center text-white mt-0 cursot-pt mr-28"
+                                                                        onclick={handleMoreClicked}>{label.btn_go_to_station_profile}</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="btn slds-col slds-size_1-of-12 arrow-section" onclick={nextHandler}>
+                                <lightning-icon icon-name="utility:chevronright" alternative-text="Next" variant="inverse" class="width-30"></lightning-icon>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <div class="slds-align_absolute-center mb-20">
+                    <template for:each={resultsList} for:item="accCertification">
+                        <div key={accCertification.Id} data-item={accCertification.Id} onclick={handleAccCertSelected}
+                            class={accCertification.classes}></div>
+                    </template>
+                </div>
+            </template>
+        </div>
+
+        
+        <!-- For responsive  -->
+        <div class="visible-md text-center mt-3 p-1-5 basic-border">
+           
+            <template if:true={isaccCertificationResults}>
+                <div class="row-no-margin">
+                    <div class="col-12 col-no-padding">
+                        <div class="slds-grid slds-gutters slds-grid--vertical-align-center">
+                            <div class="btn slds-col col-2" onclick={previousHandler}>
+                                <lightning-icon icon-name="utility:chevronleft" alternative-text="Prev" class="width-30"></lightning-icon>
+                            </div>
+                            <div class="slds-carousel col-8">
+                                <div class="slds-carousel__stage without-border">
+                                    <template if:true={positionCarousel}>
+                                        <div class={positionCarousel}>
+                                            <template if:true={resultsList}>
+                                                <template for:each={resultsList} for:item="indicator">
+                                                    <div data-item={indicator.Id} key={indicator.Id} role="tabpanel"
+                                                        class={indicator.panelClass} aria-hidden={indicator.hidden}>
+                                                        <div class="slds-carousel__panel-action slds-text-link_reset without-border cursor-txt" tabindex={indicator.tabindex}>
+                                                            <div class="row-no-margin col-12 text-center">
+                                                                <img src={indicator.image} class="m-auto width-55p">
+                                                            </div>
+                                                            </br>
+                                                            <div class="row-no-margin col-12 text-center">
+                                                                <p class="h5"><font color="black"><b>{indicator.accName} </b></font> {label.in_validation} <span><b>{indicator.city} </b></span> {label.received}: </p>
+                                                                <p class="h5 m-auto"><span><b> {indicator.certName}</b></span></p>
+                                                            </div>
+                                                            </br>
+                                                            <div data-item={indicator.Id}  class="row-no-margin col-12 text-center h5 ">
+                                                                <a data-item={indicator.Id}
+                                                                    class="btn btn-primary btn-latest-icg-updates-custom link-button slds-align_absolute-center text-white mt-0 cursot-pt mr-28 m-auto"
+                                                                    onclick={handleMoreClicked}>{label.btn_go_to_station_profile}</a>
+                                                            </div>
+                                                            </br>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="btn slds-col col-2" onclick={nextHandler}>
+                                <lightning-icon icon-name="utility:chevronright" alternative-text="Next" class="width-30"></lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-align_absolute-center mb-20">
+                    <template for:each={resultsList} for:item="accCertification">
+                        <div key={accCertification.Id} data-item={accCertification.Id} onclick={handleAccCertSelected}
+                            class={accCertification.classes}></div>
+                    </template>
+                </div>
+            </template>
+
+        </div>
+    </div>
+</template>

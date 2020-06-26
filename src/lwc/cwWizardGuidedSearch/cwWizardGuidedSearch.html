@@ -1,0 +1,239 @@
+<template>
+    <div class="col-12 col-no-margin">
+        <div class="container-modal">
+            <template if:true={stages.stage1}>
+                <template if:true={mainLoc}>
+                    <div class="col-12 text-center">
+                        <h2>{label.wizard_title_location} <span class="text-primary">{label.location_search}</span>?</h2>
+                    </div>
+                    <br />
+                </template>
+                <template if:false={mainLoc}>
+                    <div class="row">
+                        <div class="col-6 text-right">
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+                                    <h2>{selectedLocation.name}</h2>
+                                </div>
+                                <br />
+                                <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+                                    <p><span class={selectedLocation.icon}></span>
+                                        &nbsp;&nbsp;{selectedLocation.loc}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 text-left">
+                            <a href="#" class="blueText" data-tosca="changebutton" data-location="main"
+                                onclick={changeLocation}><b>{label.change}</b></a>&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
+                            <a href="#" class="blueText" data-tosca="removebutton"
+                                onclick={removeselectedlocation}><b>{label.remove}</b></a>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-12 text-center pt-2 mb-4">
+                        <h2>{label.add_the_second_location} <span class="blueText">{label.location_search}</span></h2>
+                    </div>
+                    <br />
+                </template>
+
+                <div class="row ">
+                    <div class="col-12 text-center col-no-padding min-height-140">
+                        <div class="input-group">
+                            <input type="text" class="form-control height-auto" data-tosca="locationinput"
+                                onkeyup={predictiveSearch} value={locationWrapper.value} autocomplete="off"
+                                data-obj="ICG_Account_Role_Detail__c" data-field="City_FOR__c" data-operator="LIKE">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary no-margin-top" data-tosca="addlocationbutton"
+                                    onclick={nextStep} type="button">{label.btn_add_location}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <template if:true={mainLoc}> -->
+                <div class="row text-right">
+                    <div class="col-md-12 col-no-padding-right margin-top--60">
+                        <div data-tosca="predictiveContainer" class="col-no-padding">
+                            <c-cw-predictive-values predictivevalues={locationPredictiveValues}
+                                onpredictivevalueselected={updateSearchbox} customstyle="wizard"
+                                display-the-box={isboxfocus} first-row-written={locationWrapper.value}>
+                            </c-cw-predictive-values>
+                        </div>
+                        <a class="badge-results blueText" data-tosca="worldwidesearch" onclick={searchAllLocation}>
+                            <h3 class="display-flex">
+                                <lightning-icon class="fill-blue" icon-name="utility:world" size="small"
+                                    alternative-text="worldwide search"></lightning-icon>&nbsp;{label.worldwide_search}
+                            </h3>
+                        </a>
+                    </div>
+                </div>
+            </template>
+            <!-- </template> -->
+
+            <template if:true={stages.stage1b}>
+                <div class="special-width-locations">
+                    <div class="row">
+                        <div class={extratLocation}>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+                                    <h2>{selectedLocation.name}</h2>
+                                </div>
+                                <br />
+                                <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+                                    <p><span class={selectedLocation.icon}></span>
+                                        &nbsp;&nbsp;{selectedLocation.loc}</p>
+                                </div>
+                            </div>
+                            <div class="row align-items-center justify-content-center blueText">
+                                <a href="#" class="blueText" data-tosca="changebutton" data-location="main"
+                                    onclick={changeLocation}><b>{label.change}</b></a>&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
+                                <a href="#" class="blueText" data-tosca="removebutton"
+                                    onclick={removeselectedlocation}><b>{label.remove}</b></a>
+                                <template if:true={showAddLocation}>
+                                    &nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;<a href="#" class="blueText lowercase"
+                                        data-tosca="addlocationbutton" onclick={addLocation}><b>{label.btn_add_location}</b></a>
+                                </template>
+                            </div>
+                        </div>
+                        <template if:true={extraLoc}>
+                            <div class="col-xl-6 col-lg-6 col-md-12 text-center">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+                                        <h2>{extraLocation.name}</h2>
+                                    </div>
+                                    <br />
+                                    <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+                                        <p><span class={extraLocation.icon}></span>
+                                            &nbsp;&nbsp;{extraLocation.loc}</p>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center justify-content-center blueText">
+                                    <a href="#" class="blueText" data-tosca="changebutton" data-location="extra"
+                                        onclick={changeLocation}><b>{label.change}</b></a>&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;
+                                    <a href="#" class="blueText" data-tosca="removebutton"
+                                        onclick={removeextralocation}><b>{label.remove}</b></a>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="row ">
+                        <div class="col-6 text-left m-auto">
+                            <a class="badge-results blueText" data-tosca="prevstep"
+                                onclick={previousStep}><b>{label.prev}</b></a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a class="btn btn-primary link-button no-margin-top" data-tosca="nextstep"
+                                onclick={nextStep}>{label.next}</a>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={stages.stage2}>
+                <div class="col-12 text-center">
+                    <h2>{label.are_you_looking_for_specific} <span class="blueText">{label.station_types}</span>?</h2>
+                </div>
+                <br />
+                <div class="row">
+                    <template for:each={companyTypes} for:item="item">
+                        <template if:true={item.enabled}>
+                            <div key={item.name} onclick={onClickItem} data-tosca={item.name} data-name={item.name}
+                                data-type="companyType"
+                                class="col-md-4 col-xs-6 col-sm-6 itemBase itemUnselected text-left company-item">
+                                <div class="p-2 company-type-content imgtxtfil text-truncate">
+                                    <img src={item.image} width="20px">&nbsp;&nbsp;{item.name}
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-md-8 col-xs-4 col-sm-4 text-left m-auto">
+                        <a class="badge-results blueText" data-tosca="prevstep" onclick={previousStep}><b>{label.prev}</b></a>
+                    </div>
+                    <div class="col-md-2 col-xs-4 col-sm-4 text-right m-auto">
+                        <a class="badge-results blueText" data-tosca="selectallcompanytypes"
+                            onclick={searchAllCTypes}><b>{label.select_all}</b></a>
+                    </div>
+                    <div class="col-md-2 col-xs-4 col-sm-4 text-right">
+                        <a class="btn btn-primary link-button no-margin-top" data-tosca="nextstep"
+                            onclick={nextStep}>{label.next}</a>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={stages.stage3}>
+                <div class="col-12 text-center">
+                    <h2>{label.are_you_looking_for_specific} <span class="blueText">{label.IATA_Validation_Programs}</span>?</h2>
+                </div>
+                <br />
+                <div if:true={certifications} class="row justify-content-center">
+                    <template for:each={certifications} for:item="cert">
+                        <label key={cert.Id} onclick={onClickItem} data-tosca={cert.Name} data-name={cert.Name}
+                            data-type="certification"
+                            class="col-md-2-cert col-sm-4 col-xs-4 text-center label-check itemBase itemUnselected certiCard">
+                            <div class="content-item-cert">
+                                <img src={tickSelection} class="certiTick " key={cert.Id} data-tosca={cert.Id}
+                                    data-name={cert.Name} data-type="certification"><br />
+                                <img src={cert.Image__c} class="certiImage " key={cert.Id} data-tosca={cert.Id}
+                                    data-name={cert.Name} data-type="certification" />
+                                <div class="icgBlueName certiLabel " data-tosca={cert.Id} data-name={cert.Name}
+                                    data-type="certification">{cert.LabelName}</div>
+                            </div>
+                        </label>
+                    </template>
+                </div>
+                <div class="row ">
+                    <div class="col-md-8 col-xs-4 col-sm-4 text-left m-auto">
+                        <a class="badge-results blueText" data-tosca="prevstep" onclick={previousStep}><b>{label.prev}</b></a>
+                    </div>
+                    <div class="col-md-2 col-xs-4 col-sm-4 text-right m-auto">
+                        <a class="badge-results blueText" data-tosca="selectallcertifications"
+                            onclick={selectAllCertifications}><b>{label.select_all}</b></a>
+                    </div>
+                    <div class="col-md-2 col-xs-4 col-sm-4 text-right">
+                        <a class="btn btn-primary link-button no-margin-top" data-tosca="nextstep"
+                            onclick={nextStep}>{label.next}</a>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={stages.stage4}>
+                <div class="col-12 text-center">
+                    <h2>{label.do_you_want_to_transport_a_specific} <span class="blueText">{label.commodity}</span>?</h2>
+                </div>
+                <br />
+                <div class="row">
+                    <template for:each={commodities} for:item="item">
+                        <template if:true={item.enabled}>
+                            <div key={item.name} onclick={onClickItem} data-tosca={item.name} data-name={item.name}
+                                data-type="commodity"
+                                class="col-md-4 col-xs-6 col-sm-6 itemBase itemUnselected text-left company-item">
+                                <div class="p-2 company-type-content imgtxtfil text-truncate">
+                                    <img src={tickSelection} width="20px">&nbsp;&nbsp;{item.name}
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-md-6 col-xs-3 col-sm-3 text-left m-auto">
+                        <a class="badge-results blueText" data-tosca="prevstep" onclick={previousStep}><b>{label.prev}</b></a>
+                    </div>
+                    <div class="col-md-3 col-xs-3 col-sm-3 text-right m-auto">
+                        <a class="badge-results blueText" data-tosca="selectallcargotypes"
+                            onclick={searchAllTCargo}><b>{label.select_all}</b></a>
+                    </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6 text-right">
+                        <a class="btn btn-primary link-button no-margin-top" data-tosca="seeresultsbutton"
+                            onclick={resultsPage}>{label.see_results}</a>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

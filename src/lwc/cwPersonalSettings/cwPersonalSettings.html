@@ -1,0 +1,24 @@
+<template>
+    <div class="wrapperSettings" if:true={UserInfo}>
+        <div class="row align-items-center justify-content-end">
+            <img src={UserInfo.photolinkfull} alt=" " class="mainPicture" onclick={displayMenu}>
+        </div>
+        <div if:true={showMenu}
+            class="row slds-popover slds-nubbin_top-right align-items-center justify-content-center cardContent">
+            <div class="col-md-2 p-0 align-middle">
+                <img src={UserInfo.photolinksmall} alt=" " class="detailPicture">
+            </div>
+            <div class="col-md-10 p-0 row detailSettings">
+                <div class="col-md-12">
+                    <h3>{UserInfo.name}</h3>
+                </div>
+                <div class="col-md-12">
+                    {UserInfo.email}
+                </div>
+                <div class="col-md-6">
+                    <a onclick={goToPrivateArea}><span class="text-blue">{label.private_area}</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

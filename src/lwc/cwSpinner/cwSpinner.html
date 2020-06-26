@@ -1,0 +1,10 @@
+<template>
+    <template if:true={overlay}>
+        <div class={overlaystyle} style={overlayInlineStyle}>
+                <img src={spinner} width={width} class={imgstyle}/>
+        </div>
+    </template>
+    <template if:false={overlay}>
+        <img src={spinner} width={width} class={imgstyle}/> 
+    </template>
+</template>

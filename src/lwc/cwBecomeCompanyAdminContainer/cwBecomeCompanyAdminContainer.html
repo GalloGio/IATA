@@ -1,0 +1,70 @@
+<template>
+    <c-cw-spinner width="25%" if:true={requesting} overlay="true" position="position-fixed"></c-cw-spinner>
+    <div class="col-lg-8 col-xl-8 col-md-12 ">
+        <p class="mb-2"> {label.become_company_admin_titile}</p>
+        <p class="mb-1">{label.they_approve}:</p>
+        <ul class="mb-3">
+            <li>{label.new_station_manager_request}</li>
+            <li>{label.new_company_admin_requests}</li>
+            <li>{label.new_station_profiles}</li>
+            <li>{label.change_to_critical_station_information}</li>
+        </ul>
+
+        <!--<template if:false={userInfo.isCompanyAdmin}>
+            <template if:false={userInfo.isPendingCompanyAdmin}>
+                <div class="text-left yellowbanner row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 my-auto p-3">Do you want to request Admin
+                            rights?</div>
+                    <div class="col-xl-6 col-lg-6 btn-become col-md-12 p-3"><a
+                            class="btn btn-primary link-button no-margin-top" data-tosca="nextaction"
+                            href="javascript:{}" onclick={becomeCompanyAdminJS}>Become Company Admin</a></div>
+                </div>
+            </template>
+            <template if:true={userInfo.isPendingCompanyAdmin}>
+                <div class="text-left yellowbanner row">
+                    <div class="col-6 my-auto">Do you want to request Admin rights?</div>
+                    <div class="col text-right"><a class="btn btn-primary link-button no-margin-top"
+                            data-tosca="nextaction" href="javascript:{}">Already Requested</a></div>
+                </div>
+            </template>
+        </template>
+        <template if:true={userInfo.isCompanyAdmin}>
+            <div class="text-left yellowbanner row">
+                <div class="col-8 my-auto">You are already Company Admin</div>
+            </div>
+        </template>-->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">{label.operational_hierarchy}</th>
+                <th scope="col">{label.number_of_accounts}</th>
+                <th scope="col">{label.action}</th>
+                </tr>
+            </thead>
+            <tbody>        
+                <template for:each={facilities} for:item="group">
+                    <tr key={group.groupName}>
+                        <td><p class="text-blue cursor-pt" data-id={group.groupName}>{group.groupName}</p></td>
+                        <td>{group.companyList.length}</td>
+                        <td if:false={group.isCompanyAdmin}>
+                            <template if:false={group.isPendingCompanyAdmin}>
+                                <a
+                            class="btn btn-primary link-button no-margin-top" data-tosca="nextaction" data-group={group.groupName}
+                            href="javascript:{}" onclick={becomeCompanyAdminJS}>{label.become_company_admin}</a>
+                            </template>
+                            <template if:true={group.isPendingCompanyAdmin}>
+                                <a class="btn btn-primary link-button no-margin-top"
+                            data-tosca="nextaction" href="javascript:{}">{label.already_request}</a>
+                            </template>
+                        </td>
+                        <td if:true={group.isCompanyAdmin}>{label.already_company_admin}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    <template if:true={showModal}>
+        <c-cw-basic-modal label={label} modal-message={modalMessage} modal-image={modalImage} onclosemodal={closeModal}>
+        </c-cw-basic-modal>
+    </template>
+</template>

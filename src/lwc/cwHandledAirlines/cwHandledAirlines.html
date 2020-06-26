@@ -1,0 +1,103 @@
+<template>
+    <div class="content max-height-100 border-card">
+        <template if:true={isreadonly}>
+            <div class="row">
+                <template for:each={allAirlinesToShow} for:item="list">
+                    <div key={list.label} class="col-4 text-truncate">
+                        <template for:each={list.value} for:item="item">
+                            <template if:false={item.isHeader}>
+                                <template if:false={item.selected}>
+                                    <div key={item.value} data-tosca={item.value}
+                                        data-name={item.value} class={readonlystyle}>
+                                        <span class="pl-0 item-filter" title={item.label}>{item.label}</span>
+                                    </div>
+                                </template>
+                                <template if:true={item.selected}>
+                                    <div key={item.value} data-tosca={item.value}
+                                        data-name={item.value} class={readonlystyle}>
+                                        <span class="pl-0 item-filter" title={item.label}><a href={item.url} target="_blank">{item.label}</a></span>
+                                    </div>
+                                </template>
+                            </template>
+                            <template if:true={item.isHeader}>
+                                <div key={item.label}>
+                                    <span key={item.label} class="pl-0 itemLetter"
+                                        title={item.label}>{item.label}</span>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <br />
+        </template>
+        <template if:false={isreadonly}>
+            <div class="row">
+                <template for:each={allAirlinesToShow} for:item="list">
+                    <div key={list.label} class="col-4 text-truncate">
+                        <template for:each={list.value} for:item="item">
+                            <template if:false={item.isHeader}>
+                                <template if:false={item.selected}>
+                                    <div key={item.value} onclick={selectAirline} data-tosca={item.value}
+                                        data-name={item.value} class={adminmodeUnselected}>
+                                        <img key={item.value} data-tosca={item.value} src={tickSelection}
+                                            class="selectedTick width-15" />&nbsp;&nbsp;<span class="item-filter"
+                                            title={item.label}>{item.label}</span>
+                                    </div>
+                                </template>
+                                <template if:true={item.selected}>
+                                    <div key={item.value} onclick={selectAirline} data-tosca={item.value}
+                                        data-name={item.value} class={adminmodeSelected}>
+                                        <img key={item.value} data-tosca={item.value} src={tickSelection}
+                                            class="selectedTick width-15" />&nbsp;&nbsp;<span class="item-filter filter-grey-100-operating"
+                                            title={item.label}>{item.label}</span>
+                                    </div>
+                                </template>
+                            </template>
+                            <template if:true={item.isHeader}>
+                                <div key={item.label}>
+                                    <span key={item.label} class="pl-15">&nbsp;</span>&nbsp;&nbsp;<span
+                                        class="item-filter" title={item.label}><b>{item.label}</b></span>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <br />
+            <div class="col-12 text-center"><span class="breadlink"
+                    onclick={showHideSelectedAirlines}>{showHideSelectedAirlinesButtonText}</span></div>
+            <br />
+        </template>
+        <div class="col-12 row-flex"><span if:true={showBackButton} class="breadlink backnext"
+                onclick={back}>&lt;</span>&nbsp;&nbsp;<span class="breadlink letterSelected" data-letter="ALL"
+                onclick={unselectLetter}>{label.all}</span>&nbsp;&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="A">A</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="B">B</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="C">C</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="D">D</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="E">E</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="F">F</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="G">G</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="H">H</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="I">I</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="J">J</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="K">K</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="L">L</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="M">M</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="N">N</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="O">O</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="P">P</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="Q">Q</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="R">R</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="S">S</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="T">T</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="U">U</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="V">V</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="W">W</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="X">X</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="Y">Y</span>&nbsp;<span class="breadlink" onclick={selectLetter}
+                data-letter="Z">Z</span>&nbsp;&nbsp;<span class="breadlink backnext" if:true={showNextButton}
+                onclick={next}>&gt;</span></div>
+    </div>
+</template>

@@ -1,0 +1,35 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="nameList" type="String" description="title for table" access="global" default="Station Details"/>
+    <apex:attribute name="nameList2" type="String" description="title for table 2" access="global" default=":"/>
+    <apex:attribute name="nameList3" type="String" description="title for table 3" access="global" default=""/>
+    
+    <p style="margin-top: 25px; line-height: 1.8rem;">{!nameList}{!nameList2}{!nameList3}</p>
+    <table style="border-collapse: collapse; width: max-content">
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Station name</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!stationDetails.Name}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Station type</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!stationDetails.RecordType.Name}</td>
+        </tr>
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Company Name</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!stationDetails.Company_FOR__c}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Country </th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!stationDetails.Country_FOR__c}</td>
+        </tr>
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">City</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!stationDetails.City_FOR__c}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Operational Hierarchy</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!operationalHierarchyFromStation}</td>
+        </tr>
+    </table>
+
+</apex:component>

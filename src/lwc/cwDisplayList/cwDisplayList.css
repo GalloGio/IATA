@@ -1,0 +1,13 @@
+.img-company-type {
+	padding: 0px 0px 5px 5px;
+	width: 30px;
+	display: inline;
+}
+.title-facility-page {
+	font-size: 1.5rem;
+	min-height: 0px;
+}
+.title-search-result {
+	font-size: 1.1rem;
+	min-height: 35px;
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Custom Setting used for the Gxa Integration Connection to Amazon S3</description>
+    <enableFeeds>false</enableFeeds>
+    <label>CW GxA Amazon S3</label>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Base_Path__c</fullName>
+        <defaultValue>&quot;SmartFacilityRemoteValidations/&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Base Path</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bucket__c</fullName>
+        <externalId>false</externalId>
+        <label>Bucket</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Index_File__c</fullName>
+        <defaultValue>&quot;Result.json&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Index File</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Named_Credential__c</fullName>
+        <defaultValue>&quot;CW_AWS_S3_REMOTE_VALIDATIONS&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Named Credential</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Status_Needs_Correction__c</fullName>
+        <defaultValue>&quot;RV_NeedsCorrection&quot;</defaultValue>
+        <description>Status that indicates a remote validation needs correction</description>
+        <externalId>false</externalId>
+        <label>Order Status Needs Correction</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Status_Pending_Fulfillment__c</fullName>
+        <defaultValue>&quot;RV_Created&quot;</defaultValue>
+        <description>Status that indicates a remote validation is pending for fulfillment</description>
+        <externalId>false</externalId>
+        <label>Order Status Pending for Fulfillment</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Status_Submitted__c</fullName>
+        <defaultValue>&quot;RV_WIP&quot;</defaultValue>
+        <description>Status that indicates a remote validation is being reviewed by GxA</description>
+        <externalId>false</externalId>
+        <label>Order Status Submitted</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Status_To_Start_Process__c</fullName>
+        <defaultValue>&quot;RV_Complete&quot;</defaultValue>
+        <description>Status that must have the order to start the process</description>
+        <externalId>false</externalId>
+        <label>Order Status To Start Process</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

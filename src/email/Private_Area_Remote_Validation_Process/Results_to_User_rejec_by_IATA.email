@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="Your remote validation has been rejected by IATA" relatedToType="OrderItem">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" orderItemData="{!relatedTo.Id}"> </c:CW_HelloUser>     
+                    <c:CW_StationDetails nameList="We inform you that your Smart Facility Remote Validation" nameList2="has been REJECTED for the below station:" stationData="{!relatedTo.Station__c}"></c:CW_StationDetails>
+                    <c:CW_LinkRemoteValidationManagement nameList="Please check the "></c:CW_LinkRemoteValidationManagement> 
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

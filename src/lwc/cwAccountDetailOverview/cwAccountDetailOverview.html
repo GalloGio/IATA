@@ -1,0 +1,253 @@
+<template>
+    <template if:false={shouldHideAll}>
+        <div class="title">
+            <p><b>{title}</b>
+                <template if:true={editMode}>
+                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable hidden" variant="error" data-item="editable" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable" title="Edit" data-item="editable" onclick={showInput} size="x-small"></lightning-icon>
+                </template>
+            </p>
+            <hr class="yellow-underline mt-2">
+        </div>
+
+        <div class="slds-grid slds-wrap ">
+    
+            <!-- NumberEmployees NEW UI-->
+            <template if:true={showNumberEmployyes}>
+                <div class={numberEmployeesCss} data-css="numberemployees-hover">
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div data-tosca="numberemployees-hover" class="hidden-md">
+                        <div data-item="numberemployees-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
+                            <div  class="facility-overview-item-img mr-2">
+                                <img src={icon.employees} />
+                            </div>
+                            <div class="facility-overview-item-content text-blue">
+                                <p class="text-truncate">
+                                    <span class="editable">{numberEmployeesFormatted} {label.employees}</span>                                   
+                                    <template if:true={editMode}>
+                                        <lightning-input class="input editable mr-4 hidden" name="NumberEmployees" type="number" value={facility.NumberEmployees} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                    </template>
+                                </p>
+                            </div>
+                        </div>
+                        <c-cw-simple-tooltip item-id="numberemployees-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                    </div>
+
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="visible-md text-left">
+                        <div class="text-truncate width-100 text-blue">
+                            <img src={icon.employees} />&nbsp; <b>{numberEmployeesFormatted} {label.employees}</b>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={showFacilitySpace}>
+                <!-- FacilitySize NEW UI-->
+                <template if:false={editMode}>
+                    <div data-css="total-facility-space-hover" if:true={facility.FacilitySize}
+                        class={facilitySpaceCss}>
+                        <!--HIDDEN RESPONSIVE VERSION-->
+                        <div data-tosca="total-facility-space-hover" class="hidden-md ">
+                            <div data-item="total-facility-space-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
+                                <div class="facility-overview-item-img mr-2">
+                                    <img src={icon.airlines} />
+                                </div>
+                                <div class="facility-overview-item-content text-blue">
+                                    <p class="text-truncate">
+                                        {label.total_facility_space}
+                                    </p>
+                                    <p class="text-truncate">
+                                        {facilitySizeFormatted} m<sup>2</sup>
+                                    </p>
+                                </div>
+                            </div>
+                            <c-cw-simple-tooltip item-id="total-facility-space-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                        </div>
+                        <!--VISIBLE RESPONSIVE VERSION-->
+                        <div class="visible-md text-left">
+                            <div class="text-truncate width-100 text-blue">
+                                <img src={icon.airlines} />&nbsp; <b>{label.total_facility_space} {facilitySizeFormatted}
+                                    m<sup>2</sup> </b>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={editMode}>
+                    <div data-css="total-facility-space-hover" class={facilitySpaceCss}>
+                        <!--HIDDEN RESPONSIVE VERSION-->
+                        <div data-tosca="total-facility-space-hover" class="hidden-md ">
+                            <div data-item="total-facility-space-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
+                                <div class="facility-overview-item-img mr-2">
+                                    <img src={icon.airlines} />
+                                </div>
+                                <div class="facility-overview-item-content text-blue">
+                                    <p class="text-truncate editable">
+                                        {label.total_facility_space}
+                                    </p>
+                                    <p class="text-truncate editable">
+                                        {facilitySizeFormatted} m<sup>2</sup>
+                                    </p>                               
+                                    <lightning-input class="input editable mr-4 hidden" name="FacilitySize" type="number" value={facility.FacilitySize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                </div>
+                            </div>
+                            <c-cw-simple-tooltip item-id="total-facility-space-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={showOnAirport}>
+                <!-- IsOnAirport NEW UI-->            
+                <div data-css="on-airport-hover" class={onAirportCss}>
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div data-tosca="on-airport-hover" class="hidden-md">
+                        <div data-item="on-airport-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
+                            <div class="facility-overview-item-img mr-2">
+                                <img src={icon.blueCheck} />
+                            </div>
+                            <div class="facility-overview-item-content text-blue">
+                                <p class="text-truncate">{label.on_airport}</p>
+                            </div>
+                        </div>
+                        <c-cw-simple-tooltip item-id="on-airport-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                    </div>
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="visible-md text-left">
+                        <div class="text-truncate width-100 text-blue">
+                            <img src={icon.blueCheck} />&nbsp; <b>{label.on_airport}</b>
+                        </div>
+                    </div>
+                </div>
+                
+                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3 editable hidden">
+                    <lightning-input type="checkbox" label={label.on_airport} name="IsOnAirport" checked={facility.IsOnAirport} onchange={handleInputChangeValue}></lightning-input>
+                </div>
+            </template>
+
+
+
+            <template if:true={showDirectRampAccess}>
+                <!-- DirectRampAccess NEW UI-->
+                <div class={directAccessCss}>
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div class="hidden-md ">
+                        <div class="facility-overview-item width-100 text-truncate">
+                            <div class="facility-overview-item-img mr-2">
+                                <img src={icon.blueCheck} />
+                            </div>
+                            <div class="facility-overview-item-content text-blue">
+                                <p class="text-truncate">{label.direct_ramp_access}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="visible-md text-left">
+                        <div class="text-truncate width-100 text-blue">
+                            <img src={icon.blueCheck} />&nbsp; <b>{label.direct_ramp_access}</b>
+                        </div>
+                    </div>
+                </div>
+                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3 editable hidden">
+                    <lightning-input type="checkbox" label={label.direct_ramp_access} name="DirectRampAccess" checked={facility.DirectRampAccess} onchange={handleInputChangeValue}></lightning-input>
+                </div>
+            </template>
+
+            <template if:true={showRoadFeeder}>
+                <!-- Road Feeder Services NEW UI-->           
+                <div data-css="road-feeder-hover" class={roadFeederCSS}>
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div data-tosca="road-feeder-hover" class="hidden-md ">
+                        <div data-item="road-feeder-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
+                            <div class="facility-overview-item-img mr-2">
+                                <img src={icon.blueCheck} />
+                            </div>
+                            <div class="facility-overview-item-content text-blue">
+                                <p class="text-truncate">{label.road_feeder_services}</p>
+                            </div>
+                        </div>
+                        <c-cw-simple-tooltip item-id="road-feeder-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                    </div>
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="visible-md text-left">
+                        <div class="text-truncate width-100 text-blue">
+                            <img src={icon.blueCheck} />&nbsp; <b>{label.road_feeder_services}</b>
+                        </div>
+                    </div>
+                </div>               
+                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3 editable hidden">
+                    <lightning-input type="checkbox" label={label.road_feeder_services} name="roadFeederServices" checked={facility.roadFeederServices} onchange={handleInputChangeValue}></lightning-input>
+                </div>
+            </template>
+
+            <template if:true={showOverallAirportSize}>
+                <!-- Overall Airport Size NEW UI-->
+                <template if:false={editMode}>
+                    <div data-css="overall-airport-size-hover" class={overallAirportCss}>
+                        <div data-item="overall-airport-size-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="width-100 facility-overview-item">
+                            <div class="facility-overview-item-img mr-2">
+                                <img src={icon.airlines} />
+                            </div>
+                            <div class="facility-overview-item-content">
+                                <p class="text-truncate text-blue">
+                                    {overallSizeFormatted} m<sup>2</sup>
+                                </p>
+                                <p class="text-truncate text-blue">
+                                    {label.overall_airport_size}
+                                </p>
+                            </div>
+                        </div>
+                        <c-cw-simple-tooltip item-id="overall-airport-size-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                    </div>
+                </template>
+                <template if:true={editMode}>
+                    <div data-css="overall-airport-size-hover" class={overallAirportCss}>
+                        <!--HIDDEN RESPONSIVE VERSION-->
+                        <div data-tosca="total-facility-space-hover" class="hidden-md ">
+                            <div data-item="overall-airport-size-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="width-100 facility-overview-item">
+                                <div class="facility-overview-item-img mr-2">
+                                    <img src={icon.airlines} />
+                                </div>
+                                <div class="facility-overview-item-content">
+                                    <p class="text-truncate text-blue editable">
+                                        {overallSizeFormatted} m<sup>2</sup>
+                                    </p>
+                                    <p class="text-truncate text-blue editable">
+                                        {label.overall_airport_size}
+                                    </p>
+                                    
+                                    <lightning-input class="input editable mr-4 hidden" name="overallAirportSize" type="number" value={facility.overallAirportSize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                </div>
+                            </div>
+                            <c-cw-simple-tooltip item-id="total-facility-space-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={showTrucks}>
+                <!-- Trucks NEW UI-->              
+                <div data-css="trucks-hover" class={trucksCss}>
+                    <div data-item="trucks-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="width-100 facility-overview-item">
+                        <div class="facility-overview-item-img mr-2">
+                            <img class="width-20" src={icon.trucker} />
+                        </div>
+                        <div class="facility-overview-item-content text-blue">
+                            <p class="text-truncate">
+                                <span class="editable">{numberTrucksFormatted} {label.trucks}</span>
+                                <template if:true={editMode}>
+                                    <lightning-input class="input editable mr-4 hidden" name="fleet" type="number" value={facility.fleet} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                </template>
+                            </p>
+                        </div>
+                    </div>
+                    <c-cw-simple-tooltip item-id="trucks-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                </div>
+            </template>
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+            </template>
+        </div>
+    </template>
+</template>

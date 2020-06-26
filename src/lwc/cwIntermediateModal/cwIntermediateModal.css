@@ -1,0 +1,8 @@
+.slds-modal__header {
+    position: relative;
+    border-top-right-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    padding: 1.5rem 0px 0px 1.5rem;
+    border-bottom: none;
+    margin-bottom: -20px;
+}

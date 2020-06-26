@@ -1,0 +1,237 @@
+<template>
+
+    <c-cw-spinner width="25%" if:false={loadedCss} overlay="true" position="position-fixed"></c-cw-spinner>
+    <template if:true={loadedCss}>
+        <div class="companyHeader row desktop-menu">
+            <div class="header-blue-line">
+            </div>
+            <div class={ContainerType}>
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-1 no-padding p-1-5 m-auto">
+                        <div class="row">
+                            <div class="col-2 bg-blue no-padding bg-transparent m-auto height-87"></div>
+                            <div class="cursor-pt col-10 no-padding bg-white text-center logo-print-ko">
+                                <img src={logo} onclick={handleClick} alt="IATA Logo" class="img-fluid margin-top-28">
+                            </div>
+                            <div class="cursor-pt col-10 no-padding bg-white text-center logo-print-ok">
+                                <img src={logoprint} alt="IATA Logo" class="img-fluid margin-top-28">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-11 no-padding m-auto">
+                        <div class="col-12 no-padding m-auto ml-0 height-42">
+                            <div onclick={handleClick} data-target-id="search"
+                                class="cursor-pt col name side capacity-fin name-600 text-white">{label.main_one_source}<span class="beta">&nbsp;{label.icg_beta}</span>
+                            </div>
+                        </div>
+                        <div class="col-12 no-padding height-45 ml-0 bg-transparent">
+                            <div class="row">
+                                <div class="col-10 no-padding">
+                                    <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15">
+
+                                        <template if:true={showMenu}>
+                                            <div>
+                                                <ul class="navbar-nav">
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-custom" onclick={handleClick}
+                                                            data-target-id="search">
+                                                            {label.menu_home}
+                                                        </a>
+                                                    </li>
+                                                    <li><span class="nav-link">|</span></li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-custom" onclick={handleClick}
+                                                            data-target-id="abouticg">
+                                                            {label.menu_about_one_source}
+                                                        </a>
+                                                    </li>
+                                                    <li><span class="nav-link">|</span></li>
+                                                    <li class="nav-item ">
+                                                        <a class="nav-link nav-link-custom" onclick={handleClick}
+                                                            data-target-id="validationprog">
+                                                            {label.menu_validation_programs}
+                                                        </a>
+                                                    </li>
+                                                    <li><span class="nav-link">|</span></li>
+                                                    <li class="nav-item ">
+                                                        <a class="nav-link nav-link-custom" onclick={handleClick}
+                                                            data-target-id="sfremote">
+                                                            {label.menu_remote_validations}
+                                                        </a>
+                                                    </li>
+                                                    <li><span class="nav-link">|</span></li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-custom" onclick={handleClick}
+                                                            data-target-id="latestnews">
+                                                            {label.menu_latest_news}
+                                                        </a>
+                                                    </li>
+                                                    <li><span class="nav-link">|</span></li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link nav-link-custom" onclick={handleClick}
+                                                            data-target-id="aboutiata">
+                                                            {label.menu_about_IATA}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </template>
+                                    </nav>
+
+                                </div>
+                                <div if:true={environmentVariables.data} class="col-2 no-padding flex-right">
+                                    <template if:false={isBetaOrg}>
+                                        <template if:false={userInfoLoggedIn}>
+                                            <template if:true={urlPrivateArea}>
+                                                <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15" style='padding:0px;'>
+                                                    <button class="login-btn account-btn text-white mt-0 btn btn-primary" type="button" 
+                                                    onclick={goToPrivateArea} >
+                                                        <span>{label.login}</span>
+                                                    </button>
+                                                    <img src={loginIcon} class="icon btn-icon account-icon login-icon"
+                                                        width="50px">
+                                                </nav>
+                                            </template>
+                                            <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15" style='padding:0px;'>
+                                                <button class="login-btn account-btn text-white mt-0 btn btn-primary" type="button"
+                                                    onclick={showJoinNowModal}><span>{label.icg_join_now}
+                                                        </span>
+                                                </button>
+                                                <img src={loginIcon} class="icon btn-icon account-icon login-icon"
+                                                    width="50px">
+                                            </nav>
+                                        </template>
+                                        <template if:true={userInfoLoggedIn}>
+                                            <c-cw-personal-settings label={label}>
+                                            </c-cw-personal-settings>
+                                        </template>
+                                    </template>
+                                    <template if:true={isBetaOrg}>
+                                        <button class="login-btn account-btn text-white mt-0 btn btn-primary " type="button"
+                                                onclick={goToPreRegister}><span>{label.icg_pre_register}
+                                                    </span></button>
+                                    </template>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="margin-top-main-contanier"></div>
+
+        <!--MOBILE/TABLET VERSION-->
+        <div class="responsive-menu r-menu-print">
+            <div class="row row-no-margin-left">
+                <div class="col-1 bg-blue height-50"></div>
+                <div class="col-2 no-padding cursor-pt logo-print-ko">
+                    <img src={logo} onclick={handleClick} alt="IATA Logo" class="img-fluid margin-top-18">
+                </div>
+                <div class="col-2 no-padding cursor-pt logo-print-ok">
+                    <img src={logoprint} onclick={handleClick} alt="IATA Logo" class="img-fluid margin-top-18">
+                </div>
+                <div class="col-9 align-items-center bg-blue height-50">
+                    <nav class="navbar pt-2-5 pr-1 pl-0 font-size-15">
+                        <!-- Navbar brand -->
+                        <div onclick={handleClick} data-target-id="search"
+                            class="col name side name-600 font-size-15 cursor-pt">{label.main_one_source} <span class="beta">&nbsp;{label.icg_beta}</span></div>
+
+                        <!-- Collapse button -->
+                        <lightning-icon icon-name="utility:user" variant="inverse" alternative-text="Login/Register">
+                        </lightning-icon>
+                        <button onclick={showresponsivemenu} class="navbar-toggler toggler-example"
+                            type="button"><span><img class="icoresponsivemenu" src={menuresponsive} /></span></button>
+                    </nav>
+                </div>
+
+                <!-- Collapsible content -->
+                <template if:true={showMenu}>
+                    <div class="collapse navbar-collapse">
+                        <!-- Links -->
+                        <ul class="navbar-nav mr-auto menu-resp">
+                            <li class="nav-item active">
+                                <a class="nav-link" onclick={handleClick} data-target-id="search">{label.menu_home}<span
+                                        class="float-right">&gt;</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" onclick={handleClick} data-target-id="abouticg">{label.menu_about_one_source}<span class="float-right">&gt;</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" onclick={handleClick} data-target-id="validationprog">{label.menu_validation_programs}<span class="float-right">&gt;</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" onclick={handleClick} data-target-id="sfremote">{label.menu_remote_validations}<span class="float-right">&gt;</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" onclick={handleClick} data-target-id="latestnews">{label.menu_latest_news}<span
+                                        class="float-right">&gt;</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" onclick={handleClick} data-target-id="aboutiata">{label.menu_about_IATA}<span
+                                        class="float-right">&gt;</span></a>
+                            </li>
+                        </ul>
+                        <!-- Links -->
+                    </div>
+                </template>
+                <!-- Collapsible content -->
+            </div>
+        </div>
+    </template>
+
+    <template if:true={showModal}>
+		<c-cw-intermediate-modal onclosemodal={closeModal}>
+			<div>
+                <h2 lwc:dom="manual" class="text-center mb-2 join_now_title"></h2>
+                <div class="join-div"> 
+                    <div class="row-no-margin col-12 bg-yellow ">  
+                        <div class="col-1 col-no-padding-left">
+                            <span class="giant-label">1</span>
+                        </div> 
+                        <div class="col-11 text-join-div p-2 pl-4">
+                            <h3>{label.icg_join_now_popup_message11}</h3>
+                            <p><b>{label.icg_join_now_popup_message12}</b></p>       
+                        </div>                
+                    </div>
+                </div>
+                <div class="join-div"> 
+                    <div class="col-12 row-no-margin bg-yellow ">  
+                        <div class="col-1 col-no-padding-left">
+                            <span class="giant-label">2</span>
+                        </div> 
+                        <div class="col-11 text-join-div p-2 pl-4">
+                            <h3>{label.icg_join_now_popup_message21}</h3>
+                            <p lwc:dom="manual" class="popup_message22"></p>       
+                        </div>                
+                    </div>
+                </div>
+                <div class="join-div"> 
+                    <div class="col-12 row-no-margin bg-yellow ">  
+                        <div class="col-1 col-no-padding-left">
+                            <span class="giant-label">3</span>
+                        </div> 
+                        <div class="col-11 text-join-div p-2 pl-4">
+                            <h3>{label.icg_join_now_popup_message31}</h3>
+                            <p lwc:dom="manual" class="popup_message32"></p>     
+                        </div>                
+                    </div>
+                </div>
+
+                <div class="col-12 text-center">
+                    <a class="btn btn-primary-blue link-button" data-tosca="backduplicatert"
+                        href="javascript:{}" onclick={goToJoinNow}>{label.icg_join_now_popup_ok_button}</a>          
+                </div>
+                <div class="col-12 text-center mt-1">
+                    <a class="" data-tosca="backduplicatert"
+                        href="javascript:{}" onclick={closeModal}><p class="text-blue"><b>{label.icg_join_now_popup_have_account}</b></p></a>          
+                </div>
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+</template>

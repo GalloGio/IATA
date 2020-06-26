@@ -1,0 +1,56 @@
+<!--This is a provisional version, the final is expected in the next sprint-->
+<template>
+    <div class="row col-12 bg-grey m-auto pt-2 pb-2">
+        <div class="col-4 m-auto text-right">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white"><lightning-icon icon-name="utility:search" size="x-small"></lightning-icon></div>
+                </div>
+                <input type="text" value={textFilter} onkeyup={filterRequestedAudits} class="form-control border-left-none" placeholder="Search">
+            </div>
+        </div>
+        <div class="col-4 text-right">
+            <template if:true={hasItem}>
+                <!-- OLD VERSION EXPORT TO EXCEL BUTTON -->
+                <!--<button data-tosca="pending-station-approvals-to-excel" class="btn btn-primary-blue no-margin-top minwidthbutton pl-2 pr-4 pt-1" onclick={excelFormat}>{label.icg_export_to_excel}</button>-->
+                <a href="javascript:{}"  title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-60 mb--15" /></a>
+            </template>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">{label.station}</th>
+            <th scope="col">{label.address}</th>
+            <th scope="col">{label.date_requested}</th>
+            <th scope="col">{label.certification}</th>
+            <th scope="col">{label.preferable_audit_date}</th>
+            <th scope="col">{label.status}</th>
+            <th scope="col">{label.contact_name}</th>
+            <th scope="col">{label.contact_email}</th>
+            <th scope="col">{label.contact_phone}</th>
+          </tr>
+        </thead>
+        <tbody>
+            <template if:true={requestedAudits} for:each={requestedAudits} for:item="audit">
+                <tr key={audit.Id}>
+                    <td><p if:true={audit.station}>{audit.station}</p></td>
+                    <td><p if:true={audit.address}>{audit.address}</p></td>
+                    <td><p if:true={audit.dateRequested}>{audit.dateRequested}</p></td>
+                    <td><p if:true={audit.certification}>{audit.certification}</p></td>
+                    <td><p if:true={audit.preferableAuditDate}>{audit.preferableAuditDate}</p></td>
+                    <td><p if:true={audit.status}>{audit.status}</p></td>
+                    <td><p if:true={audit.contactName}>{audit.contactName}</p></td>
+                    <td><p if:true={audit.contactEmail}>{audit.contactEmail}</p></td>
+                    <td><p if:true={audit.contactPhone}>{audit.contactPhone}</p></td>
+                </tr>
+            </template>        
+        </tbody>
+    </table>
+    <template if:false={hasItem}>
+        <c-cw-grid-empty-message></c-cw-grid-empty-message>
+    </template>
+    <c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+</template>

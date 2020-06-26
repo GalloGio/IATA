@@ -1,0 +1,23 @@
+<template>
+    <div data-tosca="predictiveWrapper">
+    <ul id="predictiveresults" data-tosca="dataListLocation" class={displayClasses}>
+        <template if:true={_displayBox} for:each={_predictiveList} for:item='item'>
+            <li key={item.techkey} data-basekey={item.basekey} data-tosca={item.key} data-label={item.label} data-code={item.code}
+            data-type={item.type} data-description={item.description} data-icon={item.icon}
+            data-value={item.value} onclick={getlivalue} class="cursor-pt p-3 li-predictive ">
+                <div class="row row-no-margin">
+                    <template if:true={item.icon}>
+                        <div class="col-1 col-no-padding-right col-icon-search-list">
+                            <span class={item.icon}></span>
+                        </div>
+                    </template>
+                    <div class="col-11 pl-2">
+                        <b class="lbl">{item.label}</b></br>
+                        <span if:false={_hideBottomSection} class="span-li-search-item">{item.key} ({item.value})</span>
+                    </div>
+                </div>                           
+            </li>
+        </template>
+</ul>
+</div>
+</template>

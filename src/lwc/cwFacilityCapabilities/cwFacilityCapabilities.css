@@ -1,0 +1,355 @@
+.capability {
+	padding: 0px 0px;
+	margin: 10px 0px;
+}
+.capability-header {
+	background-color: rgb(238, 238, 238);
+	color: #333;
+	/* width: 100%; */
+	height: 60px;
+	border: none;
+	text-align: left;
+	align-content: center;
+	font-weight: bold;
+	outline: none;
+	font-size: 15px;
+}
+.capability-header div {
+	margin: auto;
+}
+
+.collapsible-button {
+	margin-left: 5px;
+	margin-right: 5px;
+
+	border: none;
+	padding: 10px;
+	font-size: 15px;
+	color: #ffffff;
+}
+.collapsible-button img {
+	margin-right: 5px;
+	width: 15px;
+	right: 15px;
+	border: none;
+}
+.capability-detail {
+}
+.capability-summary {
+	padding: 0px 10px;
+	transition: max-height 0.2s ease-out;
+}
+
+.collapsed {
+	display: none;
+}
+.no-collapsed {
+	display: initial;
+}
+
+.collapsed-button {
+	background-color: #9b9b9b;
+}
+.collapsed-button:hover {
+	background-color: #9b9b9b !important;
+}
+.no-collapsed-button {
+	background-color: #1e32fa;
+}
+.no-collapsed-button:hover {
+	background-color: #1e32fa !important;
+}
+
+.collapsed-button-resp {
+	background-color: #9b9b9b;
+}
+.collapsed-button-resp:hover {
+	background-color: #9b9b9b !important;
+}
+.no-collapsed-button-resp {
+	background-color: #1e32fa;
+}
+.no-collapsed-button-resp:hover {
+	background-color: #1e32fa !important;
+}
+.table {
+	width: auto;
+}
+
+.table thead .first-column {
+	position: -webkit-sticky;
+	position: sticky;
+	left: 0;
+	z-index: 20;
+	background: white;
+}
+
+.first-column-width {
+	min-width: 250px;
+	max-width: 250px;
+	position: -webkit-sticky;
+	position: sticky;
+	left: 0;
+	z-index: 20;
+	background: inherit;
+}
+
+.table thead .first-column {
+	position: -webkit-sticky;
+	position: sticky;
+	right: 0;
+	z-index: 20;
+	background: white;
+	box-shadow: 0px -5px 0 0px inset rgb(186, 186, 186);
+	color: #666666 !important;
+	text-align: left !important;
+}
+
+.table thead th {
+	vertical-align: middle;
+	text-transform: none;
+}
+.table tbody td {
+	vertical-align: middle;
+}
+
+.photo-colum {
+	position: -webkit-sticky;
+	position: sticky;
+	right: 175px;
+	z-index: 20;
+	background: inherit;
+}
+
+.photo-colum-head {
+	position: -webkit-sticky;
+	position: sticky;
+	/*right: 175px;*/
+	z-index: 20;
+	background: white;
+}
+
+.row-separator {
+	box-shadow: 0px -1px 0 0px inset #e6e6e6 !important;
+}
+
+.certifications-stamp {
+	position: -webkit-sticky;
+	position: sticky;
+	right: 0;
+	z-index: 20;
+	background: inherit;
+	padding: 0.5rem !important;
+	box-shadow: none !important;
+	background-color: #ffffff !important;
+}
+
+.photo-colum {
+	position: -webkit-sticky;
+	position: sticky;
+	/*right: 175px;*/
+	z-index: 20;
+	background: inherit;
+}
+
+.certifications-stamp div {
+	display: flex;
+	flex-wrap: wrap;
+}
+.certifications-stamp div img {
+	min-width: 30px;
+	margin-left: 0.25rem;
+}
+
+ul.enlarge {
+	list-style-type: none;
+	margin-left: 0;
+	margin-bottom: 0px;
+}
+
+ul.enlarge li {
+	display: inline-block;
+	position: relative;
+	z-index: 0;
+}
+
+ul.enlarge span {
+	position: absolute;
+	left: -9999px;
+	background-color: #e6e6e6;
+	padding: 10px;
+	font-size: 0.9em;
+	text-align: center;
+	color: #666666;
+	-webkit-box-shadow: 0 0 2px rgba(102, 102, 102, 0.75);
+	-moz-box-shadow: 0 0 2px rgba(102, 102, 102, 0.75);
+	box-shadow: 0 0 2px rgba(102, 102, 102, 0.75);
+	width: max-content;
+}
+
+ul.enlarge li:hover {
+	z-index: 50;
+	cursor: pointer;
+}
+
+ul.enlarge li:hover span {
+	top: -289%;
+	left: 50%;
+}
+
+/**IE Hacks - see http://css3pie.com/ for more info on how to use CS3Pie and to download the latest version**/
+ul.enlarge img,
+ul.enlarge span {
+	behavior: url(pie/PIE.htc);
+}
+
+ul.enlarge li:hover .tooltip-img {
+	background-color: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+ul.enlarge li:hover .tooltip-img img {
+	top: 20px !important;
+	left: 0% !important;
+	width: auto !important;
+	position: fixed !important;
+	margin: auto !important;
+}
+
+.slds-button_brand:hover{
+	background-color: #1e32fa !important;
+}
+
+.slds-button_outline-brand:hover{
+	background-color: rgb(255, 255, 255) !important;
+	border-color: rgb(30, 50, 250) !important;
+}
+
+.slds-button_destructive:hover{
+	background-color: rgb(194, 57, 52) !important;
+}
+
+.slds-button_brand[disabled]:hover{
+	background-color: rgb(201, 199, 197) !important;
+}
+
+.slds-button_outline-brand[disabled]:hover{
+	border-color: rgb(212, 212, 212) !important;
+}
+
+.slds-button_destructive[disabled]:hover{
+	background-color: rgb(201, 199, 197) !important;
+}
+
+
+
+.bg-transp {
+	background: transparent;
+}
+
+.border-0 {
+	border: none;
+}
+.row-custom {
+	overflow-x: auto;
+	overflow-y: hidden;
+	margin-bottom: 25px;
+}
+
+.table-scroll {
+	position: relative;
+	width: 100%;
+	z-index: 1;
+	overflow: auto;
+}
+.table-scroll table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+.table-custom {
+	margin-bottom: 0px;
+	z-index: 10;
+}
+.stamp-inline {
+	width: max-content;
+	min-width: max-content;
+	height: 33.75px;
+}
+
+@media (max-width: 544px) {
+	.collapsible-button {
+		padding: 1px;
+		font-size: 11px;
+	}
+}
+
+/* portrait */
+@media screen and (orientation: portrait) {
+	.texttry {
+		display: block;
+	}
+}
+/* landscape */
+@media screen and (orientation: landscape) {
+	.texttry {
+		display: none;
+	}
+}
+
+@media (max-width: 992px) {
+	.col-no-padding-left {
+		padding-left: 10px !important;
+	}
+}
+
+.flip-device {
+	position: fixed;
+	top: 22%;
+	z-index: 20;
+	left: 0;
+	right: 0;
+}
+
+.spinner-div {
+	min-height: 25vw;
+}
+
+.fontw-inherit {
+	font-weight: inherit;
+}
+
+.box-shadow-none {
+	box-shadow: none;
+}
+
+.max-width-400 {
+	max-width: 400px !important;
+}
+
+.margin-icon {
+	margin-left: 10px;
+}
+
+.alert {
+	padding: 0.1rem 0.5rem;
+	font-size: 0.8rem;
+	color: red;
+	background-color: transparent;
+	border-radius: 0;
+	margin-top: -3px !important;
+}
+
+.table-photo-cert {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+}
+
+.cell-buttons{
+	background-color: #ffffff !important;
+}

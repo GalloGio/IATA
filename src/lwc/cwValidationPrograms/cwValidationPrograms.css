@@ -1,0 +1,102 @@
+.itemBase {
+    z-index: 10;
+    padding: 2px;
+}
+
+.itemBase:hover {
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.itemSelected {
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+}
+
+.itemUnselected {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+.itemUnselected .certiImage{
+    -webkit-filter: opacity(.2);
+    filter: opacity(.2);
+}
+.itemUnselected .certiTick{
+    display:none;
+}
+.itemUnselected .certiLabel{
+    color: #cccccc;
+}
+.itemUnselected .company-type-content {
+    background-color: #eee;
+}
+
+.certiTick {
+    position: absolute;
+    right: 10px;
+    /* margin-top: 10px; */
+    /* margin-bottom: 10px; */
+}
+.certiImage {
+    width: 50%;
+    margin-top: -10px !important;
+}
+
+.certiLabel {
+    font-size: 1rem;
+    color: blue;
+    text-align: center !important;
+    white-space: normal;
+}
+.company-item {
+    padding: 0.2rem 1.5rem;
+}
+
+.company-type-content {
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+
+
+
+.blueText {
+    color: blue !important;
+}
+
+a.blueText:hover {
+    color: darkblue !important;
+}
+
+.yellow-underline-100 {
+    margin: 5px 0px 15px;
+    width: 100%;
+    border-top: 2px solid #ffc90d;
+}
+
+.content-item-cert{
+    padding: 2px;
+    min-height: 153px;
+}
+
+
+@media (max-width: 992px) {
+    .certiImage{
+        width: 55%;
+    }
+
+    .certiTick{
+        right: 45px;
+    }
+}
+
+label{
+ margin-bottom: 0 !important;
+}
+
+.height-92{
+    height: 92%;
+}

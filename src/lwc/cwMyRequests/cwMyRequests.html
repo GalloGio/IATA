@@ -1,0 +1,47 @@
+<template>
+    <div class="row col-12 bg-grey m-auto pt-2 pb-2">
+        <div class="col-12 display-flex">
+            <div class="col-4 m-auto text-right">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text bg-white"><lightning-icon icon-name="utility:search" size="x-small"></lightning-icon></div>
+                    </div>
+                    <input type="text" onkeyup={setStationManagersFilterValue} class="form-control border-left-none" placeholder={label.search}>
+                </div>
+            </div>
+            <div class="col-4 text-right">
+                <template if:true={hasItem}>
+                    <a href="javascript:{}" data-tosca="pending-user-approvals-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-60 mb--15" /></a>
+                </template>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">{label.type}</th>
+            <th scope="col">{label.operational_hierarchy}</th>
+            <th scope="col">{label.station_name}</th>
+            <th scope="col">{label.status}</th>
+            <th scope="col">{label.request_date}</th>
+        </tr>
+        </thead>
+        <tbody>        
+            <template for:each={getFilteredList} for:item="item">
+                <tr key={item.Id}>
+                    <td class="align-middle">{item.Type}</td>
+                    <td class="align-middle">{item.Company}</td>
+                    <td class="align-middle">{item.Station}</td>
+                    <td class="align-middle">{item.Status}</td>
+                    <td class="align-middle">{item.CreatedDateDateFormat}</td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <template if:false={hasItem}>
+        <c-cw-grid-empty-message></c-cw-grid-empty-message>
+    </template>
+    <c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+</template>

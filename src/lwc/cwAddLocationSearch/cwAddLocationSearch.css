@@ -1,0 +1,14 @@
+.yellow-underline-100 {
+    margin: 5px 0px 15px;
+    width: 100%;
+    border-top: 2px solid #ffc90d;
+}
+a.blueText:hover {
+    color: darkblue !important;
+}
+.inputUnderlined {
+    border-bottom: 1px solid blue;
+}
+.height-85{
+    height: 85%;
+}

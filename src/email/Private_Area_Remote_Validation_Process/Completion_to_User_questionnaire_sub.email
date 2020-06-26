@@ -1,0 +1,21 @@
+<messaging:emailTemplate subject="Questionnaire has been submitted" relatedToType="OrderItem">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" orderItemData="{!relatedTo.Id}"> </c:CW_HelloUser>     
+                    <c:CW_StationDetails nameList="We confirm that the" nameList2="questionnaire  for the below station has been submitted and is pending review by IATA:" stationData="{!relatedTo.Station__c}"></c:CW_StationDetails>
+
+                    <p style="line-height: 1.8rem;">Processing will take approximately 4 business days.</p>
+                    
+                    <c:CW_LinkRemoteValidationManagement nameList="You can see the status of the Remote Validation in the"></c:CW_LinkRemoteValidationManagement>
+                    
+                    <p style="line-height: 1.8rem;">We will inform you when the results are available.</p>
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

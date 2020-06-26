@@ -1,0 +1,455 @@
+<template>
+	<template if:true={isLoading}>
+		<div class="spinner-div">
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+	</template>
+	<template if:false={isLoading}>
+		
+		<template if:true={editMode}>
+			<div if:true={existsRows} class="slds-grid slds-grid_align-end">
+				<lightning-button label={labelButtonAddRowsToList} title={labelButtonAddRowsToList} variant="brand" class="slds-col" onclick={addPreviuosCapabilities}></lightning-button>
+			</div>
+			<div if:false={existsRows} class="slds-grid slds-grid_align-center">
+				<h2 id="message-result-data" class="slds-text-heading_medium slds-hyphenate">{messageToShow}</h2>
+			</div>
+		</template>
+		<br />
+		<template for:each={data.superCategories} for:item="currentSuperCategory" for:index="superCategoryIndex">
+		<lightning-accordion if:true={currentSuperCategory.containsData} key={currentSuperCategory.label} allow-multiple-sections-open active-section-name={currentSuperCategory.label}>
+		<lightning-accordion-section name={currentSuperCategory.label} label={currentSuperCategory.label} data-key={currentSuperCategory.label}>
+		<template for:each={currentSuperCategory.sections} for:item="currentSection" for:index="sectionIndex">
+			<lightning-accordion if:true={currentSection.containsData} key={currentSection.label} allow-multiple-sections-open active-section-name={currentSection.label}>
+			<div key={currentSection.label} class="slds-accordion">
+				<div key={currentSection.label}>
+					<lightning-accordion-section name={currentSection.label} label={currentSection.label} data-key={currentSection.label}
+						data-section="content">
+						<template if:true={currentCapability.containsData} for:each={currentSection.capabilities}
+							for:item="currentCapability" for:index="capabilityIndex">
+							<lightning-accordion if:true={currentCapability.containsData} key={currentCapability.label} allow-multiple-sections-open active-section-name={currentCapability.label}>
+							
+							<!-- Capability Loop Start -->
+							<div key={currentCapability.name} class="capability" if:true={currentCapability.show_capability}>
+							<lightning-accordion-section name={currentCapability.label} label={currentCapability.label} data-key={currentSection.label}
+							data-section={currentCapability.name} data-action="detail"
+							data-tosca="section_toggle_detail">
+							<div data-section={currentCapability.name}
+							data-action="detail">							
+							<div class="col-12 zui-wrapper">
+								<!-- Header button summary detail-->
+								<div class="row capability-header">
+									
+									<!-- Edit Mode Start -->
+									<div class="col-12 text-right fontw-inherit col-no-padding slds-grid" if:true={editMode}>
+										<div class="slds-col">{label.display_in_public_site}</div>
+										<div class="slds-col slds-grid">
+											<div class="slds-col">
+												<lightning-input data-key={currentCapability.name} name="Summary"
+												type="checkbox" label="Summary"
+												checked={currentCapability.check_summary}
+												onchange={handleChangeChecks}>
+												</lightning-input>
+											</div>
+											<div class="slds-col">
+												<lightning-input data-key={currentCapability.name} name="Details"
+												type="checkbox" label="Details"
+												checked={currentCapability.check_detail}
+												onchange={handleChangeChecks}>
+												</lightning-input>
+											</div>											
+											<div class={cargoHandlingCapabilitiesCss} role="alert"></div>
+											<template if:true={currentCapability.first_load_check}>
+												<template if:false={currentCapability.check_summary}>
+													<template if:true={currentCapability.check_detail}>
+														<div class="ml-1 alert text-truncate" role="alert">
+															&nbsp;{label.summary_no_display_public}
+														</div>
+													</template>
+												</template>
+												<template if:true={currentCapability.check_summary}>
+													<template if:false={currentCapability.check_detail}>
+														<div class="ml-1 alert text-truncate" role="alert">
+															&nbsp;{label.detail_no_display_public}
+														</div>
+													</template>
+												</template>
+												<template if:false={currentCapability.check_detail}>
+													<template if:false={currentCapability.check_summary}>
+														<div class="ml-1 alert text-truncate" role="alert">
+															<b>&nbsp;{label.entire_section_no_display_public}</b>
+														</div>
+													</template>
+												</template>
+											</template>
+										</div>
+									</div>
+									<!-- Edit Mode End -->
+								</div>
+
+								<template if:true={currentCategory.hasRows} for:each={currentCapability.categories}
+									for:item="currentCategory" for:index="categoryIndex">
+									<!-- primer div -->
+									<div key={currentCategory.value} if:true={currentCategory.rows.length}
+										class="row zui-scroller">
+
+										<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+											<thead>
+												<template if:true={currentCategory.columns.length}
+													iterator:currentheader={currentCategory.columns}>
+
+													<tr key={currentheader.value.name} class="slds-line-height_reset">
+
+														<template iterator:currentfield={currentheader.value}>
+
+															<template if:false={currentheader.last}>
+																<!-- is first header-->
+																<template if:true={currentheader.first}>
+
+																	<template if:false={currentfield.value.label.length}>
+																		<th if:true={currentfield.first}
+																		 	key={currentfield.value.name} scope="col"
+																			colspan={currentfield.value.colspan}
+																			class="box-shadow-none zui-sticky-col">
+																		</th>
+
+																		<th if:false={currentfield.first}
+																		 	key={currentfield.value.name} scope="col"
+																			colspan={currentfield.value.colspan}
+																			class="box-shadow-none">
+																		</th>
+
+																		<template if:true={currentfield.last}>
+                                                                            <th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
+                                                                            <th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
+                                                                            <th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
+                                                                        </template>
+																		
+																	</template>
+	
+																	<template if:true={currentfield.value.label.length}>
+																		<th if:true={currentfield.first}
+																		 	key={currentfield.value.name} scope="col"
+																			colspan={currentfield.value.colspan} class="slds-truncate zui-sticky-col">
+																			{currentfield.value.label}
+																		</th>
+																		<th if:false={currentfield.first}
+																		 	key={currentfield.value.name} scope="col"
+																			colspan={currentfield.value.colspan} class="slds-truncate">
+																			{currentfield.value.label}
+																		</th>
+																	</template>
+
+																</template>
+
+																<template if:false={currentheader.first}>
+
+																	<template if:false={currentfield.value.label.length}>
+																		<th key={currentfield.value.name} scope="col"
+																			colspan={currentfield.value.colspan}
+																			class="box-shadow-none">
+																		</th>
+																	</template>
+	
+																	<template if:true={currentfield.value.label.length}>
+																		<th key={currentfield.value.name} scope="col"
+																			colspan={currentfield.value.colspan} class="slds-truncate">
+																			{currentfield.value.label}
+																		</th>
+																	</template>
+
+																</template>	
+
+															</template>
+															<!-- Second header-->
+															<template if:true={currentheader.last}>
+
+																<th if:true={currentfield.first}
+																	key={currentfield.value.name} scope="col"
+																	colspan={currentfield.value.colspan}
+																	class="zui-sticky-col" title={currentfield.value.label}>
+																	<p class="slds-truncate">
+																		<c-cw-capabilities-manager-inputs is-header="true"
+																			item={currentCategory}
+																			property-name="label"
+																			aux-type={currentCategory.auxType} edit-mode=false>
+																		</c-cw-capabilities-manager-inputs>
+																	</p>
+																</th>
+
+																<th if:false={currentfield.first}
+																	key={currentfield.value.name} scope="col"
+																	colspan={currentfield.value.colspan} title={currentfield.value.label}>
+																	{currentfield.value.label}
+																</th>
+
+															</template>
+
+														</template>
+
+														<template if:true={currentheader.last}>
+															<th key={currentheader.value.name}
+																scope="col">{label.photos}</th>
+															<th key={currentheader.value.name} scope="col"
+																class="certifications-stamp"></th>
+															<th key={currentheader.value.name} class="zui-sticky-col-right" scope="col"> 
+
+															<template if:true={certificationMode}>
+																<template if:true={currentCategory.isMultirecord}>
+
+																		<lightning-button-icon icon-name="utility:add"
+																		variant="brand" alternative-text="Add capability" title="Add item"
+																		data-action="Add"
+																			data-super-categories-index={superCategoryIndex}
+																			data-section-index={sectionIndex}
+																			data-capability-index={capabilityIndex}
+																			data-category-index={categoryIndex}
+																		onclick={assigntCapability}>
+																		</lightning-button-icon>
+
+																</template>
+															</template>
+
+															</th>																
+														</template>
+													</tr>
+
+												</template>
+
+											</thead>
+
+											<tbody if:true={currentCategory.columns}>
+												<template for:each={currentCategory.rows} for:item="row"
+													for:index="rowIndex">
+													<tr key={row.Id} data-index={rowIndex} class={row.customClass}>
+
+														<template if:true={currentCategory.columns.length}
+															iterator:currentheader={currentCategory.columns}>
+															<template if:true={currentheader.last}>
+																<template iterator:currentfield={currentheader.value}>
+
+																	<td if:true={currentfield.first}
+																		key={currentfield.value.name}
+																		class="zui-sticky-col">
+																		<b>
+																			<c-cw-capabilities-manager-inputs
+																				row-index={rowIndex} category-index={categoryIndex} item={row}
+																				property-name={currentfield.value.name}
+																				aux-type={currentCategory.auxType} 
+																				type={currentfield.value.type} values={currentfield.value.values}
+																				edit-mode=false onfieldupdated={addFieldToList}>
+																			</c-cw-capabilities-manager-inputs>
+																		</b>
+																	</td>
+
+																	<td if:false={currentfield.first}
+																		key={currentfield.value.name}>
+																		<c-cw-capabilities-manager-inputs
+																			row-index={rowIndex} category-index={categoryIndex} item={row}
+																			property-name={currentfield.value.name}
+																			max-characters="20"
+																			type={currentfield.value.type} values={currentfield.value.values}
+																			edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
+																		</c-cw-capabilities-manager-inputs>
+																	</td>
+
+																</template>
+															</template>
+														</template>
+
+														<td class="row-separator" 
+														data-super-categories-index={superCategoryIndex}
+																		data-section-index={sectionIndex}
+																		data-capability-index={capabilityIndex}
+																		data-category-index={categoryIndex}
+																		data-row-index={rowIndex}
+																		onclick={setRowClicked}>
+
+															<lightning-file-upload if:true={editMode}
+																variant="label-hidden"
+																name="fileUploader"
+																accept={acceptedFormats}
+																record-id={recordId}
+																onuploadfinished={handleUploadFinished}
+																disabled={row.isNotEditable}
+																multiple>
+															</lightning-file-upload>
+															
+
+															   <button if:true={row.photosAvailable}
+																	class="p-0 bg-transp border-0"
+																	data-tosca="edit_photos" title="Edit photos" disabled={editMode}>
+																	<img src={infoIcon} width="20px"
+																	data-super-categories-index={superCategoryIndex}
+																		data-section-index={sectionIndex}
+																		data-capability-index={capabilityIndex}
+																		data-category-index={categoryIndex}
+																		data-row-index={rowIndex}
+																		onclick={openModalEditPhotos}/>
+																</button>
+
+																<button if:false={row.photosAvailable} disabled
+																	class="p-0 bg-transp border-0 disabled-filter">
+																	<img src={infoIcon} width="20px" />
+																</button>
+															
+														</td>
+
+														<td class="certifications-stamp">
+															<div class="stamp-inline">
+																<template for:each={row.certifications}
+																	for:item="cert">
+																		<template if:true={editMode}>
+																			<img key={cert.id} width="35px" src={cert.src}																	
+																				onmouseover={showHideStampHover}
+																				onmousemove={showHideStampHover}
+																				onmouseout={showHideStampHover}
+																				data-name={cert.name}
+																				data-issue-date={cert.issueDate}
+																				data-expiration-date={cert.expirationDate}>
+																		</template>
+
+																		<template if:false={editMode}>
+																			<img key={cert.id} width="35px" src={cert.src}																	
+																				class="certifications-disabled">
+																		</template>
+																</template>
+															</div>
+														</td>
+
+														<td class="row-separator zui-sticky-col-right">
+															<template if:true={certificationMode}>
+																<template if:false={getisCapabCertiMode}>
+																<template if:true={row.isAssigned}>
+																	
+																	<lightning-button label={label.cancel} title={label.cancel} variant="destructive" data-action="Remove"
+																	data-super-categories-index={superCategoryIndex}
+																	data-section-index={sectionIndex}
+																	data-capability-index={capabilityIndex}
+																	data-category-index={categoryIndex}
+																	data-row-index={rowIndex}
+																	onclick={assigntCapability}></lightning-button>
+																</template>
+
+																<template if:false={row.isAssigned}>
+																	<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
+																		data-row={row} 
+																		data-super-categories-index={superCategoryIndex}
+																		data-section-index={sectionIndex}
+																		data-capability-index={capabilityIndex}
+																		data-category-index={categoryIndex}
+																		data-row-index={rowIndex}
+																	onclick={assigntCapability}></lightning-button>
+																</template>
+																</template>
+															</template>
+														</td>
+
+													</tr>
+												</template>
+											</tbody>
+										</table>
+									</div>
+
+								</template>
+
+							</div>
+						</div>
+							</lightning-accordion-section>
+							</div><!-- Capability Loop End -->
+		
+						</lightning-accordion>
+						</template>
+					</lightning-accordion-section>
+				</div>
+			</div>
+
+		</lightning-accordion>
+		</template>
+		</lightning-accordion-section>
+		</lightning-accordion>
+		</template>
+
+		<template if:true={modalEditPhotos}>
+			<div class="slds-m-around_xx-large">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header slds-modal__header_empty">
+							<lightning-button-icon icon-name="utility:close" onclick={closeModalEditPhotos}
+								alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+							</lightning-button-icon>
+						</header>
+
+						<div class="slds-modal__content text-center overflow-hidden" id="modal-edit-photos">
+
+							<div class="row">
+								<lightning-carousel disable-auto-scroll>
+									<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
+										<lightning-button-icon key={photo.id} data-id={photo.id} data-position="photoIndex" icon-name="utility:delete" onclick={deletePhotoCarousel}
+											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">
+										</lightning-button-icon>
+										<lightning-carousel-image if:true={photo.visible} key={photo.id}
+											src={photo.url} header={photoIndex} description={photoIndex}>
+										</lightning-carousel-image>
+									</template>
+								</lightning-carousel>
+							</div>
+
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</template>
+
+		<section  data-name="stamp-popover" class="slds-popover slds-nubbin_top-right popover-custom slds-hidden"
+			role="dialog">
+			<div class="slds-popover__body" if:true={dataHoverInfoStamp}>
+				<span>
+					<p>{label.capability_validated_by}: <b>{dataHoverInfoStamp.name}</b></p>
+					<p>{label.issue_date}: <b>{dataHoverInfoStamp.issueDate}</b></p>
+					<p>{label.expiration_date}: <b>{dataHoverInfoStamp.expirationDate}</b></p>
+				</span>
+			</div>
+		</section>
+
+		<template if:true={showModal}>
+
+			<div class="demo-only">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+								<lightning-icon icon-name="utility:close" size="medium">
+								</lightning-icon>
+								<span class="slds-assistive-text">{label.close}</span>
+							</button>
+							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{headerToShow}</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+							<center><h2><b>{label.icg_confirmation_text}</b></h2><br/>
+							</center>
+						</div>
+						<footer class="slds-modal__footer">
+							<lightning-button label={label.cancel} variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+							<lightning-button label={label.accept} variant="brand" onclick={makeAction}></lightning-button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+
+		</template>
+
+		<div if:true={editMode} class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
+			<div class="slds-col margin-button-save">
+				<button class="slds-button slds-button--brand button-size-footer" disabled={isSaveOption} onclick={saveCapabilities}>{label.save}</button>
+			</div>
+			<div class="slds-col"> 
+				<button class="slds-button slds-button--brand button-size-footer" onclick={cancelCapabilities}>{label.cancel}</button>
+			</div>
+		</div>
+
+	</template>
+
+</template>

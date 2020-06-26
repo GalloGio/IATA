@@ -1,0 +1,79 @@
+<template>
+    <div class="title" if:true={title}>
+        <p><b>{title}</b></p>
+        <hr class="yellow-underline mt-2">
+    </div>    
+    <template if:true={openCreateAccountContactRole}>
+        <div class="row content">
+            <div class="col-12 slds-align_absolute-center">
+                <input id="searchbox" type="text" data-tosca="locationinput" class="form-control searchbox" value={searchValue} list="predictiveresults-1" onkeyup={predictiveSearch} autocomplete="off">
+            </div>
+            <div class="col-12 col-no-padding-left pr-4">
+                <div data-tosca="predictiveContainer" class="col-xl-12 col-lg-8">
+                    <c-cw-predictive-values predictivevalues={predictiveValues} onpredictivevalueselected={updateSearchbox} display-the-box={isboxfocus} hide-bottom-section=true> 
+                    </c-cw-predictive-values>
+                </div>
+            </div>
+            <div class="col-12 display-flex p-0">
+                <div class="col-6 text-right">
+                    <button data-tosca="cancel-station-manager" class="btn btn-primary-blue minwidthbutton pl-2 pr-4 pt-1" onclick={handleCancel}>{label.cancel}</button> 
+                </div>
+                <div class="col-6 text-left">
+                    <button data-tosca="added-station-manager" class="btn btn-primary minwidthbutton pl-2 pr-4 pt-1" onclick={handleAddStationManager}>{label.add}</button> 
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template if:true={openConfirm}>
+        <div class="row content">
+            <div class="col-12 slds-align_absolute-center">
+                <b>{label.are_you_sure_delete_station_manager}?</b>
+            </div> 
+ 
+
+            <div class="col-12 display-flex p-0">
+                <div class="col-6 text-right">
+                    <button data-tosca="cancel-delete-station-manager" name='No' class="btn btn-primary-blue minwidthbutton pl-2 pr-4 pt-1" onclick={handleCancel}>{label.no}</button> 
+                </div>
+                <div class="col-6 text-left">
+                    <button data-tosca="delete-station-manager" name='Yes' class="btn btn-primary minwidthbutton pl-2 pr-4 pt-1" onclick={handleConfirmDialogYes}>{label.yes}</button> 
+                </div>
+            </div>
+    
+        </div>
+    </template>
+
+    <div class="col-12 col-no-padding-left" if:true={showStationManagers}>
+        <template for:each={accountContactRoles} for:item="currentAccCtoRol">
+            <div key={currentAccCtoRol.id} class="row ml-0 mt-2 mb-2 pt-2 pb-2 bg-light-grey">
+                <div class="col-11">
+                    <p class="font-size-sm text-truncate display-inline">{currentAccCtoRol.name} | 
+                        <a href={currentAccCtoRol.phoneLink}><span class="text-blue pl-2">{currentAccCtoRol.phone}</span></a> | 
+                        <a href={currentAccCtoRol.emailLink}><span class="text-blue pl-2">{currentAccCtoRol.email}</span></a> | 
+                        {currentAccCtoRol.otherAddress}
+                    </p>
+                </div>
+                <div class="col-1 font-size-sm cursor-pt">
+                    <lightning-icon size=" x-small" if:true={currentAccCtoRol.showDelete} icon-name="utility:delete" variant="error" alternative-text="Delete" onclick={deleteAccountContactRole} data-key={currentAccCtoRol.id} data-keyacr={currentAccCtoRol.idAccountContactRole}></lightning-icon>
+                </div>
+            </div>
+        </template>
+        <template if:true={noAccountContactRoles}>{label.there_are_not_existing_station_managers}</template>
+        
+        <div class="row div-marginTop" if:true={showShowMoreButton}>
+            <div class="col-12">
+                <lightning-button label={seeMoreLabel} onclick={showMore}></lightning-button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" if:true={isCompanyAdmin}>
+                <button data-tosca="add-station-manager" class="btn btn-primary-blue minwidthbutton pl-2 pr-4 pt-1" onclick={addStationManager}>{label.add_station_manager}</button> 
+            </div>
+            <div class="col-12" if:true={showBecomeStationManager}>
+                <lightning-button label={label.become_station_manager} onclick={becomeFacilityAdminJS}></lightning-button>
+            </div> 
+        </div>
+    </div>
+    
+</template>

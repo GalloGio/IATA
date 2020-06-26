@@ -1,0 +1,224 @@
+<apex:component access="global" controller="CW_EmailTemplateData">
+    <style>
+        .header {
+            width: 100%;
+        }
+        .footer {
+            background-color: black;
+            width: 100%;
+            color: white;
+            font-family: aktiv-grotesk, sans-serif;
+            padding: 20px 0px 20px 20px;
+        }
+        p{
+            line-height: 1.8rem;
+        }
+        .row {
+            display: flex;
+            width: 100%;
+            padding: 10px;
+        }
+        .width-25 {
+            width: 25%;
+        }
+        .width-20 {
+            width: 20%;
+        }
+        .width-50 {
+            width: 50%;
+        }
+        .width-75 {
+            width: 75%;
+        }
+        .txt-white {
+            color: white;
+        }
+        .socialimg {
+            width: 18px;
+            height: auto;
+            max-height: 18px;        
+            background-color: white;
+        }
+        .padding-social{
+            padding: 5px;
+        }
+        .padding-social-youtube{
+            padding: 2px 5px 8px 5px;
+        }
+        .display-flex {
+            display: flex;
+        }
+        .display-contents {
+            display: contents;
+        }
+        .m-auto {
+            margin: auto;
+        }
+        .margin-top-20{
+            margin-top: 20px;
+        }
+        .img-one-source {
+            padding: 15px 0px;
+            width: 40%;
+            max-width: 350px;
+        }
+        .bg-blue {
+            background-color: #1e32fa;
+        }
+        .txt-center {
+            text-align: center;
+        }
+        .content {
+            font-family: aktiv-grotesk, sans-serif;
+            padding: 30px;
+            font-size: 0.9rem;
+        }
+        .content a {
+            color: #1e32fa;
+        }
+        .footer a {
+            color: white;
+        }
+        .main-logo {
+            width: 100px;
+            padding: 20px;
+        }
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: max-content;
+        }
+        td,
+        th {
+            border: 1px solid #8eaadb;
+            text-align: left;
+            padding: 5px;
+            font-size: 0.8rem;
+        }
+        tr:nth-child(even) {
+            background-color: #d9e2f3;
+        }
+        .highlight {
+            color: #1e32fa;
+            font-weight: 600;
+        }
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        @font-face {
+            font-family: 'artik-font';
+            src: url('{!communityUrlForResources}resource/aktiv_grotesk_regular/@font-face/4337eeb93213c64896f2df77962a405e.woff');
+        }
+        .btn-primary {
+            text-transform: uppercase;
+            font-weight: bold;
+            background: #f04632;
+            position: relative;
+            padding: 0 30px 0 15px;
+            border-color: #f04632;
+            color: #ffffff !important;
+        }  
+        .btn-primary:hover {
+            color: #ffffff !important;
+            background-color: #f04632;
+            border-color: #f04632;
+        }
+        .btn-primary:after {
+            content: "";
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 20px 20px;
+            border-color: transparent;
+            border-bottom-color: #ffffff;
+            color: white !important;
+        }
+    
+        .btn-primary-blue {
+            text-transform: uppercase;
+            font-weight: bold;
+            background: #1E32FA;
+            position: relative;
+            padding: 0 30px 0 15px;
+            border-color: #1E32FA;
+            color: #ffffff !important;
+        }  
+        .btn-primary-blue:hover {
+            color: #ffffff !important;
+            background-color: #1E32FA;
+            border-color: #1E32FA;
+        }
+        .btn-primary-blue:after {
+            content: "";
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 20px 20px;
+            border-color: transparent;
+            border-bottom-color: #ffffff;
+            color: white !important;
+        }
+    
+        .btn-primary-yellow {
+            text-transform: uppercase;
+            font-weight: bold;
+            background: #fac832;
+            position: relative;
+            padding: 0 30px 0 15px;
+            border-color: #fac832;
+            color: #ffffff !important;
+        }  
+        .btn-primary-yellow:hover {
+            color: #ffffff !important;
+            background-color: #fac832;
+            border-color: #fac832;
+        }
+        .btn-primary-yellow:after {
+            content: "";
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 20px 20px;
+            border-color: transparent;
+            border-bottom-color: #ffffff;
+            color: white !important;
+        }
+        .link-button {
+            padding-top: 3px;
+            text-decoration: none;
+        }
+        .ml-3{
+            margin-left: 0.75rem;
+        }
+        .margin-top-10 {
+            margin-top: 25px;
+        }
+        .dateEmail{
+            position: absolute;
+            right: 25px;
+        }
+    </style>
+</apex:component>

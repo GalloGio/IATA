@@ -1,0 +1,200 @@
+.this .logo-small {
+	width: 100px;
+}
+
+.no-padding {
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+}
+
+.selected {
+	color: #f04632 !important;
+}
+
+.capacity-fin {
+	font-size: 23px;
+	padding-top: 9.5px;
+	padding-left: 15px;
+}
+
+.home-icon {
+	width: 25px;
+	margin-top: -8px;
+}
+
+.font-size-17 {
+	font-size: 17px;
+}
+
+.font-size-15 {
+	font-size: 15px;
+}
+
+.height-87 {
+	height: 87px;
+}
+
+.margin-top-28 {
+	margin-top: -28%;
+}
+
+.height-37 {
+	height: 37px;
+}
+
+.margin-top-18 {
+	margin-top: -18%;
+}
+
+.height-42 {
+	height: 42px;
+}
+
+.height-45 {
+	height: 45px;
+}
+
+.height-50 {
+	height: 50px;
+}
+
+.account-btn {
+	color: white;
+	min-height: 20px;
+	padding: 1px;
+	padding-left: 10px;
+	padding-right: 16px;
+	align-self: center;
+}
+
+.login-btn {
+	margin-right: 5px;
+}
+
+
+.sign-up-btn {
+	background-color: #49ba42;
+	margin-right: 5px;
+}
+
+button.sign-up-btn:hover {
+	background-color: darkgreen !important;
+}
+
+.header-hidden {
+	visibility: hidden;
+}
+
+.flex-right {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.account-icon {
+	align-self: center;
+	min-height: 20px;
+	padding: 1px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-right: 5px;
+}
+
+.logged-in-icon {
+	align-self: center;
+	min-height: 20px;
+	padding: 1px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-right: 5px;
+	fill: #1e32fa;
+}
+
+.logged-in-icon:hover {
+	background-color: darkblue !important;
+}
+
+.login-icon svg {
+	fill: #1e32fa;
+	margin-right: 5px;
+}
+
+.sign-up-icon {
+	fill: #49ba42;
+	margin-right: 5px;
+}
+
+.login-icon:hover {
+	background-color: darkblue !important;
+}
+
+.sign-up-icon:hover {
+	background-color: darkgreen !important;
+}
+
+@media (max-width: 1199px) and (min-width: 1026px) {
+	.account-btn {
+		display: none;
+	}
+
+	.nav-link-custom {
+		font-size: 12px !important;
+	}
+
+	.logged-in-icon {
+		margin-right: 20px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.account-icon {
+		display: none;
+	}
+}
+
+.btn-primary:after { 
+    border-width: 0 0 12px 12px !important;
+}
+.beta{
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.join-div{
+	margin-top: 1.5rem
+}
+
+.numberCircle {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    border: 4px solid #fac832;
+    color: #fac832;
+    text-align: center;
+    font: 32px Arial, sans-serif;
+}
+
+
+
+.circe-shape{
+	height: 100%;
+	width: 100%;
+	background-color: white;
+	border-radius: 50%;
+}
+.big-label{
+	font-weight: 600;
+    font-size: 3rem;
+}
+
+.giant-label{
+	color: white;
+	font-size: 5rem;
+	font-weight: 600;
+	position: absolute;
+    bottom: 15px;
+}
+
+.popup_message22, .popup_message32{
+ font-weight: bold;
+}

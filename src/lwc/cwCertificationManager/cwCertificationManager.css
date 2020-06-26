@@ -1,0 +1,28 @@
+.certificationItem {
+    --lwc-colorBackgroundInputDisabled: rgb(245, 241, 241);
+    color: black;
+}
+.historyItem{
+    background-color: lightgray;
+    color: gray;
+}
+.slds-modal__content{
+    overflow: initial !important;
+}
+.bt-yellow{
+    background-color: rgb(250,200,50) !important;
+    color: white !important;
+}
+.bt-yellow:hover{
+    background-color: rgb(228, 183, 47) !important;
+}
+.bt-blue{
+    background-color: rgb(30,50,250) !important;
+    padding-left: 5px !important;
+    color: white !important;
+    width: max-content;
+    padding: inherit;
+}
+.bt-blue:hover{
+    background-color: rgb(24, 40, 220) !important;
+}

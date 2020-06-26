@@ -1,0 +1,6 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="text" type="String" description="title for link" access="global" default="You can now manage/update the station details in the"/>
+    <apex:attribute name="text2" type="String" description="title for link2" access="global" default="ONE Source Profile"/>
+    <p style="line-height: 1.8rem;">{!text} <a style="color: #1e32fa;" href="{!stationUrl}">{!text2}</a></p>
+</apex:component>

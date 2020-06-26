@@ -1,0 +1,17 @@
+<messaging:emailTemplate subject="A request to create the below Station has been sent" relatedToType="ICG_Account_Role_Detail__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" username="creator" stationData="{!relatedTo.Id}"> </c:CW_HelloUser> 
+                    <p style="line-height: 1.8rem;">A new station is peding approval</p>   
+                    <c:CW_StationDetails stationData="{!relatedTo.Id}" ></c:CW_StationDetails>
+                    <p style="line-height: 1.8rem;">We will notify you as soon at the request has been approved.</p>
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

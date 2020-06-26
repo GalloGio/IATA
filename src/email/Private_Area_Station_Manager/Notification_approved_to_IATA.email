@@ -1,0 +1,24 @@
+<messaging:emailTemplate subject="A new Station Manager request has been approved" relatedToType="ICG_Contact_Role_Detail__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" contactRoleDetailData="{!relatedTo.Id}"> </c:CW_HelloUser> 
+    
+                    <p style="line-height: 1.8rem;">A new Station Manager request has been approved.</p>
+                    
+                    <c:CW_RequestedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_RequestedBy>   
+                    <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails> 
+                    <c:CW_ListStationManager nameList="Current Station Managers" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_ListStationManager>   
+                    <c:CW_ApprovedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_ApprovedBy>    
+                    <c:CW_UserDifferentOperationalHierarchy stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_UserDifferentOperationalHierarchy>     
+                    <c:CW_LinkManageStationManager stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_LinkManageStationManager> 
+    
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+             <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

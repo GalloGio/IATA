@@ -1,0 +1,447 @@
+<template>
+    <c-cw-spinner width="25%" overlay={spinnerOverlay} overlay-color={overlayColor} position={spinnerPosition} if:false={loaded}></c-cw-spinner>
+    <div class="container container-search">
+        <template if:false={facilityid}>
+            <div class="col-12 top-bar-container">
+                <div class="col-4 col-sm-5 col-xs-5 text-left">
+                    <span class="text-primary back-rslt" onclick={backToURL}>&lt; {label.back_to_results}</span>
+                </div>
+                <div class="col-8 col-sm-7 col-xs-7 text-right">
+                    <template if:true={editMode}>
+                        <button data-name="saveBtn" data-tosca="saveBtn" type="button" onclick={handleSaveChanges} class={saveBtnCss}>{label.save}</button>
+                    </template>
+                    <c-cw-compare-facility-button if:true={facilityToCompare} css-view="cw-facility-page-container"
+                        facility={facilityToCompare} add-remove-comparison-button="true">
+                    </c-cw-compare-facility-button>
+                    <li class="list-inline-item height-40">
+                        <a href="javascript:{}" onclick={printpage} class={printButton}><img src={printblue} class="filter-grey-100 print-icon" /></a>
+                    </li>
+                    <template if:true={facility}>
+                        <li class="list-inline-item height-40">
+                            <div class={shButton}>
+                                <a href="javascript:{}" onclick={sharemenu} class={shareButton}><img src={shareblue} class="filter-grey-100 share-icon" /></a>
+                                <div class={shareIcons}>
+                                    <div class="shButton-icon-background"><a href="javascript:{}" onclick={sharemenu}><img src={shareblue} class="shButton-icon" /></a></div>
+                                    <div class="twitter-icon-background"><a href="javascript:{}" onclick={conTwitter} class="twitter-share-button"><img src={twiter} class="twitter-icon" /></a></div>
+                                    <div class="facebook-icon-background" data-href={url}><a href="javascript:{}" onclick={conFacebook}><img src={facebook} class="facebook-icon" /></a></div>
+                                    <div class="linkedin-icon-background"><a href="javascript:{}" onclick={conLinkedin}><img src={linkedin} class="linkedin-icon" /></a></div>
+                                    <div class="email-icon-background"><a href="javascript:{}" onclick={conEmail}><img src={email} class="email-icon" /></a></div>
+                                </div>
+                            </div>
+                        </li>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <div class={facilitymarginrow}>
+            
+            <div class={facilitywidecol}>
+                <template if:true={facility}>
+                    <!-- Header -->
+                    <div class="hidden-md">
+                        <div class="row-no-margin">
+                            
+                            <!--HIDDEN RESPONSIVE VERSION-->
+                            <template if:true={facility}>
+                                <template if:false={facilityid}>
+                                    <!-- Logo -->
+                                    <!--HIDDEN RESPONSIVE VERSION-->
+                                    <div class="col-1 m-auto hidden-md text-center logo-align">
+                                        <img src={getLogoUrl} alt="Logo" title="" />
+                                    </div>
+                                </template>
+                            </template>
+                            
+                            <template if:false={facilityid}>
+                                <div class="col-md-11 slds-grid data-box bg-yellow p-2-5">
+                                    <div class="col-md-4">
+                                        <div class="title mb-2-5">
+                                            <strong>{facility.name}</strong>
+                                        </div>
+                                        <div class="mb-2-5">
+                                            {facility.accountName}
+                                        </div>
+                                        <div data-tosca={facility.Id} class="type">
+                                            <img class="typeButton width-20" src={getCompanyTypeImage}
+                                                alt="type" />&nbsp;&nbsp;<strong>{facility.recordTypeName}</strong>
+                                            <img data-item={facility.Id} class={getStyleImg} onmouseover={showPopover} onmouseleave={hidePopover} src={getIATAIcon} alt="type" />
+                                            <c-cw-simple-tooltip item-id={facility.Id} tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 m-auto col-no-padding">
+                                        <div class="row-no-margin-left">
+                                            <template if:false={editMode}>
+                                                <div class="col-12 col-no-padding text-right pr-5">
+                                                    <template if:true={facilityAddress}>
+                                                        <div class="col-12">
+                                                            <span onclick={searchAddress} class="cursor-pt"><img class="width-20"
+                                                                src={searchbylocation} /></span>
+                                                            <span onclick={searchAddress}
+                                                                class="cursor-pt">{facilityAddress}</span><br />
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                            <template if:true={editMode}>
+                                                <template if:true={facilityAddress}>
+                                                    <div class="col-12 col-no-padding row pr-5">
+                                                        <div class="col-5 text-right pt-1">
+                                                            <span><img class="width-20" src={searchbylocation} /></span>
+                                                            <span class="ml-1 mr-1">{facilityStreetNr}</span>
+                                                        </div>  
+                                                        <div class="col-3 text-center col-no-padding">
+                                                            <input class="width-100" name="secondAddress" value={facility.secondAddress}
+                                                                onblur={handleSecondAddressChange}/>
+                                                        </div>  
+                                                        <div class="col-4 pt-1">
+                                                            <span class="ml-1">{facilityAdressSecondPart}</span>
+                                                        </div>  
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </div>                                   
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:true={facilityid}>
+                                <template if:true={isDirty}>
+                                    <div class="comparison-bar no-collapsed comparison-container hidden-md">
+                                        <div class="slds-grid slds-wrap bg-yellow-transparent mb-0 comparison-bar-container">
+                                            <div class="slds-grid slds-wrap m-auto">
+                                                <div class="width-100 text-truncate comparison-item m-auto ">
+                                                    <button type="button" onclick={cancelChanges}
+                                                        class="btn btn-primary-blue btn-action mt-2 mb-2 pr-5 pl-5 mr-2">{label.cancel}</button>
+                                                    <button type="button" onclick={handleSaveChanges}
+                                                        class="btn btn-primary btn-action mt-2 mb-2 pr-5 pl-5 ml-2">{label.save}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <div class="col-md-12 slds-grid data-box bg-yellow p-2-5">
+                                    <div class="col-md-2 m-auto">
+  
+                                        <img src={getLogoUrl} alt="Vueling Airlines-Logo" class="editable" title="" />
+
+                                     
+                                        <template if:true={editMode}>
+                                            <img lwc:dom="manual" id="logopreview" class="editable hidden" src="" />
+                                            <div class="slds-file-selector slds-file-selector_files editable hidden mt-1">
+                                                <div class="slds-file">
+                                                    <input type="file" name="logoimage" data-tosca="logoimage"
+                                                        class="slds-file-selector__input slds-assistive-text" accept="image/*" id="logoimage"
+                                                        aria-labelledby="file-selector-primary-label file-selector-secondary-label"
+                                                        onchange={setLogoPreview} />
+                                                    <label class="slds-file-selector__body" for="logoimage" id="file-selector-secondary-label">
+                                                        <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                                           {label.upload_image}</span>
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </template>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="title mb-2-5">
+                                            <strong class="editable">{facility.name}</strong>
+                                            <template if:true={editMode}>
+                                                <input class="editable hidden" name="name" value={facility.name} onblur={handleFacilityNameChange}/>
+                                            </template>
+                                        </div>
+                                        <div class="title mb-2-5">
+                                            {facility.accountName}
+                                        </div>
+                                        <div class="type col-md-12 bg-light-yellow">
+                                            <img class="typeButton width-20" src={getCompanyTypeImage}
+                                                alt="type" />&nbsp;&nbsp;<strong class="align-middle">{facility.recordTypeName}</strong>
+                                            <img class={getStyleImg} src={getIATAIcon} alt="type" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <template if:true={editMode}>
+                                            <lightning-icon icon-name="utility:close" class="ml-2 cursor-pt position-absolute r-0 editable hidden" variant="error" data-item="editable" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                                            <lightning-icon icon-name="utility:edit" class="ml-2 cursor-pt position-absolute r-0 editable" data-item="editable" title="Edit" onclick={showInput} size="x-small"></lightning-icon>
+                                            <div class="col-12 col-no-padding row pr-5">
+                                                <div class="col-12 pt-1">
+                                                    <span><img class="width-20" src={searchbylocation} /></span>
+                                                    <span class="ml-1 mr-1">{facilityStreetNr}</span>
+                                                </div>  
+                                                <div class="col-12 pt-1">
+                                                    <span class="ml-1">
+                                                        <span class="editable">{facility.secondAddress} </span>
+                                                        <input class="mr-3 editable hidden" name="secondAddress" value={facility.secondAddress} onblur={handleSecondAddressChange}/>
+                                                    </span>
+
+                                                    
+                                                </div>  
+                                                <div class="col-12 pt-1">
+                                                    <span class="ml-1">{facilityAdressSecondPart}</span>
+                                                </div>  
+                                            </div>
+                                        </template>
+                                        <template if:false={editMode}>
+                                            <div class="col-12 col-no-padding text-right pr-5">
+                                                <div class="col-12">
+                                                    <span onclick={searchAddress} class="cursor-pt"><img class="width-20"
+                                                        src={searchbylocation} /></span>
+                                                    <span onclick={searchAddress}
+                                                        class="cursor-pt">{facilityAddress}</span><br />
+                                                </div>
+                                            </div>
+                                        </template>
+
+                                        <div class="col-12 col-no-padding-right text-right">
+                                            <template if:true={shouldShowBecomeButton}>
+                                                <template if:true={showCompanyAdminsButton}>
+                                                    <!--HERE CHECK IF IS PENDING Station MANAGER-->
+                                                    <a href="javascript:{}" title="Become Company Admin" onclick={becomeCompanyAdminJS}
+                                                        data-tosca="becomecompanyadmin"
+                                                        class="btn btn-primary btn-yellow link-button">{label.become_company_admin}</a>
+                                                </template>
+                                                <template if:true={showFacilityManagersButton}>
+                                                    <!--HERE CHECK IF IS PENDING Station MANAGER-->
+                                                    <a href="javascript:{}" title="Become Facility Manager" onclick={becomeFacilityManagerJS}
+                                                        data-tosca="becomefacilitymanager" data-facility={facility.Id}
+                                                        class="btn btn-primary btn-yellow link-button">{label.become_station_manager}</a>
+                                                </template>
+                                            </template>
+
+
+                                            <template if:true={shouldShowAdminManagerLabels}>
+                                                <template if:true={isCompanyAdmin}>
+                                                    <span class="text-blue">{label.company_admin}</span>
+                                                </template>
+                                                <template if:true={isFacilityManager}>
+                                                    <span class="text-blue">{label.station_manager}</span>
+                                                </template>
+                                            </template>
+                                        </div>
+                           
+                                    </div>
+                                </div>                               
+                            </template>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <!--VISIBLE RESPONSIVE VERSION-->
+                        <div class="visible-md">
+                            <div class="row m-0">
+                                <div class="col-3">
+                                    <img src={getLogoUrl} alt="Logo" title="" />
+                                </div>
+                                <div class="col-9">
+                                    <div class="title mb-2-5">
+                                        <strong>{facility.name}</strong>
+                                    </div>
+                                    <div class="mb-2-5">
+                                        {facility.accountName}
+                                    </div>
+                                    <div class="type col-12">
+                                        <img class="typeButton width-20" src={getCompanyTypeImage}
+                                            alt="type" />&nbsp;&nbsp;
+                                        <strong>{facility.recordTypeName}</strong>
+                                        <img class={getStyleImg} src={getIATAIcon} alt="type" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details start -->
+                    <div class={maincolclass}>
+                        <div class="col-md-12 col-lg-9 col-xl-9 col-sm-12 col-xs-12 col-no-padding-left">
+                            <div class="row">
+                                <div class="col-md-8 col-lg-7 col-xl-7 col-sm-12 col-xs-12">
+                                    <c-cw-account-detail-certification-list label={label} title={label.IATA_Validation_Programs}
+                                        underline="true" titlesize="h4" hover="true" titleminheight="0px"
+                                        account-id={facility.Id} account-type={facility.recordTypeName}
+                                        certs-css="col-2 col-no-padding enlarge mr-2"
+                                        list-detail-cert-facility={detailCertFacility}>
+                                    </c-cw-account-detail-certification-list>
+                                </div>
+                            </div>
+
+                            <div class="row-home">
+                                <div class="col-md-12 col-lg-8 col-xl-8 col-sm-12 col-xs-12">
+                                    <c-cw-display-list label={label} title={label.cargo_commodities} title-type="facility-page"
+                                        facility={facility} list-detail-cert-facility={detailCertFacility} edit-mode={editMode} onupdatefacility={updateFacility}>
+                                    </c-cw-display-list>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <c-cw-account-detail-overview label={label} onupdatedatavalidoverview={updateOverviewValidData} onupdatefacility={updateFacility} title={label.station_overview} facility={facility}
+                                        edit-mode={editMode}>
+                                    </c-cw-account-detail-overview>
+                                </div>
+                            </div>
+
+                            <!-- not Is Guest-->
+                            <template if:false={isGuest}>                                                              
+                                <div class="row-home">
+                                    <div class="col-12">
+                                        <c-cw-station-managers label={label} title={label.station_manager} facility={facility} user-info={userInfo} user-role={userRole} edit-mode={editMode}>
+                                    </c-cw-station-managers>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!--VISIBLE RESPONSIVE VERSION-->
+                            <div class="visible-md col-12 main-col bg-grey">
+                                <c-cw-facility-contact-info label={label} onupdatedatavalidcontactinfo={updateContactInfoValidData} onupdatefacility={updateFacility} facility={facility} edit-mode={editMode}>
+                                </c-cw-facility-contact-info>
+                            </div>
+
+                            <!-- SHOW IF RT = RAMP HANDLER || CARGO || AIRPORT-->
+                            <template if:true={showAirlines}>
+                                <div class="row-home">
+                                    <div class="col-12">
+                                        <p class="title-airlines-handled">
+                                            <b if:true={showListAirlines}>{label.list_airlines_handled}</b>
+                                            <b if:true={showOperatingAirlines}>{label.operating_airlines}</b>
+                                            <img class="img-list-airline" src={getListAirIcon} alt="type"
+                                                title="Information not verified by IATA" />
+                                                <template if:true={editMode}>
+                                                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable-airlines hidden" variant="error" data-item="editable-airlines" title="Close" onclick={showInputAirlines} size="x-small"></lightning-icon>
+                                                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable-airlines" title="Edit" data-item="editable-airlines" onclick={showInputAirlines} size="x-small"></lightning-icon>
+                                                </template>  
+                                        </p>
+                                        <hr class="yellow-underline mt-2">
+                                        <div class="form-row">
+                                            <div class="col-6 text-right">
+                                                <c-cw-search-in-list label={label} onfilterinlist={filterAirlinesHandled}>
+                                                </c-cw-search-in-list>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <c-cw-handled-airlines label={label} preselected-airlines={selectedAirlines}
+                                                    isreadonly={editAirlines} filter-text={filterTextAirlines}
+                                                    onselectairlines={setSelectedAirlines}></c-cw-handled-airlines>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+                            <template if:true={showOperatingCHFandRampH}>
+                                <div class="row-home">
+                                    <div class="col-12">
+                                        <p class="title-airlines-handled">
+                                            <b class="slds-truncate">{label.operating_cargo_handling_facilities}</b>
+                                            <img class="img-list-airline" src={getListAirIcon} alt="type"
+                                                title="Information not verified by IATA" />
+                                                <template if:true={editMode}>
+                                                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable-cargo-handling hidden" variant="error" data-item="editable-cargo-handling" title="Close" onclick={showInputCargoHandling} size="x-small"></lightning-icon>
+                                                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable-cargo-handling" title="Edit" data-item="editable-cargo-handling" onclick={showInputCargoHandling} size="x-small"></lightning-icon>
+                                                </template>  
+                                        </p>
+                                        <hr class="yellow-underline mt-2">
+                                        <div class="form-row">
+                                            <div class="col-6 text-right">
+                                                <c-cw-search-in-list label={label} onfilterinlist={filterOperatingCHF}>
+                                                </c-cw-search-in-list>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <c-cw-handled-airlines label={label}  filter-text={filterTextOperatingCHF} isreadonly={editCargoHandling} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+                            <template if:true={showOperatingCHFandRampH}>
+                                <div class="row-home">
+                                    <div class="col-12">
+                                        <p class="title-airlines-handled">
+                                            <b>{label.operating_ramp_handler}</b>
+                                            <img class="img-list-airline" src={getListAirIcon} alt="type"
+                                                title="Information not verified by IATA" />
+                                            <template if:true={editMode}>
+                                                <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable-ramp-handlers hidden" variant="error" data-item="editable-ramp-handlers" title="Close" onclick={showInputRampHandlers} size="x-small"></lightning-icon>
+                                                <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable-ramp-handlers" title="Edit" data-item="editable-ramp-handlers" onclick={showInputRampHandlers} size="x-small"></lightning-icon>
+                                            </template> 
+                                        </p>
+                                        <hr class="yellow-underline mt-2">
+                                        <div class="form-row">
+                                            <div class="col-6 text-right">
+                                                <c-cw-search-in-list label={label} onfilterinlist={filterRampH}>
+                                                </c-cw-search-in-list>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <c-cw-handled-airlines label={label} isreadonly={editRampHandlers} raw-data={onAirportRampH}
+                                                    filter-text={filterTextRampH} onselectairlines={hideRampHandlers}></c-cw-handled-airlines>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="row">
+                                <div class="col-md-12 col-lg-9 col-xl-9 col-sm-12 col-xs-12">
+                                    <c-cw-account-detail-carousel label={label} title={label.gallery} record-id={facility.Id} edit-mode={editMode}
+                                        underline="true" titlesize="h4">
+                                    </c-cw-account-detail-carousel>
+                                </div>
+                            </div>
+                        </div>
+                        <!--HIDDEN RESPONSIVE VERSION-->
+                        <div class="hidden-md col-3 main-col bg-grey">
+                            <c-cw-facility-contact-info label={label} onupdatedatavalidcontactinfo={updateContactInfoValidData} onupdatefacility={updateFacility} facility={facility} edit-mode={editMode}>
+                            </c-cw-facility-contact-info>
+                        </div>
+                    </div>
+                    <!-- Details end-->
+                </template>
+            </div>
+
+            <!--HIDDEN RESPONSIVE VERSION-->
+            <div class="col-3 hidden-md">
+                <template if:true={validLocation}>
+                    <lightning-map class="map-size bg-grey" map-markers={locations} markers-title={locations}
+                        zoom-level={zoomLevel}>
+                    </lightning-map>
+                </template>
+                <template if:false={validLocation}>
+                    <div class="col-12 map-size bg-cream"></div>
+                </template>
+            </div>
+        </div>
+        <template if:true={facility}>
+            <div class="row mt-4 padding-side-responsive marginbottom">
+                <template if:false={facilityid}>
+                    <div
+                        class="col-xl-12 col-lg-12 col-xs-12 col-sm-12 col-md-12 facility-capabilities">
+                        <c-cw-facility-capabilities label={label} areatype={areatype} user-role={userRole} record-id={facility.Id} edit-mode={editMode}
+                            action-save={isSendActionToSave} ondataloaded={handleCapabilityDataLoaded} onsaveaction={handleSaveAction}>
+                        </c-cw-facility-capabilities>
+                    </div>
+                </template>
+                <template if:true={facilityid}>
+                    <div class="col-xl-12 col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                        <c-cw-facility-capabilities label={label} areatype={areatype} user-role={userRole} record-id={facility.Id} edit-mode={editMode}
+                        action-save={isSendActionToSave} ondataloaded={handleCapabilityDataLoaded} onsaveaction={handleSaveAction}>
+                        </c-cw-facility-capabilities>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+
+    <template if:true={showModal}>
+        <c-cw-basic-modal label={label} modal-message={modalMessage} modal-image={modalImage} onclosemodal={closeModal}>
+        </c-cw-basic-modal>
+    </template>
+</template>

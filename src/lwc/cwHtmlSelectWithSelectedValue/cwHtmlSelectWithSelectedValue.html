@@ -1,0 +1,16 @@
+<template>
+
+    <select if:false={attribDisabled} name={attribName} class={attribClass} onchange={onchange}>
+        <template for:each={itemsProcessed} for:item="item">
+            <option if:true={item.selected} key={item.value} selected value={item.value}>{item.label}</option>
+            <option if:false={item.selected} key={item.value} value={item.value}>{item.label}</option>
+        </template>
+    </select>
+
+    <select if:true={attribDisabled} name={attribName} class={attribClass} disabled>
+        <template for:each={itemsProcessed} for:item="item">
+            <option if:true={item.selected} key={item.value} selected value={item.value}>{item.label}</option>
+        </template>
+    </select>
+
+</template>

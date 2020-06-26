@@ -1,0 +1,45 @@
+<template>
+        <div class="content max-height-100">
+            <div class="row">
+                <div class="col-12">
+                    <template for:each={facilitiesFirst} for:item="item">
+                        <template if:false={item.isHeader}>
+                            <template if:true={item.clickable}>
+                                <template if:false={item.selected}>
+                                    <div key={item.value} onclick={selectFacility} data-tosca={item.value} data-name={item.value} class="itemBase itemUnselected ">
+                                        <img key={item.value} data-tosca={item.value} src={tickSelection} class="selectedTick greyFilter" width="15px" />&nbsp;&nbsp;<span class="airlineName">{item.label}&nbsp;&nbsp;</span><span class="companytype">{item.companyType}</span>&nbsp;&nbsp;<span class="address">{item.address}</span>
+                                    </div>
+                                </template>
+                                <template if:true={item.selected}>
+                                    <div key={item.value} onclick={selectFacility} data-tosca={item.value} data-name={item.value} class="itemBase itemSelected ">
+                                        <img key={item.value} data-tosca={item.value} src={tickSelection} class="selectedTick" width="15px" />&nbsp;&nbsp;<span class="airlineName">{item.label}&nbsp;&nbsp;</span><span class="companytype">{item.companyType}</span>&nbsp;&nbsp;<span class="address">{item.address}</span>
+                                    </div>
+                                </template>
+                            </template>
+                            <template if:false={item.clickable}>
+                                <template if:true={item.userManaged}>
+                                    <div key={item.value} data-tosca={item.value} data-name={item.value} class="itemBase itemAlreadyManager" title="Already Manager">
+                                        <img key={item.value} data-tosca={item.value} src={tickReadonly} class="selectedTick" width="15px" />&nbsp;&nbsp;<span class="airlineName">{item.label}&nbsp;&nbsp;</span><span class="">{item.companyType}</span>&nbsp;&nbsp;<span class="address">{item.address}</span>
+                                    </div>
+                                </template>
+                                <template if:true={item.pendingUserManaged}>
+                                    <div key={item.value} data-tosca={item.value} data-name={item.value} class="itemBase itemPendingManager" title="Pending Request">
+                                        <img key={item.value} data-tosca={item.value} src={tickReadonly} class="selectedTick" width="15px" />&nbsp;&nbsp;<span class="airlineName">{item.label}&nbsp;&nbsp;</span><span class="">{item.companyType}</span>&nbsp;&nbsp;<span class="address">{item.address}</span>
+                                    </div>
+                                </template>
+                            </template>
+                        </template>
+                        <template if:true={item.isHeader}>
+                            <div key={item.label} >
+                                    <span key={item.label} class="pl-3">&nbsp;</span>&nbsp;&nbsp;<span class="airlineName"><b>{item.label}</b></span>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+            <br/>
+            <div class="text-left"><span class="breadlink" onclick={showHideSelectedFacilities}>{showHideSelectedFacilitiesButtonText}</span></div>
+            <br/>
+            <div class="inlineblock"><div class="text-left"><span if:true={showBackButton} class="breadlink backnext" onclick={back}>&lt;&nbsp;&nbsp;</span></div><div class="text-center"><span class="breadlink letterSelected" data-letter="ALL" onclick={unselectLetter} >{label.all}</span>&nbsp;&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="A">A</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="B">B</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="C">C</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="D">D</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="E">E</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="F">F</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="G">G</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="H">H</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="I">I</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="J">J</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="K">K</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="L">L</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="M">M</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="N">N</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="O">O</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="P">P</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="Q">Q</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="R">R</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="S">S</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="T">T</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="U">U</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="V">V</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="W">W</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="X">X</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="Y">Y</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="Z">Z</span></div><div class="text-left"><span class="breadlink backnext" if:true={showNextButton} onclick={next}>&nbsp;&nbsp;&gt;</span></div></div>
+        </div>
+    </template>

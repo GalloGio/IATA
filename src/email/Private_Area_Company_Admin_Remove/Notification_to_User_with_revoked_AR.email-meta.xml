@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Email to User with revoked Company Admin rights</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification to User with revoked Compay Admin Rights</name>
+    <style>none</style>
+    <subject>Your Company Admin rights have been revoked</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

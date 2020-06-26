@@ -1,0 +1,11 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="nameList" type="String" description="title for list" access="global" default="The following information items withing the scope of your certification have been updated:"/>
+    <p style="margin-top: 25px; line-height: 1.8rem;">{!nameList}:</p>
+    <ul>
+        <li>Item</li>
+        <li>Item</li>
+        <li>Item</li>
+        <li>Item</li>
+    </ul>
+</apex:component>

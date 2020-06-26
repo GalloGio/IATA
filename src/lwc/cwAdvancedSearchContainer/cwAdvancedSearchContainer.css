@@ -1,0 +1,35 @@
+.componentStyleBase {
+    background-color: rgb(233, 233, 233);
+    margin: 10px;
+    padding: 10px;
+    height: -webkit-fill-available;
+}
+
+.componentStyleBase-full {
+    background-color: #e9e9e9;
+    margin: 10px 20px 0px 0px;
+    height: -webkit-fill-available;
+}
+
+
+@media (max-width: 768px) {
+    .big-section
+    {
+        padding-left:0px !important;
+        padding-right:0px !important;
+    }
+}
+
+.header-search-advance{
+    z-index: 20;
+    position: fixed;
+    width: 95%;
+    top: 45px;
+}
+.fullheight{
+    min-height:100vh;
+}
+
+.mt-4r{
+    margin-top: 4rem;
+}

@@ -1,0 +1,14 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
+    <apex:attribute name="isRemoveData" type="Boolean" description="Buttons to approve or remove record" assignTo="{!isRemove}" access="global" default="false"/>
+
+    <p style="margin-top: 25px; line-height: 1.8rem;">Manage Request:</p>
+    <div style="display: flex; width: 100%; padding: 10px;">
+        <div><a style="cursor: pointer;" href="{!approveUrl}"><img src="{!communityUrlForResources}resource/ICG_Resources/img/approve.PNG"/></a></div>
+        <div style="margin-left: 0.75rem;"><a style="cursor: pointer;" href="{!rejectUrl}"><img src="{!communityUrlForResources}resource/ICG_Resources/img/reject.PNG"/></a></div>
+    </div>
+    <div style="display: flex; width: 100%; padding: 10px; margin-top: 25px;">
+        <a style="cursor: pointer;" href=""><img src="{!communityUrlForResources}resource/ICG_Resources/img/replytorequest.PNG"/></a>
+    </div>
+</apex:component>

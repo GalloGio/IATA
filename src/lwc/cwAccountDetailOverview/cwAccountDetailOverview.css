@@ -1,0 +1,59 @@
+.customCardOverview {
+	background-color: #289632;
+	color: white;
+}
+
+.THIS .changecoloricon div {
+	fill: white !important;
+}
+
+.THIS .slds-gutters div {
+	margin-left: -0.1rem !important;
+}
+
+.customCol {
+	justify-content: space-around;
+	width: 40%;
+}
+
+.changecoloricon {
+	fill: rgb(251, 252, 255) !important;
+}
+
+.THIS svg {
+	fill: rgb(251, 252, 255) !important;
+}
+
+@media (max-width: 768px) {
+	.width-100 {
+		width: auto !important;
+	}
+}
+
+@media (max-width: 992px) {
+	.responsive-padding-left {
+		padding-left: 10px !important;
+	}
+}
+
+.title p {
+	font-size: 1.5rem;
+}
+
+.facility-overview-item {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.facility-overview-item-content p,
+input {
+	font-size: 0.8rem !important;
+}
+
+.facility-overview-item-img {
+	max-width: 10%;
+}
+.facility-overview-item-content {
+	margin: auto 0px;
+	max-width: 80%;
+}

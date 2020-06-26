@@ -1,0 +1,56 @@
+<template>
+    <div class="container container-search fullheight"> 
+       
+        <div class="header-search-advance row-no-margin bg-white pt-5 pb-3">     
+            <div class="col-6">
+                <h2>{label.advanced_search}</h2>
+                <hr class="yellow-underline">
+            </div>  
+            <div class="col-6 text-right ">
+                <button class="btn btn-primary no-margin-top" data-tosca="searchbutton"
+                onclick={onSearch} type="button">{label.search}</button>
+            </div>
+        </div>
+      
+        <div class="row-no-margin mt-4r ">
+            <div class="col-xl-4 col-lg-4 col-md-12">
+                <div class="col-12 bg-grey p-3 height-100">
+                    <c-cw-add-location-search label={label} onselectlocations={setSelectedLocations}>
+                    </c-cw-add-location-search>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 ">
+                <div class="col-12 bg-grey p-3 height-100">
+                    <c-cw-cargo-commodities  label={label} onselectcommodities={setCommodities} >
+                    </c-cw-cargo-commodities>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 ">
+                <div class="col-12 bg-grey p-3 height-100">
+                    <c-cw-company-types label={label} onselectcompanytype={setCompanyTypes}>
+                    </c-cw-company-types>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-12 mt-3">
+            <div class="col-12 bg-grey p-3 height-100">
+                <c-cw-validation-programs label={label} onselectvalidationprograms={setSelectedPrograms}>
+                </c-cw-validation-programs>
+            </div>
+        </div>
+        
+        <div class="col-12 big-section">
+            <div class="col-12 componentStyleBase-full p-3 mt-3">
+                <c-cw-facility-equipment-infraestructure-wrapper label={label} onselectcategory={setSelectedCategory}>
+                </c-cw-facility-equipment-infraestructure-wrapper>
+            </div>
+        </div>
+            
+        <!--<div class="col-12 text-right mb-3">
+            <button class="btn btn-primary " data-tosca="searchbutton"
+                onclick={onSearch} type="button">Search</button>
+        </div>-->
+        
+    </div>
+</template>

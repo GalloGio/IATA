@@ -1,0 +1,34 @@
+tab{
+    padding-left:2em;
+}
+
+ul {
+    list-style: disc;
+}
+
+ul li{
+    margin-left: 2rem;
+    padding-left: 1rem;
+}
+.yellowbanner {
+    background-color: rgb(250, 200, 50);
+    padding:15px;
+}
+
+@media (max-width: 992px) {
+    .btn-become{
+        text-align: left;
+        margin-top: 1.5rem;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .btn-become{
+        text-align: right;
+    }
+}
+
+.table tbody tr td{
+    vertical-align: middle !important;
+}

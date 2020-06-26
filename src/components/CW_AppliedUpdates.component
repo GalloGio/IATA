@@ -1,0 +1,27 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="text" type="String" description="first text" access="global" />
+
+    <p style="margin-top: 25px; line-height: 1.8rem;">{!text}</p>
+    <table style="border-collapse: collapse; width: max-content">
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Name</th>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">ID</th>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Issuing Date</th>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Expiration Date</th>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Certification/ Accreditation Name"</td>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Id"</td>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Issuing Date"</td>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Expiration Date (new/update/removed)"</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Certification/ Accreditation Name"</td>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Id"</td>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Issuing Date"</td>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">"Expiration Date (new/update/removed)"</td>
+        </tr>
+    </table>
+
+</apex:component>
