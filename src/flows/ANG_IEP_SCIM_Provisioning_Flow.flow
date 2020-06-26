@@ -412,17 +412,19 @@
         <description>Formula to determine if a UserProvisioningRequest indicates enabling a user.</description>
         <name>EnableUser</name>
         <dataType>Boolean</dataType>
-        <expression>{!TEXT(UserProvisioningRequest.Operation) == &apos;Activate&apos; || TEXT(UserProvisioningRequest.Operation) == &apos;Unfreeze&apos;}</expression>
+        <expression>TEXT({!UserProvisioningRequest.Operation}) == &apos;Activate&apos; || TEXT({!UserProvisioningRequest.Operation}) == &apos;Unfreeze&apos;</expression>
     </formulas>
     <formulas>
         <name>EntitlementFormula</name>
         <dataType>String</dataType>
         <expression>&apos;{&apos;+
-&apos;&quot;language&quot;:&quot;&apos; + {!UPPER(LEFT(TEXT(UserFields.LanguageLocaleKey), 2))} + &apos;&quot;,&apos; +
+&apos;&quot;language&quot;:&quot;&apos; + UPPER(LEFT(TEXT({!UserFields.LanguageLocaleKey}), 2)) + &apos;&quot;,&apos; +
 &apos;&quot;Agent Numeric Code&quot;:&quot;&apos; + {!UserFields.Contact_Account_IATA_Code__c} + &apos;&quot;,&apos; +
 &apos;&quot;Requested Role&quot;:&quot;&apos; + {!PortalServiceAccess.ANG_Portal_Service_Role__c} + &apos;&quot;,&apos; +
 &apos;&quot;BSP Country&quot;:&quot;&apos; + {!UserFields.Contact.Account.Country_ISO_Code__c} + &apos;&quot;,&apos; +
 &apos;&quot;External Systems&quot;:&quot;&apos; + {!PortalServiceAccess.Application_Name__c} + &apos;&quot;&apos; +
+&apos;&quot;bspCountry&quot;:&quot;&apos; + TEXT({!UserFields.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.BSP_Billing__c}) + &apos;&quot;&apos; +
+&apos;&quot;isoCountry&quot;:&quot;&apos; + {!UserFields.Contact.Account.Country_ISO_Code__c} + &apos;&quot;&apos; +
 &apos;}&apos;</expression>
     </formulas>
     <formulas>
@@ -442,6 +444,12 @@
     </formulas>
     <interviewLabel>ANG IEP SCIM Provisioning Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ANG IEP SCIM Provisioning Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
     <processType>UserProvisioningFlow</processType>
     <recordLookups>
         <name>Fetch_More_User_Info</name>
@@ -495,8 +503,14 @@
         <queriedFields>Portal_Application__c</queriedFields>
         <queriedFields>Application_Name__c</queriedFields>
     </recordLookups>
-    <startElementReference>Fetch_More_User_Info</startElementReference>
-    <status>Active</status>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Fetch_More_User_Info</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
     <variables>
         <name>Details</name>
         <dataType>String</dataType>
