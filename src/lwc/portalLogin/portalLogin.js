@@ -166,7 +166,7 @@ export default class PortalLogin extends LightningElement {
 
     handleEmailChange(event){
         this.email = event.target.value;
-
+        this.password = this.template.querySelector('[data-id="passwordInput"]').value;
         if(this.email.length > 0 && this.password.length > 0){
             this.loginButtonDisabled = false;
             this.template.querySelector('[data-id="loginButton"]').classList.remove('containedButtonDisabled');
@@ -191,7 +191,7 @@ export default class PortalLogin extends LightningElement {
 
     handlePasswordChange(event){
         this.password = event.target.value;
-
+        this.email = this.template.querySelector('[data-id="emailInput"]').value;
         if(this.password.length > 0){
             this.template.querySelector('[data-id="passwordIcon"]').classList.remove('showPasswordIconDisabled');
             if(this.email.length > 0){
