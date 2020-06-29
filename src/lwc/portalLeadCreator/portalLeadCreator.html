@@ -1,0 +1,130 @@
+<template>
+    <div if:true={renderCmp} >    
+        <div if:false={submitted}>
+            <span data-form class="customCardWhite slds-align_absolute-center slds-p-vertical--xx-large slds-wrap form slds-grid slds-is-relative">
+                <div if:true={isLoading} class="slds-align--absolute-center slds-col slds-grid slds-size--1-of-1 slds-spinner_container">
+                    <lightning-spinner  alternative-text="Loading" size="small"></lightning-spinner>
+                </div>
+                <div class="slds-col slds-size_full slds-text-align_center slds-p-around_small text-large ">
+                    <h3>{labels.CSP_LeadCreator_Title}</h3>
+                </div>
+                <div class="slds-col slds-size_full slds-text-align_center text-xsmall slds-text-align_center slds-align_absolute-center slds-var-m-bottom_small">
+                    <p class="slds-size_full slds-small-size_3-of-5">{labels.CSP_LeadCreator_SubTitle}</p>
+                </div>
+                
+                <div class="slds-col slds-grid slds-wrap slds-size--5-of-6 slds-small-size--1-of-2 slds-large-size--1-of-3">
+
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                            {labels.CSP_L1_First_Name}
+                        </div> 
+                        <input type="text" data-id="firstName" name="firstName" value={form.firstName} placeholder=" " class="slds-input" onchange={handleInputValueChange}/>                               
+                    </div>
+
+                    <!------------------------------------------      Last Name      ------------------------------------------- -->
+                    
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                            {labels.CSP_L1_Last_Name}
+                        </div> 
+                        <input type="text" data-id="lastName" name="lastName" value={form.lastName}  placeholder=" " class="slds-input" onchange={handleInputValueChange}/>                            
+                    </div>
+                    <!------------------------------------------      Email      ------------------------------------------- -->
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput ">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                        {labels.CSP_Email}
+                        </div> 
+                        <input data-id="email" name="email" class="slds-input" value={form.email} placeholder=" " type="email" onchange={handleInputValueChange} />                            
+                    </div>
+
+                    <!------------------------------------------      Company      ------------------------------------------- -->
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput ">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                        {labels.Company}
+                        </div> 
+                        <input data-id="company" name="company" value={form.company} placeholder=" " class="phoneFormat slds-input" onchange={handleInputValueChange}/>                            
+                    </div>
+                    <!------------------------------------------      Phone      ------------------------------------------- -->
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput ">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                            {labels.Phone}
+                        </div> 
+                        <input data-id="phone" name="phone" value={form.phone} placeholder=" " class="phoneFormat slds-input" type="tel" onchange={handlePhoneInputChange}/>                            
+                    </div>
+
+                    
+                    <!------------------------------------------      Country      ------------------------------------------- -->
+                    
+                    <div class="slds-col slds-size_full slds-m-vertical--medium">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small registrationComboBox custTextInputSmall">
+                            {labels.CSP_L2_Country}
+                        </div> 
+                        <lightning-combobox class="firstLevelRegistrationCombobox"                    
+                            name="country"
+                            dropdown-alignment="auto"
+                            placeholder=" "
+                            variant="label-hidden"                    
+                            value={form.country} 
+                            options={countryOptions}
+                            onchange={handleInputValueChange}
+                        >
+                        </lightning-combobox>
+                    </div>
+                    
+                
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                        <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                            {labels.CSP_LeadCreator_ContactPreference_label}
+                        </div> 
+                            <span class="slds-grid slds-size--1-of-1 slds-small-size--2-of-3 text-small">
+                                <c-iata-radio-group 
+                                options={contactMethodOptions}                        
+                                name='method'
+                                value={form.method}
+                                onchangeval={handleInputValueChange}
+                                display-horizontal=true></c-iata-radio-group>
+                            </span>
+                    </div>                       
+                    
+                    <div class="slds-col slds-size_full slds-m-top--medium slds-m-bottom--medium custTextInput">               
+                        <c-portal-services-terms-and-conditions
+                            portal-service-id={serviceId}
+                            language='en_US'
+                            onacceptancechanged={changeTerms}
+                            >
+                        </c-portal-services-terms-and-conditions>
+                    </div>
+                    <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">
+                        <lightning-button data-submitbtn disabled class="containedButtonDisabled" label="Submit" onclick={handleSubmit} title='Please select fill in all fields.'></lightning-button>
+                    </div>
+                </div>
+            </span>
+            <div  data-section='btn' class="slds-show_large slds-p-horizontal--small slds-wrap btn slds-is-fixed text-white text-xsmall text-bold slds-hide">               
+                <span onclick={gotoSection} class="cursorPointer slds-align_absolute-center slds-grid slds-p-around--xx-small">
+                    <img src={callIcon}>
+                    <p class="slds-p-horizontal_x-small">Call Me Back</p>
+                </span>
+            </div>
+        </div>
+
+        <div if:true={submitted} class="customCardWhite slds-align_absolute-center slds-p-around--xx-large slds-wrap slds-size_full">
+            <span class="circle slds-grid">
+                <span class="circlel2 slds-grid slds-align--absolute-center">            
+                    <span class="circlel3">            
+                        <lightning-icon icon-name="utility:check" variant="success"
+                            alternative-text="Approved" size="medium"
+                            class="slds-col slds-align_absolute-center imgSize"
+                        ></lightning-icon>
+                    </span>
+                </span>
+            </span>
+            <span class="slds-col slds-m-top--medium slds-p-around_small slds-size--1-of-1 slds-text-align--center text-darkGray text-medium text-bold">
+                {labels.CSP_LeadCreator_ThankYou}
+            </span>
+            <span class="slds-size--1-of-1 slds-small-size--5-of-12 slds-text-align--center text-lightGray text-xsmall">
+                {labels.CSP_LeadCreator_AfterSubmitMessage}
+            </span>        
+        </div>
+    </div>
+</template>
+
