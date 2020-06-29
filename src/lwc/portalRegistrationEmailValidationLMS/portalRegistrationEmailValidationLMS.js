@@ -382,6 +382,13 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 					this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
 					this.localContactInfo.ExistingTrainingInfo = true;
 			}
+			if(this.flow === 'flow4'
+				&& this.userInfo.existingContactTrainingUsername !== undefined 
+				&& this.userInfo.existingContactTrainingUserId !== undefined){
+					this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
+					this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+					this.localContactInfo.ExistingTrainingInfo = true;
+			}
 			this.localContactInfo.flow = this.flow;
 
 			this.dispatchEvent(new CustomEvent('next'));
