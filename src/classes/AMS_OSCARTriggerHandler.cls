@@ -5069,13 +5069,12 @@ public class AMS_OSCARTriggerHandler {
 		map<Id,Account> mapOscarAccounts = new map<Id,Account>();
 		list<Case> listCase = [SELECT Id, OSCAR__c, Contact.AccountId, Contact.Account.RecordTypeId, Contact.Account.Location_Class__c
 			FROM Case
-			WHERE Id IN :mapCaseOscar.keyset()];
+			WHERE Id IN :mapCaseOscar.keyset()
+			AND ContactId != null];
 		for (Case cse: listCase) {
-			if (cse.Contact!=null) {
-				AMS_Oscar__c oscar = mapCaseOscar.get(cse.Id);
-				Account account = cse.Contact.Account;
-				mapOscarAccounts.put(oscar.Id, account);
-			}
+			AMS_Oscar__c oscar = mapCaseOscar.get(cse.Id);
+			Account account = cse.Contact.Account;
+			mapOscarAccounts.put(oscar.Id, account);
 		}
 		// assign promotions, if applicable, for the incoming oscar records
 		for(AMS_Oscar__c oscar: mapCaseOscar.values()){
