@@ -20214,7 +20214,7 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>ไม่จำเป็น</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>

@@ -20218,7 +20218,7 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>Fakultativ</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>

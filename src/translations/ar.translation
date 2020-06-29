@@ -20205,7 +20205,7 @@ and
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>اختياري</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>
