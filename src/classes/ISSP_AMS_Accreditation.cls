@@ -6865,7 +6865,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 				}
 
-				if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c && newCase.Reason1__c != 'New Commercial BR' && newCase.Reason1__c != 'New BR / IP'){) {
+				if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c && newCase.Reason1__c != 'New Commercial BR' && newCase.Reason1__c != 'New BR / IP') {
 					newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
