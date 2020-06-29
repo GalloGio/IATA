@@ -22,6 +22,8 @@
 <tr></tr>
 <tr></tr>
 
+<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+<tr><td><apex:outputText escape="false" value="{!relatedTo.Case_Thread_ID__c}" ></apex:outputText></td></tr>
 </table>
 </font>
 </body>
