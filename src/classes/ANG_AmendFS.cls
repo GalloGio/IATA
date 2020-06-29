@@ -49,9 +49,6 @@ global class ANG_AmendFS implements Process.Plugin {
 
 			insert fsCloned;
 
-			//Reset FS converted Amount Flag
-			FinancialSecurityUtil.convertedAmountUpdateFlag = false;
-
 			CreatedFSId = fsCloned.Id;
 
 			//Copy attachments from cloned FS to new one created

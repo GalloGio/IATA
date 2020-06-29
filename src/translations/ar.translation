@@ -9298,6 +9298,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CaseStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard CheckBox --></label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard CheckList Credit Card And Checque Payment Information --></label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</name>
     </customLabels>
@@ -9460,6 +9464,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <label>&quot;&lt;h2&gt;We didn&apos;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
 Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
         <name>IDCard_ContactNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Continue --></label>
+        <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Continue Button --></label>
@@ -10256,6 +10264,18 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_errMsg_Account_Rule --></label>
+        <name>IDCard_errMsg_Account_Rule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_MoreDetails --></label>
+        <name>IDCard_errMsg_MoreDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_NoContact --></label>
+        <name>IDCard_errMsg_NoContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
     </customLabels>
@@ -10560,6 +10580,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Invalid_Promotion_Code_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID Card Invalid Promotion Code 3 --></label>
+        <name>ID_Card_Invalid_Promotion_Code_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Invalid VER --></label>
         <name>ID_Card_Invalid_VER</name>
     </customLabels>
@@ -10594,6 +10618,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- ID Card Package Travel Professionals 2 --></label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Photo --></label>
+        <name>ID_Card_Photo</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Photo Disclaimer --></label>
@@ -25478,6 +25506,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Total_Cost</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total_Discount --></label>
+        <name>Total_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total Price --></label>
         <name>Total_Price</name>
     </customLabels>
@@ -36079,6 +36111,107 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Topics --></label>
             <name>Topics</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Training contact role details with Lookups info --></description>
+        <label><!-- Training contact role details with Lookups info --></label>
+        <name>Training_contact_role_details_with_Lookups_info</name>
+        <sections>
+            <columns>
+                <label><!-- Account: Account ID --></label>
+                <name>Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Account Name --></label>
+                <name>Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Category --></label>
+                <name>Account: Category</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Sector --></label>
+                <name>Account: Sector</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Membership --></label>
+                <name>Account: Training Membership</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Partner --></label>
+                <name>Account: Training Partner</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Website --></label>
+                <name>Account: Training Website</name>
+            </columns>
+            <label><!-- Account info --></label>
+            <name>Account info</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Contact Email --></label>
+                <name>Contact Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact ID --></label>
+                <name>Contact ID</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Additional Email --></label>
+                <name>Contact: Additional Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Created By --></label>
+                <name>Contact: Created By</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Created Date --></label>
+                <name>Contact: Created Date</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Bounced Date --></label>
+                <name>Contact: Email Bounced Date</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Bounced Reason --></label>
+                <name>Contact: Email Bounced Reason</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Opt Out --></label>
+                <name>Contact: Email Opt Out</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Status --></label>
+                <name>Contact: Email Status</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: First Community --></label>
+                <name>Contact: First Community</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: First Name --></label>
+                <name>Contact: First Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Full Name --></label>
+                <name>Contact: Full Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Last Name --></label>
+                <name>Contact: Last Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Title --></label>
+                <name>Contact: Title</name>
+            </columns>
+            <label><!-- Contact Info --></label>
+            <name>Contact Info</name>
+        </sections>
+        <sections>
+            <label><!-- Training Contact Role Details --></label>
+            <name>Training Contact Role Details</name>
         </sections>
     </reportTypes>
     <reportTypes>

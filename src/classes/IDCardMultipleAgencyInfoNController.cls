@@ -12,7 +12,6 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 	public String inputValue {get; set;}
 
 	public cContact selectedContact {get; set;}
-	public Boolean displayPopup {get; set;}
 
 	public String NewApp {
 		get {return IDCardUtil.APPLICATIONTYPE_NEW;}
@@ -22,17 +21,14 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 	public Integer nbrContactsFound {
 		get {
-			if (myContacts == null || myContacts.size() == 0)
-				return 0;
-			else
-				return myContacts.size();
+			if (myContacts == null) return 0;
+			else return myContacts.size();
 		}
 	}
 
 	public IDCardMultipleAgencyInfoNController() {
 		initialize();
 
-		System.debug('[IDCardMultipleAgencyInfoNController] Before Agency');
 
 		myContacts = new List<cContact>();
 
@@ -55,7 +51,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 
 				DateTime databirth = DateTime.newInstance(DOB.year(), DOB.month(), DOB.day());
 
-				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
+				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Photo__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
 									 + ' From ID_Card__c i where i.RecordTypeId =\''
 									 +  rectypeid
 									 + '\'  and i.FirstName__c = \'' + String.escapeSingleQuotes(FNAME.trim())
@@ -64,7 +60,6 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 									 + ' and i.Card_Status__c != \'' + IDCardUtil.CARDSTATUS_CANCELED
 									 + '\' order by i.Valid_To_Date__c desc LIMIT 1';
 
-				system.debug('QUERY without VER: ' + IDCardQuery);
 				ID_Card__c[] allCards = Database.query(IDCardQuery);
 
 				if (allCards.size() > 0) {
@@ -75,7 +70,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 					}
 				}
 			} else {
-				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
+				String IDCardQuery = 'Select i.VER_Number__c,i.Middle_Initial__c, i.LastName__c, i.FirstName__c, i.Photo__c, i.Email__c, i.Date_of_Birth__c, i.Agency_Name__c, i.Agency_IATA_Code__c'
 									 + ' From ID_Card__c i where i.RecordTypeId =\''
 									 +  rectypeid
 									 //+ '\'  and i.FirstName__c = \'' + String.escapeSingleQuotes(FNAME.trim())
@@ -84,7 +79,6 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 									 + '\' and i.Card_Status__c != \'' + IDCardUtil.CARDSTATUS_CANCELED
 									 + '\' order by i.Valid_To_Date__c desc LIMIT 1';
 
-				system.debug('QUERY with VER: ' + IDCardQuery);
 				ID_Card__c[] allCards = Database.query(IDCardQuery);
 
 				if (allCards.size() > 0) {
@@ -98,11 +92,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		} catch (Exception ex) {
 			errMsg = ex.getMessage() + ex.getStackTraceString();
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errMsg));
-			System.debug('**' + errMsg + ex);
 		}
-
-
-		displayPopup = false;
 	}
 
 
@@ -125,26 +115,8 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		string Id = apexpages.currentpage().getparameters().get('selected');
 		string action = apexpages.currentpage().getparameters().get('myaction');
 
-		/* if((id == null || id == '') && action != IDCardUtil.APPLICATIONTYPE_NEW)
-		{
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,Label.IDCard_PleaseSelectContact ));
-			return null;
-		}*/
-
-		/*String features = theAccount.ID_Card_KeyAccount_features__c;
-		if( features==null)features ='';
-		if(!isKeyContactForIATAode(IATACodeLocation) && features.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)){
-			errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details.';
-					   ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,errMsg ));
-			hasError = true;
-			return null;
-		}*/
-
 		try {
 			Pagereference prApplicationForm = null;
-			System.debug('*** action' + action);
-
-
 
 			// if "No the following info is not related to me" is pressed
 			if (action == IDCardUtil.APPLICATIONTYPE_NEW) {
@@ -163,28 +135,40 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 				return prAgencyDetails;
 			}
 
+			//if "Yes, the above information is related to me" is pressed
 			else {
+
+				if ((inputValue == null || inputValue == '') && myContacts.size() > 1) {
+					ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.IDCard_PleaseSelectContact ));
+					return null;
+				}
+
+				//check if the contact can only be managed by the key contact
+				String features = theAccount.ID_Card_KeyAccount_features__c;
+				if (!isKeyContactForIATAode(IATACodeLocation) && features != null && features.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
+					List <Managed_Agency__c> ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false LIMIT 1];
+					errMsg = Label.IDCard_errMsg_Account_Rule;
+
+					if (ma.isEmpty()) errMsg += ' ' + Label.IDCard_errMsg_NoContact;
+					else errMsg += ' ' + Label.IDCard_errMsg_MoreDetails + ' (' + ma[0].Contact__r.Name + ': ' + ma[0].Contact__r.IDcard_Email__c + ').';
+
+					ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, errMsg ));
+					hasError = true;
+					return null;
+				}
 
 				cContact selected;
 				if (myContacts.size() == 1) {
 					selected = myContacts[0];
 				} else {
 					for (cContact c : myContacts) {
-						//if (c.con.Id == Id )
-						if (c.con.Id == inputValue )
-							selected = c;
-
+						if (c.con.Id == inputValue ) selected = c;
 					}
 				}
-				System.debug('*** selected contact ' + selected);
 				prApplicationForm = Page.IDCard_Portal;
 				if (selected.acc.IDCard_Key_Account__c == true) {
-					system.debug('[Controller] key account selected ');
-					/*Contact tmpC = [select Id , IDCardContactType__c from Contact where IATA_Code__c = :selected.acc.IATACode__c and VER_Number__c = :Decimal.valueof(String.valueof(selected.con.VER_Number__c)) ];
-					if(tmpC.IDCardContactType__c!=null && tmpC.IDCardContactType__c.tolowercase().contains('key contact')){ */
 					List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Account__r.IATACode__c , m.delegate__c from Managed_agency__c m where m.contact__r.Ver_Number_2__c = :selected.con.VER_Number__c and m.Account__r.IATACode__c =  :selected.acc.IATACode__c ];
 					if (managedAccountList.size() > 0) {
-						system.debug('[Controller] key contact  selected ' + managedAccountList.size());
 						prApplicationForm = Page.IDCard_PortalKeyContact;
 					}
 				}
@@ -206,53 +190,7 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 	}
 	public pagereference refresh() {
 		initialize();
-		displayPopup = false;
 		return null;
-	}
-	public void showPopup() {
-		string Id = apexpages.currentpage().getparameters().get('selected');
-		string action = apexpages.currentpage().getparameters().get('myaction');
-
-		//if((id == null || id == '') && action != IDCardUtil.APPLICATIONTYPE_NEW && myContacts.size() > 1)
-		if ((inputValue == null || inputValue == '') && action != IDCardUtil.APPLICATIONTYPE_NEW && myContacts.size() > 1) {
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.IDCard_PleaseSelectContact ));
-			//return null;
-		} else {
-
-			String features = theAccount.ID_Card_KeyAccount_features__c;
-			if ( features == null)features = '';
-			if (!isKeyContactForIATAode(IATACodeLocation) && features.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
-				List <Managed_Agency__c> ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false LIMIT 1];
-				if (ma.size() == 0) {
-					errMsg = 'Your account has specific rule for ID card purchase. However no key contact assigned...';
-				}
-
-				else {
-					errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma[0].Contact__r.Name + ': ' + ma[0].Contact__r.IDcard_Email__c + ').';
-				}
-
-
-				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, errMsg ));
-				hasError = true;
-				//return null;
-			} else {
-				if (myContacts.size() == 1) {
-					selectedContact = myContacts[0];
-				} else {
-					for (cContact c : myContacts) {
-						//if (c.con.Id == Id )
-						if (c.con.Id == inputValue )
-							selectedContact = c;
-
-					}
-				}
-				displayPopup = true;
-			}
-		}
-	}
-
-	public void closePopup() {
-		displayPopup = false;
 	}
 
 	public class cContact {
@@ -263,9 +201,11 @@ public with sharing class IDCardMultipleAgencyInfoNController extends IDCardAbst
 		public String[] theAddress {get; set;}
 		//RA: Valid is used to only display contacts with valid Agency
 		public Boolean valid {get; set;}
+		public String photo {get; set;}
 
 		public cContact(ID_Card__c c) {
 			con = c;
+			photo = String.isNotBlank(con.Photo__c) ? PortalProfileCtrl.getPhotoFromAPI(con.Photo__c) : '';
 			selected = '';
 			Account[] temp = [Select Name, Legal_name__c, RecordType.Name, Short_Name__c, IATACode__c,
 							  BillingStreet, BillingState, BillingPostalCode, BillingCountry, BillingCity,
