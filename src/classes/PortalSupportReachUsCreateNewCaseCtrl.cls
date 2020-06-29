@@ -126,7 +126,9 @@ private static List<Contact> searchRelatedContacts(String searchTerm) {
 
 	if(String.isNotEmpty(searchTerm)) {
 		finalQuery += 'WHERE (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-					+ '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
+					+ '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\' AND Status__c = \'Active\' AND (NOT Email LIKE \'%.inactive%\')';
+	} else {
+		finalQuery += 'WHERE Status__c = \'Active\' AND (NOT Email LIKE \'%.inactive%\')';
 	}
 
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
