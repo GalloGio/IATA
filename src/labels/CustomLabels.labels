@@ -3937,6 +3937,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
     </labels>
     <labels>
+        <fullName>CSP_Contact_Us_Banner_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Us Banner Title</shortDescription>
+        <value>More Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Us_Banner_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Us Banner Message</shortDescription>
+        <value>Get Detailed information and/or support throught IATA Customer portal or our extensive database of knowledge</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contacts_NoResults_text1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6221,6 +6237,46 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_LastUpdate</shortDescription>
         <value>Last Update</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_AfterSubmitMessage</fullName>
+        <categories>CS Portal</categories>     
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
+        <value>Your request has been submitted and we will be contacting you shortly via your preferred channel.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_ContactPreference_label</fullName>
+        <categories>CS Portal</categories>     
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
+        <value>I would like to be contacted via:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_SubTitle</fullName>
+        <categories>CS Portal</categories>   
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_SubTitle</shortDescription>
+        <value>Get a free call from our experts and learn more about how being an IATA Accredited Travel Agent transforms your organization.</value>
+    </labels>    
+    <labels>
+        <fullName>CSP_LeadCreator_ThankYou</fullName>
+        <categories>CS Portal</categories>     
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
+        <value>Thank You!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_Title</fullName>
+        <categories>CS Portal</categories>     
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_Title</shortDescription>
+        <value>Let's Talk</value>
     </labels>
     <labels>
         <fullName>CSP_Learn_More</fullName>

@@ -157,15 +157,23 @@
     <fields>
         <fullName>ActionButtonLink__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos; &amp;&amp; NOT(ISBLANK(Product__c)), 
-  						&apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c, 
-						IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos; &amp;&amp; NOT(ISBLANK(PortalService__c)),
-									IF (  PortalService__r.Requestable__c ,
-													&apos;manage-service?serviceId=&apos; + PortalService__r.Id + &apos;&amp;openRequestService=true&apos;,
-													&apos;manage-service?serviceId=&apos; + PortalService__r.Id
-												), &apos;&apos;
-								) 
-		)</formula>
+        <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos;,
+  IF(NOT(ISBLANK( ActionButton__c)),
+     ActionButton__c,
+     &apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c
+  ), 
+   
+IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos;,
+   IF(NOT(ISBLANK( ActionButton__c)),
+      ActionButton__c,
+      IF (  PortalService__r.Requestable__c ,
+        &apos;manage-service?serviceId=&apos; + PortalService__r.Id + &apos;&amp;openRequestService=true&apos;,
+        &apos;manage-service?serviceId=&apos; + PortalService__r.Id
+      )
+   )
+,
+&apos;&apos;)
+)</formula>
         <label>Action Button Link</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -176,7 +184,7 @@
         <fullName>ActionButton__c</fullName>
         <externalId>false</externalId>
         <label>Action Button</label>
-        <length>80</length>
+        <length>250</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -618,6 +626,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Content_Reference__c</fullName>
+        <externalId>false</externalId>
+        <label>Content Reference</label>
+        <length>70</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>DescriptionLabel_TR__c</fullName>
         <description>Turkish translation</description>
         <externalId>false</externalId>
@@ -799,11 +817,16 @@
     <fields>
         <fullName>InformationButtonLink__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos; &amp;&amp; NOT(ISBLANK(Product__c)), 
-					&apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c,
-					IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos; &amp;&amp; NOT(ISBLANK(PortalService__c)), 
-						 &apos;manage-service?serviceId=&apos; + PortalService__r.Id, &apos;&apos;
-    )
+        <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos;,
+  IF(NOT(ISBLANK( InformationButton__c)),
+     InformationButton__c,
+     &apos;/IEC_ProductDetails?id=&apos; + Product__r.SAP_Material_Number__c
+  ),
+IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos;,
+   IF(NOT(ISBLANK( InformationButton__c)),
+      InformationButton__c,        
+      &apos;manage-service?serviceId=&apos; + PortalService__r.Id    
+   ),&apos;&apos;)
 )</formula>
         <label>Information Button Link</label>
         <required>false</required>
@@ -815,7 +838,7 @@
         <fullName>InformationButton__c</fullName>
         <externalId>false</externalId>
         <label>Information Button</label>
-        <length>80</length>
+        <length>250</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -829,6 +852,47 @@
         <label>IsActive</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Contact_Request_Visible__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls if the Contact Request form will be visible in the content page for this recommendation</description>
+        <externalId>false</externalId>
+        <label>Show Contact Request Form</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_More_Info_Banner_Visible__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls if the More Information Banner will be visible for the content page of this recommendation</description>
+        <externalId>false</externalId>
+        <label>Show &quot;More Info&quot; Banner</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Lead_Queue__c</fullName>
+        <description>All leads coming from this recommendation will be assigned to this queue</description>
+        <externalId>false</externalId>
+        <label>Lead Queue</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>All opportunities coming form this recommendation will be assign to this user</description>
+        <externalId>false</externalId>
+        <label>Opportunity Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Recommendations_Visibility</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>PortalService__c</fullName>
@@ -882,8 +946,8 @@
         <fullName>RecommendationTitle__c</fullName>
         <description>Title of the Service, Product or Training recommended</description>
         <externalId>false</externalId>
-        <formula>IF (  ISBLANK( PortalService__c ), (IF ( ISBLANK( Product__c ), &quot;&quot;, Product__r.Name )),  PortalService__r.ServiceName__c )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <formula>IF(NOT(ISBLANK(Title__c)),Title__c,
+  IF(ISBLANK( PortalService__c ), (IF ( ISBLANK( Product__c ), &quot;&quot;, Product__r.Name )),  PortalService__r.ServiceName__c ))</formula>
         <label>Recommendation Title</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -1025,6 +1089,17 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Title__c</fullName>
+        <description>Customizable title that will override the default recommendation title( product/service name)</description>
+        <externalId>false</externalId>
+        <label>Title</label>
+        <length>70</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Visible__c</fullName>
@@ -1949,5 +2024,12 @@
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Check_Default_Owners</fullName>
+        <active>true</active>
+        <description>If the contact request form is visible, a default queue for leads and a default owner for opportunities needs to be set</description>
+        <errorConditionFormula>Is_Contact_Request_Visible__c &amp;&amp;  (ISBLANK( Lead_Queue__c )  || ISBLANK( Opportunity_Owner__c ) )</errorConditionFormula>
+        <errorMessage>You need to set a queue and a default owner for the records generating from the form.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

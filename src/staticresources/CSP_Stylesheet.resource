@@ -2774,3 +2774,14 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 
 /*RS - END - Needed for IFTP app */
+
+/* Override image padding on content Page : important required without possible work around*/
+.comm-page-managed-content-PortalRecommendationContent .slds-large-size_6-of-12
+{
+ padding: 0px !important;
+
+}
+
+html {
+  scroll-behavior: smooth;
+}
