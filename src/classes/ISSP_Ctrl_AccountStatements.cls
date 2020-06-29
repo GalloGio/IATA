@@ -4,6 +4,67 @@ global class ISSP_Ctrl_AccountStatements {
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
 	public static final String AMAZON_ICE_PROOF_OF_PAYMENT = 'ICE POP';
 
+	private static list<String> SELECT_FIELDS = new list<String>{
+		'Id',
+		'Period__c',
+		'Operation__c',
+		'Name',
+		'Key__c',
+		'CurrencyIsoCode',
+		'Account__c',
+		'Amount_to_be_Paid__c',
+		'Balance__c',
+		'Billing_Amount__c',
+		'Paid__c',
+		'Remittance_Date__c',
+		'Status__c',
+		'Billing_Adjustment__c',
+		'Group__c',
+		'Account__r.Site',
+		'Account__r.IATAcode__c',
+		'Account__r.Name',
+		'Account__r.BillingCity',
+		'LastModifiedDate'
+	};
+
+	/**
+	 * Conditions to be used in main Account Statements queries to exclude remittance codes
+	 * This list is retrieved from the custom metadata ISSP_ICE_Parameter__mdt
+	 */
+	public String conditionExcludeRemittance {
+		get {
+			if (conditionExcludeRemittance==null) {
+				conditionExcludeRemittance = '';
+				list<ISSP_ICE_Parameter__mdt> listParam = [SELECT Id, Value__c FROM ISSP_ICE_Parameter__mdt WHERE DeveloperName = 'Exclude_remittance_Codes' ];
+				if (listParam.size()>0) {
+					ISSP_ICE_Parameter__mdt param = listParam[0];
+					for (String remmitance : param.Value__c.split(',')) {
+						conditionExcludeRemittance += ' AND (NOT Period__c LIKE \'%' + remmitance + '\') ';
+					}
+				}
+			}
+			return conditionExcludeRemittance;
+		}
+		set;
+	}
+
+	/**
+	 * Number of last remittance dates used to show data, retrieved from the custom metadata ISSP_ICE_Parameter__mdt
+	 */
+	public Integer nRowsDisplayed {
+		get {
+			if (nRowsDisplayed==null) {
+				nRowsDisplayed = 4;
+				list<ISSP_ICE_Parameter__mdt> listParam = [SELECT Id, Value__c FROM ISSP_ICE_Parameter__mdt WHERE DeveloperName = 'Displayed_Rows'];
+				if (listParam.size()>0) {
+					nRowsDisplayed = Integer.ValueOf(listParam[0].Value__c);
+				}
+			}
+			return nRowsDisplayed;
+		}
+		set;
+	}
+
 	public Account account {get; set;}
 	public Account headquarter {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
@@ -117,35 +178,17 @@ global class ISSP_Ctrl_AccountStatements {
 		this.account = this.currentUser.Contact.Account;
 		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
 		this.headquarter = this.account.Top_Parent__r == null? this.account: this.account.Top_Parent__r;
-
+		
 		// get Account Statements related with all accounts in the hierarchy
-		this.listStatements = [
-			SELECT Id,
-				Period__c,
-				Operation__c,
-				Name,
-				Key__c,
-				CurrencyIsoCode,
-				Account__c,
-				Amount_to_be_Paid__c,
-				Balance__c,
-				Billing_Amount__c,
-				Paid__c,
-				Remittance_Date__c,
-				Status__c,
-				Billing_Adjustment__c,
-				Group__c,
-				Account__r.Site,
-				Account__r.IATAcode__c,
-				Account__r.Name,
-				Account__r.BillingCity,
-				LastModifiedDate
-			FROM Account_Statement__c
-			WHERE Account__c in :listAccount
-			AND Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
-			AND (NOT Period__c LIKE '%E')
-			ORDER BY Remittance_Date__c desc, Operation__c ASC
-		];
+		Date minimumRemittance = getMinimumRemittanceDateToSearch(listAccount);
+		String query = ' SELECT ' + String.join(SELECT_FIELDS,',') +
+			' FROM Account_Statement__c' +
+			' WHERE Account__c IN :listAccount' +
+			' AND Remittance_Date__c >= ' + String.ValueOf(minimumRemittance) +
+			ConditionExcludeRemittance +
+			' ORDER BY Remittance_Date__c desc, Operation__c ASC';
+
+		this.listStatements = Database.query(query);
 
 		// create a list of wrappers with collected Account Statements
 		this.mapWrapper = new map<String,WrapperStatement>();
@@ -228,18 +271,19 @@ global class ISSP_Ctrl_AccountStatements {
 	/**
 	 * Find the lowest remitance date in last valid periods
 	 */
-	private Date getMinimumRemmitanceDateToSearch(list<Account> listAccount) {
+	private Date getMinimumRemittanceDateToSearch(list<Account> listAccount) {
 		try {
-			list<AggregateResult> listResult = [
-				Select Remittance_Date__c
-				from Account_Statement__c
-				Where Account__c in :listAccount
-				and Remittance_Date__c <= TODAY
-				AND (NOT Period__c LIKE '%E')
-				group by Remittance_Date__c
-				order by Remittance_Date__c desc
-				limit 3
-			]; // search last 3 Remittance dates
+			String query =
+				'SELECT Remittance_Date__c ' +
+				' FROM Account_Statement__c ' +
+				' WHERE Account__c IN :listAccount' +
+				' AND Remittance_Date__c <= TODAY ' +
+				ConditionExcludeRemittance +
+				' GROUP BY Remittance_Date__c ' +
+				' ORDER BY Remittance_Date__c DESC ' +
+				' LIMIT ' + nRowsDisplayed; // search last n Remittance dates
+
+			list<AggregateResult> listResult = Database.query(query);
 			AggregateResult ar = listResult.get( listResult.size()-1 );
 			return (Date)ar.get('Remittance_Date__c');
 		} catch (Exception e) {

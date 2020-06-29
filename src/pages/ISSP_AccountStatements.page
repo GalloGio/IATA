@@ -91,7 +91,7 @@
 		}
 
 		const modalOnComplete = function(overflow) {
-			document.body.style.overflow = "";
+			document.body.style.overflow = overflow;
 		}
 
 		const onChangeNotification = function(obj) {
@@ -140,7 +140,7 @@
 			<apex:outputPanel id="modalAttachments" styleclass="ICE-modalAttach">
 				<apex:outputPanel rendered="{!showAttachPopup}">
 					<apex:form>
-						<apex:actionFunction name="closeAttachModal" action="{!closeAttachModalPopup}" rerender="modalAttachments" oncomplete="modalOnComplete('overflow');" status="loadingStatus"/>
+						<apex:actionFunction name="closeAttachModal" action="{!closeAttachModalPopup}" rerender="modalAttachments" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
 
 						<div class="modal showModal modalBackgound">
 							<div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -177,7 +177,7 @@
 				<apex:outputPanel rendered="{!showDetailPopUp}">
 					<apex:form >
 						<apex:variable var="detailModalCurrencyFormat" value="{!mapCurrencyFormat[selectedWrapperStatement.parent.CurrencyIsoCode]}"/>
-						<apex:actionFunction name="closeDetailModal" action="{!closeDetailModalPopup}" rerender="modalDetail" oncomplete="modalOnComplete('overflow');" status="loadingStatus"/>
+						<apex:actionFunction name="closeDetailModal" action="{!closeDetailModalPopup}" rerender="modalDetail" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
 
 						<script>
 							function toggleTabLocation() {
