@@ -309,7 +309,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					getParameters({ urlExtension : sPageURL }).then(result => {
 						this.contactInfo = JSON.parse(result.userInfo);
 						
-						if(this.contactInfo.UserId !== undefined && this.contactInfo.UserId !== null && this.contactInfo.UserId !== ''){
+						if(this.contactInfo.UserId !== undefined && this.contactInfo.UserId !== null && this.contactInfo.UserId !== '' 
+							&& pageParams.lmsflow !== 'flow4'){
 							this.contactInfo.Username = this.contactInfo.Id.substring(0,15);
 						}
 						
