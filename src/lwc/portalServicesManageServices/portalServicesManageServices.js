@@ -689,7 +689,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 			//searchs from db - invokes server to retrieve search result
 			if(this.serviceName.includes('E&F APPS')){
-				getEFContacts({ contactId: this.contactId, searchkey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 })
+				getEFContacts({ contactId: this.contactId, searchKey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 })
 				.then(r => this.handleSearchResult(r));
 			}else{
 				searchContacts({ serviceId: this.serviceId, searchkey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 })
