@@ -45799,6 +45799,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
         <value>Error creating case</value>
     </labels>
+	<labels>
+		<fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
+		<categories>CS Portal</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
+		<value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
+	</labels>
     <labels>
         <fullName>csp_searchEmailRecipientPlaceholder</fullName>
         <categories>CS Portal</categories>
