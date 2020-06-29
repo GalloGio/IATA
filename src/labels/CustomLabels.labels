@@ -28357,7 +28357,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>Joining Change of Bank details</value>
+        <value>Bank Detail Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -29673,7 +29673,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>Joining Change Request</value>
+        <value>BSP / CASS Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
@@ -32862,7 +32862,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Join_BSP_CASS</shortDescription>
-        <value>Joining Settlement Services</value>
+        <value>Joining Settlement</value>
     </labels>
     <labels>
         <fullName>ISSP_Join_BSP_CASS_Description</fullName>
