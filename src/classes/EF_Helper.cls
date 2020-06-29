@@ -147,5 +147,9 @@ public without sharing class EF_Helper {
 		update psaToUpdate;
 	}
 
+	public static List<Contact> getContactsAndRelatedUsers(List<Id> contactIds) {
+		return [SELECT Id, Name, User_Portal_Status__c, Email, (SELECT Id FROM Users) FROM Contact WHERE Id IN :contactIds];
+	}
+
 	private class PortalServiceException extends Exception {}
 }

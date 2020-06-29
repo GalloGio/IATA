@@ -1139,17 +1139,16 @@ public with sharing class PortalServicesCtrl {
 	// Grants Acccess to a portal service from the manage service page by an portal administrator
 	@AuraEnabled(cacheable=false)
 	public static Boolean massGrantAccess(List<String> contactIds, String serviceId, String reason) {
-		// retrieves the record with the request
-		List<Portal_Application_Right__c> psal = [SELECT Id, Right__c, Access_Status_Reason__c, LastModifiedDate, Contact__c
-													FROM Portal_Application_Right__c
-													WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
-		if(psal.isEmpty()) {
+		// Retrieve Portal Application Rights for Service ID and Contact IDs
+		List<Portal_Application_Right__c> psaList = EF_Helper.getPortalApplicationRights(serviceId, contactIds);
+
+		if(psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
 		Map<Id, Contact> contactsMap = new Map<Id, Contact>();
-		for(Contact con : [SELECT Id, User_Portal_Status__c, (SELECT Id FROM Users) FROM Contact WHERE Id IN :contactIds]) {
+		for(Contact con : EF_Helper.getContactsAndRelatedUsers(contactIds)) {
 			contactsMap.put(con.Id, con);
 		}
 		if(contactsMap.isEmpty()) {
@@ -1158,9 +1157,9 @@ public with sharing class PortalServicesCtrl {
 
 		List<Portal_Application_Right__c> appRightsToUpdate = new List<Portal_Application_Right__c>();
 		Map<String, Contact> contactsToUpdateMap = new Map<String, Contact>();
-		Set<Id> contactsToStatusChangeList = new Set<Id>();
+		Set<Contact> contactsToStatusChangeList = new Set<Contact>();
 
-		for(Portal_Application_Right__c psa : psal) {
+		for(Portal_Application_Right__c psa : psaList) {
 			if(psa.Contact__c != null) {
 				Contact contact = contactsMap.get(psa.Contact__c);
 
@@ -1171,7 +1170,7 @@ public with sharing class PortalServicesCtrl {
 					contactsToUpdateMap.put(contact.Id, contact);
 				} else if (contact.users.isEmpty()) {
 					// No USer
-					contactsToStatusChangeList.add(contact.Id);
+					contactsToStatusChangeList.add(contact);
 
 				}
 			}
@@ -1182,7 +1181,7 @@ public with sharing class PortalServicesCtrl {
 		}
 
 			if(!contactsToUpdateMap.keySet().isEmpty()){
-				update contactsToUpdateMap.values();
+				WithoutSharingOperations.updateContactList(contactsToUpdateMap.values());
 
 				ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
 			}
@@ -1190,11 +1189,11 @@ public with sharing class PortalServicesCtrl {
 			ISSP_ContactList ctrl = new ISSP_ContactList();
 
 			//generates user active with the portal
-			ctrl.processMultiplePortalUserStatusChange(contactsToStatusChangeList, PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
+			ctrl.processMultiplePortalUserStatusChange(new List<Contact>(contactsToStatusChangeList), PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
 		}
 
 		try {
-			update appRightsToUpdate;
+			EF_Helper.updatePortalApplicationRights(appRightsToUpdate);
 		} catch(Exception e) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
@@ -1206,21 +1205,17 @@ public with sharing class PortalServicesCtrl {
 	@AuraEnabled(cacheable=false)
 	public static Boolean grantAccess(string contactId,string serviceId,string reason) {
 
+		// Retrieve Portal Application Rights for Service ID and Contact IDs
+		List<Portal_Application_Right__c> psaList = EF_Helper.getPortalApplicationRights(serviceId, new List<Id>{contactId});
 
-		//retrieves the record with the request
-		List<Portal_Application_Right__c> psal = [SELECT Id, Right__c, Access_Status_Reason__c,
-													LastModifiedDate
-													FROM Portal_Application_Right__c
-													WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
-
-		if(psal.isEmpty()) {
+		if(psaList.isEmpty()) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
 
-		Portal_Application_Right__c psa=psal.get(0);
+		Portal_Application_Right__c psa=psaList.get(0);
 
 
-		List<Contact> contactList = [Select Id, User_Portal_Status__c,(select id from users) From Contact Where id =: contactId];
+		List<Contact> contactList = EF_Helper.getContactsAndRelatedUsers(new List<Id>{contactId});
 
 
 		if(contactList.isEmpty()) {
@@ -1256,7 +1251,7 @@ public with sharing class PortalServicesCtrl {
 		psa.Access_Status_Reason__c = reason;
 
 		try {
-			update psa;
+			EF_Helper.updatePortalApplicationRights(new List<Portal_Application_Right__c>{psa});
 			return true;
 		} catch(Exception e) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
