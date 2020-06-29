@@ -197,6 +197,7 @@
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
+    <description>IATA Stations Dashboard</description>
     <isGridLayout>true</isGridLayout>
     <runningUser>alberto.puerto@next-link.ch</runningUser>
     <textColor>#000000</textColor>

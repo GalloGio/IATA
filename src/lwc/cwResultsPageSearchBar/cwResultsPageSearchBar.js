@@ -242,9 +242,9 @@ export default class CwResultsPageSearchBar extends LightningElement {
 			this.searchObjects.push(minLongObj);
 		}
 
-		let searchObject = prepareSearchObjectFEICategories(this.lstFEICategories);
+		let searchObject = prepareSearchObjectFEICategories(this.lstFEICategories, this.searchObjects);
 		if (searchObject) {
-			this.searchObjects.push(searchObject);
+			this.searchObjects = JSON.parse(JSON.stringify(searchObject));
 		}
 		const searchEvent = new CustomEvent("search", {
 			detail: this.searchObjects

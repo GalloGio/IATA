@@ -8,7 +8,7 @@
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
-    <masterLabel>ONE Source UtilityBar</masterLabel>
+    <masterLabel>ONE Source UtilityBar Console</masterLabel>
     <template>
         <name>one:utilityBarTemplateDesktop</name>
     </template>

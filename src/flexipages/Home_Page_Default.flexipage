@@ -4,7 +4,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>dashboardName</name>
-                <value>UwUTpOFzeWWfmsNTTHEzszovetKzCj</value>
+                <value>IATA_Stations_Dashboard</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>hideOnError</name>
@@ -15,7 +15,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>dashboardName</name>
-                <value>UwUTpOFzeWWfmsNTTHEzszovetKzCj1</value>
+                <value>IATA_Certifications_Dashboard</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>hideOnError</name>
