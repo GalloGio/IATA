@@ -122,9 +122,6 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 private static List<Contact> searchRelatedContacts(String searchTerm) {
 
 	//prepare query
-	String finalQuery = 'SELECT Id, Name, Email FROM Contact ';
-
-
 	String finalQuery = 'SELECT Id, Name, Email FROM Contact WHERE Email != \'' + CONTACT.Email + '\'';
 
 	if(String.isNotEmpty(searchTerm)) {
