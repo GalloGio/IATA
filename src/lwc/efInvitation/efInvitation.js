@@ -132,7 +132,7 @@ export default class EF_Invitation extends LightningElement {
 		}, true);
 		
 		if(allValid) {
-			let fields = {}, that = this;
+			let fields = {};
 			fields[EMAIL_FIELD.fieldApiName] = this.email;
 			fields[ACCOUNTROLEID_FIELD.fieldApiName] = this.accountRoleId;
 			fields[ROLE_FIELD.fieldApiName] = this.roleId;
@@ -148,7 +148,7 @@ export default class EF_Invitation extends LightningElement {
 						variant: 'success'
 					})
 				)
-				if(this.isCommunity) window.setTimeout(function() {that.cancel()}, 2000);
+				this.cancel();
 			}
 			).catch(error => {
 				console.error(`error: ${error.body.message}`);
