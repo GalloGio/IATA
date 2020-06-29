@@ -775,10 +775,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.createAgencyContact();
 
-		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
-
-		System.assert(upd.countryList.size() > 0);
-		System.assert(upd.countryInfoByCountryNameMapString.startsWith('{'));
+		System.assert(ISSP_ANG_ANNUAL_REV_UPDATE.countryList.size() > 0);
+		System.assert(ISSP_ANG_ANNUAL_REV_UPDATE.countryInfoByCountryNameMapString.startsWith('{'));
 
 
 		Test.stopTest();
@@ -922,7 +920,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		List<SelectOption> bsl = upd.billingStateList;
 		List<SelectOption> ssl = upd.shippingStateList;
-		string slbcn = upd.stateListByCountryName;
+		string slbcn = ISSP_ANG_ANNUAL_REV_UPDATE.stateListByCountryName;
 		string si = upd.stateInfo;
 
 		Test.stopTest();
@@ -1000,7 +998,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newform.Geoname_Shipping_City__c = Id.valueOf(city.Id);
 		ctrl.confirmUpdate();	
 		upd.ca = ctrl.currentAccount;
-		String stateListByCountryName = upd.stateListByCountryName;	
+		String stateListByCountryName = ISSP_ANG_ANNUAL_REV_UPDATE.stateListByCountryName;	
 		String geonameBillingCityId = upd.geonameBillingCityId;
 		String geonameShippingCityId = upd.geonameShippingCityId;
 		upd.currentBillingStateCities();

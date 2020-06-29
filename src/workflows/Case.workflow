@@ -4085,6 +4085,19 @@
         <template>ID_Card_templates/IDCard_ConfirmationEmail</template>
     </alerts>
     <alerts>
+        <fullName>Send_an_email_as_soon_as_idcard_is_approved</fullName>
+        <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
+        <description>Send an email as soon as idcard is approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>idcard@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ID_Card_templates/IDCard_ApprovalEmail</template>
+    </alerts>
+    <alerts>
         <fullName>Send_email_notification_for_a_new_attachment_on_a_case</fullName>
         <description>Send email notification for a new attachment on a case</description>
         <protected>false</protected>
@@ -13407,6 +13420,27 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>Send an email to the ITDI</description>
         <formula>AND ( RecordType.Name  = &apos;ID Card Application&apos;,    NOT(ISPICKVAL(Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_1__c, &apos;&apos;)))</formula>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>IDCard_ApprovalEmail_Send</fullName>
+        <actions>
+            <name>Send_an_email_as_soon_as_idcard_is_approved</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>ID Card Application</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Ready for production</value>
+        </criteriaItems>
+        <description>Send an approval confirmation email.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_ConfirmationEmail Send</fullName>
