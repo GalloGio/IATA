@@ -699,19 +699,11 @@ public without sharing class LightningRegistrationProcess{
 						ANG_Sector__c, ANG_Category__c, Customer_Type__c, ANG_Is_Accredited_Agent__c,
 						ANG_Customer_Country_ISO__c, Contact.User_Portal_Status__c
 						FROM User WHERE Id =: userId];
-
-		if(oneUser.ANG_Sector__c == 'Travel Agent'
-			&& oneUser.ANG_Category__c == 'IATA Passenger Sales Agent'
-			&& oneUser.Customer_type__c == 'Agency'
-			&& oneUser.ANG_Is_Accredited_Agent__c == true
-			&& oneUser.ANG_Customer_Country_ISO__c == 'IL'
-			&& (oneUser.Contact.User_Portal_Status__c == 'Approved User'
-			|| oneUser.Contact.User_Portal_Status__c == 'Approved Admin')){
-				list<Portal_Applications__c> lstApp = [SELECT Id
-														 FROM Portal_Applications__c
+		list<Portal_Applications__c> lstApp = [SELECT Id
+														FROM Portal_Applications__c
 														 WHERE Application_URL__c LIKE '%israel-disputes-create-new-case%'
 														 LIMIT 1];
-				List<Portal_Application_Right__c> appRight = [SELECT Id
+		List<Portal_Application_Right__c> appRight = [SELECT Id
 																FROM Portal_Application_Right__c
 																WHERE Contact__c =: oneUser.ContactId
 																AND Portal_Application__c =: lstApp[0].Id
@@ -722,8 +714,7 @@ public without sharing class LightningRegistrationProcess{
 					par.Portal_Application__c = lstApp[0].Id;
 					par.Right__c = 'Access Granted';
 					database.insert(par);
-				}
-			}
+				}			
 	}
 
 
