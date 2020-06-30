@@ -94,7 +94,7 @@ export default class PortalHomeCalendar extends LightningElement {
         this.pageParams = getParamsFromPage();
 
         if(this.pageParams.caseId !== undefined){
-            this.getCaseByIdJS();
+            this.loadCase();
         }
         
         if(this.pageParams.caseId !== undefined){
@@ -126,7 +126,8 @@ export default class PortalHomeCalendar extends LightningElement {
         });
     }
 
-    getCaseByIdJS(){
+	@api
+    loadCase(){
         getCaseById({ caseId : this.pageParams.caseId })
         .then(results => {
             this.caseDetails = results;
@@ -295,7 +296,7 @@ export default class PortalHomeCalendar extends LightningElement {
                         message: results.returnMessage,
                         variant: "success",
                     });
-                    this.getCaseByIdJS();
+                    this.loadCase();
                     this.dispatchEvent(toastEvent);
                     this.loading = false;
 
@@ -335,7 +336,7 @@ export default class PortalHomeCalendar extends LightningElement {
                     message: results.returnMessage,
                     variant: "success",
                 });
-                this.getCaseByIdJS();
+                this.loadCase();
                 this.dispatchEvent(toastEvent);
                 
                 this.loading = false;

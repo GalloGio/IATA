@@ -20,23 +20,24 @@ export default class PortalHomeCalendar extends LightningElement {
         CSP_CaseMessage_MessageTitle,
         CSP_CaseMessage_HelpText,
         CSP_CaseMessage_InputPlaceholder
-    };
-
+	};
+	
     @track loading = true;
-    @track caseDetails;
     @track lstMessages;
 
     @track newMessage = '';
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
-    @track loadingCom = false;
-    @api isCollection;
-
-    @track showCaseMessagingSection = true;
-
-    conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
+	@track loadingCom = false;
+	@track loadingNewMessages = false;
+	@api caseDetails;
+	@api isCollection;
 
     @track trackedIsExpired;
+	@track showCaseMessagingSection = true;
+
+    conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
+	replyProcessed = false;
 
     @api
     get expired() {
@@ -47,34 +48,82 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     connectedCallback() {
-
         //get the parameters for this page
         this.pageParams = getParamsFromPage();
 
         if(this.pageParams.caseId !== undefined && this.pageParams.caseId !== ''){
             //get this case messages
-            this.getCaseMessagesJS();
+			this.getCaseMessagesJS();
         }else{
             //disable the component because there is no case ID
             this.loading = false;
             this.messageInputLoading = true;
-        } 
-    }
+		}
+
+	}
+
+	renderedCallback() {
+		if(this.isToReply && !this.replyProcessed) {
+			let caseComments = this.template.querySelectorAll('c-portal-case-comment');
+			if(caseComments !== null && caseComments.length > 0) {
+				let replyResult = caseComments[caseComments.length - 1].replyComment(this.pageParams.replyComment);
+				if(replyResult) {
+					this.replyProcessed = true;
+					window.scrollTo(
+						{
+							left: 0,
+							top: caseComments[caseComments.length - 1].offsetTop,
+							behaviour: 'smooth'
+						}
+					);
+				}
+			}
+		}
+	}
 
     getCaseMessagesJS(){
         getCaseMessages({ caseId : this.pageParams.caseId })
         .then(results => {
-            this.lstMessages = results;
+			this.lstMessages = this.processMessages(results);
             this.loading = false;
-            this.messageInputLoading = false;
+			this.messageInputLoading = false;
         })
         .catch(error => {
             console.log('error: ' , error);
             this.loading = false;
             this.messageInputLoading = false;
-        }
-    );
-    }
+		});
+	}
+	
+	processMessages(messages) {
+		if(messages === undefined || messages === null) {
+			return [];
+		}
+		let autoreplyMessages = [];
+		let disabled = true;
+		for(let i = messages.length-1; i >= 0; i--) {
+			if(!messages[i].messageText.indexOf('Auto-Reply:') === 0 && !result[i].isSelf) {
+				continue;
+			}
+			else if(messages[i].messageText.indexOf('Auto-Reply:') === 0) {
+				if(disabled) {
+					messages[i].buttonsDisabled = false;
+					disabled = false;
+				}
+				if(autoreplyMessages.indexOf(messages[i].messageText) > -1) {
+					messages[i].hideComment = true;
+				}
+				else {
+					autoreplyMessages.push(messages[i].messageText);
+				}
+			}
+		}
+		return messages;
+	}
+
+	get isToReply() {
+		return this.pageParams.replyComment !== undefined && this.pageParams.replyComment !== null && this.pageParams.replyComment !== '';
+	}
 
     get hasMessages(){
         return this.lstMessages !== undefined && this.lstMessages.length > 0;
@@ -143,6 +192,30 @@ export default class PortalHomeCalendar extends LightningElement {
 	toggleCollapsed(elem, cssclass) {
 		this.template.querySelector(elem).classList.toggle(cssclass);
 	}
+
+	handleWaitingNewMessages(event) {
+		this.loadingNewMessages = true;
+	}
 	
+	handleNewMessages(event) {
+		this.lstMessages.push(...this.processMessages(event.detail.messages));
+		this.loadingNewMessages = false;
+	}
+
+	handleUpdatedCase(event) {
+		if(event.detail.closureStatus === '') {
+			const toastEvent = new ShowToastEvent({
+				title: "SUCCESS",
+				message: "Case reopened",
+				variant: "success",
+			});
+			this.dispatchEvent(toastEvent);
+
+		}
+	}
+
+	handleNewMessagesError(event) {
+		this.loadingNewMessages = false;
+	}
 
 }

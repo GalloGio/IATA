@@ -1,0 +1,147 @@
+:host {
+	display: inline;
+	align-content: center;
+	align-items: center;
+}
+
+button {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	border-radius: 1px;
+	font-size: 1rem;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.5rem;
+	letter-spacing: normal;
+	word-break: break-word;
+	min-height: 2.5rem;
+	margin: 1px;
+}
+
+button[disabled] {
+	cursor: default;
+}
+
+.iata-button-v-align_top {
+	margin-top: 0;
+}
+
+.iata-button-v-align_bottom {
+	margin-bottom: 0;
+}
+
+.base, .contained, .light-contained, .outlined {
+	min-width: 13.75rem;
+}
+
+.contained {
+	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+	background-color: #3333ff;
+	color: #ffffff;
+	border: 1px solid #3333ff;
+}
+
+.contained:hover, 
+.contained:active,
+.contained:visited,
+.contained:focus {
+	background-color: #1e32fa;
+	border: 1px solid #1e32fa;
+}
+
+.contained:disabled,
+.contained[disabled] {
+	box-shadow: none;
+	background-color: #f7f8fa;
+	border: 1px solid #f7f8fa;
+	color: #999999;
+}
+
+.light-contained {
+	background-color: #d0d6fa;
+	color: #3333ff;
+	border: none;
+}
+
+.light-contained:active,
+.light-contained:visited,
+.light-contained:focus {
+	border: 1px solid #1e32fa;
+}
+
+.light-contained[disabled]::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	min-height: 2.5rem;
+	bottom: 0;
+	left: 0;
+	background: #FFFFFF;
+	opacity: 0.35;
+}
+
+.light-contained.height-large[disabled]::after {
+	height: 3.25rem;
+}
+
+.base,
+.link,
+.outlined {
+	color: #3333ff;
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.outlined {
+	/*color: #1e32fa;*/
+    box-shadow: none;
+    border: 1px solid #1e32fa;
+}
+
+.outlined:disabled,
+.outlined[disabled] {
+	border: 1px solid #f7f8fa;
+	color: #999999;
+}
+
+.link, 
+.link:hover,
+.link:active,
+.link:visited,
+.link:focus {
+	color: #3333ff;
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.contained c-iata-icon,
+.light-contained c-iata-icon {
+	float: right;
+	margin-right: 0.5rem;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.width-large {
+	min-width: 13.75rem;
+}
+
+.width-medium {
+	min-width: 10rem;
+}
+
+.height-large {
+	min-height: 3.25rem;
+}
+
+.slds-text-body_regular {
+	font-size: 0.875rem;
+}
+
+button:focus {
+	outline-color: currentColor;
+	outline-style: outset;
+}

@@ -96,7 +96,27 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
         if (this.pageParams.caseId !== undefined) {
             this.caseId = this.pageParams.caseId;
-            getCaseById({ caseId: this.pageParams.caseId })
+			this.loadCase();
+			
+            const labelsToRetrieve = ["Country_concerned__c", "Topic__c", "Subtopic__c", "Region__c", "Type_of_case_Portal__c", "Description", "Airline__c", "Airline_E_mail__c", "Document_number__c", "Amount_disputed__c"];
+            //load the rest of the field labels
+
+            getFieldLabels({ sObjectType: 'case', sObjectFields: labelsToRetrieve }).then(result => {
+                if (result) {
+                    let currentLabels = this.labels;
+                    Object.keys(result).forEach(el => {       // adds retrieved labels to current label variable               
+                        currentLabels[el] = result[el];
+                    })
+                    this.labels = currentLabels;
+                }
+
+            });
+        }
+        
+	}
+	
+	loadCase() {
+		getCaseById({ caseId: this.caseId })
                 .then(results => {
                     this.caseDetails = results;
 
@@ -126,21 +146,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                     console.log('error: ', error);
                     this.loading = false;
                 });
-            const labelsToRetrieve = ["Country_concerned__c", "Topic__c", "Subtopic__c", "Region__c", "Type_of_case_Portal__c", "Description", "Airline__c", "Airline_E_mail__c", "Document_number__c", "Amount_disputed__c"];
-            //load the rest of the field labels
-
-            getFieldLabels({ sObjectType: 'case', sObjectFields: labelsToRetrieve }).then(result => {
-                if (result) {
-                    let currentLabels = this.labels;
-                    Object.keys(result).forEach(el => {       // adds retrieved labels to current label variable               
-                        currentLabels[el] = result[el];
-                    })
-                    this.labels = currentLabels;
-                }
-
-            });
-        }
-        
     }
 
     renderedCallback() {
@@ -330,4 +335,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         //display modal on attachment component
         this.showAddDocsModal = true;
     }
+	
+	handleUpdatedCase(event) {
+		this.loadCase();
+	}
 }

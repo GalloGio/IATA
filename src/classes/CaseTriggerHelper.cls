@@ -225,4 +225,49 @@ public with sharing class CaseTriggerHelper {
 
 				return valueToAdd;
 		}
+
+	public static void handleClosureStatus(List<Case> cases, Map<Id, Case> oldCases) {
+		for (Case current : cases) {
+			Case old = oldCases == null ? null : oldCases.get(current.Id);
+			
+			if ((old == null || old.Status != current.Status)
+				&& current.Status == 'Pending Closure' && current.Visible_on_ISS_Portal__c) {
+					current.Portal_Closure_Status__c = CaseCommentAutoReply.CLOSURE_STATUS_STARTED;
+			}
+			else if(old != null && current.Visible_on_ISS_Portal__c && old.Portal_Closure_Status__c != current.Portal_Closure_Status__c) {
+				if(String.isBlank(current.Portal_Closure_Status__c)) {
+					current.Status = 'Reopen';
+					current.Reopening_reason__c = 'same query';
+				}
+				else if(CaseCommentAutoReply.CLOSURE_STATUS_FINISHED_VALUES.contains(current.Portal_Closure_Status__c)) {
+					current.Status = 'Closed';
+				}
+			}
+		}
+	}
+
+	public static void handleAutoReplies(Map<Id, Case> cases, Map<Id, Case> oldCases) {
+		List<Id> casesToGenerateComments = new List<Id>();
+		for (Id caseId : cases.keySet()) {
+			Case current = cases.get(caseId);
+			Case old = oldCases == null ? null : oldCases.get(caseId);
+			if (((old == null && current.Status == 'Pending Closure') ||
+				(old != null && (old.Status != current.Status || old.Portal_Closure_Status__c != current.Portal_Closure_Status__c) &&
+					(current.Status == 'Pending Closure' || current.Status == 'Closed') &&
+					current.Visible_on_ISS_Portal__c)
+				) && !CaseCommentAutoReply.isProcessed(current.Id)) {
+					casesToGenerateComments.add(current.Id);
+			}
+		}
+		if (!casesToGenerateComments.isEmpty()) {
+			CaseCommentAutoReply autoReplies = new CaseCommentAutoReply(casesToGenerateComments);
+			if(PortalCasesCtrl.updatingClosureStatus) {
+				autoReplies.execute(null);
+			}
+			else {
+				System.enqueueJob(autoReplies);
+			}
+		}
+	}
+
 }
