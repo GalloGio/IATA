@@ -1,9 +1,14 @@
 import { LightningElement,api,track } from 'lwc';
+import { loadStyle } from 'lightning/platformResourceLoader';
 
 /* APEX METHODS */
 import getISOCountries  from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getCountryStates from '@salesforce/apex/GCS_AccountCreation.getStates';
 import validateAddress  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.checkAddress';
+import getCSPortalPath  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCSPortalPath';
+
+/* STATIC RESOURCES */
+import cspStylesheet    from '@salesforce/resourceUrl/CSP_Stylesheet';
 
 /* LABELS*/
 import CSP_L2_Country                   from '@salesforce/label/c.CSP_L2_Country';
@@ -26,21 +31,48 @@ import AMS_DQ_City_in_Another_State     from '@salesforce/label/c.AMS_DQ_City_in
 import AMS_DQ_Review_State_or_City      from '@salesforce/label/c.AMS_DQ_Review_State_or_City';
 
 export default class PortalAddressForm extends LightningElement {
-    /* Images */
-    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
-    arrowFirst = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first.png';
-    arrowFirstLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
-    arrowPrevious = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev.png';
-    arrowPreviousLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
-    arrowNext = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next.png';
-    arrowNextLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
-    arrowLast = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last.png';
-    arrowLastLightgrey = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    @track portalPath = CSP_PortalPath;
+
+    get alertIcon(){
+        return this.portalPath + 'CSPortal/alertIcon.png';
+    }
+
+    get arrowFirst(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first.png';
+    }
+
+    get arrowFirstLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-first-lightgrey.png';
+    }
+
+    get arrowPrevious(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev.png';
+    }
+
+    get arrowPreviousLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-prev-lightgrey.png';
+    }
+
+    get arrowNext(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next.png';
+    }
+
+    get arrowNextLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-next-lightgrey.png';
+    }
+
+    get arrowLast(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last.png';
+    }
+
+    get arrowLastLightgrey(){
+        return this.portalPath + 'CSPortal/Images/Icons/arrow-last-lightgrey.png';
+    }
 
     /* Passed address information */
     @api countryId;
-    @api disabledCountry;
     @api address;
+    @api disableCountry;
 
     /* Local address information
 
@@ -77,15 +109,21 @@ export default class PortalAddressForm extends LightningElement {
 
     // flags
     @track provinceAndCitiesEnabled;
-//TEMP    @track isStateRequired;
-//TEMP    @track isZipRequired;
+
+    get isCountryDisabled(){
+        if(this.disableCountry){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     get isStateRequired(){
         return this.provinceAndCitiesEnabled;
     }
 
     get displayStateComboBox(){
-//TEMP        return this.provinceAndCitiesEnabled || this.isStateRequired;
         return this.provinceAndCitiesEnabled;
     }
 
@@ -94,6 +132,7 @@ export default class PortalAddressForm extends LightningElement {
     get isValidationButtonDisabled(){
         return  this.localAddress.cityName === '' 
                 || this.localAddress.street.length < 3 
+                || this.localAddress.street.length > 64 
                 || (this.localAddress.stateName === '' && this.isStateRequired) 
                 || !this.localAddress.inputModified;
     }
@@ -104,8 +143,8 @@ export default class PortalAddressForm extends LightningElement {
 
     /* labels */
     _labels = {
-        CSP_L2_Country,
         CSP_L2_Is_PO_Box_Address,
+        CSP_L2_Country,
         CSP_L2_State,
         CSP_L2_City,
         CSP_L2_Postal_Code,
@@ -138,6 +177,19 @@ export default class PortalAddressForm extends LightningElement {
     }
 
     connectedCallback(){
+        loadStyle(this, cspStylesheet)
+        .then(() => {
+            console.log('CSP Stylesheet loaded.');
+        });
+
+        getCSPortalPath().then(result=>{
+            let path = JSON.parse(JSON.stringify(result));
+
+            if(path !== ''){
+                this.portalPath = path;
+            }
+        });    
+
         var address = JSON.parse(JSON.stringify(this.address));
         this.localAddress = address;
         this.generateResultsToDisplay(true);
@@ -182,11 +234,10 @@ export default class PortalAddressForm extends LightningElement {
         let value = event.target.value;
         let fieldname = event.target.dataset.fieldname;
 
-        this.localAddress.inputModified = true;
-        this.setValidationStatus(this.localAddress.validationStatus);
-
         switch(fieldname){
             case 'IsPoBox':
+                this.localAddress.inputModified = true;
+                this.setValidationStatus(this.localAddress.validationStatus);
                 this.localAddress.isPoBox = event.target.checked;
                 this.localAddress.cityName = '';
                 this.localAddress.cityId = '';
@@ -194,22 +245,45 @@ export default class PortalAddressForm extends LightningElement {
                 this.localAddress.street = '';
                 break;
             case 'Country':
+                this.localAddress.inputModified = true;
+                this.setValidationStatus(this.localAddress.validationStatus);
                 this.handleCountryChange(value,true);
                 break;
             case 'StateId':
+                this.localAddress.inputModified = true;
+                this.setValidationStatus(this.localAddress.validationStatus);
                 this.handleStateChange(value,true);
                 break;
             case 'StateName':
-                this.localAddress.stateName = value;
+                if(this.localAddress.stateName !== value){
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.localAddress.stateName = value;
+                }
                 break;
             case 'Street':
-                this.localAddress.street = value;
+                if(value.length <= 64 && this.localAddress.street !== value){
+                    this.localAddress.street = value;
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                }
+                else{
+                    this.localAddress.street = this.localAddress.street;
+                }
                 break;
             case 'City':
-                this.localAddress.cityName = value;
+                if(this.localAddress.cityName !== value){
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.localAddress.cityName = value;
+                }
                 break;
             case 'Zip':
-                this.localAddress.zip = value;
+                if(this.localAddress.zip !== value){
+                    this.localAddress.inputModified = true;
+                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.localAddress.zip = value;
+                }
                 break;
         }
     }
@@ -230,13 +304,9 @@ export default class PortalAddressForm extends LightningElement {
         this.localAddress.countryCode = country.ISO_Code__c;
         this.localAddress.countryName = country.Name;
 
-//TEMP        if(country === undefined || (country.Region_Province_and_Cities_Enabled__c === false && country.State_Province_Mandatory__c)){
         if(country === undefined || country.Region_Province_and_Cities_Enabled__c === false ){
             this.stateOptions = [];
             this.provinceAndCitiesEnabled = false;
-//TEMP            this.isStateRequired = false;
-//TEMP            this.isZipRequired = false;
-            // maybe we need to reset the state and all other fields
 
             let state = '';
             if(!clearInputs){
@@ -321,11 +391,15 @@ export default class PortalAddressForm extends LightningElement {
     handleCityKey(event){
         let stateData = this.stateData;
         let value = event.target.value;
+        if(this.localAddress.cityName === value){
+            return;
+        }
         let selectedState = this.localAddress.stateId;
         
         this.localAddress.cityId = '';
         this.localAddress.cityName = value;
         this.localAddress.inputModified = true;
+        this.setValidationStatus(this.localAddress.validationStatus);
 
         let isPoBox = this.localAddress.isPoBox;
         
@@ -472,9 +546,6 @@ export default class PortalAddressForm extends LightningElement {
                 this.performingSearch = true;
                 return;
             }
-
-            //TO DO : DATA Quality Feedback (check validateRequiredFields method in OneId_ISSP_AccountCreationController.js)
-            // mayb this needs to be (also) done after the call to address doctor, based on the address selected
         }
 
         this.search();
@@ -497,15 +568,12 @@ export default class PortalAddressForm extends LightningElement {
                 let suggestions = [];
 
                 result.forEach((address,index,arr) => {
-                    address.title = address.street;
-                    address.title += address
-                    .locality === undefined || address.locality.length === 0 ? '' : (', '+address.locality);
-                    address.title += address.province === undefined || address.province.length === 0 ? '' : (', '+address.province);
-                    address.title += address.postalCode === undefined || address.postalCode.length === 0 ? '' : (', '+address.postalCode);
                     address.key = index;
                     address.isSelected = false;
 
-                    suggestions.push(address);
+                    if(address.street.length <= 64){
+                        suggestions.push(address);
+                    }
                 });
     
                 if(suggestions.length === 0){
@@ -639,7 +707,6 @@ export default class PortalAddressForm extends LightningElement {
     get isLastPage(){
         return this.currentPage === this.numberOfPages;
     }
-
 
     unshiftSelectedAddress(){
         let suggestions = this.localAddress.addressSuggestions;

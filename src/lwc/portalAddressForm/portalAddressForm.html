@@ -32,14 +32,13 @@
                     <div class="slds-form-element__control custTextInputSmall">
                         <lightning-combobox 
                             class="cursorPointerComboBox text-xxsmall"
+                            disabled={isCountryDisabled}
                             value={localAddress.countryId}
                             variant="label-hidden"
                             options={countryOptions}
                             data-fieldname="Country"
                             dropdown-alignment="auto"
-                            onchange={handleFieldChange}
-                            disabled={disabledCountry}
-                            >
+                            onchange={handleFieldChange}>
                         </lightning-combobox>
                     </div>
                 </div>
@@ -194,6 +193,7 @@
                             class="slds-input"
                             placeholder=" "
                             data-fieldname="Street"
+                            maxlength="64"
                             value={localAddress.street}
                             onkeyup={handleFieldChange}
                             autocomplete="no"/>
