@@ -1238,13 +1238,13 @@ public with sharing class PortalServicesCtrl {
 		} else if (contact.users.isEmpty()) {
 			// No USer
 
-			Set <Id> idSet = new Set <Id>();
-			idSet.add(contact.Id);
+			Set <Contact> conSet = new Set <Contact>();
+			conSet.add(contact);
 
 			ISSP_ContactList ctrl = new ISSP_ContactList();
 
 			//generates user active with the portal
-			ctrl.processMultiplePortalUserStatusChange(idSet, PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
+			ctrl.processMultiplePortalUserStatusChange(new List<Contact>(conSet), PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
 
 		}
 		psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_GRANTED;
