@@ -107,15 +107,14 @@ public with sharing class PortalDocumentsController {
 					'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c, LastModifiedDate'+
 				' FROM ContentVersion';
 
-		String searchQuery = '';
 		if(String.isNotBlank(searchKey)){
 			String[] searchTerms = searchKey.split(' ');
-			searchQuery = '(';
+			String searchQuery = '(';
 			for(String term : searchTerms)
 				searchQuery += 'Title LIKE \'%'+ String.escapeSingleQuotes(term) +'%\' AND ';
 
 			if(searchQuery.indexOf(' AND ') > -1)
-				searchQuery.removeEnd(' AND ');
+				searchQuery = searchQuery.removeEnd(' AND ');
 			searchQuery += ')';
 			searchKey = searchQuery;
 		}
