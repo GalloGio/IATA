@@ -1228,7 +1228,7 @@ public with sharing class PortalServicesCtrl {
 			contact.User_Portal_Status__c = PortalServicesCtrl.PORTAL_USER_APPROVED;
 			try{
 
-				update contact;
+				WithoutSharingOperations.updateContact(contact);
 			}catch(exception e) {
 				throw new portalServiceException(Label.ISSP_ANG_GenericError);
 			}
