@@ -12,6 +12,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	 and IATA_code__c = currentIATACode and Application_Status__c = 'Pending'
 	*/
 	public List<ID_Card_Application__c> pendingApplications {get; set;}
+	public Promotion__c promotion {get; set;} 
 
 	/**
 	Contact informaetion per pending applicatioj
@@ -46,6 +47,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	public Double expediteFees  {get; set;}
 	public Double idCardFee {get; set;}
 	public Double coursesFee {get; set;}
+	public Double discountFee {get; set;}
+	public String promotionCode {get; set;}
 
 	private double massAppDeliveryFee = 0;
 
@@ -82,8 +85,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 	public boolean selectAll {get; set;}
 
-
-
 	/** vars used for mexpedite fees.**/
 	public boolean fastExpedition {get; set{
 			fastExpedition = false;
@@ -114,16 +115,19 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		expediteFees = 0;
 		idCardFee = 0;
 		coursesFee = 0;
+		discountFee = 0;
 		cyberSrcData = null;
 		fastExpedition =  false;
 		cyberSrcData = new Map<String, String>()     ;
 		pendingApplications = new List<ID_Card_Application__c>();
+		promotion = new Promotion__c();
 		unvalidatedApplication = new Map<String, ID_Card_Application__c> ();
 		validatedApplication = new Map<String, ID_Card_Application__c> ();
 		contactsPerApplication = new Map<String, ContactProxy>();
 		isApplicationreadyMap = new Map<String, boolean> ();
 		isNotDigitalOnly = new Map<String, Boolean>();
 		discountPerKeyAccount = new Map<String, Decimal>();
+		Promotion__c validPromotion = null;
 		singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
 		system.debug('[IDCard_AdmPendingOpsController] LOAD LIST');
@@ -237,7 +241,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 		calculateAllPrices();
 	}
-
 	/*
 	Processing action:
 		set status to rejected
@@ -289,7 +292,10 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			for (ID_Card_Application__c idca : validatedApplication.values()) {
 				if (idca != null)
 					massUpdateApplication.CurrencyIsoCode = idca.CurrencyIsoCode;
-
+					massUpdateApplication.ID_Card_Fee_Discount__c = discountFee;
+					if(promotion.Promotion_Code__c != null && promotion.Promotion_Code__c != ''){
+						massUpdateApplication.Promotion_Code__c = promotion.Promotion_Code__c;
+					}
 				break;
 			}
 
@@ -310,6 +316,9 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			}
 			system.debug('[Mass creation] id created : ' + massUpdateApplication.Id);
 			for (ID_Card_Application__c a : validatedApplication.values()) {
+				if(validatePromotion(a) != null){
+					a.Promotion_Code__c = promotion.Promotion_Code__c;
+				}
 				a.Application_Status__c = 'Unpaid';
 				a.Mass_order_Application__c = massUpdateApplication.id;
 				a.Single_Application_Processing_Step__c = IDcardUtil.single_application_status_waiting;
@@ -545,7 +554,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 	/*Calculate price from selected pending application*/
 	public void calculateAllPrices() {
-		system.debug(LoggingLevel.ERROR,'[calculateAllPrices]: calcuated rpice with ' + validatedApplication.size());
+
 		appsCurrency = '-';
 		vatPrice = 0;
 		tPrice = 0;
@@ -554,9 +563,12 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		massAppDeliveryFee = 0;
 		idCardFee = 0;
 		coursesFee = 0;
-
+		discountFee = 0;
+		Promotion__c validPromotion = null;
+		
 		for (ID_Card_Application__c app : pendingApplications) {
-
+			
+			app.ID_Card_Fee_Discount__c = 0;
 			Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
 			Boolean isITDIPackage = false;
 				if(app.Package_of_Travel_Professionals_Course_1__c != null){
@@ -570,31 +582,47 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.Card_Type__c = 'digital';
 				isToPrint = false;
 			}
-			Decimal discountPercentage = discountPerKeyAccount.get(app.IATA_Code__c);
+
 			Map<String, decimal> detailledFees = new Map<String, decimal>();
+			Decimal discountPercentage = discountPerKeyAccount.get(app.IATA_Code__c);
+
 			if(discountPercentage != null && discountPercentage != 0){
 				Promotion__c discount = new Promotion__c(Promotion_Value__c = discountPercentage);
 				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, discount, isToPrint);
-				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, discount, null, isToPrint);
 
 			} else {
 				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
-				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
 			}
-			app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
-			app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
-			if(validatedApplication.keyset().contains(app.Id)){
 
+			if(validatedApplication.isEmpty()){
+				validPromotion = validatePromotion(app);
+			}			
+			else if(validatedApplication.keyset().contains(app.Id)){
+				validPromotion = validatePromotion(app);
+				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, validPromotion, null, isToPrint);
+				app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
+				app.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
+				app.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
+				app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+				app.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
+
+				app.ID_Card_Fee_Discount__c += ((app.ID_Card_Fee__c + app.Physical_Card_Fee__c) - (app.ID_Card_Fee__c + app.Physical_Card_Fee__c) * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100));
+				app.ID_Card_Fee__c = app.ID_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
+				app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
+				app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;  
+				
 				if (app.ID_Card_Fee__c != null)
 					tPrice += app.Applicable_Fee__c;
 
 				if(app.Card_Type__c == 'plastic') deliveryPrice += app.Physical_Card_Fee__c;
 				idCardFee += app.ID_Card_Fee__c;
 				coursesFee += app.ITDI_Courses_Fee__c;
+				discountFee += app.ID_Card_Fee_Discount__c;
 
 				if (app.CurrencyIsoCode != null)
 					appsCurrency = app.CurrencyIsoCode;
 
+			
 			}
 		}
 		tPrice += massAppDeliveryFee;
@@ -689,6 +717,43 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				verNum = app.VER_Number__c;
 		}
 
+	}
+	public Promotion__c validatePromotion (ID_Card_Application__c app) {
+		boolean isError = true;
+		//////////////////////////
+		// validate the promotion
+		// Promotion code must exists, must be associated to the corresponding Price Table and be between the validity period
+		if (promotion.Promotion_Code__c != null && promotion.Promotion_Code__c != '') {
+
+			Promotion__c[] listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c where Promotion_Code__c = :promotion.Promotion_Code__c];
+			if (listPromotion == null || listPromotion.size() == 0) {
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c})));
+				return null;
+			}
+
+			 String[] typeOfAppInPromoCode =  listPromotion[0].Type_of_Application__c.split(';');
+
+				for(String typeOfApp : typeOfAppInPromoCode){
+					if(typeOfApp == app.Type_of_Application__c) {
+						isError = false;
+						break;
+					}
+				}
+
+			if (listPromotion[0].Promotion_Duration_Valid_Up_to__c < Date.today()) {
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_No_Longer_Valid));
+				return null;
+			} else if (listPromotion[0].Promotion_Duration_Valid_From__c > Date.today()) {
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_Not_Yet_Valid));
+				return null;
+			}
+			if (isError) {
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING, String.Format(Label.ID_Card_Invalid_Promotion_Code_3, new String[] {promotion.Promotion_Code__c})));
+				return null;
+			}
+			return listPromotion[0];
+		}
+		return null;
 	}
 
 }

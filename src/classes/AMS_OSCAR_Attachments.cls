@@ -72,7 +72,7 @@ global class AMS_OSCAR_Attachments {
 		AMS_OSCAR__c oscar = [SELECT Id, Process__c, AMS_Online_Accreditation__c, OwnerId FROM AMS_OSCAR__c WHERE Id = :sObjId];
 		// for child cases in banck account details changes OSCARs show the attachments on the parent case (the HO case)
 		if (cse.ParentId != null && cse.Parent.RecordType.Name == 'OSCAR Communication' && oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null) {
-			cse = [SELECT Id, Status FROM Case WHERE Id = :cse.ParentId];
+			cse = [SELECT Id, Status, OwnerId FROM Case WHERE Id = :cse.ParentId];
 		}
 
 		// check if current user is Admin

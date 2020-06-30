@@ -79,6 +79,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public class RegistrationParameters{
 		public string email{get;set;}
+		public string salutation{get;set;}
 		public string firstName{get;set;}
 		public string lastName{get;set;}
 		public string country{get;set;}
@@ -89,6 +90,19 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public boolean isNewAccount{get;set;}
 		public string selectedCustomerType {get;set;}
 		public string registrationTime {get;set;}
+		public string termsAndUsageIds {get;set;}
+
+		/*YAS info for matching contact based on additional email temporary*/
+		public String lms{get;set;}
+		public String lmsCourse{get;set;}
+		public String existingContactId{get;set;}
+		public String existingContactName{get;set;}
+		public String existingContactEmail{get;set;}
+		public String existingContactAdditionalEmail{get;set;}
+		public Boolean hasExistingContactPersonalEmail{get;set;}
+		public String existingContactAccount{get;set;}
+		public String existingContactUsername{get;set;}
+		public String emailConfirmationTemplate{get;set;}
 	}
 
 	public class UserInformation {
@@ -102,6 +116,30 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public Id contactId{get;set;}
 		@AuraEnabled
 		public Id accountId{get;set;}
+
+		/*YAS info for matching contact based on additional email temporary*/
+		@AuraEnabled
+		public Boolean hasExistingContactPersonalEmail{get;set;}
+		@AuraEnabled
+		public Boolean hasExistingUserPersonalEmail{get;set;}
+		@AuraEnabled
+		public String existingContactId{get;set;}
+		@AuraEnabled
+		public String existingContactName{get;set;}
+		@AuraEnabled
+		public String existingContactEmail{get;set;}
+		@AuraEnabled
+		public String existingContactAdditionalEmail{get;set;}
+		@AuraEnabled
+		public String existingContactAccount{get;set;}
+		@AuraEnabled
+		public String existingContactUsername{get;set;}
+
+		//Training Info in case it exists
+		@AuraEnabled
+		public String existingContactTrainingUsername{get;set;}
+		@AuraEnabled
+		public String existingContactTrainingUserId{get;set;}
 	}
 
 	@AuraEnabled(cacheable=true)
@@ -171,7 +209,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 		IATA_ISO_Country__c noCountry;
 		for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
-			//todo align with Marc - Second Level Registration
 			if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
 				countries.add(iso);
 			}else{
@@ -244,6 +281,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		List<GCS_CustomerType> customerTypesList = GCS_CustomerType.getCustomerTypesMap().values();
 		for(GCS_CustomerType customerType : customerTypesList){
+			if(customerType.metadataCustomerType.MasterLabel == sector && category == 'General Public'){
+				return customerType.metadataCustomerType.DeveloperName;
+			}
+			
 			if((customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category)
 					|| (customerType.metadataCustomerType.Filter_on_Sector__c == sector && customerType.metadataCustomerType.Filter_on_Category__c == category)){
 				return customerType.metadataCustomerType.DeveloperName;
@@ -253,7 +294,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	@AuraEnabled
-	public static UserInformation getUserInformationFromEmail(String email){
+	public static UserInformation getUserInformationFromEmail(String email, String LMSRedirectFrom){
 		UserInformation userInfo = new UserInformation();
 		List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
 		userInfo.hasExistingContact = true ? conList.size() > 0 : false;
@@ -265,21 +306,79 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		List<User> userList = returnExistingUser(contactIds, email);
 		userInfo.hasExistingUser = true ? userList.size() > 0 :false;
 		userInfo.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
+
+		/*LMS YAS check for existing contact/user based on additional email field*/
+		if(!userInfo.hasExistingContact){
+			List<Contact> contactPersonalEmailList = returnExistingContactAdditionalEmail(email);
+			userInfo.hasExistingContactPersonalEmail = contactPersonalEmailList.size() > 0 ? true : false;
+			if(!contactPersonalEmailList.isEmpty()){
+				userInfo.existingContactId = contactPersonalEmailList.get(0).Id;
+				userInfo.existingContactName = contactPersonalEmailList.get(0).Name;
+				userInfo.existingContactEmail = contactPersonalEmailList.get(0).Email;
+				userInfo.existingContactAdditionalEmail = contactPersonalEmailList.get(0).Additional_Email__c;
+				userInfo.existingContactAccount = contactPersonalEmailList.get(0).Account.Name;
+
+				Set<Id> contactPersonalEmailIds = new Set<Id>{contactPersonalEmailList.get(0).Id};
+				userInfo.hasExistingUserPersonalEmail = contactPersonalEmailIds.size() > 0 ? true : false;
+				List<User> contactUser = returnExistingUser(contactPersonalEmailIds, null);
+				if(!contactUser.isEmpty()){
+					userInfo.existingContactUsername = contactUser.get(0).Username;
+				}
+			}
+
+		}else if(userInfo.hasExistingContact){
+			userInfo.existingContactId = conList.get(0).Id;
+			userInfo.existingContactName = conList.get(0).Name;
+			userInfo.existingContactEmail = conList.get(0).Email;
+			userInfo.existingContactAdditionalEmail = conList.get(0).Additional_Email__c;
+			userInfo.existingContactAccount = conList.get(0).Account.Name;
+			if(!userList.isEmpty()){
+				userInfo.existingContactUsername = userList.get(0).Username;
+			}
+
+		}
+
+		if(userInfo.existingContactId != null){
+			List<Training_Contact_Role_Details__c> contactTrainingInfo = returnExistingContactTrainingInfo(userInfo.existingContactId);
+			if(!contactTrainingInfo.isEmpty()){
+				userInfo.existingContactTrainingUsername = contactTrainingInfo.get(0).Username__c;
+				userInfo.existingContactTrainingUserId = contactTrainingInfo.get(0).UserId__c;
+			}
+		}
+
 		return userInfo;
 	}
 
 	public static List<Contact> returnExistingContact(String email) {
 		// Method to search contact that already exists in SALESFORCE
 		List<Contact> conList = new List<Contact>();
-		conList = [SELECT id, AccountId FROM Contact WHERE Email =: email];
+		conList = [SELECT id, Name, AccountId, Email, Additional_Email__c, Account.Name FROM Contact WHERE Email = :email];
+		return conList;
+	}
+
+	public static List<Contact> returnExistingContactAdditionalEmail(String additionalEmail) {
+		// Method to search contact that already exists in SALESFORCE
+		List<Contact> conList = new List<Contact>();
+		conList = [SELECT id, Name, AccountId, Email, Additional_Email__c, Account.Name FROM Contact WHERE Additional_Email__c =: additionalEmail AND Status__c = 'Active'];
 		return conList;
 	}
 
 	public static List<User> returnExistingUser(Set<Id> contactIds, string email){
 		//check if there is an existing user associated to the contact(s) found OR associated to the email provided
 		List<User> userList = new List<User>();
-		userList = [SELECT Id FROM User WHERE contactId IN :contactIds OR email = :email];
+		userList = [SELECT Id, Username FROM User WHERE contactId IN :contactIds OR email = :email];
 		return userList;
+	}
+
+	public static List<Training_Contact_Role_Details__c> returnExistingContactTrainingInfo(Id contactId) {
+		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+		List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c
+														FROM Training_Contact_Role_Details__c
+														WHERE Account_Contact_Role__r.Contact__c = :contactId
+														AND RecordTypeId = :RECTYPE_Trainee_YASContDet
+														LIMIT 1];
+
+		return con;
 	}
 
 	public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
@@ -347,12 +446,27 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
 
-		List<User> userList =  [SELECT Id FROM User WHERE languagelocalekey =:langKey LIMIT 1];
+		List<User> userList =  [SELECT Id, Name FROM User WHERE languagelocalekey =:langKey LIMIT 1];
 		if(!userList.isEmpty()){
 			userId = userList.get(0).Id;
 		}
 
-		result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
+		if(params.existingContactName != null && params.existingContactName != '' && params.hasExistingContactPersonalEmail){
+			String prefix = '';
+			if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
+			String existingContactURL = '';
+			String sufix = 'email=' + params.existingContactEmail + ISSP_CS__c.getValues('LMS_Encoded_RelayState').value__c + EncodingUtil.urlEncode( params.lmsCourse, 'UTF-8');
+			if(params.existingContactUsername != null && params.existingContactUsername != ''){
+				existingContactURL = prefix + '/login?' + sufix;
+			}else{
+				existingContactURL = prefix + '/login/SelfRegister?' + sufix;
+			}
+			emailMap.put('{!ExistingContactUrl}',existingContactURL);
+			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
+		}else{
+			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
+		}
+
 		return result;
 	}
 
@@ -371,12 +485,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		Map<String, String> emailMap = generateEmailBodyParamsForRegistration(params, portalUrl, profileUrl);
-		result = sendEmailVF(params.email, 'CSP_New_Member_Welcome_Email_VF', emailMap, userId);
-		return result;
+		return sendEmailVF(params.email, 'CSP_New_Member_Welcome_Email_VF', emailMap, userId);
+		
 	}
 
 	@AuraEnabled
-	public static RegistrationResult simulateRegister(string registrationForm, string customerType, string contactId, string accountId){
+	public static RegistrationResult simulateRegister(string registrationForm, string customerType, string contactId, string accountId, string userInfo){
 
 		RegistrationResult result = new RegistrationResult();
 		Savepoint sp = Database.setSavepoint();
@@ -396,6 +510,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			RegistrationParameters params = new RegistrationParameters();
 			params.email     = (inputMap.get('email') != null) ? string.valueOf(inputMap.get('email')) : '';
+			params.salutation = (inputMap.get('salutation') != null) ? string.valueOf(inputMap.get('salutation')) : '';
 			params.firstName = (inputMap.get('firstName') != null) ? string.valueOf(inputMap.get('firstName')) : '';
 			params.lastName  = (inputMap.get('lastName') != null) ? string.valueOf(inputMap.get('lastName')) : '';
 			params.phone     = (inputMap.get('phone') != null) ? string.valueOf(inputMap.get('phone')) : '';
@@ -405,7 +520,20 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? string.valueOf(inputMap.get('selectedCustomerType')) : '';
 			params.registrationTime = string.valueOf(DateTime.Now());
+			params.termsAndUsageIds = (inputMap.get('termsAndUsageIds') != null) ? string.valueOf(inputMap.get('termsAndUsageIds')) : '';
 
+			Map<String, Object> userInfoMap = (Map<String, Object>)JSON.deserializeUntyped(userInfo);
+			params.existingContactId = (userInfoMap.get('existingContactId') != null) ? string.valueOf(userInfoMap.get('existingContactId')) : '';
+			params.existingContactName = (userInfoMap.get('existingContactName') != null) ? string.valueOf(userInfoMap.get('existingContactName')) : '';
+			params.existingContactEmail = (userInfoMap.get('existingContactEmail') != null) ? string.valueOf(userInfoMap.get('existingContactEmail')) : '';
+			params.existingContactAdditionalEmail = (userInfoMap.get('existingContactAdditionalEmail') != null) ? string.valueOf(userInfoMap.get('existingContactAdditionalEmail')) : '';
+			params.hasExistingContactPersonalEmail = (userInfoMap.get('hasExistingContactPersonalEmail') != null) ? Boolean.valueOf(userInfoMap.get('hasExistingContactPersonalEmail')) : false;
+			
+			params.existingContactAccount = (userInfoMap.get('existingContactAccount') != null) ? string.valueOf(userInfoMap.get('existingContactAccount')) : '';
+			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
+			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
+			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
+			params.emailConfirmationTemplate = (params.lms == 'yas' && params.existingContactId != '') ? 'CSP_New_Member_Confirmation_YAS_Email_VF' : 'CSP_New_Member_Confirmation_Email_VF';
 
 			if(params.contactId.length() < 1){
 				if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
@@ -505,12 +633,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}else{
 				con = [SELECT Id, AccountId, firstName, LastName, Phone, Email, Preferred_Language__c FROM Contact WHERE ID=: params.contactId LIMIT 1];
 				params.firstName = con.firstName;
-				//if the account is a bucket account, force user to confirm L1 on the portal when loggedin
-				//Boolean isGeneralPublic = [SELECT is_General_Public_Account__c FROM Account WHERE Id = :params.accountId LIMIT 1].is_General_Public_Account__c;
-				//if(isGeneralPublic == true){
 				registrationRequired = true;
-				//}
 			}
+			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
 
 			if(con == null){
 				result.isSuccess = false;
@@ -530,7 +655,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				result.userName = usr.userName;
 
 				//Send Confirmation Email
-				//result.isSuccess = sendRegistrationEmail(params);
 				result.isSuccess = sendRegistrationEmailVF(params, usr.userId);
 				if(result.isSuccess == false){
 					result.message = 'Error sending Registration Email';
@@ -667,13 +791,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		String sector = '';
 		String category = '';
-
-		if(selectedMetadataCustomerType.Can_Account_Be_Created__c == true){
-			sector = selectedMetadataCustomerType.Created_Account_Sector__c;
-			category = selectedMetadataCustomerType.Created_Account_Category__c;
-		}else{
+		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
 			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
 			category = selectedMetadataCustomerType.Filter_on_Category__c;
+		}
+		else{
+			sector = selectedMetadataCustomerType.MasterLabel;
+			category = 'General Public';
 		}
 
 		String accountQuery = '';
@@ -692,12 +816,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		}
 
-		if(!String.isEmpty(sector)){
-			accountQuery +=' AND Sector__c =\''+ sector +'\'';
-		}
-		if(!String.isEmpty(category)){
-			accountQuery +=' AND Category__c =\''+ category +'\'';
-		}
+		accountQuery +=' AND Sector__c =\''+ sector +'\' AND Category__c =\''+ category +'\'';
 
 		List<Account> accList = new List<Account>();
 
@@ -706,14 +825,17 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(accList.isEmpty()){
 			Account acc = new Account();
 			acc.Reason_for_creation__c = 'Created by customer';
-			//acc.Comments_Reason_for_creation__c = 'General Public Account';
 			acc.ownerid = ISSP_Constant.newAccountOwnerId;
 			acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			acc.Name = sector + ' - ' + category;
+			if(sector == 'Cargo Agent'){
+				acc.Name = 'Freight Forwarder - ' + category;
+			}
+			else{
+				acc.Name = sector + ' - ' + category;
+			}
 			acc.Sector__c = sector;
 			acc.Category__c = category;
 			acc.Is_General_Public_Account__c = true;
-			//acc.IsPartner = true;
 
 			if(!String.isEmpty(country)) {
 				String countryCode = [SELECT ISO_Code__c FROM IATA_ISO_Country__c WHERE ID =: country LIMIT 1].ISO_Code__c;
@@ -783,6 +905,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 			con.AccountId = params.accountId;
 			con.ISO_Country__c = params.country;
+			con.Salutation = params.salutation;
 			con.firstName = params.firstName;
 			con.lastName = params.lastName;
 			con.Phone = params.phone;
@@ -798,6 +921,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				}
 				return null;
 			}else{
+				//Specific LMS Yardstick flow
+				if(params.existingContactId != null){
+					createOrMigrateContactStructure(con, params.existingContactId, false);
+				}
+
 				return con;
 			}
 
@@ -871,7 +999,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				u.localesidkey = 'en_US';
 				u.emailencodingkey = 'UTF-8';
 				DataBase.SaveResult sr = DataBase.insert(u);
-				system.debug('sr: ' + sr);
 				usr.userId = u.Id;
 			}
 			usr.userName = u.username;
@@ -930,6 +1057,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				'{!HeaderUrl}'                                   => headerImageUrl,
 				'{!FooterUrl}'                                   => footerImageUrl,
 				'{!Receiving_User.FirstName}'                    => params.Firstname,
+				'{!ExistingContactName}'                         => params.existingContactName,
+				'{!ExistingContactEmail}'                        => params.existingContactEmail,
+				'{!ExistingContactAdditionalEmail}'              => params.existingContactAdditionalEmail,
+				'{!ExistingContactAccount}'                      => params.existingContactAccount,
+				'{!ExistingContactUsername}'                     => params.existingContactUsername,
 				'{!Community_Url}'                               => oneTimeLink,
 				'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
 				'{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
@@ -1026,7 +1158,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}
 
 			mail.setSaveAsActivity(false);
-			//mail.setPlainTextBody(plainBody);
 			listSingleEmailMessages.add(mail);
 
 			if(!Test.isRunningTest()) {
@@ -1138,7 +1269,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 					CustomerTypePicklist picklist = new CustomerTypePicklist(customerType.subCategorizationLabel);
 					picklist.picklistName = customerType.metadataCustomerType.sub_categorization_custom_label__c;
 					picklist.picklistOptions.add(new CustomerTypePicklistOption(null, customerType.subCategorizationPlaceholder, previousCustomerType == null));
-					//picklist.picklistOptions.add(new CustomerTypePicklistOption(customerType.metadataCustomerType.DeveloperName, customerType.subCategorizationPlaceholder, previousCustomerType == null));
 					for (GCS_CustomerType child : customerType.children) {
 						picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
 					}
@@ -1160,4 +1290,124 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		return orderedPicklists;
 	}
 
+	public static void createOrMigrateContactStructure(Contact con, String existingTrainingId, Boolean deleteOldContact){
+
+		String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+		String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
+
+		List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId
+								FROM Account_Role__c
+								WHERE Account__c = :con.AccountId
+								AND Account_Role_Name__c = 'Training'
+								AND Functional_Role__c =  'Training' LIMIT 1];
+
+		Account_Role__c ar = new Account_Role__c();
+
+		if(listAR.size() > 0){
+			ar = listAR[0];
+		}else{
+			ar.Account__c = con.AccountId;
+			ar.RecordTypeId = RECTYPE_Master_AccRole;
+			ar.Account_Role_Name__c =  'Training';
+			ar.Functional_Role__c =  'Training';
+			insert ar;
+		}
+
+		Set<String> contIds = new Set<String>();
+		contIds.add(con.Id);
+		if(existingTrainingId != ''){
+			contIds.add(existingTrainingId);
+		}
+
+		//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+		List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+												FROM Account_Contact_Role__c
+												WHERE Contact__c in :contIds
+												AND Contact_Role_Name__c = 'Trainee'
+												AND Functional_Role__c =  'Training'];
+		Account_Contact_Role__c acrNew;
+		Account_Contact_Role__c acrOld;
+		Account_Contact_Role__c acr = new Account_Contact_Role__c();
+
+		for(Account_Contact_Role__c acrItem : listACR){
+			if(acrItem.Contact__c == con.Id){
+				acrNew = acrItem;
+			}else if(acrItem.Contact__c == existingTrainingId){
+				acrOld = acrItem;
+			}
+		}
+
+		if(acrOld != null){
+			acr = acrOld;
+			acr.Account_Role__c = ar.Id;
+			acr.Contact__c = con.Id;
+
+			update acr;
+
+			if(acrNew != null)
+				delete acrNew;
+
+		}else if(acrNew != null){
+			acr = acrNew;
+		}else{
+			acr.Account_Role__c = ar.Id;
+			acr.Contact__c = con.Id;
+			acr.Contact_Role_Name__c = 'Trainee';
+			acr.Functional_Role__c =  'Training';
+			acr.RecordTypeId = RECTYPE_Master_AccContRole;
+			acr.Service_Rendered__c = 'Other';
+
+			insert acr;
+		}
+
+		if(existingTrainingId != ''){
+
+			//Inactivate the registering Contact
+			UpdateContactEmailsToInactivate(existingTrainingId);
+		}
+
+		//deactivate user
+		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
+			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
+
+	}
+
+	public static void UpdateContactEmailsToInactivate(String contactId){
+		Contact conToInactivate = [SELECT Id,Email,Additional_Email__c FROM Contact WHERE Id = :contactId];
+		conToInactivate.Email = conToInactivate.Email + '.inactive';
+		if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+			conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+		}
+		update conToInactivate;
+	}
+
+
+	public class AsyncDeactivateUser implements Queueable {
+
+		Set<string> IdsToDeactivate;
+
+		public AsyncDeactivateUser(Set<string> IdsToDeactivate){
+			this.IdsToDeactivate = IdsToDeactivate;
+		}
+
+		public void execute(QueueableContext context) {
+			List<Contact> contactList = [select Id,status__c,email from Contact where Id in:IdsToDeactivate];
+			for(Contact cont : contactList){
+				cont.status__c = 'Inactive';
+				cont.User_Portal_Status__c = 'Deactivated';
+			}
+			if(!contactList.isEmpty())
+				update contactList;
+			
+
+			List <User> userList = [select Id, ContactId, contact.email, UserType from User where ContactId in :IdsToDeactivate];
+			for(User user : userList){
+				ISSP_PortalUserStatusChange.updateUser(user.ContactId, false, user.Contact.email, '', '');
+			}
+			if (!userList.isEmpty()){
+				ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
+			}
+		}
+	}
+	
 }

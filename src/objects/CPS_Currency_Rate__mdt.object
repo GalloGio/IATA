@@ -15,6 +15,15 @@ These values are used to populate the field Operational_Calendar__c.Exchange_rat
         <unique>false</unique>
     </fields>
     <label>CPS Currency Rate</label>
+    <listViews>
+        <fullName>CPS_Currency_exchange_rate</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>Rate__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>CPS Currency exchange rate</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>CPS Currency Rates</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

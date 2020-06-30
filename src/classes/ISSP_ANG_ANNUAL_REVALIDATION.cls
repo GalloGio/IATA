@@ -36,6 +36,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	};
 
 	private static Set<String> locationTypeSet = new Set<String> {
+		AMS_Utils.GE,
 		AMS_Utils.HE,
 		AMS_Utils.AE
 	};
@@ -87,6 +88,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Boolean errorFound {get; set;}
 	public ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT_HELPER submitHelper {get; set;}
 	public Boolean ownershipCompleted {get; set;}
+	public static Map<Id, List<AMS_Agencies_relationhip__c>> getAccountsHierarchiesMap{get; set;}
 
 	//modals
 	public string editContactId {get; set;}
@@ -155,16 +157,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 														 completedForms.add(accForm.HO_Account__c);
 													 }
 
-		Set<Id> aux = new Set<Id>();
-
-		aux.add(caseAccount.id);
-
-		Map<Id, List<AMS_Agencies_relationhip__c>> h = AMS_HierarchyHelper.getAccountsHierarchies(aux);
+		
 
 		List<AMS_Agencies_relationhip__c> accountsList = new List<AMS_Agencies_relationhip__c>();
 
-   		for(Id key : h.keySet()) {
-			accountsList.addAll(h.get(key));
+   		for(Id key : getAccountsHierarchiesMap.keySet()) {
+			accountsList.addAll(getAccountsHierarchiesMap.get(key));
 		}
 
 		Set<SelectOption> relAccs = new Set<SelectOption>();
@@ -274,6 +272,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 
 		// Determine the HE and all AE.
+		getAccountsHierarchies();
 		setParentsAndChilds();
 
 		// set the accountsMap
@@ -340,6 +339,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		batchStatusBool = false;
 	}
+	public void getAccountsHierarchies() {
+		Set<Id> aux = new Set<Id>();
+		aux.add(caseAccount.id);
+		getAccountsHierarchiesMap = AMS_HierarchyHelper.getAccountsHierarchies(aux);
+	}
 
 	public static void setCaseVisibleInPortal(Case newCase) {
 		if(!newCase.Visible_on_ISS_Portal__c) {
@@ -364,16 +368,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private void setParentsAndChilds() {
-		Set<Id> aux = new Set<Id>();
-
-		aux.add(caseAccount.id);
-
-		Map<Id, List<AMS_Agencies_relationhip__c>> h = AMS_HierarchyHelper.getAccountsHierarchies(aux);
 
 		List<AMS_Agencies_relationhip__c> accountsList = new List<AMS_Agencies_relationhip__c>();
 
-   		for(Id key : h.keySet()) {
-			accountsList.addAll(h.get(key));
+   		for(Id key : getAccountsHierarchiesMap.keySet()) {
+			accountsList.addAll(getAccountsHierarchiesMap.get(key));
 		}
 
 		parents = new Set<Id>();
@@ -824,6 +823,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			oscar.IATA_Codes_NOK__c = submitHelper.strListUpdateCompleted.replaceAll(' ', '');
 
 			oscar.OwnerId = AMS_Utils.getRegionalQueue(newCase);
+
+			if (String.isBlank(oscar.IATA_Codes_NOK__c)){
+				oscar.STEP6__c = AMS_Utils.PASSED;
+				oscar.Status__c = AMS_Utils.OSCAR_CLOSED;
+			}
 
 			upsert oscar;
 

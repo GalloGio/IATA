@@ -704,7 +704,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				 c.Origin != 'myIATA' && c.Origin != 'New ISS Deployment' && c.Origin != 'OLS' &&
 				 c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' && c.Origin != 'E&F Client – Email to Case' &&
 				 !c.Phone_Redirected_to_Web__c &&
-				 c.Case_Group__c == 'Query' &&
+				 (c.Case_Group__c == 'Query' || c.Case_Group__c == 'CNS Query')  &&
 				 RoleName != null)
 			) {
 				id userroleid = UserInfo.getUserRoleId();
@@ -745,7 +745,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 					template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
 				}
 				else if (c.CNSCase__c == true) {
-						template = templates.get('Clicktools_Contact_Email_EN_CNS');
+					template = templates.get('Clicktools_Contact_Email_CX_CNS_EN_AUG17');
 				}
 
 				else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){

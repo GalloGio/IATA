@@ -14,6 +14,7 @@ export default class PortalPublicKBArticlePage extends LightningElement {
             if(pageParams.id2 !== undefined) this.article.id2 = pageParams.id2;
             if(pageParams.q !== undefined) this.article.q = decodeURIComponent((pageParams.q+'').replace(/\+/g, '%20'));
             if(pageParams.language !== undefined) this.article.language = pageParams.language;
+            if(pageParams.article !== undefined) this.article.UrlName = pageParams.article;
         }      
     }
 }

@@ -408,6 +408,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		if(recipents != null){
 
 			List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+			String errorMsg = '';
 
 			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
@@ -464,11 +465,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
 						}
 						mail.setTargetObjectId(recipient.Id);
-
 						mail.setWhatId(oscarId);
-
 						mail.setOrgWideEmailAddressId(owea.Id);
-
 						mailsToSend.add(mail);
 					}
 				}
@@ -477,7 +475,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			//FM 24/10/2017 - AMSU-32
 			if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
 				for(String key : mPortalAdminsEmailsDGR.keySet()){
-
 					Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
 					mailPortalAdmin.saveAsActivity = true;
 					mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
@@ -525,7 +522,27 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					emailMsg.Status = '0';
 					mailsToTrackInCase.add(emailMsg);
 				}
-				insert mailsToTrackInCase;
+
+				try {
+					insert mailsToTrackInCase;
+				} catch(Exception e){
+					errorMsg='The following exception has occurred: ' +e.getMessage()+' :: Line number: ' + e.getLineNumber() +' :: Stack trace: ' +e.getStackTraceString();
+				}
+
+				if(String.isNotBlank(errorMsg)){
+					List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+					for(SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
+						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+						mail.setTargetObjectId(supportEmail.Support_User_Id__c);
+						mail.setSubject('AMS_AgencyRegulationAutoRenewal.sendEmailAlert failure');
+						mail.setPlainTextBody(errorMsg);
+						mail.setSaveAsActivity(false);
+						mails.add(mail);
+					}
+					if (!mails.isEmpty()){
+						Messaging.sendEmail(mails);
+					}
+				}
 
 				// add recipients to Case Team
 				list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
@@ -537,6 +554,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					));
 				}
 				Database.insert(listCaseTeam, false);
+
 			}
 		}
 		return new List<Messaging.SingleEmailMessage>();

@@ -118,12 +118,12 @@ public class ISSP_ANG_CodeSearch {
 
 			if(!agencies.isEmpty()) {
 				Account reqAgency = agencies[0];
-
+				String isoCountry = reqAgency.IATA_ISO_Country__r.Name == null ? '' :reqAgency.IATA_ISO_Country__r.Name.replace(' ','_');
 				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c
 																				FROM IATA_Code_Search_Special_Countries__mdt
-															 													WHERE DeveloperName =:reqAgency.IATA_ISO_Country__r.Name LIMIT 1];
+															 													WHERE DeveloperName =:isoCountry LIMIT 1];
 
-				if(specialCountries.size() == 1){
+				if(!specialCountries.isEmpty()){
 					isSpecialIATACodeSearchCountry = true;
 					RHCValueForSpecialCountry = specialCountries[0].Remittance_Holding_Capacity_Value__c;
 				}
@@ -208,7 +208,7 @@ public class ISSP_ANG_CodeSearch {
 
 				if (countryFound) {
 					if (this.agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
-						afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(null, this.agency, true);
+						afpWrapper = new ANG_ISSP_AfpWrapper(this.agency);
 					}
 
 					if (this.agency.Active_Guarantees__c != 0) {

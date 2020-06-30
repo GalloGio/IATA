@@ -138,7 +138,7 @@
                         </aura:if>
 						<div class="terms item">
 							<ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" disabled="{!v.emailLocked}"/>
-							<a class="termsaccepted" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+							<a class="termsaccepted" href="{!$Label.c.OneId_CSP_Terms_Of_Use_Link}" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
 						</div>
 	                </div>
 		        </aura:if>

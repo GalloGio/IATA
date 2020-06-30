@@ -3,16 +3,17 @@
         <div class="IEFixDisplayContainer">
             <lightning-layout-item size="12" class="topLabel IEFixDisplay">
                 <div class="sectionTitle">{labels.CSP_L2_Create_New_Account}</div>
-                <div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                <template if:false={internalUser}>
+                    <div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                </template>
             </lightning-layout-item>
 
             <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
             </lightning-layout-item>
 
             <lightning-layout-item size="12" class="IEFixDisplay">
-                <div class="sectionSubTitle">{labels.CSP_L2_Company_Information}</div>
+                <div class="sectionSubTitle">{companyInformation}</div>
             </lightning-layout-item>
-
 
             <div class="companyInfoContainer">
                 <lightning-layout multiple-rows vertical-align="stretch">
@@ -47,89 +48,62 @@
 
                         <!------------------------------------------      Company Information Row 2    -------------------------------------------->
                         <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataLabel">{labels.CSP_L2_Legal_Name}</div>
+                            <div class="dataLabel">{companyName}</div>
                         </lightning-layout-item>
 
                         <lightning-layout-item size="4" class="IEFixDisplay">
-                            <div class="dataLabel">{labels.CSP_L2_Trade_Name}</div>
+                            <div class="dataLabel">{account.vatLabel}</div>
                         </lightning-layout-item>
                     
-                        <lightning-layout-item size="4" class="rightItem IEFixDisplay">
-                        </lightning-layout-item>        
-                        
-                        <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataValue">{account.legalName}</div>
-                        </lightning-layout-item>
-
-                        <lightning-layout-item size="4" class="IEFixDisplay">
-                            <div class="dataValue">{account.tradeName}</div>
-                        </lightning-layout-item>
-                    
-                        <lightning-layout-item size="4" class="rightItem IEFixDisplay">
-                        </lightning-layout-item>
-                                
-                        <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
-                        </lightning-layout-item>
-                    
-
-                        <!------------------------------------------      Company Information Row 3    -------------------------------------------->
-
-                        <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataLabel">{labels.CSP_L2_Phone_Number}</div>
-                        </lightning-layout-item>
-                    
-                        <lightning-layout-item size="4" class="IEFixDisplay">
-                            <div class="dataLabel">{labels.CSP_L2_Email_Address}</div>
-                        </lightning-layout-item>
-                        
                         <lightning-layout-item size="4" class="rightItem IEFixDisplay">
                             <div class="dataLabel">{labels.CSP_L2_Website}</div>
                         </lightning-layout-item>        
-                            
+                        
                         <lightning-layout-item size="4" class="leftItem IEFixDisplay">
-                            <div class="dataValue">{account.phone}</div>
+                            <div class="dataValue">{account.name}</div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="4" class="IEFixDisplay">
+                            <div class="dataValue">{account.vatNumber}</div>
                         </lightning-layout-item>
                     
-                        <lightning-layout-item size="4" class="IEFixDisplay">
-                            <div class="dataValue">{account.email}</div>
-                        </lightning-layout-item>
-                        
                         <lightning-layout-item size="4" class="rightItem IEFixDisplay">
                             <div class="dataValue">{account.website}</div>
                         </lightning-layout-item>
+                                
+                        <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                        </lightning-layout-item>                        
                     </div>
                 </lightning-layout>
             </div>  
             <!------------------------------------------      Address Form      -------------------------------------------->
             <lightning-layout-item size="12" class="IEFixDisplay">
                 <div class="sectionSubTitle">{labels.CSP_L2_Business_Address_Information}</div>
-                <div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div>
+                <div class="sectionDescription">{businessAddressInformationMessage}</div>
             </lightning-layout-item>
         
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
-        <!--</div>
-    </lightning-layout>-->
 
-    <c-portal-address-form 
-        country-id={countryId}
-        address={localAddress}
-        onsetvalidationstatus={setValidationStatus}
-        onstartloading={startLoading}
-        onstoploading={stopLoading}>
-    </c-portal-address-form>
+            <c-portal-address-form 
+                country-id={countryId}
+                address={localAddress}
+                disable-country=true
+                onsetvalidationstatus={setValidationStatus}
+                onstartloading={startLoading}
+                onstoploading={stopLoading}>
+            </c-portal-address-form>
 
-    <!--<lightning-layout multiple-rows vertical-align="stretch">
-        <div class="IEFixDisplayContainer">-->
             <lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay">
             </lightning-layout-item>
+
             <div class="buttonsContainer">
                 <lightning-layout-item size="6" class="backButtonWrapper">
                     <div class="text-xxsmall">
                         <lightning-button variant="base"
-                            label={labels.CSP_L2_Back_to_Company_Information}
-                            title={labels.CSP_L2_Back_to_Company_Information}
-                            onclick={toCompanyInformation}
+                            label={backToCompanyInformation}
+                            title={backToCompanyInformation}
+                            onclick={previous}
                             class="blueCustomButtonLinkSmall"
                             icon-name="utility:back" 
                             icon-position="left">
@@ -138,10 +112,11 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item size="6" class="IEFixDisplay">
-                    <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Confirmation} disabled={isConfirmationButtonDisabled} variant="brand" onclick={toConfirmation}>
+                    <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Step} disabled={isConfirmationButtonDisabled} variant="brand" onclick={next}>
                     </lightning-button>
                 </lightning-layout-item>
             </div>
+
             <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
             </lightning-layout-item>
         </div>

@@ -1,0 +1,90 @@
+
+.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+	background-color: #f7f8fa;
+}
+
+.stepText {
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.63;
+letter-spacing: normal;
+color: #525252;
+}
+
+.sectionTitle {
+font-size: 22px;
+font-weight: 500;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.45;
+letter-spacing: normal;
+color: #333333;
+}
+
+.sectionDescription {
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.63;
+letter-spacing: normal;
+color: #4a4d61;
+}
+
+.dataLabel {
+font-size: 14px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.43;
+letter-spacing: normal;
+color: #999999;
+}
+
+.dataValue {
+width: 328px;
+height: 26px;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.63;
+letter-spacing: normal;
+color: #525252;
+word-wrap: break-word;
+}
+
+.backButtonWrapper{
+	display: flex;
+	align-items: center;
+}
+
+.containedButton{
+	box-shadow: none !important;
+}
+
+.customBtn .slds-button:disabled{
+	box-shadow: none;
+}
+
+.profileContainer{
+width: 100%;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+}
+
+.profileItem{
+width: 50%;
+padding: 7px;
+margin-bottom: 20px;
+}
+
+.buttonsContainer{
+margin-top: 30px;
+width: 100%;
+display: flex;
+flex-direction: row;
+}

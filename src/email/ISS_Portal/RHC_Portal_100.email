@@ -8,16 +8,19 @@
 <BR/>
 {!$Label.ISSP_Email_Dear_Pre} {!recipient.Name}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
-We would like to inform you that according to our records you have reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> of your Remittance Holding Capacity (RHC).
+We would like to inform you that according to our records you have reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> (equal to <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></b>) of your Remittance Holding Capacity (<b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b>).
 <BR/><BR/>
-It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}" /> </apex:outputText></b>.
+Please note that as of today, the Cash form of payment has been temporarily restricted for your agency, although, you will be able to continue issuing tickets through other form of payments such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
 <BR/><BR/>
-Please note that if your Agency’s total Cash amounts outstanding to the BSP reach 100% of your RHC,  Cash as a form of payment will be temporarily restricted until a remittance is received, although you will be able to continue issuing tickets through other forms of payment such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
+Should you wish to re-activate the Cash payment method, you may:
 <BR/><BR/>
-You can consult your RHC usage at any time on the <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_ANG_RHC">IATA Customer Portal</a>.
+a)      Prepay any outstanding BSP Cash sales before or on the remittance date to reduce the amount of RHC consumed or
 <BR/><BR/>
-
-{!$Label.ISSP_Email_ThankYou}
+b)      Present additional financial security to increase the RHC amount applicable to your agency. The increase in RHC will be equal to the amount of increase of the financial security.
+<BR/><BR/>
+For more information on Remittance Holding Capacity, please do not hesitate to contact us via the IATA Customer Portal.
+<BR/><BR/>
+Best Regards,
 <br/><br/>
 <b>IATA – Global Delivery Center</b>
 <br/>
