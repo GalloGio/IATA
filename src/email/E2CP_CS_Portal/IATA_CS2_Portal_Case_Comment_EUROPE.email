@@ -1,91 +1,130 @@
 <messaging:emailTemplate subject="{!$Label.ISSP_Email_CaseComment_Subject}{!relatedTo.CaseNumber} - {!relatedTo.Subject}  {!relatedTo.E2CP__Case_Thread_Id__c}" 
-            recipientType="User" relatedToType="Case"  language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', 'Spanish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
+        recipientType="User" relatedToType="Case"  language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', 'Spanish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
     <messaging:emailHeader name="CaseId">
         {!relatedTo.Id}
-     </messaging:emailHeader>
-<messaging:htmlEmailBody >
-<div style="margin:auto; width:600px">
-<span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
-{!$Label.ISSP_Email_aNewComment}
-<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
-<a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.
-</apex:outputPanel>
-<apex:outputPanel rendered="{!!relatedTo.Visible_on_ISS_Portal__c}">
-{!relatedTo.CaseNumber}
-</apex:outputPanel>
-<br/><br/>
-<br/>
-{!$Label.Country_concerned_by_the_query}: {!relatedTo.Country_concerned_by_the_query__c}
-<br/><br/>
-<center><apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" /></center>
-<apex:outputField value="{!relatedTo.E2CP__Most_Recent_Public_Comment__c}"></apex:outputField>
-<br/>
-<center><apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" /></center>
-<br/>
-<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
-<apex:outputText value="{!$Label.ISSP_Email_YouCanAccess}" />
-</apex:outputPanel>
-</span>
-<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
-<br/><br/><center>
-<a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
-href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
-</center>
-</apex:outputPanel>
-<br/>
-<apex:outputPanel rendered="{!relatedTo.Groups__c = 'ICCS Team'}">
-<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
-<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-IATA Currency Clearance Service (ICCS) Team
-<br/>
-</span></b>
-</p>
-</apex:outputPanel>
-<apex:outputPanel rendered="{!relatedTo.Groups__c = 'AP Team'}">
-<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
-<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-Global Airline Participation Team - IATA
-<br/>
-</span></b>
+    </messaging:emailHeader>
+    <messaging:htmlEmailBody >
+        <div style="margin:auto; width:600px">
+            <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+                {!$Label.ISSP_Email_aNewComment}
+                <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+                    <a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!!relatedTo.Visible_on_ISS_Portal__c}">
+                    {!relatedTo.CaseNumber}
+                </apex:outputPanel>
+                <br/>
+                <br/>
+                <br/>
+                {!$Label.Country_concerned_by_the_query}: {!relatedTo.Country_concerned_by_the_query__c}
+                <br/>
+                <br/>
+                <center>
+                    <apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" />
+                </center>
+                <apex:outputField value="{!relatedTo.E2CP__Most_Recent_Public_Comment__c}"/>
+                <br/>
+                <center>
+                    <apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" />
+                </center>
+                <br/>
+                <apex:outputPanel rendered="{!AND( relatedTo.Visible_on_ISS_Portal__c, NOT(AND(relatedTo.Status = 'Pending Closure', relatedTo.Portal_Closure_Status__c = 'Started')) )}">
+                    <apex:outputText value="{!$Label.ISSP_Email_YouCanAccess}" />
+                </apex:outputPanel>
+            </span>
+            <apex:outputPanel rendered="{!AND( relatedTo.Visible_on_ISS_Portal__c, NOT(AND(relatedTo.Status = 'Pending Closure', relatedTo.Portal_Closure_Status__c = 'Started')) )}">
+                <br/>
+                <br/>
+                <center>
+                    <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+                            href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
+                </center>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! AND(relatedTo.Visible_on_ISS_Portal__c, relatedTo.Status = 'Pending Closure', relatedTo.Portal_Closure_Status__c = 'Started') }">
+                <br/>
+                <br/>
+                <center>
+                    <p>{!$Label.Case_Comment_Have_Been_Resolved_1}</p>
 
-<span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-Financial and Distribution Services
-<br/>
-</span>
+                    <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!relatedTo.Id}&replyComment=No" style="text-decoration:none; cursor: pointer;">
+                        <button style="min-width: 160px; height: 40px; line-height: 24px; border: 1px solid #1e32fa; background-color: #ffffff; color: #33f; font-weight: 500; font-size: 16px; padding: 1px 6px; text-align: center; cursor: pointer;">
+                            {!$Label.ISSP_No}
+                        </button>
+                    </a>
+                    &nbsp;
+                    <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!relatedTo.Id}&replyComment=Yes" style="text-decoration:none; cursor: pointer;">
+                        <button style="min-width: 160px; height: 40px; line-height: 24px; border: 1px solid #33f; background-color: #33f; color: #fff; font-weight: 500; font-size: 16px; padding: 1px 6px; text-align: center;box-shadow: 0 6px 16px 0 rgba(56,86,235,.24), 0 1px 2px 0 rgba(56,86,235,.16); cursor: pointer;">
+                            {!$Label.ISSP_Yes}
+                        </button>
+                    </a>
 
-</p>
-</apex:outputPanel>
-<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c && relatedTo.Groups__c = 'Default'}">
-<p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
-<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-IATA Operations and Service Centre - Europe
-<br/>International Air Transport Association
-</span></b>
-</p>
-</apex:outputPanel>
-<p>
+                    <p>{!$Label.Auto_Case_Comment_Notification_Email_3}</p>
+                </center>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! AND(relatedTo.Visible_on_ISS_Portal__c, relatedTo.Status = 'Pending Closure', relatedTo.Portal_Closure_Status__c  = 'Started') }">
+                <br/>
+                <apex:outputPanel rendered="{!relatedTo.Groups__c = 'ICCS Team'}">
+                    <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+                        <b>
+                            <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                            IATA Currency Clearance Service (ICCS) Team
+                                <br/>
+                            </span>
+                        </b>
+                    </p>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!relatedTo.Groups__c = 'AP Team'}">
+                    <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+                        <b>
+                            <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                            Global Airline Participation Team - IATA
+                                <br/>
+                            </span>
+                        </b>
 
-<apex:outputPanel rendered="{!relatedTo.Groups__c != 'AGM Team'}">
-<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
-</a>
-</apex:outputPanel>
+                        <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                        Financial and Distribution Services
+                            <br/>
+                        </span>
 
-<apex:outputPanel rendered="{!relatedTo.Groups__c = 'AGM Team'}">
-<b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-IATA Agency Management
-</span></b>
-<br/>
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000006BIMp&oid=00D2000000008TF&lastMod=1507038116000"/>
-</apex:outputPanel>
+                    </p>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c && relatedTo.Groups__c = 'Default'}">
+                    <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
+                        <b>
+                            <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                            IATA Operations and Service Centre - Europe
+                                <br/>International Air Transport Association
+                            </span>
+                        </b>
+                    </p>
+                </apex:outputPanel>
+                <p>
 
-</p>
-<br/>
-<br/>
-<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
-<br/>
-{!relatedTo.E2CP__Case_Thread_Id__c}
-</div>
-</messaging:htmlEmailBody>
+                    <apex:outputPanel rendered="{!relatedTo.Groups__c != 'AGM Team'}">
+                        <a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+                            <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
+                        </a>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!relatedTo.Groups__c = 'AGM Team'}">
+                        <b>
+                            <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                            IATA Agency Management
+                            </span>
+                        </b>
+                        <br/>
+                        <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000006BIMp&oid=00D2000000008TF&lastMod=1507038116000"/>
+                    </apex:outputPanel>
+
+                </p>
+                <br/>
+                <br/>
+                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+                <br/>
+            {!relatedTo.E2CP__Case_Thread_Id__c}
+            </apex:outputPanel>
+        </div>
+    </messaging:htmlEmailBody>
 </messaging:emailTemplate>
