@@ -110,12 +110,12 @@ public with sharing class PortalDocumentsController {
 		String searchQuery = '';
 		if(String.isNotBlank(searchKey)){
 			String[] searchTerms = searchKey.split(' ');
-			String searchQuery = '(';
+			searchQuery = '(';
 			for(String term : searchTerms)
-				searchQuery += 'Title LIKE \'%'+ String.escapeSingleQuotes(term) +'%\' OR ';
+				searchQuery += 'Title LIKE \'%'+ String.escapeSingleQuotes(term) +'%\' AND ';
 
-			if(searchQuery.indexOf(' OR ') > -1)
-				searchQuery.removeEnd(' OR ');
+			if(searchQuery.indexOf(' AND ') > -1)
+				searchQuery.removeEnd(' AND ');
 			searchQuery += ')';
 			searchKey = searchQuery;
 		}
