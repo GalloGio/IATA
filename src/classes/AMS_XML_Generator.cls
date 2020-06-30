@@ -1791,7 +1791,7 @@ public with sharing class AMS_XML_Generator {
 
 				getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',null);
 				//WMO-715
-				getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+				getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
 			
 			}else{
 				Set<String> changeCodeSet = new Set<String>{'NEW','FIN','TER','CLO'};
@@ -1804,19 +1804,19 @@ public with sharing class AMS_XML_Generator {
 						if(aaElem.Account__r.Location_Class__c == 'G' && aaElem.Account__r.Category__c == 'GSA General Sales Agent'){
 							if(mAg_VS_AgChangeCode.containsKey(aaElem.Account__c)){
 								if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSA' && aaElem.Status__c == 'Active'){
-									getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation', 'Yes');
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'Yes');
 								}else if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSD' && aaElem.Status__c == 'Non-Active'){
-									getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation', 'No');
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'No');
 								}else if(!changeCodeSet.contains(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c) && aaElem.Status__c == 'Active'){
-									getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation', 'Yes');
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'Yes');
 								}else{
-									getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
 								}
 							}else{
-								getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+								getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
 							}
 						}else{
-							getElementNode(nodeAauthorizationsNode, 'GSA_BSP_participation',null);
+							getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
 						}
 					}
 				
