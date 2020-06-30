@@ -93,8 +93,6 @@ public with sharing class PortalLoginCtrl {
 					LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
 				}
 
-				//Assign GDPR Permission set when user logs in. No matter the service
-				LightningRegistrationProcess.assignGDPRPermissionSet(oneUser.Id);
 			}
 			//to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
 			//oneUser.Portal_User_Frozen_Checkbox__c=true;
