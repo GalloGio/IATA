@@ -2928,6 +2928,27 @@ SF Workflow Process</value>
         <value>Attention</value>
     </labels>
     <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_1</shortDescription>
+        <value>We have just added a reply to your case, with number</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_2</shortDescription>
+        <value>You can go to case details to view the reply.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_3</shortDescription>
+        <value>You can let us know by accessing the query in the IATA Customer Portal.</value>
+    </labels>
+    <labels>
         <fullName>Auto_renew_payment_method_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6607,6 +6628,14 @@ You can easily create a company account in two steps</value>
         <value>Personal Information</value>
     </labels>
     <labels>
+        <fullName>CSP_PortalBaseURL</fullName>
+        <categories>CS Portal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PortalBaseURL</shortDescription>
+        <value>https://wmoclaudio-customer-portal-iata.cs101.force.com</value>
+    </labels>
+    <labels>
         <fullName>CSP_PortalPath</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8065,6 +8094,69 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Case Classification</shortDescription>
         <value>Case Classification</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Answer_Not_Clear</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Answer_Not_Clear</shortDescription>
+        <value>The answer was not clear</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Can_Close_Case</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Can_Close_Case</shortDescription>
+        <value>You can close this case now</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Have_New_Query</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Have_New_Query</shortDescription>
+        <value>I have a new Query</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Have_Been_Resolved_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Have_Been_Resolved_1</shortDescription>
+        <value>Has your query been resolved?</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Have_Been_Resolved_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Have_Been_Resolved_2</shortDescription>
+        <value>Should we not hear from you over the next 48 hours, we will take it that you no longer require assistance and we will close the case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_How_Can_Assist_You</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_How_Can_Assist_You</shortDescription>
+        <value>Please let us know how we can further assist you with this query.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Notification_Template_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Notification_Template_Name</shortDescription>
+        <value>NT-2006</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Survey_Lik_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Survey_Lik_Label</shortDescription>
+        <value>this survey</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Survey_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Survey_Message</shortDescription>
+        <value>We value your opinion. Please let us know your feedback about IATA&apos;s Support, in</value>
     </labels>
     <labels>
         <fullName>Case_Defect_Issue</fullName>
