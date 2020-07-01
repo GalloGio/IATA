@@ -172,20 +172,21 @@ public class SCIMServProvManager {
 		if (portalAccessList!=null) {
 			System.debug('basto1p - Initializing apps list initIATAServAccessMapOfApps');
 			for (Portal_Application_Right__c access : portalAccessList) {
-				if (access.Portal_Application__c != null) portalAppsSet.add(access.Portal_Application__c);
-
-				portalAppsAccessSet.add(access.Id);
+				if (access.Portal_Application__c != null) {                    
+					portalAppsSet.add(access.Portal_Application__c);				
+				}
 			}
 
 			if (!portalAppsSet.isEmpty()) {
-				for (
-						Portal_Applications__c objCS
-						:
-				[Select id,name, ServiceName__c ,Service_Description__c, SCIM_App_Name__c, Provisioning_Type__c
-						From Portal_Applications__c where id IN :portalAppsSet])
+				for (Portal_Applications__c objCS :	[Select id,name, ServiceName__c ,Service_Description__c, SCIM_App_Name__c, Provisioning_Type__c	From Portal_Applications__c where id IN :portalAppsSet])
 					mapOfApps.put(objCS.id, objCS);
 
 			}
+			for (Portal_Application_Right__c access : portalAccessList) {                
+				if (access.Portal_Application__c != null && (mapOfApps.get(access.Portal_Application__c).SCIM_App_Name__c == PROD_SRV_PROV || mapOfApps.get(access.Portal_Application__c).SCIM_App_Name__c == PRE_PROD_SRV_PROV)){
+					portalAppsAccessSet.add(access.Id);
+				}
+			}	
 		}
 		system.debug('basto1p - initIATAServAccessMapOfApps mapOfApps='+mapOfApps);
 	}
