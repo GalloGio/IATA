@@ -17588,6 +17588,51 @@ OR(
         <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Check_dup_for_Stock_Management_email1</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for Stock Management with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( Stock_Management_Remove_Email_1__c)),
+  OR(
+    Stock_Management_Remove_Email_1__c ==  Stock_Management_Email_1__c,
+    Stock_Management_Remove_Email_1__c ==  Stock_Management_Email_2__c,
+    Stock_Management_Remove_Email_1__c ==  Stock_Management_Email_3__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_Stock_Management_email2</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for Stock Management with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( Stock_Management_Remove_Email_2__c)),
+  OR(
+    Stock_Management_Remove_Email_2__c ==  Stock_Management_Email_1__c,
+    Stock_Management_Remove_Email_2__c ==  Stock_Management_Email_2__c,
+    Stock_Management_Remove_Email_2__c ==  Stock_Management_Email_3__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_Stock_Management_email3</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for Stock Management with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( Stock_Management_Remove_Email_3__c)),
+  OR(
+    Stock_Management_Remove_Email_3__c ==  Stock_Management_Email_1__c,
+    Stock_Management_Remove_Email_3__c ==  Stock_Management_Email_2__c,
+    Stock_Management_Remove_Email_3__c ==  Stock_Management_Email_3__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Derired_Date_to_start_ICH_Lower_than_SIS</fullName>
         <active>true</active>
         <description>The field Desired_date_to_start_in_ICH__c can&apos;t be earlier than field Desired_date_to_start_in_SIS__c</description>
