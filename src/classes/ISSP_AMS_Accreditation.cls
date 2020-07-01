@@ -6191,7 +6191,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Please_Upload + ' ' + thisReq.Name));
 					}
 
-					if (thisReq.File_Identifier2__c == AMS_Utils.CGO_SIGNED_CONTRACT || thisReq.File_Identifier2__c == AMS_Utils.NOC_SIGNED_CONTRACT) {
+					if (isCNSAgency || thisReq.File_Identifier2__c == AMS_Utils.CGO_SIGNED_CONTRACT || thisReq.File_Identifier2__c == AMS_Utils.NOC_SIGNED_CONTRACT) {
 						redirectToStepE = true;
 					}
 
