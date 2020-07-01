@@ -42,7 +42,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>Service Rendered</label>
-    <pluralLabel>Services Rendered</pluralLabel>
+    <label>Service Rendered PE</label>
+    <pluralLabel>Services Rendered PE</pluralLabel>
     <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

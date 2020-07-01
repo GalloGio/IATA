@@ -15,7 +15,7 @@
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
-    <label>Risk Status Downgrade</label>
-    <pluralLabel>Risk Status Downgrades</pluralLabel>
+    <label>Risk Status Downgrade PE</label>
+    <pluralLabel>Risk Status Downgrades PE</pluralLabel>
     <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>
