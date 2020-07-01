@@ -17531,9 +17531,9 @@ OR(
   NOT(ISBLANK( HOT_File_Recipient_Remove_Email_1__c )),
   OR(
     HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
-    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
-    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
-    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
         <errorDisplayField>HOT_File_Recipient_Remove_Email_1__c</errorDisplayField>
@@ -17546,10 +17546,10 @@ OR(
         <errorConditionFormula>AND(
   NOT(ISBLANK( HOT_File_Recipient_Remove_Email_2__c )),
   OR(
-    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_1__c,
     HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
-    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
-    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
         <errorDisplayField>HOT_File_Recipient_Remove_Email_2__c</errorDisplayField>
@@ -17562,10 +17562,10 @@ OR(
         <errorConditionFormula>AND(
   NOT(ISBLANK( HOT_File_Recipient_Remove_Email_3__c )),
   OR(
-    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
-    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_2__c,
     HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
-    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
         <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
@@ -17578,9 +17578,9 @@ OR(
         <errorConditionFormula>AND(
   NOT(ISBLANK( HOT_File_Recipient_Remove_Email_4__c )),
   OR(
-    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
-    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
-    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_3__c,
     HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
   )
 )</errorConditionFormula>
