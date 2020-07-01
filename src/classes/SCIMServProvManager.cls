@@ -170,7 +170,6 @@ public class SCIMServProvManager {
 		portalAccessList = serAccessList;
 
 		if (portalAccessList!=null) {
-			System.debug('basto1p - Initializing apps list initIATAServAccessMapOfApps');
 			for (Portal_Application_Right__c access : portalAccessList) {
 				if (access.Portal_Application__c != null) {                    
 					portalAppsSet.add(access.Portal_Application__c);				
@@ -188,7 +187,6 @@ public class SCIMServProvManager {
 				}
 			}	
 		}
-		system.debug('basto1p - initIATAServAccessMapOfApps mapOfApps='+mapOfApps);
 	}
 
 	public static String getSCIMAppNameFromId(Id IATAPortalApp){
