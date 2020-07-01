@@ -93,8 +93,6 @@ public with sharing class PortalLoginCtrl {
 					LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
 				}
 
-				//Assign GDPR Permission set when user logs in. No matter the service
-				LightningRegistrationProcess.assignGDPRPermissionSet(oneUser.Id);
 			}
 			//to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
 			//oneUser.Portal_User_Frozen_Checkbox__c=true;
@@ -115,8 +113,15 @@ public with sharing class PortalLoginCtrl {
 				startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage?communityName=CNS');
 			}
 
-
-			LightningRegistrationProcess.insertDeductionNoticeApp(string.valueOf(oneUser.Id));
+			if(oneUser.ANG_Sector__c == 'Travel Agent'
+			&& oneUser.ANG_Category__c == 'IATA Passenger Sales Agent'
+			&& oneUser.Customer_type__c == 'Agency'
+			&& oneUser.ANG_Is_Accredited_Agent__c == true
+			&& oneUser.ANG_Customer_Country_ISO__c == 'IL'
+			&& (oneUser.Contact.User_Portal_Status__c == 'Approved User' || oneUser.Contact.User_Portal_Status__c == 'Approved Admin'))	{
+				
+				LightningRegistrationProcess.insertDeductionNoticeApp(string.valueOf(oneUser.Id));	
+			}			
 
 			username=null != oneUser ? oneUser.Username : username;
 
