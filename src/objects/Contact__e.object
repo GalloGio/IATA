@@ -40,6 +40,6 @@
         <unique>false</unique>
     </fields>
     <label>Contact PE</label>
-    <pluralLabel>ContactsPE</pluralLabel>
+    <pluralLabel>Contacts PE</pluralLabel>
     <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>

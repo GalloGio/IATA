@@ -253,4 +253,10 @@
         <label>Multicountry Review</label>
         <cssExposed>false</cssExposed>
     </standardValue>
+    <standardValue>
+        <fullName>NonNewGen RHC</fullName>
+        <default>false</default>
+        <label>NonNewGen RHC</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
 </StandardValueSet>
