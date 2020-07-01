@@ -13,7 +13,10 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)
 				System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode));
 			else
-				executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
+				if(System.isFuture())
+					executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
+				else
+					executeCalloutFuture(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 		}
 		else if(isRunningBatch || ANG_ConversionHelper.isMigrationTool || System.isBatch() || System.isFuture()){
 			executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
