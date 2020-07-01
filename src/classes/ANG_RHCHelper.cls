@@ -578,7 +578,7 @@ public class ANG_RHCHelper {
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - triggerRiskOrForecastedRhcAmountNotifications] Email List - ' + emailLst);
 
-		if(!System.isBatch() && !System.isQueueable()){
+		if(!System.isBatch() && !System.isQueueable() && ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)){
 			System.enqueueJob(new RiskAlertMailService(emailLst, null));
 		}
 		else {
