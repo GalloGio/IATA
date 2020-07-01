@@ -9301,6 +9301,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CaseStatus</name>
     </customLabels>
     <customLabels>
+        <label>He leído la lista de documentos requeridos.</label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
         <label>El pago por transferencia bancaria  es aceptado para su país</label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</name>
     </customLabels>
@@ -9309,7 +9313,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformationTitle</name>
     </customLabels>
     <customLabels>
-        <label>Todos los artículos deben ser marcados antes de pasar a la página siguiente.</label>
+        <label>Es posible que necesite los siguientes documentos para completar la solicitud de la tarjeta ID Card. Con fines de verificación, IATA podrá pedir documentos o información adicionales al solicitante. Una declaración falsa dará lugar a la cancelación y bloqueo futuro de la solicitud de la tarjeta ID Card.</label>
         <name>IDCard_CheckList_ErrorMessage</name>
     </customLabels>
     <customLabels>
@@ -9481,6 +9485,10 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_ContactNotFound</name>
     </customLabels>
     <customLabels>
+        <label>Siguiente...</label>
+        <name>IDCard_Continue</name>
+    </customLabels>
+    <customLabels>
         <label>Continuar</label>
         <name>IDCard_Continue_Button</name>
     </customLabels>
@@ -9649,7 +9657,7 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_FirstName</name>
     </customLabels>
     <customLabels>
-        <label>&lt;b&gt;Importante&lt;/b&gt;: Por razones de seguridad y fraude, su tarjeta de identificación se enviará a la siguiente dirección, despuès de que la solicitud haya sido aprobada (a menos que usted estè solicitando el cambio de la agencia):</label>
+        <label>&lt;b&gt;Importante&lt;/b&gt;: Por razones de seguridad y fraude, su tarjeta de identificación se enviará a la siguiente dirección, despuès de que la solicitud haya sido aprobada:</label>
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
@@ -10280,6 +10288,18 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>IDCard_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_errMsg_Account_Rule --></label>
+        <name>IDCard_errMsg_Account_Rule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_MoreDetails --></label>
+        <name>IDCard_errMsg_MoreDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_NoContact --></label>
+        <name>IDCard_errMsg_NoContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
     </customLabels>
@@ -10584,6 +10604,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>ID_Card_Invalid_Promotion_Code_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID Card Invalid Promotion Code 3 --></label>
+        <name>ID_Card_Invalid_Promotion_Code_3</name>
+    </customLabels>
+    <customLabels>
         <label>VER # no es valido</label>
         <name>ID_Card_Invalid_VER</name>
     </customLabels>
@@ -10618,6 +10642,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
     <customLabels>
         <label>&lt;br&gt; Por favor seleccione sus cursos aquí:</label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Photo --></label>
+        <name>ID_Card_Photo</name>
     </customLabels>
     <customLabels>
         <label>Tenga en cuenta que la foto mostrada o subida será impreso tal cual y no se harán modificaciones. IATA no tendrá ninguna responsabilidad si un proveedor no reconocer el titular de la tarjeta ID en base a la foto.</label>
@@ -25525,6 +25553,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>Total_Cost</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total_Discount --></label>
+        <name>Total_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total Price --></label>
         <name>Total_Price</name>
     </customLabels>
@@ -35702,7 +35734,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Informes</label>
             <name>Contacts</name>
         </sections>
         <sections>

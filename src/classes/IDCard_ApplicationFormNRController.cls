@@ -1,4 +1,4 @@
-public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbstractController  {
+public without sharing class IDCard_ApplicationFormNRController  extends IDCardAbstractController  {
 
 	// public Boolean DisplayExpediteFee {get; set;}
 	public Boolean DisplayFees {get; set;}

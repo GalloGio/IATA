@@ -2097,24 +2097,29 @@ global class ANG_OscarProcessHelper {
 	public static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea){
 		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
 		if(!mailsToSend.isEmpty()) {
+			Set<Id> failedContacts = new Set<Id>();
 			if(!Test.isRunningTest()){
 				List<Messaging.SendEmailResult> results = Messaging.sendEmail(emailsToSend, false); //it allows delivery of the messages that don't have errors (false).
 				if(!results.isEmpty()){
-					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: ';
-					Integer msgNbr;
+					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: \n';
+					Boolean sendErrors = false;
 					for(Messaging.SendEmailResult sendResult : results){
 						if(!sendResult.isSuccess()) {
-							errorMsg =+ sendResult.getErrors()[msgNbr] + '\n' ;
+							errorMsg = errorMsg + ' \n' + sendResult.getErrors()[0].getMessage() + ' - STATUS: ' + sendResult.getErrors()[0].getStatusCode() + ' - Object Id: ' +  sendResult.getErrors()[0].getTargetObjectId() + ' \n';
+							sendErrors = true;
+							failedContacts.add(sendResult.getErrors()[0].getTargetObjectId());
 						}
-						msgNbr++;
 					}
-					TransformationHelper.sendEmailSupport('Send Email for PCI Renewal Cases & Annual Revalidation notifications Failed', errorMsg);
+					if(sendErrors) TransformationHelper.sendEmailSupport('Send Email for PCI Renewal Cases & Annual Revalidation notifications Failed', errorMsg);
 				}
 			}
 			
 			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 			for(Id oscarCommCaseId : mailsToSend.keySet()){
 				for(Messaging.SingleEmailMessage mail : mailsToSend.get(oscarCommCaseId)){
+
+					if(failedContacts.contains(mail.getTargetObjectId())) continue; // By pass failed emails
+
 					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
 					emailMsg.FromAddress = owea[0].Address;
 					emailMsg.FromName = owea[0].DisplayName;
