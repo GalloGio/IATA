@@ -849,26 +849,6 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>company_type_icon__c</fullName>
-        <description>Display image depending on the record type</description>
-        <externalId>false</externalId>
-        <formula>IF(RecordType.DeveloperName = &apos;Airline&apos; , &quot;/resource/1567067723000/icons/company_type/airline.svg&quot;, 
-IF(RecordType.DeveloperName = &apos;Airport_Operator&apos; , &quot;/resource/1567067723000/icons/company_type/airport-operator.svg&quot;, 
-IF(RecordType.DeveloperName = &apos;Freight_Forwarder&apos; , &quot;/resource/1567067723000/icons/company_type/freight-forwarder.svg&quot;, 
-IF(RecordType.DeveloperName = &apos;Trucker&apos; , &quot;/resource/1567067723000/icons/company_type/trucker.svg&quot;, 
-IF(RecordType.DeveloperName = &apos;Cargo_Handling_Facility&apos; , &quot;/resource/1567067723000/icons/company_type/Cargo-Handling-Facility.svg&quot;, 
-IF(RecordType.DeveloperName = &apos;Ramp_Handler&apos; , &quot;/resource/1567067723000/icons/company_type/ramp-handler.svg&quot;, 
-IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/1567067723000/icons/company_type/shipper.svg&quot;,&quot;&quot;)
-))))))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>company type icon</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Country_FOR__c</fullName>
         <description>Formula to get the IATA_ISO_Country__r.Name</description>
         <externalId>false</externalId>
@@ -952,7 +932,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <externalId>false</externalId>
         <formula>SUBSTITUTE(
 IF( ISBLANK( Street_Nr_FOR__c ) , NULL,  Street_Nr_FOR__c + &quot;, &quot;) +
-IF( ISBLANK(  second_address__c  ) , NULL,  second_address__c + &quot;, &quot;) +
+IF( ISBLANK(  Secondary_Address__c  ) , NULL,  Secondary_Address__c + &quot;, &quot;) +
 IF( ISBLANK( Postal_Code_FOR__c ) ,NULL,  Postal_Code_FOR__c + &quot;, &quot;) +
 IF( ISBLANK( State_Province_FOR__c ) ,NULL,  State_Province_FOR__c + &quot;, &quot;) +
 IF(State_Province_FOR__c = City_FOR__c, NULL, IF( ISBLANK( City_FOR__c ) ,NULL,  City_FOR__c + &quot;, &quot;)) +
@@ -1010,6 +990,26 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Icon_Company_Type__c</fullName>
+        <description>Display image depending on the record type</description>
+        <externalId>false</externalId>
+        <formula>IF(RecordType.DeveloperName = &apos;Airline&apos; , &quot;/resource/1567067723000/icons/company_type/airline.svg&quot;, 
+IF(RecordType.DeveloperName = &apos;Airport_Operator&apos; , &quot;/resource/1567067723000/icons/company_type/airport-operator.svg&quot;, 
+IF(RecordType.DeveloperName = &apos;Freight_Forwarder&apos; , &quot;/resource/1567067723000/icons/company_type/freight-forwarder.svg&quot;, 
+IF(RecordType.DeveloperName = &apos;Trucker&apos; , &quot;/resource/1567067723000/icons/company_type/trucker.svg&quot;, 
+IF(RecordType.DeveloperName = &apos;Cargo_Handling_Facility&apos; , &quot;/resource/1567067723000/icons/company_type/Cargo-Handling-Facility.svg&quot;, 
+IF(RecordType.DeveloperName = &apos;Ramp_Handler&apos; , &quot;/resource/1567067723000/icons/company_type/ramp-handler.svg&quot;, 
+IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/1567067723000/icons/company_type/shipper.svg&quot;,&quot;&quot;)
+))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>company type icon</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>isApproved__c</fullName>
@@ -1237,7 +1237,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>search_city__c</fullName>
+        <fullName>Search_By_City__c</fullName>
         <description>Used by search engine to avoid confusion with special characters when the search is by city</description>
         <externalId>false</externalId>
         <label>city search engine</label>
@@ -1249,7 +1249,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>search_company__c</fullName>
+        <fullName>Search_By_Company__c</fullName>
         <description>Used by search engine to avoid confusion with special characters when the search is by company name</description>
         <externalId>false</externalId>
         <label>company name search engine</label>
@@ -1261,7 +1261,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>search_country__c</fullName>
+        <fullName>Search_By_Country__c</fullName>
         <description>Used by search engine to avoid confusion with special characters when the search is by country</description>
         <externalId>false</externalId>
         <label>country search engine</label>
@@ -1273,7 +1273,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>second_address__c</fullName>
+        <fullName>Secondary_Address__c</fullName>
         <description>Used to display the second build of the facility</description>
         <externalId>false</externalId>
         <label>Second Address Line</label>

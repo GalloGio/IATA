@@ -103,4 +103,8 @@ export default class CwCompanyCard extends LightningElement {
 		this.tooltipToDisplay = "";
 		this.tooltipObject = null;
 	}
+
+	setDefaultImg(event){
+		event.target.src = resources + "/img/no-image.svg";
+	}
 }

@@ -3,7 +3,7 @@ import { LightningElement, api, track } from "lwc";
 export default class CwFieldsSection extends LightningElement {
 	initialized = false;
 	@track _currentCategory;
-	@track _currentCategoryPicklist;
+	@track _currentCategoryPicklist = [];
 	@track _currentCategoryMultiPickList;
 	@track _currentCategoryOthers;
 	@api label;
@@ -35,8 +35,6 @@ export default class CwFieldsSection extends LightningElement {
 
 	set currentCategory(value) {
 		this._currentCategory = value;
-		console.log("currentCategory: " + JSON.stringify(this._currentCategory));
-
 	}
 
 	renderedCallback() {
@@ -48,21 +46,61 @@ export default class CwFieldsSection extends LightningElement {
 		this.initialized = true;
 	}
 
+	get preselected(){
+
+		let value = this.label.select;
+
+		let preselectedValue = this._currentCategoryPicklist.some(obj => obj.selected);
+
+		if(preselectedValue){
+			this._currentCategoryPicklist.forEach(obj => {
+				if(obj.options){
+					obj.options.forEach(opt => {
+						if(opt.selected){
+							value = opt.value;
+						}
+					})
+				}
+			})
+		}
+
+
+		return value;
+	}
+
+	get preselectedLabel(){
+		let value = this.label.select;
+
+		let preselectedValue = this._currentCategoryPicklist.some(obj => obj.selected);
+
+		if(preselectedValue){
+			this._currentCategoryPicklist.forEach(obj => {
+				if(obj.options){
+					obj.options.forEach(opt => {
+						if(opt.selected){
+							value = opt.label;
+						}
+					})
+				}
+			})
+		}
+
+
+		return value;
+	}
+
 	onClickItem(event) {
-		console.log(":::::onClickItem init: ");
 		event.stopPropagation();
 
 		this._updateFields(event);
 	}
 
 	applyAction(event) {
-		console.log("applyAction: ");
 		this.dispatchEvent(new CustomEvent("fieldupdate", { detail: { updatedCategory: this.currentCategory } }));
 		this.closeModal(event);
 	}
 
 	closeModal(event) {
-		console.log("closeModal: ");
 		event.preventDefault();
         this.dispatchEvent( new CustomEvent('closemodal', { detail: { updatedCategory: this.currentCategory } }));
 	}

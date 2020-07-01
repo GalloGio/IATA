@@ -165,21 +165,6 @@
     color: #333;
 }
 
-
-.serviceInfoPanel{
-    background-color: #e2e4e8;
-}
-
-.searchBox {
-    display: flex;
-    align-items: center;
-}
-
-.searchBox lightning-input {
-    width: 100%;
-    margin-top: -1px;
-}
-
 /* datatable changes*/
 @media only screen and (max-device-width: 760px) {
     .usersTable table * {

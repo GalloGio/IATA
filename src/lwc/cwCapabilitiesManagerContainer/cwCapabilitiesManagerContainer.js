@@ -2,11 +2,10 @@ import { LightningElement, api, track,wire } from "lwc";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { deleteRecord } from 'lightning/uiRecordApi';
 import resources from "@salesforce/resourceUrl/ICG_Resources";
-import getUserRole from "@salesforce/apex/CW_Utilities.getUserRole";
+import getPermissionToEdit from "@salesforce/apex/CW_Utilities.getPermissionToEdit";
 import getPublicLinkToFiles_ from "@salesforce/apex/CW_CapabilitiesManagerController.getPublicLinkToFiles";
 import getCapabilitiesForFacilityCertificationId from "@salesforce/apex/CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId";
 import setSummaryDetailCheckJSON_ from "@salesforce/apex/CW_FacilityCapabilitiesController.setSummaryDetailCheckJSON";
-import setVisibilityPhotos_ from "@salesforce/apex/CW_FacilityCapabilitiesController.setVisibilityPhotos";
 import createRelationshipsForNewCapabilities_ from "@salesforce/apex/CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities";
 import updateCapabilitiesEdited_ from "@salesforce/apex/CW_CapabilitiesManagerController.updateCapabilitiesEdited";
 import labels from 'c/cwOneSourceLabels';
@@ -95,34 +94,26 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 	//end notification toast
 
-	@wire(getUserRole, {facilityId: "$recordId"})
-	wiredUserInfo(result) {
-		let tmpEditMode = false;
-		if (result) {
-			this.userRole = result.data;
-			tmpEditMode = this.userRole === "Company Admin" || this.userRole === "Facility Manager";
-		}
-		this.editMode = tmpEditMode;
-	}
-
 	get dataInformed() {
 		return this.data != null ? true : false;
 	}
 
 	get isSaveOption(){
-		return this.listAddedRows.length > 0 ? false : true;
+		return this.editMode === true && (this.certificationMode || this.getexistsRows()) ? true : false;
 	}
 
 	getexistsRows()
 	{
 		let containsData=false;
-		if(this.data.superCategories.length > 0){			
-			this.data.superCategories.forEach(superC=>{
-				if(superC.containsData || superC.containsData === true){
-					containsData = true;
-				}
-			});						
-		}	
+		if(this.dataInformed){
+			if(this.data.superCategories.length > 0){			
+				this.data.superCategories.forEach(superC=>{
+					if(superC.containsData || superC.containsData === true){
+						containsData = true;
+					}
+				});						
+			}	
+		}
 		return containsData;	
 	}
 
@@ -184,18 +175,19 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					}
 					element.fields.push(newField);
 				}			
-			}
+			}			
 		});
+		
 	}
 
 	restPhotosValue(){
 		let position = this.photoToDelete;
 		this.rowSelected.photos.splice(Number(position),1);
 		if(this.rowSelected.photos.length >0){
-			this.setPhotosValue(JSON.stringify(this.rowSelected.photos));
+			this.setPhotosValue(JSON.stringify(this.rowSelected.photos));	
+			this.modalEditPhotos=true;		
 		}
-		else{
-			this.modalEditPhotos=false;
+		else{			
 			this.rowSelected.photosAvailable=false;
 			this.setPhotosValue('');
 		}
@@ -315,20 +307,33 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				});
 			});
 		});
-
 		item2.capabilitiesMap = item1;
 		this.setSummaryDetailCheckJSON(this.recordId, JSON.stringify(item2));
 	}
 
 	renderedCallback() {
 		if (!this.initialized) {
-			if (this.editMode === true) {
-				this.initialized = true;				
+			this.initialized = true;
+
+			getPermissionToEdit({})
+			.then(result => {
+				let edit = false;
+				if(result){
+					edit = result;
+				}
+				this.editMode = edit;			
+				this.checkCapabilities();
+			})			
+		}
+	}
+	
+	checkCapabilities(){
+		if(this.editMode === true){
+			if (this.certificationMode === true) {								
 				this.labelButtonAddRowsToList = this.getisCapabCertiMode || this.certificationMode === false ? 'Edit capabilities' : "Maintain previous capabilities";
 				this.getCapabilitiesFromCertification(this.recordId, this.ardCertId, this.getisCapabCertiMode);
 			}
 			else { 
-				this.initialized = true;
 				this.getCapabilitiesFromCertification(this.recordId, null, this.getisCapabCertiMode);
 			}
 			
@@ -336,8 +341,13 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				loadStyle(this, resources + "/css/internal.css")
 			]);
 		}
+		else{
+			this.messageToShow = 'You cannot manage capabilities';
+			this.data = [];
+			this.loading = false;
+		}
 	}
-	
+
 	getCapabilitiesFromCertification(id, ardCertId , isCapabCertiMode) { 
 		getCapabilitiesForFacilityCertificationId({id,ardCertId, isCapabCertiMode}).then(result => {
 			this.data = result;
@@ -506,11 +516,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					}	
 					index++;			
 				});		
-				
-				if(this.listAddedRows.length === 0){
-					this.editMode=true;
-				}
-
+			
 			});
 
 		}
@@ -552,7 +558,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			
 		}
 		else{
-			this.editMode = false;
 			let rowIndex = event.target.dataset.rowIndex;
 			this.rowSelected = listDataRow[rowIndex];
 
@@ -606,9 +611,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					index++;			
 				});		
 				
-				if(this.listAddedRows.length === 0){
-					this.editMode=true;
-				}
 			}
 		}
 	}
@@ -759,8 +761,12 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					this.createRelationshipsForNewCapabilities(this.recordId,this.ardCertId,this.listAddedRows);
 				}				
 			}
+			else{
+				this.closeCapabilitiesTab();
+			}
 		}
 		if(this.actionToExecute.action === 'delete' && this.actionToExecute.result){
+			this.modalEditPhotos=false;
 			this.restPhotosValue();
 		}
 		if(this.actionToExecute.action === 'cancel' && this.actionToExecute.result)

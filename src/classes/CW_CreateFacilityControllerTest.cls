@@ -84,13 +84,13 @@ public class CW_CreateFacilityControllerTest {
 	}
 	
 	@isTest private static void createFacilityTest(){
-        List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZUnique1'];
-        CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
+		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZUnique1'];
+		CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
 		info.fileName = 'Test';
 		info.base64Data = 'Test';
-        info.contentType = 'Test';
-        
-        Airport_Detail__c airport = [Select Id, IATA_ISO_Country__c, Code__c from Airport_Detail__c limit 1];
+		info.contentType = 'Test';
+		
+		Airport_Detail__c airport = [Select Id, IATA_ISO_Country__c, Code__c from Airport_Detail__c limit 1];
 		Account acc = [Select Id from Account limit 1];
 		Account_Role__c accRole = [Select Id, Account__c from Account_Role__c limit 1];
 
@@ -98,17 +98,17 @@ public class CW_CreateFacilityControllerTest {
 			accRole.Id,
 			airport
 		);
-        
+		
 		List <IATA_ISO_Country__c> isoCodes = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 		Account accNew = new Account (Name = 'Account03', IATA_ISO_Country__c = isoCodes[0].Id);
-        List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
-        
-        Test.startTest();
+		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
+		
+		Test.startTest();
 
-        CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-        CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-    
-        Test.stopTest();
+		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+	
+		Test.stopTest();
 	}
 	/**
 	 * @description		test method for CW_CreateFacilityController.createDummyCompany complete OK
@@ -137,16 +137,16 @@ public class CW_CreateFacilityControllerTest {
 			accRole.Id,
 			airport
 		);
-        insert accRoleDetail;
-        
-        CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
+		insert accRoleDetail;
+		
+		CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
 		info.fileName = 'Test';
 		info.base64Data = 'Test';
-        info.contentType = 'Test';
-        String logoJson = JSON.serialize(info);
+		info.contentType = 'Test';
+		String logoJson = JSON.serialize(info);
 
 		String id = accRoleDetail.Id;
-		String jsonInput = '{"Number_of_Employees__c":25001,"Overall_Facility_Size_m2__c":5410,"Overall_Airport_Size__c":2560,"Fleet__c":1500,"Is_On_Airport__c":true,"Is_Direct_Ramp_Access__c":true,"Road_Feeder_Services__c":true,"Customer_Service_Email__c":"info@genericcompany.com","Customer_Service_Phone_Number__c":"+34 900902902","Website__c":"www.genericairline.com","Online_Booking_System_Link__c":"www.genericairline.com","Available_Languages__c":"English;German;Spanish","General_Cargo__c":true,"Live_Animals__c":true,"Dangerous_Goods__c":true,"Airmail__c":true,"Perishables__c":false,"Pharmaceuticals__c":true,"second_address__c":"test","Id":"' + id +'"}';
+		String jsonInput = '{"Number_of_Employees__c":25001,"Overall_Facility_Size_m2__c":5410,"Overall_Airport_Size__c":2560,"Fleet__c":1500,"Is_On_Airport__c":true,"Is_Direct_Ramp_Access__c":true,"Road_Feeder_Services__c":true,"Customer_Service_Email__c":"info@genericcompany.com","Customer_Service_Phone_Number__c":"+34 900902902","Website__c":"www.genericairline.com","Online_Booking_System_Link__c":"www.genericairline.com","Available_Languages__c":"English;German;Spanish","General_Cargo__c":true,"Live_Animals__c":true,"Dangerous_Goods__c":true,"Airmail__c":true,"Perishables__c":false,"Pharmaceuticals__c":true,"Secondary_Address__c":"test","Id":"' + id +'"}';
 		Test.startTest();
 		CW_CreateFacilityController.updateFacility(jsonInput, null);
 		Map<String, Object> result = CW_CreateFacilityController.updateFacility(jsonInput, logoJson);
@@ -154,7 +154,7 @@ public class CW_CreateFacilityControllerTest {
 		System.assert(!result.isEmpty(), 'The result is lacking attributes');
 		Map<String, String> resultValues = (Map<String, String>)result.get('result');
 		System.assertEquals('OK', resultValues.get('status'), 'Returned status is not "OK"');
-		ICG_Account_Role_Detail__c ardUpdated = [Select Id, Number_of_Employees__c, Overall_Facility_Size_m2__c, Overall_Airport_Size__c, Fleet__c, Is_On_Airport__c, Is_Direct_Ramp_Access__c, Road_Feeder_Services__c, Customer_Service_Email__c, Customer_Service_Phone_Number__c, Website__c, Online_Booking_System_Link__c, Available_Languages__c, General_Cargo__c, Live_Animals__c, Dangerous_Goods__c, Airmail__c, Perishables__c, Pharmaceuticals__c, second_address__c from ICG_Account_Role_Detail__c where Id=:id];
+		ICG_Account_Role_Detail__c ardUpdated = [Select Id, Number_of_Employees__c, Overall_Facility_Size_m2__c, Overall_Airport_Size__c, Fleet__c, Is_On_Airport__c, Is_Direct_Ramp_Access__c, Road_Feeder_Services__c, Customer_Service_Email__c, Customer_Service_Phone_Number__c, Website__c, Online_Booking_System_Link__c, Available_Languages__c, General_Cargo__c, Live_Animals__c, Dangerous_Goods__c, Airmail__c, Perishables__c, Pharmaceuticals__c, Secondary_Address__c from ICG_Account_Role_Detail__c where Id=:id];
 		System.assertEquals(25001, ardUpdated.Number_of_Employees__c, 'Number_of_Employees__c is not as expected');
 		System.assertEquals(5410, ardUpdated.Overall_Facility_Size_m2__c, 'Overall_Facility_Size_m2__c is not as expected');
 		System.assertEquals(2560, ardUpdated.Overall_Airport_Size__c, 'Overall_Airport_Size__c is not as expected');
@@ -175,7 +175,7 @@ public class CW_CreateFacilityControllerTest {
 		System.assert(ardUpdated.Airmail__c, 'Airmail__c is not as expected');
 		System.assert(!ardUpdated.Perishables__c, 'Perishables__c is not as expected');
 		System.assert(ardUpdated.Pharmaceuticals__c, 'Pharmaceuticals__c is not as expected');
-		System.assertEquals('test', ardUpdated.second_address__c, 'second_address__c is not as expected');
+		System.assertEquals('test', ardUpdated.Secondary_Address__c, 'Secondary_Address__c is not as expected');
 	}
 
 	/**
@@ -183,41 +183,47 @@ public class CW_CreateFacilityControllerTest {
 	 */ 
 	@isTest
 	private static void updateFacilityWrongId(){
-        CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
+		CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
 		info.fileName = 'Test';
 		info.base64Data = 'Test';
-        info.contentType = 'Test';
-        String logoJson = JSON.serialize(info);
+		info.contentType = 'Test';
+		String logoJson = JSON.serialize(info);
 
 		String id = 'Id';
-		String jsonInput = '{"Number_of_Employees__c":25001,"Overall_Facility_Size_m2__c":5410,"Overall_Airport_Size__c":2560,"Fleet__c":1500,"Is_On_Airport__c":true,"Is_Direct_Ramp_Access__c":true,"Road_Feeder_Services__c":true,"Customer_Service_Email__c":"info@genericcompany.com","Customer_Service_Phone_Number__c":"+34 900902902","Website__c":"www.genericairline.com","Online_Booking_System_Link__c":"www.genericairline.com","Available_Languages__c":"English;German;Spanish","General_Cargo__c":true,"Live_Animals__c":true,"Dangerous_Goods__c":true,"Airmail__c":true,"Perishables__c":false,"Pharmaceuticals__c":true,"second_address__c":"test","Id":"' + id +'"}';
+		String jsonInput = '{"Number_of_Employees__c":25001,"Overall_Facility_Size_m2__c":5410,"Overall_Airport_Size__c":2560,"Fleet__c":1500,"Is_On_Airport__c":true,"Is_Direct_Ramp_Access__c":true,"Road_Feeder_Services__c":true,"Customer_Service_Email__c":"info@genericcompany.com","Customer_Service_Phone_Number__c":"+34 900902902","Website__c":"www.genericairline.com","Online_Booking_System_Link__c":"www.genericairline.com","Available_Languages__c":"English;German;Spanish","General_Cargo__c":true,"Live_Animals__c":true,"Dangerous_Goods__c":true,"Airmail__c":true,"Perishables__c":false,"Pharmaceuticals__c":true,"Secondary_Address__c":"test","Id":"' + id +'"}';
 		Test.startTest();
 		Map<String, Object> result = CW_CreateFacilityController.updateFacility(jsonInput, logoJson);
 		Test.stopTest();
 		System.assert(!result.isEmpty(), 'The result is lacking attributes');
 		Map<String, String> resultValues = (Map<String, String>)result.get('exception');
 		System.assert(resultValues.get('message').contains('MALFORMED_ID'), 'Returned message is not about invalid id');
-    }
-    
+	}
+	
 	@isTest
 	private static void testUpdateAccountCoordinates(){
 		String acid = [SELECT id FROM Account LIMIT 1].id;
 		
-        Test.startTest();
-        CW_CreateFacilityController.updateAccountCoordinates(acid, 1, 1);
+		Test.startTest();
+
+		CW_CreateFacilityController.updateAccountCoordinates(acid, 1, 1);
+
+		Account acc = [SELECT Id, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s FROM Account WHERE Id =: acid LIMIT 1];
+		Boolean res = acc.Business_Geo_Coordinates__Latitude__s == 1 && acc.Business_Geo_Coordinates__Longitude__s == 1;
+		System.assertEquals(res, true);
+
 		Test.stopTest();
 	}
 	
 	@isTest private static void getOnAirportStationsTest(){
-        List<ICG_Account_Role_Detail__c> ards = [Select id, Nearest_Airport__r.Code__c from ICG_Account_Role_Detail__c];
-        
-        Account acc = new Account(Name = 'Qatar Airways (Test)', Account_Type__c = 'Airline', Sector__c = 'Airline', Category__c = 'General Aviation', Payment_Term__c = 'Z001', Reason_for_creation__c = 'New agent');
+		List<ICG_Account_Role_Detail__c> ards = [Select id, Nearest_Airport__r.Code__c from ICG_Account_Role_Detail__c];
+		
+		Account acc = new Account(Name = 'Qatar Airways (Test)', Account_Type__c = 'Airline', Sector__c = 'Airline', Category__c = 'General Aviation', Payment_Term__c = 'Z001', Reason_for_creation__c = 'New agent');
 		insert acc;
 
 		Account_Role__c ar = CW_TestDataFactory.testAccountRole(acc.Id, 'Test Account Role');
-        insert ar;
-        
-        String countryId = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1].Id;
+		insert ar;
+		
+		String countryId = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1].Id;
 
 		Airport_Detail__c airport = new Airport_Detail__c(Code__c = 'BAR', City__c = 'Barcelna', IATA_ISO_Country__c = countryId, Account__c = acc.Id);
 		insert airport;
@@ -229,20 +235,28 @@ public class CW_CreateFacilityControllerTest {
 		ard.Account_Role__c = ar.Id;
 		ard.Available_Languages__c = 'ESP;GER';
 		ard.Summary_Detail_Check_JSON__c = '{"capabilitiesMap":{"ground_service_equipment":{"summary":false,"detail":true},"screening_equipment":{"summary":true,"detail":true},"security_equipment_and_measures":{"summary":true,"detail":true},"weight_volume_and_dimension_equipment":{"summary":true,"detail":true},"safety_personal_and_protective_equipment":{"summary":true,"detail":true},"scanners":{"summary":true,"detail":true},"active_uld_equipment":{"summary":true,"detail":true},"delivery_pickup_infrastructure":{"summary":true,"detail":true},"cold_room_standard_temperature_ranges":{"summary":true,"detail":true},"cold_room_freezers_custom_temperature_ranges":{"summary":true,"detail":true},"temperature_controlled_handling_areas":{"summary":true,"detail":true},"pre_cooling":{"summary":true,"detail":true},"other_temperature_control_equipment_infrastructure":{"summary":true,"detail":true},"live_animals_capacities":{"summary":true,"detail":true},"build_up_break_down_areas":{"summary":true,"detail":true},"temporary_storage_and_working_areas":{"summary":true,"detail":true},"uld_storage":{"summary":true,"detail":true},"veterinary_phytosanitary_and_pest_control":{"summary":true,"detail":true}}}';
-        ard.Is_On_Airport__c = true;
-        insert ard;
+		ard.Is_On_Airport__c = true;
+		insert ard;
 
-        ICG_Account_Role_Detail_Relationship__c ardr = new ICG_Account_Role_Detail_Relationship__c();
+		ICG_Account_Role_Detail_Relationship__c ardr = new ICG_Account_Role_Detail_Relationship__c();
 		ardr.ICG_Account_Role_Detail__c = ards[0].Id;
 		ardr.Handled_Airline__c = acc.Id;
-        insert ardr;
-        
-        ards[0].Is_On_Airport__c = true;
-        update ards[0];
+		insert ardr;
+		
+		ards[0].Is_On_Airport__c = true;
+		update ards[0];
 
-        Test.startTest();
-		CW_CreateFacilityController.getOnAirportStations('Airline', acc.Name, ards[0].Nearest_Airport__r.Code__c, acc.Id);
-		CW_CreateFacilityController.getOnAirportStations('Airline', acc.Name, ards[0].Nearest_Airport__r.Code__c, null);
+		Test.startTest();
+
+		String aiportWithId = CW_CreateFacilityController.getOnAirportStations('Airline', acc.Name, ards[0].Nearest_Airport__r.Code__c, acc.Id);
+		String aiportWithoutId =CW_CreateFacilityController.getOnAirportStations('Airline', acc.Name, ards[0].Nearest_Airport__r.Code__c, null);
+
+		List<CW_SearchEngine.HandledElement> resWithId = (List<CW_SearchEngine.HandledElement>) JSON.deserialize(aiportWithId, List<CW_SearchEngine.HandledElement>.class);
+		List<CW_SearchEngine.HandledElement> resWithoutId = (List<CW_SearchEngine.HandledElement>) JSON.deserialize(aiportWithoutId, List<CW_SearchEngine.HandledElement>.class);
+
+		System.assertNotEquals(resWithId.size(), 0);
+		System.assertNotEquals(resWithoutId.size(), 0);
+
 		Test.stopTest();
 	}
 	

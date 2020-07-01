@@ -21,15 +21,15 @@ public class CW_CapabilitiesManagerControllerTest {
 		ard.Account_Role__c = ar.Id;
 		ard.Available_Languages__c = 'ESP;GER';
 		ard.Summary_Detail_Check_JSON__c = '{"capabilitiesMap":{"ground_service_equipment":{"summary":false,"detail":true},"screening_equipment":{"summary":true,"detail":true},"security_equipment_and_measures":{"summary":true,"detail":true},"weight_volume_and_dimension_equipment":{"summary":true,"detail":true},"safety_personal_and_protective_equipment":{"summary":true,"detail":true},"scanners":{"summary":true,"detail":true},"active_uld_equipment":{"summary":true,"detail":true},"delivery_pickup_infrastructure":{"summary":true,"detail":true},"cold_room_standard_temperature_ranges":{"summary":true,"detail":true},"cold_room_freezers_custom_temperature_ranges":{"summary":true,"detail":true},"temperature_controlled_handling_areas":{"summary":true,"detail":true},"pre_cooling":{"summary":true,"detail":true},"other_temperature_control_equipment_infrastructure":{"summary":true,"detail":true},"live_animals_capacities":{"summary":true,"detail":true},"build_up_break_down_areas":{"summary":true,"detail":true},"temporary_storage_and_working_areas":{"summary":true,"detail":true},"uld_storage":{"summary":true,"detail":true},"veterinary_phytosanitary_and_pest_control":{"summary":true,"detail":true}}}';
-        insert ard;
+		insert ard;
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
 		insert ardCap;
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-        capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ard.Id;
+		capvalcert.Expiration_Date__c = Date.today().addDays(1);
+		capvalcert.ICG_Account_Role_Detail__c = ard.Id;
 		insert capvalcert;
 
 		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCap.Id);
@@ -67,8 +67,8 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-        capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.Expiration_Date__c = Date.today().addDays(1);
+		capvalcert.ICG_Account_Role_Detail__c = ardid;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -93,11 +93,11 @@ public class CW_CapabilitiesManagerControllerTest {
 		insert assignment;
 		
 		Test.startTest();
-        
-        Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id),false);
+		
+		Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id),false);
 		system.assertEquals(true, response.containsKey('superCategories'), 'No superCategories found for this Account Role Detail');
-        
-        Test.stopTest();
+		
+		Test.stopTest();
 	}
 
 	@isTest
@@ -125,14 +125,17 @@ public class CW_CapabilitiesManagerControllerTest {
 		CW_CapabilitiesManagerController.CapabilityPhoto item = new CW_CapabilitiesManagerController.CapabilityPhoto();
 		item.visible = true;
 		item.url = conDoc;
+		item.Id = conDoc;
 		item.label = 'label';
 		listPhoto.add(item);
 
-        Test.startTest();
-        
-		CW_CapabilitiesManagerController.getPublicLinkToFiles(listPhoto);
-        
-        Test.stopTest();
+		Test.startTest();
+		
+		String response = CW_CapabilitiesManagerController.getPublicLinkToFiles(listPhoto);
+		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		system.assertEquals(true, resp.success, 'getPublicLinkToFiles error');
+		
+		Test.stopTest();
 	}
 
 	@isTest
@@ -167,8 +170,8 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-        capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.Expiration_Date__c = Date.today().addDays(1);
+		capvalcert.ICG_Account_Role_Detail__c = ardid;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -192,7 +195,6 @@ public class CW_CapabilitiesManagerControllerTest {
 		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
 		insert assignment;
 
-		Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id),false);
 
 		List<CW_CapabilitiesManagerController.CapabilityWrapper> listCap = new List<CW_CapabilitiesManagerController.CapabilityWrapper>();
 		List<Account_Role_Detail_Capability__c> listCapWrapper = new List<Account_Role_Detail_Capability__c>();
@@ -239,10 +241,27 @@ public class CW_CapabilitiesManagerControllerTest {
 			listCap.add(convertItem);
 		}
 
-        Test.startTest();
-        
-		CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, ardcert.id, listCap);
-        
-        Test.stopTest();
+		Test.startTest();
+		
+		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id),false);
+		
+		String response = CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, ardcert.id, listCap);
+		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		system.assertEquals(true, resp.success, 'createRelationshipsForNewCapabilities error');
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void updateCapabilitiesEditedCatchTest() {
+
+		Test.startTest();
+		
+		String response = CW_CapabilitiesManagerController.updateCapabilitiesEdited(null);
+		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		system.assertEquals(false, resp.success, 'updateCapabilitiesEditedCatchTest error');
+		
+		
+		Test.stopTest();
 	}
 }

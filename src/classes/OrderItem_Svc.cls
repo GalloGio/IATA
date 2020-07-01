@@ -121,9 +121,8 @@ public without sharing class OrderItem_Svc {
 				mail.recipients = new List<String>();
 				//mail.recipients.add(oi.Order.ShipToContact_Email__c);
 				mail.recipients.add(oi.Order.ShipToContact_Email__c);
-				if(oi.Order.ShipToContact_Email__c != null && !oi.Order.ShipToContact_Email__c.endsWithIgnoreCase('.inactive')) {
+				if(oi.Order.ShipToContact_Email__c != null)
 					lstMails.add(mail);
-				}
 			}
 
 			try{

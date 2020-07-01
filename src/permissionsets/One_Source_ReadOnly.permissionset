@@ -9,6 +9,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AmazonXMLParser</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_AccountDetailCarousel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -42,10 +46,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_AmazonS3Connector_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CW_AmazonS3Wrappers</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1454,7 +1454,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ICG_Account_Role_Detail__c.company_type_icon__c</field>
+        <field>ICG_Account_Role_Detail__c.Icon_Company_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1474,22 +1474,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ICG_Account_Role_Detail__c.search_city__c</field>
+        <field>ICG_Account_Role_Detail__c.Search_By_City__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ICG_Account_Role_Detail__c.search_company__c</field>
+        <field>ICG_Account_Role_Detail__c.Search_By_Company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ICG_Account_Role_Detail__c.search_country__c</field>
+        <field>ICG_Account_Role_Detail__c.Search_By_Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ICG_Account_Role_Detail__c.second_address__c</field>
+        <field>ICG_Account_Role_Detail__c.Secondary_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

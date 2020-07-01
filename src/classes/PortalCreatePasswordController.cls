@@ -59,7 +59,7 @@ public without sharing class PortalCreatePasswordController {
 				String lmsParam = ((String)params.lms).toLowerCase();
 				if(lmsParam.indexOf('yas') != -1){
 				startUrl += '?firstLogin=true&lms=yas&lmsCourse='+(String)params.lmsCourse;
-				} else {
+				} else {	
 					if(result.isGeneralPublicAccount == true) {
 						startUrl += '?firstLogin=true';
 					}

@@ -100,7 +100,7 @@ public without sharing class CW_SearchEngine {
 		String querySelect;
 		if (isMapQuery != true) {
 			querySelect = 'SELECT ' +
-				'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, second_address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' +
+				'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' +
 				'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' +
 				'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 
 				'Account_Role__r.Account__r.RecordType.Name, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' +
@@ -109,7 +109,7 @@ public without sharing class CW_SearchEngine {
 				'(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r order by Expiration_Date__c desc NULLS FIRST) ';
 		} else {
 			querySelect = 'Select ' + 
-				'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,second_address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 
+				'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,Secondary_Address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 
 				'Postal_Code_FOR__c,State_Province_FOR__c,Street_Nr_FOR__c,Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.IATACode__c,Account_Role__r.Account__r.ICAO_designator__c,' + 
 				'(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r order by ICG_Certification__r.Order__c asc,Expiration_Date__c desc NULLS FIRST)';
 		}
@@ -555,7 +555,7 @@ public without sharing class CW_SearchEngine {
 				this.addressStateProvince = acr.State_Province_FOR__c;
 				this.addressCity = acr.City_FOR__c;
 				this.formattedAddress = acr.Formatted_Address__c;
-				this.secondAddress = acr.second_address__c;
+				this.secondAddress = acr.Secondary_Address__c;
 				this.type = acr.Account_Role__r.Account__r.RecordType.Name;
 				this.recordTypeIcon = PageReference.forResource('ICG_Resources', 'icons/company_type/' + acr.RecordType.DeveloperName.toLowerCase().replaceAll('_', '-') + '.svg').getUrl();
 				this.NumberEmployees = acr.Number_of_Employees__c;

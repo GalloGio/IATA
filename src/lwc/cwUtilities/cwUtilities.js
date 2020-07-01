@@ -133,14 +133,15 @@ export function prepareSearchObjectFEICategories(array, searchList) {
 		relationfield: "Account_Role_Detail_Capability__c",
 		field: "Account_Role_Detail_Capability__r.Equipment__c",
 		labels: "",
-		isOutOfQuery: true
+		isOutOfQuery: true,
+		equipmentObjects: []
 	};
 
 	array.forEach((equipment) => {
 		if (equipment.selected) {
 			equipmentObject.value = equipmentObject.value === "" || equipmentObject.value.includes(equipment.name) ? equipment.name : equipmentObject.value + ";" + equipment.name;
 			equipmentObject.labels = equipmentObject.labels === "" || equipmentObject.labels.includes(equipment.label) ? equipment.label : equipmentObject.labels + ";" + equipment.label;
-
+			equipmentObject.equipmentObjects.push(equipment);
 			if (equipment.fields) {
 				equipment.fields.forEach((field) => {
 					const fieldRow = this.getSearchFieldWrapper(field, lstFields);
@@ -368,11 +369,11 @@ export function generateCertificationImages(array) {
 			id = accountRoleCertification.ICG_Certification__c;
 			if (accountRoleCertification.Expiration_Date__c) {
 				let dateArray = accountRoleCertification.Expiration_Date__c.split("-");
-				expirationDate = `${dateArray[2]}.${dateArray[1]}.${dateArray}`;
+				expirationDate = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
 			}
 			if (accountRoleCertification.Issue_Date__c) {
 				let dateArray = accountRoleCertification.Issue_Date__c.split("-");
-				issueDate = `${dateArray[2]}.${dateArray[1]}.${dateArray}`;
+				issueDate = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
 			}
 			certificationId = accountRoleCertification.Certification_Id__c;
 
@@ -643,4 +644,17 @@ export function getPredictiveData(dataType, apexJsFn) {
 			}
 		}
 	});
+}
+
+export function removeGenericItemFromList(label, array) {
+	let auxList = [];
+	let auxListLabels = [];
+	array.forEach(loc => {
+		if (loc.label.toUpperCase() !== label.toUpperCase()) {
+			auxList.push(loc);
+			auxListLabels.push(loc.label);
+		}
+	});
+
+	return { auxList: auxList, auxListLabels: auxListLabels };
 }

@@ -19,41 +19,49 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 	@track error;
 	@track superCategories;
 	@track loaded = false;
-	@track _lstFeiCategoriesLabels;
+	_lstFeiCategories;
 	@track mapCategoriesByRecordType;
 	@track availableSections;
 
 	@api
-	get lstFeiCategoriesLabels() {
-		return this._lstFeiCategoriesLabels;
+	get lstFeiCategories() {
+		return this._lstFeiCategories;
 	}
 
-	set lstFeiCategoriesLabels(value) {
-		this._lstFeiCategoriesLabels = JSON.parse(JSON.stringify(value));
+	set lstFeiCategories(value) {
+		this._lstFeiCategories = JSON.parse(JSON.stringify(value));
 		if (this.superCategories) {
 			this.superCategories.forEach(superCategory => {
 				superCategory.key = createKey(superCategory.label);
 				superCategory.sections.forEach(section => {
-					let hasChanged = false;
 					section.capabilityRT.forEach(crt => {
 						crt.isVisible = true;
 						crt.categories.forEach(category => {
-							if (category.selected) {
-								hasChanged = true;
-								category.selected = false;
+							let categoryNew = this.lstFeiCategories.filter(cat => cat.label === category.label);
+							if(categoryNew && categoryNew.length === 1){
+								category.selected = categoryNew[0].selected;
+								if(categoryNew[0].fields){
+									category.fields = JSON.parse(JSON.stringify(categoryNew[0].fields));
+								}
 							}
-							// if (category.moreDetails) {
-							// 	hasChanged = true;
-							// }
-							if (this._lstFeiCategoriesLabels.length && this._lstFeiCategoriesLabels.includes(category.label)) {
-								category.selected = true;
-								hasChanged = true;
+							else {
+								category.selected = false;
+								if(category.fields){
+									category.fields.forEach(field => {
+										field.selected = false;
+										
+										if(field.options){
+											field.options.forEach(opt => {
+												opt.selected = false;
+											})
+										}
+
+									})
+								}
 							}
 						});
 					});
-					if (hasChanged) {
-						section.capabilityRT = JSON.parse(JSON.stringify(section.capabilityRT));
-					}
+					section.capabilityRT = JSON.parse(JSON.stringify(section.capabilityRT));
 				});
 			});
 		}
@@ -257,5 +265,25 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 			hrmrgn = "base-underline-100 mt-1 mb-0";
 		}
 		return hrmrgn;
+	}
+
+	updateCategory(event){
+		let updatedCategory = event.detail;
+
+		if (this.superCategories) {
+			this.superCategories.forEach(superCategory => {
+				superCategory.key = createKey(superCategory.label);
+				superCategory.sections.forEach(section => {
+					section.capabilityRT.forEach(crt => {
+						crt.categories.forEach(category => {
+							if(category.name === updatedCategory.name){
+								category.fields = JSON.parse(JSON.stringify(updatedCategory.fields));
+							}
+						});
+					});
+				});
+			});
+		}
+		this.dispatchEvent(new CustomEvent('selectcategory', { detail: updatedCategory}));
 	}
 }

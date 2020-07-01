@@ -29,8 +29,8 @@ public with sharing class CW_AmazonS3Connector_Test {
 		// Set mock callout class
 		Test.setMock(HttpCalloutMock.class, new CW_AmazonMockHttpResponseGenerator('API_ListObjectsV2', 'OK'));
 
-		CW_AmazonS3Wrappers.ListObjectsV2Output res = CW_AmazonS3Connector.listObjectsV2(mapKey, namedCredential);
-		//System.assertEquals(actualValue, expectedValue);
+		AmazonXMLParser.ListBucketResult res = CW_AmazonS3Connector.listObjectsV2(mapKey, namedCredential);
+		System.assertEquals(res.Name, 'bucket');
 
 		Test.stopTest();
 	}
@@ -48,9 +48,8 @@ public with sharing class CW_AmazonS3Connector_Test {
 		HttpResponse response = CW_AmazonS3Connector.awsS3ListObjectsV2(queryParams, namedCredential);
 		XmlStreamReader reader = new XmlStreamReader(response.getBody());
 
-		CW_AmazonS3Wrappers.ErrorResponse res = CW_AmazonS3Wrappers.parseError(reader);
-		//CW_AmazonS3Wrappers.ListObjectsV2Output res = CW_AmazonS3Connector.listObjectsV2(mapKey,namedCredential);
-		//System.assertEquals(actualValue, expectedValue);
+		AmazonXMLParser.ErrorResponse res = AmazonXMLParser.parseError(reader);
+		System.assertEquals(200, response.getStatusCode());
 
 		Test.stopTest();
 	}

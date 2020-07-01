@@ -11,7 +11,12 @@
     </p>
     <div class="div-tags collapse-tags">
         <template for:each={searchSummaryList} for:item="item">
-            <lightning-pill key={item.label} label={item.label} data-delete={item.label} onremove={deleteFilter}></lightning-pill>
+            <lightning-pill 
+                key={item.label} 
+                label={item.label} 
+                data-delete={item.value} 
+                data-delete-with-parent={item.label}
+                onremove={deleteFilter}></lightning-pill>
         </template>
     </div>
     <label class="label-see-more hidden" onclick={seeAllTags}>{showFiltersTag} ({searchSummaryListLength})</label>
@@ -119,7 +124,7 @@
 </div>
 
 <div class="panel-filter-result-advance"><div class="componentStyleBase-full pb-3" if:true={initialLoadPerformed}>
-<c-cw-facility-equipment-infraestructure-wrapper label={label} lst-fei-categories-labels={lstFEICategoriesLabels} onsectionsloaded={updateSectionLoaded} onselectcategory={setSelectedCategory} siteclass="searchbar"></c-cw-facility-equipment-infraestructure-wrapper></div></div><div class="panel-filter-search-button panel-filter-search-button-hide button-search-resp"><div class="visible-sm">
+<c-cw-facility-equipment-infraestructure-wrapper label={label} lst-fei-categories={lstFEICategories} onsectionsloaded={updateSectionLoaded} onselectcategory={setSelectedCategory} siteclass="searchbar"></c-cw-facility-equipment-infraestructure-wrapper></div></div><div class="panel-filter-search-button panel-filter-search-button-hide button-search-resp"><div class="visible-sm">
 <div class="col-12 col-no-padding">
     <button onclick={showResultsResponsive} type="button" class="btn btn-primary width-100 uppercase">{label.search}</button>
 </div></div></div></template>

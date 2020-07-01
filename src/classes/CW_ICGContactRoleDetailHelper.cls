@@ -8,7 +8,7 @@ public without sharing class CW_ICGContactRoleDetailHelper {
 	 */
 	public static Map<String, CW_LandingSearchBarController.RowInfo> helperGetCompanyNamesWithoutSharing(String COMPANYSTR, Boolean splitByCountry) {
 		Map<String, CW_LandingSearchBarController.RowInfo> mapUpdated = new Map<String, CW_LandingSearchBarController.RowInfo> ();
-		List<ICG_Account_Role_Detail__c> stations = [SELECT id, Name, Company_FOR__c, search_company__c, City_FOR__c, Country_FOR__c
+		List<ICG_Account_Role_Detail__c> stations = [SELECT id, Name, Company_FOR__c, Search_By_Company__c, City_FOR__c, Country_FOR__c
 		FROM ICG_Account_Role_Detail__c
 		WHERE isApproved__c = true AND Company_FOR__c != null AND Country_FOR__c != null order by Company_FOR__c asc];
 		for(ICG_Account_Role_Detail__c ard : stations) {
@@ -22,7 +22,7 @@ public without sharing class CW_ICGContactRoleDetailHelper {
 					mapUpdated.get(currentKey).description = '(All Countries)';
 				}
 			} else {
-				CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.search_company__c,ard.Company_FOR__c,1,null,' (' + ard.Country_FOR__c + ')',COMPANYSTR,currentKey,null, ard.Id);
+				CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.Search_By_Company__c,ard.Company_FOR__c,1,null,' (' + ard.Country_FOR__c + ')',COMPANYSTR,currentKey,null, ard.Id);
 				mapUpdated.put(currentKey, loc);
 			}
 
@@ -31,7 +31,7 @@ public without sharing class CW_ICGContactRoleDetailHelper {
 					mapUpdated.get(secondKey).value += 1;
 					mapUpdated.get(secondKey).stationsIds += '#'+ard.Id;		
 				} else {
-					CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.search_company__c+'#'+ard.Country_FOR__c,ard.Company_FOR__c,1,null,' (' + ard.Country_FOR__c + ')',COMPANYSTR,secondKey,null,ard.Id);
+					CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.Search_By_Company__c+'#'+ard.Country_FOR__c,ard.Company_FOR__c,1,null,' (' + ard.Country_FOR__c + ')',COMPANYSTR,secondKey,null,ard.Id);
 					mapUpdated.put(secondKey, loc);
 				}
 			}
@@ -41,7 +41,7 @@ public without sharing class CW_ICGContactRoleDetailHelper {
 				mapUpdated.get(dynamicKey).value += 1;
 				mapUpdated.get(dynamicKey).stationsIds += '#'+ard.Id;	
 			} else {
-				CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.search_company__c+'#'+ard.City_FOR__c+'#'+ard.Name,ard.Name,1,null,' (' + ard.City_FOR__c +', '+ard.Country_FOR__c + ')',CW_LandingSearchBarController.STATIONSTR,dynamicKey,null,ard.Id);
+				CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.Search_By_Company__c+'#'+ard.City_FOR__c+'#'+ard.Name,ard.Name,1,null,' (' + ard.City_FOR__c +', '+ard.Country_FOR__c + ')',CW_LandingSearchBarController.STATIONSTR,dynamicKey,null,ard.Id);
 				mapUpdated.put(dynamicKey, loc);
 			}
 			

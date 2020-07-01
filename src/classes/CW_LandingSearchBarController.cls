@@ -77,7 +77,7 @@ public without sharing class CW_LandingSearchBarController {
 		/* Initialization of valueMap with Airport_Detail__c values */
 		valueMap = fetchAirports(valueMap);
 
-		for (ICG_Account_Role_Detail__c accd : [SELECT Id, City_FOR__c, Search_city__c, State_Province_FOR__c,
+		for (ICG_Account_Role_Detail__c accd : [SELECT Id, City_FOR__c, Search_By_City__c, State_Province_FOR__c,
 												Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, 
 												Nearest_Airport__r.City__c, Nearest_Airport__r.IATA_ISO_Country__r.Name, Country_FOR__c
 												FROM ICG_Account_Role_Detail__c
@@ -91,7 +91,7 @@ public without sharing class CW_LandingSearchBarController {
 			} else {
 				RowInfo locCity = new RowInfo();
 				locCity.keyName = accd.City_FOR__c;
-				locCity.searchValues = accd.Search_city__c;
+				locCity.searchValues = accd.Search_By_City__c;
 				locCity.type = CITYSTR;
 				locCity.uniqueId = locCityKey;
 				locCity.description = accd.State_Province_FOR__c != null ? accd.State_Province_FOR__c + ', ' : '';

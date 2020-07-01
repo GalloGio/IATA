@@ -50,8 +50,11 @@
                                                 <template if:true={currentCapabilityRT.label}>
                                                     <div class="content max-height-100 hiddenSection"
                                                         key={currentCapabilityRT}>
-                                                        <c-cw-facility-capability-form-section label={label}
-                                                            capability={currentCapabilityRT} siteclass={siteclass}>
+                                                        <c-cw-facility-capability-form-section 
+                                                            label={label}
+                                                            capability={currentCapabilityRT} 
+                                                            onupdatecategory={updateCategory}
+                                                            siteclass={siteclass}>
                                                         </c-cw-facility-capability-form-section>
                                                     </div>
                                                 </template>

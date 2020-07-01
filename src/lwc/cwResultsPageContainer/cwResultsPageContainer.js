@@ -312,8 +312,8 @@ export default class CwResultsPageContainer extends LightningElement {
 				case "CITY_FOR__C":
 					this.searchList[i].fields = ["Nearest_Airport__r.City__c",
 												"Nearest_Airport__r.IATA_ISO_Country__r.Name",
-												"search_city__c",
-												"search_country__c", 
+												"Search_By_City__c",
+												"Search_By_Country__c", 
 												"Nearest_Airport__r.Airport_Name__c"];
 					lstLocat.push(this.searchList[i]);
                     break;
@@ -321,7 +321,7 @@ export default class CwResultsPageContainer extends LightningElement {
 					lstCoType.push(this.searchList[i]);
 					break;
 				case "COMPANY_FOR__C":
-					this.searchList[i].fields = ["search_company__c","Name"];
+					this.searchList[i].fields = ["Search_By_Company__c","Name"];
 					lstCoName.push(this.searchList[i]);
 					break;
 				case "ICG_CERTIFICATION__R.NAME":

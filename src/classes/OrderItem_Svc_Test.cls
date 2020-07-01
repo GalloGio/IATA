@@ -32,5 +32,4 @@ public class OrderItem_Svc_Test
 	system.assert(1 ==[select count() from Order where Id = :lstOrder[0].Id and Is_Paid__c = true], 'Order should be paid');
 } //*** end of "test_setOrderToPaid"
 
-
 } //*** end of class

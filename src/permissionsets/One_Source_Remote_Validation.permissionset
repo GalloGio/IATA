@@ -9,6 +9,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AmazonXMLParser</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_AccountDetailCarousel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -42,10 +46,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_AmazonS3Connector_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CW_AmazonS3Wrappers</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

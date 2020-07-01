@@ -14,6 +14,11 @@
 				<h2 id="message-result-data" class="slds-text-heading_medium slds-hyphenate">{messageToShow}</h2>
 			</div>
 		</template>
+		<template if:false={editMode}>			
+			<div class="slds-grid slds-grid_align-center">
+				<h2 id="message-not-permission" class="slds-text-heading_medium slds-hyphenate">{messageToShow}</h2>
+			</div>
+		</template>
 		<br />
 		<template for:each={data.superCategories} for:item="currentSuperCategory" for:index="superCategoryIndex">
 		<lightning-accordion if:true={currentSuperCategory.containsData} key={currentSuperCategory.label} allow-multiple-sections-open active-section-name={currentSuperCategory.label}>
@@ -277,6 +282,7 @@
 
 															   <button if:true={row.photosAvailable}
 																	class="p-0 bg-transp border-0"
+																	style="cursor: pointer;"
 																	data-tosca="edit_photos" title="Edit photos" disabled={editMode}>
 																	<img src={infoIcon} width="20px"
 																	data-super-categories-index={superCategoryIndex}
@@ -441,14 +447,16 @@
 
 		</template>
 
-		<div if:true={editMode} class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
-			<div class="slds-col margin-button-save">
-				<button class="slds-button slds-button--brand button-size-footer" disabled={isSaveOption} onclick={saveCapabilities}>{label.save}</button>
+		<template if:true={editMode}>
+			<div if:true={isSaveOption} class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
+				<div class="slds-col margin-button-save">
+					<button class="slds-button slds-button--brand button-size-footer" onclick={saveCapabilities}>{label.save}</button>
+				</div>
+				<div class="slds-col"> 
+					<button class="slds-button slds-button--brand button-size-footer" onclick={cancelCapabilities}>{label.cancel}</button>
+				</div>
 			</div>
-			<div class="slds-col"> 
-				<button class="slds-button slds-button--brand button-size-footer" onclick={cancelCapabilities}>{label.cancel}</button>
-			</div>
-		</div>
+		</template>
 
 	</template>
 

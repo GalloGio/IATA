@@ -124,7 +124,7 @@ public with sharing class CW_FacilityContactInfoController {
 					accRoleDetail[0].Pharmaceuticals__c = Boolean.valueOf(value);
 				}
 				when 'secondAddress' {
-					accRoleDetail[0].Second_Address__c = value;
+					accRoleDetail[0].Secondary_Address__c = value;
 				}
 				when 'name' {
 					accRoleDetail[0].Name = value;

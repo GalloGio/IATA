@@ -401,6 +401,9 @@ export default class CwCreateFacilityComponent extends LightningElement {
 
 			}
 			this.initialized = true;
+			Promise.all([
+				loadStyle(this, resources + "/css/portal.css")
+			]);
 			if(this.isInternalUser){
 				Promise.all([
 					loadStyle(this, resources + "/css/internal.css")
@@ -807,7 +810,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			IATA_ISO_Country__c : this.selectedAddressObject.countryId,
 			Hidden_Operating_Stations__c : this.hiddenOperatingStations,
 			Pilot_Information__c : this.additionalData.pilotinfo,
-			second_address__c : this.additionalData.stationsecondaddress,
+			Secondary_Address__c : this.additionalData.stationsecondaddress,
 			Is_Direct_Ramp_Access__c : this.additionalData.directrampaccess
 		}
 		createFacility({

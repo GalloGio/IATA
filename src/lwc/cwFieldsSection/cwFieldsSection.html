@@ -10,11 +10,11 @@
                 <div class="slds-form-control company-type-content mb-2 col-6 mt-2 "
                     key={currentField.name} data-tosca={currentField.name} onclick={onClickItem}>
                     
-                        <div class="slds-form-__label mb-1 mt-1 mr-2"> {currentField.label} :<span></span></div>
+                        <div class="slds-form-__label mb-1 mt-1 mr-2"> {currentField.label} :<span></span></div> 
                 
                         <select class="slds-select form-control" data-tosca={currentField.name}
                             data-parentlevel={currentCategory.name} onchange={onClickItem}>
-                            <option value="Select">{label.select}</option>
+                            <option value={preselected}>{preselectedLabel}</option>
                             <template for:each={currentField.options} for:item="option">
                                 <option key={option.label} value={option.value}>{option.label}</option>
                             </template>
@@ -35,7 +35,7 @@
             <div class="slds-form-element__label company-type-content col-6 my-auto"
                 key={currentField.name} >
                 <lightning-input key={currentField.name} data-tosca={currentField.name}
-                    data-parentlevel={currentCategory.name} type={currentField.type}
+                    data-parentlevel={currentCategory.name} type={currentField.type} checked={currentField.selected}
                     label={currentField.label} value={currentField.value} onclick={onClickItem}>
                 </lightning-input>
             </div><br key={currentField.name} />

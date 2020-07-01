@@ -53,7 +53,7 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 						answersJsonContent.add(JSON.serialize(CW_GxA_Wrappers.parseSurvey(response.getBody())));
 					} else {
 						needRetry = true;
-						CW_AmazonS3Wrappers.ErrorResponse s3Error = CW_AmazonS3Wrappers.parseError(new XmlStreamReader(response.getBody()));
+						AmazonXMLParser.ErrorResponse s3Error = AmazonXMLParser.parseError(new XmlStreamReader(response.getBody()));
 						errorMessage.add('\n  ' + objectKey);
 						errorMessage.add(String.format('     - S3 Error: {0} => {1}', new List<String>{ s3Error.Code, s3Error.Message }));
 					}

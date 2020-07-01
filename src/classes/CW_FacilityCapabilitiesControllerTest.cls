@@ -28,8 +28,8 @@ public class CW_FacilityCapabilitiesControllerTest {
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-        capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ard.Id;
+		capvalcert.Expiration_Date__c = Date.today().addDays(1);
+		capvalcert.ICG_Account_Role_Detail__c = ard.Id;
 		insert capvalcert;
 
 		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCap.Id);
@@ -110,7 +110,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.ICG_Account_Role_Detail__c = ardid;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -127,7 +127,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Map<String, Object> response = CW_FacilityCapabilitiesController.getCapabilitiesFromAccountRoleDetailId(ardid);
 		Test.stopTest();
 		system.assertEquals(true, response.containsKey('superCategories'), 'No superCategories found for this Account Role Detail');
-    }
+	}
 
 	@isTest
 	public static void getCapabilitiesFromAccountRoleDetailIdTest2() {
@@ -160,7 +160,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.ICG_Account_Role_Detail__c = ardid;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -177,16 +177,19 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ICG_Certification_Capability_Assignment__c capability = new ICG_Certification_Capability_Assignment__c();
 		capability.ICG_Certification__c = cert.id;
 		capability.Category__c = 'CCTV';
-        capability.Equipment__c = 'CCTV';
-        insert capability;
-        
-        ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ardid, cap.Id);
-        assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
-        insert assignment;
-        
+		capability.Equipment__c = 'CCTV';
+		insert capability;
+		
+		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ardid, cap.Id);
+		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
+		insert assignment;
+		
 		Test.startTest();
 		Map<String, Object> response = CW_FacilityCapabilitiesController.getCapabilitiesFromAccountRoleDetailId(ardid);
-        Test.stopTest();
+		Boolean res = response.ContainsKey('e_getMessage');
+		System.assertEquals(res, false);
+
+		Test.stopTest();
 	}
 
 	@isTest
@@ -258,7 +261,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-        capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.ICG_Account_Role_Detail__c = ardid;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -328,8 +331,16 @@ public class CW_FacilityCapabilitiesControllerTest {
 		}
 
 		Test.startTest();
-		CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, listCap);
-		CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, null);
+		
+		String jsonRes = CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, listCap);
+		String jsonResError = CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, null);
+		
+		CW_FacilityCapabilitiesController.ResponseBody res = (CW_FacilityCapabilitiesController.ResponseBody) JSON.deserialize(jsonRes, CW_FacilityCapabilitiesController.ResponseBody.class);
+		CW_FacilityCapabilitiesController.ResponseBody resError = (CW_FacilityCapabilitiesController.ResponseBody) JSON.deserialize(jsonResError, CW_FacilityCapabilitiesController.ResponseBody.class);
+
+		system.assertEquals(res.success, true);
+		system.assertEquals(resError.success, false);
+
 		Test.stopTest();
 	}
 
@@ -337,7 +348,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 	public static void setVisibilityPhotosTest() {
 		Id ardcid = [SELECT id FROM Account_Role_Detail_Capability__c LIMIT 1].id;
 
-        Test.startTest();
+		Test.startTest();
 		Object returnJson = CW_FacilityCapabilitiesController.setVisibilityPhotos(ardcid, 'test');
 		system.assertNotEquals(null, returnJson);
 		Test.stopTest();
@@ -347,32 +358,41 @@ public class CW_FacilityCapabilitiesControllerTest {
 	public static void getPicklistEntryMapCapTest() {
 		Id ardcid = [SELECT id FROM Account_Role_Detail_Capability__c LIMIT 1].id;
 
-        Test.startTest();
-        CW_FacilityCapabilitiesController.CapabilityPhoto photo = new CW_FacilityCapabilitiesController.CapabilityPhoto(); 
-		CW_FacilityCapabilitiesController.getPicklistEntryMapCapEquipment(); 
-		CW_FacilityCapabilitiesController.getPicklistEntryMapCapCategory();
+		Test.startTest();
+		CW_FacilityCapabilitiesController.CapabilityPhoto photo = new CW_FacilityCapabilitiesController.CapabilityPhoto(); 
+		
+		Map<String, Schema.PicklistEntry> equipment =  CW_FacilityCapabilitiesController.getPicklistEntryMapCapEquipment(); 
+		Map<String, Schema.PicklistEntry> category = CW_FacilityCapabilitiesController.getPicklistEntryMapCapCategory();
+		
+		system.assertNotEquals(equipment.size(), 0);
+		system.assertNotEquals(category.size(), 0);
+
 		Test.stopTest();
 	}
 
 	@isTest
 	public static void catchesTest() {
-        Test.startTest();
-        CW_FacilityCapabilitiesController.CapabilityPhoto photo = new CW_FacilityCapabilitiesController.CapabilityPhoto();
-        photo.visible = true;
-        photo.url = 'url';
-        photo.label = 'label';  
+		Test.startTest();
+		CW_FacilityCapabilitiesController.CapabilityPhoto photo = new CW_FacilityCapabilitiesController.CapabilityPhoto();
+		photo.visible = true;
+		photo.url = 'url';
+		photo.label = 'label';  
 
-        Account_Role_Detail_Capability__c currentDetail = new Account_Role_Detail_Capability__c(); 
+		Account_Role_Detail_Capability__c currentDetail = new Account_Role_Detail_Capability__c(); 
 
-		CW_FacilityCapabilitiesController.getColumnsByRtAndGroup(currentDetail, null, null);
-		// CW_FacilityCapabilitiesController.getColumnsByRtAndGroup(currentDetail, 'field', null); 
-        
-        List<String> fieldsToGet = new List<String>();
-        fieldsToGet.add('field');
-        
-        CW_FacilityCapabilitiesController.convertCapabilityAssignmentToObject(null, fieldsToGet, null);
+		List<List<Map<String, Object>>> columns = CW_FacilityCapabilitiesController.getColumnsByRtAndGroup(currentDetail, null, null);
+		system.assertNotEquals(columns.size(), 0);
+		
+		List<String> fieldsToGet = new List<String>();
+		fieldsToGet.add('field');
+		
+		Map<String, Object> fieldNotExist = CW_FacilityCapabilitiesController.convertCapabilityAssignmentToObject(null, fieldsToGet, null);
+		String fieldNotExistValue = (String)fieldNotExist.get('field');
+		system.assertEquals(fieldNotExistValue, 'NOT EXIST');
 
-		CW_FacilityCapabilitiesController.getItemInMap(null, null, null);
+		Object itemMap = CW_FacilityCapabilitiesController.getItemInMap(null, null, null);
+		system.assertEquals(itemMap, null);
+		
 		Test.stopTest();
 	}
 }

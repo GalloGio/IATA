@@ -55,7 +55,7 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 	private static void updateSearchByFormulaValues(Set<Id> lstFacilities) {
 		List<ICG_Account_Role_Detail__c> ardFinal = new List<ICG_Account_Role_Detail__c>();
 		List<ICG_Account_Role_Detail__c> ardToUpdate = [SELECT Id, Company_FOR__c, City_FOR__c, Country_FOR__c,
-														search_city__c, search_company__c, search_country__c
+														Search_By_City__c, Search_By_Company__c, Search_By_Country__c
 														FROM ICG_Account_Role_Detail__c
 														WHERE Id IN :lstFacilities];
 		System.debug(LoggingLevel.FINE, 'updateSearchByFormulaValues.lstARDtoUpdate: ' + ardToUpdate);
@@ -65,11 +65,11 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 			if(facility.City_FOR__c != null) {
 				String citySimple = translationText(facility.City_FOR__c);
 				String cityUmlaute = translationUmlaute(facility.City_FOR__c);
-				if(facility.search_city__c == null
-						|| citySimple != facility.search_city__c.split(SPLITTER)[0].toLowerCase()
-						|| (facility.search_city__c.split(SPLITTER).size() > 2 
-							&& cityUmlaute != facility.search_city__c.split(SPLITTER)[2].toLowerCase()) ) {
-					facility.search_city__c = citySimple 
+				if(facility.Search_By_City__c == null
+						|| citySimple != facility.Search_By_City__c.split(SPLITTER)[0].toLowerCase()
+						|| (facility.Search_By_City__c.split(SPLITTER).size() > 2 
+							&& cityUmlaute != facility.Search_By_City__c.split(SPLITTER)[2].toLowerCase()) ) {
+					facility.Search_By_City__c = citySimple 
 											+ SPLITTER + facility.City_FOR__c 
 											+ SPLITTER + cityUmlaute;
 					toUpdate = true;
@@ -79,12 +79,12 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 				String companySimple = translationText(facility.Company_FOR__c);
 				String companyUmlaute = translationUmlaute(facility.Company_FOR__c);
 
-				if(facility.search_company__c == null 
-						|| facility.search_company__c == ''
-						|| companySimple != facility.search_company__c.split(SPLITTER)[0].toLowerCase()
-						|| (facility.search_company__c.split(SPLITTER).size() > 2 
-							&& companyUmlaute != facility.search_company__c.split(SPLITTER)[2].toLowerCase()) ) {
-					facility.search_company__c = companySimple 
+				if(facility.Search_By_Company__c == null 
+						|| facility.Search_By_Company__c == ''
+						|| companySimple != facility.Search_By_Company__c.split(SPLITTER)[0].toLowerCase()
+						|| (facility.Search_By_Company__c.split(SPLITTER).size() > 2 
+							&& companyUmlaute != facility.Search_By_Company__c.split(SPLITTER)[2].toLowerCase()) ) {
+					facility.Search_By_Company__c = companySimple 
 												+ SPLITTER + facility.Company_FOR__c
 												+ SPLITTER + companyUmlaute;
 					toUpdate = true;
@@ -94,11 +94,11 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 				String countrySimple = translationText(facility.Country_FOR__c);
 				String countryUmlaute = translationUmlaute(facility.Country_FOR__c);
 
-				if(facility.search_country__c == null
-						|| countrySimple != facility.search_country__c.split(SPLITTER)[0].toLowerCase()
-						|| ( facility.search_country__c.split(SPLITTER).size() > 2 
-							&& countryUmlaute != facility.search_country__c.split(SPLITTER)[2].toLowerCase()) ) {
-					facility.search_country__c = countrySimple 
+				if(facility.Search_By_Country__c == null
+						|| countrySimple != facility.Search_By_Country__c.split(SPLITTER)[0].toLowerCase()
+						|| ( facility.Search_By_Country__c.split(SPLITTER).size() > 2 
+							&& countryUmlaute != facility.Search_By_Country__c.split(SPLITTER)[2].toLowerCase()) ) {
+					facility.Search_By_Country__c = countrySimple 
 												+ SPLITTER + facility.Country_FOR__c
 												+ SPLITTER + countryUmlaute;
 					toUpdate = true;

@@ -6,11 +6,6 @@
         <label>E&amp;F</label>
     </customValue>
     <customValue>
-        <fullName>MedAire</fullName>
-        <default>false</default>
-        <label>MedAire</label>
-    </customValue>
-    <customValue>
         <fullName>Training</fullName>
         <default>false</default>
         <label>Training</label>

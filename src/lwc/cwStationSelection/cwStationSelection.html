@@ -13,7 +13,7 @@
     <template if:true={selectedFacility}>
         <div class="col-12 slds-grid data-box bg-yellow p-2-5">
             <div class="col-md-2">
-                <img src={getLogoUrl} alt={facilityName} title={facilityName} class="max-h-110"/>
+                <img src={getLogoUrl} alt={facilityName} title={facilityName} class="max-h-110" onerror={setDefaultImg}/>
             </div>
             <div class="col-md-5">
                 <div class="title mb-2-5">

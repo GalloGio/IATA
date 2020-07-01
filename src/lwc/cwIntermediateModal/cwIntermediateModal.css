@@ -6,3 +6,13 @@
     border-bottom: none;
     margin-bottom: -20px;
 }
+
+.slds-modal__header_empty, .slds-modal__header--empty {
+    padding: 0;
+    border-bottom: 0;
+    margin-bottom: 0px;
+}
+
+.backdrop-noBackGround{
+    background: rgba(126, 140, 153, 0.1);
+}

@@ -173,7 +173,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>company_type_icon__c</field>
+            <field>Icon_Company_Type__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
         <columns>
@@ -228,7 +228,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>second_address__c</field>
+            <field>Secondary_Address__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
         <columns>
@@ -248,17 +248,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>search_city__c</field>
+            <field>Search_By_City__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>search_company__c</field>
+            <field>Search_By_Company__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>search_country__c</field>
+            <field>Search_By_Country__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
         <columns>

@@ -39,10 +39,10 @@ public class CW_AmazonS3Connector {
 	 * @param			namedCredential		Named Credential configured in Salesforce to use in Amazon S3 requests
 	 * @return			Returns some or all (up to 1,000) of the objects in a bucket.
 	 */
-	public static CW_AmazonS3Wrappers.ListObjectsV2Output listObjectsV2(Map<String, String> queryParams, String namedCredential) {
+	public static AmazonXMLParser.ListBucketResult listObjectsV2(Map<String, String> queryParams, String namedCredential) {
 		HttpResponse response = awsS3ListObjectsV2(queryParams, namedCredential);
 		XmlStreamReader reader = new XmlStreamReader(response.getBody());
-		return CW_AmazonS3Wrappers.parseListObjectsV2Output(reader);
+		return new AmazonXMLParser().parseBucketCont(reader);
 	}
 
 	/**

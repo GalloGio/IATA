@@ -5,7 +5,7 @@ import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.get
 
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
-import { fillPredictiveValues, extractTypeFromLocation, removeFromArray, prepareSearchObjectFEICategories, checkIconType, translationTextJS, createKey, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
+import { fillPredictiveValues, extractTypeFromLocation, removeGenericItemFromList, prepareSearchObjectFEICategories, checkIconType, translationTextJS, createKey, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
 
 export default class CwResultsPageSearchBar extends LightningElement {
 	label = labels.labels();
@@ -24,8 +24,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	locationInput = "locationinput";
 
 	locationsItems = [];
-	lstFEICategories = [];
-	lstFEICategoriesLabels = [];
+	@track lstFEICategories = [];
 	companyNameItems = [];
 
 	@api filterCountResponsive;
@@ -67,7 +66,8 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		if (value) {
 			this.removeAllLocations();
 			this.onchangeFunction(true);
-			this.searchSummaryList.push({ label: "Custom Location" });
+			let label = "Custom Location";
+			this.searchSummaryList.push({ label: label, value: label });
 		}
 	}
 	_customLocationFilter;
@@ -319,7 +319,9 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	}
 
 	removeLocation(event) {
-		const updatedList = this.removeGenericItemFromList(event, this.searchLocationList);
+		event.preventDefault();
+		let label = event.currentTarget.getAttribute("data-delete");
+		const updatedList = removeGenericItemFromList(label, this.searchLocationList);
 		this.searchLocationList = updatedList.auxList;
 		this.locationsItems = updatedList.auxListLabels;
 		this.locationSearchValue = "";
@@ -327,31 +329,107 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	}
 
 	removeCompanyName(event) {
-		const updatedList = this.removeGenericItemFromList(event, this.searchCompanyNameList);
+		event.preventDefault();
+		let label = event.currentTarget.getAttribute("data-delete");
+		const updatedList = removeGenericItemFromList(label, this.searchCompanyNameList);
 		this.searchCompanyNameList = updatedList.auxList;
 		this.companyNameItems = updatedList.auxListLabels;
 		this.companyNamesSearchValue = "";
 		this.template.querySelector("[data-tosca=" + this.companyNameInput + "]").value = "";
 	}
 
-	removeFEICategory(event) {
-		const updatedList = this.removeGenericItemFromList(event, this.lstFEICategories);
-		this.lstFEICategories = updatedList.auxList;
-		this.lstFEICategoriesLabels = updatedList.auxListLabels;
-	}
 
-	removeGenericItemFromList(event, array) {
+
+	removeFEICategory(event) {
 		event.preventDefault();
-		let auxList = [];
-		let auxListLabels = [];
-		array.forEach(loc => {
-			if (loc.label.toUpperCase() !== event.currentTarget.getAttribute("data-delete").toUpperCase()) {
-				auxList.push(loc);
-				auxListLabels.push(loc.label);
+		let label = event.currentTarget.getAttribute("data-delete");
+		let labelIncludingParent = event.currentTarget.getAttribute("data-delete-with-parent");
+
+		let feiCategoriesCopy = JSON.parse(JSON.stringify(this.lstFEICategories));
+
+
+		let categoryToHandle = feiCategoriesCopy.filter(cat => {
+			let isCategory = cat.label === label;
+			let isField = false;
+			if(cat.fields){
+				let isFieldLabel = cat.fields.some(field => field.label === label);
+				let isOptionLabel;
+
+				cat.fields.forEach(field => {
+					if(field.options){
+						field.options.forEach(opt => {
+							if(opt.label === label){
+								isOptionLabel = true;
+							}
+						})
+					}
+				})
+				
+
+				isField = isFieldLabel || isOptionLabel;
 			}
+
+			return labelIncludingParent.includes(cat.label) && isCategory || isField;
 		});
 
-		return { auxList: auxList, auxListLabels: auxListLabels };
+
+		if(categoryToHandle && categoryToHandle.length == 1){
+			let category = categoryToHandle[0];
+			let isCategory = category.label === label;
+			let isField = false;
+			if(category.fields){
+				let isFieldLabel = category.fields.some(field => field.label === label);
+				let isOptionLabel;
+
+				category.fields.forEach(field => {
+					if(field.options){
+						field.options.forEach(opt => {
+							if(opt.label === label){
+								isOptionLabel = true;
+							}
+						})
+					}
+				})
+				
+
+				isField = isFieldLabel || isOptionLabel;
+			}
+
+
+			if(isCategory){
+				const updatedList = removeGenericItemFromList(label, feiCategoriesCopy);
+				feiCategoriesCopy = updatedList.auxList;
+			}
+			else if(isField){
+				let fieldsCopy = JSON.parse(JSON.stringify(category.fields));
+				let fieldsNew = [];
+				
+				fieldsCopy.forEach(field => {
+					if(field.label === label){
+						field.selected = false;
+						if(field.options){
+							field.options.forEach(opt => {
+								opt.selected = false;
+							})
+						}
+					}
+
+					if(field.options){
+						field.options.forEach(opt => {
+							if(opt.label === label){
+								opt.selected = false;
+								field.selected = false;
+							}
+						})
+					}
+
+					fieldsNew.push(field);
+				});
+				category.fields = JSON.parse(JSON.stringify(fieldsNew));
+
+			}
+		}
+		this.lstFEICategories = JSON.parse(JSON.stringify(feiCategoriesCopy));
 	}
 
 	removeAllLocations() {
@@ -363,7 +441,6 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		this.searchLocationList = [];
 		this.locationsItems = [];
 		this.lstFEICategories = [];
-		this.lstFEICategoriesLabels = [];
 		this.searchCompanyNameList = [];
 		this.companyNameItems = [];
 		this.template.querySelector("[data-tosca=" + this.companyNameInput + "]").value = "";
@@ -389,7 +466,8 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		if (array) {
 			array.forEach(element => {
 				this.searchSummaryList.push({
-					label: element
+					label: element,
+					value: element
 				});
 			});
 		}
@@ -401,11 +479,18 @@ export default class CwResultsPageSearchBar extends LightningElement {
 
 		this.addToSearchSummaryList(this.locationsItems);
 		this.addToSearchSummaryList(this.companyNameItems);
-		this.addToSearchSummaryList(this.lstFEICategoriesLabels);
+		this.lstFEICategoriesLabels.forEach(lbl => {
+			
+			this.searchSummaryList.push({
+				label: lbl.label,
+				value: lbl.value
+			});
+		})
 		inputs.forEach(input => {
 			if (input.type === "checkbox" && input.checked === true) {
 				this.searchSummaryList.push({
-					label: input.getAttribute("data-name")
+					label: input.getAttribute("data-name"),
+					value: input.getAttribute("data-name")
 				});
 			}
 		});
@@ -441,14 +526,16 @@ export default class CwResultsPageSearchBar extends LightningElement {
 
 		//Show/Hide Show more/less tags filter
 		let pills = this.template.querySelector(".collapse-tags");
-		let height = pills.scrollHeight;
-		let showmoreless = this.template.querySelector(".label-see-more");
-		if (height > 85) {
-			showmoreless.classList.remove("hidden");
-		} else {
-			showmoreless.classList.add("hidden");
+		if(pills){
+			let height = pills.scrollHeight;
+			let showmoreless = this.template.querySelector(".label-see-more");
+			if (height > 85) {
+				showmoreless.classList.remove("hidden");
+			} else {
+				showmoreless.classList.add("hidden");
+			}
 		}
-		// if (this.initialLoadPerformed && !this.availableLocationsCalloutPerformed) { -> Temporally commented
+
 		if (!this.availableLocationsCalloutPerformed && this.certifications) {
 			this.callLocationsList();
 		}
@@ -585,7 +672,6 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		if (this._initialSearch) {
 			let inputs = this.template.querySelectorAll("input");
 			let parsedValues = this._initialSearch;
-			let temporaryList = [];
 			parsedValues.forEach(elem => {
 				if (elem.obj.toUpperCase() === "ICG_ACCOUNT_ROLE_DETAIL__C" && elem.field.toUpperCase() === "CITY_FOR__C") {
 					let values = elem.value ? elem.value.split(";") : null;
@@ -596,25 +682,10 @@ export default class CwResultsPageSearchBar extends LightningElement {
 						});
 					}
 				} else if (elem.obj.toUpperCase() === "ICG_ACCOUNT_ROLE_CAPABILITY_ASSIGNMENT__C" && elem.field.toUpperCase().includes("ACCOUNT_ROLE_DETAIL_CAPABILITY__R")) {
-					let labels;
-					let names;
-					if(typeof elem.value === "boolean" || elem.value === "true") {
-						labels = [elem.labels];
-						names = [elem.labels];
-					} else {
-						labels = elem.labels ? elem.labels.split(";") : null;
-						names = elem.value ? elem.value.split(";") : null;
-					}
-					
-					if (labels && names) {
-						for (let i = 0; i < labels.length; i++) {
-							if(!temporaryList.includes(labels[i])) {
-								temporaryList.push(labels[i]);
-								this.lstFEICategories.push({ label: labels[i], selected: true, name: names[i] });
-								this.lstFEICategoriesLabels.push(labels[i]);
-							}
-						}
-						
+					if(elem.equipmentObjects){
+						elem.equipmentObjects.forEach(equip => {
+							this.lstFEICategories.push(equip);
+						})
 					}
 				} else if (elem.obj.toUpperCase() === "ICG_ACCOUNT_ROLE_DETAIL__C" && elem.field.toUpperCase() === "COMPANY_FOR__C") {
 					if (elem.value) {
@@ -721,19 +792,75 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	setSelectedCategory(event) {
 		const categoryInput = event.detail;
 		if (categoryInput.selected) {
+
+			const updatedList = removeGenericItemFromList(categoryInput.label, this.lstFEICategories);
+			this.lstFEICategories = updatedList.auxList;
+
+
 			this.lstFEICategories.push(categoryInput);
-			this.lstFEICategoriesLabels = [...this.lstFEICategoriesLabels, categoryInput.label];
+
+
 		} else {
-			this.lstFEICategoriesLabels = removeFromArray(this.lstFEICategoriesLabels, categoryInput.label);
-			this.lstFEICategories = this.lstFEICategories.filter(element => {
-				return element.label !== categoryInput.label;
-			});
+
+			categoryInput.fields.forEach(field => {
+				field.selected = false;
+			})
+			
+
+
+			const updatedList = removeGenericItemFromList(categoryInput.label, this.lstFEICategories);
+			this.lstFEICategories = updatedList.auxList;
 		}
 
 		this.onchangeFunction();
 	}
 
 	updateSectionLoaded() {
-		this.lstFEICategoriesLabels = [...this.lstFEICategoriesLabels];
+		this.lstFEICategories = [...this.lstFEICategories];
+	}
+
+	get lstFEICategoriesLabels(){
+		let array = [];
+
+		this.lstFEICategories.forEach(category => {
+			if(category.selected){
+				let obj = {
+					label: category.label,
+					value: category.label
+				}
+				array.push(obj);
+			}
+
+			if(category.fields){
+				category.fields.forEach(field => {
+					if(field.selected){
+						if(field.type === 'picklist'){
+							if(field.options){
+								field.options.forEach(opt => {
+									if(opt.selected){
+										let obj = {
+											label: opt.label + ' (' + category.label + ')',
+											value: opt.label
+										}
+										array.push(obj);
+									}
+								})
+							}
+
+						}
+						else{
+							let obj = {
+								label: field.label + ' (' + category.label + ')',
+								value: field.label
+							}
+							array.push(obj);
+						}
+					}
+				})
+			}
+		})
+
+
+		return array;
 	}
 }

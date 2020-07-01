@@ -5,7 +5,6 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import swipe from "c/cwSwipe";
 import {refreshApex} from '@salesforce/apex';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-/*import getImagesExamples_ from "@salesforce/apex/CW_AccountDetailCarousel.getImagesExamples";*/
 
 export default class CwAccountDetailCarousel extends LightningElement {
 	_recordId = "";
@@ -171,7 +170,6 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	handleIndicator(event) {
 		//Image selected
 		this.indicatorClicked = event.target.dataset.item;
-		//const elements = this.template.querySelector("a[data-item="+this.indicatorClicked+"]");
 		this.updateContentList();
 	}
 
@@ -287,7 +285,6 @@ export default class CwAccountDetailCarousel extends LightningElement {
 				this.initializedswipe = true;
 				swipedivs.forEach(swipediv => {
 					swipe.swipedetect(swipediv, swipedir => {
-						// swipedir contains either "none", "left", "right", "top", or "down"
 						if (swipedir === "left") this.moveList("rightArrow");
 						if (swipedir === "right") this.moveList("leftArrow");
 						if (swipedir === "none") {
@@ -305,7 +302,6 @@ export default class CwAccountDetailCarousel extends LightningElement {
 				this.initializedswipepopup = true;
 				swipedivs.forEach(swipediv => {
 					swipe.swipedetect(swipediv, swipedir => {
-						// swipedir contains either "none", "left", "right", "top", or "down"
 						if (swipedir === "left") this.moveList("rightArrow");
 						if (swipedir === "right") this.moveList("leftArrow");
 					});

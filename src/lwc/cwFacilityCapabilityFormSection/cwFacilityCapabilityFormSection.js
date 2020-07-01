@@ -20,6 +20,7 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
     }
     set capability(value) {
         this._capability = JSON.parse(JSON.stringify(value));
+        this.initialized = false;
         this.updateElementClasses();
     }
 
@@ -102,29 +103,36 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
     onUpdateFields(event) {
         const categoryUpdated = event.detail.updatedCategory;
 
-        let temporalCapability = JSON.parse(JSON.stringify(this._capability));
+        let temporalCapability = JSON.parse(JSON.stringify(this.capability));
         temporalCapability.categories.forEach((category, index) => {
             if(category.name === categoryUpdated.name) {
                 temporalCapability.categories[index] = JSON.parse(JSON.stringify(categoryUpdated));
             }
         })
-        this._capability = JSON.parse(JSON.stringify(temporalCapability));
-        this.dispatchEvent(new CustomEvent('selectcategory', { detail: categoryUpdated, bubbles: true, composed: true }));
+        this.capability = JSON.parse(JSON.stringify(temporalCapability));
+        this.dispatchEvent(new CustomEvent('updatecategory', { detail: categoryUpdated}));
     }
 
     launchEventEquipmentSelected(evEquipment) {
         this.initialized = false;
         let selectedItem;
-        Object.keys(this._capability).forEach(element => {
-            Object.keys(this._capability[element]).forEach(category => {
-                if (this._capability[element][category].name === evEquipment.getAttribute("data-tosca")) {
-                    this._capability[element][category].selected = evEquipment.selected;
-                    this._capability[element][category].moreDetails = evEquipment.moreDetails;
-                    selectedItem = this._capability[element][category];
+        Object.keys(this.capability).forEach(element => {
+            Object.keys(this.capability[element]).forEach(category => {
+                if (this.capability[element][category].name === evEquipment.getAttribute("data-tosca")) {
+                    this.capability[element][category].selected = evEquipment.selected;
+
+                    if(!evEquipment.selected){
+                        this.capability[element][category].fields.forEach(field => {
+                            field.selected = false;
+                        })
+                    }
+
+                    this.capability[element][category].moreDetails = evEquipment.moreDetails;
+                    selectedItem = this.capability[element][category];
                 }
             })
         })
-        this.dispatchEvent(new CustomEvent('selectcategory', { detail: selectedItem, bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('updatecategory', { detail: selectedItem}));
     }
 
     onMoreDetails(event) {
@@ -133,10 +141,10 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
         evEquipment.moreDetails = !evEquipment.moreDetails;
         this.initialized = false;
 
-        Object.keys(this._capability).forEach(element => {
-            Object.keys(this._capability[element]).forEach(category => {
-                if (this._capability[element][category].name === evEquipment.getAttribute("data-tosca")) {
-                    this._capability[element][category].moreDetails = true;// evEquipment.moreDetails;
+        Object.keys(this.capability).forEach(element => {
+            Object.keys(this.capability[element]).forEach(category => {
+                if (this.capability[element][category].name === evEquipment.getAttribute("data-tosca")) {
+                    this.capability[element][category].moreDetails = true;
                 }
             })
         })
@@ -163,7 +171,7 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
         this.showModalFields = false;
         let updatedCategory = event.detail.updatedCategory;
 
-        this._capability.categories.forEach(category => {
+        this.capability.categories.forEach(category => {
             if(category.name === updatedCategory.name) {
                 category.moreDetails = false;
             }

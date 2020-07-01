@@ -113,6 +113,18 @@ public without sharing class CW_Utilities {
 		return userRole;
 	}
 
+	@AuraEnabled (cacheable = true)
+	public static Boolean getPermissionToEdit(){
+		Boolean result=false;
+		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'One_Source_Backend_Admin'];
+		if(exist.size()>0){
+			if(Integer.valueOf(exist[0].get('expr0')) > 0){
+				result = true;
+			}
+		}
+		return result;
+	}
+
 	@AuraEnabled
 	public static Boolean approveStationAutomaticProcess(String stationId) {
 		try{

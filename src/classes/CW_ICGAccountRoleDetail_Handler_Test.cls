@@ -39,25 +39,25 @@ public with sharing class CW_ICGAccountRoleDetail_Handler_Test {
 	}
 	/**
 	 * @description		Case 01 - check search field values 
-	 *                  (search_city__c, search_company__c, search_country__c) after insert
+	 *                  (Search_By_City__c, Search_By_Company__c, Search_By_Country__c) after insert
 	 */
 	@isTest
 	public static void insert01ard() {
-		List<ICG_Account_Role_Detail__c> lstARD = [SELECT search_city__c, search_company__c, search_country__c,
+		List<ICG_Account_Role_Detail__c> lstARD = [SELECT Search_By_City__c, Search_By_Company__c, Search_By_Country__c,
 													CITY_FOR__C, Company_FOR__c, Country_FOR__c
 													FROM ICG_Account_Role_Detail__c WHERE Website__c = 'black@mamba.test'];
 
 		Test.startTest();
 		
 		System.assertEquals('München', lstARD[0].CITY_FOR__C, 'CITY_FOR__C has wrong format');
-		List<String> searchValues = lstARD[0].search_city__c.split(';');
-		System.assertEquals('munchen', searchValues[0], 'search_city__c has wrong format');
+		List<String> searchValues = lstARD[0].Search_By_City__c.split(';');
+		System.assertEquals('munchen', searchValues[0], 'Search_By_City__c has wrong format');
 
 		Test.stopTest();
 	}
 	/**
 	 * @description		Case 02 - check search field values - Account TODO - it is async so it is tricky to be tested
-	 *                  (search_city__c, search_company__c, search_country__c) after update
+	 *                  (Search_By_City__c, Search_By_Company__c, Search_By_Country__c) after update
 	 */
 	@isTest
 	public static void update02account() {
@@ -72,7 +72,7 @@ public with sharing class CW_ICGAccountRoleDetail_Handler_Test {
 		List<Account> lstAcc2 = [SELECT name FROM Account WHERE id = :lstAcc[0].Id];
 		System.debug(LoggingLevel.FINE, 'lstAcc2 - update02() : ' + JSON.serialize(lstAcc2));
 
-		List<ICG_Account_Role_Detail__c> lstARD = [SELECT search_city__c, search_company__c, search_country__c,
+		List<ICG_Account_Role_Detail__c> lstARD = [SELECT Search_By_City__c, Search_By_Company__c, Search_By_Country__c,
 													CITY_FOR__C, Company_FOR__c, Country_FOR__c
 													FROM ICG_Account_Role_Detail__c WHERE Website__c = 'black@mamba.test'];
 		
@@ -81,15 +81,15 @@ public with sharing class CW_ICGAccountRoleDetail_Handler_Test {
 
 		Test.stopTest();
 		
-		List<ICG_Account_Role_Detail__c> lstARDASINC = [SELECT search_city__c, search_company__c, search_country__c,
+		List<ICG_Account_Role_Detail__c> lstARDASINC = [SELECT Search_By_City__c, Search_By_Company__c, Search_By_Country__c,
 													CITY_FOR__C, Company_FOR__c, Country_FOR__c
 													FROM ICG_Account_Role_Detail__c WHERE Website__c = 'black@mamba.test'];
-		List<String> searchValues = lstARDASINC[0].search_company__c.split(';');
-		System.assertEquals('ccaeiouyaeiouyaeiouaeiouaonaeiouyaeioonaeiouaeiou', searchValues[0], 'search_company__c has wrong format');
+		List<String> searchValues = lstARDASINC[0].Search_By_Company__c.split(';');
+		System.assertEquals('ccaeiouyaeiouyaeiouaeiouaonaeiouyaeioonaeiouaeiou', searchValues[0], 'Search_By_Company__c has wrong format');
 	}
 	/**
 	 * @description		Case 03 - check search field values - IATA_ISO_City__c
-	 *                  (search_city__c, search_company__c, search_country__c) after update
+	 *                  (Search_By_City__c, Search_By_Company__c, Search_By_Country__c) after update
 	 */
 	@isTest
 	public static void update03city() {
@@ -98,19 +98,19 @@ public with sharing class CW_ICGAccountRoleDetail_Handler_Test {
 		Database.SaveResult updateResult = Database.update(lstCities[0], false);
 
 		Test.startTest();
-		List<ICG_Account_Role_Detail__c> lstARD = [SELECT search_city__c, search_company__c, search_country__c,
+		List<ICG_Account_Role_Detail__c> lstARD = [SELECT Search_By_City__c, Search_By_Company__c, Search_By_Country__c,
 													CITY_FOR__C, Company_FOR__c, Country_FOR__c
 													FROM ICG_Account_Role_Detail__c WHERE Website__c = 'black@mamba.test'];
 
 		System.assertEquals('çÇáéíóúýÁÉÍÓÚÝàèìòùÀÈÌÒÙãõñäëïöüÿÄËÏÖÕÑâêîôûÂÊÎÔÛ', lstARD[0].City_FOR__c, 'CITY_FOR__C has wrong format');
-		List<String> searchValues = lstARD[0].search_city__c.split(';');
-		System.assertEquals('ccaeiouyaeiouyaeiouaeiouaonaeiouyaeioonaeiouaeiou', searchValues[0], 'search_city__c has wrong format');
+		List<String> searchValues = lstARD[0].Search_By_City__c.split(';');
+		System.assertEquals('ccaeiouyaeiouyaeiouaeiouaonaeiouyaeioonaeiouaeiou', searchValues[0], 'Search_By_City__c has wrong format');
 
 		Test.stopTest();
 	}
 	/**
 	 * @description		Case 04 - check search field values - IATA_ISO_Country__c
-	 *                  (search_city__c, search_company__c, search_country__c) after update
+	 *                  (Search_By_City__c, Search_By_Company__c, Search_By_Country__c) after update
 	 */
 	@isTest
 	public static void update04country() {
@@ -119,19 +119,19 @@ public with sharing class CW_ICGAccountRoleDetail_Handler_Test {
 		Database.SaveResult updateResult = Database.update(lstCountries[0], false);
 
 		Test.startTest();
-		List<ICG_Account_Role_Detail__c> lstARD = [SELECT search_city__c, search_company__c, search_country__c,
+		List<ICG_Account_Role_Detail__c> lstARD = [SELECT Search_By_City__c, Search_By_Company__c, Search_By_Country__c,
 													CITY_FOR__C, Company_FOR__c, Country_FOR__c
 													FROM ICG_Account_Role_Detail__c WHERE Website__c = 'black@mamba.test'];
 		
 		System.assertEquals('SpáÍñ', lstARD[0].Country_FOR__c, 'Country_FOR__c has wrong format');
-		List<String> searchValues = lstARD[0].search_country__c.split(';');
-		System.assertEquals('spain', searchValues[0], 'search_country__c has wrong format');
+		List<String> searchValues = lstARD[0].Search_By_Country__c.split(';');
+		System.assertEquals('spain', searchValues[0], 'Search_By_Country__c has wrong format');
 
 		Test.stopTest();
 	}
 	/**
 	 * @description		Case 05 - check search field values - IATA_ISO_City__c with umlaute values
-	 *                  (search_city__c, search_company__c, search_country__c) after update
+	 *                  (Search_By_City__c, Search_By_Company__c, Search_By_Country__c) after update
 	 */
 	@isTest
 	public static void update05cityUmlaute() {
@@ -140,13 +140,13 @@ public with sharing class CW_ICGAccountRoleDetail_Handler_Test {
 		Database.SaveResult updateResult = Database.update(lstCities[0], false);
 
 		Test.startTest();
-		List<ICG_Account_Role_Detail__c> lstARD = [SELECT search_city__c, search_company__c, search_country__c,
+		List<ICG_Account_Role_Detail__c> lstARD = [SELECT Search_By_City__c, Search_By_Company__c, Search_By_Country__c,
 													CITY_FOR__C, Company_FOR__c, Country_FOR__c
 													FROM ICG_Account_Role_Detail__c WHERE Website__c = 'black@mamba.test'];
 
 													System.assertEquals('äöüßÄÖÜ', lstARD[0].City_FOR__c, 'CITY_FOR__C has wrong format');
-		List<String> searchValues = lstARD[0].search_city__c.split(';');
-		System.assertEquals('aeoeuessaeoeue', searchValues[2], 'search_city__c has wrong format');
+		List<String> searchValues = lstARD[0].Search_By_City__c.split(';');
+		System.assertEquals('aeoeuessaeoeue', searchValues[2], 'Search_By_City__c has wrong format');
 
 		Test.stopTest();
 	}

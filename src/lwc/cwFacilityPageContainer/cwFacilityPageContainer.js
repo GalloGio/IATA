@@ -89,6 +89,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	sendActionToSave = false;
 	isSaveCapabMangmn = false;
 	isPendingApproval = false;
+	isSendActionToCancel = false;
 	logoInfoObject;
 	logoImage;
 
@@ -293,6 +294,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					this.facility = this.results[0].facility;
 					this.facility.lstAvailableCertifications = this.results[0].lstAvailableCertifications;
 					this.detailCertFacility = this.results[0].lstAvailableCertifications;
+
 					this.selectedAirlines = this.facility.handledAirlines;
 					if(this.facility.recordTypeName === "Airport Operator" || this.facility.recordTypeName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
@@ -892,7 +894,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			Airmail__c: this.facility.airmail,
 			Perishables__c: this.facility.perishables,
 			Pharmaceuticals__c: this.facility.pharmaceuticals,
-			second_address__c: this.facility.secondAddress,
+			Secondary_Address__c: this.facility.secondAddress,
 			name: this.facility.name,
 			Id: this.facility.Id,
 			Pilot_Information__c: this.facility.pilotInformation
@@ -932,6 +934,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	cancelChanges() {
+		this.isSaveCapabMangmn=false;
+		this.isSendActionToCancel=true;
 		refreshApex(this.getData(this._facilityid));
 	}
 
@@ -1100,5 +1104,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			this.editRampHandlers = true;
 		}
 
+	}
+
+	setDefaultImg(event){
+		event.target.src = resources + "/img/no-image.svg";
 	}
 }

@@ -36,6 +36,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 	_recordId = "";
 	_actionSave= false;
+	_actionCancel = false;
 	@api facility = null;
 	@api userRole;
 	@api areatype;
@@ -48,6 +49,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 	@track photos = null;
 	@track photosAvailable = null;
 	@track dataHoverInfoStamp = null;
+	@track firstSeccionToogled = false;
 
 	@track rowSelected="";
 	@track listAddedRows = [];
@@ -72,12 +74,23 @@ export default class CwFacilityCapabilities extends LightningElement {
 		return this._actionSave;
 	}
 	set actionSave(value){
-	if(value){
 		this._actionSave = value;
 		if(this._actionSave === true){
 			this.handleSaveChanges();
-			}		
-		}
+		}	
+		
+	}
+	
+	@api
+	get actionCancel(){
+		return this._actionCancel;
+	}
+	set actionCancel(value){
+		this._actionCancel = value;
+		if(this._actionCancel === true){
+			this.disableOptions=true;
+		}	
+		
 	}
 
 	get cargoHandlingCss() {
@@ -305,7 +318,16 @@ export default class CwFacilityCapabilities extends LightningElement {
 		if (!this.initialized) {
 			this.initialized = true;
 			this.getCapabilitiesFromAccountRoleDetailId(this.recordId);
-		}		
+		}	
+
+		//no collapsed first section
+		let nodes = this.template.querySelectorAll('img[data-section="content"]');	
+		if(nodes[0] && !this.firstSeccionToogled){
+			this.firstSeccionToogled = true;
+			let nodesContent = this.template.querySelectorAll('.collapsed');
+			nodes[0].src = this.chevronup;
+			nodesContent[0].classList.replace("collapsed", "no-collapsed");		
+		}
 	}
 
 	get dataInformed() {
@@ -486,6 +508,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 							capabilitieAux.check_detail = event.detail.checked;
 						} else {
 							item0.detail = capabilitieAux.check_detail;
+							item0.summary = capabilitieAux.check_summary;
 						}
 					}
 					if (capabilitieAux.name === updatedCapabilitie) {

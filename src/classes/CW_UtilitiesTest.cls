@@ -277,7 +277,7 @@ public class CW_UtilitiesTest {
 		Boolean pickListApiFound = false;
 
 		for (CW_Utilities.picklistVal pv : result) {
-			if (pv.api == 'Cargo_Handling') {
+			if (pv.api.Contains('Cargo')) {
 				pickListApiFound = true;
 			}
 		}
@@ -396,13 +396,16 @@ public class CW_UtilitiesTest {
 		insert crd;
 		System.runAs(urs[0]) {
 			test.startTest();
-			CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+			Boolean res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+			system.assertEquals(res, false);
 
 			crd.Status__c = 'Pending for Approval';
-			CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+			res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+			system.assertEquals(res, false);
 
 			crd.ICG_Role__c = 'test';
-			CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+			res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+			system.assertEquals(res, false);
 
 			test.stopTest();
 		}
@@ -422,7 +425,10 @@ public class CW_UtilitiesTest {
 		insert crd;
 		System.runAs(urs[0]) {
 			test.startTest();
-			CW_Utilities.getRelatedAccountsByStation(crd.Id);
+			
+			Set<Id> listResult = CW_Utilities.getRelatedAccountsByStation(crd.Id);
+			System.assertNotEquals(listResult.size(), 0);
+			
 			test.stopTest();
 		}
 	}
@@ -433,15 +439,17 @@ public class CW_UtilitiesTest {
 		List<ICG_Account_Role_Detail__c> ard = [SELECT id FROM ICG_Account_Role_Detail__c];
 		List<Account_Contact_Role__c> acr = [SELECT Id FROM Account_Contact_Role__c];
 		List<Account_Role__c> arc = [SELECT Id FROM Account_Role__c LIMIT 1];
-
-		//For some reason I cannot yet see, this object cannot be created in the SETUP method
-		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-		crd.ICG_Role__c = 'Facility Manager';
-		crd.Account_Role__c = arc[0].Id;
-		insert crd;
 		System.runAs(urs[0]) {
+
+			//For some reason I cannot yet see, this object cannot be created in the SETUP method
+			ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
+			crd.ICG_Role__c = 'Facility Manager';
+			crd.Account_Role__c = arc[0].Id;
+			insert crd;
+			
 			test.startTest();
-			CW_Utilities.getFacilityManagerContactRolesFromStationListByUser(urs[0].Id);
+			List<ICG_Contact_Role_Detail__c> res = CW_Utilities.getFacilityManagerContactRolesFromStationListByUser(urs[0].Id);
+			system.assertNotEquals(res.size(), 0, 'test=' + res.size());
 			test.stopTest();
 		}
 	}
@@ -458,12 +466,14 @@ public class CW_UtilitiesTest {
 		crd.ICG_Role__c = 'Facility Manager';
 		crd.Status__c = 'Approved';
 		crd.Account_Role__c = arc[0].Id;
-
+		insert crd;
+		
 		ICG_Contact_Role_Detail__c crd1 = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
 		crd1.ICG_Role__c = 'Facility Manager';
 		crd1.Status__c = 'Rejected';
 		crd1.Account_Role__c = arc[0].Id;
-		insert crd;
+		insert crd1;
+		
 		System.runAs(urs[0]) {
 			test.startTest();
 			CW_Utilities.sendApproveOrRejectMailsContactRole(crd, crd1);
@@ -483,6 +493,10 @@ public class CW_UtilitiesTest {
 
 			crd.Status__c = 'Removed';
 			CW_Utilities.sendApproveOrRejectMailsContactRole(crd, crd1);
+		   
+			List<ICG_Notification__c> notifications = [SELECT Id FROM ICG_Notification__c];
+			
+			system.assertNotEquals(notifications.size(), 0);
 			test.stopTest();
 		}
 	}
@@ -501,10 +515,12 @@ public class CW_UtilitiesTest {
 		insert crd;
 		System.runAs(urs[0]) {
 			test.startTest();
-			CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			Boolean res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			system.assertEquals(res, false);
 
 			crd.Status__c = 'Pending for Approval';
-			CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			system.assertEquals(res, false);
 
 			test.stopTest();
 		}
@@ -552,16 +568,19 @@ public class CW_UtilitiesTest {
 		crd.ICG_Role__c = 'Facility Manager';
 		crd.Status__c = 'Approved';
 		crd.Account_Role__c = arc[0].Id;
+		insert crd;
 
 		ICG_Contact_Role_Detail__c crd1 = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
 		crd1.ICG_Role__c = 'Facility Manager';
 		crd1.Status__c = 'Rejected';
 		crd1.Account_Role__c = arc[0].Id;
-		insert crd;
+		insert crd1;
 
 		test.startTest();
 
 		CW_Utilities.updateAllStationManagementRecords(ard[0].CreatedBy.ContactId, ard[0].Id, 'Rejected');
+		List<ICG_Contact_Role_Detail__c> crds = [Select id from ICG_Contact_Role_Detail__c where ICG_Account_Role_Detail__c =:ard[0].Id AND Status__c =: 'Rejected'];
+		system.assertNotEquals(crds.size(), 0);
 
 		test.stopTest();
 	}
@@ -575,52 +594,18 @@ public class CW_UtilitiesTest {
 
 		//For some reason I cannot yet see, this object cannot be created in the SETUP method
 		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-		crd.ICG_Role__c = 'Facility Manager';
+		crd.ICG_Role__c = 'Company Admin';
 		crd.Status__c = 'Pending for Approval';
 		crd.Account_Role__c = arc[0].Id;
 		insert crd;
 		System.runAs(urs[0]) {
 			test.startTest();
 			String groupName = CW_Utilities.getOpsHierarchyNameFromStationId(crd.Id);
-			CW_Utilities.getPendingCompanyAdminContactRolesFromGroupName(groupName);
+			List<ICG_Contact_Role_Detail__c> listResult = CW_Utilities.getPendingCompanyAdminContactRolesFromGroupName(groupName);
+			System.assertNotEquals(listResult.size(), 0);
 			test.stopTest();
 		}
 	}
-
-	// @istest
-	// static void testUserRoleAdmin() {
-	// 	List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
-	// 	List<ICG_Account_Role_Detail__c> ard = [Select id, Account_Role__r.Account__r.Name from ICG_Account_Role_Detail__c];
-	// 	List<Account_Contact_Role__c> acr = [SELECT Id FROM Account_Contact_Role__c];
-	//     List<Account_Role__c> arc = [SELECT Id, Account__r.Name FROM Account_Role__c LIMIT 1];
-
-	// 	//For some reason I cannot yet see, this object cannot be created in the SETUP method
-	// 	ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-	// 	crd.ICG_Role__c = 'Company Admin';
-	//     crd.Status__c = 'Approved';
-	//     crd.Account_Role__c = arc[0].Id;
-	//     insert crd;
-
-	//     List<Account_Role_Relationship__c> arr = [SELECT Id FROM Account_Role_Relationship__c];
-	//     arr[0].Relationship_Name__c = 'Account01';
-	//     arr[1].Relationship_Name__c = 'Account01';
-	//     update arr;
-
-	//     ard[0].Account_Role__r.Account__r.Name = 'Account01';
-	//     update ard[0];
-
-	//     List<Account_Role__c> arc1 = [Select Id, Account__r.Name from Account_Role__c];
-	//     arc1[0].Account__r.Name = ard[0].Account_Role__r.Account__r.Name;
-	//     arc1[1].Account__r.Name = ard[0].Account_Role__r.Account__r.Name;
-	//     update arc1;
-
-	// 	System.runAs(urs[0]) {
-	// 		test.startTest();
-	// 		String userRoleAdmin = CW_Utilities.getUserRole(ard[0].id);
-	//         System.assertEquals('Company Admin', userRoleAdmin, 'not a company admin' + userRoleAdmin);
-	// 		test.stopTest();
-	// 	}
-	// }
 
 	@istest
 	static void testUserAdminActions() {
@@ -653,12 +638,16 @@ public class CW_UtilitiesTest {
 
 		System.runAs(urs[0]) {
 			test.startTest();
+			
+			CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			
 			String userRoleAdmin = CW_Utilities.getUserRole(ard[0].id);
 			System.assertEquals('Company Admin', userRoleAdmin, 'not a company admin' + userRoleAdmin);
 
 			CW_Utilities.approveStationAutomaticProcess(ard[0].Id);
-			CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
-			CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			String crdRemovalProcess = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
+			System.assertEquals('Successful', crdRemovalProcess);
+			
 			test.stopTest();
 		}
 	}
@@ -695,6 +684,8 @@ public class CW_UtilitiesTest {
 		try {
 			CW_Utilities.rejectStationAutomaticProcess(ard[0].Id, 'the reason');
 		} catch (Exception ex) {
+			Boolean res = ex.getMessage().contains('Aura handled exception');
+			system.assertEquals(res, true);
 		}
 
 		test.stopTest();

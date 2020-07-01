@@ -75,6 +75,10 @@ export default class CwStationSelection extends LightningElement {
 		}
 
 		return resources + "/img/no-image.svg";
+    }
+    
+    setDefaultImg(event){
+		event.target.src = resources + "/img/no-image.svg";
 	}
 
 }

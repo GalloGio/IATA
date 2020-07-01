@@ -134,7 +134,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>second_address__c</field>
+                <field>Secondary_Address__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

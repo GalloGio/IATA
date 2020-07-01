@@ -1,6 +1,6 @@
 import { LightningElement, wire, api } from "lwc";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
-import { removeFromArray, prepareSearchObjectFEICategories, prepareSearchParams } from "c/cwUtilities";
+import { removeFromArray, removeGenericItemFromList, prepareSearchObjectFEICategories, prepareSearchParams } from "c/cwUtilities";
 
 let lstLocationTypes = {};
 let lstLocations = [];
@@ -82,9 +82,17 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 	setSelectedCategory(event) {
 		const categoryInput = event.detail;
 		if (categoryInput.selected) {
+			const updatedList = removeGenericItemFromList(categoryInput.label, lstFEICategories);
+			lstFEICategories = updatedList.auxList;
 			lstFEICategories.push(categoryInput);
+
 		} else {
-			lstFEICategories = removeFromArray(lstFEICategories, categoryInput);
+			categoryInput.fields.forEach(field => {
+				field.selected = false;
+			})
+
+			const updatedList = removeGenericItemFromList(categoryInput.label, lstFEICategories);
+			lstFEICategories = updatedList.auxList;
 		}
 	}
 

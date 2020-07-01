@@ -67,12 +67,8 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	@wire(userHasOneSourceAccess,{})
 	wiredUserAccess(result){
 		this.userHasAccess = result.data;
-		console.log('UserHasAccess',result.data);
-		if(!this.userHasAccess){
-			//window.location.href = '/onesource/OneSourceLogin';
-
-			//REMOVE
-			this.userHasAccess = true;
+		if(this.userHasAccess != undefined && !this.userHasAccess){
+			window.location.href = window.location.href.toLowerCase().indexOf('onesource.iata.org')>-1 ? '/OneSourceLogin' : '/onesource/OneSourceLogin';
 		}
 	}
 	

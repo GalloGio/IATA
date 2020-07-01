@@ -17,7 +17,6 @@
                 </c-cw-intermediate-modal>
             </template>
 
-
             <template if:true={showFileHideCarousel}>
                 <div class="demo-only">
                     <div class="slds-m-around_xx-large">
@@ -34,10 +33,10 @@
                                     </div>
                                     <div class="row-no-margin col-12 mt-4">
                                         <div class="col-6 text-left">
-                                            <button class="btn btn-primary-blu btn-action" data-name="cancel" onclick={evaluateHideImage}>{label.cancel}</button>
+                                            <button class="btn btn-primary-blue btn-action" data-name="cancel" onclick={evaluateHideImage}>{label.cancel}</button>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <button class="btn btn-primarye" data-name="delete" onclick={makeActionToImage}>{label.accept}</button>
+                                            <button class="btn btn-primary" data-name="delete" onclick={makeActionToImage}>{label.accept}</button>
                                         </div>
                                     </div>
 
@@ -48,31 +47,9 @@
                     <div class="slds-backdrop slds-backdrop_open"></div>
                 </div>
             </template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </template>
 
         <template if:true={lisImagesSize}>
-
             <div class="slds-grid slds-gutters slds-wrapper m-0">
                 <div class="slds-size_10-of-12 slds-col carousel-size">
                     <lightning-icon data-item="leftArrow" icon-name="utility:chevronleft" variant="inverse" alternative-text="Left"
@@ -91,9 +68,7 @@
                                                         class="slds-carousel__panel-action slds-text-link_reset width-100"
                                                         tabindex={indicator.tabindex} onclick={openModal}>
                                                         <div class="swipediv slds-carousel__image">
-                                                            <img src={indicator.url} alt="Show images"
-                                                                class="maximum-size-panel" />
-                                                            <!-- <lightning-icon class="slds-col" variant="inverse" icon-name="utility:jump_to_top" alternative-text="forward" ></lightning-icon> -->
+                                                            <img src={indicator.url} alt="Show images" class="maximum-size-panel" />
                                                         </div>
                                                     </a>                                               
                                                 </div> 
@@ -199,16 +174,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <lightning-icon data-item="rightArrow" icon-name="utility:chevronright" variant="inverse" alternative-text="Right"
-                                                class="chevronright" onclick={moveList}></lightning-icon>
+                            <lightning-icon data-item="rightArrow" icon-name="utility:chevronright" variant="inverse" alternative-text="Right" class="chevronright" onclick={moveList}></lightning-icon>
                         </div>
                     </section>
                     <div class="slds-backdrop slds-backdrop_open"></div>
                 </div>
             </template>
         </template>
-
-
         <template if:false={lisImagesSize}>
                 <div class="alert alert-info" role="alert">
                     {label.no_images_profile}

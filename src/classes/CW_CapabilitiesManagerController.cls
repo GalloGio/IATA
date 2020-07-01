@@ -43,7 +43,7 @@ public without sharing class CW_CapabilitiesManagerController {
 			}
 
 			// Get account role detail to determine which categories need to show. If there are no categories, we leave.
-			ICG_Account_Role_Detail__c accountRoleDetailFound = [SELECT Id, RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id = :id];
+			ICG_Account_Role_Detail__c accountRoleDetailFound = [SELECT Id, RecordType.DeveloperName,Summary_Detail_Check_JSON__c FROM ICG_Account_Role_Detail__c WHERE Id = :id];
 			List<String> categoriesToRetrieve = CW_FacilityCapabilitiesController.getMapCategoriesByAccountRoleDetailRecordType().get(accountRoleDetailFound.RecordType.DeveloperName.toLowerCase());
 			if (categoriesToRetrieve == null) {
 				return returnValue;
@@ -219,6 +219,10 @@ public without sharing class CW_CapabilitiesManagerController {
 
 					Boolean isMultiRecordCapabilities = ESPECIAL_CATEGORIES.get('Multi_Record_Capabilities').contains(currentDetail.Category__c.toLowerCase()) ? true : false;
 
+					if(!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)){
+                    	checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
+					}
+
 					capabilityFound.put('rtypeId', currentDetail.RecordTypeId);
 
 					if (currentAssignment.ICG_Account_Role_Detail__r.Summary_Detail_Check_JSON__c != null) {
@@ -351,10 +355,6 @@ public without sharing class CW_CapabilitiesManagerController {
 
 					if (capabilityFound != null && !capabilityFound.containsKey('columns')) {
 						List<String> columns = mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase());
-
-						if (columns.contains('tcha_temperature_range__c')) {
-							columns.remove(columns.indexOf('tcha_temperature_range__c'));
-						}
 
 						if (columns.contains('number__c') && isMultiRecordCapabilities) {
 							columns.remove(columns.indexOf('number__c'));

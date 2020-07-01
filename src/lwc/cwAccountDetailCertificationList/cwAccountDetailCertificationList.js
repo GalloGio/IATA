@@ -40,8 +40,12 @@ export default class CwAccountDetailCertificationList extends LightningElement {
 				let certificationImages = [];
 				Object.keys(resultMap).forEach(function(accountHasCertification) {
 					resultMap[accountHasCertification].forEach(function(cert) {
-						let expirationDate = cert.expirationDate;
-						let issueDate = cert.issueDate;
+						let dateArrayExd = (cert.expirationDate ? cert.expirationDate.split("-"):null);
+						let expirationDate = (dateArrayExd ? dateArrayExd[2] + '-' + dateArrayExd[1] + '-' + dateArrayExd[0]:cert.expirationDate);
+
+						let dateArrayIsd = (cert.issueDate ? cert.issueDate.split("-"):null);
+						let issueDate = (dateArrayIsd ?dateArrayIsd[2] + '-' + dateArrayIsd[1] + '-' + dateArrayIsd[0]:cert.issueDate);
+						
 						let scope;
 						let certificationId = cert.certificationId;
 						let image = cert.image;

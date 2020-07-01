@@ -76,10 +76,11 @@ public without sharing class Order_Dom {
 	}
 
 	private void onAfterInsert() {
-		//getData(true, true);
+		// getData(true, true);
 	}
 
 	private void onAfterUpdate() {
+		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 		//This is a custom setting for order max upload
 		//Avoid the order triggers to fire when mass upload Orders
 		if (Utility.getNumericSetting('Execute Order Trigger for mass upload') != 1) return;
@@ -114,7 +115,96 @@ public without sharing class Order_Dom {
 		Order_Svc.sapInvoiceStatusUpdate(newMap, oldMap);
 
 		// GxA Remote Validation Integration
-		Order_Svc.remoteValidationStatusHandler(newMap, oldMap);
+		CW_GxA_Amazon_S3__c cfgGxaS3 = CW_GxA_Amazon_S3__c.getOrgDefaults();
+		String startProcessStatus = cfgGxaS3.Order_Status_To_Start_Process__c != null ? cfgGxaS3.Order_Status_To_Start_Process__c : 'RV_Complete';
+		String readyForUserFulfillmentStatus = cfgGxaS3.Order_Status_Pending_Fulfillment__c != null ? cfgGxaS3.Order_Status_Pending_Fulfillment__c : 'RV_Created';
+		String rvSubmittedStatus = cfgGxaS3.Order_Status_Submitted__c != null ? cfgGxaS3.Order_Status_Submitted__c : 'RV_WIP';
+		String needsCorrectionStatus = cfgGxaS3.Order_Status_Needs_Correction__c != null ? cfgGxaS3.Order_Status_Needs_Correction__c : 'RV_NeedsCorrection';
+		if (String.isNotBlank(cfgGxaS3.Order_Status_To_Start_Process__c)) {
+			List<Id> gxaOrderIds = new List<Id>();
+			List<Id> pendingToFulfillOrderIds = new List<Id>();
+			List<Id> submittedOrderIds = new List<Id>();
+			List<Id> needsCorrectionOrderIds = new List<Id>();
+			for (Order currentOrder : newMap.values()) {
+				if(String.isNotBlank(currentOrder.Remote_Validation_Status__c) && (oldMap == null || oldMap.get(currentOrder.Id).Remote_Validation_Status__c != currentOrder.Remote_Validation_Status__c)){
+					if (currentOrder.Remote_Validation_Status__c == startProcessStatus) {
+						gxaOrderIds.add(currentOrder.Id);
+					}
+					else if (currentOrder.Remote_Validation_Status__c == readyForUserFulfillmentStatus) {
+						pendingToFulfillOrderIds.add(currentOrder.Id);
+					}
+					else if (currentOrder.Remote_Validation_Status__c == rvSubmittedStatus) {
+						submittedOrderIds.add(currentOrder.Id);
+					}
+					else if (currentOrder.Remote_Validation_Status__c == needsCorrectionStatus) {
+						needsCorrectionOrderIds.add(currentOrder.Id);
+					}
+				}
+			}
+			if (gxaOrderIds.size() > 0) {
+				System.enqueueJob(new CW_GxA_Integration_Queueable(gxaOrderIds));
+				List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email, CreatedBy.ContactId from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :gxaOrderIds];
+				for(OrderItem orditem : orderItems){
+					//Insert System Notification
+					if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){
+						String subject = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ' ready';
+						String body = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ', ' + ordItem.Station__r.Formatted_Address__c + ' ready';
+						notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+					}
+					
+					//Send email to who purchased
+					CW_Utilities.sendEmailTemplate('Results_to_User_appro_by_IATA',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email});
+				}
+			}
+			List<String> whoEmailIata = new List<String>();
+			for(User u : CW_Utilities.getIATAStakeHoldersUsersList()) {
+				if(u.email != null){
+					whoEmailIata.add(u.email);
+				}
+			}
+			if (pendingToFulfillOrderIds.size() > 0) {
+				List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN : pendingToFulfillOrderIds];
+				for(OrderItem orditem : orderItems){
+					//Insert System Notification
+					if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){
+						String subject = orditem.Product2.Name + ' for ' + ordItem.Station__r.Name+ ' now ready to be completed';
+						String body = orditem.Product2.Name + ' for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.Formatted_Address__c  + ' now ready to be completed';
+						notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+					}
+
+					//Send email to who purchased
+					CW_Utilities.sendEmailTemplate('Completion_to_User_link_ready',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email});
+					//Send email to IATA
+					CW_Utilities.sendEmailTemplate('Completion_to_IATA_link_ready',orditem.Id, orditem.CreatedById, whoEmailIata);
+				}
+			}
+			if (submittedOrderIds.size() > 0) {
+				List<OrderItem> orderItems = [Select Id, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :submittedOrderIds];
+				for(OrderItem orditem : orderItems){
+					//Send email to who purchased
+					CW_Utilities.sendEmailTemplate('Completion_to_User_questionnaire_sub',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email});
+					//Send email to IATA
+					CW_Utilities.sendEmailTemplate('Completion_to_IATA_when_is_subm',orditem.Id, orditem.CreatedById, whoEmailIata);
+				}
+			}
+			if (needsCorrectionOrderIds.size() > 0) {
+				List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :needsCorrectionOrderIds];
+				for(OrderItem orditem : orderItems){
+					//Insert System Notification
+					if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){
+						String subject = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ' ready';
+						String body = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ', ' + ordItem.Station__r.Formatted_Address__c + ' ready';
+						notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+					}
+					//Send email to who purchased
+					CW_Utilities.sendEmailTemplate('Results_to_User_rejec_by_IATA',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email});
+				}
+			}
+		}
+
+		if(notifications.size() > 0){
+			Database.insert(notifications);
+		}
 	}
 
 	private void onAfterDelete() {

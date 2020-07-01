@@ -77,7 +77,6 @@ export default class CwCertificationManager extends LightningElement {
 	renderedCallback(){
 		if(!this.initialized){
 			this.initialized = true;
-			console.log(this.certificationInfo);
 			this.newCertId = this.certificationInfo.certificationId;
 		}
 	}
@@ -254,7 +253,7 @@ export default class CwCertificationManager extends LightningElement {
 				);
 				this.showToast(this.certificationInfo.name,"Certification renewed", "success");
 				this.getDeprecatedCertifications();
-				this.refreshApex(this.mapForCertifiID);
+				refreshApex(this.mapForCertifiID);
 			}
 		});
 		

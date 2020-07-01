@@ -159,7 +159,8 @@ public class CW_PrivateAreaControllerTest {
 		Test.startTest();
 		CW_PrivateAreaController.GroupDataWrapper groupData = new CW_PrivateAreaController.GroupDataWrapper('id', null, 'status', true, true);
 		CW_PrivateAreaController.OpsHierarchyDataWrapper ops = new CW_PrivateAreaController.OpsHierarchyDataWrapper(groupData, null);
-		CW_PrivateAreaController.getGxaSSOUrl();
+		String res = CW_PrivateAreaController.getGxaSSOUrl();
+		system.assertNotEquals('', res);
 		Test.stopTest();
 	}
 }

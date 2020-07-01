@@ -218,7 +218,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 			}
 
 			// Get account role detail to determine which categories need to show. If there are no categories, we leave.
-			ICG_Account_Role_Detail__c accountRoleDetailFound = [SELECT Id, RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id = :id];
+			ICG_Account_Role_Detail__c accountRoleDetailFound = [SELECT Id, RecordType.DeveloperName,Summary_Detail_Check_JSON__c FROM ICG_Account_Role_Detail__c WHERE Id = :id];
 			List<String> categoriesToRetrieve = getMapCategoriesByAccountRoleDetailRecordType().get(accountRoleDetailFound.RecordType.DeveloperName.toLowerCase());
 			if (categoriesToRetrieve == null) {
 				return returnValue;
@@ -505,6 +505,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 						// We look for the Capability, Category to which it belongs
 						Map<String, Object> capabilityFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) rawData.get('capabilities'), 'name', rtDevNameLC);
 						Map<String, Object> categoryFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) capabilityFound.get('categories'), 'value', currentDetail.Category__c);
+
+						if(!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)){
+							checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
+						}
 
 						capabilityFound.put('rtypeId', currentDetail.RecordTypeId);
 

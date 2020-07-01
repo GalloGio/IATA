@@ -1,10 +1,10 @@
 /**
 
 		Project: eCommerce Enhancements
-		   File: IEC_Cart.cls
+	       File: IEC_Cart.cls
 	Description: Cart Management for Online Store.
-		 Author: blue-infinity sa
-		History: aosantos, 2017-06-20, Initial Release.
+	     Author: blue-infinity sa
+	    History: aosantos, 2017-06-20, Initial Release.
 
 	Detailed description:
 
@@ -35,7 +35,7 @@
 	In this implementation the content stored in the cookie store has the following format:
 			<productNumber>;<quantity>;<coupon>#<productNumber>;<quantity>;<coupon>...
 
-	Sample usage:
+    Sample usage:
 
 		IEC_Cart cartInstance = IEC_Cart.getInstance();
 
@@ -44,17 +44,17 @@
 		cartInstance.retrieveCart();	// retrieve cart from database if user is logged in, else retrieve from cookies.
 
 		cartInstance.loginUserEvent();	// transition a user from not logged in to logged in appending the database cart to the current cart.
-
+		
 		cartInstance.submitEvent();		// when user submits order, event that is called, clearing the cart items and cookies.
 
 		List<IEC_Cart.CartItem> cartItems = cartInstance.getCartContent();	// get current cart content.
-
+		
 		cartInstance.addItem(productNumber, quantity, coupon);				// add a new cart item to current cart.
 
 		cartInstance.updateItem(productNumber, quantity, coupon);			// update the cart item with a new quantity + coupon.
-
+		
 		cartInstance.deleteItem(productNumber);								// remove the cart item.
-
+		
 */
 public without sharing virtual class IEC_Cart {
 	private static IEC_Cart cartInstance;
@@ -157,28 +157,28 @@ public without sharing virtual class IEC_Cart {
 		public Decimal	quantity 		{ get; set; }
 
 		public String	coupon 			{ get; set; }
-		
-		//If a product is related with a facility, store the id in this field.
-		public Id relatedFacility		{get;set;}		
+        
+        //If a product is related with a facility, store the id in this field.
+        public Id relatedFacility		{get;set;}			
 
 		public CartItem(Id id, String productNumber, Decimal quantity, String coupon) {
 			initializeFields(id, productNumber, quantity, coupon, null);
 		}
-		public CartItem(Id id, String productNumber, Decimal quantity, String coupon, Id facilityId) {
+        public CartItem(Id id, String productNumber, Decimal quantity, String coupon, Id facilityId) {
 			initializeFields(id, productNumber, quantity, coupon, facilityId);
 		}
-		
-		public void initializeFields(Id id, String productNumber, Decimal quantity, String coupon, Id facilityId){
-			this.id = id;
+        
+        public void initializeFields(Id id, String productNumber, Decimal quantity, String coupon, Id facilityId){
+            this.id = id;
 			this.productNumber = productNumber;
 			this.quantity = quantity;
 			this.coupon = coupon;
-			this.relatedFacility = facilityId;
-		}
+            this.relatedFacility = facilityId;
+        }
 	}
 
 	public class CartException extends Exception { }
-
+	
 	/** The map of Cart Items indexed by Product Number. */
 	@testVisible
 	private Map<String, CartItem> cartItemMap;
@@ -222,7 +222,7 @@ public without sharing virtual class IEC_Cart {
 	public static IEC_Cart initializer(){
 		if (cartInstance == null) {
 			cartInstance = new IEC_Cart();
-		}
+		} 
 
 		return cartInstance;
 	}
@@ -270,16 +270,16 @@ public without sharing virtual class IEC_Cart {
 
 		if (serializedString != null && serializedString.length() != 0) {
 			fields = serializedString.split(';');
-
+            
 			if (fields.size() >= 3) {
 				String productNumber = fields[0];
 				String quantity = fields[1];
 				String coupon = fields[2];
-				String facilityId;
+                String facilityId;
 				if (fields.size() == 4){
-					facilityId = fields[3];
-				}
-				
+                	facilityId = fields[3];
+            	}
+                
 				if (productNumber == 'null' || productNumber == '') {
 					productNumber = null;
 				}
@@ -291,7 +291,7 @@ public without sharing virtual class IEC_Cart {
 				if (coupon == 'null' || coupon == '') {
 					coupon = null;
 				}
-				if (facilityId == 'null' || facilityId == '') {
+                if (facilityId == 'null' || facilityId == '') {
 					facilityId = null;
 				}
 
@@ -300,7 +300,7 @@ public without sharing virtual class IEC_Cart {
 					productNumber,
 					quantity != null ? Decimal.valueOf(quantity) : null,
 					coupon,
-					facilityId
+                    facilityId
 				);
 			} else {
 				//throw new CartException('Error deserializing CartItem \'' + serializedString + '\'');
@@ -390,7 +390,7 @@ public without sharing virtual class IEC_Cart {
 
 					if (cartItem != null) {
 						cartItemMap.put(cartItem.productNumber, cartItem);
-
+						
 						System.debug('put the cartItem in the cartItemMap');
 					}
 				}
@@ -427,7 +427,7 @@ public without sharing virtual class IEC_Cart {
 
 	/**
 		Reload the Cart from Database if user is logged in, if not,
-		use the cookies stored on the browser.
+        use the cookies stored on the browser.
 
 
 	*/
@@ -481,12 +481,12 @@ public without sharing virtual class IEC_Cart {
 	/**
 		When user is logged in, call this method to perform the needed logic to
 		merge the database cart with the cookies. No changes are made in database,
-		the new image of the cart is stored in cookies.
+        the new image of the cart is stored in cookies.
 
 	*/
 	public void loginUserEvent() {
 		System.debug('loginUserEvent start');
-
+		
 		loggedCustomer = Customer_DTO.getLoggedCustomer();
 
 		if (isUserLoggedIn()) {
@@ -507,7 +507,7 @@ public without sharing virtual class IEC_Cart {
 					System.debug('OrderItem with ProductNumber ' + productNumber + ' already exists with Quantity ' + cartItem.quantity + ', adding Quantity ' + quantity);
 
 					cartItem.quantity += quantity;
-
+					
 					if (cartItem.coupon == null) {
 						// Add a coupon
 						cartItem.coupon = coupon;
@@ -535,8 +535,8 @@ public without sharing virtual class IEC_Cart {
 			clearCartInCookies();
 			cartItemMap.clear();		// clear all items from Cart (it will be reloaded later).
 		}
-
-		System.debug('loginUserEvent end');
+		
+		System.debug('loginUserEvent end');	
 	}
 
 	/**
@@ -629,7 +629,7 @@ public without sharing virtual class IEC_Cart {
 
 		System.debug('deleteItem end');
 	}
-
+	
 	/**
 		Get Ecom Products by Product Id.
 
@@ -711,14 +711,14 @@ public without sharing virtual class IEC_Cart {
 				//used for google analytics
 				oi_dto.productNameAnalytic = JSON.serialize(ecomProduct.ProductName);
 				oi_dto.productNumber = ecomProduct.ProductNumber;
-				oi_dto.productCategory = ecomProduct.Portfolio;
-				oi_dto.productBrand = ecomProduct.ProductCategory;
+    			oi_dto.productCategory = ecomProduct.Portfolio;
+    			oi_dto.productBrand = ecomProduct.ProductCategory;
 				oi_dto.productEdition = ecomProduct.Edition;
-				oi_dto.productLanguage = ecomProduct.Language;
-				oi_dto.productInventoryStatus = ecomProduct.InventoryStatus;
+    			oi_dto.productLanguage = ecomProduct.Language;
+    			oi_dto.productInventoryStatus = ecomProduct.InventoryStatus;
 				oi_dto.productAvailabilityDate = ecomProduct.AvailabilityDate;
-				oi_dto.productMedia = ecomProduct.Media;
-				oi_dto.productEffectiveTo = ecomProduct.EffectiveTo;
+    			oi_dto.productMedia = ecomProduct.Media;
+    			oi_dto.productEffectiveTo = ecomProduct.EffectiveTo;
 
 
 				orderItems.add(oi_dto);
@@ -744,7 +744,7 @@ public without sharing virtual class IEC_Cart {
 
 		Map<Id, Product2> srcProductRatePlaneToProductMap = new Map<Id, Product2>();
 		//Source product from cartItem
-		List<Product2> srcProductList = new List<Product2>([SELECT id,SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c
+		List<Product2> srcProductList = new List<Product2>([SELECT id,SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c 
 			FROM Product2 where SAP_Material_Number__c in :cartItemMap.keySet()]);
 
 		//Map of source ProductRatePlaces mapped by Product rate planes
@@ -755,16 +755,16 @@ public without sharing virtual class IEC_Cart {
 		//Retrieves the swap configurations
 		List<Swap_Configuration__c> swapConfigurationList = new List<Swap_Configuration__c>();
 
-		swapConfigurationList = [SELECT id,Relationship_Type__c, Source_Product_Rate_Plan_Information__c, Target_Product_Rate_Plan_Information__c
-			from Swap_Configuration__c where Relationship_Type__c = :IECConstants.SwappingType_Swap and
+		swapConfigurationList = [SELECT id,Relationship_Type__c, Source_Product_Rate_Plan_Information__c, Target_Product_Rate_Plan_Information__c 
+			from Swap_Configuration__c where Relationship_Type__c = :IECConstants.SwappingType_Swap and 
 			Source_Product_Rate_Plan_Information__c in :srcProductRatePlaneToProductMap.keySet()];
 
 		Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
 
 		for(Swap_Configuration__c swapConf : swapConfigurationList){
 			//Target product for the swap product rate plan information and available for the logged customer type.
-			List<Product2> trgProduct = new List<Product2>([SELECT Id, SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c
-				FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c and
+			List<Product2> trgProduct = new List<Product2>([SELECT Id, SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c 
+				FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c and 
 				Restricted_Customer_Type__c includes (:oCurrentCustomer.customerType) limit 1]);
 
 			//swaps only if there is target product
@@ -794,7 +794,7 @@ public without sharing virtual class IEC_Cart {
 	}
 
 
-
+	
 
 	/**
 		Save Order and Cart Items to Database.
@@ -821,7 +821,7 @@ public without sharing virtual class IEC_Cart {
 
 			for (String productNumber : cartItemByProductNumberMap.keySet()) {
 				Product2 product = productMap.get(productNumber);
-
+				
 				if (product != null) {
 					productIdList.add(product.Id);
 				}
@@ -829,7 +829,7 @@ public without sharing virtual class IEC_Cart {
 
 			//ecomProducts = getEcomProductsByProductIdList(productIdList);
 			Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
-
+			
 			ecomProducts = Product_Sel.getEComProduct(productIdList, false, null, null, false, oCurrentCustomer.customerType);
 
 			if (ecomProducts != null) {
@@ -838,7 +838,7 @@ public without sharing virtual class IEC_Cart {
 					ecomProductByProductNumberMap.put(ecomProduct.ProductNumber, ecomProduct);
 					priceInfoByProductNumberMap.put(ecomProduct.ProductNumber, ecomProduct.PriceInfo);
 				}
-			}
+			}		
 
 			for (CartItem cartItem : cartItemList) {
 
@@ -849,7 +849,7 @@ public without sharing virtual class IEC_Cart {
 				if (product != null && ecomProduct != null) {
 					pricebookEntry = pricebookEntryMap.get(product.Id);
 
-					if (pricebookEntry != null) {
+					if (pricebookEntry != null) {	
 						OrderItem orderItem = new OrderItem();
 
 						if (cartItem.id != null) {
@@ -865,7 +865,8 @@ public without sharing virtual class IEC_Cart {
 						orderItem.UnitPrice = ecomProduct.UnitPrice;
 						orderItem.Source__c = 'Ecommerce';
 						orderItem.Coupon__c = cartItem.coupon;
-						orderItem.Station__c = cartItem.relatedFacility;
+                        orderItem.Station__c = cartItem.relatedFacility;
+
 						orderItemList.add(orderItem);
 
 					}
@@ -959,7 +960,7 @@ public without sharing virtual class IEC_Cart {
 
 	*/
 	public Order getCartOrder() {
-
+		
 		if(pendingOrder == null){
 			pendingOrder = IECOrder_Svc.getPenddingOrder(true);
 		}
@@ -985,7 +986,7 @@ public without sharing virtual class IEC_Cart {
 		OrderItem_Sel itemSelector = new OrderItem_Sel();
 		List<OrderItem> orderItemList;
 		Map<Id,List<OrderItem>> orderItemMap = itemSelector.getOrderItems(new Set<Id>{ order.Id });
-
+	
 		orderItemList = orderItemMap.get(order.Id);
 
 		if (orderItemList == null) {

@@ -9,7 +9,7 @@ public with sharing class CW_AccountDetailCertificationList {
 		for (ICG_Capability_Assignment_Group__c accRoleCert : asgmtGroup) {
 			accRolDetCerMap.put(accRoleCert.ICG_Certification__r.Name, accRoleCert);
 		}
-		List<ICG_Certification__c> allCertifictations = [SELECT Id, Name, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c FROM ICG_Certification__c WHERE is_visible__C = true AND Applicable_to__c INCLUDES (:accountType) ORDER BY Order__c];
+		List<ICG_Certification__c> allCertifictations = [SELECT Id, Name, Expiration_Period__c, Image__c, Order__c FROM ICG_Certification__c WHERE is_visible__C = true AND Applicable_to__c INCLUDES (:accountType) ORDER BY Order__c];
 
 		Map<Boolean, List<wrapperCert>> returnMap = new Map<Boolean, List<wrapperCert>>();
 		for (ICG_Certification__c cert : allCertifictations) {

@@ -48,7 +48,7 @@
                                     <!-- Logo -->
                                     <!--HIDDEN RESPONSIVE VERSION-->
                                     <div class="col-1 m-auto hidden-md text-center logo-align">
-                                        <img src={getLogoUrl} alt="Logo" title="" />
+                                        <img src={getLogoUrl} alt="Logo" title="" onerror={setDefaultImg}/>
                                     </div>
                                 </template>
                             </template>
@@ -122,7 +122,7 @@
                                 <div class="col-md-12 slds-grid data-box bg-yellow p-2-5">
                                     <div class="col-md-2 m-auto">
   
-                                        <img src={getLogoUrl} alt="Vueling Airlines-Logo" class="editable" title="" />
+                                        <img src={getLogoUrl} alt="Vueling Airlines-Logo" class="editable" title="" onerror={setDefaultImg}/>
 
                                      
                                         <template if:true={editMode}>
@@ -229,7 +229,7 @@
                         <div class="visible-md">
                             <div class="row m-0">
                                 <div class="col-3">
-                                    <img src={getLogoUrl} alt="Logo" title="" />
+                                    <img src={getLogoUrl} alt="Logo" title="" onerror={setDefaultImg}/>
                                 </div>
                                 <div class="col-9">
                                     <div class="title mb-2-5">
@@ -425,14 +425,14 @@
                     <div
                         class="col-xl-12 col-lg-12 col-xs-12 col-sm-12 col-md-12 facility-capabilities">
                         <c-cw-facility-capabilities label={label} areatype={areatype} user-role={userRole} record-id={facility.Id} edit-mode={editMode}
-                            action-save={isSendActionToSave} ondataloaded={handleCapabilityDataLoaded} onsaveaction={handleSaveAction}>
+                            action-save={isSendActionToSave} action-cancel={isSendActionToCancel} ondataloaded={handleCapabilityDataLoaded} onsaveaction={handleSaveAction}>
                         </c-cw-facility-capabilities>
                     </div>
                 </template>
                 <template if:true={facilityid}>
                     <div class="col-xl-12 col-lg-12 col-xs-12 col-sm-12 col-md-12">
                         <c-cw-facility-capabilities label={label} areatype={areatype} user-role={userRole} record-id={facility.Id} edit-mode={editMode}
-                        action-save={isSendActionToSave} ondataloaded={handleCapabilityDataLoaded} onsaveaction={handleSaveAction}>
+                        action-save={isSendActionToSave} action-cancel={isSendActionToCancel} ondataloaded={handleCapabilityDataLoaded} onsaveaction={handleSaveAction}>
                         </c-cw-facility-capabilities>
                     </div>
                 </template>
