@@ -5,10 +5,8 @@
         action.setParams({'accountID': accountid});   
         action.setCallback(this, function(response) {
             var state = response.getState();
-            console.log('MR::: ',response);
             if (state === "SUCCESS") {
                 var result = response.getReturnValue();
-                console.log('MR::: result',result);
                 if(result){
                     helper.checkEnableOrDisableBSPParticipation(component, helper);
                 }else{
@@ -26,10 +24,8 @@
         action.setParams({'accountID': accountid});   
         action.setCallback(this, function(response) {
             var state = response.getState();
-            console.log('MR::: ',response);
             if (state === "SUCCESS") {
                 var result = response.getReturnValue();
-                console.log('MR::: result2',result);
                 component.set('v.showLoading', false);
                 component.set('v.showDisableEnable', result);
             }
