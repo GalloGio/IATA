@@ -3,7 +3,7 @@
     <description>Used to handle temporary promotions for Agencies</description>
     <fields>
         <fullName>End_Date__c</fullName>
-        <description>This promotion can only be active after this date</description>
+        <description>This promotion is automatically deactivated after this date</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>End Date</label>
@@ -23,7 +23,7 @@
     </fields>
     <fields>
         <fullName>Start_Date__c</fullName>
-        <description>This promotion is automatically deactivated after this date</description>
+        <description>This promotion can only be active after this date</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Start Date</label>
