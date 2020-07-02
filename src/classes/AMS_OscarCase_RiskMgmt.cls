@@ -179,7 +179,8 @@ public class AMS_OscarCase_RiskMgmt {
 				for(AMS_ChangeCodes__c ccConfig : changeCodesPerAccModel.get(c.Account.ANG_IsNewGenAgency__c ? 'NEWGEN' : 'AMS')){
 					Set<String> setLocClass = ccConfig.Class_Type__c == null ? new Set<String>() : new Set<String>(ccConfig.Class_Type__c.toUpperCase().split(';'));
 
-				if(!setLocClass.contains(c.Account.Location_Class__c.toUpperCase()) || !c.recordType.DeveloperName.equalsIgnoreCase(ccConfig.Record_Type__c) || (c.Account.CNS_Agency__c && !ccConfig.Used_By_CNS__c))
+				String locationClass = c.Account.Location_Class__c==null? '': c.Account.Location_Class__c.toUpperCase();
+				if(!setLocClass.contains(locationClass) || !c.recordType.DeveloperName.equalsIgnoreCase(ccConfig.Record_Type__c) || (c.Account.CNS_Agency__c && !ccConfig.Used_By_CNS__c))
 					continue;
 
 				//Check that the same change code does not exists generated from the same SIDRA (Lite)
