@@ -820,6 +820,10 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			);
 
 		insert appRight;
+		
+		c.User_Portal_Status__c = 'Pending Approval';
+		c.Community__c = 'ISS Portal';
+		update c;
 
 		Test.StartTest();
 			// Grant access to service
@@ -830,10 +834,12 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			boolean isSuccessDeny =PortalServicesCtrl.massDenyAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
 			system.assertEquals(isSuccessDeny,true);
 			system.assertEquals('Access Denied',[select Right__c from Portal_Application_Right__c where id=:appRight.id ].Right__c);
+		
+			Boolean isSuccessGrantAgain =PortalServicesCtrl.massGrantAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
+			system.assertEquals(isSuccessGrantAgain,true);
+			system.assertEquals('Access Granted',[select Right__c from Portal_Application_Right__c where id=:appRight.id ].Right__c);
 		Test.StopTest();
 	}
-
-
 
 	//WMO-736 - ACAMBAS: Begin
 	@isTest
