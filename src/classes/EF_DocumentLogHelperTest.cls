@@ -6,7 +6,8 @@ private class EF_DocumentLogHelperTest
 	{
 		User u = EF_TestDataFactory.getEfProfileAndRole(1, 2);
 		Group g = [SELECT Id FROM Group WHERE DeveloperName ='EF_Document_Mass_Uploaders'];
-
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		GroupMember gm = new GroupMember();
 		gm.GroupId = g.Id;
 		gm.UserOrGroupId = u.Id;
