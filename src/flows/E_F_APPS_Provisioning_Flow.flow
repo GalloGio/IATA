@@ -128,23 +128,17 @@
         <locationY>287</locationY>
         <apexClass>SCIMDeleteUserPlugin</apexClass>
         <inputParameters>
+            <name>CallParams</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userProvisioningRequestId</name>
             <value>
                 <elementReference>UserProvisioningRequest.Id</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>Details</assignToReference>
-            <name>Details</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>UPAStatus</assignToReference>
-            <name>UPAStatus</name>
-        </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
         <name>SCIM_Update_User</name>
@@ -255,6 +249,13 @@
         </value>
     </constants>
     <constants>
+        <name>EFAPPS</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EFAPPS</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>EFAPPSName</name>
         <dataType>String</dataType>
         <value>
@@ -315,11 +316,18 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SCIM_Delete_user</targetReference>
+                <targetReference>SCIM_Delete_User</targetReference>
             </connector>
             <label>Delete</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>CallParams</name>
+        <dataType>String</dataType>
+        <expression>&apos;{&apos;+
+&apos; &quot;externalSystems&quot; : &quot;&apos; + {!EFAPPS} + &apos;&quot; &apos; +
+&apos;}&apos;</expression>
+    </formulas>
     <formulas>
         <name>PreferredLanguage</name>
         <dataType>String</dataType>
