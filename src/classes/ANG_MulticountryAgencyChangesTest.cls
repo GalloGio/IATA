@@ -302,7 +302,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountHeSg_h2.Location_Class__c = 'P';
 		accountHeSg_h2.IATA_ISO_Country__c = countrySG.Id;
 		accountHeSg_h2.RecordTypeId = agencyRecTypeId;
-		accountHeSg_h2.IATACode__c = '42300095';
+		accountHeSg_h2.IATACode__c = '42300096';
 		accountHeSg_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountHeSg_h2.Status__c = 'Approved';
 		accountHeSg_h2.Remittance_Frequency__c = 'D';
@@ -326,7 +326,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountStandardHE_SG.Location_Class__c = 'P';
 		accountStandardHE_SG.IATA_ISO_Country__c = countrySG.Id;
 		accountStandardHE_SG.RecordTypeId = agencyRecTypeId;
-		accountStandardHE_SG.IATACode__c = '52350099';
+		accountStandardHE_SG.IATACode__c = '52350089';
 		accountStandardHE_SG.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountStandardHE_SG.Status__c = 'Approved';
 		accountStandardHE_SG.Remittance_Frequency__c = 'W';
@@ -1428,8 +1428,8 @@ private class ANG_MulticountryAgencyChangesTest {
 			'22300095' => '12300098',
 			'32300095' => '12300099',
 			'22300091' => '12300099',
-			'42300095' => '12300099',
-			'42300091' => '42300095'
+			'42300096' => '12300099',
+			'42300091' => '42300096'
 		};
 
 		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
@@ -1745,7 +1745,7 @@ private class ANG_MulticountryAgencyChangesTest {
 			'12300093' => '12300098',
 			'12300092' => '12300097',
 			'12300091' => '12300097',
-			'52350099' => '12300099'
+			'52350089' => '12300099'
 		};
 
 		assertAllHierarchy(expectedHierarchyByIataCodes, acct);

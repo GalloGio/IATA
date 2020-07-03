@@ -852,7 +852,7 @@ private class ANG_RollbackEngineHelperTest {
 			Remittance_frequency__c = 'Monthly',
 			IATA_ISO_Country__c = ctry.id,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='1234001',
+			IATACode__c='1234002',
 			Location_Type__c=AMS_Utils.AE,
 			Name='Test1 Agency OK NEW BIG BOSS',
 			Short_Name__c='Test1 Agency',
