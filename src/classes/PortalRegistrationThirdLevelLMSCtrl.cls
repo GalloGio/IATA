@@ -603,6 +603,19 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					regRes.message = 'An Error Occured! Regitration Not Completed! ' + regRes.message;
 					Database.rollback(sp);
 				}
+				
+				Map<Id,sObject> mConts = new Map<Id,sObject>();
+				Contact c = new Contact();
+				c.Id = contactInfo.Id;
+				c.AccountId = contactInfo.AccountId;
+				mConts.put(contactInfo.Id, c);
+
+				if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+					System.enqueueJob(new AccountRolesAlignBatch(mConts));
+				}else{
+					AccountRolesAlignBatch.switchAccountRoles(mConts);
+				}
+				
 				return regRes;
 			}
 		}
