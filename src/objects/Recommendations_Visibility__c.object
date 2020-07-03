@@ -156,6 +156,7 @@
     <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>ActionButtonLink__c</fullName>
+        <description>Field that calculates the link for the recommendation action button on the recomendation card</description>
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos;,
   IF(NOT(ISBLANK( ActionButton__c)),
@@ -627,6 +628,7 @@ IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos;,
     </fields>
     <fields>
         <fullName>Content_Reference__c</fullName>
+        <description>Reference to the content record from Salesforce CMS created to relate to this recommendation</description>
         <externalId>false</externalId>
         <label>Content Reference</label>
         <length>70</length>
@@ -816,6 +818,7 @@ IF(RecordType.DeveloperName = &apos;ServiceRecommendation&apos;,
     </fields>
     <fields>
         <fullName>InformationButtonLink__c</fullName>
+        <description>Field that calculates the link for the recommendation more info button on the recommendation card</description>
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName = &apos;ProductRecommendation&apos;,
   IF(NOT(ISBLANK( InformationButton__c)),
