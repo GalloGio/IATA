@@ -13448,7 +13448,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>Chú ý! Bằng cách sao chép thông tin quyền sở hữu vào một Đại lý, bạn sẽ xóa bất kỳ thông tin quyền sở hữu nào hiện có về Đại lý mục tiêu.</label>
+        <label>Chú ý! Bằng cách sao chép thông tin quyền sở hữu vào một Đại lý, bạn sẽ xóa bất kỳ thông tin quyền sở hữu nào hiện có về Đại lý đó</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
