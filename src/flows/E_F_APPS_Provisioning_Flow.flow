@@ -245,7 +245,7 @@
         <name>E_and_F</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>&#39;E&amp;F&#39;</stringValue>
+            <stringValue>&apos;E&amp;F&apos;</stringValue>
         </value>
     </constants>
     <constants>
@@ -266,7 +266,7 @@
         <name>RTServiceAdmin</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>&#39;Service_Admin&#39;</stringValue>
+            <stringValue>&apos;Service_Admin&apos;</stringValue>
         </value>
     </constants>
     <decisions>
@@ -336,7 +336,7 @@
     <formulas>
         <name>ProjectFormula</name>
         <dataType>String</dataType>
-        <expression>&#39;E&amp;F APPS&#39;</expression>
+        <expression>&apos;E&amp;F APPS&apos;</expression>
     </formulas>
     <interviewLabel>E&amp;F APPS Provisioning Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>E&amp;F APPS Provisioning Flow</label>
