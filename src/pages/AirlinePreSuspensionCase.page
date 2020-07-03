@@ -67,6 +67,7 @@
 
                 <apex:outputField value="{!asrecord.BSP_Participations_locked__c}" />
                 <apex:outputField value="{!asrecord.CASS_Participations_locked__c}" />
+                <apex:outputField value="{!asrecord.PASS_Participations_locked__c}" />
                 <apex:outputField value="{!asrecord.Regions_Involved__c}" />
             </apex:pageBlockSection>
 

@@ -15,7 +15,11 @@ global class CreateNotificationsFromQueryBatch implements Database.Batchable<sOb
 			 this.query += ' AND Contact.Account.Sector__c = \'' + string.escapeSingleQuotes(sector) + '\'';
 		}
 		if(countries != null && countries.size() > 0 ){
-			this.query += ' AND Contact.Account.IATA_ISO_Country__r.Name IN (\'' + String.join(countries, '\',\'') + '\')' ;
+			List<String> countriesWoQuotes = new List<String>();
+			for(String c : countries) {
+				countriesWoQuotes.add(string.escapeSingleQuotes(c));
+			}
+			this.query += ' AND Contact.Account.IATA_ISO_Country__r.Name IN (\'' + String.join(countriesWoQuotes, '\',\'') + '\')' ;
 		}
 		if(portalService != null && !string.isEmpty(portalService)){
 			this.query += ' AND ContactId IN (SELECT Contact__c From  Portal_Application_Right__c WHERE Portal_Application__r.Name = \'' + portalService + '\' AND Right__c = \'Access Granted\') ';

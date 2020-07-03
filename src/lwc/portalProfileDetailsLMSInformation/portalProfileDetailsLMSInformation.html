@@ -1,0 +1,169 @@
+<template>
+	<lightning-record-edit-form name="addressForm" record-id={recordId} object-api-name="Training_Contact_Role_Details__c"
+			onsuccess={handleSucess} onsubmit={handleSubmit}
+			onerror={handleError}>
+	
+		<template if:true={isSaving}>
+			<div class="modalSpinnerContainer">
+				<lightning-spinner alternative-text="Loading" size="medium">
+				</lightning-spinner>
+			</div>
+		</template>
+
+		<template if:true={isLoading}>
+			<div data-id="spinnerId" class="slds-spinner_container spinnerContainer" role="status">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</template>
+
+		<lightning-layout multiple-rows vertical-align="stretch" horizontal-align="stretch">
+			
+			<lightning-messages size="12" >
+			</lightning-messages>
+			
+			<!-- Personal Email -->
+			<lightning-layout-item size="12" class="addressItem IEFixDisplay">
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						{labels.CSP_L3_PersonalEmail_LMS}
+					</div>
+				</div>
+
+				<div class="slds-form-element">
+					<div class="slds-form-element__control custTextInput custTextInputSmall">
+						<input
+							type="text"
+							data-id="Additional_Email__c"
+							class="slds-input"
+							placeholder=" "
+							data-fieldname="Additional_Email__c"
+							value={localAdditionalEmail}
+							autocomplete="no"
+							onkeyup={handleFieldChange}
+							maxlength="255"/>
+					</div>
+				</div>
+				
+			</lightning-layout-item>
+
+			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
+			<template if:true={existingUsernameVisibility}>
+
+				<div class="infoItemLine">
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="sectionDescription">
+								<lightning-formatted-rich-text  value={messageFlow6}></lightning-formatted-rich-text>
+							</div>
+						</div>
+					</lightning-layout-item>
+					
+				</div>
+			</template>
+
+			<template if:true={existingUsernameNotMatchingF6Visibility}>
+
+				<div class="infoItemLine">
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="sectionDescription">
+								<lightning-formatted-rich-text  value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F6}></lightning-formatted-rich-text>
+							</div>
+							</br>
+							<div class="sectionDescription">
+								<lightning-formatted-rich-text value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof}></lightning-formatted-rich-text>
+							</div>
+						</div>
+					</lightning-layout-item>
+					
+				</div>
+			</template>
+
+			<template if:true={existingPersonalUsernameVisibility}>
+
+				<div class="infoItemLine">
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="sectionDescription">
+								<lightning-formatted-rich-text  value={messageFlow7}></lightning-formatted-rich-text>
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>
+
+			<div data-id="emailDiv" class="slds-form-element">
+				<div class="formElementSpacer">
+					<div if:true={displayError}>
+						<div class="slds-form-element__help">
+							<lightning-formatted-rich-text  value={errorMessage}></lightning-formatted-rich-text>
+						</div>
+					</div>
+				</div>
+				<div if:true={displayError} style="height:16px;">
+				</div>
+			</div>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<!------------------------------------------      Address Form      -------------------------------------------->
+			<lightning-layout-item size="12">
+				<div class="sectionTitle">{labels.CSP_L2_Business_Address_Information}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+		</lightning-layout>
+
+		<c-portal-address-form-l-m-s
+			is-i-e={isIE}
+			country-id={countryId}
+			address={localAddress}
+			onsetvalidationstatus={setValidationStatus}
+			onstartloading={startLoading}
+			onstoploading={stopLoading}>
+		</c-portal-address-form-l-m-s>
+
+		<lightning-layout multiple-rows vertical-align="stretch">
+
+			<lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+					<lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" 
+					label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item size="6">
+				<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+					<lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" 
+					label={labels.SaveLabel} variant="neutral" onclick={next} disabled={isConfirmationButtonDisabled}></lightning-button>
+				</div>
+			</lightning-layout-item>
+			
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+		</lightning-layout>
+	</lightning-record-edit-form>
+
+	<template if:true={openVerificationMailSuccessModal}>
+		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}
+			button1-label="" button2-label={labels.CSP_Close} 
+			onbuttontwoaction={button1Action}>
+		</c-portal-registration-generic-modal>
+	</template>
+
+	<template if:true={openVerificationMailSuccessModalLogOut}>
+		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}
+			button1-label="" button2-label={labels.CSP_LogOut} 
+			onbuttontwoaction={button2ActionLogOut}>
+		</c-portal-registration-generic-modal>
+	</template>
+</template>

@@ -23,5 +23,14 @@
         <unique>true</unique>
     </fields>
     <label>Salesforce Support Emails</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Support_Email__c</columns>
+        <columns>Support_User_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

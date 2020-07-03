@@ -173,6 +173,10 @@
         <name>AMP_Services_Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Invoiced --></label>
+        <name>AMP_Services_Invoiced</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -441,6 +445,10 @@
         <name>AMS_OSCAR_CODEASSIGNMENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_CONFIRM_CONVERSION --></label>
+        <name>AMS_OSCAR_CONFIRM_CONVERSION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_CORRECTION_ALL_HIERARCHY --></label>
         <name>AMS_OSCAR_CORRECTION_ALL_HIERARCHY</name>
     </customLabels>
@@ -707,6 +715,10 @@
     <customLabels>
         <label><!-- AMS OSCAR STEP50 --></label>
         <name>AMS_OSCAR_STEP50</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP51 --></label>
+        <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -2741,6 +2753,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CRMfusionDBR101__DB_Warning_Task_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSL_L2_Got_It --></label>
+        <name>CSL_L2_Got_It</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ALPHAFILTER_All --></label>
         <name>CSP_ALPHAFILTER_All</name>
     </customLabels>
@@ -2793,6 +2809,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Age Verification --></label>
+        <name>CSP_Age_Verification</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;a href= &apos;/s/support-reach-us&apos;&gt;문의 페이지&lt;/a&gt;를 통해 계정 정보 변경 사항을 제출하시면 됩니다.</label>
         <name>CSP_Airline_Changes_Access</name>
     </customLabels>
@@ -2811,6 +2831,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>새로운 서비스 할당하기</label>
         <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>내 북마크에 추가</label>
+        <name>CSP_BookmarkDocAddToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>내 책갈피에서 제거</label>
+        <name>CSP_BookmarkDocRemToolTip</name>
+    </customLabels>
+    <customLabels>
+        <label>내 즐겨찾기</label>
+        <name>CSP_BookmarksTabLabel</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
@@ -2985,6 +3017,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Complete Profile LMS --></label>
+        <name>CSP_Complete_Profile_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>&lt; B &gt; {1} &lt; / B &gt;를 위한&lt; B &gt; {0} &lt; / B &gt; 액세스를 거부하시겠습니까 ?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
@@ -3069,6 +3105,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
+        <label>나의 즐겨찾기에 문서가 추가 되었습니다.</label>
+        <name>CSP_DocumentBookmarkAdded</name>
+    </customLabels>
+    <customLabels>
+        <label>내 즐겨찾기에서 문서번호가 제거되었습니다.</label>
+        <name>CSP_DocumentBookmarkRemoved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DocumentType --></label>
+        <name>CSP_DocumentType</name>
+    </customLabels>
+    <customLabels>
         <label>서류</label>
         <name>CSP_Documents</name>
     </customLabels>
@@ -3101,12 +3149,68 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1 --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1a --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1a</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1b --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1b</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1c --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1c</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1d --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1e --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1e</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1f --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1f</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1g --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1g</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 1h --></label>
+        <name>CSP_Email_Confirmation_Body_Part_1h</name>
+    </customLabels>
+    <customLabels>
         <label>다음을 클릭하여 이메일 주소를 인증하세요</label>
         <name>CSP_Email_Confirmation_Body_Part_2</name>
     </customLabels>
     <customLabels>
         <label>보안상의 이유로 이 링크는 8시간 동안 유효합니다. 시간제한이 만료되면 재요청하셔야 합니다.</label>
         <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Confirmation Body Part 3 LMS --></label>
+        <name>CSP_Email_Confirmation_Body_Part_3_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 1 --></label>
+        <name>CSP_Email_Confirmation_Note_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 2 --></label>
+        <name>CSP_Email_Confirmation_Note_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 3 --></label>
+        <name>CSP_Email_Confirmation_Note_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Confirmation Note 4 --></label>
+        <name>CSP_Email_Confirmation_Note_4</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
@@ -3119,6 +3223,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Email Header Image --></label>
         <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image LMS --></label>
+        <name>CSP_Email_Header_Image_LMS</name>
     </customLabels>
     <customLabels>
         <label>이 링크</label>
@@ -3145,8 +3253,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Signature Part 1 LMS --></label>
+        <name>CSP_Email_Signature_Part_1_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Signature Part 2 --></label>
         <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 LMS --></label>
+        <name>CSP_Email_Signature_Part_2_LMS</name>
     </customLabels>
     <customLabels>
         <label>고객님께서 국제항공운송협회 (IATA)  고객 포털에서 저희와 함께 하게 되어 기쁩니다!</label>
@@ -3261,8 +3377,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP First Login Desc LMS --></label>
+        <name>CSP_First_Login_Desc_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Desc LMS --></label>
+        <name>CSP_First_Login_Desc_LMS_IE</name>
+    </customLabels>
+    <customLabels>
         <label>가입을 환영합니다.</label>
         <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP First Login Title --></label>
+        <name>CSP_First_Login_Title_IE</name>
     </customLabels>
     <customLabels>
         <label>귀하를 위해</label>
@@ -3369,6 +3497,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L1_Last_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Login Email --></label>
+        <name>CSP_L1_LoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L1_PersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_Phone_LMS --></label>
+        <name>CSP_L1_Phone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_TrainingEmail_LMS --></label>
+        <name>CSP_L1_TrainingEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_TrainingUser_LMS --></label>
+        <name>CSP_L1_TrainingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L1_WorkPhone_LMS --></label>
+        <name>CSP_L1_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>회사 계정 정보</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
@@ -3421,6 +3573,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Back_to_Edit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Back_to_Profile_Details --></label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
         <label>계정 선택 및 추가 정보</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
@@ -3429,8 +3585,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Business_Address_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Business_Address_Information_LMS --></label>
+        <name>CSP_L2_Business_Address_Information_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>근무지 주소를 알려주시기 바랍니다.</label>
         <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Business_Address_Information_Message_LMS --></label>
+        <name>CSP_L2_Business_Address_Information_Message_LMS</name>
     </customLabels>
     <customLabels>
         <label>범주</label>
@@ -3505,6 +3669,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Details_Saved_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Details_Saved_Message_LMS --></label>
+        <name>CSP_L2_Details_Saved_Message_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>이제 고객님의 서비스 요청을 계속 진행할 수 있습니다.</label>
         <name>CSP_L2_Details_Saved_Service_Message</name>
     </customLabels>
@@ -3529,6 +3697,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Edit_Company_Information_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L2_EmailValidationDescri_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>이메일</label>
         <name>CSP_L2_Email_Address</name>
     </customLabels>
@@ -3545,6 +3717,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Go_To_Homepage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Go_To_Homepage_LMS --></label>
+        <name>CSP_L2_Go_To_Homepage_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>프로필로 돌아가기</label>
         <name>CSP_L2_Go_To_Profile</name>
     </customLabels>
@@ -3553,12 +3729,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Go_To_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Go_To_Service_LMS --></label>
+        <name>CSP_L2_Go_To_Service_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>주제로 돌아가기</label>
         <name>CSP_L2_Go_To_Topic</name>
     </customLabels>
     <customLabels>
         <label>국제항공운송협회 (IATA) 코드</label>
         <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_IdAlready_LMS --></label>
+        <name>CSP_L2_IdAlready_LMS</name>
     </customLabels>
     <customLabels>
         <label>이 주소는 사서함 주소입니까?</label>
@@ -3629,8 +3813,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Postal_Code</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_Profile_Details --></label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
         <label>국제항공운송협회 (IATA)가 귀하의 맞춤형 콘텐츠 및 서비스를 제안해 드릴 수 있도록 개인 정보를 추가하십시오.</label>
         <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Profile_Details_Message --></label>
+        <name>CSP_L2_Profile_Details_Message_LMS</name>
     </customLabels>
     <customLabels>
         <label>귀하의 프로필이 아직 완전히 업데이트되지 않았습니다.</label>
@@ -3641,12 +3833,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Profile_Incomplete_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_RegistrationFailed_LMS --></label>
+        <name>CSP_L2_RegistrationFailed_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>유감스럽게도,  계정을 만들 때 문제가 발생했습니다. 자세한 내용은 지원팀에 문의하세요.</label>
         <name>CSP_L2_Registration_Error_Message</name>
     </customLabels>
     <customLabels>
         <label>문제가 발생했습니다</label>
         <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Registration_Failed_LMS --></label>
+        <name>CSP_L2_Registration_Failed_LMS</name>
     </customLabels>
     <customLabels>
         <label>취소</label>
@@ -3725,6 +3925,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_SucessUpdate_LMS --></label>
+        <name>CSP_L2_SucessUpdateOnly_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_SucessUpdate_LMS --></label>
+        <name>CSP_L2_SucessUpdate_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_SucessUpdate_LMS --></label>
+        <name>CSP_L2_SucessUpdate_Title_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>인사말</label>
         <name>CSP_L2_Title</name>
     </customLabels>
@@ -3737,6 +3949,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_L2_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_L2_VerificationToP1_LMS --></label>
+        <name>CSP_L2_VerificationToP1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_VerificationToP2_LMS --></label>
+        <name>CSP_L2_VerificationToP2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_VerificationToP3_LMS --></label>
+        <name>CSP_L2_VerificationToP3_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>웹사이트</label>
         <name>CSP_L2_Website</name>
     </customLabels>
@@ -3747,6 +3971,226 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>네</label>
         <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Back_to_Email_Validation_LMS --></label>
+        <name>CSP_L3_Back_to_Email_Validation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Complete Information --></label>
+        <name>CSP_L3_CompleteInformation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Confirmation_Message_LMS --></label>
+        <name>CSP_L3_Confirmation_Message_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_ContactSupport_LMS --></label>
+        <name>CSP_L3_ContactSupport_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Infoermation --></label>
+        <name>CSP_L3_EmailInformation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Validation --></label>
+        <name>CSP_L3_Email_Validation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistTrainNameMatch_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile Training section --></label>
+        <name>CSP_L3_ExistTrainUserId_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistTrainUserMatch_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_ExistTrainUser_LMS --></label>
+        <name>CSP_L3_ExistTrainUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistingContact_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing Contact --></label>
+        <name>CSP_L3_ExistingContact_LMS2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Existing User --></label>
+        <name>CSP_L3_ExistingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Have_Work_Email --></label>
+        <name>CSP_L3_Have_Work_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Header_Title --></label>
+        <name>CSP_L3_Header_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP homepage --></label>
+        <name>CSP_L3_HomePage_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Is Personal Email --></label>
+        <name>CSP_L3_IsPersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_IsReversedEmail_LMS --></label>
+        <name>CSP_L3_IsReversedEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Login Email --></label>
+        <name>CSP_L3_LoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile New Login Email --></label>
+        <name>CSP_L3_NewLoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Next_Confirmation_LMS --></label>
+        <name>CSP_L3_Next_Confirmation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F4_LMS --></label>
+        <name>CSP_L3_Note_F4_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F5_LMS --></label>
+        <name>CSP_L3_Note_F5_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F6_LMS --></label>
+        <name>CSP_L3_Note_F6_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Note_F7_LMS --></label>
+        <name>CSP_L3_Note_F7_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Note --></label>
+        <name>CSP_L3_Note_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_NumericError_LMS --></label>
+        <name>CSP_L3_NumericError_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L3_PersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_Phone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Update --></label>
+        <name>CSP_L3_ProfileUpdate_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Work Email --></label>
+        <name>CSP_L3_ProvideWorkEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Salutation_LMS --></label>
+        <name>CSP_L3_Salutation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Still Working --></label>
+        <name>CSP_L3_StillWorkingP1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Still Working P2 --></label>
+        <name>CSP_L3_StillWorkingP2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L3_Title_LMS --></label>
+        <name>CSP_L3_Title_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Training Validation Description --></label>
+        <name>CSP_L3_TrainValidationDescri_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Training Information --></label>
+        <name>CSP_L3_Training_Information_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Training Validation --></label>
+        <name>CSP_L3_Training_Validation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Updating Initial Message --></label>
+        <name>CSP_L3_UpdatingProfileInitialMessage_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Updating P1 --></label>
+        <name>CSP_L3_UpdatingProfileP1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Profile Updating P1 --></label>
+        <name>CSP_L3_UpdatingProfileP2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_UserId_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_Username_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Verification Mail Title --></label>
+        <name>CSP_L3_VerificationMailTitle_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Work Email --></label>
+        <name>CSP_L3_WorkEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Username --></label>
+        <name>CSP_L3_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Is Personal Email --></label>
+        <name>CSP_L3_Zip_Mandatory_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Is Personal Email --></label>
+        <name>CSP_L3_haveTrainingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP LMS Privacy Policy --></label>
+        <name>CSP_LMS_Privacy_Policy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Login Email --></label>
+        <name>CSP_L_LoginEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Personal Email --></label>
+        <name>CSP_L_PersonalEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_Phone_LMS --></label>
+        <name>CSP_L_Phone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_TrainingEmail_LMS --></label>
+        <name>CSP_L_TrainingEmail_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_TrainingUser_LMS --></label>
+        <name>CSP_L_TrainingUser_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L_WorkPhone_LMS --></label>
+        <name>CSP_L_WorkPhone_LMS</name>
     </customLabels>
     <customLabels>
         <label>마지막 업데이트</label>
@@ -3805,6 +4249,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
+        <label>주요 카테고리</label>
+        <name>CSP_MainCategories</name>
+    </customLabels>
+    <customLabels>
         <label>아래 목록에서 사용자를 관리하실 수 있습니다.</label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -3853,8 +4301,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Next</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Next_EmailValidation_LMS --></label>
+        <name>CSP_Next_EmailValidation_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Next_LMS --></label>
+        <name>CSP_Next_LMS</name>
+    </customLabels>
+    <customLabels>
         <label>표시할 관련 계정이 없습니다.</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨찾기에 현재 아무것도 없습니다.</label>
+        <name>CSP_NoBookmarksText1</name>
+    </customLabels>
+    <customLabels>
+        <label>그러나 필요한 경우, 이 영역에서 가장 최근 기본 정보를 확인하실 수 있습니다.</label>
+        <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
         <label>귀하는 지금 어떤 사례도 가지고 계시지 않습니다.</label>
@@ -4027,6 +4491,42 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>고객님께서 사용하시려는 계정은 이미 사용중입니다. 로그인 페이지로 이동하시려면 이메일을 바꾸시거나 로그인 버튼을 누르십시오</label>
         <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F4_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message_LMS_F8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing work Message --></label>
+        <name>CSP_Registration_Existing_Work_Message_LMS_Profile</name>
     </customLabels>
     <customLabels>
         <label>먼저 스팸 폴더를 확인하세요. 스팸 폴더에서 찾으실 수 없는 경우 다시 시도 버튼을 클릭하여 다시 등록하세요.</label>
@@ -4381,6 +4881,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>과정</label>
+        <name>CSP_Track</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Profile Training section --></label>
+        <name>CSP_Training_Section</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;여기를 클릭하여 국제항공운송협회 (IATA) 인증 및 변경에 직접 액세스하세요.&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
@@ -4419,6 +4927,42 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>사용자 생성</label>
         <name>CSP_User_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_3_LMS --></label>
+        <name>CSP_Verification_L3_Email_3_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LMS verification email --></label>
+        <name>CSP_Verification_L3_Email_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_PE_1_LMS --></label>
+        <name>CSP_Verification_L3_Email_PE_1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_PE_2_F5_LMS --></label>
+        <name>CSP_Verification_L3_Email_PE_2_F5_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_PE_2_LMS --></label>
+        <name>CSP_Verification_L3_Email_PE_2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_1_F4_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_1_F4_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_1_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_1_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_2_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_2_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Verification_L3_Email_UE_3_LMS --></label>
+        <name>CSP_Verification_L3_Email_UE_3_LMS</name>
     </customLabels>
     <customLabels>
         <label>국제항공운송협회 (IATA) 고객 포털에 오신 것을 환영합니다</label>
@@ -4681,12 +5225,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>ContactDirectSalesMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- Contact Account --></label>
+        <name>Contact_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Contact Information --></label>
         <name>Contact_Information</name>
     </customLabels>
     <customLabels>
         <label>담당자명</label>
         <name>Contact_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Contact Username --></label>
+        <name>Contact_Username</name>
     </customLabels>
     <customLabels>
         <label><!-- Control Total Percentage Owners And Subsidiaries --></label>
@@ -7381,6 +7937,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IATA_GDPR_White_Logo</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA_Global_Delivery_Center_Address --></label>
+        <name>IATA_Global_Delivery_Center_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IATA Store Service Description --></label>
         <name>IATA_Store_Service_Description</name>
     </customLabels>
@@ -8741,6 +9301,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>IDCard_CaseStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard CheckBox --></label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard CheckList Credit Card And Checque Payment Information --></label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</name>
     </customLabels>
@@ -8903,6 +9467,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <label>&quot;&lt;h2&gt;We didn&apos;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
 Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;&quot;Applying for a first ID Card&quot;&quot;; or &quot;&quot;Go back to the Login Page&quot;&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&quot;</label>
         <name>IDCard_ContactNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Continue --></label>
+        <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Continue Button --></label>
@@ -9699,6 +10267,18 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_errMsg_Account_Rule --></label>
+        <name>IDCard_errMsg_Account_Rule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_MoreDetails --></label>
+        <name>IDCard_errMsg_MoreDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_NoContact --></label>
+        <name>IDCard_errMsg_NoContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
     </customLabels>
@@ -10003,6 +10583,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Invalid_Promotion_Code_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID Card Invalid Promotion Code 3 --></label>
+        <name>ID_Card_Invalid_Promotion_Code_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Invalid VER --></label>
         <name>ID_Card_Invalid_VER</name>
     </customLabels>
@@ -10037,6 +10621,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- ID Card Package Travel Professionals 2 --></label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Photo --></label>
+        <name>ID_Card_Photo</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Photo Disclaimer --></label>
@@ -10653,6 +11241,10 @@ and
     <customLabels>
         <label>&quot;&lt;a href=&quot;&quot;http://www.iata.org/cs&quot;&quot;&gt;IATA Customer Support&lt;/a&gt;에 연락주시기 바랍니다.&quot;</label>
         <name>IFAP_Please_Contact_CS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IFAP PortalCase Service Description --></label>
+        <name>IFAP_PortalCase_Service_Description</name>
     </customLabels>
     <customLabels>
         <label>http://portal.iata.org</label>
@@ -12887,6 +13479,10 @@ and
         <name>ISSP_AMS_Domestic</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Download_PASS_PDF_Copy --></label>
+        <name>ISSP_AMS_Download_PASS_PDF_Copy</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Download PDF Copy --></label>
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
@@ -12899,12 +13495,20 @@ and
         <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Email_Branch_PASS_Subject --></label>
+        <name>ISSP_AMS_Email_Branch_PASS_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>대리점 승인 지점 초안 신청서</label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Email Change Subject --></label>
         <name>ISSP_AMS_Email_Change_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Email_HO_PASS_Subject --></label>
+        <name>ISSP_AMS_Email_HO_PASS_Subject</name>
     </customLabels>
     <customLabels>
         <label>대리점 승인 본사 초안 신청서</label>
@@ -13183,6 +13787,10 @@ and
         <name>ISSP_AMS_First_Page_Summary_Header_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS First Page Summary Header PASS --></label>
+        <name>ISSP_AMS_First_Page_Summary_Header_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Form --></label>
         <name>ISSP_AMS_Form</name>
     </customLabels>
@@ -13403,6 +14011,14 @@ and
         <name>ISSP_AMS_LeftNav_Section2_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav Section2 PASS --></label>
+        <name>ISSP_AMS_LeftNav_Section2_PASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section2_PASS_Branch --></label>
+        <name>ISSP_AMS_LeftNav_Section2_PASS_Branch</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3 --></label>
         <name>ISSP_AMS_LeftNav_Section3</name>
     </customLabels>
@@ -13425,6 +14041,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3_Cargo_Intermediary --></label>
         <name>ISSP_AMS_LeftNav_Section3_Cargo_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section3_PASS_Branch --></label>
+        <name>ISSP_AMS_LeftNav_Section3_PASS_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section4 --></label>
@@ -13563,8 +14183,16 @@ and
         <name>ISSP_AMS_Local_Details_Please_Enter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Local_Details_Please_Enter_PASS --></label>
+        <name>ISSP_AMS_Local_Details_Please_Enter_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Local Details Title --></label>
         <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Local_Details_Title_PASS_BRANCH --></label>
+        <name>ISSP_AMS_Local_Details_Title_PASS_BRANCH</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_MSO_Aggregator --></label>
@@ -14163,6 +14791,10 @@ and
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_No_Company_Owners_PASS --></label>
+        <name>ISSP_AMS_NoC_No_Company_Owners_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>IATA 항공사에 대한 예상 판매금액을 확인 해 주십시오.</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
@@ -14415,6 +15047,10 @@ and
         <name>ISSP_AMS_No_Pending_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_No_Pending_PASS --></label>
+        <name>ISSP_AMS_No_Pending_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -14515,6 +15151,14 @@ and
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION PAX PASS BRANCH --></label>
+        <name>ISSP_AMS_OPTION_PAX_PASS_BRANCH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION PAX PASS HO --></label>
+        <name>ISSP_AMS_OPTION_PAX_PASS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION PAX SA --></label>
         <name>ISSP_AMS_OPTION_PAX_SA</name>
     </customLabels>
@@ -14529,6 +15173,90 @@ and
     <customLabels>
         <label><!-- ISSP AMS Ownership Update --></label>
         <name>ISSP_AMS_Ownership_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Admin --></label>
+        <name>ISSP_AMS_PASS_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Application --></label>
+        <name>ISSP_AMS_PASS_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q1 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q2 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q3 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4 --></label>
+        <name>ISSP_AMS_PASS_Branch_Form_SECTION4_Q3_TXT4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Branch_Government_Owned_Company --></label>
+        <name>ISSP_AMS_PASS_Branch_Government_Owned_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Contact --></label>
+        <name>ISSP_AMS_PASS_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_Email_Description --></label>
+        <name>ISSP_AMS_PASS_Email_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS HO ReadOnly SECTION1 --></label>
+        <name>ISSP_AMS_PASS_HO_ReadOnly_SECTION1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS HO ReadOnly SECTION2 --></label>
+        <name>ISSP_AMS_PASS_HO_ReadOnly_SECTION2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 1 --></label>
+        <name>ISSP_AMS_PASS_SECTION_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 2 --></label>
+        <name>ISSP_AMS_PASS_SECTION_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PASS SECTION 2 1 text 1 --></label>
+        <name>ISSP_AMS_PASS_SECTION_2_1_text_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PASS_User --></label>
+        <name>ISSP_AMS_PASS_User</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_PAX_Company --></label>
@@ -14663,12 +15391,20 @@ and
         <name>ISSP_AMS_STEP_3_1_Identi_Appro_Req</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Title PASS BRANCH --></label>
+        <name>ISSP_AMS_STEP_3_1_Title_PASS_BRANCH</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_2 Title --></label>
         <name>ISSP_AMS_STEP_3_2_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS STEP 3_2 Title New --></label>
         <name>ISSP_AMS_STEP_3_2_Title_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_STEP_3_2_Title_PASS_BRANCH --></label>
+        <name>ISSP_AMS_STEP_3_2_Title_PASS_BRANCH</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Sales Instructions --></label>
@@ -14775,12 +15511,20 @@ and
         <name>ISSP_AMS_Step0_Intro_Accred_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_Accred_PASS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step0 Intro CNS --></label>
         <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro New --></label>
         <name>ISSP_AMS_Step0_Intro_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_PASS --></label>
+        <name>ISSP_AMS_Step0_Intro_PASS</name>
     </customLabels>
     <customLabels>
         <label>귀사 전화번호, 이메일 주소 등의 변경은 &lt;a href=&quot;&quot;/ISSP_CompanyInformation?mid=M5S2&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt;회사 정보&lt;/a&gt; 페이지에서 직접 변경할 수 있습니다.</label>
@@ -14833,6 +15577,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step0 SAA New --></label>
         <name>ISSP_AMS_Step0_SAA_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_SAA_PASS --></label>
+        <name>ISSP_AMS_Step0_SAA_PASS</name>
     </customLabels>
     <customLabels>
         <label>새로운 IATA 코드로 특정한 판매를 구별/분리 - SA Code (Specific Sales Activity)</label>
@@ -14899,6 +15647,10 @@ and
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step1_ProgressBar_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>참고: 승인을 받으려는 각 대리점 위치에 대해 별도의 온라인 신청서를 작성해서 제출해야 합니다.</label>
         <name>ISSP_AMS_Step1_Separate_Application</name>
     </customLabels>
@@ -14915,12 +15667,20 @@ and
         <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 Title PASS --></label>
+        <name>ISSP_AMS_Step1_Title_PASS</name>
+    </customLabels>
+    <customLabels>
         <label>초안 신청서는 2주 이내에 제출해야 합니다. 그렇지 않으면 승인 프로세스를 다시 시작해야 합니다.</label>
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
         <label>다음항목에 대한 체크리스트</label>
         <name>ISSP_AMS_Step2_Check_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step2 Check List PASS --></label>
+        <name>ISSP_AMS_Step2_Check_List_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step2 Instructions --></label>
@@ -14933,6 +15693,10 @@ and
     <customLabels>
         <label>B: 국가 요건 검토</label>
         <name>ISSP_AMS_Step2_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step2 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step2_ProgressBar_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_3_1_Title --></label>
@@ -15013,6 +15777,10 @@ and
     <customLabels>
         <label>하나 이상의 회사가 귀사를 전부 또는 부분적으로 소유하는 경우, 여기에 세부사항을 기입하십시오(귀사가 증권거래소에 상장된 기업이거나 ‘장외시장’에서 정기적으로 거래되는 경우는 제외).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Companies_PASS --></label>
+        <name>ISSP_AMS_Step3_4_Companies_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 Companies SubTitle --></label>
@@ -15383,6 +16151,10 @@ and
         <name>ISSP_AMS_Step3_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step3 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step3_ProgressBar_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step3 Save Anytime --></label>
         <name>ISSP_AMS_Step3_Save_Anytime</name>
     </customLabels>
@@ -15393,6 +16165,10 @@ and
     <customLabels>
         <label>D: 문서 업로드</label>
         <name>ISSP_AMS_Step4_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step4 ProgressBar PASS --></label>
+        <name>ISSP_AMS_Step4_ProgressBar_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step4 Upload &amp; Continue --></label>
@@ -15503,6 +16279,10 @@ and
         <name>ISSP_AMS_StepsAll_Import_Agent_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll PASS Participant Title --></label>
+        <name>ISSP_AMS_StepsAll_PASS_Participant_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Passenger_Title --></label>
         <name>ISSP_AMS_StepsAll_Passenger_Title</name>
     </customLabels>
@@ -15525,6 +16305,10 @@ and
     <customLabels>
         <label>IATA에 제출</label>
         <name>ISSP_AMS_Submit_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS TC PASS --></label>
+        <name>ISSP_AMS_TC_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS T&amp;Cs1 --></label>
@@ -15551,6 +16335,10 @@ and
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Trade Reg Number PASS --></label>
+        <name>ISSP_AMS_Trade_Reg_Number_PASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Trained_Staff_Name --></label>
         <name>ISSP_AMS_Trained_Staff_Name</name>
     </customLabels>
@@ -15569,6 +16357,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Update Agency New --></label>
         <name>ISSP_AMS_Update_Agency_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Update Agency PASS --></label>
+        <name>ISSP_AMS_Update_Agency_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Update HO details --></label>
@@ -15615,6 +16407,14 @@ and
         <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Validation_PASS_Admin --></label>
+        <name>ISSP_AMS_Validation_PASS_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Validation_PASS_User --></label>
+        <name>ISSP_AMS_Validation_PASS_User</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
         <name>ISSP_AMS_Validation_Percent_Ownership</name>
     </customLabels>
@@ -15633,6 +16433,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Portal Admin --></label>
         <name>ISSP_AMS_Validation_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation Portal Admin --></label>
+        <name>ISSP_AMS_Validation_Portal_Admin_PASS</name>
     </customLabels>
     <customLabels>
         <label>지사 세부 항목 보기/업데이트</label>
@@ -16101,10 +16905,6 @@ and
     <customLabels>
         <label>법적 공인 서명인만 사무소 폐업에 대해 IATA에 통보할 수 있습니다. ‘회사 관리 -&gt; 연락 담당자’ 영역에서 대리점의 공인 서명인을 지정할 수 있습니다.</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
-    </customLabels>
-    <customLabels>
-        <label>IATA에 은행계좌 세부정보의 변경사항을 알리시려면 IATA로 연락해 주십시오</label>
-        <name>ISSP_ANG_BANK_DETAILS_MC_BLOCK</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch Office --></label>
@@ -16607,6 +17407,10 @@ and
         <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_PASS_Withdraw --></label>
+        <name>ISSP_AP_PASS_Withdraw</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
     </customLabels>
@@ -16679,8 +17483,9 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
-        <label>비고 : 본 페이지의 &apos;잔액&apos; 필드는 IATA 계좌에 입금 후 최소 1영업일 뒤 업데이트됩니다. 
-ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두고 제공됨으로, 실시간으로 업데이트되지 않거나 정확 또는 완벽하지 않을수 있음을 양지하시길  바랍니다.</label>
+        <label>IATA 계정에 입금된 후 다음 영업일에 고객 포털의 잔액이 업데이트됩니다. IATA 계정에 입금되는 날은 선택하신 결제 형식에 따라 다릅니다. ICE에 표시된 청구 데이터는 제3자를 통해 24시간 이내에 IATA에 제공되며 IATA가 통제할 수 없는 지연이 발생할 수 있습니다. 
+
+항공사 직무 정지로 청구 금액이 조정된 경우, 대행사는 ICE에 등재된 금액에 의존할 수 있으며, 여기에 차액이 발생하면, 대행사의 차후 결제 또는 대행사에 대한 차후 지급을 통해 해결될 수 있습니다.</label>
         <name>ISSP_Account_Statements_Disclaimer</name>
     </customLabels>
     <customLabels>
@@ -17606,7 +18411,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_AccessGranted1</name>
     </customLabels>
     <customLabels>
-        <label>유감스럽게도, 귀하가 요청한 [placeholder]서비스에 대한 접속 신청이</label>
+        <label>본 메세지는 귀하의 포털 서비스 접속에 영향을 주는 중요한 메세지입니다.</label>
         <name>ISSP_Email_AccessRejected1</name>
     </customLabels>
     <customLabels>
@@ -17618,12 +18423,20 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_AccessRejected3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected3.1 --></label>
+        <name>ISSP_Email_AccessRejected3_1</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 IATA 고객 서비스에서[placeholder]서비스 접속을 거부하였습니다</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
         <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected5 --></label>
+        <name>ISSP_Email_AccessRejected5</name>
     </customLabels>
     <customLabels>
         <label>[placeholder]서비스 접속이</label>
@@ -17790,12 +18603,20 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Draft_PASS_Process --></label>
+        <name>ISSP_Email_Draft_PASS_Process</name>
+    </customLabels>
+    <customLabels>
         <label>귀사의 본점(혹은 지점)의 IATA 인가승인을 위한 신청서를 작성 해 주셔서 감사합니다.</label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
         <label>아래 링크를 클릭한 다음 이메일 주소로 포털에 로그인하면 작성 중인 승인 및 변경 신청서에 액세스할 수 있습니다:</label>
         <name>ISSP_Email_Draft_Process2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Draft_Process_PASS --></label>
+        <name>ISSP_Email_Draft_Process_PASS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_GiveUsFeedback --></label>
@@ -18838,6 +19659,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Loading PASS Details --></label>
+        <name>ISSP_Loading_PASS_Details</name>
+    </customLabels>
+    <customLabels>
         <label>여행사 세부사항 로딩 중…</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
@@ -19412,6 +20237,98 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
     <customLabels>
         <label><!-- ISSP Owner Name --></label>
         <name>ISSP_Owner_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS --></label>
+        <name>ISSP_PASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASSLink_PS_Description --></label>
+        <name>ISSP_PASSLink_PS_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Administrators --></label>
+        <name>ISSP_PASS_Administrators</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Administrators Rec --></label>
+        <name>ISSP_PASS_Administrators_Rec</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Agent --></label>
+        <name>ISSP_PASS_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Agreement --></label>
+        <name>ISSP_PASS_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Airline_Checklist --></label>
+        <name>ISSP_PASS_Airline_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS BankMandate --></label>
+        <name>ISSP_PASS_BankMandate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Checklist --></label>
+        <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Download_Documents --></label>
+        <name>ISSP_PASS_Download_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Help Admin --></label>
+        <name>ISSP_PASS_Help_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Help User --></label>
+        <name>ISSP_PASS_Help_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS NewUsers --></label>
+        <name>ISSP_PASS_NewUsers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS New Admins --></label>
+        <name>ISSP_PASS_New_Admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_PS_Description --></label>
+        <name>ISSP_PASS_PS_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_Agreement --></label>
+        <name>ISSP_PASS_Participation_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_AgreementTerms --></label>
+        <name>ISSP_PASS_Participation_AgreementTerms</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Participation_Checklist --></label>
+        <name>ISSP_PASS_Participation_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_And_Conditions --></label>
+        <name>ISSP_PASS_Terms_And_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_Conditions --></label>
+        <name>ISSP_PASS_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Terms_Use --></label>
+        <name>ISSP_PASS_Terms_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS TextAreas --></label>
+        <name>ISSP_PASS_TextAreas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PASS Users --></label>
+        <name>ISSP_PASS_Users</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
@@ -20169,6 +21086,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- ISSP Requirements --></label>
         <name>ISSP_Requirements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Requirements PASS --></label>
+        <name>ISSP_Requirements_PASS</name>
     </customLabels>
     <customLabels>
         <label>비밀번호 재설정</label>
@@ -24599,6 +25520,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Total_Cost --></label>
         <name>Total_Cost</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total_Discount --></label>
+        <name>Total_Discount</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>
@@ -30901,6 +31826,23 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account Contacts Role - Contacts --></description>
+        <label><!-- Account Contacts Role - Contacts --></label>
+        <name>Account_Contacts_Role_Contacts</name>
+        <sections>
+            <label><!-- Account Contacts Role --></label>
+            <name>Account Contacts Role</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account Participants --></description>
         <label><!-- Account Participants --></label>
         <name>Account_Participants</name>
@@ -31308,6 +32250,38 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Created By (if Contact) First Community --></label>
+                <name>Created By (if Contact) First Community</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Full Name --></label>
+                <name>Created By Full Name</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Profile --></label>
+                <name>Created By Profile</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Role --></label>
+                <name>Created By Role</name>
+            </columns>
+            <columns>
+                <label><!-- Created By User License --></label>
+                <name>Created By User License</name>
+            </columns>
+            <columns>
+                <label><!-- Created By User Type --></label>
+                <name>Created By User Type</name>
+            </columns>
+            <columns>
+                <label><!-- Created By Username --></label>
+                <name>Created By Username</name>
+            </columns>
+            <label><!-- Lookup Fields --></label>
+            <name>Lookup Fields</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -32210,6 +33184,51 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Activities --></label>
             <name>Activities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Address Role Business Context --></description>
+        <label><!-- Address Role Business Context --></label>
+        <name>Address_Role_Business_Context</name>
+        <sections>
+            <columns>
+                <label><!-- Clearance level --></label>
+                <name>Clearance level</name>
+            </columns>
+            <columns>
+                <label><!-- Date of last clearance --></label>
+                <name>Date of last clearance</name>
+            </columns>
+            <columns>
+                <label><!-- Legal Name --></label>
+                <name>Legal Name</name>
+            </columns>
+            <columns>
+                <label><!-- SIS 3-Digit Code --></label>
+                <name>SIS 3-Digit Code</name>
+            </columns>
+            <columns>
+                <label><!-- Sold_To_Completed --></label>
+                <name>Sold_To_Completed</name>
+            </columns>
+            <columns>
+                <label><!-- VAT Number 1 --></label>
+                <name>VAT Number 1</name>
+            </columns>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <name>Address Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Role Information --></label>
+            <name>Address Role Information</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -33264,6 +34283,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Country Profiles --></label>
             <name>Country Profiles</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country Profile History CC --></description>
+        <label><!-- Country Profile History CC --></label>
+        <name>Country_Profile_History</name>
+        <sections>
+            <label><!-- Country Profile Histories --></label>
+            <name>Country Profile Histories</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35099,6 +36127,107 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Topics --></label>
             <name>Topics</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Training contact role details with Lookups info --></description>
+        <label><!-- Training contact role details with Lookups info --></label>
+        <name>Training_contact_role_details_with_Lookups_info</name>
+        <sections>
+            <columns>
+                <label><!-- Account: Account ID --></label>
+                <name>Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Account Name --></label>
+                <name>Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Category --></label>
+                <name>Account: Category</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Sector --></label>
+                <name>Account: Sector</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Membership --></label>
+                <name>Account: Training Membership</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Partner --></label>
+                <name>Account: Training Partner</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Website --></label>
+                <name>Account: Training Website</name>
+            </columns>
+            <label><!-- Account info --></label>
+            <name>Account info</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Contact Email --></label>
+                <name>Contact Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact ID --></label>
+                <name>Contact ID</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Additional Email --></label>
+                <name>Contact: Additional Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Created By --></label>
+                <name>Contact: Created By</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Created Date --></label>
+                <name>Contact: Created Date</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Bounced Date --></label>
+                <name>Contact: Email Bounced Date</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Bounced Reason --></label>
+                <name>Contact: Email Bounced Reason</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Opt Out --></label>
+                <name>Contact: Email Opt Out</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Status --></label>
+                <name>Contact: Email Status</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: First Community --></label>
+                <name>Contact: First Community</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: First Name --></label>
+                <name>Contact: First Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Full Name --></label>
+                <name>Contact: Full Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Last Name --></label>
+                <name>Contact: Last Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Title --></label>
+                <name>Contact: Title</name>
+            </columns>
+            <label><!-- Contact Info --></label>
+            <name>Contact Info</name>
+        </sections>
+        <sections>
+            <label><!-- Training Contact Role Details --></label>
+            <name>Training Contact Role Details</name>
         </sections>
     </reportTypes>
     <reportTypes>

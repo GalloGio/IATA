@@ -89,17 +89,20 @@ global class ANG_AnualRevalCaseCreationBatch implements Database.Batchable<sObje
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
 		//Below code will fetch the job Id
-		AsyncApexJob a = [Select a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus, a.CreatedById, a.CompletedDate From AsyncApexJob a WHERE id = :BC.getJobId()];
+		AsyncApexJob a = [SELECT a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus,
+							  a.CreatedById, a.CompletedDate
+						  FROM AsyncApexJob a
+						  WHERE id = :BC.getJobId()];
 
 		//below code will send an email to User about the status
 		mail.setTargetObjectId(UserInfo.getUserId());
-		mail.setSenderDisplayName('Apex Newgen Anual Revalidation Module');
+		mail.setSenderDisplayName('Apex Newgen Annual Revalidation Module');
 		mail.setSubject('Batch Processing '+a.Status);
 		mail.setSaveAsActivity(false);
 
-		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
+		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+') processed '+a.TotalJobItems+' batches.'+' Job Item processed are '+a.JobItemsProcessed+'\n\n';
 
-		toReturnBody+= ':: Execution Summay ::'+'\n';
+		toReturnBody+= ':: Execution Summary ::'+'\n';
 
 		toReturnBody+= ':: Errors Found ::'+'\n';
 

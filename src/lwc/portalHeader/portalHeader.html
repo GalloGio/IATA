@@ -22,7 +22,9 @@
     <template if:true={displayFirstLogin}>
         <c-portal-first-login registrationlevel={registrationlevel}
                             onclosefirstloginpopup={hideFirstLogin} 
-                            ontriggersecondlevelregistration={triggerSecondLevelRegistration}>
+                            ontriggersecondlevelregistration={triggerSecondLevelRegistration}
+                            ontriggerthirdlevelregistrationlms={triggerThirdLevelRegistrationLMS}>
+
         </c-portal-first-login>
     </template>
 
@@ -33,6 +35,16 @@
             onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
         </c-portal-registration-second-level>
     </template>
+    
+    <template if:true={displayThirdLevelRegistrationLMS}>
+		<c-portal-registration-third-level-l-m-s
+			trigger={level3LMSRegistrationTrigger}
+			is-triggered-by-request={isTriggeredByRequest}
+			onclosesecondlevelregistration={closeThirdLevelRegistrationLMS}
+			onsecondlevelregistrationcompletedactiontwo={ThirdLevelRegistrationLMSCompleted}
+			serviceid={serviceid}>
+		</c-portal-registration-third-level-l-m-s>
+	</template>
 
 <div class="headerContainer borderTransition">
             <div class="slds-grid slds-wrap maxWidthHeader">
@@ -54,7 +66,7 @@
     
                                     <div class="slds-p-top_small modalType">
                                         <div class="slds-grid slds-grid_horizontal">
-                                            <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-col slds-size_1-of-2 slds-grid">
                                                 <span class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">
                                                     {notification.typeNotification}
                                                 </span>
