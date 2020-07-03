@@ -99,10 +99,6 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AccountStatus__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
@@ -289,6 +285,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Covered_Ownership__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Location_Category__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

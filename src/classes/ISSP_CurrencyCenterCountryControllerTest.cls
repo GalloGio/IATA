@@ -103,7 +103,8 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 
 	@isTest static void testAttachments(){
 		Test.startTest();
-
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		//insert country profile
 		Country_Profile__c cp = new Country_Profile__c(Name='Test Country');
 		insert cp;
