@@ -16,7 +16,7 @@ export default class PortalContentHeaderImg extends LightningElement {
             this.serviceTitle=result.RecommendationTitle__c;
         })
         .catch(Error=>{
-           
+			 this.serviceTitle='';
         });
 
     }

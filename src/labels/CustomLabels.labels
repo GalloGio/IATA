@@ -6243,7 +6243,7 @@ You can easily create a company account in two steps</value>
         <categories>CS Portal</categories>     
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
+        <shortDescription>CSP_LeadCreator_AfterSubmitMessage</shortDescription>
         <value>Your request has been submitted and we will be contacting you shortly via your preferred channel.</value>
     </labels>
     <labels>
@@ -6267,7 +6267,7 @@ You can easily create a company account in two steps</value>
         <categories>CS Portal</categories>     
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
+        <shortDescription>CSP_LeadCreator_ThankYou</shortDescription>
         <value>Thank You!</value>
     </labels>
     <labels>
