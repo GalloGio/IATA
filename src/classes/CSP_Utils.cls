@@ -283,11 +283,7 @@ public with sharing class CSP_Utils {
 				update con;
 			}
 		}
-
-
-		 /* Pagereference pr = new Pagereference(retURL);
-		pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
-	 }
+	}
 
 		 //Flag used to know if the new portal (CSPortal) is live or not.
 	@AuraEnabled
@@ -372,7 +368,7 @@ public with sharing class CSP_Utils {
 		return 'https://' + host + pageName;
 	}
 
-	 /*
+	/*
 	* @description Return if the user is an Airline User
 	* @return boolean is airline user
 	*/
@@ -448,8 +444,53 @@ public with sharing class CSP_Utils {
 
 		}
 
-	}	
+	}
 
 
+	public static Map<String, String> portalLanguages{
+		get{
+			if(portalLanguages == null){
+				portalLanguages = new Map<String, String>();
+				for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+					portalLanguages.put(portalLang.language__c, portalLang.languageLocalKey__c);
+				}
+			}
+			return portalLanguages;
+		}
+		private set;
+	}
 
+	// Method to assemble a number of params into a param query to add on an URL
+	// Does NOT return the ? sign, so you can add it to any query
+	public static String assembleParams(Map<String,String> params){
+		//need to check for null because aura/lwc can call a method with no params
+		if(params == null) return '';
+		//assemble parameters
+		List<String> p = new List<String>();
+		for(String key : params.keySet()) p.add(key + '=' + EncodingUtil.urlEncode(params.get(key), 'UTF-8'));
+
+		System.debug(loggingLevel.FINEST, '____ [cls CSP_Utils - assembleParams] final string - ' + String.join(p, '&'));
+		//add all parameters divided by an &
+		return String.join(p, '&');
+	}
+
+	//method to assemble a URL based on the current network login URL
+	//includes an encrypted part "c" and keeps all other parameters
+	public static String generateURl(String pageName, String toEncode, String lang, Map<String,String> params){
+
+		//need to check for null because aura can send a null param
+		if(params == null) params = new Map<String, String>();
+
+		if(lang != null) params.put('language', lang);
+		if(toEncode != null) params.put('c', PortalPasswordHandler.EncryptString(toEncode));
+
+		System.debug(loggingLevel.FINE, '____ [cls CSP_Utils - generateUrl] params - ' + params);
+
+		String prefix = '';
+		List<Network> csportal = [Select id from Network where name =: 'CS Portal' Limit 1];
+		String netWorkId = csportal.isEmpty() ? Network.getNetworkId() : csportal.get(0).Id;
+		if(netWorkId != null) prefix = Network.getLoginURL(netWorkId).subStringBeforeLast('/');
+
+		return prefix + '/' + pageName + '?' + CSP_Utils.assembleParams(params);
+	}
 }

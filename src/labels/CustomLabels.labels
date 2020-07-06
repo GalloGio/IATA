@@ -3922,11 +3922,18 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>IATA Customer Portal Email Confirmation</value>
     </labels>
     <labels>
+        <fullName>CSP_Confirmed_Requested_Service_EFApps_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Confirmed_Requested_Service_EFApps_Message</shortDescription>
+        <value>Your E&amp;F APPS access has been successfully Granted.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Confirmed_Requested_Service_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
-        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
+        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be found under your</value>
     </labels>
     <labels>
         <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
@@ -9476,6 +9483,13 @@ This service is free of charge.</value>
         <value>E&amp;F Compliance Review</value>
     </labels>
     <labels>
+        <fullName>EF_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Account</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9490,11 +9504,39 @@ This service is free of charge.</value>
         <value>The currency select needs to be present in the related Contract</value>
     </labels>
     <labels>
+        <fullName>EF_Invitation_Sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Invitation Sent</shortDescription>
+        <value>Invitation email sent.</value>
+    </labels>
+    <labels>
+        <fullName>EF_Invite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Invite</shortDescription>
+        <value>Invite</value>
+    </labels>
+    <labels>
         <fullName>EF_Line_Item_Not_In_Contract_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
         <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>EF_Select</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF_Select</shortDescription>
+        <value>Select {0}...</value>
+    </labels>
+    <labels>
+        <fullName>EF_Welcome_Email_Body</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Welcome Email Body</shortDescription>
+        <value>You have been invited to a new service, please accept it by clicking &lt;a href=&quot;!!invitationLink!&quot;&gt;here&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>E_Bulletin_Service_Description</fullName>
