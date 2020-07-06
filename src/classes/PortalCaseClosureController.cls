@@ -6,7 +6,17 @@ public without sharing class PortalCaseClosureController {
 		String parameters     = pageRef.getParameters().get('c');
 		CloseCaseLinkParams params = getParams(parameters);
 
+		Long validity = System.now().getTime() - params.generationTimestamp;
+		validity = validity/(1000*60*60);
+		if(validity > 48) {
+			throw new AuraHandledException('Link expired.');
+		}
+
 		Case c = [SELECT Id, CaseNumber, Status, Portal_Closure_Status__c FROM Case WHERE Id = :params.caseId];
+		if(c.Status !=CaseTriggerHelper.CASE_STATUS_CLOSED && (c.Portal_Closure_Status__c != CaseCommentAutoReply.CLOSURE_STATUS_STARTED || c.Portal_Closure_Status__c != CaseCommentAutoReply.CLOSURE_STATUS_ONGOING)) {
+			throw new AuraHandledException('Cannot close this case');
+		}
+
 		c.Portal_Closure_Status__c = CaseCommentAutoReply.CLOSURE_STATUS_FINISHED_RESOLVED;
 		update c;
 
@@ -14,13 +24,9 @@ public without sharing class PortalCaseClosureController {
 	}
 
 	public static CloseCaseLinkParams getParams(String urlParams) {
-		System.debug('1: ' + urlParams);
 		urlParams = EncodingUtil.urlDecode(urlParams, 'UTF-8');
-		System.debug('2: ' + urlParams);
 		urlParams = PortalPasswordHandler.DecryptString(urlParams);
-		System.debug('3: ' + urlParams);
 		urlParams = urlParams.replace(PortalPasswordHandler.plusReplacer,'+');
-		System.debug('4: ' + urlParams);
 		CloseCaseLinkParams params = (CloseCaseLinkParams)JSON.deserialize(urlParams, CloseCaseLinkParams.class);
 		return params;
 	}
@@ -40,10 +46,12 @@ public without sharing class PortalCaseClosureController {
 	public class CloseCaseLinkParams {
 		public String caseId {get; set;}
 		public String contactId {get; set;}
+		public Long generationTimestamp {get; set;}
 
 		public CloseCaseLinkParams(String caseId, String contactId) {
 			this.caseId = caseId;
 			this.contactId = contactId;
+			this.generationTimestamp = System.now().getTime();
 		}
 	}
 

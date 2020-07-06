@@ -86,6 +86,14 @@ export default class PortalCaseComment extends LightningElement {
 		return this.comment.hideComment;
 	}
 
+	ignoreSurvey() {
+		//TODO: set Instant_Survey_Feedback_requested__c
+	}
+
+	answerSurvey() {
+		window.location.href = this.surveyLink;
+	}
+
 	@api
 	replyComment(response) {
 		let result = false;

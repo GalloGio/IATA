@@ -857,6 +857,16 @@ public with sharing class PortalCasesCtrl {
 		return new PortalCasesCtrl_WithoutSharing().addNewRecipient(caseId,newRecipientEmail);
 	}
 
+	/**
+	 * Avoid sending an email to the contact to request answer the survey
+	 */
+	@AuraEnabled
+	public static Boolean ignoreSurvey(String caseId) {
+		Case c = [SELECT Id, Instant_Survey_Feedback_requested__c FROM Case WHERE Id = :caseId LIMIT 1];
+		c.Instant_Survey_Feedback_requested__c = true;
+		return true;
+	}
+	
 	/*
 	* Method that removes a recipient from this case
 	*/
