@@ -33227,6 +33227,24 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- All Products --></description>
         <label><!-- All Products --></label>
         <name>All_Products</name>
