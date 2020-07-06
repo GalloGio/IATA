@@ -17,6 +17,9 @@ public with sharing class SIDRACaseHelper {
 	public final static string SMALLAMOUNT = 'Small Amount (<50USD)';
 	public final static string MINORPOLICY = 'Minor error policy';
 	public final static set<String> IRR_WITH_REASONS = new set<String> {IATACHARGES, FRACTION, SMALLAMOUNT, MINORPOLICY};
+	
+	public final static string BANK_ERROR = 'Bank Error';
+	public final static string BANK_ERROR_MESSAGE = 'Bank error cannot be used more than 3 times in the last 365 days';
 
 	/**
 		After insert action
@@ -37,6 +40,8 @@ public with sharing class SIDRACaseHelper {
 
 		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
 		List<String> reasonToBeProcessed = new List<String>{'Technical Default', 'Non-payment', 'Common Ownership'};
+
+		updateRelatedObjectsOnUpdate(newCases);
 
 		for (Case thisCase : newCases.values()) {
 			Case oldCase = oldCases.get(thisCase.Id);
@@ -163,17 +168,7 @@ public with sharing class SIDRACaseHelper {
 		if (mapCases.isEmpty()) return;
 
 		// find all related accounts with their related SIDRA Cases
-		sidraCasesAccounts = new Map<Id, Account>([
-								SELECT Id, Identify_as_Last_SIDRA_Date__c,
-								(SELECT Id, CaseNumber, CreatedDate, Remittance_Period__c, IRR_Withdrawal_Reason__c, ParentId,
-								 IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c, IRR_Type__c, Short_Payment_Amount__c,
-								 CurrencyISOCode, Currency__c, Short_Payment_Amount_USD__c, Remittance_Date__c
-								 FROM Account.Cases
-								 WHERE RecordTypeId = :sidraRecordTypeId
-																			ORDER BY createdDate DESC)
-								FROM Account
-								WHERE Id IN (SELECT AccountId From Case WHERE Id IN :mapCases.keyset())]);
-
+		sidraCasesAccounts = getRelatedAccountAndCases(mapCases);
 
 		map<Id, Account> mapAccountsToUpdate = new Map<Id, Account>();
 		list<Case> casesToUpdate = new list<Case>();
@@ -185,6 +180,10 @@ public with sharing class SIDRACaseHelper {
 				// update the Account with its CreatedDate
 				acc.Identify_as_Last_SIDRA_Date__c = DateTime.now();
 				mapAccountsToUpdate.put(acc.Id, acc);
+
+				// validate if there isn't more than 3 cases with "Bank Error" in the last 365 days
+				if (!validateBankError(thisCase, acc))
+					return;
 
 				// find if there is another Sidra case with the same remittance period in the same account
 				Case otherSidraCase = null;
@@ -230,6 +229,37 @@ public with sharing class SIDRACaseHelper {
 		if (!commentsToInsert.isEmpty()) {
 			insert commentsToInsert;
 		}
+	}
+
+	private static void updateRelatedObjectsOnUpdate(map<Id, Case> mapCases) {
+		Map<Id, Case> sidraCases = getSidraCases(mapCases.values());
+		if (sidraCases.isEmpty())
+			return;
+		
+		// find all related accounts with their related SIDRA Cases
+		sidraCasesAccounts = getRelatedAccountAndCases(mapCases);
+		
+		for (Case thisCase : sidraCases.values()) {
+			Account acc = sidraCasesAccounts.get(thisCase.AccountId);
+			if (acc != null) {
+				// validate if there isn't more than 3 cases with "Bank Error" in the last 365 days
+				validateBankError(thisCase, acc);
+			}
+		}
+	}
+
+	private static Map<Id, Account> getRelatedAccountAndCases(Map<Id, Case> mapCases) {
+		return new Map<Id, Account>([SELECT Id, Identify_as_Last_SIDRA_Date__c,
+										 (SELECT Id, CaseNumber, CreatedDate, Remittance_Period__c, IRR_Withdrawal_Reason__c,
+											  ParentId, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c, IRR_Type__c,
+											  Short_Payment_Amount__c, CurrencyISOCode, Currency__c, Short_Payment_Amount_USD__c,
+											  Remittance_Date__c, DEF_Withdrawal_Reason__c, IRR_Withdrawal_Approval_Rejection_Date__c,
+											  DEF_Withdrawal_Approval_Rejection_Date__c
+										  FROM Account.Cases
+										  WHERE RecordTypeId = :sidraRecordTypeId
+										  ORDER BY createdDate DESC)
+									 FROM Account
+									 WHERE Id IN (SELECT AccountId FROM Case WHERE Id IN :mapCases.keyset())]);
 	}
 
 	/**
@@ -284,5 +314,33 @@ public with sharing class SIDRACaseHelper {
 		else
 			return sidraCasesAccounts;
 	}
+	
+	/**
+	 * Validate if there isn't more than 3 cases with "Bank Error" in the last 365 days.
+	 */
+	private static Boolean validateBankError(Case thisCase, Account acct) {
+		if (thisCase.IRR_Withdrawal_Reason__c != BANK_ERROR && thisCase.DEF_Withdrawal_Reason__c != BANK_ERROR)
+			return true; // don't block other cases
 
+		Integer countIRR = 0;
+		Integer countDEF = 0;
+
+		for (Case sidraCase : acct.Cases) {
+			if (sidraCase.IRR_Withdrawal_Reason__c == BANK_ERROR
+				&& sidraCase.IRR_Withdrawal_Approval_Rejection_Date__c != null
+				&& sidraCase.IRR_Withdrawal_Approval_Rejection_Date__c.date() >= System.today() - 365) {
+				countIRR++;
+			} else if (sidraCase.DEF_Withdrawal_Reason__c == BANK_ERROR
+				&& sidraCase.DEF_Withdrawal_Approval_Rejection_Date__c != null
+				&& sidraCase.DEF_Withdrawal_Approval_Rejection_Date__c.date() >= System.today() - 365) {
+				countDEF++;
+			}
+		}
+
+		if (countIRR > 3 || countDEF > 3) {
+			thisCase.addError(BANK_ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
 }

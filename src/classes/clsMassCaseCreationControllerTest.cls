@@ -304,7 +304,8 @@ private class clsMassCaseCreationControllerTest {
 		Contact c2 = new Contact(FirstName='Name', LastName='Contact 2 NO', Email='cont2@test.com',  Financial_Assessment_Contact__c = true, AccountId=a2.id);
 		Contact c3 = new Contact(FirstName='Name', LastName='Contact 3 OK', Email='cont3@test.com',  Financial_Assessment_Contact__c = true, AccountId=a3.id);
 		insert new List<Contact>{c1,c2,c3};
-
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		Signaturit_Events_WS__c ws = new Signaturit_Events_WS__c(name = 'test', events_url__c = 'http://test.com', oauth_url__c = 'test');
 		insert ws;
 

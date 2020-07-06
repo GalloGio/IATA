@@ -26,6 +26,9 @@ public class GCS_CustomerType implements Comparable{
 	public String label;
 
 	@AuraEnabled
+	public Integer orderInList;
+
+	@AuraEnabled
 	public String subCategorizationLabel;
 
 	@AuraEnabled
@@ -40,6 +43,7 @@ public class GCS_CustomerType implements Comparable{
 	private GCS_CustomerType(GCS_Customer_Type_For_Registration__mdt metadataCustomerType){
 		this.metadataCustomerType = metadataCustomerType;
 		this.label = metadataCustomerType.MasterLabel;
+		this.orderInList = metadataCustomerType.Partial_List_Order__c == null ? 1 : Integer.valueOf(metadataCustomerType.Partial_List_Order__c);
 		this.subCategorizationlabel = metadataCustomerType.Sub_Categorization_Custom_Label__c;
 		this.subCategorizationPlaceholder = metadataCustomerType.Placeholder_Custom_Label__c;
 
@@ -61,7 +65,7 @@ public class GCS_CustomerType implements Comparable{
 						Can_Account_Be_Created__c,Display_Submit_for_Account_Creation__c,Created_Account_Category__c,Created_Account_Sector__c,
 						Display_Country__c,Fields_Displayed__c,Fields_Targeted_Partial_Match__c,Fields_Targeted_Exact_Match__c,
 						Filter_on_Category__c,Filter_on_Record_Type__c,Filter_on_Sector__c,
-						Search_Option__c,Sub_Categorization_Custom_Label__c, Placeholder_Custom_Label__c, Type__c
+						Search_Option__c,Sub_Categorization_Custom_Label__c, Placeholder_Custom_Label__c, Type__c, Partial_List_Order__c
 				FROM GCS_Customer_Type_For_Registration__mdt WHERE Is_Active__c = true]){
 
 			customerTypesMap.put(customerType.DeveloperName, new GCS_CustomerType(customerType));
@@ -102,7 +106,7 @@ public class GCS_CustomerType implements Comparable{
 						Can_Account_Be_Created__c,Display_Submit_for_Account_Creation__c,Created_Account_Category__c,Created_Account_Sector__c,
 						Display_Country__c,Fields_Displayed__c,Fields_Targeted_Partial_Match__c,Fields_Targeted_Exact_Match__c,
 						Filter_on_Category__c,Filter_on_Record_Type__c,Filter_on_Sector__c,
-						Search_Option__c,Sub_Categorization_Custom_Label__c,Placeholder_Custom_Label__c,Type__c
+						Search_Option__c,Sub_Categorization_Custom_Label__c,Placeholder_Custom_Label__c,Type__c,Partial_List_Order__c
 				FROM GCS_Customer_Type_For_Registration__mdt WHERE Is_Active__c = true]){
 			customerTypesMap.put(customerType.DeveloperName, new GCS_CustomerType(customerType));
 		}
@@ -228,9 +232,16 @@ public class GCS_CustomerType implements Comparable{
 		else if(compareToLabel.metadataCustomerType.MasterLabel == 'Other'){
 			result = -1;
 		}
+		else if(this.orderInList < compareToLabel.orderInList){
+			result = -1;
+		}
+		else if(this.orderInList > compareToLabel.orderInList){
+			result = 1;
+		}
 		else if (this.label < compareToLabel.label) {
 			result = -1;
-		} else if (this.label > compareToLabel.label) {
+		}
+		else if (this.label > compareToLabel.label) {
 			result = 1;
 		}
 

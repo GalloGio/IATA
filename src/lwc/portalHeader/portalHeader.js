@@ -21,8 +21,13 @@ import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectCh
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
+import getGCSServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
+import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
+import createPendingTermsAndConditionsAcceptances from '@salesforce/apex/ServiceTermsAndConditionsUtils.createPendingTermsAndConditionsAcceptances';
 
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -118,42 +123,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     // terms
-    @track displayAcceptTerms = true;
+    @track displayAcceptTerms = false;
     @track displayRegistrationConfirmation = false;
     @track displayFirstLogin = false;
     @track firstLogin = false;
 
     // l2 registration
     level2RegistrationTrigger = 'homepage';
-    isTriggeredByRequest = false;
+	level3LMSRegistrationTrigger = 'homepage';
     
-    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
-    WiregetUserRecord(result) {
-        if (result.data) {
-            let user = JSON.parse(JSON.stringify(result.data));
-            let acceptTerms = user.fields.ToU_accepted__c.value;
-            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
-            let currentURL = window.location.href;
-            if (currentURL.includes(this.labels.PortalName)) {
-                this.displayAcceptTerms = acceptTerms;
-            }
-
-            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
-            console.log('firstLogin: ', this.firstLogin);
-            console.log('registrationRequired: ', registrationRequired);
-
-            if(acceptTerms == true){
-                if(registrationRequired == true){
-                    this.displayRegistrationConfirmation = true;
-                }else{
-                    if(this.firstLogin == true){
-                        this.displayFirstLogin = true;
-                    }
-                }
-            }
-
-        }
-    }
+	@track registrationlevel = ''; //FOR LMS L3
+	@track thirdLoginLMS = false; //FOR LMS L3
+	@track serviceid = ''; //FOR LMS L3
+	@wire(CurrentPageReference) pageRef;
 
     // company tab on profile
     @track displayCompanyTab = false;
@@ -291,6 +273,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonSideMenuLogoutStyle = 'headerBarButton buttonLogout';
 
     @track trackedIsInOldPortal;
+    userInfo = {};
+
+    @track gcsPortalServiceId;
 
     @api
     get isInOldPortal() {
@@ -341,6 +326,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if(pageParams !== undefined && pageParams.firstLogin !== undefined){
             if(pageParams.firstLogin == "true"){
                 this.firstLogin = true;
+				this.displayFirstLogin = true;
             }
         }
 
@@ -350,7 +336,54 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         });
         //WMO-696 - ACAMBAS: End
 
-        this.redirectChangePassword();
+	// FOR LMS L3
+	if(pageParams !== undefined &&
+		(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
+	
+		if(pageParams.lms === 'yas'){
+	
+			if(pageParams.firstLogin === "true"){
+				this.thirdLoginLMS = true;
+				this.registrationlevel = '3';
+				this.displayFirstLogin = true;
+			}else{
+	
+				getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
+					.then(serviceId => {
+	
+						verifyCompleteL3Data({serviceId: serviceId})
+						.then(result => {
+							if(result !== 'not_complete'){
+								if(pageParams.RelayState !== ''){
+									let sURL = result.split('RelayState');
+										result = sURL[0] + '&RelayState=' + encodeURIComponent(pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26'));
+								}
+									window.open(result);
+							}
+							else{
+								this.thirdLoginLMS = true;
+								this.registrationlevel = '3';
+								this.displayThirdLevelRegistrationLMS= true; 
+							}
+							this.toggleSpinner();
+						})
+						.catch(error => {
+							this.error = error;
+						});
+					})
+					.catch(error => {
+						this.error = error;
+					});
+				
+			}
+			}else if(pageParams.lmsflow.indexOf('flow') > -1){
+			this.thirdLoginLMS = true;
+			this.registrationlevel = '3';
+			this.displayFirstLogin = false;
+			this.triggerThirdLevelRegistrationLMS();
+		}
+	}
+	this.redirectChangePassword();
 
         getNotifications().then(result => {
             this.baseURL = window.location.href;
@@ -392,7 +425,34 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         });
 
         getContactInfo().then(result => {
+            this.userInfo = JSON.parse(JSON.stringify(result));
             this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+
+            getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result2 => {
+                var gcsPortalServiceId = JSON.parse(JSON.stringify(result2));
+                this.gcsPortalServiceId = gcsPortalServiceId;
+
+                checkLatestTermsAndConditionsAccepted({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result3 => {
+                    let isLatestAccepted = JSON.parse(JSON.stringify(result3));
+                    console.log('latestAccepted :' + isLatestAccepted);
+
+                    if(isLatestAccepted){
+                        this.displayAcceptTerms = false;
+                        if(result.users[0].Portal_Registration_Required__c === true){
+                            this.displayRegistrationConfirmation = true;
+                        }else{
+                            if(this.firstLogin === true){
+                                this.displayFirstLogin = true;
+                            }
+                        }
+                    } else{
+                        createPendingTermsAndConditionsAcceptances({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result4 => {
+                            this.displayAcceptTerms = true;
+                        });
+                    }
+                });
+            });
+
         });
     }
 
@@ -729,20 +789,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
-    acceptTerms() {
-
-        const fields = {};
-        fields.Id = Id;
-        fields.ToU_accepted__c = true;
-        fields.Date_ToU_accepted__c = new Date().toISOString();
-        const recordInput = { fields };
-
-        updateRecord(recordInput)
-            .then(() => {
-                this.displayAcceptTerms = true;
-                this.redirectChangePassword();
-            });
-
+    acceptTerms(){
+        this.displayAcceptTerms = false;
+        this.redirectChangePassword();        
     }
 
     confirmRegistration() {
@@ -834,6 +883,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     secondLevelRegistrationCompleted(){
         navigateToPage(CSP_PortalPath,{});
     }
+
+	@track displayThirdLevelRegistrationLMS = false;
+
+	triggerThirdLevelRegistrationLMS(){
+		this.displayFirstLogin = false;
+		this.firstLogin = false;
+		this.displayThirdLevelRegistrationLMS= true;
+	}
+
+	closeThirdLevelRegistrationLMS(){
+		this.displayThirdLevelRegistrationLMS = false;
+	}
+
+	ThirdLevelRegistrationLMSCompleted(){
+		navigateToPage(CSP_PortalPath,{});
+	}
 
     setCookie(name, value, days) {
         let expires = "";

@@ -4,6 +4,8 @@ import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavo
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 import { updateRecord } from 'lightning/uiRecordApi';
 
@@ -74,6 +76,11 @@ export default class FavoriteServicesLWC extends LightningElement {
                     if (this.auxResult[i].Portal_Application__r.Application_URL__c === undefined || this.auxResult[i].Portal_Application__r.Application_URL__c === '') {
                         this.auxResult[i].Portal_Application__r.Application_URL__c = '';
                     }
+                    if(this.auxResult[i].Portal_Application__r.Application_icon_URL__c !== undefined && this.auxResult[i].Portal_Application__r.Application_icon_URL__c !== ''){
+                        this.auxResult[i].imageCSS = 'background: url(' + this.auxResult[i].Portal_Application__r.Application_icon_URL__c + ');';
+                    }else{
+                        this.auxResult[i].imageCSS = '';
+                    }
                 }
 
 
@@ -119,6 +126,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
                         this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_x-small aroundLightGrayBorder';
+                        this.globaList[i][j][k].imageCSS += 'margin:1.5rem;';
                     }
                     if (this.globaList[i][j].length === 2) {
                         this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';
@@ -331,7 +339,29 @@ export default class FavoriteServicesLWC extends LightningElement {
                                     this.toggleSpinner();
                                 });
 
-                        } else {
+                        } else if(recordName.value === 'Training Platform (LMS)'){
+							getPortalServiceId({ serviceName: recordName.value })
+								.then(serviceId => {
+									verifyCompleteL3Data({serviceId: serviceId})
+									.then(result => {
+										if(result !== 'not_complete'){
+											window.open(result);
+										}
+										else{
+											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+										}
+										this.toggleSpinner();
+									})
+									.catch(error => {
+										this.error = error;
+									});
+								})
+								.catch(error => {
+									this.error = error;
+							});
+
+						}
+						else{
                             if (!myUrl.startsWith('http')) {
                                 myUrl = window.location.protocol + '//' + myUrl;
                             }

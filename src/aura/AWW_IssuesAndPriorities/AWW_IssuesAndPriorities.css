@@ -1,14 +1,70 @@
-.THIS .bckColor{
-    background: inherit !important;
+.THIS .noUpperCase{
+    text-transform: none !important;
+    font-size: small;
+}
+.THIS td {
+  max-width: 500px;
+  /*overflow-x: hidden;*/
+  white-space: normal !important;
+}
+.THIS th.narrowColumn {
+  width: 100px;
+}
+.THIS th.medColumn {
+  width: 110px;
+}
+.THIS th.actionColumn {
+  width: 100px;
+}
+.THIS th.wideColumn-30 {
+  width: 30%;
+}
+.THIS th.narrowColumn > span.slds-truncate {
+  white-space: normal !important;
+}
+.THIS th.medColumn > span.slds-truncate.issuewiata {  
+  white-space: normal !important;
+  max-height: inherit;
+  vertical-align: middle;
+  display: inline-block;
+  height: inherit;
+  width: min-content;
+}
+.THIS .uiMenuList--default .uiMenuItem>a {
+      height: 2em;
+}
+.THIS td.allignTop {
+  vertical-align: top;
 }
 
-.THIS lightning-primitive-header-actions {
-    display: none;
+.THIS .close-button {
+    border: 0 !important;
+    background-color: transparent !important;
+}
+.THIS .slds-icon-action-description.custom-help-text {  
+  margin-left: 3px;
+  background-color: #706e6b;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  height: 1rem;
+  width: 1rem;
+  padding: 0;
+} 
+.THIS .custom-help-text svg {  
+  fill: #fff;
+  width: 0.60rem;
+  height: 0.6rem;
+  margin-left: 0.2rem;
 }
 
-.THIS .no-truncate tbody .slds-truncate{
-    max-width: 100%;
-    overflow: initial; 
-    text-overflow: initial; 
-    white-space: normal;
+@media (max-width: 1200px) {
+    .THIS .slds-button {
+        display: block !important;
+    }
+
+    .THIS .slds-truncate {
+        /*word-break: break-all !important;*/
+        white-space: normal !important;
+    }
 }

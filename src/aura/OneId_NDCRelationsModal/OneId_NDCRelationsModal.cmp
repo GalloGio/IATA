@@ -1,4 +1,4 @@
-<aura:component controller="OneId_NDCRelationsController">
+<aura:component access="public" controller="OneId_NDCRelationsController">
     <lightning:overlayLibrary aura:id="overlayLib"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="airlineList" type="List"/>

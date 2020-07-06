@@ -104,12 +104,25 @@ public with sharing class PortalDocumentsController {
 
 		soql = 'SELECT Id, Title, Description, Product_Category__c, FileType, OwnerId,Owner.Name, '+
 					'VersionNumber, Country_visibilty__c, User_status_access__c, Region__c, TagCsv, '+
-					'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c'+
+					'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c, LastModifiedDate'+
 				' FROM ContentVersion';
 
 		queryConditions = ' WHERE IsLatest = true AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
 
-		if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';
+		if(String.isNotBlank(category)){
+			queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';			
+		}else{
+			List<CSP_Utils.PickListWrapper> lstAllCats = CSP_Utils.getPickListValues('ContentVersion','Document_Category__c');
+			
+			List<String> catsToCommaString = new List<String>();
+			
+			for(CSP_Utils.PickListWrapper cat : lstAllCats){
+				catsToCommaString.add(String.escapeSingleQuotes(cat.value));
+			}
+
+			queryConditions += ' AND (Document_Category__c IN: catsToCommaString AND Document_Category__c != null) ';
+		}
+
 		if(String.isNotBlank(prodCat)) queryConditions += ' AND Product_Category__c LIKE \'%'+ String.escapeSingleQuotes(prodCat) +'%\'';
 		if(String.isNotBlank(publiCountry)) queryConditions += ' AND Country_of_publication__c includes (\''+ String.escapeSingleQuotes(publiCountry) +'\')';
 		if(String.isNotBlank(docId)) queryConditions += ' AND Id = \''+ String.escapeSingleQuotes(docId) +'\'';
@@ -126,6 +139,7 @@ public with sharing class PortalDocumentsController {
 		ContentVersion[] contents = Database.query(soql + queryConditions + queryLimit);
 		System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] contents - ' + contents);
 
+
 		/* Filtering by products membership (ICH only, SIS only...) */
 		for(Integer j = 0; j < contents.size(); j++) {
 			if(contents[j].ICH_Member_Only__c) {
@@ -134,15 +148,28 @@ public with sharing class PortalDocumentsController {
 					contents.remove(j);
 				}
 			}
-		}
-
+		} 
 		result = new CSP_Utils.PagedResult();
 		if(requestedPage == 0) {
 			result.totalItemCount = Database.countQuery('SELECT COUNT() FROM ContentVersion' + queryConditions);
 		}
+
 		result.records = sortContentVersions(contents, UserPortalCountry, UserPortalRegion);
 
 		return result;
+	}
+
+	public class docWrapper{
+	
+		@AuraEnabled
+		public sobject record;
+		@AuraEnabled
+		public boolean isBookmarked;
+		public docWrapper(ContentVersion cv,boolean ibm){
+			this.record=cv;
+			this.isBookmarked=ibm;
+		}
+
 	}
 
 	/*
@@ -216,5 +243,115 @@ public with sharing class PortalDocumentsController {
 		System.debug('____ [cls PortalDocumentsController - sortContentVersions] retDocs - ' + retDocs);
 
 		return retDocs;
+	}
+
+
+	/*
+	* @description Returns the list of content Versions  that the user has access with bookmark information
+	* @params String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage
+	* @return CSP_Utils.PagedResult
+	*/
+	@AuraEnabled(cacheable=false)
+	public static CSP_Utils.PagedResult getSearchDocumentsWithBookmarks(String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage, String docId) {
+		
+
+		//Retrieve documents from main method
+		CSP_Utils.PagedResult docList=getSearchDocuments(searchKey, category, prodCat, publiCountry, requestedPage, docId);
+		
+		
+		//Fetch the documents bookmarked by this user
+		set<Id> bookmarkedDocSet= new set<Id>();
+		for(EntitySubscription es:[select parentId from EntitySubscription where SubscriberId =:UserInfo.getUserId() limit 1000]){
+			bookmarkedDocSet.add(es.parentId);
+		}
+
+		list<docWrapper> resultList= new list<docWrapper>();
+		for(ContentVersion cv:(List<ContentVersion>)docList.records){
+			resultList.add( new docWrapper(cv,bookmarkedDocSet.contains(cv.ContentDocumentId)));
+		}
+		docList.recordsString =  JSON.Serialize(resultList);
+		docList.records=null;
+	
+		return docList;
+	}
+
+
+	/*
+	* @description Method to bookmark unbookmark a specific document
+	* @params String docId- ContentDocument Id of the document to apply action
+	* @return CSP_Utils.PagedResult
+	*/
+	@AuraEnabled
+	public static void toggleBookmarkDocument(String docId){
+		Id usrId=UserInfo.getUserId();
+		list<EntitySubscription> entSubList=[Select id from EntitySubscription where ParentId=:docId and SubscriberId=:usrId limit 1];
+
+		try{
+			//Check if document is not bookmarked
+			if(entSubList.isEmpty()){					
+
+				//get community Id to add to file
+				Id netId=[Select id from network where name ='CS Portal'].id;
+				
+				insert new EntitySubscription (    
+					ParentId=docId,
+					SubscriberId=usrId,
+					NetworkId=netId
+				);
+			}else{			
+				delete entSubList.get(0);
+			}				
+			
+		} catch(Exception e){
+			System.debug(LoggingLevel.FINE, e.getMessage());
+			throw new CSP_Utils.portalException(Label.ISSP_ANG_GenericError);
+		}
+	}
+
+	/*
+	* @description Method to fetch the list of the documents bookmarked by the user
+	* @params String searchKey- Possible search key for searchign a specific doc(empty if to retrieve all docs);
+	* @params Integer searchKey- NR of the requested Page for pagination purposes
+	* @return CSP_Utils.PagedResult
+	*/
+	
+	@AuraEnabled(cacheable=true)
+	public static CSP_Utils.PagedResult getBookmarkedDocuments(String searchKey,integer requestedPage) {
+	
+		Id usrId=UserInfo.getUserId();
+		CSP_Utils.PagedResult respWrapper = new CSP_Utils.PagedResult();
+
+		if(requestedPage==null) requestedPage=1;
+
+		set<id> entitySet= new set<id>();
+		for(EntitySubscription es:[select ParentId FROM EntitySubscription WHERE SubscriberId=:usrId limit 1000]){
+			entitySet.add(es.ParentId);
+		}
+
+		String soqlFields = 'SELECT Id, Title, Description, Document_Category__c, Product_Category__c, FileType, '+
+					'VersionNumber, Country_visibilty__c, Region__c,Country_of_publication__c, '+
+					'ContentSize, Language__c, ContentDocumentId, ContentUrl,LastModifiedDate';
+
+		String soqlCount='SELECT COUNT()';
+		String soqlFrom=' FROM ContentVersion '+
+						'WHERE IsLatest = true '+
+						'AND ContentDocumentid in :entitySet';
+
+		String sqlCond=String.isNotEmpty(searchKey)?' AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'':'';
+		String sqlSort=' ORDER BY Title ASC';
+		respWrapper.totalItemCount = Database.countQuery(soqlCount+soqlFrom+sqlCond);
+
+		if(respWrapper.totalItemCount <=RESULTS_PER_PAGE) requestedPage=1;
+
+		String finalQuery=soqlFields+soqlFrom+sqlCond+sqlSort;
+
+		finalQuery+=' LIMIT '+RESULTS_PER_PAGE+' OFFSET '+ (requestedPage -1) * RESULTS_PER_PAGE;
+
+		List<ContentVersion> documentsList= Database.query(finalQuery);
+
+
+		respWrapper.recordsString = JSON.Serialize(documentsList);
+
+		return respWrapper;
 	}
 }

@@ -23,7 +23,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static Contact getContactInfo() {
 		User loggedUser = CSP_Utils.getLoggedUser();
 
-		List<Contact> con = [SELECT Id, FirstName, LastName, Salutation, Birthdate, Date_of_Birth__c, Title, Membership_Function__c, Function__c, User_Portal_Status__c, AccountId, Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name, Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c
+		List<Contact> con = [SELECT Id, FirstName, LastName, Salutation, Birthdate, Date_of_Birth__c, Title, Membership_Function__c, Function__c, User_Portal_Status__c, AccountId, Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name, Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c, Email, Additional_Email__c, Phone, OtherPhone
 		FROM Contact
 		WHERE Id = :loggedUser.contactId];
 
@@ -32,17 +32,6 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		}
 
 		return con[0];
-	}
-
-	@AuraEnabled
-	public static String saveContactInfo(Contact con){
-		try{
-			update con;
-			return 'success';
-		}
-		catch(Exception e){
-			return e.getMessage();
-		}
 	}
 
 	@AuraEnabled
@@ -272,16 +261,16 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 									WHERE Name = 'Airline Supplier - ITP' limit 1];
 
 			Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
-									WHERE Name = 'IFTP - ITP' limit 1];
+									WHERE Name like 'IFTP%ITP' limit 1];
 
 			PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
 
 			Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
 
 
+			Account_Role__c accRole = new Account_Role__c();
 			if(bAccExist == false){
 
-				Account_Role__c accRole = new Account_Role__c();
 				accRole.Account__c = acc.Id;
 				accRole.Account_Roles__c = accRoles.id;
 				accRole.RecordTypeId = RECTYPE_ITP_AccRole;
@@ -292,33 +281,21 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 				accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
 				insert accRoleSrv;
 
-				Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-				accContRoleToInsert.Service_Rendered__c = 'IFTP';
-				accContRoleToInsert.Status__c = 'Active';
-				accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-				accContRoleToInsert.Account_Role__c = accRole.Id;
-				accContRoleToInsert.Contact_Role__c = 'ITP Administrator;ITP Training Coordinator';
-				accContRoleToInsert.Details__c = '';
-				accContRoleToInsert.Contact__c = con.Id;
-				accContRoleToInsert.company_code__c='TC';//temporary employee code
-				insert accContRoleToInsert;
-
+			
 			}else{
-				Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
-
-				Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-				accContRoleToInsert.Service_Rendered__c = 'IFTP';
-				accContRoleToInsert.Status__c = 'Active';
-				accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-				accContRoleToInsert.Account_Role__c = accRole.Id;
-				accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-				accContRoleToInsert.Details__c = '';
-				accContRoleToInsert.company_code__c='TC';//temporary employee code
-				accContRoleToInsert.Contact__c = con.Id;
-				insert accContRoleToInsert;
-
-
+				accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
 			}
+
+			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+			accContRoleToInsert.Service_Rendered__c = 'IFTP';
+			accContRoleToInsert.Status__c = 'Active';
+			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+			accContRoleToInsert.Account_Role__c = accRole.Id;
+			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+			accContRoleToInsert.Details__c = '';
+			accContRoleToInsert.company_code__c='TC';//temporary employee code
+			accContRoleToInsert.Contact__c = con.Id;
+			insert accContRoleToInsert;
 
 			List<Portal_Application_Right__c> par = [SELECT id FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
 
@@ -344,7 +321,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		}
 	}
 
-	@future
+	
 	public static void updatePortalUseProfile(String conId, String sProfile){
 		User u=[select id,contact.user_portal_status__c from user where ContactId =:conId];
 		if(u.contact.user_portal_status__c =='Approved Admin'){
@@ -360,4 +337,20 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		insert psa;
 	}
 
+	@AuraEnabled
+	public static String getCSPortalPath(){
+		List<Network> networks = [select id, Name, UrlPathPrefix from Network where name ='CS Portal'];
+
+		if(networks.isEmpty()){
+			return '';
+		}
+
+		String s = Network.getLoginUrl(networks[0].Id);
+
+		Integer i = s.indexOf(Label.CSP_PortalPath);
+
+		s = s.substring(0, i) + Label.CSP_PortalPath;
+
+		return s;
+	}
 }

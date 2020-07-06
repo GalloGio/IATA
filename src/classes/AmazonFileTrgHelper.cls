@@ -538,7 +538,9 @@ public class AmazonFileTrgHelper {
 			FROM Case
 			WHERE Id IN :listCaseId
 			AND isClosed=false
-			AND (NOT Owner.Name like '%recycle%')];
+			AND (NOT Owner.Name like '%recycle%')
+			AND Contact.isEmailBounced = false 
+			AND (NOT Contact.Email LIKE '%.inactive')];
 		System.debug('*** listCase ' + listCase);
 		String templateName = 'AoP_permit_or_Commercial_Registry_reminder';
 		sendCertificateReminder(templateName,listCase,'ContactId');
@@ -563,7 +565,9 @@ public class AmazonFileTrgHelper {
 			FROM Case
 			WHERE Id IN :listCaseId
 			AND isClosed=false
-			AND (NOT Owner.Name like '%recycle%')];
+			AND (NOT Owner.Name like '%recycle%')
+			AND Contact.isEmailBounced = false 
+			AND (NOT Contact.Email LIKE '%.inactive')];
 		String templateName1 = 'AOC_permit_OR_Commercial_registry_expired';
 		sendCertificateReminder(templateName1,listCase,'ContactId');
 		String templateName2 = 'AOC_permit_OR_Commercial_registry_expired_internal';
@@ -752,12 +756,16 @@ public class AmazonFileTrgHelper {
 				for (Contact con : SharingContacts_List) {
 					ContactIDs_set.add(con.id);
 				}
+				
+				for(User usr : [Select id, ContactId From User Where ContactId In :ContactIDs_set AND isActive = true AND Contact.isEmailBounced = false]) {
+					contactIds_haveAccess.add(usr.ContactId);
+				}
 
 				//Get contacts with access to the portal service
 				List <Portal_Application_Right__c> accessList = [SELECT Id, Contact__c, Contact__r.AccountId FROM Portal_Application_Right__c
 																	WHERE Portal_Application__c In :portalServicesId
 																	AND Right__c = 'Access Granted'
-																	AND Contact__c IN :ContactIDs_set];
+																	AND Contact__c IN :contactIds_haveAccess];
 
 				Set<Id> contactsIds = new Set<Id>();
 				if (!accessList.isEmpty()) {
@@ -781,12 +789,6 @@ public class AmazonFileTrgHelper {
 						}
 					}
 				}
-
-				List<User> userList = [Select id, ContactId From User Where ContactId In :contactsIds];
-
-				for(User u : userList) {
-					contactUserMap.put(u.ContactId, u.Id);
-				}
 			}
 
 
@@ -804,8 +806,6 @@ public class AmazonFileTrgHelper {
 
 				for(Id key : contactFileMap.keySet()) {
 					List<AmazonFile__c> files = contactFileMap.get(key);
-
-					Id userId = contactUserMap.get(key);
 
 					// process the merge fields
 					String subject = emailTemplate.Subject;
@@ -834,10 +834,7 @@ public class AmazonFileTrgHelper {
 						//build the email message
 					Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
 
-					if(userId != null)
-						email.setTargetObjectId(userId);
-					else
-						email.setTargetObjectId(key);
+					email.setTargetObjectId(key);
 
 					if ( owea.size() > 0 ) {
 						email.setOrgWideEmailAddressId(owea[0].Id);
@@ -862,5 +859,11 @@ public class AmazonFileTrgHelper {
 
 		}
 
+	}
+
+	public static void setCaseFromsObjectId(list<AmazonFile__c> listNewAF) {
+		for(AmazonFile__c af:listNewAF)
+			if(string.isNotBlank(af.sObject_Id__c) && string.isBlank(af.Case__c) && af.sObject_Id__c.startsWith('500'))
+				af.case__c = af.sObject_Id__c;
 	}
 }

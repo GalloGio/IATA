@@ -319,6 +319,20 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>L3_Complaints</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>share complaints with L3 users</description>
+        <label>L3 Complaints</label>
+        <sharedTo>
+            <group>L3_All_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Complaint (IDFS ISS)</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>L3_Global_RT</fullName>
         <accessLevel>Edit</accessLevel>
         <description>sharing all Cases - Global record type cases with GCS level 3 users</description>
@@ -370,6 +384,19 @@
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>ISS Portal PwC,ISS Portal PwC for IATA user</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>R_S_access_to_SEDA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>R&amp;S access to SEDA</label>
+        <sharedTo>
+            <group>R_S_roles</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SEDA</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>

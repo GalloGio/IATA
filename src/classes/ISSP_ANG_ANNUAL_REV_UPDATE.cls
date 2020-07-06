@@ -8,9 +8,55 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public string txtHelpTaxNumber {get; set;}
 	public String vatNumber {get; set;}
 	public String vatNumber2 {get; set;}
-	public Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {get; set;}
 
-	public List<SelectOption> countryList {
+	public boolean chsb{get;set;}
+	public boolean chss{get;set;}
+
+	public static Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {
+		get {
+			if (stateListByCountryNameMap == null) {
+				stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
+
+				List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStates();
+
+				for(IATA_ISO_State__c state : isoStatesLst){
+					if(state.IATA_ISO_Country__r.State_Province_Picklist__c){
+						if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)){
+							stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
+						}
+						stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
+					}
+				}
+
+			}
+			return stateListByCountryNameMap;
+		}
+		set;
+	}
+	public static List<IATA_ISO_City__c> billingCityListName {get;set;}    
+	public static List<IATA_ISO_City__c> shippingCityListName {get;set;}
+
+	private Id currentCountryId;
+
+	public String geonameBillingCityId {get;set{ geonameBillingCityId = value; if(!String.isBlank(geonameBillingCityId)){ ca.fw.newForm.Geoname_Billing_City__c = geonameBillingCityId; } else {ca.fw.newForm.Geoname_Billing_City__c = null;} }}
+
+	public String geonameShippingCityId {get;set{ geonameShippingCityId = value; if(!String.isBlank(geonameShippingCityId)){ ca.fw.newForm.Geoname_Shipping_City__c = geonameShippingCityId;} else {ca.fw.newForm.Geoname_Shipping_City__c = null;} }}
+
+	public static String billingCityListNameStr {
+	get{
+		return JSON.serialize(billingCityListName);
+	}
+	set;
+	}
+	
+	public static String shippingCityListNameStr {
+	get{
+		return JSON.serialize(shippingCityListName);
+	}
+	set;
+	}
+
+	public static List<SelectOption> countryList {
 		get {
 			if (countryList==null) {
 				countryList= new List<selectOption>{new SelectOption('','')};
@@ -53,7 +99,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 		set;
 	}
 
-	public String countryInfoByCountryNameMapString {
+	public static String countryInfoByCountryNameMapString {
 		get {
 			if (countryInfoByCountryNameMapString == null) {
 				List<SelectOption> countryListPopulated = countryList;
@@ -66,37 +112,32 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
 	public List<SelectOption> billingStateList {
 		get {
-			if (billingStateList == null) {
+			if (this.currentCountryId != ca.account.IATA_ISO_Country__c){
 				billingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
-				for (IATA_ISO_State__c state: [SELECT Id, Name
-											FROM IATA_ISO_State__c
-											WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c
-											ORDER BY Name]) {
-					billingStateList.add(new SelectOption(state.Name, state.Name));
-				}
+				List<IATA_ISO_Country__c> iataIsoCountryLst = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{ca.account.IATA_ISO_Country__c});
+
+				if(!iataIsoCountryLst.isEmpty()){
+					IATA_ISO_Country__c country = iataIsoCountryLst.get(0);
+					this.currentCountryId = country.Id;
+					for (IATA_ISO_State__c state : country.IATA_ISO_States__r) {
+						billingStateList.add(new SelectOption(state.Name, state.Name));
+					}
+				}	
 			}
+
+			for(SelectOption state : billingStateList){
+				if(!String.isBlank(state.getValue()) && !String.isBlank(ca.fw.newform.State_Province__c))
+					ca.fw.newform.State_Province__c = state.getValue().toUpperCase() == ca.fw.newform.State_Province__c.toUpperCase()?state.getValue():ca.fw.newform.State_Province__c;
+			}
+
 			return billingStateList;
 		}
 		set;
 	}
 
-	public String stateListByCountryName {
+	public static String stateListByCountryName {
 		get {
-			if (stateListByCountryNameMap == null) {
-				stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
-
-				for (IATA_ISO_State__c state: [SELECT Id, Name, IATA_ISO_Country__r.Informatica_Value__c
-											FROM IATA_ISO_State__c
-											WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true
-											ORDER BY Name]) {
-					if (!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase())) {
-						stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase(), new List<IATA_ISO_State__c>());
-					}
-					stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase()).add(state);
-				}
-			}
-
 			return JSON.serialize(stateListByCountryNameMap);
 		}
 		set;
@@ -139,11 +180,28 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public void currentShippingCountryStates() {
 		shippingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
-		if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
+		if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c != null ? ca.fw.newform.Shipping_Country__c.toUpperCase():'')) {
 			for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
 				shippingStateList.add(new SelectOption(state.Name, state.Name));
+				if(!String.isBlank(state.Name) && !String.isBlank(ca.fw.newform.Shipping_State__c)){
+						ca.fw.newform.Shipping_State__c = state.Name.toUpperCase() == ca.fw.newform.Shipping_State__c.toUpperCase()?state.Name:ca.fw.newform.Shipping_State__c;
+					}
 			}
 		}
+	}
+	
+	public void currentBillingStateCities() {        
+		billingCityListName = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c 
+														  FROM IATA_ISO_City__c
+														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.State_Province__c AND Status__c <> 'Pending'                                       
+														  ORDER BY Name]);                
+	}
+	public void currentShippingStateCities() {       
+		
+		shippingCityListName = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c
+														  FROM IATA_ISO_City__c
+														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.Shipping_State__c AND Status__c <> 'Pending'                                       
+														  ORDER BY Name]);                
 	}
 
 	public void validateVATNumber2() {
@@ -200,6 +258,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 							 ca.fw.newform.shipping_postal_code__c = '';
 							 ca.fw.newform.shipping_state__c = '';
 							 ca.fw.newform.shipping_country__c = '';
+							 ca.fw.newform.Geoname_Shipping_City__c = null;
 						 } else if(ca.Account.ShippingStreet == null &&
 								   ca.Account.ShippingCity == null &&
 								   ca.Account.ShippingPostalCode == null &&
@@ -211,6 +270,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 									   ca.fw.newform.shipping_postal_code__c = '';
 									   ca.fw.newform.shipping_state__c = '';
 									   ca.fw.newform.shipping_country__c = '';
+									   ca.fw.newform.Geoname_Shipping_City__c = null;
 								   }
 
 			}
@@ -225,6 +285,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 				ca.fw.newform.shipping_postal_code__c = '';
 				ca.fw.newform.shipping_state__c = '';
 				ca.fw.newform.shipping_country__c = '';
+				ca.fw.newForm.Geoname_Shipping_City__c = null;
 			}
 		}
 	}
@@ -236,6 +297,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 		ca.fw.newform.shipping_postal_code__c = ca.Account.ShippingPostalCode;
 		ca.fw.newform.shipping_state__c = ca.Account.ShippingState;
 		ca.fw.newform.shipping_country__c = ca.Account.ShippingCountry;
+		ca.fw.newForm.Geoname_Shipping_City__c = ca.Account.Geoname_Shipping_City__c;
 	}
 
 }

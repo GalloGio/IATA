@@ -139,6 +139,10 @@
                 <behavior>Edit</behavior>
                 <field>Reason_for_change_to_AssessmentPerformed__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Visible_on_ISS_Portal__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

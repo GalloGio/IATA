@@ -502,13 +502,6 @@
 
         function loadMultiCountryNoC() {
             if ({!isNoticeOfChange} && {!isStep1}) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
-                    $('[id$="nocThirdQuestion"]').find("input")[1].checked = true; //default select as a temporary solution
-
-                    $('[id$="nocThirdQuestion"]').find("input")[1].disabled = true;
-                    $('[id$="nocThirdQuestion"]').find("input")[0].disabled = true;
-                }
-
                 $('[id$="branchaccountsel"]').first().insertAfter($('[id$="langGSA"]'));
                 
                 checkLocationQuestion();
@@ -548,8 +541,9 @@
 
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
-                    $('[id$="nocThirdQuestion"]').css('display', 'none');
-                } else if ('{!hqAccount.Sector__c}' == 'Travel Agent') {
+                }
+
+                if ('{!hqAccount.Sector__c}' == 'Travel Agent' && !{!isBankAccountChange}) {
                     $('[id$="nocThirdQuestion"]').css('display', 'block');
                 }
 
@@ -745,13 +739,13 @@
                     <apex:facet name="stop">
                         <apex:outputPanel >
                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form" oncomplete="loadPageOptions(); setArrowListeners();"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"  oncomplete="loadPageOptions();"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"  oncomplete="loadPageOptions();"/>
                         </apex:outputPanel>
                     </apex:facet>
                     <apex:facet name="start">
                         <apex:outputPanel >
                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
                         </apex:outputPanel>
                     </apex:facet>
                                     </apex:actionStatus>
@@ -768,7 +762,7 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, NOT(isBankAccountChange), newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
                                             {!$Label.ISSP_ANG_NOC_GOGLOBAL_Info}
                                         </div>
                                     </apex:outputPanel>
@@ -965,7 +959,7 @@
                                 </div>
                             </div>
 
-                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocThirdQuestion" style="display: none;">
+                            <apex:outputpanel rendered="{!AND(isNoticeOfChange, NOT(isBankAccountChange))}" id="nocThirdQuestion" style="display: none;">
                                 <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
                                     <div class="form-group">
                                         <label for="typeOfChange" class="col-lg-3 control-label">
@@ -1120,7 +1114,7 @@
                                     <apex:column headerClass="info">
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                     </apex:column>
-                                    <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)), $Label.ISSP_AMS_NoC_Request_for_Change)}">
+                        <apex:column headerClass="info" headerValue="{!IF(isPassAccreditation==true,$Label.ISSP_AMS_Step2_Check_List_PASS,$Label.ISSP_AMS_Step2_Check_List+' '+amsCountryLabel+' - '+ IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)),$Label.ISSP_AMS_NoC_Request_for_Change))}">
                                         <apex:outputText >
                                             <strong>{!reqs.Name}</strong><br/>
                                             <apex:outputField value="{!reqs.Requirement_text__c}"/>
@@ -1220,7 +1214,7 @@
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',newForm.Agent_Type__c))} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(isPassAccreditation,'',IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',newForm.Agent_Type__c)))} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
@@ -1300,14 +1294,14 @@
                         <apex:outputPanel >
                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
                             <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5PAX"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5PAX"/>
                         </apex:outputPanel>
                     </apex:facet>
                     <apex:facet name="start">
                         <apex:outputPanel >
-                            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true" style="float:right" />
-                            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true" style="float:right" />
-                            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}"  disabled="true"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true" style="float:right" />
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true" style="float:right" />
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}"  disabled="true"/>
                          </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>
@@ -1342,14 +1336,14 @@
        <div style="text-align:center;">
         <apex:actionStatus id="buttonLoadingStep5CGO">
              <apex:facet name="stop"><apex:outputPanel >
-            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5CGO"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
-            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5CGO"/>
+            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left"  action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5CGO"/>
+            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
+            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5CGO"/>
             </apex:outputPanel></apex:facet>
             <apex:facet name="start"><apex:outputPanel >
-           <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
-            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+           <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
+            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
+            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin " action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" disabled="true"/>
            </apex:outputPanel></apex:facet>
           </apex:actionStatus>
         </div>
@@ -1392,16 +1386,16 @@
                 <div style="text-align:center;">
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
-                        <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
-                        <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!NOT(isMCAccredited)}"/>
-                        <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!isMCAccredited}" onclick="showfinalConfirmationNoCMCModal();"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!OR(NOT(isMCAccredited), isBankAccountChange)}"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!AND(isMCAccredited, NOT(isBankAccountChange))}" onclick="showfinalConfirmationNoCMCModal();"/>
                         
-                        <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5NoC"/>
                     </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
-                        <apex:commandButton value="{!$Label.ISSP_Back}" disabled="true"/>
-                        <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
-                        <apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" value="{!$Label.ISSP_Back}" disabled="true"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" value="{!$Label.ISSP_Save_Draft}"  disabled="true"/>
                     </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>

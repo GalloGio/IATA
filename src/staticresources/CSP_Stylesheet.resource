@@ -31,6 +31,12 @@ body {
   	background-color: #f7f8fa;
 }
 
+.cardImageProperties{
+    background-size: contain !important; 
+    background-position: 50% 50% !important; 
+    background-repeat: no-repeat !important;
+}
+
 /*used to display the cards for the portal with opaque background */
 .customCard{
     box-shadow: 5px 5px 20px #e2e2e2;
@@ -132,6 +138,14 @@ body {
     font-size: 16px;
 }
 
+.searchInputContainer{
+    box-shadow: none;
+    border-color: lightgray;
+    border-radius: 0px;
+    height: 52px;
+    background: white;
+}
+
 /* creates a triangle for the card title */
 .triangleRight {
     width: 20px;
@@ -202,6 +216,9 @@ body {
     background-color: #f7f8fa;
 }
 
+.topSearchDiv{
+    height:52px;
+}
 .grayInputPlaceholder input::placeholder {
   	color: #999999;
 }
@@ -398,9 +415,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -419,9 +436,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
@@ -434,9 +451,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
@@ -448,9 +465,9 @@ lightning-datatable .slds-th__action {
     font-size: 11px;
     font-weight: 500;
     color: #525252;
-    display: flex;
     align-items: center;
     vertical-align: middle;
+    display: inline-block;
 }
 /* ############################################## */
 @media only screen and (max-device-width: 480px){
@@ -485,6 +502,20 @@ lightning-datatable .slds-th__action {
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.modalNarrowTopMargin {
+    position: fixed; /* Stay in place */ 
+    z-index: 2; /* Sit on top */
+    padding-top: 2vh; /* Location of the box */
+    padding-bottom: 2vh;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
 .customPopupInteriorHalfScreenCentered {
   background-color: #f7f8fa;
   width: 35%;
@@ -501,6 +532,15 @@ lightning-datatable .slds-th__action {
   box-shadow: 5px 5px 20px #808080;
   border-radius: 1px;
   border: solid 1px #e2e2e2;
+}
+
+.customPopupInteriorNinetyScreenCentered {
+    background-color: #f7f8fa;
+    width: 90%;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -798,6 +838,11 @@ lightning-datatable .slds-th__action {
   	color: #3333ff;
 }
 
+.recentcases > .aroundLinkBlueBorder:hover{
+	-webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+  	border: solid 1px rgba(0, 0, 0, 0.08);
+}
 .outlinedButton.button-half-height,
 .outlinedButton.button-half-height button,
 .outlinedButton.button-half-height button:active,
@@ -1319,9 +1364,29 @@ lightning-datatable .slds-th__action {
     background-color: #f6f7f9;
 }
 
-/***** HP Recent Casses Table ******/
+/***** HP Recent Cases Table ******/
 .hpRecentCasesTable lightning-primitive-header-factory .slds-cell-fixed {
     border-bottom: 1px solid rgb(212, 212, 212) !important;
+}
+.hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 1500px) {
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: hidden;
+  }
+}
+  
+@media screen and (max-width: 640px) {
+  .cardBodyContentSmall {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    overflow-x: auto;
+  }
+  .hpRecentCasesTable .slds-table_header-fixed_container.slds-scrollable_x {
+    overflow-x: auto;
+  }
 }
 
 /*       New Documents Button Overrides*/
@@ -1502,6 +1567,7 @@ lightning-datatable .slds-th__action {
     color: #525252;
     padding-top: 5%;
 	display: contents;
+    max-width: none;
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
@@ -2118,6 +2184,30 @@ visibility: hidden;
     display: inline-block;
 }
 
+.outlinedButtonBorderBlue button, 
+.outlinedButtonBorderBlue button:hover,
+.outlinedButtonBorderBlue button:focus,
+.outlinedButtonBorderBlue button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 40px;
+    word-break: break-word;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+    display: inline-block;
+}
+
 .languageSelection .slds-combobox_container input[role="textbox"]{
     border:none;
     background-color: transparent;
@@ -2592,6 +2682,22 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
     width: 100%;
 }
 
+
+.requestedService, .requestedService button{
+    color: #999999;
+}
+
+.requestedService button lightning-primitive-icon{
+    display:none;
+}
+
+.titleTruncation input{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.wordBreakNormal, .wordBreakNormal button{
+    word-break: normal;
+}
 /*#################################*/
 
 /*RS - START - Needed for IFTP app */

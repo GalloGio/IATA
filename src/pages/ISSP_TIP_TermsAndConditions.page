@@ -41,7 +41,7 @@
             </div>
  -->
             <div class="input-group ">
-            <p>As part of your enlistment process as a provider of Alternative Transfer Method, you will be requested to acknowledge Terms &amp; Conditions related to TIP.</p>
+            <p>As part of your enlistment process as a provider of Alternative Transfer Method, you will be requested to acknowledge <a href="{!$Resource.TIP_Terms_And_Conditions}" target="_blank"> Terms &amp; Conditions</a> related to TIP.</p>
             <p>These Terms &amp; Conditions will be communicated to you by the IATA TIP team.</p>
               <apex:inputCheckbox value="{!acceptedTaC}"/>
               {!$Label.ISSP_Registration_acceptGeneralConditions}

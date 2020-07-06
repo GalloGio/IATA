@@ -38,7 +38,7 @@
     text-align:justify;line-height:normal"><i><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">De acordo com
     nossos registros,&nbsp; o Certificado de
     Mercadorias Perigosas fornecido por sua empresa de <b>{!AMS_OSCAR__c.DGR_First_Name__c} {!AMS_OSCAR__c.DGR_Last_Name__c},
-    {!AMS_OSCAR__c.DGR_Position__c}</b> irá expirar em <b>{!AMS_OSCAR__c.Change_effective_as_of__c}</b>. Portanto, por favor,
+    {!AMS_OSCAR__c.DGR_Position__c}</b> irá expirar em <b>{!AMS_OSCAR__c.DGR_Expiry_Date__c}</b>. Portanto, por favor,
     envie provas / cópias dos novos certificados de cargas perigosas,&nbsp; juntamente com qualquer outra
     informação&nbsp; sobre suas qualificações,
     para indicar que a sua empresa está em conformidade com essa exigência.<o:p></o:p></span></i></p>

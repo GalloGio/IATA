@@ -223,6 +223,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="background" style="height: 900px;">
                 
             <center>
+				<div>
+					<apex:outputLabel value="{!$Label.Important_Delivery_Information}" style="font-weight:800" escape="false" /><br />
+					<apex:outputLabel value="{!$Label.IDCard_Covid}" escape="false" />
+				</div>
              <!-------------------------------------------------------------------------------->
                 <div id="PInfo"  class="LogMenuPanel">
                     <!--<h1>--><apex:outputLabel value="{!$Label.IDCard_LoginWithPInfo}" escape="false" style="color:white" /><!--</h1>-->                                 

@@ -5,12 +5,15 @@ import CASE_OBJECT from '@salesforce/schema/Case';
 
 import searchAccounts from '@salesforce/apex/IsraelDisputesCreateNewCaseCtrl.searchAccounts';
 import isBeforeFifteenth from '@salesforce/apex/IsraelDisputesCreateNewCaseCtrl.isBeforeFifteenth';
+import isBranch from '@salesforce/apex/IsraelDisputesCreateNewCaseCtrl.isBranch';
 
 //reusing controller for portalSupportReachUsCreateNewCase since required functionality fits
 import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchContacts';
-import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
+import insertCase from '@salesforce/apex/IsraelDisputesCreateNewCaseCtrl.insertCase';
+import searchRelatedAccounts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchAccounts';
 
 import csp_CreateNewCaseMainInputEmailsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsTopLabel';
+import csp_searchIataCodeLocationNamePlaceHolder from '@salesforce/label/c.csp_searchIataCodeLocationNamePlaceHolder';
 import csp_errorCreatingCase from '@salesforce/label/c.csp_errorCreatingCase';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 
@@ -19,6 +22,7 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class IsraelDisputesCreateNewCase extends LightningElement {
 
     label = {
+        csp_searchIataCodeLocationNamePlaceHolder,
         csp_CreateNewCaseMainInputEmailsTopLabel,
         csp_errorCreatingCase,
         IDCard_FillAllFields,
@@ -27,6 +31,7 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
     calendarIcon = CSP_PortalPath + 'CSPortal/Images/Icons/calendar.svg'; 
 
     childComponent;
+    childComponent2;
     
     //stores emails to be sent to case creation
     caseEmails = [];
@@ -39,6 +44,12 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
 
     //is before 15th controller
     @track isBeforeFifteenth = true;
+
+    //is branch controller
+    @track isNotBranch = true;
+
+    //branch site
+    @track branchSite = '';
 
     //goes true to show modal once case is created
     @track bShowModal = false;
@@ -64,17 +75,22 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
 
     //variable to control error class sent to child component
     @track requiredClass;
+    @track requiredClass2;
 
     //variable used to set the lookup input for the lookup component
     @track singleresult;
+    @track singleresult2;
 
     @track relatedAccounts;
+    @track airlineAccounts
 
     @track relatedContacts;
 
     @track caseID;
     //Same as doInit() on aura
     connectedCallback() {
+        this.getIsBranch();
+        this.getAirlineAccounts();
         this.getRelatedAccounts();
         this.getRelatedContacts();
         this.getIsBeforeFifteenth();
@@ -109,7 +125,11 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
 
     //shows results upon clicking the search.
     showIataResults() {
-        this.template.querySelector('[data-id="iatalookup"]').setSearchResults(this.relatedAccounts);
+        this.template.querySelector('[data-id="iatalookup"]').setSearchResults(this.airlineAccounts);
+    }
+    
+    showRelatedResults() {
+        this.template.querySelector('[data-id="relatedLookup"]').setSearchResults(this.relatedAccounts);
     }
 
     //shows results upon clicking the search.
@@ -150,15 +170,66 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
             });
     }
 
+    //checks if it's before 15th midnight or after
+    getIsBranch() {
+        isBranch()
+            .then(result => {
+                if (result !== '') {
+                    this.isNotBranch = false;
+                    this.branchSite = result;
+                }
+            });
+    }
+
     //gets related accounts and sets them in global var
     getRelatedAccounts() {
         //activate spinner
         this.loading = true;
-        searchAccounts({ searchTerm: null })
+        searchRelatedAccounts({ searchTerm: null })
             .then(relatedAccountsResult => {
-
                 let allresults = JSON.parse(JSON.stringify(relatedAccountsResult));
                 this.relatedAccounts = allresults;
+
+                if (allresults.length === 1) {
+                    this.singleresult2 = allresults;
+                } else if (allresults.length === 0) {
+                    this.singleresult2 = [{ title: this.label.CSP_NoSearchResults }];
+                }
+
+                //activate spinner
+                this.loading = false;
+            });
+    }
+
+    handleRelatedSearch(event) {
+        searchRelatedAccounts(event.detail)
+            .then(results => {
+                this.template.querySelector('[data-id="relatedLookup"]').setSearchResults(results);
+                this.requiredClass2 = '';
+            })
+            .catch((error) => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: this.label.csp_SearchNotPerformed,
+                        message: this.label.ISSP_ANG_GenericError,
+                        variant: 'error'
+                    })
+                );
+                //Errors usually are due to session timeout.
+                // eslint-disable-next-line no-console
+                console.log('Lookup Error: ' + error);
+            });
+    }
+    
+    //gets related accounts and sets them in global var
+    getAirlineAccounts() {
+        //activate spinner
+        this.loading = true;
+        searchAccounts({ searchTerm: null })
+            .then(airlineAccountsResult => {
+
+                let allresults = JSON.parse(JSON.stringify(airlineAccountsResult));
+                this.airlineAccounts = allresults;
 
                 if (allresults.length === 1) {
                     this.singleresult = allresults;
@@ -268,6 +339,17 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
             this.errors = [];
             this.requiredClass = '';
         }
+        
+		if (this.isNotBranch === true){
+			if (this.template.querySelector('[data-id="relatedLookup"]').getSelection().length === 0) {
+				this.requiredClass2 = ' slds-has-error';
+				error = true;
+			} else {
+				this.childComponent2 = this.template.querySelector('[data-id="relatedLookup"]').getSelection()[0];
+				this.errors = [];
+				this.requiredClass2 = '';
+			}
+		}
 
         if (this.newRecipient !== undefined && this.newRecipient !== '') {
             error = true;
@@ -307,15 +389,21 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
         }
         else {
             //create the Case record
+            let amDisp = (this.requestType === 'Deduction') ? Math.abs(this.amountDisputed) : (Math.abs(this.amountDisputed) * -1);
             let cse = { 'sobjectType': 'Case' };
-            cse.IATAcode__c = this.childComponent.extraFields.iataCode;
+            if (this.isNotBranch === false) {
+                cse.IATAcode__c = this.branchSite;
+            } else {
+				cse.IATAcode__c = this.childComponent2.extraFields.iataCode;
+			}
             cse.Reason1__c = this.requestType;
             cse.Airline_E_mail__c = this.email;
             cse.Airline__c = this.childComponent.title;
+            cse.Airline_Code__c = this.childComponent.extraFields.airlineCode;
             cse.Description = this.reasonDeduction;
             cse.Document_number__c = this.docNumber;
             cse.Reporting_date__c = this.issueDate;
-            cse.Amount_disputed__c = this.amountDisputed;
+            cse.Amount_disputed__c = amDisp;
             cse.Subject = 'On-line Deduction Form';
             cse.Status = 'Open';
             cse.RecordTypeId = this.recTypeId;
