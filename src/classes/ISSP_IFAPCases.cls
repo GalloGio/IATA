@@ -7,6 +7,7 @@ public  class ISSP_IFAPCases {
 		public list<String> successMessage {get; set;}
 		public list<WrapperCase> setCon {get;set;}
 		public List<CaseComment> List_CaseComment {get; set;}
+	public String gxaLink {get; set;}
 		//CNS
 		public String communityName {get;set;}
 
@@ -47,6 +48,8 @@ public  class ISSP_IFAPCases {
 						if(ISSP_Utilities.isCNS()==true){
 								communityName = 'CNS';
 						}
+
+		gxaLink = ISSP_Constant.customSetingMap.get('GxA_Link');
 
 		}
 
