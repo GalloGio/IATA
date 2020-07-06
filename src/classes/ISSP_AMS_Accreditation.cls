@@ -7493,7 +7493,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean validateCGOCASSAssociate(Integer cntIFAPContacts, Integer cntAuthorisedSig, Integer cntCASSContact) {
 		Boolean errorFound = false;
 
-		if(isCNSAgency){
+		if(isCNSAgency && newCase.Reason1__c != AMS_UTILS.CASE_REASON_NEW_COMMERCIAL_HO){
 			if(newForm.Total_Freight_Charges_monetary_value__c == null){
 				newForm.Total_Freight_Charges_monetary_value__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
