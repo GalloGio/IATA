@@ -6956,7 +6956,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Process</value>
+                <value>Process,Internal Cases (IDFS ISS)</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
