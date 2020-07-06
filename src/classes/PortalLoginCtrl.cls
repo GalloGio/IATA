@@ -72,9 +72,6 @@ public with sharing class PortalLoginCtrl {
 				LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
 			}
 
-			//Assign GDPR Permission set when user logs in. No matter the service
-			LightningRegistrationProcess.assignGDPRPermissionSet(oneUser.Id);
-
 			if (oneUser.Portal_User_Frozen_Checkbox__c){
 				result.userIsFrozen = true;
 				reactivateUser(oneUser, params);
@@ -101,8 +98,16 @@ public with sharing class PortalLoginCtrl {
 			}
 
 			System.debug(loggingLevel.FINE, '____ [cls PortalLoginCtrl - login] startUrl - ' + startUrl);
+			if(oneUser.ANG_Sector__c == 'Travel Agent'
+			&& oneUser.ANG_Category__c == 'IATA Passenger Sales Agent'
+			&& oneUser.Customer_type__c == 'Agency'
+			&& oneUser.ANG_Is_Accredited_Agent__c == true
+			&& oneUser.ANG_Customer_Country_ISO__c == 'IL'
+			&& (oneUser.Contact.User_Portal_Status__c == 'Approved User' || oneUser.Contact.User_Portal_Status__c == 'Approved Admin'))	{
+				
 
-			LightningRegistrationProcess.insertDeductionNoticeApp(String.valueOf(oneUser.Id));
+				LightningRegistrationProcess.insertDeductionNoticeApp(String.valueOf(oneUser.Id));
+			}			
 
 			System.PageReference pageRef = Site.login(oneUser.Username, password, startUrl);
 

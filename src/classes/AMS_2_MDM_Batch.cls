@@ -135,7 +135,11 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 					if(au.Change_Code__c == ccbs.Change_Code__c && auxAccAccount.ANG_IsNewGenAgency__c && aModelToExcludeSet.contains(accreditationModelMap.get(auxAccAccount.ANG_Accreditation_Model__c))){
 						bToSend = false;
 					}
+				}
 
+				//if the oscar has an active promotion then we exclude this change code
+				if ( ! String.isEmpty(au.OSCAR__r.Promotions__c) ) {
+					bToSend = false;
 				}
 
 				if(bToSend){

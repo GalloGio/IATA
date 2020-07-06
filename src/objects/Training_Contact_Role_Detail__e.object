@@ -38,7 +38,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>Training Contact Role Detail</label>
-    <pluralLabel>Training Contact Role Details</pluralLabel>
+    <label>Training Contact Role Detail PE</label>
+    <pluralLabel>Training Contact Role Details PE</pluralLabel>
     <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>
