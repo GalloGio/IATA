@@ -1,7 +1,7 @@
 global class ANG_FOPOSCARNotificationScheduler implements Schedulable {
 	// Will Run Every day and call ANG_FOPOSCARNotificationBatch
 
-	private static final Integer BATCH_SCOPE = 200;
+	private static final Integer BATCH_SCOPE = 100;
 
 	global void execute(SchedulableContext sc) {
 
