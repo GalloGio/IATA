@@ -28460,6 +28460,38 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_CompanyActivities</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyActivities</shortDescription>
+        <value>The Administrator in each company is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyAdmin</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyAdmin</shortDescription>
+        <value>Please provide the Name and E-mail address of each company staff that will act as administrator for PASS.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyRecomendation</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyRecomendation</shortDescription>
+        <value>Recommendation: Each company should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_FieldsFilled</fullName>
+        <categories>ISSP, PASS, ISSP_AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_FieldsFilled</shortDescription>
+        <value>All mandatory fields have been filled; you are ready to submit your application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_PASS_Withdraw</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34069,10 +34101,10 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PASS Agreement</shortDescription>
         <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
-Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+Participation Agreement must be signed at the participant’s Head Office, by the Chief Executive Officer, Chief Financial Officer, or Director General.
 &lt;br/&gt;
 &lt;br/&gt;
-Please download, complete and upload the PASS agreement as a scanned document.</value>
+Please download, sign and upload the PASS agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Airline_Checklist</fullName>
