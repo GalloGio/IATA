@@ -65,6 +65,12 @@
         </rules>
     </decisions>
     <formulas>
+        <description>Account Id 15 digit version</description>
+        <name>AccountId_15</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!AccountID},15)</expression>
+    </formulas>
+    <formulas>
         <name>Description</name>
         <dataType>String</dataType>
         <expression>&quot;Designator Code: &quot;&amp;{!DesignatorCode}&amp;
@@ -214,7 +220,7 @@ BR()&amp;
             <field>Account__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>AccountID</elementReference>
+                <elementReference>AccountId_15</elementReference>
             </value>
         </filters>
         <filters>
