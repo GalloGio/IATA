@@ -39,7 +39,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>Remote Invocation</label>
-    <pluralLabel>Remote Invocations</pluralLabel>
+    <label>Remote Invocation PE</label>
+    <pluralLabel>Remote Invocations PE</pluralLabel>
     <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
