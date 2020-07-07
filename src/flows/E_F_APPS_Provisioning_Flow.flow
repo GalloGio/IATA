@@ -122,10 +122,10 @@
         </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
-        <name>SCIM_Delete_user</name>
-        <label>SCIM Delete user</label>
-        <locationX>254</locationX>
-        <locationY>287</locationY>
+        <name>SCIM_Delete_User</name>
+        <label>SCIM Delete User</label>
+        <locationX>324</locationX>
+        <locationY>307</locationY>
         <apexClass>SCIMDeleteUserPlugin</apexClass>
         <inputParameters>
             <name>CallParams</name>
@@ -139,6 +139,10 @@
                 <elementReference>UserProvisioningRequest.Id</elementReference>
             </value>
         </inputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
+        </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
         <name>SCIM_Update_User</name>
