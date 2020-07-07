@@ -1328,7 +1328,7 @@ global class ANG_OscarProcessHelper {
 		OrgWideEmailAddress[] owea;
 
 		if(!accsToSendEmail.isEmpty()){
-			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+			owea = new OrgWideEmailAddress[]{AMS_AgencyRegulationAutoRenewal.getAgencyManagementOwa()};
 		}
 
 		List<Case> casesToUpdate = new List<Case>();
@@ -1719,7 +1719,7 @@ global class ANG_OscarProcessHelper {
 
 		OrgWideEmailAddress[] owea;
 
-		if(!accsToSendEmail.isEmpty()) owea = [select Id, Address, DisplayName from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		if(!accsToSendEmail.isEmpty()) owea = new OrgWideEmailAddress[]{AMS_AgencyRegulationAutoRenewal.getAgencyManagementOwa()};
 
 		List<Case> casesToUpdate = new List<Case>();
 
@@ -2063,7 +2063,7 @@ global class ANG_OscarProcessHelper {
 
 		//send emails
 		OrgWideEmailAddress[] owea;
-		owea = [select Id, Address, DisplayName  from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		owea = new OrgWideEmailAddress[]{AMS_AgencyRegulationAutoRenewal.getAgencyManagementOwa()};
 
 		// casesByTemplateName map {TemplateId, Map<CaseId,Case>}
 
@@ -2302,7 +2302,7 @@ global class ANG_OscarProcessHelper {
 			insert oscarsToInsert;
 
 		OrgWideEmailAddress[] owea;
-		owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		owea = new OrgWideEmailAddress[]{AMS_AgencyRegulationAutoRenewal.getAgencyManagementOwa()};
 
 		List<Case> casesToUpdate = new List<Case>();
 
