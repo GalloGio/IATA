@@ -221,7 +221,7 @@
 											</span>
 											<span class="ICE-Links">
 												<label>CSV</label>
-												<button class="ICE-ActionIcon ICE-download" onclick="downloadDetailCSV('{!selectedWrapperStatement.parent.Period__c}'); return false;"/>
+												<button class="ICE-ActionIcon ICE-download" onclick="downloadDetailCSV('{!selectedWrapperStatement.parent.Period__c}.csv'); return false;"/>
 											</span>
 										</div>
 									</div>
