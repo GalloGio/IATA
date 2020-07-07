@@ -11,22 +11,20 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public String MITAairlineID {get;set;}
 	public String BIETAairlineID {get;set;}
 
-	public List<ContactWrapper> otherContacts {get;set;}
-
 	public Map<Id,MITA_AgreementsCtrl.WrapperAgreement> wrapperAgreements {get;set;}
 	public MITA_AgreementsCtrl.WrapperAgreement wrapper {get;set;}
 
-	//NEW VARIABLES
-
-	public boolean MITAwithdrawalMode {get;set;}
-	public boolean BIETAwithdrawalMode {get;set;}
-	public boolean MITAsubmitMode {get;set;}
-	public boolean BIETAsubmitMode {get;set;}
-
-
 	public Map<Id,SuggestedAirline> suggestedAirlines {get;set;}
+	public map<id, contact> mapActiveContacts	{get; set;}
+	public boolean bHasActiveContacts	{get; set;}
+	public map<id, contact> mapAllContacts	{get; set;}
+	public boolean bHasContacts	{get; set;}
 
 	public MITA_PortalMyAgreementsCtrl(){
+		mapActiveContacts = new map<id, contact>();
+		mapAllContacts = new map<id, contact>();
+		bHasActiveContacts = false;
+		bHasContacts = false;
 
 		this.currentUser = [SELECT UserName, ContactId, Contact.AccountId, Contact.Account.Name, Profile.Name FROM User WHERE ID = :UserInfo.getUserId()];
 
@@ -37,6 +35,16 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 								Name_on_AOC__c, Airline_Prefix__c
 							  FROM Account
 							  WHERE Id = :this.currentUser.Contact.AccountId];
+		for(Contact c:[select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where AccountId = :this.currentUser.Contact.AccountId]){
+			if(c.MITA_Contact__c){
+				mapActiveContacts.put(c.id, c);
+				bHasActiveContacts = true;
+			}
+			else {
+				mapAllContacts.put(c.id, c);
+				bHasContacts = true;
+			}
+		}
 
 		if(accs.size()!=1)    ApexPages.addMessage(new ApexPages.Message(ApexPAges.Severity.ERROR, Label.ISSP_cannot_open_the_selected_account));
 		else{
@@ -74,11 +82,6 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 							 AND (MITA_Member__c = true OR BIETA_Member__c = true)
 							 AND ID <> :acc.Id])
 			suggestedAirlines.put(a.id,new SuggestedAirline(a,acc));
-
-		MITAwithdrawalMode = false;
-		BIETAwithdrawalMode = false;
-		MITAsubmitMode = false;
-		BIETAsubmitMode = false;
 	}
 
 	private void addToAgreementsMap( MITA_Agreement__c newAgreement, map<Id,MITA_AgreementsCtrl.WrapperAgreement> mapAgreements, Account account) {
@@ -194,153 +197,6 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public String escape(String s){
 		return s == null ? '' : s.escapeHtml4();
 	}
-
-	//Methods for edit and save the agreement
-	public void selectMITAAgreement(){selectAgreement(true);}
-	public void selectBIETAAgreement(){selectAgreement(false);}
-	public void selectAgreement(boolean isMITA){
-		String agreementId = isMITA ? MITAagreementid : BIETAagreementid;
-		try {
-			list<MITA_Agreement__c> listAgr = [
-				SELECT Airline_1__c, Airline_2__c, Active__c, Status__c, Cancellation_Reason__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c,
-				MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c,
-				Airline_1__r.Name_on_AOC__c , Airline1_designator_code__c, Airline_1__r.Airline_designator__c, Airline_1__r.Airline_Prefix__c, Airline_1__r.IATACode__c,
-				Airline_2__r.Name_on_AOC__c , Airline2_designator_code__c, Airline_2__r.Airline_designator__c, Airline_2__r.Airline_Prefix__c, Airline_2__r.IATACode__c
-				From MITA_Agreement__c m
-				where id in :agreementId.split(',')];
-
-			this.wrapper = new MITA_AgreementsCtrl.WrapperAgreement(listAgr.get(0), this.acc);
-			if ( listAgr.size() > 1 ) {
-				this.wrapper.checkMixAgreement(listAgr.get(1));
-			}
-
-		} catch (Exception e) {
-			System.debug('EXCEPTION selectAgreement ' + e.getMessage());
-		}
-
-		try {
-			MITA_Agreement__c agr = this.wrapper.getAgreement();
-			Id otherAirline = (agreementId == agr.Airline_1__c ? agr.Airline_2__c : agr.Airline_1__c);
-			otherContacts = new List<ContactWrapper>();
-			for( Contact c : [SELECT Name, Email, Title, MITA_Contact_Type__c FROM Contact WHERE AccountId = :otherAirline AND MITA_Contact__c = true])
-			otherContacts.add(new ContactWrapper(c,false));
-		} catch (Exception e) {
-			System.debug('EXCEPTION selectAgreement ' + e.getMessage());
-		}
-	}
-
-	public void deleteMITAAgreement(){deleteAgreement(true);}
-	public void deleteBIETAAgreement(){deleteAgreement(false);}
-	public void deleteAgreement(boolean isMITA){
-		selectAgreement(isMITA);
-		if(isMITA){
-			MITAwithdrawalMode = true;
-		}else{
-			BIETAwithdrawalMode = true;
-		}
-	}
-
-	public void createMITAAgreement(){createAgreement(true);}
-	public void createBIETAAgreement(){createAgreement(false);}
-	public void createAgreement(boolean isMITA){
-		/*
-		agr = new MITA_Agreement__c(Airline_1__c = acc.Id);
-		if(isMITA){
-			MITAsubmitMode = true;
-			sair = suggestedAirlines.get(MITAairlineID);
-			agr.Airline_2__c = sair.id;
-			agr.MITAorBIETA__c = 'MITA';
-		}else{
-			BIETAsubmitMode = true;
-			sair = suggestedAirlines.get(BIETAairlineID);
-			agr.Airline_2__c = sair.id;
-			agr.MITAorBIETA__c = 'BIETA';
-		}
-
-		otherContacts = new List<ContactWrapper>();
-		for( Contact c : [SELECT Name, Email, Title, MITA_Contact_Type__c FROM Contact WHERE AccountId = :agr.Airline_2__c AND MITA_Contact__c = true])
-			otherContacts.add(new ContactWrapper(c,false));
-		*/
-	}
-
-
-	public void resetMITAWithdrawals(){resetWithdrawals(true);}
-	public void resetBIETAWithdrawals(){resetWithdrawals(false);}
-	public void resetWithdrawals(boolean isMITA){
-		if(isMITA)
-			MITAwithdrawalMode = false;
-		else
-			BIETAwithdrawalMode = false;
-	}
-
-	public void resetMITAsubmit(){resetSubmit(true);}
-	public void resetBIETAsubmit(){resetSubmit(false);}
-	public void resetSubmit(boolean isMITA){
-		if(isMITA)
-			MITAsubmitMode = false;
-		else
-			BIETAsubmitMode = false;
-	}
-
-
-	public void completeWithdrawal(){
-		/*
-		try{
-			update agr;
-			//TODO: understand process! Open case? send email? case team?
-			MITAwithdrawalMode = false;
-			BIETAwithdrawalMode = false;
-			agr = null;
-		}catch(Exception e){
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'It was not possible to finalize the withdrawal for the following error: '+e.getMessage()));
-			system.debug('It was not possible to finalize the withdrawal for the following error: '+e.getMessage());
-		}
-		*/
-	}
-
-	public void completeSubmit(){
-		/*
-		try{
-			system.debug('completeSubmit() - sair = '+sair);
-			// As first I'll check that the agreement type is available
-			if(sair==null){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Internal error, please contact the admin: (sair not found).'));
-				return;
-			}
-			if((agr.MITAorBIETA__c == 'MITA' && sair.mitatypesToIsSenior.get(agr.Agreement_type__c) != false) ||
-				(agr.MITAorBIETA__c == 'BIETA' && sair.bietatypesToIsSenior.get(agr.Agreement_type__c) != false)){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'This agreemnt type is not available for this airline: '));
-				system.debug('completeSubmit() - this agreemnt type '+agr.Agreement_type__c+'is not available for this airline: '+sair.name);
-				return;
-
-			}
-
-
-			insert agr;
-			//TODO: understand process! Open case? send email? case team?
-
-			 MITAsubmitMode = false;
-			 BIETAsubmitMode = false;
-			 agr = null;
-		}catch(Exception e){
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'It was not possible to submit the agreement for the following error: '+e.getMessage()));
-			system.debug('It was not possible to submit the agreement for the following error: '+e.getMessage());
-		}
-		*/
-	}
-
-
-
-	public class ContactWrapper{
-		public Contact c {get;set;}
-		public boolean sel {get;set;}
-
-		public ContactWrapper(Contact c, boolean sel){
-			this.c = c;
-			this.sel = sel;
-		}
-	}
-
 
 	public class SuggestedAirline{
 		public ID id {get;set;}
