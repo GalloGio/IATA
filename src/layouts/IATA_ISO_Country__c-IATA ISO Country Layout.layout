@@ -65,6 +65,10 @@
                 <behavior>Edit</behavior>
                 <field>Informatica_Value__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISO_Country_Short_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -93,6 +97,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSP_Country_free_text__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PASS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_Settlement_System_PASS__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -512,11 +524,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Valid_for_Address__c</fields>
         <fields>ISO_Code__c</fields>
         <fields>ISO_CODE_STANDARD__c</fields>
         <fields>GeonameAsciiName__c</fields>
         <fields>GeonameName__c</fields>
-        <fields>Valid_for_Address__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -99,9 +99,9 @@ private class ANG_MulticountryHelperTest {
 	{
 		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-		Account accountHEUK = makeAccount('S Account HE UK', (Id) null, AMS_Utils.HE, countryUK.Id,
-			'12341234', ANG_Risk_Helper.RISK_STATUS_B);
-		insert accountHEUK;
+			Account accountHEUK = makeAccount('S Account HE UK', (Id) null, AMS_Utils.HE, countryUK.Id,
+				'12341234', ANG_Risk_Helper.RISK_STATUS_B);
+			insert accountHEUK;
 
 		Account accountAEUK = makeAccount('S Account AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
 			'12341235', ANG_Risk_Helper.RISK_STATUS_B);
@@ -169,6 +169,78 @@ private class ANG_MulticountryHelperTest {
 	@isTest static void allowIATACodeGenerationTest(){
 
 		List<Account> accountLst = new List<Account>(
+			[SELECT Id
+			 FROM Account
+			 WHERE Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+			 ORDER BY Name ASC
+			]
+		);
+
+		Account accountHE = accountLst.get(1);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountHE.Id
+		);
+
+		insert oscar;
+
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
+			AccountId = accountHE.Id,
+			Oscar__c = oscar.Id
+		);
+
+		insert cse;
+
+		Test.startTest();
+
+		AMS_OSCAR__c oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Accreditation_date__c 
+			 FROM AMS_OSCAR__c
+			];
+
+		Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
+
+		System.assert(!allowIATACodeGeneration, 'Should not allow the IATA code generation.');
+
+		Account accountGE = accountLst.get(0);
+
+		accountGE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
+		accountGE.IATACode__c = '12345678';
+
+		update accountGE;
+
+		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
+			Account__c = accountGE.Id,
+			Change_Code__c = AMS_Utils.NEW_CHANGE_CODE,
+			Sent_to_external_system__c = false
+		);
+
+		insert changeCodeApplied;
+
+		oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Accreditation_date__c 
+			 FROM AMS_OSCAR__c
+			];
+
+		allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
+
+		System.assert(allowIATACodeGeneration, 'Should allow the IATA code generation.');
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void allowIATACodeGenerationMigratedAgenciesTest(){
+
+		List<Account> accountLst = new List<Account>(
 			[SELECT
 				Id
 			 FROM Account
@@ -198,28 +270,31 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
-		AMS_OSCAR__c oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
+		AMS_OSCAR__c oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Accreditation_date__c 
+			 FROM AMS_OSCAR__c
+			];
 
 		Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
 
 		System.assert(!allowIATACodeGeneration, 'Should not allow the IATA code generation.');
 
 		Account accountGE = accountLst.get(0);
-
 		accountGE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
 		accountGE.IATACode__c = '12345678';
-
+		accountGE.Accreditation_date__c = System.today().addDays(-20);
 		update accountGE;
 
-		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
-			Account__c = accountGE.Id,
-			Change_Code__c = 'NEW',
-			Sent_to_external_system__c = false
-		);
-
-		insert changeCodeApplied;
-
-		oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
+		oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Accreditation_date__c 
+			 FROM AMS_OSCAR__c
+			];
 
 		allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
 
@@ -233,12 +308,11 @@ private class ANG_MulticountryHelperTest {
 
 		List<Account> accountLst = new List<Account>(
 			[SELECT
-				Id
+				Id,
+				Parent.Accreditation_date__c
 			 FROM Account
-			 WHERE
-				Name IN ('Multicountry AE PT', 'Multicountry GE PT')
-			 ORDER BY
-				Name ASC
+			 WHERE Name IN ('Multicountry AE PT', 'Multicountry GE PT')
+			 ORDER BY Name ASC
 			]
 		);
 
@@ -261,6 +335,8 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
+		oscar.putSObject('Account__r', accountAE);
+
 		Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
 
 		System.assert(!allowApproval, 'Should not allow the approval step.');
@@ -269,7 +345,7 @@ private class ANG_MulticountryHelperTest {
 
 		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'FIN',
+			Change_Code__c = AMS_Utils.FIN_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
@@ -283,8 +359,60 @@ private class ANG_MulticountryHelperTest {
 
 	}
 
-	@isTest static void multicountryAccountValidationsTest() {
+	@isTest static void allowApprovalStepMigratedAgenciesTest(){
 
+		List<Account> accountLst = new List<Account>(
+			[SELECT
+				Id,
+				Parent.Accreditation_date__c
+			 FROM Account
+			 WHERE Name IN ('Multicountry AE PT', 'Multicountry GE PT')
+			 ORDER BY Name ASC
+			]
+		);
+
+		Account accountAE = accountLst.get(0);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountAE.Id
+		);
+
+		insert oscar;
+
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
+			AccountId = accountAE.Id,
+			Oscar__c = oscar.Id
+		);
+
+		insert cse;
+
+		Test.startTest();
+
+		oscar.putSObject('Account__r', accountAE);
+
+		Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
+
+		System.assert(!allowApproval, 'Should not allow the approval step.');
+
+		Account accountGE = accountLst.get(1);
+		accountGE.Accreditation_date__c = System.today().addDays(-10);
+		update accountGE;
+
+		accountAE.putSObject('Parent', accountGE);
+		oscar.putSObject('Account__r', accountAE);
+
+		allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
+
+		System.assert(allowApproval, 'Should allow the approval step.');
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void multicountryAccountValidationsTest() {
+		
 		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		List<IATA_ISO_Country__c> countriesLst = new List<IATA_ISO_Country__c>(
@@ -292,8 +420,7 @@ private class ANG_MulticountryHelperTest {
 				Id,
 				Name
 			 FROM IATA_ISO_Country__c
-			 ORDER BY
-				Name ASC
+			 ORDER BY Name ASC
 			]
 		);
 
@@ -306,10 +433,8 @@ private class ANG_MulticountryHelperTest {
 				Id,
 				IATA_ISO_Country__c
 			 FROM Account
-			 WHERE
-				Name IN ('Multicountry GE PT', 'Multicountry HE UK')
-			 ORDER BY
-				Name ASC
+			 WHERE Name IN ('Multicountry GE PT', 'Multicountry HE UK')
+			 ORDER BY Name ASC
 			]
 		);
 
@@ -406,14 +531,15 @@ private class ANG_MulticountryHelperTest {
 	}
 
 
-	@isTest static void testmulticountryAccountHasRemittenceFrequencyEmpty() {
+	@isTest static void testmulticountryAccountHasRemittanceFrequencyEmpty() {
 
 		List<Account> accountLst = new List<Account>(
 			[SELECT Id
 			 FROM Account
 			 WHERE  Name IN ('Multicountry HE UK')
 			 ORDER BY Name ASC
-			]);
+			]
+		);
 
 		Account accountHE = accountLst.get(0);
 
@@ -422,6 +548,8 @@ private class ANG_MulticountryHelperTest {
 			Account__c = accountHE.Id,
 			Process__c = AMS_Utils.MCAE
 		);
+
+		Test.startTest();
 
 		insert oscar;
 
@@ -442,14 +570,11 @@ private class ANG_MulticountryHelperTest {
 		AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c, Location_Type__c, AMS_Online_Accreditation__c
 								FROM AMS_Oscar__c WHERE Account__c = : accountHE.Id limit 1];
 
-		Test.startTest();
-
-		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(oscar2);
-
 		Test.stopTest();
 
+		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittanceFrequencyEmpty(oscar2, paxAccreditation);
 		//Has empty Remittance Frequency
-		System.assert(hasRF);
+		System.assert(hasRF, 'Remittance Frequency must be empty');
 
 	}
 
@@ -459,10 +584,8 @@ private class ANG_MulticountryHelperTest {
 			[SELECT
 				Id , ParentId, Name
 			 FROM Account
-			 WHERE
-				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
-			 ORDER BY
-				Name ASC
+			 WHERE Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+			 ORDER BY Name ASC
 			]
 		);
 
@@ -533,10 +656,9 @@ private class ANG_MulticountryHelperTest {
 
 	}
 
-
 	@isTest static void testGEAccreditationWithoutRequestFinancialSecurityStep() {
 
-		AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = 'FIN', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
+		AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = AMS_Utils.FIN_CHANGE_CODE, Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
 		insert changeCodeCustomsettings;
 
 		Account accountGE = [SELECT Id, ParentId, Name FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
@@ -568,7 +690,7 @@ private class ANG_MulticountryHelperTest {
 
 		AMS_ChangeCodes__c finChgCode = new AMS_ChangeCodes__c(
 			Name = 'FIN-AMS',
-			Change_Code__c = 'FIN',
+			Change_Code__c = AMS_Utils.FIN_CHANGE_CODE,
 			Reason_Code__c = '',
 			Reason_Code_Description__c = '',
 			Account_status_change__c = '',
@@ -583,8 +705,7 @@ private class ANG_MulticountryHelperTest {
 				IATA_ISO_Country__c,
 				ANG_HE_RiskHistoryAssessment__c
 			 FROM Account
-			 WHERE
-				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+			 WHERE Name IN ('Multicountry HE UK', 'Multicountry GE PT')
 			 ORDER BY
 				Name ASC
 			]
@@ -599,13 +720,13 @@ private class ANG_MulticountryHelperTest {
 
 		Agency_Applied_Change_code__c changeCodeAppliedNew = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'NEW',
+			Change_Code__c = AMS_Utils.NEW_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
 		Agency_Applied_Change_code__c changeCodeAppliedFin = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'FIN',
+			Change_Code__c = AMS_Utils.FIN_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
@@ -646,7 +767,7 @@ private class ANG_MulticountryHelperTest {
 		theAccreditation.Remittance_frequency__c='M';
 		theAccreditation.Solicitation_Flag__c=false;
 		theAccreditation.Location_Class__c='P';
-		theAccreditation.Location_Type__c='HE';
+		theAccreditation.Location_Type__c=AMS_Utils.HE;
 		theAccreditation.SAAM_Case__c=cse.Id;
 		theAccreditation.ISSP_Branch_AccountId__c = accountHE.Id;
 		insert theAccreditation;
@@ -661,7 +782,7 @@ private class ANG_MulticountryHelperTest {
 
 		changeCodeAppliedNew = new Agency_Applied_Change_code__c(
 			Account__c = accountHE.Id,
-			Change_Code__c = 'NEW',
+			Change_Code__c = AMS_Utils.NEW_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
@@ -669,7 +790,7 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
-		system.assertEquals(accountGE.ANG_HE_RiskHistoryAssessment__c, null, 'The risk assessment information should be empty');
+		System.assertEquals(null, accountGE.ANG_HE_RiskHistoryAssessment__c, 'The risk assessment information should be empty');
 
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
@@ -677,7 +798,7 @@ private class ANG_MulticountryHelperTest {
 		update oscar;
 
 		accountGE = [SELECT Id, ANG_HE_RiskHistoryAssessment__c FROM Account WHERE Id = :accountGE.Id];
-		system.assertEquals(accountGE.ANG_HE_RiskHistoryAssessment__c, 'Passed', 'The risk history assessment should pass');
+		System.assertEquals(AMS_Utils.PASSED, accountGE.ANG_HE_RiskHistoryAssessment__c, 'The risk history assessment should pass');
 
 		Test.stopTest();
 
@@ -686,14 +807,15 @@ private class ANG_MulticountryHelperTest {
 	@isTest
 	public static void testGetChildHEAccounts()
 	{
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id, Name, Location_type__c FROM Account
 			 													WHERE Name IN ('MC Account GE PT', 'S Account HE UK')]);
 
 		Test.startTest();
-		Map<Id, Account> accounts = ANG_MulticountryHelper.getChildHEAccounts(accountIds.keySet());
+		Map<Id, Account> accounts = ANG_MulticountryHelper.getAccountsInfo(accountIds.keySet());
+
 		Test.stopTest();
 
-		System.assertEquals(1, accounts.size()); // the 1 HE child for PT GE
+		System.assertEquals(3, accounts.size()); // the 1 HE child for PT GE and the HE Standard
 
 		List<String> names = new List<String>();
 		for (Account a : accounts.values())
@@ -721,19 +843,9 @@ private class ANG_MulticountryHelperTest {
 		List<AsyncApexJob> batches = [SELECT Id, Status, MethodName, ApexClass.Name, createddate
 										FROM AsyncApexJob
 										WHERE ApexClass.Name = 'ANG_RiskStatusDowngradeBatch'];
+
 		System.assertEquals(1, batches.size(), 'Should have scheduled a Batch job');
 
-		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
-		System.assertEquals(1, cases.size()); // 1 for each GE
-
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
-											 WHERE Name IN ('MC Account GE PT')]);
-
-		for (Case c : cases)
-		{
-			System.assert(accountIds.keySet().contains(c.Account_Concerned__c),
-				'The cases were not associated with the right accounts');
-		}
 	}
 
 	@isTest
@@ -743,19 +855,16 @@ private class ANG_MulticountryHelperTest {
 									WHERE Name IN ('MC Account GE PT')
 									ORDER BY Name ASC];
 
-		Account accountGE = accounts.get(0);
-		accountGE.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
-		accountGE.ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C;
-		update accountGE;
-
 		Test.startTest();
 		ANG_RiskStatusDowngradeBatch batch = new ANG_RiskStatusDowngradeBatch(new Set<Id> { accounts.get(0).Id });
 		Id batchId = Database.executeBatch(batch);
 		Test.stopTest();
 
-		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
-		System.assertEquals(2, cases.size()); // 1 for each GE and 1 for each child HE accounts
 
+		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
+		System.assertEquals(1, cases.size()); 
+		
+		// 1 for each GE and 1 for each child HE accounts. In this case because of max number of batch executes, 
 		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
 											 WHERE Name IN ('MC Account GE PT', 'MC Account HE UK')]);
 
@@ -778,8 +887,7 @@ private class ANG_MulticountryHelperTest {
 				Location_Class__c,
 				IATA_ISO_Country__c
 			 FROM Account
-			 WHERE
-			 	Location_Type__c = :AMS_Utils.GE
+			 WHERE Location_Type__c = :AMS_Utils.GE
 			 LIMIT 1
 			]
 		);
@@ -808,7 +916,7 @@ private class ANG_MulticountryHelperTest {
 			Account__c = acct.Id,
 			Process__c = AMS_Utils.NGCHANGES,
 			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES,
-			Status__c = 'Open'
+			Status__c = AMS_Utils.OPEN
 		);
 
 		insert oscar;
@@ -873,14 +981,14 @@ private class ANG_MulticountryHelperTest {
 
 		Case ifap = [SELECT Id, Deadline_Date__c, Financial_Review_Type__c FROM Case WHERE Id = :ifapCaseId];
 
-		system.assertEquals(ifap.Deadline_Date__c, System.today().addDays(60), 'Deadline date must be 60 days from today\'s date');
-		system.assertEquals(ifap.Financial_Review_Type__c, AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL, 'Financial Review Type must be \'Multicountry\'');
+		system.assertEquals(System.today().addDays(60), ifap.Deadline_Date__c, 'Deadline date must be 60 days from today\'s date');
+		system.assertEquals(AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC, ifap.Financial_Review_Type__c, 'Financial Review Type must be ' + AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC);
 
 		Id financialReviewPdRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Multicountry_Yearly_Financial_Review');
 
 		List<AMS_Process_Detail__c> pdLst = [SELECT Id FROM AMS_Process_Detail__c WHERE Case__c = :ifapCaseId AND RecordTypeId = :financialReviewPdRecordTypeId];
 
-		system.assertEquals(pdLst.size(), 1, 'There must be a single process detail record with the record type \'Multicountry Yearly Financial Review\'');
+		system.assertEquals(1, pdLst.size(), 'There must be a single process detail record with the record type \'Multicountry Yearly Financial Review\'');
 
 		Test.stopTest();
 
@@ -898,8 +1006,7 @@ private class ANG_MulticountryHelperTest {
 				Location_Class__c,
 				IATA_ISO_Country__c
 			 FROM Account
-			 WHERE
-			 	Location_Type__c = :AMS_Utils.GE
+			 WHERE Location_Type__c = :AMS_Utils.GE
 			 LIMIT 1
 			]
 		);
@@ -927,7 +1034,7 @@ private class ANG_MulticountryHelperTest {
 		ifap.AccountId = accountGE.Id;
 		ifap.ContactId = cont.Id;
 		ifap.Subject = 'IFAP Multicountry';
-		ifap.Status = 'Agent to be Notified';
+		ifap.Status = AMS_Utils.CASE_STATUS_AGENT_TO_BE_NOTIFIED;
 		ifap.RecordTypeId = ifapCaseRecordTypeId;
 		ifap.IFAP_Financial_Year__c = String.valueOf(Date.today().year());
 		ifap.ArchivedDate__c = Date.today();
@@ -951,13 +1058,12 @@ private class ANG_MulticountryHelperTest {
 				Assessment_Performed_Date__c,
 				Financial_Assessment_Points__c
 			FROM Account
-			WHERE
-				Id = :accountGE.Id
+			WHERE Id = :accountGE.Id
 			];
 
-		system.assertEquals(accountGE.Financial_Assessment_Points__c, ifap.Financial_Assessment_Points__c);
-		system.assertEquals(accountGE.Financial_Review_Result__c, ifap.Financial_Review_Result__c);
-		system.assertEquals(accountGE.Assessment_Performed_Date__c, ifap.Assessment_Performed_Date__c);
+		System.assertEquals(ifap.Financial_Assessment_Points__c, accountGE.Financial_Assessment_Points__c, 'The account must have the financial assessment points from the IFAP');
+		System.assertEquals(ifap.Financial_Review_Result__c, accountGE.Financial_Review_Result__c, 'The account must have the financial review result from the IFAP');
+		System.assertEquals(ifap.Assessment_Performed_Date__c, accountGE.Assessment_Performed_Date__c, 'The account must have the assessment performed date from the IFAP');
 
 		Test.stopTest();
 
@@ -975,8 +1081,7 @@ private class ANG_MulticountryHelperTest {
 				Location_Class__c,
 				IATA_ISO_Country__c
 			 FROM Account
-			 WHERE
-			 	Location_Type__c = :AMS_Utils.GE
+			 WHERE Location_Type__c = :AMS_Utils.GE
 			 LIMIT 1
 			]
 		);
@@ -1004,7 +1109,7 @@ private class ANG_MulticountryHelperTest {
 		ifap.AccountId = accountGE.Id;
 		ifap.ContactId = cont.Id;
 		ifap.Subject = 'IFAP Multicountry';
-		ifap.Status = 'Agent to be Notified';
+		ifap.Status = AMS_Utils.CASE_STATUS_AGENT_TO_BE_NOTIFIED;
 		ifap.RecordTypeId = ifapCaseRecordTypeId;
 		ifap.IFAP_Financial_Year__c = String.valueOf(Date.today().year());
 		ifap.ArchivedDate__c = Date.today();
@@ -1029,13 +1134,12 @@ private class ANG_MulticountryHelperTest {
 				Assessment_Performed_Date__c,
 				Financial_Assessment_Points__c
 			FROM Account
-			WHERE
-				Id = :accountGE.Id
+			WHERE Id = :accountGE.Id
 			];
 
-		system.assertNotEquals(accountGE.Financial_Assessment_Points__c, ifap.Financial_Assessment_Points__c);
-		system.assertNotEquals(accountGE.Financial_Review_Result__c, ifap.Financial_Review_Result__c);
-		system.assertNotEquals(accountGE.Assessment_Performed_Date__c, ifap.Assessment_Performed_Date__c);
+		System.assertNotEquals(ifap.Financial_Assessment_Points__c, accountGE.Financial_Assessment_Points__c, 'The account must NOT have the financial assessment points from the IFAP');
+		System.assertNotEquals(ifap.Financial_Review_Result__c, accountGE.Financial_Review_Result__c, 'The account must NOT have the financial review result from the IFAP');
+		System.assertNotEquals(ifap.Assessment_Performed_Date__c, accountGE.Assessment_Performed_Date__c, 'The account must NOT have the assessment performed date from the IFAP');
 
 		Test.stopTest();
 

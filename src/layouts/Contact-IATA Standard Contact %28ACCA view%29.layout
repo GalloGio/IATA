@@ -102,6 +102,10 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Address__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Data_Submission__c.User__c</relatedList>
     </relatedLists>
     <relatedLists>

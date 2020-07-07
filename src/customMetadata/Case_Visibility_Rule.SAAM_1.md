@@ -31,6 +31,10 @@ Chat
 IATA Internal User</value>
     </values>
     <values>
+        <field>OwnerID__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Reason1__c</field>
         <value xsi:type="xsd:string">CHC – Change of Shareholding
 CHG – Data Maintenance
@@ -54,7 +58,9 @@ New TIDS
 New MSO
 New HE lite
 New HE standard
+New HE Multicountry
 New AE
+New AE Multicountry
 GSA / MSO / Handling Agent
 FoP Management
 Accreditation Type

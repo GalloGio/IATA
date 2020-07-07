@@ -1,131 +1,197 @@
 <apex:page cache="true" expires="600" docType="html" title="IATA/IATAN ID Card Online Platform" sidebar="false" showHeader="false" language="{!Language}"  controller="IDCardPortalController" >  
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>IATA/IATAN ID Card Online Platform</title>
+		<apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
+		
+		<script type="text/javascript">
+		
+			function refreshLanguageIDCardPortal() {
+				$("[id*='Loading']").show();
+				var exdate=new Date();
+				exdate.setDate(exdate.getDate() + 365); 
+				var c_value=escape(document.getElementById('{!$Component.idcardForm.langSelect}').value) + "; expires=" + exdate.toUTCString() + ';path=/';
+				document.cookie="apex__idcard_portal_lang" + "=" + c_value;
+				callRefresh();
+			}
 
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<c:IDCard_HeaderComponent />
-<title>IATA/IATAN ID Card Online Platform</title>
-    <script>
-       
-        function getSelectedApplicationType(type)
-        {           
-            if(type == "{!renewal}" && {!isRenewable} == false)
-            {
-                if ("{!renewalDate}" != "")
-                {
-                    alert("{!$Label.IDCard_RenewalOptionAllowedMonths} {!$Label.IDCard_RenewalAvailableDate_PopUpMessage} {!renewalDate}");
-                    return;
-                }
-                else
-                {
-                    alert("{!$Label.IDCard_RenewalOptionAllowedMonths}");   
-                    return;
-                }   
-            }
-            if (type == "{!reissue}" && {!isReplacementAvailable} == false)
-            {
-                alert("{!$Label.IDCard_PortalPage_SubMenu_ReplaceNotActive}");
-            }
-            else 
-            {                  
-                next(type);
-            }        
-        }
-    </script>
-</head>
+			function getSelectedApplicationType(type) {
+				if(type == "{!renewal}"){
+					if({!isRenewable}) openPopupJS(type);
+					else if ("{!renewalDate}" != "") {
+						alert("{!$Label.IDCard_RenewalOptionAllowedMonths} {!$Label.IDCard_RenewalAvailableDate_PopUpMessage} {!renewalDate}");
+					}else{
+						alert("{!$Label.IDCard_RenewalOptionAllowedMonths}");
+					}
+				}
+				else if (type == "{!reissue}") {
+					if({!isReplacementAvailable}) openPopupJS(type);
+					else alert("{!$Label.IDCard_PortalPage_SubMenu_ReplaceNotActive}");
+				}
+				else next(type);
+			}
+		</script>
+
+		<style type="text/css">
+			.customPopup {
+				background-color: white;
+				border-style: solid;
+				border-width: 2px;
+				left: 50%;
+				top: 30%;
+				font-size: 11pt;
+				padding: 10px;
+				position: absolute;
+				z-index: 9999;
+				width: 810px;
+				margin-left: -405px;
+			}
+	
+			.closeButton {
+				float: right;
+			}
+		</style>
+	</head>
 
 <body>
-    <div id="page_wrapper">
-        <apex:form forceSSL="true" id="idcardForm">
-        <!-- Header -->
-                <div class="HeaderIMG"> 
-                    <table width="100%">
-                        <tr>
-                            <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
-                            <td>
-                                <div class="select-style">
-                                  <apex:actionRegion >
-                                     <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
-                                     <apex:selectOptions value="{!LangItems}" />
-                                     <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
-                                     </apex:selectList>
-                                  </apex:actionRegion>
-                                </div>
-                            </td>
-                         </tr>
-                    </table>
-                    <h1>{!$Label.IDCard_Landing_Title}</h1>
-                </div>
-                <div class="background">
-                    <br />
-                    <apex:pageMessage summary="{!errMsg}" rendered="{!HasError}" severity="error" strength="2" />
-                    <br />
-                    <div style="width: 1000px; margin: 0 auto;">
-                        <apex:actionFunction name="next" action="{!next}" rerender="Msgs">
-                            <apex:param name="myaction" value="" />
-                        </apex:actionFunction>
-        
-                        <table cellpadding="20">
-                            <tr style="display:{!IF(accountStatusTerminated,'none','')}"> <!--INC183592-->
-                                <td align="center" valign="top">
-                                    <div class="CardRequestPanel" style="display:{!IF(limited,'none','')}">
-                                        <apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-renew.png')}" style="margin-bottom: 20px" />
-                                        <h1>{!$Label.IDCard_PortalPage_MenuRenew}</h1>
-                                        <p>{!$Label.IDCard_PortalPage_SubMenu_Renew}</p>
-                                        <div style="position: absolute; bottom: 0px;">
-                                            <a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!renewal}');">
-                                                <span>{!$Label.IDCard_PortalPage_SubMenu_Button_Renew}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td align="center" valign="top">
-                                    <div class="CardRequestPanel" style="display:{!IF(limited,'none','')}">
-                                        <apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-replace.png')}" style="margin-bottom: 20px" />
-                                        <h1>{!$Label.IDCard_PortalPage_MenuReplace}</h1>
-                                        <p>{!$Label.IDCard_PortalPage_SubMenu_Replace} </p>
-                                        <div style="position: absolute; bottom: 0px;">
-                                            <a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!reissue}');">
-                                                <span>{!$Label.IDCard_PortalPage_SubMenu_Button_Replace}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td align="center" valign="top">
-                                    <div class="CardRequestPanel">
-                                        <apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-request.png')}" style="margin-bottom: 20px" />
-                                        <h1>{!$Label.IDCard_PortalPage_MenuChange}</h1>
-                                        <p>{!$Label.IDCard_PortalPage_SubMenu_Change}</p>
-                                        <div style="position: absolute; bottom: 0px;">
-                                            <a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!replacement}');">
-                                                <span>{!$Label.IDCard_PortalPage_SubMenu_Button_Change}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+	<c:IDCard_HeaderComponent />
+	<c:Loading />
+	
+	<div id="page_wrapper">
+		<apex:form forceSSL="true" id="idcardForm">
+		<!-- Header -->
+				<div class="HeaderIMG"> 
+					<table width="100%">
+						<tr>
+							<td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+							<td>
+								<div class="select-style">
+								  <apex:actionRegion >
+									 <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+									 <apex:selectOptions value="{!LangItems}" />
+									 <apex:actionSupport event="onchange" onsubmit="refreshLanguageIDCardPortal()" reRender=""></apex:actionSupport>
+									 </apex:selectList>
+								  </apex:actionRegion>
+								</div>
+							</td>
+						 </tr>
+					</table>
+					<h1>{!$Label.IDCard_Landing_Title}</h1>
+				</div>
+				<div class="background">
 
-                            <!--INC183592-->
-                            <tr style="display:{!IF(accountStatusTerminated,'','none')}">
-                                <td align="left" valign="top">
-                                    <div class="CardRequestPanel">
-                                        <apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-request.png')}" style="margin-bottom: 20px" />
-                                        <h1>{!$Label.IDCard_PortalPage_MenuChange}</h1>
-                                        <p>{!$Label.IDCard_PortalPage_SubMenu_Change}</p>
-                                        <div style="position: absolute; bottom: 0px;">
-                                            <a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!replacement}');">
-                                                <span>{!$Label.IDCard_PortalPage_SubMenu_Button_Change}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                  </div>
-            </apex:form>
-    </div>
-        
+					<div style="width:900px; margin:0 auto;">
+						<apex:outputPanel id="popup">
+							<apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!showPopup}">
+								<apex:commandButton value="X" title="Close the popup" action="{!closePopup}" styleClass="closeButton" rerender="Msgs,popup" >
+								</apex:commandButton>
+								<apex:pageBlock >
+									<apex:pageblockSection columns="1">
+										<apex:pageBlockSectionItem dataStyle="display:block;width:800px;">                         
+											<apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false" style="display:block;width:770px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!theAccount.Short_Name__c}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[0]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[1]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center; display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[4]}, {!shippingAddress[2]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem dataStyle="text-align:center;display:block;width:800px;">
+											<apex:outputText value="{!shippingAddress[3]}" label="" style="display:block;width:800px;"/>
+										</apex:pageblockSectionItem>
+										<apex:pageBlockSectionItem >
+											<apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="display:block;width:770px;"/>
+										</apex:pageblockSectionItem>
+									</apex:pageblockSection>
+								</apex:pageBlock>
+								<apex:commandButton value="{!$Label.IDCard_Continue}" action="{!next}" styleClass="closeButton" rerender="popup">
+								</apex:commandButton>
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</div>
+
+					<br />
+					<apex:pageMessage summary="{!errMsg}" rendered="{!HasError}" severity="error" strength="2" />
+					<br />
+					<div style="width: 1000px; margin: 0 auto;">
+						<apex:actionFunction name="openPopupJS" action="{!openPopup}" rerender="Msgs,popup">
+							<apex:param name="p1" value="" assignTo="{!selectedAction}" />
+						</apex:actionFunction>
+						<apex:actionFunction name="next" action="{!next}" rerender="Msgs">
+							<apex:param name="p1" value="" assignTo="{!selectedAction}" />
+						</apex:actionFunction>
+
+						<table cellpadding="20">
+							<tr style="display:{!IF(accountStatusTerminated,'none','')}"> <!--INC183592-->
+								<td align="center" valign="top">
+									<div class="CardRequestPanel" style="display:{!IF(limited,'none','')}">
+										<apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-renew.png')}" style="margin-bottom: 20px" />
+										<h1>{!$Label.IDCard_PortalPage_MenuRenew}</h1>
+										<p>{!$Label.IDCard_PortalPage_SubMenu_Renew}</p>
+										<div style="position: absolute; bottom: 0px;">
+											<a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!renewal}');">
+												<span>{!$Label.IDCard_PortalPage_SubMenu_Button_Renew}</span>
+											</a>
+										</div>
+									</div>
+								</td>
+								<td align="center" valign="top">
+									<div class="CardRequestPanel" style="display:{!IF(limited,'none','')}">
+										<apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-replace.png')}" style="margin-bottom: 20px" />
+										<h1>{!$Label.IDCard_PortalPage_MenuReplace}</h1>
+										<p>{!$Label.IDCard_PortalPage_SubMenu_Replace} </p>
+										<div style="position: absolute; bottom: 0px;">
+											<a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!reissue}');">
+												<span>{!$Label.IDCard_PortalPage_SubMenu_Button_Replace}</span>
+											</a>
+										</div>
+									</div>
+								</td>
+								<td align="center" valign="top">
+									<div class="CardRequestPanel">
+										<apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-request.png')}" style="margin-bottom: 20px" />
+										<h1>{!$Label.IDCard_PortalPage_MenuChange}</h1>
+										<p>{!$Label.IDCard_PortalPage_SubMenu_Change}</p>
+										<div style="position: absolute; bottom: 0px;">
+											<a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!replacement}');">
+												<span>{!$Label.IDCard_PortalPage_SubMenu_Button_Change}</span>
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+
+							<!--INC183592-->
+							<tr style="display:{!IF(accountStatusTerminated,'','none')}">
+								<td align="left" valign="top">
+									<div class="CardRequestPanel">
+										<apex:image url="{!URLFOR($Resource.IDCard_Styles,'img/icon-request.png')}" style="margin-bottom: 20px" />
+										<h1>{!$Label.IDCard_PortalPage_MenuChange}</h1>
+										<p>{!$Label.IDCard_PortalPage_SubMenu_Change}</p>
+										<div style="position: absolute; bottom: 0px;">
+											<a href="#" class="btn-BlueButtonWAR" onclick="getSelectedApplicationType('{!replacement}');">
+												<span>{!$Label.IDCard_PortalPage_SubMenu_Button_Change}</span>
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				  </div>
+			<apex:actionFunction name="callRefresh"  action="{!refresh}" />
+			</apex:form>
+	</div>
+		
   <c:IDCard_footerComponent />
-    
+	
 </body>
+</html>
 </apex:page>

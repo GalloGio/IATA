@@ -28,11 +28,11 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 				String mailSubject = 'AutoAssignmentEngine: Job failed!';
 				String errorMessage = 'CompletedDate: ' + a.CompletedDate + 'Number of Cases processed: ' + a.JobItemsProcessed;
 
-				emailAlert(mailSubject, errorMessage, getUserIds(getSupportEmails()));
+				emailAlert(mailSubject, errorMessage, getSupportEmails());
 			}
 
 		} catch (Exception ex) {
-			emailAlert('Auto Assignment Engine Exception', ex.getMessage() + ' ' + ex.getStackTraceString(), null, getUserIds(getSupportEmails()));
+			emailAlert('Auto Assignment Engine Exception', ex.getMessage() + ' ' + ex.getStackTraceString(), null, getSupportEmails());
 		}
 
 	}
@@ -54,11 +54,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 		} catch (Exception ex)   {
 			String mailSubject = 'AutoAssignmentEngine: No System Settings were found!';
 			String errorMessage = ex.getStackTraceString();
-
-			List<ID> supportUserIDs = new List<ID>();
-
-			supportUserIDs = getUserIds(getSupportEmails());
-			emailAlert(mailSubject, errorMessage, supportUserIDs);
+			emailAlert(mailSubject, errorMessage, getSupportEmails());
 
 		}
 		Auto_Queue__c[] aAutoQueue = [select Queue_ID__c from Auto_Queue__c where Active__c = true and Region__c in : regionList];
@@ -100,9 +96,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 
 			//Need to get the IDs from the internal users to whom we want to send the email notifications
 			List<ID> regionUserIDs =  new List<ID>();
-			List<ID> supportUserIDs = new List<ID>();
-
-			supportUserIDs = getUserIds(getSupportEmails());
+			List<ID> supportUserIDs = getSupportEmails();
 			// ******************************
 			// 1) Calculate Case Skills
 			// ******************************
@@ -129,17 +123,13 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 
 			try { /*23Sept2013:Updated to add try-catch block*/
 				// get region of the case via its assigned Auto_Queue
-				Auto_Queue__c aq = [Select a.Name, a.Region__c, a.Queue_ID__c, a.Id From Auto_Queue__c a where Queue_ID__c = :caseToAssign.OwnerId limit 1];
-				if (aq == null) {
-
-					String errorMessage = 'KO : Cannot retrieve Auto_Queue__c for caseid ' + idCase + ' having OwnerId ' + caseToAssign.OwnerId;
-					emailAlert(mailSubject, errorMessage, supportUserIDs);
-
-					return (errorMessage);
-
+				List<Auto_Queue__c> aq = [Select a.Name, a.Region__c, a.Queue_ID__c, a.Id From Auto_Queue__c a where Queue_ID__c = :caseToAssign.OwnerId limit 1];
+				if (aq.isEmpty()){
+					// The case was manually assigned
+					return null;
 				}
 
-				caseRegion = aq.Region__c;
+				caseRegion = aq[0].Region__c;
 
 				// get the System Settings for the case region
 				System_Settings__c[] syssets = [select Active__c, Workload_Weight__c, Skill_P3_Weighting__c, Skill_P2_Weighting__c, Skill_P1_Weighting__c, Open_Case_Workload_Weighting__c, In_Progress_Case_Workload_Weighting__c, Email_on_Error__c from System_Settings__c where Active__c = true and Region__c = :caseRegion LIMIT 1];
@@ -476,9 +466,8 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 	private static List<String> getSupportEmails() {
 		List<String> supEmails = new List<String>();
 		for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
-			supEmails.add(email.Support_Email__c);
+			supEmails.add(email.Support_User_Id__c);
 
 		return supEmails;
 	}
-
 }

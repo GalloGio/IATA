@@ -269,9 +269,9 @@ public with sharing class PortalCasesCtrl {
 				}
 				if(filtersWrapper.casesComponent.caseCountryFilter != null && filtersWrapper.casesComponent.caseCountryFilter != ''){
 					if(queryConditions == ''){
-						queryConditions = ' WHERE IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
+						queryConditions = ' WHERE Country_concerned_by_the_query__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
 					}else{
-						queryConditions += ' AND IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
+						queryConditions += ' AND Country_concerned_by_the_query__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
 					}
 				}
 				if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
@@ -498,7 +498,7 @@ public with sharing class PortalCasesCtrl {
 		if(record.CNSCase__c) {
 			return new Map<Id, String>{
 				record.Id =>
-				OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_Case?caseId=' + record.Id + '&communityName=CNS')
+				OneIdUtils.getOrgUrl() +  '/ISSP_Case?caseId=' + record.Id + '&communityName=CNS'
 			};
 		}
 
@@ -507,14 +507,14 @@ public with sharing class PortalCasesCtrl {
 			if(record.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
 				return new Map<Id, String>{
 					record.Id =>
-					OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_TIP_Home?caseId=' + record.Id)
+					OneIdUtils.getOrgUrl() +  '/ISSP_TIP_Home?caseId=' + record.Id
 				};
 			}
 
 			if(record.Reason1__c == TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT) {
 				return new Map<Id, String>{
 					record.Id =>
-					OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_TIP_Home?prodId=' + record.TIP_Partner_Product__c)
+					OneIdUtils.getOrgUrl() +  '/ISSP_TIP_Home?prodId=' + record.TIP_Partner_Product__c
 				};
 			}
 		}
@@ -524,53 +524,60 @@ public with sharing class PortalCasesCtrl {
 			if(openIFAPStatuses.contains(record.Status.toLowerCase()) && myUser.Contact.Financial_Assessment_Contact__c) {
 				return new Map<Id, String>{
 					record.Id =>
-					OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_IFAPCases?id=' + record.Id)
+					OneIdUtils.getOrgUrl() +  '/ISSP_IFAPCases?id=' + record.Id
 				};
 			}
 		} else if(record.RecordType.Name == 'OSCAR Communication') {
 			if(!agencyRightList.isEmpty()) {
-				if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == 'Draft' || record.Status == 'Open - EDMC') ) {
+				if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == TIP_Utils.CASE_STATUS_DRAFT || record.Status == 'Open - EDMC') ) {
 					if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
 						return new Map<Id, String>{
 							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_PCI?caseId=' + record.Id)
+							OneIdUtils.getOrgUrl() +  '/ISSP_ANG_PCI?caseId=' + record.Id
 						};
 					} else if(record.Reason1__c.startsWith('New')) {
-						return new Map<Id, String>{
-							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2')
-						};
+						if (record.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && record.Status == TIP_Utils.CASE_STATUS_DRAFT) {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() + '/ISSP_AMSCases'
+							};
+						} else {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2'
+							};
+						}
 					} else if(record.Reason1__c == 'CLO – Closure') {
 						return new Map<Id, String>{
 							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_VoluntaryRelinquishment?caseId=' + record.Id + '&step=1')
+							OneIdUtils.getOrgUrl() +  '/ISSP_ANG_VoluntaryRelinquishment?caseId=' + record.Id + '&step=1'
 						};
 					} else if(record.Reason1__c == 'Bank Detail Update') {
 						return new Map<Id, String>{
 							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=true&step=2')
+							OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=true&step=2'
 						};
 					} else {
 						return new Map<Id, String>{
 							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2')
+							OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2'
 						};
 					}
 				} else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && record.Owner.Name.startsWith('NewGen PCI'))
 					|| ((record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT))) {
 					return new Map<Id, String>{
 						record.Id =>
-						OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_PCI?caseId=' + record.Id)
+						OneIdUtils.getOrgUrl() +  '/ISSP_ANG_PCI?caseId=' + record.Id
 					};
 				} else if(record.Reason1__c == 'Annual revalidation' && record.Owner.Name.startsWith('Annual Revalidation')) {
 					return new Map<Id, String>{
 						record.Id =>
-						OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id)
+						OneIdUtils.getOrgUrl() +  '/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id
 					};
 				} else if (record.Owner.Name.startsWith('Model A Onboarding')) {
 					return new Map<Id, String>{
 						record.Id =>
-						OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ModelA_Onboarding?caseId=' + record.Id)
+						OneIdUtils.getOrgUrl() +  '/ISSP_ModelA_Onboarding?caseId=' + record.Id
 					};
 				}
 			} else {
@@ -583,17 +590,17 @@ public with sharing class PortalCasesCtrl {
 
 		/* If case is a SIS Joining Form */
 		if(record.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process') {
-			if(record.Status == 'Draft' && record.Classification_SIS__c == 'SIS Membership' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
+			if(record.Status == TIP_Utils.CASE_STATUS_DRAFT && record.Classification_SIS__c == 'SIS Membership' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
 				return new Map<Id, String>{
 					record.Id =>
-					OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2')
+					OneIdUtils.getOrgUrl() +  '/ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2'
 				};
-			} else if((record.Status == 'Draft' || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') &&
+			} else if((record.Status == TIP_Utils.CASE_STATUS_DRAFT || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') &&
 					apListForm != null && apListForm.contains(record.Id) &&
 					airlineRightList != null && !airlineRightList.isEmpty()) {
 						return new Map<Id, String>{
 							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_APProcess2?caseId=' + record.Id + '&step=2')
+							OneIdUtils.getOrgUrl() +  '/ISSP_APProcess2?caseId=' + record.Id + '&step=2'
 						};
 			}
 		}
@@ -602,7 +609,7 @@ public with sharing class PortalCasesCtrl {
 		if(record.Origin == 'Portal' && recordTypesSet.contains(record.RecordType.Name)) {
 			return new Map<Id, String>{
 				record.Id =>
-				OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ICCS_Service?caseId=' + record.Id)
+				OneIdUtils.getOrgUrl() +  '/ISSP_ICCS_Service?caseId=' + record.Id
 			};
 		}
 
@@ -663,9 +670,10 @@ public with sharing class PortalCasesCtrl {
 						Remittance_Date__c, CurrencyIsoCode, Update_AIMS_IRR__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c,ClosedDate,
 						CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
 						Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c,
-						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
+						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,Has_the_agent_paid_invoice__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
-						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName
+						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName,
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c
 						FROM Case 
 						WHERE Id = :caseId];
 
@@ -676,25 +684,25 @@ public with sharing class PortalCasesCtrl {
 	}
 
 	/**
-	Returns true if the input case has an specific RecordType
-	and is closed for more than 2 weeks
-	**/
+	 * Returns true if the input case has an specific RecordType
+	 * and is closed for more than 2 weeks
+	 **/
 	
 	@AuraEnabled
 	public static Boolean getHideForClosedCases(String caseId) {
-		set<String> validRecordtypes = new set<String>{'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 
-		'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs'};
+		set<String> validRecordtypes = new set<String> {
+			'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
+			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE'
+		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
-
-		List<Case> cases = 
-		[SELECT Id,RecordType.Id 
-		FROM Case 
-		WHERE 
-		RecordType.Id = :newCase.RecordType.Id
-		AND (RecordType.DeveloperName IN :validRecordtypes)];
 		
-		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO );
+		List<Case> cases = [SELECT Id, RecordType.Id
+							FROM Case
+							WHERE RecordType.Id = :newCase.RecordType.Id
+								AND (RecordType.DeveloperName IN :validRecordtypes)];
+		
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO);
 	}
 
 	private Static boolean isMSOcase(Case newCase){

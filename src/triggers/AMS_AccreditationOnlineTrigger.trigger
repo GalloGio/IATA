@@ -11,5 +11,6 @@ trigger AMS_AccreditationOnlineTrigger on AMS_Pax_Accreditation_Form__c (before 
 			AMS_AccreditationOnlineTriggerHelper.prepopulateAbbreviatedFields(ac, trigger.oldMap.get(ac.id));
 
 		AMS_AccreditationOnlineTriggerHelper.runPopulateStates(trigger.new, trigger.oldMap);
+		AMS_AccreditationOnlineTriggerHelper.updateAddressAccordingToLookup(trigger.new, trigger.oldMap);
 	}
 }

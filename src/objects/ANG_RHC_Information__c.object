@@ -183,46 +183,6 @@
         </displayedFields>
         <label>Display On Currency</label>
     </fieldSets>
-    <fieldSets>
-        <fullName>Request_Provisional</fullName>
-        <description>ANG_RequestProvisionalRHCPage</description>
-        <displayedFields>
-            <field>ANG_AccountId__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_IATA_Code__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_RHC_Amount_Provisional__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_Provisional_RHC_Last_Update__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_RHC_Amount_Forecasted__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_Forecasted_RHC_Effective_date__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_Minimum_Financial_Security__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Request Provisional</label>
-    </fieldSets>
     <fields>
         <fullName>ANG_AccountId__c</fullName>
         <description>Holds the id of the account to wich the RHC record is related.</description>
@@ -345,7 +305,7 @@
         <externalId>false</externalId>
         <label>Forecasted RHC Effective date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -448,7 +408,7 @@
         <externalId>false</externalId>
         <label>RHC Amount Effective Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -658,49 +618,6 @@ alert(result[0].description);
 }</url>
     </webLinks>
     <webLinks>
-        <fullName>Request_Provisional</fullName>
-        <availability>online</availability>
-        <description>Request Provisional RHC</description>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Request RHC calculation</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/apex.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/support/console/43.0/integration.js&quot;)} 
-
-
-try{
-    var result = sforce.connection.query(&quot;Select Id, ANG_AccountId__c From ANG_RHC_Information__c Where Id = &apos;{!ANG_RHC_Information__c.Id}&apos;&quot;);
-
-    var records = result.getArray(&quot;records&quot;);
-    var rhc;
-
-    if (records.length &gt; 0)
-        rhc = records[0];
-                else
-                    throw &apos;RHC record not found&apos;;
-                                
-    if (sforce.console.isInConsole()) {
-    
-        sforce.console.getEnclosingPrimaryTabId(openPrimarytab);   
-
-        function openPrimarytab(result) {
-            var primaryTabId = result.id;
-			sforce.console.openSubtab(primaryTabId , &apos;/apex/ANG_RequestProvisionalRHC?id={!ANG_RHC_Information__c.Id}&apos;, true, &apos;Request Provisional RHC&apos;, null);
-        };
-                                
-    } else {
-       window.open(&apos;/apex/ANG_RequestProvisionalRHC?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=600&apos;);
-    }
-                                                                
-                
-} catch (err) {
-    alert(err);
-}</url>
-    </webLinks>
-    <webLinks>
         <fullName>Request_RHC_Calculation</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
@@ -713,7 +630,7 @@ try{
 
 var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
 
-var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId, flagUpdateProvisioning: false}); 
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId}); 
 
 console.info(result[0]);
 

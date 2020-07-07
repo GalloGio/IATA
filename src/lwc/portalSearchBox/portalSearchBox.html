@@ -1,0 +1,12 @@
+<template>
+    <div class="slds-grid slds-media_center slds-p-horizontal_small aroundLightGrayBorder borderlessInput  text-xsmall searchBoxContainer customLightShadow background-white ">
+        <img src={searchIconUrl}>
+        <lightning-input name="newRecipientTextInput" placeholder={label.CSP_SearchFAQ}
+            class="hideInputLabel grayInputPlaceholder"
+            value={searchText} onchange={onInputChange}>
+        </lightning-input>
+        <div if:true={showCross}  class="searchBarIcon slds-m-right--large">
+            <lightning-icon class="cursorPointer rotateIcon45Deg" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+        </div>
+    </div>
+</template>

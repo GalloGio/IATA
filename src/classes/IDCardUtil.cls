@@ -697,9 +697,12 @@ global with sharing class IDCardUtil {
 					update idCardApp;
 
 					// update ID Card
-					ID_Card__c idCard = [Select Photo__c, Id From ID_Card__c where ID_Card_Application__c = : idCardApp.Id limit 1];
-					idCard.Photo__c = newFilename;
-					update idCard;
+					List<ID_Card__c> idCards = [Select Photo__c, Id From ID_Card__c where ID_Card_Application__c = : idCardApp.Id];
+					if(!idCards.isEmpty()){
+						ID_Card__c idCard = idCards[0];
+						idCard.Photo__c = newFilename;
+						update idCard;
+					}
 				} else {
 					throw new IDCardApplicationException('Error renaming the photo file on Amazon S3');
 				}
@@ -882,6 +885,8 @@ global with sharing class IDCardUtil {
 			idCard.MustSyncWithAIMS__c = true;
 			idCard.Sent_to_AIMS_on__c = null;
 			idCard.Received_From_AIMS__c = null;
+			idCard.Cancellation_Date__c = null;
+			idCard.GDP_Products_Account_View__c = null;
 
 			if (IdCardAIMSrt == null)
 				IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
@@ -889,8 +894,9 @@ global with sharing class IDCardUtil {
 
 			//Get Start and End date and put them on the new idcard
 			idCardStartEndDate StartEndDate = getIdCardStartEndDate(theAccount, objApp, theContact);
+			if (objApp.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW)
+				idCard.Valid_From_Date__c = Date.today();
 			idCard.Valid_To_Date__c = StartEndDate.EndDate;
-			idCard.Valid_From_Date__c = StartEndDate.StartDate;
 
 			if (theAccount.ID_Card_Corporate_Validation_Date__c != null)
 				idCard.Valid_To_Date__c = theAccount.ID_Card_Corporate_Validation_Date__c;
@@ -909,13 +915,14 @@ global with sharing class IDCardUtil {
 			ID_Card__c lastIdCard;
 			if (theContact != null) {
 				idCard.Related_Contact__c = theContact.Id;
-				lastIdCard = LastIdCardForGivenContact(theContact);
+				List<ID_Card__c> card = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c
+										 FROM ID_Card__c WHERE Related_Contact__c = :theContact.id
+										 ORDER BY Name DESC NULLS LAST LIMIT 1];
+				if(!card.isEmpty()) lastIdCard = card[0];
 			}
 
 			if(lastIdCard != null) {
 				idCard.Id = lastIdCard.Id;
-				if(lastIdCard.Valid_To_Date__c < Date.today())
-					idCard.Valid_From_Date__c = lastIdCard.Valid_From_Date__c;
 			}
 
 			system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] return ' + idcard);
@@ -997,7 +1004,7 @@ global with sharing class IDCardUtil {
 		string appType = objApp.Type_of_application__c;
 		date dStartDate, dEndDate = null;
 		date dToday = system.Today();
-		date LastDayOfCurrentMonth = Date.newInstance(dToday.year(), dToday.month(), Date.daysInMonth(dToday.year(), dToday.month()));
+
 		if (appType == 'New' || appType == 'Replacement') {
 			dStartDate = dToday;//LastDayOfCurrentMonth - INC184819
 			dEndDate = dateReturn.EndDateCheckAccnt(Accnt, dStartDate, dToday, null);

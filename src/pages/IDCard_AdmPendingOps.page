@@ -18,7 +18,7 @@
            .pendingApplicationTable td, .pendingApplicationTable th {padding:0.5em;}
        </style>
        <div id="page_wrapper">
-           <div class="HeaderIMGSmall"> 
+           <div class="HeaderIMGSmall" style="width:1420px"> 
                <apex:form forceSSL="true" id="formSF">
                <table width="80%">
                    <tr>
@@ -47,10 +47,10 @@
                      <td><c:IDCard_logoutComponent /></td>
                     </tr>
                </table>
-               </apex:form>
+               </apex:form>	
                <h1>{!$Label.IDCard_Landing_Title}</h1>
            </div>
-           <div class="background" style="min-height:600px;background-color:#C9E5FF">
+           <div class="background" style="width:1460px;min-height:600px;background-color:#C9E5FF">
           		<div class="tabs">
 				    <ul class="tab-links" style="margin-bottom:0px;">
 				        <li ><a href="{! pagesurl['prefix']}/IDCard_AdmUserList"  >
@@ -74,6 +74,7 @@
 		                                      <th>{!$Label.IDCard_ka_agency}</th>
 		                                      <th>{!$Label.IDCard_ka_Nature}</th>
 		                                      <th>{!$Label.IDCard_ka_Amount}</th>
+		                                      <th>{!$Label.IDCard_Discount}</th>
 		                                      <th>{!$Label.IDCard_ka_date_Request}</th>
 											  <th > <input type="checkbox" id="allDigital"  onchange="allDigitalApp();" />All digital</th>
 		                                      <th > <input type="checkbox" class="selectAll" name="checkAll"  onclick="checkAllApp();" />Approve all </th>
@@ -97,15 +98,20 @@
 		                                          <td><apex:outputField value="{!application.Type_of_application__c}" /></td>
 		                                          <td>
 												  <apex:outputPanel id="appFee">
-												  <apex:outputField value="{!application.Applicable_Fee__c}" />
-		                                          </apex:outputPanel></td> 
+												  	<apex:outputField value="{!application.Applicable_Fee__c}" />
+												  </apex:outputPanel></td> 
+												  <td>
+												  <apex:outputPanel id="appDiscount">
+													<apex:outputField value="{!application.ID_Card_Fee_Discount__c}" />
+												  </apex:outputPanel>
+												  </td>
 		                                          <td><apex:outputField value="{!application.CreatedDate}" /></td>
 												  <td>
 												  	<p style="display:{!IF(isNotDigitalOnly[application.Id],'block','none')}">
 													<apex:actionRegion >
 												  	<apex:selectList id="cardTypeSelect" size="1" value="{!application.Card_Type__c}" styleClass="cardTypeSelect">
                                             			<apex:selectOptions value="{!cardTypeList}"/>
-                                                			<apex:actionSupport event="onchange"  status="Loading"  action="{!calculateAllPrices}"  reRender="appFee, pageHeader"/>
+                                                			<apex:actionSupport event="onchange"  status="Loading"  action="{!calculateAllPrices}"  reRender="appFee, pageHeader, appDiscount"/>
                                         				</apex:selectList>
 													</apex:actionRegion >
                                                     </p>
@@ -125,17 +131,31 @@
 		                                      </tr>
 		                                  </apex:repeat>
 		                              </tbody>
-		                          </table> 
-		                          
+		                          </table> 	
 		                    </div>
 		                    <div  style="padding: 10px;border-left:solid 1px  gray;float:right;width:15%;">
 		                        <apex:outputPanel id="pageHeader">
-		                             
-									 <p><b>{!$Label.IDCard_Fee}:</b>  {!appsCurrency} {!idCardFee}</p>
-		                             <p><b>{!$Label.IDCard_FeesPhysical}:</b>  {!appsCurrency} {!deliveryPrice}</p>
-									 <p><b>{!$Label.ID_Card_Training_Fee}:</b>  {!appsCurrency} {!coursesFee}</p>
-									 <p><b>{!$Label.ID_Card_Taxes}:</b>  {!appsCurrency} {!vatPrice}</p>
-									 <p><b>{!$Label.Total_Cost}:</b>  {!appsCurrency} {!tPrice}</p>
+									 <p><b>{!$Label.IDCard_PromotionCode}: </b>  <apex:inputField id="txtPromotionCode" value="{!promotion.Promotion_Code__c}" style="width:6em" onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
+										<apex:actionSupport event="onblur" action="{!calculateAllPrices}" reRender="appDiscount, pageHeader"  status="saveStatus"/>
+									 </apex:inputField></p>								
+									 <p><b>{!$Label.IDCard_Fee}:</b>  {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
+																						<apex:param value="{!IF(OR(ISNULL(idCardFee),ISBLANK(idCardFee)), 0, idCardFee)}" />
+																					</apex:outputText></p>
+		                             <p><b>{!$Label.IDCard_FeesPhysical}:</b>  {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
+																									<apex:param value="{!IF(OR(ISNULL(deliveryPrice),ISBLANK(deliveryPrice)), 0, deliveryPrice)}" />
+																								</apex:outputText></p>
+									 <p><b>{!$Label.ID_Card_Training_Fee}:</b>  {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
+																									<apex:param value="{!IF(OR(ISNULL(coursesFee),ISBLANK(coursesFee)), 0, coursesFee)}" />
+																								</apex:outputText></p>
+									 <p><b>{!$Label.ID_Card_Taxes}:</b>  {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
+																							<apex:param value="{!IF(OR(ISNULL(vatPrice),ISBLANK(vatPrice)), 0, vatPrice)}" />
+																						</apex:outputText></p>
+									 <p><b>{!$Label.Total_Discount}:</b> {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
+																							<apex:param value="{!IF(OR(ISNULL(discountFee),ISBLANK(discountFee)), 0, discountFee)}" />
+																						</apex:outputText></p>													
+									 <p><b>{!$Label.Total_Cost}:</b>  {!appsCurrency} <apex:outputText value="{0, number, ###,##0.00}">
+																							<apex:param value="{!IF(OR(ISNULL(tPrice),ISBLANK(tPrice)), 0, tPrice)}" />
+																						</apex:outputText></p>
 		                             <p><b>{!$Label.IDCard_rejected}:</b>  {!rejectedSize}</p>
 									 
 		                            
@@ -158,20 +178,20 @@
 		                        </apex:outputPanel>
 		                    </div>
                           <div style="clear:both" class="clear"></div>    
-		                     <apex:actionFunction status="Loading" action="{!validationApplication}" name="validationApplication" rerender="pageHeader">
+		                     <apex:actionFunction status="Loading" action="{!validationApplication}" name="validationApplication" rerender="pageHeader, appDiscount">
 		                        <apex:param name="id" value=""/>
 		                    </apex:actionFunction>
-		                      <apex:actionFunction status="Loading" action="{!unvalidationApplication}" name="unvalidationApplication" rerender="pageHeader" >
+		                      <apex:actionFunction status="Loading" action="{!unvalidationApplication}" name="unvalidationApplication" rerender="pageHeader, appDiscount" >
 		                        <apex:param name="id" value=""/>
 		                    </apex:actionFunction>
-		                    <apex:actionFunction status="Loading" action="{!doNotProcessApplication}" name="doNotProcessApplication" rerender="pageHeader"  >
+		                    <apex:actionFunction status="Loading" action="{!doNotProcessApplication}" name="doNotProcessApplication" rerender="pageHeader, appDiscount"  >
 		                        <apex:param name="id" value=""/>
 		                    </apex:actionFunction>
-		                    <apex:actionFunction status="Loading"  action="{!validateAllApplication}" name="validateAllApplication" rerender="pageHeader"  >
+		                    <apex:actionFunction status="Loading"  action="{!validateAllApplication}" name="validateAllApplication" rerender="pageHeader, appDiscount"  >
 		                    </apex:actionFunction>
-							<apex:actionFunction status="Loading"  action="{!calculateAllPrices}" name="calculateAllPrices" rerender="appFee, pageHeader"  >
+							<apex:actionFunction status="Loading"  action="{!calculateAllPrices}" name="calculateAllPrices" rerender="appFee, pageHeader, appDiscount"  >
 		                    </apex:actionFunction>
-    						<apex:actionFunction status="Loading"  action="{!processAllDigital}" name="processAllDigital" rerender="appFee, pageHeader"  >
+    						<apex:actionFunction status="Loading"  action="{!processAllDigital}" name="processAllDigital" rerender="appFee, pageHeader, appDiscount"  >
 		                    </apex:actionFunction>
 		               </apex:form>
 		            </div>
@@ -189,22 +209,18 @@
               </form>
                <script>
                 function checkAllApp(){
-		         
-		            /*jQuery.each( arr, function( i, val ) {
-		            	if(val!=='')
-		                	$("#b_"+val+"_0").checked = true;
-					});*/
+
 					var b =  $(".selectAll")[0].checked;
 					
-						var allRows = $("#pendingApplicationTable").DataTable().column(6).nodes();
+						var allRows = $("#pendingApplicationTable").DataTable().column(7).nodes();
 						 $.each($(allRows).find(".radioClass"),function(){
 	                    		this.checked = b;
 	                    		});
-	                    allRows = $("#pendingApplicationTable").DataTable().column(7).nodes();
+	                    allRows = $("#pendingApplicationTable").DataTable().column(8).nodes();
 						 $.each($(allRows).find("input"),function(){
 	                    		this.checked = false;
                    		});
-                   		allRows = $("#pendingApplicationTable").DataTable().column(8).nodes();
+                   		allRows = $("#pendingApplicationTable").DataTable().column(9).nodes();
 						 $.each($(allRows).find(".radiodoNothingClass"),function(){
 	                    		this.checked = !b;
                    		});
@@ -215,7 +231,7 @@
 			   function allDigitalApp(){
 		         
 					var checkBox = document.getElementById('allDigital');
-        			var allRows = $("#pendingApplicationTable").DataTable().column(5).nodes();
+        			var allRows = $("#pendingApplicationTable").DataTable().column(6).nodes();
 					if (checkBox.checked){
 						$.each($(allRows).find(".cardTypeSelect"),function(){
 	                    	this.value = 'digital';

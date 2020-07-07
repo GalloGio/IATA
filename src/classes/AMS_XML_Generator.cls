@@ -148,6 +148,7 @@ public with sharing class AMS_XML_Generator {
 
 	//Get XML for Agency SalesOrder to send to AW WS
 	public String getAgencySalesOrder(List<Agency_Applied_Change_code__c> agencies){
+		Set<String> gdiOrGdnChangeCode = new Set<String>{AMS_Utils.GDI_CHANGE_CODE, AMS_Utils.GDN_CHANGE_CODE};
 
 		//Begin of XML tags
 		Dom.Document doc = new Dom.Document();
@@ -165,24 +166,50 @@ public with sharing class AMS_XML_Generator {
 		Datetime dtFirstDayOfMonth = datetime.newInstance(dFirstDayOfMonth.year(), dFirstDayOfMonth.month(),dFirstDayOfMonth.day());
 		Datetime dtLastDayOfMonth = datetime.newInstance(dLastDayOfMonth.year(), dLastDayOfMonth.month(),dLastDayOfMonth.day());
 
-		/*NEWGEN-3267 START - Discarded from Release 6 NEWGEN
+		/*NEWGEN-3267 START*/
+
 		Map<Id,Id> changeCodeOscarMap = new Map<Id,Id>();
 		Map<Id,String> changeCodeCaseNumber = new Map<Id,String>();
+		Set<Id> setOscarID = new Set<ID>();
 
 		for(Agency_Applied_Change_code__c aacc: agencies){
+
 			if(aacc.OSCAR__c <> null && aacc.OSCAR__r.Oscar_Communication_Case_Id__c <> null){
 				changeCodeCaseNumber.put(aacc.Id,aacc.OSCAR__r.Oscar_Communication_Case_Id__c);
 			}
-			else if(aacc.OSCAR__c <> null)
+			else if(aacc.OSCAR__c <> null) {
 				changeCodeOscarMap.put(aacc.OSCAR__c,aacc.Id);
+			}
+
+			if(gdiOrGdnChangeCode.contains(aacc.Change_Code__c)){
+				setOscarID.add(aacc.OSCAR__c);
+			}
+
 		}
 
-
-		for(Case c: [Select Id, CaseNumber from Case where RecordTypeId = :AMS_Utils.OSCAR_COMUNICATION and OSCAR__c in: changeCodeOscarMap.Values() and ( ParentId = null or Parent.RecordTypeId != :AMS_Utils.OSCAR_COMUNICATION)]){
-			changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.Id);
+		for (Case c : [SELECT Id, OSCAR__c
+					   FROM Case
+					   WHERE RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
+						   AND OSCAR__c IN :changeCodeOscarMap.keySet()
+						   AND (ParentId = null
+								OR Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]) {
+			changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c), c.Id);
 		}
-		NEWGEN-3267 END*/
 
+		/*NEWGEN-3267 END*/
+
+		/* NEWGEN-5164 START*/
+
+		//Load opportunities related to the oscars with GDI / GDN change codes 
+		Map<Id,Opportunity> oppForGDIorGDN = new Map<Id,Opportunity>();
+		if(!setOscarID.isEmpty()){
+			for(Opportunity opp : [SELECT GDI_Offer_Id__c, Offer_exchange_rate_date__c, Related_Oscar__c
+									FROM Opportunity WHERE Related_Oscar__c in :setOscarID ]) {
+				oppForGDIorGDN.put(opp.Related_Oscar__c, opp);
+			}
+		}
+
+		/* NEWGEN-5164 END */
 
 		//for(Account ag : agencies){
 		for(Agency_Applied_Change_code__c ag : agencies){
@@ -194,19 +221,46 @@ public with sharing class AMS_XML_Generator {
 			//Changed on AMSU-97
 			//getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
 			//getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
+
 			getElementNode(liNode, 'period_from', dtFirstDayOfMonth.format('yyyyMMdd'));
 			getElementNode(liNode, 'period_to', dtLastDayOfMonth.format('yyyyMMdd'));
 
-			getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c);
+			getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c); 
 			getElementNode(liNode, 'quantity', '1');
 
-			/*NEWGEN-3267 START - Discarded from Release 6 NEWGEN
-			if(changeCodeCaseNumber.get(ag.Id) <> null)
-				getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
-			NEWGEN-3267 END*/
+			/* NEWGEN-5164 START*/
+			Boolean isGDIorGDN  = gdiOrGdnChangeCode.contains(ag.Change_Code__c);
+			Opportunity curOpp  = oppForGDIorGDN.get(ag.OSCAR__c);
+			String caseId       = changeCodeCaseNumber.get(ag.Id);
+
+			//If it's a GDI/GDN change code and have an opportunity for the specific oscar
+			if(isGDIorGDN && curOpp != null){
+
+				if(caseId != null){
+					getElementNode(liNode, 'CaseId', caseId);
+				}
+
+				Date offerDate = curOpp.Offer_exchange_rate_date__c;
+
+				if(offerDate != null){
+					Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
+					getElementNode(liNode, 'offerDate', dtOfferDate.format('yyyyMMdd'));
+				}
+
+				if(curOpp.GDI_Offer_Id__c != null){
+					getElementNode(liNode, 'offerId', curOpp.GDI_Offer_Id__c);
+				}
+
+			}
+			//Otherwise only send the case id if the account is new gen
+			else if(!isGDIorGDN && ag.Account__r.ANG_IsNewGenAgency__c && caseId != null){
+				getElementNode(liNode, 'CaseId', caseId);
+			}
+			/* NEWGEN-5164 END */
+
 		}
 
-		system.debug('--------- doc: ' + doc.toXmlString());
+		System.debug(LoggingLevel.DEBUG, '____ [cls AMS_XML_Generator - getAgencySalesOrder] doc - ' + doc.toXmlString());
 		return doc.toXmlString();
 
 	}
@@ -504,7 +558,7 @@ public with sharing class AMS_XML_Generator {
 					RecordTypeId,RecordType.Name,
 					STD_Code__c,VAT_Number__c,
 					TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-					Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c
+					Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,IMPC_Code__c
 					FROM Account WHERE Id in :setOwnershipKeys];
 
 		for (Account o : lOwner) {
@@ -588,7 +642,7 @@ public with sharing class AMS_XML_Generator {
 		lAgRelationshipHierarchy = [SELECT Id,AIMS_ID__c,
 					CASS_Number__c,Check_Digit__c,IATACode__c,
 					C_Code__c,ParentId,Parent.AIMS_ID__c,
-					IATA_Area__c,Sector__c
+					IATA_Area__c,Sector__c, Location_Class__c, IMPC_Code__c
 					FROM Account where id in :setAgRelationshipKeys];
 
 		//REFERENCE
@@ -692,7 +746,7 @@ public with sharing class AMS_XML_Generator {
 					RecordTypeId,RecordType.Name,
 					STD_Code__c,VAT_Number__c,
 					TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-					Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c FROM Account WHERE Id in :setAccountKeys];
+					Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c,IMPC_Code__c  FROM Account WHERE Id in :setAccountKeys];
 
 		for (Account o : lAccount) {
 			//20-06-2017 - Change AMSU-93 - special chars replacement
@@ -848,17 +902,21 @@ public with sharing class AMS_XML_Generator {
 
 		SET<Id> setAgencyPaxKeys = new SET<Id>();
 		SET<Id> setAgencyCargoKeys = new SET<Id>();
+		SET<Id> setAgencyCargoPassKeys = new SET<Id>();
 		for (Account ag : agency) {
 			if( ag.Sector__c.equalsIgnoreCase('Travel Agent') ){
 				setAgencyPaxKeys.add(ag.Id);
-			}else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') ){
+			}else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') && ag.Location_Class__c!='L'){
 				setAgencyCargoKeys.add(ag.Id);
+			}else if(ag.Sector__c.equalsIgnoreCase('Postal Service') && ag.Location_Class__c=='L'){
+				setAgencyCargoPassKeys.add(ag.Id);
 			}
 		}
 
 		List<AggregateResult> agBspDpc = new List<AggregateResult>();
 		List<AggregateResult> agBspDpcPax = new List<AggregateResult>();
 		List<AggregateResult> agBspDpcCargo = new List<AggregateResult>();
+		List<AggregateResult> agBspDpcCargoPass = new List<AggregateResult>();
 
 		agBspDpcPax = [SELECT id Account__c,IATA_ISO_Country__r.name,
 											IATA_ISO_Country__r.AMS_Settlement_System__r.name bsp,
@@ -876,9 +934,17 @@ public with sharing class AMS_XML_Generator {
 											IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name,
 											IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c];
 
+		agBspDpcCargoPass = [SELECT id Account__c, IATA_ISO_Country__r.name,
+											IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.name bsp,
+											IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.DPC_System__c dpc
+											FROM Account where id in :setAgencyCargoPassKeys
+											group by id, IATA_ISO_Country__r.name,
+											IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.name,
+											IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.DPC_System__c];
 
 		agBspDpc.addAll(agBspDpcPax);
 		agBspDpc.addAll(agBspDpcCargo);
+		agBspDpc.addAll(agBspDpcCargoPass);
 
 
 		String auxBSP = '';
@@ -1609,6 +1675,11 @@ public with sharing class AMS_XML_Generator {
 		getElementNode(agencyNode, 'area', mAg_VS_AgArea.get(agency.Id));
 		getElementNode(agencyNode, 'ams_id', agency.Id);
 
+		//PASS
+		if(agency.Location_Class__c == 'L'){
+			getElementNode(agencyNode, 'impc_code', agency.IMPC_Code__c);
+		}
+
 		if(!redux){
 			//Sprint 10: removed condition for Inserting "agref" and "agxref", Now they are always inserted
 			//Sprint 7: Inserting "agref" and "agxref" for Agencies with Legacy "AIMS", for now we use the legacy ID
@@ -1691,7 +1762,11 @@ public with sharing class AMS_XML_Generator {
 				}
 			}
 
-			getElementNode(agencyNode, 'pas_cgo', sPasCargo);
+			if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASS) && agency.Location_Class__c=='L'){
+				getElementNode(agencyNode, 'pas_cgo', 'L');
+			}else{
+				getElementNode(agencyNode, 'pas_cgo', sPasCargo);
+			}
 
 			getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Company_Type__c', 'co_type', agency.Company_Type__c);
 

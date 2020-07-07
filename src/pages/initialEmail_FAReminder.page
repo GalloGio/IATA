@@ -3,12 +3,18 @@
 
     <script>
 
+        const MULTICOUNTRY_FINANCIAL_REVIEW_TYPES = [
+            'Multicountry Annual',
+            'Multicountry Quarterly',
+            'Multicountry Adhoc'
+        ];
+
         function isFinancialReviewTypeAllowed(){
 
             var financialReviewType = "{!Case.Financial_Review_Type__c}";
 
-            if(financialReviewType == 'Multicountry Annual'){
-                alert('Error: It is not possible to notify the agent since the Financial Review Type is Multicountry Annual');
+            if(MULTICOUNTRY_FINANCIAL_REVIEW_TYPES.includes(financialReviewType)){
+                alert('Error: It is not possible to notify the agent since the Financial Review Type is ' + financialReviewType);
                 return false;
             }
 

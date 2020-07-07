@@ -1,4 +1,4 @@
-<aura:component controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard_List">
+<aura:component controller="PowerBI_Embedded_Dashboard_CTRL" description="PowerBI_Embedded_Dashboard_List" access="public">
 
     <aura:attribute name="category" type="Object" />
     <aura:attribute name="selectedDashboard" type="Object" />

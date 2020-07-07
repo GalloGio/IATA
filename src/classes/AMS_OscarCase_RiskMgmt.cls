@@ -9,6 +9,10 @@ At the same time, bulletin memo text (sometimes dinamically calculated) will be 
 **************************************/
 
 public class AMS_OscarCase_RiskMgmt {
+
+	private static final String NOT_CHANGE_CODE_LOG_TEXT = 'NOT change code';
+	private static final String NFS_CHANGE_CODE_LOG_TEXT = 'NFS change code';
+	
 	//Check that trigger is not already running on change codes.
 	private static Boolean run = true;
 	public static Boolean runOnce(){
@@ -65,19 +69,23 @@ public class AMS_OscarCase_RiskMgmt {
 			List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
 		Boolean generateNOTnotification = true;
 
+			Set<String> caseFieldsToQuery = new Set<String>{'Id', 'recordType.DeveloperName', 'DEF_Withdrawal_Approval_Rejection__c', 'Short_Payment_Date__c', 'DEF_Withdrawal_Reason__c', 'DEF_Approval_Rejection__c', 'End_of_Grace_Period_Date__c',
+			'Shut_Down_TKT_System_GDS_and_BSPlink__c', 'IRR_Approval_Rejection__c', 'IRR_Withdrawal_Approval_Rejection__c', 'IRR_Withdrawal_Reason__c', 'NOT_Date__c', 'NOT_Sent__c', 'NOT_Approval__c', 'Notify_Agreement_Approval_to_AG__c',
+			'Reason_for_Default__c', 'REI_ApprovalRejectin__c', 'Repayment_Schedule_Approval__c', 'SIDRA_Lite_Reason__c', 'TER_Approval_Rejection__c', 'Current_Outstanding_Amount_USD__c', 'Type_of_REI_WD__c', 'Termination_Reason__c',
+			'Ticketing_Authority_Re_assigned__c', 'Update_AIMS_DEF__c', 'Update_AIMS_IRR__c', 'Update_AIMS_IRRWITH__c', 'Update_AIMS_REI_DEFWITH__c', 'Update_AIMS_Repayment_agreed__c', 'Update_AIMS_TER__c', 'Parent.OSCAR__r.Type_of_change__c',
+			'Parent.OSCAR__c', 'Parent.Status', 'IRR_Approval_Rejection_Date__c', 'IRR_Type__c', 'Termination_date__c', 'Outstanding_Amount__c', 'Reason_of_REI_WD__c', 'External_ID__c', 'ParentId', 'Parent.RecordtypeId', 'Parent.AccountId',
+			'CaseArea__c', 'Reason1__c', 'Account.Location_Class__c', 'AccountId', 'Account.Status__c', 'Account.PreviousStatus__c', 'Account.Previous_Reason__c', 'Account.Reason__c', 'Account.Accumulated_Irregularities__c',
+			'Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c', 'Account.AIMS_ID__c', 'Account.WebStar_ID__c', 'Account.IATACode__c', 'Account.ANG_IsNewGenAgency__c', 'Account.ParentId', 'Account.Parent.ParentId', 'Account.Parent.Parent.ParentId',
+			'Account.CNS_Agency__c', 'Currency__c', 'OSCAR__r.ANG_Type_Of_Change__c', 'Parent.IFAP_Financial_Year__c', 'Group_Single_Agent__c', 'Account_Location_Type__c', 'Parent.Financial_Review_Type__c', 'Account.ANG_Accreditation_Model__c' };
 
-			//Get all cases and respective Hierarchy Selections
-			Map<Id,Case> mapCases = new Map<Id,Case>([SELECT Id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, Short_Payment_Date__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
-									Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, NOT_Approval__c,
-									Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c,
-									Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c,
-									Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, Parent.Status, IRR_Approval_Rejection_Date__c, IRR_Type__c,
-									Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, ParentId, Parent.RecordtypeId, Parent.AccountId,
-									Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c,
-									Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c,
-									Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c, Group_Single_Agent__c,
-									(SELECT Id, HOId__c, Case__c, Account__c FROM Hierarchy_Account_Selections__r)
-									FROM Case WHERE Id IN: mapTrgNew.keySet()]);
+			for(Schema.FieldSetMember fieldSetMember : Schema.SObjectType.Case.FieldSets.AMS_Change_Code_Fields.getFields()){
+				caseFieldsToQuery.add(fieldSetMember.getFieldPath());
+			}
+
+			String query = 'SELECT ' + String.join(new List<String>(caseFieldsToQuery),',') + ', (SELECT Id, HOId__c, Case__c, Account__c FROM Hierarchy_Account_Selections__r) FROM Case WHERE Id IN (\'' + String.join(new List<Id>(mapTrgNew.keySet()),'\',\'') + '\')';
+
+			// Get all cases and respective Hierarchy Selections
+			Map<Id,Case> mapCases = new Map<Id,Case>((List<Case>) Database.query(query));
 
 			//Get all the change code configurations
 			ReadConfiguration();
@@ -135,14 +143,26 @@ public class AMS_OscarCase_RiskMgmt {
 			allAccts.addAll(accIdSet);
 
 
-		//get all accounts and respective change codes created previously for the same case
-				Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, ParentId, Parent.ParentId, CNS_Agency__c, ANG_IsNewGenAgency__c, Default_date__c, Status__c, Reason__c, Previous_Reason__c, PreviousStatus__c, Location_Class__c, Expiry_Date__c, Location_Type__c, ANG_Accreditation_Model__c,
-													 	(SELECT Id, Change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, CreatedDate, Created_Date_To_Show__c,
-													 	RecordType.DeveloperName, Irregularities_Expired__c, Account__c, Effective_Date__c, Operation__c, Irregularity_Type__c, Irregularities_Points__c, SIDRA_Case__c
-													 	FROM Agencies_Applied_Change_codes__r
-													 	ORDER BY Created_Date_To_Show__c DESC),
-													 	(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status, IFAP_Financial_Year__c FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds)
-														FROM Account WHERE Id IN: allAccts]);
+		// get all accounts and respective change codes created previously for the same case
+		Map<Id, Account> mapAccounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.ParentId, CNS_Agency__c, ANG_IsNewGenAgency__c,
+																 Default_date__c, Status__c, Reason__c, Previous_Reason__c,
+																 PreviousStatus__c, Location_Class__c, Expiry_Date__c, Location_Type__c,
+																 ANG_Accreditation_Model__c,
+																 (SELECT Id, Change_code__c, AccountNewStatus__c, AccountPreviousStatus__c,
+																	  PreviousReason__c, Reason_Code__c, Reason_Description__c,
+																	  CreatedDate, Created_Date_To_Show__c, RecordType.DeveloperName,
+																	  Irregularities_Expired__c, Account__c, Effective_Date__c,
+																	  Operation__c, Irregularity_Type__c, Irregularities_Points__c,
+																	  SIDRA_Case__c
+																  FROM Agencies_Applied_Change_codes__r
+																  ORDER BY Created_Date_To_Show__c DESC),
+																 (SELECT Id, RecordTypeId, CreatedDate, AccountId, Status,
+																	  IFAP_Financial_Year__c, Financial_Review_Type__c
+																  FROM Cases
+																  WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP
+																	  AND Id NOT IN :parentCasesIds)
+															 FROM Account
+															 WHERE Id IN :allAccts]);
 
 			for(Case c : mapCases.values()){
 
@@ -159,7 +179,8 @@ public class AMS_OscarCase_RiskMgmt {
 				for(AMS_ChangeCodes__c ccConfig : changeCodesPerAccModel.get(c.Account.ANG_IsNewGenAgency__c ? 'NEWGEN' : 'AMS')){
 					Set<String> setLocClass = ccConfig.Class_Type__c == null ? new Set<String>() : new Set<String>(ccConfig.Class_Type__c.toUpperCase().split(';'));
 
-				if(!setLocClass.contains(c.Account.Location_Class__c.toUpperCase()) || !c.recordType.DeveloperName.equalsIgnoreCase(ccConfig.Record_Type__c) || (c.Account.CNS_Agency__c && !ccConfig.Used_By_CNS__c))
+				String locationClass = c.Account.Location_Class__c==null? '': c.Account.Location_Class__c.toUpperCase();
+				if(!setLocClass.contains(locationClass) || !c.recordType.DeveloperName.equalsIgnoreCase(ccConfig.Record_Type__c) || (c.Account.CNS_Agency__c && !ccConfig.Used_By_CNS__c))
 					continue;
 
 				//Check that the same change code does not exists generated from the same SIDRA (Lite)
@@ -186,28 +207,30 @@ public class AMS_OscarCase_RiskMgmt {
 				if(ccConfig.Field6__c!=null && ccToBeGenerated){
 					//NEWGEN-5318 - Get the last IFAP case from the related Account's Cases
 					Case lastIFAP;
-					if(ccConfig.Field6__c == 'LastYearIFAP.Status')
-						lastIFAP = findLastIFAP(mapAccounts.get(c.AccountId).Cases, c.Parent.IFAP_Financial_Year__c);
+					if(ccConfig.Field6__c == 'LastYearIFAP.Status'){
+						lastIFAP = IFAP_BusinessRules.findLastFinancialYearIFAP(mapAccounts.get(c.AccountId).Cases, c.Parent.IFAP_Financial_Year__c, c.Parent.Financial_Review_Type__c);
+					}
 
 					ccToBeGenerated = bCheckCondition(c, ccConfig.Field6__c, ccConfig.Field6Values__c.toUpperCase(), mapExistingChangeCodes, lastIFAP);
 
-					if(!CCToBeGenerated && generateNOTnotification && ccConfig.Change_Code__c == 'NOT'){
+					if(!CCToBeGenerated && generateNOTnotification && ccConfig.Change_Code__c == AMS_Utils.NOT_CHANGE_CODE){
 						generateNOTnotification = false;
-						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NOT change code'));
+						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = NOT_CHANGE_CODE_LOG_TEXT));
 					}
 				}
 
-				if(ccConfig.Field7__c != NULL && ccToBeGenerated){
+				if(ccConfig.Field7__c != null && ccToBeGenerated){
 					ccToBeGenerated = bCheckCondition(c, ccConfig.Field7__c, ccConfig.Field7Values__c.toUpperCase(), mapExistingChangeCodes);
 				}
 
 				if(ccToBeGenerated){
 
-					//NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
-					if(ccConfig.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && c.Account.ANG_IsNewGenAgency__c
-							&& !mapAccounts.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(mapAccounts.get(c.AccountId).Cases, 'Closed_Non compliance')){
-
-							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
+					// NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
+					if (ccConfig.Change_Code__c == AMS_Utils.NFS_CHANGE_CODE && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP
+						&& c.Account.ANG_IsNewGenAgency__c && !mapAccounts.get(c.AccountId).Cases.isEmpty()
+						&& IFAP_BusinessRules.isPreviousIFAPStatusEquals(mapAccounts.get(c.AccountId).Cases, AMS_Utils.CASE_STATUS_CLOSED_NON_COMPLIANCE,
+							c.Account.ANG_Accreditation_Model__c, c.Parent.IFAP_Financial_Year__c, c.Parent.Financial_Review_Type__c)) {
+						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = NFS_CHANGE_CODE_LOG_TEXT));
 					} else {
 
 						if(!changeCodesToCreatePerCase.containsKey(c))
@@ -1146,24 +1169,5 @@ public class AMS_OscarCase_RiskMgmt {
 						return String.ValueOf(detail.Due_Date__c);
 				}
 				return '';
-		}
-
-		/**
-		 * For the given Case list
-		 * find the Last IFAP case in the last Financial Year
-		 *
-		 */
-		private static Case findLastIFAP(List<Case> caseList, String financialYear){
-
-			Case lastIfapCase = null;
-			if(financialYear == null) return null;
-
-			Integer lastYearIfap = Integer.valueOf(financialYear) - 1;
-
-			for(Case c : caseList){
-				if(c.IFAP_Financial_Year__c == String.valueOf(lastYearIfap) && (lastIfapCase == null || lastIfapCase.CreatedDate < c.CreatedDate))
-					lastIfapCase = c;
-			}
-			return lastIfapCase;
 		}
 }

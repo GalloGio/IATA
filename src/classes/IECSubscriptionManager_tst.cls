@@ -29,6 +29,8 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	private static void setupData(Boolean triable){
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia,ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
 		insert oProductCategory;
 
@@ -199,7 +201,7 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-	@isTest(SeeAllData=true)
+
 	static void testPreview() {
 
 		// create a shopping cart with an item
@@ -212,7 +214,7 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-	@isTest(SeeAllData=true)
+	
 	static void testCreditCardSubscribe() {
 		Test.startTest();
 		//setupData(false);
@@ -268,7 +270,7 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-	@isTest(SeeAllData=true)
+	
 	static void testICHSubscribe() {
 		//setupData(false);
 		Test.startTest();
@@ -294,14 +296,13 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-	@isTest(SeeAllData=true)
 	static void testPaymentMethods() {
 
 		List<Zuora.zObject> lstPM = IECSubscriptionManager.getPaymentMethodsFromZuora('someAccountId');
 		system.assert(lstPM != null && lstPM.size() > 0, 'The dummy payment methods should be returned');
 	}
 
-	@isTest(SeeAllData=true)
+	
 	static void testInvoicesPayments() {
 		setupInvoicesAndPayments();
 

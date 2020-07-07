@@ -11,6 +11,11 @@ public with sharing class FinancialSecurityUtil {
 	public static Boolean acknowledgeRunning = false;
 
 	/*
+	 * Avoid recursive Financial Security trigger due to update of the Converted Amounts of all active FS 
+	 */
+	public static Boolean convertedAmountUpdateFlag = false;
+
+	/*
 	 *  Handles the actions of the Before Update trigger for Financial Security records
 	 */
 	public static void HandleFSBeforeUpdate (Map<Id, Financial_Security__c> mapTriggerNew, Map<Id, Financial_Security__c> mapTriggerOld) {
@@ -173,7 +178,7 @@ public with sharing class FinancialSecurityUtil {
 		List<Contact> contacts = [
 			SELECT Id, AccountId, Account.Top_Parent__c, Preferred_Language__c
 			FROM Contact
-			WHERE AccountId IN :accountIds AND IsEmailBounced = false AND
+			WHERE AccountId IN :accountIds AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive') AND
 				(Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin')
 			ORDER BY Account.Top_Parent__c ASC NULLS FIRST
 		];

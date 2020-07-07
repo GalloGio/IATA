@@ -12,7 +12,6 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
-
                             <img class="questionIcon" src={question_selected} if:true={isQuestion} />
                             <img class="questionIcon" src={question_unselected} if:false={isQuestion} />
                         </div>
@@ -24,9 +23,6 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
-                            <!-- <lightning-icon icon-name="utility:password" size="small"
-                                class="tileNewServiceIcon slds-current-color">
-                            </lightning-icon> -->
                             <img class="questionIcon" src={concern_selected} if:true={isConcern} />
                             <img class="questionIcon" src={concern_unselected} if:false={isConcern} />
                         </div>
@@ -38,9 +34,6 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
-                            <!-- <lightning-icon icon-name="utility:task" size="small"
-                                class="tileNewServiceIcon slds-current-color">
-                            </lightning-icon> -->
                             <img class="questionIcon" src={compliment_selected} if:true={isCompliment} />
                             <img class="questionIcon" src={compliment_unselected} if:false={isCompliment} />
                         </div>
@@ -48,19 +41,6 @@
                             {label.csp_SupportReachUs_Compliment_Label}
                         </div>
                     </div>
-                    <!--div onclick={tileClickHandler} data-id="004"
-                                    class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
-                                    slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                     slds-m-horizontal_small default_panel customCard cursorPointer">
-                                    <div class="slds-p-top_large noPointerEvents">
-                                        <lightning-icon icon-name="utility:display_text" size="small"
-                                            class="tileNewServiceIcon slds-current-color">
-                                        </lightning-icon>
-                                    </div>
-                                    <div class="slds-p-top_xx-large text-xsmall text-bold noPointerEvents">
-                                        {label.csp_SupportReachUs_Suggest_Label}
-                                    </div>
-                                </div-->
                 </div>
             </div>
         </template>
@@ -69,7 +49,7 @@
 
                 <template if:true={showRecentCasesList}>
                     <div class="recentCasesMargin">
-                        <c-recent-cases home-page = false special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
+                        <c-recent-cases  special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
                     </div>
                 </template>
 
@@ -251,7 +231,6 @@
     <template if:true={displaySecondLevelRegistration}>
         <c-portal-registration-second-level
             trigger={level2RegistrationTrigger}
-            is-triggered-by-request={isTriggeredByRequest}
             onclosesecondlevelregistration={cancelSecondLevelRegistration}
             onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
             onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}>

@@ -625,13 +625,6 @@ private class IDCard_AdmUserListAndFormTest {
 		ctrl.app.Date_of_birth__c = date.today().addYears(-30);
 		system.assertEquals(null,ctrl.SaveContact());
 
-
-		// Will fail because it has a duplicate email
-		ctrl.app.IATA_Code__c = ctrl.accountCodes[1].getValue();
-		ctrl.app.First_Name__c = 'New Test';
-		ctrl.app.Last_Name__c = 'New Contact';
-	 	system.assertEquals(null,ctrl.SaveContact());
-
 		apps = [SELECT Id FROM ID_Card_Application__c WHERE Id <> :firstappid];
 		system.assertEquals(0, apps.size());
 
@@ -713,6 +706,9 @@ private class IDCard_AdmUserListAndFormTest {
 
 		IDCard_AdmPendingOpsController pendingctrl = new IDCard_AdmPendingOpsController();
 
+		List<ID_Card_Application__c> app = [SELECT Id FROM ID_Card_Application__c ORDER BY Name];
+		idcs[0].ID_Card_Application__c = app[1].id;
+		update idcs[0];
 
 		ApexPages.currentPage().getParameters().put('id',apps[0].id);
 		pendingctrl.validationApplication();

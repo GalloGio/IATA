@@ -1,4 +1,4 @@
-<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+<aura:component controller="AMP_IssuesAndPrioritiesExtension" access="public">
     <aura:attribute name="header" type="String" default="New"/>
     <aura:attribute name="errorMessage" type="String" default="Error"/>
     <aura:attribute name="divisionList" type="List"/>
@@ -39,7 +39,7 @@
                     </aura:renderIf>
                     <div class="slds-grid slds-gutters slds-wrap">
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning:input aura:id="recordName" label="Name" type="text" required="true" value="{!v.record.Name}"/>
+                            <lightning:input maxlength="80" aura:id="recordName" label="Name" type="text" required="true" value="{!v.record.Name}"/>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <lightning:select label="Division" value="{!v.record.Division__c}">
@@ -49,7 +49,7 @@
                             </lightning:select>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning:input label="Source" type="text" value="{!v.record.AM_Source_Text__c}"/>   
+                            <lightning:input maxlength="128" label="Source" type="text" value="{!v.record.AM_Source_Text__c}"/>   
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <lightning:textarea aura:id="recordDescription" label="Description" type="text" value="{!v.record.Details__c}" maxlength="2048"/>   
@@ -70,23 +70,25 @@
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <label class="slds-form-element__label" for="global">Global</label>
-                            <lightning:input name="global" type="checkbox" checked="{!v.record.AM_Global__c}" variant="label-hidden"/>   
+                            <lightning:input name="global" aura:id="amCheckbox" type="checkbox" checked="{!v.record.AM_Global__c}" variant="label-hidden" onchange="{!c.cleanCheckboxes}"/>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <label class="slds-form-element__label" for="regional">Regional</label>
-                            <lightning:input name="regional" type="checkbox" checked="{!v.record.AM_Regional__c}" variant="label-hidden"/>   
+                            <lightning:input name="regional" aura:id="amCheckbox" type="checkbox" checked="{!v.record.AM_Regional__c}" variant="label-hidden" onchange="{!c.cleanCheckboxes}"/>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <label class="slds-form-element__label" for="local">Local</label>
-                            <lightning:input name="local" type="checkbox" checked="{!v.record.AM_Local__c}" variant="label-hidden"/>   
+                            <lightning:input name="local" aura:id="amCheckbox" type="checkbox" checked="{!v.record.AM_Local__c}" variant="label-hidden" onchange="{!c.cleanCheckboxes}"/>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
-                            <label class="slds-form-element__label" for="issueIata">Issue with IATA</label>
+                            <label class="slds-form-element__label" for="issueIata">
+                                <span>Issue with IATA</span>
+                                <span class="custom-help-text slds-icon_container slds-icon-action-description" title="{!$Label.c.issue_with_iata}">
+                                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/action-sprite/svg/symbols.svg#question_post_action'}" class="slds-icon slds-icon--x-small slds-icon-text-default" />
+                                    <span class="slds-assistive-text">{!$Label.c.issue_with_iata}</span>
+                                </span>
+                            </label>
                             <lightning:input name="issueIata" type="checkbox" checked="{!v.record.AM_Issue_with_IATA__c}" variant="label-hidden"/>   
-                        </div>
-                        <div class="slds-col slds-size_1-of-3">
-                            <label class="slds-form-element__label" for="public">Visible to all IATA</label>
-                            <lightning:input name="public" type="checkbox" checked="{!v.record.AM_Public__c}" variant="label-hidden"/>   
                         </div>
                     </div>
                 </div>

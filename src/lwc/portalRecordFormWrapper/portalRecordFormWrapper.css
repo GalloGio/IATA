@@ -1,10 +1,9 @@
-/**
- * Created by pvavruska on 5/28/2019.
- */
 .modalSpinnerContainer {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
+  left: 0;
+  top: 0;
 }
 
 .maxWidth {
@@ -111,7 +110,6 @@ input[type="checkbox"] {
 }
 
 .changeUserStatus {
-  display: flex;
   float: left;
 }
 
@@ -129,6 +127,7 @@ input[type="checkbox"] {
   pointer-events: none;
   cursor: default;
   text-decoration: none;
+  float: right;
 }
 
 .removeLink{
@@ -185,4 +184,18 @@ input[type="checkbox"] {
   border-bottom: 1px solid #e1e1e1;
   padding-bottom: 1%;
   padding-top: 1%;
+}
+
+.customPopupInteriorHalfScreenCenteredShippingAddress {
+  background-color: #F7F8FA;
+  width: 40%;
+  margin: auto;
+  box-shadow: 5px 5px 20px #808080;
+  border-radius: 1px;
+  border: solid 1px #e2e2e2;
+}
+
+.orangeIcon {
+  line-height: 1;
+  vertical-align: text-top;
 }

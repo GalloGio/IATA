@@ -1,39 +1,27 @@
-.THIS .bckColor{
-    background: inherit !important;
-}
-
-.THIS .underGroup {
-    background-color: rgb(160, 195, 248);
-}
-
-.THIS .expandRows {
-    cursor: pointer;
-} 
-
-.THIS .th_17 {
-    width: 15%;
-}
-
-.THIS .th_30 {
-    width: 30%;
-}
-
-.THIS .th_11 {
-    width: 11%;
-}
-
-.THIS .th_5 {
-    width: 5%;
-}
-
-.THIS .th_8 {
-    width: 8%;
-}
-
-.THIS .th_9 {
-    width: 9%;
-}
-
-.THIS lightning-primitive-header-actions {
-    display: none;
-}
+.THIS td, .THIS th{
+    white-space: normal !important;
+    word-wrap: break-word !important;
+  }
+  .THIS .dontIndent {
+    padding-left: 0.5em !important;
+  }
+  .THIS .underGroup {
+      background-color: rgb(160, 195, 248);
+  }
+  
+  .THIS .blue-icon {
+      display: inline;
+      margin-left: 1em;
+  }
+  
+  .THIS .blue-icon > .slds-icon {
+      fill: blue;
+  }
+  
+  @media (max-width: 1200px) {
+      .THIS td {
+          white-space: normal !important;
+      }
+  
+  }
+  

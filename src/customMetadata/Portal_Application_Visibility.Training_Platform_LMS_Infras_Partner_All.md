@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Sector__c</field>
-        <value xsi:type="xsd:string">Infrastructure Partner</value>
+        <value xsi:type="xsd:string">Airport</value>
     </values>
 </CustomMetadata>

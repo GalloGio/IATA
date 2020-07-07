@@ -16,7 +16,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		//this.query = 'select ' + fieldsToRecover + ' from AMS_eBulletin_Profile__c ' + filters;
 
 
-		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name','User__r.ContactId'},
+		this.query = AMS_QueryUtils.getAllFieldQuery('AMS_eBulletin_Profile__c',new List<String>{'User__r.email','User__r.name','User__r.ContactId', 'User__r.Id'},
 										'recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE',
 										FALSE);
 
@@ -56,36 +56,15 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			profIds.add(ebProfile.Id);
 		}
 
-		Map<Id, Id> ebprofContactsMap = new Map<Id, Id>();
-
 		List<AMS_eBulletin_Profile__c> eBprofContacts = new List<AMS_eBulletin_Profile__c>();
 
-		eBprofContacts = [SELECT Id, User__r.ContactId FROM AMS_eBulletin_Profile__c WHERE Id IN :profIds AND User__c != null];
-
-		for(AMS_eBulletin_Profile__c prof : eBprofContacts) {
-
-			ebprofContactsMap.put(prof.User__r.ContactId, prof.Id);
-		}
-
-		Map<Id, Boolean> conBouncedMap = new Map<Id, Boolean>();
-
-		List<Contact> conBounced = new List<Contact>();
-
-		Set<Id> contacts = ebprofContactsMap.keySet();
-
-		conBounced = [SELECT Id, IsEmailBounced FROM Contact WHERE Id IN :contacts];
-
-		for(Contact con : conBounced) {
-
-			conBouncedMap.put(con.Id, con.IsEmailBounced);
-		}
+		eBprofContacts = [SELECT Id, User__r.ContactId, User__r.Contact.isEmailBounced, User__r.isActive FROM AMS_eBulletin_Profile__c WHERE Id IN :profIds AND User__c != null];
 
 		profBouncedMap = new Map<Id,Boolean>();
 
-		for(Id conId : contacts) {
-
-			profBouncedMap.put(ebprofContactsMap.get(conId), conBouncedMap.get(conId));
-		}
+		for(AMS_eBulletin_Profile__c prof : eBprofContacts) {
+			profBouncedMap.put(prof.Id, prof.User__r.isActive && prof.User__r.ContactId != null ? prof.User__r.Contact.isEmailBounced : true);
+		}		
 
 		System.debug('AMS_EBulletinBatch - ebulletin profiles and value of IsEmailBounced (Contact field) : ' + profBouncedMap);
 
@@ -181,7 +160,6 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			return null;
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setToAddresses(new List<String>{eBprof.User__r.email});
 
 		mail.setReplyTo(ENV.Reply_Email);
 		mail.setOrgWideEmailAddressId(PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email));
@@ -198,9 +176,9 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		mail.setCharset(emailTemplate.Encoding);
 		mail.setSubject(emailTemplate.Subject);
-		mail.setTargetObjectId(eBprof.User__r.ContactId);
+		mail.setTargetObjectId(eBprof.User__r.Id);
 		mail.setWhatId(eBprof.Id);
-		mail.setSaveAsActivity(true);
+		mail.setSaveAsActivity(false);
 
 		return mail;
 	}

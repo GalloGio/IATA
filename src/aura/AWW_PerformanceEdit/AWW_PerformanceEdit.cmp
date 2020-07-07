@@ -1,4 +1,4 @@
-<aura:component controller="AWW_PerformanceCtrl">
+<aura:component controller="AWW_PerformanceCtrl" access="public">
     <aura:attribute name="header" type="String" default="New"/>
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="errorMessage" type="String"/>
@@ -54,23 +54,6 @@
                             <div class="slds-col slds-size_1-of-3">
                                 <lightning:select aura:id="activityStatus" label="Account Status" value="{!v.record.Status__c}" required="true">
                                     <aura:iteration items="{!v.statusList}" var="option">
-                                        <option text="{!option.label}" value="{!option.id}"/>
-                                    </aura:iteration>
-                                </lightning:select>
-                            </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:input type="date" aura:id="deadline" label="Deadline" value="{!v.record.Deadline__c}" required="true"/>
-                            </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="division" label="Division" value="{!v.record.Division__c}" required="true">
-                                    <aura:iteration items="{!v.divisionList}" var="option">
-                                        <option text="{!option.label}" value="{!option.id}"/>
-                                    </aura:iteration>
-                                </lightning:select>
-                            </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="type" label="Unit Type" value="{!v.record.Unit_Type__c}" required="true">
-                                    <aura:iteration items="{!v.unitList}" var="option">
                                         <option text="{!option.label}" value="{!option.id}"/>
                                     </aura:iteration>
                                 </lightning:select>

@@ -95,6 +95,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Financial_Security_Currency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_isToUpdateRHC__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -218,6 +222,22 @@
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Financial Security Files</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>GenericAttachmentListFinancialSecurity</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>

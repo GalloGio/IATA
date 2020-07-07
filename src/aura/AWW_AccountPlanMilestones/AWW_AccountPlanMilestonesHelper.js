@@ -10,7 +10,7 @@
             {label: 'Comments', fieldName: 'Description', type: 'text', sortable : true}
         ];
 
-        if(component.get('v.canEdit') == true) {
+        if(component.get('v.canEdit') == true || component.get('v.haveUserAMPIssuesAndPriorities') == true) {
             var actions = [
                 {label: 'Edit', name: 'edit_milestone', 'iconName': 'utility:edit'},
                 {label: 'Delete', name: 'delete_milestone', 'iconName': 'utility:delete'}
@@ -20,6 +20,7 @@
 
         component.set('v.columns', columns);
     },
+
     fetchData : function(component) {
         var action = component.get('c.getTasks');
         action.setParams({
@@ -38,13 +39,19 @@
 
         $A.enqueueAction(action);
     },
-    editRecord : function(component,event) {
+    editRecord : function(component,event, idRow) {
+        component.set('v.milestoneView',true);
         var modalCmp = component.find('manage-record');
-        modalCmp.showModal(event.getParam('row'));
+        var data = component.get('v.data');
+        for(let i = 0; i < data.length; i++ ){
+            if(data[i].Id == idRow){
+                modalCmp.showModal(data[i]);
+            }
+        }
     },
-    deleteRecord : function(component, event) {
+    deleteRecord : function(component, event, idRow) {
         var modalCmp = component.find('delete-record');
-        modalCmp.showModal(event.getParam('row').Id);
+        modalCmp.showModal(idRow);
     },
     sortData : function(component,fieldName,sortDirection) {
         var data = component.get('v.data');

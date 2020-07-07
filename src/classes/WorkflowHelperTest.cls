@@ -2,7 +2,7 @@
 private class WorkflowHelperTest {
 
 	@testSetup static void setup(){
-
+		
 	}
 
 	@isTest static void  AccountUpdateIndustryTest(){
@@ -43,7 +43,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Is_AIMS_Account__c',true);
 
 		Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
-
+		
 		insert new List<Account>{acct,acct2};
 
 		Test.stopTest();
@@ -90,7 +90,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Name','NewGenAgencyAE');
 		fieldsOfObject.put('Short_Name__c','NewGenAgency');
 		fieldsOfObject.put('Location_Class__c','P');
-		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Location_Type__c',AMS_Utils.AE);
 		fieldsOfObject.put('Remittance_frequency__c','M');
 		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
 		fieldsOfObject.put('Company_Type__c','A');
@@ -103,7 +103,7 @@ private class WorkflowHelperTest {
 		insert acctAE;
 
 		Test.stopTest();
-
+	
 		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
 		System.assertEquals(true,acctAE.IATA_Member__c);
@@ -152,7 +152,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Name','NewGenAgencyAE');
 		fieldsOfObject.put('Short_Name__c','NewGenAgency');
 		fieldsOfObject.put('Location_Class__c','P');
-		fieldsOfObject.put('Location_Type__c','HE');
+		fieldsOfObject.put('Location_Type__c',AMS_Utils.AE);
 		fieldsOfObject.put('Remittance_frequency__c','M');
 		fieldsOfObject.put('Reason_for_creation__c','Account is missing');
 		fieldsOfObject.put('Company_Type__c','A');
@@ -165,7 +165,7 @@ private class WorkflowHelperTest {
 		insert acctAE;
 
 		Test.stopTest();
-
+	
 		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
 		System.assertEquals(true,acctAE.IATA_Member__c);
@@ -220,7 +220,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Is_AIMS_Account__c',true);
 
 		Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
-
+		
 
 		// Create a unique UserName
 		  String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -247,7 +247,7 @@ private class WorkflowHelperTest {
 
 
 		Test.stopTest();
-
+	
 		acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
 		acct2 = [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency2'];
 
@@ -263,7 +263,7 @@ private class WorkflowHelperTest {
 		}
 
 		acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
-
+		
 		date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
 		date2 = date.newinstance(acct.Last_Modified_by_Source__c.year(), acct.Last_Modified_by_Source__c.month(), acct.Last_Modified_by_Source__c.day());
 
@@ -306,7 +306,7 @@ private class WorkflowHelperTest {
 
 		System.assertEquals('Travel Agent',acct.sector__c);
 		System.assertEquals('IATAN Passenger Agent',acct.Category__c);
-
+		
 	}
 
 	@isTest static void  updateAIMSAccountRecordtypeTest(){
@@ -345,8 +345,8 @@ private class WorkflowHelperTest {
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		System.assertEquals(accountRT,acct.recordTypeId);
-
-	}
+		
+	}    
 
 	@isTest static void  resetAccountIdCardDiscountTest(){
 
@@ -385,9 +385,9 @@ private class WorkflowHelperTest {
 		acct =  [Select Id, ID_Card_Key_Account_Discount__c from Account where name = 'NewGenAgency'];
 
 		System.assertEquals(0,acct.ID_Card_Key_Account_Discount__c);
-
-	}
-
+		
+	}    
+	
 	@isTest static void resetAccountTypeTest(){
 
 		Test.startTest();
@@ -513,7 +513,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Industry','Travel Agent');
 		fieldsOfObject.put('Site','Site');
 		fieldsOfObject.put('Sector__c','Travel Agent');
-
+		
 		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
 		fieldsOfObject = new Map<String,Object>();
@@ -530,7 +530,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Sector__c','Airline');
 
 		Account acct2 = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
-
+			
 		insert new List<Account>{acct,acct2};
 
 		Test.stopTest();
@@ -634,22 +634,22 @@ private class WorkflowHelperTest {
 		insert acctAE;
 
 		Test.stopTest();
-
+	
 		acctAE = [Select Id, TradeName__c, name from Account where location_type__c = 'AE'];
 
 		System.assertEquals('tradenameParent',acctAE.TradeName__c);
 		System.assertEquals('tradenameParent',acctAE.name);
 
-		acct.TradeName__c = 'NewTradeNameParent';
+		acct.TradeName__c = 'NewTradeNameParent';        
 		acctAE.TradeName__c = 'XPTO';
 
 
-		Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
-
-		User u = [Select id from User where ProfileId = :p.Id AND isActive = true LIMIT 1];
+        Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
+        
+        User u = [Select id from User where ProfileId = :p.Id AND isActive = true LIMIT 1];
 
 		System.runAs(u) {
-
+			
 			update new List<Account>{acct,acctAE};
 		}
 
@@ -699,7 +699,7 @@ private class WorkflowHelperTest {
 		update acct;
 
 		acct =   [Select Id,DDS_Last_Update_Date__c from Account where name = 'NewGenAgency'];
-
+		
 		Date date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
 		Date date2 = date.newinstance(acct.DDS_Last_Update_Date__c.year(), acct.DDS_Last_Update_Date__c.month(), acct.DDS_Last_Update_Date__c.day());
 
@@ -711,10 +711,10 @@ private class WorkflowHelperTest {
 
 		// Create a unique UserName
 		String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-
+		
 		// This code runs as the system user
 		Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
-
+		
 		User u = new User(
 			Alias = 'standt',
 			Email='standarduser@testorg.com',
@@ -728,16 +728,16 @@ private class WorkflowHelperTest {
 			UserName=uniqueUserName,
 			License_Cost_Center__c ='IDS005CH01'
 			);
-
+		
 		insert u;
 
 		PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Airline_HQ_ACLI'];
 		insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
-
+		
 		Test.startTest();
 
 		System.runAs(u) {
-
+			
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
 		insert ctry ;
 
@@ -773,146 +773,650 @@ private class WorkflowHelperTest {
 
 
 		update acct;
-
+			
 		acct =   [Select Id,Name from Account];
 
 		System.assertEquals('OLDNAME', acct.Name);
-
+		
 		}
 
 
-	}
+    }
 
-	@isTest static void updateRecordSharingCriteriaTest() {
+    @isTest static void updateRecordSharingCriteriaTest() {
 
-		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+        insert ctry ;
+
+        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        Account account = new Account();
+        account.Name = 'Update Record Sharing Criteria Test';
+        account.IATA_ISO_Country__c = ctry.Id;
+        account.RecordTypeId = standardAccountRT;
+        insert account;
+
+        List<Contact> conListToInsert = new List<Contact>();
+
+        Contact c1 = new Contact();
+        c1.LastName = 'Contact 1';
+        c1.Email = uniqueUserName + '1';
+        c1.AccountId = account.Id;
+        c1.Record_Sharing_Criteria__c = 'IFG Active Users';
+        conListToInsert.add(c1);
+
+        Contact c2 = new Contact();
+        c2.LastName = 'Contact 2';
+        c2.Email = uniqueUserName + '2';
+        c2.AccountId = account.Id;
+        c2.Record_Sharing_Criteria__c = 'None';
+        conListToInsert.add(c2);
+
+        Test.startTest();
+        insert conListToInsert;
+        Test.stopTest();
+
+        Map<Id,Contact> conList = new Map<Id,Contact>([SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id]);
+
+        System.assertEquals('IFG Active Users;', conList.get(c1.Id).Record_Sharing_Criteria_AUX__c);
+        System.assertEquals(null, conList.get(c2.Id).Record_Sharing_Criteria_AUX__c);
+    }
+
+    @isTest static void keyContactOptOutTest() {
+
+        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+        insert ctry ;
+
+        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account account = new Account();
+        account.Name = 'Key Contact Opt Out Test';
+        account.IATA_ISO_Country__c = ctry.Id;
+        account.RecordTypeId = standardAccountRT;
+        insert account;
+
+        List<Contact> conListToInsert = new List<Contact>();
+
+        Contact c1 = new Contact();
+        c1.FirstName = 'My';
+        c1.LastName = 'Contact 1';
+        c1.Email = uniqueUserName + '1';
+        c1.AccountId = account.Id;
+        c1.CEO_CFO__c = 'CEO';
+        c1.HasOptedOutOfEmail = false;
+        c1.Marketing_Communications_Opt_in__c = true;
+        c1.Title = 'Manager';
+        c1.Membership_Function__c = 'Finance';
+        conListToInsert.add(c1);
+
+        Contact c2 = new Contact();
+        c2.FirstName = 'My';
+        c2.LastName = 'Contact 2';
+        c2.Email = uniqueUserName + '2';
+        c2.AccountId = account.Id;
+        c2.HasOptedOutOfEmail = false;
+        c2.Marketing_Communications_Opt_in__c = true;
+        conListToInsert.add(c2);
+
+        Test.startTest();
+        insert conListToInsert;
+        Test.stopTest();
+
+        Map<Id,Contact> conList = new Map<Id,Contact>([SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id]);
+
+        System.assert(conList.get(c1.Id).HasOptedOutOfEmail);
+        System.assert(!conList.get(c1.Id).Marketing_Communications_Opt_in__c);
+        System.assert(!conList.get(c2.Id).HasOptedOutOfEmail);
+        System.assert(conList.get(c2.Id).Marketing_Communications_Opt_in__c);
+    }
+
+    @isTest static void updateIDCardContactCheckboxTest() {
+
+        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+        insert ctry ;
+
+        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        Account account = new Account();
+        account.Name = 'Update ID Card Contact Checkbox Test';
+        account.IATA_ISO_Country__c = ctry.Id;
+        account.RecordTypeId = standardAccountRT;
+        insert account;
+
+        List<Contact> conListToInsert = new List<Contact>();
+
+        Contact c1 = new Contact();
+        c1.LastName = 'Contact 1';
+        c1.Email = uniqueUserName + '1';
+        c1.AccountId = account.Id;
+        c1.ID_Card_Holder__c = false;
+        conListToInsert.add(c1);
+
+        Contact c2 = new Contact();
+        c2.LastName = 'Contact 2';
+        c2.Email = uniqueUserName + '2';
+        c2.AccountId = account.Id;
+        c2.VER_Number__c = 1234567890;
+        c2.ID_Card_Holder__c = false;
+        conListToInsert.add(c2);
+
+        Test.startTest();
+        insert conListToInsert;
+        Test.stopTest();
+
+        Map<Id,Contact> conList = new Map<Id,Contact>([SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id]);
+
+        System.assert(!conList.get(c1.Id).ID_Card_Holder__c);
+        System.assert(conList.get(c2.Id).ID_Card_Holder__c);
+    }
+
+	@isTest static void changeCaseOriginToFaxTest() {
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-		insert ctry ;
+		insert ctry;
 
 		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account account = new Account();
-		account.Name = 'Update Record Sharing Criteria Test';
+		account.Name = 'Change Case Origin To Fax Test';
 		account.IATA_ISO_Country__c = ctry.Id;
 		account.RecordTypeId = standardAccountRT;
 		insert account;
 
-		List<Contact> conListToInsert = new List<Contact>();
+		List<Case> casesListToInsert = new List<Case>();
 
-		Contact c1 = new Contact();
-		c1.LastName = 'Contact 1';
-		c1.Email = uniqueUserName + '1';
+		Case c1 = new Case();
+		c1.Subject = 'Infofax recibido desde: Case 1 Change Case Origin To Fax Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
 		c1.AccountId = account.Id;
-		c1.Record_Sharing_Criteria__c = 'IFG Active Users';
-		conListToInsert.add(c1);
+		casesListToInsert.add(c1);
 
-		Contact c2 = new Contact();
-		c2.LastName = 'Contact 2';
-		c2.Email = uniqueUserName + '2';
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Change Case Origin To Fax Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
 		c2.AccountId = account.Id;
-		c2.Record_Sharing_Criteria__c = 'None';
-		conListToInsert.add(c2);
+		casesListToInsert.add(c2);
 
 		Test.startTest();
-		insert conListToInsert;
+		insert casesListToInsert;
 		Test.stopTest();
 
-		List<Contact> conList = [SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id];
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, Origin FROM Case WHERE AccountId =: account.Id]);
 
-		System.assertEquals('IFG Active Users;', conList.get(0).Record_Sharing_Criteria_AUX__c);
-		System.assertEquals(null, conList.get(1).Record_Sharing_Criteria_AUX__c);
+		System.assertEquals('Fax', casesList.get(c1.Id).Origin);
+		System.assertEquals('IATA Internal User', casesList.get(c2.Id).Origin);
 	}
 
-	@isTest static void keyContactOptOutTest() {
-
-		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+	@isTest static void updateACCADatetimeCaseEscalatedTest() {
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-		insert ctry ;
-
-		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-
-		Account account = new Account();
-		account.Name = 'Key Contact Opt Out Test';
-		account.IATA_ISO_Country__c = ctry.Id;
-		account.RecordTypeId = standardAccountRT;
-		insert account;
-
-		List<Contact> conListToInsert = new List<Contact>();
-
-		Contact c1 = new Contact();
-		c1.FirstName = 'My';
-		c1.LastName = 'Contact 1';
-		c1.Email = uniqueUserName + '1';
-		c1.AccountId = account.Id;
-		c1.CEO_CFO__c = 'CEO';
-		c1.HasOptedOutOfEmail = false;
-		c1.Marketing_Communications_Opt_in__c = true;
-		c1.Title = 'Manager';
-		c1.Membership_Function__c = 'Finance';
-		conListToInsert.add(c1);
-
-		Contact c2 = new Contact();
-		c2.FirstName = 'My';
-		c2.LastName = 'Contact 2';
-		c2.Email = uniqueUserName + '2';
-		c2.AccountId = account.Id;
-		c2.HasOptedOutOfEmail = false;
-		c2.Marketing_Communications_Opt_in__c = true;
-		conListToInsert.add(c2);
-
-		Test.startTest();
-		insert conListToInsert;
-		Test.stopTest();
-
-		List<Contact> conList = [SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id];
-
-		System.assert(conList.get(0).HasOptedOutOfEmail);
-		System.assert(!conList.get(0).Marketing_Communications_Opt_in__c);
-		System.assert(!conList.get(1).HasOptedOutOfEmail);
-		System.assert(conList.get(1).Marketing_Communications_Opt_in__c);
-	}
-
-	@isTest static void updateIDCardContactCheckboxTest() {
-
-		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
-
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-		insert ctry ;
+		insert ctry;
 
 		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account account = new Account();
-		account.Name = 'Update ID Card Contact Checkbox Test';
+		account.Name = 'Update ACCA Datetime Case Escalated Test';
 		account.IATA_ISO_Country__c = ctry.Id;
 		account.RecordTypeId = standardAccountRT;
 		insert account;
 
-		List<Contact> conListToInsert = new List<Contact>();
+		List<Case> casesListToInsert = new List<Case>();
 
-		Contact c1 = new Contact();
-		c1.LastName = 'Contact 1';
-		c1.Email = uniqueUserName + '1';
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update ACCA Datetime Case Escalated Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
 		c1.AccountId = account.Id;
-		c1.ID_Card_Holder__c = false;
-		conListToInsert.add(c1);
+		c1.Escalate_to_ACCA__c = true;
+		c1.ACCA_Date_Time_New__c = null;
+		casesListToInsert.add(c1);
 
-		Contact c2 = new Contact();
-		c2.LastName = 'Contact 2';
-		c2.Email = uniqueUserName + '2';
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update ACCA Datetime Case Escalated Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
 		c2.AccountId = account.Id;
-		c2.VER_Number__c = 1234567890;
-		c2.ID_Card_Holder__c = false;
-		conListToInsert.add(c2);
+		c2.Escalate_to_ACCA__c = false;
+		c2.ACCA_Date_Time_New__c = null;
+		casesListToInsert.add(c2);
 
 		Test.startTest();
-		insert conListToInsert;
+		insert casesListToInsert;
 		Test.stopTest();
 
-		List<Contact> conList = [SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id];
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, ACCA_Date_Time_New__c FROM Case WHERE AccountId =: account.Id]);
 
-		System.assert(!conList.get(0).ID_Card_Holder__c);
-		System.assert(conList.get(1).ID_Card_Holder__c);
+		System.assertNotEquals(null, casesList.get(c1.Id).ACCA_Date_Time_New__c);
+		System.assertEquals(null, casesList.get(c2.Id).ACCA_Date_Time_New__c);
+	}
+
+	@isTest static void updateACCADatetimeCaseScheduledTest() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update ACCA Datetime Case Scheduled Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update ACCA Datetime Case Scheduled Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.Planned_End_CR__c = Date.today();
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update ACCA Datetime Case Scheduled Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.Planned_Start_CR__c = Date.today();
+		casesListToInsert.add(c2);
+
+		Case c3 = new Case();
+		c3.Subject = 'Case 3 Update ACCA Datetime Case Scheduled Test';
+		c3.Status = 'Open';
+		c3.Region__c = 'Europe';
+		c3.Origin = 'IATA Internal User';
+		c3.CaseArea__c = 'Agency Management';
+		c3.AccountId = account.Id;
+		casesListToInsert.add(c3);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, ACCA_Date_Time_Scheduled__c FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertNotEquals(null, casesList.get(c1.Id).ACCA_Date_Time_Scheduled__c);
+		System.assertNotEquals(null, casesList.get(c2.Id).ACCA_Date_Time_Scheduled__c);
+		System.assertEquals(null, casesList.get(c3.Id).ACCA_Date_Time_Scheduled__c);
+	}
+
+	@isTest static void updateACCADatetimeCaseCompletedTest() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update ACCA Datetime Case Completed Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update ACCA Datetime Case Completed Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.CR_Status__c = 'Completed';
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update ACCA Datetime Case Completed Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.Escalated_Status_ACCA__c = 'Completed';
+		c2.ACCA_Owner__c = UserInfo.getUserId();
+		casesListToInsert.add(c2);
+
+		Case c3 = new Case();
+		c3.Subject = 'Case 3 Update ACCA Datetime Case Completed Test';
+		c3.Status = 'Open';
+		c3.Region__c = 'Europe';
+		c3.Origin = 'IATA Internal User';
+		c3.CaseArea__c = 'Agency Management';
+		c3.AccountId = account.Id;
+		c3.CR_Status__c = null;
+		c3.Escalated_Status_ACCA__c = null;
+		casesListToInsert.add(c3);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, ACCA_Date_Time_Completed__c FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertNotEquals(null, casesList.get(c1.Id).ACCA_Date_Time_Completed__c);
+		System.assertNotEquals(null, casesList.get(c2.Id).ACCA_Date_Time_Completed__c);
+		System.assertEquals(null, casesList.get(c3.Id).ACCA_Date_Time_Completed__c);
+	}
+
+	@isTest static void updateRecordTypeToLockedTest() {
+
+		Id DPCSystem_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+		Id DPCSystemsLocked_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
+		Id InternalCases_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update Record Type To Locked Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update Record Type To Locked Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.RecordTypeId = DPCSystem_RT;
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update Record Type To Locked Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.RecordTypeId = InternalCases_RT;
+		casesListToInsert.add(c2);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, RecordTypeId FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertEquals(DPCSystemsLocked_RT, casesList.get(c1.Id).RecordTypeId);
+		System.assertEquals(InternalCases_RT, casesList.get(c2.Id).RecordTypeId);
+	}
+
+	@isTest static void uncheckNewCommentforACCATest() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Uncheck New Comment for ACCA Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Uncheck New Comment for ACCA Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.Escalated_Status_ACCA__c = 'Completed';
+		c1.ACCA_Owner__c = UserInfo.getUserId();
+		c1.New_Comment_for_ACCA__c = true;
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Uncheck New Comment for ACCA Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.Escalated_Status_ACCA__c = 'New';
+		c2.New_Comment_for_ACCA__c = true;
+		casesListToInsert.add(c2);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, New_Comment_for_ACCA__c FROM Case WHERE AccountId =: account.Id]);
+
+		System.assert(!casesList.get(c1.Id).New_Comment_for_ACCA__c);
+		System.assert(casesList.get(c2.Id).New_Comment_for_ACCA__c);
+	}
+
+	@isTest static void updateStatusToEscalatedTest() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update Status To Escalated Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update Status To Escalated Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.Escalated_Status_ACCA__c = 'Reopend by IATA';
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update Status To Escalated Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.Escalated_Status_ACCA__c = 'New';
+		casesListToInsert.add(c2);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, Status FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertEquals('2.0 IE approved - Escalated DPC for PQ', casesList.get(c1.Id).Status);
+		System.assertEquals('Open', casesList.get(c2.Id).Status);
+	}
+
+	@isTest static void updateDPCStatusTest() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update DPC Status Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update DPC Status Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.Escalated_Status_ACCA__c = 'Completed';
+		c1.ACCA_Owner__c = UserInfo.getUserId();
+		c1.New_Comment_for_ACCA__c = true;
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update DPC Status Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.Escalated_Status_ACCA__c = 'New';
+		casesListToInsert.add(c2);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, Escalated_Status_ACCA__c FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertEquals('2.0 DPC Investigating', casesList.get(c1.Id).Escalated_Status_ACCA__c);
+		System.assertEquals('New', casesList.get(c2.Id).Escalated_Status_ACCA__c);
+	}
+
+	@isTest static void updateCSRScheduledTest() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update CSR Scheduled Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update CSR Scheduled Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'IATA Internal User';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.Planned_End_CR__c = Date.today();
+		c1.CR_Status__c = null;
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update CSR Scheduled Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'IATA Internal User';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.Planned_Start_CR__c = Date.today();
+		c2.CR_Status__c = null;
+		casesListToInsert.add(c2);
+
+		Case c3 = new Case();
+		c3.Subject = 'Case 3 Update CSR Scheduled Test';
+		c3.Status = 'Open';
+		c3.Region__c = 'Europe';
+		c3.Origin = 'IATA Internal User';
+		c3.CaseArea__c = 'Agency Management';
+		c3.AccountId = account.Id;
+		c3.CR_Status__c = null;
+		casesListToInsert.add(c3);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, CR_Status__c, Escalated_Status_ACCA__c FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertEquals('Scheduled', casesList.get(c1.Id).CR_Status__c);
+		System.assertEquals('Scheduled', casesList.get(c2.Id).CR_Status__c);
+		System.assertEquals(null, casesList.get(c3.Id).CR_Status__c);
+		System.assertEquals('CSR Scheduled', casesList.get(c1.Id).Escalated_Status_ACCA__c);
+		System.assertEquals('CSR Scheduled', casesList.get(c2.Id).Escalated_Status_ACCA__c);
+		System.assertEquals(null, casesList.get(c3.Id).Escalated_Status_ACCA__c);
+	}
+
+	@isTest static void updateRTExternalInternalTest() {
+
+		Id DPCSystem_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+		Id InternalCases_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
+		Id OperationalManagementHO_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Case_Operational_Management_Head_Office');
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry;
+
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update RT External Internal Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
+
+		List<Case> casesListToInsert = new List<Case>();
+
+		Case c1 = new Case();
+		c1.Subject = 'Case 1 Update RT External Internal Test';
+		c1.Status = 'Open';
+		c1.Region__c = 'Europe';
+		c1.Origin = 'E-mail to Case - BSPlink';
+		c1.CaseArea__c = 'Agency Management';
+		c1.AccountId = account.Id;
+		c1.SuppliedEmail = 'internalemail@iata.test';
+		c1.RecordTypeId = DPCSystem_RT;
+		casesListToInsert.add(c1);
+
+		Case c2 = new Case();
+		c2.Subject = 'Case 2 Update RT External Internal Test';
+		c2.Status = 'Open';
+		c2.Region__c = 'Europe';
+		c2.Origin = 'E-mail to Case - BSPlink';
+		c2.CaseArea__c = 'Agency Management';
+		c2.AccountId = account.Id;
+		c2.SuppliedEmail = 'externalemail@ext.test';
+		c2.RecordTypeId = DPCSystem_RT;
+		casesListToInsert.add(c2);
+
+		Test.startTest();
+		insert casesListToInsert;
+		Test.stopTest();
+
+		Map<Id,Case> casesList = new Map<Id,Case>([SELECT Id, RecordTypeId FROM Case WHERE AccountId =: account.Id]);
+
+		System.assertEquals(InternalCases_RT, casesList.get(c1.Id).RecordTypeId);
+		System.assertEquals(OperationalManagementHO_RT, casesList.get(c2.Id).RecordTypeId);
 	}
 }

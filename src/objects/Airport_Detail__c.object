@@ -141,7 +141,15 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Airport_Detail_Compact_Layout</fullName>
+        <fields>City__c</fields>
+        <fields>Code__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
+        <fields>Name</fields>
+        <label>Airport Detail Compact Layout</label>
+    </compactLayouts>
     <compactLayouts>
         <fullName>IFTP_Compact_Layout</fullName>
         <fields>City__c</fields>
@@ -151,7 +159,7 @@
         <label>IFTP Compact Layout</label>
     </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Transversal Object used to store data of different types of addresses.</description>
+    <description>Represents Airport related data and must be related to an Account where data for the airport as a legal entity is stored.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -161,7 +169,32 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Read</externalSharingModel>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <description>The Account representing the Airport as a legal entity.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Airport Details</relationshipLabel>
+        <relationshipName>Airport_Details</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Airport_Name__c</fullName>
+        <description>The name of the airport is equal to the name of the associated account.</description>
+        <externalId>false</externalId>
+        <formula>Account__r.Name</formula>
+        <label>Airport Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>City__c</fullName>
         <externalId>false</externalId>
@@ -225,6 +258,18 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>ICAO_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>If assigned, the code assigned to the airport by the International Civil Aviation Organisation (ICAO).</description>
+        <externalId>true</externalId>
+        <label>ICAO Code</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
     <label>Airport Detail</label>
     <listViews>
         <fullName>All</fullName>
@@ -236,15 +281,15 @@
         <label>All</label>
     </listViews>
     <nameField>
-        <displayFormat>Address-{00000000}</displayFormat>
-        <label>Address Number</label>
+        <displayFormat>APD-{0000000000}</displayFormat>
+        <label>Airport Autoname</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Airport Details</pluralLabel>
     <recordTypes>
         <fullName>Airport</fullName>
         <active>true</active>
-        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <compactLayoutAssignment>Airport_Detail_Compact_Layout</compactLayoutAssignment>
         <description>Airports&apos; location information.</description>
         <label>Airport</label>
     </recordTypes>
@@ -265,7 +310,7 @@
         <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>

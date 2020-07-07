@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title={CardTitle} variant="Narrow">
+        <lightning-spinner if:true={loading} alternative-text="Loading" size="medium" class="slds-is-relative slds-align_absolute-center cardHeight"></lightning-spinner>
+        <div if:false={loading} class="slds-grid slds-size_full">
+            <div if:true={hasResults} class="slds-size_full cardHeight">
+                <lightning-datatable
+                class="slds-scrollable_y"
+                    key-field="Id"
+                    data={recordList}
+                    show-row-number-column
+                    hide-checkbox-column        
+                    enable-infinite-loading        
+                    columns={columns}
+                    sorted-direction={sortDirection}
+                    sorted-by={sortedBy}
+                    onloadmore={loadMoreData}
+                    onsort={onHandleSort}
+                    >
+                </lightning-datatable>
+            </div>
+            <div if:false={hasResults}>
+               <p class="slds-p-around--medium">This record doesn't contain Subscribers.</p>
+            </div>
+        </div>
+    </lightning-card>
+</template>

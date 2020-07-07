@@ -43,6 +43,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>AccountStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Sector__c</field>
             </layoutItems>
             <layoutItems>
@@ -190,7 +194,7 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
-        <fields>Primary_Contact__c</fields>
+        <fields>CONTACT.CREATED_DATE</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>

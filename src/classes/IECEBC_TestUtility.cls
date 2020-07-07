@@ -23,7 +23,7 @@
 	*
 	*/
 
-//@isTest
+@isTest
 public with sharing class IECEBC_TestUtility {
 
 	// Test User related records, created by createTestUser
@@ -86,11 +86,6 @@ public with sharing class IECEBC_TestUtility {
 	// static constants
 	private static String TEST_IATA_CODE = '1234567';
 	public static final String EBC_RENEWAL_WINDOW = '60';
-
-		private static String generateZuoraID() {
-				String newId = IECUtil.NewGuid();
-				return newId.substring(0, 32);
-		}
 
 	// ========================================================================
 	// create one community user, along with its related records

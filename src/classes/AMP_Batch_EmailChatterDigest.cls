@@ -21,7 +21,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		lsHQAccounts = AMP_ChatterTopicSubscribeController.getHQAccounts();
 		// System.debug(dailyOrWeekly);
 		query = 'SELECT Id, FirstName, LastName, Email, AMP_Digest_Topics__c, '+
-				'AMP_Digest_Daily_or_Weekly__c FROM User WHERE AMP_Digest_Daily_or_Weekly__c=\'Daily\'';
+				'AMP_Digest_Daily_or_Weekly__c FROM User WHERE AMP_Digest_Daily_or_Weekly__c=\'Daily\' AND isActive = true';
 		if(dailyOrWeekly == 'weekly') {
 			query += ' OR AMP_Digest_Daily_or_Weekly__c=\'Weekly\'';
 			lsAllFeedItems = AMP_ChatterTopicSubscribeController.getFeedItems(lsHQAccounts);
@@ -54,8 +54,8 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		for(User u : lsUsers) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setOrgWideEmailAddressId(owa.id);
-			String[] toAddresses = new String[] {u.Email};
-			mail.setToAddresses(toAddresses);
+			mail.setTargetObjectId(u.Id);
+			mail.setSaveAsActivity(false);
 			if(dailyOrWeekly == 'weekly')
 				mail.setSubject('Your Weekly Digest by Topic(s)');
 			else

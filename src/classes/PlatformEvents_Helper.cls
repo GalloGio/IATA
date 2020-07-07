@@ -42,11 +42,15 @@ public class PlatformEvents_Helper implements Queueable {
 				'Contact' => 'Contact__e',
 				'Account_Contact_Role__c' => 'AccountContactRole__e',
 				'Account_Role__c' => 'AccountRole__e',
+				'Address_Role_Business_Context__c' => 'AddressRoleBusinessContext__e',
 				'Partner_products__c' => 'PartnerProduct__e',
 				'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
 				'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
 				'Remote_Invocation__c' => 'RemoteInvocation__e',
-				'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e'
+				'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e',
+				'Training_Contact_Role_Details__c' => 'Training_Contact_Role_Detail__e',
+				'AP_Process_Form__c' => 'Airline_Account__e',
+				'Services_Rendered__c' => 'Service_Rendered__e'
 		};
 
 
@@ -135,7 +139,8 @@ public class PlatformEvents_Helper implements Queueable {
 		}
 
 		if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj == 'GadmAccountServiceDetail__e'
-			|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'){
+			|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'|| sObj=='Service_Rendered__e'
+			|| sObj=='Airline_Account__e' || sObj=='AddressRoleBusinessContext__e' || sObj=='Training_Contact_Role_Detail__e'){
 			return new map<String,String>{
 				'Id' => 'RecordId__c',
 				'Recordtype' => 'RecordType__c',

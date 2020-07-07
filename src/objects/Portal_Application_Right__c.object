@@ -150,7 +150,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Link object between contact and Portal Application</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -444,7 +444,7 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Currency1__c</fullName>
@@ -890,6 +890,11 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             <field>Restricted_App__c</field>
             <operation>equals</operation>
             <value>0</value>
+        </filters>
+        <filters>
+            <field>Portal_Application__c</field>
+            <operation>contains</operation>
+            <value>AVSEC</value>
         </filters>
         <label>All</label>
         <sharedTo>

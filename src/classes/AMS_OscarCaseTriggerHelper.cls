@@ -117,7 +117,7 @@ public class AMS_OscarCaseTriggerHelper {
 		}
 	}
 
-	public static void populateOscarFields(list<Case> triggerNew){
+	public static void populateOscarFields(list<Case> triggerNew, Map<Id,Case> oldMap, boolean isUpdate){
 
 		if(avoidRecursiveUpdateOnOSCAR){
 			return;
@@ -127,6 +127,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 		Set<Id> oscarIds = new Set<Id>();
 		List<Case> oscarCases = new List<Case>();
+		List<AMS_OSCAR_reset_dossier_reception__mdt> resetDossierReceptionDateMDT = [SELECT Label, DeveloperName FROM AMS_OSCAR_reset_dossier_reception__mdt];
 
 		 for(Case c : triggerNew){
 			if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) {
@@ -139,8 +140,9 @@ public class AMS_OscarCaseTriggerHelper {
 
 		List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
 		//WMO-564 copy case reason to oscar
+
 		Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c, Certificate_Quantity__c, Case_Reason__c
-																	 FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
+																	FROM AMS_OSCAR__c WHERE Id = :oscarIds]);
 
 		for(Case c : oscarCases){
 			if(!oscars.containsKey(c.Oscar__c)) continue;
@@ -178,6 +180,19 @@ public class AMS_OscarCaseTriggerHelper {
 			if(oscar.Open_TKT_System__c != c.Open_TKT_System__c){
 				oscar.Open_TKT_System__c = c.Open_TKT_System__c;
 				changed = true;
+			}
+
+			boolean statusExists = false;
+			if(isUpdate){
+				for(AMS_OSCAR_reset_dossier_reception__mdt dossierMDT : resetDossierReceptionDateMDT){
+					if(dossierMDT.Label == oldMap.get(c.Id).Status){
+						statusExists = true;
+					}
+				}
+				if(statusExists && !c.isClosed){
+					oscar.Dossier_Reception_Date__c = Date.today();
+					changed = true;
+				}
 			}
 
 			if(changed) oscarsToUpdate.add(oscar);
@@ -357,6 +372,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 	private static id RTSidra = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 	private static id RTSidraLite = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+	private static id RTSaam = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 	public static void CreateRiskChangeCode(){
 		if(AMS_OscarCase_RiskMgmt.runOnce()){
@@ -365,7 +381,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 			for(Case c : (List<Case>)Trigger.new){
 				Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
-				if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite){
+				if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite || c.RecordTypeId == RTSaam){
 					mapNewCase.put(c.Id, c);
 					if(cOld!=null)
 						mapOldCase.put(cOld.id, cOld);
@@ -431,6 +447,8 @@ public class AMS_OscarCaseTriggerHelper {
 					newCaseSubject = 'New Head Entity - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
 				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY)
 					newCaseSubject = 'Accreditation Type - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.Name;
+				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGCONVERSIONMCTOST)
+					newCaseSubject = 'Accreditation Type - GoStandard - ' + oscars.get(c.Oscar__c).Account__r.Name;
 				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.MCAE)
 					newCaseSubject = 'New Associate Entity - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
 				else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWAE)

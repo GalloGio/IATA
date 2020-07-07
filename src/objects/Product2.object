@@ -925,7 +925,6 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <controllingFieldValue>IATA Branded Merchandise</controllingFieldValue>
                 <valueName>New</valueName>
             </valueSettings>
             <valueSettings>
@@ -2481,6 +2480,11 @@ SIS Charge Code Type.</description>
                     <label>City Code Directory</label>
                 </value>
                 <value>
+                    <fullName>Dangerous Goods Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods Regulations ES</label>
+                </value>
+                <value>
                     <fullName>DGR Compliance Kits - Combos</fullName>
                     <default>false</default>
                     <label>DGR Compliance Kits - Combos</label>
@@ -2581,9 +2585,19 @@ SIS Charge Code Type.</description>
                     <label>IATA Cargo Handling Manual</label>
                 </value>
                 <value>
+                    <fullName>IATA Clearing Services Exchange Rates</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing Services Exchange Rates</label>
+                </value>
+                <value>
                     <fullName>IATA Consolidated Exchange Rates</fullName>
                     <default>false</default>
                     <label>IATA Consolidated Exchange Rates</label>
+                </value>
+                <value>
+                    <fullName>IATA COVID-19 Passenger Survey</fullName>
+                    <default>false</default>
+                    <label>IATA COVID-19 Passenger Survey</label>
                 </value>
                 <value>
                     <fullName>IATA Exchange Rates</fullName>
@@ -2644,6 +2658,11 @@ SIS Charge Code Type.</description>
                     <fullName>Live Animals Regulations</fullName>
                     <default>false</default>
                     <label>Live Animals Regulations</label>
+                </value>
+                <value>
+                    <fullName>Live Animals Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Live Animals Regulations ES</label>
                 </value>
                 <value>
                     <fullName>Load Control XML Messaging Toolkit</fullName>
@@ -2741,6 +2760,11 @@ SIS Charge Code Type.</description>
                     <label>Perishable Cargo Regulations</label>
                 </value>
                 <value>
+                    <fullName>Perishable Cargo Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Perishable Cargo Regulations ES</label>
+                </value>
+                <value>
                     <fullName>Publications Online</fullName>
                     <default>false</default>
                     <label>Publications Online</label>
@@ -2784,6 +2808,11 @@ SIS Charge Code Type.</description>
                     <fullName>Temperature Control Regulations</fullName>
                     <default>false</default>
                     <label>Temperature Control Regulations</label>
+                </value>
+                <value>
+                    <fullName>Temperature Control Regulations ES</fullName>
+                    <default>false</default>
+                    <label>Temperature Control Regulations ES</label>
                 </value>
                 <value>
                     <fullName>The Combined Cargo Conference Manual</fullName>
@@ -4208,11 +4237,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <default>false</default>
                     <label>data-and-statistics</label>
                 </value>
-                <value>
-                    <fullName>IATA Branded Merchandise</fullName>
-                    <default>false</default>
-                    <label>IATA Branded Merchandise</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -4763,6 +4787,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <fullName>Academic Partnership</fullName>
                     <default>false</default>
                     <label>Academic Partnership</label>
+                </value>
+                <value>
+                    <fullName>Aircraft Maintenance</fullName>
+                    <default>false</default>
+                    <label>Aircraft Maintenance</label>
                 </value>
                 <value>
                     <fullName>Airport &amp; Civil Aviation</fullName>
@@ -8197,6 +8226,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -8230,6 +8263,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing Services Exchange Rates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8278,6 +8315,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Live Animals Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8349,6 +8390,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
@@ -8374,6 +8419,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11313,6 +11362,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -11393,6 +11446,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -11461,6 +11518,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
@@ -11482,6 +11543,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14501,6 +14566,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -14533,7 +14602,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA COVID-19 Passenger Survey</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing Services Exchange Rates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14590,6 +14667,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Live Animals Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14669,6 +14750,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
@@ -14702,6 +14787,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17489,6 +17578,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -17581,6 +17674,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Load Control XML Messaging Toolkit</fullName>
                 <default>false</default>
             </values>
@@ -17657,6 +17754,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications Online</fullName>
                 <default>false</default>
             </values>
@@ -17686,6 +17787,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18547,10 +18652,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
-            <values>
-                <fullName>IATA Branded Merchandise</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
@@ -20724,6 +20825,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -20804,6 +20909,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Live Animals Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -20868,6 +20977,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Handbook</fullName>
                 <default>false</default>
             </values>
@@ -20889,6 +21002,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations ES</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21998,6 +22115,10 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>Product_Segment__c</picklist>
             <values>
                 <fullName>Academic Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance</fullName>
                 <default>false</default>
             </values>
             <values>

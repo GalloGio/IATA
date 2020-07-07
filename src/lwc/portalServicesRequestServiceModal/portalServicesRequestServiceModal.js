@@ -4,7 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import Id from '@salesforce/user/Id';
 
 //import labels
-
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import newServiceRequestlb from '@salesforce/label/c.ISSP_New_Service_Request';
 import newServiceAccessConfirmMsglb from '@salesforce/label/c.csp_ServiceAccessConfirm';
 import newServiceRequestConfirmMsglb from '@salesforce/label/c.csp_ServiceRequestConfirm';
@@ -54,7 +54,6 @@ import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
 import CSP_Breadcrumb_CompanyProfile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
 import ISSP_Page from '@salesforce/label/c.ISSP_Page';
 
-
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
@@ -62,8 +61,6 @@ import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 //import static resources
 import IATA_LOADING_IMAGE from '@salesforce/resourceUrl/IataLoadingImage';
 
-
-// import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import requestServiceAccess from '@salesforce/apex/PortalServicesCtrl.requestAccess';
 import getUserOptions from '@salesforce/apex/PortalServicesCtrl.getUserOptions';
 import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableIEPPortalServiceRoles';
@@ -74,7 +71,8 @@ import performCheckonPoll from '@salesforce/apex/DAL_WithoutSharing.performCheck
 import ISSP_AvailableService_newAppsRequest2 from '@salesforce/apex/PortalServicesCtrl.newAppsRequest2';
 import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
-import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+const AE = 'AE';
+const MULTICOUNTRY = 'Multicountry';
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
@@ -143,7 +141,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         return this.trackedServiceId;
     }
     set service(val) {
-        console.log('ppf', val)
         this.trackedServiceId = val;
     }
 
@@ -164,7 +161,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
         }
-
     }
 
     @api
@@ -184,8 +180,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     @track trackedServiceId;
     @track trackedServiceRecord = {};
-
-
     @track showConfirm = false;
     @track showPopUp = false;
     @track showSpinner = false;
@@ -213,7 +207,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track TDOptionalMessages;
     @track ICCSSuccessMessage;
     @track SSWSSuccessMessage;
-    @track defaultPortalUserRole = [];
+    @track defaultPortalUserRole;
     @track roleICCSList = [];
     @track radioOption = '';
     @track roleList;
@@ -222,8 +216,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track ICCSRole;
 
     //tracks visibility of intro modal
-
-    //tracks visibility of 
 
     //tracks visibility of buttons
     @track IEPRoleChangeButton = false;
@@ -290,7 +282,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
                             this.userContactId = userOptions.User_ContactId;
                         }
-                        if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
+                        if (userOptions.Location_Type == AE && userOptions.Accreditation_model == MULTICOUNTRY) {
+                            let string3 = this.label.csp_RequestService_ContactSupport;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string3.link(link3));
+                        } else if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
                             let string3 = this.label.csp_RequestService_ContactSupport;
                             let link0 = window.location.toString().replace('/services', '');
                             let link3 = link0 + '/support-reach-us';
@@ -312,8 +309,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                         let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
                                         item.label = this.label[newlabel];
                                     }
-
-
                                 });
                         }
                         else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
@@ -469,8 +464,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ShowIEPIntroMessage = false;
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
-        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true);
-
+		availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
+			.then(result => {
+			let myResults = JSON.parse(JSON.stringify(result));
+			let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
+			if (mydefaultPortalUserRole) {
+				this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
+				this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
+			} else {
+				console.log('Custom Setting configuration missing');
+			}
+		});
     }
 
     ICCSRolePick(event) {
@@ -509,7 +513,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showSpinner = true;
         this.newAppsRequestTD(this.trackedServiceId, this.serviceFullName, this.userContactId);
     }
-
 
     newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole) {
         ISSP_AvailableService_newAppsRequest2({
@@ -602,6 +605,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         let myRolesObj = [];
                         if (!this.ICCSRole) {
                             let iepRoles = results.filter(obj => { return obj.Connected_App__c.startsWith('IATA EasyPay') && obj.Permission_set_SSO__c != null });
+                            let mydefaultPortalUserRole = results.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
+                            if (mydefaultPortalUserRole) {
+                                this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
+                            } 
                             for (const role of iepRoles) {
                                 myRolesObj.push({ label: role.Connected_App__c + ' - ' + role.Role__c, value: role.Permission_set_SSO__c });
                             }
@@ -614,7 +621,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         this.timeoutCounter = 0;
                         this.pollServer();
                     });
-
             });
     }
 
@@ -641,7 +647,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                     location.reload();
                                 });
                         }
-
                     }
                     if (results === 'Incomplete') {
                         this.timeoutCounter = this.timeoutCounter + 1;
@@ -686,10 +691,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         location.reload();
     }
 
-    checkStuff() {
-        console.log('test');
-    }
-
     handlRadioOptions(event) {
         const radioOption = event.target.attributes.getNamedItem('data-id');
         event.target.value = !event.target.value;
@@ -720,26 +721,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.IEPAdmin = false;
     }
 
-    loadServiceInfo() {
-
-        /*getServiceDetails({ serviceId: '$trackedServiceId'}){
-            this.serviceDetailsResult = result;
-            if (result.data) {
-                this.serviceRecord = result.data;
-                console.log(this.serviceRecord);
-                this.isAdmin = this.serviceRecord.isAdmin;
-                this.addUsersEnable = this.serviceRecord.addUsersEnable;
-                this.serviceName = this.serviceRecord.recordService.ServiceName__c;
-            }
-        }*/
-    }
-
-
-
-
-
-
-
     handleSubmitRequest() {
         this.showConfirm = false; //hides confirm box
         //displays popup with active spinner
@@ -761,7 +742,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             }).catch(error => {
                 console.error(error);
             });
-
     }
 
     navigateToServicesPage() {

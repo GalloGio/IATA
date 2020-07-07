@@ -334,6 +334,11 @@ No value set denotes that the agent is logged in.</description>
             <operation>equals</operation>
             <value>Africa &amp; Middle East</value>
         </filters>
+        <filters>
+            <field>Maximum_case_workload__c</field>
+            <operation>notEqual</operation>
+            <value>0</value>
+        </filters>
         <label>AME Agents</label>
         <language>en_US</language>
     </listViews>
@@ -363,6 +368,11 @@ No value set denotes that the agent is logged in.</description>
             <field>Region__c</field>
             <operation>equals</operation>
             <value>Americas</value>
+        </filters>
+        <filters>
+            <field>Maximum_case_workload__c</field>
+            <operation>notEqual</operation>
+            <value>0</value>
         </filters>
         <label>Americas - All</label>
         <language>en_US</language>
@@ -439,6 +449,11 @@ No value set denotes that the agent is logged in.</description>
             <field>Region__c</field>
             <operation>equals</operation>
             <value>Europe</value>
+        </filters>
+        <filters>
+            <field>Maximum_case_workload__c</field>
+            <operation>notEqual</operation>
+            <value>0</value>
         </filters>
         <label>SCE Agents</label>
         <language>en_US</language>

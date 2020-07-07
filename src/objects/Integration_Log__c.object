@@ -187,6 +187,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Record_Id__c</fullName>
+        <description>The Record ID of the record that this log entry refers to.</description>
+        <externalId>false</externalId>
+        <label>Record ID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Status_Detail__c</fullName>
         <description>Optional text field used to provide further information about the Status.</description>
         <externalId>false</externalId>
@@ -244,9 +255,16 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Detail__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>object_type__c</columns>
+        <columns>RecordId__c</columns>
+        <columns>Record_Id__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>ILog-{000000}</displayFormat>
