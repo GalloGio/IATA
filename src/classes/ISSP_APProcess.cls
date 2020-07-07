@@ -319,7 +319,6 @@ global without sharing class ISSP_APProcess {
 		//PASS
 		selectedPassCountries= new List<SelectOption>();
 		if(ApexPages.currentPage().getParameters().get('airline')==AMS_Utils.passParticipation){
-			ISSP_PASS_Participation_Checklist = PageReference.forResource('PASS_Airline_Joining_Checklist').getUrl();
 			isPassAirline=true;
 			passParam='&airline=PASS';
 		}else{
@@ -454,7 +453,12 @@ global without sharing class ISSP_APProcess {
 				vHQAccountId = newCase.Account_Concerned__r.Top_Parent__c;
 			}
 
-			retrieveHQAccountDetails(vHQAccountId);
+
+			if(isPassAirline && isGSSAUser){
+				retrieveHQAccountDetails(con.AccountId);
+			}else{
+				retrieveHQAccountDetails(vHQAccountId);
+			}
 
 			if (isGSSAUser){  //For GSSA display Airline details
 				strGSSAName = newCase.Account.Name;
@@ -514,30 +518,30 @@ global without sharing class ISSP_APProcess {
 				}
 				if(isPASSGSSA){
 					if(String.isBlank(newForm.GSSA_Legal_Name__c)){
-						newForm.GSSA_Legal_Name__c = con.Account.Name;
+						newForm.GSSA_Legal_Name__c = newCase.Account.Name;
 					}
 					if(String.isBlank(newForm.GSSA_VAT_Id__c)){
 						newForm.GSSA_VAT_Id__c = '';
 					}
 					if(String.isBlank(newForm.GSSA_Code__c)){
-						newForm.GSSA_Code__c = con.Account.IATACode__c;
+						newForm.GSSA_Code__c = '';
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Address__c)){
-						newForm.GSSA_HQ_Address__c = con.Account.BillingStreet + ', ' + con.Account.BillingCity + ', ' + con.Account.BillingState + ', ' + con.Account.BillingPostalCode + ', ' +  con.Account.BillingCountry;
+						newForm.GSSA_HQ_Address__c = strParentBillingStreet;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_City__c)){
-						newForm.GSSA_HQ_City__c = con.Account.BillingCity;
+						newForm.GSSA_HQ_City__c = strParentBillingCity;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_State__c)){
-						newForm.GSSA_HQ_State__c = con.Account.BillingState;
+						newForm.GSSA_HQ_State__c = strParentBillingState;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Post_Code__c)){
-						newForm.GSSA_HQ_Post_Code__c = con.Account.BillingPostalCode;
+						newForm.GSSA_HQ_Post_Code__c = strParentBillingCode;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Country__c)){
-						newForm.GSSA_HQ_Country__c = con.Account.BillingCountry;
+						newForm.GSSA_HQ_Country__c = strParentBillingCountry;
 					}
-
+					
 				}
 				getCityData();//TF
 				newForm.Submitted_to_IATA__c = FALSE;
@@ -731,6 +735,12 @@ global without sharing class ISSP_APProcess {
 									break;
 								}
 							}
+							if(isPASSGSSA){
+								if(newForm.Accept_Online_Corrections__c==null){
+									allfieldsfilled = false;
+								}
+							}
+							
 					}else {
 						allfieldsfilled = true;
 					}
@@ -775,14 +785,7 @@ global without sharing class ISSP_APProcess {
 
 	private void popContact(){
 		User user = [SELECT Id,ContactId FROM USER WHERE Id=:Userinfo.getUserId()];
-		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id,Account.Category_Other_Value__c,
-						Account.BillingStreet,
-						Account.BillingCity,
-						Account.BillingState,
-						Account.BillingPostalCode,
-						Account.BillingCountry
-			   FROM Contact
-			   WHERE Id=:user.ContactId];
+		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id,Account.Category_Other_Value__c FROM Contact WHERE Id=:user.ContactId];
 
 	}
 
@@ -826,7 +829,7 @@ global without sharing class ISSP_APProcess {
 			'Fin_Adm_Contact_Job_Title__c,Fin_Adm_Contact_Phone__c,Fin_Adm_Contact_Email__c,Fin_Adm_Contact_Address__c,Fin_Adm_Contact_Zip_Code__c,Fin_Adm_Contact_City__c,Fin_Adm_Contact_Country__c';
 		}
 		if(isPassAirline){
-			queryString += ',Type_of_participation_desired__c,CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
+			queryString += ',CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
 			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Corrections_Email_1__c,CASS_Corrections_Email_2__c,GSSA_Legal_Name__c,'+
 			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
 			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
@@ -901,13 +904,7 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Contact retrieveContact (String vContactID){
-		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c, Title,
-									Account.BillingStreet,
-									Account.BillingCity,
-									Account.BillingState,
-									Account.BillingPostalCode,
-									Account.BillingCountry
-								 FROM Contact where Id = :vContactID ];
+		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c, Title FROM Contact where Id = :vContactID ];
 		if(contact.size()>0){
 			return contact[0];
 		}else{
@@ -1046,7 +1043,6 @@ global without sharing class ISSP_APProcess {
 		String description;
 
 		 if(isGSSAUser) {
-			newForm.Type_of_participation_desired__c = 'PASS Participation via GSSA';
 			if(strOperationType=='Airline Joining') {
 				vGSSAAccountId = con.AccountId;
 				vHQAccountId = cassairlineid; //For Joining selected AL in list is a HQ Account Id
@@ -1108,7 +1104,6 @@ global without sharing class ISSP_APProcess {
 		//AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
 		if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
 			String countryConcerned='';
-			newForm.Type_of_participation_desired__c = 'PASS Participation Direct';
 			if(!selectedPASSCountries.isEmpty()) {
 				if(selectedPASSCountries.size()==1){//if there is only one selected country, there won't be child cases, so the field IFAP_Country_ISO__c is going to be populated
 					newCase.IFAP_Country_ISO__c=selectedPASSCountries[0].getValue();
@@ -1154,9 +1149,6 @@ global without sharing class ISSP_APProcess {
 						newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
 																				hqAccount.Airline_Prefix__c,
 																				apCountryisocode, airlineList[0].Name, airlineList[0].Id);
-						if(isPassAirline){
-							newCase.AccountId = newCase.Account_Concerned__c;
-						}
 					}
 				}
 			} else {
@@ -1575,9 +1567,8 @@ global without sharing class ISSP_APProcess {
 
 			newCase.Status = 'For Review and Acceptance';
 			newCase.Dossier_Reception_Date__c = Date.today();
-			if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id){
-				newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
-			}
+			if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
+			newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
 			upsert newCase;
 
 			sendConfirmationEmail(newCase);
@@ -1665,7 +1656,7 @@ global without sharing class ISSP_APProcess {
 			}
 		}
 		if(isPassAirline){
-			listMandatoryFiles.add('PASSAgreement');
+			listMandatoryFiles.add('FormOfAuthorization');
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;
@@ -1745,7 +1736,7 @@ global without sharing class ISSP_APProcess {
 			}
 
 			if(strAreaType=='Airline Joining') {
-				isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c FROM AP_Country_Requierment__c
+				isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
 								WHERE Line_of_business__c = :strLoB ORDER by Name];
 			} else {  //AP Change process, so based country list on Services Rendered
 				if(!isGSSAUser) {
@@ -1759,22 +1750,12 @@ global without sharing class ISSP_APProcess {
 								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
 								ORDER BY ISO_Country_formula__c];
 					}
-					if(strLOB == AMS_Utils.passParticipation || dupLoB == AMS_Utils.passParticipation){
-						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason AND Services_Rendered_Status__c='Active'
-								ORDER BY ISO_Country_formula__c];
-					}
 				} else {
-					if(strLOB == AMS_Utils.passParticipation || dupLoB == AMS_Utils.passParticipation){
-						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-								WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c=:AMS_Utils.passGSSACaseReason  AND Services_Rendered_Status__c='Active'
-								ORDER BY ISO_Country_formula__c];
-					}
-					else{
-						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+					System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
+
+					isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
 								WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
 								ORDER BY ISO_Country_formula__c];
-					}
 				}
 			}
 
@@ -1925,31 +1906,15 @@ global without sharing class ISSP_APProcess {
 				  ORDER BY Name];
 		} else { //Or else get list of existing Airlines where this GSSA renders the CASS service, for selected country, for changes
 			if(gssaCountryISOCode != null) {
-				if(strOperationType == 'PASS'){
-					existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
-							FROM Services_Rendered__c
-							WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='PASS Participation via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode
-							 ORDER BY Services_Rendered_to_Airline__r.Name];
-				} else {
-					existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
+			  existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
 							FROM Services_Rendered__c
 							WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode
 							 ORDER BY Services_Rendered_to_Airline__r.Name];
-				}
-			  
 			} else {
-				if(strOperationType == 'PASS'){
-					existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
-							FROM Services_Rendered__c
-							WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='PASS Participation via GSSA' AND Services_Rendered_Status__c='Active'
-							 ORDER BY Services_Rendered_to_Airline__r.Name];
-				} else {
-					existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
+				existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
 							FROM Services_Rendered__c
 							WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
 							 ORDER BY Services_Rendered_to_Airline__r.Name];
-				}
-				
 			}
 
 		}
@@ -2315,11 +2280,7 @@ global without sharing class ISSP_APProcess {
 
 		strParentAOCName = hqAccount.Name_on_AOC__c;
 		strParentDesignator = hqAccount.Airline_designator__c;
-		if(isPASSGSSA) {
-			strParentIATACode = hqAccount.Airline_Prefix__c;
-		} else {
-			strParentIATACode = hqAccount.IATACode__c;
-		}
+		strParentIATACode = hqAccount.IATACode__c;
 		strParentBillingStreet = hqAccount.BillingStreet;
 		strParentBillingCity = hqAccount.BillingCity;
 		strParentBillingState = hqAccount.BillingState;
@@ -2458,8 +2419,7 @@ global without sharing class ISSP_APProcess {
 					[SELECT CaseNumber, CreatedDate, Account_Concerned__r.Site, Id, Subject, Status, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
 					 FROM Case
 					 WHERE RecordType.Name IN ('IDFS Airline Participation Process') AND (Status = 'Draft' OR Status = 'Pending customer' OR Status = 'For Review and Acceptance') AND Origin = 'Portal'
-					 AND Visible_on_ISS_Portal__c = true AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId AND (NOT Case.Reason1__c LIKE '%via%'))
-						OR (Case.Reason1__c='PASS Participation' AND Case.Provider__c=:con.AccountId))
+					 AND Visible_on_ISS_Portal__c = true AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId AND (NOT Case.Reason1__c LIKE '%via%')))
 					 ORDER BY CaseNumber DESC]));
 			}
 			return setConn;
@@ -3269,37 +3229,26 @@ global without sharing class ISSP_APProcess {
 		return null;
 	}
 
+	//DB :: PASS
 	public void withdrawCountries(){
+
 		List<String> isoCountriesList = new List<String>();
-		List<String> isoCountriesInactiveList = new List<String>(); 
-		List<Services_Rendered__c> serviceRenderedList;
-		if(!isGSSAUser){
-			if(withdrawPassCountries == null || withdrawPassCountries.size() == 0) {
-				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please choose at least one country to invalidate');
-				ApexPages.addMessage(myMsg);
-				return;
-			}
-			
-			for(SelectOption option : withdrawPassCountries){
-				isoCountriesList.add(option.getValue());
-				isoCountriesInactiveList.add(option.getLabel());
-			}
-			serviceRenderedList =[SELECT Id,Services_Rendered_Type__c, Services_Rendered_Status__c
-															FROM Services_Rendered__c
-															WHERE Services_Rendered_Type__c LIKE 'PASS%'
-															AND (Services_Rendered_By__r.Id=:con.accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:con.accountId)
-															AND BSP_Country__c IN:isoCountriesList];
-		} else {
-			serviceRenderedList =[SELECT Id,Services_Rendered_Type__c, Services_Rendered_Status__c, ISO_Country_formula__c
-															FROM Services_Rendered__c
-															WHERE Services_Rendered_Type__c='PASS Participation via GSSA'
-															AND Services_Rendered_By__r.Id=:con.accountId
-								  							AND Services_Rendered_to_Airline__c =: cassairlineid
-															AND BSP_Country__c=:newCase.IFAP_Country_ISO__c]; 
-			
-			isoCountriesInactiveList.add(serviceRenderedList[0].ISO_Country_formula__c);
+		List<String> isoCountriesInactiveList = new List<String>();
+		if(withdrawPassCountries == null || withdrawPassCountries.size() == 0) {
+			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please choose at least one country to invalidate');
+			ApexPages.addMessage(myMsg);
+			return;
 		}
-		
+
+		for(SelectOption option : withdrawPassCountries){
+			isoCountriesList.add(option.getValue());
+			isoCountriesInactiveList.add(option.getLabel());
+		}
+		List<Services_Rendered__c> serviceRenderedList=[SELECT Id,Services_Rendered_Type__c, Services_Rendered_Status__c
+														FROM Services_Rendered__c
+														WHERE Services_Rendered_Type__c LIKE 'PASS%'
+														AND (Services_Rendered_By__r.Id=:con.accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:con.accountId)
+														AND BSP_Country__c IN:isoCountriesList];
 		Map<Id,sObject> objectMapServiceRendered=new Map<Id,sObject>();
 
 		for(Services_Rendered__c service : serviceRenderedList){
@@ -3409,12 +3358,10 @@ global without sharing class ISSP_APProcess {
 	public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
 		List<Services_Rendered__c> serviceRenderedList=[SELECT Id
 														FROM Services_Rendered__c
-														WHERE (Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason
-														OR Services_Rendered_Type__c=:AMS_Utils.passGSSACaseReason)
+														WHERE Services_Rendered_Type__c=:AMS_Utils.passCountryCaseReason
 														AND (Services_Rendered_By__r.Id=:accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:accountId)];
-		if(isGSSAUser){
-			return false;
-		} else	if(serviceRenderedList.size()>0){
+
+		if(serviceRenderedList.size()>0){
 			return true;
 		}
 

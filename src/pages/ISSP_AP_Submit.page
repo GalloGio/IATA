@@ -68,7 +68,7 @@
             <apex:outputPanel rendered="{!OR(isBSP,isCASS,isPassAirline,managePASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
                     <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
-                        <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,$Label.ISSP_AP_PASS_FieldsFilled,'You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
+                        <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="{!$Label.ISSP_PASS_Participation_AgreementTerms}" columns="1" collapsible="false" rendered="{!isPassAirline || managePASS}">
 						<div class="aplabel" style="font-weight:bold;"> {!$Label.ISSP_PASS_Download_Documents}</div>
@@ -84,7 +84,7 @@
                             <div class="aplabel">
                                 <apex:outputText value="{!$Label.ISSP_PASS_Agreement}" escape="false" styleclass="aplabel"/>
                             </div>
-                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=PASSAgreement"
+                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=FormOfAuthorization"
                                 height="190px" width="100%" scrolling="false" rendered="true"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
