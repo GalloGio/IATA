@@ -388,14 +388,9 @@
                     <label>PASS Participation</label>
                 </value>
                 <value>
-                    <fullName>PASS Country</fullName>
+                    <fullName>PASS Participation via GSSA</fullName>
                     <default>false</default>
-                    <label>PASS Country</label>
-                </value>
-                <value>
-                    <fullName>PASS Country Aggregator</fullName>
-                    <default>false</default>
-                    <label>PASS Country Aggregator</label>
+                    <label>PASS Participation via GSSA</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
