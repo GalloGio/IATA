@@ -201,7 +201,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>oscar.Bank_Guarantee_received__c</leftValueReference>
+                <leftValueReference>oscar.Bank_Guarantee_requested__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -211,7 +211,7 @@
                 <leftValueReference>oscar.Disapproval_date__c</leftValueReference>
                 <operator>LessThan</operator>
                 <rightValue>
-                    <elementReference>oscar.Bank_Guarantee_received__c</elementReference>
+                    <elementReference>oscar.Bank_Guarantee_requested__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
