@@ -1045,6 +1045,15 @@ Product__r.Product_Section__c = &quot;BIQ005&quot;
             <template>All/IDFS_Case_assignment_Profit_center_VF</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>New_Front_End_Changes</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>New BSPlink</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>CasesSouthWestAfrica</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND( 
