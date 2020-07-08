@@ -405,7 +405,7 @@
    
     </script>
 
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
        <div id="contentWrapper">
     <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
