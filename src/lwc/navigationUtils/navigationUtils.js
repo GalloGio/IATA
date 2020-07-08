@@ -42,19 +42,14 @@ const navigateToNewPage = (baseURl, paramsObject) => {
 };
 
 const getParamsFromPage = () => {
-	let prmstr = window.location.search.substr(1);
+	let prmstr = window.location.search.substr(1).toString();
 
-	let paramsReturn = {};
+	//create a JSON string, replacing & with comma (and quotes) and = with colon (and quotes)
+	// Also replacing the + sign with %20 so it can be properly converted in a space
+	let	paramsMap = prmstr ? decodeURIComponent('{"' + prmstr.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"').replace(new RegExp('\\+', 'g'),'%20') + '"}') : '{}';
 
-	if(prmstr !== undefined && prmstr !== null && prmstr !== ''){
-		let prmarr = prmstr.split("&");
-		for ( let i = 0; i < prmarr.length; i++) {
-			let tmparr = prmarr[i].split("=");
-			paramsReturn[tmparr[0]] = tmparr[1];
-		}
-	}
-
-	return paramsReturn;
+	//parsing the JSON string into an object
+	return JSON.parse(paramsMap);
 };
 
 const getPageName = () => {
