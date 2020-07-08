@@ -98,24 +98,26 @@ public with sharing class PortalRecommendationCtrl {
 		String iecURL = '/servlet/networks/switch?networkId='+networkId.substring(0,15)+'&startURL=';
 		for(Card_Visibility__c rec : recommendationList) {
 			Recommendations_Visibility__c rv= rec.Recommendation_Visibility__r;
-			if (rv.Product__c != null || availableAppNames.contains(rv.PortalService__c) || rv.PortalService__c==null ) {
-
-				if (rv.RecordTypeId != serviceRecommendationRecTypeId) {
-					prodDescription = getProductDescriptionWithUserLanguage(LANGUAGE, rec);
-				}
-				string prefix =String.isEmpty(rv.Content_Reference__c)?iecURL:'';
-				recommendations.add(new RecommendationWrapper(
-					rv.Icon_URL__c,
-					rv.RecordType.Name,
-					rv.RecommendationTitle__c,
-					(rv.RecordTypeId != serviceRecommendationRecTypeId ? ( !String.isBlank(prodDescription) ? prodDescription : rv.Product_Description__c): rv.Service_Description__c),
-					learnMoreLabel,
-					(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.InformationButtonLink__c: rv.InformationButtonLink__c),
-					(rv.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : (rv.PortalService__r.Requestable__c ? (isPortalAdmin ? (rv.PortalService__r.Cannot_be_managed_by_portal_admin__c == false ? enableThisServiceLabel : requestServiceLabel ) : requestServiceLabel) : goToServiceLabel) ),
-					(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.ActionButtonLink__c : rv.ActionButtonLink__c),
-					(rv.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
-				));
+			if (rv.RecordTypeId == serviceRecommendationRecTypeId && rv.PortalService__c!=null && !availableAppNames.contains(rv.PortalService__c)) {
+				continue; 
 			}
+
+			if (rv.RecordTypeId != serviceRecommendationRecTypeId) {
+				prodDescription = getProductDescriptionWithUserLanguage(LANGUAGE, rec);
+			}
+			string prefix =String.isEmpty(rv.Content_Reference__c)?iecURL:'';
+			recommendations.add(new RecommendationWrapper(
+				rv.Icon_URL__c,
+				rv.RecordType.Name,
+				rv.RecommendationTitle__c,
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? ( !String.isBlank(prodDescription) ? prodDescription : rv.Product_Description__c): rv.Service_Description__c),
+				learnMoreLabel,
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.InformationButtonLink__c: rv.InformationButtonLink__c),
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : (rv.PortalService__r.Requestable__c ? (isPortalAdmin ? (rv.PortalService__r.Cannot_be_managed_by_portal_admin__c == false ? enableThisServiceLabel : requestServiceLabel ) : requestServiceLabel) : goToServiceLabel) ),
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.ActionButtonLink__c : rv.ActionButtonLink__c),
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
+			));
+			
 
 		}
 
