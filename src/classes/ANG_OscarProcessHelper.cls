@@ -2068,7 +2068,6 @@ global class ANG_OscarProcessHelper {
 		for (String conId :templateContIdMap.keyset()){
 
 			Map<String, Id> countryTemplates = AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false);
-			System.debug('JR Debug countryTemplates: ' + countryTemplates);		
 			
 			for(Id caseId: notifTempNameCaseMap.get(conId).KeySet()){
 
