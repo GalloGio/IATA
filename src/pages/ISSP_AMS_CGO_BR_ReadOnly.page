@@ -26,7 +26,9 @@
 	          <apex:pageBlockSection columns="1" collapsible="false">
 	              <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!IF(isCNSAgency, $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
+	                            {!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
+									IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial,
+										IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)))}
 	                        </apex:outputpanel>                       
 	                    </apex:facet>
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
