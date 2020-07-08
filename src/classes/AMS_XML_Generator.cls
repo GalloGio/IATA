@@ -791,12 +791,17 @@ public with sharing class AMS_XML_Generator {
 		}
 
 		Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+		Id BSPLinkId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 
 /*  NEWGEN-801 */
 
-		lAgencyAuthorizations = [SELECT Id, ANG_FormOfPayment_ID__c,Account__c from Agency_Authorization__c where Account__c in :setAgencyKeys and RecordTypeId =:formOfPaymentRTId and Status__c = 'Active' ];
+		lAgencyAuthorizations = [
+			SELECT Id, ANG_FormOfPayment_ID__c,Account__c, RecordTypeId, Account__r.Location_Class__c, Account__r.Category__c, Status__c
+			FROM Agency_Authorization__c
+			WHERE Account__c IN :setAgencyKeys
+			AND RecordTypeId IN (:formOfPaymentRTId, :BSPLinkId)];
 
-		if(mAgencyAuthorizations == null)
+			if(mAgencyAuthorizations == null)
 			mAgencyAuthorizations =  new Map<Id, List<Agency_Authorization__c>>();
 
 		for(Agency_Authorization__c aa: lAgencyAuthorizations){
@@ -1854,6 +1859,8 @@ public with sharing class AMS_XML_Generator {
 
 			//Authorizations Codes
 
+			Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+			Id BSPLinkId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 			Dom.Xmlnode nodeAauthorizationsNode = agencyNode.addChildElement('authorizations', null, null);
 
 			List<Agency_Authorization__c> agencyAuthl = mAgencyAuthorizations.get(agency.Id);
@@ -1861,13 +1868,33 @@ public with sharing class AMS_XML_Generator {
 			if(agencyAuthl == null){
 
 				getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',null);
+				getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
 
 			}else{
-
+				Set<String> changeCodeSet = new Set<String>{'NEW','FIN','TER','CLO'};
 				for(Agency_Authorization__c aaElem: agencyAuthl){
 
-					getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',aaElem.ANG_FormOfPayment_ID__c);
-
+					if(aaElem.RecordTypeId == formOfPaymentRTId && aaElem.Status__c == 'Active'){
+						getElementNode(nodeAauthorizationsNode, 'form_of_payment_id',aaElem.ANG_FormOfPayment_ID__c);
+					}else if(aaElem.RecordTypeId == BSPLinkId){
+						if(aaElem.Account__r.Location_Class__c == 'G' && aaElem.Account__r.Category__c == 'GSA General Sales Agent'){
+							if(mAg_VS_AgChangeCode.containsKey(aaElem.Account__c)){
+								if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSA' && aaElem.Status__c == 'Active'){
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'Yes');
+								}else if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSD' && aaElem.Status__c == 'Non-Active'){
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'No');
+								}else if(!changeCodeSet.contains(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c) && aaElem.Status__c == 'Active'){
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'Yes');
+								}else{
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
+								}
+							}else{
+								getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
+							}
+						}else{
+							getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
+						}
+					}
 				}
 			}
 
