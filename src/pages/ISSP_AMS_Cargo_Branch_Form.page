@@ -485,11 +485,12 @@
                 <apex:pageBlockSection columns="1" id="LegalStatusSection">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!IF(isCNSAgency, $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
-                                IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
+							{!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
+								IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial,
+                                	IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)))}
                         </apex:outputpanel>
                         </apex:facet>
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(isCNSAgency, $Label.ISSP_AMS_Step3_Branch_Location_CNS, $Label.ISSP_AMS_Step3_Branch_Location)}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_Step3_Branch_Location_CNS, IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_Step3_Branch_Location_CASS_Commercial ,$Label.ISSP_AMS_Step3_Branch_Location))}"/>
                        
                     <apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />

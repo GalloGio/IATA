@@ -466,7 +466,7 @@
                             </header>
                                 
                             <div class="row bankDetails" style="padding-top: 20px">
-                                <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
+                                <div class="col-md-12" style="display:{!IF(AND(communityName!='CNS',isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
                                     <input type="button" class="iatabtn btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                                 </div>
                             </div>
@@ -538,7 +538,7 @@
                             </header>
                             <div class="row" style="padding-top: 20px">
                                 <div class="col-md-12 padded-on-bottom">
-                                <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}" onclick="proceedToVR(); return false;"/>
+                                <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!AND(communityName!='CNS', isUserAccAccredited)}" onclick="proceedToVR(); return false;"/>
                             
                                 <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
                                     <a href="#" onclick="proceedToVMFR(); return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>

@@ -23031,6 +23031,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>SECTION 1 - IATA Accredited Head Office Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</shortDescription>
+        <value>SECTION 1 - Commercial Account Head Office Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title_CNS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24378,6 +24386,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Branch Location</shortDescription>
         <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following IATA Approved agent:&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Branch_Location_CASS_Commercial</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 Branch Location CASS Commercial</shortDescription>
+        <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following Commercial Account Head Office:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Branch_Location_CNS</fullName>
