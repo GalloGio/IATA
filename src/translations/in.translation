@@ -13183,15 +13183,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label>Apakah yakin ingin dibatalkan?</label>
+        <label>Apakah anda yakin ingin dibatalkan?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label>Yakin ingin menghapus data ini?</label>
+        <label>Apakah anda yakin ingin menghapus data ini?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label>Apakah yakin pembaruan ini akan dibuang?</label>
+        <label>Apakah anda yakin pembaruan ini akan dibuang?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -16947,7 +16947,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label>Agensi diproses</label>
+        <label>Agensi telah di proses</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
@@ -17689,7 +17689,7 @@ Jika penangguhan maskapai penerbangan menunjukkan nilai tagihan yang disesuaikan
         <name>ISSP_BSP_Concerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Kembali</label>
         <name>ISSP_Back</name>
     </customLabels>
     <customLabels>
@@ -21794,7 +21794,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Submit --></label>
+        <label>Kirim</label>
         <name>ISSP_Submit</name>
     </customLabels>
     <customLabels>

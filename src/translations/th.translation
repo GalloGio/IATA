@@ -13446,7 +13446,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>โปรดทราบ! เมื่อคัดลอกข้อมูลความเป็นเจ้าของไปยังบริษัทตัวแทนแห่งใดแห่งหนึ่ง คุณจะลบข้อมูลความเป็นเจ้าของที่มีอยู่ของบริษัทตัวแทนเป้าหมาย</label>
+        <label>โปรดทราบ! เมื่อคัดลอกข้อมูลความเป็นเจ้าของไปยังบริษัทตัวแทนแห่งใดแห่งหนึ่ง คุณจะลบข้อมูลความเป็นเจ้าของที่มีอยู่ของบริษัทตัวแทนนั้น</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -16862,7 +16862,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>รหัส IATA แบบเดียวกับที่มีการปรับปรุง ไม่สามารถเพิ่มเป็นเจ้าของบริษัท</label>
+        <label>รหัส IATA แบบเดียวกับที่มีการอัพเดท จะไม่สามารถเพิ่มเป็นเจ้าของบริษัทได้</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -17676,7 +17676,7 @@ and
         <name>ISSP_BSP_Concerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>กลับ</label>
         <name>ISSP_Back</name>
     </customLabels>
     <customLabels>
