@@ -116,8 +116,9 @@ public class MITA_PortalTest {
 			ctrl.getBIETAAgreementTypes();
 			ctrl.getMITASuggestionTable();
 			ctrl.getBIETASuggestionTable();
-			ctrl.selectMITAAgreement();
-			ctrl.selectBIETAAgreement();
+			string s = ctrl.RetrieveOtherAirlineContacts();
+			ctrl.selectedAirlineId=Airlines[0].Id;
+			s = ctrl.RetrieveOtherAirlineContacts();
 		}
 		Test.stopTest();
 	}

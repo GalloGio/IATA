@@ -196,7 +196,25 @@
 			<div class="container">
 				<apex:image styleclass="mastericonx" url="{!URLFOR($Resource.MITAicons, 'icon-x.png')}" style="display:none" />
 				<apex:image styleclass="mastericonarrow" url="{!URLFOR($Resource.MITAicons, 'icon-arrow.png')}" style="display:none" />
-				<c:Loading />
+				
+				<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+					<apex:actionStatus id="Loading" stopText="">
+						<apex:facet name="start">
+							<apex:outputPanel >
+								<div id="loading">
+									<div style="height:100%;width:100%;z-index:100; position:fixed;background:black;opacity:0.5; top:0; left:0;"></div>
+								</div>
+							</apex:outputPanel>
+						</apex:facet>
+					</apex:actionStatus>
+				<script>
+				function startLoading(){
+					$('[id*="Loading"]').show();
+				}
+				function stopLoading(){
+					$('[id*="Loading"]').hide();
+				}
+				</script>
 
 				<apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
 				<apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
@@ -226,12 +244,13 @@
 							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
 							"pageLength": 50,
 							"columnDefs": [
-								{ "name": "designator", "targets": 0, "width": "110px" },
-								{ "name": "code", "targets": 1, "width": "110px" },
-								{ "name": "prefix", "targets": 2, "width": "110px" },
+								{ "name": "designator", "targets": 0},
+								{ "name": "code", "targets": 1},
+								{ "name": "prefix", "targets": 2},
 								{ "name": "name", "targets": 3 },
 								{ "name": "type", "targets": 4 },
-								{ "name": "active", "targets": 5, "width": "110px" }
+								{ "name": "active", "targets": 5},
+								{ "name": "actions", "targets": 6, "orderable": false}
 							],
 							"language": {
 								"lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
@@ -262,6 +281,31 @@
 						});
 					}
 
+					function initOtherContactTable() {
+						var otherConTable = $('#otherContactTable').DataTable({
+							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
+							"pageLength": 10,
+							"columnDefs": [
+								{ "name": "Name", "targets": 0},
+								{ "name": "email", "targets": 1},
+								{ "name": "Contact Type", "targets": 2},
+								{ "name": "Teletype", "targets": 3 }
+							],
+							"language": {
+								"lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+								"zeroRecords": "{!$Label.ISSP_Nothing_found}",
+								"info": "{!$Label.ISSP_Showing_page}",
+								"infoEmpty": "{!$Label.ISSP_No_records_available}",
+								"infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+								"search": "{!$Label.ISSP_Search}",
+								"paginate": {
+									"next": "{!$Label.ISSP_Next}",
+									"previous": "{!$Label.ISSP_Previous}"
+								}
+							}
+						});
+					}
+
 
 					function filterAgreements(isMITA) {
 						var MB = isMITA ? "MITA" : "BIETA";
@@ -281,7 +325,7 @@
 						var suggestionsTable = $('#' + (isMITA ? 'MITA' : 'BIETA') + 'suggestionsTable').DataTable({
 							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
 							"pageLength": 50,
-							"columnDefs": [
+							"columnDefs": [+
 								{ "name": "dcode", "targets": 0, "width": "110px" },
 								{ "name": "ncode", "targets": 1, "width": "110px" },
 								{ "name": "prefix", "targets": 2, "width": "110px" },
@@ -342,6 +386,15 @@
 						activeMainTab = maintab;
 						activeTab[maintab] = tab;
 					}
+
+					function showOtherAirlineContacts(){
+						$( '#otherAirCon').modal('show');
+						initOtherContactTable();
+					}
+
+					function closeOtherAirlineContact() {
+						$( '#otherAirCon' ).modal('hide');
+					}
 				</script>
 
 				<apex:outputPanel id="column2" style="width:40%">
@@ -349,6 +402,41 @@
 
 					<apex:outputPanel id="accountInfoPanel">
 						<apex:form >
+							<apex:actionFunction action="{!RetrieveOtherAirlineContacts}" name="RetrieveOtherAirlineContacts" onComplete="showOtherAirlineContacts();" reRender="ModalOtherContacts">
+								<apex:param name="myParam" assignTo="{!selectedAirlineId}" value=""/>
+							</apex:actionFunction>
+							<!-- MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
+							<apex:outputPanel id="ModalOtherContacts">
+								<div class="modal fade" id="otherAirCon" role="dialog">
+									<div class="modal-dialog modal-lg" style="width: 1100px;">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">{!$Label.ISSP_Airline}: {!selectedAirlineName}</h4>
+											</div>
+											<div class="modal-body">
+												<table id="otherContactTable" class="agreementsTable dataTable no-footer hover row-border compact">
+													<thead>
+														<tr>
+															<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
+															<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+															<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
+															<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
+														</tr>
+													</thead>
+													<tbody>
+														<apex:outputText value="{!OtherAirlineContactTable}" escape="false" />
+													</tbody>
+												</table>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.LAQ_Close}</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</apex:outputPanel>
+							<!-- END MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
+							
 							<apex:pageBlock >
 								<div class="panel-primary">
 									<div class="panel-heading head_panel_green" id="container">
@@ -400,6 +488,7 @@
 																				<th>{!$Label.ISSP_Airline}</th>
 																				<th>{!$Label.ISSP_Agreement_type}</th>
 																				<th>{!$Label.ISSP_Active}</th>
+																				<th>Actions</th>
 																			</tr>
 																		</thead>
 																		<tbody>
@@ -420,7 +509,6 @@
 
 															<!-- SECTION FOR BIETA AGREEMENTS -->
 															<apex:inputHidden value="{!BIETAagreementid}" id="BIETAagreementid" />
-															<apex:actionFunction id="selectBIETAAgreement" name="selectBIETAAgreement" action="{!selectBIETAAgreement}" rerender="BIETAagreementInfoPanel,messages" status="Loading" />
 
 															<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel">
 																<apex:outputPanel>
@@ -445,6 +533,7 @@
 																				<th>{!$Label.ISSP_Airline}</th>
 																				<th>{!$Label.ISSP_Agreement_type}</th>
 																				<th>{!$Label.ISSP_Active}</th>
+																				<th>Actions</th>
 																			</tr>
 																		</thead>
 																		<tbody>
@@ -461,7 +550,7 @@
 														</div>
 													</div>
 												</div>
-
+												
 												<!-- SECOND EXTERNAL TAB: ADD AGREEMENTS -->
 												<div class="mytab level1" id="tabAdd">
 													<div class="mytabheadercontainer level2">

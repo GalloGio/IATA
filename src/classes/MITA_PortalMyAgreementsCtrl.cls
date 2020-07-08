@@ -20,14 +20,46 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public map<id, contact> mapAllContacts	{get; set;}
 	public boolean bHasContacts	{get; set;}
 
+	public string selectedAirlineId		{get; set;}
+	public string selectedAirlineName	{get; set;}
+	public string OtherAirlineContactTable	{get; set;}
+	public string RetrieveOtherAirlineContacts(){
+		OtherAirlineContactTable = '';
+		selectedAirlineName='';
+		if(string.isEmpty(selectedAirlineId))
+			return null;
+		else{
+			Account acc = [select id, Name_on_AOC__c from account where id=:selectedAirlineId];
+			if(acc<>null){
+				selectedAirlineName = acc.Name_on_AOC__c;
+				for(Contact c:[select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where MITA_Contact__c=true AND Status__c='Active' AND (AccountId = :acc.Id OR Account.ParentId = :acc.Id or Account.parent.ParentId = :acc.Id) ]){
+					OtherAirlineContactTable += '<tr id="'+c.Id+'">'+
+								'<td>'+escape(c.name)+ '</td>'+
+								'<td>'+escape(c.email)+ '</td>'+
+								'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
+								'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
+							'</tr>';
+				}
+			}
+		}
+		return null;
+	}
+
 	public MITA_PortalMyAgreementsCtrl(){
+		selectedAirlineId = '';
 		mapActiveContacts = new map<id, contact>();
 		mapAllContacts = new map<id, contact>();
 		bHasActiveContacts = false;
 		bHasContacts = false;
+		id hierarchyTopParent = null;
 
-		this.currentUser = [SELECT UserName, ContactId, Contact.AccountId, Contact.Account.Name, Profile.Name FROM User WHERE ID = :UserInfo.getUserId()];
+		this.currentUser = [SELECT UserName, ContactId, Contact.AccountId, Contact.Account.Name, Profile.Name, Contact.Account.ParentId, Contact.Account.Parent.ParentId FROM User WHERE ID = :UserInfo.getUserId()];
 
+		if(this.currentUser.Contact.Account.Parent.ParentId <> null)	hierarchyTopParent = this.currentUser.Contact.Account.Parent.ParentId;
+		else if(this.currentUser.Contact.Account.ParentId <> null)		hierarchyTopParent = this.currentUser.Contact.Account.ParentId;
+		else hierarchyTopParent = this.currentUser.Contact.AccountId;
+			
+		
 		List<Account> accs = [SELECT Name, Airline_designator__c, IATAcode__c, MITA_Member__c, Membership_status__c, ICH_Member__c, Due_Diligence_Status__c, BIETA_Member__c, MITA_Currency__c, ACH_Member__c,
 								BIETA_Bilateral_Date__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c, BIETA_One_way_Intermodal_Participating__c,
 								MITA_IATA_Interline_Art3_Excepted_Status__c, MITA_IATA_Interline_Cargo__c, MITA_IATA_Interline_Cargo_Charges__c, MITA_IATA_Interline_Cargo_Claims__c, MITA_IATA_Interline_Pass_Art3_Joined__c,
@@ -35,7 +67,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 								Name_on_AOC__c, Airline_Prefix__c
 							  FROM Account
 							  WHERE Id = :this.currentUser.Contact.AccountId];
-		for(Contact c:[select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where AccountId = :this.currentUser.Contact.AccountId]){
+		for(Contact c:[select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where Status__c='Active' AND (AccountId = :hierarchyTopParent OR Account.ParentId = :hierarchyTopParent or Account.parent.ParentId = :hierarchyTopParent) ]){
 			if(c.MITA_Contact__c){
 				mapActiveContacts.put(c.id, c);
 				bHasActiveContacts = true;
@@ -155,6 +187,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 								'<td>'+escape(otherAccount.Name_on_AOC__c)+ '</td>'+
 								'<td>'+wrapper.getAgreementType()+ '</td>'+
 								'<td>'+wrapper.getStatus()+ '</td>'+
+								'<td><a href="#!" onClick="startLoading();RetrieveOtherAirlineContacts(\'' + escape(otherAccount.Id) + '\');">View Contacts</a></td>'+
 							'</tr>';
 			}
 		}
