@@ -1,4 +1,4 @@
-<aura:component controller="AWW_ProductsServicesCtrl">
+<aura:component controller="AWW_ProductsServicesCtrl" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="accessToSAP" type="Boolean" default="false"/>
     <aura:attribute name="linkToSAP" type="String"/>
@@ -28,9 +28,9 @@
                     <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
                         <thead>
                             <tr>
-                                <th style="width: 10%"><lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="Line of Business (LoB)"/></th>
-                                <th style="width: 70%"></th>
-                                <th style="width: 20%"><lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="Active"/></th>
+                                <th style="width: 10%;"><lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!$Label.c.Line_of_Business_LoB}"/></th>
+                                <th style="width: 70%;"></th>
+                                <th style="width: 20%;"><lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!$Label.c.AMP_Services_Invoiced}"/></th>
                             </tr>
                         </thead>
                         <aura:if isTrue="{!v.nonServices.services.length > 0}">

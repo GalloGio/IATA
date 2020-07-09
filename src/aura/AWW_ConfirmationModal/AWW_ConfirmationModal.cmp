@@ -1,4 +1,4 @@
-<aura:component>
+<aura:component access="public">
     <aura:attribute name="header" type="String"/>
     <aura:attribute name="message" type="String"/>
     <aura:attribute name="action" type="String"/>

@@ -1,0 +1,8 @@
+.searchBoxContainer{
+    height:52px;
+}
+
+.searchBoxContainer lightning-input {
+    width: 100%;
+    margin-top: -1px;
+}

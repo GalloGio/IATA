@@ -1,7 +1,7 @@
 /**
 @Author: One1link - Gavriel Talalai
 @Description: One step portal user creation. The option will be available to portal
-			  Admins only.The option available through the "My contacts" tab click the button "create active..."
+				Admins only.The option available through the "My contacts" tab click the button "create active..."
 @Test class: Test_ISSP_PortalUserCreation
 */
 public with sharing class ISSP_PortalUserCreation {
@@ -77,16 +77,16 @@ public with sharing class ISSP_PortalUserCreation {
 		system.debug('accountId: ' + accountId);
 		system.debug('con.Phone: ' + con.Phone);
 		if(lastName == null || lastName == ''){
-		   ErrFields += Schema.Contact.fields.LastName.getDescribe().getLabel()  + ', ';
+			 ErrFields += Schema.Contact.fields.LastName.getDescribe().getLabel()  + ', ';
 		}
 		if(emailAddress == null || emailAddress == ''){
-		   ErrFields += Schema.Contact.fields.Email.getDescribe().getLabel()  + ', ';
+			 ErrFields += Schema.Contact.fields.Email.getDescribe().getLabel()  + ', ';
 		}
 		if(accountId == null || accountId == ''){
-		   ErrFields += Schema.Account.fields.Name.getDescribe().getLabel()  + ', ';
+			 ErrFields += Schema.Account.fields.Name.getDescribe().getLabel()  + ', ';
 		}
 		if(con.Phone == null || con.Phone == ''){
-		   ErrFields += Schema.Contact.fields.Phone.getDescribe().getLabel()  + ', ';
+			 ErrFields += Schema.Contact.fields.Phone.getDescribe().getLabel()  + ', ';
 		}
 		system.debug('ErrFields: ' + ErrFields);
 		if (ErrFields != ''){
@@ -103,9 +103,7 @@ public with sharing class ISSP_PortalUserCreation {
 		}
 
 		Map<String,String> res;
-		//Save Account,Iso country and prefered language in a temporary contact
-		//In order to restore it after the rollback
-		//newContact = customClone(con);
+
 		//Save backup point before the contac is saved
 		Savepoint sPointContact = Database.setSavepoint();
 		try{
@@ -124,27 +122,11 @@ public with sharing class ISSP_PortalUserCreation {
 			update con;
 		}
 		catch(Exception e){
-			//ApexPages.addMessages(e);
 			errorMessage.add(e.getMessage());
 			return false;
 		}
-		/*
-		if(res.containsKey('error')){
-			//if error occurred while creating a portal user erase the contact as well.
-			Database.rollback(sPointContact);
-			return false;
-		}
-		*/
 		return true;
 
-
-	}
-	private Contact customClone(Contact con){
-		Contact newContact = new Contact();
-		newContact.ISO_Country__c = con.ISO_Country__c;
-		newContact.AccountId = con.AccountId;
-		newContact.Preferred_Language__c = con.Preferred_Language__c;
-		return newContact;
 
 	}
 
@@ -163,7 +145,7 @@ public with sharing class ISSP_PortalUserCreation {
 		List<SelectOption> options = new List<SelectOption>();
 
 		List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
-									  FROM Account
+										FROM Account
 									 WHERE (Id = :currentCon.AccountId OR Top_Parent__c = :currentCon.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
 									 ORDER BY RecordType.DeveloperName, Location_Type__c, Site
 									 ];

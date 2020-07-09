@@ -5,6 +5,9 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+
 
 //import labels
 import aboutlb from '@salesforce/label/c.CSP_About';
@@ -32,7 +35,7 @@ import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
 import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
-import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered'; 
+import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered';
 
 import Email from '@salesforce/label/c.Email';
 import Status from '@salesforce/label/c.Status';
@@ -97,7 +100,6 @@ import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNew
 import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-
 
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -188,11 +190,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track currentContactPage = []; //page being displayed
     @track pageList = [];         // list of pages for the pagination cmp
     @track totalNrPagesOg = 0;
-    @track totalNrPages = 0; // total nr pages 
+    @track totalNrPages = 0; // total nr pages
     @track totalNrRecords = 0;
     @track nrLoadedRecs = 0;     //nr of loaded records
     @track currentPageNumber = 1;
 
+    @track showCross = false;
     searchMode = false;
     @track searchText='';
 
@@ -226,7 +229,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track availableContacts = [];
     @track contactsToAdd = [];
     @track grantingAccess = false;
-    @track canAddUsers = false;
+	@track canAddUsers = false;
 
     //IEP Rolelist
     @track roleList;
@@ -240,7 +243,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track serviceIEPStatus;
 
     //user id from import
-    userID = Id;
+	userID = Id;
 
     serviceDetailsResult; // wire result holder
 
@@ -276,7 +279,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 })
             )];
             this.showMassApprove = !uniqueGrant.includes(false);
-            
+
             const uniqueDeny = [...new Set(this.selectedRecords.map((rec) => {
                 return rec.showDeny;
                 })
@@ -292,18 +295,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //Level 2 registration variables
     @track isFirstLevelUser = false;
     level2RegistrationTrigger = 'service';
-    isTriggeredByRequest = true;
-    
+
     @track displaySecondLevelRegistrationPopup = false;
     @track displaySecondLevelRegistration = false;
 
     connectedCallback() {
-        
+
         //get the parameters for this page
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
-            
+
             if (this.pageParams.openRequestService) {
                 this.showConfirm = true;
             }
@@ -312,7 +314,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.selectedStatus = "Access Requested";
                 }
             }
-
         }
 
         getLoggedUser().then(userResult => {
@@ -325,7 +326,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.isAgency = true;
                 }
 
-                
+
                 isAirlineUser().then(result => {
                     this.airlineUser = result;
 
@@ -396,7 +397,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.currentContactPage = []; //page being displayed
         this.pageList = [];         // list of pages for the pagination cmp
         this.totalNrPagesOg = 0;
-        this.totalNrPages = 0; // total nr pages 
+        this.totalNrPages = 0; // total nr pages
         this.totalNrRecords = 0;
         this.nrLoadedRecs = 0;     //nr of loaded records
         this.currentPageNumber = 1;
@@ -427,13 +428,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         this.serviceIEPStatus = this.serviceRecord.accessGranted;
                     }
 
-
                     if (this.isAdmin) {
                         this.getContactsForPage();
                         this.getContactsForAssignment();
                         this.getCanAddUsers();
                     } else {
-                        //this.showSpinner = false;
                         this.componentLoading = false;
                     }
                 })
@@ -452,8 +451,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.canAddUsers = result;
             });
 	}
-	
-	populateIataCodeDropdown(contactList){		
+
+	populateIataCodeDropdown(contactList){
 		if(contactList==undefined)return;
 
 		let optionslist=JSON.parse(JSON.stringify(this.optionsIATACodes));
@@ -609,7 +608,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         this.currentPageNumber = currentPage;
         let newPage = this.contactList[this.currentPageNumber - 1];
-        //if page not loaded yet        
+        //if page not loaded yet
         if (!newPage) {
             this.loadingContacts = true;
             getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
@@ -629,16 +628,23 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //search Records
     searchRecord(event) {
         let searchKey = event.target.value.toLowerCase().trim();
+        this.showCross=searchKey.length>0;
         this.searchText = event.target.value;
-        this.searchKey = searchKey;      
+        this.searchKey = searchKey;
         if (this.searchKey.length == 0 ||this.searchKey.length >= 3) {
             this.queryContacts();
         } else{
             this.searchKey = '';
         }
-    }  
+    }
+    removeTextSearch(){
+        this.searchText='';
+        this.searchKey = '';
+        this.showCross=false;
+        this.queryContacts();
+    }
 
-    queryContacts(){ 
+    queryContacts(){
             this.showSpinner = true;
             let filter1 = '';
             let filter1_2 = '';
@@ -652,7 +658,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             }
             else{
                 filter1 = this.selectedCountry;
-            } 
+            }
 
             if(filter1 == this.allLabel)
                 filter1 = 'All';
@@ -710,32 +716,30 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     onRowSelection(event) {
         const selectedRows = event.detail.selectedRows;
         this.selectedRecords = selectedRows;
-        
+
         this.checkMassActionButtons();
     }
 
     handleMassApproveAccess(event) {
-        console.log('MASS Approve', event.detail, this.selectedRecords);
         let contactNames = this.selectedRecords.map(function(elem){
             return elem.contactName;
         }).join("; ");
 
         this.popupTitle = this.label.grantAccessTitle;
-        
+
         this.popupMsg = this.label.confirmGrantAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
         this.mode = 'mass_grant';
         this.showConfirmPopup = true;
     }
 
     handleMassDenyAccess(event) {
-        console.log('MASS DENY', event.detail, this.selectedRecords);
         let contactNames = this.selectedRecords.map(function(elem){
             return elem.contactName;
         }).join("; ");
 
         let title = this.label.denyAccessTitle;
         let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
-        
+
         this.popupTitle = title;
         this.popupMsg = msg;
 
@@ -771,6 +775,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     //only display contact list for portal admins with access granted
     get displayAdminView() {
+
         return this.isAdmin;
     }
 
@@ -804,18 +809,44 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         if (openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData) {
-                if (appFullUrlData !== 'undefined') {
-                    myUrl = appFullUrlData;
-                }
-                //is this link a requestable Service?
-                if (requestable === "true") {
-                    //stop the spinner
-                    this.toggleSpinner();
-                    //open new tab with the redirection
-                    window.open(myUrl);
-                } else {
-                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
-                    window.open(myUrl);
+
+                if (!myUrl.startsWith('/')) {
+                    if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
+                        getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
+                            .then(serviceId => {
+                                verifyCompleteL3Data({serviceId: recordId})
+                                .then(result => {
+                                    if(result !== 'not_complete'){
+                                        window.open(result);
+                                    }
+                                    else{
+                                        navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+                                    }
+                                    this.toggleSpinner();
+                                })
+                                .catch(error => {
+                                    this.error = error;
+                                });
+                            })
+                            .catch(error => {
+                                this.error = error;
+                        });
+
+                    }
+                }else{
+                    if (appFullUrlData !== 'undefined') {
+                        myUrl = appFullUrlData;
+                    }
+                    //is this link a requestable Service?
+                    if (requestable === "true") {
+                        //stop the spinner
+                        this.toggleSpinner();
+                        //open new tab with the redirection
+                        window.open(myUrl);
+                    } else {
+                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+                        window.open(myUrl);
+                    }
                 }
             } else {
                 window.open(myUrl,"_self");
@@ -918,7 +949,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showConfirmPopup = true;
     }
 
-    //================== Popup Methods =======================// 
+    //================== Popup Methods =======================//
     handleChangeReason(event) {
         this.appRejReason = event.target.value;
     }
@@ -975,7 +1006,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     confirmMassGrantAction(recordsList) {
         let contactIds = recordsList.map((rec) => { return rec.contactId });
 
-        let methodParam = { 
+        let methodParam = {
             contactIds: contactIds,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
@@ -994,7 +1025,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.showSpinner = false;
             this.componentLoading = false;
             this.checkMassActionButtons();
-            
+
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
@@ -1004,11 +1035,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             );
         });
     }
-    
+
     confirmMassDenyAction(recordsList) {
         let contactIds = recordsList.map((rec) => { return rec.contactId });
 
-        let methodParam = { 
+        let methodParam = {
             contactIds: contactIds,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
@@ -1019,7 +1050,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.componentLoading = true;
             this.showSpinner = false;
             this.showConfirmPopup = false;
-            
+
             this.resetComponent();
             this.checkMassActionButtons();
         }).catch( error => {
@@ -1132,7 +1163,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                     }).catch(error => {
                         this.showSpinner = false;
-                        console.log(error);
                         this.componentLoading = false;
                         this.dispatchEvent(
                             new ShowToastEvent({
@@ -1146,7 +1176,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 }).catch(error => {
                     this.showSpinner = false;
                     this.componentLoading = false;
-                    console.log(error);
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Error',
@@ -1339,7 +1368,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedIataCode = '';
         this.filtered = false;
         this.applyFiltersModal();
-        
+
     }
 
     handleChangeCountryFilter(event) {
@@ -1350,7 +1379,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.selectedCountry = el.label;
             }
         });
-        
+
     }
 
     handleChangeIataCodeFilter(event) {

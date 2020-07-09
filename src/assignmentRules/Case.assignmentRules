@@ -889,16 +889,16 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 7) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6))</booleanFilter>
+            <booleanFilter>((1 AND (2 OR 7) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Name</field>
                 <operation>equals</operation>
-                <value>Emirates,Singapore Airlines</value>
+                <value>Emirates,Singapore Airlines,China Eastern,China Southern Airlines,Qatar Airways,Ethiopian Airlines,COPA Airlines,United Airlines,American Airlines,Qantas,Air India</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Sector__c</field>
@@ -923,7 +923,22 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999,SQ 618</value>
+                <value>CA 999,SQ 618,LH 020,LH 220,EK 176,MU 781,CZ 784,QR 157,ET 071,CM 230,UA 016,AA 001,QF 081,AI 098</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>SIDRA,SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.IATAcode__c</field>
+                <operation>equals</operation>
+                <value>999,618,020,220,176,781,784,157,071,230,016,001,081,098</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Description</field>
+                <operation>contains</operation>
+                <value>Follow up Settlement</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -5334,113 +5349,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>IATA_Training_Academic_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Academic Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_RTP_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>RTP Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_ATS_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>ATS Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_ATC_Partnership</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>ATC Partnership</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_Exam</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning – Exam</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_ATC_Student_Enrolment</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning – ATC Student Enrolment</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_Ind_Student_Enrolment</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>IATA Training</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning – Individual Student Enrolment</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>IATA_Training_DL_Ind_Student_Enrolment</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>Distance Learning</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Queue_IFG_Support_Level_1</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -7048,7 +6956,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Process</value>
+                <value>Process,Internal Cases (IDFS ISS)</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -7626,6 +7534,26 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
                 <field>Case.SuppliedEmail</field>
                 <operation>notContain</operation>
                 <value>sis_servicedesk@kaleconsultants.com,kaleuser@yahoo.com,alexsmith567@gmail.com,SIS_Servicedesk@kaleconsultants.com,SIS.Servicedesk@accelyakale.com,sis.servicedesk@accelyakale.com,ishelpdesk@iata.org,sis.support@accelya.com</value>
+            </criteriaItems>
+            <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>SISHelpDesk</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>SIS</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Internal Case</value>
             </criteriaItems>
             <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
         </ruleEntry>
@@ -10979,7 +10907,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>People&apos;s Republic of China,&quot;Hong Kong (SAR), China&quot;,China (People&apos;s Republic of)</value>
+                <value>People&apos;s Republic of China,China (People&apos;s Republic of)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>

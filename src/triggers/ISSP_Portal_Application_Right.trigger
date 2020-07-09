@@ -33,6 +33,9 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	Set <Id> contactIdIATAAccreditationSet = new Set <Id>();
 	Set <Id> contactIdRemoveIATAAccreditationSet = new Set <Id>();
 
+	Set <Id> contactIdPASSAccreditationSet = new Set <Id>();
+	Set <Id> contactIdRemovePASSAccreditationSet = new Set <Id>();
+
 	List<Portal_Application_Right__c> ebulletinServices = new List<Portal_Application_Right__c>();
 
 	//Mconde start
@@ -53,6 +56,28 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (Trigger.isBefore && Trigger.isDelete) handler.onBeforeDelete();
 	if (Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
+
+	List<Portal_Application_Right__c> passGrantPortalRights = new List<Portal_Application_Right__c>();
+	List<Portal_Application_Right__c> passReGrantPortalRights = new List<Portal_Application_Right__c>();
+	List<Portal_Application_Right__c> passDenyPortalRights = new List<Portal_Application_Right__c>();
+	if(!Trigger.isDelete && trigger.new!=null){
+		for(Portal_Application_Right__c portal : trigger.new){
+
+			if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Requested')){
+				passGrantPortalRights.add(portal);
+			}
+			else if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Denied')){
+				passReGrantPortalRights.add(portal);
+			}
+			else if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Denied' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Granted')){
+				passDenyPortalRights.add(portal);
+			}
+		}
+		if(passGrantPortalRights.size() >0 || passDenyPortalRights.size()>0 || passReGrantPortalRights.size()>0){
+			PASS_UserProvisioningRequestHandler.handleProvisioningRequest(passGrantPortalRights,passDenyPortalRights,passReGrantPortalRights);
+		}
+	}
+
 
 	if(Trigger.isDelete) {
 
@@ -236,6 +261,27 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 				}
 			}
 		}
+		//PASS
+		else if (access.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService)){
+
+			if (trigger.isInsert && access.Right__c == 'Access Granted') {
+				system.debug('IS INSERT AND GRANTED');
+				contactIdPASSAccreditationSet.add(access.Contact__c);
+			}
+			else if (trigger.isUpdate){
+				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+				if (access.Right__c != oldAccess.Right__c) {
+					if (access.Right__c == 'Access Granted') {
+						system.debug('IS UPDATE AND GRANTED');
+						contactIdPASSAccreditationSet.add(access.Contact__c);
+					}
+					else if (access.Right__c == 'Access Denied'){
+						system.debug('IS UPDATE AND DENIED');
+						contactIdRemovePASSAccreditationSet.add(access.Contact__c);
+					}
+				}
+			}
+		}
 		/*
 		else if (access.Application_Name__c == 'ASD'){
 			system.debug('IS ASD');
@@ -383,6 +429,15 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 
 		if (!ISSP_UserTriggerHandler.preventTrigger)
 			ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
+		ISSP_UserTriggerHandler.preventTrigger = true;
+	}
+
+	if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
+		if (!ISSP_UserTriggerHandler.preventTrigger){
+			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_SSO', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+			PASS_UserProvisioningRequestHandler.createPassUserProvAccounts(contactIdPASSAccreditationSet);
+		}
 		ISSP_UserTriggerHandler.preventTrigger = true;
 	}
 

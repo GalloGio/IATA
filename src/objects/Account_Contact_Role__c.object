@@ -154,7 +154,7 @@
     </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -166,6 +166,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Account_Name__c</fullName>
+        <description>It returns the name account associated to the account role. Used in flows.</description>
         <externalId>false</externalId>
         <formula>HYPERLINK(&apos;/&apos;+Account_Role__r.Account__c, Account_Role__r.Account__r.Name, &apos;_self&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -185,7 +186,7 @@
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -223,6 +224,31 @@
         <externalId>false</externalId>
         <label>Employee Code</label>
         <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Account__c</fullName>
+        <description>Used for flow, to get records</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.AccountId</formula>
+        <label>Contact&apos;s Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_And_Functional_Role__c</fullName>
+        <description>Concatenation of the contact firstname and functional role of the account role, it is used to display a secondary field when the user is looking for a contact role in a lookup field.</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName &amp;&quot; &quot;&amp;  Contact__r.LastName &amp;&quot; - &quot;&amp;  TEXT( Account_Role__r.Functional_Role__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact and Functional role</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -320,7 +346,7 @@
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -358,6 +384,20 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <description>Business context this detailed role will be related to</description>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Global_ID__c</fullName>
@@ -456,6 +496,11 @@
                     <fullName>IFTP</fullName>
                     <default>false</default>
                     <label>IFTP</label>
+                </value>
+                <value>
+                    <fullName>Medaire</fullName>
+                    <default>false</default>
+                    <label>Medaire</label>
                 </value>
                 <value>
                     <fullName>Other</fullName>
@@ -572,6 +617,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Integration_Status__c</picklist>
             <values>
                 <fullName>Error</fullName>
@@ -591,6 +647,10 @@
             <values>
                 <fullName>GADM</fullName>
                 <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>true</default>
             </values>
             <values>
                 <fullName>TIP</fullName>
@@ -618,6 +678,17 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -680,6 +751,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Integration_Status__c</picklist>
             <values>
                 <fullName>Error</fullName>
@@ -738,6 +820,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Integration_Status__c</picklist>
             <values>
                 <fullName>Error</fullName>
@@ -756,6 +853,14 @@
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -784,6 +889,17 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

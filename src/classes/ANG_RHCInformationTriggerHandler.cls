@@ -37,7 +37,7 @@ public class ANG_RHCInformationTriggerHandler{
 			if(rhc.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhc.id).ANG_RHC_Amount_Equals_FS__c)
 				updatedFlagsForRHCEqsFS.add(rhc);
 
-		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
+		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS, true);
 
 		assessOscarAccreditationForecastRHC(filterByIATACode(triggerNew));
 
@@ -102,7 +102,8 @@ public class ANG_RHCInformationTriggerHandler{
 	}
 
 	private void sumRHCAmount() {
-		List<ANG_RHC_Information__c> rhcToSum = new List<ANG_RHC_Information__c>();
+		map<id, ANG_RHC_Information__c> rhcToSum = new map<id, ANG_RHC_Information__c>();
+		map<id, ANG_RHC_Information__c> rhcToNotRecalculate = new map<id, ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhcInfo : triggerNew){
 			if(
 				rhcinfo.ANG_Enable_Calculation__c &&
@@ -112,15 +113,20 @@ public class ANG_RHCInformationTriggerHandler{
 					|| rhcInfo.ANG_RME_Amount__c != oldMap.get(rhcInfo.Id).ANG_RME_Amount__c
 					|| rhcInfo.ANG_Financial_Security__c != oldMap.get(rhcInfo.Id).ANG_Financial_Security__c
 					|| rhcInfo.ANG_Minimum_Financial_Security__c != oldMap.get(rhcInfo.Id).ANG_Minimum_Financial_Security__c
-					|| rhcInfo.ANG_RHC_Amount_Provisional__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Provisional__c
 					|| rhcInfo.ANG_RHC_Amount_Equals_FS__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Equals_FS__c
 				)
 			){
-				rhcToSum.add(rhcInfo);
+				rhcToSum.put(rhcInfo.id, rhcInfo);
+			}
+
+			if(Trigger.isUpdate && rhcinfo.ANG_Enable_Calculation__c && (rhcInfo.ANG_RHC_Amount_Provisional__c != oldMap.get(rhcInfo.Id).ANG_RHC_Amount_Provisional__c)){
+				if(!rhcToSum.containsKey(rhcInfo.id))
+					rhcToNotRecalculate.put(rhcInfo.id, rhcInfo);
 			}
 		}
 
-		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum);
+		if(!rhcToSum.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToSum.values());
+		if(!rhcToNotRecalculate.isEmpty()) ANG_RHCHelper.calculateRHCAmount(rhcToNotRecalculate.values(), false);
 
 		for(ANG_RHC_Information__c rhc : triggerNew){
 			if(Trigger.isInsert || oldMap.get(rhc.id).ANG_RHC_Amount__c != rhc.ANG_RHC_Amount__c) rhc.ANG_RHC_Effective_Date__c=System.Today();
@@ -168,7 +174,6 @@ public class ANG_RHCInformationTriggerHandler{
 
 		ANG_RHC_Information__c rhc = rhcLst.get(0);
 		rhc.ANG_RHC_Amount__c = rhc.ANG_RHC_Amount_Forecasted__c;
-		rhc.ANG_Forecasted_RHC_Effective_date__c = System.today();
 		rhc.ANG_RHC_Effective_Date__c = System.today();
 
 	}
@@ -178,7 +183,7 @@ public class ANG_RHCInformationTriggerHandler{
 		Set<Id> toNotify = new Set<Id>();
 
 		for(ANG_RHC_Information__c rhc : triggerNew){
-			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount__c != oldMap.get(rhc.Id).ANG_RHC_Amount__c){
 				Boolean sendNotification = true;
 
 				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{rhc.ANG_Account_Country_ISO_Code__c}).get(0).AMS_Country_Specific_Attributes__r){

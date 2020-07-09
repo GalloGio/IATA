@@ -1,4 +1,4 @@
-<aura:component implements="force:appHostable" controller="AMP_AccountManagementController" >
+<aura:component implements="force:appHostable" controller="AMP_AccountManagementController" access="public">
     <!-- VARIABLES INITIATION -->
     <!-- Account ID parameter - to be received from app -->
     <aura:attribute name="accountId" type="String"/>

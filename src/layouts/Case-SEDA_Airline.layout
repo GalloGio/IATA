@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Accept_Case</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
@@ -149,6 +150,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Remittance_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Settlement_Model__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -319,6 +324,10 @@
                 <behavior>Readonly</behavior>
                 <field>ClosedDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Process_Age__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -397,6 +406,22 @@
             <layoutItems>
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Tracking history (Custom)</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>CaseTrackingHistory</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>

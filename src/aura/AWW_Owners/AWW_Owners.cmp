@@ -1,4 +1,4 @@
-<aura:component controller="AWW_AccountOwnershipCtrl" extends="c:TablePagination">
+<aura:component controller="AWW_AccountOwnershipCtrl" extends="c:TablePagination" access="public">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="List"/>
     <aura:attribute name="columns" type="List"/>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Training_Contact_Role_Details__c</baseObject>
+    <category>accounts</category>
+    <deployed>true</deployed>
+    <description>Training contact role details, including information about the contacts, and accounts it is related to.</description>
+    <label>Training contact role details with Lookups info</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account_Contact_Role__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ATC__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ATC_ID__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>City_Name__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>City_Reference__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Country__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Country_Reference__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CurrencyIsoCode</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PO_Box_Address__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Postal_Code__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Preferred_Course__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RecordType</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>State_Name__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>State_Reference__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Street__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Street2__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UserId__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Username__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account_Contact_Role__c.Contact__c.Status__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <masterLabel>Training Contact Role Details</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact Email</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Email</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact ID</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Id</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Email Bounced Date</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.EmailBouncedDate</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Full Name</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Name</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: First Name</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.FirstName</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Last Name</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.LastName</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Email Bounced Reason</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.EmailBouncedReason</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account_Contact_Role__c.Contact__c.User_Portal_Status__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Title</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Title</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Additional Email</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Additional_Email__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Email Opt Out</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.HasOptedOutOfEmail</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Email Status</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Email_Status__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Created By</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.CreatedBy</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: Created Date</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.CreatedDate</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact: First Community</displayNameOverride>
+            <field>Account_Contact_Role__c.Contact__c.Community__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <masterLabel>Contact Info</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Account ID</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.Id</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Account Name</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.Name</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Sector</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.Sector__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Category</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.Category__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Training Website</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.IATATrainingUrl__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Training Partner</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.IsIATATrainingAirline__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account: Training Membership</displayNameOverride>
+            <field>Account_Contact_Role__c.Account_Role__c.Account__c.Training_Membership__c</field>
+            <table>Training_Contact_Role_Details__c</table>
+        </columns>
+        <masterLabel>Account info</masterLabel>
+    </sections>
+</ReportType>

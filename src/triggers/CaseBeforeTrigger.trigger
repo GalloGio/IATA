@@ -130,6 +130,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 	Map<id, Account> accountMap = new map<id, Account>();
 	Map<ID, List<Case>> mapSAAMParentIDCase = new Map<ID, List<Case>>();
 	Map<ID, List<Case>> mapIFAPParentIDCase = new Map<ID, List<Case>>();
+	// Store for each account the list of closed IFAP cases
+	Map<ID, List<Case>> mapAccountIFAPClosedCases = new Map<Id, List<Case>>();
 	//get a Set of the Ids of all the Accounts with IFAP Cases linked to the Trigger cases
 	Set<Id> IFAPaccountIds = new Set<Id>();
 
@@ -159,7 +161,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		}
 
 		/** WMO-424 **/
-		CaseVisibilityEngine.execute(Trigger.new);
+		CaseVisibilityEngine.execute(Trigger.oldMap, Trigger.new);
 
 		// assigns default email address to be used on send email quick action
 		//follows same logic as current classic functionality
@@ -209,17 +211,51 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 
 				if (!IFAPaccountIds.isEmpty()) {
-					Map<Id, Account> accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c
-													FROM Account a WHERE Id IN :IFAPaccountIds]);
+					Map<Id, Account> accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type,
+																		  a.RecordType.DeveloperName, a.CNS_Account__c,
+																		  (SELECT Id, Status, IFAP_Financial_Year__c, IFAP_Financial_Month__c,
+																			   Financial_Review_Type__c, AccountId, RecordTypeId, CaseNumber
+																		   FROM Cases
+																		   WHERE RecordTypeId = :IFAPcaseRecordTypeID
+																			   AND ((Account.ANG_Accreditation_Model__c != :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
+																					 AND Status = :AMS_Utils.CASE_STATUS_CLOSED)
+																					OR Account.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+																		   ORDER BY CreatedDate DESC)
+																	  FROM Account a
+																	  WHERE Id IN :IFAPaccountIds]);
+
+					// Store for each account a wrapper that counts the number of IFAP open cases for multicountry agents 
+					Map<Id, ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap = new Map<Id, ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper>();
+
 					// Create Account (in order to decrease the number of SOQL queries executed)
 					for (Case aCase : IFAPCaseList) {
+
+						ANG_MulticountryHelper.addMulticountryOpenIFAPCase(aCase, nbrOfOpenCasesPerReviewTypeMap);
+
 						// Search for the account related to the case
 						Account aAccount = accounts.get(aCase.AccountId);
 						if(aAccount != null){
 							accountMap.put(aCase.id, aAccount);
 							if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){ aCase.CNSCase__c = true; }
-						}
 
+							for(Case currentCase : aAccount.Cases){
+								if (currentCase.Status == AMS_Utils.CASE_STATUS_CLOSED) {
+									if (!mapAccountIFAPClosedCases.containsKey(currentCase.AccountId)) {
+										mapAccountIFAPClosedCases.put(currentCase.AccountId, new List<Case>());
+									}
+									mapAccountIFAPClosedCases.get(currentCase.AccountId).add(currentCase);
+								}
+								//Exclude the case that is being inserted/updated
+								//since it is already being considered for the total count
+								if(currentCase.Id != aCase.Id){
+									ANG_MulticountryHelper.addMulticountryOpenIFAPCase(currentCase, nbrOfOpenCasesPerReviewTypeMap);
+								}
+							}
+
+							if(ANG_MulticountryHelper.hasMulticountryOpenIFAPCases(aCase, nbrOfOpenCasesPerReviewTypeMap)){
+								aCase.addError(ANG_MulticountryHelper.MULTICOUNTRY_ACCOUNT_ALREADY_HAS_OPEN_IFAPS);
+							}
+						}
 					}
 				}
 			}
@@ -1080,18 +1116,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if (!CaseChildHelper.noValidationsOnTrgCAseIFAP && !IFAPCaseList.isEmpty()) {
 				System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP Trigger.isInsert]');
 
-				Map<ID, List<Case>> mapAccountCases = new Map<ID, List<Case>>();
 				Map<Case, Case> insertedCases = new Map<Case, Case>();
-
-				//accountHasClosedCases
-				for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c
-										WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
-
-					if(!mapAccountCases.containsKey(currentCase.AccountId)){
-						mapAccountCases.put(currentCase.AccountId, new List<Case>());
-					}
-					mapAccountCases.get(currentCase.AccountId).add(currentCase);
-				}
 
 				for (Case newCase : IFAPCaseList) {
 					//fill map with only new cases to be used in IFAP_BusinessRules.IsStatusCanBeSelected
@@ -1146,7 +1171,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					}
 					// Phase 4
 					// check if the agent already has closed case for the same financial year and if the checkbox has been checked
-					List<Case> caseClosedList = mapAccountCases.get(newCase.AccountId);
+					List<Case> caseClosedList = mapAccountIFAPClosedCases.get(newCase.AccountId);
 					if (caseClosedList != null && newCase.IFAP_CanCreateWhileClosedCase__c == false && IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList, newCase.IFAP_Financial_Year__c))
 						newCase.addError('The selected agent already has a closed IFAP case for the financial year ' + newCase.IFAP_Financial_Year__c + '. Please confirm that you really wish to create another IFAP case for this account by checking the confirmation check box at the bottom of this page.');
 					else if (caseClosedList == null && newCase.IFAP_CanCreateWhileClosedCase__c && !IFAP_BusinessRules.checkIFAPFinancialYear(caseClosedList,newCase.IFAP_Financial_Year__c))

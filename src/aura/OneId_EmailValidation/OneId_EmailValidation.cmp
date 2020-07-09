@@ -1,4 +1,4 @@
-<aura:component controller="OneId_RegistrationProcessController">
+<aura:component controller="OneId_RegistrationProcessController" access="public">
 
     <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
     <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
@@ -75,7 +75,7 @@
                     <aura:set attribute="else">
                     <div class="slds-size--1-of-1">
                         <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
-                        <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+                        <a class="terms" href="{!$Label.c.OneId_CSP_Terms_Of_Use_Link}" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
                     </div>
                 </aura:set>
                     </aura:if>

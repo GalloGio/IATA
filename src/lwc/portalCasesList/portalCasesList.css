@@ -13,6 +13,10 @@
     margin-top: -1px;
 }
 
+.buttonGrid{
+    min-height:52px;
+}
+
 .noRecentCases {
     display: flex;
     flex-direction: column;
@@ -27,6 +31,9 @@
     vertical-align: middle;
 }
 
+.rotateIcon {
+    transform: rotate(45deg);
+}
 .noPadding {
     padding: 0px;
 }
@@ -56,4 +63,8 @@
     .fullHeight button:hover {
        height: auto;
     }
+}
+
+.searchInputContainer {
+    height:48px;
 }

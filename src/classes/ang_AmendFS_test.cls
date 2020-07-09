@@ -4,6 +4,9 @@ private class ang_AmendFS_test {
 	 	  // Create a new ISO Country
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true);
 		insert country;
+         
+         insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		// Create an Airline HQ account
 		Account a = new Account(
@@ -69,6 +72,8 @@ private class ang_AmendFS_test {
 				ParentId=fs.id
 		);
 		insert att;
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 	 }
 
@@ -117,8 +122,57 @@ private class ang_AmendFS_test {
 	 }
 
 
+	TestMethod static void testAmendFS_BankGuarantee(){
 
+		//new minimum fs on rhc == inserted financial security
+		system.assertEquals([select ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1].get(0).ANG_Minimum_Financial_Security__c,[select id,ANG_Minimum_Financial_Security__c from Financial_Security__c limit 1].get(0).ANG_Minimum_Financial_Security__c);
+		ANG_AmendFS plugin = new ANG_AmendFS();
 
+		
+		Financial_Security__c fs = [SELECT Id, Security_Type__c FROM Financial_Security__c LIMIT 1];
+		fs.Security_Type__c = 'Bank Guarantee';
+		update fs;
+
+		Case c = new Case(
+			Subject = 'second case', 
+			AccountId = [select id from account limit 1].get(0).id,
+			Status = 'Open', 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
+			Financial_Security_Amount__c=20000,
+			Financial_Security_Currency__c='EUR'
+		);
+		insert c;
+		c = [SELECT Id, CaseNumber FROM Case WHERE Id = :c.Id];
+
+		Test.startTest();
+
+		Map<String, Object> inputParams = new Map<String, Object>();
+		inputParams.put('NewFSAmount',1000);
+		inputParams.put('SelectedCaseId',c.id);
+		inputParams.put('SelectedCurrency','EUR');
+		inputParams.put('FSToCloneId',fs.Id);
+		inputParams.put('ExpiryDate',system.today());
+		inputParams.put('UnlimitedValidity',false);
+		inputParams.put('FSValidationCase',c.CaseNumber);
+
+		Process.PluginRequest request = new Process.PluginRequest(inputParams);
+		Process.PluginResult result = plugin.invoke(request);
+		Process.PluginDescribeResult describeresult= plugin.describe();
+
+		Test.stopTest();
+
+		system.assertEquals('OK',result.outputParameters.get('Result'));
+
+		string newFSId= String.valueOF(result.outputParameters.get('CreatedFSId'));
+		Financial_Security__c fsResult = [select id,ANG_Minimum_Financial_Security__c, Security_status__c, Financial_Security_Validation_Case__c, Financial_Security_Validation_Case__r.CaseNumber from Financial_Security__c where id=:newFSId];
+		ANG_RHC_Information__c rhcInfoResult = [select ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1];
+
+		//new minimum fs on rhc from selected case
+		system.assertEquals(rhcInfoResult.ANG_Minimum_Financial_Security__c,fsResult.ANG_Minimum_Financial_Security__c);
+
+		//amended fs status with a Security Validation Case
+		system.assertEquals(fsResult.Financial_Security_Validation_Case__r.CaseNumber,c.CaseNumber);
+	}
 
 
 }

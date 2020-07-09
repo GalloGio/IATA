@@ -287,7 +287,13 @@ global class WrapperAttach implements Comparable {
 
 			AmazonFile__c aFile = this.fileAmazon.amazonfile.clone(false, true);
 			aFile.Full_Name_Unique__c = destFileName;
-			aFile.Case__c = sobjectId;
+			
+			if(String.valueOf(sobjectId.getSObjectType()) == 'Case'){
+				aFile.Case__c = sobjectId;
+			}
+			else {
+				aFile.sObject_Id__c = sobjectId;
+			}
 
 			AmazonFile cloned = this.fileAmazon.clone();
 			cloned.amazonFile = aFile;
@@ -387,9 +393,9 @@ global class WrapperAttach implements Comparable {
 		Get all attachments related to an object but only visible for Portal
 	**/
 	public static list<WrapperAttach> getListAttachmentsForPortal(Id sobjectId) {
-	   Boolean fullAttachmentAccess;
-	   list<AttachmentListLimitedAccess__c> perms = [select SetupOwnerId , Name, Id from AttachmentListLimitedAccess__c where SetupOwnerId = :userinfo.getProfileId() or SetupOwnerId = :userinfo.getUserId()];
-	   fullAttachmentAccess = perms.size()==0;
+		 Boolean fullAttachmentAccess;
+		 list<AttachmentListLimitedAccess__c> perms = [select SetupOwnerId , Name, Id from AttachmentListLimitedAccess__c where SetupOwnerId = :userinfo.getProfileId() or SetupOwnerId = :userinfo.getUserId()];
+		 fullAttachmentAccess = perms.size()==0;
 
 		list<WrapperAttach> listAttachments = new list<WrapperAttach>();
 		for (WrapperAttach attach: getListAttachments(sobjectId,false,true) ) {
@@ -455,32 +461,6 @@ global class WrapperAttach implements Comparable {
 		}
 		return mapPermission;
 	}
-
-	/**
-		Get all Archived Attachments related to this object
-	private static list<WrapperAttach> getArchivedAttachments(Id sobjectId) {
-		list<WrapperAttach> listAttach = new list<WrapperAttach>();
-		if (String.ValueOf(sobjectId.getSObjectType()).equals('Case')) {
-			return listAttach;
-		}
-		try {
-			list<Archived_Attachment__c> archivedAttachments  = [
-				SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id, BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c, LastModifiedDate
-				FROM Archived_Attachment__c
-				where Case__c= :sobjectId
-				and ArchivedMessage__c = null
-				order by Original_Creation_Date__c desc
-			];
-
-			for(Archived_Attachment__c attach: archivedAttachments){
-				listAttach.add(new WrapperAttach(attach));
-			}
-		} catch (Exception e) {
-			System.debug(e.getMessage());
-		}
-		return listAttach;
-	}
-	**/
 
 	/**
 		Get all files in the bucket related to this object
@@ -579,24 +559,6 @@ global class WrapperAttach implements Comparable {
 			attachList.add(new WrapperAttach(cv));
 		}
 		return attachList;
-	}
-
-
-
-	/**
-		Return generates content public link
-	**/
-	public static ContentDistribution generateContentDistribution (ContentDocument cd) {
-		ContentDistribution cdi = new ContentDistribution();
-		cdi.name = cd.title;
-		cdi.ContentVersionId = cd.LatestPublishedVersionId;
-		cdi.PreferencesAllowViewInBrowser= true;
-		cdi.PreferencesLinkLatestVersion=true;
-		cdi.PreferencesNotifyOnVisit=false;
-		cdi.PreferencesPasswordRequired=false;
-		cdi.PreferencesAllowOriginalDownload= true;
-
-		return cdi;
 	}
 
 	/**

@@ -286,6 +286,10 @@
                 <behavior>Readonly</behavior>
                 <field>Covered_Ownership__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Location_Category__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

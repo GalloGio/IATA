@@ -1,8 +1,8 @@
 <template>
     <!-- TOP SEARCH -->
-    <div class="heigthInfo">
-        <div class="slds-p-around_medium customCardTitleBox cursorPointer customBorderlessCardGray cardStyle" onclick={handleTopSearch}>
-            <span class="slds-p-left_small text-bold">{label.CSP_Search_TopResults}</span>
+    <div class="slds-p-bottom--x-small">
+        <div class="slds-grid slds-grid--vertical-align-center slds-p-horizontal--medium customCardTitleBox cursorPointer customBorderlessCardGray cardStyle topSearchDiv" onclick={handleTopSearch}>
+            <span class="slds-p-left--large slds-size--1-of-1 slds-p-left_medium text-bold">{label.CSP_Search_TopResults}</span>
         </div>
     </div>
 
@@ -20,10 +20,10 @@
             </div>        
             <div if:true={tile.open} key={tile.categoryApiName} data-item={tile.categoryApiName}>
                 <div class="slds-m-around_medium slds-align_absolute-center">
-                    <lightning-combobox class="fullWidth" name="documentsProductType" label="Product Type" value="Product Type" options={typePicklistValues} onchange={handleTypePicklist}></lightning-combobox>
+                    <lightning-combobox class="fullWidth" name="documentsProductType" label="Product Type" value={tile.prodCatVal} options={typePicklistValues} onchange={handleTypePicklist}></lightning-combobox>
                 </div>
                 <div class="slds-m-around_medium slds-align_absolute-center">
-                    <lightning-combobox class="fullWidth" name="documentsPublishedCountry" label="Published Country" value="Published Country" options={countryPicklistValues} onchange={handleCountryPicklist}></lightning-combobox>
+                    <lightning-combobox class="fullWidth" name="documentsPublishedCountry" label="Published Country" value={tile.countrypub} options={countryPicklistValues} onchange={handleCountryPicklist}></lightning-combobox>
                 </div>
             </div>
         </template>        

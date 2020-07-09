@@ -6,7 +6,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>BSPCountry__c</field>
-        <formula>Contact.Account.IATA_ISO_Country__c</formula>
+        <formula>Contact.Account.IATA_ISO_Country__r.Name</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Case_record_type__c</field>
@@ -18,7 +18,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Region__c</field>
-        <formula>TEXT(Contact.Account.Region__c)</formula>
+        <formula>Contact.Account.Region_formula__c</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>

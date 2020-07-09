@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Authorized Signatory</fullName>
+        <default>false</default>
+        <label>Authorized Signatory</label>
+    </customValue>
+    <customValue>
+        <fullName>Decision maker</fullName>
+        <default>false</default>
+        <label>Decision maker</label>
+    </customValue>
+    <customValue>
+        <fullName>Operational Contact</fullName>
+        <default>false</default>
+        <label>Operational Contact</label>
+    </customValue>
+    <masterLabel>Contact Role Details</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

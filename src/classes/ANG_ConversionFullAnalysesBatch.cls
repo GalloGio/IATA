@@ -142,13 +142,6 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 				contactEmail = null;
 				contactName = null;
 
-			/*
-				if(!acct.Contacts.isEmpty()){
-					contactEmail = acct.Contacts.get(0).Email;
-					contactName = acct.Contacts.get(0).Name;
-				}
-			*/
-
 				if(contactGlobal.get(acct.id) != null){
 
 					contactEmail = contactGlobal.get(acct.id).Email;
@@ -213,12 +206,10 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 
-		String[] toAddress = new List<String>{'goncalvesd@iata.org',UserInfo.getUserEmail()};
-
 		String subject = 'Conversion Report for ' + country;
-
+		email.setSaveAsActivity(false);
+		email.setTargetObjectId(UserInfo.getUserId());
 		email.setSubject(subject);
-		email.setToAddresses(toAddress);
 		email.setPlainTextBody('Conversion Report for '  + country + ' in attachment. \n\n\n ' + errorsFound);
 
 		email.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttachment});
