@@ -591,7 +591,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>AMS_PCI_Auto_Expire</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Is_PCI_compliant__c</field>
             <operation>equals</operation>
