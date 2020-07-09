@@ -739,6 +739,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.editContactId = newContact.Id;
 
 			ctrl.getIATAMemberAirlines();
+			ctrl.getTrainingTypes();
 			ctrl.getOfficeTypes();
 			ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
 			ctrl.Save();
