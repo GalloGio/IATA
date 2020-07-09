@@ -15,36 +15,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public MITA_AgreementsCtrl.WrapperAgreement wrapper {get;set;}
 
 	public Map<Id,SuggestedAirline> suggestedAirlines {get;set;}
-	public map<id, contact> mapActiveContacts	{get; set;}
-	public boolean bHasActiveContacts	{get; set;}
-	public map<id, contact> mapAllContacts	{get; set;}
-	public boolean bHasContacts	{get; set;}
-
-	public string selectedAirlineId		{get; set;}
-	public string selectedAirlineName	{get; set;}
-	public string OtherAirlineContactTable	{get; set;}
-	public string RetrieveOtherAirlineContacts(){
-		OtherAirlineContactTable = '';
-		selectedAirlineName='';
-		if(string.isEmpty(selectedAirlineId))
-			return null;
-		else{
-			Account acc = [select id, Name_on_AOC__c, (select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contacts where MITA_Contact_Type__c<>'' AND Status__c='Active') from account where id=:selectedAirlineId];
-			if(acc<>null){
-				selectedAirlineName = acc.Name_on_AOC__c;
-				for(Contact c:acc.Contacts){
-					OtherAirlineContactTable += '<tr id="'+c.Id+'">'+
-								'<td>'+escape(c.name)+ '</td>'+
-								'<td>'+escape(c.email)+ '</td>'+
-								'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
-								'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-							'</tr>';
-				}
-			}
-		}
-		return null;
-	}
-
+	
 	public MITA_PortalMyAgreementsCtrl(){
 		selectedAirlineId = '';
 		mapActiveContacts = new map<id, contact>();
@@ -58,7 +29,8 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		if(this.currentUser.Contact.Account.Parent.ParentId <> null)	hierarchyTopParent = this.currentUser.Contact.Account.Parent.ParentId;
 		else if(this.currentUser.Contact.Account.ParentId <> null)		hierarchyTopParent = this.currentUser.Contact.Account.ParentId;
 		else hierarchyTopParent = this.currentUser.Contact.AccountId;
-			
+		
+		RetrieveMyActiveContacts();
 		
 		List<Account> accs = [SELECT Name, Airline_designator__c, IATAcode__c, MITA_Member__c, Membership_status__c, ICH_Member__c, Due_Diligence_Status__c, BIETA_Member__c, MITA_Currency__c, ACH_Member__c,
 								BIETA_Bilateral_Date__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c, BIETA_One_way_Intermodal_Participating__c,
@@ -315,4 +287,68 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		}
 	}
 
+	/**********************************
+	 *   CONTACTS METHODS AND VARIABLES 
+	 **********************************/
+	public map<id, contact> mapActiveContacts	{get; set;}
+	public boolean bHasActiveContacts			{get; set;}
+	public map<id, contact> mapAllContacts		{get; set;}
+	public boolean bHasContacts					{get; set;}
+	public string selectedAirlineId				{get; set;}
+	public string selectedAirlineName			{get; set;}
+	public string OtherAirlineContactTable		{get; set;}
+
+	public string MyActiveContactsTable			{get; set;}
+
+	public string RetrieveOtherAirlineContacts(){
+		OtherAirlineContactTable = '';
+		selectedAirlineName='';
+		if(string.isEmpty(selectedAirlineId))
+			return null;
+		else{
+			for(Contact c:retrieveContacts(selectedAirlineId, false)){
+				selectedAirlineName = c.Account.Name_on_AOC__c;
+				OtherAirlineContactTable += '<tr id="'+c.Id+'">'+
+							'<td>'+escape(c.name)+ '</td>'+
+							'<td>'+escape(c.email)+ '</td>'+
+							'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
+							'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
+						'</tr>';
+			}
+		}
+		return null;
+	}
+
+	public string getContactTypes(){
+		string ctype = '<input type="radio" name="ContactType" class="agreementtypefilter" data-value="" data-type="Contact" checked="true"/>Show all the contacts<br/>';
+		List<String> pickListValuesList= new List<String>();
+		Schema.DescribeFieldResult fieldResult = Contact.MITA_Contact_Type__c.getDescribe();
+		for( Schema.PicklistEntry pickListVal : fieldResult.getPicklistValues()){
+			ctype += '<input type="radio" name="ContactType" class="agreementtypefilter" data-value="'+pickListVal.getLabel()+'" data-type="Contact" />Show '+pickListVal.getLabel()+'<br/>';
+		}
+		return ctype;
+	}
+
+	public string RetrieveMyActiveContacts(){
+		MyActiveContactsTable = '';
+		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId, false)){
+			MyActiveContactsTable += '<tr id="'+c.Id+'">'+
+				'<td>'+escape(c.name)+ '</td>'+
+				'<td>'+escape(c.email)+ '</td>'+
+				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
+				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
+			'</tr>';
+		}
+		return MyActiveContactsTable;
+	}
+
+	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy){
+		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where MITA_Contact_Type__c<>\'\' AND Status__c=\'Active\'';
+		if(bAllHierarchy){
+			sQuery += ' AND ((AccountId = \'' + AirlineId + '\' OR Account.ParentId = \'' + AirlineId + '\' or Account.parent.ParentId = \'' + AirlineId + '\')';
+		}else{
+			sQuery += ' AND AccountId =\'' + AirlineId + '\'';
+		}
+		return database.query(sQuery);
+	}
 }

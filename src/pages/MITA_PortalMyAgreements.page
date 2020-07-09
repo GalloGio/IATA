@@ -281,8 +281,8 @@
 						});
 					}
 
-					function initOtherContactTable() {
-						var otherConTable = $('#otherContactTable').DataTable({
+					function initContactTable(isMyActive) {
+						var otherConTable = $('#' + (isMyActive ? 'myActive' : 'other') + 'ContactTable').DataTable({
 							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
 							"pageLength": 10,
 							"columnDefs": [
@@ -389,7 +389,7 @@
 
 					function showOtherAirlineContacts(){
 						$( '#otherAirCon').modal('show');
-						initOtherContactTable();
+						initContactTable(false);
 					}
 
 					function closeOtherAirlineContact() {
@@ -551,7 +551,7 @@
 													</div>
 												</div>
 												
-												<!-- SECOND EXTERNAL TAB: ADD AGREEMENTS -->
+												<!-- SECOND EXTERNAL TAB: AVAILABLE AGREEMENTS -->
 												<div class="mytab level1" id="tabAdd">
 													<div class="mytabheadercontainer level2">
 														<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdNewMITA" onclick="showTab('Add','NewMITA')">MITA</div>
@@ -643,14 +643,27 @@
 													===============================================================================-->
 													<div class="mytab level2"  id="tabActiveContacts">
 														<apex:pageBlockSection columns="1" id="ContactActivePnl">
+															<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
+																<apex:outputText value="{!ContactTypes}" escape="false" />
+															</div>
+															<br/>
 															<apex:outputPanel>
-																<apex:pageBlockTable value="{!mapActiveContacts}" var="mapKey" rendered="{!bHasActiveContacts}" id="tblActiveContact">
-																	<apex:column value="{!mapActiveContacts[mapKey].Name}"/>
-																	<apex:column value="{!mapActiveContacts[mapKey].Email}"/>
-																	<apex:column value="{!mapActiveContacts[mapKey].MITA_Contact__c}"/>
-																	<apex:column value="{!mapActiveContacts[mapKey].MITA_Contact_Type__c}"/>
-																	<apex:column value="{!mapActiveContacts[mapKey].MITA_Teletype__c}"/>
-																</apex:pageBlockTable>
+																<table id="myActiveContactTable" class="agreementsTable dataTable no-footer hover row-border compact">
+																	<thead>
+																		<tr>
+																			<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
+																			<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+																			<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
+																			<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<apex:outputText value="{!MyActiveContactsTable}" escape="false" />
+																	</tbody>
+																</table>
+																<script>
+																	initContactTable(true);
+																</script>
 															</apex:outputPanel>
 														</apex:pageBlockSection>
 													</div>
@@ -662,7 +675,6 @@
 																<apex:pageBlockTable value="{!mapAllContacts}" var="mapKey2" rendered="{!bHasContacts}" id="tblAllContact">
 																	<apex:column value="{!mapAllContacts[mapKey2].Name}"/>
 																	<apex:column value="{!mapAllContacts[mapKey2].Email}"/>
-																	<apex:column value="{!mapAllContacts[mapKey2].MITA_Contact__c}"/>
 																	<apex:column value="{!mapAllContacts[mapKey2].MITA_Contact_Type__c}"/>
 																	<apex:column value="{!mapAllContacts[mapKey2].MITA_Teletype__c}"/>
 																</apex:pageBlockTable>
