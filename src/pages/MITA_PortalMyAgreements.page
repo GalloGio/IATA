@@ -407,7 +407,7 @@
 							</apex:actionFunction>
 							<!-- MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
 							<apex:outputPanel id="ModalOtherContacts">
-								<div class="modal fade" id="otherAirCon" role="dialog">
+								<div class="modal fade" id="otherAirCon" role="dialog" data-backdrop="static" data-keyboard="false">
 									<div class="modal-dialog modal-lg" style="width: 1100px;">
 										<div class="modal-content">
 											<div class="modal-header">

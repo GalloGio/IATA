@@ -29,10 +29,10 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		if(string.isEmpty(selectedAirlineId))
 			return null;
 		else{
-			Account acc = [select id, Name_on_AOC__c from account where id=:selectedAirlineId];
+			Account acc = [select id, Name_on_AOC__c, (select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contacts where MITA_Contact_Type__c<>'' AND Status__c='Active') from account where id=:selectedAirlineId];
 			if(acc<>null){
 				selectedAirlineName = acc.Name_on_AOC__c;
-				for(Contact c:[select id, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where MITA_Contact__c=true AND Status__c='Active' AND (AccountId = :acc.Id OR Account.ParentId = :acc.Id or Account.parent.ParentId = :acc.Id) ]){
+				for(Contact c:acc.Contacts){
 					OtherAirlineContactTable += '<tr id="'+c.Id+'">'+
 								'<td>'+escape(c.name)+ '</td>'+
 								'<td>'+escape(c.email)+ '</td>'+
