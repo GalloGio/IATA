@@ -207,7 +207,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
                         let row = allDataAux.records[i];
                         row.CaseURL = urlMap[row.Id];
                         row.Country = row.Country_concerned_by_the_query__c;
-                        row.ContactName = row.Contact.Name;
+                        row.ContactName = row.Contact == null ? 'External user' : row.Contact.Name;
                         row.statusClass = row.Status.replace(/\s/g, '').replace(/_|-|\./g, '') + ' cellHidden';
                     }
 
