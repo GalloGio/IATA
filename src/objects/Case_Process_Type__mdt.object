@@ -24,6 +24,8 @@
     </fields>
     <fields>
         <fullName>Other_Conditions__c</fullName>
+        <description>If this field is populated it must contain a valid WHERE clause, using field names in the Case object, related tables can also be called.
+If this WHERE clause evaluates to true then the custom metadata record will be applied.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Other Conditions</label>

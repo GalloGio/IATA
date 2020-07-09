@@ -220,7 +220,7 @@ public with sharing class CaseProcessTypeHelper {
 				return values.contains(fieldValue);
 			}
 		} catch (Exception e) {
-			System.debug('___ processOtherConditions error ' + e.getMessage());
+			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
 		}
 		return false;
 	}
@@ -286,9 +286,6 @@ public with sharing class CaseProcessTypeHelper {
 	 *  reference value then KPI will be 0 otherwise it will be 1
 	 */
 	private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {
-		System.debug('*** calculateKPI cse ' + cse);
-		System.debug('*** calculateKPI oscar ' + oscar);
-		System.debug('*** calculateKPI process ' + process);
 		//WMO-564 - ACAMBAS: Begin
 		List<String> refFieldList = process.KPI_Reference_Field__c.split('\\.');
 		Integer recordValue;
