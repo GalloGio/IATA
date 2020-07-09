@@ -432,4 +432,36 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>is_Accepted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True when a user accepts the invitation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>True when a user accepts the invitation</inlineHelpText>
+        <label>is Accepted</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Invitation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>Role__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>INV-{00000000}</displayFormat>
+        <label>Invitation Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invitations</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
