@@ -14,7 +14,7 @@ public without sharing class PortalLeadCreatorController {
        
        //Check if there is a contact with the provided Email
 
-       list<contact> contactList=[select id from contact where email =:dtlsMap.get('email')];
+       list<contact> contactList=[select id,accountId from contact where email =:dtlsMap.get('email')];
        String genDesc='Product/Service: '+rec.RecommendationTitle__c+'\n Prefered Contact Method: '+dtlsMap.get('method')+' \n Phone Number: '+dtlsMap.get('phone');
        //if no contact found, generate a lead
         if(contactList.isEmpty()){
@@ -50,6 +50,7 @@ public without sharing class PortalLeadCreatorController {
             Opportunity opp = new Opportunity(
                 name=rec.RecommendationTitle__c+' - '+dtlsMap.get('company'),
                 recordtypeId=rtId,
+                accountId=contactList.get(0).accountId,
                 stageName=OPP_STAGE_NEW,
                 leadSource=LEAD_SOURCE,
                 CloseDate=system.today().addDays(10),
