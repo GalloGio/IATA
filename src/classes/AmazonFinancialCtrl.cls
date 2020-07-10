@@ -8,6 +8,7 @@ global class AmazonFinancialCtrl {
 	public static final Integer FILE_SIZE_LIMIT_MB = 20;
 	public static final Integer FILE_SIZE_LIMIT_BYTES = FILE_SIZE_LIMIT_MB * 1024 * 1024;
 	private static final string FOLDER = 'IFAP/FinancialDocuments/';
+	private static final string FOLDER_GxA = 'IFAP/FinancialDocumentsGxA/';
 
 	public List<ENZ__FTPAttachment__c> docs {get; private set;} /// this just for the legacy documents on the drive in the YMQ
 
@@ -74,6 +75,7 @@ global class AmazonFinancialCtrl {
 
 	private  AsyncWSToolmasterIfap.mergeAndSubmitParametersResponse_elementFuture futureElement {get; set;}
 	private String caseFolder;
+	private String caseFolderGxA;
 	public Case cse {get; private set;}
 	private Account acc {get; set;}
 
@@ -104,6 +106,7 @@ global class AmazonFinancialCtrl {
 				} else {
 
 					this.casefolder = FOLDER + cse.CaseNumber;
+					this.caseFolderGxA = FOLDER_GxA + cse.CaseNumber;
 					//  if(cse.IFAP_Agent_Code__c == null || cse.IFAP_Agent_Code__c.length() < 7  )
 					//      throw new transformationException(' Please check the Agent\'s Code ');
 
@@ -153,6 +156,7 @@ global class AmazonFinancialCtrl {
 				} else {
 
 					this.casefolder = FOLDER + cse.CaseNumber;
+					this.caseFolderGxA = FOLDER_GxA + cse.CaseNumber;
 					//  if(cse.IFAP_Agent_Code__c == null || cse.IFAP_Agent_Code__c.length() < 7  )
 					//      throw new transformationException(' Please check the Agent\'s Code ');
 
@@ -208,6 +212,7 @@ global class AmazonFinancialCtrl {
 				} else {
 
 					this.casefolder = FOLDER + cse.CaseNumber;
+					this.caseFolderGxA = FOLDER_GxA + cse.CaseNumber;
 					// if(cse.IFAP_Agent_Code__c == null || cse.IFAP_Agent_Code__c.length() < 7  )
 					//  throw new transformationException(' Please check the Agent\'s Code ');
 
@@ -417,6 +422,7 @@ private static String mergedFileName(case Cse, list<AmazonFile> listFile) {
 		map<String, AmazonFile__c> mapAmazonFiles = getMapAmazonFile();
 		this.renderLast2Columns = true;
 		list<AmazonRest.S3File> dirtyList = AmazonRest.getListFiles(this.caseFolder, CREDENTIALS);
+		dirtyList.addAll(AmazonRest.getListFiles(this.caseFolderGxA, CREDENTIALS));
 		// throw new transformationException(''+dirtyList);
 		this.listFile = new list<AmazonFile>();
 		for (AmazonRest.S3File s3File : dirtyList ) {

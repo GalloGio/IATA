@@ -247,7 +247,7 @@ private class AmazonFinancialTest {
 		AmazonFinancialCtrl controller = new AmazonFinancialCtrl(stand);
 		//system.debug('asdasd '+ controller.listFile);
 	  // throw new transformationException('asdasd '+ controller.listFile);
-		system.assertEquals(controller.listFile.size(),1);
+		system.assertEquals(controller.listFile.size(),2);
 
 		controller.refreshAll();
 		//system.assertEquals(controller.docs.size(), 1);

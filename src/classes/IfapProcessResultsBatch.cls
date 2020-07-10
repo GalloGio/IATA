@@ -323,6 +323,9 @@ System.debug('############ theCase ' + theCase);
 							theCase.Financial_Security_Currency__c = xml.getFinancialSecurity().getCurrency_x();
 					}
 
+					if(xml.getStatus() != null && xml.getStatus().contains('Submitted')){
+						theCase.Status = 'Submitted';
+					}
 
 					//Check whether the result contains errors or not
 System.debug('############ xml.getError() ' + xml.getError());

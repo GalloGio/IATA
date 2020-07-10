@@ -321,7 +321,7 @@ public class IfapProcessTest {
 			String jsonCase =
 				'{'+
 				'"caseNumber": "'+c.CaseNumber+'",'+
-				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+c.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>100</FinancialCriteriaTotalScore> <Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
+				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+c.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>100</FinancialCriteriaTotalScore> <Status>SUBMITTED-ASSESSMENT INPROGRESS</Status> <Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
 				'"success":true'+
 				'}';
 			listJson.add(jsonCase);
