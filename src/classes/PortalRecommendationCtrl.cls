@@ -111,9 +111,9 @@ public with sharing class PortalRecommendationCtrl {
 				rv.RecordType.Name,
 				rv.RecommendationTitle__c,
 				(rv.RecordTypeId != serviceRecommendationRecTypeId ? ( !String.isBlank(prodDescription) ? prodDescription : rv.Product_Description__c): rv.Service_Description__c),
-				learnMoreLabel,
+				'',
 				(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.InformationButtonLink__c: rv.InformationButtonLink__c),
-				(rv.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : (rv.PortalService__r.Requestable__c ? (isPortalAdmin ? (rv.PortalService__r.Cannot_be_managed_by_portal_admin__c == false ? enableThisServiceLabel : requestServiceLabel ) : requestServiceLabel) : goToServiceLabel) ),
+				learnMoreLabel,
 				(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.ActionButtonLink__c : rv.ActionButtonLink__c),
 				(rv.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
 			));
