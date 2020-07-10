@@ -35735,7 +35735,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Các báo cáo</label>
             <name>Contacts</name>
         </sections>
         <sections>
