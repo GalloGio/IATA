@@ -351,8 +351,8 @@
             </div>
 
             <div style="padding-top:16px;">
-                <h3>{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_SAA_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA)))}</h3>
-                <apex:outputText value="{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_Intro_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro)))}" escape="false"/>
+                <h3>{!IF(isCNSAgency, $Label.ISSP_AMS_Step0_CNS_NEW_HO_BR, IF(isPassAccreditation,$Label.ISSP_AMS_Step0_SAA_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))))}</h3>
+                <apex:outputText value="{!IF(isCNSAgency, $Label.ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR, IF(isPassAccreditation,$Label.ISSP_AMS_Step0_Intro_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))))}" escape="false"/>
             </div>
             <div id="load_scrl" class="loadingBox loader" style="display:none;"/>
             <div class="loadingBox overlay"/>
@@ -371,7 +371,7 @@
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
-                                    <strong>{!IF(isPassAccreditation,$Label.ISSP_AMS_PASS_Application,$Label.ISSP_AMS_Agency_Accreditation)}</strong>
+                                    <strong>{!IF(isCNSAgency, $Label.ISSP_AMS_Agency_Endorsement, IF(isPassAccreditation,$Label.ISSP_AMS_PASS_Application,$Label.ISSP_AMS_Agency_Accreditation))}</strong>
                                 </div>
                             </header>
 
@@ -459,7 +459,7 @@
                                 </header>
                                     
                                 <div class="row bankDetails" style="padding-top: 20px">
-                                    <div class="col-md-12" style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
+                                    <div class="col-md-12" style="display:{!IF(AND(communityName!='CNS',isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
                                         <input type="button" class="iatabtn btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                                     </div>
                                 </div>
@@ -536,7 +536,7 @@
                                 </header>
                                 <div class="row" style="padding-top: 20px">
                                     <div class="col-md-12 padded-on-bottom">
-                                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}" onclick="proceedToVR(); return false;"/>
+                                    <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!AND(communityName!='CNS', isUserAccAccredited)}" onclick="proceedToVR(); return false;"/>
                                 
                                     <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
                                         <a href="#" onclick="proceedToVMFR(); return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>

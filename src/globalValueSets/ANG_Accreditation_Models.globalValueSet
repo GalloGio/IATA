@@ -20,6 +20,36 @@
         <default>false</default>
         <label>Multicountry</label>
     </customValue>
+    <customValue>
+        <fullName>CNS Endorsement HO</fullName>
+        <default>false</default>
+        <label>CNS Endorsement HO</label>
+    </customValue>
+    <customValue>
+        <fullName>CNS Endorsement BR</fullName>
+        <default>false</default>
+        <label>CNS Endorsement BR</label>
+    </customValue>
+    <customValue>
+        <fullName>CNS Endorsement Independent BR</fullName>
+        <default>false</default>
+        <label>CNS Endorsement Independent BR</label>
+    </customValue>
+    <customValue>
+        <fullName>CASS Commercial Account HO</fullName>
+        <default>false</default>
+        <label>CASS Commercial Account HO</label>
+    </customValue>
+    <customValue>
+        <fullName>CASS Commercial Account BR</fullName>
+        <default>false</default>
+        <label>CASS Commercial Account BR</label>
+    </customValue>
+    <customValue>
+        <fullName>CNS Notice Of Change</fullName>
+        <default>false</default>
+        <label>CNS Notice Of Change</label>
+    </customValue>
     <masterLabel>Accreditation Models</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
