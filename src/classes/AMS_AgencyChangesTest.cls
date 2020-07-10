@@ -22,6 +22,9 @@ public class AMS_AgencyChangesTest {
 
 
 	public static void init2Hierarchies(boolean isPax){
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
 															TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
@@ -121,12 +124,12 @@ public class AMS_AgencyChangesTest {
 		ID rtOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
 		for(Account acc : new List<Account>{HO1, BR1, BR2, BR3}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Owner_Account__c = OwnersAccount.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Owner_Account__c = OwnersAccount.Id));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
 		}
 		for(Account acc : new List<Account>{HO2, BR4, BR5, BR6}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW3.Id, Owner_Account__c = OwnersAccount.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW4.Id, Owner_Account__c = OwnersAccount.Id));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW3.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW4.Id, Owner_Account__c = OwnersAccount.Id, Percentage__c = 50));
 		}
 
 		insert roles;
@@ -330,8 +333,8 @@ public class AMS_AgencyChangesTest {
 		//system.assertEquals(8,changecodes.size(), 'Change of Ownership S1: when the change is finalized owners OW1 and OW2 should be deactivated for all the hierarchy');
 
 		for(Account acc : new List<Account>{HO1, BR1, BR2, BR3}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Percentage__c= 50));
+			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Percentage__c= 50));
 		}
 
 		// After finalization the new owners should be applied to all the agencies involved

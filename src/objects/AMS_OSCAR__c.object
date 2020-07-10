@@ -4124,6 +4124,30 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Promotions__c</fullName>
+        <description>Used to store all promotions applied to this case.
+Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</description>
+        <externalId>false</externalId>
+        <label>Promotions</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>TIDS_to_GoLite</fullName>
+                    <default>false</default>
+                    <label>TIDS to GoLite (free)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Proof_of_payment_received__c</fullName>
         <externalId>false</externalId>
         <label>Payment Status Updated</label>
@@ -10234,6 +10258,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -13711,6 +13742,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -17135,6 +17173,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2EMAJOR%2ECHANGES%2ECHINA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20620,6 +20665,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2ECONVERT%2EMC%2ETO%2EST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24325,6 +24377,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -27862,6 +27921,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -31351,6 +31417,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2EGDI%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34908,6 +34981,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>VR%2E1%2E0%2ECA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38521,6 +38601,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -42122,6 +42209,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>VR%2E1%2E0%2ECA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45815,6 +45909,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -49348,6 +49449,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2ENEW%2EAE%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52993,6 +53101,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -56483,6 +56598,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>ANG%2ENEW%2EHE%2ESTANDARD%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60044,6 +60166,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -63594,6 +63723,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -65825,6 +65961,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>TERMINATED%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68104,6 +68247,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -70245,6 +70395,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -72377,6 +72534,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>RPM_Approval__c</picklist>
             <values>
                 <fullName>Authorize Approval</fullName>
@@ -74464,6 +74628,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>NGCORRECTION%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77919,6 +78090,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Process__c</picklist>
             <values>
                 <fullName>ANG%2EFOPMANAGEMENT%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -81408,6 +81586,13 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>VR%2E1%2E0%2ECA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

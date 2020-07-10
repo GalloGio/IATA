@@ -9299,6 +9299,10 @@
         <name>IDCard_CaseStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard CheckBox --></label>
+        <name>IDCard_CheckBox</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard CheckList Credit Card And Checque Payment Information --></label>
         <name>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</name>
     </customLabels>
@@ -9457,6 +9461,10 @@
     <customLabels>
         <label><!-- IDCard_ContactNotFound --></label>
         <name>IDCard_ContactNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Continue --></label>
+        <name>IDCard_Continue</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Continue Button --></label>
@@ -10251,6 +10259,18 @@
         <name>IDCard_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_errMsg_Account_Rule --></label>
+        <name>IDCard_errMsg_Account_Rule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_MoreDetails --></label>
+        <name>IDCard_errMsg_MoreDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_errMsg_NoContact --></label>
+        <name>IDCard_errMsg_NoContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
     </customLabels>
@@ -10555,6 +10575,10 @@
         <name>ID_Card_Invalid_Promotion_Code_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID Card Invalid Promotion Code 3 --></label>
+        <name>ID_Card_Invalid_Promotion_Code_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Invalid VER --></label>
         <name>ID_Card_Invalid_VER</name>
     </customLabels>
@@ -10589,6 +10613,10 @@
     <customLabels>
         <label><!-- ID Card Package Travel Professionals 2 --></label>
         <name>ID_Card_Package_Travel_Professionals_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Photo --></label>
+        <name>ID_Card_Photo</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Photo Disclaimer --></label>
@@ -17371,6 +17399,22 @@
     <customLabels>
         <label><!-- ISSP_AP_New_Joining_App --></label>
         <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
@@ -25505,6 +25549,10 @@ GSA - 3 буквы.
         <name>Total_Cost</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total_Discount --></label>
+        <name>Total_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total Price --></label>
         <name>Total_Price</name>
     </customLabels>
@@ -33251,6 +33299,24 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- All Products --></description>
         <label><!-- All Products --></label>
         <name>All_Products</name>
@@ -36106,6 +36172,107 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Topics --></label>
             <name>Topics</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Training contact role details with Lookups info --></description>
+        <label><!-- Training contact role details with Lookups info --></label>
+        <name>Training_contact_role_details_with_Lookups_info</name>
+        <sections>
+            <columns>
+                <label><!-- Account: Account ID --></label>
+                <name>Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Account Name --></label>
+                <name>Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Category --></label>
+                <name>Account: Category</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Sector --></label>
+                <name>Account: Sector</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Membership --></label>
+                <name>Account: Training Membership</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Partner --></label>
+                <name>Account: Training Partner</name>
+            </columns>
+            <columns>
+                <label><!-- Account: Training Website --></label>
+                <name>Account: Training Website</name>
+            </columns>
+            <label><!-- Account info --></label>
+            <name>Account info</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Contact Email --></label>
+                <name>Contact Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact ID --></label>
+                <name>Contact ID</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Additional Email --></label>
+                <name>Contact: Additional Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Created By --></label>
+                <name>Contact: Created By</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Created Date --></label>
+                <name>Contact: Created Date</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Bounced Date --></label>
+                <name>Contact: Email Bounced Date</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Bounced Reason --></label>
+                <name>Contact: Email Bounced Reason</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Opt Out --></label>
+                <name>Contact: Email Opt Out</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Email Status --></label>
+                <name>Contact: Email Status</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: First Community --></label>
+                <name>Contact: First Community</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: First Name --></label>
+                <name>Contact: First Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Full Name --></label>
+                <name>Contact: Full Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Last Name --></label>
+                <name>Contact: Last Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact: Title --></label>
+                <name>Contact: Title</name>
+            </columns>
+            <label><!-- Contact Info --></label>
+            <name>Contact Info</name>
+        </sections>
+        <sections>
+            <label><!-- Training Contact Role Details --></label>
+            <name>Training Contact Role Details</name>
         </sections>
     </reportTypes>
     <reportTypes>

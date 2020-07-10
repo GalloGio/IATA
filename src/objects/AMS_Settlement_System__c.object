@@ -409,6 +409,16 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>RHC_Exceptional_Monitoring__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to flag that the BSP is under the RHC Exception Monitoring (used on masterdata interface and reception of RHC alert from RME)</description>
+        <externalId>false</externalId>
+        <label>RHC Exceptional Monitoring</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Remittance_Frequency_per_State__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

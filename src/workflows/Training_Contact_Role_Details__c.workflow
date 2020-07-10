@@ -38,7 +38,7 @@
         </actions>
         <active>true</active>
         <description>TCRD City Update</description>
-        <formula>OR(ISCHANGED(City_Reference__c), AND(ISNEW(),City_Reference__c &lt;&gt; null) )</formula>
+        <formula>ISCHANGED(City_Reference__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -49,7 +49,7 @@
         </actions>
         <active>true</active>
         <description>TCRD Country Update</description>
-        <formula>OR(ISCHANGED(Country_Reference__c), AND(ISNEW(),Country_Reference__c&lt;&gt; null) )</formula>
+        <formula>ISCHANGED(Country_Reference__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -60,7 +60,7 @@
         </actions>
         <active>true</active>
         <description>TCRD State Update</description>
-        <formula>OR(ISCHANGED(State_Reference__c), AND(ISNEW(),State_Reference__c&lt;&gt; null) )</formula>
+        <formula>ISCHANGED(State_Reference__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

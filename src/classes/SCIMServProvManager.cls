@@ -80,11 +80,6 @@ public class SCIMServProvManager {
 			this.spcMsg=spcMsg;
 			this.excepMsg=SCIMServProvManager.mapCodMsg.get(this.excepCode);
 
-
-			System.debug('basto1p - excepCode='+this.excepCode
-					+'; excepMsg='+this.getExcepMsg()
-					+'; spcMsg='+this.spcMsg
-					+'; System='+this.getMessage());
 			if (EXCEP_RSP_DEBUG_MODE_ACTIVE){
 				this.appendExcepMsg(this.spcMsg);
 			}
@@ -104,7 +99,6 @@ public class SCIMServProvManager {
 		public void appendExcepMsg(String spcMsg){
 			this.excepMsg=this.excepMsg+'; SPECIFIC MESSAGE: '+spcMsg;
 			this.setMessage(this.excepMsg+'; SYSTEM MSG EXCP:'+this.getMessage());
-			system.debug('basto1p - SPECIFIC ECEPTION MESSAGE='+spcMsg);
 		}
 	}
 	//////////////////////////////////////
@@ -145,24 +139,17 @@ public class SCIMServProvManager {
 
 	private void initServiceConfig(List<String> servProvNameList){
 
-		system.debug('basto1p - initServiceConfig servProvNameList='+servProvNameList);
-
 		List<One_Id_App_Config_Detail__c> apps = OneIdProvisioningDAO.getAppPermissionSetListForISSP(servProvNameList);
-
-		system.debug('basto1p - initServiceConfig list of confs='+apps);
 
 		for(One_Id_App_Config_Detail__c an : apps){
 			mapAppConfList.put(an.One_Id_Service_Provider_Config__r.Service_Bundle__r.Service_Provider_Name__c , an);
 		}
-
-		system.debug('basto1p - initServiceConfig mapAppConfList='+mapAppConfList);
 
 		List<User> listOfUsers = [select id, contactid from user where contactId = :contactIdSet];
 
 		for(User anUser : listOfUsers){
 			mapContactUsers.put(anUser.ContactId, anUser);
 		}
-		system.debug('basto1p - initServiceConfig mapContactUsers='+mapContactUsers);
 	}
 
 
@@ -170,28 +157,26 @@ public class SCIMServProvManager {
 		portalAccessList = serAccessList;
 
 		if (portalAccessList!=null) {
-			System.debug('basto1p - Initializing apps list initIATAServAccessMapOfApps');
 			for (Portal_Application_Right__c access : portalAccessList) {
-				if (access.Portal_Application__c != null) portalAppsSet.add(access.Portal_Application__c);
-
-				portalAppsAccessSet.add(access.Id);
+				if (access.Portal_Application__c != null) {                    
+					portalAppsSet.add(access.Portal_Application__c);				
+				}
 			}
 
 			if (!portalAppsSet.isEmpty()) {
-				for (
-						Portal_Applications__c objCS
-						:
-				[Select id,name, ServiceName__c ,Service_Description__c, SCIM_App_Name__c, Provisioning_Type__c
-						From Portal_Applications__c where id IN :portalAppsSet])
+				for (Portal_Applications__c objCS :	[Select id,name, ServiceName__c ,Service_Description__c, SCIM_App_Name__c, Provisioning_Type__c	From Portal_Applications__c where id IN :portalAppsSet])
 					mapOfApps.put(objCS.id, objCS);
 
 			}
+			for (Portal_Application_Right__c access : portalAccessList) {                
+				if (access.Portal_Application__c != null && (mapOfApps.get(access.Portal_Application__c).SCIM_App_Name__c == PROD_SRV_PROV || mapOfApps.get(access.Portal_Application__c).SCIM_App_Name__c == PRE_PROD_SRV_PROV)){
+					portalAppsAccessSet.add(access.Id);
+				}
+			}	
 		}
-		system.debug('basto1p - initIATAServAccessMapOfApps mapOfApps='+mapOfApps);
 	}
 
 	public static String getSCIMAppNameFromId(Id IATAPortalApp){
-		system.debug('basto1p - getSCIMAppNameFromId.IATAPortalApp='+IATAPortalApp);
 
 		Portal_Applications__c resultApp;
 		String result;
@@ -283,7 +268,6 @@ public class SCIMServProvManager {
 				mapOfAppsAux.put(anUsrApp.App_Key__c, anUsrApp);
 			}
 
-			System.debug('keySet ' + mapOfAppsAux.keySet());
 			List<One_Id_User_Applications__c> allList =
 			[select id, User_Provisioning_Request__c,App_Key__c
 				from One_Id_User_Applications__c
@@ -310,8 +294,7 @@ public class SCIMServProvManager {
 			ccs.add(SCIM_Prov_Connector__c.getOrgDefaults().FYI_Email__c);
 			mail.setCcAddresses(ccs);
 			mail.setPlainTextBody('Text');
-			Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-			System.debug(r);
+			Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });			
 		}
 	}
 
@@ -333,9 +316,6 @@ public class SCIMServProvManager {
 
 
 	public static void syncTechProvStatus(List<Portal_Application_Right__c> newListObj, map<Id, Portal_Application_Right__c> oldObjMap){
-		system.debug('basto1p - BEGIN syncTechProvStatus');
-
-		system.debug('basto1p - newListObj='+newListObj);
 
 		Set<Id> servIds=new Set<Id>();
 		for (Portal_Application_Right__c item : newListObj){
@@ -346,13 +326,10 @@ public class SCIMServProvManager {
 		Map<Id, Portal_Applications__c> servMap = new Map<Id, Portal_Applications__c> (
 			[SELECT Id, Provisioning_Type__c from Portal_Applications__c WHERE Id IN :servIds]);
 
-		system.debug('basto1p - servIds='+servIds);
-		system.debug('basto1p - servIds='+servMap);
+
 
 		for(Portal_Application_Right__c right : newListObj){
-		system.debug('basto1p - trigger row='+right);
 			if(System.Trigger.isUpdate && System.Trigger.isBefore ) {
-				system.debug('basto1p - TRIGGER BEFORE UPDATE');
 				Portal_Application_Right__c oldAccess = oldObjMap.get(right.Id);
 				if((right.Right__c != null && oldAccess.Right__c != null)
 						&& right.Right__c != oldAccess.Right__c
@@ -360,41 +337,30 @@ public class SCIMServProvManager {
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c.equals(PROV_TYP_SCIM)
 
 				) {
-					if (right.Right__c.equals(IATA_STS_ACCESS_GRANTED)){
-						system.debug('basto1p - SEt Technical_Provisioning_Status__c=TECH_STS_IATA_ACCESS_GRANTED');
+					if (right.Right__c.equals(IATA_STS_ACCESS_GRANTED)){						
 						right.Technical_Provisioning_Status__c = TECH_STS_IATA_ACCESS_GRANTED;
 					}
 					else if (  right.Right__c.equals(IATA_STS_ACCESS_DENIED)
 							&& right.Technical_Provisioning_Status__c != null
 							&& !right.Technical_Provisioning_Status__c.equals(SCIMServProvManager.TECH_STS_EXT_ACCESS_DENIED)
 					){
-						system.debug('basto1p - SEt Technical_Provisioning_Status__c=TECH_STS_IATA_ACCESS_DENIED');
 						right.Technical_Provisioning_Status__c = TECH_STS_IATA_ACCESS_DENIED;
 					}
 
 				}
 			}else if(System.Trigger.isInsert && System.Trigger.isBefore ) {
-				system.debug('basto1p - TRIGGER BEFORE INSERT');
 				if(right.Right__c != null && right.Right__c.equals(IATA_STS_ACCESS_GRANTED)
 				   //&& right.Portal_Application__r.Provisioning_Type__c.equals(PROV_TYP_SCIM)
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c!=null
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c.equals(PROV_TYP_SCIM)
 				  ) {
-					system.debug('basto1p - App Provisions Type SCIM on INSERT added Technical_Provisioning_Status__c=TECH_STS_IATA_ACCESS_GRANTED');
 					right.Technical_Provisioning_Status__c = TECH_STS_IATA_ACCESS_GRANTED;
 				}
-				else{
-					//right.Technical_Provisioning_Status__c = '';
-					system.debug('basto1p - App Provisions Type INSERT NOT added Technical_Provisioning_Status__c');
-				}
-
 			}
 		}
-		system.debug('basto1p - END syncTechProvStatus');
 	}
 
 	public void setExternalAccessGranted(Portal_Application_Right__c serviceRqRow, id userId){
-		System.debug('basto1p - EXternal ACCESS GRANTED.');
 
 		SCIMServProvManager.addPermissionSet(
 				userId,
@@ -406,40 +372,16 @@ public class SCIMServProvManager {
 	}
 
 	public void setExternalAccessDenied(Portal_Application_Right__c serviceRqRow){
-		System.debug('basto1p - EXternal ACCESS DECLINED.');
 
 		serviceRqRow.Technical_Provisioning_Status__c = SCIMServProvManager.TECH_STS_EXT_ACCESS_DENIED;
 		serviceRqRow.Right__c = SCIMServProvManager.IATA_STS_ACCESS_DENIED;
 		serviceRqRow.Access_Status_Reason__c= Label.IFG_Prov_Declined;
 
 		update serviceRqRow;
-/*
-					//Get One ID App Service table related row
-					OneIdUsrAppRow=[SELECT Application__c,Identity_User__c
-									FROM One_Id_User_Applications__c
-									WHERE Provisioning_Status__c=:LightningConnectedAppHelper.OID_USER_APP_STATUS_COMPLETED
-									  AND Identity_User__c=:u.Id
-									  AND Application__c=:IFGProvManagHandler.appConf.Id];
-					//TODO: CONFIRM if is to change to deleted
-					//One id service accesss update status row
-					//LightningConnectedAppHelper.OID_USER_APP_STATUS_COMPLETED ou DELETED?
-					OneIdUsrAppRow.Provisioning_Status__c=LightningConnectedAppHelper.OID_USER_APP_STATUS_DELETED;
-					Update OneIdUsrAppRow;
-*/
-
-		//remove permission set with rest user
-		//(web service REST user have permissions to do this operation)
-		//Remove permission set --> this will triggers User deativation provisioning
-		//(since REST services uses a full license user)
-		//SCIMProvisioningRequestUpdate.removePermissionSet(u.Id, 'IFG_Provisioning_Prod');
-		//SCIMProvisioningRequestUpdate.removePermissionSet(
-		//				u.Id,
-		//				IFGProvManagHandler.appConf.PermissionSet_Provisioning__c);
 	}
 
 	@future
 	public static void setPortalAccessRightProvTechStatus(Id userId, String anAppkey, String techStatus){
-		system.debug('basto1p - BRGIN setProvisioningFailure userId='+userId+'; anAppkey='+anAppkey);
 
 		User u=[select ContactId from user where id =:userId];
 
@@ -457,7 +399,6 @@ public class SCIMServProvManager {
 		];
 
 		if (techStatus.equals(SCIMServProvManager.TECH_STS_PROV_FAIL)) {
-			system.debug('bastos - line in app rights' + ServiceRq);
 			ServiceRq.Technical_Provisioning_Status__c = SCIMServProvManager.TECH_STS_PROV_FAIL;
 			ServiceRq.Access_Status_Reason__c = Label.IFG_Prov_Failed;
 			if (ServiceRq.Right__c!=null
@@ -470,8 +411,6 @@ public class SCIMServProvManager {
 		}
 
 		Update ServiceRq;
-
-		system.debug('basto1p - END setProvisioningFailure');
 	}
 
 	@future
@@ -546,19 +485,15 @@ public class SCIMServProvManager {
 		List<Portal_Application_Right__c> ServiceAccList = [select Id, Right__c, Contact__c, Portal_Application__c, Contact__r.Record_Sharing_Criteria__c
 		FROM Portal_Application_Right__c
 		WHERE Id = :listOfPortalAccessRows];
-		System.debug('basto1p - reviewIFGUserStatusAndContactSharing.ServiceAccList='+ServiceAccList);
 
 		for (Portal_Application_Right__c conItem: ServiceAccList){
 			allContactsKeys.add(conItem.Contact__c);
 		}
-		System.debug('basto1p - reviewIFGUserStatusAndContactSharing.allContactsKeys='+allContactsKeys);
 
 		List<Contact> allContactsList=[SELECT Id, Record_Sharing_Criteria__c, Record_Sharing_Criteria_AUX__c, Name  FROM Contact WHERE Id IN :  allContactsKeys];
-		System.debug('basto1p - reviewIFGUserStatusAndContactSharing.allContactsList='+allContactsList);
 		for (Contact conItem : allContactsList){
 			contactRecSharingCritMapp.put(conItem.Id, conItem.Record_Sharing_Criteria__c);
 		}
-		System.debug('basto1p - reviewIFGUserStatusAndContactSharing.contactRecSharingCritMapp='+contactRecSharingCritMapp);
 
 		SCIMServProvManager.initIATAServAccessMapOfApps(ServiceAccList);
 
@@ -569,23 +504,10 @@ public class SCIMServProvManager {
 			//Setting IFG_User_Status__c values
 			if (!item.Right__c.equals(SCIMServProvManager.IATA_STS_ACCESS_DENIED)){
 
-				//if (getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PRE_PROD_SRV_PROV) &&
-				//        getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PROD_SRV_PROV)
-				//) {
-				//    recordUserStatusValue = SCIMServProvManager.IFG_USR_STS_PROD_AND_PRE_PROD;
-				//} else if (getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PROD_SRV_PROV)) {
-				//    recordUserStatusValue = SCIMServProvManager.IFG_USR_STS_PROD;
-				//} else if (getSCIMAppNameFromId(item.Portal_Application__c).equals(SCIMServProvManager.PRE_PROD_SRV_PROV)) {
-				//    recordUserStatusValue = SCIMServProvManager.IFG_USR_STS_PRE_PROD;
-				//}
-
-				System.debug('basto1p - reviewIFGUserStatusAndContactSharing inside IATA_STS_ACCESS_DENIED');
 				//Set Record_Sharing_Criteria__c values
 				if (isIFGServiceRow(item)) {
-					System.debug('basto1p - reviewIFGUserStatusAndContactSharing inside IS IFG ROW');
 					recordSharingCriteriaValue = RSC_IFG_ACTIVE_USERS;
 					recordSharingCriteriaValuePickListVal=multiSelectPickListAppendValue(contactRecSharingCritMapp.get(item.Contact__c),RSC_IFG_ACTIVE_USERS);
-					System.debug('basto1p - ADD recordSharingCriteriaValuePickListVal='+recordSharingCriteriaValuePickListVal+'; item.Contact__c='+item.Contact__c);
 				}
 				else{
 					recordSharingCriteriaValuePickListVal=multiSelectPickListDeleteValue(contactRecSharingCritMapp.get(item.Contact__c),RSC_IFG_ACTIVE_USERS);
@@ -595,7 +517,6 @@ public class SCIMServProvManager {
 				recordSharingCriteriaValuePickListVal=multiSelectPickListDeleteValue(contactRecSharingCritMapp.get(item.Contact__c),RSC_IFG_ACTIVE_USERS);
 			}
 
-			System.debug('basto1p - recordSharingCriteriaValue='+recordSharingCriteriaValue+'; recordUserStatusValue='+recordUserStatusValue);
 			//item add updates to Update contact list
 			Contact anContact = new Contact(
 					id = item.Contact__c,
@@ -627,17 +548,9 @@ public class SCIMServProvManager {
 			 from contact
 			 where accountId in :listOfAccounts];
 
-			/*
-			System.debug('basto1p - reviewIFGAccountSharing.contactsList='+contactsList);
-			for (contact conAux : contactsList){
-				allContactsKeys.add(conAux.id);
-			}
-			*/
-			System.debug('basto1p - reviewIFGAccountSharing.allContactsKeys='+allContactsKeys);
 			List<Portal_Application_Right__c> ServiceAccList = [select Id, Right__c, Contact__c, Portal_Application__c, Contact__r.Record_Sharing_Criteria__c
 					FROM Portal_Application_Right__c
 					where Contact__r.Account.Id in :listOfAccounts];
-			System.debug('basto1p - reviewIFGAccountSharing.ServiceAccList='+ServiceAccList);
 			SCIMServProvManager.initIATAServAccessMapOfApps(ServiceAccList);
 
 			String recordSharingCriteriaAux;
@@ -648,11 +561,8 @@ public class SCIMServProvManager {
 				mapAccountServiceKey='';
 
 				for(Portal_Application_Right__c ri : con.Portal_Application_Rights__r){
-					System.debug('basto1p - reviewIFGAccountSharing.ri.Portal_Application__c='+ri.Portal_Application__c);
 					if(isIFGServiceRow(ri)) totalIFGServices++;
 				}
-
-				System.debug('basto1p - con.account.Record_Sharing_Criteria__c='+con.account.Record_Sharing_Criteria__c);
 
 				mapAccountServiceKey=con.account.Id+'_'+RSC_IFG_ACTIVE_USERS;
 				if(totalIFGServices > 0
@@ -660,7 +570,6 @@ public class SCIMServProvManager {
 
 					mapAccServiceFound.put(mapAccountServiceKey,true);
 					recordSharingCriteriaAux=multiSelectPickListAppendValue(con.account.Record_Sharing_Criteria__c,RSC_IFG_ACTIVE_USERS);
-					System.debug('basto1p - ADD recordSharingCriteriaAux='+recordSharingCriteriaAux+'; Account='+con.account.Id);
 
 					Account anAccount = new Account(id = con.accountId, Record_Sharing_Criteria__c = recordSharingCriteriaAux);
 					uSharingList.put(con.accountId, anAccount);
@@ -671,7 +580,6 @@ public class SCIMServProvManager {
 					mapAccServiceFound.put(mapAccountServiceKey,false);
 
 					recordSharingCriteriaAux=multiSelectPickListDeleteValue(con.account.Record_Sharing_Criteria__c,RSC_IFG_ACTIVE_USERS);
-					System.debug('basto1p - REMOVE recordSharingCriteriaAux='+recordSharingCriteriaAux+'; Account='+con.account.Id);
 
 					Account anAccount = new Account(id = con.accountId, Record_Sharing_Criteria__c = recordSharingCriteriaAux);
 					uSharingList.put(con.accountId, anAccount);
@@ -679,14 +587,12 @@ public class SCIMServProvManager {
 			}
 
 			//Update
-			System.debug('basto1p - UPDATE uSharingList='+uSharingList);
 			if(!uSharingList.isEmpty()) update uSharingList.values();
 		}
 
 	}
 
 	public static String multiSelectPickListAppendValue(String PickListCurrentValues, String ValueToAppend){
-		System.debug('basto1p - multiSelectPickListAppendValue.PickListCurrentValues='+PickListCurrentValues+'; ValueToAppend='+ValueToAppend);
 		if (PickListCurrentValues==null) return ValueToAppend;
 
 		string[] arrayPickListCurrValues=PickListCurrentValues.split(';');
@@ -699,14 +605,11 @@ public class SCIMServProvManager {
 
 		//If not already there add new item to list
 		arrayPickListCurrValues.add(ValueToAppend);
-		System.debug('basto1p - multiSelectPickListDeleteValue.arrayPickListCurrValues='+arrayPickListCurrValues);
-		System.debug('basto1p - multiSelectPickListDeleteValue.RESULT='+string.join(arrayPickListCurrValues,';'));
 		return string.join(arrayPickListCurrValues,';')+';';
 	}
 	public static String multiSelectPickListDeleteValue(String PickListCurrentValues, String ValueToDelete){
 		if (PickListCurrentValues==null) return '';
 
-		System.debug('basto1p - multiSelectPickListDeleteValue.PickListCurrentValues='+PickListCurrentValues+'; ValueToAppend='+ValueToDelete);
 		string[] arrayPickListCurrValues=PickListCurrentValues.split(';');
 		string[] resultArray=new List<String>();
 		for (String itemValStr : arrayPickListCurrValues){
@@ -716,7 +619,6 @@ public class SCIMServProvManager {
 			}
 		}
 
-		System.debug('basto1p - multiSelectPickListDeleteValue.RESULT='+string.join(resultArray,';'));
 		//If not already there add new item to list
 		return string.join(resultArray,';')+';';
 	}

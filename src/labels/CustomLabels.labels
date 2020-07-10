@@ -2625,7 +2625,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ASD Service Description</shortDescription>
-        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. Air Service Desk (ASD) consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. Air Service Desk (ASD) consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant.
 
 ASD is an innovative, internet-based system, which facilitates these interactions and exchanges of information between all participants in the Billing and Settlement Plan (BSP). Using this service through the IATA Customer Portal will allow you access to ASD, without the need for separate login details.</value>
     </labels>
@@ -2986,7 +2986,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BSP/CASS Ch Request Service Description</shortDescription>
-        <value>You can use the BSP/CASS Change Request to modify your airline&apos;s BSP/CASS Participation details. These details include your airline&apos;s local address, the tax number or the Financial/Admin contact. You can also opt-in for IATA EasyPay. Directly online, this service simplifies processing the BSP/CASS changes to keep your data always up to date. 
+        <value>You can use the BSP/CASS Change Request to modify your airline&apos;s BSP/CASS Participation details. These details include your airline&apos;s local address, the tax number or the Financial/Admin contact. You can also opt-in for IATA EasyPay. Directly online, this service simplifies processing the BSP/CASS changes to keep your data always up to date.
 
 This service is free of charge.</value>
     </labels>
@@ -2995,7 +2995,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>BSPlink Service Description</shortDescription>
-        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. BSPlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. BSPlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant.
 
 BSPlink is an innovative, internet-based system, which facilitates these interactions and exchanges of information between all participants in the Billing and Settlement Plan (BSP). Using this service through the IATA Customer Portal will allow you access to BSPlink, without the need for separate login details.</value>
     </labels>
@@ -3324,7 +3324,7 @@ Gain a rare, increased advantage by knowing your business environment inside out
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CASSlink Export Service Description</shortDescription>
-        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant.
 
 CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
     </labels>
@@ -3333,7 +3333,7 @@ CASSlink is an internet-based system which facilitates these interactions and ex
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CASSlink Import Service Description</shortDescription>
-        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant.
 
 CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
     </labels>
@@ -3342,7 +3342,7 @@ CASSlink is an internet-based system which facilitates these interactions and ex
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CASSlink Service Description</shortDescription>
-        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant.
 
 CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
     </labels>
@@ -3358,7 +3358,7 @@ CASSlink is an internet-based system which facilitates these interactions and ex
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CNS CASSlink Service Description</shortDescription>
-        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CNS CASSlink consolidates the amounts owed by each agent and the amounts due to each airline in the United States. It enables the settlement to be made through one single financial transfer for each participant. 
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CNS CASSlink consolidates the amounts owed by each agent and the amounts due to each airline in the United States. It enables the settlement to be made through one single financial transfer for each participant.
 
 CNS CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CNS CASSlink, without the need for separate login details.</value>
     </labels>
@@ -8284,7 +8284,7 @@ Automated process from a new account activation</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Country Requirements Service Description</shortDescription>
-        <value>For any airline, joining a BSP/CASS operation opens up new business opportunities. 
+        <value>For any airline, joining a BSP/CASS operation opens up new business opportunities.
 
 You can use the Country Requirements Service to find out more information about the local requirements per country or market for your airline to join a new BSP/CASS operation - even before you begin the BSP/CASS Joining procedure.
 
@@ -9278,14 +9278,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey</shortDescription>
-        <value>833d368df5c23296a4efe8a6fc2b9b1d</value>
+        <value>33da3256100f3b0b9395aaafba400e3e</value>
     </labels>
     <labels>
         <fullName>Cybersource_AccessKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey_USD</shortDescription>
-        <value>b3d6f88098cf3f16980ccc5e21ea9c1d</value>
+        <value>df936b4fc51a34d98759f45c5d530df8</value>
     </labels>
     <labels>
         <fullName>Cybersource_MerchantId</fullName>
@@ -9320,14 +9320,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey</shortDescription>
-        <value>d7807348d5e04536b84f24774d2ab31b60a44906574445fe8c048d459ab2bbe41607755b175d4f79a3fb3ca109d46dca46de71ff10694921b2ea4cab367dc2d29e2da2bcf1a74db6ba1257d53525135a8ef7fe311a3d44088785d9b12a621dc7210b25519e6246b18602c1c4c7d9a446468c91619ecb42049435c833e1a61499</value>
+        <value>9bfa9ac66a0f4ea9a8cae78baaf0169b6fe9e9368d98431cb8b956fd42d705bf67a1004e207b4993811ea286d4f1fc5d4c6298e89c0748d0a52bdcc59259befa56afcbb5a24f4a8d9865c46ad56366213bd260fead9746f794f62cc22c89df2448ab5060ab394c07b1fc4ea12ea5a9704483b853fdce4987b2f846b2a4550d1a</value>
     </labels>
     <labels>
         <fullName>Cybersource_SecurityKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey_USD</shortDescription>
-        <value>a9ff049e793d4f5f9b7ee166e20761c9a9ed454028c14624a79ef2dfd4d7a0473bb6b7f1aa14410aba60ba86244273456098da4ed6ec4c7d857d14730e47ee61711ba93f815f43a480ed41330ad7f8b93e2e3943d160459dbeadf4c7637c145cae22317c5dbb480c909c7ad6e8439f38924dd228ed214d6d9c9345801223d274</value>
+        <value>cbc3e602969444669448b3f12b6906c3d99e089f530e477da15a8466a3cf8caa9e103488ebfe49938e53b2b44954eb82af6a6119a9c14bfb86e2d487e885ca11c9b432dca2644b17b756a5a81b1b3b2087d6bb75ade5473587c975f3799f5dfb8ab05695786847288ed58204fad60789777b1796631a40038581843bf51a756a</value>
     </labels>
     <labels>
         <fullName>Cybersource_SerialNumber</fullName>
@@ -10141,7 +10141,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GADM Service Description</shortDescription>
-        <value>The Global Aviation Data Management (GADM) program is a data management platform which integrates all sources of operational data received from various channels. 
+        <value>The Global Aviation Data Management (GADM) program is a data management platform which integrates all sources of operational data received from various channels.
 
 Techniques to improve aviation safety have moved beyond the analyses of isolated accidents, to data-driven analyses of trends and the interaction between the links in the air transport chain. This is what the GADM program is about. It offers a comprehensive, cross-database analysis, supporting a proactive data-driven approach for advanced trend analysis and predictive risk mitigation.</value>
     </labels>
@@ -10518,7 +10518,7 @@ Spain</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IATA Store Service Description</shortDescription>
-        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store. 
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store.
 
 Browse through our extensive catalogue or purchase any of the IATA publications, data &amp; statistics or even IATA Branded Merchandise.</value>
     </labels>
@@ -12657,7 +12657,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Si Create Currency Warning</shortDescription>
-        <value>Please note once a Currency Instruction is submitted, it will lock the participations with the currency selected under this new payment instruction. Further changes (for this cycle) will only be possible by submitting another Currency Instruction. 
+        <value>Please note once a Currency Instruction is submitted, it will lock the participations with the currency selected under this new payment instruction. Further changes (for this cycle) will only be possible by submitting another Currency Instruction.
 
 Any change of instruction for a specific country line under a currency instruction will not be possible.</value>
     </labels>
@@ -13271,6 +13271,13 @@ The sum of percentage cannot exceed 100%</value>
         <value>Case Status</value>
     </labels>
     <labels>
+        <fullName>IDCard_CheckBox</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard CheckBox</shortDescription>
+        <value>I have read the required document list.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_CheckList_CreditCardAndChecque_PaymentInformation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13294,7 +13301,7 @@ Credit cards accepted are:&lt;br&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CheckList_ErrorMessage</shortDescription>
-        <value>All Items must be checked before proceeding to the next page.</value>
+        <value>You may need the following document(s) in order to complete the ID Card application. For verification purposes, IATA may request for additional information or documents from the applicant. False declaration will lead to cancellation and blacklisting of ID Card application in the future.</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckList_PageTitle</fullName>
@@ -13587,6 +13594,13 @@ Accepted documents for independent travel consultant/contractor/broker are:&lt;b
         <shortDescription>IDCard_ContactNotFound</shortDescription>
         <value>&lt;h2&gt;We didn&apos;t find any existing ID Card based on the personal informations you provided in Login Page.&lt;/h2&gt;&lt;/br&gt;&lt;/br&gt;
 Please, if it&apos;s the first time you are applying for an ID Card, confirm that the Agency details below are corrects and click &quot;Applying for a first ID Card&quot;; or &quot;Go back to the Login Page&quot; and enter a correct Personal Information.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Continue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Continue</shortDescription>
+        <value>Continue...</value>
     </labels>
     <labels>
         <fullName>IDCard_Continue_Button</fullName>
@@ -13889,7 +13903,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard Fraudulence and Security</shortDescription>
-        <value>&lt;b&gt;Important&lt;/b&gt;: For fraudulence and security reason, your ID Card will be sent to the following address upon approval of the application (unless you are applying for change of agency):</value>
+        <value>&lt;b&gt;Important&lt;/b&gt;: For fraudulence and security reason, your ID Card will be sent to the following address upon approval of the application:</value>
     </labels>
     <labels>
         <fullName>IDCard_FundamentalsJourneyPricing_Description</fullName>
@@ -14990,6 +15004,30 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <value>Yes</value>
     </labels>
     <labels>
+        <fullName>IDCard_errMsg_Account_Rule</fullName>
+        <categories>IDCARD</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_errMsg_Account_Rule</shortDescription>
+        <value>Your account has specific rule for ID card purchase.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_errMsg_MoreDetails</fullName>
+        <categories>IDCARD</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_errMsg_MoreDetails</shortDescription>
+        <value>Please contact your key contact for more details</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_errMsg_NoContact</fullName>
+        <categories>IDCARD</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_errMsg_NoContact</shortDescription>
+        <value>However no key contact assigned...</value>
+    </labels>
+    <labels>
         <fullName>IDCard_error_20_hours_required</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15529,6 +15567,13 @@ Your ID Card application manager has been informed of your request.</value>
         <value>The Promotion Code {0} is not valid for this type of ID Card application.</value>
     </labels>
     <labels>
+        <fullName>ID_Card_Invalid_Promotion_Code_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card Invalid Promotion Code 3</shortDescription>
+        <value>The Promotion Code {0} is not valid for all types of ID Card applications.</value>
+    </labels>
+    <labels>
         <fullName>ID_Card_Invalid_VER</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15590,6 +15635,13 @@ Your ID Card application manager has been informed of your request.</value>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 2</shortDescription>
         <value>&lt;br&gt; Please select your courses here:</value>
+    </labels>
+    <labels>
+        <fullName>ID_Card_Photo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Photo</shortDescription>
+        <value>ID Card Photo</value>
     </labels>
     <labels>
         <fullName>ID_Card_Photo_Disclaimer</fullName>
@@ -17871,7 +17923,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_EXISTING_CASE</shortDescription>
-        <value>Your company has already create a case to request the code. 
+        <value>Your company has already create a case to request the code.
 Click here to view the case number:</value>
     </labels>
     <labels>
@@ -18401,7 +18453,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</shortDescription>
-        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate. 
+        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate.
 A provisional assignment shall be valid for a non-renewable period of six (6) months, and is for internal use only.</value>
     </labels>
     <labels>
@@ -28546,6 +28598,38 @@ Tel Aviv, ISRAEL</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_CompanyActivities</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyActivities</shortDescription>
+        <value>The Administrator in each company is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyAdmin</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyAdmin</shortDescription>
+        <value>Please provide the Name and E-mail address of each company staff that will act as administrator for PASS.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyRecomendation</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyRecomendation</shortDescription>
+        <value>Recommendation: Each company should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_FieldsFilled</fullName>
+        <categories>ISSP, PASS, ISSP_AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_FieldsFilled</shortDescription>
+        <value>All mandatory fields have been filled; you are ready to submit your application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_PASS_Withdraw</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29339,7 +29423,7 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application. 
+        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application.
 Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
@@ -34163,10 +34247,10 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PASS Agreement</shortDescription>
         <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
-Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+Participation Agreement must be signed at the participant’s Head Office, by the Chief Executive Officer, Chief Financial Officer, or Director General.
 &lt;br/&gt;
 &lt;br/&gt;
-Please download, complete and upload the PASS agreement as a scanned document.</value>
+Please download, sign and upload the PASS agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Airline_Checklist</fullName>
@@ -38544,7 +38628,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Insurance Providers Service Description</shortDescription>
-        <value>For travel agents who are required to provide IATA with a Financial Security, several options are available. Apart from providing a bank guarantee, you can also choose to use a Global Default Insurance (GDI), or a local Default Insurance Programs (called DIPs). 
+        <value>For travel agents who are required to provide IATA with a Financial Security, several options are available. Apart from providing a bank guarantee, you can also choose to use a Global Default Insurance (GDI), or a local Default Insurance Programs (called DIPs).
 
 Through this Portal service of Insurance Providers, you can get an overview of the local insurance programs (DIPs) available to you in your market.</value>
     </labels>
@@ -38674,12 +38758,12 @@ Using the Join BSP/CASS service, you can directly manage the joining process onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1RT</shortDescription>
-        <value>CasesMENA 
-CasesAmericas 
-ExternalCasesIDFSglobal 
-Cases_China_North_Asia 
-CasesEurope 
-ComplaintIDFS 
+        <value>CasesMENA
+CasesAmericas
+ExternalCasesIDFSglobal
+Cases_China_North_Asia
+CasesEurope
+ComplaintIDFS
 InternalCasesEuropeSCE</value>
     </labels>
     <labels>
@@ -38687,14 +38771,14 @@ InternalCasesEuropeSCE</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1Reason</shortDescription>
-        <value>CHC – Change of Shareholding 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New HO 
-Financial RVW intermediaries 
-New HE lite 
-New HE standard 
-Accreditation Type 
+        <value>CHC – Change of Shareholding
+CHO / CHS – Change of Ownership / Legal Status
+CHN - Change of Name
+New HO
+Financial RVW intermediaries
+New HE lite
+New HE standard
+Accreditation Type
 New EAA - Application process for European Accredited Agent</value>
     </labels>
     <labels>
@@ -38702,16 +38786,16 @@ New EAA - Application process for European Accredited Agent</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI2</shortDescription>
-        <value>New BR / IP 
-CHL - Change of Location 
-New SA / CHV – New Code 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-CLO - Closure 
-New AE 
-FoP Management 
-New HE lite 
-Accreditation Type 
+        <value>New BR / IP
+CHL - Change of Location
+New SA / CHV – New Code
+Direct Debit Setup/Update
+VMFR Setup/Update
+CLO - Closure
+New AE
+FoP Management
+New HE lite
+Accreditation Type
 CHG – Data Maintenance</value>
     </labels>
     <labels>
@@ -43193,7 +43277,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Paymentlink Service Description</shortDescription>
-        <value>Paymentlink is IATA&apos;s online credit card payment platform. As you purchase products &amp; services from IATA, you can use this service to pay easily and instantly. 
+        <value>Paymentlink is IATA&apos;s online credit card payment platform. As you purchase products &amp; services from IATA, you can use this service to pay easily and instantly.
 Whether to use Paymentlink for your payments is either indicated on the IATA invoices, or confirmed to you by an IATA representative.</value>
     </labels>
     <labels>
@@ -43381,26 +43465,26 @@ Whether to use Paymentlink for your payments is either indicated on the IATA inv
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ProcessEffAge</shortDescription>
-        <value>New HO 
-CHG – Data Maintenance 
-CLO - Closure 
-CHL - Change of Location 
-New BR Abroad 
-Termination 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New BR / IP 
-CHC – Change of Shareholding 
-New SA / CHV – New Code 
-GSA / MSO / Handling Agent 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-Reinstatement 
-AIMS Data Entry 
-CAD – Data Maintenance 
-Review 
-Review withdrawal 
-Minor Database Changes 
+        <value>New HO
+CHG – Data Maintenance
+CLO - Closure
+CHL - Change of Location
+New BR Abroad
+Termination
+CHO / CHS – Change of Ownership / Legal Status
+CHN - Change of Name
+New BR / IP
+CHC – Change of Shareholding
+New SA / CHV – New Code
+GSA / MSO / Handling Agent
+Direct Debit Setup/Update
+VMFR Setup/Update
+Reinstatement
+AIMS Data Entry
+CAD – Data Maintenance
+Review
+Review withdrawal
+Minor Database Changes
 Financial RVW intermediaries</value>
     </labels>
     <labels>
@@ -43742,18 +43826,18 @@ Remittance date: {4}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SISCaseDescription</shortDescription>
-        <value>Account legal name: 
+        <value>Account legal name:
 {0}
 
-E&amp;F main contact: 
+E&amp;F main contact:
 {1} {2}
 {3}
 
 Address (business):
 Street {4}
 Zip/Postal Code  {5}
-City  {6}	
-State/Province {7}	
+City  {6}
+State/Province {7}
 Country {8}</value>
     </labels>
     <labels>
@@ -44387,6 +44471,13 @@ Through this service, you can directly access TIP Reports.</value>
         <value>Total cost</value>
     </labels>
     <labels>
+        <fullName>Total_Discount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total_Discount</shortDescription>
+        <value>Total discount</value>
+    </labels>
+    <labels>
         <fullName>Total_Price</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -44405,7 +44496,7 @@ Through this service, you can directly access TIP Reports.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Training Platform (LMS) Service Description</shortDescription>
-        <value>Through the IATA Training Platform, you can consult our extensive training portfolio which includes topics for airlines, airports, cargo operators, governments, ground service providers, travel agents, young professionals and more. 
+        <value>Through the IATA Training Platform, you can consult our extensive training portfolio which includes topics for airlines, airports, cargo operators, governments, ground service providers, travel agents, young professionals and more.
 
 Upscale your skills by signing up for one of our training programs, directly online!</value>
     </labels>
@@ -45550,11 +45641,11 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
         <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;
-        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. 
-        As a Portal Administrator you can either update your 
+        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account.
+        As a Portal Administrator you can either update your
         {0}
-        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the 
-        {1} 
+        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the
+        {1}
         page and ask them to open your EasyPay account.
         &lt;br/&gt;
         &lt;br/&gt;

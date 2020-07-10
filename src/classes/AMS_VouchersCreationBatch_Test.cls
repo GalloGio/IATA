@@ -17,7 +17,8 @@ private class AMS_VouchersCreationBatch_Test {
 		AMS_VouchersCreationBatch batchJob;
 		Map<IATA_ISO_Country__c,Decimal> metricsMap = new Map<IATA_ISO_Country__c,Decimal>();
 		String year = '2017';
-
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia,ComplaintIDFS,'
+		+  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		Test.startTest();
 
 		country  = new IATA_ISO_Country__c(
