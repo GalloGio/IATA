@@ -7,7 +7,7 @@ import getRecomendationDetails                  from '@salesforce/apex/PortalRec
  
 import PhoneFormatter16                         from '@salesforce/resourceUrl/PhoneFormatter16';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
-import RegistrationUtils                        from 'c/registrationUtils';
+import { getUserInfo }                          from 'c/ipInfo';
 
 
 import CSP_PortalPath                           from '@salesforce/label/c.CSP_PortalPath';
@@ -124,7 +124,6 @@ export default class PortalLeadCreator extends LightningElement {
     }
 
     connectedCallback(){
-        const RegistrationUtilsJs = new RegistrationUtils();
         this.form.recommendation=window.location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
 
 
@@ -138,9 +137,8 @@ export default class PortalLeadCreator extends LightningElement {
                 loadStyle(this, PhoneFormatter16 + '/PhoneFormatter/build/css/intlTelInput.css')
             ]).then(function(){			
     
-                RegistrationUtilsJs.getUserLocation().then(result=> {				
-                    this.userCountryCode = result.countryCode;
-                    this.userCountry = result.countryId;
+                getUserInfo().then(result=> {				
+                    this.userCountryCode = result.country;//used later on the _initializePhoneInput
                     this._initializePhoneInput();
                 });
     
