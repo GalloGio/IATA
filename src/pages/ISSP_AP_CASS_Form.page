@@ -516,7 +516,7 @@
                         <apex:inputField value="{!newForm.GSSA_Contact_Phone__c}"/>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="Fax number" styleclass="ap-required"/>
+                        <apex:outputLabel value="Fax number"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_FAX__c}"/>
                     </apex:pageBlockSectionItem>
                     

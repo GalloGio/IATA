@@ -822,9 +822,9 @@ global without sharing class ISSP_APProcess {
 						'Hot_files_delivery_format__c,Submitted_to_IATA__c,VAT_Tax_number_in_your_home_country__c,Online_carrier_in_the_BSP_country__c,Colombia_City_selection__c,'+
 						'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c, Type_of_Change_Requested__c,'+
 						'Colombia_City_percentage__c,Case__c,Type__c,RecordTypeId,Accept_terms_and_conditions__c,Desired_commencment_date__c,Contact_Resp_Salutation__c,Contact_Resp_Phone__c,Type_of_Settlement__c,'+
-						'BSP_Russia_Double_Tax_avoiding_Treaty__c';
+						'BSP_Russia_Double_Tax_avoiding_Treaty__c,Type_of_participation_desired__c';
 		if(isBSP){
-			queryString += ',Type_of_participation_desired__c,ETSP_Contact_Salutation__c,ETSP_Contact_F_Name__c,ETSP_Contact_L_Name__c,ETSP_Contact_Job_Title__c,ETSP_Contact_Address__c,ETSP_Contact_Email__c,'+
+			queryString += ',ETSP_Contact_Salutation__c,ETSP_Contact_F_Name__c,ETSP_Contact_L_Name__c,ETSP_Contact_Job_Title__c,ETSP_Contact_Address__c,ETSP_Contact_Email__c,'+
 			'ETSP_Contact_Phone__c,	ETSP_Contact_Fax__c,BSPLink_ASD_China_Contact__c,BSPLink_ASD_China_Contact_L_Name__c,'+
 			'BSPLink_ASD_China_Contact_Phone__c,BSPLink_ASD_China_Contact_Email__c,IINET_account_number__c,BSPLink_access_level_requested__c,'+
 			'Participate_in_any_Commission_Control__c,Participate_in_any_Remit_scheme__c,Accept_payment_Cards_for_BSP_ticket__c,Card_brand_accepted_for_BSP_ticket__c,Other_Card_brand_accepted_for_BSP_ticket__c,'+
@@ -839,7 +839,7 @@ global without sharing class ISSP_APProcess {
 			'GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,'+
 			'Airline_Billing_Data_File_Type__c,Billing_File_Emrgcy_Contact_Salutation__c,Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,'+
 			'Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,'+
-			'PDF_File_Recipient_Email_3__c,PDF_File_Recipient_Email_4__c,Receive_XLS_Reports__c,CASSLink_Username_1__c,CASSLink_User_1_System_Functions__c,CASSLink_Username_2__c,'+
+			'PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,PDF_File_Recipient_Email_4__c,Receive_XLS_Reports__c,CASSLink_Username_1__c,CASSLink_User_1_System_Functions__c,CASSLink_Username_2__c,'+
 			'CASSLink_User_2_System_Functions__c,CASSLink_Username_3__c,CASSLink_User_3_System_Functions__c,CASSLink_Extra_Existing_Users__c,CASSLink_New_User_1_Salutation__c,'+
 			'CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,'+
 			'CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,CASSLink_New_User_2_System_Functions__c,CASSLink_New_User_3_Salutation__c,'+
@@ -858,7 +858,7 @@ global without sharing class ISSP_APProcess {
 			'Fin_Adm_Contact_Job_Title__c,Fin_Adm_Contact_Phone__c,Fin_Adm_Contact_Email__c,Fin_Adm_Contact_Address__c,Fin_Adm_Contact_Zip_Code__c,Fin_Adm_Contact_City__c,Fin_Adm_Contact_Country__c';
 		}
 		if(isPassAirline){
-			queryString += ',Type_of_participation_desired__c,CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
+			queryString += ',CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
 			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Corrections_Email_1__c,CASS_Corrections_Email_2__c,GSSA_Legal_Name__c,'+
 			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
 			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
