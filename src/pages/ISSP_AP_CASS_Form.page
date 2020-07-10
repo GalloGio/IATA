@@ -148,7 +148,8 @@
         <p><a href="#nav_six">6.Reporting</a></p>
         <p><a href="#nav_seven">7.CASSLink</a></p>
         <p><a href="#nav_eight">8.Commission</a></p>
-        <apex:outputLink value="#nav_nine" rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='MX',apcountryisocode='PH',apcountryisocode='CO', apcountryisocode='IN')}">9.Additional Info</apex:outputLink>
+        <p><a id="pageNav-9" href="#nav_nine">9.Other Cargo services</a></p>
+        <p><a id="pageNav-10" href="#nav_ten"></a></p>
         <div style="border-top: 1px #fff dotted; padding-top: 5px; padding-bottom: 5px;">
             <a data-toggle="modal" data-target="#ModalCountryReqs" href="#">Country Requirements</a>
         </div>
@@ -723,6 +724,7 @@
 
                  <!-- BRAZIL,MEXICO  - START -->
                 <apex:pageBlockSection id="section9" title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jurídicas)', 'Local VAT - RFC #')}"/>
@@ -762,6 +764,7 @@
                 
                 <!-- ARGENTINA - START -->
                 <apex:pageBlockSection title="9. Additional Information - Clave Bancaria Unificada (CBU)" columns="1" rendered="{!apcountryisocode='AR'}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Information - Clave Bancaria Unificada (CBU)"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - Clave Bancaria Unificada (CBU)"/>
@@ -786,6 +789,7 @@
                 
                 <!-- PHILIPPINES - START -->
                 <apex:pageBlockSection title="9. Additional Legal Requirements - CASS Philippines" columns="1" rendered="{!apcountryisocode='PH'}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Legal Requirements - CASS Philippines"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Legal Requirements - CASS Philippines"/>
@@ -812,6 +816,7 @@
                 
                 <!-- COLOMBIA - START -->
                 <apex:pageBlockSection title="9. Additional Information - ICA Taxes" columns="2" rendered="{!apcountryisocode='CO'}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Information - ICA Taxes"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - ICA Taxes"/>
@@ -847,7 +852,9 @@
                 </apex:pageBlockSection>
 
                 <!-- INDIA - START -->
+                <span id="nav_ten"></span>
                 <apex:pageBlockSection title="10. Local VAT Information" columns="1" rendered="{!apcountryisocode='IN'}">                        
+                    <script>document.getElementById("pageNav-10").innerHTML="10. Local VAT Information"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Local VAT Information"/>
