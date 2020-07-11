@@ -486,7 +486,7 @@
         <description>Checkbox used to know which services are the users favourites</description>
         <externalId>false</externalId>
         <label>Favourite Service</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -569,7 +569,7 @@
         <description>Indicates if the service is in the list of favorite services</description>
         <externalId>false</externalId>
         <label>Is Favorite</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -588,7 +588,7 @@
         <externalId>false</externalId>
         <label>Last Visit Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -850,7 +850,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <description>Indicates if terms and conditions have been accepted</description>
         <externalId>false</externalId>
         <label>Terms Acceptance</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
