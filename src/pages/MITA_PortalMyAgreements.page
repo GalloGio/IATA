@@ -232,6 +232,7 @@
 					var MITAsuggestionsTable;
 					var BIETAsuggestionsTable;
 					var myActiveContactTable;
+					var myAllContactTable;
 					var otherContactTable;
 
 					var activeMainTab = '';
@@ -286,8 +287,8 @@
 						});
 					}
 
-					function initContactTable(isMyActive) {
-						var theContTable = $('#' + (isMyActive ? 'myActive' : 'other') + 'ContactTable').DataTable({
+					function initContactTable(tblType) {
+						var theContTable = $('#' + tblType + 'ContactTable').DataTable({
 							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
 							"pageLength": 10,
 							"columnDefs": [
@@ -312,10 +313,42 @@
 						
 						$(theContTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
 
-						if (isMyActive)
+						if (tblType=='myActive')
 							myActiveContactTable = theContTable;
 						else
 							otherContactTable = theContTable;
+					}
+
+
+					function initMyAllContactTable() {
+						var theMyAllContTable = $('#myAllContactTable').DataTable({
+							"dom": '<"top"f>t<"clear">',
+							"pageLength": 10,
+							"ordering": false,
+							"searching": false,
+							"info": false,
+							"columnDefs": [
+								{ "name": "Name", "targets": 0},
+								{ "name": "email", "targets": 1},
+								{ "name": "Teletype", "targets": 2 }
+							],
+							"language": {
+								"lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+								"zeroRecords": "{!$Label.ISSP_Nothing_found}",
+								"info": "{!$Label.ISSP_Showing_page}",
+								"infoEmpty": "{!$Label.ISSP_No_records_available}",
+								"infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+								"search": "{!$Label.ISSP_Search}",
+								"paginate": {
+									"next": "{!$Label.ISSP_Next}",
+									"previous": "{!$Label.ISSP_Previous}"
+								}
+							}
+						});
+						
+						$(theMyAllContTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
+
+						myAllContactTable = theMyAllContTable;
 					}
 
 
@@ -401,7 +434,7 @@
 
 					function showOtherAirlineContacts(){
 						$( '#otherAirCon').modal('show');
-						initContactTable(false);
+						initContactTable('other');
 					}
 
 					function closeOtherAirlineContact() {
@@ -425,7 +458,7 @@
 								<apex:param name="myParam" assignTo="{!selectedAirlineId}" value=""/>
 							</apex:actionFunction>
 
-							<apex:actionFunction action="{!retrieveContact}" name="editContact" onComplete="showEditContact();" reRender="modalEditContact">
+							<apex:actionFunction action="{!retrieveContactToEdit}" name="editContact" onComplete="showEditContact();" reRender="modalEditContact">
 								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
 							</apex:actionFunction>
 
@@ -725,7 +758,7 @@
 																		</tbody>
 																	</table>
 																	<script>
-																		initContactTable(true);
+																		initContactTable('myActive');
 																	</script>
 																</apex:outputPanel>
 															</apex:pageBlockSection>
@@ -735,14 +768,48 @@
 													</apex:outputPanel>
 
 													<!-- SECOND INTERNAL TAB: All Contacts -->
+													<apex:actionFunction name="SearchContact" action="{!SearchContact}" oncomplete="stopLoading();" reRender="tableAllConSearchResult,pbsResult">
+														<apex:param name="myParam" assignTo="{!SearchCriteria}" value=""/>
+													</apex:actionFunction>
+
+													<script>
+														function checkInputs(){
+															var searchCrit = $('#searchCrit').val();
+															if(searchCrit.length >=3){
+																startLoading();
+																SearchContact(searchCrit);
+																initMyAllContactTable();
+															}else{
+																alert('Please input at least 3 character');
+															}
+														}
+													</script>
+
 													<apex:outputPanel id="AllContactsPanel">
 														<div class="mytab level2" id="tabAllContacts">
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
-																HERE THE SEARCH:
+																<apex:pageBlockSection>
+																	<input type="search" id="searchCrit"/>
+																	<!--<apex:inputText value="{!SearchCriteria}" label="{!$label.ISSP_ANG_SearchContacts}: " id="searchCrit"/>-->
+																	<button type="button" class="iatabtn iatabtn-default" onclick="checkInputs();">{!$Label.ISSP_Search}</button>
+																</apex:pageBlockSection>
 															</div>
-															<apex:pageBlockSection columns="1">
-																<apex:outputPanel>
-																	Search Results
+															
+															<apex:pageBlockSection columns="1" id="pbsResult">
+																<apex:outputPanel id="tableAllConSearchResult" rendered="{!hasSearched}">
+																	<table id="myAllContactTable" class="contactsTable dataTable no-footer hover row-border compact">
+																		<thead>
+																			<tr>
+																				<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
+																				<th>{!$Label.Action}</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<apex:outputText value="{!MyAllContactsTable}" escape="false" />
+																		</tbody>
+																	</table>
 																</apex:outputPanel>
 															</apex:pageBlockSection>
 														</div>
