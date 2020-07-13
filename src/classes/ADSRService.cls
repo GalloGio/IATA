@@ -352,6 +352,7 @@ public without sharing class ADSRService {
 			this.outstandingUSDIncrement = detail.totalUSD;
 			this.outstandingUSD += detail.totalUSD;
 			this.refundedRate = this.charged == 0 ? 0 : this.refunded / this.charged;
+			this.refundedRate = this.refundedRate < 0 ? this.refundedRate * -1 : this.refundedRate;
 			this.outstandingIncrement = this.charged + this.refunded - this.outstanding;
 			this.outstanding = this.charged + this.refunded;
 		}
