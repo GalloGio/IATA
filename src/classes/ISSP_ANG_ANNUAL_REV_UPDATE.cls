@@ -17,15 +17,11 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 			if (stateListByCountryNameMap == null) {
 				stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
 
-				List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStates();
-
-				for(IATA_ISO_State__c state : isoStatesLst){
-					if(state.IATA_ISO_Country__r.State_Province_Picklist__c){
-						if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)){
-							stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
-						}
-						stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
+				for(IATA_ISO_State__c state :  [SELECT Id, Name, IATA_ISO_Country__r.Informatica_Value__c FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true ORDER BY Name]){
+					if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase())){
+						stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase(), new List<IATA_ISO_State__c>());
 					}
+					stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase()).add(state);
 				}
 
 			}

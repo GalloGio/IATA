@@ -107,7 +107,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 	@isTest
 	static void testCompleteRegistrationFlow6(){
 
-		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact ORDER BY Name];
+		List<Contact> contacts = [SELECT Id, Name, Email,AccountId FROM Contact ORDER BY Name];
 		Contact c = contacts[0];
 		Contact c2 = contacts[1];
 
@@ -115,7 +115,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 		Test.startTest();
 
-		String paramsJSON6 = '{"flow":"flow6","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","Phone":"21212121"}';
+		String paramsJSON6 = '{"flow":"flow6","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","Phone":"21212121","AccountId":"'+c.AccountId+'"}';
 		PortalRegistrationThirdLevelLMSCtrl.RegistrationResult res = PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON6);
 
 		system.assert(res.isSuccess);
