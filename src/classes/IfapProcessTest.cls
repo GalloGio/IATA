@@ -554,7 +554,7 @@ public class IfapProcessTest {
 	}
 
 	@isTest static void multicountryFinancialAssessmentResults70PointsTest(){
-		multicountryFinancialAssessmentResults(70, AMS_Utils.FA_RESULT_UNSATISFACTORY_UPDATE_FS);
+		multicountryFinancialAssessmentResults(70, AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION);
 	}
 
 	@isTest static void multicountryFinancialAssessmentResults50PointsTest(){
