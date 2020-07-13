@@ -107,9 +107,23 @@ public with sharing class PortalDocumentsController {
 					'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c, LastModifiedDate'+
 				' FROM ContentVersion';
 
-		queryConditions = ' WHERE IsLatest = true AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
+		if(String.isNotBlank(searchKey)){
+			String[] searchTerms = searchKey.split(' ');
+			String searchQuery = '(';
+			for(String term : searchTerms)
+				searchQuery += 'Title LIKE \'%'+ String.escapeSingleQuotes(term) +'%\' AND ';
+
+			if(searchQuery.indexOf(' AND ') > -1)
+				searchQuery = searchQuery.removeEnd(' AND ');
+			searchQuery += ')';
+			searchKey = searchQuery;
+		}
+		else searchKey = 'Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
+
+		queryConditions = ' WHERE IsLatest = true AND ' + searchKey;
 
 		if(String.isNotBlank(category)){
+			category = category.replace(' ','%');
 			queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';			
 		}else{
 			List<CSP_Utils.PickListWrapper> lstAllCats = CSP_Utils.getPickListValues('ContentVersion','Document_Category__c');
@@ -337,6 +351,9 @@ public with sharing class PortalDocumentsController {
 						'WHERE IsLatest = true '+
 						'AND ContentDocumentid in :entitySet';
 
+		if(String.isNotBlank(searchKey)){
+			searchKey = searchKey.replace(' ','%');
+		}
 		String sqlCond=String.isNotEmpty(searchKey)?' AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'':'';
 		String sqlSort=' ORDER BY Title ASC';
 		respWrapper.totalItemCount = Database.countQuery(soqlCount+soqlFrom+sqlCond);

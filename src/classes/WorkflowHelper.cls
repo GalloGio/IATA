@@ -484,7 +484,6 @@ public without sharing class WorkflowHelper {
 
 		Set<String> caseOrigins = new Set<String>{'E-mail to Case - EMD Testing', 
 												'E-mail to Case - BSPlink', 
-												'E-mail to Case - TSP Certification', 
 												'E-mail to Case - BSP Support', 
 												'E-mail to Case - SNAP', 
 												'E-mail to Case - CASSlink GVA', 

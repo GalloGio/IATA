@@ -35,7 +35,7 @@ public class AccountRolesAlignBatch implements Queueable {
 												FROM Account_Contact_Role__c
 												WHERE Contact__c in :contactIds
 												AND Contact_Role_Name__c = 'Trainee'
-												AND Functional_Role__c =  'Training'];
+												AND Functional_Role__c =  'Training' FOR UPDATE];
 
 			//Get AccountIds from Contacts
 			for(Id contactId : contactIds){

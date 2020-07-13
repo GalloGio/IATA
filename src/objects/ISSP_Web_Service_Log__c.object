@@ -654,16 +654,16 @@
         <columns>User__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>System__c</field>
-            <operation>equals</operation>
-            <value>BSPLink</value>
-        </filters>
-        <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
             <value>YESTERDAY,TODAY</value>
         </filters>
-        <label>. mgo - BSP</label>
+        <filters>
+            <field>System__c</field>
+            <operation>equals</operation>
+            <value>Standards Setting Workspace</value>
+        </filters>
+        <label>. mgo - kavy today</label>
         <language>en_US</language>
         <sharedTo>
             <group>IATAAdmins</group>
