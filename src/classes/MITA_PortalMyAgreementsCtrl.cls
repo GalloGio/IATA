@@ -18,10 +18,13 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	
 	public MITA_PortalMyAgreementsCtrl(){
 		selectedAirlineId = '';
+		selectedContactToEdit = '';
+		ContactBeingEdited = null;
 		mapActiveContacts = new map<id, contact>();
 		mapAllContacts = new map<id, contact>();
 		bHasActiveContacts = false;
 		bHasContacts = false;
+		SaveError='';
 		id hierarchyTopParent = null;
 
 		this.currentUser = [SELECT UserName, ContactId, Contact.AccountId, Contact.Account.Name, Profile.Name, Contact.Account.ParentId, Contact.Account.Parent.ParentId FROM User WHERE ID = :UserInfo.getUserId()];
@@ -295,10 +298,13 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public map<id, contact> mapAllContacts		{get; set;}
 	public boolean bHasContacts					{get; set;}
 	public string selectedAirlineId				{get; set;}
+	public string selectedContactToEdit			{get; set;}
+	public contact ContactBeingEdited			{get; set;}
 	public string selectedAirlineName			{get; set;}
 	public string OtherAirlineContactTable		{get; set;}
 
 	public string MyActiveContactsTable			{get; set;}
+	private static final string MandatoryMITAType = 'Interline Airline Generic Contact';
 
 	public string RetrieveOtherAirlineContacts(){
 		OtherAirlineContactTable = '';
@@ -337,18 +343,49 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 				'<td>'+escape(c.email)+ '</td>'+
 				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
+				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
 			'</tr>';
 		}
 		return MyActiveContactsTable;
 	}
 
 	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy){
-		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, MITA_Contact__c, MITA_Contact_Type__c, MITA_Teletype__c from contact where MITA_Contact_Type__c<>\'\' AND Status__c=\'Active\'';
+		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, MITA_Contact_Type__c, MITA_Teletype__c from contact where MITA_Contact_Type__c<>\'\' AND Status__c=\'Active\'';
 		if(bAllHierarchy){
 			sQuery += ' AND ((AccountId = \'' + AirlineId + '\' OR Account.ParentId = \'' + AirlineId + '\' or Account.parent.ParentId = \'' + AirlineId + '\')';
 		}else{
 			sQuery += ' AND AccountId =\'' + AirlineId + '\'';
 		}
 		return database.query(sQuery);
+	}
+
+	public void retrieveContact(){
+		if(!string.isBlank(selectedContactToEdit))
+			ContactBeingEdited = [select id, name, AccountId, email, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
+	}
+
+	public string SaveError	{get; set;}
+
+	public pageReference ValidateContact(){
+		SaveError='';
+		try{
+			if(!(string.isBlank(ContactBeingEdited.MITA_Contact_Type__c)) && ContactBeingEdited.MITA_Contact_Type__c.contains(MandatoryMITAType)) SaveError='';
+			else {
+				list<contact> lsOtherAccnContact = [SELECT id, MITA_Contact_Type__c FROM contact WHERE AccountId = :ContactBeingEdited.AccountId AND id <> :ContactBeingEdited.Id AND MITA_Contact_Type__c INCLUDES (:MandatoryMITAType)];
+				if(!lsOtherAccnContact.isEmpty())
+					SaveError='';
+				else{
+					SaveError='At least one contact must be ' + MandatoryMITAType;
+				}
+			}
+		}
+		catch(exception e){
+			SaveError='An unexpected error occured ' +  e.getMessage();
+		}
+		return null;
+	}
+
+	public void SaveTheContact(){
+		update ContactBeingEdited;
 	}
 }

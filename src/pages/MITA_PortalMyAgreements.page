@@ -187,6 +187,9 @@
 				.agreementsTable{
 					width: 100% !important;
 				}
+				.contactsTable{
+					width: 100% !important;
+				}
 			</style>
 		</head>
 		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
@@ -228,6 +231,8 @@
 					var BIETAagreementsTable;
 					var MITAsuggestionsTable;
 					var BIETAsuggestionsTable;
+					var myActiveContactTable;
+					var otherContactTable;
 
 					var activeMainTab = '';
 					var activeTab = {};
@@ -282,7 +287,7 @@
 					}
 
 					function initContactTable(isMyActive) {
-						var otherConTable = $('#' + (isMyActive ? 'myActive' : 'other') + 'ContactTable').DataTable({
+						var theContTable = $('#' + (isMyActive ? 'myActive' : 'other') + 'ContactTable').DataTable({
 							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
 							"pageLength": 10,
 							"columnDefs": [
@@ -304,6 +309,13 @@
 								}
 							}
 						});
+						
+						$(theContTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
+
+						if (isMyActive)
+							myActiveContactTable = theContTable;
+						else
+							otherContactTable = theContTable;
 					}
 
 
@@ -395,6 +407,13 @@
 					function closeOtherAirlineContact() {
 						$( '#otherAirCon' ).modal('hide');
 					}
+
+					function showEditContact(){
+						$( '#editContact').modal('show');
+					}
+					function closeEditContact() {
+						$( '#editContact' ).modal('hide');
+					}
 				</script>
 
 				<apex:outputPanel id="column2" style="width:40%">
@@ -405,6 +424,26 @@
 							<apex:actionFunction action="{!RetrieveOtherAirlineContacts}" name="RetrieveOtherAirlineContacts" onComplete="showOtherAirlineContacts();" reRender="ModalOtherContacts">
 								<apex:param name="myParam" assignTo="{!selectedAirlineId}" value=""/>
 							</apex:actionFunction>
+
+							<apex:actionFunction action="{!retrieveContact}" name="editContact" onComplete="showEditContact();" reRender="modalEditContact">
+								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
+							</apex:actionFunction>
+
+							<apex:actionFunction action="{!ValidateContact}" name="ValidateContact" reRender="AfterValPnl" onComplete="PerformAfterValidation();"/>
+							<apex:actionFunction action="{!SaveTheContact}" name="SaveTheContact"/>
+							
+							<apex:outputPanel id="AfterValPnl">
+								<script>
+									function PerformAfterValidation(){
+										if('{!SaveError}' == ''){
+											SaveTheContact();
+										}else{
+											alert('{!SaveError}');
+										}
+									}
+								</script>
+							</apex:outputPanel>
+
 							<!-- MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
 							<apex:outputPanel id="ModalOtherContacts">
 								<div class="modal fade" id="otherAirCon" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -414,7 +453,7 @@
 												<h4 class="modal-title">{!$Label.ISSP_Airline}: {!selectedAirlineName}</h4>
 											</div>
 											<div class="modal-body">
-												<table id="otherContactTable" class="agreementsTable dataTable no-footer hover row-border compact">
+												<table id="otherContactTable" class="contactsTable dataTable no-footer hover row-border compact">
 													<thead>
 														<tr>
 															<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
@@ -437,250 +476,277 @@
 							</apex:outputPanel>
 							<!-- END MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
 							
+							<!-- MODAL WINDOWS TO SHOW EDIT CONTACTS -->
+							<apex:outputPanel id="modalEditContact">
+								<div class="modal fade" id="editContact" role="dialog" data-backdrop="static" data-keyboard="false">
+									<div class="modal-dialog modal-lg" style="width: 1100px;">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Edit Contact: {!ContactBeingEdited.Name}</h4>
+											</div>
+											<div class="modal-body">
+												<apex:pageBlock>
+													<apex:pageBlockSection>
+														<apex:outputText value="{!ContactBeingEdited.email}" label="{!$ObjectType.Contact.fields.email.label}"/><br/><br/>
+														<apex:inputField value="{!ContactBeingEdited.MITA_Contact_Type__c}" label="{!$ObjectType.Contact.fields.MITA_Contact_Type__c.label}"/><br/><br/>
+														<apex:inputField value="{!ContactBeingEdited.MITA_Teletype__c}" label="{!$ObjectType.Contact.fields.MITA_Teletype__c.label}"/><br/><br/>
+													</apex:pageBlockSection>
+												</apex:pageBlock>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="iatabtn iatabtn-default" onclick="ValidateContact();">{!$Label.ISSP_Save}</button>
+												<button type="button" class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.LAQ_Close}</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</apex:outputPanel>
+
 							<apex:pageBlock >
 								<div class="panel-primary">
 									<div class="panel-heading head_panel_green" id="container">
 										<div id="left"><h3 class="panel-title">MITA agreements / {!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h3></div>
 									</div>
-										<div class="panel-body" id="body-enquiries">
+									<div class="panel-body" id="body-enquiries">
 
-											<!-- CUSTOM TAB HEADER -->
-											<div class="mytabheadercontainer level1" style="padding-left: 2px;">
-												<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')" style="float: left;">{!$Label.ISSP_Existing_Agreements}</div>
-												<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
-												<div class="mytabheader level1" id="hdContacts" onclick="showTab('Contacts')">Airline Contacts</div>
-											</div>
+										<!-- CUSTOM TAB HEADER -->
+										<div class="mytabheadercontainer level1" style="padding-left: 2px;">
+											<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')" style="float: left;">{!$Label.ISSP_Existing_Agreements}</div>
+											<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
+											<div class="mytabheader level1" id="hdContacts" onclick="showTab('Contacts')">Airline Contacts</div>
+										</div>
 
-											<!-- TAB CONTAINER -->
-											<div class="mytabcontainer level1" style="background-color: #fff;">
-												<!-- FIRST EXTERNAL TAB: EXISTING AGREEMENTS -->
-												<div class="mytab level1 active" id="tabExisting">
-													<div class="progress mytabheadercontainer">
-														<div class="level2 mytabheader {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left; width:50%" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
-														<div class="level2 mytabheader {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}"  style="float:right; width:50%" id="hdBIETA" onclick="showTab('Existing','BIETA')">BIETA</div>
-													</div>
-													
-													<div class="mytabcontainer level2" style="background-color: #fff;">
-														<!-- FIRST INTERNAL TAB: MITA -->
-														<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}"  id="tabMITA">
-															<!-- SECTION FOR MITA AGREEMENTS -->
-															<apex:inputHidden value="{!MITAagreementid}" id="MITAagreementid" />
-															<apex:pageBlockSection columns="1" id="MITAagreementSearchPanel">
-																<apex:outputPanel>
-																	<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
-																		<apex:outputText value="{!MITAagreementTypes}" escape="false" />
-																	</div>
-																	<div style="float:right; visibility: hidden;">
-																		<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}
-																		<br/>
-																		<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}
-																		<br/>
-																		<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />{!$Label.ISSP_Inactive_agreements}
-																		<br/>
-																	</div>
-																	
-																	<table id="MITAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact">
-																		<thead>
-																			<tr>
-																				<th>{!$Label.ISSP_IATA_Designator}</th>
-																				<th>{!$Label.ISSP_3_Digit_Code}</th>
-																				<th>{!$Label.ISSP_Airline_Prefix}</th>
-																				<th>{!$Label.ISSP_Airline}</th>
-																				<th>{!$Label.ISSP_Agreement_type}</th>
-																				<th>{!$Label.ISSP_Active}</th>
-																				<th>Actions</th>
-																			</tr>
-																		</thead>
-																		<tbody>
-																			<apex:outputText value="{!MITAAgreementTable}" escape="false" />
-																		</tbody>
-																	</table>
-																	<script>
-																		initAgreementTable(true);
-																	</script>
-																	<br/>
-																	<br/>
-																</apex:outputPanel>
-															</apex:pageBlockSection>
-														</div>
-
-														<!-- SECOND INTERNAL TAB: BIETA -->
-														<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabBIETA">
-
-															<!-- SECTION FOR BIETA AGREEMENTS -->
-															<apex:inputHidden value="{!BIETAagreementid}" id="BIETAagreementid" />
-
-															<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel">
-																<apex:outputPanel>
-																	<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
-																		<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
-																	</div>
-																	<div style="float:right; visibility: hidden;">
-																		<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}
-																		<br/>
-																		<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}
-																		<br/>
-																		<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="false" />{!$Label.ISSP_Inactive_agreements}
-																		<br/>
-																	</div>
-																	
-																	<table id="BIETAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact">
-																		<thead>
-																			<tr>
-																				<th>{!$Label.ISSP_IATA_Designator}</th>
-																				<th>{!$Label.ISSP_3_Digit_Code}</th>
-																				<th>{!$Label.ISSP_Airline_Prefix}</th>
-																				<th>{!$Label.ISSP_Airline}</th>
-																				<th>{!$Label.ISSP_Agreement_type}</th>
-																				<th>{!$Label.ISSP_Active}</th>
-																				<th>Actions</th>
-																			</tr>
-																		</thead>
-																		<tbody>
-																			<apex:outputText value="{!BIETAAgreementTable}" escape="false" />
-																		</tbody>
-																	</table>
-																	<script>
-																		initAgreementTable(false);
-																	</script>
-																	<br/>
-																	<br/>
-																</apex:outputPanel>
-															</apex:pageBlockSection>
-														</div>
-													</div>
+										<!-- TAB CONTAINER -->
+										<div class="mytabcontainer level1" style="background-color: #fff;">
+											<!-- FIRST EXTERNAL TAB: EXISTING AGREEMENTS -->
+											<div class="mytab level1 active" id="tabExisting">
+												<div class="progress mytabheadercontainer">
+													<div class="level2 mytabheader {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left; width:50%" id="hdMITA" onclick="showTab('Existing','MITA')">MITA</div>
+													<div class="level2 mytabheader {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}"  style="float:right; width:50%" id="hdBIETA" onclick="showTab('Existing','BIETA')">BIETA</div>
 												</div>
 												
-												<!-- SECOND EXTERNAL TAB: AVAILABLE AGREEMENTS -->
-												<div class="mytab level1" id="tabAdd">
-													<div class="mytabheadercontainer level2">
-														<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdNewMITA" onclick="showTab('Add','NewMITA')">MITA</div>
-														<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;" id="hdNewBIETA" onclick="showTab('Add','NewBIETA')">BIETA</div>
-													</div>
-													
-													<div class="mytabcontainer level2">
-														<apex:outputPanel id="NewMITAPanel">
-															<apex:inputHidden value="{!MITAairlineID}" id="MITAairlineid" />
-															
-															<!-- FIRST INTERNAL TAB: NEW MITA -->
-															<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabNewMITA">
-																<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
-																	<apex:outputText value="{!MITASuggestionTypes}" escape="false" />
+												<div class="mytabcontainer level2" style="background-color: #fff;">
+													<!-- FIRST INTERNAL TAB: MITA -->
+													<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}"  id="tabMITA">
+														<!-- SECTION FOR MITA AGREEMENTS -->
+														<apex:inputHidden value="{!MITAagreementid}" id="MITAagreementid" />
+														<apex:pageBlockSection columns="1" id="MITAagreementSearchPanel">
+															<apex:outputPanel>
+																<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
+																	<apex:outputText value="{!MITAagreementTypes}" escape="false" />
 																</div>
-																<apex:pageBlockSection>
-																	<apex:outputPanel >
-																		<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
-																			<thead>
-																				<tr>
-																					<th>{!$Label.ISSP_IATA_Designator}</th>
-																					<th>{!$Label.ISSP_3_Digit_Code}</th>
-																					<th>{!$Label.ISSP_Airline_Prefix}</th>
-																					<th>{!$Label.ISSP_Airline}</th>
-																					<th>{!$Label.ISSP_Available_types}</th>
-																				</tr>
-																			</thead>
-																			<tbody>
-																				<apex:outputText value="{!MITASuggestionTable}" escape="false" />
-																			</tbody>
-																		</table>
-																		<script>
-																			initSuggestionTable(true);
-																		</script>
-																	</apex:outputPanel>
-																</apex:pageBlockSection>
-																<br/>
-																<br/>
-															</div>
-														</apex:outputPanel>
-														
-														<apex:outputPanel id="NewBIETAPanel">
-															<apex:inputHidden value="{!BIETAairlineID}" id="BIETAairlineid" />
-															<!-- SECOND INTERNAL TAB: NEW BIETA -->
-															<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabNewBIETA">
-																<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
-																	<apex:outputText value="{!BIETASuggestionTypes}" escape="false" />
+																<div style="float:right; visibility: hidden;">
+																	<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}
+																	<br/>
+																	<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}
+																	<br/>
+																	<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />{!$Label.ISSP_Inactive_agreements}
+																	<br/>
 																</div>
 																
-																<br style="clear:both" />
-																<apex:pageBlockSection>
-																	<apex:outputPanel >
-																		<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
-																			<thead>
-																				<tr>
-																					<th>{!$Label.ISSP_IATA_Designator}</th>
-																					<th>{!$Label.ISSP_3_Digit_Code}</th>
-																					<th>{!$Label.ISSP_Airline_Prefix}</th>
-																					<th>{!$Label.ISSP_Airline}</th>
-																					<th>{!$Label.ISSP_Available_types}</th>
-																				</tr>
-																			</thead>
-																			<tbody>
-																				<apex:outputText value="{!BIETASuggestionTable}" escape="false" />
-																			</tbody>
-																		</table>
-																		<script>
-																			initSuggestionTable(false);
-																		</script>
-																	</apex:outputPanel>
-																</apex:pageBlockSection>
-																<br/>
-																<br/>
-															</div>
-														</apex:outputPanel>
-													</div>
-												</div>
-												
-												<div class="mytab level1" id="tabContacts">
-													<div class="mytabheadercontainer level2">
-														<div class="mytabheader level2 active" style="float:left;" id="hdActiveContacts" onclick="showTab('Contacts','ActiveContacts')">Active Contacts</div>
-														<div class="mytabheader level2" style="float:right;" id="hdAllContacts" onclick="showTab('Contacts','AllContacts')">All Contacts</div>
-													</div>
-
-													<div class="mytabcontainer level2">
-													<!-- FIRST INTERNAL TAB: Active Contacts -->
-													<!--===============================================================================
-													THIS IS WHAT HAS TO CHANGE!!!
-													===============================================================================-->
-													<div class="mytab level2"  id="tabActiveContacts">
-														<apex:pageBlockSection columns="1" id="ContactActivePnl">
-															<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
-																<apex:outputText value="{!ContactTypes}" escape="false" />
-															</div>
-															<br/>
-															<apex:outputPanel>
-																<table id="myActiveContactTable" class="agreementsTable dataTable no-footer hover row-border compact">
+																<table id="MITAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact">
 																	<thead>
 																		<tr>
-																			<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
-																			<th>{!$ObjectType.Contact.Fields.email.Label}</th>
-																			<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
-																			<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
+																			<th>{!$Label.ISSP_IATA_Designator}</th>
+																			<th>{!$Label.ISSP_3_Digit_Code}</th>
+																			<th>{!$Label.ISSP_Airline_Prefix}</th>
+																			<th>{!$Label.ISSP_Airline}</th>
+																			<th>{!$Label.ISSP_Agreement_type}</th>
+																			<th>{!$Label.ISSP_Active}</th>
+																			<th>{!$Label.Action}</th>
 																		</tr>
 																	</thead>
 																	<tbody>
-																		<apex:outputText value="{!MyActiveContactsTable}" escape="false" />
+																		<apex:outputText value="{!MITAAgreementTable}" escape="false" />
 																	</tbody>
 																</table>
 																<script>
-																	initContactTable(true);
+																	initAgreementTable(true);
 																</script>
+																<br/>
+																<br/>
 															</apex:outputPanel>
 														</apex:pageBlockSection>
 													</div>
 
-													<!-- SECOND INTERNAL TAB: All Contacts -->
-													<div class="mytab level2" id="tabAllContacts">
-														<apex:pageBlockSection columns="1" id="ContactAllPnl">
+													<!-- SECOND INTERNAL TAB: BIETA -->
+													<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabBIETA">
+
+														<!-- SECTION FOR BIETA AGREEMENTS -->
+														<apex:inputHidden value="{!BIETAagreementid}" id="BIETAagreementid" />
+
+														<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel">
 															<apex:outputPanel>
-																<apex:pageBlockTable value="{!mapAllContacts}" var="mapKey2" rendered="{!bHasContacts}" id="tblAllContact">
-																	<apex:column value="{!mapAllContacts[mapKey2].Name}"/>
-																	<apex:column value="{!mapAllContacts[mapKey2].Email}"/>
-																	<apex:column value="{!mapAllContacts[mapKey2].MITA_Contact_Type__c}"/>
-																	<apex:column value="{!mapAllContacts[mapKey2].MITA_Teletype__c}"/>
-																</apex:pageBlockTable>
+																<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
+																	<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
+																</div>
+																<div style="float:right; visibility: hidden;">
+																	<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}
+																	<br/>
+																	<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}
+																	<br/>
+																	<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="false" />{!$Label.ISSP_Inactive_agreements}
+																	<br/>
+																</div>
+																
+																<table id="BIETAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact">
+																	<thead>
+																		<tr>
+																			<th>{!$Label.ISSP_IATA_Designator}</th>
+																			<th>{!$Label.ISSP_3_Digit_Code}</th>
+																			<th>{!$Label.ISSP_Airline_Prefix}</th>
+																			<th>{!$Label.ISSP_Airline}</th>
+																			<th>{!$Label.ISSP_Agreement_type}</th>
+																			<th>{!$Label.ISSP_Active}</th>
+																			<th>{!$Label.Action}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<apex:outputText value="{!BIETAAgreementTable}" escape="false" />
+																	</tbody>
+																</table>
+																<script>
+																	initAgreementTable(false);
+																</script>
+																<br/>
+																<br/>
 															</apex:outputPanel>
 														</apex:pageBlockSection>
 													</div>
+												</div>
+											</div>
+											
+											<!-- SECOND EXTERNAL TAB: AVAILABLE AGREEMENTS -->
+											<div class="mytab level1" id="tabAdd">
+												<div class="mytabheadercontainer level2">
+													<div class="mytabheader level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" style="float:left;" id="hdNewMITA" onclick="showTab('Add','NewMITA')">MITA</div>
+													<div class="mytabheader level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" style="float:right;" id="hdNewBIETA" onclick="showTab('Add','NewBIETA')">BIETA</div>
+												</div>
+												
+												<div class="mytabcontainer level2">
+													<apex:outputPanel id="NewMITAPanel">
+														<apex:inputHidden value="{!MITAairlineID}" id="MITAairlineid" />
+														
+														<!-- FIRST INTERNAL TAB: NEW MITA -->
+														<div class="mytab level2 {!IF(acc.MITA_Member__c, 'active', 'mydisabled')}" id="tabNewMITA">
+															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
+																<apex:outputText value="{!MITASuggestionTypes}" escape="false" />
+															</div>
+															<apex:pageBlockSection>
+																<apex:outputPanel >
+																	<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
+																		<thead>
+																			<tr>
+																				<th>{!$Label.ISSP_IATA_Designator}</th>
+																				<th>{!$Label.ISSP_3_Digit_Code}</th>
+																				<th>{!$Label.ISSP_Airline_Prefix}</th>
+																				<th>{!$Label.ISSP_Airline}</th>
+																				<th>{!$Label.ISSP_Available_types}</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<apex:outputText value="{!MITASuggestionTable}" escape="false" />
+																		</tbody>
+																	</table>
+																	<script>
+																		initSuggestionTable(true);
+																	</script>
+																</apex:outputPanel>
+															</apex:pageBlockSection>
+															<br/>
+															<br/>
+														</div>
+													</apex:outputPanel>
+													
+													<apex:outputPanel id="NewBIETAPanel">
+														<apex:inputHidden value="{!BIETAairlineID}" id="BIETAairlineid" />
+														<!-- SECOND INTERNAL TAB: NEW BIETA -->
+														<div class="mytab level2 {!IF(acc.BIETA_Member__c, IF(acc.MITA_Member__c, '', 'active'), 'mydisabled')}" id="tabNewBIETA">
+															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
+																<apex:outputText value="{!BIETASuggestionTypes}" escape="false" />
+															</div>
+															
+															<br style="clear:both" />
+															<apex:pageBlockSection>
+																<apex:outputPanel >
+																	<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
+																		<thead>
+																			<tr>
+																				<th>{!$Label.ISSP_IATA_Designator}</th>
+																				<th>{!$Label.ISSP_3_Digit_Code}</th>
+																				<th>{!$Label.ISSP_Airline_Prefix}</th>
+																				<th>{!$Label.ISSP_Airline}</th>
+																				<th>{!$Label.ISSP_Available_types}</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<apex:outputText value="{!BIETASuggestionTable}" escape="false" />
+																		</tbody>
+																	</table>
+																	<script>
+																		initSuggestionTable(false);
+																	</script>
+																</apex:outputPanel>
+															</apex:pageBlockSection>
+															<br/>
+															<br/>
+														</div>
+													</apex:outputPanel>
+												</div>
+											</div>
+											
+											<div class="mytab level1" id="tabContacts">
+												<div class="mytabheadercontainer">
+													<div class="mytabheader level2 active" style="float:left;" id="hdActiveContacts" onclick="showTab('Contacts','ActiveContacts')">Active Contacts</div>
+													<div class="mytabheader level2" style="float:right;" id="hdAllContacts" onclick="showTab('Contacts','AllContacts')">All Contacts</div>
+												</div>
+
+												<div class="mytabcontainer level2">
+													<apex:outputPanel id="ActiveContactsPanel">
+														<!-- FIRST INTERNAL TAB: Active Contacts -->
+														<div class="mytab level2 active"  id="tabActiveContacts">
+															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
+																<apex:outputText value="{!ContactTypes}" escape="false" />
+															</div>
+															<apex:pageBlockSection columns="1">
+																<apex:outputPanel>
+																	<table id="myActiveContactTable" class="contactsTable dataTable no-footer hover row-border compact">
+																		<thead>
+																			<tr>
+																				<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
+																				<th>{!$Label.Action}</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<apex:outputText value="{!MyActiveContactsTable}" escape="false" />
+																		</tbody>
+																	</table>
+																	<script>
+																		initContactTable(true);
+																	</script>
+																</apex:outputPanel>
+															</apex:pageBlockSection>
+															<br/>
+															<br/>
+														</div>
+													</apex:outputPanel>
+
+													<!-- SECOND INTERNAL TAB: All Contacts -->
+													<apex:outputPanel id="AllContactsPanel">
+														<div class="mytab level2" id="tabAllContacts">
+															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
+																HERE THE SEARCH:
+															</div>
+															<apex:pageBlockSection columns="1">
+																<apex:outputPanel>
+																	Search Results
+																</apex:outputPanel>
+															</apex:pageBlockSection>
+														</div>
+													</apex:outputPanel>
 												</div>
 											</div>
 										</div>
