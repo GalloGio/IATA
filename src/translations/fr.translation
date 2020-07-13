@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4508,6 +4512,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -17441,6 +17449,22 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label><!-- ISSP_AP_New_Joining_App --></label>
         <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
