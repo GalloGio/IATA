@@ -235,9 +235,9 @@
 															<tr>
 																<th class="ICE-TableHeader arrowwidth width"></th>
 																<th class="ICE-TableHeader textwidth ICE-strong">{!$Label.ISSP_Account_Statements_Item}</th>
-																<th class="ICE-TableHeader textwidth"></th>
-																<th class="ICE-TableHeader currencywidth">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
-																<th class="ICE-TableHeader currencywidth">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader datewidth"></th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
 																<th class="ICE-TableHeader detailwidth"></th>
 															</tr>
 														</thead>
@@ -251,12 +251,12 @@
 																		<apex:outputText value="{!wrapperSummary.item}"/>
 																	</td>
 																	<td class="ICE-TableBody"></td>
-																	<td class="ICE-TableBody">
+																	<td class="ICE-TableBody ICE-currency-col">
 																		<apex:outputText value="{!detailModalCurrencyFormat}">
 																			<apex:param value="{!wrapperSummary.billing}"/>
 																		</apex:outputText>
 																	</td>
-																	<td class="ICE-TableBody">
+																	<td class="ICE-TableBody ICE-currency-col">
 																		<apex:outputText value="{!detailModalCurrencyFormat}">
 																			<apex:param value="{!wrapperSummary.payment}"/>
 																		</apex:outputText>
@@ -271,8 +271,8 @@
 																				<tr>
 																					<th class="ICE-TableHeader textwidth">{!$ObjectType.Account.fields.IATACode__c.label}</th>
 																					<th class="ICE-TableHeader datewidth">{!$ObjectType.Account_Statement_Transaction__c.fields.Value_Date__c.label}</th>
-																					<th class="ICE-TableHeader currencywidth">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
-																					<th class="ICE-TableHeader currencywidth">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
 																					<th class="ICE-TableHeader detailwidth">{!$ObjectType.Account_Statement_Transaction__c.fields.Details__c.label}</th>
 																				</tr>
 																			</thead>
@@ -287,13 +287,13 @@
 																								<apex:param value="{!transaction.Value_Date__c}" />
 																							</apex:outputText>
 																						</td>
-																						<td class="ICE-TableBody">
+																						<td class="ICE-TableBody ICE-currency-col">
 																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!!transaction.Is_Payment__c}">
 																								<apex:param value="{!transaction.Amount__c}"/>
 																							</apex:outputText>
 																							<apex:outputText value="-" rendered="{!transaction.Is_Payment__c}"/>
 																						</td>
-																						<td class="ICE-TableBody">
+																						<td class="ICE-TableBody ICE-currency-col">
 																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!transaction.Is_Payment__c}">
 																								<apex:param value="{!transaction.Amount__c}"/>
 																							</apex:outputText>
@@ -316,12 +316,12 @@
 																<th class="ICE-TableBody ICE-strong" colspan="2">
 																	<apex:outputText value="Sum"/>
 																</th>
-																<th class="ICE-TableBody ICE-strong">
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
 																	<apex:outputText value="{!detailModalCurrencyFormat}">
 																		<apex:param value="{!selectedWrapperStatement.parent.Billing_Amount__c}"/>
 																	</apex:outputText>
 																</th>
-																<th class="ICE-TableBody ICE-strong">
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
 																	<apex:outputText value="{!detailModalCurrencyFormat}">
 																		<apex:param value="{!selectedWrapperStatement.parent.Paid__c}"/>
 																	</apex:outputText>
@@ -411,9 +411,9 @@
 															<tr>
 																<th class="ICE-TableHeader arrowwidth"></th>
 																<th class="ICE-TableHeader textwidth ICE-strong">{!$ObjectType.Account.fields.IATACode__c.label}</th>
-																<th class="ICE-TableHeader textwidth">{!$Label.ISSP_Account_Statement_Location}</th>
-																<th class="ICE-TableHeader currencywidth">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
-																<th class="ICE-TableHeader currencywidth">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader datewidth">{!$Label.ISSP_Account_Statement_Location}</th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
 																<th class="ICE-TableHeader detailwidth"></th>
 															</tr>
 														</thead>
@@ -432,12 +432,12 @@
 																	<td class="ICE-TableBody">
 																		<apex:outputText value="{!wrapperLocation.location}"/>
 																	</td>
-																	<td class="ICE-TableBody">
+																	<td class="ICE-TableBody ICE-currency-col">
 																		<apex:outputText value="{!detailModalCurrencyFormat}">
 																			<apex:param value="{!wrapperLocation.billing}"/>
 																		</apex:outputText>
 																	</td>
-																	<td class="ICE-TableBody">
+																	<td class="ICE-TableBody ICE-currency-col">
 																		<apex:outputText value="{!detailModalCurrencyFormat}">
 																			<apex:param value="{!wrapperLocation.payment}"/>
 																		</apex:outputText>
@@ -453,8 +453,8 @@
 																					<th class="ICE-TableHeader hidden toexportheader">{!$ObjectType.Account.fields.IATACode__c.label}</th>
 																					<th class="ICE-TableHeader textwidth toexportheader">{!$Label.ISSP_Account_Statements_Item}</th>
 																					<th class="ICE-TableHeader datewidth toexportheader">{!$ObjectType.Account_Statement_Transaction__c.fields.Value_Date__c.label}</th>
-																					<th class="ICE-TableHeader currencywidth toexportheader">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
-																					<th class="ICE-TableHeader currencywidth toexportheader">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col toexportheader">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col toexportheader">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
 																					<th class="ICE-TableHeader detailwidth toexportheader">{!$ObjectType.Account_Statement_Transaction__c.fields.Details__c.label}</th>
 																				</tr>
 																			</thead>
@@ -472,13 +472,13 @@
 																								<apex:param value="{!transaction.Value_Date__c}" />
 																							</apex:outputText>
 																						</td>
-																						<td class="ICE-TableBody toexport">
+																						<td class="ICE-TableBody ICE-currency-col toexport">
 																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!!transaction.Is_Payment__c}">
 																								<apex:param value="{!transaction.Amount__c}"/>
 																							</apex:outputText>
 																							<apex:outputText value="-" rendered="{!transaction.Is_Payment__c}"/>
 																						</td>
-																						<td class="ICE-TableBody toexport">
+																						<td class="ICE-TableBody ICE-currency-col toexport">
 																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!transaction.Is_Payment__c}">
 																								<apex:param value="{!transaction.Amount__c}"/>
 																							</apex:outputText>
@@ -504,12 +504,12 @@
 																</th>
 																<th class="ICE-TableBody">
 																</th>
-																<th class="ICE-TableBody ICE-strong">
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
 																	<apex:outputText value="{!detailModalCurrencyFormat}">
 																		<apex:param value="{!selectedWrapperStatement.parent.Billing_Amount__c}"/>
 																	</apex:outputText>
 																</th>
-																<th class="ICE-TableBody ICE-strong">
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
 																	<apex:outputText value="{!detailModalCurrencyFormat}">
 																		<apex:param value="{!selectedWrapperStatement.parent.Paid__c}"/>
 																	</apex:outputText>
