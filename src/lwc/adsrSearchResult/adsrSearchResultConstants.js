@@ -116,7 +116,7 @@ const TABLE_DETAIL_COLUMNS = [
 		helptext: "[Accumulated Charged in Local Currency] / the total charged amount in the market."
 	},
 	{
-		label:"Currently Refunded in Local Currency",
+		label:"Currently Recovered in Local Currency",
 		targetField:"refunded",
 		type:"number",
 		helptext: "Total Amount Recovered and refunded to the airline at the last day of the previous month at the report date.",
@@ -125,7 +125,7 @@ const TABLE_DETAIL_COLUMNS = [
 		displayTotal: true
 	},
 	{
-		label:"Refunded against Charged %",
+		label:"Recovered against Charged %",
 		targetField:"refundedRate",
 		type:"percent",
 		helptext: "[Currently Recovered in Local Currency] / [Accumulated Charged in Local Currency].",
