@@ -477,7 +477,6 @@ global without sharing class ISSP_APProcess {
 
 			retrieveCountryRequirements(apcountryisocode, strLoB );
 			this.ICCSProductCountry = retrieveICCSProductCountry(strLoB, isocountry);
-			this.newForm.Type_of_Settlement__c = 'Local Bank';
 
 			apCountry = countryRequirement.Name;  //Used for country display on Country Reqs pages
 
