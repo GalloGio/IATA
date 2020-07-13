@@ -443,6 +443,13 @@ export default class AdsrSearchResult extends LightningElement {
 					this.selectedOperation = i;
 					this.tableType = TABLE_TYPE_DETAIL;
 					this._displayBackButton = true;
+					window.scrollTo(
+						{
+							left: 0,
+							top: 0,
+							behaviour: 'smooth'
+						}
+					);
 				}
 			}
 		});
