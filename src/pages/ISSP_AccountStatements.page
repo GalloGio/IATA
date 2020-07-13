@@ -345,10 +345,17 @@
 																			<span class="ICE-TableOutputInfo ICE-{!selectedWrapperStatement.ParentStatus}">
 																				{!$Label['ISSP_'+selectedWrapperStatement.ParentStatus]}
 																			</span>
-																			<span class="ICE-tooltip">
+																			<apex:outputPanel style="width:90px;" rendered="{! !selectedWrapperStatement.ShowPaymentProof && !selectedWrapperStatement.ShowSettlementInfo}"></apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowPaymentProof}">
 																				<span>{!$Label.ISSP_Account_Statement_Add_Proof_Payment}</span>
-																				<div class="ICE-Attachment" onclick="showModalAttach('{!selectedWrapperStatement.key}'); return false;"/>
-																			</span>
+																				<div class="ICE-Attachment" onclick="event.stopPropagation(); showModalAttach('{!selectedWrapperStatement.key}'); return false;"/>
+																			</apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowSettlementInfo}">
+																				<apex:outputText value="{!$Label.ISSP_Account_Statement_Settlement_Info}" style="width: 140px;">
+																					<apex:param value="{!selectedWrapperStatement.calendar.Settlement_Day__c}" />
+																				</apex:outputText>
+																				<div class="ICE-SettlementInfo"><div>i</div></div>
+																			</apex:outputPanel>
 																		</span>
 																	</div>
 																</th>
@@ -526,10 +533,17 @@
 																			<span class="ICE-TableOutputInfo ICE-{!selectedWrapperStatement.ParentStatus}">
 																				{!$Label['ISSP_'+selectedWrapperStatement.ParentStatus]}
 																			</span>
-																			<span class="ICE-tooltip">
+																			<apex:outputPanel style="width:90px;" rendered="{! !selectedWrapperStatement.ShowPaymentProof && !selectedWrapperStatement.ShowSettlementInfo}"></apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowPaymentProof}">
 																				<span>{!$Label.ISSP_Account_Statement_Add_Proof_Payment}</span>
-																				<div class="ICE-Attachment" onclick="showModalAttach('{!selectedWrapperStatement.key}'); return false;"/>
-																			</span>
+																				<div class="ICE-Attachment" onclick="event.stopPropagation(); showModalAttach('{!selectedWrapperStatement.key}'); return false;"/>
+																			</apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowSettlementInfo}">
+																				<apex:outputText value="{!$Label.ISSP_Account_Statement_Settlement_Info}" style="width: 140px;">
+																					<apex:param value="{!selectedWrapperStatement.calendar.Settlement_Day__c}" />
+																				</apex:outputText>
+																				<div class="ICE-SettlementInfo"><div>i</div></div>
+																			</apex:outputPanel>
 																		</span>
 																	</div>
 																</th>
