@@ -565,9 +565,20 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		coursesFee = 0;
 		discountFee = 0;
 		Promotion__c validPromotion = null;
-		
+
 		for (ID_Card_Application__c app : pendingApplications) {
-			
+
+			Account theAccount = [SELECT a.ID_Card_Key_Account_Discount__c, a.IATACode__c, a.type, a.BillingCountry, a.BillingState
+														FROM Account a where a.RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
+														AND a.IATACode__c = : app.IATA_Code__c limit 1];
+			if (theAccount == null)
+				throw new IDCardApplicationException(string.format(Label.ID_Card_Account_Not_Found, new String[] {app.IATA_Code__c}));
+
+			Map<String, String> taxes = IDCardTaxUtil.GetTaxes(theAccount.BillingState, theAccount.BillingCountry);
+
+			List<String> taxNames = new List<String>();
+			taxNames.addAll(taxes.keySet());
+
 			app.ID_Card_Fee_Discount__c = 0;
 			Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
 			Boolean isITDIPackage = false;
@@ -611,6 +622,32 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.Physical_Card_Fee__c = app.Physical_Card_Fee__c * ((100 - (discountPercentage == null ? 0 : discountPercentage)) / 100);
 				app.Applicable_Fee__c = app.ID_Card_Fee__c + app.Physical_Card_Fee__c + app.IDCard_Expedite_Delivery_Fee__c + app.ITDI_Courses_Fee__c;  
 				
+				if (taxNames.size() == 1){
+					String name1 = taxNames.get(0);
+					String percentage1 = taxes.get(name1);
+					app.Tax_1_Name__c = name1 + '(' + percentage1 + '%)' ;
+					app.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(percentage1, String.ValueOf(app.Applicable_Fee__c)) + ' '+ app.CurrencyIsoCode;
+					vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(app.Tax_1_Value__c.split(' ', 0)[0])).setScale(2));
+				}
+				else if (taxNames.size() == 2){
+					String name1 = taxNames.get(0);
+					String percentage1 = taxes.get(name1);
+					String name2 = taxNames.get(1);
+					String percentage2 = taxes.get(name2);
+
+					app.Tax_1_Name__c = name1 + '(' + percentage1 + '%)' ;
+					app.Tax_2_Name__c = name2 + '(' + percentage2 + '%)' ;
+
+					Decimal totalTaxPercentage = Decimal.valueOf(percentage1) + Decimal.valueOf(percentage2);
+					Decimal totalTaxAmount = Decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totalTaxPercentage), String.ValueOf(app.Applicable_Fee__c)));
+
+					Decimal taxAmount1 = totalTaxAmount / totalTaxPercentage * Decimal.valueOf(percentage1);
+					Decimal taxAmount2 = totalTaxAmount / totalTaxPercentage * Decimal.valueOf(percentage2);
+
+					app.Tax_1_Value__c = taxAmount1.setScale(2) + ' ' + app.CurrencyIsoCode;
+					app.Tax_2_Value__c = taxAmount2.setScale(2) + ' ' + app.CurrencyIsoCode;
+				}
+
 				if (app.ID_Card_Fee__c != null)
 					tPrice += app.Applicable_Fee__c;
 
