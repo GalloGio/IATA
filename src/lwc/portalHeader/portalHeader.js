@@ -7,7 +7,7 @@ import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommun
 
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
-import { navigateToPage, getPageName, getParamsFromPage } from 'c/navigationUtils';
+import { navigateToPage, getPageName, getParamsFromPage, assembleUrl } from 'c/navigationUtils';
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
@@ -736,7 +736,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 })
                     .then(url => navigateToPage(url, params));
             } else {
-                goToManageService().then(results => {
+                goToManageService({startUrl: assembleUrl('s/manage-service', params)}).then(results => {
                     navigateToPage(results, params);
                 });
             }

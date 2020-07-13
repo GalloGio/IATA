@@ -60,5 +60,6 @@ export {
 	navigateToPage,
 	navigateToNewPage,
 	getParamsFromPage,
-	getPageName
+	getPageName,
+	assembleUrl
 };
