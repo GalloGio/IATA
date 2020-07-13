@@ -4,41 +4,41 @@
  */
 
 /**
- * Generates a URL with set of params
- * @param {object} baseUrl - landing page
+ * Fires an event to listeners.
+ * @param {object} baseUrl - Pagereference object
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
-const assembleUrl = (baseURl, paramsObject) => {
+const navigateToPage = (baseURl, paramsObject) => {
 	let ret = [];
 	for (let d in paramsObject) {
-		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d].replace(new RegExp('\\+', 'g'),' ')));
+		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
 	}
 
 	let url = baseURl;
 	if(ret.length > 0) {
-		url = url + (url.indexOf('?') > 0 ? '&' : '?') + ret.join('&');
+		url = url + '?' + ret.join('&');
 	}
 
-	return url;
-}
-
-/**
- * Redirects to a URL and set of params
- * @param {object} baseUrl - landing page
- * @param {object} paramsObject - Object containing the parameters to be incapsulated
- */
-const navigateToPage = (baseURl, paramsObject) => {
-	window.location.href = assembleUrl(baseURl, paramsObject);
+	window.location.href = url;
 };
 
 /**
- * Open a URL and set of params on a new page
- * @param {object} baseUrl - landing page
+ * Fires an event to listeners.
+ * @param {object} baseUrl - Pagereference object
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
 const navigateToNewPage = (baseURl, paramsObject) => {
+	let ret = [];
+	for (let d in paramsObject) {
+		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
+	}
 
-	window.open(assembleUrl(baseURl, paramsObject),"_blank");
+	let url = baseURl;
+	if(ret.length > 0) {
+		url = url + '?' + ret.join('&');
+	}
+
+	window.open(url,"_blank");
 };
 
 const getParamsFromPage = () => {
@@ -53,7 +53,7 @@ const getParamsFromPage = () => {
 };
 
 const getPageName = () => {
-	return window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1);
+	return location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
 }
 
 export {

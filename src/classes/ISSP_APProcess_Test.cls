@@ -2239,7 +2239,7 @@ private class ISSP_APProcess_Test
 			ctrl.goToStep2();
 			ctrl.save();
 
-			System.assertEquals('&airline=PASS&managePASS=true',ctrl.passParam);
+			System.assertEquals('&airline=PASS',ctrl.passParam);
 		}
 	}
 

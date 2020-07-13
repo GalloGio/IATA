@@ -4416,6 +4416,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>We hope you enjoy our IATA Customer Portal!</value>
     </labels>
     <labels>
+        <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
+        <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
+    </labels>
+    <labels>
         <fullName>CSP_Error_Creating_Record</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6839,6 +6847,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
         <value>If this is your own Personal email address please send us a scanned copy of the passport page showing your full name (or other government-issued identity document) via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and &lt;b&gt;quote the Personal email address above in your support message&lt;/b&gt; so we can assist. For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof</fullName>
@@ -28502,6 +28518,38 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_CompanyActivities</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyActivities</shortDescription>
+        <value>The Administrator in each company is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyAdmin</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyAdmin</shortDescription>
+        <value>Please provide the Name and E-mail address of each company staff that will act as administrator for PASS.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyRecomendation</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyRecomendation</shortDescription>
+        <value>Recommendation: Each company should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_FieldsFilled</fullName>
+        <categories>ISSP, PASS, ISSP_AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_FieldsFilled</shortDescription>
+        <value>All mandatory fields have been filled; you are ready to submit your application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_PASS_Withdraw</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34111,10 +34159,10 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PASS Agreement</shortDescription>
         <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
-Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+Participation Agreement must be signed at the participant’s Head Office, by the Chief Executive Officer, Chief Financial Officer, or Director General.
 &lt;br/&gt;
 &lt;br/&gt;
-Please download, complete and upload the PASS agreement as a scanned document.</value>
+Please download, sign and upload the PASS agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Airline_Checklist</fullName>

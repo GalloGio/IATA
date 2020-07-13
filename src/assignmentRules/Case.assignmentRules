@@ -898,7 +898,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Name</field>
                 <operation>equals</operation>
-                <value>Emirates,Singapore Airlines,China Eastern,China Southern Airlines,Qatar Airways,Ethiopian Airlines,COPA Airlines,United Airlines,American Airlines,Qantas,Air India</value>
+                <value>Emirates,Singapore Airlines,China Eastern,China Southern Airlines,Qatar Airways,Ethiopian Airlines,COPA Airlines,United Airlines,American Airlines,Qantas,Air India,Air France,KLM,Turkish Airlines</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Sector__c</field>
@@ -923,7 +923,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
-                <value>CA 999,SQ 618,LH 020,LH 220,EK 176,MU 781,CZ 784,QR 157,ET 071,CM 230,UA 016,AA 001,QF 081,AI 098</value>
+                <value>CA 999,SQ 618,LH 020,LH 220,EK 176,MU 781,CZ 784,QR 157,ET 071,CM 230,UA 016,AA 001,QF 081,AI 098,AF 057,KL 074,TK 235</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
@@ -933,7 +933,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.IATAcode__c</field>
                 <operation>equals</operation>
-                <value>999,618,020,220,176,781,784,157,071,230,016,001,081,098</value>
+                <value>999,618,020,220,176,781,784,157,071,230,016,001,081,098,057,074,235</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Description</field>
