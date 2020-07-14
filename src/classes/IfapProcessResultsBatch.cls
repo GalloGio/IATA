@@ -323,7 +323,7 @@ System.debug('############ theCase ' + theCase);
 							theCase.Financial_Security_Currency__c = xml.getFinancialSecurity().getCurrency_x();
 					}
 
-					if(xml.getStatus() != null && xml.getStatus().contains('Submitted')){
+					if(xml.getStatus() != null && xml.getStatus().containsIgnoreCase('submitted')){
 						theCase.Status = 'Submitted';
 					}
 
