@@ -15,7 +15,6 @@ private class IEC_ShoppingCartControllerTest
 			Is_Active__c = true,
 			Audience__c = 'all=true'
 		);
-
 		insert f;
 	}
 
@@ -33,17 +32,20 @@ private class IEC_ShoppingCartControllerTest
 			Is_Active__c = true,
 			Audience__c = 'all=false'
 		);
-
 		insert f;
 	}
 
 	static List<Location__c> createTestLocation(Contact oContact, List<IECAddress__c> lstAddress)
 	{
-		List<Location__c> lstLocation =  [SELECT ID, Active__c, Type__c, SAP_Id__c, Address__c, Account__c FROM Location__c WHERE Id in (:oContact.Account.SoldTo_Location__c , :oContact.BillTo_Location__c, :oContact.ShipTo_Location__c)];
-
+		List<Location__c> lstLocation = new List<Location__c>();
+		lstLocation.add(new Location__c(Active__c = true, Type__c = 'Sold To', SAP_Id__c = 'Sold', Address__c = lstAddress[0].Id, Account__c = oContact.AccountId));
+		lstLocation.add(new Location__c(Active__c = true, Type__c = 'Bill To', SAP_Id__c = 'Bill', Address__c = lstAddress[0].Id, Account__c = oContact.AccountId, Contact__c = oContact.Id, Email__c = oContact.Email, Phone__c = oContact.Phone));
+		lstLocation.add(new Location__c(Active__c = true, Type__c = 'Ship To', SAP_Id__c = 'Ship', Address__c = lstAddress[0].Id, Account__c = oContact.AccountId, Contact__c = oContact.Id, Email__c = oContact.Email, Phone__c = oContact.Phone));
+		insert lstLocation;
+		update new Account(Id = oContact.AccountId, SoldTo_Location__c = lstLocation[0].Id);
+		update new Contact(Id = oContact.Id, BillTo_Location__c = lstLocation[1].Id, ShipTo_Location__c = lstLocation[2].Id);
 		return lstLocation;
 	}
-
 
 	static List<Product2> createTestProduct(Integer nb)
 	{
@@ -70,18 +72,18 @@ private class IEC_ShoppingCartControllerTest
 		return lstProduct;
 	}
 
-
 	static Order createTestOrder(User oUser, Contact oContact, List<Product2> lstProduct, List<Location__c> lstLocation)
 	{
 		Order oOrder = TestDataGenerator.generateOrder(1, oContact.AccountId, oContact.Id, oContact.Id, false)[0];
 		oOrder.SoldTo_Location__c = lstLocation[0].Id;
 		oOrder.BillTo_Location__c = lstLocation[1].Id;
 		oOrder.ShipTo_Location__c = lstLocation[2].Id;
+		oOrder.ShipTo_Address__c = lstLocation[2].Address__c;
 		oOrder.OwnerId = oUser.Id;
 		oOrder.Type = 'Cart';
 		oOrder.Status = 'New';
 		insert oOrder;
-		oOrder = [select Id, OrderNumber from Order where Id = :oOrder.Id limit 1];
+		oOrder = [select Id, OrderNumber, ShipTo_Address__r.ISO_Country__c from Order where Id = :oOrder.Id limit 1];
 
 		List<Id> lstProductId = new List<Id>();
 		for (Product2 p : lstProduct)
@@ -97,7 +99,6 @@ private class IEC_ShoppingCartControllerTest
 		return oOrder;
 	}
 
-
 	@isTest
 	static void test_cart_empty()
 	{
@@ -108,7 +109,6 @@ private class IEC_ShoppingCartControllerTest
 		ctrl.vfOrder = new Order_DTO();
 		System.assertEquals(true, ctrl.isCartEmpty);
 	}
-
 
 	@isTest (SeeAllData=true)
 	static void test_not_logged_in()
@@ -141,7 +141,6 @@ private class IEC_ShoppingCartControllerTest
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 	}
 
-
 	@isTest (SeeAllData=true)
 	static void test_logged_in()
 	{
@@ -162,7 +161,9 @@ private class IEC_ShoppingCartControllerTest
 
 		//*** create order
 		Order oOrder = createTestOrder(oUser, oContact, lstProduct, lstLocation);
-
+		IATA_ISO_Country__c country = [SELECT Id, Is_Non_Compliant__c FROM IATA_ISO_Country__c WHERE Id = :oOrder.ShipTo_Address__r.ISO_Country__c LIMIT 1][0];
+		country.Is_Non_Compliant__c = true;
+		update country;
 		IEC_ShoppingCartController ctrl;
 
 		oOrder.Type = 'Quote';
@@ -184,10 +185,10 @@ private class IEC_ShoppingCartControllerTest
 			//*** assert on product already existed is risky due to merge field: System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Item_already_in_your_cart), 'Invalid error: ' + ApexPages.getMessages());
 
 			//*** continue shopping and checkout with non-compliant
-			//system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
+			system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
 			ctrl.continueShopping();
 
-			//system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
+			system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
 			ctrl.startCheckout();
 		}
 		Test.stopTest();
@@ -209,6 +210,7 @@ private class IEC_ShoppingCartControllerTest
 		//*** create products
 		List<Product2> lstProduct = createTestProduct(2);
 
+		//*** set country as non compliant
 		IATA_ISO_Country__c country = [SELECT Id, Is_Non_Compliant__c FROM IATA_ISO_Country__c WHERE Id = :lstAddress[0].ISO_Country__c];
 		country.Is_Non_Compliant__c = true;
 		update country;
@@ -220,9 +222,6 @@ private class IEC_ShoppingCartControllerTest
 
 		IEC_ShoppingCartController ctrl;
 
-		//oOrder.Type = 'Quote';
-		//update oOrder;
-
 		//*** have a request order and add product already existed
 
 		System.runAs(oUser)
@@ -233,17 +232,16 @@ private class IEC_ShoppingCartControllerTest
 			ctrl.onLoadAction();
 
 			//*** remove product
-			system.debug('SAP_Material_Number__c: '+lstProduct[1].SAP_Material_Number__c);
 			ApexPages.currentPage().getParameters().put('productCode', lstProduct[1].SAP_Material_Number__c);
 			ctrl.removeProduct();
 
 			ctrl.onLoadAction();
 
-			//system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1, got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);
+			system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1, got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);
 
 			//*** continue shopping and checkout with non-compliant
-			//system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
-			//system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
+			system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
+			system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
 		}
 		Test.stopTest();
 	}
@@ -283,7 +281,7 @@ private class IEC_ShoppingCartControllerTest
 			ApexPages.currentPage().getParameters().put('quantity', '-1');
 			ctrl.updateProductQuantity();
 
-			//system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count: ' + ctrl.vfOrder.orderItems.size() + ', expecting 1');
+			system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count: ' + ctrl.vfOrder.orderItems.size() + ', expecting 1');
 		}
 		Test.stopTest();
 	}
@@ -300,7 +298,6 @@ private class IEC_ShoppingCartControllerTest
 		Contact oContact = new Contact_Sel().getContactById(oUser.ContactId);
 		List<IECAddress__c> lstAddress = TestDataGenerator.generateAddresses(1, true);
 
-		Test.startTest();
 		List<Location__c> lstLocation = createTestLocation(oContact, lstAddress);
 
 		//*** create products
@@ -311,35 +308,36 @@ private class IEC_ShoppingCartControllerTest
 
 		IEC_ShoppingCartController ctrl;
 
-			System.runAs(oUser)
-			{
-				//*** get pending cart - nothing to assert
-				Test.setCurrentPage(Page.IEC_ShoppingCart);
-				ctrl = new IEC_ShoppingCartController();
-				ctrl.onLoadAction();
+		System.runAs(oUser)
+		{
+			//*** get pending cart - nothing to assert
+			Test.setCurrentPage(Page.IEC_ShoppingCart);
+			ctrl = new IEC_ShoppingCartController();
+			ctrl.onLoadAction();
 
-				//*** update quantity
-				ApexPages.currentPage().getParameters().put('productCode', lstProduct[0].SAP_Material_Number__c);
-				ApexPages.currentPage().getParameters().put('quantity', '-1');
-				ctrl.updateProductQuantity();
-				ctrl.onLoadAction();
+			Test.startTest();
+			
+			//*** update quantity
+			ApexPages.currentPage().getParameters().put('productCode', lstProduct[0].SAP_Material_Number__c);
+			ApexPages.currentPage().getParameters().put('quantity', '-1');
+			ctrl.updateProductQuantity();
+			ctrl.onLoadAction();
 
-				//system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1 got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);
+			system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1 got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);
 
-				ApexPages.currentPage().getParameters().put('productCode', lstProduct[1].SAP_Material_Number__c);
-				ApexPages.currentPage().getParameters().put('quantity', '5');
-				ctrl.updateProductQuantity();
-				ctrl.onLoadAction();
+			ApexPages.currentPage().getParameters().put('productCode', lstProduct[1].SAP_Material_Number__c);
+			ApexPages.currentPage().getParameters().put('quantity', '5');
+			ctrl.updateProductQuantity();
+			ctrl.onLoadAction();
 
-				//system.assert(ctrl.vfOrder.orderItems.size() == 1 && ctrl.vfOrder.orderItems[0].quantity == 5, 'Wrong quantity: ' + ctrl.vfOrder.orderItems);
+			system.assert(ctrl.vfOrder.orderItems.size() == 1 && ctrl.vfOrder.orderItems[0].quantity == 5, 'Wrong quantity: ' + ctrl.vfOrder.orderItems);
 
-				Test.stopTest();
+			Test.stopTest();
 
-				//*** continue shopping and checkout
-				system.assert(ctrl.continueShopping() != null, 'Continue shopping should be allowed');
-				system.assert(ctrl.startCheckout() != null, 'Checkout should be allowed');
-			}
-
+			//*** continue shopping and checkout
+			system.assert(ctrl.continueShopping() != null, 'Continue shopping should be allowed');
+			system.assert(ctrl.startCheckout() != null, 'Checkout should be allowed');
+		}
 	}
 
 	// ------------------------ old version ---------------------------------
@@ -354,7 +352,6 @@ private class IEC_ShoppingCartControllerTest
 		ctrl.vfOrder = new Order_DTO();
 		System.assertEquals(true, ctrl.isCartEmpty);
 	}
-
 
 	@isTest (SeeAllData=true)
 	static void test_not_logged_in_old()
@@ -387,7 +384,6 @@ private class IEC_ShoppingCartControllerTest
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 	}
 
-
 	@isTest (SeeAllData=true)
 	static void test_logged_in_old()
 	{
@@ -403,17 +399,21 @@ private class IEC_ShoppingCartControllerTest
 
 		//*** create products
 		List<Product2> lstProduct = createTestProduct(2);
-
 		Test.startTest();
 
 		//*** create order
 		Order oOrder = createTestOrder(oUser, oContact, lstProduct, lstLocation);
-
+				
+		//*** set country as non compliant
+		IATA_ISO_Country__c country = [SELECT Id, Is_Non_Compliant__c FROM IATA_ISO_Country__c WHERE Id = :oOrder.ShipTo_Address__r.ISO_Country__c LIMIT 1][0];
+		country.Is_Non_Compliant__c = true;
+		update country;
+		
 		IEC_ShoppingCartController ctrl;
 
 		oOrder.Type = 'Quote';
 		update oOrder;
-
+		
 			System.runAs(oUser)
 			{
 				//*** get pending cart - nothing to assert
@@ -428,8 +428,8 @@ private class IEC_ShoppingCartControllerTest
 				//*** assert on product already existed is risky due to merge field: System.assert(String.valueOf(ApexPages.getMessages()[ApexPages.getMessages().size() - 1]).contains(Label.Item_already_in_your_cart), 'Invalid error: ' + ApexPages.getMessages());
 
 				//*** continue shopping and checkout with non-compliant
-				//system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
-				//system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
+				system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
+				system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
 			}
 		Test.stopTest();
 	}
@@ -460,6 +460,11 @@ private class IEC_ShoppingCartControllerTest
 		oOrder.Type = 'Quote';
 		update oOrder;
 
+		//*** set country as non compliant
+		IATA_ISO_Country__c country = [SELECT Id, Is_Non_Compliant__c FROM IATA_ISO_Country__c WHERE Id = :oOrder.ShipTo_Address__r.ISO_Country__c LIMIT 1][0];
+		country.Is_Non_Compliant__c = true;
+		update country;
+		
 		//*** have a request order and add product already existed
 
 			System.runAs(oUser)
@@ -469,7 +474,6 @@ private class IEC_ShoppingCartControllerTest
 				ctrl = new IEC_ShoppingCartController();
 				ctrl.onLoadAction();
 
-
 				//*** remove product
 				ApexPages.currentPage().getParameters().put('productCode', lstProduct[1].SAP_Material_Number__c);
 				ctrl.removeProduct();
@@ -478,8 +482,8 @@ private class IEC_ShoppingCartControllerTest
 				system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1, got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);
 
 				//*** continue shopping and checkout with non-compliant
-				//system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
-				//system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
+				system.assert(ctrl.continueShopping() == null, 'Continue shopping should NOT be allowed');
+				system.assert(ctrl.startCheckout() == null, 'Checkout should NOT be allowed');
 			}
 		Test.stopTest();
 	}
@@ -562,14 +566,7 @@ private class IEC_ShoppingCartControllerTest
 			ctrl.onLoadAction();
 
 			system.assert(ctrl.vfOrder.orderItems.size() == 1, 'Wrong count, expecting 1 got ' + ctrl.vfOrder.orderItems.size() + ': ' + ctrl.vfOrder.orderItems);
-			/*
-			ApexPages.currentPage().getParameters().put('productCode', lstProduct[1].SAP_Material_Number__c);
-			ApexPages.currentPage().getParameters().put('quantity', '5');
-			ctrl.updateProductQuantity();
-			ctrl.onLoadAction();
 
-			system.assert(ctrl.vfOrder.orderItems.size() == 1 && ctrl.vfOrder.orderItems[0].quantity == 5, 'Wrong quantity: ' + ctrl.vfOrder.orderItems);
-			*/
 			//*** continue shopping and checkout
 			system.assert(ctrl.continueShopping() != null, 'Continue shopping should be allowed');
 			system.assert(ctrl.startCheckout() != null, 'Checkout should be allowed');
