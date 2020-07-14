@@ -4409,6 +4409,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>We hope you enjoy our IATA Customer Portal!</value>
     </labels>
     <labels>
+        <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
+        <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
+    </labels>
+    <labels>
         <fullName>CSP_Error_Creating_Record</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6832,6 +6840,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
         <value>If this is your own Personal email address please send us a scanned copy of the passport page showing your full name (or other government-issued identity document) via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and &lt;b&gt;quote the Personal email address above in your support message&lt;/b&gt; so we can assist. For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof</fullName>
