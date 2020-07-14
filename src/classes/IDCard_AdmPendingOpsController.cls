@@ -568,12 +568,10 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 		for (ID_Card_Application__c app : pendingApplications) {
 
-			Account theAccount = [SELECT a.ID_Card_Key_Account_Discount__c, a.IATACode__c, a.type, a.BillingCountry, a.BillingState
+			Account theAccount = [SELECT a.BillingCountry, a.BillingState
 														FROM Account a where a.RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
 														AND a.IATACode__c = : app.IATA_Code__c limit 1];
-			if (theAccount == null)
-				throw new IDCardApplicationException(string.format(Label.ID_Card_Account_Not_Found, new String[] {app.IATA_Code__c}));
-
+	
 			Map<String, String> taxes = IDCardTaxUtil.GetTaxes(theAccount.BillingState, theAccount.BillingCountry);
 
 			List<String> taxNames = new List<String>();
