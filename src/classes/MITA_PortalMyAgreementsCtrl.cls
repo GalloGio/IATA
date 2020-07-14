@@ -1,6 +1,6 @@
 public without sharing class MITA_PortalMyAgreementsCtrl {
 
-	public static final String APP_NAME = 'MITA Agreements';
+	public static final String APP_NAME = 'Interline agreements';
 	public Account acc {get;set;}
 	public user currentUser {get;set;}
 
@@ -305,8 +305,9 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 			for(Contact c:retrieveContacts(selectedAirlineId, false, 'MITA', false)){
 				selectedAirlineName = c.Account.Name_on_AOC__c;
 				OtherAirlineContactTable += '<tr id="'+c.Id+'">'+
-							'<td>'+escape(c.name)+ '</td>'+
+							'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 							'<td>'+escape(c.email)+ '</td>'+
+							'<td>'+escape(c.phone)+ '</td>'+
 							'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 							'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
 						'</tr>';
@@ -330,8 +331,9 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId, false, null, false)){
 			if(string.isNotBlank(c.MITA_Contact_Type__c))
 			MyActiveContactsTable += '<tr id="'+c.Id+'">'+
-				'<td>'+escape(c.name)+ '</td>'+
+				'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 				'<td>'+escape(c.email)+ '</td>'+
+				'<td>'+escape(c.phone)+ '</td>'+
 				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
 				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
@@ -350,8 +352,9 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId , true, null, true)){
 			hasResult = true;
 			myAllContactsTable += '<tr id="'+c.Id+'">'+
-				'<td>'+escape(c.name)+ '</td>'+
+				'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 				'<td>'+escape(c.email)+ '</td>'+
+				'<td>'+escape(c.phone)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
 				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
 			'</tr>';
@@ -359,7 +362,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	}
 
 	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy, string searchType, boolean filterSearch){
-		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, MITA_Contact_Type__c, MITA_Teletype__c from contact where Status__c=\'Active\'';
+		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where Status__c=\'Active\'';
 		if(searchType=='MITA')
 			sQuery += ' AND MITA_Contact_Type__c<>\'\'';
 
@@ -377,7 +380,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public void retrieveContactToEdit(){
 		if(!string.isBlank(selectedContactToEdit))
-			ContactBeingEdited = [select id, name, AccountId, email, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
+			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
 	}
 
 	public pageReference ValidateContact(){

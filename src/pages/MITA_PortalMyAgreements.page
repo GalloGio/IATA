@@ -296,8 +296,9 @@
 							"columnDefs": [
 								{ "name": "Name", "targets": 0},
 								{ "name": "email", "targets": 1},
-								{ "name": "ContactType", "targets": 2},
-								{ "name": "Teletype", "targets": 3 }
+								{ "name": "phone", "targets": 2},
+								{ "name": "ContactType", "targets": 3},
+								{ "name": "Teletype", "targets": 4 }
 							],
 							"language": {
 								"lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
@@ -320,7 +321,7 @@
 
 						$(".contactTypefilter").on('change', function () {
 							var typefilter = $('.contactTypefilter[data-type="Contact"]:checked').attr("data-value").trim();
-							$('#myActiveContactTable').DataTable().column(2).search('"' + typefilter + '"').draw();
+							$('#myActiveContactTable').DataTable().column(3).search('"' + typefilter + '"').draw();
 						});
 					}
 
@@ -334,6 +335,7 @@
 							"columnDefs": [
 								{ "name": "Name", "targets": 0},
 								{ "name": "email", "targets": 1},
+								{ "name": "phone", "targets": 2},
 								{ "name": "Teletype", "targets": 2 }
 							],
 							"language": {
@@ -480,6 +482,7 @@
 														<tr>
 															<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
 															<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+															<th>{!$ObjectType.Contact.Fields.phone.Label}</th>
 															<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
 															<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
 														</tr>
@@ -515,13 +518,14 @@
 									<div class="modal-dialog modal-lg" style="width: 1100px;">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title">Edit Contact: {!ContactBeingEdited.Name}</h4>
+												<h4 class="modal-title">Edit Contact: {!ContactBeingEdited.Salutation} {!ContactBeingEdited.Name}</h4>
 											</div>
 											<div class="modal-body">
 												<div id="modal_alert_placeholder"></div>
 												<apex:pageBlock>
 													<apex:pageBlockSection>
 														<apex:outputText value="{!ContactBeingEdited.email}" label="{!$ObjectType.Contact.fields.email.label}"/><br/><br/>
+														<apex:outputText value="{!ContactBeingEdited.phone}" label="{!$ObjectType.Contact.fields.phone.label}"/><br/><br/>
 														<apex:inputField value="{!ContactBeingEdited.MITA_Contact_Type__c}" label="{!$ObjectType.Contact.fields.MITA_Contact_Type__c.label}"/><br/><br/>
 														<apex:inputField value="{!ContactBeingEdited.MITA_Teletype__c}" label="{!$ObjectType.Contact.fields.MITA_Teletype__c.label}"/><br/><br/>
 													</apex:pageBlockSection>
@@ -782,6 +786,7 @@
 																			<tr>
 																				<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
 																				<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.phone.Label}</th>
 																				<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
 																				<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
 																				<th>{!$Label.Action}</th>
@@ -849,6 +854,7 @@
 																			<tr>
 																				<th>{!$ObjectType.Contact.Fields.Name.Label}</th>
 																				<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+																				<th>{!$ObjectType.Contact.Fields.phone.Label}</th>
 																				<th>{!$ObjectType.Contact.Fields.MITA_Teletype__c.Label}</th>
 																				<th>{!$Label.Action}</th>
 																			</tr>
