@@ -316,35 +316,26 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	}
 
 	public string getContactTypes(){
-		string ctype = '<input type="radio" name="ContactType" class="agreementtypefilter" data-value="" data-type="Contact" checked="true"/>Show all the contacts<br/>';
+		string ctype = '<input type="radio" name="ContactType" class="contactTypefilter" data-value="" data-type="Contact" checked="true"/>Show all the contacts<br/>';
 		List<String> pickListValuesList= new List<String>();
 		Schema.DescribeFieldResult fieldResult = Contact.MITA_Contact_Type__c.getDescribe();
 		for( Schema.PicklistEntry pickListVal : fieldResult.getPicklistValues()){
-			ctype += '<input type="radio" name="ContactType" class="agreementtypefilter" data-value="'+pickListVal.getLabel()+'" data-type="Contact" />Show '+pickListVal.getLabel()+'<br/>';
+			ctype += '<input type="radio" name="ContactType" class="contactTypefilter" data-value="'+pickListVal.getLabel()+'" data-type="Contact" />Show '+pickListVal.getLabel()+'<br/>';
 		}
 		return ctype;
 	}
 
 	public void RetrieveMyContacts(){
 		MyActiveContactsTable = '';
-		myAllContactsTable = '';
 		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId, false, null, false)){
-			string sTbl = '<tr id="'+c.Id+'">'+
+			if(string.isNotBlank(c.MITA_Contact_Type__c))
+			MyActiveContactsTable += '<tr id="'+c.Id+'">'+
 				'<td>'+escape(c.name)+ '</td>'+
-				'<td>'+escape(c.email)+ '</td>';
-
-				if(!string.isBlank(c.MITA_Contact_Type__c))
-					sTbl += '<td>'+escape(c.MITA_Contact_Type__c)+ '</td>';
-	
-				sTbl += '<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
+				'<td>'+escape(c.email)+ '</td>'+
+				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
+				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
 				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
 			'</tr>';
-
-			if(string.IsEmpty(c.MITA_Contact_Type__c)){
-				myAllContactsTable += sTbl;
-			}else{
-				MyActiveContactsTable += sTbl;
-			}
 		}
 	}
 	
@@ -379,7 +370,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		}
 
 		if(filterSearch){
-			sQuery += ' AND (name like \'%' + SearchCriteria + '%\' OR email like \'%' + SearchCriteria + '%\')';
+			sQuery += ' AND MITA_Contact_Type__c =\'\' AND (name like \'%' + SearchCriteria + '%\' OR email like \'%' + SearchCriteria + '%\')';
 		}
 		return database.query(sQuery);
 	}
@@ -410,5 +401,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public void SaveTheContact(){
 		update ContactBeingEdited;
+		RetrieveMyContacts();
+		SearchContact();
 	}
 }

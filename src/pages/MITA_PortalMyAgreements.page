@@ -222,6 +222,8 @@
 				<apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
 				<apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
 
+				<apex:includescript value="https://unpkg.com/sweetalert/dist/sweetalert.min.js" />
+
 				<apex:outputPanel id="messages">
 					<apex:pageMessages />
 				</apex:outputPanel>
@@ -294,7 +296,7 @@
 							"columnDefs": [
 								{ "name": "Name", "targets": 0},
 								{ "name": "email", "targets": 1},
-								{ "name": "Contact Type", "targets": 2},
+								{ "name": "ContactType", "targets": 2},
 								{ "name": "Teletype", "targets": 3 }
 							],
 							"language": {
@@ -311,14 +313,16 @@
 							}
 						});
 						
-						$(theContTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
-
 						if (tblType=='myActive')
 							myActiveContactTable = theContTable;
 						else
 							otherContactTable = theContTable;
-					}
 
+						$(".contactTypefilter").on('change', function () {
+							var typefilter = $('.contactTypefilter[data-type="Contact"]:checked').attr("data-value").trim();
+							$('#myActiveContactTable').DataTable().column(2).search('"' + typefilter + '"').draw();
+						});
+					}
 
 					function initMyAllContactTable() {
 						var theMyAllContTable = $('#myAllContactTable').DataTable({
@@ -462,21 +466,6 @@
 								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
 							</apex:actionFunction>
 
-							<apex:actionFunction action="{!ValidateContact}" name="ValidateContact" reRender="AfterValPnl" onComplete="PerformAfterValidation();"/>
-							<apex:actionFunction action="{!SaveTheContact}" name="SaveTheContact"/>
-							
-							<apex:outputPanel id="AfterValPnl">
-								<script>
-									function PerformAfterValidation(){
-										if('{!SaveError}' == ''){
-											SaveTheContact();
-										}else{
-											alert('{!SaveError}');
-										}
-									}
-								</script>
-							</apex:outputPanel>
-
 							<!-- MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
 							<apex:outputPanel id="ModalOtherContacts">
 								<div class="modal fade" id="otherAirCon" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -511,6 +500,17 @@
 							
 							<!-- MODAL WINDOWS TO SHOW EDIT CONTACTS -->
 							<apex:outputPanel id="modalEditContact">
+								<apex:actionFunction action="{!ValidateContact}" name="ValidateContact" reRender="AfterValPnl" onComplete="PerformAfterValidation();"/>
+								<apex:actionFunction action="{!SaveTheContact}" name="SaveTheContact" reRender="pbsResult,pbsActiveContact" onComplete="RestoreButtons();"/>
+								<script>
+									modal_alert = function() {}
+									modal_alert.warning = function(message) {
+										if(message=='')
+											$('#modal_alert_placeholder').html('');
+										else
+											$('#modal_alert_placeholder').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
+									}
+								</script>
 								<div class="modal fade" id="editContact" role="dialog" data-backdrop="static" data-keyboard="false">
 									<div class="modal-dialog modal-lg" style="width: 1100px;">
 										<div class="modal-content">
@@ -518,6 +518,7 @@
 												<h4 class="modal-title">Edit Contact: {!ContactBeingEdited.Name}</h4>
 											</div>
 											<div class="modal-body">
+												<div id="modal_alert_placeholder"></div>
 												<apex:pageBlock>
 													<apex:pageBlockSection>
 														<apex:outputText value="{!ContactBeingEdited.email}" label="{!$ObjectType.Contact.fields.email.label}"/><br/><br/>
@@ -527,13 +528,46 @@
 												</apex:pageBlock>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="iatabtn iatabtn-default" onclick="ValidateContact();">{!$Label.ISSP_Save}</button>
-												<button type="button" class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.LAQ_Close}</button>
+												<button type="button" id="btnSave" class="iatabtn iatabtn-default" onclick="modal_alert.warning('');ValidateContact();">{!$Label.ISSP_Save}</button>
+												<button type="button" id="btnClose" class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.LAQ_Close}</button>
+												<script>
+													$('#btnSave').click(function(){
+														$(this).attr("disabled", true);
+														$(this).removeClass("iatabtn-default");
+														$(this).addClass("iatabtn-danger");
+
+														$('#btnClose').attr("disabled", true);
+														$('#btnClose').removeClass("iatabtn-default");
+														$('#btnClose').addClass("iatabtn-danger");
+													});
+												</script>
 											</div>
 										</div>
 									</div>
 								</div>
+								<apex:outputPanel id="AfterValPnl">
+									<script>
+										function PerformAfterValidation(){
+											if('{!SaveError}' == ''){
+												SaveTheContact();
+											}else{
+												modal_alert.warning('{!SaveError}');
+											}
+										}
+
+										function RestoreButtons(){
+											$('#btnClose').removeAttr("disabled");
+											$('#btnClose').addClass("iatabtn-default");
+											$('#btnClose').removeClass("iatabtn-danger");
+
+											$('#btnSave').removeAttr("disabled");
+											$('#btnSave').addClass("iatabtn-default");
+											$('#btnSave').removeClass("iatabtn-danger");
+										}
+									</script>
+								</apex:outputPanel>
 							</apex:outputPanel>
+							<!-- END MODAL WINDOWS TO SHOW EDIT CONTACTS -->
 
 							<apex:pageBlock >
 								<div class="panel-primary">
@@ -741,7 +775,7 @@
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
 																<apex:outputText value="{!ContactTypes}" escape="false" />
 															</div>
-															<apex:pageBlockSection columns="1">
+															<apex:pageBlockSection columns="1" id="pbsActiveContact">
 																<apex:outputPanel>
 																	<table id="myActiveContactTable" class="contactsTable dataTable no-footer hover row-border compact">
 																		<thead>
@@ -773,14 +807,25 @@
 													</apex:actionFunction>
 
 													<script>
+														search_alert = function() {}
+														search_alert.warning = function(message) {
+															$('#search_alert_placeholder').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
+														}
+
 														function checkInputs(){
+															$('#search_alert_placeholder').html('');
 															var searchCrit = $('#searchCrit').val();
 															if(searchCrit.length >=3){
-																startLoading();
-																SearchContact(searchCrit);
-																initMyAllContactTable();
+																var letterNumber = /^[0-9a-zA-Z@.]+$/;
+																if(searchCrit.match(letterNumber)) {
+																	startLoading();
+																	SearchContact(searchCrit);
+																	initMyAllContactTable();
+																}else{
+																	search_alert.warning('Please input only characters and numbers or a valid email address');
+																}
 															}else{
-																alert('Please input at least 3 character');
+																search_alert.warning('Please input at least 3 character');
 															}
 														}
 													</script>
@@ -790,8 +835,10 @@
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
 																<apex:pageBlockSection>
 																	<input type="search" id="searchCrit"/>
-																	<!--<apex:inputText value="{!SearchCriteria}" label="{!$label.ISSP_ANG_SearchContacts}: " id="searchCrit"/>-->
 																	<button type="button" class="iatabtn iatabtn-default" onclick="checkInputs();">{!$Label.ISSP_Search}</button>
+																</apex:pageBlockSection>
+																<apex:pageBlockSection>
+																	<div id="search_alert_placeholder"></div>
 																</apex:pageBlockSection>
 															</div>
 															
