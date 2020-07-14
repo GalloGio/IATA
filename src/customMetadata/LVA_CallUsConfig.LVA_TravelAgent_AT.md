@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>PhoneNumber__c</field>
-        <value xsi:type="xsd:string">0800 301012</value>
+        <value xsi:type="xsd:string">+43 1 36027 72861</value>
     </values>
     <values>
         <field>Sector__c</field>

@@ -255,9 +255,16 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Detail__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>object_type__c</columns>
+        <columns>RecordId__c</columns>
+        <columns>Record_Id__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>ILog-{000000}</displayFormat>

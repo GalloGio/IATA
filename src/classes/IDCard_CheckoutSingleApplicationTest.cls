@@ -363,6 +363,7 @@ public class IDCard_CheckoutSingleApplicationTest {
 		pageRef.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardApp.Id));		
 
 		IDCard_CheckoutSingleApplication controller = new IDCard_CheckoutSingleApplication();
+		controller.setSelectedLanguage('test');
 
 		Test.startTest();
 			controller.updateRecord();

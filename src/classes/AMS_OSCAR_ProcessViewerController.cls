@@ -87,7 +87,20 @@ public class AMS_OSCAR_ProcessViewerController {
 
 	public boolean isParentOscar {
 		get {
-			return this.oscar.Parent_OSCAR__c == null && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE;
+			return this.oscar.Parent_OSCAR__c == null && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE
+				&& oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE;
+		}
+	}
+
+	public boolean isChildOscar {
+		get {
+			return this.oscar.Parent_OSCAR__c != null || oscar.Child_OSCAR_Status__c == AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE;
+		}
+	}
+
+	public boolean shouldFinishCase {
+		get {
+			return oscar.Child_OSCAR_Status__c == AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE;
 		}
 	}
 	
@@ -431,6 +444,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
 				if (step.name == 'STEP6') { // sanity check
 					if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && isParentOscar && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED)
+						step.saveActionEnabled = false;
+					else if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && oscar.Child_OSCAR_Status__c == AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE)
 						step.saveActionEnabled = false;
 				}
 			}
