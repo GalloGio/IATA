@@ -3284,6 +3284,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4506,6 +4510,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -35735,7 +35743,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Các báo cáo</label>
             <name>Contacts</name>
         </sections>
         <sections>
