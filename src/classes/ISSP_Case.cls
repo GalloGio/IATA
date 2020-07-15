@@ -1559,16 +1559,14 @@ public without sharing class ISSP_Case {
 				setEmailPriority.add(email);
 			}
 		}
-		User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
+		User myUser = [SELECT Id, Email, ContactId, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
 		List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
 		Set<String> lsNewEmails = new Set<String>();
 
-		String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
-
 		if(DPC2DPCCasesEmails != null){
-			if(emailCurrentAcc != ''){
+			if(String.isNotBlank(myUser.Contact.AccountId)){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
-					if(d2dca.Name == emailCurrentAcc){
+					if(d2dca.Name == myUser.Contact.AccountId){
 						for(String email : d2dca.Email__c.split(',')){
 							if(!String.isBlank(email)){
 								setEmailPriority.add(email);
@@ -1621,12 +1619,14 @@ public without sharing class ISSP_Case {
 				AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
 
 			for(Contact contact : listContact) {
-				CaseTeamMember teammember = new CaseTeamMember(
+				if(!(isDPCUser && whoToContact != 'IATA' && contact.Id == myUser.ContactId)) {
+					CaseTeamMember teammember = new CaseTeamMember(
 					ParentId = newCase.Id,
 					MemberId = contact.Id,
 					TeamRoleId = PARTNER_USER_ROLE);
-				lsCaseTeamMembers.add(teammember);
-				lsNewEmails.add(contact.Email);
+					lsCaseTeamMembers.add(teammember);
+					lsNewEmails.add(contact.Email);
+				}
 			}
 		}
 
