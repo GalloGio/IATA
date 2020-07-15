@@ -2124,6 +2124,11 @@
                     <default>false</default>
                     <label>Zimbabwe</label>
                 </value>
+                <value>
+                    <fullName>Myanmar</fullName>
+                    <default>false</default>
+                    <label>Myanmar</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>
