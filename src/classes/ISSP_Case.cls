@@ -1559,7 +1559,7 @@ public without sharing class ISSP_Case {
 				setEmailPriority.add(email);
 			}
 		}
-		User myUser = [SELECT Id, Email, ContactId, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
+		User myUser = [SELECT Id, ContactId, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
 		List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
 		Set<String> lsNewEmails = new Set<String>();
 
