@@ -87,9 +87,9 @@ private class IEC_ShippingControllerTest {
 
 			//-- Generate Quote
 			//try{
-				ctrl.bAreProductsCompliant = false;
+				ctrl.isCountryCompliant = false;
 				ctrl.generateQuote();
-				ctrl.bAreProductsCompliant = true;
+				ctrl.isCountryCompliant = true;
 				ctrl.generateQuote();
 			//}
 			//catch(Exception ex){}
