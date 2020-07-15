@@ -38,6 +38,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	*/
 
 	public Map<String, Decimal> discountPerKeyAccount {get; set;}
+	private Map<String, Account> taxesPerKeyAccount;
 
 	public String appsCurrency  {get; set;}
 	public Double tPrice  {get; set;}
@@ -127,6 +128,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		isApplicationreadyMap = new Map<String, boolean> ();
 		isNotDigitalOnly = new Map<String, Boolean>();
 		discountPerKeyAccount = new Map<String, Decimal>();
+		taxesPerKeyAccount = new Map<String, Account>();
 		Promotion__c validPromotion = null;
 		singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
@@ -161,9 +163,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			b = true;
 		}
 
-		for(Account acc : [SELECT Id, IATACode__c, ID_Card_Key_Account_Discount__c FROM Account WHERE IATACode__c in :keyContactAndDelegateForAccountList.keySet()]){
+		for(Account acc : [SELECT Id, IATACode__c, RecordTypeId, ID_Card_Key_Account_Discount__c, BillingCountry, BillingState FROM Account WHERE IATACode__c in :keyContactAndDelegateForAccountList.keySet()]){
 			discountPerKeyAccount.put(acc.IATACode__c, acc.ID_Card_Key_Account_Discount__c);
+			if(acc.RecordTypeId == AMS_Utils.RECTYPE_IATAAGENCY){
+				taxesPerKeyAccount.put(acc.IATACode__c, acc);
+			}
 		}
+		
 
 		system.debug('[IDCard_AdmPendingOpsController]load list iataCodeSubstring=' + iataCodeSubstring);
 		//pendingApplications   = new List<PendingApplicationProxy>();
@@ -567,13 +573,9 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		Promotion__c validPromotion = null;
 
 		for (ID_Card_Application__c app : pendingApplications) {
-
-			Account theAccount = [SELECT a.BillingCountry, a.BillingState
-														FROM Account a where a.RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
-														AND a.IATACode__c = : app.IATA_Code__c limit 1];
-	
+			
+			Account theAccount = taxesPerKeyAccount.get(app.IATA_Code__c);										
 			Map<String, String> taxes = IDCardTaxUtil.GetTaxes(theAccount.BillingState, theAccount.BillingCountry);
-
 			List<String> taxNames = new List<String>();
 			taxNames.addAll(taxes.keySet());
 
@@ -625,7 +627,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 					String percentage1 = taxes.get(name1);
 					app.Tax_1_Name__c = name1 + '(' + percentage1 + '%)' ;
 					app.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(percentage1, String.ValueOf(app.Applicable_Fee__c)) + ' '+ app.CurrencyIsoCode;
-					vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(app.Tax_1_Value__c.split(' ', 0)[0])).setScale(2));
 				}
 				else if (taxNames.size() == 2){
 					String name1 = taxNames.get(0);
