@@ -5,51 +5,60 @@
 
 /**
  * Fires an event to listeners.
- * @param {object} baseUrl - Pagereference object 
+ * @param {object} baseUrl - Pagereference object
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
-const navigateToPage = (baseURl, paramsObject) => { 
-    console.log('paramsObject', paramsObject);
-    
-    let ret = [];
-    for (let d in paramsObject) { 
-        ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
-    }
-    
-    let url = baseURl;
-    if(ret.length > 0) {
-        url = url + '?' + ret.join('&');
-    }
-    
-    window.location.href = url;
+const navigateToPage = (baseURl, paramsObject) => {
+	let ret = [];
+	for (let d in paramsObject) {
+		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
+	}
+
+	let url = baseURl;
+	if(ret.length > 0) {
+		url = url + '?' + ret.join('&');
+	}
+
+	window.location.href = url;
 };
 
+/**
+ * Fires an event to listeners.
+ * @param {object} baseUrl - Pagereference object
+ * @param {object} paramsObject - Object containing the parameters to be incapsulated
+ */
+const navigateToNewPage = (baseURl, paramsObject) => {
+	let ret = [];
+	for (let d in paramsObject) {
+		ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
+	}
+
+	let url = baseURl;
+	if(ret.length > 0) {
+		url = url + '?' + ret.join('&');
+	}
+
+	window.open(url,"_blank");
+};
 
 const getParamsFromPage = () => {
-    let prmstr = window.location.search.substr(1);
+	let prmstr = window.location.search.substr(1).toString();
 
-    let paramsReturn = {};
+	//create a JSON string, replacing & with comma (and quotes) and = with colon (and quotes)
+	// Also replacing the + sign with %20 so it can be properly converted in a space
+	let	paramsMap = prmstr ? decodeURIComponent('{"' + prmstr.replace(new RegExp('&', 'g'), '","').replace(new RegExp('=', 'g'),'":"').replace(new RegExp('\\+', 'g'),'%20') + '"}') : '{}';
 
-    if(prmstr !== undefined && prmstr !== null && prmstr !== ''){
-        let prmarr = prmstr.split("&");
-        for ( let i = 0; i < prmarr.length; i++) {
-            let tmparr = prmarr[i].split("=");
-            paramsReturn[tmparr[0]] = tmparr[1];
-        }
-    }
-
-    return paramsReturn;
+	//parsing the JSON string into an object
+	return JSON.parse(paramsMap);
 };
 
 const getPageName = () => {
-    return location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
-
-    }
-
-
+	return location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+}
 
 export {
-    navigateToPage,
-    getParamsFromPage,
-    getPageName
+	navigateToPage,
+	navigateToNewPage,
+	getParamsFromPage,
+	getPageName
 };

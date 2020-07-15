@@ -850,7 +850,7 @@
         <description>IAPP - Notify team leader case has been set as Not eligible</description>
         <protected>false</protected>
         <recipients>
-            <recipient>montoyac@iata.org</recipient>
+            <recipient>macneillb@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2472,6 +2472,21 @@
         <template>All/New_DPC_ACR_for_ILDS_Notification</template>
     </alerts>
     <alerts>
+        <fullName>Notification_new_comment_idpc_case</fullName>
+        <description>Send email notification for a new comment on a Inter DPCs case</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Partner User Role</recipient>
+            <type>caseTeam</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
         <fullName>Notification_on_Priority_1_Case_for_InvoiceWorks</fullName>
         <ccEmails>iataiwteam@iata.org</ccEmails>
         <description>IW: Notification on Priority 1 Case for InvoiceWorks</description>
@@ -4070,6 +4085,19 @@
         <template>ID_Card_templates/IDCard_ConfirmationEmail</template>
     </alerts>
     <alerts>
+        <fullName>Send_an_email_as_soon_as_idcard_is_approved</fullName>
+        <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
+        <description>Send an email as soon as idcard is approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>idcard@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ID_Card_templates/IDCard_ApprovalEmail</template>
+    </alerts>
+    <alerts>
         <fullName>Send_email_notification_for_a_new_attachment_on_a_case</fullName>
         <description>Send email notification for a new attachment on a case</description>
         <protected>false</protected>
@@ -4093,7 +4121,7 @@
     </alerts>
     <alerts>
         <fullName>Send_email_notification_for_a_new_comment_on_a_case</fullName>
-        <description>Send email notification for a new comment on a case</description>
+        <description>Send email notification for a new comment on a case (No Inter DPCs)</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
@@ -13394,6 +13422,27 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>IDCard_ApprovalEmail_Send</fullName>
+        <actions>
+            <name>Send_an_email_as_soon_as_idcard_is_approved</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>ID Card Application</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Ready for production</value>
+        </criteriaItems>
+        <description>Send an approval confirmation email.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>IDCard_ConfirmationEmail Send</fullName>
         <actions>
             <name>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</name>
@@ -16589,6 +16638,35 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>New Case Comment %28IDPC%29</fullName>
+        <actions>
+            <name>Notification_new_comment_idpc_case</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>New_Comment_From_Connection_User_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.New_Comment_From_Connection_User__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.UserType</field>
+            <operation>equals</operation>
+            <value>Partner</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Inter DPCs</value>
+        </criteriaItems>
+        <description>Send email notification on Inter DPCs Cases when is added a new comment by a portal user</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>New External Case %28InvoiceWork%29</fullName>
         <actions>
             <name>Invoice_Direction_Empty</name>
@@ -19031,7 +19109,12 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <operation>equals</operation>
             <value>Partner</value>
         </criteriaItems>
-        <description>Send email notification on all Cases when is added a new comment by a portal user</description>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Inter DPCs</value>
+        </criteriaItems>
+        <description>Send email notification on all Cases (NOT Inter DPCs) when is added a new comment by a portal user</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

@@ -16,6 +16,9 @@
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
+                <field>CS_Portal_link__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>CNS_Article__c</field>
             </layoutItems>
             <layoutItems>
@@ -27,7 +30,7 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
-        <editHeading>false</editHeading>
+        <editHeading>true</editHeading>
         <label>Custom Links</label>
         <layoutColumns/>
         <layoutColumns/>

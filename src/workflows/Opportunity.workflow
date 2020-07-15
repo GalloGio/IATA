@@ -12,14 +12,11 @@
     </alerts>
     <alerts>
         <fullName>Closed_deal_AME</fullName>
+        <ccEmails>ame.closed.deal@fake.org</ccEmails>
         <description>Closed deal AME</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>auragh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
-        <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
+        <template>MarketingPAX/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
@@ -35,6 +32,10 @@
         </recipients>
         <recipients>
             <recipient>agouzoulm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>alicia@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -234,7 +235,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
+        <template>MarketingPAX/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
@@ -253,15 +254,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>atakee@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>auragh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -732,7 +733,7 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
             <name>Closed_deal_AME</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.Customer_Region__c</field>
             <operation>equals</operation>

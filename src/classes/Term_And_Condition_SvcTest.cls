@@ -27,6 +27,8 @@ private class Term_And_Condition_SvcTest {
 			License_Cost_Center__c = 'IDS005CH01'
 		);
 		insert u;
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		System.runAs(u){
 			EmailTemplate eT = new EmailTemplate(

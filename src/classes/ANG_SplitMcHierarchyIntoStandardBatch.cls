@@ -8,7 +8,7 @@
 global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable {
 	private Id accountGE;
 	private Id oscarId;
-	private Boolean processSingleBsp;
+	private SplitBatchExecutionType executionType;
 
 	private Integer currentThreads = 0;
 	private Integer finishedThreads = 0;
@@ -19,17 +19,28 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 * Used when testing to limit the "start" method query. If the batch is executed in testing, it can only return 1 result.
 	 */
 	public static Id forceAccountForTesting = null;
+
+	public enum SplitBatchExecutionType {
+		// Used on the conversion oscar MC to ST
+		Normal,
+		// Used when there a change of hierarchy that leaves the GE BSP alone
+		GeLeftAlone,
+		// First step on a VR oscar that leaves the GE BSP alone
+		JustCreateCase,
+		// Finishes the execution started by a "JustCreateCase" execution
+		FinishExecution
+	}
 	
 	/**
-	 * Creates and splits a MC hierarchy into multiple ST hierarchies. If <i>processSingleBsp</i> is <i>true</i>, only the parent GE
-	 * 	BSP is considered.
+	 * Creates and splits a MC hierarchy into multiple ST hierarchies.
+	 * @param oscarId The oscar Id associated with this execution (can the a conversion oscar or, for eg, a VR that left the GE alone);
 	 * @param accountGE The MC hierarchy parent GE account;
-	 * @param processSingleBsp When "false": normal MC split into ST; When "true": only consider the parent BSP.
+	 * @param executionType The type of execution.
 	 */
-	public ANG_SplitMcHierarchyIntoStandardBatch(Id oscarId, Id accountGE, Boolean processSingleBsp) {
+	public ANG_SplitMcHierarchyIntoStandardBatch(Id oscarId, Id accountGE, SplitBatchExecutionType executionType) {
 		this.accountGE = accountGE;
 		this.oscarId = oscarId;
-		this.processSingleBsp = processSingleBsp;
+		this.executionType = executionType;
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -92,10 +103,13 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	global void finish(Database.BatchableContext BC) {
 		AMS_OSCAR__c oscar = getOscarFromCase(accountGE, getOscarCase(accountGE));
 
-		if(currentThreads == finishedThreads){
-			oscar.Child_OSCAR_Status__c = processSingleBsp
-				? AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE
-				: AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED;
+		if (currentThreads == finishedThreads) {
+			if (is(SplitBatchExecutionType.GeLeftAlone))
+				oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_GEALONE;
+			else if (is(SplitBatchExecutionType.JustCreateCase))
+				oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE;
+			else
+				oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED;
 		}
 		else {
 			oscar.Child_OSCAR_Status__c = AMS_Utils.OSCAR_CHILD_PROCESSING_ERROR;
@@ -106,7 +120,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 
 	private void findContact() {
-		if (!processSingleBsp)
+		if (is(SplitBatchExecutionType.Normal))
 			return;
 		
 		List<Contact> contacts = [SELECT Id, AccountId, User_Portal_Status__c
@@ -134,6 +148,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 
 	private List<Account> filterAccounts(List<Account> accts) {
 		List<Account> accounts = new List<Account>();
+
+		Boolean processSingleBsp = notIs(SplitBatchExecutionType.Normal);
 
 		for (Account acct : accts) {
 			// when processSingleBsp = false, include all
@@ -173,6 +189,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 * Updates the location type, parents and accreditation model based on the account location type (for active accounts).
 	 */
 	private void updateAccountInformation(List<Account> accts) {
+		if (is(SplitBatchExecutionType.JustCreateCase))
+			return;
+
 		for (Account acct : accts) {
 			if (!isActiveAccount(acct)) {
 				acct.ParentId = null;
@@ -201,6 +220,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 * Removed the relationship between HE and parent GE and between all inactive accounts (any location type).
 	 */
 	private void updateAccountHierarchy(List<Account> accts) {
+		if (is(SplitBatchExecutionType.JustCreateCase))
+			return;
+		
 		List<AMS_Agencies_relationhip__c> arsToDelete = new List<AMS_Agencies_relationhip__c>();
 		Map<Id, AMS_Agencies_Hierarchy__c> arsToCreate = new Map<Id, AMS_Agencies_Hierarchy__c>();
 
@@ -244,7 +266,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 * Update the information on the stating area of the GE account.
 	 */
 	private void updateStagingArea(List<Account> accts, Case c) {
-		if (processSingleBsp)
+		if (notIs(SplitBatchExecutionType.Normal))
 			return;
 		
 		for (Account acct : accts) {
@@ -268,14 +290,21 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	 * Creates a single oscar for each HE account (hierarchy)
 	 */
 	private void createConversionMcToStProcess(List<Account> accts, Case c) {
+		if (is(SplitBatchExecutionType.FinishExecution))
+			return;
+
 		// get the HE accounts (active)
 		List<Account> allHe = new List<Account>();
 		Account geAccount = null;
+
+		Boolean processSingleBsp = notIs(SplitBatchExecutionType.Normal);
 		
 		for (Account acct : accts) {
 			if (acct.Id == accountGE && !processSingleBsp) // GE is treated as HE if "processSingleBsp"
 				geAccount = acct;
 			else if (isActiveAccount(acct) && acct.Location_Type__c == AMS_Utils.HE)
+				allHe.add(acct);
+			else if (isActiveAccount(acct) && acct.Location_Type__c == AMS_Utils.GE && is(SplitBatchExecutionType.JustCreateCase))
 				allHe.add(acct);
 		}
 
@@ -284,6 +313,9 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		List<Account> allGeAndHe = new List<Account>(allHe);
 		if (geAccount != null)
 			allGeAndHe.add(geAccount);
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createConversionMcToStProcess] allHe: ' + allHe);
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_SplitMcHierarchyIntoStandardBatch - createConversionMcToStProcess] allGeAndHe: ' + allGeAndHe);
 
 		// create / update the entities
 		Map<Id, AMS_OSCAR__c> oscars = createOscar(allHe, geOscar);
@@ -322,7 +354,8 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		for (Account acct : accts) {
 			AMS_OSCAR__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD, acct.Id, fieldsToSetOnOscar);
 			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(new List<AMS_OSCAR__c> { oscar }, new Map<Id, Account> { acct.Id => acct });
-			oscar.Step51__c = AMS_Utils.NOT_APPLICABLE;
+			if (notIs(SplitBatchExecutionType.JustCreateCase))
+				oscar.Step51__c = AMS_Utils.NOT_APPLICABLE;
 			if (parentOscar != null)
 				oscar.Parent_OSCAR__c = parentOscar.Id;
 			oscarsToInsert.put(acct.Id, oscar);
@@ -394,7 +427,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 	}
 
 	private void addCaseComments(Map<Id, Case> cases) {
-		if (!processSingleBsp)
+		if (is(SplitBatchExecutionType.Normal))
 			return;
 
 		List<CaseComment> comments = new List<CaseComment>();
@@ -419,6 +452,7 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 			AMS_Pax_Accreditation_Form__c stagingArea = ANG_EntityCreator.createStagingArea(AMS_Utils.RECTYPE_GENERAL_ONLINE_PAX,
 				acct.Name, cases.get(acct.Id).Id, fieldsToSetOnPax);
 			
+			stagingArea.Location_Type__c = AMS_Utils.HE;
 			stagingArea.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
 			stagingArea.Remittance_frequency__c = acct.Remittance_frequency__c;
 			paxToInsert.put(acct.Id, stagingArea);
@@ -550,5 +584,13 @@ global class ANG_SplitMcHierarchyIntoStandardBatch implements Database.Batchable
 		String year = String.valueOf(now.year());
 
 		return ss + ' ' + min + ' ' + hour + ' ' + day + ' ' + month + ' ? ' + year;
+	}
+
+	private boolean is(SplitBatchExecutionType tp) {
+		return executionType == tp;
+	}
+
+	private boolean notIs(SplitBatchExecutionType tp) {
+		return !is(tp);
 	}
 }

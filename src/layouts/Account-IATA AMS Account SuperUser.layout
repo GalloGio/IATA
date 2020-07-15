@@ -190,10 +190,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AccountStatus__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Segmentation__c</field>
             </layoutItems>
             <layoutItems>
@@ -374,6 +370,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ShippingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Shipping_City__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

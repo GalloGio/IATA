@@ -156,6 +156,7 @@ export default class PortalLogin extends LightningElement {
                     config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                     config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
+                    config.selfRegistrationUrl += '?startURL='+ this.startURL;
 
                     //todo remove this part - for testing only.
                     //config.isUsernamePasswordEnabled = false;
@@ -225,7 +226,7 @@ export default class PortalLogin extends LightningElement {
 
     handleEmailChange(event){
         this.email = event.target.value;
-
+        this.password = this.template.querySelector('[data-id="passwordInput"]').value;
         if(this.email.length > 0 && this.password.length > 0){
             this.loginButtonDisabled = false;
             this.template.querySelector('[data-id="loginButton"]').classList.remove('containedButtonDisabled');
@@ -259,7 +260,7 @@ export default class PortalLogin extends LightningElement {
 
     handlePasswordChange(event){
         this.password = event.target.value;
-
+        this.email = this.template.querySelector('[data-id="emailInput"]').value;
         if(this.password.length > 0){
             this.template.querySelector('[data-id="passwordIcon"]').classList.remove('showPasswordIconDisabled');
             if(this.email.length > 0){
@@ -302,7 +303,7 @@ export default class PortalLogin extends LightningElement {
                 this.isLoading = false;
                 return;
             }else{
-                login({username: this.email, password: this.password, landingPage: this.startURL, relayState: this.relayState }).then(result => {
+                login({username: this.email, password: this.password, landingPage: encodeURIComponent(this.startURL), relayState: this.relayState }).then(result => {
                     var response = JSON.parse(JSON.stringify(result));
                     if(response.isSuccess == true){
                         navigateToPage(response.sessionUrl, {});

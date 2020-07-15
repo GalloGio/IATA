@@ -20,7 +20,9 @@
                                 </template>
                                 <div class="slds-p-bottom_x-small textAlignCenter">
                                     <div class="slds-p-bottom_medium">
-                                        <span class="fixed-text text-gray">{message}</span>
+                                        <span class="fixed-text text-gray">
+                                            <lightning-formatted-rich-text value={message}></lightning-formatted-rich-text>
+                                        </span>
                                     </div>
 
                                     <div class="buttonsWrapper">

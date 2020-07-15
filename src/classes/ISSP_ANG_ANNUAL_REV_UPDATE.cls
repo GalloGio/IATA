@@ -12,7 +12,23 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public boolean chsb{get;set;}
 	public boolean chss{get;set;}
 
-	public Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {get; set;}
+	public static Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {
+		get {
+			if (stateListByCountryNameMap == null) {
+				stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
+
+				for(IATA_ISO_State__c state :  [SELECT Id, Name, IATA_ISO_Country__r.Informatica_Value__c FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true ORDER BY Name]){
+					if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase())){
+						stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase(), new List<IATA_ISO_State__c>());
+					}
+					stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase()).add(state);
+				}
+
+			}
+			return stateListByCountryNameMap;
+		}
+		set;
+	}
 	public static List<IATA_ISO_City__c> billingCityListName {get;set;}    
 	public static List<IATA_ISO_City__c> shippingCityListName {get;set;}
 
@@ -36,7 +52,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	set;
 	}
 
-	public List<SelectOption> countryList {
+	public static List<SelectOption> countryList {
 		get {
 			if (countryList==null) {
 				countryList= new List<selectOption>{new SelectOption('','')};
@@ -79,7 +95,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 		set;
 	}
 
-	public String countryInfoByCountryNameMapString {
+	public static String countryInfoByCountryNameMapString {
 		get {
 			if (countryInfoByCountryNameMapString == null) {
 				List<SelectOption> countryListPopulated = countryList;
@@ -116,22 +132,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 		set;
 	}
 
-	public String stateListByCountryName {
+	public static String stateListByCountryName {
 		get {
-			if (stateListByCountryNameMap == null) {
-				stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
-
-				for (IATA_ISO_State__c state: [SELECT Id, Name, IATA_ISO_Country__r.Informatica_Value__c
-											FROM IATA_ISO_State__c
-											WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true
-											ORDER BY Name]) {
-					if (!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase())) {
-						stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase(), new List<IATA_ISO_State__c>());
-					}
-					stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase()).add(state);
-				}
-			}
-
 			return JSON.serialize(stateListByCountryNameMap);
 		}
 		set;

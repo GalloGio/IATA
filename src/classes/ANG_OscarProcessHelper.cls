@@ -1339,9 +1339,6 @@ global class ANG_OscarProcessHelper {
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
 
-			//if(accsToSendEmail.contains(acc.Id))
-				//AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);
-
 			System.debug('[ANG_OscarProcessHelper.createRevalidationOscar] - FINISHING... INSERTING OSCARS: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 
@@ -1779,33 +1776,8 @@ global class ANG_OscarProcessHelper {
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 
-		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
-		if(!mailsToSend.isEmpty()) {
-			if(!Test.isRunningTest()) Messaging.sendEmail(emailsToSend);
-			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
-
-			for(Id oscarCommCaseId : mailsToSend.keySet()){
-				for(Messaging.SingleEmailMessage mail : mailsToSend.get(oscarCommCaseId)){
-					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-					emailMsg.FromAddress = owea[0].Address;
-					emailMsg.FromName = owea[0].DisplayName;
-					if(mail.getToAddresses() != null && !mail.getToAddresses().isEmpty()) {
-						emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
-					}
-					if(!String.isBlank(mail.getTargetObjectId())) {
-						emailMsg.toIds = new List<Id>{ mail.getTargetObjectId() };
-					}
-					emailMsg.Subject = mail.getSubject();
-					emailMsg.HtmlBody = mail.getHtmlBody();
-					emailMsg.ParentId = oscarCommCaseId; //Attach with the case
-					emailMsg.MessageDate = system.now();
-					emailMsg.Status = '0';
-					mailsToTrackInCase.add(emailMsg);
-				}
-			}
-			insert mailsToTrackInCase;
-		}
-
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea);
+		
 		if(notificationTemplate <> null)
 			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
 
@@ -2077,6 +2049,8 @@ global class ANG_OscarProcessHelper {
 			nt.Subject__c = nt.Subject__c
 				.replace('#IATACODE', contacts.get(nt.Contact__c).Account.IataCode__c)
 				.replace('#ACCOUNTNAME',contacts.get(nt.Contact__c).Account.Name);
+			nt.Subject__c = nt.Subject__c.length() > 140 ? nt.Subject__c.substring(0,140) : nt.Subject__c; //Notification__c.Subjec -> max size 140
+
 		}
 
 		if (!notifications.isEmpty())
@@ -2085,14 +2059,16 @@ global class ANG_OscarProcessHelper {
 		System.debug('## notifications created: '+notifications.size());
 
 		//send emails
-		OrgWideEmailAddress[] owea;
-		owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		OrgWideEmailAddress[] owea = [select Id, Address, DisplayName  from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		// casesByTemplateName map {TemplateId, Map<CaseId,Case>}
-
+		Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend = new Map<ID,List<Messaging.SingleEmailMessage>>();
+		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 
 		for (String conId :templateContIdMap.keyset()){
 
+			Map<String, Id> countryTemplates = AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false);
+			
 			for(Id caseId: notifTempNameCaseMap.get(conId).KeySet()){
 
 				Case caseToProcess = notifTempNameCaseMap.get(conId).get(caseId);
@@ -2100,12 +2076,66 @@ global class ANG_OscarProcessHelper {
 				List<Contact> contactIdList = new List<Contact>();
 				contactIdList.add(contacts.get(caseToProcess.ContactId));
 
-				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false), caseToProcess.Id, owea[0], false);
-
+				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, countryTemplates, caseToProcess.Id, owea[0], false, null, false);
+				mailsToSend.put(caseToProcess.Id, mailListAux);
+				emailsToSend.addAll(mailListAux);
 			}
-
 		}
 
+		//Bulkified process to send emails and create SingleEmailMessage
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea);
+
+	}
+
+	/**
+	 * Bulkified process to send email 
+	 * PCI Renewal Cases & Annual Revalidation notifications
+	 */
+	public static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea){
+		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
+		if(!mailsToSend.isEmpty()) {
+			Set<Id> failedContacts = new Set<Id>();
+			if(!Test.isRunningTest()){
+				List<Messaging.SendEmailResult> results = Messaging.sendEmail(emailsToSend, false); //it allows delivery of the messages that don't have errors (false).
+				if(!results.isEmpty()){
+					String errorMsg = 'ERRORS FOUND Sending Email for PCI Renewal Cases & Annual Revalidation notifications: \n';
+					Boolean sendErrors = false;
+					for(Messaging.SendEmailResult sendResult : results){
+						if(!sendResult.isSuccess()) {
+							errorMsg = errorMsg + ' \n' + sendResult.getErrors()[0].getMessage() + ' - STATUS: ' + sendResult.getErrors()[0].getStatusCode() + ' - Object Id: ' +  sendResult.getErrors()[0].getTargetObjectId() + ' \n';
+							sendErrors = true;
+							failedContacts.add(sendResult.getErrors()[0].getTargetObjectId());
+						}
+					}
+					if(sendErrors) TransformationHelper.sendEmailSupport('Send Email for PCI Renewal Cases & Annual Revalidation notifications Failed', errorMsg);
+				}
+			}
+			
+			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
+			for(Id oscarCommCaseId : mailsToSend.keySet()){
+				for(Messaging.SingleEmailMessage mail : mailsToSend.get(oscarCommCaseId)){
+
+					if(failedContacts.contains(mail.getTargetObjectId())) continue; // By pass failed emails
+
+					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
+					emailMsg.FromAddress = owea[0].Address;
+					emailMsg.FromName = owea[0].DisplayName;
+					if(mail.getToAddresses() != null && !mail.getToAddresses().isEmpty()) {
+						emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					}
+					if(!String.isBlank(mail.getTargetObjectId())) {
+						emailMsg.toIds = new List<Id>{ mail.getTargetObjectId() };
+					}
+					emailMsg.Subject = mail.getSubject();
+					emailMsg.HtmlBody = mail.getHtmlBody();
+					emailMsg.ParentId = oscarCommCaseId; //Attach with the case
+					emailMsg.MessageDate = system.now();
+					emailMsg.Status = '0';
+					mailsToTrackInCase.add(emailMsg);
+				}
+			}
+			insert mailsToTrackInCase;
+		}
 	}
 
 	public Class EntityUpdater{
