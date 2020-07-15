@@ -3,8 +3,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 	// This batch is joining the old batches: SurveyCustomWorkflowBatch and SurveyCustomerRecoveryBatch
 	// The purpose of joining them in one single batch is to reduce the load on sfdc's batch scheduler
 
-	global set<Id> CasesPart2;
-
 	//----- VARIABLES USED BY PART 1 -----
 	global list<Case> cases;
 	global Set<Id> ContactIds;
@@ -37,6 +35,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 	//----- VARIABLES USED BY PART 2 -----
 	global list<Case> lstCases;
+	global set<Id> casesSet; // Set of Cases where a survey was created yesterday
 	public Date CreatedDate {get; set;}
 
 	global map<String, Id> mapComplaintQueuesPerName = new map<string, Id>();
@@ -168,9 +167,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 															 WHERE Id IN :lstCaseIds
 															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR'];//WMO-571
 
-		CasesPart2 = new Set<Id>();
+		casesSet = new Set<Id>();
 		for (Case c : SurveyCases)
-			CasesPart2.add(c.Id);
+			casesSet.add(c.Id);
 		casesToBeProcessed.addAll(SurveyCases);
 		system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
 		return casesToBeProcessed;
@@ -186,7 +185,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 		List<Case> scopepart2 = new List<Case>();
 
 		for (Case c : scope) {
-			if (!CasesPart2.contains(c.ID)){
+			if (!casesSet.contains(c.ID)){
 				scopepart1.add(c);
 			} else {
 				scopepart2.add(c);
