@@ -4392,51 +4392,48 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void sendConfirmationEmail(Case newCase) {
 		String emailTemplateName;
-		String fromaddress;
+		String fromaddress = 'noreply@iata.org';
+		if(isCNSAgency) {
+			fromaddress = 'cns_noreply@cnsc.us';
+		}
 
-		if(newCase.Reason1__c == 'FoP Management' && newCase.origin == 'Massive FOP Creation') {
+
+		/*if(isCNSAgency && isNoticeOfChange) {
+			emailTemplateName = 'CNS Notice of Change Auto-response';
+			fromaddress = 'CNS Agency Management (cns_noreply@cnsc.us)';
+		} else*/ if(isCNSAgency && !isNoticeOfChange) {
+			emailTemplateName = 'CNS Accreditation Auto-response';
+		} else if(newCase.Reason1__c == 'FoP Management' && newCase.origin == 'Massive FOP Creation') {
 			emailTemplateName = 'ISSP ANG PCI Process Notification';
-			fromaddress = 'IATA Service Centre (noreply@iata.org)';
 		} else if (isNoticeOfChange && (newCase.ContactId == con.id)) { //Can't user VF template if Contact submitting case does not have case visibility i.e. is not the case contact
 			emailTemplateName = 'ISSP AMS Process Notification';
-			fromaddress = 'IATA Service Centre (noreply@iata.org)';
 		} else if (newCase.BSPCountry__c == null) {
 			emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
-			fromaddress = 'IATA (noreply@iata.org)';
 		} else if (newCase.BSPCountry__c.contains('Spain')) {
 			emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
-			fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
 		} else if (newCase.BSPCountry__c == 'France') {
 			emailTemplateName = 'EUR_Case Confirmation - online HTML (French)';
-			fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
 		} else if (newCase.Region__c == 'Europe') {
 			emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
-			fromaddress = 'IATA Europe (noreply@iata.org)';
 		} else if (newCase.BSPCountry__c == 'Canada') {
 			emailTemplateName = 'A1 - CS Auto-response confirmation (EN/FR)';
-			fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
 		} else if (newCase.BSPCountry__c == 'Brazil') {
 			emailTemplateName = 'A1 - CS Auto-response confirmation (EN/PT)';
-			fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
 		} else if (newCase.Region__c == 'Americas') {
 			emailTemplateName = 'A1 - CS Auto-response confirmation (EN/SP)';
-			fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
 		} else if (newCase.Region__c.contains('China')) {
 			emailTemplateName = 'N.ASIA_Case confirmation - online HTML (English)- China';
-			fromaddress = 'IATA China - Customer Services (noreply@iata.org)';
 		} else if (newCase.Region__c.contains('Africa')) {
-			fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
 			emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
 		} else {
 			emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
-			fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';
 		}
 
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 		List<EmailTemplate> ets = [Select Name, Id From EmailTemplate where Name = :emailTemplateName];
 		EmailTemplate et = ets[0];
 
-		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = :fromaddress];
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		mail.setTemplateID(et.Id);
@@ -5133,9 +5130,11 @@ public without sharing class ISSP_AMS_Accreditation {
 				AND Origin = 'Portal'
 				AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId))
 				AND Case.Reason1__c IN (:AMS_Utils.CASE_REASON_NEW_HO,
+										:AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO,
 										:AMS_Utils.CASE_REASON_BR_IP,
 										:AMS_Utils.CASE_REASON_BR_INDEPENDENT,
 										:AMS_Utils.CASE_REASON_BR_ABROAD,
+										:AMS_Utils.CASE_REASON_BR_COMERCIAL,
 										'CHL - Change of Location', 'CHN - Change of Name',
 										'CHO / CHS – Change of Ownership / Legal Status', 'Bank Detail Update',
 										'IRIS Bank Detail Update', 'Major Change',
