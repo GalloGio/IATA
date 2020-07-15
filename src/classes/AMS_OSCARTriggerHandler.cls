@@ -5055,7 +5055,7 @@ public class AMS_OSCARTriggerHandler {
 	 */
 	private static Boolean isUpdated(AMS_OSCAR__c newOscar, AMS_OSCAR__c oldOscar, set<String> setFieldNames) {
 		for (String fieldname: setFieldNames) {
-			if (newOscar.get(fieldName) != oldOscar.get(fieldName)) {
+			if (fieldname.containsNone('.') && newOscar.get(fieldName) != oldOscar.get(fieldName)) {
 				return true;
 			}
 		}
