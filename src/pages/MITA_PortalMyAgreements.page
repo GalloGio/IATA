@@ -234,7 +234,6 @@
 					var MITAsuggestionsTable;
 					var BIETAsuggestionsTable;
 					var myActiveContactTable;
-					var myAllContactTable;
 					var otherContactTable;
 
 					var activeMainTab = '';
@@ -327,16 +326,13 @@
 
 					function initMyAllContactTable() {
 						var theMyAllContTable = $('#myAllContactTable').DataTable({
-							"dom": '<"top"f>t<"clear">',
+							"dom": '<"top" lf>rt<"bottom"ip><"clear">',
 							"pageLength": 10,
-							"ordering": false,
-							"searching": false,
-							"info": false,
 							"columnDefs": [
 								{ "name": "Name", "targets": 0},
 								{ "name": "email", "targets": 1},
 								{ "name": "phone", "targets": 2},
-								{ "name": "Teletype", "targets": 2 }
+								{ "name": "Teletype", "targets": 3 }
 							],
 							"language": {
 								"lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
@@ -352,9 +348,7 @@
 							}
 						});
 						
-						$(theMyAllContTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
-
-						myAllContactTable = theMyAllContTable;
+						//$(theMyAllContTable.rows().nodes()).find(".iconx").attr('src', $('.mastericonx').attr('src'));
 					}
 
 
@@ -438,6 +432,12 @@
 						activeTab[maintab] = tab;
 					}
 
+					function toggleMyModal(theModal, theOperation){
+						$('\'#' + theModal + '\'').modal('\'' + theOperation + '\'');  //show|hide
+						if(theModal == 'otherAirCon' && theOperation =='show')
+							initContactTable('other');
+					}
+
 					function showOtherAirlineContacts(){
 						$( '#otherAirCon').modal('show');
 						initContactTable('other');
@@ -453,6 +453,13 @@
 					function closeEditContact() {
 						$( '#editContact' ).modal('hide');
 					}
+
+					function showDeleteContact(){
+						$( '#delCon').modal('show');
+					}
+					function closeDeleteContact() {
+						$( '#delCon' ).modal('hide');
+					}
 				</script>
 
 				<apex:outputPanel id="column2" style="width:40%">
@@ -467,6 +474,76 @@
 							<apex:actionFunction action="{!retrieveContactToEdit}" name="editContact" onComplete="showEditContact();" reRender="modalEditContact">
 								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
 							</apex:actionFunction>
+
+							<apex:actionFunction action="{!retrieveContactToEdit}" name="deleteContact" onComplete="showDeleteContact();" reRender="ModalDeleteContact">
+								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
+							</apex:actionFunction>
+
+							<!-- MODAL WINDOWS TO DELETE A CONTACTS -->
+							<apex:outputPanel id="ModalDeleteContact">
+								<apex:actionFunction action="{!deleteContact}" name="ValidateDelContact" reRender="AfterDelValPnl" onComplete="PerformAfterdelValidation();"/>
+								<apex:actionFunction action="{!SaveTheContact}" name="DelTheContact" reRender="pbsResult,pbsActiveContact" onComplete="RestoreDelButtons();"/>
+								<script>
+									modalDelete_alert = function() {}
+									modalDelete_alert.warning = function(message) {
+										if(message=='')
+											$('#modalDelete_alert_placeholder').html('');
+										else
+											$('#modalDelete_alert_placeholder').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
+									}
+								</script>
+								<div class="modal fade" id="delCon" role="dialog" data-backdrop="static" data-keyboard="false">
+									<div class="modal-dialog modal-lg" style="width: 1100px;">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Remove Contact</h4>
+											</div>
+											<div class="modal-body">
+												Are you sure you want to remove <b>{!ContactBeingEdited.Name}?</b>
+											</div>
+											<div id="modalDelete_alert_placeholder"></div>
+											<div class="modal-footer">
+												<button type="button" id='btnDel' class="iatabtn iatabtn-default" onclick="modalDelete_alert.warning('');ValidateDelContact();">{!$Label.ICCS_Delete_Label}</button>
+												<button type="button" id='btnDelClose' class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.LAQ_Close}</button>
+											</div>
+											<script>
+												$('#btnDel').click(function(){
+													$(this).attr("disabled", true);
+													$(this).removeClass("iatabtn-default");
+													$(this).addClass("iatabtn-danger");
+
+													$('#btnDelClose').attr("disabled", true);
+													$('#btnDelClose').removeClass("iatabtn-default");
+													$('#btnDelClose').addClass("iatabtn-danger");
+												});
+											</script>
+										</div>
+									</div>
+								</div>
+								<apex:outputPanel id="AfterDelValPnl">
+									<script>
+										function PerformAfterdelValidation(){
+											if('{!SaveError}' == ''){
+												DelTheContact();
+											}else{
+												modalDelete_alert.warning('{!SaveError}');
+												RestoreDelButtons();
+											}
+										}
+
+										function RestoreDelButtons(){
+											$('#btnDel').removeAttr("disabled");
+											$('#btnDel').addClass("iatabtn-default");
+											$('#btnDel').removeClass("iatabtn-danger");
+
+											$('#btnDelClose').removeAttr("disabled");
+											$('#btnDelClose').addClass("iatabtn-default");
+											$('#btnDelClose').removeClass("iatabtn-danger");
+										}
+									</script>
+								</apex:outputPanel>
+							</apex:outputPanel>
+							<!-- END MODAL WINDOWS TO DELETE A CONTACTS-->
 
 							<!-- MODAL WINDOWS TO SHOW OTHER AIRLINE CONTACTS -->
 							<apex:outputPanel id="ModalOtherContacts">
@@ -529,6 +606,9 @@
 														<apex:inputField value="{!ContactBeingEdited.MITA_Contact_Type__c}" label="{!$ObjectType.Contact.fields.MITA_Contact_Type__c.label}"/><br/><br/>
 														<apex:inputField value="{!ContactBeingEdited.MITA_Teletype__c}" label="{!$ObjectType.Contact.fields.MITA_Teletype__c.label}"/><br/><br/>
 													</apex:pageBlockSection>
+													<apex:pageBlockSection columns="2">
+														<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_EditContactMsg}</div>
+													</apex:pageBlockSection>
 												</apex:pageBlock>
 											</div>
 											<div class="modal-footer">
@@ -555,6 +635,7 @@
 											if('{!SaveError}' == ''){
 												SaveTheContact();
 											}else{
+												RestoreButtons();
 												modal_alert.warning('{!SaveError}');
 											}
 										}
@@ -584,7 +665,7 @@
 										<div class="mytabheadercontainer level1" style="padding-left: 2px;">
 											<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')" style="float: left;">{!$Label.ISSP_Existing_Agreements}</div>
 											<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
-											<div class="mytabheader level1" id="hdContacts" onclick="showTab('Contacts')">Airline Contacts</div>
+											<div class="mytabheader level1" id="hdContacts" onclick="showTab('Contacts')">{!$Label.ISSP_MITA_TAB}</div>
 										</div>
 
 										<!-- TAB CONTAINER -->
@@ -768,8 +849,8 @@
 											
 											<div class="mytab level1" id="tabContacts">
 												<div class="mytabheadercontainer">
-													<div class="mytabheader level2 active" style="float:left;" id="hdActiveContacts" onclick="showTab('Contacts','ActiveContacts')">Active Contacts</div>
-													<div class="mytabheader level2" style="float:right;" id="hdAllContacts" onclick="showTab('Contacts','AllContacts')">All Contacts</div>
+													<div class="mytabheader level2 active" style="float:left;" id="hdActiveContacts" onclick="showTab('Contacts','ActiveContacts')">{!$Label.ISSP_MITA_SUBTAB_01}</div>
+													<div class="mytabheader level2" style="float:right;" id="hdAllContacts" onclick="showTab('Contacts','AllContacts')">{!$Label.ISSP_MITA_SUBTAB_02}</div>
 												</div>
 
 												<div class="mytabcontainer level2">
@@ -778,6 +859,9 @@
 														<div class="mytab level2 active"  id="tabActiveContacts">
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
 																<apex:outputText value="{!ContactTypes}" escape="false" />
+																<br/>
+																<br/>
+																<button type="button" class="iatabtn iatabtn-default" onclick="showTab('Contacts','AllContacts')">{!$Label.ISSP_MITA_Add_Contact}</button>
 															</div>
 															<apex:pageBlockSection columns="1" id="pbsActiveContact">
 																<apex:outputPanel>
@@ -820,17 +904,17 @@
 														function checkInputs(){
 															$('#search_alert_placeholder').html('');
 															var searchCrit = $('#searchCrit').val();
-															if(searchCrit.length >=3){
+															if(searchCrit=="" || searchCrit==null || searchCrit.length >=3){
 																var letterNumber = /^[0-9a-zA-Z@.]+$/;
-																if(searchCrit.match(letterNumber)) {
+																if(searchCrit=="" || searchCrit==null || searchCrit.match(letterNumber)) {
 																	startLoading();
 																	SearchContact(searchCrit);
 																	initMyAllContactTable();
 																}else{
-																	search_alert.warning('Please input only characters and numbers or a valid email address');
+																	search_alert.warning('{!$Label.ISSP_MITA_Search_ValidInput}');
 																}
 															}else{
-																search_alert.warning('Please input at least 3 character');
+																search_alert.warning('{!$Label.ISSP_MITA_Search_At_Least3Chars}');
 															}
 														}
 													</script>
@@ -838,12 +922,18 @@
 													<apex:outputPanel id="AllContactsPanel">
 														<div class="mytab level2" id="tabAllContacts">
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
+																<apex:pageBlockSection columns="1">
+																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text01}</div>
+																</apex:pageBlockSection>
 																<apex:pageBlockSection>
 																	<input type="search" id="searchCrit"/>
-																	<button type="button" class="iatabtn iatabtn-default" onclick="checkInputs();">{!$Label.ISSP_Search}</button>
+																	<button type="submit" class="iatabtn iatabtn-default" onclick="checkInputs();return false;">{!$Label.ISSP_MITA_Search_Button}</button>
 																</apex:pageBlockSection>
 																<apex:pageBlockSection>
 																	<div id="search_alert_placeholder"></div>
+																</apex:pageBlockSection>
+																<apex:pageBlockSection columns="1">
+																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text02}</div>
 																</apex:pageBlockSection>
 															</div>
 															

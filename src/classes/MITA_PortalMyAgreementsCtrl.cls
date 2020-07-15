@@ -19,6 +19,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public MITA_PortalMyAgreementsCtrl(){
 		selectedAirlineId = '';
 		selectedContactToEdit = '';
+		selectedContactToDelete = '';
 		ContactBeingEdited = null;
 		SaveError='';
 		hasSearched = false;
@@ -289,6 +290,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public string SaveError						{get; set;}
 	public boolean hasSearched					{get; set;}
 	public boolean hasResult					{get; set;}
+	public string selectedContactToDelete		{get; set;} 
 	private static final string MandatoryMITAType = 'Interline Airline Generic Contact';
 
 	//Variables storing the HTML text to be rerenderd in dataTable
@@ -328,7 +330,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public void RetrieveMyContacts(){
 		MyActiveContactsTable = '';
-		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId, false, null, false)){
+		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId, true, null, false)){
 			if(string.isNotBlank(c.MITA_Contact_Type__c))
 			MyActiveContactsTable += '<tr id="'+c.Id+'">'+
 				'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
@@ -336,7 +338,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 				'<td>'+escape(c.phone)+ '</td>'+
 				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
+				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a><br/><a href="#!" onClick="startLoading();deleteContact(\'' + escape(c.Id) + '\');">Remove Contact</a></td>'+
 			'</tr>';
 		}
 	}
@@ -349,20 +351,22 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public void SearchContact(){
 		myAllContactsTable = '';
 		hasSearched = true;
-		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId , true, null, true)){
-			hasResult = true;
-			myAllContactsTable += '<tr id="'+c.Id+'">'+
-				'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
-				'<td>'+escape(c.email)+ '</td>'+
-				'<td>'+escape(c.phone)+ '</td>'+
-				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
-			'</tr>';
+		if(string.isNotBlank(SearchCriteria)){
+			for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId , true, null, true)){
+				hasResult = true;
+				myAllContactsTable += '<tr id="'+c.Id+'">'+
+					'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
+					'<td>'+escape(c.email)+ '</td>'+
+					'<td>'+escape(c.phone)+ '</td>'+
+					'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
+					'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
+				'</tr>';
+			}
 		}
 	}
 
 	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy, string searchType, boolean filterSearch){
-		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where Status__c=\'Active\'';
+		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, toLabel(MITA_Contact_Type__c), MITA_Teletype__c from contact where Status__c=\'Active\'';
 		if(searchType=='MITA')
 			sQuery += ' AND MITA_Contact_Type__c<>\'\'';
 
@@ -375,12 +379,20 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		if(filterSearch){
 			sQuery += ' AND MITA_Contact_Type__c =\'\' AND (name like \'%' + SearchCriteria + '%\' OR email like \'%' + SearchCriteria + '%\')';
 		}
+
+		sQuery += ' ORDER BY Name ASC';
 		return database.query(sQuery);
 	}
 
 	public void retrieveContactToEdit(){
 		if(!string.isBlank(selectedContactToEdit))
-			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
+			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, ToLabel(MITA_Contact_Type__c), MITA_Teletype__c from contact where id=:selectedContactToEdit];
+	}
+
+	public pageReference deleteContact(){
+		ContactBeingEdited.MITA_Contact_Type__c = null;
+		ValidateContact();
+		return null;
 	}
 
 	public pageReference ValidateContact(){
@@ -388,7 +400,11 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		try{
 			if(!(string.isBlank(ContactBeingEdited.MITA_Contact_Type__c)) && ContactBeingEdited.MITA_Contact_Type__c.contains(MandatoryMITAType)) SaveError='';
 			else {
-				list<contact> lsOtherAccnContact = [SELECT id, MITA_Contact_Type__c FROM contact WHERE AccountId = :ContactBeingEdited.AccountId AND id <> :ContactBeingEdited.Id AND MITA_Contact_Type__c INCLUDES (:MandatoryMITAType)];
+				list<contact> lsOtherAccnContact = [SELECT id, MITA_Contact_Type__c 
+													FROM contact 
+													WHERE (AccountId = :this.currentUser.Contact.AccountId OR Account.ParentId = :this.currentUser.Contact.AccountId OR Account.parent.ParentId = :this.currentUser.Contact.AccountId)
+													AND id <> :ContactBeingEdited.Id 
+													AND toLabel(MITA_Contact_Type__c) INCLUDES (:MandatoryMITAType)];
 				if(!lsOtherAccnContact.isEmpty())
 					SaveError='';
 				else{
