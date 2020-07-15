@@ -4612,7 +4612,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Desc LMS</shortDescription>
-        <value>In order to get the full Training experience please log back in using a browser such as Google Chrome (please note Internet Explorer is no longer supported)</value>
+        <value>You're using a web browser we don't support. Try one of these options to have a better experience on the IATA Customer Portal: Microsoft Edge, Google Chrome, Safari, Firefox or Opera.</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
@@ -4628,7 +4628,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Title</shortDescription>
-        <value>Welcome to the IATA Customer Portal</value>
+        <value>Improve Your Experience</value>
     </labels>
     <labels>
         <fullName>CSP_ForYou</fullName>
