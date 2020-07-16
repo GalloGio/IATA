@@ -4398,10 +4398,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 
-		/*if(isCNSAgency && isNoticeOfChange) {
-			emailTemplateName = 'CNS Notice of Change Auto-response';
-			fromaddress = 'CNS Agency Management (cns_noreply@cnsc.us)';
-		} else*/ if(isCNSAgency && !isNoticeOfChange) {
+		if(isCNSAgency && !isNoticeOfChange) {
 			emailTemplateName = 'CNS Accreditation Auto-response';
 		} else if(newCase.Reason1__c == 'FoP Management' && newCase.origin == 'Massive FOP Creation') {
 			emailTemplateName = 'ISSP ANG PCI Process Notification';
@@ -4552,6 +4549,10 @@ public without sharing class ISSP_AMS_Accreditation {
 			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR;
 		} else if (amsLocationType == AMS_Utils.TYPE_CNS_BR_INDEPEND) {
 			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR;
+		} else if(amsLocationType == AMS_Utils.TYPE_CNS_HO_COMMERCIAL) {
+			return Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
+		} else if(amsLocationType == AMS_Utils.TYPE_CNS_BR_COMMERCIAL) {
+			return Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR;
 		} else {
 			return Label.ISSP_AMS_OPTION_PAX_BRANCH;
 		}
