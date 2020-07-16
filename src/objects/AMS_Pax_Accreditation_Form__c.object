@@ -4051,7 +4051,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>ISSP_AMS_Paidup_capital__c</fullName>
         <externalId>false</externalId>
         <label>* Paid-up Capital</label>
-        <precision>10</precision>
+        <precision>11</precision>
         <required>false</required>
         <scale>0</scale>
         <trackHistory>true</trackHistory>

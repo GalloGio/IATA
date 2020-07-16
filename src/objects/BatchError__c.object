@@ -189,6 +189,18 @@
     </fields>
     <label>BatchError</label>
     <listViews>
+        <fullName>ALL</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>BatchID__c</columns>
+        <columns>ErrorMsg__c</columns>
+        <columns>AccountInfo__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>one_batch</fullName>
         <columns>NAME</columns>
         <columns>AccountInfo__c</columns>

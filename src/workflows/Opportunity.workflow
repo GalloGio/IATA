@@ -12,12 +12,9 @@
     </alerts>
     <alerts>
         <fullName>Closed_deal_AME</fullName>
+        <ccEmails>ame.closed.deal@fake.org</ccEmails>
         <description>Closed deal AME</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>auragh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>MarketingPAX/MMAlertonClosedDealsNrcrm</template>
     </alerts>
@@ -35,6 +32,10 @@
         </recipients>
         <recipients>
             <recipient>agouzoulm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>alicia@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -253,15 +254,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>atakee@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>auragh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -402,6 +403,10 @@
         </recipients>
         <recipients>
             <recipient>mccorleys@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>murrayhaydena@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -732,7 +737,7 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
             <name>Closed_deal_AME</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.Customer_Region__c</field>
             <operation>equals</operation>

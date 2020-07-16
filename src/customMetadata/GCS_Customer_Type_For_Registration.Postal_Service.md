@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Other</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Partial_List_Order__c</field>

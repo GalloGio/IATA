@@ -5,9 +5,9 @@ public class ANG_RHCHelper {
 		Id accountId;
 		String riskStatus;
 		String cashConditions;
-		String rhcAmountForecasted;
+		String rhcAmount;
 		String currencyIsoCode;
-		String rhcForecastedEffectiveDate;
+		String rhcEffectiveDate;
 		String templateLanguage;
 	}
 
@@ -28,6 +28,11 @@ public class ANG_RHCHelper {
 	//Risk Alert
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
 	public static final String RISK_ALERT_DIRECTION_DOWN = 'DOWN';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_100 = '100%';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_75 = '75%';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_50 = '50%';
+	
+
 	//RHC Portal Service Name
 	public static final String RISK_PROFILE_AND_RHC_PORTAL_SERVICE ='Risk Profile and RHC';
 
@@ -58,7 +63,7 @@ public class ANG_RHCHelper {
 											   IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c,
 											   (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c
 												FROM Financial_Securities__r),
-											   (SELECT Id, ANG_Financial_Security__c
+											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c
 												FROM RHC_Informations__r
 												WHERE RecordTypeId = :RECTYPE_STDRHCINFO)
 										   FROM Account
@@ -117,7 +122,17 @@ public class ANG_RHCHelper {
 		if(!rhcinfos.isEmpty()) update rhcInfos;
 	}
 
-	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo) {
+	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo ){
+		calculateRHCAmount(rhcInfo, true);
+	}
+
+	public static void calculateRHCAmount(ANG_RHC_Information__c rhcInfo, boolean ApplyRHC){
+		list<ANG_RHC_Information__c> ls = new list<ANG_RHC_Information__c>();
+		ls.add(rhcInfo);
+		calculateRHCAmount(ls, ApplyRHC);
+	}
+
+	public static void calculateRHCAmount(List<ANG_RHC_Information__c> rhcInfo, boolean ApplyRHC) {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 		Set<Id> accountsIds = new Set<Id>();
 
@@ -127,12 +142,6 @@ public class ANG_RHCHelper {
 		Map<Id, Account> accountsMap = new Map<Id, Account>();
 		Map<Id, String> isoCountries = new Map<Id, String>();
 		Map<String, AMS_Country_Specific_Attribute__c> attributes = new Map<String, AMS_Country_Specific_Attribute__c>();
-
-		//NEWGEN-4881 - RHC amount effective from first day of next calendar period
-		Map<ID, List<Account>> mapBspIdAccountList = new Map<ID, List<Account>>();
-		Map<ID, Date> mapBillingPeriodPerAccount = new Map<ID, Date>();
-		Set<String> remittanceFrequencySet = new Set<String>();
-		//NEWGEN-4881-END
 
 		if(!accountsIds.isEmpty()){
 
@@ -146,20 +155,7 @@ public class ANG_RHCHelper {
 
 				accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
 				accountsMap.put(a.Id, a);
-
-				//NEWGEN-4881 - RHC amount effective from first day of next calendar period
-				//RemittanceFrtequency Set to help filtering the Operational Calendars
-				remittanceFrequencySet.add(a.Remittance_frequency__c);
-
-				if(!mapBspIdAccountList.containsKey(a.IATA_ISO_Country__r.AMS_Settlement_System__c))
-					mapBspIdAccountList.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, new List<Account>());
-
-				mapBspIdAccountList.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c).add(a);
-				//NEWGEN-4881-END
 			}
-
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] remittanceFrequencySet: ' + remittanceFrequencySet);
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] mapBspIdAccountList: ' + mapBspIdAccountList);
 
 			Set<String> isoCountriesSet = new Set<String>{DEFAULT_CODE};
 			isoCountriesSet.addAll(isoCountries.values());
@@ -172,48 +168,6 @@ public class ANG_RHCHelper {
 					}
 				}
 			}
-
-			//NEWGEN-4881 - RHC amount effective from first day of next calendar period
-			Map<Id, Map<String, Date>> mapBSPwithOperationalCalenders = new Map<Id, Map<String, Date>>();
-			AggregateResult[] groupedResults = [SELECT MIN(First_Day__c), ISS_operation__c, Frequency_code__c
-														FROM Operational_Calendar__c
-														WHERE ISS_operation__c IN :mapBspIdAccountList.KeySet()
-															AND Frequency_code__c in :remittanceFrequencySet AND First_Day__c > TODAY
-														GROUP BY ISS_Operation__c, Frequency_Code__c
-														ORDER BY ISS_operation__c, Frequency_code__c ASC];
-
-			for(AggregateResult oppCalendar : groupedResults){
-
-				//Map to group for all the bsps with the specific Account's remittance frequencies
-				if(!mapBSPwithOperationalCalenders.containsKey((ID)oppCalendar.get('ISS_operation__c')))
-					mapBSPwithOperationalCalenders.put((ID)oppCalendar.get('ISS_operation__c'), new Map<String, Date>());
-
-				//Only load the 1st billing Period for the BSP with a specific Remittence Frequency
-				if(!mapBSPwithOperationalCalenders.get((ID)oppCalendar.get('ISS_operation__c')).containsKey((String)oppCalendar.get('Frequency_code__c')))
-					mapBSPwithOperationalCalenders.get((ID)oppCalendar.get('ISS_operation__c')).put((String)oppCalendar.get('Frequency_code__c'), (Date)oppCalendar.get('expr0'));
-			}
-
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] mapBSPwithOperationalCalenders: ' + mapBSPwithOperationalCalenders);
-
-			List<Account> accountsByBSP;
-			for(Id bspId : mapBSPwithOperationalCalenders.KeySet()){
-
-				//Load accounts list by BSP
-				accountsByBSP = mapBspIdAccountList.get(bspId);
-				Map<String, Date> mapFrequencyCodeFirstBiilingPeriod = mapBSPwithOperationalCalenders.get(bspId);
-
-				for(Account acc : accountsByBSP){
-
-					Date firstBillPeriod = mapFrequencyCodeFirstBiilingPeriod.get(acc.Remittance_frequency__c);
-					//Map for each account the new First Billing Period.
-					if(firstBillPeriod != null){
-						mapBillingPeriodPerAccount.put(acc.id, firstBillPeriod);
-					}
-				}
-			}
-
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] mapBillingPeriodPerAccount: ' + mapBillingPeriodPerAccount);
-			//NEWGEN-4881-END
 		}
 
 		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = fetchBSPAttributesConfig(accountsBspMap.values());
@@ -233,7 +187,7 @@ public class ANG_RHCHelper {
 			// retrieve % of FS from the RHC information (rhcAmountFsPercent) and calculate RHC amount
 			if (rhc.ANG_RHC_Amount_Equals_FS__c && shouldApplyRhcPercentage) {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
-				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent, mapBillingPeriodPerAccount);
+				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent);
 				continue;
 			}
 
@@ -257,7 +211,7 @@ public class ANG_RHCHelper {
 					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Consider cash condition BSP Attribute');
 				}
 
-				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage, mapBillingPeriodPerAccount);
+				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 				continue;
 			}
 
@@ -266,7 +220,7 @@ public class ANG_RHCHelper {
 			//jump into the formula calculation
 			if(isMulticountry){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, mapBillingPeriodPerAccount);
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
 				continue;
 			}
 
@@ -322,11 +276,11 @@ public class ANG_RHCHelper {
 			if(fixedPercentageCalc && !skipFixedPercentageCalc){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
 				double fsPercentage = (bspAttrRhc.FS_Percentage__c == null) ? 0 : bspAttrRhc.FS_Percentage__c;
-				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage, mapBillingPeriodPerAccount);
+				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 			}
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, mapBillingPeriodPerAccount);
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
 			}
 
 		}
@@ -340,9 +294,8 @@ public class ANG_RHCHelper {
 	 * @param  fsAmount                   total fs provided amount
 	 * @param  isoCountries               maps the Id with the ISO Country Code
 	 * @param  attributes                 country specific attributes of type 'Minimum RHC Amount'
-	 * @param  mapBillingPeriodPerAccount next billing period per each account
 	 */
-	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, Map<ID, Date> mapBillingPeriodPerAccount)
+	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC)
 	{
 		Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
 		Decimal provisional = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
@@ -362,11 +315,6 @@ public class ANG_RHCHelper {
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] exceedingFs: ' + exceedingFs);
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] percentageOfExceedingFs: ' + percentageOfExceedingFs);
 
-		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
-		Decimal newRhcAmountForecasted = provisional + (percentageOfExceedingFs * provisional).setScale(0);
-
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] newRhcAmountForecasted: ' + newRhcAmountForecasted);
-
 		// The minimum rhc amount is defined in the AMS Country Specific Attributes for the account's ISO country.
 		// if that is not defined then we get the AMS Country Specific Attributes for the ww country (All countries)
 		// If the calculated RHC amount is lower than the minimum RHC amount the the RHC amount = minimum RHC amount.
@@ -378,39 +326,46 @@ public class ANG_RHCHelper {
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] minimumRHCAmount: ' + minimumRHCAmount);
 
 		// MAX between FS, minimumRHCAmount and the new RHC ammount
-		Decimal newValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
-		if (newValue != rhc.ANG_RHC_Amount_Forecasted__c)
-			rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
-		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newValue, 9999999999999999.99);
+		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
+		Decimal newRhcAmountForecasted = provisional + (percentageOfExceedingFs * provisional).setScale(0);
 
-		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newValue);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] newRhcAmountForecasted: ' + newRhcAmountForecasted);
+
+		Decimal newRHCForecastedValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
+		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
+		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
+
+		if(ApplyRHC){
+			Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
+
+			Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
+			rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
+		}
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Set RHC Forecasted Amount as: ' + newRHCForecastedValue);
 	}
 
 	/**
 	* Calculates the RHC Amount Forecasted that will correspond
 	* to a percent of the financial security amount
-	* Also set the RHC Forecasted RHC Effedtive Date with the 1st billing period
-	* for the specific BSP country and remittance Frequency
 	*
 	* @param rhc: ANG_RHC_Information__c
 	* @param fsAmount: Decimal
 	* @param fsPercentage: Decimal
-	* @param mapBillingPeriodPerAccount Map<Id, Date>
 	*
 	*/
-	private static void applyRhcAmountFsPercentage(ANG_RHC_Information__c rhc, Decimal fsAmount, Decimal fsPercentage, Map<ID, Date> mapBillingPeriodPerAccount){
+	private static void applyRhcAmountFsPercentage(ANG_RHC_Information__c rhc, Decimal fsAmount, Decimal fsPercentage){
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] FS Amount: ' + fsAmount);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] FS Percentage to apply: ' + fsPercentage);
 
 		Decimal rhcAmount = (fsAmount * fsPercentage/100);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - rhcAmount] RHC Amount: ' + rhcAmount);
-		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] ANG_Forecasted_RHC_Effective_date__c: ' + mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c));
 
-		if(rhc.ANG_RHC_Amount_Forecasted__c != rhcAmount){
-			rhc.ANG_Forecasted_RHC_Effective_date__c = mapBillingPeriodPerAccount.get(rhc.ANG_AccountId__c);
-		}
+		/*NEWGEN-4881 - comment logic to set ANG_RHC_Amount*/
+		rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
+		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
 	}
 
 	/**
@@ -484,8 +439,9 @@ public class ANG_RHCHelper {
 				Id,
 				CurrencyIsoCode,
 				ANG_AccountId__c,
+				ANG_RHC_Amount__c,
 				ANG_RHC_Amount_Forecasted__c,
-				ANG_Forecasted_RHC_Effective_date__c,
+				ANG_RHC_Effective_Date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
 				ANG_AccountId__r.ANG_HE_CashCondition__c
 			 FROM ANG_RHC_Information__c
@@ -525,18 +481,18 @@ public class ANG_RHCHelper {
 					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? YES : NO;
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
 
-					riuw.rhcAmountForecasted = '';
+					riuw.rhcAmount = '';
 
-					if(rhc.ANG_RHC_Amount_Forecasted__c != null){
-						riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
+					if(rhc.ANG_RHC_Amount__c != NULL){
+						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.format();
 					}
 
-					riuw.rhcForecastedEffectiveDate = '';
+					riuw.rhcEffectiveDate = '';
 
-					if(rhc.ANG_Forecasted_RHC_Effective_date__c != null){
-						riuw.rhcForecastedEffectiveDate = (rhc.ANG_Forecasted_RHC_Effective_date__c.month() + '/'
-							+ rhc.ANG_Forecasted_RHC_Effective_date__c.day() + '/'
-							+ rhc.ANG_Forecasted_RHC_Effective_date__c.year());
+					if(rhc.ANG_RHC_Effective_Date__c != NULL){
+						riuw.rhcEffectiveDate = (rhc.ANG_RHC_Effective_Date__c.month() + '/' +
+																							rhc.ANG_RHC_Effective_Date__c.day() + '/' +
+																							rhc.ANG_RHC_Effective_Date__c.year());
 					}
 
 					riuw.templateLanguage = contactMap.get(contactId).Preferred_Language__c;
@@ -599,14 +555,14 @@ public class ANG_RHCHelper {
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
-			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
-			htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcForecastedEffectiveDate == null ? '' :String.valueOf(wrap.rhcForecastedEffectiveDate)));
+			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
+			//htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
-			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
-			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcForecastedEffectiveDate == null ? '' :String.valueOf(wrap.rhcForecastedEffectiveDate)));
+			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
+			//plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
 				emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
@@ -622,7 +578,7 @@ public class ANG_RHCHelper {
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - triggerRiskOrForecastedRhcAmountNotifications] Email List - ' + emailLst);
 
-		if(!System.isBatch() && !System.isQueueable()){
+		if(!System.isBatch() && !System.isQueueable() && ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)){
 			System.enqueueJob(new RiskAlertMailService(emailLst, null));
 		}
 		else {
@@ -644,8 +600,8 @@ public class ANG_RHCHelper {
 			nt.Message__c = nt.Message__c
 							.replace('#RISK_STATUS#', riuw.riskStatus)
 							.replace('#CASH_CONDITION#', riuw.cashConditions)
-							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmountForecasted) + ' ' + riuw.CurrencyIsoCode)
-							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcForecastedEffectiveDate == null ? '' : String.valueOf(riuw.rhcForecastedEffectiveDate)));
+							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmount) + ' ' + riuw.CurrencyIsoCode);
+//							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcEffectiveDate == null ? '' :String.valueOf(riuw.rhcEffectiveDate)));
 			notifications.add(nt);
 		}
 

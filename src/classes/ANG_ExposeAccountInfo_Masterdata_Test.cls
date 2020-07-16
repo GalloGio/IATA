@@ -3,12 +3,31 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 
 	private static Integer HTTP_STATUS_OK = 200;
 
-	@testSetup static void setup() {
+	@testSetup 
+	static void setup() {
+
+		Test.startTest();
 
 		Portal_Applications__c pa = new Portal_Applications__c (Name='TEST');
 		insert pa;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, ISO_Code_Numeric__c = 445, BSP_Country_free_text__c = 'test', ANG_Portal_Service__c = pa.Id)  ;
+		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
+			Name = 'BSP-PT',
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			RHC_Exceptional_Monitoring__c = true
+		);
+		insert bspPT;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (
+			Name='US',
+			ISO_Code__c='US', 
+			ANG_Enable_NewGen__c = true, 
+			Multicountry_Enabled__c = true, 
+			ISO_Code_Numeric__c = 445, 
+			BSP_Country_free_text__c = 'test', 
+			ANG_Portal_Service__c = pa.Id
+		);
 
 		IATA_ISO_Country__c ukCountry = new IATA_ISO_Country__c(
 			Name = 'United Kingdom',
@@ -20,7 +39,14 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 			ANG_IEP_Model__c = 'Model B+'
 		);
 
-		insert new List<IATA_ISO_Country__c>{ctry, ukCountry};
+		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(
+			Name = 'Portugal',
+			ISO_Code__c = 'PT',
+			AMS_Settlement_System__c = bspPT.Id,
+			ANG_Enable_NewGen__c = false
+		);
+
+		insert new List<IATA_ISO_Country__c>{ctry, ukCountry, countryPT};
 
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
 		insert stt;
@@ -62,7 +88,17 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 		accountGE.Accreditation_date__c = date.today();
 		accountGE.Default_date__c = date.today();
 
-		insert new List<Account>{accHE, accountGE};
+		Account rhcMonitoringAccount = new Account();
+		rhcMonitoringAccount.Name = 'Account for exceptional monitoring';
+		rhcMonitoringAccount.IATACode__c = '912345678';
+		rhcMonitoringAccount.IATA_ISO_Country__c = countryPT.Id;
+		rhcMonitoringAccount.RecordTypeId = accountAgencyRT;
+		rhcMonitoringAccount.Location_Type__c = AMS_Utils.HO;
+		rhcMonitoringAccount.Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT;
+		rhcMonitoringAccount.Location_Class__c = AMS_Utils.LC_PASSENGER;
+		rhcMonitoringAccount.Status__c = AMS_Utils.ACC_S9_APPROVED;
+
+		insert new List<Account>{accHE, accountGE, rhcMonitoringAccount};
 
 		Account account = new Account();
 		account.Name = 'Main HE Account H1';
@@ -110,6 +146,46 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 		Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Change_Code__c = 'LSP', Account__c = account.Id);
 		insert aacc;
 
+		Financial_Institution__c fi = new Financial_Institution__c(Name = 'Financial Institution Test', Institution_Type__c = 'Bank');
+		insert fi;
+
+		Case receptionCase = new Case(AccountId = rhcMonitoringAccount.Id);
+		insert receptionCase;
+
+		Financial_Security__c activeFS = new Financial_Security__c(
+			CurrencyIsoCode = 'USD', 
+			Account__c = rhcMonitoringAccount.Id, 
+			Amount__c = 10000, 
+			Expiry_Date__c = System.Today().addDays(100), 
+			Financial_Institution__c = fi.Id,
+			SECURITY_STATUS__C = AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application', 
+			Reception_Case__c = receptionCase.Id, 
+			Financial_Security_Validation_Case__c = receptionCase.Id
+		);
+
+		Financial_Security__c closeToExpiryDateFS = new Financial_Security__c(
+			CurrencyIsoCode = 'USD', 
+			Account__c = rhcMonitoringAccount.Id, 
+			Amount__c = 30000, 
+			Expiry_Date__c = System.Today().addDays(10), 
+			Financial_Institution__c = fi.Id,
+			SECURITY_STATUS__C = AMS_Utils.FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY, 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today().addDays(-100), 
+			Reasonforrequest__c = 'New Application', 
+			Reception_Case__c = receptionCase.Id, 
+			Financial_Security_Validation_Case__c = receptionCase.Id
+		);
+
+		insert new List<Financial_Security__c>{activeFS, closeToExpiryDateFS};
+
+		Test.stopTest();
+
 	}
 
 	private static RestResponse doCallOutToWS(String iataCode, String caller, String accountType){
@@ -153,24 +229,24 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 		ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'P', 'LSP');
 		ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), 'D', 'LSP');
 
-		system.assertEquals(200, RestContext.response.statusCode);
+		System.assertEquals(200, RestContext.response.statusCode);
 
-		test.stopTest();
+		Test.stopTest();
 	}
 
-	 @isTest static void pciCompliantTest(){
+	 @isTest 
+	 static void pciCompliantTest(){
 
-		Account acct =
-			[SELECT
+		Account acct = [
+			SELECT
 				Id,
 				Name,
 				IATACode__c,
 				Is_PCI_Compliant__c
 			 FROM Account
-			 WHERE
-				Name = 'Uk Test'
+			 WHERE Name = 'Uk Test'
 			 LIMIT 1
-			];
+		];
 
 		Test.startTest();
 
@@ -183,8 +259,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 
 		ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload payload = payloadLst.get(0);
 
-		system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
-		system.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
+		System.assert(payload.isPciDss != null, 'Payload isPciDss element must NOT be empty');
+		System.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
 
 		acct.Is_PCI_Compliant__c = 'Nil CC';
 		update acct;
@@ -198,8 +274,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 
 		payload = payloadLst.get(0);
 
-		system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
-		system.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
+		System.assert(payload.isPciDss != null, 'Payload isPciDss element must NOT be empty');
+		System.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
 
 		acct.Is_PCI_Compliant__c = 'Corporate Card';
 		update acct;
@@ -213,8 +289,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 
 		payload = payloadLst.get(0);
 
-		system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
-		system.assert(payload.isPciDss, 'Payload isPciDss element must be \'TRUE\'');
+		System.assert(payload.isPciDss != null, 'Payload isPciDss element must NOT be empty');
+		System.assert(payload.isPciDss, 'Payload isPciDss element must be \'TRUE\'');
 
 		//When the IEP Status is not 'open' or 'in progress'
 		//the pci compliant value must not be in the payload
@@ -230,7 +306,95 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 
 		payload = payloadLst.get(0);
 
-		system.assert(payload.isPciDss == NULL, 'Payload isPciDss element must be NULL');
+		System.assert(payload.isPciDss == null, 'Payload isPciDss element must be NULL');
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void rhcExceptionalMonitoringTest(){
+
+		Account acct = [
+			SELECT
+				Id, Name, IATACode__c, CurrencyIsoCode,
+				IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+				(SELECT Id, Amount__c 
+				FROM Financial_Securities__r)
+			 FROM Account
+			 WHERE Name = 'Account for exceptional monitoring'
+			 LIMIT 1
+		];
+
+		Test.startTest();
+
+		RestResponse response = doCallOutToWS(acct.IATACode__c, ANG_RestServiceHelper.Caller_Mulesoft, 'Agency');
+		System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+
+		String respBody = response.responseBody.toString();
+
+		List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload> payloadLst = (List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>) JSON.deserialize(respBody, List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>.class);
+
+		ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload payload = payloadLst.get(0);
+
+		Decimal totalFsAmount = 0;
+		for(Financial_Security__c fs : acct.Financial_Securities__r) {
+			totalFsAmount += fs.Amount__c;
+		}
+
+		String bspCurrency = acct.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
+
+		System.assertEquals(bspCurrency, payload.RHCInfo.RHCCurrency, 'The RHC currency must be ' + bspCurrency);
+
+		Decimal totalFsConverted = ANG_Risk_Helper.currencyConverter(acct.CurrencyIsoCode, totalFsAmount, bspCurrency);
+
+		System.assertEquals(totalFsConverted, payload.RHCInfo.RHCAmount, 'The RHC amount must be ' + totalFsConverted);
+		System.assertEquals(totalFsConverted, payload.RHCInfo.RHCTotalFSProvided, 'The RHC Total FS Provided amount must be ' + totalFsConverted);
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void rhcExceptionalMonitoringInvalidTest(){
+
+		Account acct = [
+			SELECT
+				Id, Name, IATACode__c, CurrencyIsoCode,
+				IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+				(SELECT Id, Amount__c 
+				FROM Financial_Securities__r)
+			 FROM Account
+			 WHERE Name = 'Account for exceptional monitoring'
+			 LIMIT 1
+		];
+
+		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(Id = acct.IATA_ISO_Country__r.AMS_Settlement_System__c);
+		bspPT.RHC_Exceptional_Monitoring__c = false;
+		update bspPT;
+
+		Test.startTest();
+
+		RestResponse response = doCallOutToWS(acct.IATACode__c, ANG_RestServiceHelper.Caller_Mulesoft, 'Agency');
+		System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+
+		String respBody = response.responseBody.toString();
+
+		List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload> payloadLst = (List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>) JSON.deserialize(respBody, List<ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload>.class);
+
+		ANG_ExposeAccountInfo_Masterdata.INT008_SuccessPayload payload = payloadLst.get(0);
+
+		Decimal totalFsAmount = 0;
+		for(Financial_Security__c fs : acct.Financial_Securities__r) {
+			totalFsAmount += fs.Amount__c;
+		}
+
+		String bspCurrency = acct.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
+
+		System.assertEquals(bspCurrency, payload.RHCInfo.RHCCurrency, 'The RHC currency must be ' + bspCurrency);
+
+		Decimal totalFsConverted = ANG_Risk_Helper.currencyConverter(acct.CurrencyIsoCode, totalFsAmount, bspCurrency);
+
+		System.assertEquals(null, payload.RHCInfo.RHCAmount, 'The RHC amount must be null');
+		System.assertEquals(totalFsConverted, payload.RHCInfo.RHCTotalFSProvided, 'The RHC Total FS Provided amount must be ' + totalFsConverted);
 
 		Test.stopTest();
 	}

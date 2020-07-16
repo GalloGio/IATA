@@ -721,7 +721,7 @@
     </apex:pageBlock>
 
                         
-     <apex:pageBlock rendered="false">
+     <apex:pageBlock rendered="true">
          <apex:pageBlockSection title="{!$Label.ISSP_Registration_Comments}" columns="1">
          	<apex:form >             
      	

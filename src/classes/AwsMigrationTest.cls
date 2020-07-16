@@ -29,6 +29,8 @@ private class AwsMigrationTest {
 			name = 'sandbox';
 		AWSKey__c awsc = new AWSKey__c(Bucket__c='bucket',  Secret__c='secret', Key__c='key' ,Name = name );
 		insert awsc;
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
 	static private Attachment attachFileToParent(String parentId){

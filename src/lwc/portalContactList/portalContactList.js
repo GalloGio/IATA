@@ -545,6 +545,7 @@ export default class PortalContactList extends LightningElement {
 
                     let rowValue = {};
 
+                    rowValue.gridClassName = field.gridClassName;
                     if (record[fieldName] != null) {
 
                         rowValue.className = field.className;
@@ -615,11 +616,11 @@ export default class PortalContactList extends LightningElement {
                     return 'amber';
                 }
             } else {
-                return 'underLined';
+                return '';
             }
         }
 
-        return 'underLined';
+        return '';
     }
 
     checkEmail(value) {

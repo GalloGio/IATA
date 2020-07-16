@@ -232,6 +232,7 @@ public class AMS_OSCARTriggerHandler {
 
 		processGeneralActionsOnOscarBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);
 		performBackupANGBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);//Tick rollback in course
+		setPromotions(Trigger.new);
 	}
 
 	public static void handleAfterInsert() {
@@ -2887,7 +2888,7 @@ public class AMS_OSCARTriggerHandler {
 
 				if (AMS_Utils.pickListContains(updatedOSCAR.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_GE_ACCOUNT_LEFT_AS_STANDALONE)) {
 					Id parentAccountLeftAlone = getAccounts(accountsInvolved.get(updatedOSCAR.Id)).get(0).Top_Parent__c;
-					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(updatedOSCAR.Id, parentAccountLeftAlone, true));
+					ANG_SplitMcHierarchyIntoStandardBatch.scheduleOrRun(new ANG_SplitMcHierarchyIntoStandardBatch(updatedOSCAR.Id, parentAccountLeftAlone, ANG_SplitMcHierarchyIntoStandardBatch.SplitBatchExecutionType.JustCreateCase));
 				}
 			}
 
@@ -2959,7 +2960,7 @@ public class AMS_OSCARTriggerHandler {
 					ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, 
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
-					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c,
+					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c, recordTypeID,
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -3139,10 +3140,8 @@ public class AMS_OSCARTriggerHandler {
 
 
 	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
-
-		Map<Id, Integer> contacts = null;
-
-		Map<Id, Integer> allPercentages = null;
+		Map<Id, Set<String>> contacts = null;
+		Map<Id, Double> allPercentages = null;
 
 		for(AMS_OSCAR__c oscar: oscars){
 
@@ -3157,40 +3156,71 @@ public class AMS_OSCARTriggerHandler {
 					allPercentages = getAllOWnersPercentage(oscars);
 				}
 
-				if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
-					continue;
-				else
-					if(!validate100Ownership(oscar,allPercentages)){//AMSU-180
-						Double requiredOwnership = 99.99;
-						String errorMessage = 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+				Set<String> errorMessages = contacts.get(oscar.AMS_Online_Accreditation__c);
+				if(errorMessages <> null) {
+					for(String errorMessage : errorMessages) {
 						oscar.addError(errorMessage);
 					}
+				} else {
+					if(!validate100Ownership(oscar,allPercentages)){//AMSU-180//WMO-492
+						oscar.addError('Agency must have at least 99.99% ownership and less than 100.01%. Please correct agency owners before passing the Sanity Check.');
+					}
+				}
 
 			}
 		}
 
 	}
 
-	public static Map<Id, Integer> getAccreditationContacts(List<AMS_Oscar__c> oscars){
-
+	public static Map<Id, Set<String>> getAccreditationContacts(List<AMS_Oscar__c> oscars) {
 		Set<Id> onlineForms = new Set<Id>();
-
-		for(AMS_OSCAR__c oscar : oscars)
+		for(AMS_OSCAR__c oscar : oscars) {
 			onlineForms.add(oscar.AMS_Online_Accreditation__c);
-
-		List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms group by AMS_Pax_Accreditation_Form__r.Id];
-
-		Map<Id,Integer> toReturn = new Map<Id,Integer>();
-
-		for(AggregateResult ar: sumPercentageAR){
-			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
 		}
 
-		return toReturn;
+		//WMO-492
+		Set<Id> recordTypes = new Set<Id>();
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'));
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'));
+		recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner'));
 
+		List<AMS_Accreditation_Contact__c> accContacts = [SELECT AMS_Pax_Accreditation_Form__c, Financial_interest__c 
+			from AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c in :onlineForms AND Agency_owner__c = true AND RecordTypeId IN :recordTypes];
+
+		Map<Id,Set<String>> res = new Map<Id,Set<String>>();
+		Map<Id,Decimal> totalOwnership = new Map<Id,Decimal>();
+
+		for(AMS_Accreditation_Contact__c accContact : accContacts) {
+			Set<String> errMessages = res.get(accContact.AMS_Pax_Accreditation_Form__c);
+			if(errMessages == null) {
+				errMessages = new Set<String>();
+				res.put(accContact.AMS_Pax_Accreditation_Form__c, errMessages);
+			}
+
+			Decimal ownership = totalOwnership.get(accContact.AMS_Pax_Accreditation_Form__c);
+			if(ownership == null) {
+				totalOwnership.put(accContact.AMS_Pax_Accreditation_Form__c, accContact.Financial_interest__c);
+			} else {
+				totalOwnership.put(accContact.AMS_Pax_Accreditation_Form__c, ownership + accContact.Financial_interest__c);
+			}
+
+			if(accContact.Financial_interest__c <= 0 || accContact.Financial_interest__c > 100) {
+				errMessages.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%. Please correct agency owners before passing the Sanity Check.');
+			}
+		}
+
+		for(Id accredId : totalOwnership.keySet()) {
+			Decimal accrTotalOwnership = totalOwnership.get(accredId);
+			if(!(accrTotalOwnership >= 99.99 && accrTotalOwnership <= 100)) {
+				res.get(accredId).add('Agency must have at least 99.99% ownership and less than 100.01%. Please correct agency owners before passing the Sanity Check.');
+			}
+		}
+
+		return res;
 	}
 
-	public static Map<Id, Integer> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
+	public static Map<Id, Double> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
 
 		Set<Id> accounts = new Set<Id>();
 
@@ -3199,19 +3229,19 @@ public class AMS_OSCARTriggerHandler {
 
 		List<AggregateResult> sumPercentageAR = [select Account__r.Id, SUM(Percentage__c) percentage from AMS_Account_Role__c  where Account__c in :accounts and Active__c = true group by Account__r.Id];
 
-		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+		Map<Id,Double> toReturn = new Map<Id,Double>();
 
 		for(AggregateResult ar: sumPercentageAR){
-			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
+			toReturn.put((Id)ar.get('Id'), Double.valueOf(ar.get('percentage')));
 		}
 
 		return toReturn;
 
 	}
 
-	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
-
-		return percentages.get(oscar.Account__c) < 99.99;//AMSU-180
+	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Double> percentages){
+		Double percentage = percentages.get(oscar.Account__c);//WMO-492
+		return percentage >= 99.99 && percentage <= 100;//AMSU-180
 
 	}
 
@@ -5061,4 +5091,61 @@ public class AMS_OSCARTriggerHandler {
 		}
 		return false;
 	}
+
+	/**
+	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt
+	 */
+	public static map<String,Oscar_Promotion__mdt> MAP_PROMOTIONS = null;
+	public static map<String,Oscar_Promotion__mdt> getMapActivePromotions() {
+		if (MAP_PROMOTIONS==null) {
+			MAP_PROMOTIONS = new map<String,Oscar_Promotion__mdt>();
+			list<Oscar_Promotion__mdt> listPromotion = [
+				SELECT DeveloperName, Oscar_Process__c
+				FROM Oscar_Promotion__mdt
+				WHERE Start_Date__c <= TODAY
+				AND End_Date__c >= TODAY
+			];
+			for (Oscar_Promotion__mdt promotion: listPromotion) {
+				MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+			}
+		}
+		return MAP_PROMOTIONS;
+	}
+
+	/**
+	 * Set the value for promotion field, defined in Oscar_Promotion__mdt, if applicable
+	 */
+	private static void setPromotions(list<AMS_Oscar__c> listNew) {
+		// find only those oscar where we are setting the field Oscar_Communication_Case_Id__c
+		map<Id,AMS_Oscar__c> mapCaseOscar = new map<Id,AMS_Oscar__c>();
+		for (AMS_Oscar__c newOscar: listNew) {
+			if (newOscar.Oscar_Communication_Case_Id__c!=null) {
+				mapCaseOscar.put(Id.ValueOf(newOscar.Oscar_Communication_Case_Id__c),newOscar);
+			}
+		}
+		if (mapCaseOscar.isEmpty()) return;
+
+		// get Case.contact.accounts for each OSCAR
+		map<Id,Account> mapOscarAccounts = new map<Id,Account>();
+		list<Case> listCase = [SELECT Id, OSCAR__c, Contact.AccountId, Contact.Account.RecordTypeId, Contact.Account.Location_Class__c
+			FROM Case
+			WHERE Id IN :mapCaseOscar.keyset()
+			AND ContactId != null];
+		for (Case cse: listCase) {
+			AMS_Oscar__c oscar = mapCaseOscar.get(cse.Id);
+			Account account = cse.Contact.Account;
+			mapOscarAccounts.put(oscar.Id, account);
+		}
+		// assign promotions, if applicable, for the incoming oscar records
+		for(AMS_Oscar__c oscar: mapCaseOscar.values()){
+			Account acc = mapOscarAccounts.get(oscar.Id);
+			if ( acc!=null && acc.RecordTypeId == AMS_utils.RECTYPE_IATAAGENCY && acc.Location_Class__c == 'T') {
+				Oscar_Promotion__mdt promotion = getMapActivePromotions().get(oscar.Process__c);
+				if (promotion != null) {
+					oscar.Promotions__c = promotion.DeveloperName;
+				}
+			}
+		}
+	}
+
 }
