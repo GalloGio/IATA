@@ -8097,6 +8097,48 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Case Type</value>
     </labels>
     <labels>
+        <fullName>Case_KPI_AirlineManagement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_AirlineManagement</shortDescription>
+        <value>.</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Long50d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Long50d</shortDescription>
+        <value>.</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Medium20d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Medium20d</shortDescription>
+        <value>.</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Medium25d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Medium25d</shortDescription>
+        <value>.</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Risk</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Risk</shortDescription>
+        <value>.</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Short24</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Short24</shortDescription>
+        <value>.</value>
+    </labels>
+    <labels>
         <fullName>Cases_SIS_Help_Desk</fullName>
         <language>en_US</language>
         <protected>false</protected>
