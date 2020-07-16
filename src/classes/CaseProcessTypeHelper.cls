@@ -230,7 +230,7 @@ public with sharing class CaseProcessTypeHelper {
 	 * Example: "('elem1','elem2')"  to set {'elem1','elem2'}
 	 */
 	private static set<String> stringToSet(String str) {
-		return new set<String>(str.replace('(\'','').replace('\')','').split('\',\''));
+		return new set<String>(str.replaceAll('[(][ ]*\'','').replaceAll('\'[ ]*[)]','').split('\'[ ]*,[ ]*\''));
 	}
 
 	/**
