@@ -4680,6 +4680,10 @@ public without sharing class ISSP_AMS_Accreditation {
 			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR;
 		} else if (amsLocationType == AMS_Utils.TYPE_CNS_BR_INDEPEND) {
 			return Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR;
+		} else if(amsLocationType == AMS_Utils.TYPE_CNS_HO_COMMERCIAL) {
+			return Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO;
+		} else if(amsLocationType == AMS_Utils.TYPE_CNS_BR_COMMERCIAL) {
+			return Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR;
 		} else {
 			return Label.ISSP_AMS_OPTION_PAX_BRANCH;
 		}
