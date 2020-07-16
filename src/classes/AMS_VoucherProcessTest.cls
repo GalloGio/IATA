@@ -48,6 +48,8 @@ private class AMS_VoucherProcessTest {
 		AMS_Voucher_Information__c voucherInfo2 = new  AMS_Voucher_Information__c(Account__c = account2.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 2000000, Exchange_Rate__c =1 , Year__c = '2016');
 
 		insert new List<AMS_Voucher_Information__c>{voucherInfo1,voucherInfo2};
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 	}
 

@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4507,6 +4511,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -13175,15 +13183,15 @@ and
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label>정말로 취소하시겠습니까?</label>
+        <label>정말 취소하시겠습니까?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label>이 기록을 정말로 삭제하시겠습니까?</label>
+        <label>이 기록을 정말 삭제하시겠습니까?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label>변경을 정말로 취소하시겠습니까?</label>
+        <label>정말 변경을 취소하시겠습니까?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -13451,7 +13459,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>주의! 소유권 정보를 대행사에 복사하면 대상 대행사의 기존 소유권 정보가 전부 삭제됩니다.</label>
+        <label>주의! 소유권 정보를 대리점에 복사하면 해당 대리점의 기존 소유권 정보가 모두 삭제됩니다.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -14163,15 +14171,15 @@ and
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label>국문회사명이 없을 경우, 로마자로 입력 바랍니다.</label>
+        <label>국문 회사명이 없을 경우, 로마자로 입력 바랍니다.</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label>국문회사명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
+        <label>국문명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label>국문회사명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
+        <label>국문명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -15427,7 +15435,7 @@ and
         <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
-        <label>대상 계정 선택</label>
+        <label>해당 계정 선택</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -16143,7 +16151,7 @@ and
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label>체크박스에 귀사가 추가하려는 직원분의 직책을 표시한 다음, 세부사항을 기입하십시오. 직책이 없을 경우,  체크 표시없이 세부사항만 기입하시면 됩니다.</label>
+        <label>체크박스에 귀사가 추가하려는 직원분의 직책을 표시한 다음, 세부사항을 기입하십시오. 해당하는 직책이 없을 경우,  체크 표시없이 세부사항만 기입하시면 됩니다.</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -16295,7 +16303,7 @@ and
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
-        <label>도로 주소</label>
+        <label>세부 도로명 주소</label>
         <name>ISSP_AMS_Street</name>
     </customLabels>
     <customLabels>
@@ -16795,7 +16803,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label>내역들이 정확함을 확인합니다.</label>
+        <label>내역이 정확함을 확인합니다.</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
     </customLabels>
     <customLabels>
@@ -16835,7 +16843,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label>당사 기록에 따르면 해당 IATA 코드의 소유권은 100%가 아닙니다. 당사에서 기록을 업데이트할 수 있도록 대행사 세부 정보(대행사 소유권/주식 보유량 섹션)를 업데이트해 총 소유권이 100%가 되도록 하십시오.</label>
+        <label>당사 기록에 따르면 해당 IATA 코드의 소유권은 100%가 아닙니다. 당사에서 기록을 업데이트할 수 있도록 대리점 세부정보(대리점 소유권/주식 보유량 섹션)를 업데이트하시어, 총 소유권이 100%가 되도록 하십시오.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
@@ -16863,11 +16871,11 @@ and
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label>귀사 계층 구조의 각 IATA 코드에 대한 세부사항을 확인 또는 업데이트해주십시오.</label>
+        <label>귀사 본사와 지사의 각 IATA 코드에 대한 세부사항을 확인 또는 업데이트 해주시기 바랍니다. </label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>업데이트 중인 것과 동일한 IATA 코드를 회사 소유주로 추가할 수 없습니다.</label>
+        <label>업데이트 중인 동일한 IATA 코드를 회사 소유주로 추가할 수 없습니다.</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -16939,7 +16947,7 @@ and
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label>처리된 대행사</label>
+        <label>진행된 대리점</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
@@ -17407,6 +17415,22 @@ and
         <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
         <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
@@ -17545,7 +17569,7 @@ and
         <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
-        <label>대행사 이름</label>
+        <label>대리점명</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
     <customLabels>
@@ -33269,6 +33293,24 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Skill Assignments --></label>
             <name>Skill Assignments</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
         </sections>
     </reportTypes>
     <reportTypes>

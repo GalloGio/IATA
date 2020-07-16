@@ -113,7 +113,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 								 'AND Instant_Survey_Feedback_requested__c = false' +
 								 'AND ParentId == NULL');
 
-		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
 															 ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
 															 Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
 															 Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
@@ -177,7 +177,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 		system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
 
-		casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name,
+		casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name,
 																	WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
 															 FROM Case
 															 WHERE Id IN :lstCaseIds

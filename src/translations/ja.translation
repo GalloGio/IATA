@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4508,6 +4512,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -13179,7 +13187,7 @@ and
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label>この記録を削除しますか？</label>
+        <label>この情報を削除しますか？</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
@@ -13451,7 +13459,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>ご注意ください！所有者情報を代理店にコピーすると、対象代理店の既存の所有者情報が削除されます。</label>
+        <label>所有者情報を代理店にコピーすると、対象代理店の既存の所有者情報が削除されますので、ご注意ください</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -14163,11 +14171,11 @@ and
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label>日本語の会社名はありませんか？その場合は、英数字で名前を入力してください。</label>
+        <label>日本語の社名はありませんか？その場合は、英語、数字で社名を入力してください。</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label>日本語の名前はありませんか？その場合は、英数字で名前を再入力してください。</label>
+        <label>日本語の名前はありませんか？その場合は、英語、数字で姓を入力してください。</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
@@ -15451,7 +15459,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>都道府県/州</label>
+        <label>都道府県</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -16143,7 +16151,7 @@ and
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label>追加する個人の役割を示す欄にチェックを入れ、詳細を記入してください。その個人の役割がどれにも当てはまらない場合は、どの欄にもチェックを入れず、詳細を記入してください。</label>
+        <label>追加する個人の役職を示す欄にチェックを入れ、詳細を記入してください。その個人の役職がどれにも当てはまらない場合は、どの欄にもチェックを入れず、詳細を記入してください。</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -16783,7 +16791,7 @@ and
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
-        <label>IATA認証 - 年次再承認</label>
+        <label>IATA公認 - 年次認証プロセス</label>
         <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
     </customLabels>
     <customLabels>
@@ -16835,7 +16843,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label>記録によりますと、このIATAコードの所有権は100%になっていません。記録が更新できるように、代理店の詳細 (代理店の所有権 / 株主セクション) を更新して所有権の合計が100%になるようにしてください。</label>
+        <label>入力情報において、このIATAコードの所有権は100%になっていません。代理店の詳細 (代理店の所有権 / 株主セクション) を更新して所有権の合計が100%になるようにしてください。</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
@@ -16863,7 +16871,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label>貴社の階層の各IATAコードの詳細を確認、または更新してください</label>
+        <label>貴社の支社/支店の各IATAコードの詳細を確認、または更新してください</label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
@@ -16939,11 +16947,11 @@ and
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label>処理の対象となる代理店</label>
+        <label>プロセスの対象となる代理店</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label>所有者情報のコピーの進捗</label>
+        <label>所有者情報のコピーの状況</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -17405,6 +17413,22 @@ and
     <customLabels>
         <label><!-- ISSP_AP_New_Joining_App --></label>
         <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
@@ -33272,6 +33296,24 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- Skill Assignments --></label>
             <name>Skill Assignments</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
         </sections>
     </reportTypes>
     <reportTypes>

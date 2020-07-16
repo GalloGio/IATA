@@ -1106,6 +1106,15 @@ Record Type + Group Type + ISO_Country_Name</description>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>China_North_Asia_Local_Groups_Notifi_LocalGovernance</fullName>
+        <filterScope>Queue</filterScope>
+        <label>China &amp; North Asia – Local Groups Notifi</label>
+        <queue>China_North_Asia_Local_Groups_Notifi</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Inactive_Local_Groups</fullName>
         <columns>NAME</columns>
         <columns>Cargo_Passenger__c</columns>

@@ -213,4 +213,11 @@
                 </div>
             </div>
     </template>
+
+	<template if:true={openErrorModal}>
+		<c-portal-registration-generic-modal icon={errorIcon} title={title} message={message}
+			button1-label="" button2-label={labels.CSP_L2_Go_To_Homepage_LMS}
+			 onbuttontwoaction={button1Action}>
+		</c-portal-registration-generic-modal>
+	</template>
 </template>

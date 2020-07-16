@@ -154,6 +154,7 @@ public without sharing class AMS_Utils {
 	public static final String customerTypePass   = 'Postal_Operator' ;
 	public static final String passParticipation  = 'PASS' ;
 	public static final String passAirlineCaseReason = 'PASS Participation';
+	public static final String passGSSACaseReason = 'PASS Participation via GSSA';
 	public static final String passCountryCaseReason = 'PASS Country';
 	public static final String passAggregatorCaseReason = 'PASS Country Aggregator';
 	public static final String passIATAMultipleCountries = 'Multiple';
@@ -299,6 +300,8 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';
 	public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
 	public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
+	public static final String CASE_REASON_EDS = 'EDS';
+	public static final String CASE_REASON_NONNEWGEN_RHC = 'NonNewGen RHC';
 
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
@@ -316,6 +319,7 @@ public without sharing class AMS_Utils {
 	// Case - Origin
 	public static final String CASE_ORIGIN_PORTAL = 'Portal';
 	public static final String CASE_ORIGIN_GDI_PORTAL = 'GDI Portal';
+	public static final String CASE_ORIGIN_RISK_MONITORING_ENGINE = 'Risk Monitoring Engine';
 	public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';
 	public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';
 
