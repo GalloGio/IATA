@@ -143,12 +143,12 @@
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
-            <label>check change account</label>
+            <label>Check Change Account</label>
         </rules>
     </decisions>
-    <description>contact change account</description>
-    <interviewLabel>contact_change_account-1_InterviewLabel</interviewLabel>
-    <label>contact change account</label>
+    <description>Contact Change Account</description>
+    <interviewLabel>Contact_Change_Account-1_InterviewLabel</interviewLabel>
+    <label>Contact Change Account</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>
