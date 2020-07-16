@@ -81,7 +81,7 @@
             color: #1E32FA;
         }
         #file-Area .RD-deleteIcon{
-            background: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/delete.png')}") no-repeat center;
+            background: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/delete.svg')}") no-repeat center;
             color: transparent;
             width: 24px;
             height: 24px;
