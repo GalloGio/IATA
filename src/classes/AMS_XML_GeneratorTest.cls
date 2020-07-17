@@ -721,7 +721,7 @@ private class AMS_XML_GeneratorTest {
 
 		if(aa1.Account__r.ANG_IsNewGenAgency__c){
 			system.assert(xmlReq1.contains('<CaseId>'));
-			system.assert(!xmlReq2.contains('<CaseId>'));
+			system.assert(xmlReq2.contains('<CaseId>'));
 		}
 		else {
 			system.assert(!xmlReq1.contains('<CaseId>'));
