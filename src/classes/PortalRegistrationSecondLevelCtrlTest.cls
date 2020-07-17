@@ -86,6 +86,12 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		);
 		insert con;
 
+		System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]) {
+		PermissionSet ps = new PermissionSet(Name = 'Absorb', Label = 'Absorb');
+		insert ps;
+		}
+		String cspath = PortalRegistrationSecondLevelCtrl.getCSPortalPath();
+
 		/** USER */
 		User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 	}
