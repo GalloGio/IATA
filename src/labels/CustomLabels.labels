@@ -1094,7 +1094,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_RRejected</shortDescription>
-        <value>Rejected</value>
+        <value>Request Rejected</value>
     </labels>
     <labels>
         <fullName>AMS_RollbackCase_Description</fullName>
@@ -28576,7 +28576,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Accepted_Future Date</shortDescription>
-        <value>Accepted</value>
+        <value>Accepted with future date</value>
     </labels>
     <labels>
         <fullName>ISSP_Access_Denied</fullName>
@@ -28792,7 +28792,7 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Agent Accredited</shortDescription>
-        <value>Accredited</value>
+        <value>Agent Accredited</value>
     </labels>
     <labels>
         <fullName>ISSP_Agreement_type</fullName>
@@ -31782,7 +31782,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_For Review and Acceptance</shortDescription>
-        <value>For Review</value>
+        <value>For Review and Acceptance</value>
     </labels>
     <labels>
         <fullName>ISSP_ForgotPassword</fullName>
@@ -32720,7 +32720,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_In Progress</shortDescription>
-        <value>In</value>
+        <value>In Progress</value>
     </labels>
     <labels>
         <fullName>ISSP_In_compatibility_mode</fullName>
@@ -35665,7 +35665,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Request Incomplete</shortDescription>
-        <value>Incomplete</value>
+        <value>Request Incomplete</value>
     </labels>
     <labels>
         <fullName>ISSP_Request_Ongoing</fullName>
@@ -35681,7 +35681,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Request Submitted</shortDescription>
-        <value>Request</value>
+        <value>Request Submitted</value>
     </labels>
     <labels>
         <fullName>ISSP_Request_Withdrawn</fullName>
@@ -35689,7 +35689,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Request Withdrawn</shortDescription>
-        <value>Withdrawn</value>
+        <value>Request Withdrawn</value>
     </labels>
     <labels>
         <fullName>ISSP_Request_pending_approval</fullName>
@@ -38280,7 +38280,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Your input needed</shortDescription>
-        <value>input needed</value>
+        <value>Your input needed</value>
     </labels>
     <labels>
         <fullName>ISSP_accept_General_Conditions</fullName>
