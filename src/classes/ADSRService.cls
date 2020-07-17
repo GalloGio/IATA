@@ -51,11 +51,11 @@ public without sharing class ADSRService {
 	private List<Account> loadAgents(List<String> agentCodes) {
 		List<Account> agents =  [SELECT Id, Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.Region__c, IRIS_Code__c,
 					Holds_FS_first_call_letter__c, RecordType.DeveloperName, Location_Type__c, Status__c,
-					(SELECT Id, First_Call_Letter__c, Update_AIMS_DEF__c
-					FROM Cases
+					(SELECT Id, First_Call_Letter__c, Update_AIMS_DEF__c,Total_Defaulted_Amount__c 
+					 FROM Cases
 					 WHERE RecordType.DeveloperName LIKE 'SIDRA%' AND Update_AIMS_DEF__c != null
-					ORDER BY CreatedDate DESC
-					LIMIT 1),
+					 ORDER BY CreatedDate DESC
+					 LIMIT 1),
 					(SELECT Id, Name, Change_Code__c, SIDRA_Case__c, SIDRA_Case__r.First_Call_Letter__c, SIDRA_Case__r.Handover_Bankruptcy_Lawyer__c
 					 FROM Agencies_Applied_Change_codes__r
 					 WHERE Active__c = true
@@ -297,6 +297,8 @@ public without sharing class ADSRService {
 		@AuraEnabled
 		public Decimal charged;
 		@AuraEnabled
+		public Decimal totalDefaultedAmount;
+		@AuraEnabled
 		public Decimal shareRate;
 		@AuraEnabled
 		public Decimal refunded;
@@ -328,6 +330,7 @@ public without sharing class ADSRService {
 			this.outstandingUSD = 0;
 			this.outstandingIncrement = 0;
 			this.outstandingUSDIncrement = 0;
+			this.totalDefaultedAmount = 0;
 		}
 		
 		public SummaryReportAgency(ADSRExternalAPI.SummaryReportDataDetail detail, ADSRExternalAPI.SummaryReportData parent,
@@ -336,13 +339,13 @@ public without sharing class ADSRService {
 			this.agentCode = detail.agentCode;
 			this.agentName = detail.agentName;
 			this.defaultDate = this.parseDate(detail.defaultDate);
-			this.shareRate = parent.aLShareVStotalIndustry;
 			this.currencyCode = detail.currencyCode;
 			this.exchangeRate = detail.exchangeRate;
 			this.totalIndustry = parent.totalIndustry;
 			this.financialSecurityStatus = calculateFinancialSecurityStatus(agentInfo);
 			this.agentStatus = calculateAgentStatus(agentInfo);
-
+			this.totalDefaultedAmount = getTotalDefaultedAmount(agentInfo);
+			
 			this.addDetail(detail);
 		}
 
@@ -355,6 +358,7 @@ public without sharing class ADSRService {
 			this.refundedRate = this.refundedRate < 0 ? this.refundedRate * -1 : this.refundedRate;
 			this.outstandingIncrement = this.charged + this.refunded - this.outstanding;
 			this.outstanding = this.charged + this.refunded;
+			this.shareRate = this.totalDefaultedAmount == 0 ? 0 : this.charged / this.totalDefaultedAmount;
 		}
 		
 		public String parseDate(String inputDate) {
@@ -367,6 +371,16 @@ public without sharing class ADSRService {
 			Datetime parsedDate = Datetime.newInstance(Integer.valueOf(dateAgs[2]), Integer.valueOf(dateAgs[1]), Integer.valueOf(dateAgs[0]));
 			
 			return parsedDate.format('dd MMM YYYY');
+		}
+
+		private Decimal getTotalDefaultedAmount(AgencyInfo info) {
+			if (info.agency == null || info.agency.Cases == null || info.agency.Cases.isEmpty()) {
+				return 0;
+			}
+			Case sidraCase = info.agency.Cases[0];
+			return sidraCase == null || sidraCase.Total_Defaulted_Amount__c == null ? 
+					0 :
+					sidraCase.Total_Defaulted_Amount__c;
 		}
 		
 		private String calculateFinancialSecurityStatus(AgencyInfo info) {

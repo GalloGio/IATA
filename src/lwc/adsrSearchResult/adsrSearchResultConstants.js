@@ -98,13 +98,13 @@ const TABLE_DETAIL_COLUMNS = [
 		label:"Default Date",
 		targetField:"defaultDate",
 		type:"text",
-		helptext: "The Date when we put the Agent in Default."
+		helptext: "The Date the Agent is placed in Default."
 	},
 	{
 		label:"Currently Charged in Local Currency",
 		targetField:"charged",
 		type:"number",
-		helptext: "Total Amount charged to the airline at the last day of the month of the report.",
+		helptext: "Total Amount charged to your airline at the last day of the month of the report.",
 		minDecimalPlaces: 2,
 		maxDecimalPlaces: 2,
 		displayTotal: true
@@ -113,7 +113,7 @@ const TABLE_DETAIL_COLUMNS = [
  		label: "AL Share versus Total Industry Default %",
  		targetField: "shareRate",
 		type: "percent",
-		helptext: "[Accumulated Charged in Local Currency] / the total charged amount in the market."
+		helptext: "[Currently Charged in Local Currency] / the total charged amount for all airlines."
 	},
 	{
 		label:"Currently Recovered in Local Currency",
@@ -128,7 +128,7 @@ const TABLE_DETAIL_COLUMNS = [
 		label:"Recovered against Charged %",
 		targetField:"refundedRate",
 		type:"percent",
-		helptext: "[Currently Recovered in Local Currency] / [Accumulated Charged in Local Currency].",
+		helptext: "[Currently Recovered in Local Currency] / [Currently Charged in Local Currency].",
 		minDecimalPlaces: 2,
 		maxDecimalPlaces: 2
 	},
@@ -150,7 +150,7 @@ const TABLE_DETAIL_COLUMNS = [
 	{
 		label:"Exch. Rate",
 		targetField:"exchangeRate",
-		type:"percent",
+		type:"number",
 		helptext: "Exchange rate applied to convert to US Dollars.",
 		minDecimalPlaces: 2,
 		maxDecimalPlaces: 2
@@ -165,7 +165,7 @@ const TABLE_DETAIL_COLUMNS = [
 		displayTotal: true
 	},
 	{
- 		label: "Total Industry",
+ 		label: "Financial Security in Local Currency",
  		targetField: "totalIndustry",
 		type: "number",
 		helptext: "Total Sum of Financial Cover pending encashment activated by our risk department.",
@@ -203,7 +203,7 @@ const TABLE_DETAIL_COLUMNS = [
 					+ "Agent will be reactivated after the completion of the repayment plan and satisfying the conditions of the resolutions.<br>"
 					+ "Failure to honor the repayment agreement will result in removal of the agent from the agency list.<br>"
 					+ "Last installment will be on " + record.dueDate + ".";
-			}
+				}
 			return false;
 		},
 		infoStyle: {

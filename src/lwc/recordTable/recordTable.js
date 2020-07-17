@@ -140,6 +140,9 @@ export default class RecordTable extends RecordCollection {
 			}
 		}
 		let baseTop = currentElement.offsetTop;
+		if(isNaN(rowNumber)) {
+			rowNumber = 0;
+		}
 		let top = baseTop + headerHeight + rowHeight * rowNumber;
 		e.detail.top === undefined ?
 			e.detail.top = '+ 0px' :
