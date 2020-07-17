@@ -236,7 +236,7 @@ global class ISSP_WS_NewUser {
 				}
 				else{
 					appId = appList[0].Id;
-					List <User> userList = [SELECT Id, ContactId, FederationIdentifier, FedContactId__c FROM User WHERE IsActive = true AND Email =: userEmail AND UserType = 'PowerPartner'];
+					List <User> userList = [SELECT Id, ContactId, FederationIdentifier, FedContactId__c FROM User WHERE Email =: userEmail AND UserType = 'PowerPartner'];
 					if (!userList.isEmpty()){
 						//found user
 						theUser = userList[0].Id;
