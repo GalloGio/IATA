@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IsOptedOut</field>
+                <field>MessagingConsentStatus</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
