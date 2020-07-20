@@ -4395,6 +4395,60 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Reason_for_unsuccessful_application__c</fullName>
+        <description>This field will be shown on left side panel in different steps and each step will have only a subset of values available.
+The values selected by the analyst will determine the reason why the application failed</description>
+        <externalId>false</externalId>
+        <label>Reason for unsuccessful application</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Requirements not met</fullName>
+                    <default>false</default>
+                    <label>IATA Requirements not met</label>
+                </value>
+                <value>
+                    <fullName>Fees not paid</fullName>
+                    <default>false</default>
+                    <label>Fees not paid</label>
+                </value>
+                <value>
+                    <fullName>Process too burocratic/unflexible</fullName>
+                    <default>false</default>
+                    <label>Process too burocratic/unflexible</label>
+                </value>
+                <value>
+                    <fullName>Agent decided to work with consolidator</fullName>
+                    <default>false</default>
+                    <label>Agent decided to work with consolidator</label>
+                </value>
+                <value>
+                    <fullName>Agent decided to apply for TIDS</fullName>
+                    <default>false</default>
+                    <label>Agent decided to apply for TIDS</label>
+                </value>
+                <value>
+                    <fullName>Agent decided to apply for GoLite</fullName>
+                    <default>false</default>
+                    <label>Agent decided to apply for GoLite</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Received_Bank_Guarantee_amount__c</fullName>
         <externalId>false</externalId>
         <label>Received Bank Guarantee amount</label>
@@ -10288,6 +10342,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17199,6 +17284,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -20687,6 +20803,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27955,6 +28102,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -31439,6 +31617,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35015,6 +35224,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38635,6 +38875,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -42243,6 +42514,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49475,6 +49777,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -56624,6 +56957,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -60200,6 +60564,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -63757,6 +64152,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Reconsideration_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -65995,6 +66421,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68281,6 +68738,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Reconsideration_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -70429,6 +70917,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Reconsideration_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -72568,6 +73087,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Reconsideration_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -74650,6 +75200,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -78124,6 +78705,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
             <values>
                 <fullName>Reprocess case</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -81624,6 +82236,37 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_unsuccessful_application__c</picklist>
+            <values>
+                <fullName>Agent decided to apply for GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to apply for TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent decided to work with consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fees not paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Requirements not met</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process too burocratic%2Funflexible</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Reconsideration_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -82722,6 +83365,14 @@ ISPICKVAL(Process__c, &quot;ANG.NEW.GE.STANDARD.1.0&quot;)
   ISPICKVAL(STEP6__c, &quot;Passed&quot;)
 )</errorConditionFormula>
         <errorMessage>Sanity checks cannot be set as passed if &quot;Change effective as of&quot; is empty or in the future</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Fill_unsuccessful_application_reason</fullName>
+        <active>true</active>
+        <description>Forces user to fill &quot;Unsuccessful application reason&quot; field when switching status from open to “Closed_Rejected”, “Closed_Not Accepted”, “Closed_Withdrawn”</description>
+        <errorConditionFormula>AND(OR(ISPICKVAL(Process__c, &quot;NEW.HO.1.0&quot;),ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;)),OR(ISPICKVAL(Status__c ,&quot;Closed_Rejected&quot;),ISPICKVAL(Status__c ,&quot;Closed_Withdrawn&quot;),ISPICKVAL(Status__c ,&quot;Closed_ Not Accepted&quot;),ISPICKVAL(Status__c ,&quot;Closed_Disapproved&quot;)),ISCHANGED(Status__c),ISBLANK( Reason_for_unsuccessful_application__c),NOT(CONTAINS(PRIORVALUE(Status__c),&quot;Closed&quot;)))</errorConditionFormula>
+        <errorDisplayField>Reason_for_unsuccessful_application__c</errorDisplayField>
+        <errorMessage>Please fill a &quot;Reason for Unsuccessful application&quot; before closing this case.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Form_Date_Courier_Cargo</fullName>
