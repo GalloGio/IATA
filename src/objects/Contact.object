@@ -9386,17 +9386,17 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>MITA01</fullName>
+                    <fullName>Interline Agreement Manager</fullName>
                     <default>false</default>
                     <label>Interline Agreement Manager</label>
                 </value>
                 <value>
-                    <fullName>MITA02</fullName>
+                    <fullName>Passenger Protection Agreement</fullName>
                     <default>false</default>
                     <label>Passenger Protection Agreement</label>
                 </value>
                 <value>
-                    <fullName>MITA03</fullName>
+                    <fullName>Interline Airline Generic Contact</fullName>
                     <default>false</default>
                     <label>Interline Airline Generic Contact</label>
                 </value>
@@ -19610,15 +19610,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>MITA_Contact_Type__c</picklist>
             <values>
-                <fullName>MITA01</fullName>
+                <fullName>Interline Agreement Manager</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MITA02</fullName>
+                <fullName>Passenger Protection Agreement</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>MITA03</fullName>
+                <fullName>Interline Airline Generic Contact</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
