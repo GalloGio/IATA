@@ -569,12 +569,12 @@ public with sharing class PortalCasesCtrl {
 						record.Id =>
 						OneIdUtils.getOrgUrl() +  '/ISSP_ANG_PCI?caseId=' + record.Id
 					};
-				} else if(record.Reason1__c == 'Annual revalidation' && record.Owner.Name.startsWith('Annual Revalidation')) {
+				} else if(record.Reason1__c == 'Annual revalidation' && record.OwnerId == '00G1r000003KX81EAG') {
 					return new Map<Id, String>{
 						record.Id =>
 						OneIdUtils.getOrgUrl() +  '/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id
 					};
-				} else if (record.Owner.Name.startsWith('Model A Onboarding')) {
+				} else if (record.OwnerId == '00G1r00000329qFEAQ' || record.OwnerId == '00G1r00000329qGEAQ' || record.OwnerId == '00G1r00000329qHEAQ' || record.OwnerId == '00G1r00000329qIEAQ' || record.OwnerId == '00G1r00000329qJEAQ') {
 					return new Map<Id, String>{
 						record.Id =>
 						OneIdUtils.getOrgUrl() +  '/ISSP_ModelA_Onboarding?caseId=' + record.Id
