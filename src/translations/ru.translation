@@ -20244,7 +20244,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>Факультативный сайт</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>

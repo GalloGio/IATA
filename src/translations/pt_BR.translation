@@ -20237,7 +20237,7 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>Opcional</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>

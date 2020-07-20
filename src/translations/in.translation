@@ -20248,7 +20248,7 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>Pilihan</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>

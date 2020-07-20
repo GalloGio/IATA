@@ -20239,7 +20239,7 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>선택 과목</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>
