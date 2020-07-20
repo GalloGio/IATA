@@ -156,6 +156,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Amount__c</fullName>
+        <description>Currency Amount for this transaction. Depending on the type can be positive or negative value.</description>
         <externalId>false</externalId>
         <label>Amount</label>
         <precision>18</precision>
@@ -225,6 +226,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Parent__c</fullName>
+        <description>Master-detail relation to Account Statement object</description>
         <externalId>false</externalId>
         <label>Account Statement</label>
         <referenceTo>Account_Statement__c</referenceTo>
@@ -238,6 +240,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Transaction_Id__c</fullName>
+        <description>Unique identifier from the external service muleSoft</description>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
         <label>Transaction Id</label>
@@ -249,6 +252,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Transaction_Type__c</fullName>
+        <description>Type of transaction, some represent a positive and others a negative amount</description>
         <externalId>false</externalId>
         <label>Transaction Type</label>
         <required>true</required>
@@ -303,6 +307,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Value_Date__c</fullName>
+        <description>Date when this transaction was applied</description>
         <externalId>false</externalId>
         <label>Date</label>
         <required>false</required>
