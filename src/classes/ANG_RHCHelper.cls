@@ -28,6 +28,11 @@ public class ANG_RHCHelper {
 	//Risk Alert
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
 	public static final String RISK_ALERT_DIRECTION_DOWN = 'DOWN';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_100 = '100%';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_75 = '75%';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_50 = '50%';
+	
+
 	//RHC Portal Service Name
 	public static final String RISK_PROFILE_AND_RHC_PORTAL_SERVICE ='Risk Profile and RHC';
 
@@ -573,7 +578,7 @@ public class ANG_RHCHelper {
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - triggerRiskOrForecastedRhcAmountNotifications] Email List - ' + emailLst);
 
-		if(!System.isBatch() && !System.isQueueable()){
+		if(!System.isBatch() && !System.isQueueable() && ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)){
 			System.enqueueJob(new RiskAlertMailService(emailLst, null));
 		}
 		else {

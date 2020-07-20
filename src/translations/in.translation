@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4508,6 +4512,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -13183,15 +13191,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label>Apakah yakin ingin dibatalkan?</label>
+        <label>Apakah anda yakin ingin dibatalkan?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label>Yakin ingin menghapus data ini?</label>
+        <label>Apakah anda yakin ingin menghapus data ini?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label>Apakah yakin pembaruan ini akan dibuang?</label>
+        <label>Apakah anda yakin pembaruan ini akan dibuang?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -16947,7 +16955,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label>Agensi diproses</label>
+        <label>Agensi telah di proses</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
@@ -17415,6 +17423,22 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
         <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
@@ -17689,7 +17713,7 @@ Jika penangguhan maskapai penerbangan menunjukkan nilai tagihan yang disesuaikan
         <name>ISSP_BSP_Concerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration --></label>
+        <label>Kembali</label>
         <name>ISSP_Back</name>
     </customLabels>
     <customLabels>
@@ -21794,7 +21818,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Submit --></label>
+        <label>Kirim</label>
         <name>ISSP_Submit</name>
     </customLabels>
     <customLabels>
@@ -33280,6 +33304,24 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- All Products --></description>
         <label><!-- All Products --></label>
         <name>All_Products</name>
@@ -36504,6 +36546,19 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

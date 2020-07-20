@@ -13,6 +13,15 @@ public class AccountRolesAlignBatch implements Queueable {
 		System.debug('____ [AccountRolesAlignBatch - execute] switch Account Roles');
 	}
 
+	@InvocableMethod(label='switchAccountRoles')
+	public static void switchAccountRoles(List<Contact> contactList){
+		Map<Id,sObject> contactMap = new Map<Id,sObject>();
+		for(Contact c : contactList){
+			contactMap.put(c.Id, c);
+		}
+		AccountRolesAlignBatch.switchAccountRoles(contactMap);
+	}
+
 	public static void switchAccountRoles(Map<Id,sObject> contactMap){
 		Savepoint sp = Database.setSavepoint();
 		try{
@@ -35,7 +44,7 @@ public class AccountRolesAlignBatch implements Queueable {
 												FROM Account_Contact_Role__c
 												WHERE Contact__c in :contactIds
 												AND Contact_Role_Name__c = 'Trainee'
-												AND Functional_Role__c =  'Training'];
+												AND Functional_Role__c =  'Training' FOR UPDATE];
 
 			//Get AccountIds from Contacts
 			for(Id contactId : contactIds){
