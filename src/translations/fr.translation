@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4508,6 +4512,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -17443,6 +17451,22 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
         <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
@@ -17575,10 +17599,6 @@ En cas de suspension d’une compagnie aérienne donnant lieu à l’ajustement 
     <customLabels>
         <label>Administrateur</label>
         <name>ISSP_Administrator</name>
-    </customLabels>
-    <customLabels>
-        <label>Code IATA du Bureau principal/Maison Mère</label>
-        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>Nom de l’agence</label>
@@ -20490,10 +20510,6 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Les mots de passe doivent être identiques.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Périodes précédentes</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link peut Être utilisé pour payer les factures IATA par carte de crédit&amp;nbsp;
@@ -33313,6 +33329,24 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- All Products --></description>
         <label><!-- All Products --></label>
         <name>All_Products</name>
@@ -36537,6 +36571,19 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

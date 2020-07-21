@@ -24,6 +24,10 @@
                 <behavior>Edit</behavior>
                 <field>AMS_Online_Accreditation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_unsuccessful_application__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

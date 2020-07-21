@@ -3281,6 +3281,10 @@
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4505,6 +4509,10 @@
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -17401,6 +17409,22 @@
         <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
         <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
@@ -17533,10 +17557,6 @@
     <customLabels>
         <label>Администратор</label>
         <name>ISSP_Administrator</name>
-    </customLabels>
-    <customLabels>
-        <label>Код главного офиса агентства</label>
-        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>Наименование агентства</label>
@@ -20454,10 +20474,6 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label>Пароли должны совпадать.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Прошлые периоды</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Ссылку на оплату можно использовать для оплаты счетов IATA кредитной картой.&lt;br/&gt;
@@ -33283,6 +33299,24 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- All Products --></description>
         <label><!-- All Products --></label>
         <name>All_Products</name>
@@ -36507,6 +36541,19 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

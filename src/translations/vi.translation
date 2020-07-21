@@ -3284,6 +3284,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4506,6 +4510,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -13448,7 +13456,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>Chú ý! Bằng cách sao chép thông tin quyền sở hữu vào một Đại lý, bạn sẽ xóa bất kỳ thông tin quyền sở hữu nào hiện có về Đại lý mục tiêu.</label>
+        <label>Chú ý! Bằng cách sao chép thông tin quyền sở hữu vào một Đại lý, bạn sẽ xóa bất kỳ thông tin quyền sở hữu nào hiện có về Đại lý đó</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -17404,6 +17412,22 @@ and
         <name>ISSP_AP_New_Joining_App</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyActivities --></label>
+        <name>ISSP_AP_PASS_CompanyActivities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyAdmin --></label>
+        <name>ISSP_AP_PASS_CompanyAdmin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_CompanyRecomendation --></label>
+        <name>ISSP_AP_PASS_CompanyRecomendation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_PASS_FieldsFilled --></label>
+        <name>ISSP_AP_PASS_FieldsFilled</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_PASS_Withdraw --></label>
         <name>ISSP_AP_PASS_Withdraw</name>
     </customLabels>
@@ -17536,10 +17560,6 @@ Trong trường hợp hãng hàng không tạm dừng hoạt động dẫn đế
     <customLabels>
         <label>Quản trị viên</label>
         <name>ISSP_Administrator</name>
-    </customLabels>
-    <customLabels>
-        <label>Mã số Văn phòng trụ sở chính</label>
-        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>Tên Đại lý</label>
@@ -20446,10 +20466,6 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
     <customLabels>
         <label>Các mật khẩu phải khớp với nhau.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Các kỳ báo cáo trước</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link có thể được sử dụng để trả hóa đơn IATA bằng thẻ Credit Card&lt;br/&gt;
@@ -33270,6 +33286,24 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agents Presence Status --></description>
+        <label><!-- Agents Presence Status --></label>
+        <name>Agents_Presence_Status</name>
+        <sections>
+            <label><!-- User Presences --></label>
+            <name>User Presences</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agents Work --></description>
+        <label><!-- Agents Work --></label>
+        <name>Agents_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- All Products --></description>
         <label><!-- All Products --></label>
         <name>All_Products</name>
@@ -35701,7 +35735,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Các báo cáo</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -36494,6 +36528,19 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

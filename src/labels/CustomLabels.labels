@@ -4409,6 +4409,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>We hope you enjoy our IATA Customer Portal!</value>
     </labels>
     <labels>
+        <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
+        <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
+    </labels>
+    <labels>
         <fullName>CSP_Error_Creating_Record</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6832,6 +6840,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Registration Existing User Message</shortDescription>
         <value>If this is your own Personal email address please send us a scanned copy of the passport page showing your full name (or other government-issued identity document) via &lt;a target=&quot;_blank&quot; href=&quot;support-reach-us?category=Training&amp;topic=Self_study_courses&amp;subtopic=Sign_Up_Join_ssc&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;this link&lt;/a&gt; and &lt;b&gt;quote the Personal email address above in your support message&lt;/b&gt; so we can assist. For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>For the integrity of your training record we strongly recommend that you wait until your name has been updated before continuing. Changing your above answer to &apos;Yes&apos; may enable to continue if you urgently need to do so.</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof</fullName>
@@ -9278,14 +9294,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey</shortDescription>
-        <value>833d368df5c23296a4efe8a6fc2b9b1d</value>
+        <value>33da3256100f3b0b9395aaafba400e3e</value>
     </labels>
     <labels>
         <fullName>Cybersource_AccessKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey_USD</shortDescription>
-        <value>b3d6f88098cf3f16980ccc5e21ea9c1d</value>
+        <value>df936b4fc51a34d98759f45c5d530df8</value>
     </labels>
     <labels>
         <fullName>Cybersource_MerchantId</fullName>
@@ -9320,14 +9336,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey</shortDescription>
-        <value>d7807348d5e04536b84f24774d2ab31b60a44906574445fe8c048d459ab2bbe41607755b175d4f79a3fb3ca109d46dca46de71ff10694921b2ea4cab367dc2d29e2da2bcf1a74db6ba1257d53525135a8ef7fe311a3d44088785d9b12a621dc7210b25519e6246b18602c1c4c7d9a446468c91619ecb42049435c833e1a61499</value>
+        <value>9bfa9ac66a0f4ea9a8cae78baaf0169b6fe9e9368d98431cb8b956fd42d705bf67a1004e207b4993811ea286d4f1fc5d4c6298e89c0748d0a52bdcc59259befa56afcbb5a24f4a8d9865c46ad56366213bd260fead9746f794f62cc22c89df2448ab5060ab394c07b1fc4ea12ea5a9704483b853fdce4987b2f846b2a4550d1a</value>
     </labels>
     <labels>
         <fullName>Cybersource_SecurityKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey_USD</shortDescription>
-        <value>a9ff049e793d4f5f9b7ee166e20761c9a9ed454028c14624a79ef2dfd4d7a0473bb6b7f1aa14410aba60ba86244273456098da4ed6ec4c7d857d14730e47ee61711ba93f815f43a480ed41330ad7f8b93e2e3943d160459dbeadf4c7637c145cae22317c5dbb480c909c7ad6e8439f38924dd228ed214d6d9c9345801223d274</value>
+        <value>cbc3e602969444669448b3f12b6906c3d99e089f530e477da15a8466a3cf8caa9e103488ebfe49938e53b2b44954eb82af6a6119a9c14bfb86e2d487e885ca11c9b432dca2644b17b756a5a81b1b3b2087d6bb75ade5473587c975f3799f5dfb8ab05695786847288ed58204fad60789777b1796631a40038581843bf51a756a</value>
     </labels>
     <labels>
         <fullName>Cybersource_SerialNumber</fullName>
@@ -28460,6 +28476,38 @@ This service is free of charge.</value>
         <value>New Joining Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_PASS_CompanyActivities</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyActivities</shortDescription>
+        <value>The Administrator in each company is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyAdmin</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyAdmin</shortDescription>
+        <value>Please provide the Name and E-mail address of each company staff that will act as administrator for PASS.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyRecomendation</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyRecomendation</shortDescription>
+        <value>Recommendation: Each company should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_FieldsFilled</fullName>
+        <categories>ISSP, PASS, ISSP_AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_FieldsFilled</shortDescription>
+        <value>All mandatory fields have been filled; you are ready to submit your application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_PASS_Withdraw</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28586,6 +28634,30 @@ This service is free of charge.</value>
         <value>Account Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Add_Proof_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statement_Add_Proof_Payment</shortDescription>
+        <value>Add proof of payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Add_Proof_Payment_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Add proof payment description</shortDescription>
+        <value>You can upload proof of payment for this period here</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statement_Done</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statement_Done</shortDescription>
+        <value>Done</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statement_Location</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -28602,12 +28674,28 @@ This service is free of charge.</value>
         <value>Remittance Date Reminders</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Settlement_Info</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Settlement Info</shortDescription>
+        <value>In case of negative billing, IATA settles the amount back to the agents. Settlement date for this period is: {0,date,dd MMM yyyy}</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Account Statements</shortDescription>
         <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Billing</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Billing</shortDescription>
+        <value>Billing</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer</fullName>
@@ -28626,6 +28714,54 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
         <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the Non- BOP Total (BALANCE PAYABLE) to your DD account.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Item</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Item</shortDescription>
+        <value>Item</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_No_Results</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_No_Results</shortDescription>
+        <value>No results found</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Per_Location</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Per_Location</shortDescription>
+        <value>Per Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Search</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Search</shortDescription>
+        <value>Type to search specific details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Summary</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Account_Statements_Summary</shortDescription>
+        <value>Summary</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -28721,14 +28857,6 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <protected>false</protected>
         <shortDescription>ISSP Administrator</shortDescription>
         <value>Administrator</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Agency_Head_Office_code</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Agency Head Office code</shortDescription>
-        <value>Agency Head Office code</value>
     </labels>
     <labels>
         <fullName>ISSP_Agency_name</fullName>
@@ -34069,10 +34197,10 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PASS Agreement</shortDescription>
         <value>IATA currently does not hold any valid PASS Participation Agreement. All participants must sign this Participation Agreement as condition to join PASS as Terms of Use applicable to PASS.&lt;br/&gt;
-Participation Agreement must be signed at the participants Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document shall be signed by any other authorized signatory as per Power of Attorney (POA), please provide the POA copy.
+Participation Agreement must be signed at the participant’s Head Office, by the Chief Executive Officer, Chief Financial Officer, or Director General.
 &lt;br/&gt;
 &lt;br/&gt;
-Please download, complete and upload the PASS agreement as a scanned document.</value>
+Please download, sign and upload the PASS agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Airline_Checklist</fullName>
@@ -34425,14 +34553,6 @@ I, undersigned, hereby represents and declare that I am duty authorized to submi
         <protected>false</protected>
         <shortDescription>ISSP_ChangePassword</shortDescription>
         <value>Passwords must match.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Past_Periods</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Past Periods</shortDescription>
-        <value>Past Periods</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Link_Description</fullName>
@@ -34923,6 +35043,134 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Quantity</shortDescription>
         <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_Date</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_Date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_DragAndDropInf</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_DragAndDropInf</shortDescription>
+        <value>Or drop them here</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_DragAndDropSize</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_DragAndDropSize</shortDescription>
+        <value>Only PDF, JPG, PNG, DOCX, PPT files smaller than 20 MB</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_Exception</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_Exception</shortDescription>
+        <value>Exception</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileDeleted</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileDeleted</shortDescription>
+        <value>File deleted</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileDeletedExc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileDeletedExc</shortDescription>
+        <value>There was a problem when trying to delete the file. Please try again or contact support.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileDeletedSucc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileDeletedSucc</shortDescription>
+        <value>File deleted</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileExist</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileExist</shortDescription>
+        <value>This file already exists</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileExtensionError</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileExtensionError</shortDescription>
+        <value>Only PDF, JPG, PNG, DOCX, PPT files</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_FileUploaded</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_FileUploaded</shortDescription>
+        <value>File succesfuly uploaded</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_File_Name</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_File_Name</shortDescription>
+        <value>File Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_File_Size</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_File_Size</shortDescription>
+        <value>File Size</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_OK_Action</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_OK_Action</shortDescription>
+        <value>OK</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_UploadFile</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_UploadFile</shortDescription>
+        <value>Upload File</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_UploadingSucc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_UploadingSucc</shortDescription>
+        <value>{0} is uploading</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RD_View</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_RD_View</shortDescription>
+        <value>View</value>
     </labels>
     <labels>
         <fullName>ISSP_RHC_HUB</fullName>
@@ -44321,6 +44569,38 @@ Through this service, you can directly access TIP Reports.</value>
         <value>Through the IATA Training Platform, you can consult our extensive training portfolio which includes topics for airlines, airports, cargo operators, governments, ground service providers, travel agents, young professionals and more.
 
 Upscale your skills by signing up for one of our training programs, directly online!</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Payment_Received</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Payment_Received</shortDescription>
+        <value>Payment Received</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Billing_Adjustment</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Billing_Adjustment</shortDescription>
+        <value>Billing Adjustment</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Clawback</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Clawback</shortDescription>
+        <value>Clawback</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Compensation</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Compensation</shortDescription>
+        <value>Compensation</value>
     </labels>
     <labels>
         <fullName>Transfer_Attachments</fullName>
