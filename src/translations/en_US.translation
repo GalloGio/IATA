@@ -17545,10 +17545,6 @@
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Agency Head Office code --></label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP Agency name --></label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20443,10 +20439,6 @@
     <customLabels>
         <label><!-- ISSP_ChangePassword --></label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Past Periods --></label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Payment_Link_Description --></label>

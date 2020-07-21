@@ -17565,10 +17565,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>대리점 본사 코드</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>대리점명</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20473,10 +20469,6 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
     <customLabels>
         <label>비밀번호가 일치해야 합니다.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>과거 빌링 주기</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link를 통해, IATA인보이스 비용을 신용카드로 지불하실 수 있습니다.&lt;br/&gt;

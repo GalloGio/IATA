@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Line detail for each transaction in account statements</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <description>Currency Amount for this transaction. Depending on the type can be positive or negative value.</description>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <description>Description field</description>
+        <externalId>false</externalId>
+        <label>Details</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Internal_Type__c</fullName>
+        <description>Converts the Transaction type to a user friendly type using labels</description>
+        <externalId>false</externalId>
+        <formula>CASE(TEXT(Transaction_Type__c),
+	&apos;Automatic Match&apos;,$Label.Transaction_Type_Payment_Received,
+	&apos;Billing Adjustement&apos;,$Label.Transaction_Type_Billing_Adjustment,
+	&apos;Clawback&apos;,$Label.Transaction_Type_Clawback,
+	&apos;Compensation&apos;,$Label.Transaction_Type_Compensation,
+	&apos;Expected Remittance&apos;,&apos;Expected Remittance&apos;,
+	&apos;Expected Settlement&apos;,&apos;Expected Settlement&apos;,
+	&apos;Manual Match&apos;,$Label.Transaction_Type_Payment_Received,
+	&apos;Post Billing Dispute&apos;,$Label.Transaction_Type_Billing_Adjustment,
+	TEXT(Transaction_Type__c)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Internal Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Payment__c</fullName>
+        <description>True is the transaction type is one of the defined types as Payment</description>
+        <externalId>false</externalId>
+        <formula>OR(
+  ISPICKVAL(Transaction_Type__c, &quot;Automatic Match&quot;),
+  ISPICKVAL(Transaction_Type__c, &quot;Manual Match&quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Payment Types are: &quot;Automatic Match&quot; and &quot;Manual Match&quot;.
+Otherwise this transaction is considered as Billing.</inlineHelpText>
+        <label>Is Payment</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Key__c</fullName>
+        <description>This will be used to find the parent id when a record is inserted, so will only be mandatory when you don&apos;t provide a parent Id</description>
+        <externalId>false</externalId>
+        <label>Parent Key</label>
+        <length>38</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent__c</fullName>
+        <description>Master-detail relation to Account Statement object</description>
+        <externalId>false</externalId>
+        <label>Account Statement</label>
+        <referenceTo>Account_Statement__c</referenceTo>
+        <relationshipLabel>Account Statement Transactions</relationshipLabel>
+        <relationshipName>Account_Statement_Transactions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Transaction_Id__c</fullName>
+        <description>Unique identifier from the external service muleSoft</description>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Transaction Id</label>
+        <length>10</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Transaction_Type__c</fullName>
+        <description>Type of transaction, some represent a positive and others a negative amount</description>
+        <externalId>false</externalId>
+        <label>Transaction Type</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Automatic Match</fullName>
+                    <default>false</default>
+                    <label>Automatic Match</label>
+                </value>
+                <value>
+                    <fullName>Billing Adjustement</fullName>
+                    <default>false</default>
+                    <label>Billing Adjustement</label>
+                </value>
+                <value>
+                    <fullName>Clawback</fullName>
+                    <default>false</default>
+                    <label>Clawback</label>
+                </value>
+                <value>
+                    <fullName>Compensation</fullName>
+                    <default>false</default>
+                    <label>Compensation</label>
+                </value>
+                <value>
+                    <fullName>Expected Remittance</fullName>
+                    <default>false</default>
+                    <label>Expected Remittance</label>
+                </value>
+                <value>
+                    <fullName>Expected Settlement</fullName>
+                    <default>false</default>
+                    <label>Expected Settlement</label>
+                </value>
+                <value>
+                    <fullName>Manual Match</fullName>
+                    <default>false</default>
+                    <label>Manual Match</label>
+                </value>
+                <value>
+                    <fullName>Post Billing Dispute</fullName>
+                    <default>false</default>
+                    <label>Post Billing Dispute</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Value_Date__c</fullName>
+        <description>Date when this transaction was applied</description>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Account Statement Transaction</label>
+    <nameField>
+        <displayFormat>T-{0000000000}</displayFormat>
+        <label>Account Statement Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Account Statement Transactions</pluralLabel>
+    <recordTypes>
+        <fullName>ICE_Balance</fullName>
+        <active>true</active>
+        <description>Client Balance detail for Account Statements (ICE)</description>
+        <label>ICE Balance</label>
+        <picklistValues>
+            <picklist>Transaction_Type__c</picklist>
+            <values>
+                <fullName>Automatic Match</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing Adjustement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clawback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compensation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expected Remittance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expected Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Manual Match</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Billing Dispute</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+</CustomObject>

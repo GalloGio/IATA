@@ -17601,10 +17601,6 @@ En cas de suspension d’une compagnie aérienne donnant lieu à l’ajustement 
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Code IATA du Bureau principal/Maison Mère</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Nom de l’agence</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20514,10 +20510,6 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Les mots de passe doivent être identiques.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Périodes précédentes</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link peut Être utilisé pour payer les factures IATA par carte de crédit&amp;nbsp;
