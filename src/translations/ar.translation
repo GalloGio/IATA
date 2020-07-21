@@ -17560,10 +17560,6 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>رمز المكتب الرئيسي للوكالة</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>اسم الوكالة</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20463,10 +20459,6 @@ and
     <customLabels>
         <label>يجب أن تتطابق كلمات المرور.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>الفترات السابقة</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>يمكنك استخدام Payment Link كطريقة لدفع فواتير الأياتا عبر بطاقات الائتمان&lt;br/&gt;

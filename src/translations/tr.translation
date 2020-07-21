@@ -17556,10 +17556,6 @@ Bir havayolunun faaliyetlerini geçici olarak durdurması sonucunda fatura tutar
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Acente Genel Merkez kodu</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Acente Adı</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20471,10 +20467,6 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label>Parolalar eşleşmelidir.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Geçmiş Dönemler</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>IATA faturalarını kredi kartıyla ödemek için Ödeme Linki kullanılabilir.&lt;br/&gt;
