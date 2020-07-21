@@ -17590,10 +17590,6 @@ Si se produce un ajuste del importe de facturación como consecuencia de la susp
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Código Oficina Principal Agencia</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Nombre de la agencia</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20504,10 +20500,6 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
     <customLabels>
         <label>Las contraseñas deben coincidir.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Ultimos periodos</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label> Puede emplear Payment Link para pagar facturas de IATA mediante tarjeta de crédito.&amp;nbsp;

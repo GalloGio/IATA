@@ -17573,10 +17573,6 @@ Jika penangguhan maskapai penerbangan menunjukkan nilai tagihan yang disesuaikan
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>Kode Keagenan Kantor Pusat</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
         <label>Nama Agensi</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
@@ -20482,10 +20478,6 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
     <customLabels>
         <label>Kata sandi harus sama.</label>
         <name>ISSP_PasswordMatch</name>
-    </customLabels>
-    <customLabels>
-        <label>Periode yang lalu</label>
-        <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
         <label>Payment Link dapat digunakan untuk pembayaran IATA invoices dengan menggunakan kartu kredit&lt;br/&gt;
