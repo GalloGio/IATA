@@ -19,18 +19,18 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public MITA_PortalMyAgreementsCtrl(){
 		selectedAirlineId = '';
 		selectedContactToEdit = '';
-		selectedContactToDelete = '';
-		ContactBeingEdited = null;
+		ContactBeingEdited = new contact();
+		selectedContactToRemove = '';
+		ContactBeingRemoved = new contact();
+
 		SaveError='';
 		hasSearched = false;
-		hasResult = false;
-		id hierarchyTopParent = null;
 
 		this.currentUser = [SELECT UserName, ContactId, Contact.AccountId, Contact.Account.Name, Profile.Name, Contact.Account.ParentId, Contact.Account.Parent.ParentId FROM User WHERE ID = :UserInfo.getUserId()];
 
-		if(this.currentUser.Contact.Account.Parent.ParentId <> null)	hierarchyTopParent = this.currentUser.Contact.Account.Parent.ParentId;
-		else if(this.currentUser.Contact.Account.ParentId <> null)		hierarchyTopParent = this.currentUser.Contact.Account.ParentId;
-		else hierarchyTopParent = this.currentUser.Contact.AccountId;
+		if(this.currentUser.Contact.Account.Parent.ParentId <> null)	currUserTopAccntId = this.currentUser.Contact.Account.Parent.ParentId;
+		else if(this.currentUser.Contact.Account.ParentId <> null)		currUserTopAccntId = this.currentUser.Contact.Account.ParentId;
+		else currUserTopAccntId = this.currentUser.Contact.AccountId;
 		
 		RetrieveMyContacts();
 		
@@ -283,14 +283,21 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	 *   CONTACTS METHODS AND VARIABLES 
 	 **********************************/
 	public string selectedAirlineId				{get; set;}
+	public string selectedAirlineName			{get; set;}
+
 	public string selectedContactToEdit			{get; set;}
 	public contact ContactBeingEdited			{get; set;}
-	public string selectedAirlineName			{get; set;}
-	public string SearchCriteria				{get; set;}
 	public string SaveError						{get; set;}
+
+	public contact ContactBeingRemoved			{get; set;}
+	public string selectedContactToRemove		{get; set;}
+	public string RemoveError					{get; set;}
+
+	public string SearchCriteria				{get; set;}
+
 	public boolean hasSearched					{get; set;}
-	public boolean hasResult					{get; set;}
-	public string selectedContactToDelete		{get; set;} 
+	private string currUserTopAccntId;
+	
 	private static final string MandatoryMITAType = 'Interline Airline Generic Contact';
 
 	//Variables storing the HTML text to be rerenderd in dataTable
@@ -330,7 +337,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public void RetrieveMyContacts(){
 		MyActiveContactsTable = '';
-		for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId, true, null, false)){
+		for(Contact c:retrieveContacts(currUserTopAccntId, true, null, false)){
 			if(string.isNotBlank(c.MITA_Contact_Type__c))
 			MyActiveContactsTable += '<tr id="'+c.Id+'">'+
 				'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
@@ -338,34 +345,29 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 				'<td>'+escape(c.phone)+ '</td>'+
 				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-				'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');"></a> <a class="glyphicon glyphicon-remove" href="#!" onClick="startLoading();deleteContact(\'' + escape(c.Id) + '\');"></a></td>'+
+				'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="ActiveCon_EditContactSuccess(\'\');startLoading();editContact(\'' + escape(c.Id) + '\');"></a> <a class="glyphicon glyphicon-remove" href="#!" onClick="ActiveCon_EditContactSuccess(\'\');startLoading();removeContact(\'' + escape(c.Id) + '\');"></a></td>'+
 			'</tr>';
 		}
 	}
 	
-	public void reinitializeSearch(){
-		hasSearched = false;
-		hasResult = false;
-	}
-
 	public void SearchContact(){
 		myAllContactsTable = '';
 		hasSearched = true;
 		if(string.isNotBlank(SearchCriteria)){
-			for(Contact c:retrieveContacts(this.currentUser.Contact.AccountId , true, null, true)){
-				hasResult = true;
+			for(Contact c:retrieveContacts(currUserTopAccntId , true, null, true)){
 				myAllContactsTable += '<tr id="'+c.Id+'">'+
 					'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 					'<td>'+escape(c.email)+ '</td>'+
 					'<td>'+escape(c.phone)+ '</td>'+
 					'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-					'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');"></a></td>'+
+					'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="AllCon_EditContactSuccess(\'\');startLoading();editContact(\'' + escape(c.Id) + '\');"></a></td>'+
 				'</tr>';
 			}
 		}
 	}
 
 	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy, string searchType, boolean filterSearch){
+		system.debug('DTULLO retrieveContacts AirlineId --> ' + string.valueOf(AirlineId));
 		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where recordtype.developername=\'Standard_Contact\' AND Status__c=\'Active\'';
 		if(searchType=='MITA')
 			sQuery += ' AND MITA_Contact_Type__c<>\'\'';
@@ -389,28 +391,19 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
 	}
 
-	public pageReference deleteContact(){
-		ContactBeingEdited.MITA_Contact_Type__c = null;
-		ValidateContact();
-		return null;
+	public void retrieveContactToRemove(){
+		if(!string.isBlank(selectedContactToRemove))
+			ContactBeingRemoved = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToRemove];
 	}
+
 
 	public pageReference ValidateContact(){
 		SaveError='';
 		try{
 			if(!(string.isBlank(ContactBeingEdited.MITA_Contact_Type__c)) && ContactBeingEdited.MITA_Contact_Type__c.contains(MandatoryMITAType)) SaveError='';
 			else {
-				list<contact> lsOtherAccnContact = [SELECT id, MITA_Contact_Type__c 
-													FROM contact 
-													WHERE (AccountId = :this.currentUser.Contact.AccountId OR Account.ParentId = :this.currentUser.Contact.AccountId OR Account.parent.ParentId = :this.currentUser.Contact.AccountId)
-													AND RecordType.DeveloperName = 'Standard_Contact'
-													AND id <> :ContactBeingEdited.Id 
-													AND MITA_Contact_Type__c INCLUDES (:MandatoryMITAType)];
-				if(!lsOtherAccnContact.isEmpty())
-					SaveError='';
-				else{
+				if(ValidateMandatoryType(ContactBeingEdited.Id))
 					SaveError='At least one contact must be ' + MandatoryMITAType;
-				}
 			}
 		}
 		catch(exception e){
@@ -419,16 +412,52 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		return null;
 	}
 
-	public void  SaveTheContact(){
+	private boolean ValidateMandatoryType(id ContactId){
+		list<contact> lsOtherAccnContact = [SELECT id, MITA_Contact_Type__c 
+											FROM contact 
+											WHERE (AccountId = :this.currentUser.Contact.AccountId OR Account.ParentId = :this.currentUser.Contact.AccountId OR Account.parent.ParentId = :this.currentUser.Contact.AccountId)
+											AND RecordType.DeveloperName = 'Standard_Contact'
+											AND id <> :ContactId
+											AND MITA_Contact_Type__c INCLUDES (:MandatoryMITAType) limit 1];
+		
+		return lsOtherAccnContact.isEmpty();
+	}
+
+	public void SaveTheContact(){
 		SaveError='';
 		try{
 			update ContactBeingEdited;
 			RetrieveMyContacts();
 			SearchContact();
+			ContactBeingEdited = null;
 		}catch(Exception e){
 			SaveError = 'An exception occured: ' + e.getMessage();
 		}
 	}
 
-	public void doNothing(){}
+	public void removeTheContact(){
+		SaveError='';
+		try{
+			ContactBeingRemoved.MITA_Contact_Type__c = null;
+			update ContactBeingRemoved;
+			RetrieveMyContacts();
+			SearchContact();
+			ContactBeingRemoved = null;
+		}catch(Exception e){
+			SaveError = 'An exception occured: ' + e.getMessage();
+		}
+	}
+
+
+	public pageReference ValidateContactRemoval(){
+		SaveError='';
+		try{
+			if(ValidateMandatoryType(ContactBeingRemoved.Id))
+				SaveError='At least one contact must be ' + MandatoryMITAType;
+		}
+		catch(exception e){
+			SaveError='An unexpected error occured ' +  e.getMessage();
+		}
+		return null;
+	}
 }

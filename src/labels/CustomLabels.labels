@@ -33111,6 +33111,14 @@ this is the tiess topic help</value>
 		<value>Only MITA Contact type can be changed here, to make changes to other contact information like Name, Email or phone number, please contact your IATA portal administrator.</value>
 	</labels>
 	<labels>
+		<fullName>ISSP_MITA_EditContactSuccess</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP MITA Edit Contact Success</shortDescription>
+		<value>Contact details changed succesfully</value>
+	</labels>
+	<labels>
 		<fullName>ISSP_MITA_RemoveContactMsg</fullName>
 		<categories>ISSP, MITA</categories>
 		<language>en_US</language>

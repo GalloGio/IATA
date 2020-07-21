@@ -222,8 +222,6 @@
 				<apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
 				<apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
 
-				<apex:includescript value="https://unpkg.com/sweetalert/dist/sweetalert.min.js" />
-
 				<apex:outputPanel id="messages">
 					<apex:pageMessages />
 				</apex:outputPanel>
@@ -448,7 +446,7 @@
 						$( '#editContact' ).modal('hide');
 					}
 
-					function showDeleteContact(){
+					function showRemoveContact(){
 						$( '#delCon').modal('show');
 					}
 					function closeDeleteContact() {
@@ -469,14 +467,14 @@
 								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
 							</apex:actionFunction>
 
-							<apex:actionFunction action="{!retrieveContactToEdit}" name="deleteContact" onComplete="showDeleteContact();" reRender="ModalDeleteContact">
-								<apex:param name="myParam" assignTo="{!selectedContactToEdit}" value=""/>
+							<apex:actionFunction action="{!retrieveContactToRemove}" name="removeContact" onComplete="showRemoveContact();" reRender="ModalRemoveContact">
+								<apex:param name="myParam" assignTo="{!selectedContactToRemove}" value=""/>
 							</apex:actionFunction>
 
 							<!-- MODAL WINDOWS TO DELETE A CONTACTS -->
-							<apex:outputPanel id="ModalDeleteContact">
-								<apex:actionFunction action="{!deleteContact}" name="ValidateDelContact" reRender="AfterDelValPnl" onComplete="PerformAfterdelValidation();return false;"/>
-								<apex:actionFunction action="{!SaveTheContact}" name="DelTheContact" reRender="pbsResult,pbsActiveContact" onComplete="CloseDelModalAndRemoveLoading();return false;"/>
+							<apex:outputPanel id="ModalRemoveContact">
+								<apex:actionFunction action="{!ValidateContactRemoval}" name="ValidateContactRemoval" reRender="AfterDelValPnl" onComplete="PerformAfterRemovalValidation();return false;"/>
+								<apex:actionFunction action="{!removeTheContact}" name="removeTheContact" reRender="pbsResult,pbsActiveContact" onComplete="CloseRemovalModalAndRemoveLoading();return false;"/>
 								<script>
 									modalDelete_alert = function() {}
 									modalDelete_alert.warning = function(message) {
@@ -490,14 +488,14 @@
 									<div class="modal-dialog modal-lg" style="width: 1100px;">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title">{!$Label.Button_Remove} {!ContactBeingEdited.Name}</h4>
+												<h4 class="modal-title">{!$Label.Button_Remove} {!ContactBeingRemoved.Name}</h4>
 											</div>
 											<div class="modal-body">
 												{!$Label.ISSP_MITA_RemoveContactMsg}
 											</div>
 											<div id="modalDelete_alert_placeholder"></div>
 											<div class="modal-footer">
-												<button type="button" id='btnDel' class="iatabtn iatabtn-default" onclick="modalDelete_alert.warning('');ValidateDelContact();">{!$Label.Button_Remove}</button>
+												<button type="button" id='btnDel' class="iatabtn iatabtn-default" onclick="modalDelete_alert.warning('');ValidateContactRemoval();">{!$Label.Button_Remove}</button>
 												<button type="button" id='btnDelClose' class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.CSP_Cancel}</button>
 											</div>
 											<script>
@@ -516,13 +514,14 @@
 								</div>
 								<apex:outputPanel id="AfterDelValPnl">
 									<script>
-										function CloseDelModalAndRemoveLoading(){
+										function CloseRemovalModalAndRemoveLoading(){
 											$('#delCon').modal('hide');
+											ActiveCon_EditContactSuccess('{!$Label.ISSP_MITA_EditContactSuccess}');
 											stopLoading();
 										}
-										function PerformAfterdelValidation(){
+										function PerformAfterRemovalValidation(){
 											if('{!SaveError}' == ''){
-												DelTheContact();
+												removeTheContact();
 											}else{
 												modalDelete_alert.warning('{!SaveError}');
 												$('#btnDel').removeAttr("disabled");
@@ -589,7 +588,7 @@
 									<div class="modal-dialog modal-lg" style="width: 1100px;">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title">Edit Contact: {!ContactBeingEdited.Salutation} {!ContactBeingEdited.Name}</h4>
+												<h4 class="modal-title">{!$Label.ISSP_Edit}: {!ContactBeingEdited.Salutation} {!ContactBeingEdited.Name}</h4>
 											</div>
 											<div class="modal-body">
 												<div id="modal_alert_placeholder"></div>
@@ -627,6 +626,8 @@
 									<script>
 										function CloseEditModalAndRemoveLoading(){
 											$('#editContact').modal('hide');
+											AllCon_EditContactSuccess('{!$Label.ISSP_MITA_EditContactSuccess}');
+											ActiveCon_EditContactSuccess('{!$Label.ISSP_MITA_EditContactSuccess}');
 											stopLoading();
 										}
 										function PerformAfterValidation(){
@@ -659,7 +660,7 @@
 										<div class="mytabheadercontainer level1" style="padding-left: 2px;">
 											<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')" style="float: left;">{!$Label.ISSP_Existing_Agreements}</div>
 											<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
-											<div class="mytabheader level1" id="hdContacts" onclick="showTab('Contacts')">{!$Label.ISSP_MITA_TAB}</div>
+											<div class="mytabheader level1" id="hdContacts" onclick="AllCon_EditContactSuccess('');ActiveCon_EditContactSuccess('');showTab('Contacts')">{!$Label.ISSP_MITA_TAB}</div>
 										</div>
 
 										<!-- TAB CONTAINER -->
@@ -843,19 +844,24 @@
 											
 											<div class="mytab level1" id="tabContacts">
 												<div class="mytabheadercontainer">
-													<div class="mytabheader level2 active" style="float:left;" id="hdActiveContacts" onclick="showTab('Contacts','ActiveContacts')">{!$Label.ISSP_MITA_SUBTAB_01}</div>
-													<div class="mytabheader level2" style="float:right;" id="hdAllContacts" onclick="showTab('Contacts','AllContacts')">{!$Label.ISSP_MITA_SUBTAB_02}</div>
+													<div class="mytabheader level2 active" style="float:left;" id="hdActiveContacts" onclick="AllCon_EditContactSuccess('');ActiveCon_EditContactSuccess('');showTab('Contacts','ActiveContacts')">{!$Label.ISSP_MITA_SUBTAB_01}</div>
+													<div class="mytabheader level2" style="float:right;" id="hdAllContacts" onclick="AllCon_EditContactSuccess('');ActiveCon_EditContactSuccess('');showTab('Contacts','AllContacts')">{!$Label.ISSP_MITA_SUBTAB_02}</div>
 												</div>
 
 												<div class="mytabcontainer level2">
 													<apex:outputPanel id="ActiveContactsPanel">
 														<!-- FIRST INTERNAL TAB: Active Contacts -->
 														<div class="mytab level2 active"  id="tabActiveContacts">
-															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
-																<apex:outputText value="{!ContactTypes}" escape="false" />
-																<br/>
-																<br/>
-																<button type="button" class="iatabtn iatabtn-default" onclick="showTab('Contacts','AllContacts')">{!$Label.ISSP_MITA_Add_Contact}</button>
+															<div style="float:left;padding-bottom: 20px; padding-top: 30px; width:100%">
+																<apex:pageBlockSection columns="1">
+																	<div id="ActiveCon_EditContactSuccess_ph"></div>
+																</apex:pageBlockSection>
+																<apex:pageBlockSection columns="1">
+																	<apex:outputText value="{!ContactTypes}" escape="false" /><br/><br/>
+																</apex:pageBlockSection>
+																<apex:pageBlockSection >
+																	<button type="button" class="iatabtn iatabtn-default" onclick="showTab('Contacts','AllContacts')">{!$Label.ISSP_MITA_Add_Contact}</button>
+																</apex:pageBlockSection>
 															</div>
 															<apex:pageBlockSection columns="1" id="pbsActiveContact">
 																<apex:outputPanel>
@@ -895,6 +901,21 @@
 															$('#search_alert_placeholder').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
 														}
 
+														
+														AllCon_EditContactSuccess = function(message){
+															if(message=='')
+																$('#AllCon_EditContactSuccess_ph').html('');
+															else
+																$('#AllCon_EditContactSuccess_ph').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
+														}
+
+														ActiveCon_EditContactSuccess = function(message){
+															if(message=='')
+																$('#ActiveCon_EditContactSuccess_ph').html('');
+															else
+																$('#ActiveCon_EditContactSuccess_ph').html('<div class="alert alert-success" role="alert"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>');
+														}
+
 														function checkInputs(){
 															$('#search_alert_placeholder').html('');
 															var searchCrit = $('#searchCrit').val();
@@ -916,6 +937,9 @@
 													<apex:outputPanel id="AllContactsPanel">
 														<div class="mytab level2" id="tabAllContacts">
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
+																<apex:pageBlockSection columns="1">
+																	<div id="AllCon_EditContactSuccess_ph"></div>
+																</apex:pageBlockSection>
 																<apex:pageBlockSection columns="1">
 																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text01}</div>
 																</apex:pageBlockSection>
