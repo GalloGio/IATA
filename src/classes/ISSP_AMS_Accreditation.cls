@@ -4607,7 +4607,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			return Label.ISSP_AMS_Reason_New_HO;
 		} else if (r == AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO || r == AMS_Utils.CASE_REASON_BR_INDEPENDENT || r == AMS_Utils.CASE_REASON_BR_COMERCIAL) {
 			return r;
-		}else if (r == AMS_Utils.CASE_REASON_BR_IP) {
+		}else if (r == AMS_Utils.CASE_REASON_BR_IP || r == AMS_Utils.CASE_REASON_NEW_BR) {
 			return Label.ISSP_AMS_Reason_New_Branch;
 		} else if (r == AMS_Utils.CASE_REASON_BR_ABROAD) {
 			return Label.ISSP_AMS_Reason_Branch_Abroad;
