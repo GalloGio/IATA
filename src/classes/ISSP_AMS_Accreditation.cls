@@ -2988,6 +2988,9 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 		}
+		else if(sectorValue.StartsWith(AMS_Utils.sectorValuePass)){
+			locationClass = 'L';
+		}
 
 		return locationClass;
 	}
