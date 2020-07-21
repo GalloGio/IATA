@@ -9,9 +9,11 @@ public without sharing class ADSRService {
 	private List<String> operationCodes;
 	private Account agent;
 	private Map<String, Map<String, List<Case_Detail__c>>> caseDetailsByCaseByAgency;
+	private Map<String, Decimal> financialSecurityAmountByAgency;
 	
 	public ADSRService(Account airline, String region, List<String> countries, String operation, String agent) {
 		this.caseDetailsByCaseByAgency = new Map<String, Map<String, List<Case_Detail__c>>>();
+		this.financialSecurityAmountByAgency = new Map<String, Decimal>();
 		this.airline = airline;
 		this.region = region;
 		this.loadAgent(agent);
@@ -67,6 +69,23 @@ public without sharing class ADSRService {
 				FROM Account
 				WHERE Recordtype.DeveloperName = 'IATA_Agency'
 					AND (IRIS_Code__c IN :agentCodes OR IATACode__c IN :agentCodes)];
+
+		List<Account> financialSecutiryCalculationRecords = [SELECT Id,
+				(SELECT Id, Amount__c
+				 FROM Financial_Securities__r
+				 WHERE Security_Status__c IN ('Close to Expiry Date', 'Encashment in progress', 'Pending to be Released')
+				 	AND Security_Type__c NOT IN ('MCPG', 'MCBG', 'CCG', 'Transit Account', 'Letter Of Undertaking', 'Parent Company Guarantee'))
+				FROM Account
+				WHERE Recordtype.DeveloperName = 'IATA_Agency' AND Status__c != 'Approved'
+					AND (IRIS_Code__c IN :agentCodes OR IATACode__c IN :agentCodes)];
+		
+		for(Account agency : financialSecutiryCalculationRecords) {
+			Decimal financialSecurityAmount = 0;
+			for(Financial_Security__c financialSecurity : agency.Financial_Securities__r) {
+				financialSecurityAmount += financialSecurity.Amount__c;
+			}
+			this.financialSecurityAmountByAgency.put(agency.Id, financialSecurityAmount);
+		}
 
 		Set<Id> caseIds = new Set<Id>();
 		for(Account currentAgent : agents) {
@@ -145,7 +164,7 @@ public without sharing class ADSRService {
 		Map<String, AgencyInfo> agents = new Map<String, AgencyInfo>();
 		for (Account agent : loadAgents(agentCodes)) {
 			Map<String, List<Case_Detail__c>> caseDetails = this.caseDetailsByCaseByAgency.get(agent.Id);
-			agents.put(agent.IRIS_Code__c, new AgencyInfo(agent, caseDetails));
+			agents.put(agent.IRIS_Code__c, new AgencyInfo(agent, caseDetails, this.financialSecurityAmountByAgency.get(agent.Id)));
 		}
 		
 		for (ADSRExternalAPI.SummaryReportData item : data) {
@@ -160,6 +179,7 @@ public without sharing class ADSRService {
 	
 	private class AgencyInfo {
 		private Account agency;
+		private Decimal financialSecurityAmount;
 		private Map<String, List<Case_Detail__c>> caseDetailsByCase;
 
 		private AgencyInfo() {
@@ -174,6 +194,11 @@ public without sharing class ADSRService {
 		private AgencyInfo(Account agency, Map<String, List<Case_Detail__c>> caseDetails) {
 			this(agency);
 			this.caseDetailsByCase = caseDetails;
+		}
+
+		private AgencyInfo(Account agency, Map<String, List<Case_Detail__c>> caseDetails, Decimal amount) {
+			this(agency, caseDetails);
+			this.financialSecurityAmount = amount;
 		}
 	}
 
@@ -341,7 +366,8 @@ public without sharing class ADSRService {
 			this.defaultDate = this.parseDate(detail.defaultDate);
 			this.currencyCode = detail.currencyCode;
 			this.exchangeRate = detail.exchangeRate;
-			this.totalIndustry = parent.totalIndustry;
+			this.totalIndustry = agentInfo.financialSecurityAmount != null && agentInfo.financialSecurityAmount > 0 ?
+				agentInfo.financialSecurityAmount : null;
 			this.financialSecurityStatus = calculateFinancialSecurityStatus(agentInfo);
 			this.agentStatus = calculateAgentStatus(agentInfo);
 			this.totalDefaultedAmount = getTotalDefaultedAmount(agentInfo);

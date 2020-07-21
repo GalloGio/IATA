@@ -139,9 +139,11 @@ export default class RecordTable extends RecordCollection {
 				headerHeight = currentElement.querySelector('thead').offsetHeight;
 			}
 		}
+
 		let baseTop = currentElement.offsetTop;
 		if(isNaN(rowNumber)) {
 			rowNumber = 0;
+			baseTop = window.scrollY > baseTop ? window.scrollY : baseTop;
 		}
 		let top = baseTop + headerHeight + rowHeight * rowNumber;
 		e.detail.top === undefined ?

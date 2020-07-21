@@ -1,5 +1,5 @@
 <template>
-    <div class={recordFieldClass} title={value}>
+    <div class={recordFieldClass} title={title}>
         <template if:true={picklist}>
 			<lightning-combobox
 				if:true={isTable}
@@ -14,7 +14,6 @@
 			<lightning-formatted-text
 				if:true={isTable}	
 				value={value}
-				title={label}
 				></lightning-formatted-text>
         </template>
         <template if:true={text}>
@@ -31,7 +30,6 @@
 			<lightning-formatted-text
 				if:true={isTable}	
 				value={value}
-				title={label}
 				></lightning-formatted-text>
         </template>
         <template if:true={number}>

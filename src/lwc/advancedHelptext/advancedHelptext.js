@@ -54,8 +54,10 @@ export default class AdvancedHelptext extends LightningElement {
 	}
 
 	handleMouseOver(e) {
-		if(!this.activator)
+		if(!this.activator && !this.display){
+			this.show();
 			return;
+		}
 		this.dispatchEvent(
 			new CustomEvent(
 				"tooltipover",
@@ -75,8 +77,10 @@ export default class AdvancedHelptext extends LightningElement {
 	}
 
 	handleMouseOut(e) {
-		if(!this.activator)
+		if(!this.activator && !this.display){
+			this.hide();
 			return;
+		}
 		this.dispatchEvent(
 			new CustomEvent(
 				"tooltipout",

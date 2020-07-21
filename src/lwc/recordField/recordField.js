@@ -145,6 +145,14 @@ export default class RecordField extends LightningElement {
 		return this.variant.indexOf("table") > -1;
 	}
 
+	get title() {
+		return this.properties.displayTitleAsValue ?
+			this.value :
+			this.properties.displayTitleAsLabel ?
+				this.label :
+				null;
+	}
+
 	get infotext() {
 		if(this.properties.info === undefined){
             return false;

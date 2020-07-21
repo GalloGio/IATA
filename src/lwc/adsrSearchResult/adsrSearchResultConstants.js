@@ -183,6 +183,7 @@ const TABLE_DETAIL_COLUMNS = [
 		label: "Financial Security Status",
 		targetField: "financialSecurityStatus",
 		type: "text",
+		helptext: "Current status of Agent’s Financial Security encashment",
 		description: "First Call Letter Sent- Nonpayment notification sent to the Financial Institution providing information about unpaid debt after the Agent’s default.<br>"
 					+"Final Claim Sent – Financial security claim notification sent to the Financial Institution providing information about the total unpaid debt after the Agent’s termination.<br>"
 					+"Financial Security Encashed- Financial Institution has accepted the claim and proceeded with the down payment equal to the financial security amount or defaulted amount.<br>"
