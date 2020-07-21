@@ -354,14 +354,14 @@
 
                                     
                                     <!-- If direct Sales -->
-                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! or(and(bIsDirectSales , NOT(bIsProductCompliant)),bIsDirectSales, NOT(bIsProductCompliant))}">
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! or(and(bIsDirectSales , NOT(isCountryCompliant)),bIsDirectSales, NOT(isCountryCompliant))}">
                                         <div class="contact-info">
                                             <span class="icon phone-square">{!$Label.ContactDirectSalesMessage}</span>
                                             <a class="phone-link" href="tel:1-800-716-6326">1 800 716 6326</a>
                                         </div>
                                     </apex:outputPanel>
                                     <!-- Add to cart block -->
-                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! or(and(bIsDirectSales==false, bIsProductCompliant)) }">
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! or(and(bIsDirectSales==false, isCountryCompliant)) }">
                                         <label class="input-label">
                                             <span class="show-for-extra-small">{!$Label.QTY}:</span>
                                             <span class="hide-for-extra-small">{!$Label.Quantity}:</span>
