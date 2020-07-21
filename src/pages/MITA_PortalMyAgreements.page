@@ -432,12 +432,6 @@
 						activeTab[maintab] = tab;
 					}
 
-					function toggleMyModal(theModal, theOperation){
-						$('\'#' + theModal + '\'').modal('\'' + theOperation + '\'');  //show|hide
-						if(theModal == 'otherAirCon' && theOperation =='show')
-							initContactTable('other');
-					}
-
 					function showOtherAirlineContacts(){
 						$( '#otherAirCon').modal('show');
 						initContactTable('other');
@@ -481,8 +475,8 @@
 
 							<!-- MODAL WINDOWS TO DELETE A CONTACTS -->
 							<apex:outputPanel id="ModalDeleteContact">
-								<apex:actionFunction action="{!deleteContact}" name="ValidateDelContact" reRender="AfterDelValPnl" onComplete="PerformAfterdelValidation();"/>
-								<apex:actionFunction action="{!SaveTheContact}" name="DelTheContact" reRender="pbsResult,pbsActiveContact" onComplete="RestoreDelButtons();"/>
+								<apex:actionFunction action="{!deleteContact}" name="ValidateDelContact" reRender="AfterDelValPnl" onComplete="PerformAfterdelValidation();return false;"/>
+								<apex:actionFunction action="{!SaveTheContact}" name="DelTheContact" reRender="pbsResult,pbsActiveContact" onComplete="CloseDelModalAndRemoveLoading();return false;"/>
 								<script>
 									modalDelete_alert = function() {}
 									modalDelete_alert.warning = function(message) {
@@ -496,15 +490,15 @@
 									<div class="modal-dialog modal-lg" style="width: 1100px;">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title">Remove Contact</h4>
+												<h4 class="modal-title">{!$Label.Button_Remove} {!ContactBeingEdited.Name}</h4>
 											</div>
 											<div class="modal-body">
-												Are you sure you want to remove <b>{!ContactBeingEdited.Name}?</b>
+												{!$Label.ISSP_MITA_RemoveContactMsg}
 											</div>
 											<div id="modalDelete_alert_placeholder"></div>
 											<div class="modal-footer">
-												<button type="button" id='btnDel' class="iatabtn iatabtn-default" onclick="modalDelete_alert.warning('');ValidateDelContact();">{!$Label.ICCS_Delete_Label}</button>
-												<button type="button" id='btnDelClose' class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.LAQ_Close}</button>
+												<button type="button" id='btnDel' class="iatabtn iatabtn-default" onclick="modalDelete_alert.warning('');ValidateDelContact();">{!$Label.Button_Remove}</button>
+												<button type="button" id='btnDelClose' class="iatabtn iatabtn-default" data-dismiss="modal" onclick="stopLoading();">{!$Label.CSP_Cancel}</button>
 											</div>
 											<script>
 												$('#btnDel').click(function(){
@@ -522,23 +516,23 @@
 								</div>
 								<apex:outputPanel id="AfterDelValPnl">
 									<script>
+										function CloseDelModalAndRemoveLoading(){
+											$('#delCon').modal('hide');
+											stopLoading();
+										}
 										function PerformAfterdelValidation(){
 											if('{!SaveError}' == ''){
 												DelTheContact();
 											}else{
 												modalDelete_alert.warning('{!SaveError}');
-												RestoreDelButtons();
+												$('#btnDel').removeAttr("disabled");
+												$('#btnDel').addClass("iatabtn-default");
+												$('#btnDel').removeClass("iatabtn-danger");
+
+												$('#btnDelClose').removeAttr("disabled");
+												$('#btnDelClose').addClass("iatabtn-default");
+												$('#btnDelClose').removeClass("iatabtn-danger");
 											}
-										}
-
-										function RestoreDelButtons(){
-											$('#btnDel').removeAttr("disabled");
-											$('#btnDel').addClass("iatabtn-default");
-											$('#btnDel').removeClass("iatabtn-danger");
-
-											$('#btnDelClose').removeAttr("disabled");
-											$('#btnDelClose').addClass("iatabtn-default");
-											$('#btnDelClose').removeClass("iatabtn-danger");
 										}
 									</script>
 								</apex:outputPanel>
@@ -580,8 +574,8 @@
 							
 							<!-- MODAL WINDOWS TO SHOW EDIT CONTACTS -->
 							<apex:outputPanel id="modalEditContact">
-								<apex:actionFunction action="{!ValidateContact}" name="ValidateContact" reRender="AfterValPnl" onComplete="PerformAfterValidation();"/>
-								<apex:actionFunction action="{!SaveTheContact}" name="SaveTheContact" reRender="pbsResult,pbsActiveContact" onComplete="RestoreButtons();"/>
+								<apex:actionFunction action="{!ValidateContact}" name="ValidateContact" reRender="AfterValPnl" onComplete="PerformAfterValidation();return false;"/>
+								<apex:actionFunction action="{!SaveTheContact}" name="SaveTheContact" reRender="pbsResult,pbsActiveContact" onComplete="CloseEditModalAndRemoveLoading();return false;"/>
 								<script>
 									modal_alert = function() {}
 									modal_alert.warning = function(message) {
@@ -631,23 +625,23 @@
 								</div>
 								<apex:outputPanel id="AfterValPnl">
 									<script>
+										function CloseEditModalAndRemoveLoading(){
+											$('#editContact').modal('hide');
+											stopLoading();
+										}
 										function PerformAfterValidation(){
 											if('{!SaveError}' == ''){
 												SaveTheContact();
 											}else{
-												RestoreButtons();
+												$('#btnClose').removeAttr("disabled");
+												$('#btnClose').addClass("iatabtn-default");
+												$('#btnClose').removeClass("iatabtn-danger");
+
+												$('#btnSave').removeAttr("disabled");
+												$('#btnSave').addClass("iatabtn-default");
+												$('#btnSave').removeClass("iatabtn-danger");
 												modal_alert.warning('{!SaveError}');
 											}
-										}
-
-										function RestoreButtons(){
-											$('#btnClose').removeAttr("disabled");
-											$('#btnClose').addClass("iatabtn-default");
-											$('#btnClose').removeClass("iatabtn-danger");
-
-											$('#btnSave').removeAttr("disabled");
-											$('#btnSave').addClass("iatabtn-default");
-											$('#btnSave').removeClass("iatabtn-danger");
 										}
 									</script>
 								</apex:outputPanel>
@@ -705,7 +699,7 @@
 																			<th>{!$Label.ISSP_Airline}</th>
 																			<th>{!$Label.ISSP_Agreement_type}</th>
 																			<th>{!$Label.ISSP_Active}</th>
-																			<th>{!$Label.Action}</th>
+																			<th>{!$Label.ISSP_View} {!$ObjectType.Contact.LabelPlural}</th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -750,7 +744,7 @@
 																			<th>{!$Label.ISSP_Airline}</th>
 																			<th>{!$Label.ISSP_Agreement_type}</th>
 																			<th>{!$Label.ISSP_Active}</th>
-																			<th>{!$Label.Action}</th>
+																			<th>{!$Label.ISSP_View} {!$ObjectType.Contact.LabelPlural}</th>
 																		</tr>
 																	</thead>
 																	<tbody>

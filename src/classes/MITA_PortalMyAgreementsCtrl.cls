@@ -151,7 +151,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 								'<td>'+escape(otherAccount.Name_on_AOC__c)+ '</td>'+
 								'<td>'+wrapper.getAgreementType()+ '</td>'+
 								'<td>'+wrapper.getStatus()+ '</td>'+
-								'<td><a href="#!" onClick="startLoading();RetrieveOtherAirlineContacts(\'' + escape(otherAccount.Id) + '\');">View Contacts</a></td>'+
+								'<td align="center"><a class="glyphicon glyphicon-eye-open" href="#!" onClick="startLoading();RetrieveOtherAirlineContacts(\'' + escape(otherAccount.Id) + '\');"></a></td>'+
 							'</tr>';
 			}
 		}
@@ -338,7 +338,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 				'<td>'+escape(c.phone)+ '</td>'+
 				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-				'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a><br/><a href="#!" onClick="startLoading();deleteContact(\'' + escape(c.Id) + '\');">Remove Contact</a></td>'+
+				'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');"></a> <a class="glyphicon glyphicon-remove" href="#!" onClick="startLoading();deleteContact(\'' + escape(c.Id) + '\');"></a></td>'+
 			'</tr>';
 		}
 	}
@@ -359,14 +359,14 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 					'<td>'+escape(c.email)+ '</td>'+
 					'<td>'+escape(c.phone)+ '</td>'+
 					'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-					'<td><a href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');">Edit Contact</a></td>'+
+					'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="startLoading();editContact(\'' + escape(c.Id) + '\');"></a></td>'+
 				'</tr>';
 			}
 		}
 	}
 
 	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy, string searchType, boolean filterSearch){
-		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, toLabel(MITA_Contact_Type__c), MITA_Teletype__c from contact where Status__c=\'Active\'';
+		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where recordtype.developername=\'Standard_Contact\' AND Status__c=\'Active\'';
 		if(searchType=='MITA')
 			sQuery += ' AND MITA_Contact_Type__c<>\'\'';
 
@@ -386,7 +386,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public void retrieveContactToEdit(){
 		if(!string.isBlank(selectedContactToEdit))
-			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, ToLabel(MITA_Contact_Type__c), MITA_Teletype__c from contact where id=:selectedContactToEdit];
+			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
 	}
 
 	public pageReference deleteContact(){
@@ -403,8 +403,9 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 				list<contact> lsOtherAccnContact = [SELECT id, MITA_Contact_Type__c 
 													FROM contact 
 													WHERE (AccountId = :this.currentUser.Contact.AccountId OR Account.ParentId = :this.currentUser.Contact.AccountId OR Account.parent.ParentId = :this.currentUser.Contact.AccountId)
+													AND RecordType.DeveloperName = 'Standard_Contact'
 													AND id <> :ContactBeingEdited.Id 
-													AND toLabel(MITA_Contact_Type__c) INCLUDES (:MandatoryMITAType)];
+													AND MITA_Contact_Type__c INCLUDES (:MandatoryMITAType)];
 				if(!lsOtherAccnContact.isEmpty())
 					SaveError='';
 				else{
@@ -418,9 +419,16 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		return null;
 	}
 
-	public void SaveTheContact(){
-		update ContactBeingEdited;
-		RetrieveMyContacts();
-		SearchContact();
+	public void  SaveTheContact(){
+		SaveError='';
+		try{
+			update ContactBeingEdited;
+			RetrieveMyContacts();
+			SearchContact();
+		}catch(Exception e){
+			SaveError = 'An exception occured: ' + e.getMessage();
+		}
 	}
+
+	public void doNothing(){}
 }
