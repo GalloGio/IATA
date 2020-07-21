@@ -563,7 +563,7 @@ public with sharing class PortalCasesCtrl {
 							OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2'
 						};
 					}
-				} else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && record.Owner.Name.startsWith('NewGen PCI'))
+				} else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && (record.OwnerId == '00G1r000002xun7EAA' || record.OwnerId == '00G1r000002xun8EAA' || record.OwnerId == '00G1r000002xun9EAA' || record.OwnerId == '00G1r000002xunAEAQ' || record.OwnerId == '00G1r000002xunBEAQ' || record.OwnerId == '00G1r000004SpvKEAS'))
 					|| ((record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT))) {
 					return new Map<Id, String>{
 						record.Id =>
