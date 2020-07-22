@@ -73,7 +73,7 @@ public without sharing class ADSRService {
 		List<Account> financialSecutiryCalculationRecords = [SELECT Id,
 				(SELECT Id, Amount__c
 				 FROM Financial_Securities__r
-				 WHERE Security_Status__c IN ('Close to Expiry Date', 'Encashment in progress', 'Pending to be Released')
+				 WHERE Security_Status__c IN ('Active', 'Close to Expiry Date', 'Encashment in progress', 'Pending to be Released')
 				 	AND Security_Type__c NOT IN ('MCPG', 'MCBG', 'CCG', 'Transit Account', 'Letter Of Undertaking', 'Parent Company Guarantee'))
 				FROM Account
 				WHERE Recordtype.DeveloperName = 'IATA_Agency' AND Status__c != 'Approved'
@@ -309,6 +309,7 @@ public without sharing class ADSRService {
 			this.totalRecoveredUSD = this.totalRecovered * reportLine.exchangeRate;
 			this.totalOutstandingUSD += agency.outstandingUSDIncrement;
 			this.recoveredRate = this.totalCharged != 0 ? this.totalRecovered / this.totalCharged : this.recoveredRate;
+			this.recoveredRate = this.recoveredRate < 0 ? this.recoveredRate * -1 : this.recoveredRate;
 		}
 	}
 	
