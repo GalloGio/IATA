@@ -298,7 +298,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	public boolean hasSearched					{get; set;}
 	private string currUserTopAccntId;
 	
-	private static final string MandatoryMITAType = 'Interline Airline Generic Contact';
+	public static final string MandatoryMITAType = 'Interline Airline Generic Contact';
 
 	//Variables storing the HTML text to be rerenderd in dataTable
 	public string OtherAirlineContactTable		{get; set;}

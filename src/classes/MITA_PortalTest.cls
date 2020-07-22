@@ -21,6 +21,7 @@ public class MITA_PortalTest {
 			Airline_Prefix__c = '456');
 		insert MyAirline;
 
+		
 		Contact MyContact = new Contact(FirstName = 'Name', LastName='My Contact', AccountId=MyAirline.Id, Email='contact@MyAirline.com');
 		insert MyContact;
 
@@ -41,8 +42,10 @@ public class MITA_PortalTest {
 		insert Airlines;
 
 		Contacts = new List<Contact>();
-		for(Account a : Airlines)
-			Contacts.add(new Contact(FirstName = 'Name', LastName='Contact '+a.Name, AccountId=a.Id, MITA_Contact__c = true, Email='contact@'+a.Name.replace(' ','')+'.com'));
+		for(Account a : Airlines){
+			Contacts.add(new Contact(FirstName = 'Name', LastName='Contact '+a.Name, AccountId=a.Id, MITA_Contact__c = true, MITA_Contact_Type__c= MITA_PortalMyAgreementsCtrl.MandatoryMITAType, Email='contact@'+a.Name.replace(' ','')+'.com'));
+			Contacts.add(new Contact(FirstName = 'NameNoMita', LastName='Contact No Mita '+a.Name, AccountId=a.Id, MITA_Contact__c = true, Email='contactNoMita@'+a.Name.replace(' ','')+'.com'));
+		}
 		insert Contacts;
 
 		Portal_Applications__c app = new Portal_Applications__c(Name = MITA_PortalMyAgreementsCtrl.APP_NAME);
@@ -107,6 +110,17 @@ public class MITA_PortalTest {
 		System.runAs(portalUser){
 			MITA_PortalMyAgreementsCtrl ctrl = new MITA_PortalMyAgreementsCtrl();
 			//system.assertEquals(2,ctrl.wrapperAgreements.size());
+
+			MITA_PortalMyAgreementsCtrl.SuggestedAirline sairTest = ctrl.sair;
+			string s1 = ctrl.MITAagreementid;
+			s1 = ctrl.BIETAagreementid;
+			s1 = ctrl.MITAairlineID;
+			s1 = ctrl.BIETAairlineID;
+			s1 = ctrl.getMITASuggestionTypes();
+			s1 = ctrl.getBIETASuggestionTypes();
+
+
+			
 			ctrl.getMITAAgreementTable();
 			ctrl.getBIETAAgreementTable();
 
@@ -116,9 +130,6 @@ public class MITA_PortalTest {
 			ctrl.getBIETAAgreementTypes();
 			ctrl.getMITASuggestionTable();
 			ctrl.getBIETASuggestionTable();
-			string s = ctrl.RetrieveOtherAirlineContacts();
-			ctrl.selectedAirlineId=Airlines[0].Id;
-			s = ctrl.RetrieveOtherAirlineContacts();
 		}
 		Test.stopTest();
 	}
@@ -216,5 +227,75 @@ public class MITA_PortalTest {
 		}
 		system.assertEquals(false, found, '"One Way Passenger Issuing Airline" should not be one of the suggested agreement types');
 
+	}
+
+	static TestMethod void testContacts(){
+		initData();
+		MyAirline.MITA_Member__c = true;
+		MyAirline.BIETA_Member__c = true;
+		setMITADates(MyAirline,date.today().addDays(-1));
+		setBIETADates(MyAirline,date.today().addDays(-1));
+
+		Airlines[0].MITA_Member__c = true;
+		Airlines[0].BIETA_Member__c = true;
+		setMITADates(Airlines[0],date.today());
+		setBIETADates(Airlines[0],date.today());
+
+		update new list<Account>{MyAirline, Airlines[0]};
+
+		agreements = new List<MITA_Agreement__c>();
+		agreements.add(new MITA_Agreement__c(Airline_1__c = MyAirline.ID, Airline_2__c = Airlines[0].Id, MITAorBIETA__c='MITA', Agreement_Type__c = 'The Passenger Interline Agreement', Effective_date__c = Date.today()));
+		agreements.add(new MITA_Agreement__c(Airline_1__c = MyAirline.ID, Airline_2__c = Airlines[0].Id, MITAorBIETA__c='BIETA', Agreement_Type__c = 'One Way Passenger Issuing Airline', Effective_date__c = Date.today()));
+		insert agreements;
+
+		Test.startTest();
+
+		System.runAs(portalUser){
+			list<contact> OtherMyAirlineContacts = new list<contact>();
+			OtherMyAirlineContacts.add(new Contact(FirstName = 'NameNoMita', LastName='My Contact No Mita', AccountId=MyAirline.Id, Email='contactNoMita@MyAirline.com'));
+			OtherMyAirlineContacts.add(new Contact(FirstName = 'NameMita', LastName='My Contact Mita', AccountId=MyAirline.Id, Email='contactMita@MyAirline.com', MITA_Contact_Type__c = MITA_PortalMyAgreementsCtrl.MandatoryMITAType));
+			insert OtherMyAirlineContacts;
+			
+			MITA_PortalMyAgreementsCtrl ctrl = new MITA_PortalMyAgreementsCtrl();
+			PageReference page = ctrl.initActions();
+			string contType = ctrl.getContactTypes();
+
+			//testing other airline contacts view
+			string otherAirlineContTable = ctrl.RetrieveOtherAirlineContacts();
+			system.assert(string.isBlank(ctrl.OtherAirlineContactTable));
+			ctrl.selectedAirlineId=Airlines[0].Id;
+			otherAirlineContTable = ctrl.RetrieveOtherAirlineContacts();
+			system.assert(!string.isBlank(ctrl.OtherAirlineContactTable));
+
+			//testing my contact search
+			system.assert(string.isBlank(ctrl.myAllContactsTable));
+			ctrl.SearchCriteria = 'contactNoMita@MyAirline.com';
+			ctrl.SearchContact();
+			system.assert(string.isNotBlank(ctrl.myAllContactsTable));
+
+			//test edit contact
+			list<contact> myMitaCon = [select id, mita_contact_type__c, MITA_Teletype__c from contact where Email='contactMita@MyAirline.com'];
+			system.assertEquals(1,myMitaCon.size());
+			system.assertEquals(null, myMitaCon[0].mita_teletype__c);
+			ctrl.selectedContactToEdit = myMitaCon[0].Id;
+			ctrl.retrieveContactToEdit();
+			system.assert(ctrl.ContactBeingEdited.id == myMitaCon[0].Id);
+			ctrl.ContactBeingEdited.MITA_Teletype__c = '123456';
+			ctrl.ValidateContact();
+			system.assert(string.isBlank(ctrl.SaveError));
+			ctrl.SaveTheContact();
+			myMitaCon = [select id, mita_contact_type__c, MITA_Teletype__c from contact where Email='contactMita@MyAirline.com' limit 1];
+			system.assertEquals('123456', myMitaCon[0].Mita_teletype__c);
+
+			//test remove contact
+			ctrl.selectedContactToRemove = myMitaCon[0].Id;
+			ctrl.retrieveContactToRemove();
+			system.assert(ctrl.ContactBeingRemoved.id == myMitaCon[0].Id);
+			ctrl.ValidateContactRemoval();
+			system.assert(string.isNotBlank(ctrl.SaveError));
+			//remove anyway, just to test the method
+			ctrl.removeTheContact();
+		}
+		Test.stopTest();
 	}
 }
