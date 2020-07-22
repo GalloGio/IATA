@@ -1,0 +1,22 @@
+.ul-predictive {
+    border-radius: 2px;
+    /*box-shadow: 0 10px 30px rgba(41, 51, 57, .75);*/
+    box-shadow: 0px 8px 10px rgba(41,51,57,.75);
+    z-index: 20 !important;
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+.content-width-resultsPage {
+    width: 500px;
+}
+
+.display-contents {
+    display: contents;
+}
+
+@media (max-width: 768px){
+    .content-width-resultsPage {
+        max-width: 90%;
+    }
+}

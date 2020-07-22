@@ -1,0 +1,938 @@
+<template>
+    <div data-name="top"></div>
+    <c-cw-spinner width="25%" if:true={requesting} overlay="true" position="position-fixed"></c-cw-spinner>
+    <template if:true={setBasicInfoStep}>
+        <p class="pb-3"><b>{label.station_location}</b></p>
+ 
+        <form class="col-8 formcontainer basicdataform">
+            <template if:false={selectCountryStep}>
+                <template if:false={createHQStep}>
+                    <div class="form-group formmessage">
+                        <span if:false={isInternalUser}>{label.new_station_account_address}?</span>
+                        <span if:true={isInternalUser}>{label.icg_new_station_account_address_internal}?</span>
+                    </div>
+
+
+                    <div class="form-group form-row">
+                        <div class="col">
+                            <label class="slds-form-element__label" for="disabledstreet">{label.street_name}*</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" disabled class="slds-input" name="disabledstreet"
+                                    data-tosca="disabledstreet" id="disabledstreet" value={formData.disabledstreet}>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="form-group form-row">
+                        <div class="col">
+                            <label class="slds-form-element__label" for="disabledcountry">{label.country}*</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" disabled class="slds-input" name="disabledcountry"
+                                    data-tosca="disabledcountry" id="disabledcountry" value={formData.disabledcountry}>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="slds-form-element__label" for="disabledcity">{label.city}*</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" disabled class="slds-input" name="disabledcity" data-tosca="disabledcity"
+                                    id="disabledcity" value={formData.disabledcity}>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="form-group form-row">                        
+                        <div class="col-8">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="disabledstate">{label.state_province}</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" disabled class="slds-input" name="disabledstate"
+                                        data-tosca="disabledstate" id="disabledstate" value={formData.disabledstate}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="disabledzip">{label.zip_code}*</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" disabled class="slds-input" name="disabledzip"
+                                        data-tosca="disabledzip" id="disabledzip" value={formData.disabledzip}>
+                                </div>
+                            </div>
+                        </div>                 
+                    </div>
+                    <div class="text-center">
+                        <a if:false={isInternalUser} class="btn btn-primary-blue no-margin-top minwidthbutton pl-2 pr-4 pt-1"
+                            data-tosca="differentaddress" href="javascript:{}" onclick={next} data-substep="yes"
+                            data-sameadress="no">{label.no}</a>
+                        <a class="btn btn-primary no-margin-top minwidthbutton ml-4 pl-2 pr-4 pt-1"
+                            data-tosca="sameaddressasaccount" href="javascript:{}" onclick={next}
+                            data-sameadress="yes">
+                            <template if:false={isInternalUser}>
+                                {label.yes}
+                            </template>
+                            <template if:true={isInternalUser}>
+                                {label.confirm}
+                            </template></a>
+                    </div>
+                    <div if:true={isInternalUser} class="mt-3">
+                        <span class="advice-ms"> * {label.icg_new_station_account_address_hint}</span>
+                    </div>
+                </template>
+            </template>
+            <template if:true={selectCountryStep}>
+                <div class="form-group formmessage">
+                    <span>{label.pleae_select_country}</span>
+                </div>
+
+
+
+
+
+
+                <div class="searchboxdiv slds-form-element">
+                    <label class="slds-form-element__label" for="hqcountry">{label.country}*</label>
+                    <div class="col-md-12 p-0">
+                        <div class="slds-form-element__control">
+                            <input id="searchbox" type="text" data-tosca="hqcountryinput"
+                                class="slds-input searchbox mb-0" value={hqSearchValue} onkeyup={hqPredictiveSearch}
+                                autocomplete="off">
+                        </div>
+                    </div>
+                    <div data-tosca="predictiveContainer" class="col-xl-12 col-no-padding">
+                        <c-cw-predictive-values predictivevalues={predictiveValues}
+                            onpredictivevalueselected={selectHQCountry} display-the-box={ishqboxfocus}
+                            hide-bottom-section="true">
+                        </c-cw-predictive-values>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-left m-auto">
+                        <span class="backbutton" onclick={back} data-substep="yes"><b>{label.back}</b></span>
+                    </div>
+                </div>
+            </template>
+        </form>
+    </template>
+    <template if:true={createHQStep}>
+        <span class="breadlink pb-3" onclick={goToBasicForm}><b>{label.station_location} > </b></span><span class="breadlink"
+            onclick={goToCheckDups}><b>{label.check_existing_stations} > </b></span><span><b>{label.new_account_creation}</b></span>
+        <br /><br />
+        <span>{label.order_to_create_new_phyisical_address}</span>
+        <br /><br />
+        <form class="col-8 formcontainer accountcreationform">
+            <div class="form-group formmessage">
+                <span>{label.account_details}</span>
+            </div>
+            <c-cw-station-creation-company-information label={label} country-id={selectedHQCountry} onnext={goToSetAddressStep}
+                onback={goToCheckDups} account={account} ops-hierarchies={opsHierarchyList}>
+            </c-cw-station-creation-company-information>
+        </form>
+    </template>
+    <template if:true={setAddressStep}>
+        <span class="breadlink" onclick={goToBasicForm}><b>{label.station_location} > </b></span><span class="breadlink"
+            onclick={goToCheckDups}><b>{label.check_existing_stations} > </b></span><span><b>{label.new_account_creation}</b></span>
+        <br /><br />
+        <span>{label.order_to_create_new_phyisical_address}</span>
+        <br /><br />
+        <form class="col-8 formcontainer accountcreationform">
+            <div class="form-group formmessage">
+                <span>{label.address_information}</span>
+            </div>
+            <c-cw-station-creation-address-information label={label} country-id={selectedHQCountry} onnext={addressInfoCompleted}
+                onback={goToCreateHQStep} account={account} address={address} onscrolltotop={scrollToTop}
+                onstartloading={startLoading} onstoploading={stopLoading}></c-cw-station-creation-address-information>
+        </form>
+    </template>
+
+
+    <template if:true={checkDuplicatesStep}>
+        <div class="mb-3">
+            <span class="breadlink" onclick={goToBasicForm}><b>{label.station_location} > </b></span><span><b>{label.check_existing_stations}</b></span>
+        </div>
+        <template if:true={duplicatesFound}>
+            <p><b>{label.we_found_existing_stations}</b> <template if:false={isInternalUser}> <b>{label.icg_of_your_company}</b> {label.icg_in} {countryOrAddress}</template><template if:true={isInternalUser}> {label.icg_for_the_selected_account}</template>. {label.check_before_creating_station_profile}:</p>
+            <br />
+            <template for:each={potentialDupFacilities} for:item="group">
+                <div class="yellowbanner row-no-margin col-11 opshierarchyheadline" key={group.groupName}><span
+                        class="headline-text">{group.groupName}</span><span class="mid-size-text">[Operational
+                        Hierarchy]</span></div>
+                <table class="table table-striped col-11" key={group.groupName}>
+                    <tbody>
+                        <tr class="row-no-margin">
+                            <th class="col-3">{label.account_name}</th>
+                            <th class="col-2">{label.city}</th>
+                            <th class="col-3">{label.address}</th>
+                            <th class="col-2">{label.existing_stations}</th>
+                            <th class="col-1"></th>
+                        </tr>
+                        <template for:each={group.companyList} for:item="cmpany">
+                            <tr key={cmpany.accountInfo.Id} data-key={cmpany.accountInfo.Id} class="row-no-margin">
+                                <td class="col-3 col-no-padding-left"><span
+                                        if:false={cmpany.accountInfo.Is_DB_Branch__c}
+                                        class="hqname pr-2 pl-2">{cmpany.accountInfo.Name}</span><span
+                                        if:true={cmpany.accountInfo.Is_DB_Branch__c} class="branchname">&emsp; -
+                                        {cmpany.accountInfo.Name}</span></td>
+                                <td class="col-2 text-truncate"><span if:true={cmpany.accountInfo.Business_City__r}>{cmpany.accountInfo.Business_City__r.Name}</span><span if:false={cmpany.accountInfo.Business_City__r}>{cmpany.accountInfo.Business_City_Name__c}</span></td>
+                                <td class="col-3">{cmpany.accountInfo.Business_Street__c},
+                                    {cmpany.accountInfo.Business_Postal_Code__c}</td>
+                                <td data-group={group.groupName} data-key={cmpany.accountInfo.Id} class="col-2">
+                                    <div class="row">
+                                        <template if:true={cmpany.airlinecount}>
+                                            <div class="text-center stationhover col" data-type="Airline">
+                                                <img src={airline} /><br />
+                                                x{cmpany.airlinecount}
+                                            </div>
+                                        </template>
+                                        <template if:true={cmpany.airportcount}>
+                                            <div class="text-center stationhover col" data-type="Airport Operator">
+                                                <img src={airportoperator} /><br />
+                                                x{cmpany.airportcount}
+                                            </div>
+                                        </template>
+                                        <template if:true={cmpany.ffcount}>
+                                            <div class="text-center stationhover col" data-type="Freight Forwarder">
+                                                <img src={freight} /><br />
+                                                x{cmpany.ffcount}
+                                            </div>
+                                        </template>
+                                        <template if:true={cmpany.truckercount}>
+                                            <div class="text-center stationhover col" data-type="Trucker">
+                                                <img src={trucker} /><br />
+                                                x{cmpany.truckercount}
+                                            </div>
+                                        </template>
+                                        <template if:true={cmpany.cargocount}>
+                                            <div class="text-center stationhover col"
+                                                data-type="Cargo Handling Facility">
+                                                <img src={cargohandling} /><br />
+                                                x{cmpany.cargocount}
+                                            </div>
+                                        </template>
+                                        <template if:true={cmpany.shippercount}>
+                                            <div class="text-center stationhover col" data-type="Shipper">
+                                                <img src={shipper} /><br />
+                                                x{cmpany.shippercount}
+                                            </div>
+                                        </template>
+                                        <template if:true={cmpany.ramphandlercount}>
+                                            <div class="text-center stationhover col" data-type="Ramp Handler">
+                                                <img src={ramphandler} /><br />
+                                                x{cmpany.ramphandlercount}
+                                            </div>
+                                        </template>
+                                    </div>
+                                </td>
+                                <td class="col">
+                                    <a data-tosca="createstation" data-isbranch="true" data-groupname={group.groupName}
+                                        data-companyid={cmpany.accountInfo.Id} href="javascript:{}"
+                                        onclick={selectParentAccount} class="createfacilitylink">{label.create_new_profile_for_address}</a>
+                                </td>
+                            </tr>
+                        </template>
+
+                    </tbody>
+                </table>
+            </template>
+
+        </template>
+        <template if:false={duplicatesFound}>
+            <h3>{label.no_account_in_this_country}</h3>
+            <br />
+        </template>
+        <template if:false={formData.sameaddress}>
+            <div class="text-left yellowbanner col-11 row-no-margin">
+                <template if:false={formData.sameaddress}>
+                    <div class="col-7 my-auto"><span if:true={duplicatesFound}>{label.if_address_no_list_create_new_one}: &nbsp;&nbsp;</span></div>
+                </template>
+                <div class="col text-right"><a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1"
+                        data-tosca="nextaction" href="javascript:{}" onclick={createStationInNewAddress}>{label.create_station_in_new_address}</a></div>
+            </div>
+            <br /><br />
+        </template>
+        <p class="backbutton" onclick={back}><b>{label.back}</b></p>
+    </template>
+    <template if:true={facilityDetailsStep}>
+        <span class="breadlink" onclick={goToBasicForm}><b>{label.station_location} > </b></span><span class="breadlink"
+            onclick={goToCheckDups}><b>{label.check_existing_stations} > </b></span><span if:false={selectedCompany} class="breadlink" onclick={goToCreateHQStep}>{label.new_account_creation} > </span><span><b>{label.station_details}</b></span>
+        <br /><br />
+        <form class="col-lg-8 col-md-12 formcontainer additionaldataform">
+            <p><b>{label.station_information}</b></p>
+            <hr class="yellow-underline mb-2-5">
+            <div class="form-row">
+                <div class="col">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="stationtype">{label.station_type}</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" disabled class="slds-input" name="stationtype"
+                            data-tosca="stationtype" id="stationtype" value={companyType}>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="stationname">{label.station_name}</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" disabled class="slds-input" name="stationname"
+                            data-tosca="stationname" id="stationname" value={formData.name}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label text-xxsmall" for="stationaddress">{label.address}</label>
+                <div class="slds-form-element__control">
+                    <input type="text" disabled class="slds-input" name="stationaddress"
+                    data-tosca="stationaddress" id="stationaddress" value={selectedAddress}>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label text-xxsmall" for="stationsecondaddress">{label.icg_second_address}</label>
+                <div class="slds-form-element__control">
+                    <input type="text" class="slds-input" name="stationsecondaddress"
+                    data-tosca="stationsecondaddress" id="stationsecondaddress" value={additionalData.stationsecondaddress}>
+                </div>
+            </div>
+            <div class="row-no-margin col-12 mt-2 mb-2">
+                <i>If the address of the station is not located where the map indicates, please <b>drag the marker to the right place</b>.
+                This will not update the address itself but the geocoordinates of the station.</i>
+            </div>
+            <div class="row-no-margin col-12 mt-2 mb-2">
+                <c-cw-address-selector-map-container class="width-100" is-internal-user={isInternalUser} onsetgeocoordinates={setGeocoordinates} address-text={selectedAddressForMap} label={label} collapsed="true"></c-cw-address-selector-map-container>
+            </div>
+            
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="email">{label.customer_email}</label>
+                <div class="slds-form-element__control">
+                    <input type="email" name="email" data-tosca="email" class="slds-input" id="email"
+                        value={additionalData.email}>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="website">{label.customer_website}</label>
+                <div class="slds-form-element__control">
+                    <input type="url" name="website" data-tosca="website" class="slds-input" id="website"
+                        value={additionalData.website}>
+                </div>
+            </div>
+            <div class="slds-form-element" if:true={showPilotInformation}>
+                <label class="slds-form-element__label" for="website">{label.icg_pilotInformation}</label>
+                <div class="slds-form-element__control">
+                    <input type="url" name="pilotinfo" data-tosca="pilotinfo" class="slds-input" id="pilotinfo"
+                        value={additionalData.pilotinfo}>
+                </div>
+            </div>
+            <div class="slds-form-element" if:true={showOnlineBooking}>
+                <label class="slds-form-element__label" for="onlineplatform">{label.do_you_have_booking_platform}</label>
+                <div class="slds-form-element__control">
+                    <input type="url" name="onlineplatform" data-tosca="onlineplatform" class="slds-input"
+                        id="onlineplatform" value={additionalData.onlineplatform}>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="col">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="phone">{label.customer_service_phone}</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" name="phone" data-tosca="phone" class="slds-input" id="phone"
+                                value={additionalData.phone} />
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="noemployees">{label.number_of_employees}</label>
+                        <div class="slds-form-element__control">
+                            <input type="number" name="noemployees" data-tosca="noemployees" class="slds-input"
+                                id="noemployees" value={additionalData.noemployees} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col" if:true={showSupportedLanguages}>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="languages">{label.languages_spoken}</label>
+                        <div class="slds-form-element__control">
+                            <div class="col-md-12 p-0">
+                                <div class="slds-form-element__control">
+                                    <input id="langsearchbox" type="text" data-tosca="languagesinput"
+                                        class="slds-input searchbox mb-0" value={langSearchValue} onkeyup={langPredictiveSearch}
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div data-tosca="predictiveContainer" class="col-xl-12 col-no-padding">
+                                <c-cw-predictive-values predictivevalues={predictiveValues}
+                                onpredictivevalueselected={setLanguages} display-the-box={islangboxfocus}
+                                hide-bottom-section="true">
+                                </c-cw-predictive-values>
+                            </div>
+                            <div class="selectedLanguages div-tags collapse-tags">
+                                <template for:each={selectedLanguagesList} for:item="selectedlang">
+                                    <lightning-pill key={selectedlang.value} label={selectedlang.label} data-value={selectedlang.value} onremove={removeLang}></lightning-pill>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="nofacilities">{label.number_of_facilities_at_station}</label>
+                        <div class="slds-form-element__control">
+                            <input type="number" name="nofacilities" data-tosca="nofacilities" class="slds-input"
+                                id="nofacilities" value={additionalData.nofacilities} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">           
+                <div class="col">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="nearestairportsearchbox">{label.nearest_airport}</label>
+                        <div class="slds-form-element__control">
+                            <div class="col-md-12 p-0">
+                                <div class="slds-form-element__control">
+                                    <input id="nearestairportsearchbox" type="text" data-tosca="nearestairportinput"
+                                        class="slds-input searchbox mb-0" value={airportSearchValue} onkeyup={airportPredictiveSearch}
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div data-tosca="predictiveContainer" class="col-xl-12 col-no-padding">
+                                <c-cw-predictive-values predictivevalues={predictiveValues}
+                                onpredictivevalueselected={setNearestAirport} display-the-box={isairportboxfocus}
+                                hide-bottom-section="true">
+                                </c-cw-predictive-values>
+                            </div>
+                            <div class="selectedAirport div-tags collapse-tags" if:true={selectedAirport}>
+                                <lightning-pill key={selectedAirport.value} label={selectedAirport.label} data-value={selectedAirport.value} onremove={removeSelectedAirport}></lightning-pill>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m-auto">
+                    <div class="slds-form-element m-auto">                       
+                        <div class="slds-form-element__control">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="onairport" data-tosca="onairport" id="onairport" value={additionalData.onairport}/>
+                                <label class="slds-checkbox__label" for="onairport">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">{label.on_airport}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" if:true={showDirectRampAccess}>           
+                <div class="col m-auto">
+                    <div class="slds-form-element m-auto">                       
+                        <div class="slds-form-element__control">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="directrampaccess" data-tosca="directrampaccess" id="directrampaccess" value={additionalData.directrampaccess}/>
+                                <label class="slds-checkbox__label" for="directrampaccess">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">{label.direct_ramp_access}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <p><b>{label.company_logo}</b></p>
+            <hr class="yellow-underline mb-2-5">
+            <div class="form-row">
+                <div class="col-4 middle">
+                    <div class="slds-file-selector slds-file-selector_files">
+                        <div class="slds-file">
+                            <input type="file" name="logoimage" data-tosca="logoimage"
+                                class="slds-file-selector__input slds-assistive-text" accept="image/*" id="logoimage"
+                                aria-labelledby="file-selector-primary-label file-selector-secondary-label"
+                                onchange={setLogoPreview} />
+                            <label class="slds-file-selector__body" for="logoimage" id="file-selector-secondary-label">
+                                <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="upload">
+                                            <path
+                                                d="M22.4 14.3H21c-.4 0-.7.4-.7.7v4.6c0 .4-.3.7-.7.7H4.4c-.4 0-.7-.3-.7-.7V15c0-.3-.3-.7-.7-.7H1.6c-.4 0-.7.4-.7.7v6.2c0 1 .9 1.9 1.9 1.9h18.4c1 0 1.9-.9 1.9-1.9V15c0-.3-.3-.7-.7-.7zM12.5 1.1c-.3-.3-.7-.3-1 0L5.3 7.3c-.3.3-.3.7 0 1l.9 1c.3.3.7.3 1 0l2.6-2.6c.3-.3.8-.1.8.3v9.8c0 .4.3.7.7.7h1.3c.4 0 .8-.4.8-.7V7.1c0-.5.4-.6.8-.4l2.6 2.6c.2.3.6.3.9 0l1-.9c.3-.3.3-.7 0-1l-6.2-6.3z">
+                                            </path>
+                                        </svg>
+                                    </svg>{label.upload_image}</span>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 middle">
+                    <div class="col-8 text-center m-auto">
+                        <img lwc:dom="manual" id="logopreview" src="" />
+                    </div>
+                    <div class="col-12 text-center">
+                        <label if:true={logoImage} class="label-remove-logo" onclick={removeLogoInput}>
+                            <img class="width-15 mb-1" src={deletecustom}/>
+                            &nbsp;{label.remove_logo}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row col-12 col-no-padding">
+                <template if:true={openingHours}>
+                    <template for:each={configOpeningHours} for:item="configHours">
+                        <template if:true={configHours.show}>
+                            <div class="col-6 col-no-padding-left mb-4 detail-section" key={configHours.title}>
+                                <c-cw-opening-hours label={label} title={configHours.title} hide-expandible-button="true"
+                                    days={configHours.arrayDays} underline="yellow-underline" edit-mode="true" onupdated={handleDaysUpdated}>
+                                </c-cw-opening-hours>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+            </div>
+            <br />
+            
+            <!-- SHOW IF RT = RAMP HANDLER || CARGO || AIRPORT OPERATOR -->
+            <template if:true={showListAirlines}>
+                <div class="row-home">
+                    <div class="col-12">
+                        <p class="title-airlines-handled">
+                            <b if:false={showOperatingAirlines}>{label.list_airlines_handled}</b>
+                            <b if:true={showOperatingAirlines}>{label.operating_airlines}</b>
+                        </p>
+                        <hr class="yellow-underline mt-2">
+                        <div class="form-row">
+                            <div class="col-6 text-right">
+                                <c-cw-search-in-list label={label} onfilterinlist={filterAirlinesHandled}>
+                                </c-cw-search-in-list>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col">
+                                <c-cw-handled-airlines label={label} preselected-airlines={selectedAirlines} isreadonly={summaryStep}
+                                    filter-text={filterTextAirlines} onselectairlines={setSelectedAirlines}>
+                                </c-cw-handled-airlines>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+             <template if:true={showOperatingCHFandRampH}>
+                <div class="row-home">
+                    <div class="col-12">
+                        <p class="title-airlines-handled">
+                            <b class="slds-truncate">{label.operating_cargo_handling_facilities}</b>
+                        </p>
+                        <hr class="yellow-underline mt-2">
+                        <div class="form-row">
+                            <div class="col-6 text-right">
+                                <c-cw-search-in-list label={label} onfilterinlist={filterOperatingCHF}>
+                                </c-cw-search-in-list>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col">
+                                <c-cw-handled-airlines label={label}  filter-text={filterTextOperatingCHF} 
+                                isreadonly={summaryStep} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+            <template if:true={showOperatingCHFandRampH}>
+                <div class="row-home">
+                    <div class="col-12">
+                        <p class="title-airlines-handled">
+                            <b>{label.operating_ramp_handler}</b>
+                        </p>
+                        <hr class="yellow-underline mt-2">
+                        <div class="form-row">
+                            <div class="col-6 text-right">
+                                <c-cw-search-in-list label={label} onfilterinlist={filterRampH}>
+                                </c-cw-search-in-list>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col">
+                                <c-cw-handled-airlines label={label} isreadonly={summaryStep} raw-data={onAirportRampH}
+                                                filter-text={filterTextRampH} onselectairlines={hideRampHandlers}></c-cw-handled-airlines>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div class="row">
+                <div class="col-6 text-left m-auto">
+                    <span class="backbutton" onclick={back}><b>{label.back}</b></span>
+                </div>
+                <div class="col-6 text-right">
+                    <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="nextaction" href="javascript:{}"
+                        onclick={next}>{label.next}</a>
+                </div>
+            </div>
+        </form>
+
+    </template>
+    <template if:true={summaryStep}>
+        <span class="breadlink" onclick={goToBasicForm}>{label.station_name_and_address} > </span><span class="breadlink"
+            onclick={goToCheckDups}>{label.check_existing_facilities} > </span><span if:false={selectedCompany} class="breadlink" onclick={goToCreateHQStep}>{label.new_account_creation} > </span><span class="breadlink"
+            onclick={goToAdvancedForm}>{label.station_details} > </span><span class="capitalize">{label.summary}</span>
+        <br /><br />
+        <form class="col-8 formcontainer summarystep">
+            <h3>{label.summary}</h3>
+            <hr class="yellow-underline mb-2-5">
+            <br />          
+            <div class="row-no-margin col-12">       
+                <div class="col-8 summarydatadiv separatorbelow">
+                    <p><b>{label.station_information}</b></p>
+                    <hr class="yellow-underline mb-2-5">
+                    <p>{label.station_type}: <b>{companyType}</b></p>
+                    <p>{label.station_name}: <b>{formData.name}</b></p>
+                    <p>{label.address}: <b>{selectedAddress}</b></p>
+                    <p>{label.icg_second_address}: <b>{additionalData.stationsecondaddress}</b></p>
+                </div>
+                <div class="col-4 text-center"><b>{label.company_logo}</b> 
+                    <div class="col-8 middle">
+                        <img lwc:dom="manual" id="logopreview2" src="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 summarydatadiv">
+                <p>{label.customer_email}: <b>{additionalData.email}</b></p>
+                <p>{label.customer_website}: <b>{additionalData.website}</b></p>
+                <p if:true={showPilotInformation}>{label.icg_pilotInformation}: <b>{additionalData.pilotinfo}</b></p>
+                <p if:true={showOnlineBooking}>{label.online_platform}: <b>{additionalData.onlineplatform}</b></p>
+                <p>{label.customer_service_phone}: <b>{additionalData.phone}</b></p>
+                <p>{label.number_of_employees}: <b>{additionalData.noemployees}</b></p>
+                <p if:true={showSupportedLanguages}>{label.languages_spoken}: <b>{selectedLanguages}</b></p>
+                <p>{label.number_of_facilities_at_station}: <b>{additionalData.nofacilities}</b></p>
+                <p>{label.on_airport}: <b>{additionalData.onairport}</b></p>
+                <p if:true={selectedAirport}>{label.nearest_airport}: <b>{selectedAirport.label}</b></p>
+                <p if:true={showDirectRampAccess}>{label.direct_ramp_access}: <b>{additionalData.directrampaccess}</b></p>
+            </div>
+            <br />
+            <!--<p><b>Opening Hours</b></p>
+            <hr class="yellow-underline mb-2-5">-->
+            <div class="row col-12 col-no-padding">
+                <!-- New Import Opening Hours -->
+                <template if:true={openingHours}>
+                    <template for:each={configOpeningHours} for:item="configHours">
+                        <template if:true={configHours.show}>
+                            <div class="col-6 col-no-padding-left mb-4 detail-section" key={configHours.title}>
+                                <c-cw-opening-hours label={label} title={configHours.title} hide-expandible-button="true"
+                                    days={configHours.arrayDays} underline="yellow-underline" closed-color="true">
+                                </c-cw-opening-hours>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+            </div>
+            <!-- SHOW IF RT = RAMP HANDLER || CARGO || AIRPORT OPERATOR -->
+            <template if:true={showListAirlines}>
+                <div class="row-home">
+                    <div class="col-12">
+                        <p class="title-airlines-handled">
+                            <b if:false={showOperatingAirlines}>{label.list_airlines_handled}</b>
+                            <b if:true={showOperatingAirlines}>{label.operating_airlines}</b>
+                        </p>
+                        <hr class="yellow-underline">
+                        <div class="form-row">
+                            <div class="col-6 text-right">
+                                <c-cw-search-in-list label={label} onfilterinlist={filterAirlinesHandled}>
+                                </c-cw-search-in-list>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col">
+                                <c-cw-handled-airlines label={label} preselected-airlines={selectedAirlines} isreadonly={summaryStep}
+                                    filter-text={filterTextAirlines}></c-cw-handled-airlines>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+            <template if:true={showOperatingCHFandRampH}>
+                <div class="row-home">
+                    <div class="col-12">
+                        <p class="title-airlines-handled">
+                            <b class="slds-truncate">{label.operating_cargo_handling_facilities}</b>
+                        </p>
+                        <hr class="yellow-underline mt-2">
+                        <div class="form-row">
+                            <div class="col-6 text-right">
+                                <c-cw-search-in-list label={label} onfilterinlist={filterOperatingCHF}>
+                                </c-cw-search-in-list>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col">
+                                <c-cw-handled-airlines label={label}  filter-text={filterTextOperatingCHF} 
+                                isreadonly={summaryStep} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+            <template if:true={showOperatingCHFandRampH}>
+                <div class="row-home">
+                    <div class="col-12">
+                        <p class="title-airlines-handled">
+                            <b>{label.operating_ramp_handler}</b>
+                        </p>
+                        <hr class="yellow-underline mt-2">
+                        <div class="form-row">
+                            <div class="col-6 text-right">
+                                <c-cw-search-in-list label={label} onfilterinlist={filterRampH}>
+                                </c-cw-search-in-list>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col">
+                                <c-cw-handled-airlines label={label} isreadonly={summaryStep} raw-data={onAirportRampH}
+                                                filter-text={filterTextRampH} onselectairlines={hideRampHandlers}></c-cw-handled-airlines>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <br /><br />
+
+            <div class="row">
+                <div class="col-6 text-left m-auto">
+                    <span class="backbutton" onclick={back}><b>{label.back}</b></span>
+                </div>
+                <div class="col-6 text-right">
+                    <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="nextaction" href="javascript:{}"
+                        onclick={createFacilityJS}>{label.submit}</a>
+                </div>
+            </div>
+        </form>
+    </template>
+    <template if:true={setFacilityNameAndType}>
+        <c-cw-intermediate-modal onclosemodal={closeFacilityNameAndTypeModal} extra-classes="p-0">
+            <form class="selectRtModal">
+                <div class="form-group" if:true={selectRt}>
+                    <div if:false={existingStationTypeNotif}>
+                        <label for="servicetype">
+                            <h3>{label.select_new_station_type}</h3>
+                        </label>
+                        <select class="form-control backgroundBlueArrow" name="recordtype" data-tosca="recordtype" id="servicetype"
+                            required>
+                            <option value="">{label.select_station} {label.type}</option>
+                            <template for:each={companyTypes} for:item="ctype">
+                                <option if:true={ctype.available} key={ctype.rtid} value={ctype.rtid} selected={ctype.selected}>{ctype.name}
+                                </option>
+                            </template>
+                        </select>
+                    </div>
+                    <div if:true={existingStationTypeNotif}>
+                        <span class="duplicateRtNotif">
+                            <h3>{label.station_type_already_exists}?</h3>
+
+                            <div class="text-center mt-2">
+                                <ul>
+                                    <template for:each={duplicatedStationsByType} for:item="station">
+                                        <li key={station.Id}>
+                                            <a key={station.Id} href={station.privateAreaLink} target="_blank"><b>{station.Name}</b></a>
+                                        </li>                                    
+                                    </template>
+                                </ul>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" if:true={selectStationName}>
+                    <div if:true={existingStationNotif}><h3 class="duplicateStationNotif">{label.station_name_and_type_already_exists}.</h3>
+                            <div class="text-center mt-2">
+                                <ul>
+                                    <template for:each={duplicatedStationsByName} for:item="station">
+                                        <li key={station.Id}>
+                                            <a key={station.Id} href={station.privateAreaLink} target="_blank"><b>{station.Name}</b></a>
+                                        </li>                                    
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    <div if:false={existingStationNotif}>
+                        <label for="name">
+                            <h3>{label.new_station_name}</h3>
+                        </label>
+                        <input type="text" placeholder={label.enter_station_name} required class="form-control" name="name" data-tosca="name" id="name" value={formData.name}>
+                    </div>
+                </div>
+
+                <div class="row-no-margin col-12">
+                    <template if:false={existingStationNotif}>
+
+                        <div class="col-6 text-left m-auto pl-0">
+                            <!--<a if:true={selectStationName} class="btn btn-primary-blue no-margin-top pl-2 pr-4 pt-1"
+                                data-tosca="backstationnameselection" href="javascript:{}"
+                                onclick={continueOrBackSelectRtAndName}>BACK</a>-->
+
+                                <span if:true={selectStationName} data-tosca="backstationnameselection" class="backbutton" onclick={continueOrBackSelectRtAndName}><b>{label.back}</b></span>
+
+                            <template if:true={selectRt}>
+                                <!--<a if:false={existingStationTypeNotif}
+                                    class="btn btn-primary-blue no-margin-top pl-2 pr-4 pt-1"
+                                    data-tosca="cancelrtypeandnameselection" href="javascript:{}"
+                                    onclick={closeFacilityNameAndTypeModal}>CANCEL</a>-->
+
+
+                                    <span if:false={existingStationTypeNotif} data-tosca="cancelrtypeandnameselection" class="backbutton" onclick={closeFacilityNameAndTypeModal}><b>{label.cancel}</b></span>
+
+                                    <span if:true={existingStationTypeNotif} data-tosca="backduplicatert" class="backbutton" onclick={continueOrBackSelectRtAndName}><b>{label.back}</b></span>
+                                <!--<a if:true={existingStationTypeNotif}
+                                    class="btn btn-primary-blue no-margin-top pl-2 pr-4 pt-1 " data-tosca="backduplicatert"
+                                    href="javascript:{}" onclick={continueOrBackSelectRtAndName}>BACK</a>-->
+                            </template>
+                        </div>
+                        <div class="col-6 text-right pr-0">
+                            <a if:false={existingStationTypeNotif} class="btn btn-primary no-margin-top pl-2 pr-4 pt-1"
+                                data-tosca="selectrtypeandname" href="javascript:{}"
+                                onclick={selectRtypeAndNameJS}>{label.icg_continue}</a>
+                            <a if:true={existingStationTypeNotif} class="btn btn-primary no-margin-top pl-2 pr-4 pt-1"
+                                data-tosca="continueduplicatert" href="javascript:{}"
+                                onclick={continueOrBackSelectRtAndName} data-continue="true">{label.icg_continue}</a>
+                        </div>
+                    </template>
+                    <template if:true={existingStationNotif}>
+                        <div class="col-12 text-center">
+                            <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1 ml-4" data-tosca="backduplicatert"
+                                href="javascript:{}" onclick={continueOrBackSelectRtAndName} data-continue="true">{label.ok}</a>
+                        </div>
+                    </template>
+
+                </div>
+            </form>
+        </c-cw-intermediate-modal>
+    </template>
+    <template if:true={newAddressPrompt}>
+        <c-cw-intermediate-modal onclosemodal={closeStationInNewAddressPrompt}>
+            <div>
+                <h3>{label.creating_station_new_address_required_new_account}</h3>
+                <br />
+                <div class="text-center">
+                    <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="backduplicatert"
+                        href="javascript:{}" onclick={goToCreateHQStep}>{label.proceed_to_account_creation}</a>
+                </div>
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+
+    <template if:true={accountCreationPrompt}>
+        <c-cw-intermediate-modal onclosemodal={closeNewAccountCreationPrompt}>
+            <div>
+                <h3>{label.account_create_take_several_days}</h3>
+                <br />
+                <div class="text-center">
+                    <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="backduplicatert"
+                        href="javascript:{}" onclick={goToAdvancedForm}>{label.icg_continue}</a>
+                </div>
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+    <template if:true={stationCreationPrompt}>
+        <c-cw-intermediate-modal onclosemodal={closeStationCreationPrompt}>
+            <div>
+                <div class="col-12 text-center">
+                    <h3 if:true={objectBeingCreated}>{label.icg_creating} {objectBeingCreated}</h3>
+                    <h3 if:false={objectBeingCreated}>
+                        <template if:true={stationCreationCompleted}>{label.process_finished}</template>
+                        <template if:false={stationCreationCompleted}>{label.in_progress}...</template>
+                    </h3>
+                </div>
+                <br />
+                <div class="row align-items-center" if:false={selectedCompany}>
+                    <div class="col-12 text-center">
+                        <c-cw-spinner if:true={creatingAccount} position="position-relative" width="20%"></c-cw-spinner>
+                        <img src={CHECKED_IMAGE} width="20px" if:true={accountCreated}/>
+                        <img src={ERROR_IMAGE} width="20px" if:true={errorCreatingAccount}/>
+
+                        <label class="pl-2">{label.account_creation}</label>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-12 text-center">
+                        <c-cw-spinner if:true={creatingStation} position="position-relative" width="20%"></c-cw-spinner>
+                        <img width="20px" src={CHECKED_IMAGE} if:true={stationCreated}/>
+                        <img width="20px" src={ERROR_IMAGE} if:true={errorCreatingStation}/>
+                        <label class="pl-2">{label.station_creation}</label>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-items-center">
+                    <div class="text-center col-12 m-auto">
+                        <span if:true={errorCreatingStation}>{modalMessage}</span>
+                        <span if:true={stationCreated}>
+                            {successMessage}
+                            <template if:true={additionalMessage}>
+                                <br/>
+                                {additionalMessage}
+                            </template>
+                        </span>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-items-center" if:true={stationCreationCompleted}>
+                    <div class="text-center col-12 m-auto">
+                        <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="okstationcreation"
+                            href="javascript:{}" onclick={closeStationCreationPrompt}>{label.ok}</a>
+                    </div>
+                </div>
+                
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+    <template if:true={showModal}>
+        <c-cw-basic-modal label={label} modal-message={modalMessage} modal-image={modalImage} onclosemodal={closeModal}>
+        </c-cw-basic-modal>
+    </template>
+    <section data-name="stamp-popover" class="slds-popover_hide slds-nubbin_top-left popover-custom" role="dialog">
+        <div class="slds-popover__body">
+            <span if:true={hoveredCompany}>
+                <template for:each={hoveredFacilities} for:item="facility">
+                    <div class="pr-3" key={facility.Id}>
+                        <div class="row">
+                            <div class="col-2 m-auto display-flex">
+                                <img src={facility.thumbnail} class="width-100" />
+                            </div>
+
+                            <div class="col-10 m-auto">
+                                <div class="col-12">
+                                    <a href={facility.recordUrl} target="_blank">
+                                        <h3 class="text-black">{facility.Name}</h3>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <img class="width-20" src={facility.ctypeimage} alt="type" />
+                                    <span><b>{facility.RecordType.Name}</b></span>
+                                </div>
+                                <div class="col-12" if:true={facility.canRequestAccess}>
+                                    <span key={facility.Id} data-companyid={facility.Account_Role__r.Account__c}
+                                        data-facility={facility.Id} class="breadlink uppercase" data-tosca="becomefacilityadmin"
+                                        onclick={becomeFacilityAdminJS}>{label.become_station_manager}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <hr class="mt-2 mb-2" key={facility.Id}>
+                </template>
+            </span>
+        </div>
+    </section>
+</template>

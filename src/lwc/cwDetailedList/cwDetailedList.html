@@ -1,0 +1,67 @@
+<template>
+        <template if:false={isLoading}>
+            <div class="col-12 col-no-padding full-section-results-us">
+                <div id="allfacilities" class="tabcontent display-block">
+                        <div class="row">
+                            <div class="col-8 pl-3 pt-3" >
+                            </div>
+                            <div class="col-4 text-right pr-3" >
+                                <a href="javascript:{}" data-name="groupName" title={label.icg_export_to_excel} onclick={excelFormatAll}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a>
+                            </div>
+                        </div>
+                    
+                        <table class="table table-striped width-100">
+                            <thead>
+                                <tr>
+                                    <th class="col-st-name" scope="col">{label.station_name}</th>
+                                    <th class="col-st-type" scope="col">{label.station_type}</th>
+                                    <th class="col-st-address" scope="col">{label.address}</th>
+                                    <th class="col-st-certs" scope="col">{label.icg_validation_programs}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template if:true={facilities} for:each={facilities} for:item="station">
+                                    <tr key={station.Banner} if:true={station.isBanner}>
+                                        <td colspan="5">
+                                            <div key={station.Banner} class="resultBox">
+                                                <div class="row-no-margin align-items-center bg-blue">
+                                                    <div class="col-md-6 offset-md-1 col-sm-12 reg-today-txt"><b
+                                                            class="bannerText">{label.icg_resultpage_banner_text}</b></div>
+                                                    <div class="col-md-4 col-sm-12 reg-today-btn">
+                                                        <button type="button" onclick={goToPreregister}
+                                                            class="btn btn-primary mt-0 width-100">{label.icg_resultpage_banner_button}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                   
+                                    <template if:false={station.isBanner}>
+                                        <tr key={station.facility.Id}>
+                                            <td class="col-st-name">
+                                                <p class="text-blue cursor-pt" onclick={handleMoreInfo} data-id={station.facility.Id}>
+                                                    {station.facility.name}</p>
+                                            </td>
+
+                                            <td class="col-st-type"><img title={station.facility.recordTypeName} width="25" src={station.facility.recordTypeIcon} /></td>
+                                            <td class="col-st-address">{station.facility.formattedAddress}</td>
+                                            <td class="col-st-certs">
+                                                <template for:each={station.facility.listAccCert} for:item="cert" for:index="certIndex">
+                                                    <img src={cert.ICG_Certification__r.Image__c} class="certiImageTable mr-1" key={cert.Id}/>
+                                                </template>
+                                            </td>
+                                            
+                                        </tr>
+                                    </template>
+                                    
+                                </template>
+                            </tbody>
+                        </table>
+                    <c-cw-xlsx-main class="xlsxallvalidations" header-list={xlsHeaderAllValidations} filename={filename} sheet-data={xlsDataAllValidations}></c-cw-xlsx-main>
+                </div>
+            </div>
+        </template>
+        <template if:true={isLoading}>
+            <c-cw-spinner width="25%" position="position-absolute" class="height-250"></c-cw-spinner>
+        </template>
+</template>

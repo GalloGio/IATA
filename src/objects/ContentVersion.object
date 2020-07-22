@@ -2212,6 +2212,15 @@
     <fields>
         <fullName>IsAssetEnabled</fullName>
     </fields>
+	<fields>
+        <fullName>Is_Company_Logo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for checking if a file is used as a company logo</description>
+        <externalId>false</externalId>
+        <label>Is Company Logo</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Language</fullName>
         <trackHistory>false</trackHistory>

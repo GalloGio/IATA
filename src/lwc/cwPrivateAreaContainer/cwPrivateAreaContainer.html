@@ -1,0 +1,227 @@
+<template>
+	<template if:true={userHasAccess}>
+	<!--VISIBLE RESPONSIVE VERSION-->
+	<div class="bg-white">
+		<div class="container container-search">
+			<div class="row">
+				<div class="col-xl-2 col-lg-2 col-md-12 col-xs-12 filter-panel">
+					<c-cw-private-area-menu-bar label={label} onmenuitemselection={selectMenuItem} onexpandmenu={expandMnu} oncollapsemenu={collapseMnu} selected-element={menuItemSelected} class="height-100" ongotohome={goToHome} user-info={userInfo} company-admin-section-text={getCompanyAdminSectionText}> </c-cw-private-area-menu-bar>
+				</div>
+				<div class="col-xl-10 col-lg-10 col-md-12 col-xs-12 maincol marginbottom">
+					<div class="col-12">
+						<!--<c-cw-spinner width="25%" overlay="true" overlay-color="#FFF" position="position-absolute" if:true={sectionLoading}></c-cw-spinner>-->
+						<c-cw-manager-facility-selector label={label} user-managed-facilities={userManagedFacilities} user-info={userInfo} onfacilityselection={selectFacility} selected-facility={selectedFacility}> </c-cw-manager-facility-selector>
+						<a href="#" onclick={emptyMenuItemSelected} if:true={showBackToStationProfile}>Back to Station Profile</a>
+						<div>
+							<template if:true={showUserStats}>
+								<template if:true={userInfo}>
+									<div class="row-no-margin pt-5 pb-3">
+										<h2 class="name-500">
+											{label.welcome_back} &nbsp;
+											<span class="text-primary">{userInfo.Name}</span>
+										</h2>
+									</div>
+								</template>
+							
+								<template if:false={showAlertsAndEvents}>	
+									<div class="pb-3">								
+										<c-cw-private-notifications label={label} user-info={userInfo} company-info={userCompanyInfo} ongotohome={goToHome} company-admins={companyAdmins} gxa-url={gxaUrl} view-alerts-events=false onrefresh={refreshData}> </c-cw-private-notifications>
+									</div>
+								</template>		
+							
+								<div class="pb-3 pt-3">
+									<h3>{label.your_current_stats}</h3>
+									<hr class="yellow-underline">
+								</div>
+								<c-cw-user-stats label={label} environment-variables={environmentVariables} user-facilities={userFacilities} user-managed-facilities={userManagedFacilities} user-info={userInfo} active-certifications={activeCertifications} onfacilityselection={selectFacility}></c-cw-user-stats>
+							</template>
+								
+							<template if:true={showAlertsAndEvents}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.icg_notifications}</h3>
+										<hr class="yellow-underline">
+									</div>	
+								</div>								
+								<c-cw-private-notifications label={label} user-info={userInfo} company-info={userCompanyInfo} ongotohome={goToHome} company-admins={companyAdmins} view-alerts-events=true gxa-url={gxaUrl} onrefresh={refreshData}> </c-cw-private-notifications>
+							</template>	
+							<template if:true={showFacilityDetail}>
+								<c-cw-facility-page-container label={label} facilityid={selectedFacility} areatype="private" overlay-color="#FFF" spinner-position="position-absolute" onloading={sectionLoadingJS} onloaded={sectionLoadedJS}> </c-cw-facility-page-container>
+							</template>
+							<template if:true={showCreateNewFacility}>
+								<div class="pt-50">
+									<h3>{label.create_new_station}</h3>
+									<hr class="yellow-underline">		
+								</div>
+								<c-cw-create-facility-component label={label} user-info={userInfo} company-info={userCompanyInfo} user-facilities={userFacilities} ongotohome={goToHome} company-admins={companyAdmins} onrefresh={refreshData}> </c-cw-create-facility-component>
+							</template>
+							<template if:true={showBecomeFacilityManager}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3 class="capitalize">{label.become_station_manager}</h3>
+										<hr class="yellow-underline">
+										<div class="text-left">
+											<p><b>{label.which_station_to_manage}?</b></p>
+										</div>
+									</div>
+								</div>
+								<c-cw-become-facility-manager-container filter-text-facilities={selectedFacilityName} label={label} facilities={userFacilities} user-info={userInfo} onmenuitemselection={selectMenuItem} onrefresh={refreshData}> </c-cw-become-facility-manager-container>
+							</template>
+							<template if:true={showPendingFacilityApprovals}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.pending_station_approvals}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-pending-facility-approvals label={label} onapprove={approveStationEvent} onreject={rejectStationEvent} facilities={userFacilities} user-managed-facilities={userManagedFacilities} user-info={userInfo} onmenuitemselection={selectMenuItem} onrefresh={refreshData}> </c-cw-pending-facility-approvals>
+							</template>
+
+							<template if:true={showBecomeCompanyAdmin}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{getCompanyAdminSectionText}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-become-company-admin-container label={label} user-info={userInfo} facilities={userFacilities} onrefresh={refreshData}> </c-cw-become-company-admin-container>
+							</template>
+							<template if:true={showScheduleAudits}>
+								<div class="pt-50">
+									<h3>{label.schedule_audits}</h3>
+									<hr class="yellow-underline">					
+								</div>
+								<c-cw-schedule-audits label={label} user-info={userInfo} user-facilities={userFacilities} user-managed-facilities={userManagedFacilities} pre-selected-facility={selectedFacility} oncompleted={refreshAudits}> </c-cw-schedule-audits>
+							</template>
+							<template if:true={showAuditsRequested}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.audits_requested}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-audits-requested label={label} text-filter={selectedFacilityName} audit-requested-list={requestedAudits}> </c-cw-audits-requested>
+							</template>
+
+							<template if:true={showValidationHistory}>
+								<div class="pt-50">
+									<h3>{label.validation_history}</h3>
+									<hr class="yellow-underline">
+								</div>
+								<c-cw-validation-history label={label} user-facilities={userFacilities} user-managed-facilities={userManagedFacilities} pre-selected-facility={selectedFacility} user-info={userInfo} oncompleted={goToHome}></c-cw-validation-history>
+							</template>
+
+							<template if:true={showCapabilityManagement}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.capability_management}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-capability-conflict-handler label={label} user-managed-facilities={userManagedFacilities} pre-selected-facility={selectedFacility}></c-cw-capability-conflict-handler>
+							</template>
+
+							<template if:true={showPurchaseRemoteValidation}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.purchase_remote_valdation}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-purchase-remote-validation text-filter={selectedFacilityName} label={label} user-managed-facilities={userManagedFacilities} remote-validations={userRemoteValidations} is-production={isProductionEnv} onstationclicked={selectFacility}> </c-cw-purchase-remote-validation>
+							</template>
+
+							<template if:true={showOpenRemoteValidations}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.open_remote_validations}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-open-remote-validations text-filter={selectedFacilityName} label={label} user-info={userInfo} remote-validations={userRemoteValidations} gxa-url={gxaUrl} onstationclicked={selectFacility}> </c-cw-open-remote-validations>
+							</template>
+
+							<template if:true={showOpenRemoteValidationHistory}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.remote_validation_history}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-remote-validation-history text-filter={selectedFacilityName} label={label} user-info={userInfo} remote-validations={userRemoteValidations} onstationclicked={selectFacility}> </c-cw-remote-validation-history>
+							</template>
+
+							<template if:true={showPendingUserApprovals}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.pending_user_approvals}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-pending-user-approvals station-manager-filter-value={selectedFacilityName} label={label} user-facilities={userFacilities} user-managed-facilities={userManagedFacilities} onapprove={approveContactRoleEvent} onreject={rejectContactRoleEvent} onhandlecontactroleremoval={handleContactRoleRemovalEvent}></c-cw-pending-user-approvals>
+							</template>
+
+							<template if:true={showStationManagers}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.station_manager}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-station-managers-container label={label} user-managed-facilities={userManagedFacilities} pre-selected-facility={selectedFacility} user-info={userInfo} oncompleted={goToHome}></c-cw-station-managers-container>
+							</template>
+
+							<template if:true={showCompanyAdmins}>
+								<div class="pt-50">
+									<h3>{label.company_admins}</h3>
+									<hr class="yellow-underline">
+								</div>
+								<c-cw-company-admins label={label} user-facilities={userFacilities}></c-cw-company-admins>
+							</template>
+
+							<template if:true={showMyRequests}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.my_requests}</h3>
+										<hr class="yellow-underline">
+									</div>
+                                </div>
+                                <c-cw-my-requests label={label} user-managed-facilities={userManagedFacilities} user-facilities={userFacilities} user-info={userInfo}></c-cw-my-requests>
+							
+							</template>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<template if:true={showApprovalModal}>
+        <c-cw-basic-modal label={label} modal-message={approvalModalMessage} modal-image={approvalModalImage} onclosemodal={closeApprovalModal}>
+        </c-cw-basic-modal>
+    </template>
+	<template if:true={showRejectModal}>
+		<c-cw-intermediate-modal onclosemodal={closeRejectModal}>
+			<div class="col-12">
+                <h3>{rejectModalMessage}</h3>
+                <br />
+                <div>
+       				 <lightning-textarea 
+						class="width-100"
+                        name="reject-reason-input" 
+                        label="Reject Reason" 
+                        placeholder="type here..."
+                        onchange={handleRejectReasonChanged}
+                     ></lightning-textarea>
+                </div>
+                <div class="col-12 text-center">	
+					<button type="button" class="btn btn-primary-blue mr-2" data-tosca="backduplicatert" onclick={closeRejectModal}>{label.no}</button>
+					<button type="button" class="btn btn-primary ml-2" data-tosca="backduplicatert" onclick={handleConfirmReject}>{label.yes}</button>					
+                </div>
+            </div>
+        </c-cw-intermediate-modal>
+	</template>
+	</template>
+	<template if:true={isLoading}>
+		<lightning-spinner alternative-text="Loading..."></lightning-spinner>
+	</template>
+</template>

@@ -1,0 +1,147 @@
+<template>
+    <lightning-spinner if:true={isLoading} alternative-text="Loading..."></lightning-spinner>
+    <div class="col-lg-8 p-0 col-md-12">
+        <c-cw-station-selection 
+            label={label} 
+            user-managed-facilities={userManagedFacilities} 
+            pre-selected-facility={preSelectedFacility}
+            onselectfacility={selectFacility}>
+        </c-cw-station-selection>
+    </div>
+    <template if:true={selectedFacility}>
+        <div if:true={categoriesNotEmpty} class="mw-100 text-right formcontainer">
+            <template if:true={categories} for:each={categories} for:item="currentCategory" for:index="categoryIndex">
+                <div key={currentCategory.value} if:true={currentCategory.hasRows}
+                    class="row row-custom table-scroll conflict-table-scrl">
+
+                    <table class="table table-striped table-custom pb-3">
+                        <thead>
+                            <template if:true={currentCategory.columns.length}
+                                iterator:currentheader={currentCategory.columns}>
+                                <tr key={currentheader.value.name}>
+                                    <template
+                                        iterator:currentfield={currentheader.value}>
+                                        <template if:false={currentheader.last}>
+                                            <template
+                                                if:false={currentfield.value.label.length}>
+                                                <th key={currentfield.value.name}
+                                                    scope="col"
+                                                    colspan={currentfield.value.colspan}
+                                                    class="box-shadow-none">
+                                                </th>
+                                            </template>
+                                            <template
+                                                if:true={currentfield.value.label.length}>
+                                                <th key={currentfield.value.name}
+                                                    scope="col"
+                                                    colspan={currentfield.value.colspan}>
+                                                    {currentfield.value.label}
+                                                </th>
+                                            </template>
+                                        </template>
+                                        <template if:true={currentheader.last}>
+                                            <th if:true={currentfield.first}
+                                                key={currentfield.value.name}
+                                                scope="col"
+                                                colspan={currentfield.value.colspan}
+                                                class="first-column-head">
+                                                <p>
+                                                    <c-cw-html-tag-generator
+                                                        label={label} is-header="true"
+                                                        item={currentCategory}
+                                                        property-name="label"
+                                                        onconflictactiontaken={handleConflictAction}
+                                                        aux-type={currentCategory.auxType}>
+                                                    </c-cw-html-tag-generator>
+                                                </p>
+                                            </th>
+                                            <th if:false={currentfield.first}
+                                                key={currentfield.value.name}
+                                                scope="col"
+                                                colspan={currentfield.value.colspan}
+                                                data-head={currentfield.value.name}>
+                                                {currentfield.value.label}
+                                            </th>
+                                        </template>
+                                    </template>
+                                </tr>
+                            </template>
+                        </thead>
+
+                        <tbody if:true={currentCategory.columns}>
+                            <template for:each={currentCategory.rows} for:item="row"
+                                for:index="rowIndex">
+                                <tr key={row.Id} >
+
+                                    <template if:true={currentCategory.columns.length}
+                                        iterator:currentheader={currentCategory.columns}>
+                                        <template if:true={currentheader.last}>
+                                            <template
+                                                iterator:currentfield={currentheader.value}>
+                                                
+                                                <td if:true={currentfield.first}
+                                                    key={currentfield.value.name}
+                                                    class="align-middle first-column-cell text-left row-separator">
+                                                    <b>
+                                                        <c-cw-html-tag-generator
+                                                            label={label}
+                                                            row-index={rowIndex}
+                                                            item={row}
+                                                            property-name={currentfield.value.name}
+                                                            onconflictactiontaken={handleConflictAction}
+                                                            aux-type={currentCategory.auxType}>
+                                                        </c-cw-html-tag-generator>
+                                                    </b>
+                                                </td>
+
+                                                <td if:false={currentfield.first}
+                                                    key={currentfield.value.name}
+                                                    class="align-middle row-separator max-width-400" 
+                                                    data-cell={currentfield.value.name}>
+                                                    <c-cw-html-tag-generator
+                                                        label={label}
+                                                        row-index={rowIndex} item={row}
+                                                        property-name={currentfield.value.name}
+                                                        onconflictactiontaken={handleConflictAction}
+                                                        max-characters="20">
+                                                    </c-cw-html-tag-generator>
+                                                </td>
+
+                                            </template>
+                                        </template>
+                                    </template>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 text-right mb-5" key={currentCategory.value}>
+                    <a key={currentCategory.value} data-category={currentCategory.value} class="btn btn-primary mt-1 link-button disabled"
+                    data-tosca="btncontinuetoprev" href="javascript:{}"
+                        onclick={handleConfirmClicked} data-substep="yes">{label.confirm}</a>
+                </div>
+            </template>
+        </div>
+        <template if:false={categoriesNotEmpty}>
+            <div class="text-center formcontainer">
+                <div>
+                    {label.no_conflict_to_handle}
+                </div>
+            </div>
+        </template>
+    </template>
+    <template if:true={openConfirm}>
+        <c-cw-intermediate-modal onclosemodal={handleCancel}>
+            <div class="col-12 text-center">
+                <h3>{label.are_you_sure}?</h3>               
+                <button class="btn btn-primary-blue mr-2" data-tosca="backduplicatert" onclick={handleCancel}>{label.no}</button>
+                <button type="button" class="btn btn-primary ml-2" data-tosca="backduplicatert" onclick={handleConfirmDialogYes}>{label.yes}</button>
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+    <template if:true={openConfirmSuccess}>
+        <c-cw-basic-modal label={label} modal-message={modalMessage} modal-image={modalImage} onclosemodal={closeModal}>
+        </c-cw-basic-modal>
+    </template>
+
+</template>

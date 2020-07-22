@@ -1,0 +1,485 @@
+<apex:page showHeader="false" standardStylesheets="false" lightningStylesheets="true">
+    <html>
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.ICG_Resources, '/css/GoogleMapStyles.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.ICG_Resources, '/css/main.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.ICG_Resources, '/css/custom.css')}" />
+            <style>
+             .gm-ui-hover-effect{
+                top: 5px !important;
+                right: 12px !important;
+                font-size: 1.5rem;
+             }
+             .gm-ui-hover-effect img{
+                display: none !important;
+             }
+
+             .gm-ui-hover-effect:after {
+                content: '&#215;';
+            }
+
+            @media (max-width:1007px) and (min-width:521px){
+                .gm-style-iw-c {
+                    zoom: 80% !important;
+                }
+                
+                .cluster{
+                    width: 29px !important;
+                    height: 34px !important;
+                }
+
+                .cluster img{
+                    width: 29px !important;
+                    height: 34px !important;
+                }
+
+                .cluster div{
+                    width: 29px !important;
+                    height: 34px !important;
+                    line-height: 45px !important;
+                }
+                .gm-svpc{
+                    zoom: 80% !important;
+                }
+                .gmnoprint{
+                    zoom: 80% !important;
+                }
+                .gm-fullscreen-control{
+                    zoom: 80% !important;
+                }
+            }
+
+            </style>
+            <apex:includeScript value="{!URLFOR($Resource.ICG_Resources, '/js/markerclusterer.min.js')}"/>
+        </head>
+        <body>
+            <div id="map"></div>
+            <script>
+            var lexOrigin = 'https://{!$CurrentPage.parameters.lcHost}';
+            //Data for Google map
+            var data;
+            var markers = [];
+            var groupped = true;
+            var clickedMarker = false;
+            var isOverInfoWindow = false;
+            var isOverMarker = false;
+
+            var activeInfoWindow;
+            
+            //Send message to LC
+            function sendToLC(message) {
+                if(typeof(lexOrigin) != 'undefined'){
+                    parent.postMessage(message, lexOrigin);
+                }
+            }
+            
+            var style = document.createElement('style');
+            document.head.appendChild(style);
+            //Receive message from LC
+            window.addEventListener("message", function(event) {
+                //If page is public (like used in force.com sites) then be careful about the origin
+                if (event.origin !== lexOrigin) {
+                // Not the expected origin: reject message!
+                    return;
+                }
+                // Handle message
+                data = event.data;
+                
+                if(style.sheet.rules && style.sheet.rules.length > 0) style.sheet.deleteRule(0);
+                style.sheet.insertRule(`.certifications {display: ${event.data.isCollapsed ? 'none' : 'block'}}`);
+                if(event.data.loadGoogleMap === true){
+                    //Load Google Map Script
+                    var script = document.createElement("script");
+                    script.src = "https://maps.googleapis.com/maps/api/js?key={!$Setup.ICG_Environment_Variables__c.Google_Maps_Key_OneSource__c}&callback=initMap"; 
+                    document.getElementsByTagName("head")[0].appendChild(script);        
+                }else{
+                    if(event.data.initMap) this.initMap();
+                }
+            }, false);
+
+            function isOverInfoWindowFunc(value){
+                isOverInfoWindow = value;
+                if(!isOverInfoWindow && activeInfoWindow && !clickedMarker && !isOverMarker){
+                    activeInfoWindow.close();
+                    activeInfoWindow = null;
+                }
+            }
+            function nullToEmpty(str){
+                return str ? str : '';
+            }
+            function isEmpty(str) {
+                return (!str || 0 === str.length);
+            }
+            
+            //Callback when Google Map is loaded
+            function initMap() {
+                markers = [];
+                //Add marker for each point along with text
+                function addMarker(feature) {
+                    var myLatlng = new google.maps.LatLng(feature.location.Latitude, feature.location.Longitude);
+                    let label;
+                    let icon;
+                    icon = feature.icon;
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        label: label,
+                        icon: icon,
+                        originalicon: icon,
+                        rawdata : feature,
+                        map: map
+                    });
+                    let location = nullToEmpty(feature.location.Street);
+                    location += !isEmpty(location) ? !isEmpty(feature.location.PostalCode) ? ', '+nullToEmpty(feature.location.PostalCode) : nullToEmpty(feature.location.PostalCode) : nullToEmpty(feature.location.PostalCode);
+                    location += !isEmpty(location) ? !isEmpty(feature.location.City) ? ', '+nullToEmpty(feature.location.City) : nullToEmpty(feature.location.City) : nullToEmpty(feature.location.City);
+                    location += !isEmpty(location) ? !isEmpty(feature.location.Country) ? ', '+nullToEmpty(feature.location.Country) : nullToEmpty(feature.location.Country) : nullToEmpty(feature.location.Country);
+
+                    let contentHtml = `<div class="pr-1">
+                                            <div class="row-no-margin">
+                                                <div class="col-2 col-no-padding" style="display: flex;
+                                                max-width: 42px;">
+                                                    <img src="${feature.thumbnail}" class="width-100 preserveAspectRatio"/>
+                                                </div>
+                                
+                                                <div class="col-10">
+                                                    <div class="col-12">
+                                                        <a href="${feature.recordUrl}" target="_blank"><h3 class="text-black">${feature.name}</h3></a>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <img style="width:20px;" src="${feature.companyTypeImage}" alt="type"/>
+                                                        <span><b>${feature.dataType}</b></span>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-12 col-no-padding width-100 mt-2 certifications">
+                                                ${getCertsDiv(feature.availableCerts)}
+                                            </div>
+                                            <div class="row-no-margin mt-2">
+                                                <div class="col-1 col-no-padding-right" style="display: flex">
+                                                    <img src="{!URLFOR($Resource.ICG_Resources, '/icons/search-by-location.svg')}" width="25px"/>
+                                                </div>
+                                                <div class="col-7 m-auto">
+                                                    <a target="_blank" href="https://maps.google.com/?q=${location}">
+                                                        <p class="text-blue font-weight-normal">${location}
+                                                        </p>
+                                                    </a>
+                                                </div>
+                                                <div class="col-4 col-no-padding text-right m-auto">
+                                                    <button type="button" onclick="window.open('${feature.recordUrl}')" class="btn btn-primary mt-0 w-auto" style="min-height: 30px !important; height:20px !important;">+ 
+                                                        INFO</button>
+                                                </div>
+                                            </div>
+                                        </div>`;
+
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: contentHtml,
+                        maxWidth: 430,
+                        minHeight: 130,
+                        maxHeight: 500,
+                        disableAutoPan: true
+                    });
+                    addListeners(marker, infoWindow);
+                    markers.push(marker);                    
+                }
+                function getCertsDiv(availableCerts){
+                    let certDiv = '';
+                    if(availableCerts){
+                        availableCerts.forEach(cert => {
+                            if(cert.image){
+                                certDiv+=`<img src="${cert.image}" class="${cert.included ? 'included pl-1 pr-1' : 'notincluded pl-1 pr-1'}" width="50px"/>`
+                            }
+                        });
+                    }
+                    return certDiv;
+                }
+                
+                function addListeners(marker, infoWindow){
+                    marker.addListener('click', function() {
+                        if (activeInfoWindow && clickedMarker) {
+                            activeInfoWindow.close();
+                            activeInfoWindow = null;
+                            clickedMarker = false;
+                        }
+                        clickedMarker = true;
+                        infoWindow.setOptions({disableAutoPan:false});
+                        infoWindow.open(map, marker);
+                        activeInfoWindow = infoWindow;
+                    });
+                    marker.addListener('mouseover', function() {
+                        isOverMarker = true;
+                        if(activeInfoWindow && !clickedMarker){
+                            activeInfoWindow.close();
+                            activeInfoWindow = null;
+                        }
+                        if(!activeInfoWindow){
+                            infoWindow.setOptions({disableAutoPan:true});
+                            infoWindow.open(map, marker);
+                            activeInfoWindow = infoWindow;
+
+                            setTimeout(()=>{
+                                Array.from(document.getElementsByClassName('gm-style-iw-d')).forEach(elem => {
+                                    elem.addEventListener('mouseleave', ()=>{isOverInfoWindowFunc(false)});
+                                    elem.addEventListener('mouseenter', ()=>{isOverInfoWindowFunc(true)});
+                                })
+
+                            },100);
+                        }
+                    });
+                    marker.addListener('mouseout', function(e) {
+                        isOverMarker = false;
+                        setTimeout(()=>{
+                                if (activeInfoWindow && !clickedMarker && !isOverInfoWindow && !isOverMarker) {
+                                activeInfoWindow.close();
+                                activeInfoWindow = null;
+                            }
+                        }, '200');
+                        
+                    });
+                    google.maps.event.addListener(infoWindow,'closeclick',function(){
+                        clickedMarker = false;
+                        activeInfoWindow = null;
+                        // then, remove the infowindows name from the array
+                    });
+                }
+
+                //Create new map
+                let mapOptions = JSON.parse(data.mapOptions);
+                if (mapOptions.mapTypeControl !== false) {
+                    mapOptions.mapTypeControlOptions = {
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.TOP_RIGHT
+                    }
+                }
+                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+                //iterate through map data for each point (even if 1)
+                // initial coordanates at geneva
+                var mapData = data.mapData;              
+                var lat_min = 46.2309188;
+                var lat_max = 46.2309188;
+                var lng_min = 6.1096637;
+                var lng_max = 6.1096637;                 
+                
+                if(mapData){
+                    for(var i=0, j=mapData.length; i<j; i++){
+                        //Add marker for each point
+                        if(mapData[i].location.Latitude && mapData[i].location.Longitude && (!data || !data.companyTypeFilter || (data && data.companyTypeFilter && data.companyTypeFilter === mapData[i].dataType)))
+                        {
+                            addMarker(mapData[i]);
+                            if(lat_min===0 || mapData[i].location.Latitude<lat_min){ lat_min=mapData[i].location.Latitude;}
+                            if(lat_max===0 || mapData[i].location.Latitude>lat_max){ lat_max=mapData[i].location.Latitude;}
+                            if(lng_min===0 || mapData[i].location.Longitude<lng_min){ lng_min=mapData[i].location.Longitude;}
+                            if(lng_max===0 || mapData[i].location.Longitude>lng_max){ lng_max=mapData[i].location.Longitude;}
+                        }
+                    }
+                }
+           
+
+                map.setCenter(new google.maps.LatLng(
+                    ((lat_max + lat_min) / 2.0),
+                    ((lng_max + lng_min) / 2.0)
+                ));
+                map.fitBounds(new google.maps.LatLngBounds(
+                    //bottom left
+                    new google.maps.LatLng(lat_min, lng_min),
+                    //top right
+                    new google.maps.LatLng(lat_max, lng_max)
+                ));
+
+                map.addListener('zoom_changed', function() {
+                    if(activeInfoWindow) {
+                        activeInfoWindow.close();
+                        activeInfoWindow = null;
+                        clickedMarker = false;
+                    }
+                });
+                var options_markerclusterer = {
+                    zoomOnClick: false,
+                    styles : [{
+                        url :  mapData && mapData.certicon ? mapData.certicon.replace('.svg','-group.svg') : "{!URLFOR($Resource.ICG_Resources, 'icons/map-icons/icmp-grouped.svg')}",
+                        width: mapData && mapData.certicon ? 39 : 43,
+                        height: mapData && mapData.certicon ? 48 : 50,
+                        anchorText: mapData && mapData.certicon ? [-15, 11] : [-14,0],
+                        anchorIcon: [49, 20]
+                    }]
+                };
+                    // Add a marker clusterer to manage the markers.
+                var markerCluster = new MarkerClusterer(map, markers,options_markerclusterer);
+                google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+
+                    var clusterMarkers = cluster.getMarkers();
+
+                    let contentHtml ='';
+                    clusterMarkers.forEach(feature => {
+                        contentHtml = contentHtml + `
+                            <div class="pr-3">
+                                <div class="row">
+                                    <div class="col-2" style="display: flex;">
+                                        <img src="${feature.rawdata.thumbnail}" class="width-100 preserveAspectRatio"/>
+                                    </div>
+                    
+                                    <div class="col-10 m-auto">
+                                        <div class="col-12">
+                                            <a href="${feature.rawdata.recordUrl}" target="_blank"><h3 class="text-black">${feature.rawdata.name}</h3></a>
+                                        </div>
+                                        <div class="col-12">
+                                            <img style="width:20px;" src="${feature.rawdata.companyTypeImage}" alt="type"/>
+                                            <span><b>${feature.rawdata.dataType}</b></span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <hr class="mt-2 mb-2">`;
+                    })
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: contentHtml,
+                        maxWidth: 430,
+                        minHeight: 130,
+                        maxHeight: 500
+
+                    });
+
+                    infoWindow.setPosition(cluster.getCenter());
+                    infoWindow.setOptions({pixelOffset : new google.maps.Size(0, -49)});
+                    google.maps.event.addListener(infoWindow,'closeclick',function(){
+                        clickedMarker = false;
+                        activeInfoWindow = null;
+                    // then, remove the infowindows name from the array
+                    });
+                    if (activeInfoWindow) {
+                        activeInfoWindow.close();
+                        activeInfoWindow = null;
+                        if(clickedMarker) clickedMarker = false;
+                    }
+                    clickedMarker = true;
+                    infoWindow.open(map);
+                    activeInfoWindow = infoWindow;
+                });
+                google.maps.event.addListener(markerCluster, 'mouseover', function(cluster) {
+                        isOverMarker = true;
+                        if(activeInfoWindow && !clickedMarker){
+                            activeInfoWindow.close();
+                            activeInfoWindow = null;
+                        }
+                        if(!activeInfoWindow){
+                            var clusterMarkers = cluster.getMarkers();
+
+                            let contentHtml = '';
+                            clusterMarkers.forEach(feature => {
+                                contentHtml = contentHtml + `
+                                    <div class="pr-3">
+                                        <div class="row">
+                                            <div class="col-2" style="display: flex;">
+                                                <img src="${feature.rawdata.thumbnail}" class="width-100 preserveAspectRatio"/>
+                                            </div>
+                            
+                                            <div class="col-10 m-auto">
+                                                <div class="col-12">
+                                                    <a href="${feature.rawdata.recordUrl}" target="_blank"><h3 class="text-black">${feature.rawdata.name}</h3></a>
+                                                </div>
+                                                <div class="col-12">
+                                                    <img style="width:20px;" src="${feature.rawdata.companyTypeImage}" alt="type"/>
+                                                    <span><b>${feature.rawdata.dataType}</b></span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="mt-2 mb-2">`;
+                            })
+
+                            var infoWindow = new google.maps.InfoWindow({
+                                content: contentHtml,
+                                maxWidth: 430,
+                                minHeight: 130,
+                                maxHeight: 500,
+                                disableAutoPan: true
+
+                            });
+
+                            infoWindow.setPosition(cluster.getCenter());
+                            infoWindow.setOptions({pixelOffset : new google.maps.Size(0, -49)});
+                            infoWindow.open(map);
+                            activeInfoWindow = infoWindow;
+                            setTimeout(()=>{
+                                Array.from(document.getElementsByClassName('gm-style-iw-d')).forEach(elem => {
+                                    elem.addEventListener('mouseleave', ()=>{isOverInfoWindowFunc(false)});
+                                    elem.addEventListener('mouseenter', ()=>{isOverInfoWindowFunc(true)});
+                                })
+
+                            },100);
+                        }
+                });
+                google.maps.event.addListener(markerCluster, 'mouseout', function(cluster) {
+                    isOverMarker = false;
+                    setTimeout(()=>{
+                        if (activeInfoWindow && !clickedMarker && !isOverInfoWindow && !isOverMarker) {
+                            activeInfoWindow.close();
+                            activeInfoWindow = null;
+                        }
+                    },'200')
+                    
+                });
+
+                function SearchThisAreaControl(controlDiv, map) {
+
+                    // Set CSS for the control border.
+                    var controlUI = document.createElement('div');
+                    controlUI.style.backgroundColor = '#fff';
+                    controlUI.style.border = '2px solid #fff';
+                    controlUI.style.borderRadius = '3px';
+                    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+                    controlUI.style.cursor = 'pointer';
+                    controlUI.style.marginBottom = '22px';
+                    controlUI.style.textAlign = 'center';
+                    controlUI.style.opacity = '0.5';
+                    controlUI.title = 'Click to search around this area and recenter the map';
+                    controlDiv.appendChild(controlUI);
+
+                    // Set CSS for the control interior.
+                    var controlText = document.createElement('div');
+                    controlText.style.color = 'rgb(25,25,25)';
+                    controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+                    controlText.style.fontSize = '16px';
+                    controlText.style.lineHeight = '38px';
+                    controlText.style.paddingLeft = '5px';
+                    controlText.style.paddingRight = '5px';
+                    controlText.innerHTML = 'Search this area';
+                    controlUI.appendChild(controlText);
+
+                    controlUI.addEventListener('click', function() {
+                        let latNEValue =  map.getBounds().getNorthEast().lat();
+                        let longNEValue = map.getBounds().getNorthEast().lng();
+                        let latSWValue =  map.getBounds().getSouthWest().lat();
+                        let longSWValue = map.getBounds().getSouthWest().lng();
+                        
+                        let msg = {filterByLatLong: true, maxLat : latNEValue, maxLong : longNEValue, minLat : latSWValue, minLong: longSWValue}
+                        sendToLC(msg);
+                        
+                    });
+
+                }
+
+                var searchThisAreaControlDiv = document.createElement('div');
+                var searchThisAreaControl = new SearchThisAreaControl(searchThisAreaControlDiv, map);
+
+                searchThisAreaControlDiv.index = 1;
+                map.controls[google.maps.ControlPosition.TOP_CENTER].push(searchThisAreaControlDiv);
+                
+            }
+            
+            //Let LC know that VF page been loaded along with it's URL
+            //LC will then send the data
+            //This is done because LC has no way to know that VF page in iFrame has been loaded, event listener set and ready for data
+            var vfHost = "{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))}";
+            sendToLC({'state':'LOADED', 'vfHost': vfHost});
+
+            </script>  
+            
+
+        </body>
+    </html>
+</apex:page>

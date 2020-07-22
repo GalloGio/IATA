@@ -1,0 +1,40 @@
+<template>
+	<div class="row col-12 bg-grey m-auto pt-2 pb-2">
+        <div class="col-4 m-auto text-right">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white"><lightning-icon icon-name="utility:search" size="x-small"></lightning-icon></div>
+                </div>
+                <input type="text" value={textFilter} onkeyup={filterFacilitiesToPurchase} class="form-control border-left-none" placeholder="Search">
+            </div>
+        </div>
+        <div class="col-4 text-right">
+            <template if:true={hasItem}>
+				<a href="javascript:{}" data-tosca="pending-station-approvals-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a>
+            </template>
+        </div>
+    </div>
+
+	<table class="table table-striped">
+		<thead>
+		  <tr>
+			<th scope="col">Station</th>
+			<th scope="col">Address</th>
+			<th scope="col">Purchase Link</th>
+		  </tr>
+		</thead>
+		<tbody>
+			<template for:each={facilitiesToPurchaseList} for:item="facility">
+				<tr key={facility.Id}>
+					<td><p if:true={facility.Name}><a class="text-blue blueLink" onclick={goToFacilityPage} id-station={facility.Id}>{facility.Name}</a></p></td>
+					<td><p if:true={facility.Street_Nr_FOR__c}>{facility.Street_Nr_FOR__c}, {facility.Postal_Code_FOR__c}, {facility.City_FOR__c}, {facility.State_Province_FOR__c}</p></td>
+					<td><p if:true={facility.linkToPurchase}><a class="blueLink" href={facility.linkToPurchase} target="_blank">Click Here</a></p></td>
+				</tr>
+			</template>
+		</tbody>
+	</table>
+    <template if:false={hasItem}>
+        <c-cw-grid-empty-message></c-cw-grid-empty-message>
+    </template>
+	<c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+</template>

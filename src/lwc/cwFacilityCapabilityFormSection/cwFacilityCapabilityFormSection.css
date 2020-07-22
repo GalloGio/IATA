@@ -1,0 +1,233 @@
+.collapsible {
+    color: #333;
+    cursor: pointer;
+    padding: 0px 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    background-color: transparent;
+}
+
+.collapsible label {
+    max-width: 86%;
+}
+
+.collapsible:hover {
+    background-color: #eee;
+}
+
+.collapsible:after {
+    color: black;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.content {
+    max-height: 0;
+    padding: 0px 10px;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.collapsible-parent {
+    color: #333;
+    cursor: pointer;
+    padding: 0px 10px;
+    margin: 10px 0px;
+    width: auto;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+.collapsible-parent:after {
+    color: black;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+
+/* todo in static res */
+
+.itemBase {
+    border: solid 1px black;
+    margin: 2px;
+    z-index: 10;
+    color: blue;
+}
+
+.itemBase-cert {
+    z-index: 10;
+    color: blue;
+    cursor: pointer;
+}
+
+.itemSelected .arrowOptions {
+    position: absolute;
+    left: 8px;
+    top: 30px;
+    width: 13px;
+}
+
+.lbl-check {
+    font-size: 12px;
+}
+
+.itemUnselected .arrowOptions {
+    display: none;
+}
+
+.itemBase:hover {
+    border: none 2px rgb(70, 71, 70);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.itemSelected {
+    border: blue;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+    font-weight: bold;
+    /* margin-bottom: -15px; TO BE DONE WITH INPUTS*/
+    /* opacity: 0; */
+}
+
+.itemUnselected {
+    border: grey;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+    /* transition: opacity .5s linear;
+    opacity: 1; */
+}
+
+@media (max-width: 768px) {
+    .slds-pill {
+        margin: 2px 2px !important;
+    }
+}
+
+.slds-pill {
+    background-color: #1e32fa;
+    color: white;
+    font-size: 0.8rem;
+    margin: 2px 4px;
+    align-items: inherit;
+}
+
+.itemUnselected .certiImage {
+    -webkit-filter: opacity(.2);
+    filter: opacity(.2);
+}
+
+.itemUnselected .item-filter {
+    color: #919191;
+}
+
+.itemUnselected .certiTick {
+    display: none;
+}
+
+.itemUnselected .cargoTick {
+    -webkit-filter: opacity(.2);
+    filter: opacity(.2);
+}
+
+@media (max-width: 768px) {
+    .certiImage {
+        width: 55% !important;
+    }
+    .certiTick {
+        position: absolute !important;
+        margin-left: 55% !important;
+    }
+    .itemSelected .arrowOptions {
+        position: absolute;
+        left: 8px;
+        top: 50px;
+        width: 13px;
+    }
+}
+
+.certiImage {
+    width: 85%;
+}
+
+.certiTick {
+    float: right;
+    width: 15px;
+    margin-left: -15px;
+}
+
+.certiLabel {
+    font-size: 0.8rem;
+}
+
+.label-see-more {
+    cursor: pointer;
+    color: blue;
+    font-weight: 700;
+}
+
+.div-tags {
+    overflow: hidden;
+}
+
+.collapse-tags {
+    max-height: 83px;
+    overflow: hidden;
+}
+
+.collapsible .filters-label {
+    margin-bottom: 0px;
+}
+
+.active .filters-label {
+    margin-bottom: 0.5rem;
+}
+
+.itemUnselected {
+    -webkit-filter: opacity(.2) grayscale(100%);
+    filter: opacity(.2) grayscale(100%);
+}
+
+.itemSelected {
+    -webkit-filter: grayscale(0%);
+    /* font-size: 1.03rem; */
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+    color: blue;
+}
+
+.base-underline-100 {
+    margin: 5px 0px 15px 0px;
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.section {
+    font-size: 1.1rem;
+    font-weight: bold;
+    /* padding: 10px; */
+    margin: 0px;
+}
+
+.slds-form-element__label {
+    margin-bottom: 0.25rem !important;
+    padding-top: 0.25rem !important;
+}
+
+.border-light-blue {
+    border-bottom: 0.1px solid #d6d6ff;
+}

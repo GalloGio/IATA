@@ -1,0 +1,42 @@
+ul {
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.detail-section {
+  margin-top: 10px;
+}
+
+.link-blue:hover {
+  color: #1e32fa !important;
+  text-decoration: underline !important;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 700;
+}
+.icon {
+  margin: 0px 5px;
+  width: 15px;
+  max-width: 15px;
+}
+
+.btn-icon {
+  cursor: pointer;
+}
+.slds-pill{
+  background-color: #1e32fa;
+  color: #fff;
+  font-size: .8rem;
+  align-items: inherit;
+}
+
+.hidden2{
+  display: none !important;
+}
+.visible2{
+  display: block !important;
+}

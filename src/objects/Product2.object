@@ -5531,6 +5531,15 @@ The product will only appear on the Online Store when the date entered in this f
         <type>Text</type>
         <unique>false</unique>
     </fields>
+	<fields>
+        <fullName>Smart_Facility_Remote_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field has to be set manually to True for the product that matches Smart Facility Remote Validation</description>
+        <externalId>false</externalId>
+        <label>Smart Facility Remote Validation</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Source__c</fullName>
         <externalId>false</externalId>

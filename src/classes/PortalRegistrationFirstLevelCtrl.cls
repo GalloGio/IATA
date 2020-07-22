@@ -516,6 +516,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.phone     = (inputMap.get('phone') != null) ? string.valueOf(inputMap.get('phone')) : '';
 			params.country   = (inputMap.get('country') != null) ? string.valueOf(inputMap.get('country')) : '';
 			params.language  = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
+			params.sourceService = (inputMap.get('sourceService') != null) ? string.valueOf(inputMap.get('sourceService')) : '';
 			params.contactId = contactId != null ? contactId : '';
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? string.valueOf(inputMap.get('selectedCustomerType')) : '';
@@ -1034,6 +1035,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		String prefix = '';
 		if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
 		String oneTimeUrl = prefix + '/' + 'createPassword' + '?' + encodedPart;
+		if(params.sourceService != null && params.sourceService != '') oneTimeUrl += '&sourceService='+params.sourceService;
 		return oneTimeUrl;
 
 	}

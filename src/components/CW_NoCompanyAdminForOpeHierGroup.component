@@ -1,0 +1,5 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
+    <p style="line-height: 1.8rem; color: #1e32fa; font-weight: 600;">ATTENTION: There is no existing company admin for {!operationalHierarchyFromCrdOrStation}. Therefore the REQUEST HAS TO BE MANAGED BY IATA.</p>
+</apex:component>

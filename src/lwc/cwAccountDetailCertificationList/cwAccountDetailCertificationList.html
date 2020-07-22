@@ -1,0 +1,70 @@
+<template>
+    <div class={specialPadding}>
+        <p class={gtitlesize}><b>{title}</b></p>
+        <template if:true={showUnderline}>
+            <hr class="yellow-underline mt-2">
+        </template>
+        <template if:true={hasHover}>
+            <lightning-layout class="row-no-margin">
+                <template if:true={imagesListInformed} for:each={orderedImagesList} for:item="cert">
+                    <lightning-layout-item key={cert.Id} padding="around-slds-m-around_x-small"
+                        class={certsCss}>
+                        <template if:true={cert.hasCerts}>
+                            <template if:false={cert.expired}>
+                                <section data-name="stamp-popover" data-item={cert.Id} class="slds-popover_hide slds-nubbin_top-left popover-custom"
+                                    role="dialog">
+                                    <div class="slds-popover__body">
+                                        <span class="text-left">
+                                            <b>{cert.name}</b><br />
+                                            <template if:true={cert.certificationId}>
+                                                {label.certification_id}: <b>{cert.certificationId}</b><br />
+                                            </template>
+                                            <template if:true={cert.scope}>
+                                                {label.scope}: <b>{cert.scope}</b><br />
+                                            </template>
+                                            {label.issue_date}: <b>{cert.issueDate}</b><br />
+                                            {label.expiration_date}: <b>{cert.expirationDate}</b>
+                                        </span>
+                                    </div>
+                                </section>
+                            </template>
+                            <template if:true={cert.expired}>
+                                <section data-name="stamp-popover" data-item={cert.Id} class="slds-popover_hide slds-nubbin_top-left popover-custom"
+                                    role="dialog">
+                                    <div class="slds-popover__body">
+                                        <span class="text-left">
+                                            <b>{cert.name}</b><br />
+                                            <span class="text-red">{label.expired}: <b>{cert.expirationDate}</b></span>
+                                        </span>
+                                    </div>
+                                </section>
+                            </template>
+                        </template>
+
+                        <img data-item={cert.Id} key={cert.Id} src={cert.image} class={cert.cssClass}
+                            onmouseover={showExpirationDate} onmouseleave={hideExpirationDate}>
+             
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </template>
+        <template if:false={hasHover}>
+            <lightning-layout class="row-no-margin">
+                <template if:true={imagesListInformed} for:each={orderedImagesList} for:item="cert">
+                    <lightning-layout-item key={cert.Id} padding="around-slds-m-around_x-small"
+                        class="col-2 lightning-layout-item">
+                        <section data-name="stamp-popover" data-item={cert.Id} class="slds-popover_hide slds-nubbin_top-left popover-custom" role="dialog">
+                            <div class="slds-popover__body">
+                                <span class="text-left">
+                                    <b>{cert.name}</b><br />
+                                </span>
+                            </div>
+                        </section>
+                        <img data-item={cert.Id} key={cert.Id} src={cert.image} class={cert.cssClass}
+                        onmouseover={showExpirationDate} onmouseleave={hideExpirationDate}>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </template>
+    </div>
+</template>

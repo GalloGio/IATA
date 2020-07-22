@@ -1,0 +1,246 @@
+<template>
+
+	<div class="col-md-12 bg-search-section hidden-md width-100vw">
+		<div class="container">
+			<div class="col-md-8 offset-md-2 text-center padding-logo-search">
+				<div class="text-center">
+					<img src={logoSearch} class="width-60p" />
+				</div>
+				<template if:true={showLandingBar}>
+					<div class="find-your-cargo">
+						<br /><br />
+						<h3 class="font-size-1-1">{label.find_your_aviation_business_partner}</h3>
+					</div>
+
+
+					<div class="row-no-margin containercombo mt-1 p-1-5" onmouseleave={closeSearchTypeCombo}>
+						<div id="searchtypebox" class="searchtypebox col-xl-3 col-lg-4 bg-yellow p-0"
+							onmouseleave={closeSearchTypeCombo}>
+							<div id="selectedtype" class="selectedtype" data-tosca="selectedType"
+								onmouseover={displaySearchTypeCombo}>
+								<template if:true={isLocation}>
+									<table>
+										<tr data-tosca="bylocation">
+											<td><img class="width-25" src={searchbylocation} /></td>
+											<td class="text-black">
+												<p class="padding-search-by"><b>{label.search_by} <br />{label.location_search}</b></p>
+											</td>
+											<td><img class="width-15" data-tosca="bluearrow" src={bluearrow} /></td>
+										</tr>
+									</table>
+								</template>
+								<template if:true={isCertification}>
+									<table>
+										<tr data-tosca="bycertification">
+											<td><img class="width-32" src={searchbycertification} /></td>
+											<td class="text-black text-center">
+												<p class="padding-search-by"><b>{label.search_by} <br />{label.certification_search}</b></p>
+											</td>
+											<td><img class="width-15" data-tosca="bluearrow" src={bluearrow} /></td>
+										</tr>
+									</table>
+								</template>
+								<template if:true={isCompanyName}>
+									<table>
+										<tr data-tosca="bycompany">
+											<td><img class="width-22" src={searchbycompany} /></td>
+											<td class="text-black text-center">
+												<p class="company-name-text padding-search-by"><b>{label.search_by}
+														<br />{label.company_name_search}</b></p>
+											</td>
+											<td><img class="width-15" data-tosca="bluearrow" src={bluearrow} /></td>
+										</tr>
+									</table>
+								</template>
+							</div>
+
+
+							<div id="searchtypecombo" class="searchtypecombo" if:true={showSearchTypeCombo}>
+								<table id="searchtypestable" class="searchtypestable">
+									<tr onclick={setCertificationSearchType} class="item-searchby-bar">
+										<td class="cellpadding"><img class="width-15" src={searchbycertification} />
+										</td>
+										<td class="text-left text-black">
+											<p data-tosca="setCertification">{label.search_by_certification}</p>
+										</td>
+									</tr>
+									<tr onclick={setCompanyNameSearchType} class="item-searchby-bar">
+										<td class="cellpadding"><img class="width-15" src={searchbycompany} /></td>
+										<td class="text-left text-black">
+											<p data-tosca="setCoName">{label.search_by_company_name}</p>
+										</td>
+									</tr>
+									<tr onclick={setLocationSearchType} class="item-searchby-bar">
+										<td class="cellpadding"><img class="width-15" src={searchbylocation} /></td>
+										<td class="text-left text-black">
+											<p data-tosca="setLocation">{label.search_by_location}</p>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div id="searchboxdiv" class="searchboxdiv input-group col-xl-9 col-lg-8 bg-white p-0"
+							onmouseleave={closeSearchTypeCombo}>
+							<div class="col-md-12 p-0">
+								<div class="input-group">
+									<template if:false={searchReady}>
+										<input id="searchboxHidden" type="text" data-tosca="locationinput" data-mobile="false" disabled
+											class="form-control searchbox" value={searchValue}
+											onfocus={handleOnFocus} onblur={handleOnBlur} onmouseover={closeSearchTypeCombo}
+											placeholder={searchBoxPlaceholder} list="predictiveresults-1"
+											onkeyup={predictiveSearch} autocomplete="off" readonly>
+									</template>
+									<template if:true={searchReady}>
+										<input id="searchbox" type="text" data-tosca="locationinput" data-mobile="false" disabled
+											class="form-control searchbox" value={searchValue}
+											onfocus={handleOnFocus} onblur={handleOnBlur} onmouseover={closeSearchTypeCombo}
+											placeholder={searchBoxPlaceholder} list="predictiveresults-1"
+											onkeyup={predictiveSearch} autocomplete="off">
+									</template>
+									<span class="input-group-btn">
+										<template if:true={searchReady}>
+											<button onclick={resultsPage} data-tosca="search-btn" disabled
+												class="disabled-filter searchbutton btn search" type="button">
+												<img src={searchIcon} data-tosca="searchIcon" class="searchbuttonimg" alt="Search" />
+											</button>
+										</template>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div data-tosca="predictiveContainer"
+							class="col-xl-9 col-lg-8 offset-xl-3 offset-lg-4 col-no-padding ">
+							<c-cw-predictive-values predictivevalues={predictiveValues} first-row-written={searchValueForFirstItem}
+								onpredictivevalueselected={updateSearchbox} display-the-box={isboxfocus}>
+							</c-cw-predictive-values>
+						</div>
+					</div>
+				</template>
+				<div data-tosca="coming-soon-tooltip" class="col-md-6 offset-md-6 searchbarlinks text-right">
+					<template if:true={showWizardLink}>
+						<a onclick={evaluateDisplaySearchAssistant}>{label.search_assistant}</a> &nbsp;&nbsp; 
+						<span class="text-white">|</span> &nbsp;&nbsp;
+					</template>
+					<!--TODO add onclick={evaluateDisplayAdvanceSearch} for next release-->
+					<a data-item="coming-soon-tooltip" onmouseover={showPopover} onmouseleave={hidePopover} onclick={evaluateDisplayAdvanceSearch}>{label.advanced_search}</a>
+					
+					<!-- <a data-item="coming-soon-tooltip" onmouseover={showPopover} onmouseleave={hidePopover} class="isDisabled">{label.advanced_search}</a>
+					<c-cw-simple-tooltip item-id="coming-soon-tooltip" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--MOBILE/TABLET VERSION-->
+	<div class="col-12 bg-blue visible-md col-no-margin">
+		<div class="col-12 padding-logo-search-resp">
+			<div class="text-center text-white">
+				<div class="col-8 offset-2 text-center">
+					<img src={logoSearch} />
+				</div>
+			</div>
+			<template if:true={showLandingBar}>
+				<div class="text-center text-white">
+					<div class="col-10 offset-1"><br />
+						<hr class="white-hr"><br /></div>
+
+					<h3 class="font-size-1-2">{label.find_your_aviation_business_partner}</h3>
+				</div>
+				<div class="hidden-sm">
+					<br />
+				</div>
+				<div class="row-no-margin containercombo p-1-5" onmouseleave={closeSearchTypeCombo}>
+					<div id="searchtypeboxr" class="searchtypebox col-10 offset-1 p-0"
+						onmouseleave={closeSearchTypeCombo}>
+						<div id="selectedtyper" class="pb-2" onmouseover={displaySearchTypeCombo}>
+							<template if:true={isLocation}>
+								<p class="text-yellow">
+									<img class="width-20" src={searchbylocationresp} />
+									&nbsp;{label.search_by_location}&nbsp;
+									<img class="width-15" src={yellowarrow} />
+								</p>
+							</template>
+							<template if:true={isCertification}>
+								<p class="text-yellow">
+									<img class="width-25" src={searchbycertificationresp} />
+									&nbsp;{label.search_by_certification}&nbsp;
+									<img class="width-15" src={yellowarrow} />
+								</p>
+							</template>
+							<template if:true={isCompanyName}>
+								<p class="text-yellow">
+									<img class="width-18" src={searchbycompanyresp} />
+									&nbsp;{label.search_by_company_name}&nbsp;
+									<img class="width-15" src={yellowarrow} />
+								</p>
+							</template>
+						</div>
+						<div id="searchtypecombor" class="searchtypecombo-responsive" if:true={showSearchTypeCombo}>
+							<table id="searchtypestabler" class="searchtypestable">
+								<tr data-tosca="searchCertification" onclick={setCertificationSearchType}>
+									<td class="cellpadding"><img class="width-20" src={searchbycertification} /></td>
+									<td class="text-blue">
+										<p>{label.search_by_certification}</p>
+									</td>
+								</tr>
+								<tr data-tosca="searchCoName" onclick={setCompanyNameSearchType}>
+									<td class="cellpadding"><img class="width-20" src={searchbycompany} /></td>
+									<td class="text-blue">
+										<p>{label.search_by_company_name}</p>
+									</td>
+								</tr>
+								<tr data-tosca="searchLocation" onclick={setLocationSearchType}>
+									<td class="cellpadding"><img class="width-20" src={searchbylocation} /></td>
+									<td class="text-blue">
+										<p>{label.search_by_location}</p>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</template>
+
+			<div class="col-10 offset-1 row col-no-padding">
+				<div id="searchboxdivr" class="searchboxdiv input-group col-xl-9 col-lg-8 mb-3"
+					onmouseleave={closeSearchTypeCombo}>
+					<div class="col-md-12 p-0">
+						<div class="input-group bg-white ig-r">
+							<input id="searchboxr" type="text" data-tosca="locationinputMobile" data-mobile="true" disabled class="form-control searchbox"
+								value={searchValue} onfocus={handleOnFocus} onblur={handleOnBlur} onmouseover={closeSearchTypeCombo}
+								placeholder={searchBoxPlaceholder} list="predictiveresults-1" onkeyup={predictiveSearch}
+								onchange={resultsPage}>
+							<span class="input-group-btn">
+								<button onclick={resultsPage} data-tosca="search-btn" class="searchbutton btn search"
+									type="button"><img src={searchIcon} class="searchbuttonimg" alt="Search" /></button>
+							</span>
+						</div>
+					</div> 
+					<div data-tosca="predictiveContainer" class="col-md-12 p-0 text-black">
+						<c-cw-predictive-values predictivevalues={predictiveValues}
+							onpredictivevalueselected={updateSearchbox} display-the-box={isboxMfocus}>
+						</c-cw-predictive-values>
+					</div>  
+				</div>
+				
+				<template if:true={showLandingBar}>
+					<div class="col-12 searchbarlinks text-center col-no-padding">
+						<template if:true={showWizardLink}>
+						   <a onclick={evaluateDisplaySearchAssistant}>{label.search_assistant}</a> 
+						</template>
+					</div>
+				</template>
+			</div>
+		</div>
+	</div>
+	<template if:true={showSearchAssistantcmp}>
+		<c-cw-intermediate-modal onclosemodal={evaluateDisplaySearchAssistant}>
+			<c-cw-wizard-guided-search label={label} available-locations={availableLocations} ></c-cw-wizard-guided-search>
+		</c-cw-intermediate-modal>
+	</template>
+	<template if:true={showAdvanceSearchcmp}>
+		<c-cw-intermediate-modal onclosemodal={evaluateDisplayAdvanceSearch} modal-container-width = "slds-modal__container width-100">
+			<c-cw-advanced-search-container label={label} class="m-auto"></c-cw-advanced-search-container>
+		</c-cw-intermediate-modal>
+	</template>
+</template>

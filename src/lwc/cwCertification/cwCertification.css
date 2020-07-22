@@ -1,0 +1,17 @@
+.certification-title{
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.img-cert{
+    cursor: pointer;
+    width:65%;
+    max-width:83px;
+    background: white;
+}
+
+.title-cert-div{
+    height: 44px;
+    align-items: center;
+    padding-top: 5px;
+}

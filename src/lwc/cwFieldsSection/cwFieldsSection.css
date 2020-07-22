@@ -1,0 +1,11 @@
+.btn-primary:after {
+    border-width: 0 0 12px 12px;
+}
+
+.btn-primary-blue:after {
+    border-width: 0 0 12px 12px;
+}
+
+.btn{
+    min-height: 29px !important;
+}

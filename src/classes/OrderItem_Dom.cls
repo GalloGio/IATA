@@ -86,6 +86,8 @@ public without sharing class OrderItem_Dom {
 
 		//*** set order to paid if all order items are paid
 		OrderItem_Svc.setOrderToPaid(newList, oldList);
+        //*** send Remote Validation event if paid
+		OrderItem_Svc.sendRemoteValidationPlatformEvents(newList, oldMap);
 
 		//Update Product Access based on Paid Flag of the OrderItem
 		new IECProductAccess_Svc().ActivateProductAccessForPaidOrderItems(newList, oldMap);
@@ -108,6 +110,8 @@ public without sharing class OrderItem_Dom {
 
 		//*** set order to paid if all order items are paid
 		OrderItem_Svc.setOrderToPaid(newList, null);
+        //*** send Remote Validation event if paid
+		OrderItem_Svc.sendRemoteValidationPlatformEvents(newList, null);
 
 		//Update Product Access based on Paid Flag of the OrderItem
 		new IECProductAccess_Svc().ActivateProductAccessForPaidOrderItems(newList, null);

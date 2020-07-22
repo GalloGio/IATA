@@ -1,0 +1,100 @@
+<template>
+	<template if:true={isLoading}>
+		<div class="spinner-div">
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+	</template>
+	<template if:false={isLoading}>
+
+	<template if:false={editMode}>			
+		<div class="slds-grid slds-grid_align-center">
+			<h2 id="message-not-permission" class="slds-text-heading_medium slds-hyphenate">{label.icg_Data_Submission_no_access}</h2>
+		</div>
+	</template>
+	<template if:true={editMode}>
+
+		<template if:true={showModal}>
+			<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.close}>
+							<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+								<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+							</svg>
+							<span class="slds-assistive-text capitalize">{label.close}</span>
+						</button>
+						<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{label.create_certification}</h2>  
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_3-of-6">
+								<lightning-combobox name="certifications" label={label.certification} value={selectedCert} placeholder={label.select_certification} options={certificationDropdowOptions} onchange={handleChangeCertification} required></lightning-combobox>
+							</div>
+							<div class="slds-col slds-size_3-of-6"> 
+								<lightning-input type="text" label={label.certification_id} max-length="20" onchange={handleCertIdChange} value={newCertificationId} required></lightning-input>
+							</div>
+						</div>		
+						<template if:true={showScope}>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_3-of-6">
+								<lightning-input type="date" onchange={handleIssuedDateChange} label={label.issued_date} value={formatedIssuedDate} required ></lightning-input>
+							</div>
+							<div class="slds-col slds-size_3-of-6">
+								<lightning-input type="date" onchange={handleExpireDateChange} label={label.expiration_date} value={formatedExpireDate} min={formatedIssuedDate} required></lightning-input>
+							</div>
+						</div>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col">
+								<lightning-dual-listbox scope="progress" label={label.scope} source-label="Available" selected-label="Selected" options={scope} required onchange={changeScope}></lightning-dual-listbox>
+							</div>
+								
+						</div>
+						</template>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral" onclick={closeModal}>{label.cancel}</button>
+					<button class="slds-button slds-button_brand" disabled={isCanSave} onclick={createCertification}>{label.accept}</button>
+				</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+
+		<template if:true={showCertifications}>
+			<div>
+				<div class="slds-grid">
+					<div class="slds-col slds-size_1-of-8">
+						<p>{label.id}:</p>
+					</div>
+					<div class="slds-col slds-size_1-of-8">
+						<p>{label.name}:</p>
+					</div>
+					<div class="slds-col slds-size_1-of-4">
+						<p>{label.scope}:</p>
+					</div>
+					<div class="slds-col slds-size_1-of-12">
+						<p>{label.issuing_date}:</p>
+					</div>
+					<div class="slds-col slds-size_1-of-12">
+						<p>{label.expiration_date}:</p>
+					</div>
+					<div class="slds-col slds-size_1-of-12">
+						<p>{label.status}:</p>
+					</div>
+				</div>
+				<template for:each={certifications} for:item="item">
+					<c-cw-certification-manager label={label} key={item.value} record-id={recordId} available-certifications={allcertificationDropdowOptions} certification-info={item} lst-certifications={allCertifications} sfoc-scope={sofcScope} ceiv-scope={ceivScope} oncertificationdelete={refreshCertificationsAfterDelete} oncertificationrenewed={renewCertification} oneditonlycapabilitiesbycerti={editOnlyCapabilitiesByCerti} onrenew={renewCertification}></c-cw-certification-manager>
+				</template>
+				<div class="slds-p-top_small slds-p-left_xx-large">
+					<button class="slds-button slds-button_brand font-large" onclick={openModal}>+</button>
+				</div> 
+			</div>
+		</template>
+
+		<template if:true={showCapabilities}>
+			<c-cw-capabilities-manager-container record-id={recordId} certification-name={getCertificationName} certification-mode=true is-capab-certi-mode={isCapabCertiMode} ard-cert-id={groupId} onclosecapabilitiestab={changeViewCapabilitiesCertifications}></c-cw-capabilities-manager-container>
+		</template>
+
+		</template>
+	</template>
+</template>

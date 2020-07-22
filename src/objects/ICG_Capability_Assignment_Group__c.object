@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The certification / remote validation header where relevant data is stored</description>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>ICG Capability Assignment Group</label>
+    <nameField>
+        <displayFormat>OSC-{0000000}</displayFormat>
+        <label>ICG Capability Assignment Group</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>ICG Capability Assignment Groups</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>CEIV_Scope_List__c</fullName>
+        <description>Picklist of possible values for ceiv scope</description>
+        <externalId>false</externalId>
+        <label>CEIV Scope</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Administrative</fullName>
+                    <default>false</default>
+                    <label>Administrative</label>
+                </value>
+                <value>
+                    <fullName>Operational</fullName>
+                    <default>false</default>
+                    <label>Operational</label>
+                </value>
+                <value>
+                    <fullName>Cargo_Facility_Operations</fullName>
+                    <default>false</default>
+                    <label>Cargo Facility Operations</label>
+                </value>
+                <value>
+                    <fullName>Ramp_Operations</fullName>
+                    <default>false</default>
+                    <label>Ramp Operations</label>
+                </value>
+                <value>
+                    <fullName>Administrative_And_Operational</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Administrative and Operational</label>
+                </value>
+                <value>
+                    <fullName>Cargo_Handling</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Cargo Handling</label>
+                </value>
+                <value>
+                    <fullName>Cargo_Handling_And_Ramp</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Cargo Handling and Ramp</label>
+                </value>
+                <value>
+                    <fullName>Ramp_Handling</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Ramp Handling</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Certification_Id__c</fullName>
+        <description>Describes the ID of the certification</description>
+        <externalId>false</externalId>
+        <label>Certification Id</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_Until_Expiration__c</fullName>
+        <description>Calculates the remaining days until expiration</description>
+        <externalId>false</externalId>
+        <formula>ROUND(Expiration_Date__c - TODAY(), 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days Until Expiration</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expiration_Date__c</fullName>
+        <description>Show the expiration date of the validation</description>
+        <externalId>false</externalId>
+        <label>Expiration Date</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Expired_Notification_Sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field to track whether expired notification is sent or not</description>
+        <externalId>false</externalId>
+        <label>Expired Notification Sent</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>GxA_Answers_Not_Mapped_Json__c</fullName>
+        <description>Answers from gxa not mapped in sf</description>
+        <externalId>false</externalId>
+        <label>GxA Answers Not Mapped Json</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GxA_Error_Message__c</fullName>
+        <description>Error message on integration process</description>
+        <externalId>false</externalId>
+        <label>GxA Error Message</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GxA_Error_StackTrace__c</fullName>
+        <description>Error StackTrace on integration process</description>
+        <externalId>false</externalId>
+        <label>GxA Error StackTrace</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GxA_Form_Submited_Date__c</fullName>
+        <description>Describe the date when the form is submited</description>
+        <externalId>false</externalId>
+        <label>GxA Form Submited Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>GxA_Integration_Status__c</fullName>
+        <description>Current status of integration status process</description>
+        <externalId>false</externalId>
+        <label>GxA Integration Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>InProgress</fullName>
+                    <default>false</default>
+                    <label>InProgress</label>
+                </value>
+                <value>
+                    <fullName>Done</fullName>
+                    <default>false</default>
+                    <label>Done</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>GxA_Object_Key__c</fullName>
+        <description>Store the object key in s3 aws</description>
+        <externalId>false</externalId>
+        <label>GxA Object Key</label>
+        <length>1024</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GxA_Result_Json__c</fullName>
+        <description>Store the json structure</description>
+        <externalId>false</externalId>
+        <label>GxA Result Json</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ICG_Account_Role_Detail__c</fullName>
+        <description>Master detail to facility</description>
+        <externalId>false</externalId>
+        <label>ICG Account Role Detail</label>
+        <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
+        <relationshipLabel>ICG Capability Assignment Groups</relationshipLabel>
+        <relationshipName>ICG_Capability_Assignment_Groups</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>ICG_Certification__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Certification</description>
+        <externalId>false</externalId>
+        <label>ICG Certification</label>
+        <referenceTo>ICG_Certification__c</referenceTo>
+        <relationshipLabel>ICG Capability Assignment Groups</relationshipLabel>
+        <relationshipName>ICG_Capability_Assignment_Groups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IEnVA_Scope__c</fullName>
+        <description>Contains the scope ienva selected</description>
+        <externalId>false</externalId>
+        <label>IEnvA Scope</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CORE</fullName>
+                    <default>false</default>
+                    <label>CORE</label>
+                </value>
+                <value>
+                    <fullName>MRO</fullName>
+                    <default>false</default>
+                    <label>MRO</label>
+                </value>
+                <value>
+                    <fullName>GH</fullName>
+                    <default>false</default>
+                    <label>GH</label>
+                </value>
+                <value>
+                    <fullName>CF</fullName>
+                    <default>false</default>
+                    <label>CF</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Issue_Date__c</fullName>
+        <description>Show the issue date of the validation</description>
+        <externalId>false</externalId>
+        <label>Issue Date</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Is_Deprecated_Without_Children__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Marks if a group is deprecated and has no children</description>
+        <externalId>false</externalId>
+        <label>Is Deprecated Without Children</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Deprecated__c</fullName>
+        <description>Technical formula to indicate if is depcrecated</description>
+        <externalId>false</externalId>
+        <formula>Total_Children__c &gt; 0 &amp;&amp; Total_Children__c = Total_Deprecated_Children__c
+|| Is_Deprecated_Without_Children__c = true</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Deprecated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Expired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox to specify if the record is expired</description>
+        <externalId>false</externalId>
+        <label>Is Expired</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Order Product linked to remote validation</description>
+        <externalId>false</externalId>
+        <label>Order Product</label>
+        <referenceTo>OrderItem</referenceTo>
+        <relationshipLabel>ICG Capability Assignment Groups</relationshipLabel>
+        <relationshipName>ICG_Capability_Assignment_Groups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Request_Date__c</fullName>
+        <description>Describe the date when the request is sent</description>
+        <externalId>false</externalId>
+        <label>Request Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Response_Date__c</fullName>
+        <description>Describe the date when the request is responsed</description>
+        <externalId>false</externalId>
+        <label>Response Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SFOC_Scope__c</fullName>
+        <description>Multiselect to display the scope of SFOC records</description>
+        <externalId>false</externalId>
+        <label>SFOC Scope</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>General Cargo</fullName>
+                    <default>false</default>
+                    <label>General Cargo</label>
+                </value>
+                <value>
+                    <fullName>Dangerous Goods</fullName>
+                    <default>false</default>
+                    <label>Dangerous Goods</label>
+                </value>
+                <value>
+                    <fullName>Live Animals</fullName>
+                    <default>false</default>
+                    <label>Live Animals</label>
+                </value>
+                <value>
+                    <fullName>Pharmaceuticals</fullName>
+                    <default>false</default>
+                    <label>Pharmaceuticals</label>
+                </value>
+                <value>
+                    <fullName>Perishables</fullName>
+                    <default>false</default>
+                    <label>Perishables</label>
+                </value>
+                <value>
+                    <fullName>Airmail</fullName>
+                    <default>false</default>
+                    <label>Airmail</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Field that shows the status of the certification depending on the expiration date and if a new certification has been created to update this one.</description>
+        <externalId>false</externalId>
+        <formula>IF(Is_Expired__c,&apos;Expired&apos;,&apos;Active&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sticker_Id__c</fullName>
+        <description>Id of the sticker for some CEIV certifications</description>
+        <externalId>false</externalId>
+        <label>Sticker Id</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Children__c</fullName>
+        <description>Calculates the total amount of children for the group</description>
+        <externalId>false</externalId>
+        <label>Total Children</label>
+        <summaryForeignKey>ICG_Account_Role_Capability_Assignment__c.ICG_Capability_Assignment_Group__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Deprecated_Children__c</fullName>
+        <description>Number of children non depreciated linked to group</description>
+        <externalId>false</externalId>
+        <label>Total Deprecated Children</label>
+        <summaryFilterItems>
+            <field>ICG_Account_Role_Capability_Assignment__c.Deprecated__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>ICG_Account_Role_Capability_Assignment__c.ICG_Capability_Assignment_Group__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Upcoming_Expiration_Notification_Sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field to keep track of notification sent for upcoming expiration notification</description>
+        <externalId>false</externalId>
+        <label>Upcoming Expiration Notification Sent</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Validation_Payment_Date__c</fullName>
+        <description>Describe the date when the payment is validated</description>
+        <externalId>false</externalId>
+        <label>Validation Payment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <recordTypes>
+        <fullName>Certification</fullName>
+        <active>true</active>
+        <label>Certification</label>
+        <picklistValues>
+            <picklist>CEIV_Scope_List__c</picklist>
+            <values>
+                <fullName>Administrative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Facility_Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp_Operations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GxA_Integration_Status__c</picklist>
+            <values>
+                <fullName>Done</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IEnVA_Scope__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFOC_Scope__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>No_Certification_Required</fullName>
+        <active>true</active>
+        <description>No certification required for create new capabilities</description>
+        <label>No Certification Required</label>
+        <picklistValues>
+            <picklist>CEIV_Scope_List__c</picklist>
+            <values>
+                <fullName>Administrative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GxA_Integration_Status__c</picklist>
+            <values>
+                <fullName>Done</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IEnVA_Scope__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFOC_Scope__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Remote_Validation</fullName>
+        <active>true</active>
+        <label>Remote Validation</label>
+        <picklistValues>
+            <picklist>CEIV_Scope_List__c</picklist>
+            <values>
+                <fullName>Administrative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GxA_Integration_Status__c</picklist>
+            <values>
+                <fullName>Done</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InProgress</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IEnVA_Scope__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CORE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MRO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFOC_Scope__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+</CustomObject>

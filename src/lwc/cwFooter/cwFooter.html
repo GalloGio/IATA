@@ -1,0 +1,308 @@
+<template>
+	<!-- Comparison bar no-collapse -->
+	<div class="comparison-bar no-collapsed force-hidden comparison-container hidden-md">
+		<div class="slds-grid slds-wrap bg-yellow-transparent mb-0 comparison-bar-container">
+			<template if:true={shouldShowComparisonBar} iterator:item={comparisonItems} class="slds-grid slds-wrap">
+				<div if:true={item.first} key={item.value.id} class="comparison-item-container col-1 hidden-lg"></div>
+				<!-- Comparation type -->
+				<div if:true={item.first} key={item.value.id} class="comparison-item-container col-2">
+					<div class=" width-100 text-truncate ">
+						<p>{label.station_to_compare}</p>
+						<div class="comparison-type">
+							<p>
+								<span>
+									<img src={item.value.recordTypeIcon} alt="type" />
+									{item.value.recordTypeName}
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<!-- Items to compare -->
+				<div key={item.value.id} class="comparison-item-container col-2">
+					<template if:true={item.value.type}>
+						<div class="btn-bg-blue width-100 text-truncate comparison-item">
+							<div class="col-2 hidden-lg m-auto p-0">
+								<div class="comparison-item-img slds-align_absolute-center bg-white">
+									<img class="bg-white facility-compare-logo" alt="" src={item.value.logoUrl} title={item.value.name} />
+								</div>
+							</div>
+							<div class="col-9 col-no-padding-right m-auto">
+								<div class="comparison-item-content">
+									<h3 class="text-truncate" title={item.value.name}>{item.value.name}</h3>
+									<p class="text-truncate" title={item.value.address}>{item.value.address}</p>
+								</div>
+							</div>
+							<div class="col-xl-1 col-lg-2 col-no-padding">
+								<div class="height-100 slds-align_absolute-center">
+									<button type="button" class="bg-transparent no-border"
+										onclick={handleRemoveItemFromComparison} data-item-id={item.value.id}><img
+											class="width-15" src={icons.close} /></button>
+								</div>
+							</div>
+						</div>
+					</template>
+					<!-- Add more -->
+					<template if:false={item.value.type}>
+						<div class="bg-blue-transparent width-100 text-truncate comparison-item pointer"
+							onclick={handleAddMoreItemToCompare}>
+							<div class="col-9 m-auto">
+								<div class="comparison-item-content height-100">
+									<p class="text-truncate">{item.value.name}</p>
+								</div>
+							</div>
+							<div class="col-3">
+								<!-- <div class="comparison-item-content"> -->
+								<div class="height-100 slds-align_absolute-center">+</div>
+							</div>
+						</div>
+					</template>
+				</div>
+				<!-- Actions 1 -->
+
+				<div if:true={item.last} key={item.value.id} class="comparison-item-container col-xl-1 col-lg-2">
+
+					<div class="width-100 text-truncate comparison-item m-auto ">
+
+						<button if:true={minItemsRequiredToCompare} type="button" onclick={handleCompare}
+							class="btn btn-primary btn-action">{label.compare}</button>
+
+						<button if:false={minItemsRequiredToCompare} type="button" disabled
+							class="btn btn-primary btn-action disabled-filter">{label.compare}</button>
+
+					</div>
+				</div>
+
+				<!-- Actions 2 -->
+
+				<div if:true={item.last} key={item.value.id} class="comparison-item-container col-1 hidden-lg"></div>
+
+				<!-- Actions 3 -->
+				<div if:true={item.last} key={item.value.id} class="comparison-item-container col-xl-1 col-lg-2 p-0">
+					<div class="width-100 text-truncate comparison-item m-auto text-right pl-0">
+						<button type="button" onclick={handleShowHideComparison}
+							class="btn btn-bg-blue btn-action btn-action-icon ">
+							<lightning-icon icon-name="utility:chevrondown" variant="inverse" size="x-small">
+							</lightning-icon>
+						</button>
+						<button type="button" onclick={handleClearComparison}
+							class="btn btn-bg-blue btn-action btn-action-icon "><img class="width-15"
+								src={icons.close} /></button>
+					</div>
+				</div>
+			</template>
+		</div>
+	</div>
+
+	<div class="comparison-bar-show comparison-container collapsed hidden-sm">
+		<div class="slds-grid slds-wrap bg-yellow-transparent mb-0">
+			<template if:true={shouldShowComparisonBar} iterator:item={comparisonItems} class="slds-grid slds-wrap">
+				<div if:true={item.first} key={item.value.id} class="comparison-item-container col-1"></div>
+				<!-- Comparation type -->
+				<div if:true={item.first} key={item.value.id} class="comparison-item-container col-2">
+					<div class=" width-100 text-truncate ">
+						<p>{label.station_to_compare}</p>
+					</div>
+				</div>
+				<!-- Items -->
+				<div key={item.value.id} class="comparison-item-container col-2"></div>
+				<!-- Actions 1 & 2 -->
+				<div if:true={item.last} key={item.value.id} class="comparison-item-container col-2">
+				</div>
+				<!-- Actions 3 -->
+				<div if:true={item.last} key={item.value.id} class="comparison-item-container col-1 p-0">
+					<div class="width-100 text-truncate comparison-item-show m-auto text-right p-0">
+						<button type="button" onclick={handleShowHideComparison}
+							class="btn btn-bg-blue btn-action btn-action-icon p-0">
+							<lightning-icon icon-name="utility:chevronup" variant="inverse" size="x-small">
+							</lightning-icon>
+						</button>
+						<button type="button" onclick={handleClearComparison}
+							class="btn btn-bg-blue btn-action btn-action-icon p-0"><img class="width-15"
+								src={icons.close} /></button>
+					</div>
+				</div>
+			</template>
+		</div>
+	</div>
+
+	<c-cw-spinner width="25%" if:false={loadedCss} overlay="true" position="position-fixed"></c-cw-spinner>
+	<template if:true={loadedCss}>
+
+		<!--HIDDEN RESPONSIVE VERSION-->
+		<div class="hidden-sm">
+			<footer class="bg-black70 color-white ">
+				<div class={getContainerType}>
+					<div class="row">
+						<div class="col">
+							<div class="row">
+								<div>
+									<img src={logoOther} class="logo-small" alt="IATA Logo">
+								</div>
+								<div class="col tagline">
+									<template if:true={metadataFooterTitle.data}>
+										<h2>{FooterTitleDescription}</h2>
+									</template>
+								</div>
+							</div>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">
+							<template if:true={metadataAirlines.data}>
+								<h3>{AirlinesName}</h3>
+								<ul>
+									<li><a class="text-white" href={AirlinesURL} target="_blank">{AirlinesURL}</a></li>
+								</ul>
+							</template>
+						</div>
+						<div class="col-3">
+							<template if:true={metadataAviation.data}>
+								<h3>{AviationName}</h3>
+								<ul>
+									<li><a class="text-white" href={AviationURL} target="_blank">{AviationURL} </a></li>
+								</ul>
+							</template>
+						</div>
+						<div class="col social">
+							<div class="row">
+								<template if:true={metadataTwitter.data}>
+									<div class="social-item"><a title={twitterName} href={twitterURL}
+											target="_blank"><img src={twitter} alt="Twitter" class="img-fluid"></a>
+									</div>
+								</template>
+								<template if:true={metadataFacebook.data}>
+									<div class="social-item"><a title={FacebookName} href={FacebookURL}
+											target="_blank"><img src={facebook} alt="Facebook" class="img-fluid"></a>
+									</div>
+								</template>
+								<template if:true={metadataLinkedIn.data}>
+									<div class="social-item"><a title={LinkedinName} href={LinkedinURL}
+											target="_blank"><img src={linkedin} alt="LinkedIn" class="img-fluid"></a>
+									</div>
+								</template>
+								<template if:true={metadataYoutube.data}>
+									<div class="social-item"><a title={YoutubeName} href={YoutubeURL}
+											target="_blank"><img src={youtube} alt="YouTube" class="img-fluid"></a>
+									</div>
+								</template>
+								<template if:true={metadataRSS.data}>
+									<div class="social-item"><a title={RSSName} href={RSSURL} target="_blank"><img
+												src={rss} alt="RSS" class="img-fluid"></a></div>
+								</template>
+							</div>
+						</div>
+					</div>
+					<div class="row copy">
+						<div class="col">
+							<template if:true={metadataFooterCopyright.data}>
+								<p>© {FooterCopyrightDescription}</p>
+							</template>
+						</div>
+						<div class="col text-right color-white">
+							<p>
+								<template if:true={metadataPrivacy.data}>
+									<a href={PrivacyURL} class="color-white">{PrivacyName}</a>
+								</template> |
+								<template if:true={metadataLegal.data}>
+									<a href={LegalURL} class="color-white">{LegalName}</a>
+								</template>
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+
+
+		<!--VISIBLE RESPONSIVE VERSION-->
+		<div class="visible-sm">
+			<div class="bg-black70 color-white footer-responsive">
+				<div class="row-no-margin">
+					<div class="col-12 text-center">
+						<img src={logoOther} class="logo-other" alt="IATA Logo">
+					</div>
+				</div>
+				<div class="row row-no-margin">
+					<div class="col-12 text-center footer-desc-div">
+						<p class="footer-desc">{FooterTitleDescription}</p>
+					</div>
+				</div>
+				<br />
+				<div class="row-home row-no-margin text-center">
+					<div class="col-12">
+						<p class="footer-link">{AirlinesName}</p>
+						<a href={AirlinesURL} class="text-white" target="_blank">{AirlinesURL}</a>
+					</div>
+				</div>
+
+				<div class="row-home row-no-margin text-center">
+					<div class="col-12">
+						<p class="footer-link">{AviationName}</p>
+						<a href={AviationURL} class="text-white" target="_blank">{AviationURL}</a>
+					</div>
+				</div>
+
+
+				<div class="row-home row-no-margin">
+					<div class="col-6 text-right twitter-div">
+						<template if:true={metadataTwitter.data}>
+							<div class="social-item"><a title={twitterName} href={twitterURL} target="_blank"><img
+										src={twitter} alt="Twitter" class="img-fluid width-78"></a></div>
+						</template>
+					</div>
+					<div class="col-6 text-left facebook-div">
+						<template if:true={metadataFacebook.data}>
+							<div class="social-item"><a title={FacebookName} href={FacebookURL} target="_blank"><img
+										class="width-41" src={facebook} alt="Facebook" /></a></div>
+						</template>
+					</div>
+				</div>
+
+
+				<div class="row-home row-no-margin">
+					<div class="col-6 text-right linkedin-div">
+						<template if:true={metadataLinkedIn.data}>
+							<div class="social-item"><a title={LinkedinName} href={LinkedinURL} target="_blank"><img
+										src={linkedin} alt="LinkedIn" class="img-fluid width-82"></a></div>
+						</template>
+					</div>
+
+					<div class="col-6 text-left youtube-div">
+						<template if:true={metadataYoutube.data}>
+							<div class="social-item"><a title={YoutubeName} href={YoutubeURL} target="_blank"><img
+										src={youtube} alt="YouTube" class="img-fluid width-82"></a></div>
+						</template>
+					</div>
+				</div>
+
+				<div class="row-home row-no-margin">
+					<div class="col-12 text-center">
+						<template if:true={metadataRSS.data}>
+							<div class="social-item"><a title={RSSName} href={RSSURL} target="_blank"><img src={rss}
+										alt="RSS" class="img-fluid width-72"></a></div>
+						</template>
+					</div>
+				</div>
+				<div class="row-home row-no-margin">
+					<div class="col-12 text-center">
+						<template if:true={metadataFooterCopyright.data}>
+							<p>© {FooterCopyrightDescription}</p>
+						</template>
+
+						<template if:true={metadataPrivacy.data}>
+							<a href={PrivacyURL} class="color-white">{PrivacyName}</a>
+						</template> |
+						<template if:true={metadataLegal.data}>
+							<a href={LegalURL} class="color-white">{LegalName}</a>
+						</template>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</template>
+</template>

@@ -1,0 +1,193 @@
+<template>
+
+    <template if:true={dataInformed}>
+        <!-- Email -->
+        <div class="row detail-section">
+            <div class="col-12">                
+                <p>
+                    <b>{label.email}</b>
+                    <template if:true={editMode}>
+                        <lightning-icon icon-name="utility:close" class="ml-2 float-right cursor-pt" if:true={editOn} variant="error" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                        <lightning-icon icon-name="utility:edit" class="ml-2 float-right cursor-pt" if:false={editOn} title="Edit" onclick={showInput} size="x-small"></lightning-icon>
+                    </template>
+                </p>
+                <div class="slds-grid">
+                    <a href={mailTo} class="link-blue slds-truncate" if:false={editOn}>{facility.email}</a>
+                    <template if:true={editMode}>
+                        <lightning-input class="input" if:true={editOn} name="email" type="email" value={facility.email} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
+                    </template>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="row detail-section">
+            <div class="col-12">
+                <p>
+                    <b>{label.phone}</b>
+                </p>
+                <div class="slds-grid">
+                    <a href=tel:{facility.phone} class="link-blue" if:false={editOn}>{facility.phone}</a>
+                    <template if:true={editMode}>
+                        <lightning-input class="input" if:true={editOn} name="phone" type="tel" pattern="(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{0,4})" value={facility.phone} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Website -->
+        <div class="row detail-section">
+            <div class="col-12">
+                <p>
+                    <b>{label.website}</b>
+                </p>
+                <div class="slds-grid">
+                    <lightning-formatted-url 
+                        if:false={editOn}
+                        value={facility.website}
+                        label={facility.website} 
+                        target="_blank" ></lightning-formatted-url>
+                    <template if:true={editMode}>
+                        <lightning-input class="input" if:true={editOn} name="website" value={facility.website} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pilot Information -->
+
+        <template if:true={showPilotInformation}>
+
+
+            <div class="row detail-section">
+                <div class="col-12">
+                    <template if:true={editMode}>
+                        <p>
+                            <b>{label.icg_pilotInformation}</b>
+                        </p>
+                        <div class="slds-grid">
+                            <template if:false={isPilotInformationBlank}>
+                                <a href={facility.pilotInformation} class="link-blue slds-truncate" if:false={editOn} target="_blank">{facility.pilotInformation}</a>
+                            </template>
+                        </div>
+                        <lightning-input class="input" if:true={editOn} name="pilotInformation" value={facility.pilotInformation} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
+                    </template>
+
+
+                    <template if:false={editMode}>
+                        <template if:false={isPilotInformationBlank}>
+                            <div class="slds-grid"><a href={facility.pilotInformation} class="link-blue slds-truncate" target="_blank">{label.icg_pilotInformation}</a></div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!-- Online Booking -->
+        <template if:true={showOnlineBooking}>
+            <div class="row detail-section">
+                <div class="col-12">
+                    <template if:true={editMode}>
+                        <p>
+                            <b>{label.online_booking}</b>
+                        </p>
+                        <div class="slds-grid">
+                            <a href={facility.onlineBooking} class="link-blue slds-truncate" if:false={editOn} target="_blank">{facility.onlineBooking}</a>
+                        </div>
+                        <lightning-input class="input" if:true={editOn} name="onlineBooking" value={facility.onlineBooking} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
+                    </template>
+
+                    <template if:false={editMode}>
+                        <template if:true={facility.onlineBooking}>
+                            <div class="slds-grid">
+                                <lightning-formatted-url 
+                                    value={facility.onlineBooking}
+                                    label={label.online_booking}
+                                    target="_blank" ></lightning-formatted-url>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!--Operating Hours-->
+        <template for:each={configOpeningHours} for:item="configHours">
+            <template if:true={configHours.show}>
+                <div class="row detail-section" key={configHours.title}>
+                    <c-cw-opening-hours label={label} record-id={facility.Id} title={configHours.title}
+                        days={configHours.arrayDays} edit-mode={editHours} onupdated={handleDaysUpdated}>
+                    </c-cw-opening-hours>
+                </div>
+            </template>
+        </template>
+
+        <!-- Supported Languages -->
+        <template if:true={showSupportedLanguages}>
+            <div class="row detail-section">
+                <div class="col-12 pt-1 pb-1">
+
+                    <div class="header">
+                        <div>
+                            <img if:false={showLanguagesContent} src={icons.chevrondown} class="icon btn-icon"
+                                onclick={showHideLanguagesContent}>
+                            <img if:true={showLanguagesContent} src={icons.chevronup} class="icon btn-icon"
+                                onclick={showHideLanguagesContent}>
+                        </div>
+                        <div>
+                            {label.supported_languages}
+                            <hr class="yellow-underline">
+                        </div>
+                    </div>
+
+                    <div if:true={showLanguagesContent} class="col-12 content">
+                        <div class="row">
+                            <div class="col-12 pl-3">
+
+                                <ul class="slds-list_dotted" if:false={editOn}>
+                                    <template for:each={facility.supportedLanguages} for:item="supportedLanguage">
+                                        <li key={supportedLanguage}>{supportedLanguage}</li>
+                                    </template>
+                                </ul>
+                                <div class="slds-form-element" if:true={editMode}>
+                                    <div if:true={editOn}>
+                                        <label class="slds-form-element__label" for="languages">{label.languages_spoken}</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="col-md-12 p-0">
+                                                <div class="slds-form-element__control">
+                                                    <input id="langsearchbox" type="text" data-tosca="languagesinput"
+                                                        class="slds-input searchbox mb-0" value={langSearchValue} onkeyup={langPredictiveSearch}
+                                                        autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div data-tosca="predictiveContainer" class="col-xl-12 col-no-padding">
+                                                <c-cw-predictive-values predictivevalues={predictiveValues}
+                                                onpredictivevalueselected={setLanguages} display-the-box={islangboxfocus}
+                                                hide-bottom-section="true">
+                                                </c-cw-predictive-values>
+                                            </div>
+                                            <div class="selectedLanguages div-tags collapse-tags">
+                                                <template for:each={selectedLanguagesList} for:item="selectedlang">
+                                                    <lightning-pill key={selectedlang.value} label={selectedlang.label} data-value={selectedlang.value} onremove={removeLang}></lightning-pill>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+    </template>
+
+    <!-- Is Loading -->
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+    </template>
+
+</template>

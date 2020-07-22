@@ -38,6 +38,10 @@ public  class AmazonXMLParser {
 
 		}
 
+	public class ErrorResponse {
+		public String Code { get; set; }
+		public String Message { get; set; }
+	}
 
 
 
@@ -285,6 +289,37 @@ public  class AmazonXMLParser {
 				 return null;
 		}
 
+		public static ErrorResponse parseError(XmlStreamReader reader) {
+			ErrorResponse parsedItem = new ErrorResponse();
+
+			Boolean isSafeToGetNextXmlElement = true;
+			while (isSafeToGetNextXmlElement) {
+				if (reader.isStartElement()) {
+					switch on reader.getLocalName() {
+						when 'Code' {
+							reader.next();
+							if (reader.isCharacters()) {
+								parsedItem.Code = reader.getText();
+							}
+						}
+						when 'Message' {
+							reader.next();
+							if (reader.isCharacters() && reader.HasText()) {
+								parsedItem.Message = reader.getText();
+							}
+						}
+					}
+				}
+
+				if (reader.hasNext()) {
+					reader.next();
+				} else {
+					isSafeToGetNextXmlElement = false;
+					break;
+				}
+			}
+			return parsedItem;
+		}
 
 }
 		 /*

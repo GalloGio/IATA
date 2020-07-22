@@ -1,0 +1,80 @@
+<template>
+	<div class="col-lg-8 p-0 col-md-12">
+		<c-cw-station-selection 
+			label={label} 
+			user-managed-facilities={userManagedFacilities} 
+			pre-selected-facility={preSelectedFacility}
+			onselectfacility={selectFacility}>
+		</c-cw-station-selection>
+	</div>
+	<template if:true={selectedFacility}>
+		<div class="col-lg-8 p-0 col-md-12">
+			<div class="form-group">
+				<label class="capitalize" for="facilitySelector"><b>{label.select_certification}</b></label>
+				<select class="facility-select form-control backgroundBlueArrowSecondary" id="certificationSelector" name="certifications" onchange={selectCertification} required>
+					<option value="">{label.all}</option>
+					<template for:each={filteredCertifications} for:item="certification">
+						<option key={certification} value={certification}>{certification}</option>
+					</template>
+				</select>
+			</div>
+		</div>
+
+		<div class="offset-8 col-4 text-right pr-3 mb-2">
+            <template if:true={hasItem}>
+				<a href="javascript:{}" data-tosca="validation-history-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a>
+            </template>
+        </div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">{label.certification_id}</th>
+					<th scope="col">{label.station_name}</th>
+					<th scope="col">{label.certification}</th>
+					<th if:true={isCEIV} scope="col">{label.sticker_id}</th>
+					<th scope="col">{label.issuing_date}</th>
+					<th scope="col">{label.expiration_date}</th>
+					<th scope="col">{label.scope}</th>
+					<th scope="col">{label.status}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={certificationHistory} for:item="item">
+					<tr key={item}>
+						<td class="tableCell">
+							<p>{item.Certification_Id__c}</p>
+						</td>
+						<td class="tableCell">
+							<p>{item.ICG_Account_Role_Detail__r.Name}</p>
+						</td>
+						<td class="tableCell">
+							<p>{item.ICG_Certification__r.Name}</p>
+						</td>
+						<td if:true={isCEIV} class="tableCell">
+							<p>{item.StickerID__c}</p>
+						</td>
+						<td class="tableCell">
+							<p>{item.Issue_Date__c}</p>
+						</td>
+						<td class="tableCell">
+							<p>{item.Expiration_Date__c}</p>
+						</td>
+						<td if:true={item.CEIV_Scope_List__c}>
+							<pre class="formatedText">{item.CEIV_Scope_List__c}</pre>
+						</td>
+						<td if:true={item.SFOC_Scope__c}>
+							<pre class="formatedText">{item.SFOC_Scope__c}</pre>
+						</td>
+						<td class="tableCell">
+							<p>{item.Status__c}</p>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+        <template if:false={hasItem}>
+            <c-cw-grid-empty-message></c-cw-grid-empty-message>
+        </template>
+		<c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+	</template>
+</template>

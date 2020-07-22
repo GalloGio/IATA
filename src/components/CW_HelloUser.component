@@ -1,0 +1,8 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
+    <apex:attribute name="orderItemData" type="String" description="Order Item ID" assignTo="{!orderItemId}" access="global" />
+    <apex:attribute name="text" type="String" description="first text" access="global" />
+    <apex:attribute name="username" type="String" description="username if possible to get" access="global" />
+    <p style="line-height: 1.8rem;">{!text}<apex:outputText value="{!' '+requestedby.Firstname}" rendered="{!username == 'creator'}"></apex:outputText>,</p>
+</apex:component>

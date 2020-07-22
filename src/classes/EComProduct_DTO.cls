@@ -56,6 +56,8 @@ public with sharing class EComProduct_DTO
 
 	public String productNameAnalytic {get; set;}
 
+	public Boolean isRemoteValidation {get;set;}
+	
 	//*** constructor
 	public EComProduct_DTO()
 	{
@@ -95,6 +97,7 @@ public with sharing class EComProduct_DTO
 		EffectiveTo = prod.Effective_To__c;
 		DisplayEffectiveTo = (prod.Hide_Effective_To_Date_in_eCommerce__c != true);
 		Sell_Through_eCommerce = prod.Sell_through_eCommerce__c;
+		isRemoteValidation = prod.Smart_Facility_Remote_Validation__c;
 
 		//-- Product Prices
 		OrderQuantity = 1;  //*** default quantity to order

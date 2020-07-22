@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Upcoming Certification Expiration: Email to Station Managers/Company Admins.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Certification upcoming expiration to Station Managers/Company Admins</name>
+    <style>none</style>
+    <subject>Certification is expiring</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

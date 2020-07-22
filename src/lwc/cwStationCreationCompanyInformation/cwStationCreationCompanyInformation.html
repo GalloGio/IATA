@@ -1,0 +1,328 @@
+<template>
+	<div>
+		<lightning-layout multiple-rows vertical-align="stretch">
+			<div class="col-12">
+				
+					<!------------------------------------------      Customer Type      -------------------------------------------->
+					<template if:true={customerTypesList}>
+						<div class="row">
+	
+							<!------------------------------------------      First Categorization picklist      -------------------------------------------->
+							<div class="col-6 companyItem IEFixDisplay">
+								
+					
+								<div class="slds-form-element">
+									<label class="slds-form-element__label" for="tradename">{firstCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr></label>
+									<div class="slds-form-element__control custTextInputSmall">
+										<lightning-combobox
+											options={firstCategorizationPicklist.options}
+											value={firstCategorizationPicklist.selectedItem}
+											variant="label-hidden"
+											class="cursorPointerComboBox text-xxsmall"
+											dropdown-alignment="auto"
+											onchange={changeCustomerType}>
+										</lightning-combobox>
+									</div>
+								</div>
+							</div>
+
+							<!--<lightning-layout-item size="6" class="IEFixDisplay"></lightning-layout-item>-->
+		
+							<!------------------------------------------      Second Categorization picklist      -------------------------------------------->
+							<template if:false={atLeastTwoPicklists}>
+								<div class="col-6 companyItem IEFixDisplay">
+									<div class="slds-form-element">
+									<label class="slds-form-element__label" for="tradename">{label.category}<abbr class="slds-required" title="required">*</abbr></label>
+						
+									
+										<div class="slds-form-element__control custTextInputSmall">
+											<lightning-combobox
+												options={fakeCategoryPicklist}
+												variant="label-hidden"
+												class="cursorPointerComboBox text-xxsmall"
+												dropdown-alignment="auto">
+											</lightning-combobox>
+										</div>
+									</div>
+								</div>
+								<!--<lightning-layout-item size="6" class="IEFixDisplay"></lightning-layout-item>-->
+							</template>
+		
+							<template if:true={atLeastTwoPicklists}>
+								<!------------------------------------------      if Other is selected      -------------------------------------------->
+								<template if:true={isOtherPicklistDisplayed}>
+								<!--<lightning-layout-item size="12">-->
+									<!-- ///// COMENTED 30/03 DELETED "otherSectionContainer" class ////// -->
+									<!--<div class="otherSectionContainer companyItem">-->
+										<div class="col-6 companyItem IEFixDisplay">
+										<!--<lightning-layout-item size="6" class="leftItem">-->
+								
+						
+											<div class="slds-form-element">
+											<label class="slds-form-element__label" for="tradename">{secondCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr></label>
+								
+											
+												<div class="slds-form-element__control custTextInputSmall">
+													<lightning-combobox
+														options={secondCategorizationPicklist.options}
+														value={secondCategorizationPicklist.selectedItem}
+														variant="label-hidden"
+														class="cursorPointerComboBox text-xxsmall"
+														dropdown-alignment="auto"
+														onchange={changeCustomerType}>
+													</lightning-combobox>
+												</div>
+											</div>
+										
+										<!--</lightning-layout-item>-->
+										<!--</lightning-layout-item>-->
+										
+									</div>
+		
+									<template if:false={threePicklists}>
+										<div class="col-6 companyItem IEFixDisplay">
+											<div class="slds-form-element">
+											<label class="slds-form-element__label" for="tradename">{label.category}<abbr class="slds-required" title="required">*</abbr></label>
+								
+											
+												<div class="slds-form-element__control custTextInputSmall">
+													<lightning-combobox
+														options={fakeCategoryPicklist}
+														variant="label-hidden"
+														class="cursorPointerComboBox text-xxsmall"
+														dropdown-alignment="auto">
+													</lightning-combobox>
+												</div>
+											</div>
+										</div>
+									</template>
+		
+									<!------------------------------------------      Third Categorization picklist      -------------------------------------------->
+									<template if:true={threePicklists}>
+										<div class="col-6 companyItem IEFixDisplay">
+											<div class="slds-form-element">
+											<label class="slds-form-element__label" for="tradename">{thirdCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr></label>
+								
+											
+												<div class="slds-form-element__control custTextInputSmall">
+													<lightning-combobox
+														options={thirdCategorizationPicklist.options}
+														value={thirdCategorizationPicklist.selectedItem}
+														variant="label-hidden"
+														class="cursorPointerComboBox text-xxsmall"
+														dropdown-alignment="auto"
+														onchange={changeCustomerType}>
+													</lightning-combobox>
+												</div>
+											</div>
+										</div>
+									</template>
+		
+								</template>
+		
+								<!------------------------------------------      if Other is NOT selected      -------------------------------------------->
+								<template if:false={isOtherPicklistDisplayed}>
+									<div class="col-6 companyItem IEFixDisplay">
+										<div class="slds-form-element">
+										<label class="slds-form-element__label" for="tradename">{secondCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr></label>
+							
+										
+											<div class="slds-form-element__control custTextInputSmall">
+												<lightning-combobox
+													options={secondCategorizationPicklist.options}
+													value={secondCategorizationPicklist.selectedItem}
+													variant="label-hidden"
+													class="cursorPointerComboBox text-xxsmall"
+													dropdown-alignment="auto"
+													onchange={changeCustomerType}>
+												</lightning-combobox>
+											</div>
+										</div>
+									</div>
+								</template>
+							</template>
+						</div>
+					</template>
+					
+	
+					<!--Trade Name -->
+					<!--<lightning-layout-item size="12" class="companyItem IEFixDisplay">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								Trade Name
+							</div>
+						</div>
+	
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input 
+									data-id="tradeName"
+									name="tradeName"    
+									type="text"
+									class="slds-input" 
+									placeholder=" "
+									value={localAccount.tradeName} 
+									onkeyup={handleInputValueChange}/>
+							</div>
+						</div>
+					</lightning-layout-item>-->
+					<div class="form-row">                          
+						<div class="col">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="tradename">{label.trade_name}</label>
+								<div class="slds-form-element__control">
+									<input type="text" class="slds-input" name="tradename" data-tosca="tradename" id="tradename"
+										value={localAccount.tradename} onkeyup={handleInputValueChange}>
+								</div>
+							</div>
+						</div>
+					<!--      Legal Name  -->
+					<!--<lightning-layout-item size="12" class="companyItem IEFixDisplay">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								Legal Name*
+							</div>
+						</div>
+	
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input 
+									data-id="legalName"
+									name="legalName"    
+									type="text"
+									class="slds-input" 
+									placeholder=" "
+									value={localAccount.legalName} 
+									onkeyup={handleInputValueChange}/>
+							</div>
+						</div>
+					</lightning-layout-item>-->
+					<div class="col">
+						<div class="slds-form-element">
+							<label class="slds-form-element__label" for="legalname">{label.legal_name}<abbr class="slds-required" title="required">*</abbr></label>
+							<div class="slds-form-element__control">
+								<input type="text" required class="slds-input" name="legalname" data-tosca="legalname" id="legalname"
+									value={localAccount.legalname} onkeyup={handleInputValueChange}>
+							</div>
+						</div>
+					</div>
+				</div>
+					<!------------------------------------------      Phone      -------------------------------------------->
+				<div class="form-row">                          
+					<div class="col companyItem IEFixDisplay">
+						<div class="slds-form-element">
+							<label class="slds-form-element__label" for="legalname">{label.phone}<abbr class="slds-required" title="required">*</abbr></label>
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInput custTextInputSmall">
+									<input 
+										data-id="phone"
+										name="phone" 
+										type="tel"
+										class="phoneFormat slds-input phoneInput" 
+										placeholder=" "
+										value={localAccount.phone}
+										onkeyup={handleInputValueChange}/>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<!------------------------------------------      Email      -------------------------------------------->
+					<div class="col companyItem IEFixDisplay">
+						<div class="slds-form-element">
+							<label class="slds-form-element__label" for="legalname">{label.email}</label>
+	
+							<div data-id="emailDiv" class="slds-form-element">
+								<div class="slds-form-element__control custTextInput custTextInputSmall">
+									<input 
+										data-id="email"
+										name="email"
+										type="text"
+										class="slds-input"
+										placeholder=" "
+										value={localAccount.email}
+										onkeyup={handleInputValueChange}/>
+								</div>
+								<div if:true={displayInvalidEmailMessage}>
+									<div class="height-16">
+										<div class="slds-form-element__help">{label.invalid_email}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<!------------------------------------------      Website      -------------------------------------------->
+					<!--<lightning-layout-item size="12" class="companyItem IEFixDisplay">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								Website
+							</div>
+						</div>
+	
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input 
+									data-id="website"
+									name="website"    
+									type="text"
+									class="slds-input"
+									placeholder=" "
+									value={localAccount.website}
+									onkeyup={handleInputValueChange}/>
+							</div>
+						</div>
+					</lightning-layout-item>-->
+
+
+
+					<div class="form-row">                          
+						<div class="col">
+							<div class="slds-form-element">	
+								<label class="slds-form-element__label" for="tradename">{label.website}</label>
+								<div class="slds-form-element__control">
+									<input type="text" class="slds-input" name="website" data-tosca="website" id="website"
+									value={localAccount.website} onkeyup={handleInputValueChange}>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="tradename">{label.operational_hierarchy}<abbr class="slds-required" title="required">*</abbr></label>
+								<div class="slds-form-element__control custTextInputSmall">
+									<!--<select class="slds-input" name="opsHierarchy" data-tosca="recordtype" id="servicetype" required onchange={handleInputValueChange}>
+										<option value=""></option>
+										<template for:each={opsHierarchies} for:item="hierarchy">
+											<option key={hierarchy.value} value={hierarchy.value} selected={hierarchy.selected}>{hierarchy.label}</option>
+										</template>
+									</select>-->
+									<lightning-combobox
+										name="opsHierarchy"
+										options={opsHierarchies}
+										value={account.opsHierarchy}
+										class="cursorPointerComboBox text-xxsmall"
+										dropdown-alignment="auto"
+										variant="label-hidden"
+										onchange={handleInputValueChange}>
+									</lightning-combobox>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-6 text-left m-auto">
+							<span class="backbutton" onclick={goBack} data-substep="yes"><b>{label.back}</b></span>
+						</div>
+					
+						<div class="col-6 text-right m-auto">												
+							<lightning-layout-item class="width-100">
+								<button data-tosca="selectrtypeandname" class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-id="nextButton" disabled={isNextButtonDisabled} onclick={goNext}>{label.next_step_address_inf} </button>
+							</lightning-layout-item>
+						</div>
+					</div>
+					<lightning-layout-item size="12" padding="around-small" class="IEFixDisplay">
+					</lightning-layout-item>
+				</div>
+			</lightning-layout>
+		</div>
+	</template>

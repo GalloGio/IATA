@@ -1,0 +1,23 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
+    <apex:attribute name="isRemoveData" type="Boolean" description="Buttons to approve or remove record" assignTo="{!isRemove}" access="global" default="false"/>
+
+    <p style="margin-top: 25px; line-height: 1.8rem;">Manage Request:</p>
+    <table border="0" cellpadding="10" cellspacing="10">
+        <tr>
+            <td><a href="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/s/private-area?approveRemoveContactRole=aDD3N0000004CepWAE" style="cursor: pointer;"><img src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/img/approve.PNG" /></a></td>
+            <td>
+                <a href="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/s/private-area?rejectRemoveContactRole=aDD3N0000004CepWAE" style="cursor: pointer;"><img src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/img/reject.PNG" /></a>
+            </td>
+        </tr>
+    </table>
+    <table border="0" cellpadding="10" cellspacing="10">
+        <tr>
+            <td>
+                <a style="cursor: pointer;"><img src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/img/replytorequest.PNG" /></a>
+            </td>
+        </tr>
+    </table>
+
+</apex:component>

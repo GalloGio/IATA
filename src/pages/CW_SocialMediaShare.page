@@ -1,0 +1,7 @@
+<apex:page controller="CW_SocialMediaShareController" showHeader="false" showChat="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" >
+    <script>
+    window.location.href = '/csportal/s/station-profile?eid={!stationId}';
+    </script>
+    <apex:outputText escape="false" value="{!stationDetails}"></apex:outputText>
+    
+</apex:page>

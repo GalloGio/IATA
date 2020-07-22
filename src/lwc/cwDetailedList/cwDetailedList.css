@@ -1,0 +1,43 @@
+.certiImage {
+    width: 7%;
+}
+
+@media (min-width: 768px) {
+	.reg-today-btn {
+		text-align: right;
+	}
+}
+
+@media (max-width: 768px) {
+	.reg-today-btn {
+		text-align: center;
+	}
+	.reg-today-txt {
+		text-align: center;
+	}
+}
+
+.col-st-name{
+	width: 25%;
+	vertical-align: middle;
+}
+
+.col-st-type{
+	width: 10%;
+	vertical-align: middle;
+}
+
+
+.col-st-address{
+	width: 40%;
+	vertical-align: middle;
+}
+
+.col-st-certs{
+	width: 25%;
+	vertical-align: middle;
+}
+
+.certiImageTable{
+	width: 15%;
+}

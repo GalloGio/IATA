@@ -1,0 +1,153 @@
+.companyIconBox {
+	border: 2px solid grey;
+	height: 100%;
+	width: 100%;
+	min-height: 80px;
+	min-width: 80px;
+	line-height: 80px;
+	text-align: center;
+}
+
+.save-btn {
+	margin-top: 10px;
+}
+
+.padding {
+	padding: 0px 2px;
+}
+
+.title {
+	font-size: 1.4rem;
+}
+
+.map-size {
+	min-height: 100%;
+	min-width: 200px;
+}
+
+.igc-logo {
+	width: 110px;
+	height: 110px;
+	background: #fff;
+	float: left;
+	padding: 10px;
+	padding-left: 0px;
+	box-sizing: border-box;
+}
+
+section.bg-secondary--yellow {
+	display: flex;
+}
+
+.type {
+	background-color: #ece1be;
+	width: fit-content;
+	padding: 5px;
+}
+
+@media (max-width: 992px) {
+	.padding-side-responsive {
+		padding-left: 20px !important;
+		padding-right: 20px !important;
+	}
+}
+
+@media (min-width: 992px) {
+    .facility-capabilities{
+        padding-left: 6%;
+    }
+}
+
+.title-airlines-handled {
+	font-size: 1.5rem;
+}
+
+@media (max-width: 992px) {
+	.col-no-padding-left {
+		padding-left: 10px !important;
+	}
+}
+
+.marginbottom {
+	margin-bottom: 60px;
+}
+
+.top-bar-container {
+	border-bottom: 1px solid #1e32fa;
+	display: flex;
+}
+
+.back-rslt {
+	position: absolute;
+	bottom: 10px;
+	cursor: pointer;
+}
+
+.height-40 {
+	height: 40px;
+}
+
+.print-icon {
+	width: 22px;
+	margin-bottom: -15px;
+}
+
+.share-icon {
+	width: 15px;
+	margin-bottom: -15px;
+}
+
+.bg-light-yellow {
+	background-color: #ece1be;
+}
+.bg-cream {
+	background-color: #f0f1f2;
+}
+
+.padding-right {
+	padding-right: 17px;
+}
+
+.img-list-airline {
+	padding: 0px 0px 5px 5px;
+	width: 30px;
+}
+
+.width-27 {
+	width: 27px;
+}
+
+.collapsed {
+	bottom: -100px !important;
+	transition: bottom 0.5s;
+}
+
+.no-collapsed {
+	bottom: 0% !important;
+	transition: bottom 0.5s;
+}
+
+.comparison-container {
+	left: 0;
+	right: 0;
+	position: fixed;
+	bottom: 0px;
+	z-index: 20;
+	margin: auto;
+}
+
+.comparison-item-container {
+	padding: 5px;
+}
+
+.comparison-item {
+	display: flex;
+	flex-wrap: wrap;
+	min-height: 64px;
+	max-height: 64px;
+	padding: 5px;
+}
+
+.r-0{
+	right: 0;
+}

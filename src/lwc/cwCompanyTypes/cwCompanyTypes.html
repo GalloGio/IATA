@@ -1,0 +1,22 @@
+<template>
+    <h3>{label.station_types}</h3>
+    <hr class="yellow-underline-100">
+    <div>
+        <div class="row-no-margin bg-white p-3">
+            <template for:each={companyTypes} for:item="item">
+                <template if:true={item.enabled}>
+                    <div key={item.name} onclick={onClickItem} data-tosca={item.name} data-name={item.name}
+                        data-type="companyType" class="col-6 itemBase itemUnselected text-left company-item">
+                        <div class="p-2 company-type-content imgtxtfil text-truncate">
+                            <img src={item.image} width="20px">&nbsp;&nbsp;{item.name}
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <div class="col-12 text-right mt-3">
+                <a class="badge-results blueText" data-tosca="selectallcompanytypes" onclick={searchAllCTypes}><b>{selectedText}</b></a>
+            </div>
+        </div>
+    </div>
+
+</template>

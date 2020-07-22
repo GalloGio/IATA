@@ -1,0 +1,26 @@
+<messaging:emailTemplate subject="A new request to REMOVE STATION MANAGER rights is pending approval" relatedToType="ICG_Contact_Role_Detail__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" contactRoleDetailData="{!relatedTo.Id}"> </c:CW_HelloUser>  
+                    
+                    <p style="line-height: 1.8rem;">A new request to REMOVE STATION MANAGER rights is pending approval.</p>   
+                                    
+                    <c:CW_StationManagerRightRemoved contactRoleDetailData="{!relatedTo.Id}" ></c:CW_StationManagerRightRemoved>
+                    <c:CW_RequestedBy stationData="{!relatedTo.Id}" ></c:CW_RequestedBy>
+                    <c:CW_ListStationManager nameList="Current Station Managers" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_ListStationManager> 
+                    
+                    <p style="line-height: 1.8rem; color: #1e32fa; font-weight: 600;">ATTENTION: THIS REQUEST HAS TO BE MANAGED BY IATA.</p>
+                                        
+                    <c:CW_LinkManageRequest contactRoleDetailData="{!relatedTo.Id}"></c:CW_LinkManageRequest>
+
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

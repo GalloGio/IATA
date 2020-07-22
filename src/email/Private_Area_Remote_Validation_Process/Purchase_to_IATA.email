@@ -1,0 +1,17 @@
+<messaging:emailTemplate subject="A Remote Validation has been purchased" relatedToType="OrderItem">
+    <messaging:HtmlEmailBody >
+        <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello"> </c:CW_HelloUser>     
+                    <c:CW_StationDetails nameList="A Remote Validation for the following station has been purchased:" stationData="{!relatedTo.Station__c}"></c:CW_StationDetails>                 
+                    <c:CW_RequestedBy nameList="Order has been placed by:" orderItemData="{!relatedTo.Id}"></c:CW_RequestedBy>
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

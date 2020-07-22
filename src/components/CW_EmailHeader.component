@@ -1,0 +1,16 @@
+<apex:component access="global" controller="CW_EmailTemplateData">
+    <div style="width: 100%;">
+        &nbsp;&nbsp;&nbsp;&nbsp;<img src="{!communityUrlForResources}resource/ICG_Resources/img/iata-logo-cut.png" width="100"  alt="IATA" />
+        <br /> <br />
+        <div style="background-color: #1e32fa; text-align: center;">
+            <br />
+            <img src="{!communityUrlForResources}resource/ICG_Resources/img/one-source--logo.png" width="350" style="width: 40% !important; max-width: 350px !important;" />
+            <br /> <br /> <br />
+        </div>
+    </div>
+    <div style="width: 100%; text-align:right;">
+        <apex:outputText value="{0, date, MMMM d','  yyyy}">
+            <apex:param value="{!NOW()}" />
+        </apex:outputText>
+    </div>
+</apex:component>

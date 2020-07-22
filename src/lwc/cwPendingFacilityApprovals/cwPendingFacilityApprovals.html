@@ -1,0 +1,82 @@
+<template>
+    <div class="row col-12 bg-grey m-auto pt-2 pb-2">
+        <div class="col-12 display-flex">
+            <div class="col-4 m-auto text-right">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text bg-white"><lightning-icon icon-name="utility:search" size="x-small"></lightning-icon></div>
+                    </div>
+                    <input type="text" onkeyup={setFilterValue} class="form-control border-left-none" placeholder="Search">
+                </div>
+            </div>
+            <div class="col-4 text-right">
+                <template if:true={hasItem}>
+                    <a href="javascript:{}" data-tosca="pending-station-approvals-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a> 
+                </template>
+            </div>
+        </div>
+    </div>
+    
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">{label.station_name}</th>
+            <th scope="col">{label.station_type}</th>
+            <th scope="col">{label.operational_hierarchy}</th>
+            <th scope="col">{label.address}</th>
+            <th scope="col">{label.status}</th>
+            <th scope="col">{label.request_date}</th>
+            <th scope="col">{label.action}</th>
+        </tr>
+        </thead>
+        <tbody>        
+            <template for:each={filteredFacilities} for:item="facility">
+                <tr key={facility.Id}>
+                    <td class="align-middle"><p class="text-blue cursor-pt" onclick={handleMoreInfo} data-id={facility.Id}>{facility.Name}</p></td>
+                    <td class="align-middle"><img title={facility.RecordType.Name} width="25" src={facility.ctypeimage}/></td>
+                    <td class="align-middle">{facility.groupName}</td>
+                    <td class="align-middle">{facility.address}</td>
+                    <td class="align-middle">{facility.Status__c}</td>
+                    <td class="align-middle">{facility.CreatedDateDateFormat}</td>
+                    <td class="align-middle">
+                        <template if:true={facility.userIsCompanyAdmin}>
+                            <template if:false={facility.pendingForIataApproval}>
+                                <div class="hidden-lg">
+                                    <div class="col-12 col-no-padding display-flex text-center">
+                                        <div class="col-7 col-no-padding table-action-btn">
+                                            <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-stid={facility.Id} data-name={facility.Name} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
+                                        </div>
+                                        <div class="col-5 col-no-padding table-action-btn">
+                                            <a data-stid={facility.Id} data-action="reject" class="btn btn-primary no-margin-top pl-2 pr-3 pt-1" data-name={facility.Name} onclick={confirmApproval}>{label.reject}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="visible-lg">
+                                    <div class="col-12 col-no-padding text-center table-action-btn">
+                                        <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-stid={facility.Id} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
+                                        <a data-stid={facility.Id} data-action="reject" class="btn btn-primary mt-1 pl-2 pr-3 pt-1" onclick={confirmApproval}>{label.reject}</a>                                      
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <template if:false={hasItem}>
+        <c-cw-grid-empty-message></c-cw-grid-empty-message>
+    </template>
+    <c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+
+    <template if:true={openConfirm}>
+        <c-cw-intermediate-modal onclosemodal={handleCancel}>
+            <div class="col-12 text-center">
+                <h3>{label.are_you_sure}&nbsp;<label class="lowercase">{label.icg_to}</label>&nbsp;{action}&nbsp;{facilityName}&nbsp;{label.station}?</h3>
+                <button type="button" class="btn btn-primary-blue mr-2" data-tosca="backduplicatert" onclick={handleCancel}>{label.no}</button>
+                <button type="button" class="btn btn-primary ml-2" data-tosca="backduplicatert" onclick={handleConfirmDialogYes}>{label.yes}</button>              
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+</template>

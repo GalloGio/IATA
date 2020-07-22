@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Email to IATA when Remote Validation is submitted</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Completion to IATA when is submitted</name>
+    <style>none</style>
+    <subject>Questionnaire for the following station has been submitted</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

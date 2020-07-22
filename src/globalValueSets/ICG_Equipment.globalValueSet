@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Dollies_Tub_Carts</fullName>
+        <default>false</default>
+        <label>Dollies / Tub Carts</label>
+    </customValue>
+    <customValue>
+        <fullName>Live_Animals_Vehicles</fullName>
+        <default>false</default>
+        <label>Live Animals Vehicles</label>
+    </customValue>
+    <customValue>
+        <fullName>Valuable_Vehicles</fullName>
+        <default>false</default>
+        <label>Valuable Vehicles</label>
+    </customValue>
+    <customValue>
+        <fullName>Heavy_Vehicles</fullName>
+        <default>false</default>
+        <label>Heavy Vehicles</label>
+    </customValue>
+    <customValue>
+        <fullName>Forklifts_Electric</fullName>
+        <default>false</default>
+        <label>Forklifts (Electric)</label>
+    </customValue>
+    <customValue>
+        <fullName>Forklifts_Fuel</fullName>
+        <default>false</default>
+        <label>Forklifts (Fuel)</label>
+    </customValue>
+    <customValue>
+        <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
+        <default>false</default>
+        <label>Elevated Transfer Vehicles (ETV)</label>
+    </customValue>
+    <customValue>
+        <fullName>Crane</fullName>
+        <default>false</default>
+        <label>Crane</label>
+    </customValue>
+    <customValue>
+        <fullName>Ball_Caster_Decks</fullName>
+        <default>false</default>
+        <label>Ball/Caster Decks</label>
+    </customValue>
+    <customValue>
+        <fullName>Slave_Pallets</fullName>
+        <default>false</default>
+        <label>Slave Pallets</label>
+    </customValue>
+    <customValue>
+        <fullName>Slave_Pallet_Transport</fullName>
+        <default>false</default>
+        <label>Slave Pallet Transport</label>
+    </customValue>
+    <customValue>
+        <fullName>Other_GSE_In_Facility</fullName>
+        <default>false</default>
+        <label>Other GSE In Facility</label>
+    </customValue>
+    <customValue>
+        <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
+        <default>false</default>
+        <label>Electronic Metal Detection Device (EDM)</label>
+    </customValue>
+    <customValue>
+        <fullName>Explosive_Detection_System_EDS</fullName>
+        <default>false</default>
+        <label>Explosive Detection System (EDS)</label>
+    </customValue>
+    <customValue>
+        <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
+        <default>false</default>
+        <label>Explosive Trace Detection Device (ETD)</label>
+    </customValue>
+    <customValue>
+        <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
+        <default>false</default>
+        <label>Carbon Dioxide (CO2) Monitors</label>
+    </customValue>
+    <customValue>
+        <fullName>XRay_Single_View</fullName>
+        <default>false</default>
+        <label>XRay-Single View</label>
+    </customValue>
+    <customValue>
+        <fullName>XRay_Dual_View</fullName>
+        <default>false</default>
+        <label>XRay-Dual View</label>
+    </customValue>
+    <customValue>
+        <fullName>K9_Dogs</fullName>
+        <default>false</default>
+        <label>K9 Dogs</label>
+    </customValue>
+    <customValue>
+        <fullName>Other_Screening_Equipment</fullName>
+        <default>false</default>
+        <label>Other Screening Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>CCTV</fullName>
+        <default>false</default>
+        <label>CCTV</label>
+    </customValue>
+    <customValue>
+        <fullName>Security_Patrol</fullName>
+        <default>false</default>
+        <label>Security Patrol</label>
+    </customValue>
+    <customValue>
+        <fullName>Facility_Access_Control</fullName>
+        <default>false</default>
+        <label>Facility Access Control</label>
+    </customValue>
+    <customValue>
+        <fullName>Intruder_Alarm_System</fullName>
+        <default>false</default>
+        <label>Intruder Alarm System</label>
+    </customValue>
+    <customValue>
+        <fullName>Other_Security_Equipment_Measures</fullName>
+        <default>false</default>
+        <label>Other Security Equipment / Measures</label>
+    </customValue>
+    <customValue>
+        <fullName>Weight_Scales</fullName>
+        <default>false</default>
+        <label>Weight Scales</label>
+    </customValue>
+    <customValue>
+        <fullName>Volume_And_Dimension_Measuring</fullName>
+        <default>false</default>
+        <label>Volume And Dimension Measuring</label>
+    </customValue>
+    <customValue>
+        <fullName>UNDEFINED</fullName>
+        <default>false</default>
+        <label>UNDEFINED</label>
+    </customValue>
+    <customValue>
+        <fullName>Firefighting_Equipment</fullName>
+        <default>false</default>
+        <label>Firefighting Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Fire_Container_Covers</fullName>
+        <default>false</default>
+        <label>Fire Container Covers</label>
+    </customValue>
+    <customValue>
+        <fullName>Personal_Protective_Equipment</fullName>
+        <default>false</default>
+        <label>Personal Protective Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Barcode_Scanners</fullName>
+        <default>false</default>
+        <label>Barcode Scanners</label>
+    </customValue>
+    <customValue>
+        <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
+        <default>false</default>
+        <label>Mail Scanner / Mail Registration Device</label>
+    </customValue>
+    <customValue>
+        <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
+        <default>false</default>
+        <label>Recharging Power Areas For Active ULDs</label>
+    </customValue>
+    <customValue>
+        <fullName>Battery_Replacement_For_Active_ULDs</fullName>
+        <default>false</default>
+        <label>Battery Replacement For Active ULDs</label>
+    </customValue>
+    <customValue>
+        <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
+        <default>false</default>
+        <label>Dry Ice Replenishment For ULDs</label>
+    </customValue>
+    <customValue>
+        <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
+        <default>false</default>
+        <label>Self-Check-In System / Kiosk For Truckers</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
+        <default>false</default>
+        <label>Pre-Arrival Slot Booking Capability</label>
+    </customValue>
+    <customValue>
+        <fullName>Truck_Parking</fullName>
+        <default>false</default>
+        <label>Truck Parking</label>
+    </customValue>
+    <customValue>
+        <fullName>Loose_Cargo</fullName>
+        <default>false</default>
+        <label>Loose Cargo</label>
+    </customValue>
+    <customValue>
+        <fullName>ULD</fullName>
+        <default>false</default>
+        <label>ULD</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery_Counter</fullName>
+        <default>false</default>
+        <label>Delivery Counter</label>
+    </customValue>
+    <customValue>
+        <fullName>Pick_Up_Counter</fullName>
+        <default>false</default>
+        <label>Pick-Up Counter</label>
+    </customValue>
+    <customValue>
+        <fullName>Beneficial_Insects_Bees</fullName>
+        <default>false</default>
+        <label>Beneficial Insects / Bees</label>
+    </customValue>
+    <customValue>
+        <fullName>Birds</fullName>
+        <default>false</default>
+        <label>Birds</label>
+    </customValue>
+    <customValue>
+        <fullName>Farm_Animals</fullName>
+        <default>false</default>
+        <label>Farm Animals</label>
+    </customValue>
+    <customValue>
+        <fullName>Fish_Aquatics</fullName>
+        <default>false</default>
+        <label>Fish/Aquatics</label>
+    </customValue>
+    <customValue>
+        <fullName>Horses</fullName>
+        <default>false</default>
+        <label>Horses</label>
+    </customValue>
+    <customValue>
+        <fullName>Non_Domesticated_Mammals</fullName>
+        <default>false</default>
+        <label>Non-Domesticated Mammals</label>
+    </customValue>
+    <customValue>
+        <fullName>Pets</fullName>
+        <default>false</default>
+        <label>Pets</label>
+    </customValue>
+    <customValue>
+        <fullName>Reptiles_Amphibians</fullName>
+        <default>false</default>
+        <label>Reptiles / Amphibians</label>
+    </customValue>
+    <customValue>
+        <fullName>Animal_Attendant_Amenities</fullName>
+        <default>false</default>
+        <label>Animal Attendant Amenities</label>
+    </customValue>
+    <customValue>
+        <fullName>Veterinary_Inspection</fullName>
+        <default>false</default>
+        <label>Veterinary Inspection</label>
+    </customValue>
+    <customValue>
+        <fullName>Phytosanitary_Inspection</fullName>
+        <default>false</default>
+        <label>Phytosanitary Inspection</label>
+    </customValue>
+    <customValue>
+        <fullName>Border_Inspection_Post</fullName>
+        <default>false</default>
+        <label>Border Inspection Post</label>
+    </customValue>
+    <customValue>
+        <fullName>Pest_Control</fullName>
+        <default>false</default>
+        <label>Pest Control</label>
+    </customValue>
+    <customValue>
+        <fullName>Quarantine_Room</fullName>
+        <default>false</default>
+        <label>Quarantine Room</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+        <default>false</default>
+        <label>Cargo Handling / Warehouse Management System</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer_Management_Module_For_Carriers</fullName>
+        <default>false</default>
+        <label>Customer Management Module For Carriers</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
+        <default>false</default>
+        <label>Customer Management Module For Freight Forwarders</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer_Management_Module_For_Shippers</fullName>
+        <default>false</default>
+        <label>Customer Management Module For Shippers</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer_Management_Module_For_Consigners</fullName>
+        <default>false</default>
+        <label>Customer Management Module For Consigners</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer_Management_Module</fullName>
+        <default>false</default>
+        <label>Customer Management Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo_Acceptance_Module</fullName>
+        <default>false</default>
+        <label>Cargo Acceptance Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Export_Handling_Module</fullName>
+        <default>false</default>
+        <label>Export Handling Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Import_Handling_Module</fullName>
+        <default>false</default>
+        <label>Import Handling Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Warehouse_Module</fullName>
+        <default>false</default>
+        <label>Warehouse Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Track_And_Trace_Module</fullName>
+        <default>false</default>
+        <label>Track And Trace Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Discrepancy_Module</fullName>
+        <default>false</default>
+        <label>Discrepancy Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoice_Billing_And_Settlement_Module</fullName>
+        <default>false</default>
+        <label>Invoice, Billing And Settlement Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Reporting_Module</fullName>
+        <default>false</default>
+        <label>Reporting Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo_Dashboard</fullName>
+        <default>false</default>
+        <label>Cargo Dashboard</label>
+    </customValue>
+    <customValue>
+        <fullName>Piece_Level</fullName>
+        <default>false</default>
+        <label>Piece Level</label>
+    </customValue>
+    <customValue>
+        <fullName>HAWB_Level</fullName>
+        <default>false</default>
+        <label>HAWB Level</label>
+    </customValue>
+    <customValue>
+        <fullName>MAWB_Level</fullName>
+        <default>false</default>
+        <label>MAWB Level</label>
+    </customValue>
+    <customValue>
+        <fullName>ULD_Level</fullName>
+        <default>false</default>
+        <label>ULD Level</label>
+    </customValue>
+    <customValue>
+        <fullName>Flight_Level</fullName>
+        <default>false</default>
+        <label>Flight Level</label>
+    </customValue>
+    <customValue>
+        <fullName>Local_Customs_System_Import</fullName>
+        <default>false</default>
+        <label>Local Customs&apos; System Import</label>
+    </customValue>
+    <customValue>
+        <fullName>Local_Customs_System_Export</fullName>
+        <default>false</default>
+        <label>Local Customs&apos; System Export</label>
+    </customValue>
+    <customValue>
+        <fullName>Local_Cargo_Community_System</fullName>
+        <default>false</default>
+        <label>Local Cargo Community System</label>
+    </customValue>
+    <customValue>
+        <fullName>XFWB</fullName>
+        <default>false</default>
+        <label>XFWB</label>
+    </customValue>
+    <customValue>
+        <fullName>XFZB</fullName>
+        <default>false</default>
+        <label>XFZB</label>
+    </customValue>
+    <customValue>
+        <fullName>XFFM</fullName>
+        <default>false</default>
+        <label>XFFM</label>
+    </customValue>
+    <customValue>
+        <fullName>XFBL</fullName>
+        <default>false</default>
+        <label>XFBL</label>
+    </customValue>
+    <customValue>
+        <fullName>XFSU</fullName>
+        <default>false</default>
+        <label>XFSU</label>
+    </customValue>
+    <customValue>
+        <fullName>XCSN</fullName>
+        <default>false</default>
+        <label>XCSN</label>
+    </customValue>
+    <customValue>
+        <fullName>RESDIT</fullName>
+        <default>false</default>
+        <label>RESDIT</label>
+    </customValue>
+    <customValue>
+        <fullName>CARDIT</fullName>
+        <default>false</default>
+        <label>CARDIT</label>
+    </customValue>
+    <customValue>
+        <fullName>2_To_8_C</fullName>
+        <default>false</default>
+        <label>2 To 8 ºC</label>
+    </customValue>
+    <customValue>
+        <fullName>15_To_25_C</fullName>
+        <default>false</default>
+        <label>15 To 25 ºC</label>
+    </customValue>
+    <customValue>
+        <fullName>2_To_25_C</fullName>
+        <default>false</default>
+        <label>2 To 25 ºC</label>
+    </customValue>
+    <customValue>
+        <fullName>Temp_Controlled_Rooms</fullName>
+        <default>false</default>
+        <label>Temp. Controlled Rooms</label>
+    </customValue>
+    <customValue>
+        <fullName>Freezer</fullName>
+        <default>false</default>
+        <label>Freezer</label>
+    </customValue>
+    <customValue>
+        <fullName>Pharmaceuticals_Processing_Area</fullName>
+        <default>false</default>
+        <label>Pharmaceuticals processing area</label>
+    </customValue>
+    <customValue>
+        <fullName>Perishables_Processing_Area</fullName>
+        <default>false</default>
+        <label>Perishables processing area</label>
+    </customValue>
+    <customValue>
+        <fullName>Room_Cooling</fullName>
+        <default>false</default>
+        <label>Room Cooling</label>
+    </customValue>
+    <customValue>
+        <fullName>Hydro_Cooling</fullName>
+        <default>false</default>
+        <label>Hydro Cooling</label>
+    </customValue>
+    <customValue>
+        <fullName>Forced_Air_Cooling</fullName>
+        <default>false</default>
+        <label>Forced Air Cooling</label>
+    </customValue>
+    <customValue>
+        <fullName>Vacuum_Cooling</fullName>
+        <default>false</default>
+        <label>Vacuum Cooling</label>
+    </customValue>
+    <customValue>
+        <fullName>Other_Pre_Cooling_Method</fullName>
+        <default>false</default>
+        <label>Other Pre-Cooling Method</label>
+    </customValue>
+    <customValue>
+        <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
+        <default>false</default>
+        <label>Thermal Covers / Blankets offered for purchase</label>
+    </customValue>
+    <customValue>
+        <fullName>Other_Temperature_Control_Equipment</fullName>
+        <default>false</default>
+        <label>Other Temperature Control Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+        <default>false</default>
+        <label>Temperature Controlled Dollies/Trucks</label>
+    </customValue>
+    <customValue>
+        <fullName>Build_Up_Break_Down_Station_General</fullName>
+        <default>false</default>
+        <label>Build-up/Break-Down Station (General)</label>
+    </customValue>
+    <customValue>
+        <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
+        <default>false</default>
+        <label>Build-up/Break-Down Stations (AKE/10ft ULDs)</label>
+    </customValue>
+    <customValue>
+        <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
+        <default>false</default>
+        <label>Build-up/Break-Down Stations (20ft ULDs)</label>
+    </customValue>
+    <customValue>
+        <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
+        <default>false</default>
+        <label>Build-up//Break-Down Stations for special loads</label>
+    </customValue>
+    <customValue>
+        <fullName>Loose_Cargo_Area</fullName>
+        <default>false</default>
+        <label>Loose Cargo Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Dangerous_Goods_Area</fullName>
+        <default>false</default>
+        <label>Dangerous Goods Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Secured_Area</fullName>
+        <default>false</default>
+        <label>Secured Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Strong_Room</fullName>
+        <default>false</default>
+        <label>Strong Room</label>
+    </customValue>
+    <customValue>
+        <fullName>Vulnerable_Cargo_Area</fullName>
+        <default>false</default>
+        <label>Vulnerable Cargo Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Express_Mail_Area</fullName>
+        <default>false</default>
+        <label>Express Mail Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance_Repair_Area</fullName>
+        <default>false</default>
+        <label>Maintenance/repair Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Human_Remains_Area</fullName>
+        <default>false</default>
+        <label>Human Remains Area</label>
+    </customValue>
+    <customValue>
+        <fullName>Empty_ULDs_Storage_System</fullName>
+        <default>false</default>
+        <label>Empty ULDs storage system</label>
+    </customValue>
+    <customValue>
+        <fullName>Built_ULDs_Storage_System</fullName>
+        <default>false</default>
+        <label>Built ULDs storage system</label>
+    </customValue>
+    <customValue>
+        <fullName>Unserviceable_ULD_Storage_Area</fullName>
+        <default>false</default>
+        <label>Unserviceable ULD storage area</label>
+    </customValue>
+    <customValue>
+        <fullName>Temperature_Controlled_Transport_Trucks</fullName>
+        <default>false</default>
+        <label>Temperature Controlled Transport Trucks</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline_Noise_Obligations</fullName>
+        <default>false</default>
+        <label>Airline Noise Obligations</label>
+    </customValue>
+    <customValue>
+        <fullName>Airside_Ground_Handling</fullName>
+        <default>false</default>
+        <label>Airside Ground Handling</label>
+    </customValue>
+    <customValue>
+        <fullName>Airside_Ground_Handling_Noise_Obligations</fullName>
+        <default>false</default>
+        <label>Airside Ground Handling Noise Obligations</label>
+    </customValue>
+    <customValue>
+        <fullName>Waste_Obligations</fullName>
+        <default>false</default>
+        <label>Waste Obligations</label>
+    </customValue>
+    <customValue>
+        <fullName>Emissions_Obligations</fullName>
+        <default>false</default>
+        <label>Emissions Obligations</label>
+    </customValue>
+    <customValue>
+        <fullName>Spill_Kits</fullName>
+        <default>false</default>
+        <label>Spill Kits</label>
+    </customValue>
+    <customValue>
+        <fullName>Palletized</fullName>
+        <default>false</default>
+        <label>Palletized</label>
+    </customValue>
+    <customValue>
+        <fullName>Noise_Obligations</fullName>
+        <default>false</default>
+        <label>Noise_Obligations</label>
+    </customValue>
+    <masterLabel>ICG Equipment</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,23 @@
+<messaging:emailTemplate subject="A new request to REMOVE ADMIN rights has been sent to IATA for approval" relatedToType="ICG_Account_Role_Detail__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" stationData="{!relatedTo.Id}"> </c:CW_HelloUser> 
+    
+                    <p style="line-height: 1.8rem;">A new request to REMOVE ADMIN rights has been sent to IATA for approval.</p>
+                     
+                    <c:CW_UserRemoveAdminRights nameList="Admin rights requested to be removed for the following User:" stationData="{!relatedTo.Id}"></c:CW_UserRemoveAdminRights>
+                    <c:CW_OperationalHierarchy nameList="Admin rights requested for the following Operational Hierarchies:" stationData="{!relatedTo.Id}"> </c:CW_OperationalHierarchy>    
+                    <c:CW_AdminRightsRemoveReason stationData="{!relatedTo.Id}"></c:CW_AdminRightsRemoveReason>
+
+                    <p style="line-height: 1.8rem;">We will notify you as soon as the request has been approved.</p>                    
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

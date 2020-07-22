@@ -1,0 +1,9 @@
+<apex:page controller="CW_LoginController" showHeader="false" sidebar="false">
+	<script>
+		if({!(ISPICKVAL($User.UserType,'Guest'))}){
+			window.location.href = "{!portalUrl}/login/?startURL={!($Label.CSP_PortalPath+'manage-service?serviceId='+serviceId+'%26startService=true')}";
+		}else{
+			window.location.href = "{!portalUrl}/{!('manage-service?serviceId='+serviceId+'&startService=true')}";
+		}
+	</script>
+</apex:page>

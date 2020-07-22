@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Company Admin Rejected: Notification to IATA</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification Company Admin Rejected to IATA</name>
+    <style>none</style>
+    <subject>A new Company Admin request has been rejected</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

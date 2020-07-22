@@ -1,0 +1,67 @@
+<apex:component access="global" controller="CW_EmailTemplateData">
+    <div style="color: white; width:100%; font-family: aktiv-grotesk, sans-serif !important; padding: 20px 0px 20px 20px;">
+        <table cellpadding="10" cellspacing="10" width="100%" border="0" style="background-color: black; font-family: aktiv-grotesk, sans-serif !important;">
+            <tr>
+                <td width="75%">
+                    <p style="line-height: 1.8rem; color: white;">International Air Transport Association (IATA)</p>
+                    <p style="line-height: 1.8rem; color: white;">800 Square Victoria, Montreal, H4Z 1m1, Canada.</p>
+                </td>
+                <td width="5%" valign="top">
+                    <a href="https://www.twitter.com" target="_blank" title="Twitter" >
+                        <img alt="Twitter" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-twitter.png"
+                            style="width: 18px; height: auto; max-height: 18px; padding: 5px; " width="18"
+                        />
+                    </a>
+                </td>
+                <td width="5%" valign="top">
+                    <a href="https://www.facebook.com" target="_blank" title="facebook" >
+                        <img alt="facebook" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-facebook.png"
+                            style="width: 18px; height: auto; max-height: 18px; padding: 5px;" width="12"
+                        />
+                    </a>
+                </td>
+                <td width="5%" valign="top">
+                    <a href="https://www.linkedin.com" target="_blank" title="linkedin" >
+                        <img alt="linkedin" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-linkedin.png"
+                            style="width: 18px; height: auto; max-height: 18px; padding: 5px;" width="18"
+                        />
+                    </a>
+                </td>
+                <td width="5%" valign="top">
+                    <a href="https://www.youtube.com" target="_blank" title="Youtube" >
+                        <img alt="Youtube" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-youtube.png"
+                            style="width: 18px; height: auto; max-height: 18px; padding: 5px;" width="18"
+                        />
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="20" cellspacing="20" width="100%" border="0" style="background-color: black;" align="center">
+            <tr>
+                <td align="center" width="100%">
+                    <div style="width: 100%; text-align: center; display: contents; color: white;">
+                        <h2>We represent, lead and serve the airline industry</h2>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="10" cellspacing="10" width="100%" border="0" style="background-color: black;" align="center">
+            <tr>
+                <td width="70%">
+                    <p style="line-height: 1.8rem; color:white">@ Copyright 2020. All right reserved.</p>
+                </td>
+                <td width="15%" style=" color: white;">
+                    <p style="line-height: 1.8rem;">
+                        <a style="color:white;">Privacy</a> |
+                        <a style="color:white;">Legal</a>
+                    </p>
+                </td>
+                <td width="15%" style="text-align: right;">
+                    <img alt="IATA Logo" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/iata-logo-other.png"
+                        width="100" />
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</apex:component>

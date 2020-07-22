@@ -720,6 +720,69 @@
         <fullName>PoNumber</fullName>
         <trackHistory>true</trackHistory>
     </fields>
+	<fields>
+        <fullName>Remote_Validation_Status__c</fullName>
+        <description>GXA Remote Validation Integration to check the status of the remote validation process.</description>
+        <externalId>false</externalId>
+        <label>Remote Validation Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Preparing Document</fullName>
+                    <default>true</default>
+                    <label>Preparing Document</label>
+                </value>
+                <value>
+                    <fullName>RV_Created</fullName>
+                    <default>false</default>
+                    <label>Pending for user fulfillment</label>
+                </value>
+                <value>
+                    <fullName>RV_WIP</fullName>
+                    <default>false</default>
+                    <label>Validating</label>
+                </value>
+                <value>
+                    <fullName>RV_Complete</fullName>
+                    <default>false</default>
+                    <label>Complete</label>
+                </value>
+                <value>
+                    <fullName>RV_NeedsCorrection</fullName>
+                    <default>false</default>
+                    <label>Needs Correction</label>
+                </value>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Validated</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Validated</label>
+                </value>
+                <value>
+                    <fullName>Waiting for Payment</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Waiting for Payment</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <fields>
         <fullName>Renewal_Notification_URL__c</fullName>
         <externalId>false</externalId>

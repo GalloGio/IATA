@@ -1,0 +1,40 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+
+    <p style="margin-top: 25px; line-height: 1.8rem;">Account Details:</p>
+    <table style="border-collapse: collapse; width: max-content">
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Sector</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.Sector__c}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Category</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.Category__c}</td>
+        </tr>
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Trade Name</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.TradeName__c}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Legal Name</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.Legal_name__c}</td>
+        </tr>
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Phone Number</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.Phone}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">E-mail Address</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.Email__c}</td>
+        </tr>
+        <tr style="background-color: #d9e2f3">
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Website</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!accountDetail.Website}</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Operational Hierarchy</th>
+            <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!operationalHierarchyFromStation}</td>
+        </tr>
+    </table>
+
+</apex:component>

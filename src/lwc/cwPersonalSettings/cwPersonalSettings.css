@@ -1,0 +1,27 @@
+.mainPicture {
+    border-radius: 50%;
+    border: 2px solid grey;
+    width: 35px;
+    height: 35px;
+}
+
+.detailPicture {
+    width: 55px;
+    height: 55px;
+    border: 2px solid grey;
+}
+
+.cardContent {
+    margin: 8px;
+    padding: 20px 15px 20px 10px !important;
+    background-color: white;
+    min-width: 400px;
+}
+
+.wrapperSettings {
+    margin-top: 5px;
+}
+
+.detailSettings {
+    padding: 5px !important;
+}

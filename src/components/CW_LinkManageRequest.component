@@ -1,0 +1,5 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
+    <p style="line-height: 1.8rem;">Please, click on the <a style="color: #1e32fa;" href="{!iataManageRequest}">LINK</a> to manage the request.</p>
+</apex:component>

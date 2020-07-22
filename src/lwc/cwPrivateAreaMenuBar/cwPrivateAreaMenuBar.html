@@ -1,0 +1,163 @@
+<template>
+    <div class="cwGris h-100">
+        <div class="row no-gutters ovrow">
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 overView">
+            <p class="overViewText" ><b><a  onclick={goToHome}> <span class="text-yellow">{label.overview}</span></a></b></p>
+            </div>
+            <template if:true={mnuIsOpen}>
+                <!-- HIDDEN RESPONSIVE VERSION -->
+                <div class="hidden-md col-2 arrow" onclick={closeNav}>
+                    <img class="collapse-arrow" src={collapsearrow} />
+                </div>
+
+                <!-- VISIBLE RESPONSIVE VERSION -->             
+                <div class="visible-md col-2 arrow-resp text-center" onclick={closeNavResp}>
+                    <img class="collapse-arrow-resp" src={collapsearrow} />
+                </div>
+            </template>
+            <template if:false={mnuIsOpen}>
+                <!-- HIDDEN RESPONSIVE VERSION -->
+                <div class="hidden-md  col-9 arrow" onclick={openNav}>
+                    <img class="width-25 rotate-180" src={menuclosed} />
+                </div>
+
+                <!-- VISIBLE RESPONSIVE VERSION -->
+                <div class="visible-md col-2 arrow text-center" onclick={openNavResp}>
+                        <img class="width-25 rotate-180" src={menuclosed} />
+                    </div>
+            </template>
+        </div>
+
+        <div class="col-md-12 sidebar-private-menu">
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={alertsandevents} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.alerts_and_events}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Alerts and Events">{label.icg_notifications}</p>
+                </div>
+            </div>
+            
+            <div class="separator"></div>
+
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={myrequest} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.my_requests}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="My Requests">{label.my_requests}</p>
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={facilitymanagement} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.facility_management}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="New Facility">{label.create_new_station}</p>
+                </div>
+                <template if:true={userInfo}>
+                    <template if:false={userInfo.isCompanyAdmin}>
+                        <div class="sectionText">
+                            <p class="pItem capitalize" onclick={selectItem} data-action="Become Facility Manager">{label.become_station_manager}</p>
+                        </div>
+                    </template>
+                </template>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Become Company Admin">{companyAdminSectionText}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Pending Facility Approvals">{label.pending_station_approvals}</p>
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={validationmanagement} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.validation_management}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Schedule Audits">{label.schedule_audits}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Audits Requested">{label.audits_requested}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Validation History">{label.validation_history}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action={label.capability_management}>{label.capability_management}</p>
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={remotevalidation} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.remote_validations}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Purchase Remote Validation">{label.purchase_remote_valdation}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Open Remote Validations">{label.open_remote_validations}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Remote Validation History">{label.remote_validation_history}</p>
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={manageruserpermisions} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.manage_user_permission}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Pending User Approvals">{label.pending_user_approvals}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Station Managers">{label.station_manager}</p>
+                </div>
+                <div class="sectionText">
+                    <p class="pItem" onclick={selectItem} data-action="Company Admins">{label.company_admins}</p>
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="sectionIcon" onclick={openNav}>
+                <img class="width-25" src={settings} />
+            </div>
+            <div class="sectionTitle">
+                <p><b>{label.public_area}</b></p>
+            </div>
+            <div class="pl-special">
+                <div class="sectionText">
+                    <p class="pItem" onclick={goToPublicArea} data-action="Pending User Approvals">{label.go_to_public_area}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

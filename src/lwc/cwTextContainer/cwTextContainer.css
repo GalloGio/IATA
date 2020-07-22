@@ -1,0 +1,65 @@
+.red{
+    color: red;
+}
+.textleft{
+    text-align: left;
+    font-size: 13px;
+}
+.black{
+    background-color: yellowgreen;
+}
+.bg-white{
+    background-color: white;
+}
+.titulogrande{
+    text-align: center;
+    font-size: 34px;
+}
+
+.center{
+    text-align: center;
+}
+
+.boton {   
+    border: 1px solid #2e518b; 
+    padding: 5px; 
+    background-color: #2e518b; 
+    color: #ffffff; 
+    font-family: 'Helvetica', sans-serif; 
+}
+
+.padding-25{
+    padding: 27px;
+}
+
+.padding-0-20{
+    padding: 0px 20px;
+}
+
+.m-b-8p{
+    margin-bottom: 8px;
+}
+
+
+
+
+.padding-0-20-0{
+    padding: 27px 20px 0px 0px;
+}
+
+.first-blue{
+    font-size: 18px;
+    font-weight: 600;
+    min-height: 176px;
+}
+
+@media (max-width: 1680px) and (min-width: 1200px){
+    .first-blue{
+        min-height: 171px;
+    }
+}
+@media (max-width: 768px) {
+    .padding-0-20-0{
+        padding: 0px 20px;
+    }
+}

@@ -1,0 +1,8 @@
+<template >
+        <lightning-layout-item class="text-center slds_align_absolute_center">
+            <img key={certification.Id} src={certification.imagen} onclick={handleClick} class="slds-icon_container_circle img-cert"> 
+            <div class="col-12 title-cert-div">
+                <p class={certificationStyle} key={certification.Id}>{certification.Name}</p>        
+            </div>
+        </lightning-layout-item>
+</template>

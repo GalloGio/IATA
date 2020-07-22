@@ -11,6 +11,8 @@ import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
 import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
+import { getQueryParameters } 					from "c/cwUtilities";
+
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
@@ -475,6 +477,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
 
+		if(getQueryParameters().sourceService){
+			this.registrationForm.sourceService = getQueryParameters().sourceService;
+		}
 		register({ registrationForm : JSON.stringify(this.registrationForm),
 				   customerType : JSON.stringify(this.selectedMetadataCustomerType),
 				   contactId : contactId,

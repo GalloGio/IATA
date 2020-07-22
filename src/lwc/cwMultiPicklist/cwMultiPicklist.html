@@ -1,0 +1,60 @@
+<template>
+
+        <div id="ddlPart" class="slds-picklist">
+            <button class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="false" onclick={toggle}>
+                <label id="lblselectvalue" class="mb-0">
+                    {selectedItemsNumber} {label.selected}
+                </label>  
+                <img aria-hidden="true" class="slds-icon slds-icon_x-small" src={downIcon}/>
+            </button>
+    
+            <div class="slds-dropdown slds-dropdown--left slds-hide dropdown-div" id="droplist">
+                <ul class="slds-dropdown__list" role="menu" >
+                    <template if:true={allSelected}>
+                        <li class="selected ddheaditem slds-dropdown__item slds-is-selected" role="presentation">
+                            <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" onclick={uncheckAll}>
+                                <span class="slds-truncate">
+                                    <img aria-hidden="true" class="slds-icon slds-icon_x-small disabled-filter" src={ckIcon}/>
+                                    <label>{label.unselected_all}</label>
+                                </span>
+                            </a>
+                        </li>
+                    </template>
+                    <template if:false={allSelected}>
+                        <li class="ddheaditem slds-dropdown__item slds-is-selected" role="presentation">
+                            <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="false" onclick={checkAll}>
+                                <span class="slds-truncate">
+                                    <img aria-hidden="true" class="slds-icon slds-icon_x-small" src={ckIcon}/>
+                                    <label class="capitalize">{label.select_all}</label>
+                                </span>
+                            </a>
+                        </li>
+                    </template>
+    
+                    <template for:each={picklistElems} for:item="pItem">
+                        <template if:true={pItem.selected}>
+                            <li key={pItem.value} class="selected slds-dropdown__item slds-is-selected" role="presentation">
+                                <a data-value={pItem.value} data-tosca={pItem.value} href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" onclick={uncheckItem}>
+                                    <span class="slds-truncate">
+                                        <img aria-hidden="true" class="slds-icon slds-icon_x-small" src={ckIcon}/>
+                                        <label>{pItem.label}</label>
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
+                        <template if:false={pItem.selected}>
+                            <li key={pItem.value} class="slds-dropdown__item slds-is-selected" role="presentation">
+                                <a data-value={pItem.value} data-tosca={pItem.value} href="javascript:void(0);" role="menuitemcheckbox" aria-checked="false" onclick={checkItem}>
+                                    <span class="slds-truncate">
+                                        <img aria-hidden="true" class="slds-icon slds-icon_x-small disabled-filter" src={ckIcon}/>
+                                        <label>{pItem.label}</label>
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    
+    </template>

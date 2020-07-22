@@ -1,0 +1,18 @@
+<messaging:emailTemplate subject="{!relatedTo.ICG_Certification__r.Name} certification/accreditation of {!relatedTo.ICG_Account_Role_Detail__r.Name}, {!relatedTo.ICG_Account_Role_Detail__r.RecordType.Name}, {!relatedTo.ICG_Account_Role_Detail__r.Formatted_Address__c} expired" relatedToType="ICG_Capability_Assignment_Group__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" stationData="{!relatedTo.ICG_Account_Role_Detail__c}"> </c:CW_HelloUser>     
+                    <c:CW_StationDetails nameList="Please be informed that {!relatedTo.ICG_Certification__r.Name} " nameList2="certification/accreditation for the below station has expired:" stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_StationDetails>
+                    <c:CW_LinkCertificationManagement stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_LinkCertificationManagement>
+
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

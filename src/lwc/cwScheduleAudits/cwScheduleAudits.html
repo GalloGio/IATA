@@ -1,0 +1,80 @@
+<template>
+    <div class="col-lg-8 col-md-12 p-0">
+        <c-cw-spinner width="25%" if:true={requesting} overlay="true" position="position-fixed"></c-cw-spinner>
+        <c-cw-station-selection 
+            label={label} 
+            user-managed-facilities={userManagedFacilities} 
+            pre-selected-facility={preSelectedFacility}
+            onselectfacility={selectFacility}>
+        </c-cw-station-selection>
+
+        <template if:true={selectedFacility}>
+            <div class="formcontainer">
+                <div class="validationprograms text-center"><h3>{label.which_validation_programs_to_renew_archieve}?</h3>
+                    <div class="content max-height-100 mt-3">
+                        <template if:true={certifications}>
+                            <template for:each={certifications} for:item="cert">
+                                <label data-tosca={cert.Name} data-type="certification"
+                                    class="col-2 align-top text-center itemBase-cert itemUnselected certiCard"
+                                    onclick={clickCertif} key={cert.Id} data-name={cert.Name}>
+                                    <img src={tickSelection} class="certiTick " key={cert.Id} data-tosca={cert.Id}
+                                        data-name={cert.Name} data-type="certification">
+                                    <img src={cert.Image__c} class="certiImage " key={cert.Id} data-tosca={cert.Id}
+                                        data-name={cert.Name} data-type="certification" />
+                                    <div class="icgBlueName certiLabel item-filter" data-tosca={cert.Id}
+                                        data-name={cert.Name} data-type="certification">{cert.Name}</div>
+                                    <input type="checkbox" key={cert.Id} value={cert.Name} data-id={cert.Id} data-name={cert.Name}
+                                        class="hidden">
+                                </label>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+                <div>
+                    <b>Audit contact</b>
+                    <br /><br />
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="name">{label.name}*</label>
+                            <input type="text" required name="Contact_Name__c" data-tosca="name" class="form-control" id="name" value={contactData.name}>
+                        </div>
+                        <div class="col">
+                            <label for="email">{label.email}*</label>
+                            <input type="email" required name="Contact_Email__c" data-tosca="email" class="form-control" id="email" value={contactData.email}>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col">
+                            <label for="phone">{label.phone}*</label>
+                            <input type="text" required name="Contact_Phone__c" data-tosca="phone" class="form-control" id="phone"
+                                value={contactData.phone}>
+                        </div>
+                        <div class="col datepickslds">
+                            <label for="Preferable_Audit_Date__c">Preferable Audit Date* </label>
+                            <lightning-input type="date" data-name="preferable-audit-date" name="Preferable_Audit_Date__c" label="" variant="label-hidden" value={contactData.date} class="dateAudits" required></lightning-input>
+
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-left m-auto">
+                        <span class="backbutton" onclick={removeFacility} if:false={saving}><b>{label.back}</b></span>
+                        <!--<a class="btn btn-primary-blue link-button no-margin-top"  href="javascript:{}"
+                            onclick={removeFacility} data-substep="yes" if:false={saving}>{label.back}</a>-->
+                        <!--  ALTERNATIVE STYLE FOR BACK BUTTON  -->
+                    </div>
+                    <div class="col-6 text-right">
+                        <a class="btn btn-primary link-button no-margin-top" data-tosca="bookaudits" href="javascript:{}"
+                            onclick={bookAudits} data-substep="yes" if:false={saving}>{label.request}</a>
+                        <c-cw-spinner position="absolute" width="20%" if:true={saving}></c-cw-spinner>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <template if:true={showModal}>
+        <c-cw-basic-modal label={label} modal-message={modalMessage} modal-image={modalImage} onclosemodal={closeModal}>
+        </c-cw-basic-modal>
+    </template>
+</template>

@@ -1,0 +1,5 @@
+<template>
+    <span id="previous" if:true={showPrevious} class="previous" onclick={previous}>&lt;</span>
+    <template for:each={pageNumbers} for:item="num"><span onclick={goToPage} key={num} data-page={num} class="pagenumber">{num}</span></template>
+    <span id="next" if:true={showNext} class="next" onclick={next}>&gt;</span>
+</template>

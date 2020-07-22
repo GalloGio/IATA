@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Email to the user when remote validation is Rejected by IATA</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Results to User rejected by IATA</name>
+    <style>none</style>
+    <subject>Your remote validation has been rejected by IATA</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

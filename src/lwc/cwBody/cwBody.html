@@ -1,0 +1,396 @@
+<template>
+
+    <div class="bg-white body-landing">
+        <c-cw-spinner width="25%" if:false={initialized} overlay="true" position="position-fixed"></c-cw-spinner>
+        <lightning-layout-item padding="" size="12" flexibility="grow" small-device-size="12" class="pt-0"
+            medium-device-size="12">
+            <!--ANCHOR DIV search-->
+            <div id="search"></div>
+            <div class="row-home-search searchid mt-0 mb-0">
+                <c-cw-Landing-Search-Bar label={label}></c-cw-Landing-Search-Bar>
+            </div>
+            <div class="container">
+                <div class="col-12 col-no-padding bg-white">
+                    <!--ANCHOR DIV abouticg-->
+                    
+                        <div id="abouticg"></div>
+                        <div class="row-home ml-0 mr-0 mt-0 pt-45">
+                            <div class="col-md-7 col-6-5">
+                                <c-cw-Text-Container title={label.what_is_the_IATA_One_Source} titlecolor="" underline="true"
+                                    text={label.what_is_the_IATA_One_Source_text1}
+                                    text2={label.what_is_the_IATA_One_Source_text2}
+                                    textcolor="text-black" backgroundcolor="bg-white" firstext="true">
+                                </c-cw-Text-Container>
+                               
+                                <div class="hidden-sm">
+                                    <a class='text-white mt-0 btn btn-primary btn-primary link-button' onclick={showWhatsIATAModal} >{label.watch_video}</a>
+                                </div>
+                                <div class="visible-sm">
+                                    <div class="col-12 text-center mb-3">
+                                        <a class='text-white mt-0 btn btn-primary btn-primary link-button ' onclick={showWhatsIATAModal} >{label.watch_video}</a>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="col-md-3 col-3-5">
+                                <c-cw-Text-Container title={label.do_you_manage_a_Cargo_Station} titlecolor='text-white'
+                                    text={label.do_you_manage_a_Cargo_Station_text1}
+                                    textcolor="text-white" button-text={label.icg_join_now}
+                                    button-color="btn btn-primary btn-blue link-button"
+                                    pass-button-click="true"
+                                    button-click={showJoinNowPopUp}
+                                    button-position="text-center" backgroundcolor="bg-blue" firstext="true">
+                                </c-cw-Text-Container>
+                            </div>
+                            <!--HIDDEN RESPONSIVE VERSION-->
+                            <div class="col-md-2 hidden-sm banner-col col-no-padding-right">
+                                <div class="memberAirlines">
+                                    <br />
+                                    <a onclick={showMemberAirlinesModal}><h2 class="text-banner-title">{label.memberAirlines}</h2><hr class="yellow-underline-percentBanner"><h3 class="text-banner">{label.memberAirlines2}</h3></a>
+                                </div>
+                  
+                                <div class="strategicPartners">
+                                    <br />
+                                    <a onclick={showStrategicAirlinesModal}><h2 class="text-banner-title">{label.strategicAirlines}</h2><hr class="blue-underline-percentBanner"><h3 class="text-banner">{label.strategicAirlines2}</h3></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="visible-sm">
+                        <section>
+                            <div class="col-12 row-no-margin">
+                                <div class="col-6">
+                                    <div class="memberAirlines text-center">
+                          
+                                        <a onclick={showMemberAirlines}><h3>{label.memberAirlines}</h3></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="strategicPartners text-center" onclick={showStrategicAirlines}>
+                        
+                                        <h3>{label.strategicAirlines}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!--ANCHOR DIV validationprog-->
+                    <div id="validationprog"></div>
+                    <div class="row-no-margin row-lg-home">
+                        <div class="width-100">
+                            <c-cw-certification-panel label={label} title={label.IATA_Validation_Programs} back-ground-style="bg-yellow">
+                            </c-cw-certification-panel>
+                        </div>
+                    </div>
+
+                    <!--ANCHOR DIV sfremote-->
+                    
+                    <div id="sfremote"></div>
+                    <!--HIDDEN RESPONSIVE VERSION-->
+                    <div class="hidden-lg">
+                        
+                        <div class="row-home ml-0 mr-0" id="smartfaclity">
+                            <div class="col-6">
+                                <div class={backgroundSmartFacility}></div>
+                            </div>
+                            <div class="col-6">
+                                <c-cw-Text-Container title={label.smart_facility_remote_validation} titlecolor="text-black"
+                                    underline="true"
+                                    text={label.smart_facility_remote_validation_text1}
+                                    text2={label.smart_facility_remote_validation_text2}
+                                    text3={label.smart_facility_remote_validation_text3}
+                                    textcolor="" button-text={label.btn_learn_more} button-color="btn btn-primary link-button"
+                                    button-url="https://www.iata.org/smart-facility" button-position="text-right"
+                                    backgroundcolor="bg-white">
+                                </c-cw-Text-Container>
+                            </div>
+                        </div>
+                    </div>
+            
+
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    
+                    <div class="visible-lg">
+                        <section>
+                            <div class="row col-12">
+                                <c-cw-Text-Container title={label.smart_facility_remote_validation} underline="true"
+                                    titlecolor="text-black">
+                                </c-cw-Text-Container>
+                            </div>
+                            <div class="row-no-margin">
+                                <c-cw-Text-Container title="" titlecolor="text-white"
+                                    text={label.smart_facility_remote_validation_text1}
+                                    text2={label.smart_facility_remote_validation_text2}
+                                    text3={label.smart_facility_remote_validation_text3}
+                                    textcolor="text-white" button-text={label.btn_learn_more} button-color="btn btn-primary link-button"
+                                    button-url="https://www.iata.org/smart-facility" button-position="text-right"
+                                    backgroundcolor="bg-blue">
+                                </c-cw-Text-Container>
+                            </div>
+                        </section>
+                    </div>
+                    
+
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    
+                    <div class="visible-md">
+                        <section>
+                            <div class="row-no-margin" id="latestupdates">
+                                <div class="col-12">
+
+                                    <c-cw-latest-i-c-g-updates-container label={label} title="Latest ICG Updates">
+                                    </c-cw-latest-i-c-g-updates-container>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    
+
+                    <!--HIDDEN RESPONSIVE VERSION-->
+               
+                    <div class="row-home hidden-sm">
+                        <div class="col-md-8 offset-md-2">
+                            <a href="https://www.iata.org/wcs" target="_blank"><img src={adv3} alt="adv3" class="width-100"/></a>
+                        </div>
+                    </div>
+               
+
+                    <!--ANCHOR DIV latestnews-->
+                
+                    <div id="latestnews"></div>
+                    <div class="row-home ml-0 mr-0">
+                        <!--HIDDEN RESPONSIVE VERSION-->
+                        <div class="col-xl-2 col-lg-12 col-md-12 hidden-md latest-news-home">
+                            <div class="bg-latest-news">
+                                <h1 class="title-latest-news">
+                                    IATA </br>{label.latest} </br>{label.news}
+                                </h1>
+                            </div>
+                        </div>
+
+                        <!--VISIBLE RESPONSIVE VERSION-->
+                        <div class="col-12 visible-md text-center row-lg-home">
+                            <section>
+                                <div class="bg-latest-news">
+                                    <h2 class="latest-new-title-resp">
+                                        {label.icg_latest_news}
+                                    </h2>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-12 col-md-12 row-lg-home">
+                            <c-cw-Text-Container title={label.air_cargo_and_ecommerce}
+                                title-color="black"
+                                text={label.air_cargo_and_ecommerce_text1}
+                                button-position="text-left" button-text={label.btn_learn_more}
+                                button-url="https://www.iata.org/en/programs/cargo/cargo-operations/e-commerce-logistics/"
+                                button-target="_blank" button-color="btn btn-primary link-button"
+                                background-color="bg-white">
+                            </c-cw-Text-Container>
+                        </div>
+                        <div class="col-md-6 col-sm-12">                     
+                            <div class="embed-responsive embed-responsive-21by9">
+                                <iframe class="embed-responsive-item" src={label.icg_ecommerce_video} allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <!--ANCHOR DIV aboutiata-->                    
+                    <div id="aboutiata"></div>
+                    <!--VISIBLE RESPONSIVE VERSION-->
+                    <div class="visible-sm text-center">
+                        <section>
+                            <div class="row-home carousel-home ml-0 mr-0">
+                                
+                                    <div class="slds-carousel">
+                                        <div class="slds-carousel__stage without-border width-100vw">
+                                            <div class={totrans}>
+                                                    <div class="col-md-12 width-100 services-home-one overlay services-home-article fullcolor car-item item-active swipediv" data-target-id="1">                                                       
+                                                        <div class="height-100 width-100vw">
+                                                            <h2 class="carrusel-item-resp servicehome1r" lwc:dom="manual"></h2>
+                                                        </div>
+                                                        <a class="link-button service-home-btn" target="_blank"
+                                                            href="https://www.iata.org/smart-facility">
+                                                            <img class="btn-img-custom" src={btnyllw}>
+                                                        </a>                                                       
+                                                    </div>
+                                                
+                         
+                                               
+                                                    <div class="without-border col-md-12 width-100 services-home-two overlay services-home-article fullcolor car-item item-inactive swipediv" data-target-id="2">                                                   
+                                                        <div class="height-100 width-100vw">
+                                                            <h2 class="carrusel-item-resp servicehome2r" lwc:dom="manual"></h2>
+                                                        </div>
+                                                        <a class="link-button service-home-btn" target="_blank"
+                                                            href="https://www.iata.org/services/consulting/Pages/index.aspx">
+                                                            <img class="btn-img-custom" src={btnyllw}>
+                                                        </a>                                                        
+                                                    </div>
+                                             
+                         
+                                            
+                                                    <div class="col-md-12 width-100 services-home-three overlay services-home-article fullcolor car-item item-inactive swipediv" data-target-id="3">                                                      
+                                                        <div class="height-100 width-100vw">
+                                                            <h2 class="carrusel-item-resp servicehome3r" lwc:dom="manual"></h2>
+                                                        </div>
+                                                        <a class="link-button service-home-btn" target="_blank"
+                                                            href="https://www.iata.org/training/Pages/index.aspx">
+                                                            <img class="btn-img-custom" src={btnyllw}>
+                                                        </a>                                                        
+                                                    </div>
+                            
+                                               
+                                                    <div class="col-md-12 width-100 services-home-four overlay services-home-article fullcolor car-item item-inactive swipediv" data-target-id="4">                                                      
+                                                        <div class="height-100 width-100vw">
+                                                            <h2 class="carrusel-item-resp servicehome4r" lwc:dom="manual"></h2>
+                                                        </div>
+                                                        <a class="link-button service-home-btn" target="_blank"
+                                                            href="https://www.iata.org/publications/tact/Pages/tact-online.aspx">
+                                                            <img class="btn-img-custom" src={btnyllw}>
+                                                        </a>                                                       
+                                                    </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="left-arrow-yllw-sctn cursor-pt" onclick={getPreviousCarouselElementId}>
+                                            <lightning-icon icon-name="utility:chevronleft" variant="inverse" alternative-text="Prev" class="width-30"></lightning-icon>
+                                        </div>              
+                
+                                        <div class="right-arrow-yllw-sctn cursor-pt" onclick={getNextCarouselElementId}>
+                                            <lightning-icon icon-name="utility:chevronright" variant="inverse" alternative-text="Next" class="width-30"></lightning-icon>
+                                        </div>
+                                    </div>                              
+                           
+                                
+                                <div class="row col-6 offset-3 text-center indicators">
+                                    <div class="col-3 text-center">
+                                        <div class="bullet current" data-target-id="1" onclick={carouselchange}></div>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <div class="bullet" data-target-id="2" onclick={carouselchange}></div>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <div class="bullet" data-target-id="3" onclick={carouselchange}></div>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <div class="bullet" data-target-id="4" onclick={carouselchange}></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+
+
+
+
+                    
+                    <!--HIDDEN RESPONSIVE VERSION-->                  
+                        <div class="hidden-sm">
+                            <div class="row-home">
+                                <div class="col-xl-3 col-lg-3 col-md-6">
+                                    <div
+                                        class="col-md-12 services-home-one overlay services-home-article fullcolor serv-home-padd special-height">
+                                        <h2 class="carrusel-item servicehome1" lwc:dom="manual"></h2>
+                                        <a class="link-button service-home-btn" target="_blank"
+                                            href="https://www.iata.org/smart-facility">
+                                            <img class="btn-img-custom" src={btnyllw}>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-6 serv-home-padd">
+                                    <div
+                                        class="col-md-12 services-home-two overlay services-home-article fullcolor serv-home-padd special-height">
+                                        <h2 class="carrusel-item servicehome2" lwc:dom="manual"></h2>
+                                        <a class="link-button service-home-btn" target="_blank"
+                                            href="https://www.iata.org/services/consulting/Pages/index.aspx">
+                                            <img class="btn-img-custom" src={btnyllw}>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-6">
+                                    <div
+                                        class="col-md-12 services-home-three overlay services-home-article fullcolor special-height">
+                                        <h2 class="carrusel-item servicehome3" lwc:dom="manual"></h2>
+                                        <a class="link-button service-home-btn" target="_blank"
+                                            href="https://www.iata.org/training/Pages/index.aspx">
+                                            <img class="btn-img-custom" src={btnyllw}>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-6">
+                                    <div
+                                        class="col-md-12 services-home-four overlay services-home-article fullcolor special-height">
+                                        <h2 class="carrusel-item servicehome4" lwc:dom="manual"></h2>
+                                        <a class="link-button service-home-btn" target="_blank"
+                                            href="https://www.iata.org/publications/tact/Pages/tact-online.aspx">
+                                            <img class="btn-img-custom" src={btnyllw}>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                
+                        <div class="row-no-margin" id="about3">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 bg-blue pr-0">
+                                <c-cw-Text-Container 
+                                    title={label.about_IATA} 
+                                    titlecolor='text-white'
+                                    text={label.about_IATA_text1}
+                                    textcolor="text-white" 
+                                    button-position="text-right"
+                                    button-text={label.btn_learn_more}
+                                    button-url={label.icg_iata_base_url}
+                                    button-target="_blank" 
+                                    button-color="btn btn-primary link-button"
+                                    backgroundcolor="bg-blue">
+                                </c-cw-Text-Container>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-no-padding">
+                                <div class="embed-responsive embed-responsive-21by9">
+                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/R4PdVFjtdCI"
+                                        allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>                   
+                    <br />
+                </div>
+            </div>
+        </lightning-layout-item>
+    </div>
+    <template if:true={showWhatIsIataSource}>
+        <c-cw-intermediate-modal onclosemodal={closeWhatsIsIataSource} titleheader={label.what_is_the_IATA_One_Source}>
+            <iframe width="560" height="315" src={label.icg_what_is_the_IATA_One_Source_videoUrl} allowfullscreen></iframe>
+        </c-cw-intermediate-modal>
+    </template>
+    <template if:true={showMemberAirlines}>
+        <c-cw-intermediate-modal onclosemodal={closeMemberAirlines} extra-classes={extraClasses}>
+            <div class="slds-grid slds-grid_vertical">
+                <h3 class="modaldiv">{label.memberAirlines} {label.memberAirlines2}</h3><hr class="yellow-underline-percentModal">
+                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal}</p></div>
+                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal2}</p></div>
+                <div class="text-center slds-col modaldiv padding-buttons">
+                    <a class='text-white mt-0 btn btn-primary btn-primary btn-blue link-button' href={label.icg_registration_url} target="_blank" >{label.btn_register_now}</a>
+                    
+                </div>
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+    <template if:true={showStrategicAirlines}>
+        <c-cw-intermediate-modal onclosemodal={closeStrategicAirlines} extra-classes={extraClasses}>
+            <div class="slds-grid slds-grid_vertical">
+                <h3 class="modaldiv">{label.strategicAirlines} {label.strategicAirlines2}</h3><hr class="blue-underline-percentModal">
+                <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal}</p></div>
+                <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal2}</p></div>
+                <div class="text-center slds-col slds-grid modaldiv padding-buttons">
+                    <div class="slds-col slds-p-horizontal_medium buttonRegistration"><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' href={label.icg_registration_url} target="_blank" >{label.btn_register_now}</a></div>
+                    <div class="slds-col slds-p-horizontal_medium buttonListed"><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' onclick={seeAllResults} >{label.icg_see_listed_companies}</a></div>
+                </div>
+            </div>
+        </c-cw-intermediate-modal>
+    </template>
+</template>

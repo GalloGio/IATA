@@ -1,0 +1,9 @@
+.next,.previous,.pagenumber {
+    color: blue;
+    cursor: pointer;
+    padding:5px;
+}
+
+.selected {
+    font-weight:900;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Station Request Rejected: Notification to Requestor/Company Admins</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification Rejected to Requestor/Company Admins</name>
+    <style>none</style>
+    <subject>The creation request for the below Station has been rejected</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

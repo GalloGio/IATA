@@ -46133,6 +46133,3489 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <shortDescription>doubleHash</shortDescription>
         <value>##</value>
     </labels>
+	<labels>
+        <fullName>icg_IATA_Validation_Programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg IATA Validation Programs</shortDescription>
+        <value>IATA Validation Programs</value>
+    </labels>
+    <labels>
+        <fullName>icg_about_IATA</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg about IATA</shortDescription>
+        <value>About IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_about_IATA_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg about IATA text1</shortDescription>
+        <value>The International Air Transport Association (IATA) is the trade association for the world’s airlines, representing some 290 airlines or 82% of total air traffic. We support many areas of aviation activity and help formulate industry policy on critical aviation issues.</value>
+    </labels>
+    <labels>
+        <fullName>icg_accept</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg accept</shortDescription>
+        <value>Accept</value>
+    </labels>
+    <labels>
+        <fullName>icg_account_bussiness_address_info</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg account bussiness address info</shortDescription>
+        <value>Account Business Address Information</value>
+    </labels>
+    <labels>
+        <fullName>icg_account_create_take_several_days</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg account create take several days</shortDescription>
+        <value>Account Creation Process takes several days, please proceed to enter the Station details for the One Source Station Profile.</value>
+    </labels>
+    <labels>
+        <fullName>icg_account_creation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg account creation</shortDescription>
+        <value>Account Creation</value>
+    </labels>
+    <labels>
+        <fullName>icg_account_details</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg account details</shortDescription>
+        <value>Account Details</value>
+    </labels>
+    <labels>
+        <fullName>icg_account_information</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg account information</shortDescription>
+        <value>Account Information</value>
+    </labels>
+    <labels>
+        <fullName>icg_account_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg account name</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_accredited_agent</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Accredited Agent</shortDescription>
+        <value>IATA Accredited Agent</value>
+    </labels>
+    <labels>
+        <fullName>icg_accredited_airline</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Member Airline</shortDescription>
+        <value>IATA Member Airline</value>
+    </labels>
+    <labels>
+        <fullName>icg_action</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg action</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>icg_add</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>icg_add_additional_criteria</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg add additional filters</shortDescription>
+        <value>Add additional filters</value>
+    </labels>
+    <labels>
+        <fullName>icg_add_station_manager</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg add station manager</shortDescription>
+        <value>Add Station Manager</value>
+    </labels>
+    <labels>
+        <fullName>icg_add_the_second_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg add the second location</shortDescription>
+        <value>Add the second</value>
+    </labels>
+    <labels>
+        <fullName>icg_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>icg_address_information</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg address information</shortDescription>
+        <value>Address Information</value>
+    </labels>
+    <labels>
+        <fullName>icg_advanced_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg advanced search</shortDescription>
+        <value>Advanced Search</value>
+    </labels>
+    <labels>
+        <fullName>icg_air_cargo_and_ecommerce</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg air cargo and ecommerce</shortDescription>
+        <value>Air cargo and e-commerce, enabling global trade</value>
+    </labels>
+    <labels>
+        <fullName>icg_air_cargo_and_ecommerce_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg air cargo and ecommerce	text1</shortDescription>
+        <value>The air cargo industry is transforming to capitalize on e-commerce by building global standards, creating partnerships and fostering innovation. IATA works with the industry in embracing new initiatives and technologies that enable speed, visibility, and predictability.</value>
+    </labels>
+    <labels>
+        <fullName>icg_airline</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg airline</shortDescription>
+        <value>Airline</value>
+    </labels>
+    <labels>
+        <fullName>icg_airport_operator</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg airport operator</shortDescription>
+        <value>Airport Operator</value>
+    </labels>
+    <labels>
+        <fullName>icg_alerts_and_events</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg alerts and events</shortDescription>
+        <value>Alerts and Events</value>
+    </labels>
+    <labels>
+        <fullName>icg_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg all</shortDescription>
+        <value>ALL</value>
+    </labels>
+    <labels>
+        <fullName>icg_all_results</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg all results</shortDescription>
+        <value>ALL RESULTS</value>
+    </labels>
+    <labels>
+        <fullName>icg_all_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg all stations</shortDescription>
+        <value>All Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_already_company_admin</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg already company admin</shortDescription>
+        <value>Already Company Admin</value>
+    </labels>
+    <labels>
+        <fullName>icg_already_open_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg already open remote validations</shortDescription>
+        <value>This Station has already open remote validations.</value>
+    </labels>
+    <labels>
+        <fullName>icg_already_request</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg already request</shortDescription>
+        <value>Already Requested</value>
+    </labels>
+    <labels>
+        <fullName>icg_already_requested_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg already requested remote validations</shortDescription>
+        <value>The remote validation was already requested. All the station managers can access to it in the GxA panel once GxA prepare the document.</value>
+    </labels>
+    <labels>
+        <fullName>icg_apply</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg apply</shortDescription>
+        <value>Apply</value>
+    </labels>
+    <labels>
+        <fullName>icg_approve</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg approve</shortDescription>
+        <value>Approve</value>
+    </labels>
+    <labels>
+        <fullName>icg_are_you_looking_for_specific</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg are you looking for specific</shortDescription>
+        <value>Are you looking for specific</value>
+    </labels>
+    <labels>
+        <fullName>icg_are_you_sure</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg are you sure</shortDescription>
+        <value>Are you sure</value>
+    </labels>
+    <labels>
+        <fullName>icg_are_you_sure_delete_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg are you sure delete certification</shortDescription>
+        <value>Are you sure you want to delete the certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_are_you_sure_delete_station_manager</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg are you sure delete station manager</shortDescription>
+        <value>Are you sure you want to delete this Station Manager</value>
+    </labels>
+    <labels>
+        <fullName>icg_audits_requested</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg audits requested</shortDescription>
+        <value>Audit Requests</value>
+    </labels>
+    <labels>
+        <fullName>icg_available_rv_recordtypes</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_available_rv_recordtypes</shortDescription>
+        <value>Cargo_Handling_Facility</value>
+    </labels>
+    <labels>
+        <fullName>icg_back</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg back</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>icg_back_to_results</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg back to results</shortDescription>
+        <value>back to results</value>
+    </labels>
+    <labels>
+        <fullName>icg_become_company_admin</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg become company admin</shortDescription>
+        <value>Become Company Admin</value>
+    </labels>
+    <labels>
+        <fullName>icg_become_company_admin_titile</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg become company admin titile</shortDescription>
+        <value>The Company Administrators are the company’s super users. They can manage all Station profiles related to their company.</value>
+    </labels>
+    <labels>
+        <fullName>icg_become_station_manager</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg become station manager</shortDescription>
+        <value>Become Station Manager</value>
+    </labels>
+    <labels>
+        <fullName>icg_beta</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg beta</shortDescription>
+        <value>beta</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_add_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn add location</shortDescription>
+        <value>ADD LOCATION</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_go_to_station_profile</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn go to station profile</shortDescription>
+        <value>GO TO STATION PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_learn_more</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn learn more</shortDescription>
+        <value>LEARN MORE</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_more_info</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn more info</shortDescription>
+        <value>MORE INFO</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_register_now</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn register now</shortDescription>
+        <value>PRE-REGISTER NOW</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_show_certified_entities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn show certified entities</shortDescription>
+        <value>SHOW CERTIFIED ENTITIES</value>
+    </labels>
+    <labels>
+        <fullName>icg_cancel</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt</shortDescription>
+        <value>Certification management</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_certify</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_certify</shortDescription>
+        <value>Certify</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_disable</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_disable</shortDescription>
+        <value>Edit mode</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_edit</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_edit_capab</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_edit_capab</shortDescription>
+        <value>Edit Capabilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_enable</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_enable</shortDescription>
+        <value>Edit section</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_mantain_prev</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_mantain_prev</shortDescription>
+        <value>Maintain previous capabilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_capability_management</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg capability management</shortDescription>
+        <value>Capability Management</value>
+    </labels>
+    <labels>
+        <fullName>icg_capability_validated_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg capability validated by</shortDescription>
+        <value>Capability validated by</value>
+    </labels>
+    <labels>
+        <fullName>icg_cargo_commodities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg cargo commodities</shortDescription>
+        <value>Cargo Commodities</value>
+    </labels>
+    <labels>
+        <fullName>icg_cargo_handling_facility</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg cargo handling facility</shortDescription>
+        <value>Cargo Handling Facility</value>
+    </labels>
+    <labels>
+        <fullName>icg_cargo_handling_id</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg cargo handling id for demo</shortDescription>
+        <value>aDA9E00000000efWAA</value>
+    </labels>
+    <labels>
+        <fullName>icg_carousel_info_delete</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>text for confirmation</shortDescription>
+        <value>Delete image selected ?</value>
+    </labels>
+    <labels>
+        <fullName>icg_category</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification</shortDescription>
+        <value>Certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_id</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification id</shortDescription>
+        <value>Certification Id</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_of_excellence</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification of excellence</shortDescription>
+        <value>Certifications of Excellence</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_of_excellence_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification of excellence description</shortDescription>
+        <value>Validate excellence beyond adherence to IATA standards. These certifications improve the level of competency, operational and technical preparedness in the handling and transport of special cargo, identifying the &apos;best in class&apos; industry stakeholders</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification search</shortDescription>
+        <value>certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_certifications_of_compliance</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certifications of compliance</shortDescription>
+        <value>Certifications of Compliance</value>
+    </labels>
+    <labels>
+        <fullName>icg_certifications_of_compliance_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certifications of compliance description</shortDescription>
+        <value>Validate companies&apos; compliance with IATA standards, guidelines and recommended practices for handling operations and environmental management.</value>
+    </labels>
+    <labels>
+        <fullName>icg_change</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg change</shortDescription>
+        <value>change</value>
+    </labels>
+    <labels>
+        <fullName>icg_change_to_critical_station_information</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg change to critical station information</shortDescription>
+        <value>Changes to critical Station information made by Station Managers</value>
+    </labels>
+    <labels>
+        <fullName>icg_check_before_creating_station_profile</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg check before creating station profile</shortDescription>
+        <value>Please check before creating a Station profile</value>
+    </labels>
+    <labels>
+        <fullName>icg_check_existing_facilities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg check existing facilities</shortDescription>
+        <value>Check Existing Facilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_check_existing_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg check existing stations</shortDescription>
+        <value>Check Existing Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_city</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg city</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>icg_click_here</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg click here</shortDescription>
+        <value>Click Here</value>
+    </labels>
+    <labels>
+        <fullName>icg_close</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg close</shortDescription>
+        <value>CLOSE</value>
+    </labels>
+    <labels>
+        <fullName>icg_closed</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg closed</shortDescription>
+        <value>Closed</value>
+    </labels>
+    <labels>
+        <fullName>icg_cns_endorsed_agent</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CNS Endorsed Agent</shortDescription>
+        <value>CNS Endorsed Agent</value>
+    </labels>
+    <labels>
+        <fullName>icg_comming_soon</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg comming soon</shortDescription>
+        <value>Coming Soon</value>
+    </labels>
+    <labels>
+        <fullName>icg_commodity</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg commodity</shortDescription>
+        <value>Commodity</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_admin</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company admin</shortDescription>
+        <value>Company Admin</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_admins</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company admins</shortDescription>
+        <value>Company Admins</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_logo</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company logo</shortDescription>
+        <value>Company Logo</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company name</shortDescription>
+        <value>Company Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_name_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company name search</shortDescription>
+        <value>company name</value>
+    </labels>
+    <labels>
+        <fullName>icg_compare</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg compare</shortDescription>
+        <value>COMPARE</value>
+    </labels>
+    <labels>
+        <fullName>icg_condensed_list</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg condensed list</shortDescription>
+        <value>Condensed List</value>
+    </labels>
+    <labels>
+        <fullName>icg_confirmation_text</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_confirmation_text</shortDescription>
+        <value>Are you sure?</value>
+    </labels>
+    <labels>
+        <fullName>icg_contact_email</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg contact email</shortDescription>
+        <value>Contact Email</value>
+    </labels>
+    <labels>
+        <fullName>icg_contact_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg contact name</shortDescription>
+        <value>Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_contact_phone</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg contact phone</shortDescription>
+        <value>Contact Phone</value>
+    </labels>
+    <labels>
+        <fullName>icg_continue</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg continue</shortDescription>
+        <value>CONTINUE</value>
+    </labels>
+    <labels>
+        <fullName>icg_country</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>icg_create_a_new_one</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg create a new one</shortDescription>
+        <value>create a new one</value>
+    </labels>
+    <labels>
+        <fullName>icg_create_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg create certification</shortDescription>
+        <value>Create Certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_create_new_profile_for_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg create new profile for address</shortDescription>
+        <value>Create new profile for this address</value>
+    </labels>
+    <labels>
+        <fullName>icg_create_new_station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg create new station</shortDescription>
+        <value>Create New Station</value>
+    </labels>
+    <labels>
+        <fullName>icg_create_station_in_new_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg create station in new address</shortDescription>
+        <value>CREATE STATION IN NEW ADDRESS</value>
+    </labels>
+    <labels>
+        <fullName>icg_creating</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg creating</shortDescription>
+        <value>Creating</value>
+    </labels>
+    <labels>
+        <fullName>icg_creating_station_new_address_required_new_account</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg creating station new address required new account</shortDescription>
+        <value>Creating Stations at a NEW ADDRESS requires a new Account.</value>
+    </labels>
+    <labels>
+        <fullName>icg_customer_email</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg customer email</shortDescription>
+        <value>Customer Service e-Mail</value>
+    </labels>
+    <labels>
+        <fullName>icg_customer_service_phone</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg customer service phone</shortDescription>
+        <value>Customer Service Phone Number</value>
+    </labels>
+    <labels>
+        <fullName>icg_customer_website</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg customer website</shortDescription>
+        <value>Customer Website</value>
+    </labels>
+    <labels>
+        <fullName>ICG_Data_Submission_no_access</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>You don´t have permission</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>icg_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>icg_date_requested</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg date requested</shortDescription>
+        <value>Date Requested</value>
+    </labels>
+    <labels>
+        <fullName>icg_detail</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg detail</shortDescription>
+        <value>Detail</value>
+    </labels>
+    <labels>
+        <fullName>icg_detail_no_display_public</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg detail no display public</shortDescription>
+        <value>Details of this section will not be displayed on public profile</value>
+    </labels>
+    <labels>
+        <fullName>icg_detailed_list</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg detailed list</shortDescription>
+        <value>Detailed List</value>
+    </labels>
+    <labels>
+        <fullName>icg_direct_ramp_access</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg direct ramp access</shortDescription>
+        <value>Direct Ramp Access</value>
+    </labels>
+    <labels>
+        <fullName>icg_display_in_public_site</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg display in public site</shortDescription>
+        <value>Display in public site</value>
+    </labels>
+    <labels>
+        <fullName>icg_display_table_in_public_site</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg display title in public site</shortDescription>
+        <value>Display Table in public site</value>
+    </labels>
+    <labels>
+        <fullName>icg_display_publicly</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg display publicly</shortDescription>
+        <value>Display publicly</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_have_booking_platform</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you have booking platform</shortDescription>
+        <value>Do you have an online booking platform? (Add link)</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_manage_a_Cargo_Station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you manage a Cargo Station</shortDescription>
+        <value>Do you want to be listed?</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_manage_a_Cargo_Station_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you manage a Cargo Station text1</shortDescription>
+        <value>Attract new customers by creating a free profile on the IATA One Source. Stand out from your competitors and highlight your facility&apos;s capacities and IATA certifications and accreditations.</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_want_to_request_manager_rights</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you want to request manager rights</shortDescription>
+        <value>Do you want to request Manager rights?</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_want_to_transport_a_specific</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you want to transport a specific</shortDescription>
+        <value>Do you want to transport a specific</value>
+    </labels>
+    <labels>
+        <fullName>icg_dolly_truck</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg dolly truck</shortDescription>
+        <value>Dolly/Truck</value>
+    </labels>
+    <labels>
+        <fullName>icg_ecommerce_video</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg ecommerce video</shortDescription>
+        <value>https://www.youtube.com/embed/oimgyps8nEI</value>
+    </labels>
+    <labels>
+        <fullName>icg_email</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>icg_employees</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg employees</shortDescription>
+        <value>Employees</value>
+    </labels>
+    <labels>
+        <fullName>icg_enabled_ids</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg enabled ids for demo</shortDescription>
+        <value>aDA3N0000004CkVWAU;aDA3N0000004CkaWAE;aDA3N0000004CkfWAE;aDA3N0000004CkuWAE;aDA9E00000000efWAA;aDA3N0000004CkpWAE;aDA3N0000004CkkWAE</value>
+    </labels>
+    <labels>
+        <fullName>icg_enter_station_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg enter station name</shortDescription>
+        <value>Enter Station Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_entire_section_no_display_public</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg entire section no display public</shortDescription>
+        <value>Entire section will not be displayed on public profile</value>
+    </labels>
+    <labels>
+        <fullName>icg_existing_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg existing stations</shortDescription>
+        <value>Existing Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_expand_collapse</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg expand collapse</shortDescription>
+        <value>Expand/Collapse</value>
+    </labels>
+    <labels>
+        <fullName>icg_expiration_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg expiration date</shortDescription>
+        <value>Expiration date</value>
+    </labels>
+    <labels>
+        <fullName>icg_expired</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg expired</shortDescription>
+        <value>Expired</value>
+    </labels>
+    <labels>
+        <fullName>icg_expiring_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg expiring remote validations</shortDescription>
+        <value>Expiring Remote Validations</value>
+    </labels>
+    <labels>
+        <fullName>icg_expiring_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg expiring validations</shortDescription>
+        <value>Expiring Validations</value>
+    </labels>
+    <labels>
+        <fullName>icg_export_to_excel</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg export to excel</shortDescription>
+        <value>Export to Excel</value>
+    </labels>
+    <labels>
+        <fullName>icg_facility_management</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg facility management</shortDescription>
+        <value>Facility Management</value>
+    </labels>
+    <labels>
+        <fullName>icg_file_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg file name</shortDescription>
+        <value>File Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_find_your_aviation_business_partner</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg find your aviation business partner</shortDescription>
+        <value>Find your aviation business partner</value>
+    </labels>
+    <labels>
+        <fullName>icg_firstname</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg firstname</shortDescription>
+        <value>Firstname</value>
+    </labels>
+    <labels>
+        <fullName>icg_for_the_selected_account</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg for the selected account</shortDescription>
+        <value>for the selected account</value>
+    </labels>
+    <labels>
+        <fullName>icg_freight_forwarder</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg freight forwarder</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>icg_from</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg from</shortDescription>
+        <value>From</value>
+    </labels>
+    <labels>
+        <fullName>icg_gallery</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg gallery</shortDescription>
+        <value>Gallery</value>
+    </labels>
+    <labels>
+        <fullName>icg_go_to_public_area</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg go to public area</shortDescription>
+        <value>Go to public area</value>
+    </labels>
+    <labels>
+        <fullName>icg_gridEmptyMessage</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg grid empty message</shortDescription>
+        <value>There are no records in this section.</value>
+    </labels>
+    <labels>
+        <fullName>icg_history</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg history</shortDescription>
+        <value>History</value>
+    </labels>
+    <labels>
+        <fullName>icg_home</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg home</shortDescription>
+        <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>icg_hybrid_view</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg hybrid view</shortDescription>
+        <value>Hybrid View</value>
+    </labels>
+    <labels>
+        <fullName>icg_iata_base_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg IATA base url</shortDescription>
+        <value>https://www.iata.org</value>
+    </labels>
+    <labels>
+        <fullName>icg_id</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg id</shortDescription>
+        <value>Id</value>
+    </labels>
+    <labels>
+        <fullName>icg_if_address_no_list_create_new_one</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg if address no list create new one</shortDescription>
+        <value>If the address is not in the list, you can proceed to create a new one</value>
+    </labels>
+    <labels>
+        <fullName>icg_if_facility_no_list</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg if facility no list</shortDescription>
+        <value>If a facility is not on the list, you can proceed to</value>
+    </labels>
+    <labels>
+        <fullName>icg_in</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg in</shortDescription>
+        <value>in</value>
+    </labels>
+    <labels>
+        <fullName>icg_in_progress</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg in progress</shortDescription>
+        <value>In Progress</value>
+    </labels>
+    <labels>
+        <fullName>icg_in_validation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg in validation</shortDescription>
+        <value>in</value>
+    </labels>
+    <labels>
+        <fullName>icg_information_not_verified</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg information not verified</shortDescription>
+        <value>Information not verified by IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_information_validated_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg information validated by</shortDescription>
+        <value>Information Validated by</value>
+    </labels>
+    <labels>
+        <fullName>icg_invalid_email</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg invalid email</shortDescription>
+        <value>Invalid Email</value>
+    </labels>
+    <labels>
+        <fullName>icg_issue_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg issue date</shortDescription>
+        <value>Issue date</value>
+    </labels>
+    <labels>
+        <fullName>icg_issued_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg issued date</shortDescription>
+        <value>Issued Date</value>
+    </labels>
+    <labels>
+        <fullName>icg_issuing_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg issuing date</shortDescription>
+        <value>Issuing Date</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now</shortDescription>
+        <value>Join Now</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_have_account</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up ok button</shortDescription>
+        <value>I already have an account</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Join Now pop-up message</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message11</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Are you already registered in the IATA Customer Portal?</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message12</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Follow the links at the bottom of this page to log in or register.</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message21</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Is your IATA Customer Portal profile linked to your company’s account?</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message22</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Once you are registered, you will be prompted to request that your User account is connected to an existing company account. If your company doesn’t have one yet, you will need to request its creation in the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message31</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Welcome to ONE Source!</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message32</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up message</shortDescription>
+        <value>Once your request has been approved, you will be able to log in and access the ONE Source Private Area. You can now see all the station profiles belonging to your company. Get started by creating a new station profile or becoming a station manager for existing station profiles.</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_ok_button</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now pop-up ok button</shortDescription>
+        <value>Continue to registration</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_title</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now title</shortDescription>
+        <value>Create your ONE Source profile in &lt;span class=&quot;big-label&quot;&gt;3&lt;/span&gt; steps</value>
+    </labels>
+    <labels>
+        <fullName>icg_languages_spoken</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg languages spoken</shortDescription>
+        <value>Languages Spoken</value>
+    </labels>
+    <labels>
+        <fullName>icg_lastname</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg lastname</shortDescription>
+        <value>Lastname</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest</shortDescription>
+        <value>LATEST</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest news</shortDescription>
+        <value>LATEST NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest_validation_updates</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest validation updates</shortDescription>
+        <value>Latest Validation Updates</value>
+    </labels>
+    <labels>
+        <fullName>icg_legal_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg legal name</shortDescription>
+        <value>Legal Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_limit_filters_reached</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg limit filters reached</shortDescription>
+        <value>Filter limit reached - Remove one or multiple filters before adding new ones.</value>
+    </labels>
+    <labels>
+        <fullName>icg_link</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg link</shortDescription>
+        <value>Link</value>
+    </labels>
+    <labels>
+        <fullName>icg_list_airlines_handled</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg list airlines handled</shortDescription>
+        <value>List of Airlines Handled</value>
+    </labels>
+    <labels>
+        <fullName>icg_location_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg location search</shortDescription>
+        <value>location</value>
+    </labels>
+    <labels>
+        <fullName>icg_login</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg login</shortDescription>
+        <value>Login</value>
+    </labels>
+    <labels>
+        <fullName>icg_main_one_source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg main one source</shortDescription>
+        <value>ONE SOURCE</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_photos</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage photos</shortDescription>
+        <value>Manage Photos</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage remote validations</shortDescription>
+        <value>Manage Remote Validations</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_user_permission</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage user permission</shortDescription>
+        <value>Manage User Permission</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines</shortDescription>
+        <value>Why</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines2</shortDescription>
+        <value>should you be listed?</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines_modal</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines modal</shortDescription>
+        <value>ONE Source lists aviation service stations for all company types along the transportation chain from Shippers, Freight Forwarders, Truckers, Cargo Handling Facilities, Ground Handlers to Airlines. Currently, you find all stations with existing CEIV, SFOC, IEnvA and United for Wildlife certifications.</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines_modal2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines modal2</shortDescription>
+        <value>Soon the registration will be opened to all stations regardless of whether they already have an IATA Certification. Ensure to pre-register now to be the first in line to list your stations on ONE Source.</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_about_IATA</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu about IATA</shortDescription>
+        <value>ABOUT IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_about_one_source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu about one source</shortDescription>
+        <value>ABOUT ONE SOURCE</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_home</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu home</shortDescription>
+        <value>HOME</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_latest_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu latest news</shortDescription>
+        <value>LATEST NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu remote validations</shortDescription>
+        <value>REMOTE VALIDATIONS</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_validation_programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu validation programs</shortDescription>
+        <value>VALIDATION PROGRAMS</value>
+    </labels>
+    <labels>
+        <fullName>icg_my_facilities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg my facilities</shortDescription>
+        <value>My Facilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_my_requests</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg my requests</shortDescription>
+        <value>My Requests</value>
+    </labels>
+    <labels>
+        <fullName>icg_my_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg my stations</shortDescription>
+        <value>My Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_my_validated_facilities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg my validated facilities</shortDescription>
+        <value>My Validated Facilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_my_validated_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg my validated stations</shortDescription>
+        <value>My Validated Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_nearest_airport</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg nearest airport</shortDescription>
+        <value>Nearest Airport</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_account_creation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new account creation</shortDescription>
+        <value>New Account Creation</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_company_admin_requests</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new company admin requests</shortDescription>
+        <value>New Company Admin requests</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_station_account_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new station account address</shortDescription>
+        <value>Is the new station located at your account&apos;s address</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_station_account_address_hint</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new station account address hint</shortDescription>
+        <value>If the station is not located at the account&apos;s address, please select/create a new account</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_station_account_address_internal</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new station account address internal</shortDescription>
+        <value>Confirm new station is located at the account&apos;s address</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_station_manager_requests</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new station manager requests</shortDescription>
+        <value>New Station Manager requests</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_station_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new station name</shortDescription>
+        <value>New Station Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_station_profiles</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new station profiles</shortDescription>
+        <value>New Station Profiles</value>
+    </labels>
+    <labels>
+        <fullName>icg_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg news</shortDescription>
+        <value>NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_news_alerts_of</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg news alerts of</shortDescription>
+        <value>new notifications</value>
+    </labels>
+    <labels>
+        <fullName>icg_next</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg next</shortDescription>
+        <value>NEXT</value>
+    </labels>
+    <labels>
+        <fullName>icg_next_step_address_inf</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg next step address inf</shortDescription>
+        <value>Next Step / Address Information</value>
+    </labels>
+    <labels>
+        <fullName>icg_no</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg no</shortDescription>
+        <value>NO</value>
+    </labels>
+    <labels>
+        <fullName>icg_no_account_in_this_country</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg no account in this country</shortDescription>
+        <value>No Accounts found in this Country</value>
+    </labels>
+    <labels>
+        <fullName>icg_no_conflict_to_handle</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg no conflict to handle</shortDescription>
+        <value>No conflicts to handle</value>
+    </labels>
+    <labels>
+        <fullName>icg_no_images_profile</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg no images profile</shortDescription>
+        <value>There are NO IMAGES available for this profile.</value>
+    </labels>
+    <labels>
+        <fullName>icg_no_results_review_filters</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg no results review filters</shortDescription>
+        <value>No results, please review your filters to extend the search</value>
+    </labels>
+    <labels>
+        <fullName>icg_notification_collapse_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg notification collapse all</shortDescription>
+        <value>Collapse</value>
+    </labels>
+    <labels>
+        <fullName>icg_notification_dismiss</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg notification dismiss</shortDescription>
+        <value>Dismiss</value>
+    </labels>
+    <labels>
+        <fullName>icg_notification_dismiss_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg notification dismiss all</shortDescription>
+        <value>Dismiss all</value>
+    </labels>
+    <labels>
+        <fullName>icg_notification_view_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg notification view all</shortDescription>
+        <value>View all</value>
+    </labels>
+    <labels>
+        <fullName>icg_notifications</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg notifications</shortDescription>
+        <value>See all</value>
+    </labels>
+    <labels>
+        <fullName>icg_number_of_accounts</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg number of accounts</shortDescription>
+        <value>Number of Accounts</value>
+    </labels>
+    <labels>
+        <fullName>icg_number_of_employees</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg number of employees</shortDescription>
+        <value>Number of Employees</value>
+    </labels>
+    <labels>
+        <fullName>icg_number_of_facilities_at_station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg number of facilities at station</shortDescription>
+        <value>Number of Facilities at Station</value>
+    </labels>
+    <labels>
+        <fullName>icg_of_your_company</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg of your company</shortDescription>
+        <value>of your company</value>
+    </labels>
+    <labels>
+        <fullName>icg_ok</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg ok</shortDescription>
+        <value>OK</value>
+    </labels>
+    <labels>
+        <fullName>icg_on_airport</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg on airport</shortDescription>
+        <value>On-Airport</value>
+    </labels>
+    <labels>
+        <fullName>icg_online_booking</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg online booking</shortDescription>
+        <value>Online Booking</value>
+    </labels>
+    <labels>
+        <fullName>icg_online_platform</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg online platform</shortDescription>
+        <value>Online Platform</value>
+    </labels>
+    <labels>
+        <fullName>icg_open_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg open remote validations</shortDescription>
+        <value>Open Remote Validations</value>
+    </labels>
+    <labels>
+        <fullName>icg_operating_airlines</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg operating airlines</shortDescription>
+        <value>Operating Airlines</value>
+    </labels>
+    <labels>
+        <fullName>icg_operating_cargo_handling_facilities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg operating cargo handling facilities</shortDescription>
+        <value>Operating Cargo Handling Facilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_operating_ramp_handler</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg operating ramp handler</shortDescription>
+        <value>Operating Ramp Handlers</value>
+    </labels>
+    <labels>
+        <fullName>icg_operational_hierarchy</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg operational hierarchy</shortDescription>
+        <value>Operational Hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>icg_or</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg or</shortDescription>
+        <value>or</value>
+    </labels>
+    <labels>
+        <fullName>icg_order_to_create_new_phyisical_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg order to create new phyisical address</shortDescription>
+        <value>In order to create a new physical address, please proceed to request the creation of the new Account</value>
+    </labels>
+    <labels>
+        <fullName>icg_overall_airport_size</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg overall airport size</shortDescription>
+        <value>Overall Airport Size</value>
+    </labels>
+    <labels>
+        <fullName>icg_overview</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg overview</shortDescription>
+        <value>Overview</value>
+    </labels>
+    <labels>
+        <fullName>icg_pending_approvals</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pending approvals</shortDescription>
+        <value>Pending Approvals</value>
+    </labels>
+    <labels>
+        <fullName>icg_pending_company_admins</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pending company admins</shortDescription>
+        <value>Pending Company Admins</value>
+    </labels>
+    <labels>
+        <fullName>icg_pending_station_approvals</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pending station approvals</shortDescription>
+        <value>Pending Station Approvals</value>
+    </labels>
+    <labels>
+        <fullName>icg_pending_user_approvals</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pending user approvals</shortDescription>
+        <value>Pending User Approvals</value>
+    </labels>
+    <labels>
+        <fullName>icg_phone</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>icg_photo</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg photo</shortDescription>
+        <value>Photo</value>
+    </labels>
+    <labels>
+        <fullName>icg_photos</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg photos</shortDescription>
+        <value>Photos</value>
+    </labels>
+    <labels>
+        <fullName>icg_pilotInformation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg grid pilot information</shortDescription>
+        <value>Pilot Information</value>
+    </labels>
+    <labels>
+        <fullName>icg_pleae_select_country</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pleae select country</shortDescription>
+        <value>Please, select the country of the New Station</value>
+    </labels>
+    <labels>
+        <fullName>icg_please_fill_account_bussiness_addess</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg please fill account bussiness addess</shortDescription>
+        <value>Please fill out the account business address information</value>
+    </labels>
+    <labels>
+        <fullName>icg_please_rotate_device</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg please rotate device</shortDescription>
+        <value>Please rotate your device to show the details</value>
+    </labels>
+    <labels>
+        <fullName>icg_pre_register</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pre-register</shortDescription>
+        <value>PRE-REGISTER</value>
+    </labels>
+    <labels>
+        <fullName>icg_preferable_audit_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg preferable audit date</shortDescription>
+        <value>Preferable Audit Date</value>
+    </labels>
+    <labels>
+        <fullName>icg_prev</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg prev</shortDescription>
+        <value>PREV</value>
+    </labels>
+    <labels>
+        <fullName>icg_private_area</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg private area</shortDescription>
+        <value>Private Area</value>
+    </labels>
+    <labels>
+        <fullName>icg_proceed_to_account_creation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg proceed to account creation</shortDescription>
+        <value>PROCEED TO ACCOUNT CREATION</value>
+    </labels>
+    <labels>
+        <fullName>icg_process_finished</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg process finished</shortDescription>
+        <value>Process Finished</value>
+    </labels>
+    <labels>
+        <fullName>icg_public_area</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg public area</shortDescription>
+        <value>Public area</value>
+    </labels>
+    <labels>
+        <fullName>icg_purchase_remote_valdation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg purchase remote valdation</shortDescription>
+        <value>Purchase Remote Validation</value>
+    </labels>
+    <labels>
+        <fullName>icg_ramp_handler</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg ramp handler</shortDescription>
+        <value>Ramp Handler</value>
+    </labels>
+    <labels>
+        <fullName>icg_received</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg received</shortDescription>
+        <value>received</value>
+    </labels>
+    <labels>
+        <fullName>icg_register</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg register</shortDescription>
+        <value>REGISTER</value>
+    </labels>
+    <labels>
+        <fullName>icg_registration_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg registration url</shortDescription>
+        <value>https://go.updates.iata.org/onesource</value>
+    </labels>
+    <labels>
+        <fullName>icg_reject</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg reject</shortDescription>
+        <value>Reject</value>
+    </labels>
+    <labels>
+        <fullName>icg_remote_validation_history</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remote validation history</shortDescription>
+        <value>Remote Validation History</value>
+    </labels>
+    <labels>
+        <fullName>icg_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remote validations</shortDescription>
+        <value>Remote Validations</value>
+    </labels>
+    <labels>
+        <fullName>icg_remove</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remove</shortDescription>
+        <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>icg_remove_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remove all</shortDescription>
+        <value>Remove all</value>
+    </labels>
+    <labels>
+        <fullName>icg_remove_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remove certification</shortDescription>
+        <value>Remove Certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_remove_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remove location</shortDescription>
+        <value>Remove Location</value>
+    </labels>
+    <labels>
+        <fullName>icg_remove_logo</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg remove logo</shortDescription>
+        <value>Remove Logo</value>
+    </labels>
+    <labels>
+        <fullName>icg_renew</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg renew</shortDescription>
+        <value>Renew</value>
+    </labels>
+    <labels>
+        <fullName>icg_renew_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg renew certification</shortDescription>
+        <value>Renew Certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_request</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg request</shortDescription>
+        <value>REQUEST</value>
+    </labels>
+    <labels>
+        <fullName>icg_request_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg request by</shortDescription>
+        <value>Request By</value>
+    </labels>
+    <labels>
+        <fullName>icg_request_date</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg request date</shortDescription>
+        <value>Request Date</value>
+    </labels>
+    <labels>
+        <fullName>icg_request_remote_valdation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg request remote valdation</shortDescription>
+        <value>Request Remote Validation</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_banner_button</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg resultpage banner button</shortDescription>
+        <value>PRE-REGISTER TODAY</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_banner_text</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg resultpage banner text</shortDescription>
+        <value>Would you like to appear here?</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_register_company</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_resultpage_register_company</shortDescription>
+        <value>Not finding what you&apos;re looking for?</value>
+    </labels>
+    <labels>
+        <fullName>icg_resultpage_register_company2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_resultpage_register_company2</shortDescription>
+        <value>PRE-REGISTER YOUR COMPANY</value>
+    </labels>
+    <labels>
+        <fullName>icg_road_feeder_services</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg road feeder services</shortDescription>
+        <value>Road Feeder Services</value>
+    </labels>
+    <labels>
+        <fullName>icg_room</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg room</shortDescription>
+        <value>Room</value>
+    </labels>
+    <labels>
+        <fullName>icg_save</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg save</shortDescription>
+        <value>SAVE</value>
+    </labels>
+    <labels>
+        <fullName>icg_schedule_audits</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg schedule audits</shortDescription>
+        <value>Schedule Audits</value>
+    </labels>
+    <labels>
+        <fullName>icg_scope</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg scope</shortDescription>
+        <value>Scope</value>
+    </labels>
+    <labels>
+        <fullName>icg_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_assistant</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search assistant</shortDescription>
+        <value>Search Assistant</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by</shortDescription>
+        <value>Search by</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by certification</shortDescription>
+        <value>Search by certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_company_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by company name</shortDescription>
+        <value>Search by company name</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by location</shortDescription>
+        <value>Search by location</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_in_the_list</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search in the list</shortDescription>
+        <value>Search in the list</value>
+    </labels>
+    <labels>
+        <fullName>icg_second_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg second address</shortDescription>
+        <value>Second Address Line</value>
+    </labels>
+    <labels>
+        <fullName>icg_sector</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg sector</shortDescription>
+        <value>Sector</value>
+    </labels>
+    <labels>
+        <fullName>icg_see_listed_companies</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg see listed companies</shortDescription>
+        <value>SEE LISTED COMPANIES</value>
+    </labels>
+    <labels>
+        <fullName>icg_see_more</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg see more</shortDescription>
+        <value>SEE MORE</value>
+    </labels>
+    <labels>
+        <fullName>icg_see_results</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg see results</shortDescription>
+        <value>SEE RESULTS</value>
+    </labels>
+    <labels>
+        <fullName>icg_select</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select all</shortDescription>
+        <value>SELECT ALL</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select certification</shortDescription>
+        <value>Select Certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_new_station_type</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select new station type</shortDescription>
+        <value>Select new Station Type</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_scope</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select scope</shortDescription>
+        <value>Select Scope</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select station</shortDescription>
+        <value>Select Station</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_station_to_display</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select station to display</shortDescription>
+        <value>Select a Station to display</value>
+    </labels>
+    <labels>
+        <fullName>icg_select_your_station_service</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg select your station service</shortDescription>
+        <value>Select your Station/Service</value>
+    </labels>
+    <labels>
+        <fullName>icg_selected</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg selected</shortDescription>
+        <value>Selected</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home1</shortDescription>
+        <value>IATA Smart&amp;lt;br/&amp;gt;Facility&amp;lt;br/&amp;gt;Program</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home2</shortDescription>
+        <value>IATA&amp;lt;br/&amp;gt;Consulting:&amp;lt;br/&amp;gt;Unbiased&amp;lt;br/&amp;gt;and Neutral&amp;lt;br/&amp;gt;Assessments</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home3</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home3</shortDescription>
+        <value>IATA&amp;lt;br/&amp;gt;Training:&amp;lt;br/&amp;gt;Developing&amp;lt;br/&amp;gt;professionals&amp;lt;br/&amp;gt;for&amp;lt;br/&amp;gt;tomorrow&apos;s&amp;lt;br/&amp;gt;air transport&amp;lt;br/&amp;gt;industry</value>
+    </labels>
+    <labels>
+        <fullName>icg_service_home4</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg service home4</shortDescription>
+        <value>Access the&amp;lt;br/&amp;gt;full TACT&amp;lt;br/&amp;gt;rates&amp;lt;br/&amp;gt;database&amp;lt;br/&amp;gt;online</value>
+    </labels>
+    <labels>
+        <fullName>icg_shipper</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg shipper</shortDescription>
+        <value>Shipper</value>
+    </labels>
+    <labels>
+        <fullName>icg_show_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg show all</shortDescription>
+        <value>Show All</value>
+    </labels>
+    <labels>
+        <fullName>icg_show_selected</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg show selected</shortDescription>
+        <value>Show Selected</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation</shortDescription>
+        <value>Smart Facility Remote Validation</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation text1</shortDescription>
+        <value>The Smart Facility Remote Validation assesses the equipment and infrastructure of a facility in a fast and easy way. You only need to fill an online questionnaire and upload the documents to confirm that the information is accurate.</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_text2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation text2</shortDescription>
+        <value>The Remote Validation makes it easier for cargo handling facilities to improve or update their ONE Source profile quickly. It is an excellent way to bridge the gap towards an upcoming IATA audit.</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_text3</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation text3</shortDescription>
+        <value>Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility.</value>
+    </labels>
+    <labels>
+        <fullName>icg_state_province</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg state province</shortDescription>
+        <value>State/Province</value>
+    </labels>
+    <labels>
+        <fullName>icg_station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station</shortDescription>
+        <value>Station</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_creation</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station creation</shortDescription>
+        <value>Station Creation</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_details</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station details</shortDescription>
+        <value>Station Details</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_information</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station information</shortDescription>
+        <value>Station Information</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station location</shortDescription>
+        <value>Station Location</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_manager</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station manager</shortDescription>
+        <value>Station Manager</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station name</shortDescription>
+        <value>Station Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_name_and_address</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station name and address</shortDescription>
+        <value>Station Name and Address</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_name_and_type_already_exists</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station name and type already exists</shortDescription>
+        <value>A Station with this Type and Name already exists. You cannot create a duplicate</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_overview</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station overview</shortDescription>
+        <value>Station Overview</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_to_compare</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station to compare</shortDescription>
+        <value>STATIONS TO COMPARE</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_type</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station type</shortDescription>
+        <value>Station Type</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_type_already_exists</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station type already exists</shortDescription>
+        <value>A Station of this type already exists at this address. Do you want to proceed</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_types</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station types</shortDescription>
+        <value>Station Types</value>
+    </labels>
+    <labels>
+        <fullName>icg_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg stations</shortDescription>
+        <value>Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_status</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>icg_sticker_id</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg sticker id</shortDescription>
+        <value>Sticker ID</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners</shortDescription>
+        <value>Who</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners2</shortDescription>
+        <value>is already in ONE Source?</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners_modal</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners modal</shortDescription>
+        <value>ONE Source is the Industry Platform for validated aviation capability and infrastructure information. It makes it easier for your customers to find you by bringing the modern search platform experience into aviation services.</value>
+    </labels>
+    <labels>
+        <fullName>icg_strategic_partners_modal2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg strategic partners modal 2</shortDescription>
+        <value>ONE Source your one-stop-shop for IATA accreditation programs like CEIVs, SF Operational Capacity, IEnvA, United for Wildlife... ONE Source makes it easier for you to manage your IATA accreditations, including booking, maintenance of data, and renewals.</value>
+    </labels>
+    <labels>
+        <fullName>icg_street_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg street name</shortDescription>
+        <value>Street Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_summary</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg summary</shortDescription>
+        <value>SUMMARY</value>
+    </labels>
+    <labels>
+        <fullName>icg_summary_capabilities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg summary capabilities</shortDescription>
+        <value>Summary</value>
+    </labels>
+    <labels>
+        <fullName>icg_summary_no_display_public</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg summary no display public</shortDescription>
+        <value>Summary of this section will not be displayed on public profile</value>
+    </labels>
+    <labels>
+        <fullName>icg_supported_languages</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg supported languages</shortDescription>
+        <value>Supported Languages</value>
+    </labels>
+    <labels>
+        <fullName>icg_temperature_range</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg temperature range</shortDescription>
+        <value>Temperature Range</value>
+    </labels>
+    <labels>
+        <fullName>icg_there_are_not_existing_station_managers</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg there are not existing station managers</shortDescription>
+        <value>There are no existing station managers</value>
+    </labels>
+    <labels>
+        <fullName>icg_they_approve</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg they approve</shortDescription>
+        <value>They approve</value>
+    </labels>
+    <labels>
+        <fullName>icg_title</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg title</shortDescription>
+        <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>icg_to</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg to</shortDescription>
+        <value>To</value>
+    </labels>
+    <labels>
+        <fullName>icg_total_facility_space</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg total facility space</shortDescription>
+        <value>Total Facility Space</value>
+    </labels>
+    <labels>
+        <fullName>icg_trade_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg trade name</shortDescription>
+        <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>icg_trucker</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg trucker</shortDescription>
+        <value>Trucker</value>
+    </labels>
+    <labels>
+        <fullName>icg_trucks</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg trucks</shortDescription>
+        <value>Trucks</value>
+    </labels>
+    <labels>
+        <fullName>icg_type_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg type search</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>icg_unselected_all</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg unselected all</shortDescription>
+        <value>Unselect All</value>
+    </labels>
+    <labels>
+        <fullName>icg_upload_image</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg upload image</shortDescription>
+        <value>Upload Image</value>
+    </labels>
+    <labels>
+        <fullName>icg_validation_history</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg validation history</shortDescription>
+        <value>Validation History</value>
+    </labels>
+    <labels>
+        <fullName>icg_validation_management</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg validation management</shortDescription>
+        <value>Audits and Certifications</value>
+    </labels>
+    <labels>
+        <fullName>icg_validation_programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg validation programs</shortDescription>
+        <value>IATA Validations Programs</value>
+    </labels>
+    <labels>
+        <fullName>icg_we_found_existing_stations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg we found existing stations</shortDescription>
+        <value>We found these existing Stations</value>
+    </labels>
+    <labels>
+        <fullName>icg_website</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg website</shortDescription>
+        <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>icg_welcome_back</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg welcome back</shortDescription>
+        <value>Welcome back</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what_is_the_IATA_One_Source</shortDescription>
+        <value>What is ONE Source?</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source text1</shortDescription>
+        <value>IATA ONE Source is the industry platform for validated aviation capability and infrastructure information. Find the right business partner for your needs, from specific infrastructure requirements such as temperature-controlled rooms to IATA certifications. The platform makes it easier for you to find the right services where you need them.</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_text2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source text2</shortDescription>
+        <value>ONE Source only lists information verified through the different IATA validation programs. It guarantees that all the data is accurate, enabling you to make better decisions for your business.</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_videoUrl</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source videoUrl</shortDescription>
+        <value>https://www.youtube.com/embed/LViVYrezsDQ</value>
+    </labels>
+    <labels>
+        <fullName>icg_which_station_to_manage</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg which station to manage</shortDescription>
+        <value>Which stations do you want to manage</value>
+    </labels>
+    <labels>
+        <fullName>icg_which_validation_programs_to_renew_archieve</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg which validation programs to renew archieve</shortDescription>
+        <value>Which Validation Programs do you want to achieve/renew</value>
+    </labels>
+    <labels>
+        <fullName>icg_wizard_title_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg wizard title location</shortDescription>
+        <value>Are you looking for a specific</value>
+    </labels>
+    <labels>
+        <fullName>icg_worldwide_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg worldwide search</shortDescription>
+        <value>WORLDWIDE SEARCH</value>
+    </labels>
+    <labels>
+        <fullName>icg_yes</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg yes</shortDescription>
+        <value>YES</value>
+    </labels>
+    <labels>
+        <fullName>icg_you_are_filtering_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg you are filtering by</shortDescription>
+        <value>You are filtering by</value>
+    </labels>
+    <labels>
+        <fullName>icg_your_current_stats</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg your current stats</shortDescription>
+        <value>Station Overview</value>
+    </labels>
+    <labels>
+        <fullName>icg_zip_code</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg zip code</shortDescription>
+        <value>Zip Code</value>
+    </labels>
+    <labels>
+        <fullName>idcard_replacementHeadText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_replacementHeadText</shortDescription>
+        <value>Request a change of agency</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_new_application</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>new application</shortDescription>
+        <value>New Service</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_request_new_application</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>request new application</shortDescription>
+        <value>Request a New Service</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_select_role</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>select role</shortDescription>
+        <value>Select your role</value>
+    </labels>
+    <labels>
+        <fullName>issue_with_iata</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>issue with iata help text</shortDescription>
+        <value>Tick this box if the issue described by the account is related to an issue caused by IATA</value>
+    </labels>
+    <labels>
+        <fullName>label_custom_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label custom price</shortDescription>
+        <value>{0} price</value>
+    </labels>
+    <labels>
+        <fullName>label_direct_sales_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label direct sales price</shortDescription>
+        <value>direct sales</value>
+    </labels>
+    <labels>
+        <fullName>label_regular_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label regular price</shortDescription>
+        <value>regular price</value>
+    </labels>
+    <labels>
+        <fullName>n</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
+&lt;br/&gt;
+&lt;br/&gt;
+Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>noreplyEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>noreplyEmail</shortDescription>
+        <value>noreply@iata.org</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Arabic</shortDescription>
+        <value>Arabic</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_bs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Bosnian</shortDescription>
+        <value>босански</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_cy</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welsh</shortDescription>
+        <value>Cymraeg</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_da</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Danish</shortDescription>
+        <value>Dansk</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_de</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>German</shortDescription>
+        <value>Deutsch</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_en_US</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>English</shortDescription>
+        <value>English</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_es</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Español</shortDescription>
+        <value>Español</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_et</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Estonian</shortDescription>
+        <value>Eesti Keel</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_eu</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Basque</shortDescription>
+        <value>Euskara</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_fi</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Finnish</shortDescription>
+        <value>Suomalainen</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_fr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Francais</shortDescription>
+        <value>Francais</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ga</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Irish (Gaelic)</shortDescription>
+        <value>Gaeilge</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_hi</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hindi</shortDescription>
+        <value>हिन्दी</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_hr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Croatian</shortDescription>
+        <value>Hrvatski</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_hy</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Armenian</shortDescription>
+        <value>Հայերէն</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_in</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Indonesian</shortDescription>
+        <value>Bahasa Indonesia</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_is</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Icelandic</shortDescription>
+        <value>Íslenska</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_it</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Italian</shortDescription>
+        <value>Italiano</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ja</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Japanese</shortDescription>
+        <value>日本の</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ka</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Georgian</shortDescription>
+        <value>ქართული</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ko</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Korean</shortDescription>
+        <value>한국어</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_lb</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Luxembourgish</shortDescription>
+        <value>Lëtzebuergesch</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_lt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Lithuanian</shortDescription>
+        <value>Lietuvių Kalba</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_lv</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Latvian</shortDescription>
+        <value>Latviešu Valoda</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_mk</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Macedonian</shortDescription>
+        <value>македонски</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_mt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Maltese</shortDescription>
+        <value>Malti</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_nl_NL</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dutch</shortDescription>
+        <value>Nederlands</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_pt_BR</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Portuguese (Brazilian)</shortDescription>
+        <value>Português</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_pt_PT</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Portuguese</shortDescription>
+        <value>Português</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ro_MD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Moldovan</shortDescription>
+        <value>лимба молдовеняскэ</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ru</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Russian</shortDescription>
+        <value>русский</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sh</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Serbian latin</shortDescription>
+        <value>Srpski</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sk</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Slovak</shortDescription>
+        <value>Slovenčina</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sl</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Slovenian</shortDescription>
+        <value>Slovenščina</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sq</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Albanian</shortDescription>
+        <value>Shqiptar</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Serbian Cyrillic</shortDescription>
+        <value>српски</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sv</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Swedish</shortDescription>
+        <value>Svenska</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_th</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Thai</shortDescription>
+        <value>ภาษาไทย</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_tl</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tagalog</shortDescription>
+        <value>Tagalog</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ur</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Urdu</shortDescription>
+        <value>اردو</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_vi</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vietnamese</shortDescription>
+        <value>Tiếng Việt</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_zh_CN</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Chinese (Simplified)</shortDescription>
+        <value>中国的</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_zh_TW</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Chinese (Traditional)</shortDescription>
+        <value>中國的</value>
+    </labels>
+    <labels>
+        <fullName>regular_price</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>regular price</shortDescription>
+        <value>Regular Price</value>
+    </labels>
+    <labels>
+        <fullName>resetPasswordConfirmMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>resetPasswordConfirmMessage</shortDescription>
+        <value>Reset password for this user for the selected community?</value>
+    </labels>
+    <labels>
+        <fullName>select_all</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>select all</shortDescription>
+        <value>select all</value>
+    </labels>
+    <labels>
+        <fullName>wire_transfer_payment_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>wire transfer payment msg</shortDescription>
+        <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>icg_watch_video</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg watch video</shortDescription>
+        <value>Watch Video</value>
+    </labels>
+    <labels>
+        <fullName>icg_all_rights_reserved</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg all rights reserved</shortDescription>
+        <value>All rights reserved</value>
+    </labels>
+    <labels>
+        <fullName>icg_submit</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg submit</shortDescription>
+        <value>Submit</value>
+    </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>
         <language>en_US</language>

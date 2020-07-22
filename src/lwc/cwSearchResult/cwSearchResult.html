@@ -1,0 +1,82 @@
+<template>
+    <div class="slds-theme_default result-card">
+        <template if:true={input}>
+
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 responsive-row-result col-no-padding-right">
+                    <c-cw-company-card label={label} input={input.facility}></c-cw-company-card>
+
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 responsive-row-result">
+                    
+                    <c-cw-account-detail-certification-list label={label} title={label.icg_validation_programs}
+                        list-detail-cert-facility={input.lstAvailableCertifications} account-id={input.facility.Id}
+                        certs-css="slds-col slds-size_1-of-5 col-no-padding enlarge"
+                        account-type={input.facility.recordTypeName} padding="title cert-padding-left">
+                    </c-cw-account-detail-certification-list>
+                </div>
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 responsive-row-result">
+                    <c-cw-display-list label={label} list-detail-cert-facility={input.lstAvailableCertifications} title="Cargo Commodities" title-type="search-result" facility={input.facility}>
+                    </c-cw-display-list>
+                </div>
+
+            </div>
+            <!--HIDDEN RESPONSIVE VERSION-->
+            <div class="hidden-sm">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-6 col-md-9 display-table-cell">
+                        <!--Pelikaanweb 1 , 1118 DT Schiphol, netherlands -->     
+                        <div class="hidden-lg">
+                            <span class="span-pos slds-grid">
+                                <template if:true={facilityAddress}><img class="width-20" src={searchbylocation} /><a target="_blank" href={addresstogm} class="slds-truncate address"><span class="text-black">{facilityAddress}  </span></a></template>
+                                <template if:true={addressAndPhone}>&nbsp;&nbsp;|&nbsp;&nbsp;</template>
+                                <template if:true={input.facility.phone}><a href={phoneto} class="mail"><span class="text-black pl-2">{input.facility.phone}  </span></a></template>
+                                <template if:true={phoneAndEmail}>&nbsp;&nbsp;|&nbsp;&nbsp;</template>
+                                <template if:true={addressAndEmail}>&nbsp;&nbsp;|&nbsp;&nbsp;</template>
+                                <template if:true={input.facility.email}><a href={emailto} class="slds-truncate mail"><span class="text-black pl-2">{input.facility.email}</span></a></template>
+                            </span>
+                        </div>
+                    
+                        <div class="visible-lg">
+                            <div class="col-md-12 col-no-padding text-truncate responsive-row-result">
+                                <img class="width-20"
+                                    src={searchbylocation} /><a target="_blank" href={addresstogm}><span class="text-black">{facilityAddress}</span></a>
+                            </div>
+                            <div class="col-md-12 col-no-padding-right">
+                                <a href={phoneto}><span class="text-black pl-2">{input.facility.phone}</span></a> &nbsp;&nbsp;|&nbsp;&nbsp;<a href={emailto}><span class="text-black pl-2">{input.facility.email}</span></a>
+                            </div>
+                        </div>                  
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 text-right m-auto hidden-md">
+                        <c-cw-compare-facility-button label={label} css-view="cw-search-result" facility={input.facility}
+                            add-remove-comparison-button="true">
+                        </c-cw-compare-facility-button>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 text-right m-auto">
+                        <button type="button" onclick={handleMoreInfo} class="btn btn-primary mt-1 width-100">{label.btn_more_info}</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--VISIBLE RESPONSIVE VERSION-->
+            <div class="visible-sm">
+                <br />
+                <div class="row-no-margin">
+                    <p><img class="width-20" src={searchbylocation} />&nbsp;<a target="_blank" href={addresstogm}><span class="text-black">{facilityAddress}</span></a></p>
+                    <p class="info-responsive"><a href={phoneto}><span class="text-black">{input.facility.phone}</span></a> </p>
+                    <p class="info-responsive"><a href={emailto}><span class="text-black">{input.facility.email}</span></a></p>
+                </div>
+            </div>
+
+            <!--VISIBLE RESPONSIVE VERSION-->
+            <div class="visible-sm">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button type="button" onclick={handleMoreInfo} class="btn btn-primary width-100">{label.btn_more_info}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

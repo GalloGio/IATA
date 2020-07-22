@@ -1,0 +1,13 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <apex:outputText rendered="{!duplicatedStations != null}">
+        <p style="line-height: 1.8rem; color: #1e32fa; font-weight: 600; text-transform: uppercase;">
+            ATTENTION: A STATION OF TYPE: {!stationDetails.RecordType.Name} ALREADY EXISTS AT THIS LOCATION:
+        </p>
+        <ul>
+            <apex:repeat value="{!duplicatedStations}" var="station">
+                <li><apex:outputText value="{!station.Name}"/></li>
+            </apex:repeat>           
+        </ul>
+    </apex:outputText>
+</apex:component>

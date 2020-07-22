@@ -1,0 +1,158 @@
+<template>
+    <div class="hidden-lg overwidth">
+        <div class="row-no-margin pt-1">
+            <div class="slds-theme_default row-no-margin-left col-md-11 col-no-padding width-100">
+                <ul class="nav nav-tabs width-100" id="tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active capitalize" id="tab1" data-tab="All" onclick={filterFacility}> {label.all_results}<p
+                                class="count-filter-tab-no-img">({allCount})</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class={classAriline} id="tab2" data-tab="Airline" onclick={filterFacility}>
+                            <img src={airline} class="img-tab" />
+                            &nbsp;&nbsp;{label.airline} <p class="count-filter-tab">({arilineCount})</p></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class={classAirportOperator} id="tab3" data-tab="Airport Operator" onclick={filterFacility}>
+                            <img src={airportoperator} class="img-tab" />
+                            &nbsp;&nbsp;{label.airport_operator}<p class="count-filter-tab">({airportOperatorCount})</p></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class={classFreight} id="tab4" data-tab="Freight Forwarder" onclick={filterFacility}>
+                            <img src={freight} class="img-tab" />
+                            &nbsp;&nbsp;{label.freight_forwarder}<p class="count-filter-tab">({freightCount})</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class={classTrucker} id="tab5" data-tab="Trucker" onclick={filterFacility}>
+                            <img src={trucker} class="img-tab" />
+                            &nbsp;&nbsp;{label.trucker}<p class="count-filter-tab">({truckerCount})</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class={classCargoHandling} id="tab6" data-tab="Cargo Handling Facility"
+                            onclick={filterFacility}>
+                            <img src={cargohandling} class="img-tab" />
+                            &nbsp;&nbsp;{label.cargo_handling_facility}<p class="count-filter-tab">({cargoHandlingCount})</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class={classShipper} id="tab7" data-tab="Shipper" onclick={filterFacility}>
+                            <img src={shipper} class="img-tab" />
+                            &nbsp;&nbsp;{label.shipper}<p class="count-filter-tab">({shipperCount})</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class={classRampHandler} id="tab8" data-tab="Ramp Handler" onclick={filterFacility}>
+                            <img src={ramphandler} class="img-tab" />
+                            &nbsp;&nbsp;{label.ramp_handler}<p class="count-filter-tab">({rampHandlerCount})</p></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-1 text-right width-100 col-no-padding-left">
+                <ul class="list-inline nav-tabs">
+                    <!--Functionality to be implement in the next release-->
+                    <!--<li class="list-inline-item height-40"><a class={sortButton}><img src={sortblue}
+                                class="filter-grey-100 width-22 mb--15" /></a></li>-->
+                    <li class="list-inline-item height-40">
+                        <div class={shButton}>
+                            <a href="javascript:{}" onclick={sharemenu} class={shareButton}><img src={shareblue}
+                                    class="filter-grey-100 width-15 mb--15" /></a>
+                            <div class={shareIcons}>
+                                <div class="shButton-icon-background">
+                                    <a href="javascript:{}" onclick={sharemenu}>
+                                        <img src={shareblue} class="shButton-icon" />
+                                    </a>
+                                </div>
+                                <div class="twitter-icon-background">
+                                    <a href="javascript:{}" onclick={conTwitter} class="twitter-share-button">
+                                        <img src={twiter} class="twitter-icon" />
+                                    </a>
+                                </div>
+                                <div class="facebook-icon-background" data-href={url}>
+                                    <a href="javascript:{}" onclick={conFacebook}>
+                                        <img src={facebook} class="facebook-icon" />
+                                    </a>
+                                </div>
+                                <div class="linkedin-icon-background"><a href="javascript:{}" onclick={conLinkedin}>
+                                        <img src={linkedin} class="linkedin-icon" />
+                                    </a>
+                                </div>
+                                <div class="email-icon-background"><a href="javascript:{}" onclick={conEmail}><img
+                                            src={email} class="email-icon" /></a></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--VISIBLE RESPONSIVE VERSION-->
+    <div class="hidden-sm">
+        <div class="row-no-margin visible-lg row-resp pt-3">
+            <div class="col-12 col-no-padding display-inline-flex">
+                <div class="col-9 col-no-padding">
+                    <div class="form-group">
+                        <select class="form-control" onchange={filterFacilityResp}>
+                            <option value="All"> {label.all_results} ({allCount}) </option>
+                            <option value="Airline"> {label.airline} ({arilineCount})</option>
+                            <option value="Airport">{label.airport_operator} ({airportOperatorCount})</option>
+                            <option value="Freight-Forwarder">{label.freight_forwarder}({freightCount})</option>
+                            <option value="Trucker">{label.trucker} ({truckerCount})</option>
+                            <option value="Cargo-Handling-Facility">{label.cargo_handling_facility} ({cargoHandlingCount})
+                            </option>
+                            <option value="Shipper">{label.shipper} ({shipperCount})</option>
+                            <option value="Ramp Handler">{label.ramp_handler} ({rampHandlerCount})</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3 option-results text-right">
+                    <!--Functionality to be implement in the next release-->
+                    <!--<a><img class="filter-grey-100 width-22" src={sortblue} /></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+                    <a><img class="filter-grey-100 width-15" src={shareblue} /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--HIDDEN RESPONSIVE VERSION-->
+    <div class="col-12 col-no-padding full-section-results">
+        <template if:false={isLoading}>
+            <template if:true={searchResults}>
+                <template if:false={isDetailed}>
+                    <template for:each={filteredFacilities} for:item="singleResult">
+                        <div key={singleResult.Banner} if:true={singleResult.isBanner} class="resultBox">
+                            <div class="row-no-margin align-items-center bg-blue">
+                                <div class="col-md-6 offset-md-1 col-sm-12 reg-today-txt"><b
+                                        class="bannerText">{label.icg_resultpage_banner_text}</b></div>
+                                <div class="col-md-4 col-sm-12 reg-today-btn">
+                                    <button type="button" onclick={goToPreregister}
+                                        class="btn btn-primary mt-0 width-100">{label.icg_resultpage_banner_button}</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                            <div key={singleResult.facility.name} class="resultBox" if:false={singleResult.isBanner}>
+                                <c-cw-search-result url-result-page={urlResultPage} label={label} input={singleResult}></c-cw-search-result>
+                            </div>
+
+                    </template>
+                </template>
+
+                <template if:true={isDetailed}>
+                    <c-cw-detailed-list label={label} url-result-page={urlResultPage} facilities={filteredFacilities}></c-cw-detailed-list>
+                </template>
+            </template>
+            <template if:false={searchResults}>
+                <div class="col-12 text-center mt-3">
+                    <h3 class="no-result-search">{label.no_results_review_filters}</h3>
+                </div>
+            </template>
+        </template>
+        <template if:true={isLoading}>
+            <c-cw-spinner width="25%" position="position-absolute" class="height-250"></c-cw-spinner>
+        </template>
+    </div>
+    <br />
+
+</template>

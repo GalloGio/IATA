@@ -1,0 +1,44 @@
+<template>
+    <div class="row justify-content-between text-truncate">
+        <template if:true={_capability.label} for:each={_capability.categories} for:item="currentCategory"
+            for:index="fieldIndex">
+            <template if:true={currentCategory.isVisible}>
+                <div class={gesiteclass} data-tosca={currentCategory.name} key={currentCategory}>
+                    <div class="itemUnselected row" data-name={currentCategory.name} data-tosca={currentCategory.name}
+                        onclick={onClickEquipment}>
+                        <div class="col-10 pr-0 display-flex">
+                            <img src={tickSelection} width="18px">
+                            <div class="text-truncate">
+                                <label title={currentCategory.label} class={marginLabel}>&nbsp;&nbsp;{currentCategory.label}</label>
+                            </div>
+                        </div>
+                        <template if:true={currentCategory.selected}>
+                            <template if:true={currentCategory.hasFields}>
+                                <div class="col-2 ">
+                                    <button class="collapsible active col-no-padding">
+                                        <lightning-icon icon-name="utility:relate"  size="small" class="cursor-pt blueIcon" title={label.add_additional_criteria}  key={currentCategory.name} onclick={onMoreDetails} data-tosca={currentCategory.name}></lightning-icon>
+                                    </button>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+
+                    <div class="row justify-content-around">
+                        <template if:true={currentCategory.moreDetails} >
+                            <template if:true={showModalFields}>
+                                <c-cw-intermediate-modal onclosemodal={closeModalFields} no-back-drop-grey=true>
+                                    <c-cw-fields-section current-category={currentCategory} label={label} onfieldupdate={onUpdateFields} onclosemodal={closeModalFields}></c-cw-fields-section>
+                                </c-cw-intermediate-modal>
+                            </template>
+                        </template>
+                    </div>
+
+
+                </div>
+            </template>
+
+
+        </template>
+
+    </div>
+</template>

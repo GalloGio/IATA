@@ -1,0 +1,21 @@
+<messaging:emailTemplate subject="You have been removed as Station Manager from the following station(s)" relatedToType="ICG_Contact_Role_Detail__c">
+    <messaging:HtmlEmailBody >
+        <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
+            <body>
+                <c:CW_EmailHeader ></c:CW_EmailHeader>
+                <div style="padding: 30px; font-size: 0.9rem;">
+                    <c:CW_HelloUser text="Hello" contactRoleDetailData="{!relatedTo.Id}"> </c:CW_HelloUser>    
+                    
+                    <p style="line-height: 1.8rem;">You have been removed as Station Manager from the following station(s)</p> 
+                                                   
+                    <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>
+                    <c:CW_ApprovedBy stationData="{!relatedTo.Id}" ></c:CW_ApprovedBy>    
+                                  
+                    <p style="line-height: 1.8rem;">Thank you</p>
+                </div>
+                <c:CW_EmailFooter ></c:CW_EmailFooter>
+            </body>
+        </html>
+    </messaging:HtmlEmailBody>
+</messaging:emailTemplate>

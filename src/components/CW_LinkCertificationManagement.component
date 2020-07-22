@@ -1,0 +1,4 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <p style="line-height: 1.8rem;">Book your re-certification now in the <a style="color: #1e32fa;" href="{!scheduleAuditsUrl}">Certification Management Area of your ONE Source Account</a>.</p>
+</apex:component>

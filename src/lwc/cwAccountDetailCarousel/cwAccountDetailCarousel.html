@@ -1,0 +1,190 @@
+<template>
+    <div class="title">
+        <p class={gtitlesize}><b>{title}</b>
+        <template if:true={editMode}>
+            <img src={icon.plus} class="icon btn-icon pl-2 width-25 cursor-pt" onclick={evaluateDisplayFileUpload}>
+            <img src={icon.minus} class="icon btn-icon pl-2 width-25 cursor-pt"  onclick={evaluateHideImage}>
+        </template>
+        </p>
+        <template if:true={showUnderline}>
+            <hr class="yellow-underline mt-2">
+        </template>
+        
+        <template if:true={editMode}>
+            <template if:true={showFileUploadCarousel}>
+                <c-cw-intermediate-modal onclosemodal={evaluateDisplayFileUpload}>
+                    <c-cw-file-upload-carousel record-id={recordId} onclosemodal={evaluateDisplayFileUpload}></c-cw-file-upload-carousel>
+                </c-cw-intermediate-modal>
+            </template>
+
+            <template if:true={showFileHideCarousel}>
+                <div class="demo-only">
+                    <div class="slds-m-around_xx-large">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header slds-modal__header_empty">
+                                    <lightning-button-icon icon-name="utility:close" onclick={evaluateHideImage}
+                                        alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+                                    </lightning-button-icon>
+                                </header>
+                                <div class="slds-modal__content padding-intermediate-modal overflow-auto" id="modal-content-id-2">
+                                    <div class="col-12 text-center">
+                                        <h3>{label.icg_carousel_info_delete}</h3>
+                                    </div>
+                                    <div class="row-no-margin col-12 mt-4">
+                                        <div class="col-6 text-left">
+                                            <button class="btn btn-primary-blue btn-action" data-name="cancel" onclick={evaluateHideImage}>{label.cancel}</button>
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <button class="btn btn-primary" data-name="delete" onclick={makeActionToImage}>{label.accept}</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </template>
+        </template>
+
+        <template if:true={lisImagesSize}>
+            <div class="slds-grid slds-gutters slds-wrapper m-0">
+                <div class="slds-size_10-of-12 slds-col carousel-size">
+                    <lightning-icon data-item="leftArrow" icon-name="utility:chevronleft" variant="inverse" alternative-text="Left"
+                    class="chevronleft" onclick={moveList}></lightning-icon>
+                    <div class="slds-box slds-box_medium slds-text-align_center sliderbox">
+                        <div class="slds-carousel">
+                            <div class="slds-carousel__stage">
+                                <template if:true={positionCarousel}>
+                                    <div class={positionCarousel}>
+                                        <template if:true={listImages}>
+                                            <template for:each={listImages} for:item="indicator">
+                                                <div data-item={indicator.id} key={indicator.id}
+                                                    class={indicator.panelClass} role="tabpanel"
+                                                    aria-hidden={indicator.hidden}>
+                                                    <a href="javascript:void(0);"
+                                                        class="slds-carousel__panel-action slds-text-link_reset width-100"
+                                                        tabindex={indicator.tabindex} onclick={openModal}>
+                                                        <div class="swipediv slds-carousel__image">
+                                                            <img src={indicator.url} alt="Show images" class="maximum-size-panel" />
+                                                        </div>
+                                                    </a>                                               
+                                                </div> 
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                                <ul class="slds-carousel__indicators" role="tablist">
+                                    <template if:true={listImages}>
+                                        <template for:each={listImages} for:item="indicator">
+                                            <li data-item={indicator.id} key={indicator.id} class="slds-carousel__indicator"
+                                                role="presentation" onclick={handleIndicator}>
+                                                <a data-item={indicator.id} class={indicator.indicatorClass}
+                                                    href="javascript:void(0);" role="tab" tabindex={indicator.tabindex}
+                                                    aria-selected={indicator.hidden} aria-controls="content-id-01" title="">
+                                                </a>
+                                            </li>
+                                        </template>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <lightning-icon data-item="rightArrow" icon-name="utility:chevronright" variant="inverse" alternative-text="Right"
+                    class="chevronright" onclick={moveList}></lightning-icon>
+                </div>
+
+                <!-- Miniature Section -->
+                <!--HIDDEN RESPONSIVE VERSION-->
+                <div class="slds-size_4-of-12 slds-col hidden-md thumbs col-no-padding-left">
+                    <template if:true={hasMorePictures}>
+                        <div class="text-center div-chevronup">
+                            <img data-item="upArrow" src={icon.bluearrow} class="chevronup" onclick={moveListMiniature}/>
+                        </div>
+                    </template>
+                    <template if:true={listMiniature}>
+                        <template for:each={listMiniature} for:item="indicator">
+                            <div data-item={indicator.id} key={indicator.id} class={indicator.panelClass}
+                                onclick={handleIndicator}>
+                                <img src={indicator.url} data-item={indicator.id} alt="Show images"
+                                    class="maximum-size-indicators cursor-pt"/>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:true={hasMorePictures}>
+                        <div class="text-center div-chevrondown">
+                            <img src={icon.bluearrow} data-item="downArrow" class="chevrondown cursor-pt" onclick={moveListMiniature}/>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Modal Section -->
+            <template if:true={modalCarouselOpen}>
+                <div class="slds-m-around_xx-large">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header slds-modal__header_empty">
+                                <lightning-button-icon icon-name="utility:close" onclick={closeModal}
+                                    alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+                                </lightning-button-icon>
+                            </header>
+                            <lightning-icon data-item="leftArrow" icon-name="utility:chevronleft" variant="inverse" alternative-text="Left"
+                            class="chevronleft" onclick={moveList}></lightning-icon>
+                            <div class="slds-modal__content" id="modal-content-id-1">
+                                <div class="slds-carousel">
+                                    <div class="slds-carousel__stage  carousel-size">
+                                        <template if:true={positionCarousel}>
+                                            <div class={positionCarousel}>
+                                                <template if:true={listImages}>
+                                                    <template for:each={listImages} for:item="indicator">
+                                                        <div data-item={indicator.id} key={indicator.id}
+                                                            class={indicator.panelClass} role="tabpanel"
+                                                            aria-hidden={indicator.hidden}>
+                                                            <a href="javascript:void(0);"
+                                                                class="slds-carousel__panel-action slds-text-link_reset width-100"
+                                                                tabindex={indicator.tabindex} onclick={openModal}>
+                                                                <div class="swipedivpopup slds-carousel__image slds-grid_align-center">
+                                                                    <img src={indicator.url} alt="Show images" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </template>
+                                                </template>                                            
+                                            </div>
+                                        </template>
+                                        <ul class="slds-carousel__indicators" role="tablist">
+                                            <template if:true={listImages}>
+                                                <template for:each={listImages} for:item="indicator">
+                                                    <li data-item={indicator.id} key={indicator.id}
+                                                        class="slds-carousel__indicator" role="presentation"
+                                                        onclick={handleIndicator}>
+                                                        <a data-item={indicator.id} class={indicator.indicatorClass}
+                                                            href="javascript:void(0);" role="tab"
+                                                            tabindex={indicator.tabindex} aria-selected={indicator.hidden}
+                                                            aria-controls="content-id-01" title="">
+                                                        </a>
+                                                    </li>
+                                                </template>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <lightning-icon data-item="rightArrow" icon-name="utility:chevronright" variant="inverse" alternative-text="Right" class="chevronright" onclick={moveList}></lightning-icon>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </template>
+        </template>
+        <template if:false={lisImagesSize}>
+                <div class="alert alert-info" role="alert">
+                    {label.no_images_profile}
+                </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,9 @@
+<apex:component access="global" >
+    <head>
+        <style>
+            body{
+            font-family: aktiv-grotesk, sans-serif !important;
+            }
+        </style>
+    </head>
+</apex:component>

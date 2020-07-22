@@ -1,0 +1,52 @@
+<template>
+    <div class="row">
+        <div class="offset-8 col-4 text-right pr-3 mb-2">
+            <template if:true={hasListItems}>
+                <a if:false={hideExcelBtn} href="javascript:{}" data-tosca="my-expired-remote-validations-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a>
+            </template>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">{label.station_name}</th>
+                <th scope="col">{label.station_type}</th>
+                <th scope="col">{label.city}</th>
+                <th scope="col">{label.country}</th>
+                <template if:true={displayCertifications} for:each={activeCertifications} for:item="cert">
+                    <th key={cert.Id} scope="col"><img title={cert.Name} src={cert.Image__c} width="50px" /></th>
+                </template>
+                <template if:true={displayRemoteValidations}>
+                    <th scope="col"><img title="remotevalidations" src={remoteValidationIcon} width="50px" /></th>
+                </template>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={listItems} for:item="facility">
+                <tr if:true={facility} key={facility.Id} class={facility.classes}>
+                    <td>
+                        <p class="text-blue cursor-pt" onclick={handleMoreInfo} data-id={facility.Id}>
+                            {facility.Name}</p>
+                    </td>
+                    <td><img title={facility.RecordType.Name} width="25" src={facility.ctypeimage} /></td>
+                    <td>{facility.City_FOR__c}</td>
+                    <td>{facility.IATA_ISO_Country__r.Name}</td>
+                    <template if:true={displayCertifications} for:each={facility.certifications} for:item="cert" for:index="certIndex">
+                        <td key={cert.certName}>
+                            {cert.expDate}
+                        </td>
+                    </template>
+                    <template if:true={displayRemoteValidations} for:each={facility.remoteValidations} for:item="cert" for:index="certIndex">
+                        <td key={cert.certName}>
+                            {cert.expDate}
+                        </td>
+                    </template>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <template if:false={hasListItems}>
+        <c-cw-grid-empty-message ></c-cw-grid-empty-message>
+    </template>
+    <c-cw-xlsx-main class="xlsdownload" header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+</template>

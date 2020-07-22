@@ -1,0 +1,118 @@
+<template>
+
+	<!-- Is Header - Start -->
+	<template if:true={isHeader}>
+
+		<!-- Aux type defined - Start -->
+		<template if:true={isAuxTypeDefined}>
+			<template if:true={isAuxTypeStandardTemperatureRanges}>
+				<div class="content bold yellow capitalize" title={getTooltip}>
+					<span>Temperature Range: {getValue}</span>
+				</div>
+			</template>
+
+			<template if:true={isAuxTypeCustomTemperatureRanges}>
+				<div class="content capitalize" title={getTooltip}>
+					<span>{getValue}</span>
+				</div>
+			</template>
+
+			<template if:true={isAuxTypeTemperatureControlledGroundServiceEq}>
+				<div class="content capitalize" title={getTooltip}>
+					<span>{getValue}</span>
+				</div>
+			</template>
+		</template>
+		<!-- Aux type defined - End -->
+
+	</template>
+	<!-- Is Header - End -->
+
+
+	<!-- Not Header - Start -->
+	<template if:false={isHeader}>
+
+		<!-- Aux type defined - Start -->
+		<template if:true={isAuxTypeDefined}>
+
+			<template if:true={isAuxTypeStandardTemperatureRanges}>
+				<diV class="display-flex">
+					<div class="content blue" title={getTooltip}>
+						<span>Room {getRowIndexAddOne}</span>
+					</div>
+					<div if:true={isComparisonFacilityView} class="content yellow" title={getTooltip}>
+						<span> <img class="width-20" src={icons.thermometer} /> {getValue}</span>
+					</div>
+				</diV>
+			</template>
+
+			<template if:true={isAuxTypeCustomTemperatureRanges}>
+				<diV class="display-flex">
+					<div class="content blue" title={getTooltip}>
+						<span>Room {getRowIndexAddOne}</span>
+					</div>
+				</diV>
+			</template>
+
+			<template if:true={isAuxTypeTemperatureControlledGroundServiceEq}>
+				<div class="content blue" title={getTooltip}>
+					<span>Dolly/Truck {getRowIndexAddOne}</span>
+				</div>
+			</template>
+
+		</template>
+		<!-- Aux type defined - End -->
+
+		<!-- Aux type not defined - Start -->
+		<template if:false={isAuxTypeDefined}>
+
+			<!-- Aux field defined - Start -->
+			<template if:true={editMode}>
+				<template if:true={isAuxFieldDefined}>
+					<template if:true={isTchaTemperatureRangeField}>
+						<div if:true={getValue} class="content yellow m-auto" title={getTooltip}>
+							<span>{getValue}</span>
+						</div>
+					</template>
+				</template>
+			</template>
+			<template if:false={editMode}>
+				<template if:true={isAuxFieldDefined}>
+					<template if:true={isTchaTemperatureRangeField}>
+						<lightning-input if:true={isText} type="text" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
+					</template>
+				</template>
+			</template>
+			<!-- Aux field defined - End -->
+
+			<!-- Aux field not defined - Start -->
+			<template if:false={isAuxFieldDefined}>
+				
+				<template if:false={isTypeDefined}>
+					<lightning-input if:true={isText} type="text" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
+					<lightning-textarea if:true={isTextArea} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-textarea>
+					<lightning-combobox if:true={isPicklist} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} options={getOptions} readonly={editMode} onchange={setValue} ></lightning-combobox>
+					<lightning-dual-listbox if:true={isMultiPicklist} name={getPropertyName} source-label="Available" selected-label="Selected" options={getOptions} value={getValue} disabled={editMode} onchange={setValue}></lightning-dual-listbox>
+				</template>
+
+				<template if:true={isTypeDefined}>
+					<template if:true={isTypeNumber}>
+						<lightning-input type="number" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-input>
+					</template>
+
+					<template if:true={isTypeTrueFalse}>
+						<lightning-input type="checkbox" variant="label-hidden" data-name={getPropertyName} label="" name={getTooltip} checked={getValue} disabled={editMode} onblur={setValue}></lightning-input>
+					</template>
+					
+				</template>
+
+			</template>
+			<!-- Aux field not defined - End -->
+
+		</template>
+		<!-- Aux type not defined - Start -->
+
+	</template>
+	<!-- Not Header - End -->
+
+</template>

@@ -1,0 +1,98 @@
+<apex:page showHeader="false" standardStylesheets="false" lightningStylesheets="true">
+    <html>
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.ICG_Resources, '/css/GoogleMapStyles.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.ICG_Resources, '/css/main.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.ICG_Resources, '/css/custom.css')}" />
+        </head>
+        <body>
+            <div id="map"></div>
+            <script>
+            var lexOrigin = 'https://{!$CurrentPage.parameters.lcHost}';
+            //Data for Google map
+            var data;
+            var marker;
+            //Send message to LC
+            function sendToLC(message) {
+                if(typeof(lexOrigin) != 'undefined'){
+                    parent.postMessage(message, lexOrigin);
+                }
+            }
+            
+            //Receive message from LC
+            window.addEventListener("message", function(event) {
+                //If page is public (like used in force.com sites) then be careful about the origin
+                if (event.origin !== lexOrigin) {
+                // Not the expected origin: reject message!
+                    return;
+                }
+                // Handle message
+                data = event.data;
+                
+
+                if(event.data.loadGoogleMap === true){
+                    //Load Google Map Script
+                    var script = document.createElement("script");
+                    script.src = "https://maps.googleapis.com/maps/api/js?key={!$Setup.ICG_Environment_Variables__c.Google_Maps_Key_OneSource__c}&callback=initMap"; 
+                    document.getElementsByTagName("head")[0].appendChild(script);        
+                }else{
+                    if(event.data.initMap) this.initMap();
+                }
+            }, false);
+            
+            //Callback when Google Map is loaded
+
+			function initMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 16,
+					center: {lat: -34.397, lng: 150.644}
+				});
+				
+				var geocoder = new google.maps.Geocoder();
+				geocodeAddress(geocoder, map, data.initialAddress);
+			}
+
+			function geocodeAddress(geocoder, resultsMap, address) {
+				geocoder.geocode({'address': address}, function(results, status) {
+					if (status === 'OK') {
+						resultsMap.setCenter(results[0].geometry.location);
+						sendToLC({latitude : results[0].geometry.location.lat(), longitude: results[0].geometry.location.lng()})
+						initializeMarker(resultsMap, results[0].geometry.location);
+					} else {
+						initializeMarker(resultsMap, '46.2363,6.1057'); //By Default initialize in geneve airport
+					}
+				});
+			}
+			function initializeMarker(resultsMap, pos){
+				marker = new google.maps.Marker({
+							map: resultsMap,
+							position: pos,
+							draggable: true,
+							animation: google.maps.Animation.DROP,
+							title:"Drag me!"
+						});
+						marker.addListener('click', toggleBounce);
+						marker.addListener('dragend', function(ev){
+							sendToLC({latitude : marker.getPosition().lat(), longitude: marker.getPosition().lng()})
+						});
+			}
+			function toggleBounce() {
+				if (marker.getAnimation() !== null) {
+					marker.setAnimation(null);
+				} else {
+					marker.setAnimation(google.maps.Animation.BOUNCE);
+				}
+			}
+            
+            //Let LC know that VF page been loaded along with it's URL
+            //LC will then send the data
+            //This is done because LC has no way to know that VF page in iFrame has been loaded, event listener set and ready for data
+            var vfHost = "{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))}";
+            sendToLC({'state':'LOADED', 'vfHost': vfHost});
+
+            </script>  
+            
+
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,163 @@
+<template>
+
+	<!-- Is Header - Start -->
+	<template if:true={isHeader}>
+
+		<!-- Aux type defined - Start -->
+		<template if:true={isAuxTypeDefined}>
+			<template if:true={isAuxTypeStandardTemperatureRanges}>
+				<div data-item="stamp-popover-1" onmouseover={showPopover} onmouseleave={hidePopover} class="content bold yellow ">
+					<span>{label.temperature_range}: {getValue}</span>
+					<c-cw-simple-tooltip item-id="stamp-popover-1" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+				</div>
+				
+
+			</template>
+
+			<template if:true={isAuxTypeCustomTemperatureRanges}>
+				<div data-item="stamp-popover-2" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
+					<span>{getValue}</span>
+					<c-cw-simple-tooltip item-id="stamp-popover-2" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+				</div>
+				
+			</template>
+
+			<template if:true={isAuxTypeTemperatureControlledGroundServiceEq}>
+				<div data-item="stamp-popover-3" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
+					<span>{getValue}</span>
+					<c-cw-simple-tooltip item-id="stamp-popover-3" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+				</div>
+				
+			</template>
+		</template>
+		<!-- Aux type defined - End -->
+
+		<!-- Aux type not defined - Start -->
+		<template if:false={isAuxTypeDefined}>
+			<div data-item="stamp-popover-4" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
+				<span>{getValue}</span>
+				<c-cw-simple-tooltip item-id="stamp-popover-4" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+			</div>
+		</template>
+		<!-- Aux type not defined - End -->
+
+	</template>
+	<!-- Is Header - End -->
+
+
+	<!-- Not Header - Start -->
+	<template if:false={isHeader}>
+
+		<!-- Aux type defined - Start -->
+		<template if:true={isAuxTypeDefined}>
+
+			<template if:true={isAuxTypeStandardTemperatureRanges}>
+				<diV class="display-flex">
+					<div data-item="stamp-popover-5" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
+						<span>{generateLabel}</span>
+						<c-cw-simple-tooltip item-id="stamp-popover-5" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+					</div>
+					<div data-item="stamp-popover-6" onmouseover={showPopover} onmouseleave={hidePopover} if:true={isComparisonFacilityView} class="content yellow">
+						<span> <img class="width-20" src={icons.thermometer} /> {getValue}</span>
+						<c-cw-simple-tooltip item-id="stamp-popover-6" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+					</div>
+					
+				</diV>
+			</template>
+
+			<template if:true={isAuxTypeCustomTemperatureRanges}>
+				<div class="display-flex">
+					<div data-item="stamp-popover-8" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
+						<span>{generateLabel}</span>
+						<c-cw-simple-tooltip item-id="stamp-popover-8" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={isAuxTypeTemperatureControlledGroundServiceEq}>
+				<div data-item="stamp-popover-9" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
+					<span>{generateLabel}</span>
+					<c-cw-simple-tooltip item-id="stamp-popover-9" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+				</div>
+			</template>
+
+		</template>
+		<!-- Aux type defined - End -->
+
+		<!-- Aux type not defined - Start -->
+		<template if:false={isAuxTypeDefined}>
+
+			<!-- Aux field defined - Start -->
+			<template if:true={isAuxFieldDefined}>
+				<template if:true={isTchaTemperatureRangeField}>
+					<div data-item="stamp-popover-10" onmouseover={showPopover} onmouseleave={hidePopover} if:true={getValue} class="content yellow m-auto">
+						<span>{getValue}</span>
+						<c-cw-simple-tooltip item-id="stamp-popover-10" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+					</div>
+				</template>
+			</template>
+			<!-- Aux field defined - End -->
+
+			<!-- Aux field not defined - Start -->
+			<template if:false={isAuxFieldDefined}>
+				<template if:false={isTypeDefined}>
+					<div data-item="stamp-popover-11" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClassNew}>
+						<span>{generateLabel}</span>
+						<c-cw-simple-tooltip item-id="stamp-popover-11" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+					</div>
+				</template>
+
+				<template if:true={isTypeDefined}>
+					<template if:true={isTypeNumber}>
+						<div if:false={isTypeTrueFalse} data-item="stamp-popover-12" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
+							
+							<template if:true={getValueNumber}>
+								<lightning-formatted-number value={getValue}></lightning-formatted-number>
+							</template>
+							<template if:false={getValueNumber}>
+								-
+							</template>
+							<c-cw-simple-tooltip item-id="stamp-popover-12" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+						</div>
+					</template>
+					<template if:true={isTypeHttp}>
+						<div data-item="stamp-popover-13" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
+							<a href={getHref} target="_blank">{getValue}</a>
+							<c-cw-simple-tooltip item-id="stamp-popover-13" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+						</div>
+
+					</template>
+					<template if:true={isTypeTrueFalse}>
+						<div data-item="stamp-popover-14" onmouseover={showPopover} onmouseleave={hidePopover} if:true={getValue} class="content commodity-active">
+							<img src={checkIcon} width="20px">
+							<c-cw-simple-tooltip item-id="stamp-popover-14" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+						</div>
+						<div data-item="stamp-popover-15" onmouseover={showPopover} onmouseleave={hidePopover} if:false={getValue} class="content disabled-filter commodity-inactive">
+							<img src={checkIcon} width="20px">
+							<c-cw-simple-tooltip item-id="stamp-popover-15" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+						</div>
+					</template>
+					<template if:true={isCombobox}>
+						<div if:false={isTypeTrueFalse} data-item="stamp-popover-12" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
+							<lightning-combobox
+								data-tosca="conflict-actions"
+								options={item.options}
+								class="conflict-options"
+								value={selectedOption}
+								onchange={handleConflictActionChanged}
+								variant="label-hidden">
+							</lightning-combobox>
+						</div>
+					</template>
+				</template>
+
+			</template>
+			<!-- Aux field not defined - End -->
+
+		</template>
+		<!-- Aux type not defined - Start -->
+
+	</template>
+	<!-- Not Header - End -->
+
+</template>

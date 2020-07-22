@@ -1,0 +1,36 @@
+li a label {
+	color: black;
+	padding-left: 6px;
+	margin-bottom: 0px !important;
+	cursor: pointer;
+}
+
+.ddheaditem {
+	background-color: #f2f2f2;
+}
+.hidden {
+	display: none;
+}
+button,
+button:focus,
+button:hover,
+button:active,
+button:visited {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none !important;
+	width: 100%;
+	background: none;
+	box-shadow: none;
+	color: black;
+}
+label {
+	cursor: pointer;
+}
+
+.dropdown-div {
+	max-height: auto;
+	overflow: auto;
+	margin-top: auto;
+}

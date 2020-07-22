@@ -1,0 +1,104 @@
+<template>
+	<template if:true={userFacilities}>
+		<div class="slds-theme_default row col-md-12 hidden-lg col-no-padding-right">
+			<ul class="nav nav-tabs width-100" id="tabs" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active display-grid" id="tab1" data-toggle="tab" role="tab" onclick={openTab}
+						data-tab="allfacilities">
+						<span>{label.all_stations}</span>
+						<span class="countnumber">{allStationsCount}</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link display-grid" id="tab2" data-toggle="tab" role="tab" data-tab="myfacilities"
+						onclick={openTab}>
+						<span>{label.my_stations}</span>
+						<span class="countnumber">{numberOfMyFacilities}</span></a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link display-grid" id="tab3" data-toggle="tab" role="tab"
+						data-tab="myvalidatedfacilities" onclick={openTab}>
+						<span>{label.my_validated_stations}</span>
+						<span class="countnumber display-inline-block">{numberOfMyValidatedFacilities}&nbsp;
+							<span
+								class="countnumber green display-inline-block">({validatedPercentage})</span></span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link display-grid" id="tab4" data-toggle="tab" role="tab"
+						data-tab="expiringvalidations" onclick={openTab}>
+						<span>{label.expiring_validations}</span>
+						<span class="countnumber red">{numberOfMyExpiringValidations}</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link display-grid" id="tab7" data-toggle="tab" role="tab"
+						data-tab="expiringremotevalidations" onclick={openTab}>
+						<span>{label.expiring_remote_validations}</span>
+						<span class="countnumber red">{numberOfExpiringRemoteValidations}</span></a>
+				</li>
+			</ul>
+		</div>
+
+		<!--VISIBLE RESPONSIVE VERSION-->
+
+		<div class="row visible-lg main-row-resp">
+			<div class="col-12 display-inline-flex">
+				<div class="col-9 col-no-padding-left">
+					<div class="form-group">
+						<select class="form-control">
+							<option >{label.all_stations}
+							</option>
+							<option>{label.my_facilities} ({numberOfMyFacilities})</option>
+							<option>{label.my_validated_facilities}
+								({numberOfMyValidatedFacilities})</option>
+							<option>{label.expiring_validations}
+								({numberOfMyExpiringValidations})</option>
+							<option>{label.expiring_remote_validations}
+								({numberOfExpiringRemoteValidations})</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--</div>-->
+
+		<!--HIDDEN RESPONSIVE VERSION-->
+
+		<div class="slds-theme_default row-no-margin full-section-results-us">
+			<div data-tosca="allfacilities" class="tabcontent display-block">
+				<template for:each={companyFacilities} for:item="opsGroup">
+					<div class="row" key={opsGroup.groupName}>
+						<div class="col-8 pl-3 pt-3" >
+							<h3 class="capitalize">{label.all} {opsGroup.groupName} {label.stations} ({opsGroup.numberOfApprovedStations})</h3>
+							<hr class="yellow-underline">
+						</div>
+						<div class="col-4 text-right pr-45" >
+                            <template if:true={opsGroup.hasItem}>
+								<a href="javascript:{}" key={opsGroup.Id} data-name={opsGroup.groupName} title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a>
+                            </template>
+                        </div>
+					</div>
+				
+					<div key={opsGroup.groupName}>
+						<c-cw-user-stats-table environment-variables={environmentVariables} label={label} hide-excel-btn="true" display-certifications="true" active-certifications={activeCertifications} list-items={opsGroup.stations}></c-cw-user-stats-table>
+						<template if:true={opsGroup.hasItem}>
+							<c-cw-xlsx-main key={opsGroup.groupName} class="xlsxallvalidations" data-key={opsGroup.groupName} header-list={xlsHeaderAllValidations} filename={filenameAllValidations} sheet-data={xlsDataAllValidations}></c-cw-xlsx-main>
+						</template>
+					</div>
+				</template>
+			</div>
+			<div data-tosca="myfacilities" class="tabcontent">
+				<c-cw-user-stats-table environment-variables={environmentVariables} label={label} display-certifications="true" active-certifications={activeCertifications} list-items={filteredUserManagedFacilities} filename="my_stations.xlsx"></c-cw-user-stats-table>
+			</div>
+			<div data-tosca="myvalidatedfacilities" class="tabcontent">
+				<c-cw-user-stats-table environment-variables={environmentVariables} label={label} display-certifications="true" active-certifications={activeCertifications} list-items={userManagedCertifiedFacilities} filename="my_validated_stations.xlsx"></c-cw-user-stats-table>
+			</div>
+			<div data-tosca="expiringvalidations" class="tabcontent">
+				<c-cw-user-stats-table environment-variables={environmentVariables} label={label} display-certifications="true" is-expiring-tab="true" active-certifications={activeCertifications} list-items={myExpiringValidations} filename="my_expiring_validations.xlsx"></c-cw-user-stats-table>
+			</div>
+			<div data-tosca="expiringremotevalidations" class="tabcontent">
+				<c-cw-user-stats-table environment-variables={environmentVariables} label={label} display-remote-validations="true" is-expiring-tab="true" active-certifications={activeCertifications} list-items={myExpiringRemoteValidations} filename="my_expiring_remote_validations.xlsx"></c-cw-user-stats-table>
+			</div>
+		</div>
+		<br />
+	</template>
+</template>
