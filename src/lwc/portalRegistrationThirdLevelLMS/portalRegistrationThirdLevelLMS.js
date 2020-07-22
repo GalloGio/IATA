@@ -37,6 +37,7 @@ import CSP_L2_Go_To_Service_LMS                   from '@salesforce/label/c.CSP_
 import CSP_L2_SucessUpdateOnly_LMS                   from '@salesforce/label/c.CSP_L2_SucessUpdateOnly_LMS';
 import CSP_L3_Email_Validation_LMS                   from '@salesforce/label/c.CSP_L3_Email_Validation_LMS';
 import CSP_L3_Note_F4_LMS                   from '@salesforce/label/c.CSP_L3_Note_F4_LMS';
+import CSP_L2_Go_To_Homepage_LMS from '@salesforce/label/c.CSP_L2_Go_To_Homepage_LMS';
 
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
@@ -57,6 +58,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	@track registrationParams;
 	@track registerData = true;
 	@track openMessageModalFlowRegister = false;
+	@track openErrorModal = false;
 	@track title;
 	@track message;
 	@track button1Label;
@@ -124,7 +126,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L2_Go_To_Service_LMS,
 		CSP_L2_SucessUpdateOnly_LMS,
 		CSP_L3_Email_Validation_LMS,
-		CSP_L3_Note_F4_LMS
+		CSP_L3_Note_F4_LMS,
+		CSP_L2_Go_To_Homepage_LMS
 	}
 	
 	get labels() {
@@ -266,7 +269,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.contactInfo.Username = '';
 					this.contactInfo.UserId = '';
 				
-					this.openMessageModalFlowRegister = true;
+					this.openErrorModal = true;
 					this.message = CSP_L2_RegistrationFailed_LMS + error;
 				});
 				
@@ -309,8 +312,9 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					getParameters({ urlExtension : sPageURL }).then(result => {
 						this.contactInfo = JSON.parse(result.userInfo);
 						
-						if(this.contactInfo.UserId !== undefined && this.contactInfo.UserId !== null && this.contactInfo.UserId !== ''){
-							this.contactInfo.Username = this.contactInfo.Id.substring(0,15);
+						if(this.contactInfo.UserId !== undefined && this.contactInfo.UserId !== null && this.contactInfo.UserId !== '' 
+							&& pageParams.lmsflow !== 'flow4'){
+							this.contactInfo.Username = this.contactInfo.Id;
 						}
 						
 						if(pageParams.lmsflow === 'flow3'){
@@ -366,6 +370,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							}
 							else{
 								this.isResLoading = false;
+								this.openMessageModalFlowRegister = false;
+								this.openErrorModal = true;
 								this.message = CSP_L2_Registration_Failed_LMS+'\n'+result2.message;
 							}
 							
@@ -373,7 +379,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 						.catch(error => {
 							this.errorModalMessage = JSON.parse(JSON.stringify(error));
 							this.isResLoading = false;
-							this.openMessageModalFlowRegister = true;
+							this.openErrorModal = true;
 							this.message = CSP_L2_RegistrationFailed_LMS + error;
 						});
 					})
@@ -384,7 +390,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 			})
 		.catch((error) => {
-			this.openMessageModalFlowRegister = true;
+			this.openErrorModal = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
 		})
 

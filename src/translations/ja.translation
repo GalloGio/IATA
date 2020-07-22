@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4508,6 +4512,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -13179,7 +13187,7 @@ and
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label>この記録を削除しますか？</label>
+        <label>この情報を削除しますか？</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
@@ -13451,7 +13459,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>ご注意ください！所有者情報を代理店にコピーすると、対象代理店の既存の所有者情報が削除されます。</label>
+        <label>所有者情報を代理店にコピーすると、対象代理店の既存の所有者情報が削除されますので、ご注意ください</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -14163,11 +14171,11 @@ and
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label>日本語の会社名はありませんか？その場合は、英数字で名前を入力してください。</label>
+        <label>日本語の社名はありませんか？その場合は、英語、数字で社名を入力してください。</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label>日本語の名前はありませんか？その場合は、英数字で名前を再入力してください。</label>
+        <label>日本語の名前はありませんか？その場合は、英語、数字で姓を入力してください。</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
@@ -15451,7 +15459,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label>都道府県/州</label>
+        <label>都道府県</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -16143,7 +16151,7 @@ and
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label>追加する個人の役割を示す欄にチェックを入れ、詳細を記入してください。その個人の役割がどれにも当てはまらない場合は、どの欄にもチェックを入れず、詳細を記入してください。</label>
+        <label>追加する個人の役職を示す欄にチェックを入れ、詳細を記入してください。その個人の役職がどれにも当てはまらない場合は、どの欄にもチェックを入れず、詳細を記入してください。</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -16783,7 +16791,7 @@ and
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
-        <label>IATA認証 - 年次再承認</label>
+        <label>IATA公認 - 年次認証プロセス</label>
         <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
     </customLabels>
     <customLabels>
@@ -16835,7 +16843,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label>記録によりますと、このIATAコードの所有権は100%になっていません。記録が更新できるように、代理店の詳細 (代理店の所有権 / 株主セクション) を更新して所有権の合計が100%になるようにしてください。</label>
+        <label>入力情報において、このIATAコードの所有権は100%になっていません。代理店の詳細 (代理店の所有権 / 株主セクション) を更新して所有権の合計が100%になるようにしてください。</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
@@ -16863,7 +16871,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label>貴社の階層の各IATAコードの詳細を確認、または更新してください</label>
+        <label>貴社の支社/支店の各IATAコードの詳細を確認、または更新してください</label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
@@ -16939,11 +16947,11 @@ and
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label>処理の対象となる代理店</label>
+        <label>プロセスの対象となる代理店</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label>所有者情報のコピーの進捗</label>
+        <label>所有者情報のコピーの状況</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -17487,6 +17495,18 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Account_Statement_Add_Proof_Payment --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statement Add proof payment description --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statement_Done --></label>
+        <name>ISSP_Account_Statement_Done</name>
+    </customLabels>
+    <customLabels>
         <label>所在地</label>
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
@@ -17495,8 +17515,16 @@ and
         <name>ISSP_Account_Statement_Notifications_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statement Settlement Info --></label>
+        <name>ISSP_Account_Statement_Settlement_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Statements --></label>
         <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Billing --></label>
+        <name>ISSP_Account_Statements_Billing</name>
     </customLabels>
     <customLabels>
         <label>カスタマーポータルの残高は、IATAのアカウントに入金が行われた後の翌営業日に更新されます。IATAのアカウントへの入金日は、 選択された支払い方法によって異なります。ICEに表示される請求データは、第三機関が24時間ごとにIATAに提供するため、IATAのコントロールできない遅延が発生する可能性があります。
@@ -17507,6 +17535,30 @@ and
     <customLabels>
         <label><!-- ISSP Account Statements Disclaimer China Travel Agent --></label>
         <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Item --></label>
+        <name>ISSP_Account_Statements_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_No_Results --></label>
+        <name>ISSP_Account_Statements_No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Payment --></label>
+        <name>ISSP_Account_Statements_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Per_Location --></label>
+        <name>ISSP_Account_Statements_Per_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Search --></label>
+        <name>ISSP_Account_Statements_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Summary --></label>
+        <name>ISSP_Account_Statements_Summary</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Title --></label>
@@ -17555,10 +17607,6 @@ and
     <customLabels>
         <label>管理者</label>
         <name>ISSP_Administrator</name>
-    </customLabels>
-    <customLabels>
-        <label>代理店HOコード</label>
-        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>代理店名</label>
@@ -20471,10 +20519,6 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
-        <label>過去のピリオド</label>
-        <name>ISSP_Past_Periods</name>
-    </customLabels>
-    <customLabels>
         <label>Payment LinkとはIATAの請求書をクレジットカードでお支払いされる際に使用されます&lt;br/&gt;
 &lt;b&gt;警告&lt;/b&gt;&lt;br/&gt;
 IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収します。クレジットカードでのお支払いをされる前に請求書が既に作成されていないか請求書の詳細のご確認下さい。</label>
@@ -20731,6 +20775,70 @@ IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収しま�
     <customLabels>
         <label>数量</label>
         <name>ISSP_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Date --></label>
+        <name>ISSP_RD_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropInf --></label>
+        <name>ISSP_RD_DragAndDropInf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropSize --></label>
+        <name>ISSP_RD_DragAndDropSize</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Exception --></label>
+        <name>ISSP_RD_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeleted --></label>
+        <name>ISSP_RD_FileDeleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedExc --></label>
+        <name>ISSP_RD_FileDeletedExc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedSucc --></label>
+        <name>ISSP_RD_FileDeletedSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExist --></label>
+        <name>ISSP_RD_FileExist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExtensionError --></label>
+        <name>ISSP_RD_FileExtensionError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileUploaded --></label>
+        <name>ISSP_RD_FileUploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Name --></label>
+        <name>ISSP_RD_File_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Size --></label>
+        <name>ISSP_RD_File_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_OK_Action --></label>
+        <name>ISSP_RD_OK_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadFile --></label>
+        <name>ISSP_RD_UploadFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadingSucc --></label>
+        <name>ISSP_RD_UploadingSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_View --></label>
+        <name>ISSP_RD_View</name>
     </customLabels>
     <customLabels>
         <label>送金保持能力</label>
@@ -25555,6 +25663,22 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label><!-- Training Platform (LMS) Service Description --></label>
         <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Billing_Adjustment --></label>
+        <name>Transaction_Type_Billing_Adjustment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Clawback --></label>
+        <name>Transaction_Type_Clawback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Compensation --></label>
+        <name>Transaction_Type_Compensation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Payment_Received --></label>
+        <name>Transaction_Type_Payment_Received</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -36533,6 +36657,19 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

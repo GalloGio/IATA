@@ -3285,6 +3285,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
+        <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Error Creating Record --></label>
         <name>CSP_Error_Creating_Record</name>
     </customLabels>
@@ -4507,6 +4511,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
         <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration Existing User Message --></label>
+        <name>CSP_Registration_Existing_User_Message_Not_Matching_F6_3</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Existing User Message --></label>
@@ -13175,15 +13183,15 @@ and
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label>정말로 취소하시겠습니까?</label>
+        <label>정말 취소하시겠습니까?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label>이 기록을 정말로 삭제하시겠습니까?</label>
+        <label>이 기록을 정말 삭제하시겠습니까?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label>변경을 정말로 취소하시겠습니까?</label>
+        <label>정말 변경을 취소하시겠습니까?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -13451,7 +13459,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label>주의! 소유권 정보를 대행사에 복사하면 대상 대행사의 기존 소유권 정보가 전부 삭제됩니다.</label>
+        <label>주의! 소유권 정보를 대리점에 복사하면 해당 대리점의 기존 소유권 정보가 모두 삭제됩니다.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -14163,15 +14171,15 @@ and
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label>국문회사명이 없을 경우, 로마자로 입력 바랍니다.</label>
+        <label>국문 회사명이 없을 경우, 로마자로 입력 바랍니다.</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label>국문회사명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
+        <label>국문명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label>국문회사명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
+        <label>국문명이 없을 경우, 로마자로 다시 한 번 입력 바랍니다.</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -15427,7 +15435,7 @@ and
         <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
-        <label>대상 계정 선택</label>
+        <label>해당 계정 선택</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -16143,7 +16151,7 @@ and
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label>체크박스에 귀사가 추가하려는 직원분의 직책을 표시한 다음, 세부사항을 기입하십시오. 직책이 없을 경우,  체크 표시없이 세부사항만 기입하시면 됩니다.</label>
+        <label>체크박스에 귀사가 추가하려는 직원분의 직책을 표시한 다음, 세부사항을 기입하십시오. 해당하는 직책이 없을 경우,  체크 표시없이 세부사항만 기입하시면 됩니다.</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -16295,7 +16303,7 @@ and
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
-        <label>도로 주소</label>
+        <label>세부 도로명 주소</label>
         <name>ISSP_AMS_Street</name>
     </customLabels>
     <customLabels>
@@ -16795,7 +16803,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label>내역들이 정확함을 확인합니다.</label>
+        <label>내역이 정확함을 확인합니다.</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
     </customLabels>
     <customLabels>
@@ -16835,7 +16843,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label>당사 기록에 따르면 해당 IATA 코드의 소유권은 100%가 아닙니다. 당사에서 기록을 업데이트할 수 있도록 대행사 세부 정보(대행사 소유권/주식 보유량 섹션)를 업데이트해 총 소유권이 100%가 되도록 하십시오.</label>
+        <label>당사 기록에 따르면 해당 IATA 코드의 소유권은 100%가 아닙니다. 당사에서 기록을 업데이트할 수 있도록 대리점 세부정보(대리점 소유권/주식 보유량 섹션)를 업데이트하시어, 총 소유권이 100%가 되도록 하십시오.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
@@ -16863,11 +16871,11 @@ and
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label>귀사 계층 구조의 각 IATA 코드에 대한 세부사항을 확인 또는 업데이트해주십시오.</label>
+        <label>귀사 본사와 지사의 각 IATA 코드에 대한 세부사항을 확인 또는 업데이트 해주시기 바랍니다. </label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>업데이트 중인 것과 동일한 IATA 코드를 회사 소유주로 추가할 수 없습니다.</label>
+        <label>업데이트 중인 동일한 IATA 코드를 회사 소유주로 추가할 수 없습니다.</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -16939,7 +16947,7 @@ and
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label>처리된 대행사</label>
+        <label>진행된 대리점</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
@@ -17487,6 +17495,18 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Account_Statement_Add_Proof_Payment --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statement Add proof payment description --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statement_Done --></label>
+        <name>ISSP_Account_Statement_Done</name>
+    </customLabels>
+    <customLabels>
         <label>본사/지점</label>
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
@@ -17495,8 +17515,16 @@ and
         <name>ISSP_Account_Statement_Notifications_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statement Settlement Info --></label>
+        <name>ISSP_Account_Statement_Settlement_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Statements --></label>
         <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Billing --></label>
+        <name>ISSP_Account_Statements_Billing</name>
     </customLabels>
     <customLabels>
         <label>IATA 계정에 입금된 후 다음 영업일에 고객 포털의 잔액이 업데이트됩니다. IATA 계정에 입금되는 날은 선택하신 결제 형식에 따라 다릅니다. ICE에 표시된 청구 데이터는 제3자를 통해 24시간 이내에 IATA에 제공되며 IATA가 통제할 수 없는 지연이 발생할 수 있습니다. 
@@ -17507,6 +17535,30 @@ and
     <customLabels>
         <label><!-- ISSP Account Statements Disclaimer China Travel Agent --></label>
         <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Item --></label>
+        <name>ISSP_Account_Statements_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_No_Results --></label>
+        <name>ISSP_Account_Statements_No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Payment --></label>
+        <name>ISSP_Account_Statements_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Per_Location --></label>
+        <name>ISSP_Account_Statements_Per_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Search --></label>
+        <name>ISSP_Account_Statements_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Summary --></label>
+        <name>ISSP_Account_Statements_Summary</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Title --></label>
@@ -17557,11 +17609,7 @@ and
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label>대리점 본사 코드</label>
-        <name>ISSP_Agency_Head_Office_code</name>
-    </customLabels>
-    <customLabels>
-        <label>대행사 이름</label>
+        <label>대리점명</label>
         <name>ISSP_Agency_name</name>
     </customLabels>
     <customLabels>
@@ -20467,10 +20515,6 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
-        <label>과거 빌링 주기</label>
-        <name>ISSP_Past_Periods</name>
-    </customLabels>
-    <customLabels>
         <label>Payment Link를 통해, IATA인보이스 비용을 신용카드로 지불하실 수 있습니다.&lt;br/&gt;
 &lt;b&gt;경고&lt;/b&gt;&lt;br/&gt;
 대부분의 IATA에서 발행하는 인보이스는 BSP/CASS 빌링을 통하여 청구됩니다. 신용카드로 결제하시기 전에 반드시. 해당 인보이스가 귀사의 빌링에 반영되지 않았는지 확인하신 후에 결제를 진행하여 주시기 바랍니다.</label>
@@ -20727,6 +20771,70 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
     <customLabels>
         <label>수량</label>
         <name>ISSP_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Date --></label>
+        <name>ISSP_RD_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropInf --></label>
+        <name>ISSP_RD_DragAndDropInf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropSize --></label>
+        <name>ISSP_RD_DragAndDropSize</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Exception --></label>
+        <name>ISSP_RD_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeleted --></label>
+        <name>ISSP_RD_FileDeleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedExc --></label>
+        <name>ISSP_RD_FileDeletedExc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedSucc --></label>
+        <name>ISSP_RD_FileDeletedSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExist --></label>
+        <name>ISSP_RD_FileExist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExtensionError --></label>
+        <name>ISSP_RD_FileExtensionError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileUploaded --></label>
+        <name>ISSP_RD_FileUploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Name --></label>
+        <name>ISSP_RD_File_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Size --></label>
+        <name>ISSP_RD_File_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_OK_Action --></label>
+        <name>ISSP_RD_OK_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadFile --></label>
+        <name>ISSP_RD_UploadFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadingSucc --></label>
+        <name>ISSP_RD_UploadingSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_View --></label>
+        <name>ISSP_RD_View</name>
     </customLabels>
     <customLabels>
         <label>송금 보류 기능</label>
@@ -25552,6 +25660,22 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Training Platform (LMS) Service Description --></label>
         <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Billing_Adjustment --></label>
+        <name>Transaction_Type_Billing_Adjustment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Clawback --></label>
+        <name>Transaction_Type_Clawback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Compensation --></label>
+        <name>Transaction_Type_Compensation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Payment_Received --></label>
+        <name>Transaction_Type_Payment_Received</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -36530,6 +36654,19 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

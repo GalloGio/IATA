@@ -646,10 +646,10 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 
 		if(toUpdateStatus){
-
+			//TA-ENHC0013530
 			if(cc.Account_status_change__c == null || cc.Account_status_change__c.toUpperCase()=='CURRENT'){
-				newAACC.AccountNewStatus__c = sCurrStatus;
-				newAACC.AccountPreviousStatus__c = sPrevStatus;
+				newAACC.AccountNewStatus__c = acct.Status__c;
+				newAACC.AccountPreviousStatus__c = acct.PreviousStatus__c;
 			}else if(cc.Account_status_change__c.toUpperCase()=='PREV'){
 				newAACC.AccountNewStatus__c = sPrevStatus;
 				newAACC.AccountPreviousStatus__c = sCurrStatus;
@@ -704,6 +704,7 @@ public class AMS_OscarCase_RiskMgmt {
 		String sReasonDesc = '';
 
 		if(cc.Reason_Code__c == null || cc.Reason_Code__c.toUpperCase() == 'CURRENT'){
+			sCurrReason = acct.Reason__c;//TA-ENHC0013530
 			if(sCurrReason != null && sCurrReason != '-'){
 				if(sCurrReason.IndexOf('-') > 0){
 					SplittedReason = sCurrReason.split('-');
