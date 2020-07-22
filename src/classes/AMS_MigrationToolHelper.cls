@@ -906,7 +906,7 @@ public without sharing class AMS_MigrationToolHelper {
 		'MSO Member Sales Office',
 		'GSA General Sales Agent',
 		'GSSA Cargo',
-		'Handling Agent'
+		'Airport Handling Agent'
 		};
 
 		Account acct = c.Account;
@@ -922,7 +922,7 @@ public without sharing class AMS_MigrationToolHelper {
 			return 'The process only starts if the account has the proper process / location class.';
 		if(acct.Category__c == 'TIDS Agent' && acct.Location_Class__c != 'T')
 			return 'The process only starts if the account has the proper process / location class.';
-		if(acct.Category__c == 'Handling Agent' && acct.Location_Class__c != 'X')
+		if(acct.Category__c == 'Airport Handling Agent' && acct.Location_Class__c != 'X')
 			return 'The process only starts if the account has the proper process / location class.';
 
 

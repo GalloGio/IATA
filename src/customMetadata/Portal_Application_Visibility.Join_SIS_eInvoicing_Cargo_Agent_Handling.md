@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Category__c</field>
-        <value xsi:type="xsd:string">Handling Agent</value>
+        <value xsi:type="xsd:string">Airport Handling Agent</value>
     </values>
     <values>
         <field>Is_Visible__c</field>

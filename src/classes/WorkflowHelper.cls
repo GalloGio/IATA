@@ -16,7 +16,7 @@ public without sharing class WorkflowHelper {
 	private static final ID INTERNALCASESRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 	private static final ID OPERATIONALMANAGEMENTHORT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Case_Operational_Management_Head_Office');
 
-	private static Set<String> accountTypes = new Set<String>{'GSA General Sales Agent','IATA Passenger Sales Agent','SSI','TIDS Agent','ERSP Agent','Domestic Agent','Associations','Handling Agent','NISI','Airline Point of Sale','MSO Member Sales Office'};
+	private static Set<String> accountTypes = new Set<String>{'GSA General Sales Agent','IATA Passenger Sales Agent','SSI','TIDS Agent','ERSP Agent','Domestic Agent','Associations','Airport Handling Agent','NISI','Airline Point of Sale','MSO Member Sales Office'};
 
 	private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
