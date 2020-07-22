@@ -221,7 +221,7 @@ public without sharing class ISSP_Case {
 
 			//if case is a SIS Joining Form
 			if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
-					&& newCase.Status == 'Draft' && !newCase.isClosed && !((newCase.OwnerId == '00G20000000mDEUEA2' || newCase.OwnerId == '00G20000000mZCpEAM' || newCase.OwnerId == '00G20000000mZCzEAM' || newCase.OwnerId == '00G20000000mp9MEAQ' || newCase.OwnerId == '00G20000001MbtoEAC' || newCase.OwnerId == '00G20000001Mcq2EAC')){
+					&& newCase.Status == 'Draft' && !newCase.isClosed && !(newCase.OwnerId == '00G20000000mDEUEA2' || newCase.OwnerId == '00G20000000mZCpEAM' || newCase.OwnerId == '00G20000000mZCzEAM' || newCase.OwnerId == '00G20000000mp9MEAQ' || newCase.OwnerId == '00G20000001MbtoEAC' || newCase.OwnerId == '00G20000001Mcq2EAC')){
 				return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
 			}
 			// If Case is an ICCS Case, redirect to ICCS Service
