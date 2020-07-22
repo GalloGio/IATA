@@ -920,7 +920,7 @@
 															$('#search_alert_placeholder').html('');
 															var searchCrit = $('#searchCrit').val();
 															if(searchCrit=="" || searchCrit==null || searchCrit.length >=3){
-																var letterNumber = /^[0-9a-zA-Z@.\-_+]+$/;
+																var letterNumber = /^[0-9a-zA-Z@.\-_+ ]+$/;
 																if(searchCrit=="" || searchCrit==null || searchCrit.match(letterNumber)) {
 																	startLoading();
 																	SearchContact(searchCrit);
