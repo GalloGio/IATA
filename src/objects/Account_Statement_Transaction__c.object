@@ -240,8 +240,8 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Transaction_Id__c</fullName>
-        <description>Unique identifier from the external service muleSoft</description>
         <caseSensitive>false</caseSensitive>
+        <description>Unique identifier from the external service muleSoft</description>
         <externalId>true</externalId>
         <label>Transaction Id</label>
         <length>10</length>

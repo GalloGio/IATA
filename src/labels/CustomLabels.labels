@@ -44571,14 +44571,6 @@ Through this service, you can directly access TIP Reports.</value>
 Upscale your skills by signing up for one of our training programs, directly online!</value>
     </labels>
     <labels>
-        <fullName>Transaction_Type_Payment_Received</fullName>
-        <categories>AccountStatementTransaction</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Transaction_Type_Payment_Received</shortDescription>
-        <value>Payment Received</value>
-    </labels>
-    <labels>
         <fullName>Transaction_Type_Billing_Adjustment</fullName>
         <categories>AccountStatementTransaction</categories>
         <language>en_US</language>
@@ -44601,6 +44593,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Transaction_Type_Compensation</shortDescription>
         <value>Compensation</value>
+    </labels>
+    <labels>
+        <fullName>Transaction_Type_Payment_Received</fullName>
+        <categories>AccountStatementTransaction</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction_Type_Payment_Received</shortDescription>
+        <value>Payment Received</value>
     </labels>
     <labels>
         <fullName>Transfer_Attachments</fullName>
