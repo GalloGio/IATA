@@ -400,6 +400,7 @@
                             <apex:outputLabel for="city" value="City" styleclass="{!IF(localAddressMandatory,'ap-required','')}"/>
                             <apex:inputField id="city" value="{!newForm.BSP_Local_City__c}" />
                         </apex:pageBlockSectionItem>
+                        <script>$('[data-toggle="tooltip"]').tooltip();</script>
                     </apex:pageBlockSection>
                     
                 <span id="nav_three"></span>
@@ -566,6 +567,7 @@
                             <apex:image value="/img/msg_icons/info16.png" title="If YES please contact IATA for details" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
+                    <script>$('[data-toggle="tooltip"]').tooltip();</script>
                 </apex:pageBlockSection>
                 
                 <span id="commision-section" style="{!IF(newForm.Participate_in_any_Commission_Control__c=='Yes','','display:none')}">
