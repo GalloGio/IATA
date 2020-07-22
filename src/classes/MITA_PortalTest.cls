@@ -263,7 +263,7 @@ public class MITA_PortalTest {
 			//testing other airline contacts view
 			string otherAirlineContTable = ctrl.RetrieveOtherAirlineContacts();
 			system.assert(string.isBlank(ctrl.OtherAirlineContactTable));
-			ctrl.selectedAirlineId=Airlines[0].Id;
+			ctrl.selectedAirlineId=ctrl.EncryptId(Airlines[0].Id);
 			otherAirlineContTable = ctrl.RetrieveOtherAirlineContacts();
 			system.assert(!string.isBlank(ctrl.OtherAirlineContactTable));
 
@@ -277,7 +277,7 @@ public class MITA_PortalTest {
 			list<contact> myMitaCon = [select id, mita_contact_type__c, MITA_Teletype__c from contact where Email='contactMita@MyAirline.com'];
 			system.assertEquals(1,myMitaCon.size());
 			system.assertEquals(null, myMitaCon[0].mita_teletype__c);
-			ctrl.selectedContactToEdit = myMitaCon[0].Id;
+			ctrl.selectedContactToEdit = ctrl.EncryptId(myMitaCon[0].Id);
 			ctrl.retrieveContactToEdit();
 			system.assert(ctrl.ContactBeingEdited.id == myMitaCon[0].Id);
 			ctrl.ContactBeingEdited.MITA_Teletype__c = '123456';
@@ -288,7 +288,7 @@ public class MITA_PortalTest {
 			system.assertEquals('123456', myMitaCon[0].Mita_teletype__c);
 
 			//test remove contact
-			ctrl.selectedContactToRemove = myMitaCon[0].Id;
+			ctrl.selectedContactToRemove = ctrl.EncryptId(myMitaCon[0].Id);
 			ctrl.retrieveContactToRemove();
 			system.assert(ctrl.ContactBeingRemoved.id == myMitaCon[0].Id);
 			ctrl.ValidateContactRemoval();

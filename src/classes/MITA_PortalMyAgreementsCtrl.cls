@@ -151,7 +151,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 								'<td>'+escape(otherAccount.Name_on_AOC__c)+ '</td>'+
 								'<td>'+wrapper.getAgreementType()+ '</td>'+
 								'<td>'+wrapper.getStatus()+ '</td>'+
-								'<td align="center"><a class="glyphicon glyphicon-eye-open" href="#!" onClick="startLoading();RetrieveOtherAirlineContacts(\'' + escape(otherAccount.Id) + '\');"></a></td>'+
+								'<td align="center"><a class="glyphicon glyphicon-eye-open" href="#!" onClick="startLoading();RetrieveOtherAirlineContacts(\'' + escape(EncryptId(otherAccount.Id)) + '\');"></a></td>'+
 							'</tr>';
 			}
 		}
@@ -291,7 +291,6 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public contact ContactBeingRemoved			{get; set;}
 	public string selectedContactToRemove		{get; set;}
-	public string RemoveError					{get; set;}
 
 	public string SearchCriteria				{get; set;}
 
@@ -299,6 +298,9 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 	private string currUserTopAccntId;
 	
 	public static final string MandatoryMITAType = 'Interline Airline Generic Contact';
+
+	@testVisible
+	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
 
 	//Variables storing the HTML text to be rerenderd in dataTable
 	public string OtherAirlineContactTable		{get; set;}
@@ -311,9 +313,9 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		if(string.isEmpty(selectedAirlineId))
 			return null;
 		else{
-			for(Contact c:retrieveContacts(selectedAirlineId, false, 'MITA', false)){
+			for(Contact c:retrieveContacts(DecryptId(selectedAirlineId), false, 'MITA', false)){
 				selectedAirlineName = c.Account.Name_on_AOC__c;
-				OtherAirlineContactTable += '<tr id="'+c.Id+'">'+
+				OtherAirlineContactTable += '<tr id="'+EncryptId(c.Id)+'">'+
 							'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 							'<td>'+escape(c.email)+ '</td>'+
 							'<td>'+escape(c.phone)+ '</td>'+
@@ -323,6 +325,17 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 			}
 		}
 		return null;
+	}
+
+	@testVisible
+	private string EncryptId(string IdToEncrypt){
+		Blob cipherText = Crypto.encryptWithManagedIV('AES128', EncDecKey, Blob.valueOf(IdToEncrypt));
+		return EncodingUtil.base64Encode(cipherText);
+	}
+	@testVisible
+	private string DecryptId(string idToDecrypt){
+		Blob encodedEncryptedBlob = EncodingUtil.base64Decode(idToDecrypt);
+		return Crypto.decryptWithManagedIV('AES128', EncDecKey, encodedEncryptedBlob).toString();
 	}
 
 	public string getContactTypes(){
@@ -339,13 +352,13 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		MyActiveContactsTable = '';
 		for(Contact c:retrieveContacts(currUserTopAccntId, true, null, false)){
 			if(string.isNotBlank(c.MITA_Contact_Type__c))
-			MyActiveContactsTable += '<tr id="'+c.Id+'">'+
+			MyActiveContactsTable += '<tr id="'+encryptId(c.Id)+'">'+
 				'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 				'<td>'+escape(c.email)+ '</td>'+
 				'<td>'+escape(c.phone)+ '</td>'+
 				'<td>'+escape(c.MITA_Contact_Type__c)+ '</td>'+
 				'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-				'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="ActiveCon_EditContactSuccess(\'\');startLoading();editContact(\'' + escape(c.Id) + '\');"></a> <a class="glyphicon glyphicon-remove" href="#!" onClick="ActiveCon_EditContactSuccess(\'\');startLoading();removeContact(\'' + escape(c.Id) + '\');"></a></td>'+
+				'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="ActiveCon_EditContactSuccess(\'\');startLoading();editContact(\'' + escape(EncryptId(c.Id)) + '\');"></a> <a class="glyphicon glyphicon-remove" href="#!" onClick="ActiveCon_EditContactSuccess(\'\');startLoading();removeContact(\'' + escape(EncryptId(c.Id)) + '\');"></a></td>'+
 			'</tr>';
 		}
 	}
@@ -355,19 +368,18 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		hasSearched = true;
 		if(string.isNotBlank(SearchCriteria)){
 			for(Contact c:retrieveContacts(currUserTopAccntId , true, null, true)){
-				myAllContactsTable += '<tr id="'+c.Id+'">'+
+				myAllContactsTable += '<tr id="'+encryptId(c.Id)+'">'+
 					'<td>'+escape(c.salutation)+ ' ' +escape(c.name)+ '</td>'+
 					'<td>'+escape(c.email)+ '</td>'+
 					'<td>'+escape(c.phone)+ '</td>'+
 					'<td>'+escape(c.MITA_Teletype__c)+ '</td>'+
-					'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="AllCon_EditContactSuccess(\'\');startLoading();editContact(\'' + escape(c.Id) + '\');"></a></td>'+
+					'<td align="center"><a class="glyphicon glyphicon-pencil" href="#!" onClick="AllCon_EditContactSuccess(\'\');startLoading();editContact(\'' + escape(EncryptId(c.Id)) + '\');"></a></td>'+
 				'</tr>';
 			}
 		}
 	}
 
 	private list<Contact> retrieveContacts(id AirlineId, boolean bAllHierarchy, string searchType, boolean filterSearch){
-		system.debug('DTULLO retrieveContacts AirlineId --> ' + string.valueOf(AirlineId));
 		string sQuery = 'select id, Account.Name_on_AOC__c, name, email, phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where recordtype.developername=\'Standard_Contact\' AND Status__c=\'Active\'';
 		if(searchType=='MITA')
 			sQuery += ' AND MITA_Contact_Type__c<>\'\'';
@@ -388,12 +400,12 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 
 	public void retrieveContactToEdit(){
 		if(!string.isBlank(selectedContactToEdit))
-			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToEdit];
+			ContactBeingEdited = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:decryptId(selectedContactToEdit)];
 	}
 
 	public void retrieveContactToRemove(){
 		if(!string.isBlank(selectedContactToRemove))
-			ContactBeingRemoved = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:selectedContactToRemove];
+			ContactBeingRemoved = [select id, name, AccountId, email,  phone, salutation, MITA_Contact_Type__c, MITA_Teletype__c from contact where id=:decryptId(selectedContactToRemove)];
 	}
 
 
