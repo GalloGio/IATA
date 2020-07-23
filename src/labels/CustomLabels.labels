@@ -8101,42 +8101,42 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_AirlineManagement</shortDescription>
-        <value>.</value>
+        <value>&quot;Airline joining,Airline leaving,Airline suspension&quot;</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Long50d</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Long50d</shortDescription>
-        <value>.</value>
+        <value>CHC – Change of Shareholding,CHO / CHS – Change of Ownership / Legal Status,CHN - Change of Name,New HO,New BR Abroad,Financial RVW intermediaries,New EAA - Application process for European Accredited Agent,New HE standard,IATAN Re-certification</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Medium20d</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Medium20d</shortDescription>
-        <value>.</value>
+        <value>CHG – Data Maintenance,CHL - Change of Location,New SA / CHV – New Code,CLO - Closure,VMFR Setup/Update,New AE</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Medium25d</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Medium25d</shortDescription>
-        <value>.</value>
+        <value>IATAN Re-designation, IATAN Conversion</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Risk</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Risk</shortDescription>
-        <value>.</value>
+        <value>&quot;financial security request,Financial security release,financial security update,financial security renewal,Yearly Review,Ad hoc Review&quot;</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Short24</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Short24</shortDescription>
-        <value>.</value>
+        <value>&quot;CHG – Data Maintenance,CHL - Change of Location,New SA / CHV – New Code,CLO - Closure,VMFR Setup/Update,New AE&quot;</value>
     </labels>
     <labels>
         <fullName>Cases_SIS_Help_Desk</fullName>
