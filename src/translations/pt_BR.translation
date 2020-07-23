@@ -17493,6 +17493,18 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Account_Statement_Add_Proof_Payment --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statement Add proof payment description --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statement_Done --></label>
+        <name>ISSP_Account_Statement_Done</name>
+    </customLabels>
+    <customLabels>
         <label>Localização</label>
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
@@ -17501,8 +17513,16 @@ and
         <name>ISSP_Account_Statement_Notifications_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statement Settlement Info --></label>
+        <name>ISSP_Account_Statement_Settlement_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Statements --></label>
         <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Billing --></label>
+        <name>ISSP_Account_Statements_Billing</name>
     </customLabels>
     <customLabels>
         <label>Os saldos no portal do cliente são atualizados no dia útil subsequente à data em que a conta da IATA tiver sido creditada. O dia em que a conta da IATA é creditada depende da forma de pagamento que escolheu. A data de faturação indicada na ICE é fornecida à IATA por terceiros com intervalos de 24 horas e podem ocorrer atrasos que estão fora do controlo da IATA. 
@@ -17513,6 +17533,30 @@ Em caso de suspensão de uma companhia aérea, que resulte na regularização de
     <customLabels>
         <label><!-- ISSP Account Statements Disclaimer China Travel Agent --></label>
         <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Item --></label>
+        <name>ISSP_Account_Statements_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_No_Results --></label>
+        <name>ISSP_Account_Statements_No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Payment --></label>
+        <name>ISSP_Account_Statements_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Per_Location --></label>
+        <name>ISSP_Account_Statements_Per_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Search --></label>
+        <name>ISSP_Account_Statements_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Summary --></label>
+        <name>ISSP_Account_Statements_Summary</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Title --></label>
@@ -20725,6 +20769,70 @@ Por favor note que muitas invoices IATA para agentes acreditados são cobradas a
     <customLabels>
         <label>Quantidade</label>
         <name>ISSP_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Date --></label>
+        <name>ISSP_RD_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropInf --></label>
+        <name>ISSP_RD_DragAndDropInf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropSize --></label>
+        <name>ISSP_RD_DragAndDropSize</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Exception --></label>
+        <name>ISSP_RD_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeleted --></label>
+        <name>ISSP_RD_FileDeleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedExc --></label>
+        <name>ISSP_RD_FileDeletedExc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedSucc --></label>
+        <name>ISSP_RD_FileDeletedSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExist --></label>
+        <name>ISSP_RD_FileExist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExtensionError --></label>
+        <name>ISSP_RD_FileExtensionError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileUploaded --></label>
+        <name>ISSP_RD_FileUploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Name --></label>
+        <name>ISSP_RD_File_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Size --></label>
+        <name>ISSP_RD_File_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_OK_Action --></label>
+        <name>ISSP_RD_OK_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadFile --></label>
+        <name>ISSP_RD_UploadFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadingSucc --></label>
+        <name>ISSP_RD_UploadingSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_View --></label>
+        <name>ISSP_RD_View</name>
     </customLabels>
     <customLabels>
         <label>Capacidade de retenção de remessas</label>
@@ -25551,6 +25659,22 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- Training Platform (LMS) Service Description --></label>
         <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Billing_Adjustment --></label>
+        <name>Transaction_Type_Billing_Adjustment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Clawback --></label>
+        <name>Transaction_Type_Clawback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Compensation --></label>
+        <name>Transaction_Type_Compensation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Payment_Received --></label>
+        <name>Transaction_Type_Payment_Received</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -35692,7 +35816,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label>Acesso a serviços do portal</label>
         <name>Portal_Service_Access</name>
         <sections>
-            <label><!-- Portal Service Access --></label>
+            <label>Relatorios / Reportes</label>
             <name>Portal Service Access</name>
         </sections>
     </reportTypes>
