@@ -206,8 +206,6 @@ public class ContactHandler{
 		only used in insert
 	**/
 	private static void grantAccessToPortalApps(list<Contact> listNews) {
-		System.debug('___grantAccessToPortalApps listNews ' + listNews);
-
 		// create new app rights for each new role
 		list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
 		for (Contact contactNew: listNews) {
@@ -216,7 +214,6 @@ public class ContactHandler{
 
 				for (String serviceName: listAddServices) {
 					Portal_Applications__c app = getAppByName(serviceName);
-					System.debug('___grantAccessToPortalApps app ' + app);
 					if (app!=null) {
 						Portal_Application_Right__c appRight =  new Portal_Application_Right__c(
 							Contact__c = contactNew.Id,
@@ -230,13 +227,10 @@ public class ContactHandler{
 			}
 		}
 		// insert app rights
-		System.debug('___grantAccessToPortalApps listAppRight ' + listAppRight);
 		if (listAppRight.isEmpty()) return;
 		if (listNews.size()==1 || System.isQueueable()) {
 			Database.SaveResult result = Database.insert(listAppRight[0], false);
-			System.debug('___grantAccessToPortalApps listAppRight ' + result.isSuccess());
 			for (Database.Error error: result.getErrors()) {
-				System.debug('___grantAccessToPortalApps error ' + error);
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {
 					listNews[0].addError(error.getMessage());
 				}
@@ -254,9 +248,6 @@ public class ContactHandler{
 	**/
 	private static list<Portal_Application_Right__c> LIST_GRANT_APPS = new list<Portal_Application_Right__c>();
 	private static void grantAccessToPortalAppsBefore(list<Contact> listNews, Map<Id,Contact> mapOlds) {
-		System.debug('___grantAccessToPortalAppsBefore listNews ' + listNews);
-		System.debug('___grantAccessToPortalAppsBefore mapOlds ' + mapOlds);
-
 		map<Id,list<Portal_Application_Right__c>> mapContactRights = new map<Id,list<Portal_Application_Right__c>>();
 		// create new app rights for each new role
 		for (Contact contactNew: listNews) {
@@ -267,7 +258,6 @@ public class ContactHandler{
 				list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
 				for (String serviceName: listAddServices) {
 					Portal_Applications__c app = getAppByName(serviceName);
-					System.debug('___grantAccessToPortalAppsBefore app ' + app);
 					if (app!=null) {
 						Portal_Application_Right__c appRight =  new Portal_Application_Right__c(
 							Contact__c = contactNew.Id,
@@ -328,8 +318,6 @@ public class ContactHandler{
 	**/
 	private static list<Portal_Application_Right__c> LIST_REVOKE_APPS  = new list<Portal_Application_Right__c>();
 	private static void revokeAccessToPortalAppsBefore(list<Contact> listNews, Map<Id,Contact> mapOlds) {
-		System.debug('___revokeAccessToPortalAppsBefore listNews ' + listNews);
-
 		list<Contact> listPortalContacts = new list<Contact>();
 		for (Contact contactNew: listNews) {
 			listPortalContacts.add(contactNew);
@@ -369,11 +357,9 @@ public class ContactHandler{
 		listRights.addAll(LIST_REVOKE_APPS);
 		LIST_GRANT_APPS = new list<Portal_Application_Right__c>();
 		LIST_REVOKE_APPS = new list<Portal_Application_Right__c>();
-		System.debug('___accessToPortalAppsAfter listRights ' + listRights);
 		if (listRights.isEmpty()) return;
 		if (listNews.size()==1 || System.isQueueable()) {
 			Database.UpsertResult result = Database.upsert(listRights[0], false);
-			System.debug('___accessToPortalAppsAfter listAppRight ' + result);
 			for (Database.Error error: result.getErrors()) {
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {
 					listNews[0].addError(error.getMessage());
