@@ -20276,7 +20276,7 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Optional --></label>
+        <label>Không bắt buộc</label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>
