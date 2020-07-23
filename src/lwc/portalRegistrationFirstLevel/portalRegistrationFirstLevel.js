@@ -281,7 +281,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 								if(this._pageParams){
 									if(this._pageParams.language){
-										this.registrationForm.language = this._pageParams.language.toLowerCase();;
+										this.registrationForm.language = this._pageParams.language.toLowerCase();
 									}
 
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
