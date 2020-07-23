@@ -17,7 +17,10 @@ public class ContactHandler{
 	public static void afterInsert( list<Contact> listNews) {
 		findParentAcountsToUpdate(listNews);
 		ANG_ActivatePortalUsers.activate(listNews);
-		grantAccessToPortalApps(listNews);
+		//create a copy because this contact list is readonly
+		list<Contact> listCloned = listNews.deepClone(true);
+		addAccountRecords(listCloned);
+		grantAccessToPortalApps(listCloned);
 	}
 
 	/**
@@ -26,6 +29,8 @@ public class ContactHandler{
 	public static void beforeUpdate( list<Contact> listNews, Map<Id,Contact> mapOlds) {
 		populateNotificationTemplate(listNews, mapOlds);
 		populateCanAllowPortalSelfReg(listNews);
+		// account info is required in grantAccessToPortalAppsBefore() and revokeAccessToPortalAppsBefore()
+		addAccountRecords(listNews);
 		grantAccessToPortalAppsBefore(listNews,mapOlds);
 		revokeAccessToPortalAppsBefore(listNews,mapOlds);
 		allowOnlyOneDistributionRiskLeaderForUpdate(listNews,mapOlds);
@@ -231,6 +236,7 @@ public class ContactHandler{
 			Database.SaveResult result = Database.insert(listAppRight[0], false);
 			System.debug('___grantAccessToPortalApps listAppRight ' + result.isSuccess());
 			for (Database.Error error: result.getErrors()) {
+				System.debug('___grantAccessToPortalApps error ' + error);
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {
 					listNews[0].addError(error.getMessage());
 				}
@@ -293,6 +299,26 @@ public class ContactHandler{
 					}
 				}
 			}
+		}
+	}
+
+	/**
+		It attaches the Account object related to each Contact record in the input
+	**/
+	private static void addAccountRecords(list<Contact> listContact) {
+		// get all account IDs
+		list<Id> listAccountId = new list<Id>();
+		for (Contact contact: listContact) {
+			listAccountId.add(contact.AccountId);
+		}
+		// Query accounts
+		map<Id,Account> mapAccount = new map<Id,Account>(
+			[SELECT Id, Location_Class__c, Location_Type__c, Country_ISO_Code__c
+			FROM Account WHERE Id in :listAccountId]
+		);
+		//Attach Accounts to Contacts
+		for (Contact contact: listContact) {
+			contact.Account = mapAccount.get(contact.AccountId);
 		}
 	}
 
