@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="portalLeadCreator">
+    <apiVersion>47.0</apiVersion>
+    <description>Form to capture contact Requests from the CS Portal</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Portal Lead Creator Form</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+</LightningComponentBundle>

@@ -58,4 +58,16 @@ public class PortalRecommendationCtrlTest {
 		}
 		Test.stopTest();
 	}
+	
+	@isTest
+	public static void testGetRecommendationDetailsByReference() {
+		User testUser = [SELECT Id, Contact.Account.Sector__c, Contact.Account.Category__c FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		Recommendations_Visibility__c rev=[select RecommendationTitle__c from Recommendations_Visibility__c limit 1];
+		Test.startTest();
+		System.runAs(testUser) {
+			Recommendations_Visibility__c recommVisibility = PortalRecommendationCtrl.getRecomendationDetails('testRef');
+			System.assertEquals(rev.RecommendationTitle__c, recommVisibility.RecommendationTitle__c);
+		}
+		Test.stopTest();
+	}
 }
