@@ -168,7 +168,7 @@ const TABLE_DETAIL_COLUMNS = [
  		label: "Financial Security in Local Currency",
  		targetField: "totalIndustry",
 		type: "number",
-		helptext: "Total Sum of Financial Cover pending encashment activated by our risk department.",
+		helptext: "Total Sum of Financial Cover held with IATA for all active airlines impacted by the default.",
 		minDecimalPlaces: 2,
 		maxDecimalPlaces: 2,
 		displayTotal: true
