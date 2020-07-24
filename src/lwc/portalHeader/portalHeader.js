@@ -7,7 +7,7 @@ import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommun
 
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
-import { navigateToPage, getPageName, getParamsFromPage, assembleUrl } from 'c/navigationUtils';
+import { navigateToPage, navigateToNewPage, getPageName, getParamsFromPage, assembleUrl } from 'c/navigationUtils';
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
@@ -131,7 +131,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     // l2 registration
     level2RegistrationTrigger = 'homepage';
 	level3LMSRegistrationTrigger = 'homepage';
-    
+
 	@track registrationlevel = ''; //FOR LMS L3
 	@track thirdLoginLMS = false; //FOR LMS L3
 	@track serviceid = ''; //FOR LMS L3
@@ -292,91 +292,89 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     connectedCallback() {
 
-        isGuestUser().then(results => {            
-            this.internalUser = !results;
-        });
-        
-        getLoggedUser()
-        .then(results => {
-            if(results.Contact !== undefined) {
-                let userPortalStatus = results.Contact.User_Portal_Status__c !== undefined ? results.Contact.User_Portal_Status__c : '';
-                let accountCategory = results.Contact.Account !== undefined && results.Contact.Account.Category__c !== undefined ? results.Contact.Account.Category__c : '';
-                let accountSector = results.Contact.Account !== undefined && results.Contact.Account.Sector__c !== undefined ? results.Contact.Account.Sector__c : '';
-                let isoCode = results.Contact.Account.IATA_ISO_Country__r !== undefined && results.Contact.Account.IATA_ISO_Country__r.ISO_Code__c !== undefined ? results.Contact.Account.IATA_ISO_Country__r.ISO_Code__c : '';
-                let jobFunction = results.Contact.Membership_Function__c !== undefined ? results.Contact.Membership_Function__c.replace(/;/g, ',') : '';
-                
-                this.setCookie('userguiding_acc_categ', accountCategory, 1);
-                this.setCookie('userguiding_acc_sector', accountSector, 1);
-                this.setCookie('userguiding_iso-code', isoCode, 1);
-                this.setCookie('userguiding_user-status', userPortalStatus, 1);
-                this.setCookie('userguiding_job-function', jobFunction, 1);
-            }
-        });
+	isGuestUser().then(results => {
+		this.internalUser = !results;
+	});
 
-        this.getLanguagesOptions();
+	getLoggedUser()
+	.then(results => {
+		if(results.Contact !== undefined) {
+			let userPortalStatus = results.Contact.User_Portal_Status__c !== undefined ? results.Contact.User_Portal_Status__c : '';
+			let accountCategory = results.Contact.Account !== undefined && results.Contact.Account.Category__c !== undefined ? results.Contact.Account.Category__c : '';
+			let accountSector = results.Contact.Account !== undefined && results.Contact.Account.Sector__c !== undefined ? results.Contact.Account.Sector__c : '';
+			let isoCode = results.Contact.Account.IATA_ISO_Country__r !== undefined && results.Contact.Account.IATA_ISO_Country__r.ISO_Code__c !== undefined ? results.Contact.Account.IATA_ISO_Country__r.ISO_Code__c : '';
+			let jobFunction = results.Contact.Membership_Function__c !== undefined ? results.Contact.Membership_Function__c.replace(/;/g, ',') : '';
 
-        isAdmin().then(result => {
-            this.userAdmin = result;
-            this.canLoadNotifications = true;
-        }).catch(error => {
-            this.canLoadNotifications = true;
-        });
+			this.setCookie('userguiding_acc_categ', accountCategory, 1);
+			this.setCookie('userguiding_acc_sector', accountSector, 1);
+			this.setCookie('userguiding_iso-code', isoCode, 1);
+			this.setCookie('userguiding_user-status', userPortalStatus, 1);
+			this.setCookie('userguiding_job-function', jobFunction, 1);
+		}
+	});
 
-        let pageParams = getParamsFromPage();
-        if(pageParams !== undefined && pageParams.firstLogin !== undefined){
-            if(pageParams.firstLogin == "true"){
-                this.firstLogin = true;
-				this.displayFirstLogin = true;
-            }
-        }
+	this.getLanguagesOptions();
 
-        //WMO-696 - ACAMBAS: Begin
-        showIATAInvoices().then(result => {
-            this.displayInvoicesMenu = result;
-        });
-        //WMO-696 - ACAMBAS: End
+	isAdmin().then(result => {
+		this.userAdmin = result;
+		this.canLoadNotifications = true;
+	}).catch(error => {
+		this.canLoadNotifications = true;
+	});
+
+	let pageParams = getParamsFromPage();
+	if(pageParams && pageParams.firstLogin){
+		this.firstLogin = true;
+		this.displayFirstLogin = true;
+	}
+
+	//WMO-696 - ACAMBAS: Begin
+	showIATAInvoices().then(result => {
+		this.displayInvoicesMenu = result;
+	});
+	//WMO-696 - ACAMBAS: End
 
 	// FOR LMS L3
-	if(pageParams !== undefined &&
-		(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
-	
+	if(pageParams && (pageParams.lms || pageParams.lmsflow ) ){
+
 		if(pageParams.lms === 'yas'){
-	
+
 			if(pageParams.firstLogin === "true"){
 				this.thirdLoginLMS = true;
 				this.registrationlevel = '3';
 				this.displayFirstLogin = true;
 			}else{
-	
+
 				getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
-					.then(serviceId => {
-	
-						verifyCompleteL3Data({serviceId: serviceId})
-						.then(result => {
-							if(result !== 'not_complete'){
-								if(pageParams.RelayState !== ''){
-									let sURL = result.split('RelayState');
-										result = sURL[0] + '&RelayState=' + encodeURIComponent(pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26'));
-								}
-									window.open(result);
-							}
-							else{
-								this.thirdLoginLMS = true;
-								this.registrationlevel = '3';
-								this.displayThirdLevelRegistrationLMS= true; 
-							}
-							this.toggleSpinner();
-						})
-						.catch(error => {
-							this.error = error;
-						});
-					})
-					.catch(error => {
-						this.error = error;
-					});
-				
+				.then(serviceId => {
+
+					return verifyCompleteL3Data({serviceId: serviceId});
+				})
+				.then(result => {
+					if(result !== 'not_complete'){
+						let url = result;
+						let params = {};
+
+						if(pageParams.RelayState){
+							url = result.split('&RelayState')[0];
+							params.RelayState = pageParams.RelayState;
+						}
+
+						navigateToNewPage(url, params);
+					}
+					else{
+						this.thirdLoginLMS = true;
+						this.registrationlevel = '3';
+						this.displayThirdLevelRegistrationLMS= true;
+					}
+					this.toggleSpinner();
+				})
+				.catch(error => {
+					this.error = error;
+				});
+
 			}
-			}else if(pageParams.lmsflow.indexOf('flow') > -1){
+		}else if(pageParams.lmsflow.indexOf('flow') > -1){
 			this.thirdLoginLMS = true;
 			this.registrationlevel = '3';
 			this.displayFirstLogin = false;
@@ -482,7 +480,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService) {
-        
+
         this.closeSideMenu();
         if (this.trackedIsInOldPortal) {
             redirectfromPortalHeader({ pageName: currentService }).then(result => {
@@ -600,7 +598,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.openNotificationsStyle = 'display: none;';
             this.showBackdrop = false;
         }
-           
+
     }
     //method to change the style when the user clicks on the search
     toggleSearch() {
@@ -615,7 +613,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.displayBodyStyle = '';
             this.displaySearchStyle = 'width: 100%';
             this.closeSideMenu();
-            
+
         } else {
             this.headerButtonSearchContainerStyle = 'z-index: 100;';
             this.headerButtonSearchCloseIconStyle = 'display: none; ';
@@ -623,7 +621,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.openSearchStyle = 'display: none;';
             this.showBackdrop = false;
         }
-           
+
     }
 
     toggleSideMenu()
@@ -753,7 +751,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     handlePageRefChanged() {
         let pagename = getPageName();
-        
+
         this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
         this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuServiceStyle = this.buttonSideMenuServiceStyle.replace(/selectedButton/g, '');
@@ -791,7 +789,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     acceptTerms(){
         this.displayAcceptTerms = false;
-        this.redirectChangePassword();        
+        this.redirectChangePassword();
     }
 
     confirmRegistration() {
@@ -909,7 +907,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
-      
+
     getCookie(name) {
         let nameEQ = name + "=";
         let ca = document.cookie.split(';');
