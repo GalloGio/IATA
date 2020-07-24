@@ -322,6 +322,44 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Exc_RHC_Monitoring_Alert__c</fullName>
+        <description>Define which type of RHC alert will be exceptionally monitored</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select which type of RHC alert will be exceptionally monitored</inlineHelpText>
+        <label>Exc. RHC  Monitoring Alert</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>100%</fullName>
+                    <default>false</default>
+                    <label>100%</label>
+                </value>
+                <value>
+                    <fullName>50%</fullName>
+                    <default>false</default>
+                    <label>50%</label>
+                </value>
+                <value>
+                    <fullName>75%</fullName>
+                    <default>false</default>
+                    <label>75%</label>
+                </value>
+                <value>
+                    <fullName>90%</fullName>
+                    <default>false</default>
+                    <label>90%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>ISS_Joining_fee_cluster__c</fullName>
         <description>Holds the countries with which a certain operation shares Joining fees</description>
         <externalId>false</externalId>
@@ -558,6 +596,25 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
+            <values>
+                <fullName>100%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Legacy_System__c</picklist>
             <values>
                 <fullName>AIMS1</fullName>
@@ -669,6 +726,25 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
+            <values>
+                <fullName>100%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Legacy_System__c</picklist>
             <values>
                 <fullName>AIMS1</fullName>
@@ -768,6 +844,25 @@
             </values>
             <values>
                 <fullName>CASSLINK</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
+            <values>
+                <fullName>100%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

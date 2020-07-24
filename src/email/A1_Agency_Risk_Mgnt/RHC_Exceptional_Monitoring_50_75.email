@@ -1,0 +1,5 @@
+<html>
+<body>
+<p>##COUNTRY## ##AGENT_NAME## ##IATA_CODE## has breached ##THRESHOLD## RHC threshold</p>
+</body>
+</html>
