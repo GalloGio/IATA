@@ -19,37 +19,96 @@ public class ANG_RME_Alert_Service_Test {
 	@testSetup 
 	static void createData() {
 
-		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
-			Name = 'BSP-PT',
+		AMS_Settlement_System__c bspKZ = new AMS_Settlement_System__c(
+			Name = 'BSP-KZ',
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
-			RHC_Exceptional_Monitoring__c = true
+			RHC_Exceptional_Monitoring__c = true,
+			Exc_RHC_Monitoring_Alert__c = '100%'
 		);
-		insert bspPT;
+		insert bspKZ;
+
+		AMS_Settlement_System__c bspRU = new AMS_Settlement_System__c(
+			Name = 'BSP-RU',
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			RHC_Exceptional_Monitoring__c = true,
+			Exc_RHC_Monitoring_Alert__c = '100%;75%;50%'
+		);
+
+		insert bspRU;
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD');
 		
-		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (
-			Name = 'Portugal',
-			ISO_Code__c = 'PT',
-			AMS_Settlement_System__c = bspPT.Id,
+		IATA_ISO_Country__c countryKZ = new IATA_ISO_Country__c (
+			Name = 'Kazakhstan',
+			ISO_Code__c = 'KZ',
+			AMS_Settlement_System__c = bspKZ.Id,
 			ANG_Enable_NewGen__c = false
 		);
 
-		insert new List<IATA_ISO_Country__c>{ctry, countryPT};
+		IATA_ISO_Country__c countryRU = new IATA_ISO_Country__c (
+			Name = 'Russia',
+			ISO_Code__c = 'RU',
+			AMS_Settlement_System__c = bspRU.Id,
+			ANG_Enable_NewGen__c = false
+		);
+
+		insert new List<IATA_ISO_Country__c>{ctry, countryKZ, countryRU};
+
+		list<AMS_Country_Specific_Attribute__c> lsAttr = new list<AMS_Country_Specific_Attribute__c>();
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = countryKZ.Id,
+														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
+														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
+														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_SMAP_Notification',
+														 Create_SMAP_Case__c = true,
+														 ANG_Send_Email_Agent__c = false,
+														 Stakeholders_email_list__c = 'tullod@iata.org'));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = countryRU.Id,
+														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
+														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
+														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_100',
+														 Create_SMAP_Case__c = false,
+														 ANG_Send_Email_Agent__c = false,
+														 Stakeholders_email_list__c = 'tullod@iata.org'));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = countryRU.Id,
+														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN, 
+														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
+														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 ANG_Send_Email_Agent__c = false,
+														 Email_Template_Internal_Stakeholders__c = '',
+														 Create_SMAP_Case__c = false,
+														 Stakeholders_email_list__c = ''));
+		
+		insert lsAttr;
 
 		Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_utils.RECTYPE_IATAAGENCY, IATACode__c='1234562',Location_Type__c= AMS_Utils.BR, Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT, Location_Class__c = AMS_Utils.LC_PASSENGER);
 		
 		Account rhcMonitoringAccount = new Account();
 		rhcMonitoringAccount.Name = 'Account for exceptional monitoring';
 		rhcMonitoringAccount.IATACode__c = '912345678';
-		rhcMonitoringAccount.IATA_ISO_Country__c = countryPT.Id;
+		rhcMonitoringAccount.IATA_ISO_Country__c = countryKZ.Id;
 		rhcMonitoringAccount.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 		rhcMonitoringAccount.Location_Type__c = AMS_Utils.HO;
 		rhcMonitoringAccount.Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT;
 		rhcMonitoringAccount.Location_Class__c = AMS_Utils.LC_PASSENGER;
 
-		insert new List<Account>{a, rhcMonitoringAccount};
+		Account RussiaRhcMonitoringAccount = new Account();
+		RussiaRhcMonitoringAccount.Name = 'RUSSIA exceptional monitoring';
+		RussiaRhcMonitoringAccount.IATACode__c = '88888888';
+		RussiaRhcMonitoringAccount.IATA_ISO_Country__c = countryRU.Id;
+		RussiaRhcMonitoringAccount.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+		RussiaRhcMonitoringAccount.Location_Type__c = AMS_Utils.HO;
+		RussiaRhcMonitoringAccount.Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT;
+		RussiaRhcMonitoringAccount.Location_Class__c = AMS_Utils.LC_PASSENGER;
+
+
+		insert new List<Account>{a, rhcMonitoringAccount, RussiaRhcMonitoringAccount};
 
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
 
@@ -452,16 +511,16 @@ public class ANG_RME_Alert_Service_Test {
 	@isTest
 	static void rhcAlert100UpReceptionExceptionalMonitoringInvalidTest() {
 
-		AMS_Settlement_System__c bspPT = [
+		AMS_Settlement_System__c bspKZ = [
 			SELECT 
 				Id, RHC_Exceptional_Monitoring__c
 			FROM AMS_Settlement_System__c
-			WHERE Name = 'BSP-PT'
+			WHERE Name = 'BSP-KZ'
 			LIMIT 1
 		];
 
-		bspPT.RHC_Exceptional_Monitoring__c = false;
-		update bspPT;
+		bspKZ.RHC_Exceptional_Monitoring__c = false;
+		update bspKZ;
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '912345678';
@@ -522,6 +581,8 @@ public class ANG_RME_Alert_Service_Test {
 				Id, ANG_Threshold_Level__c, ANG_Direction__c 
 			FROM ANG_Risk_Alert__c
 		];
+
+		system.debug('DTULLO --> ' + string.valueOf(RestContext.response.responseBody));
 
 		System.assertEquals(202, RestContext.response.StatusCode, 'The response code must be 202');
 		System.assertEquals(0, alerts.size(), 'The RHC Alert must NOT be created');

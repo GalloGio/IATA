@@ -153,6 +153,7 @@ global class ANG_RME_Alert_Service {
 			List<Account> accs = [
 				SELECT Id, IATACode__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
 					 FROM RHC_Informations__r)
 				FROM Account
@@ -169,8 +170,10 @@ global class ANG_RME_Alert_Service {
 
 				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
 					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
+						system.debug('DTULLO: Is Eligible!');
 						saveAlert(req, acct.Id, null);
 					} else {
+						system.debug('DTULLO: Is NOT Eligible!');
 						//Ignore the request
 						setResponse(null, 202);
 					}

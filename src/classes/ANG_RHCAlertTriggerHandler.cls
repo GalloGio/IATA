@@ -184,7 +184,6 @@ public class ANG_RHCAlertTriggerHandler{
 				}
 				for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r) configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c, att);
 			}
-
 			if(configs.isEmpty()) return; //no configurations set, no need to check further
 
 			//check if any of the risk alerts match the Country Specific Attributes and gather information to query other objects
@@ -291,9 +290,7 @@ public class ANG_RHCAlertTriggerHandler{
 					}
 				}
 
-
 				//MULTICOUNTRY -----------------------------------------
-
 				//ACAMBAS - NEWGEN-4466 - Start
 				if(!String.isEmpty(config.Email_Template_Internal_Stakeholders__c)) {
 					//Ensure that the agency is a MC key
@@ -605,6 +602,7 @@ public class ANG_RHCAlertTriggerHandler{
 								Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
 								Status__c, Sector__c , Category__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 								IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
+								IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 								(SELECT ID, Name, RecordTypeId, ANG_Account__c, CurrencyIsoCode, ANG_Sidra_Lite__c, ANG_Agent_Sales__c,
 									 ANG_Is_Case_Created__c, ANG_Direction__c, ANG_email_sent__c, ANG_EventId__c, ANG_RHC_Information__c,
 									 ANG_RME_Last_Update__c, ANG_Severity__c, ANG_Threshold_Level__c, ANG_Agent_current_standing__c,
@@ -1534,6 +1532,12 @@ public class ANG_RHCAlertTriggerHandler{
 			}
 		}
 
+		system.debug('DTULLO emailAddressesLst.isEmpty() ' + emailAddressesLst.isEmpty());
+		system.debug('DTULLO raLst ' + raLst);
+		system.debug('DTULLO raAccountMap ' + raAccountMap);
+		system.debug('DTULLO mapEmailAddrPerAlert ' + mapEmailAddrPerAlert);
+		system.debug('DTULLO mapTemplates ' + mapTemplates);
+
 		if(emailAddressesLst.isEmpty()){
 			System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring Stakeholder found');
 			return emailLst;
@@ -1554,6 +1558,11 @@ public class ANG_RHCAlertTriggerHandler{
 				System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring SMAP Notification Template found');
 				continue; //skip to next element if no email template is found
 			}
+
+			system.debug('DTULLO Template ' + template);
+			system.debug('DTULLO Template.subject ' + template.subject);
+			system.debug('DTULLO Template.HtmlValue ' + template.HtmlValue);
+
 			RegionNotificationWrapper notificationWrapper = new RegionNotificationWrapper(REGION_ALL);
 			//notificationWrapper.emailAddressSet.addAll(mapEmailAddrPerAlert.get(ra.id));
 			
@@ -1574,17 +1583,21 @@ public class ANG_RHCAlertTriggerHandler{
 			Decimal rhcAmount = ANG_Risk_Helper.currencyConverter(acct.CurrencyIsoCode, acct.Guaranteed_amount__c, bspCurrency);
 
 			String emailSubject = template.Subject;
-			emailSubject = emailSubject.replace('##IATA_CODE##', acct.IATACode__c);
-			emailSubject = emailSubject.replace('##AGENT_NAME##', acct.Name);
-			emailSubject = emailSubject.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
-
+			if(!string.isBlank(emailSubject)){
+				emailSubject = emailSubject.replace('##IATA_CODE##', acct.IATACode__c);
+				emailSubject = emailSubject.replace('##AGENT_NAME##', acct.Name);
+				emailSubject = emailSubject.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
+			}
+			
 			String htmlBody = template.HtmlValue;
-			htmlBody = htmlBody.replace('##AGENT_NAME##', acct.Name);
-			htmlBody = htmlBody.replace('##IATA_CODE##', acct.IATACode__c);
-			htmlBody = htmlBody.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
-			htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
-			htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
-			htmlBody = htmlBody.replace('##THRESHOLD##', ra.ANG_Threshold_Level__c);
+			if(!string.isBlank(htmlBody)){
+				htmlBody = htmlBody.replace('##AGENT_NAME##', acct.Name);
+				htmlBody = htmlBody.replace('##IATA_CODE##', acct.IATACode__c);
+				htmlBody = htmlBody.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
+				htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
+				htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
+				htmlBody = htmlBody.replace('##THRESHOLD##', ra.ANG_Threshold_Level__c);
+			}
 
 			emailLst.addAll(createNotificationEmailMessages(null, htmlBody, ORG_WIDE_EMAILS.get(0).Id, emailSubject, notificationWrapper));
 		}
