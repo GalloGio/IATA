@@ -1835,6 +1835,8 @@ private class ISSP_APProcess_Test
 			ctrl.getAdditionalSignatoryFormName();
 			ctrl.securityCheck();
 			ctrl.getShowJoinICCS();
+			ctrl.getShowUploadBankMandate();
+			ctrl.getShowIATAEasyPay();
 			ctrl.getShowFormOfConcurrence();
 			ctrl.getShowFormOfApplication();
 			ctrl.getShowFormOfApplicationAndConcurrence();

@@ -1474,7 +1474,9 @@ global without sharing class ISSP_APProcess {
 					return null;
 				}
 			}
-			
+			if (!getShowIATAEasyPay()) {
+				newForm.ANG_Airline_accepts_EasyPay_tr_in_BSP__c = 'No';
+			}
 
 			if (this.isICH) {
 				if(!showTermsConditionsPopup) {
@@ -2830,6 +2832,15 @@ global without sharing class ISSP_APProcess {
 	public Boolean getShowUploadBankMandate() {
 		return getShowBankMandateSection() && ICCSProductCountry!=null && newForm.Type_of_Settlement__c == 'Local Bank';
 	}
+
+	/**
+		Show IATA Easypay section in submit page only for BSP joining and Minor Changes, and when the country is Easypay eligible
+	 */
+	public Boolean getShowIATAEasyPay() {
+		return ( (this.strAreaType=='Airline Joining' || (strAreaType=='Airline Change' && this.strChangeType=='Minor database changes'))
+			&& strOperationType == 'BSP' && this.isoCountryEligible);
+	}
+
 	/**
 		Returns true if the account meets the conditions to show CounterIndemnity section
 	**/

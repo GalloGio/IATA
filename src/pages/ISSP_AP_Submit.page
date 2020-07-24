@@ -323,7 +323,7 @@
                     </apex:pageBlockSection>
 
                     <!-- IATA EasyPay -->
-                    <apex:pageBlockSection title="IATA EasyPay" columns="1" rendered="{! AND(strOperationType = 'BSP', isoCountryEligible)}" collapsible="false">
+                    <apex:pageBlockSection title="IATA EasyPay" columns="1" rendered="{!showIATAEasyPay}" collapsible="false">
                         <div class="aplabel">
                             <p><apex:outputText value="{!$Label.ISSP_AP_IATA_EasyPay_Section_Description}" escape="false">
                                 <apex:param value="{!apcountry}"/>
