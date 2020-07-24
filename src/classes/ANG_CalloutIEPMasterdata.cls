@@ -13,7 +13,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)
 				System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode));
 			else
-				if(System.isFuture())
+				if(System.isFuture() || System.isBatch())
 					executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 				else
 					executeCalloutFuture(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);

@@ -50,7 +50,8 @@ public with sharing class PortalDocumentsController {
 		for(Access_to_Libraries_on_Portal__c a : accessToLibrariesCS) {
 			System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] accessToLibrariesCS - ' + a);
 			if(((a.Category_of_Account__c == UserPortalCategory && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType) ||
-				a.Category_of_Account__c == 'All' && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType)) {
+				a.Category_of_Account__c == 'All' && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType ||
+				a.Category_of_Account__c == 'All' && a.Sector_of_Account__c == 'All' && a.Record_Type_of_Account__c == 'All')) {
 
 				String libs = String.valueOf(a.Library_visibility__c);
 				System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] Library_visibility__c - ' + libs);
