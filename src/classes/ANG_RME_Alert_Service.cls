@@ -168,7 +168,7 @@ global class ANG_RME_Alert_Service {
 				Account acct = accs[0];
 
 				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
-					if(isEligibleForRhcExceptionalMonitoring(eventType, req)){
+					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
 						saveAlert(req, acct.Id, null);
 					} else {
 						//Ignore the request
@@ -225,9 +225,9 @@ global class ANG_RME_Alert_Service {
 		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
 	}
 
-	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request) {
+	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
 		return eventType == RHC_ALERT_EVENT_TYPE && request.direction == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
-			&& request.thresholdLevel == ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100;
+			&& (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel));
 	}
 
 	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {

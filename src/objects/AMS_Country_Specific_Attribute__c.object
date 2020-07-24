@@ -336,6 +336,16 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Create_SMAP_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If flagged, instruct the system to create a SMAP case when the alert matching direction and percentage is processed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If flagged, instruct the system to create a SMAP case when the alert matching direction and percentage is processed</inlineHelpText>
+        <label>Create SMAP Case</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Disabled__c</fullName>
         <defaultValue>true</defaultValue>
         <description>When this is true, no Push Notifications will be sent from the selected country [NewGen APP]</description>
@@ -347,8 +357,9 @@
     </fields>
     <fields>
         <fullName>Email_Template_Internal_Stakeholders__c</fullName>
-        <description>API name of the Email Template that will be sent to internal stakeholders. The mailing list is defined in the custom setting Risk_Alert_Stakeholders__c.</description>
+        <description>API name of the Email Template that will be sent to internal stakeholders.</description>
         <externalId>false</externalId>
+        <inlineHelpText>API name of the Email Template that will be sent to internal stakeholders. If no value is specified, no email is sent</inlineHelpText>
         <label>Email Template - Internal Stakeholders</label>
         <length>50</length>
         <required>false</required>
@@ -565,6 +576,17 @@ J-Joint Vent</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Stakeholders_email_list__c</fullName>
+        <description>list of email address which will receive the notification</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The notification will be sent to the list of email address stored in this field. Separate each email with a comma (,)</inlineHelpText>
+        <label>Stakeholders email list</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Threshold__c</fullName>

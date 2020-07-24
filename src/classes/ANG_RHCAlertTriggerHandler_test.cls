@@ -194,7 +194,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP;
 		att.ANG_Percentage__c = '50%';
 		att.ANG_Create_Process_Case__c = true;
-		att.ANG_EmailTemplate_Legacy__c = 'emailTemplate';
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
