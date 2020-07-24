@@ -3041,6 +3041,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Contact_Id_Card_Error_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Contact Us Banner Message --></label>
+        <name>CSP_Contact_Us_Banner_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Title --></label>
+        <name>CSP_Contact_Us_Banner_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -4199,6 +4207,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Pembaharuan Terakhir</label>
         <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_AfterSubmitMessage --></label>
+        <name>CSP_LeadCreator_AfterSubmitMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ContactPreference_label --></label>
+        <name>CSP_LeadCreator_ContactPreference_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_SubTitle --></label>
+        <name>CSP_LeadCreator_SubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ThankYou --></label>
+        <name>CSP_LeadCreator_ThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_Title --></label>
+        <name>CSP_LeadCreator_Title</name>
     </customLabels>
     <customLabels>
         <label>Pelajari lebih lanjut</label>
@@ -20288,7 +20316,7 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
-        <label>Pilihan</label>
+        <label><!-- ISSP Optional --></label>
         <name>ISSP_Optional</name>
     </customLabels>
     <customLabels>
@@ -32641,6 +32669,23 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Account Roles --></label>
             <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with Account Statements with Account Statement Transactions --></description>
+        <label><!-- Accounts with Account Statements with Account Statement Transactions --></label>
+        <name>Accounts_with_Account_Statements_with_Account_Statement_Transactions</name>
+        <sections>
+            <label><!-- Account Statement Transactions --></label>
+            <name>Account Statement Transactions</name>
+        </sections>
+        <sections>
+            <label><!-- Account Statements --></label>
+            <name>Account Statements</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
