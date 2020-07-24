@@ -189,7 +189,7 @@
     </fields>
     <fields>
         <fullName>AccountRoleId__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Account Role linked to invitations to services</description>
         <externalId>false</externalId>
         <label>Account Role</label>
         <referenceTo>Account_Role__c</referenceTo>
@@ -422,7 +422,7 @@
     </fields>
     <fields>
         <fullName>ServiceId__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Portal Application linked to the invitation</description>
         <externalId>false</externalId>
         <label>Portal Service</label>
         <referenceTo>Portal_Applications__c</referenceTo>
