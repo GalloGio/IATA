@@ -51,7 +51,7 @@ public with sharing class ADSRExportController {
 			for (Object field : this.fields) {
 				String fieldName = (String) ((Map<String, Object>) field).get('targetField');
 				String fieldType = (String) ((Map<String, Object>) field).get('type');
-				if (!((Map<String, Object>) record).containsKey(fieldName)) {
+				if (!((Map<String, Object>) record).containsKey(fieldName) || ((Map<String, Object>) record).get(fieldName) == null) {
 					if (this.exportFormat == 'csv' || fieldType == 'text') {
 						((Map<String, Object>) record).put(fieldName, '');
 					} else {
