@@ -3937,20 +3937,20 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
     </labels>
     <labels>
-        <fullName>CSP_Contact_Us_Banner_Title</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Contact Us Banner Title</shortDescription>
-        <value>More Information</value>
-    </labels>
-    <labels>
         <fullName>CSP_Contact_Us_Banner_Msg</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Contact Us Banner Message</shortDescription>
         <value>Get Detailed information and/or support throught IATA Customer portal or our extensive database of knowledge</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Us_Banner_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Us Banner Title</shortDescription>
+        <value>More Information</value>
     </labels>
     <labels>
         <fullName>CSP_Contacts_NoResults_text1</fullName>
@@ -6248,7 +6248,7 @@ You can easily create a company account in two steps</value>
     </labels>
     <labels>
         <fullName>CSP_LeadCreator_AfterSubmitMessage</fullName>
-        <categories>CS Portal</categories>     
+        <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LeadCreator_AfterSubmitMessage</shortDescription>
@@ -6256,7 +6256,7 @@ You can easily create a company account in two steps</value>
     </labels>
     <labels>
         <fullName>CSP_LeadCreator_ContactPreference_label</fullName>
-        <categories>CS Portal</categories>     
+        <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
@@ -6264,15 +6264,15 @@ You can easily create a company account in two steps</value>
     </labels>
     <labels>
         <fullName>CSP_LeadCreator_SubTitle</fullName>
-        <categories>CS Portal</categories>   
+        <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LeadCreator_SubTitle</shortDescription>
         <value>Get a free call from our experts and learn more about how this product can improve your business.</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>CSP_LeadCreator_ThankYou</fullName>
-        <categories>CS Portal</categories>     
+        <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LeadCreator_ThankYou</shortDescription>
@@ -6280,11 +6280,11 @@ You can easily create a company account in two steps</value>
     </labels>
     <labels>
         <fullName>CSP_LeadCreator_Title</fullName>
-        <categories>CS Portal</categories>     
+        <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LeadCreator_Title</shortDescription>
-        <value>Let's Talk</value>
+        <value>Let&apos;s Talk</value>
     </labels>
     <labels>
         <fullName>CSP_Learn_More</fullName>
