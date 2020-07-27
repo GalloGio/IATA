@@ -950,7 +950,7 @@
 																	<div id="search_alert_placeholder"></div>
 																</apex:pageBlockSection>
 																<apex:pageBlockSection columns="1">
-																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text02} <a href="{!$Label.ISSP_Email_PortalUrl}"> IATA Customer Portal</a></div>
+																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text02} <a href="{!$Label.ISSP_Email_PortalUrl}" target="_blank"> IATA Customer Portal</a></div>
 																</apex:pageBlockSection>
 															</div>
 															
