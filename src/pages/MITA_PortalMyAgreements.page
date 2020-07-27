@@ -597,8 +597,8 @@
 														<apex:outputText value="{!ContactBeingEdited.email}" label="{!$ObjectType.Contact.fields.email.label}"/><br/><br/>
 														<apex:outputText value="{!ContactBeingEdited.phone}" label="{!$ObjectType.Contact.fields.phone.label}"/><br/><br/>
 														<apex:inputField value="{!ContactBeingEdited.MITA_Contact_Type__c}" label="{!$ObjectType.Contact.fields.MITA_Contact_Type__c.label}"/><br/><br/>
-														<apex:inputField value="{!ContactBeingEdited.MITA_Teletype__c}" label="{!$ObjectType.Contact.fields.MITA_Teletype__c.label}"/><br/><br/>
 													</apex:pageBlockSection>
+													<br/><br/>
 													<apex:pageBlockSection columns="2">
 														<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_EditContactMsg}</div>
 													</apex:pageBlockSection>
@@ -891,7 +891,7 @@
 													</apex:outputPanel>
 
 													<!-- SECOND INTERNAL TAB: All Contacts -->
-													<apex:actionFunction name="SearchContact" action="{!SearchContact}" oncomplete="stopLoading();" reRender="tableAllConSearchResult,pbsResult">
+													<apex:actionFunction name="SearchContact" action="{!SearchContact}" oncomplete="initMyAllContactTable();stopLoading();" reRender="tableAllConSearchResult,pbsResult">
 														<apex:param name="myParam" assignTo="{!SearchCriteria}" value=""/>
 													</apex:actionFunction>
 
@@ -924,7 +924,6 @@
 																if(searchCrit=="" || searchCrit==null || searchCrit.match(letterNumber)) {
 																	startLoading();
 																	SearchContact(searchCrit);
-																	initMyAllContactTable();
 																}else{
 																	search_alert.warning('{!$Label.ISSP_MITA_Search_ValidInput}');
 																}
@@ -951,7 +950,7 @@
 																	<div id="search_alert_placeholder"></div>
 																</apex:pageBlockSection>
 																<apex:pageBlockSection columns="1">
-																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text02}</div>
+																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text02} <a href="{!$Label.ISSP_Email_PortalUrl}"> IATA Customer Portal</a></div>
 																</apex:pageBlockSection>
 															</div>
 															

@@ -415,7 +415,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 			if(!(string.isBlank(ContactBeingEdited.MITA_Contact_Type__c)) && ContactBeingEdited.MITA_Contact_Type__c.contains(MandatoryMITAType)) SaveError='';
 			else {
 				if(ValidateMandatoryType(ContactBeingEdited.Id))
-					SaveError='At least one contact must be ' + MandatoryMITAType;
+					SaveError='At least one contact must be ' + MandatoryMITAType + '. <br/> A new ' + MandatoryMITAType + ' must be created before removing this one';
 			}
 		}
 		catch(exception e){
