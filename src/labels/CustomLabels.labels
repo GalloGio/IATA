@@ -39791,7 +39791,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
+msgWarnProductNotCompliant:- This order is going to an embargoed country, clearance from Corporate Compliance is required before processing it.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
@@ -39808,7 +39808,7 @@ errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
 errMissState:State/Province cannot be empty
 msgAddrExist:Shipping address is already in system.
-msgErrorCartNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
+msgErrorCartNotCompliant:This order is going to an embargoed country, clearance from Corporate Compliance is required before processing it.</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
