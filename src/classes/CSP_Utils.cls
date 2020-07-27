@@ -64,12 +64,28 @@ public with sharing class CSP_Utils {
 	@AuraEnabled
 	public static User getLoggedUser() {
 
-		User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c,
-									Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c,
+		User loggedUser = [SELECT Id,Contact.FirstName,Contact.LastName,Contact.phone,Contact.ISO_Country_Formula__c,Contact.Email,Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c,
+									Contact.Account.Name,Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c,
 									Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c,
 									Contact.AccountId, Contact.User_Portal_Status__c, Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Membership_Function__c
 							 FROM User
 							 WHERE Id =: UserInfo.getUserId()];
+
+		return loggedUser;
+	}
+
+
+	/*
+	* @description Return current user information
+	* @return User 
+	* If guest User, return null
+	*/
+	@AuraEnabled
+	public static User getCurrentUserInfo() {
+		User loggedUser=null;
+		if(!isGuestUser()){
+			loggedUser=getLoggedUser();
+		}
 
 		return loggedUser;
 	}
@@ -80,8 +96,11 @@ public with sharing class CSP_Utils {
 	*/
 	@AuraEnabled
 	public static Boolean isAdmin() {
-		User loggedUser = getLoggedUser();
-		return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
+		Boolean isAdmin =false ;
+		if(!isGuestUser()){
+			isAdmin=getLoggedUser().Contact.User_Portal_Status__c == 'Approved Admin';
+		}
+		return isAdmin;
 	}
 
 	/*
