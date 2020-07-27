@@ -273,6 +273,11 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
                     <label>Billing Adjustement</label>
                 </value>
                 <value>
+                    <fullName>Billing Adjustment</fullName>
+                    <default>false</default>
+                    <label>Billing Adjustment</label>
+                </value>
+                <value>
                     <fullName>Clawback</fullName>
                     <default>false</default>
                     <label>Clawback</label>
@@ -334,6 +339,10 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
             </values>
             <values>
                 <fullName>Billing Adjustement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing Adjustment</fullName>
                 <default>false</default>
             </values>
             <values>
