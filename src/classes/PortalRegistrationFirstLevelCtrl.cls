@@ -367,7 +367,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static List<User> returnExistingUser(Set<Id> contactIds, string email){
 		//check if there is an existing user associated to the contact(s) found OR associated to the email provided
 		List<User> userList = new List<User>();
-		userList = [SELECT Id, Username FROM User WHERE contactId IN :contactIds OR email = :email];
+		userList = [SELECT Id, Username FROM User WHERE contactId IN :contactIds OR (email = :email and contactId != '')];
 		return userList;
 	}
 
