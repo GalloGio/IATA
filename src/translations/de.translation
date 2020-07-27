@@ -3042,6 +3042,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Contact_Id_Card_Error_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Contact Us Banner Message --></label>
+        <name>CSP_Contact_Us_Banner_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Title --></label>
+        <name>CSP_Contact_Us_Banner_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -4200,6 +4208,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Letztes Update</label>
         <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_AfterSubmitMessage --></label>
+        <name>CSP_LeadCreator_AfterSubmitMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ContactPreference_label --></label>
+        <name>CSP_LeadCreator_ContactPreference_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_SubTitle --></label>
+        <name>CSP_LeadCreator_SubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ThankYou --></label>
+        <name>CSP_LeadCreator_ThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_Title --></label>
+        <name>CSP_LeadCreator_Title</name>
     </customLabels>
     <customLabels>
         <label>Mehr erfahren</label>
@@ -17496,6 +17524,18 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Account_Statement_Add_Proof_Payment --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statement Add proof payment description --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statement_Done --></label>
+        <name>ISSP_Account_Statement_Done</name>
+    </customLabels>
+    <customLabels>
         <label>IATA Nummer</label>
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
@@ -17504,8 +17544,16 @@ and
         <name>ISSP_Account_Statement_Notifications_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statement Settlement Info --></label>
+        <name>ISSP_Account_Statement_Settlement_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Statements --></label>
         <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Billing --></label>
+        <name>ISSP_Account_Statements_Billing</name>
     </customLabels>
     <customLabels>
         <label>Die Salden im Kundenportal werden am folgenden Geschäftstag nach Gutschrift auf dem IATA-Konto aktualisiert. Der Tag der Gutschrift auf dem IATA-Konto hängt von der von Ihnen gewählten Zahlungsmethode ab. Die in ICE angezeigten Rechnungslegungsdaten werden IATA in 24-Stunden-Intervallen von Dritten zur Verfügung gestellt. Es kann zu Verzögerungen kommen, auf die IATA keinen Einfluss hat. 
@@ -17516,6 +17564,30 @@ Im Fall einer Anpassung des Abrechnungsbetrags durch die Suspendierung einer Flu
     <customLabels>
         <label><!-- ISSP Account Statements Disclaimer China Travel Agent --></label>
         <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Item --></label>
+        <name>ISSP_Account_Statements_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_No_Results --></label>
+        <name>ISSP_Account_Statements_No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Payment --></label>
+        <name>ISSP_Account_Statements_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Per_Location --></label>
+        <name>ISSP_Account_Statements_Per_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Search --></label>
+        <name>ISSP_Account_Statements_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Summary --></label>
+        <name>ISSP_Account_Statements_Summary</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Title --></label>
@@ -17564,10 +17636,6 @@ Im Fall einer Anpassung des Abrechnungsbetrags durch die Suspendierung einer Flu
     <customLabels>
         <label>Administrator</label>
         <name>ISSP_Administrator</name>
-    </customLabels>
-    <customLabels>
-        <label>IATA Code des Head Office</label>
-        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>Name der Agentur</label>
@@ -20478,10 +20546,6 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
-        <label>Vergangene Abrechnungsperioden</label>
-        <name>ISSP_Past_Periods</name>
-    </customLabels>
-    <customLabels>
         <label>Der Payment Link kann zur Zahlung Ihrer IATA Rechnungen mit Kreditkarte verwendet werden&amp;nbsp;
 &lt;b&gt;Warnung!&lt;/b&gt;&amp;nbsp;
 Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch die BSP / CASS berechnet werden. Bitte überprüfen Sie Ihre Rechnungsdaten, um sicherzustellen , dass der Betrag noch nicht bezahlt wurde, bevor Sie mit der Zahlung mit Kreditkarte fortfahren</label>
@@ -20738,6 +20802,70 @@ Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch
     <customLabels>
         <label>Quantität</label>
         <name>ISSP_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Date --></label>
+        <name>ISSP_RD_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropInf --></label>
+        <name>ISSP_RD_DragAndDropInf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropSize --></label>
+        <name>ISSP_RD_DragAndDropSize</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Exception --></label>
+        <name>ISSP_RD_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeleted --></label>
+        <name>ISSP_RD_FileDeleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedExc --></label>
+        <name>ISSP_RD_FileDeletedExc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedSucc --></label>
+        <name>ISSP_RD_FileDeletedSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExist --></label>
+        <name>ISSP_RD_FileExist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExtensionError --></label>
+        <name>ISSP_RD_FileExtensionError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileUploaded --></label>
+        <name>ISSP_RD_FileUploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Name --></label>
+        <name>ISSP_RD_File_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Size --></label>
+        <name>ISSP_RD_File_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_OK_Action --></label>
+        <name>ISSP_RD_OK_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadFile --></label>
+        <name>ISSP_RD_UploadFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadingSucc --></label>
+        <name>ISSP_RD_UploadingSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_View --></label>
+        <name>ISSP_RD_View</name>
     </customLabels>
     <customLabels>
         <label>Vorhaltekapazität für Überweisungen</label>
@@ -25565,6 +25693,22 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- Training Platform (LMS) Service Description --></label>
         <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Billing_Adjustment --></label>
+        <name>Transaction_Type_Billing_Adjustment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Clawback --></label>
+        <name>Transaction_Type_Clawback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Compensation --></label>
+        <name>Transaction_Type_Compensation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Payment_Received --></label>
+        <name>Transaction_Type_Payment_Received</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -32529,6 +32673,23 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts with Account Statements with Account Statement Transactions --></description>
+        <label><!-- Accounts with Account Statements with Account Statement Transactions --></label>
+        <name>Accounts_with_Account_Statements_with_Account_Statement_Transactions</name>
+        <sections>
+            <label><!-- Account Statement Transactions --></label>
+            <name>Account Statement Transactions</name>
+        </sections>
+        <sections>
+            <label><!-- Account Statements --></label>
+            <name>Account Statements</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with Accreditation --></description>
         <label><!-- Accounts with Accreditation --></label>
         <name>Accounts_with_Accreditation</name>
@@ -35750,7 +35911,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Portal Service Notifications --></label>
         <name>Portal_Service_Notifications</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Berichte</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -36543,6 +36704,19 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

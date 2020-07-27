@@ -3038,6 +3038,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Contact_Id_Card_Error_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Contact Us Banner Message --></label>
+        <name>CSP_Contact_Us_Banner_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Title --></label>
+        <name>CSP_Contact_Us_Banner_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -4196,6 +4204,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>อัปเดตล่าสุด</label>
         <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_AfterSubmitMessage --></label>
+        <name>CSP_LeadCreator_AfterSubmitMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ContactPreference_label --></label>
+        <name>CSP_LeadCreator_ContactPreference_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_SubTitle --></label>
+        <name>CSP_LeadCreator_SubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ThankYou --></label>
+        <name>CSP_LeadCreator_ThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_Title --></label>
+        <name>CSP_LeadCreator_Title</name>
     </customLabels>
     <customLabels>
         <label>เรียนรู้เพิ่มเติม</label>
@@ -17490,6 +17518,18 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Account_Statement_Add_Proof_Payment --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statement Add proof payment description --></label>
+        <name>ISSP_Account_Statement_Add_Proof_Payment_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statement_Done --></label>
+        <name>ISSP_Account_Statement_Done</name>
+    </customLabels>
+    <customLabels>
         <label>ที่ตั้ง</label>
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
@@ -17498,8 +17538,16 @@ and
         <name>ISSP_Account_Statement_Notifications_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statement Settlement Info --></label>
+        <name>ISSP_Account_Statement_Settlement_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Statements --></label>
         <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Billing --></label>
+        <name>ISSP_Account_Statements_Billing</name>
     </customLabels>
     <customLabels>
         <label>ยอดคงเหลือในพอร์ทัลลูกค้ามีการปรับปรุงข้อมูลในวันทำการถัดไป หลังจากที่บัญชีของ IATA ได้รับเครดิต วันที่บัญชีของ IATA ได้รับเครดิตจะขึ้นอยู่กับช่องทางการชำระเงินที่คุณเลือก ข้อมูลการเรียกเก็บเงินที่แสดงใน ICE ได้รับการจัดหาให้ IATA โดยบุคคลภายนอกในระยะเวลา 24 ชั่วโมง และความล่าช้านอกเหนือการควบคุมของ IATA อาจเกิดขึ้นได้ 
@@ -17510,6 +17558,30 @@ and
     <customLabels>
         <label><!-- ISSP Account Statements Disclaimer China Travel Agent --></label>
         <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Item --></label>
+        <name>ISSP_Account_Statements_Item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_No_Results --></label>
+        <name>ISSP_Account_Statements_No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Payment --></label>
+        <name>ISSP_Account_Statements_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Per_Location --></label>
+        <name>ISSP_Account_Statements_Per_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Search --></label>
+        <name>ISSP_Account_Statements_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Account_Statements_Summary --></label>
+        <name>ISSP_Account_Statements_Summary</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Title --></label>
@@ -17558,10 +17630,6 @@ and
     <customLabels>
         <label>ผู้ดูแลระบบ</label>
         <name>ISSP_Administrator</name>
-    </customLabels>
-    <customLabels>
-        <label>รหัสของสำนักงานใหญ่</label>
-        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>ชื่อบริษัทตัวแทน</label>
@@ -20475,10 +20543,6 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
-        <label>ช่วงเวลาที่ผ่านมา</label>
-        <name>ISSP_Past_Periods</name>
-    </customLabels>
-    <customLabels>
         <label>PaymentLink สามารถใช้ในการชำระใบแจ้งหนี้ของ IATA ด้วยบัตรเครดิต&lt;br/&gt;
 &lt;b&gt;คำเตือน!&lt;/b&gt;&lt;br/&gt;
 โปรดทราบว่าใบแจ้งหนี้ IATA จำนวนมากของเอเย่นต์ได้ถูกเก็บผ่าน BSP / CASS คุณควรตรวจสอบรายละเอียดในใบแจ้งหนี้ของคุณเพื่อให้แน่ใจว่าคุณยังไม่ได้ทำการจ่าย ก่อนที่คุณจะดำเนินการชำระเงินด้วยบัตรเครดิต</label>
@@ -20735,6 +20799,70 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
     <customLabels>
         <label>ปริมาณ</label>
         <name>ISSP_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Date --></label>
+        <name>ISSP_RD_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropInf --></label>
+        <name>ISSP_RD_DragAndDropInf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_DragAndDropSize --></label>
+        <name>ISSP_RD_DragAndDropSize</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_Exception --></label>
+        <name>ISSP_RD_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeleted --></label>
+        <name>ISSP_RD_FileDeleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedExc --></label>
+        <name>ISSP_RD_FileDeletedExc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileDeletedSucc --></label>
+        <name>ISSP_RD_FileDeletedSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExist --></label>
+        <name>ISSP_RD_FileExist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileExtensionError --></label>
+        <name>ISSP_RD_FileExtensionError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_FileUploaded --></label>
+        <name>ISSP_RD_FileUploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Name --></label>
+        <name>ISSP_RD_File_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_File_Size --></label>
+        <name>ISSP_RD_File_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_OK_Action --></label>
+        <name>ISSP_RD_OK_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadFile --></label>
+        <name>ISSP_RD_UploadFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_UploadingSucc --></label>
+        <name>ISSP_RD_UploadingSucc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_RD_View --></label>
+        <name>ISSP_RD_View</name>
     </customLabels>
     <customLabels>
         <label>การจำกัดมูลค่าเงินสำรองจ่าย</label>
@@ -25561,6 +25689,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Training Platform (LMS) Service Description --></label>
         <name>Training_Platform_LMS_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Billing_Adjustment --></label>
+        <name>Transaction_Type_Billing_Adjustment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Clawback --></label>
+        <name>Transaction_Type_Clawback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Compensation --></label>
+        <name>Transaction_Type_Compensation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transaction_Type_Payment_Received --></label>
+        <name>Transaction_Type_Payment_Received</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -32525,6 +32669,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts with Account Statements with Account Statement Transactions --></description>
+        <label><!-- Accounts with Account Statements with Account Statement Transactions --></label>
+        <name>Accounts_with_Account_Statements_with_Account_Statement_Transactions</name>
+        <sections>
+            <label><!-- Account Statement Transactions --></label>
+            <name>Account Statement Transactions</name>
+        </sections>
+        <sections>
+            <label><!-- Account Statements --></label>
+            <name>Account Statements</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with Accreditation --></description>
         <label><!-- Accounts with Accreditation --></label>
         <name>Accounts_with_Accreditation</name>
@@ -35702,7 +35863,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label>การเข้าถึงบริการพอร์ทัล</label>
         <name>Portal_Service_Access</name>
         <sections>
-            <label><!-- Portal Service Access --></label>
+            <label>รายงาน</label>
             <name>Portal Service Access</name>
         </sections>
     </reportTypes>
@@ -36539,6 +36700,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Locations --></label>
             <name>Locations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
     <scontrols>

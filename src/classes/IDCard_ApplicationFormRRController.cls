@@ -1,4 +1,4 @@
-public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbstractController {
+public without sharing class IDCard_ApplicationFormRRController extends  IDCardAbstractController {
 
 	private String part;
 	private final String sectionOne = '1';

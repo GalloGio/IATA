@@ -80,4 +80,29 @@ private class AccountRolesAlignBatch_Test {
 
 		test.stopTest();
 	}
+	
+	@isTest
+	static void testChangeContactAccount_switchAccountRoles_Invocable(){
+		Account acc2 = [SELECT Id, Name FROM Account WHERE Name = 'Test Account2' LIMIT 1];
+		Contact contact = [SELECT Id, Name, Email,AccountId FROM Contact WHERE LastName = 'Don' LIMIT 1];
+
+		test.startTest();
+
+		contact.AccountId = acc2.Id;
+		
+		List<Contact> contactList = new List<Contact>();
+		contactList.add(contact);
+
+		AccountRolesAlignBatch.switchAccountRoles(contactList);
+
+		Account_Contact_Role__c acr = [SELECT Id,Account_Role__c,Account_Role__r.Account__c,Contact__c
+			FROM Account_Contact_Role__c
+			WHERE Contact__c = :contact.Id
+			AND Contact_Role_Name__c = 'Trainee'
+			AND Functional_Role__c =  'Training' LIMIT 1];
+
+		system.assert(acr.Account_Role__r.Account__c == acc2.Id);
+
+		test.stopTest();
+	}
 }

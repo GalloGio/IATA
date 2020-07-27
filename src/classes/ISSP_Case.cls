@@ -206,22 +206,22 @@ public without sharing class ISSP_Case {
 						PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
 						return pr;
 					}
-			}else if(newCase.RecordType.name == 'OSCAR Communication' && (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') && newCase.Owner.Name.startsWith('NewGen PCI')){
+			}else if(newCase.RecordType.name == 'OSCAR Communication' && (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') && (newCase.OwnerId == '00G1r000002xun7EAA' || newCase.OwnerId == '00G1r000002xun8EAA' || newCase.OwnerId == '00G1r000002xun9EAA' || newCase.OwnerId == '00G1r000002xunAEAQ' || newCase.OwnerId == '00G1r000002xunBEAQ' || newCase.OwnerId == '00G1r000004SpvKEAS')){
 						PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
 						return pr;
 			} else if (newCase.RecordType.name == 'OSCAR Communication' && newCase.Status == 'Draft' && (newCase.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT)) {
 				PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
 				return pr;
-			}else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
+			}else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.OwnerId == '00G1r000003KX81EAG'){
 				PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
 				return pr;
-			} else if (newCase.RecordType.Name == 'OSCAR Communication' && newCase.Owner.Name.startsWith('Model A Onboarding')) {
+			} else if (newCase.RecordType.Name == 'OSCAR Communication' && (newCase.OwnerId == '00G1r00000329qFEAQ' || newCase.OwnerId == '00G1r00000329qGEAQ' || newCase.OwnerId == '00G1r00000329qHEAQ' || newCase.OwnerId == '00G1r00000329qIEAQ' || newCase.OwnerId == '00G1r00000329qJEAQ')) {
 				return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
 			}
 
 			//if case is a SIS Joining Form
 			if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
-					&& newCase.Status == 'Draft' && !newCase.isClosed && !newCase.Owner.Name.StartsWith('Recycle Bin')){
+					&& newCase.Status == 'Draft' && !newCase.isClosed && !(newCase.OwnerId == '00G20000000mDEUEA2' || newCase.OwnerId == '00G20000000mZCpEAM' || newCase.OwnerId == '00G20000000mZCzEAM' || newCase.OwnerId == '00G20000000mp9MEAQ' || newCase.OwnerId == '00G20000001MbtoEAC' || newCase.OwnerId == '00G20000001Mcq2EAC')){
 				return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
 			}
 			// If Case is an ICCS Case, redirect to ICCS Service
