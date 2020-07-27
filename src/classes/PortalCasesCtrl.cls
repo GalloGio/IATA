@@ -818,6 +818,16 @@ public with sharing class PortalCasesCtrl {
 		List<MessageWrapper> result = new List<MessageWrapper>();
 		
 		try {
+			CaseComment comment = new CaseComment();
+			comment.ParentId = caseId;
+			comment.CommentBody = CaseCommentAutoReply.USER_ANSWER_ID + ' ' + status;
+			comment.IsPublished = true;
+			insert comment;
+
+			if(status == 'Unresolved') {
+				status = '';
+			}
+
 			PortalCasesCtrl.updatingClosureStatus = true;
 			Case c = new Case(Id = caseId, Portal_Closure_Status__c = status);
 			update c;
@@ -825,11 +835,13 @@ public with sharing class PortalCasesCtrl {
 			throw new AuraHandledException(e.getMessage());
 		}
 		
+
 		List<CaseComment> caseComments = [SELECT Id, ParentId, IsPublished, IsDeleted, CommentBody, CreatedDate, CreatedById, CreatedBy.Name
 										  FROM CaseComment
 										  WHERE ParentId = :caseId
 											  AND CreatedDate >= :transactionStart
-											  AND IsDeleted = false];
+											  AND IsDeleted = false
+											  ORDER BY CreatedDate ASC];
 		
 		result.addAll(getMessageWrapper(caseComments));
 		
@@ -857,16 +869,6 @@ public with sharing class PortalCasesCtrl {
 		return new PortalCasesCtrl_WithoutSharing().addNewRecipient(caseId,newRecipientEmail);
 	}
 
-	/**
-	 * Avoid sending an email to the contact to request answer the survey
-	 */
-	@AuraEnabled
-	public static Boolean ignoreSurvey(String caseId) {
-		Case c = [SELECT Id, Instant_Survey_Feedback_requested__c FROM Case WHERE Id = :caseId LIMIT 1];
-		c.Instant_Survey_Feedback_requested__c = true;
-		return true;
-	}
-	
 	/*
 	* Method that removes a recipient from this case
 	*/

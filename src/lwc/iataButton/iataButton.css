@@ -145,3 +145,8 @@ button:focus {
 	outline-color: currentColor;
 	outline-style: outset;
 }
+
+.contained[disabled].highlighted,
+.outlined[disabled].highlighted {
+	border: 1px solid #1e32fa;
+}

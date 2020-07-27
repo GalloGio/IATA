@@ -4,21 +4,33 @@
 		<c-portal-comment if:true={isHaveBeenResolved} comment={comment} hide-info>
 			<p>{label.Case_Comment_Have_Been_Resolved_1}</p>
 			<p class="slds-var-m-vertical_small">
-				<c-iata-button variant="outlined" width="medium" label="No" disabled={haveBeenResolvedButtonsDisabled} onclick={continueClosureProcess} class="slds-var-m-horizontal_x-small"></c-iata-button>
-				<c-iata-button variant="contained" width="medium" label="Yes" disabled={haveBeenResolvedButtonsDisabled} onclick={closeResolved} class="slds-var-m-horizontal_x-small"></c-iata-button>
+				<c-iata-button variant="outlined" width="medium" label={label.ISSP_No} disabled={haveBeenResolvedButtonsDisabled} onclick={continueClosureProcess}  highlighted={haveNotBeenResolvedHighlighted} class="slds-var-m-horizontal_x-small"></c-iata-button>
+				<c-iata-button variant="contained" width="medium" label={label.ISSP_Yes} disabled={haveBeenResolvedButtonsDisabled} onclick={closeResolved}  highlighted={haveBeenResolvedHighlighted} class="slds-var-m-horizontal_x-small"></c-iata-button>
 			</p>
 			<p>{label.Case_Comment_Have_Been_Resolved_2}</p>
 		</c-portal-comment>
 		<c-portal-comment if:true={isNeedMoreHelp} comment={comment} hide-info>
 			<p>{label.Case_Comment_How_Can_Assist_You}</p>
 			<p class="slds-var-m-vertical_small">
-				<c-iata-button variant="outlined" label={label.Case_Comment_Button_Answer_Not_Clear} disabled={needMoreHelpButtonsDisabled} onclick={reopenCase} class="slds-var-m-horizontal_x-small"></c-iata-button>
-				<c-iata-button variant="outlined" label={label.Case_Comment_Button_Have_New_Query} disabled={needMoreHelpButtonsDisabled} onclick={closeWithNewQuery} class="slds-var-m-horizontal_x-small"></c-iata-button>
-				<c-iata-button variant="contained" label={label.Case_Comment_Button_Can_Close_Case} disabled={needMoreHelpButtonsDisabled} onclick={closeUnresolved} class="slds-var-m-horizontal_x-small"></c-iata-button>
+				<c-iata-button variant="outlined" label={label.Case_Comment_Button_Answer_Not_Clear} disabled={needMoreHelpButtonsDisabled} onclick={reopenCase} highlighted={answerNotClearHighlighted} class="slds-var-m-horizontal_x-small"></c-iata-button>
+				<c-iata-button variant="outlined" label={label.Case_Comment_Button_Have_New_Query} disabled={needMoreHelpButtonsDisabled} onclick={closeWithNewQuery} highlighted={haveNewQueryHighlighted} class="slds-var-m-horizontal_x-small"></c-iata-button>
+				<c-iata-button variant="contained" label={label.Case_Comment_Button_Can_Close_Case} disabled={needMoreHelpButtonsDisabled} onclick={closeUnresolved} highlighted={canCloseCaseHighlighted} class="slds-var-m-horizontal_x-small"></c-iata-button>
 			</p>
+			<c-iata-modal variant="success" size="small" hide-footer>
+				<div slot="header">Header</div>
+				<div slot="body">
+					<div class="text-small slds-align_absolute-center" style="font-weight: 500;">{label.Case_Comment_New_Query_Confirmation_Title}</div>
+					<div class="text-xsmall slds-var-p-vertical_small slds-var-p-horizontal_large slds-align_absolute-center slds-text-align_center">
+						<p>{newQueryConfirmationMessage1}<a href={caseLink} class="text-blue">{caseNumber}</a>{newQueryConfirmationMessage2}</p>
+					</div>
+					<div class="slds-var-p-top_large slds-var-p-bottom_xx-small slds-var-p-horizontal_xx-small">
+						<c-iata-button label={label.Case_Comment_Button_Go_To_Contact_Us} variant="contained" onclick={goToContactUs} width="full" height-large></c-iata-button>
+					</div>
+				</div>
+			</c-iata-modal>
 		</c-portal-comment>
 		<c-portal-comment if:true={isSurvey} comment={comment} hide-info>
-			<p>{label.Case_Comment_Survey_Message}&nbsp;<a href={surveyLink} target="_blank">{label.Case_Comment_Survey_Lik_Label}</a>.</p>
+			<p>{label.Case_Comment_Survey_Message}&nbsp;<a href={surveyLink} class="text-blue" target="_blank">{label.Case_Comment_Survey_Lik_Label}</a>.</p>
 		</c-portal-comment>
 	</template>
 </template>

@@ -11,12 +11,33 @@ import Case_Comment_Survey_Message from '@salesforce/label/c.Case_Comment_Survey
 import Case_Comment_Button_Answer_Not_Clear from '@salesforce/label/c.Case_Comment_Button_Answer_Not_Clear';
 import Case_Comment_Button_Can_Close_Case from '@salesforce/label/c.Case_Comment_Button_Can_Close_Case';
 import Case_Comment_Button_Have_New_Query from '@salesforce/label/c.Case_Comment_Button_Have_New_Query';
+import Case_Comment_Button_Go_To_Contact_Us from '@salesforce/label/c.Case_Comment_Button_Go_To_Contact_Us';
+import Case_Comment_New_Query_Confirmation_Message from '@salesforce/label/c.Case_Comment_New_Query_Confirmation_Message';
+import Case_Comment_New_Query_Confirmation_Title from '@salesforce/label/c.Case_Comment_New_Query_Confirmation_Title';
 import CSP_PortalBaseURL from '@salesforce/label/c.CSP_PortalBaseURL';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import ISSP_No from '@salesforce/label/c.ISSP_No';
+import ISSP_Yes from '@salesforce/label/c.ISSP_Yes';
 
 export default class PortalCaseComment extends LightningElement {
 
-	@api comment;
+	_comment;
+
+	@api get comment() {
+		return this._comment;
+	};
+
+	set comment(c) {
+		c = JSON.parse(JSON.stringify(c));
+		if(c !== null && c.messageText !== undefined && c.messageText !== null &&
+			c.messageText.indexOf('Auto-Reply:') === 0) {
+			this.autoReply = c.messageText;
+			c.messageText = null;
+			c.isSelf = false;
+		}
+		this._comment = c;
+	}
+
 	@api case;
 
 	autoReply = null;
@@ -30,22 +51,18 @@ export default class PortalCaseComment extends LightningElement {
 		Case_Comment_Button_Answer_Not_Clear,
 		Case_Comment_Button_Can_Close_Case,
 		Case_Comment_Button_Have_New_Query,
+		Case_Comment_Button_Go_To_Contact_Us,
+		Case_Comment_New_Query_Confirmation_Message,
+		Case_Comment_New_Query_Confirmation_Title,
 		CSP_PortalBaseURL,
-		CSP_PortalPath
+		CSP_PortalPath,
+		ISSP_Yes,
+		ISSP_No
 	}
 
 	surveyLink = '';
 
 	connectedCallback() {
-		let c = JSON.parse(JSON.stringify(this.comment));
-		if(c !== null && c.messageText !== undefined && c.messageText !== null &&
-			c.messageText.indexOf('Auto-Reply:') === 0) {
-			this.autoReply = this.comment.messageText;
-			c.messageText = null;
-			c.isSelf = false;
-		}
-		this.comment = c;
-
 		if(this.isSurvey) {
 			let id = this.case.id;
 			getSurveyLink({caseId: id})
@@ -86,6 +103,31 @@ export default class PortalCaseComment extends LightningElement {
 		return this.comment.hideComment;
 	}
 
+	get haveNotBeenResolvedHighlighted() {
+		return this.comment.answer !== undefined && this.comment.answer !== null &&
+			this.comment.answer.indexOf('Ongoing') > -1;
+	}
+
+	get haveBeenResolvedHighlighted() {
+		return this.comment.answer !== undefined && this.comment.answer !== null &&
+			this.comment.answer.indexOf('Finished_Resolved') > -1;
+	}
+
+	get answerNotClearHighlighted() {
+		return this.comment.answer !== undefined && this.comment.answer !== null &&
+			this.comment.answer.indexOf('Unresolved') > -1;
+	}
+
+	get haveNewQueryHighlighted() {
+		return this.comment.answer !== undefined && this.comment.answer !== null &&
+			this.comment.answer.indexOf('Finished_New_Case') > -1;
+	}
+
+	get canCloseCaseHighlighted() {
+		return this.comment.answer !== undefined && this.comment.answer !== null &&
+			this.comment.answer.indexOf('Finished_Resolved') > -1;
+	}
+
 	ignoreSurvey() {
 		//TODO: set Instant_Survey_Feedback_requested__c
 	}
@@ -111,7 +153,7 @@ export default class PortalCaseComment extends LightningElement {
 	}
 	
 	waitForNewComments(status) {
-		return status === '' || ['Ongoing', 'Finished_Unresolved', 'Finished_Resolved'].indexOf(status) > -1;
+		return status === '' || ['Ongoing', 'Finished_Unresolved', 'Finished_Resolved', 'Finished_New_Case'].indexOf(status) > -1;
 	}
 
 	closeResolved() {
@@ -124,8 +166,12 @@ export default class PortalCaseComment extends LightningElement {
 
 	closeWithNewQuery() {
 		this.updateClosureStatus('Finished_New_Case');
+	}
+
+	goToContactUs() {
 		let targetURL = this.label.CSP_PortalBaseURL + this.label.CSP_PortalPath + 'support-reach-us';
 		window.open(targetURL,'_top');
+
 	}
 
 	continueClosureProcess() {
@@ -133,7 +179,7 @@ export default class PortalCaseComment extends LightningElement {
 	}
 
 	reopenCase() {
-		this.updateClosureStatus('');
+		this.updateClosureStatus('Unresolved');
 	}
 
 	updateClosureStatus(newStatus) {
@@ -169,6 +215,9 @@ export default class PortalCaseComment extends LightningElement {
 					}
 				)
 			);
+			if("Finished_New_Case" === newStatus){
+				this.template.querySelector('c-iata-modal').openModal();
+			}
 		}).catch(error => {
 			console.error(error);
 			this.dispatchEvent(
@@ -182,5 +231,21 @@ export default class PortalCaseComment extends LightningElement {
 				)
 			);
 		})
+	}
+
+	get newQueryConfirmationMessage1() {
+		return this.label.Case_Comment_New_Query_Confirmation_Message.split('{arg0}')[0];
+	}
+
+	get newQueryConfirmationMessage2() {
+		return this.label.Case_Comment_New_Query_Confirmation_Message.split('{arg0}')[1];
+	}
+
+	get caseLink() {
+		return  this.label.CSP_PortalBaseURL + this.label.CSP_PortalPath + 'case-details?caseId=' + this.case.Id;
+	}
+
+	get caseNumber() {
+		return this.case.CaseNumber;
 	}
 }

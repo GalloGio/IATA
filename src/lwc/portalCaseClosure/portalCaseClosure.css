@@ -1,0 +1,50 @@
+.main-div {
+	height: calc(100vh - 98px);
+}
+
+.spinner-container {
+	min-height: 10rem;
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
+.spinner-container lightning-spinner {
+	display: block;
+	background-color: transparent;
+}
+
+.success, .success>div {
+	height: 6rem;
+}
+
+.circleInner{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.circleOutter{
+    height: 96px;
+    width: 96px;
+    border-radius: 50%;
+}
+
+.success .circleInner {
+    background: linear-gradient(0deg, rgba(40, 150, 50, 0.6), rgba(40, 150, 50, 0.6)), #FFFFFF;
+}
+
+.success .circleOutter {
+    background: linear-gradient(0deg, rgba(40, 150, 50, 0.3), rgba(40, 150, 50, 0.3)), #FFFFFF;
+}
+
+.iconSize{
+    width:56px;
+    height:56px;
+    background:white;
+    border-radius:50%;
+}
+
+.ignore-survey-message {
+	font-weight: 500;
+}

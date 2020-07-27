@@ -257,6 +257,30 @@
         <template>All/CNS_Deadline_Date_Reached</template>
     </alerts>
     <alerts>
+        <fullName>Case_Closure_24Hours_Notification</fullName>
+        <description>Case Closure 24Hours Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>CS_Portal/Case_Closure_24H_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Case_Closure_48Hours_Notification</fullName>
+        <description>Case Closure 48Hours Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>CS_Portal/Case_Closure_48H_Notification</template>
+    </alerts>
+    <alerts>
         <fullName>Case_changed</fullName>
         <description>Case changed</description>
         <protected>false</protected>
@@ -7842,7 +7866,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
-        <formula>(IF(
+        <formula>IF(NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Pending Closure&quot;)),
+(IF(
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
   &quot;DPC External&quot;,
 (IF(
@@ -9115,7 +9140,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <description>This workflow fill field &apos;Closed by Role&apos; with the user&apos;s role name who closed the case</description>
-        <formula>IsClosed = true</formula>
+        <formula>OR(IsClosed = true, ISPICKVAL(Status, &quot;Pending Closure&quot;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

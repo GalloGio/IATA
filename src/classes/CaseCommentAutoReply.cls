@@ -1,4 +1,7 @@
 public with sharing class CaseCommentAutoReply implements Queueable {
+
+	public static final String AUTO_REPLY_ID = 'Auto-Reply:';
+	public static final String USER_ANSWER_ID = 'User-Answer:';
 	
 	public static final String AUTO_REPLY_HAVE_BEEN_RESOLVED = 'Have_been_resolved_question';
 	public static final String AUTO_REPLY_NEED_MORE_HELP = 'Need_more_help_question';
@@ -36,7 +39,7 @@ public with sharing class CaseCommentAutoReply implements Queueable {
 		
 		for (Case current : [SELECT Id, Portal_Closure_Status__c, ContactId FROM Case WHERE Id IN :this.caseIds]) {
 			if (AUTO_REPLY_ELIGIBLE_STATUS.contains(current.Portal_Closure_Status__c)) {
-				String commentBody = 'Auto-Reply: ';
+				String commentBody = AUTO_REPLY_ID + ' ';
 				
 				if (current.Portal_Closure_Status__c == CLOSURE_STATUS_STARTED) {
 					commentBody += AUTO_REPLY_HAVE_BEEN_RESOLVED;

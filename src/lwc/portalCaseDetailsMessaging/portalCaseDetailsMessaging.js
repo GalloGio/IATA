@@ -102,6 +102,12 @@ export default class PortalHomeCalendar extends LightningElement {
 		let autoreplyMessages = [];
 		let disabled = true;
 		for(let i = messages.length-1; i >= 0; i--) {
+			
+			if(i > 0 && messages[i-1] !== undefined && messages[i-1] !== null && messages[i].messageText.indexOf('User-Answer:') === 0) {
+				messages[i-1].answer = messages[i].messageText;
+				messages[i].hideComment = true;
+			}
+
 			if(!messages[i].messageText.indexOf('Auto-Reply:') === 0 && !result[i].isSelf) {
 				continue;
 			}
@@ -118,6 +124,7 @@ export default class PortalHomeCalendar extends LightningElement {
 				}
 			}
 		}
+		console.log(messages);
 		return messages;
 	}
 
@@ -198,7 +205,9 @@ export default class PortalHomeCalendar extends LightningElement {
 	}
 	
 	handleNewMessages(event) {
-		this.lstMessages.push(...this.processMessages(event.detail.messages));
+		let messages = JSON.parse(JSON.stringify(this.lstMessages));
+		messages.push(...event.detail.messages);
+		this.lstMessages = this.processMessages(messages);
 		this.loadingNewMessages = false;
 	}
 

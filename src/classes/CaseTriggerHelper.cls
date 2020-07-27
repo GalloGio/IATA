@@ -9,6 +9,7 @@ public with sharing class CaseTriggerHelper {
 	public static Boolean isDone = false;
 
 	public static final String CASE_STATUS_PENDING_CLOSURE = 'Pending Closure';
+	public static final String CASE_STATUS_ACTION_NEEDED = 'Action Needed';
 	public static final String CASE_STATUS_CLOSED = 'Closed';
 	public static final String CASE_STATUS_ESCALATED_INTERNALLY = 'Escalated Internally';
 	public static final String CASE_STATUS_ESCALATED_EXTERNALLY = 'Escalated Externally';
@@ -227,6 +228,20 @@ public with sharing class CaseTriggerHelper {
 			return valueToAdd;
 	}
 
+	public static void avoidSavingLastAutoCommentsInCase(List<Case> cases, Map<Id, Case> oldCases) {
+		for (Case current : cases) {
+			Case old = oldCases == null ? null : oldCases.get(current.Id);
+			if(old != null && current.E2CP__Most_Recent_Public_Comment__c != null && current.E2CP__Most_Recent_Public_Comment__c != old.E2CP__Most_Recent_Public_Comment__c && 
+				(current.E2CP__Most_Recent_Public_Comment__c.startsWith(CaseCommentAutoReply.AUTO_REPLY_ID) || current.E2CP__Most_Recent_Public_Comment__c.startsWith(CaseCommentAutoReply.USER_ANSWER_ID))) {
+					current.E2CP__Most_Recent_Public_Comment__c = old.E2CP__Most_Recent_Public_Comment__c;
+			}
+			else if(old == null && current.E2CP__Most_Recent_Public_Comment__c != null &&
+				(current.E2CP__Most_Recent_Public_Comment__c.startsWith(CaseCommentAutoReply.AUTO_REPLY_ID) || current.E2CP__Most_Recent_Public_Comment__c.startsWith(CaseCommentAutoReply.USER_ANSWER_ID))) {
+					current.E2CP__Most_Recent_Public_Comment__c = '';
+				}
+		}
+	}
+
 	public static void handleClosureStatus(List<Case> cases, Map<Id, Case> oldCases) {
 		for (Case current : cases) {
 			if(getPortalCaseClosureAvailableRecordTypes().keySet().contains(current.RecordTypeId)) {
@@ -240,8 +255,7 @@ public with sharing class CaseTriggerHelper {
 				}
 				else if(old != null && current.Visible_on_ISS_Portal__c && old.Portal_Closure_Status__c != current.Portal_Closure_Status__c) {
 					if(String.isBlank(current.Portal_Closure_Status__c)) {
-						current.Status = 'Reopen';
-						current.Reopening_reason__c = 'same query';
+						current.Status = CASE_STATUS_ACTION_NEEDED;
 					}
 					else if(CaseCommentAutoReply.CLOSURE_STATUS_FINISHED_VALUES.contains(current.Portal_Closure_Status__c)) {
 						current.Status = CASE_STATUS_CLOSED;

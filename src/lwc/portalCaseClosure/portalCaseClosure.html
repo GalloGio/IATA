@@ -1,3 +1,62 @@
 <template>
-	<h1>Test!</h1>
+	<c-portal-page-container>
+		<div slot="componentContent" class="main-div">
+
+			<!-- Loading spinner area -->
+			<div class={spinnerClass}>
+				<section class="slds-var-p-vertical_xx-large">
+					<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					<div if:true={waitingSurveyLink}>
+						{label.CaseClosureRedirectSurvey}
+					</div>
+				</section>
+			</div>
+			
+				<!-- Success message -->
+				<div if:true={isSuccess} class="customLightShadow background-white slds-var-m-top_x-large slds-var-p-around_large slds-align_absolute-center slds-size_3-of-4">
+					<div if:false={ignoreSurveyIntention}>
+						<div class="success">
+							<div data-icon class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap slds-icon">
+								<span class="circleOutter slds-grid">
+									<span class="circleInner slds-align--absolute-center slds-grid">
+										<img class="slds-col slds-align_absolute-center iconSize" src={successIcon}/>
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="text-large text-blue text-bold slds-var-p-vertical_medium slds-align_absolute-center">{label.CaseClosureSuccessTitle}</div>
+						<div if:true={isSuccessUpdated} class="text-xsmall slds-align_absolute-center">{label.CaseClosureSuccessMessage}</div>
+						<div if:true={isSuccessNotUpdated} class="text-xsmall slds-align_absolute-center">{label.CaseClosureSuccessMessage48Hours}</div>
+						<div class="slds-align_absolute-center">
+							<c-iata-button variant="link" label={caseDetailsButtonLabel} onclick={goToCase}></c-iata-button>
+						</div>
+						<div class="text-xsmall slds-var-p-vertical_medium text-gray slds-align_absolute-center">{label.CaseClosureSurveyMessage}</div>
+						<div class="slds-align_absolute-center slds-var-p-vertical_large">
+							<c-iata-button variant="outlined" label={label.CaseClosureIgnoreSurveyButton} onclick={ignoreSurvey} class="slds-var-p-horizontal_small"></c-iata-button>
+							<c-iata-button variant="contained" label={label.CaseClosureTakeSurveyButton} onclick={answerSurvey} class="slds-var-p-horizontal_small"></c-iata-button>
+						</div>
+					</div>
+					<div if:true={ignoreSurveyIntention}>
+						<div class="success">
+							<div data-icon class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap slds-icon">
+								<span class="circleOutter slds-grid">
+									<span class="circleInner slds-align--absolute-center slds-grid">
+										<img class="slds-col slds-align_absolute-center iconSize" src={successIcon}/>
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="text-small slds-var-p-vertical_medium slds-align_absolute-center ignore-survey-message">{label.CaseClosureIgnoreSurvey}</div>
+						<div class="text-small slds-var-p-vertical_large slds-align_absolute-center">
+							<c-iata-button variant="contained" label={label.CaseClosureGoToCustomerPortalButton} onclick={goToPortal} height-large></c-iata-button></div>
+					</div>
+				</div>
+
+				<!-- Error message -->
+				<div if:true={hasErrors}>
+					{errorMessage}
+				</div>
+		</div>
+
+	</c-portal-page-container>
 </template>

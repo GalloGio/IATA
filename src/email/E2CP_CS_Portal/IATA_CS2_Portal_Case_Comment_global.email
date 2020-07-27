@@ -40,19 +40,20 @@
                 <br/>
                 <center>
                     <p>{!$Label.Case_Comment_Have_Been_Resolved_1}</p>
-
-                    <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!relatedTo.Id}&replyComment=No" style="text-decoration:none; cursor: pointer;">
-                        <button style="min-width: 160px; height: 40px; line-height: 24px; border: 1px solid #1e32fa; background-color: #ffffff; color: #33f; font-weight: 500; font-size: 16px; padding: 1px 6px; text-align: center; cursor: pointer;">
-                            {!$Label.ISSP_No}
-                        </button>
-                    </a>
-                    &nbsp;
-                    <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!relatedTo.Id}&replyComment=Yes" style="text-decoration:none; cursor: pointer;">
-                        <button style="min-width: 160px; height: 40px; line-height: 24px; border: 1px solid #33f; background-color: #33f; color: #fff; font-weight: 500; font-size: 16px; padding: 1px 6px; text-align: center;box-shadow: 0 6px 16px 0 rgba(56,86,235,.24), 0 1px 2px 0 rgba(56,86,235,.16); cursor: pointer;">
-                            {!$Label.ISSP_Yes}
-                        </button>
-                    </a>
-
+                    <table border="0" cellpadding="0" cellspacing="10" style="text-align: center;" role="presentation">
+                        <tr>
+                            <td style="width: 160px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #1e32fa; background-color: #ffffff;">
+                                <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!relatedTo.Id}&replyComment=No" style="text-decoration:none; cursor: pointer; display: inline-block; color: #33f; font-weight: 500; font-size: 16px; text-align: center; cursor: pointer;">
+                                    {!$Label.ISSP_No}
+                                </a>
+                            </td>
+                            <td style="width: 160px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #33f; background-color: #33f; box-shadow: 0 6px 16px 0 rgba(56,86,235,.24), 0 1px 2px 0 rgba(56,86,235,.16);">
+                                <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}{!relatedTo.Portal_Closure_Link__c}" style="text-decoration:none; cursor: pointer; display: inline-block; color: #fff; font-weight: 500; font-size: 16px; text-align: center; cursor: pointer;">
+                                    {!$Label.ISSP_Yes}
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
                     <p>{!$Label.Auto_Case_Comment_Notification_Email_3}</p>
                 </center>
             </apex:outputPanel>
