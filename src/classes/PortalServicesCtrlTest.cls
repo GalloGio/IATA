@@ -820,12 +820,12 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			);
 
 		insert appRight;
-		
-		c.User_Portal_Status__c = 'Pending Approval';
-		c.Community__c = 'ISS Portal';
-		update c;
 
 		Test.StartTest();
+			c.User_Portal_Status__c = 'Pending Approval';
+			c.Community__c = 'ISS Portal';
+			update c;
+
 			// Grant access to service
 			Boolean isSuccessGrant =PortalServicesCtrl.massGrantAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
 			system.assertEquals(isSuccessGrant,true);
