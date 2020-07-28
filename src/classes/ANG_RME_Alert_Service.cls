@@ -229,8 +229,7 @@ global class ANG_RME_Alert_Service {
 	}
 
 	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
-		return eventType == RHC_ALERT_EVENT_TYPE && request.direction == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
-			&& (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel));
+		return eventType == RHC_ALERT_EVENT_TYPE && (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel + request.direction));
 	}
 
 	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {

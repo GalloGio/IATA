@@ -336,24 +336,44 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>100%</fullName>
+                    <fullName>100%UP</fullName>
                     <default>false</default>
-                    <label>100%</label>
+                    <label>100%UP</label>
                 </value>
                 <value>
-                    <fullName>50%</fullName>
+                    <fullName>50%UP</fullName>
                     <default>false</default>
-                    <label>50%</label>
+                    <label>50%UP</label>
                 </value>
                 <value>
-                    <fullName>75%</fullName>
+                    <fullName>75%UP</fullName>
                     <default>false</default>
-                    <label>75%</label>
+                    <label>75%UP</label>
                 </value>
                 <value>
-                    <fullName>90%</fullName>
+                    <fullName>90%UP</fullName>
                     <default>false</default>
-                    <label>90%</label>
+                    <label>90%UP</label>
+                </value>
+                <value>
+                    <fullName>100%DOWN</fullName>
+                    <default>false</default>
+                    <label>100%DOWN</label>
+                </value>
+                <value>
+                    <fullName>90%DOWN</fullName>
+                    <default>false</default>
+                    <label>90%DOWN</label>
+                </value>
+                <value>
+                    <fullName>75%DOWN</fullName>
+                    <default>false</default>
+                    <label>75%DOWN</label>
+                </value>
+                <value>
+                    <fullName>50%DOWN</fullName>
+                    <default>false</default>
+                    <label>50%DOWN</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -598,19 +618,35 @@
         <picklistValues>
             <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
             <values>
-                <fullName>100%25</fullName>
+                <fullName>100%25DOWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>50%25</fullName>
+                <fullName>100%25UP</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>75%25</fullName>
+                <fullName>50%25DOWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>90%25</fullName>
+                <fullName>50%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25UP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -728,19 +764,35 @@
         <picklistValues>
             <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
             <values>
-                <fullName>100%25</fullName>
+                <fullName>100%25DOWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>50%25</fullName>
+                <fullName>100%25UP</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>75%25</fullName>
+                <fullName>50%25DOWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>90%25</fullName>
+                <fullName>50%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25UP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -850,19 +902,35 @@
         <picklistValues>
             <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
             <values>
-                <fullName>100%25</fullName>
+                <fullName>100%25DOWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>50%25</fullName>
+                <fullName>100%25UP</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>75%25</fullName>
+                <fullName>50%25DOWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>90%25</fullName>
+                <fullName>50%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25UP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

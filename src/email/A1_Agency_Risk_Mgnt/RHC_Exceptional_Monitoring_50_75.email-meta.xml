@@ -6,7 +6,7 @@
     <name>RHC Exceptional Monitoring 50_75 Notification</name>
     <style>none</style>
     <subject>NonNewGen RHC Monitoring – ##COUNTRY## – ##AGENT_NAME## – ##IATA_CODE##</subject>
-    <textOnly>##COUNTRY## ##AGENT_NAME## ##IATA_CODE## has breached ##THRESHOLD## RHC threshold</textOnly>
+    <textOnly>##COUNTRY## ##AGENT_NAME## ##IATA_CODE## has breached ##THRESHOLD## ##DIRECTION## RHC threshold</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

@@ -1597,6 +1597,7 @@ public class ANG_RHCAlertTriggerHandler{
 				htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
 				htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
 				htmlBody = htmlBody.replace('##THRESHOLD##', ra.ANG_Threshold_Level__c);
+				htmlBody = htmlBody.replace('##DIRECTION##', ra.ANG_Direction__c);
 			}
 
 			emailLst.addAll(createNotificationEmailMessages(null, htmlBody, ORG_WIDE_EMAILS.get(0).Id, emailSubject, notificationWrapper));
@@ -1607,9 +1608,9 @@ public class ANG_RHCAlertTriggerHandler{
 	}
 
 	private boolean isEligibleForRhcExceptionalMonitoring(Id riskAlertRHCRecType, ANG_Risk_Alert__c ra, Account acct) {
-		return ra.RecordTypeId == riskAlertRHCRecType && ra.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
+		return ra.RecordTypeId == riskAlertRHCRecType 
 			&& string.isNotBlank(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c) 
-			&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c.contains(ra.ANG_Threshold_Level__c)
+			&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c.contains(ra.ANG_Threshold_Level__c + ra.ANG_Direction__c)
 			&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c;
 	}
 

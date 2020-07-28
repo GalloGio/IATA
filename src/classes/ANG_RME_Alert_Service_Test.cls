@@ -24,7 +24,7 @@ public class ANG_RME_Alert_Service_Test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%'
+			Exc_RHC_Monitoring_Alert__c = '100%UP'
 		);
 		insert bspKZ;
 
@@ -33,7 +33,7 @@ public class ANG_RME_Alert_Service_Test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%;75%;50%'
+			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN'
 		);
 
 		insert bspRU;

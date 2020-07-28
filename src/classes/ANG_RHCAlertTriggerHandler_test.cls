@@ -86,7 +86,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			CurrencyIsoCode = 'SGD',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%'
+			Exc_RHC_Monitoring_Alert__c = '100%UP'
 		);
 
 		AMS_Settlement_System__c bspRU = new AMS_Settlement_System__c(
@@ -94,7 +94,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%;75%;50%'
+			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN'
 		);
 
 		insert new List<AMS_Settlement_System__c>{iss, bspKZ, bspRU};
