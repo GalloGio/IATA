@@ -573,8 +573,6 @@ public class ANG_RME_Alert_Service_Test {
 			FROM ANG_Risk_Alert__c
 		];
 
-		system.debug('DTULLO --> ' + string.valueOf(RestContext.response.responseBody));
-
 		System.assertEquals(202, RestContext.response.StatusCode, 'The response code must be 202');
 		System.assertEquals(0, alerts.size(), 'The RHC Alert must NOT be created');
 	}

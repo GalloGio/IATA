@@ -1532,12 +1532,6 @@ public class ANG_RHCAlertTriggerHandler{
 			}
 		}
 
-		system.debug('DTULLO emailAddressesLst.isEmpty() ' + emailAddressesLst.isEmpty());
-		system.debug('DTULLO raLst ' + raLst);
-		system.debug('DTULLO raAccountMap ' + raAccountMap);
-		system.debug('DTULLO mapEmailAddrPerAlert ' + mapEmailAddrPerAlert);
-		system.debug('DTULLO mapTemplates ' + mapTemplates);
-
 		if(emailAddressesLst.isEmpty()){
 			System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring Stakeholder found');
 			return emailLst;
@@ -1558,10 +1552,6 @@ public class ANG_RHCAlertTriggerHandler{
 				System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring SMAP Notification Template found');
 				continue; //skip to next element if no email template is found
 			}
-
-			system.debug('DTULLO Template ' + template);
-			system.debug('DTULLO Template.subject ' + template.subject);
-			system.debug('DTULLO Template.HtmlValue ' + template.HtmlValue);
 
 			RegionNotificationWrapper notificationWrapper = new RegionNotificationWrapper(REGION_ALL);
 			//notificationWrapper.emailAddressSet.addAll(mapEmailAddrPerAlert.get(ra.id));

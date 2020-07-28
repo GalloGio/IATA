@@ -335,7 +335,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert ara;
 
 		Test.stopTest();
-System.debug('DTULLO isSent?  ' + [SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c);
 		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was not sent');
 	}
 
@@ -1276,11 +1275,7 @@ System.debug('DTULLO isSent?  ' + [SELECT Id,ANG_email_sent__c FROM ANG_Risk_Ale
 
 		Messaging.SingleEmailMessage emailNotification = emailNotificationLst.get(0);
 
-		system.debug('DTULLO emailNotification ' + emailNotification);
-
 		List<String> emailAddressLst = emailNotification.getToAddresses();
-
-		system.debug('DTULLO emailNotification.getToAddresses() ' + emailNotification.getToAddresses());
 
 		Id targetUserId = emailNotification.getTargetObjectId(); 
 

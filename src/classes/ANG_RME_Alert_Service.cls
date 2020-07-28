@@ -170,10 +170,8 @@ global class ANG_RME_Alert_Service {
 
 				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
 					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
-						system.debug('DTULLO: Is Eligible!');
 						saveAlert(req, acct.Id, null);
 					} else {
-						system.debug('DTULLO: Is NOT Eligible!');
 						//Ignore the request
 						setResponse(null, 202);
 					}
