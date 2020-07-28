@@ -1,9 +1,7 @@
 public without sharing class OneId_Fred_AccountSelection_CTRL {
 	public class RegistrationResponse {
-		@AuraEnabled
-		public boolean success {get; set;}
-		@AuraEnabled
-		public String error  {get; set;}
+		@AuraEnabled public boolean success {get; set;}
+		@AuraEnabled public String error  {get; set;}
 
 		public RegistrationResponse(Boolean success) {
 			this.success = success;
@@ -28,7 +26,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 		// FRED is english only
 		String languageString = 'English';
 
-	   // Existing account selected => Create contact
+		// Existing account selected => Create contact
 		if(acc != null) {
 			// Define account base on account information
 			if(con.Id == null){
@@ -54,8 +52,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			// Retrieve the number of primary and secondary fred users for the selected account
 			list<PermissionSetAssignment> fredUsers = [SELECT AssigneeId, PermissionSet.Name FROM PermissionSetAssignment WHERE PermissionSet.Name in ('FRED_Primary_User', 'FRED_SSO') AND Assignee.AccountId =: acc.Id];
 
-			set<Id> primariesIds = new set<Id>();
-			set<Id> secondariesIds = new set<Id>();
+			Set<Id> primariesIds = new Set<Id>();
+			Set<Id> secondariesIds = new Set<Id>();
 
 			for(PermissionSetAssignment psa : fredUsers) {
 				if(psa.PermissionSet.Name == 'FRED_Primary_User'){
@@ -139,7 +137,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 				return new RegistrationResponse(false, ''+ex);
 			}
 		}
-	   return new RegistrationResponse(true);
+		return new RegistrationResponse(true);
 	}
 
 
@@ -190,7 +188,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 			}
 			String thisNickname;
 			if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)
-				thisNickname = con.lastName.substring(0, 3)+Datetime.now().formatLong();
+				thisNickname = con.lastName.subString(0, 3)+Datetime.now().formatLong();
 			else
 				thisNickname = con.lastName+Datetime.now().formatLong();
 
@@ -206,7 +204,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 			System.debug('>>con ' + con);
 
-			string UID = Comm_User_Helper.NewGuid();
+			String UID = Comm_User_Helper.NewGuid();
 			User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
 			//User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
 
@@ -277,26 +275,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 
 	public class SearchWrap {
-		@AuraEnabled
-		public list<Account> accList {get; set;}
-		@AuraEnabled
-		public Integer totalAccListNotLimited {get; set;}
-		/*
-		@AuraEnabled
-		public Account HQAccount {get; set;}
-		@AuraEnabled
-		public Account acc {get; set;}
-		@AuraEnabled
-		public String msg {get; set;}
-		@AuraEnabled
-		public String buttonLabel {get; set;}
-		@AuraEnabled
-		public Boolean accountFound {get; set;}
-		@AuraEnabled
-		public Boolean showCreateAccount {get; set;}
-		@AuraEnabled
-		public Boolean showcreateother {get; set;}
-		*/
+		@AuraEnabled public list<Account> accList {get; set;}
+		@AuraEnabled public Integer totalAccListNotLimited {get; set;}
 	}
 
 	@AuraEnabled
@@ -362,20 +342,13 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 	}
 
 	public class InitParam {
-		@AuraEnabled
-		Boolean isGuest {get; set;}
-		@AuraEnabled
-		Boolean isFredPrimaryUser {get; set;}
-		@AuraEnabled
-		String primaryUserId {get; set;}
-		@AuraEnabled
-		Account partnerAccount {get; set;}
-		@AuraEnabled
-		Boolean isAlreadyPartner {get; set;}
-		@AuraEnabled
-		Boolean createPrimary {get; set;}
-		@AuraEnabled
-		Boolean isInvitation {get; set;}
+		@AuraEnabled Boolean isGuest {get; set;}
+		@AuraEnabled Boolean isFredPrimaryUser {get; set;}
+		@AuraEnabled String primaryUserId {get; set;}
+		@AuraEnabled Account partnerAccount {get; set;}
+		@AuraEnabled Boolean isAlreadyPartner {get; set;}
+		@AuraEnabled Boolean createPrimary {get; set;}
+		@AuraEnabled Boolean isInvitation {get; set;}
 	}
 
 
@@ -386,7 +359,7 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 
 		String recordTypeSearch = customerType;
 
-		set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
+		Set<String> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(recordTypeSearch);
 
 		String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry, RecordTypeId FROM Account WHERE ';
 		queryStr += ' RecordType.DeveloperName in :recordTypesSet';
@@ -447,10 +420,8 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 	}
 
 	public class CustomerTypeByServicePicklist {
-		@AuraEnabled
-		public String label {get; set;}
-		@AuraEnabled
-		public String value {get; set;}
+		@AuraEnabled public String label {get; set;}
+		@AuraEnabled public String value {get; set;}
 		public CustomerTypeByServicePicklist(String l, String v) {
 			label = l;
 			value = v;
