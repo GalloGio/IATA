@@ -14,6 +14,7 @@ import Case_Comment_Button_Have_New_Query from '@salesforce/label/c.Case_Comment
 import Case_Comment_Button_Go_To_Contact_Us from '@salesforce/label/c.Case_Comment_Button_Go_To_Contact_Us';
 import Case_Comment_New_Query_Confirmation_Message from '@salesforce/label/c.Case_Comment_New_Query_Confirmation_Message';
 import Case_Comment_New_Query_Confirmation_Title from '@salesforce/label/c.Case_Comment_New_Query_Confirmation_Title';
+import Case_Comment_Provide_Aditional_Feedback from '@salesforce/label/c.Case_Comment_Provide_Aditional_Feedback';
 import CSP_PortalBaseURL from '@salesforce/label/c.CSP_PortalBaseURL';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import ISSP_No from '@salesforce/label/c.ISSP_No';
@@ -54,6 +55,7 @@ export default class PortalCaseComment extends LightningElement {
 		Case_Comment_Button_Go_To_Contact_Us,
 		Case_Comment_New_Query_Confirmation_Message,
 		Case_Comment_New_Query_Confirmation_Title,
+		Case_Comment_Provide_Aditional_Feedback,
 		CSP_PortalBaseURL,
 		CSP_PortalPath,
 		ISSP_Yes,
@@ -64,7 +66,7 @@ export default class PortalCaseComment extends LightningElement {
 
 	connectedCallback() {
 		if(this.isSurvey) {
-			let id = this.case.id;
+			let id = this.case.Id;
 			getSurveyLink({caseId: id})
 			.then(data => {
 				this.surveyLink = data;
@@ -91,6 +93,10 @@ export default class PortalCaseComment extends LightningElement {
 		return this.isAutoReply && this.autoReply.indexOf('Case_survey_message') > -1;
 	}
 
+	get isProvideAditionalComments() {
+		return this.isAutoReply && this.autoReply.indexOf('Provide_aditional_comments') > -1;
+	}
+
 	get haveBeenResolvedButtonsDisabled() {
 		return this.case.Portal_Closure_Status__c !== 'Started' || this.comment.buttonsDisabled;
 	}
@@ -115,7 +121,7 @@ export default class PortalCaseComment extends LightningElement {
 
 	get answerNotClearHighlighted() {
 		return this.comment.answer !== undefined && this.comment.answer !== null &&
-			this.comment.answer.indexOf('Unresolved') > -1;
+			this.comment.answer.indexOf('Closure_Declined') > -1;
 	}
 
 	get haveNewQueryHighlighted() {
@@ -153,7 +159,7 @@ export default class PortalCaseComment extends LightningElement {
 	}
 	
 	waitForNewComments(status) {
-		return status === '' || ['Ongoing', 'Finished_Unresolved', 'Finished_Resolved', 'Finished_New_Case'].indexOf(status) > -1;
+		return status === '' || ['Ongoing', 'Finished_Unresolved', 'Finished_Resolved', 'Finished_New_Case', 'Closure_Declined'].indexOf(status) > -1;
 	}
 
 	closeResolved() {
@@ -179,7 +185,7 @@ export default class PortalCaseComment extends LightningElement {
 	}
 
 	reopenCase() {
-		this.updateClosureStatus('Unresolved');
+		this.updateClosureStatus('Closure_Declined');
 	}
 
 	updateClosureStatus(newStatus) {

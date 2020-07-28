@@ -734,10 +734,12 @@ public with sharing class PortalCasesCtrl {
 		}
 
 		Id profileId = Userinfo.getProfileId();
-		String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
+		String profileName = [SELECT Id, Name FROM Profile where Id = :profileId].Name;
+		List<User> closedUserType = [SELECT Id, UserType FROM User WHERE Id = :newCase.WhoClosedCase__c];
 		ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
-		String userRole =  newCase.WhoClosedCase__c != null ? DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
-
+		String userRole = closedUserType.isEmpty() || closedUserType[0].UserType == 'Guest' ? '' :
+							newCase.WhoClosedCase__c != null ?
+								DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
 		String caseType = ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);
 
 		String surveyLanguage = UserInfo.getLanguage();
@@ -823,10 +825,6 @@ public with sharing class PortalCasesCtrl {
 			comment.CommentBody = CaseCommentAutoReply.USER_ANSWER_ID + ' ' + status;
 			comment.IsPublished = true;
 			insert comment;
-
-			if(status == 'Unresolved') {
-				status = '';
-			}
 
 			PortalCasesCtrl.updatingClosureStatus = true;
 			Case c = new Case(Id = caseId, Portal_Closure_Status__c = status);

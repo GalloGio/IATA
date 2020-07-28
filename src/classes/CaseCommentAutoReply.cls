@@ -6,15 +6,17 @@ public with sharing class CaseCommentAutoReply implements Queueable {
 	public static final String AUTO_REPLY_HAVE_BEEN_RESOLVED = 'Have_been_resolved_question';
 	public static final String AUTO_REPLY_NEED_MORE_HELP = 'Need_more_help_question';
 	public static final String AUTO_REPLY_SURVEY = 'Case_survey_message';
+	public static final String AUTO_REPLY_PROVIDE_ADITIONAL_COMMENTS = 'Provide_aditional_comments';
 	
 	public static final String CLOSURE_STATUS_STARTED = 'Started';
 	public static final String CLOSURE_STATUS_ONGOING = 'Ongoing';
 	public static final String CLOSURE_STATUS_FINISHED_RESOLVED = 'Finished_Resolved';
 	public static final String CLOSURE_STATUS_FINISHED_UNRESOLVED = 'Finished_Unresolved';
 	public static final String CLOSURE_STATUS_FINISHED_NEW_CASE = 'Finished_New_Case';
+	public static final String CLOSURE_STATUS_CLOSURE_DECLINED = 'Closure_Declined';
 	
 	public static final List<String> AUTO_REPLY_ELIGIBLE_STATUS = new List<String> {
-		CLOSURE_STATUS_STARTED, CLOSURE_STATUS_ONGOING, CLOSURE_STATUS_FINISHED_RESOLVED, CLOSURE_STATUS_FINISHED_UNRESOLVED
+		CLOSURE_STATUS_STARTED, CLOSURE_STATUS_ONGOING, CLOSURE_STATUS_FINISHED_RESOLVED, CLOSURE_STATUS_FINISHED_UNRESOLVED, CLOSURE_STATUS_CLOSURE_DECLINED
 	};
 	
 	public static final List<String> CLOSURE_STATUS_FINISHED_VALUES = new List<String> {
@@ -44,9 +46,10 @@ public with sharing class CaseCommentAutoReply implements Queueable {
 				if (current.Portal_Closure_Status__c == CLOSURE_STATUS_STARTED) {
 					commentBody += AUTO_REPLY_HAVE_BEEN_RESOLVED;
 					fieldBindingByGroupMap.put(current.ContactId, new List<String> { (Label.CSP_PortalBaseURL + Label.CSP_PortalPath), current.Id });
-
 				} else if (current.Portal_Closure_Status__c == CLOSURE_STATUS_ONGOING) {
 					commentBody += AUTO_REPLY_NEED_MORE_HELP;
+				} else if (current.Portal_Closure_Status__c == CLOSURE_STATUS_CLOSURE_DECLINED) {
+					commentBody += AUTO_REPLY_PROVIDE_ADITIONAL_COMMENTS;
 				} else if (current.Portal_Closure_Status__c == CLOSURE_STATUS_FINISHED_RESOLVED
 					|| current.Portal_Closure_Status__c == CLOSURE_STATUS_FINISHED_UNRESOLVED) {
 					commentBody += AUTO_REPLY_SURVEY;

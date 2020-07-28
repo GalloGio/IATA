@@ -254,7 +254,7 @@ public with sharing class CaseTriggerHelper {
 						current.Portal_Closure_Link__c = PortalCaseClosureController.getCloseCaseLink(params);
 				}
 				else if(old != null && current.Visible_on_ISS_Portal__c && old.Portal_Closure_Status__c != current.Portal_Closure_Status__c) {
-					if(String.isBlank(current.Portal_Closure_Status__c)) {
+					if(String.isBlank(current.Portal_Closure_Status__c) || current.Portal_Closure_Status__c == CaseCommentAutoReply.CLOSURE_STATUS_CLOSURE_DECLINED) {
 						current.Status = CASE_STATUS_ACTION_NEEDED;
 					}
 					else if(CaseCommentAutoReply.CLOSURE_STATUS_FINISHED_VALUES.contains(current.Portal_Closure_Status__c)) {
@@ -273,8 +273,9 @@ public with sharing class CaseTriggerHelper {
 				Case old = oldCases == null ? null : oldCases.get(caseId);
 				if (((old == null && current.Status == CASE_STATUS_PENDING_CLOSURE) ||
 					(old != null && (old.Status != current.Status || old.Portal_Closure_Status__c != current.Portal_Closure_Status__c) &&
-						(current.Status == CASE_STATUS_PENDING_CLOSURE || current.Status == CASE_STATUS_CLOSED) &&
-						current.Visible_on_ISS_Portal__c)
+						(current.Status == CASE_STATUS_PENDING_CLOSURE || current.Status == CASE_STATUS_CLOSED ||
+							(current.Status == CASE_STATUS_ACTION_NEEDED && current.Portal_Closure_Status__c == CaseCommentAutoReply.CLOSURE_STATUS_CLOSURE_DECLINED)
+						) && current.Visible_on_ISS_Portal__c)
 					) && !CaseCommentAutoReply.isProcessed(current.Id)) {
 						casesToGenerateComments.add(current.Id);
 				}

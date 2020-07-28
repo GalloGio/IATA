@@ -52,7 +52,6 @@ export default class PortalCaseClosure extends LightningElement {
 	}
 
 	connectedCallback() {
-		console.log('test 123');
 		var sPageURL = ''+ window.location;
 		closeCase({pageUrl: sPageURL}).then(data => {
 			this.success = true;
@@ -85,7 +84,7 @@ export default class PortalCaseClosure extends LightningElement {
 
 		}).catch(error => {
 			console.log(error);
-			this.errorMessage = 'TEST -> something went wrong!';
+			this.errorMessage = 'Error';
 			this.success = false;
 		}).finally(() => {
 			this.waitingResponse = false;

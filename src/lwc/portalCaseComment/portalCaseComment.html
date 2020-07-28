@@ -29,6 +29,9 @@
 				</div>
 			</c-iata-modal>
 		</c-portal-comment>
+		<c-portal-comment if:true={isProvideAditionalComments} comment={comment} hide-info>
+			<p>{label.Case_Comment_Provide_Aditional_Feedback}</p>
+		</c-portal-comment>
 		<c-portal-comment if:true={isSurvey} comment={comment} hide-info>
 			<p>{label.Case_Comment_Survey_Message}&nbsp;<a href={surveyLink} class="text-blue" target="_blank">{label.Case_Comment_Survey_Lik_Label}</a>.</p>
 		</c-portal-comment>

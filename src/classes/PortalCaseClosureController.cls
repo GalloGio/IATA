@@ -31,8 +31,32 @@ public without sharing class PortalCaseClosureController {
 	@AuraEnabled
 	public static String answerSurvey(String caseId) {
 		try {
-			return PortalCasesCtrl.getSurveyLink(caseId);
-		} catch(Exception e) {
+
+			Case newCase = [SELECT Id, Status, CaseNumber, ContactId, Contact.FirstName, Contact.LastName, Contact.Email, Contact.Phone
+							FROM Case
+							WHERE Id = :caseId];
+
+			if(newCase.Status != 'Closed') {
+				throw new AuraHandledException('Survey is not available for open cases.');
+			}
+
+			String fName = newCase.Contact.FirstName != null ? newCase.Contact.FirstName : '';
+			String lName = newCase.Contact.LastName != null ? newCase.Contact.LastName : '';
+			String email = newCase.Contact.Email != null ? newCase.Contact.Email : '';
+			String phone = newCase.Contact.Phone != null ? newCase.Contact.Phone : '';
+
+			String surveyLink = 'http://survey.clicktools.com/go?iv='
+					+System.Label.ISSP_SurveyClosedCase
+					+'&q1='+newCase.Id
+					+'&q2='+newCase.CaseNumber+
+					+'&q3='+newCase.ContactId
+					+'&q9='+fName+'|'+lName+'|'+email+'|'+phone
+					+'&language=en_US';
+
+			return surveyLink;
+		} catch(AuraHandledException e1) {
+			throw e1;
+		} catch(Exception e2) {
 			throw new AuraHandledException(Label.Case_Closure_Survey_Link_Error);
 		}
 	}
