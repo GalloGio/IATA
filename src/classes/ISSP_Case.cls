@@ -1598,13 +1598,15 @@ public without sharing class ISSP_Case {
 				 WHERE Email IN :setEmailPriority AND isActive = true];
 
 			for(User user : lsUsersPriority) {
-				CaseTeamMember teammember = new CaseTeamMember(
-					ParentId = newCase.Id,
-					MemberId = user.Id,
-					TeamRoleId = PARTNER_USER_ROLE);
-				lsCaseTeamMembers.add(teammember);
-				lsNewEmails.add(user.Email);
-				setEmailPriority.remove(user.Email);
+				if(!(isDPCUser && whoToContact != 'IATA' && user.Id == myUser.Id)) {
+					CaseTeamMember teammember = new CaseTeamMember(
+						ParentId = newCase.Id,
+						MemberId = user.Id,
+						TeamRoleId = PARTNER_USER_ROLE);
+					lsCaseTeamMembers.add(teammember);
+					lsNewEmails.add(user.Email);
+					setEmailPriority.remove(user.Email);
+				}
 			}
 		}
 
