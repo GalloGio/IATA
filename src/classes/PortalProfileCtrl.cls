@@ -19,6 +19,7 @@ public with sharing class PortalProfileCtrl {
 	PRIVATE STATIC FINAL STRING FIELDSET_STANDARD = 'GCS_Profile_Standard';
 	PRIVATE STATIC FINAL STRING FIELDSET_OTHERS = 'GCS_Profile_Others';
 	PRIVATE STATIC FINAL STRING FIELDSET_CONTACT = 'GCS_CompanyContact';
+	PRIVATE STATIC FINAL STRING FIELDSET_CONTACT_AIRLINE = 'GCS_Company_Contact_Airline';
 
 	PRIVATE STATIC FINAL STRING LABEL_BASICS = System.label.csp_Basics_Section_label;
 	PRIVATE STATIC FINAL STRING LABEL_COMPANY_CONTACT = System.label.csp_CompanyContact_Section_label;
@@ -668,16 +669,32 @@ public static Contact contactInfo = new Contact();
 		String legalName = myContact.Account.Legal_name__c;
 
 		String fieldsetBasic;
-		if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){fieldsetBasic = FIELDSET_AIRLINE;}
-		else if(rType == 'IATA_Agency'){fieldsetBasic = FIELDSET_AGENCY;}
-		else if(rType == 'IATA_GSA'){fieldsetBasic = FIELDSET_GSA;}
-		else if(rType == 'Others'){fieldsetBasic = FIELDSET_OTHERS;}
-		else {fieldsetBasic = FIELDSET_STANDARD;}
+		String fieldsetContact;
+		if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
+			fieldsetBasic = FIELDSET_AIRLINE;
+			fieldsetContact = FIELDSET_CONTACT_AIRLINE;
+		}
+		else if(rType == 'IATA_Agency'){
+			fieldsetBasic = FIELDSET_AGENCY;
+			fieldsetContact = FIELDSET_CONTACT;
+		}
+		else if(rType == 'IATA_GSA'){
+			fieldsetBasic = FIELDSET_GSA;
+			fieldsetContact = FIELDSET_CONTACT;
+		}
+		else if(rType == 'Others'){
+			fieldsetBasic = FIELDSET_OTHERS;
+			fieldsetContact = FIELDSET_CONTACT;
+		}
+		else {
+			fieldsetBasic = FIELDSET_STANDARD;
+			fieldsetContact = FIELDSET_CONTACT;		
+		}
 
 
 		Map<String,Schema.FieldSet> fieldsets =  SObjectType.Account.FieldSets.getMap();
 		List<Schema.FieldSetMember>  basicsFields = fieldsets.get(fieldsetBasic).getFields();
-		List<Schema.FieldSetMember>  contactFields = fieldsets.get(FIELDSET_CONTACT).getFields();
+		List<Schema.FieldSetMember>  contactFields = fieldsets.get(fieldsetContact).getFields();
 
 
 		//stores each card
