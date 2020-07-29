@@ -154,6 +154,28 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
+	<label>Invitation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>Role__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>INV-{00000000}</displayFormat>
+        <label>Invitation Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invitations</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>AccountId__c</fullName>
         <description>Account Id send by FRED application</description>
@@ -164,6 +186,18 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AccountRoleId__c</fullName>
+        <description>Account Role linked to invitations to services</description>
+        <externalId>false</externalId>
+        <label>Account Role</label>
+        <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>Invitations</relationshipLabel>
+        <relationshipName>Invitations</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Business_Fax__c</fullName>
@@ -386,26 +420,16 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <label>Invitation</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>First_Name__c</columns>
-        <columns>Last_Name__c</columns>
-        <columns>Email__c</columns>
-        <columns>Role__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <nameField>
-        <displayFormat>INV-{00000000}</displayFormat>
-        <label>Invitation Name</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Invitations</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
+    <fields>
+        <fullName>ServiceId__c</fullName>
+        <description>Portal Application linked to the invitation</description>
+        <externalId>false</externalId>
+        <label>Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>Invitations</relationshipLabel>
+        <relationshipName>Invitations</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
 </CustomObject>
