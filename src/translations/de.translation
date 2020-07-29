@@ -19233,6 +19233,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_General_enquiries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
         <name>ISSP_GoTo_Homepage</name>
     </customLabels>
