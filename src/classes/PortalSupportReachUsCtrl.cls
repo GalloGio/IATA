@@ -90,20 +90,15 @@ public static Map<String,String> getCountryList(){
 @AuraEnabled (cacheable=true)
 public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicName, String country, Contact contactInfo, Boolean isEmergency){
 
-	if(isEmergency) {
-		return [SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c, Language__c, Region__c, Sectors__c, Topic__c
-						FROM LiveAgentButtonSettings__c
-						WHERE Name =: 'Emergency'];
-	}
-
 	//lower cases the country value;
 	country = country.toLowerCase();
 
-	//adds __c to end of Topic value. Check Custom Settings or query below.
-	topicName = '%' + topicName + '__c' + '%';
+	topicName = topicName + '__c';
 
 	Contact con = contactInfo;
 
+
+	String countryLbl=System.Label.ISSP_Topics_To_Exclude_Country_PL;
 	//Make sector ready for LIKE search
 	String sector = con.Account.Sector__c != null ? con.Account.Sector__c : '';
 	sector = '%' + sector + '%';
@@ -123,21 +118,37 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 	}else{
 		selectedCountryRegion =  con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
 	}
-
-	if(country != null && country != '') {
-		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-						 Language__c, Region__c, Sectors__c, Topic__c
-						 FROM LiveAgentButtonSettings__c
-						 WHERE Sectors__c Like : sector
-						 AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
-									OR (Language__c =: lang AND Region__c =: selectedCountryRegion))];
+	
+	String query='SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,'+
+	'Language__c, Region__c, Sectors__c, Topic__c '+
+	'FROM LiveAgentButtonSettings__c ';
+	string criteria='';
+	if(isEmergency) {
+		criteria='WHERE Name = \'Emergency\'';
+	}else 
+	if(country != null && country != '' && countryLbl.indexOf(topicName)==-1 ) {
+		criteria='WHERE Sectors__c Like : sector '+
+				' AND ((Language__c = \'en\' AND Region__c =: selectedCountryRegion) '+
+				' OR (Language__c =: lang AND Region__c =: selectedCountryRegion))';
 	}
 	else{
-		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-						 Language__c, Region__c, Sectors__c, Topic__c
-						 FROM LiveAgentButtonSettings__c
-						 WHERE Topic__c Like : topicName];
+
+		//adds __c to end of Topic value. Check Custom Settings or query below.
+		topicName = '%' + topicName + '%';
+		criteria='WHERE Topic__c Like : topicName';
 	}
+
+	list<LiveAgentButtonSettings__c> btnList=Database.query(query+criteria);
+	//update btn label
+	for(LiveAgentButtonSettings__c lbt:btnList ){
+		string lbkey=lbt.language__c.substring(0,2).toLowerCase();
+		if(CSP_Utils.langlabelMap.containskey(lbkey)){				
+			lbt.language__C=CSP_Utils.langlabelMap.get(lbkey);				
+		}
+	}
+
+	return btnList;
+
 }
 
 
