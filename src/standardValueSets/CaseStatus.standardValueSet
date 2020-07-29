@@ -487,4 +487,10 @@
         <label>Closed_Non compliance</label>
         <closed>true</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Pending Closure</fullName>
+        <default>false</default>
+        <label>Pending Closure</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>
