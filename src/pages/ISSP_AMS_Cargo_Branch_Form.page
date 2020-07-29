@@ -131,6 +131,10 @@
             .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
             .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
             .col3 {width:50%}
+
+            .table .tooltip{
+                white-space: initial;
+            }
        
     </style>    
     <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
@@ -291,6 +295,14 @@
     function showNewTrainedStaffDialog() {
         $j(function() {
             $j( '#addNewTrainedStaffModal').modal('show');
+            if({!isCNSAgency}){
+                var e = document.querySelectorAll('[id$="TrainingType"]')[0];
+                for(var i = e.options.length-1; i >0 ; i--){
+                    if (e[i].value != 'DGR') {
+                        e.remove(i);
+                    }
+                }
+            }
             $j( '.datePicker').css('position','fixed');
       });
     }
@@ -393,7 +405,7 @@
    
     </script>
 
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div class="container">
        <div id="contentWrapper">
     <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
@@ -406,7 +418,7 @@
         <p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_LeftNav_Section2_New, $Label.ISSP_AMS_LeftNav_Section2)}</a></p>
         <p><a href="#nav_three">{!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_NAV3_New, $Label.ISSP_AMS_Cargo_Branch_Form_NAV3)}</a></p>
         <p><a href="#nav_four">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV4}</a></p>
-        <p><a href="#nav_five">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV5}
+        <p style="display:{!IF(newCase.Reason1__c == 'New Commercial BR','none','')}"><a href="#nav_five">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV5}
 </a></p>
         
         <apex:outputLink value="#nav_seven" rendered="{!countryCheckList.Statement_of_International_Sales_Branch__c}">{!$Label.ISSP_AMS_LeftNav_Section7_Branch}</apex:outputLink>
@@ -415,31 +427,39 @@
      
      <div class="panel-primary">
         <div class="panel-heading head_panel_green">
-            <h3 class="panel-title">{!IF(amsAgentType == 'IATA Cargo Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title), 
-                                        IF(amsAgentType == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
-                                            IF(amsAgentType == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
-                                                IF(amsAgentType == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
-                                                    IF(amsAgentType == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
-                                                        IF(amsAgentType == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title))))))}
+            <h3 class="panel-title">{!IF(isCNSAgency, lblCNSAgencyTitle,
+                                        IF(amsAgentType == 'IATA Cargo Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title), 
+                                            IF(amsAgentType == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
+                                                IF(amsAgentType == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
+                                                    IF(amsAgentType == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
+                                                        IF(amsAgentType == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
+                                                            IF(amsAgentType == 'Courier', $Label.ISSP_AMS_StepsAll_Courier_Title, $Label.ISSP_AMS_StepsAll_Application_Approval_Title)))))))}
             </h3>
         </div>
     <div class="panel-body" id="body-enquiries">
         <apex:form id="AMSForm">
         <div class="progress iata-tabs">
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" value="{!$Label.ISSP_AMS_Step1_ProgressBar}" id="Prev1"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" id="Prev1">
+                    <apex:outputText value="{!$Label.ISSP_AMS_Step1_ProgressBar}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_AMS_Step2_ProgressBar}" id="Prev2"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoBack}" id="Prev2">
+                    <apex:outputText value="{!$Label.ISSP_AMS_Step2_ProgressBar}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!$Label.ISSP_AMS_Step3_ProgressBar}
+                <apex:outputText value="{!$Label.ISSP_AMS_Step3_ProgressBar}" escape="false"/>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" id="Next4"/>
+                <apex:outputText value="{!$Label.ISSP_AMS_Step4_ProgressBar}" escape="false"/>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" value="{!$Label.ISSP_AMS_Step5_ProgressBar}" id="Next5"/>
+                <apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" id="Next5">
+                    <apex:outputText value="{!IF(CommunityName=='CNS', $Label.ISSP_AMS_Step5_ProgressBar_CNS, $Label.ISSP_AMS_Step5_ProgressBar)}" escape="false"/>
+                </apex:commandLink>
             </div>
         </div>
                
@@ -465,10 +485,12 @@
                 <apex:pageBlockSection columns="1" id="LegalStatusSection">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+							{!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
+								IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial,
+                                	IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)))}
                         </apex:outputpanel>
                         </apex:facet>
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!$Label.ISSP_AMS_Step3_Branch_Location}"/>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_Step3_Branch_Location_CNS, IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_Step3_Branch_Location_CASS_Commercial ,$Label.ISSP_AMS_Step3_Branch_Location))}"/>
                        
                     <apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />
@@ -494,8 +516,8 @@
                         <apex:outputField value="{!hqAccount.Mobile__c}"/>
                         <apex:outputField value="{!hqAccount.Fax}"/>
                         <apex:outputField value="{!hqAccount.IATACode__c}"/>
-                        <apex:pageblocksectionitem >
-                            <apex:outputlabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
+                        <apex:pageblocksectionitem>
+                            <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c))}" />
                             <apex:outputField value="{!hqAccount.VAT_Number__c}"/>
                         </apex:pageblocksectionitem>
                         <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
@@ -568,22 +590,29 @@
                         FormControlStyle="apcontainer wid">
                     </DSE:DS_DataQuality>
 
-                    <apex:pageBlockSectionItem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
-                            <apex:outputlabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
+                    <apex:pageBlockSectionItem rendered="{!AND(NOT(isocountry.Hide_Tax_Number_VAT__c), newCase.Reason1__c != 'New Commercial BR', newCase.Reason1__c != 'New BR / IP')}">
+                            <apex:outputlabel value="{!IF(isCNSAgency, '* '+$Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c))}" />
                             <apex:outputpanel id="VATNumberInput">
                                 <span style="margin-left:6px;padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
                                 <apex:inputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!isocountry.Tax_number_format__c}" onblur="if(this.value != '' && isEUcountry) {validateVAT(this.value.trim());}" />
-                                <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN_Title, IF(isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, isocountry.Tax_number_help_text__c))}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                 <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
                                     <apex:facet name="start">
-                                        {!$Label.ISSP_PAX_Validating_VAT_Number}
+                                        {!IF(isCNSAgency, $Label.ISSP_PAX_Validating_Federal_EIN, $Label.ISSP_PAX_Validating_VAT_Number)}
                                     </apex:facet>
                                 </apex:actionstatus>
                             </apex:outputpanel>
                         </apex:pageBlockSectionItem>
-               
+                        <apex:pageblocksectionitem rendered="{!AND(isCNSAgency, OR(newCase.Reason1__c == 'New Commercial BR', newCase.Reason1__c == 'New BR / IP'))}">
+                            <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c))}" />
+                            <apex:outputField value="{!newForm.ISSP_AMS_VAT_Number_Input__c}"/>
+                        </apex:pageblocksectionitem>
+                    <apex:pageblocksectionitem rendered="{!NOT(isCNSAgency)}">
+                        <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c))}" />
+                        <apex:outputField value="{!newForm.ISSP_AMS_VAT_Number_Input__c}"/>
+                    </apex:pageblocksectionitem>
                 </apex:pageBlockSection>
-                    <apex:pageBlockSectionItem rendered="{!isocountry.EACP_Country__c}">
+                <apex:pageBlockSectionItem rendered="{!AND(isocountry.EACP_Country__c, NOT(isCNSAgency))}">
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_your_firm_handling_Dangerous_Goods__c.Label}"/>
                             <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_your_firm_handling_Dangerous_Goods__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_your_firm_handling_Dangerous_Goods__c}"  >
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -650,12 +679,12 @@
                        <div class="col-md-12">
                        	{!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1)}<br/><br/>
                         {!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2)}<br/><br/>
-                        {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3}<br/>
+                        {!IF(isCNSAgency, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3)}<br/>
                        </div>
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                            {!$Label.ISSP_AMS_Not_Listed_Msg}
                         </div>
-                        <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!IF(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Manager)}</apex:commandLink>
+                        <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!IF(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Manager) + IF(isCNSAgency, ' '+ $Label.ISSP_AMS_CNS_CASS_Contact, '')}</apex:commandLink>
                                 
                            <apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon"  id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
@@ -774,9 +803,9 @@
                         </apex:pageBlockSectionItem>
                     
                     
-                    <apex:outputlabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3}" />
+                    <apex:outputlabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3}" rendered="NOT(isCNSAgency)"/>
 
-                    <apex:pageBlockSectionItem >                
+                    <apex:pageBlockSectionItem rendered="NOT(isCNSAgency)">                
                         <apex:panelGrid columns="10">
                             <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Billing_payment_Branch_Office__c==false,newForm.Billing_payment_Head_Office__c==false,newForm.Billing_payment_Another_Branch__c==false), 'requiredIndicator', '')}" title="billingpayment" value="{!newForm.Billing_payment_Head_Office__c}" onchange="forceOneSelection(this);" />
                             <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3_TXT1}&nbsp;&nbsp;&nbsp;&nbsp;"/>
@@ -799,7 +828,7 @@
                             "/>
                         </apex:panelGrid>
                     </apex:pageBlockSectionItem>    
-                    <apex:outputPanel id="payvia" style="{!IF(newForm.Billing_payment_Branch_Office__c==false,'display:none','display:block')}">
+                    <apex:outputPanel id="payvia" style="{!IF(newForm.Billing_payment_Branch_Office__c==false,'display:none','display:block')}" rendered="NOT(isCNSAgency)">
                         <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q4}" />
 
                         <apex:pageBlockSectionItem >                
@@ -816,7 +845,7 @@
                 </apex:pageBlockSection>       
 
                 <span id="nav_five"></span>
-                <apex:pageBlockSection id="section5" columns="1" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary')}">
+                <apex:pageBlockSection id="section5" columns="1" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary', OR(newCase.Reason1__c == 'New Independent BR', newCase.Reason1__c == 'New BR / IP'))}">
                     <apex:facet name="header">
                             <apex:outputpanel >
                                 {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION5}     

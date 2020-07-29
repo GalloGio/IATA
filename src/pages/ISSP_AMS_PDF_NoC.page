@@ -77,7 +77,13 @@
     
     <body>
         <div class="header">
-            <div><apex:image width="100%" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
+            <div>
+                <apex:image rendered="{!!isCNSAgency}" width="100%" value="{!URLFOR($Resource.AP_PDF_Header)}"/>
+                <center style="display:{!if(isCNSAgency,'','none')};">
+                    <apex:image height="70px" value="{!URLFOR($Resource.AP_PDF_Header_CNS)}"/>
+                </center>
+                
+            </div>
         </div>
           
          <center>
