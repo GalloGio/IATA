@@ -250,6 +250,45 @@ public static List<LVA_CallUsConfigClass> getCallUsPhoneNumber(){
 
 }
 
+//Returns the list of topics that the user has access to and if they are L2 dependent
+@AuraEnabled (cacheable=true)
+public static string getTopicsWithL2Dep(){
+
+	set<string> reqL2TopicSet= new set<string>();
+	//Get topic list that require L2 Registration
+	list<PortalKnowledge__c> pkList= [SELECT Id, DataTopicName__c
+		FROM PortalKnowledge__c
+		WHERE DataCategoryName__c <> ''
+		AND DataTopicName__c <> ''
+		AND DataSubtopicName__c = ''
+		AND Requires_Level2_Registration__c = true];
+
+	for(PortalKnowledge__c pk:pkList){
+		reqL2TopicSet.add(pk.DataTopicName__c);
+	}
+
+
+	//retrieve full tree with the topics the user has access
+	List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> structureTreeList=PortalFAQsCtrl.getFAQsInfo();
+
+	List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> topicList = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
+	map<string,map<string,string>> topicsMap= new map<string,map<string,string>>();
+	for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dc :structureTreeList){
+		//Matches the topics that require L2 with the topics the user has access
+		if (!topicsMap.containsKey(dc.topicName) && dc.topicName != 'All') {
+			Map<string,string> valMap= new Map<string,string>();
+			valMap.put('topicName',dc.topicName);
+			valMap.put('topicLabel',dc.topicLabel);
+			valMap.put('reqL2',String.valueOf(reqL2TopicSet.contains(dc.topicName)));
+
+			topicsMap.put(dc.topicName,valMap);
+		}
+	}		
+
+	return JSON.serialize(topicsMap.values());
+
+}
+
 //This wrapper was constructed to hide the ID from the users view
 //The remaining data is public and can be shown
 public class LVA_CallUsConfigClass {
