@@ -19229,6 +19229,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_General_enquiries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
         <name>ISSP_GoTo_Homepage</name>
     </customLabels>
