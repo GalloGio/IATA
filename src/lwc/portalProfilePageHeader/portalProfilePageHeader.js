@@ -52,6 +52,10 @@ export default class PortalProfilePageHeader extends LightningElement {
             return (isPending || this.userAccount === undefined || this.userAccount.IATACode__c === undefined || this.userAccount.IATACode__c.length == 0);
         }
 
+        get isAirlineUser(){
+            return (this.loggedUser.Customer_type__c.toLowerCase() == 'airline');
+        }
+
         connectedCallback() {
 
             getLoggedUser().then(result => {
