@@ -77,7 +77,6 @@ private class ISSP_AMS_Accreditation_Test {
 			CASS_Import__c = 'Yes', Local_language_Agency_details_required__c = true
 		);
 
-		insert new List<IATA_ISO_Country__c>{country, country2, country3, country4, country5};
 
 		IATA_ISO_Country__c country6 = new IATA_ISO_Country__c();
 		country6.Name = 'Czech Republic';
