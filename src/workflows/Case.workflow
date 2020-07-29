@@ -7941,7 +7941,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))),Closed_by_Role__c)</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
