@@ -596,7 +596,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				params.firstName = con.firstName;
 				registrationRequired = true;
 			}
-			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
+			if(String.isNotBlank(params.termsAndUsageIds)) ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
 
 			if(con == null){
 				result.isSuccess = false;
