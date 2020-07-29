@@ -19228,6 +19228,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_General_enquiries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
         <name>ISSP_GoTo_Homepage</name>
     </customLabels>
