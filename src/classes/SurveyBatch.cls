@@ -56,6 +56,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
 	global List<Case> start(Database.BatchableContext BC) {
+		Set<Id> casesIdToBeProcessed = new Set<Id>();
 		List<Case> casesToBeProcessed = new List<Case>();
 		system.debug(LoggingLevel.error, '################### START() ###########################');
 		system.debug(LoggingLevel.error, '################### START() -> GETTING CASES FOR SENDING THE SURVEY ');
@@ -106,7 +107,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			templates.put(et.DeveloperName, et.Id);
 		}
 
-		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject, Customer_recovery__c, OwnerId,
 															 ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
 															 Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
 															 Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
@@ -123,6 +124,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 															 AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
 															 AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
 																	 ORDER BY ClosedDate DESC]);
+
+		for(Case c : casesToBeProcessed){
+			casesIdToBeProcessed.add(c.Id);
+		}
 
 		system.debug(LoggingLevel.error, '################### START() -> PART 1 FOUND ' + casesToBeProcessed.size() + ' CASES');
 
@@ -161,16 +166,17 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			lstCaseIds.add(is.Relationship_to_Case__c);
 		}
 
-		List<Case> SurveyCases = [SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name,
-																	WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
+		List<Case> SurveyCases = [SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
 															 FROM Case
 															 WHERE Id IN :lstCaseIds
 															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR'];//WMO-571
 
 		casesSet = new Set<Id>();
-		for (Case c : SurveyCases)
+		for (Case c : SurveyCases){
 			casesSet.add(c.Id);
-		casesToBeProcessed.addAll(SurveyCases);
+			if(!casesIdToBeProcessed.contains(c.Id))
+				casesToBeProcessed.add(c);
+		}
 		system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
 		return casesToBeProcessed;
 
