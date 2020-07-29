@@ -46608,6 +46608,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Tagalog</value>
     </labels>
     <labels>
+        <fullName>pkb2_lang_tr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Turkish</shortDescription>
+        <value>Türk</value>
+    </labels>
+    <labels>
         <fullName>pkb2_lang_ur</fullName>
         <language>en_US</language>
         <protected>true</protected>

@@ -1,5 +1,23 @@
 public with sharing class CSP_Utils {
 
+	public static final map<string,string> langlabelMap = new map<string,string>{
+		'ar' => System.Label.pkb2_lang_ar,
+		'de' => System.Label.pkb2_lang_de,
+		'en' => System.Label.pkb2_lang_en_US,
+		'es' => System.Label.pkb2_lang_es,
+		'fr' => System.Label.pkb2_lang_fr,
+		'in' => System.Label.pkb2_lang_in,
+		'id' => System.Label.pkb2_lang_in,
+		'it' => System.Label.pkb2_lang_it,
+		'ja' => System.Label.pkb2_lang_ja,
+		'ko' => System.Label.pkb2_lang_ko,
+		'pt' => System.Label.pkb2_lang_pt_BR,
+		'ru' => System.Label.pkb2_lang_ru,
+		'tr' => System.Label.pkb2_lang_tr,
+		'th' => System.Label.pkb2_lang_th,
+		'vi' => System.Label.pkb2_lang_vi,
+		'zh' => System.Label.pkb2_lang_zh_CN
+	};
 	public class LoginConfig {
 		@AuraEnabled
 		public String selfRegistrationUrl {get;set;}
@@ -264,9 +282,12 @@ public with sharing class CSP_Utils {
 		List<PickListWrapper> options = new List<PickListWrapper>();
 
 		Map<String,String> langMap = new Map<String,String>();
-
-		for(Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
-			langMap.put(l.Language__c,l.languageLocalKey__c);
+	
+		for(Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+			string langKey=l.languageLocalKey__c.substring(0,2).toLowerCase();
+			string key= langlabelMap.containsKey(langKey)? langlabelMap.get(langKey):l.Language__c ;
+			langMap.put(key,l.languageLocalKey__c);
+		}
 
 		List<String> auxList = new List<String>(langMap.keySet());
 		auxList.sort();
