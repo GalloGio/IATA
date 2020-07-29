@@ -197,15 +197,12 @@ public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, Stri
 
 
 @AuraEnabled (cacheable=true)
-public static Contact getContactInfo(){
-	//Grabs User info
-	User user = [SELECT Id,ContactId FROM User WHERE Id =:Userinfo.getUserId()];
-
-	//Grabs User's associated Contact
-	return [SELECT ID, FirstName, Name, Email, Phone, Account.Name, Account.Sector__c,
-					Account.Category__c, Account.id, Account.Country_ISO_Code__c,
-					Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
-
+public static User  getContactInfo(){
+	//Grabs User info		
+	return [SELECT profile.name,contactID, contact.FirstName, contact.Name, contact.Email, contact.Phone,contact.Account.Name, contact.Account.Sector__c,
+			contact.Account.Category__c, contact.Account.id, contact.Account.Country_ISO_Code__c,contact.ISO_Country__r.ISO_Code__c,
+			contact.Account.Region_formula__c,contact.Account.Is_General_Public_Account__c
+			FROM User WHERE Id =:Userinfo.getUserId()];
 }
 
 @AuraEnabled (cacheable=true)
