@@ -3823,6 +3823,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
     </labels>
     <labels>
+        <fullName>CSP_Chat_base_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chat base label</shortDescription>
+        <value>Chat in $0</value>
+    </labels>
+    <labels>
         <fullName>CSP_Check_Email</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4433,6 +4441,47 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
     </labels>
     <labels>
+        <fullName>CSP_Emergency_Selected_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message when emergency option is selected on the support page</shortDescription>
+        <value>Please note that the support provided
+            through the Emergency channel is only for the following critical situations:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>System access issue or platform outage</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Billing issues (major issues/discrepancies)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>System suspension</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Suspicion of fraudulent activity</value>
+    </labels>
+    <labels>
         <fullName>CSP_Error_Creating_Record</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4709,6 +4758,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Call_Tile_SubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Call Tile Sub label</shortDescription>
+        <value>Give Us a Call</value>
     </labels>
     <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
@@ -39451,6 +39508,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_CallUsAvailableHours</shortDescription>
         <value>Available Period:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsDial</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsDial</shortDescription>
+        <value>Just Dial:</value>
     </labels>
     <labels>
         <fullName>LVA_CallUsEmergencyAvailableHours</fullName>

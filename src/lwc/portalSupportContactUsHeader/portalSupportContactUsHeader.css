@@ -1,0 +1,104 @@
+.slds-col.default_panel {
+    background-color: #fff;
+    color: #333333;
+    border: transparent;
+    min-height: 154px; 
+    margin-bottom: 30px;
+    width: 160px;
+}
+
+.default_panel .cardSubTitle{
+    color: #8E8E8E;
+    font-weight: 400;
+
+}
+
+
+.slds-col.active_panel {
+    background-color: #1e32fa;
+    color: #fff;
+    position: relative;
+    border: transparent;
+    min-height: 154px;
+    margin-bottom: 30px;
+    width: 160px;
+}
+
+.active_panel .cardSubTitle{
+    color:#F0F2F5;
+    font-weight: 400;
+
+}
+
+.default_panel::after {
+    width: 0px;
+    height: 0px;
+    position: relative;
+    top: -3px;
+    border-style: solid;
+    content: " ";
+    border-width: 15px 15px 0;
+}
+
+.active_panel::after {
+    width: 0px;
+    height: 0px;
+    position: relative;
+    top: -3px;
+    border-style: solid;
+    content: " ";
+    border-width: 15px 15px 0;
+    border-color: #1e32fa transparent transparent;
+}
+
+.column-backgroundwhite-textblack-aligned-wborder {
+    background: #FFFF;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    background-clip: content-box;
+    border: 1px solid #fff;
+    border-radius: 0;
+}
+
+
+.slds-current-color.blue_arrow {
+    color: #1E32FA;
+}
+
+.iconSize {
+    width: 48px;
+    height: 48px;
+    fill: red;
+}
+
+@media screen and (max-width: 640px) {
+    .recentCasesMargin {
+        width: auto;
+        margin-left: none;
+        margin-right: none;
+        min-width: none;
+        max-width: none;
+        padding: 0 1rem;
+    }
+    .slds-p-horizontal_xx-large, .slds-p-horizontal--xx-large {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+ul {
+    list-style: none;
+  }
+  
+ul li::before {
+    content: "\2022";
+    color: #7884FC;
+    font-weight: bolder;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+.lineH{
+    line-height: 26px;  
+  }

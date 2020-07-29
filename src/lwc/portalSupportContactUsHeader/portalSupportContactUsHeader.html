@@ -1,0 +1,162 @@
+<template>
+	<div class="slds-align_absolute-center slds-size_4-of-5 maxContentWidth">
+		<template if:false={loading}>
+			<div class="slds-align--absolute-center slds-grid slds-text-align_center slds-wrap slds-m-vertical_small">
+				<h1 class="text-large text-bold">{label.csp_SupportReachUs_IntentionOnThisPage}</h1>
+				<h2 class="text-xsmall slds-m-vertical_small">{label.csp_SupportReachUs_ChooseOption}</h2>
+			</div>
+		</template>
+	</div>
+	<div class="slds-align_absolute-center slds-size_4-of-5 maxContentWidth">
+		<div class="slds-size_full">
+			<template if:true={showRecentCasesList}>
+				<div class="slds-p-bottom_large">
+					<c-recent-cases special-case oncheckemptylist={hideRecentCasesList}></c-recent-cases>
+				</div>
+			</template>
+
+			<div class="slds-p-vertical_large topic">
+				<p class="text-bold text-medium text-small slds-text-align_center">
+					{label.csp_SupportReachUs_Topic_Label}</p>
+				<p class="text-xsmall slds-m-vertical_small slds-text-align_center">
+					{label.csp_SupportReachUs_ActionForTopicPicklist}</p>
+				<lightning-combobox name="progress"
+					class="specialPickList cursorPointerComboBox text-xxsmall customPickList labelValue " value={topic}
+					options={topicOptions} dropdown-alignment="auto" onchange={topicHandler} placeholder=" ">
+				</lightning-combobox>
+			</div>
+			<div if:true={supOptionsPanel}
+				class="slds-col slds-grid slds-m-top_small slds-scrollable_x">
+				<div class="slds-grid slds-align-content-center">
+					<div onclick={tileClickHandler} data-option-tile data-id="001" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+									slds-medium-size_1-of-3 slds-large-size_1-of-8 
+									active_panel customCard cursorPointer slds-m-right_small">
+						<div data-id="001" class="fullHeight">
+							<div class=" noPointerEvents slds-m-top_medium">
+								<img class="iconSize" data-checked-icn src={caseIcon_selected} />
+								<img class="iconSize slds-hide" data-unchecked-icn src={caseIcon_unselected} />
+							</div>
+							<div class=" text-xsmall text-bold noPointerEvents">
+								{label.csp_SupportReachUs_Case_Panel_label}
+							</div>
+							<div
+								class="noPointerEvents slds-align--absolute-center slds-p-top_small slds-size--3-of-4 text-bold  text-xxsmall cardSubTitle">
+								{label.csp_SupportReachUs_Case_Panel_sub_label}
+							</div>
+						</div>
+					</div>
+					<div onclick={tileClickHandler} data-option-tile data-id="002" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+										slds-medium-size_1-of-3 slds-large-size_1-of-8 
+										default_panel customCard cursorPointer slds-m-right_small">
+						<div data-id="002" class="fullHeight">
+							<div class=" noPointerEvents slds-m-top_medium">
+								<img class="iconSize slds-hide" data-checked-icn src={chatIcon_selected} />
+								<img class="iconSize" data-unchecked-icn src={chatIcon_unselected} />
+							</div>
+							<div class="text-xsmall text-bold noPointerEvents">
+								{label.csp_SupportReachUs_Chat_Panel_label}
+							</div>
+							<div
+								class="noPointerEvents slds-align--absolute-center slds-p-top_small slds-size--3-of-4 text-bold  text-xxsmall cardSubTitle">
+								{label.csp_SupportReachUs_Chat_Panel_sub_label}
+							</div>
+						</div>
+					</div>
+					<div if:true={showCallUs} onclick={tileClickHandler} data-option-tile data-id="003" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+										slds-medium-size_1-of-3 slds-large-size_1-of-8 
+										default_panel customCard cursorPointer">
+						<div data-id="003" class="fullHeight">
+							<div class=" noPointerEvents slds-m-top_medium">
+								<img class="iconSize slds-hide" data-checked-icn src={callIcon_selected} />
+								<img class="iconSize" data-unchecked-icn src={callIcon_unselected} />
+							</div>
+							<div class=" text-xsmall text-bold noPointerEvents">
+								{label.csp_SupportReachUs_Call_Panel_label}
+							</div>
+							<div
+								class="noPointerEvents slds-align--absolute-center slds-p-top_small slds-size--3-of-4 text-bold  text-xxsmall cardSubTitle">
+								{label.CSP_Call_Tile_SubLabel}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-p-vertical_xx-large country slds-size_full background-white slds-align_absolute-center slds-grid slds-wrap"
+		if:true={supOptionsPanel}>
+		<div class="slds-col slds-size_4-of-5 maxContentWidth">
+			<p class="text-xsmall">{label.csp_SupportReachUs_Country_Label}</p>
+			<p class="text-xxsmall text-gray slds-p-bottom_small">{label.csp_SupportReachUs_CountryOrRegionIndicator}
+			</p>
+			<lightning-combobox name="progress" class=" labelValue cursorPointerComboBox text-xsmall customPickList "
+				value={countryValue} placeholder=" " dropdown-alignment="auto" options={countryOptions}
+				onchange={countryHandler}>
+			</lightning-combobox>
+			<!-- IF CHAT SELECTED-->
+			<div if:true={isChatOpt} class="slds-m-top_x-large">
+				<c-portal-support-emergency-box is-emergency-case={isEmergency} oncheckchange={handleIsEmergency}>
+				</c-portal-support-emergency-box>
+				<div if:true={isEmergency}>
+					<div class="slds-p-top_large text-xxsmall lineH">
+						<p class="slds-text-align_center slds-p-vertical_x-small">{label.CSP_Emergency_Selected_Message}</p>
+						<span class="slds-grid slds-size_3-of-4 slds-align_absolute-center slds-p-vertical_small">
+							<ul class="slds-list_dotted">
+								<li>{label.CSP_Emergency_Selected_Reason1}</li>
+								<li>{label.CSP_Emergency_Selected_Reason2}</li>
+								<li>{label.CSP_Emergency_Selected_Reason3}</li>
+								<li>{label.CSP_Emergency_Selected_Reason4}</li>
+							</ul>
+						</span>
+					</div>
+				</div>
+			</div>
+			<!-- IF CALL SELECTED-->
+			<div if:true={isCallOpt} class="slds-m-top_x-large">
+				<div class="slds-align_absolute-center customCardWhite">
+					<div if:true={phoneNumber} class="slds-size_3-of-4 slds-text-align_center slds-m-vertical--large">
+						<div class="text-medium text-bold  slds-p-around_small ">
+							<p>{label.CSP_Call_Tile_SubLabel}</p>
+						</div>
+						<div class="noPointerEvents slds-p-around_small">
+							<h3> {label.LVA_CallUsDial}</h3>
+						</div>
+						<div class="text-small text-bold text-darkGray slds-p-around_small ">
+							<lightning-formatted-phone value={phoneNumber.PhoneNumber}></lightning-formatted-phone>
+						</div>
+						<div class="text-xxsmall noPointerEvents slds-p-around_small ">
+							{label.LVA_CallUsAvailableHours} {phoneNumber.AvailableHours}
+						</div>
+					</div>
+					<!-- <div if:false={phoneNumber} class="slds-size_3-of-4 slds-text-align_center">
+						<div class="text-small text-bold  slds-p-around_small ">
+							<p>Sorry, there is no call support available for {countryValue} yet, but you can still
+								create a case or chat with an IATA representative. </p>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- Show Create Case -->
+		<c-portal-support-reach-us-create-new-case if:true={isCaseOpt} topic={topic} country-i-s-o={countryValue}
+			show-emergency={emergencyButton} is-emergency-case={isEmergency} class="slds-size_full">
+		</c-portal-support-reach-us-create-new-case>
+	</div>
+	<template if:true={displaySecondLevelRegistrationPopup}>
+		<c-portal-registration-generic-modal icon={alertIcon} title={label.CSP_L2_Requested_Modal_Title}
+			message={label.CSP_L2_Requested_Modal_Message} button1-label={label.CSP_L2_Requested_Modal_Cancel}
+			button2-label={label.CSP_L2_Requested_Modal_Complete} onbuttononeaction={cancelSecondLevelRegistration}
+			onbuttontwoaction={showSecondLevelRegistration}>
+		</c-portal-registration-generic-modal>
+	</template>
+
+	<template if:true={displaySecondLevelRegistration}>
+		<c-portal-registration-second-level trigger={level2RegistrationTrigger}
+			onclosesecondlevelregistration={cancelSecondLevelRegistration}
+			onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
+			onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}>
+		</c-portal-registration-second-level>
+	</template>
+
+</template>
