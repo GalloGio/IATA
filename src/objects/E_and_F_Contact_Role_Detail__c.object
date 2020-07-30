@@ -195,17 +195,16 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Contact_Role__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Contact role record linked to the E&amp;F contact role detial</description>
+        <fullName>Contact_Id__c</fullName>
+        <description>Display the id of the contact linked to the E&amp;F contact role detail record</description>
         <externalId>false</externalId>
-        <label>Contact Role</label>
-        <referenceTo>Account_Contact_Role__c</referenceTo>
-        <relationshipLabel>E&amp;F Contact Role Details</relationshipLabel>
-        <relationshipName>E_F_Contact_Role_Details</relationshipName>
+        <formula>Contact_Role__r.Contact__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Id</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Contact_name__c</fullName>
@@ -218,6 +217,19 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Contact role record linked to the E&amp;F contact role detial</description>
+        <externalId>false</externalId>
+        <label>Contact Role</label>
+        <referenceTo>Account_Contact_Role__c</referenceTo>
+        <relationshipLabel>E&amp;F Contact Role Details</relationshipLabel>
+        <relationshipName>E_F_Contact_Role_Details</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Detailed_contact_role__c</fullName>
@@ -272,6 +284,48 @@
         <fullName>MASTER</fullName>
         <active>true</active>
         <label>MASTER</label>
+        <picklistValues>
+            <picklist>Detailed_contact_role__c</picklist>
+            <values>
+                <fullName>Authorized Signatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Decision maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Service_Admin</fullName>
+        <active>true</active>
+        <description>E&amp;F Service Service Admin</description>
+        <label>Service Admin</label>
+        <picklistValues>
+            <picklist>Detailed_contact_role__c</picklist>
+            <values>
+                <fullName>Authorized Signatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Decision maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standard_User</fullName>
+        <active>true</active>
+        <description>E&amp;F Service Standard User</description>
+        <label>Standard User</label>
         <picklistValues>
             <picklist>Detailed_contact_role__c</picklist>
             <values>
