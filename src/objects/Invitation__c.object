@@ -166,6 +166,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>AccountRoleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Account Role linked to invitations to services</description>
+        <externalId>false</externalId>
+        <label>Account Role</label>
+        <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>Invitations</relationshipLabel>
+        <relationshipName>Invitations</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Business_Fax__c</fullName>
         <externalId>false</externalId>
         <label>Business Fax</label>
@@ -385,6 +398,19 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>ServiceId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Portal Application linked to the invitation</description>
+        <externalId>false</externalId>
+        <label>Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>Invitations</relationshipLabel>
+        <relationshipName>Invitations</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <label>Invitation</label>
     <listViews>
