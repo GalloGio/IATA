@@ -39510,6 +39510,15 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Available Period:</value>
     </labels>
     <labels>
+        <fullName>LVA_CallUsDefaultMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsDefaultMessage</shortDescription>
+        <value>If chat for your language is not available at the moment, please &lt;b&gt;create a
+            case&lt;/b&gt; or contact us through &lt;b&gt;phone&lt;/b&gt;.</value>
+    </labels>
+    <labels>
         <fullName>LVA_CallUsDial</fullName>
         <categories>LVA</categories>
         <language>en_US</language>

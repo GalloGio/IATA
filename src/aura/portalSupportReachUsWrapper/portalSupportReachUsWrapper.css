@@ -16,11 +16,12 @@
 .THIS .tile-column {
   background: #fff;
   color: rgb(0, 0, 0);
-  text-align: center;
   background-clip: border-box;
   border: 1px solid #fff;
   border-radius: 0;
 }
+
+
 
 .THIS .containedButtonLiveAgent {
   -webkit-transition-duration: 0.4s;
@@ -38,9 +39,9 @@
   text-align: center;
   color: #ffffff;
   min-height: 40px;
-  width: 60px;
   word-break: break-word;
   border: none;
+  height:64px;
 }
 
 .THIS .containedButtonLiveAgent button:hover {
@@ -59,7 +60,6 @@
   text-align: center;
   color: #ffffff;
   min-height: 40px;
-  width: 60px;
   word-break: break-word;
   border: none;
 }
@@ -79,9 +79,9 @@
   text-align: center;
   color: #ffffff;
   min-height: 40px;
-  width: 60px;
   word-break: break-word;
   border: none;
+  height:64px;
 }
 
 .THIS .containedButton, .THIS .containedButton button, .THIS .containedButton button:active, .THIS .containedButton button:visited, .THIS .containedButton button:focus {
@@ -100,7 +100,6 @@
   text-align: center;
   color: #ffffff;
   min-height: 40px;
-  width: 220px;
   word-break: break-word;
   border: none;
 }
@@ -126,4 +125,35 @@
 .THIS.customCard .cardSizing {
   height: 180px;
   width: 250px;
+}
+
+
+.THIS.slds-col.default_panel {
+  background-color: #fff;
+  color: #333333;
+  border: transparent;
+  height: 140px;
+  margin-bottom: 30px;
+  width: 150px;
+}
+
+.THIS.slds-col.active_panel {
+  background-color: #1e32fa;
+  color: #fff;
+  position: relative;
+  border: transparent;
+  height: 140px;
+  margin-bottom: 30px;
+  width: 150px;
+}
+
+.THIS.active_panel::after {
+  width: 0px;
+  height: 0px;
+  position: relative;
+  top: 32px;
+  border-style: solid;
+  content: " ";
+  border-width: 15px 15px 0;
+  border-color: #1e32fa transparent transparent;
 }
