@@ -5415,6 +5415,25 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GoGlobal_Financial_Assessments</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>GFA communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason</field>
+                <operation>equals</operation>
+                <value>Multicountry Review</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>ISS Portal PwC for IATA user</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>PwC_Change_Requests</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
