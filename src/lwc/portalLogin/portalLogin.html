@@ -44,7 +44,7 @@
                                             <lightning-layout-item size="12">
                                                 <div data-id="emailDiv" class="slds-form-element">
                                                     <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                        <input type="text" value={email} data-id="emailInput" placeholder=" " required="" class="slds-input"
+                                                        <input name="username" type="text" value={email} data-id="emailInput" placeholder=" " required="" class="slds-input"
                                                             onchange={handleEmailChange} onfocusout={handleEmailFocusOut} autocomplete="on" readonly={isEmailFieldReadOnly} />
                                                     </div>
                                                     <div if:true={isEmailInvalid}>
