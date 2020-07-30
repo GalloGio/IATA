@@ -258,7 +258,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 					let myTopicsList = [];
 
 					//Set first value on the list
-					// let auxmyTopicsList = [];
 					for (const item of this.myResult) {
 						myTopicsList.push({
 							label: item.topicLabel,
