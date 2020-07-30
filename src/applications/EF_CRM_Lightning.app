@@ -116,5 +116,6 @@
     <tabs>AMS_Account_Role__c</tabs>
     <tabs>Account_Role__c</tabs>
     <tabs>Business_Context__c</tabs>
+    <tabs>Portal_Invitation</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
