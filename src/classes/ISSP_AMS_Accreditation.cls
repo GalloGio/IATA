@@ -830,7 +830,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					|| newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
 					amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
 				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_BR || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_COMERCIAL  || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
-					amsOfficeType = AMS_Utils.BR;
+					amsOfficeType = 'Branch';
 				}
 
 				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
