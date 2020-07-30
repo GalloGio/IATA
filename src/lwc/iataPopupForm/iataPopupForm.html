@@ -1,0 +1,43 @@
+<template>
+	<div class={formElementClass}>
+		<lightning-layout-item size={buttonAreaSize}>
+			<lightning-layout multiple-rows="true">
+				<lightning-layout-item size="12" if:true={label}>
+					<label class="slds-form-element__label">
+						<abbr if:true={required} class="slds-required" title="required">* </abbr>{label}
+					</label>
+				</lightning-layout-item>
+				<lightning-layout-item class="slds-form-element__control slds-var-p-top_small" style="height: 3.25rem;">
+					<c-iata-button
+						icon={buttonIcon}
+						icon-size={buttonIconSize}
+						icon-right={buttonIconRight}
+						label={buttonLabel}
+						onclick={open}
+						variant={buttonVariant}
+						width={buttonWidth}
+						text-align={buttonAlignment}
+						small-text={buttonSmallText}
+						disabled={disabled}>
+					</c-iata-button>
+				</lightning-layout-item>
+			</lightning-layout>
+		</lightning-layout-item>
+		<div if:true={displayErrors} class="slds-form-element__help" id="form-error">This field is required</div>
+	</div>
+    <c-iata-modal showclosebutton="true" size="x-small">
+        <h2 slot="header">{header}</h2>
+        <div slot="body" style="min-height: 30rem;">
+			<c-iata-dependent-picklist
+				fields={fields}
+				variant={formVariant}
+				onchange={handleChange}
+				onpicklistopen={handlepicklistopen}>
+			</c-iata-dependent-picklist>
+        </div>
+        <div slot="footer" class="slds-grid slds-grid_align-space">
+			<c-iata-button label="Remove All Filters" onclick={clear}></c-iata-button>
+			<c-iata-button label="Apply" variant="contained" onclick={apply}></c-iata-button>
+        </div>
+    </c-iata-modal>
+</template>
