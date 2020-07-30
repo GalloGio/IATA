@@ -1,0 +1,60 @@
+<template>
+	<div class={picklistContainerClass}>
+	<div class={formElementClass}>
+		<label class="slds-form-element__label" for="combobox-id">
+			<abbr if:true={required} class="slds-required" title="required">* </abbr>{label}
+		</label>
+		<div class="slds-form-element__control">
+			<div class="slds-combobox_container">
+				<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+					aria-expanded="true" aria-haspopup="listbox" role="combobox">
+					<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none" onclick={handleClickSelect}>
+						<input type="text" class="slds-input slds-combobox__input"
+							aria-controls="listbox-id" role="textbox" title={title}
+							placeholder={picklistPlaceholder} readonly="readonly" disabled={disabled} value={valueLabel} onblur={handleBlurSelect}/>
+							<span class={picklistIconClass} onmousedown={handleClickSelectIcon}></span>
+					</div>
+					<div id="listbox-id" class={listBoxContainerClass} role="listbox" if:true={options}>
+						<div data-value="close" if:true={multiSelect} onclick={handleClickClose}
+							role="option" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small">
+							<span class="slds-media__figure slds-listbox__option-icon">
+								<lightning-icon icon-name="utility:close" size="x-small"></lightning-icon>
+							</span>
+							<span class="">
+								<span class="slds-truncate" title="Close"><a>Close</a></span>
+							</span>
+						</div>
+						<div class={listBoxClass}>
+							<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+								<template for:each={options} for:item="option">
+									<li role="presentation" key={option.value}>
+										<div id={option.value} data-value={option.value}
+											class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+											role="option" onmousedown={handleClickOption}>
+											<span class="slds-media__figure slds-listbox__option-icon">
+												<lightning-icon icon-name="utility:check" size="x-small" if:true={option.selected}></lightning-icon>
+											</span>
+											<span class="slds-media__body">
+												<span class="slds-truncate" title={option.label}>{option.label}</span>
+											</span>
+										</div>
+									</li>
+								</template>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div if:true={displayErrors} class="slds-form-element__help" id="form-error">This field is required</div>
+	</div>
+	<div class={pillFiltersContainerClass} if:true={pillFilters} style={pillFiltersContainerStyle}>
+		<c-pill-filters
+			value={selectedOptions}
+			collapsible={pillFiltersCollapsible}
+			full-column={displayVertical}
+			onchange={handlePillFilterChange}
+			></c-pill-filters>
+	</div>
+</div>
+</template>
