@@ -802,10 +802,9 @@
                             </apex:panelGrid>
                         </apex:pageBlockSectionItem>
                     
+                    <apex:outputlabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3}" rendered="{!NOT(isCNSAgency)}"/>
                     
-                    <apex:outputlabel value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3}" rendered="NOT(isCNSAgency)"/>
-
-                    <apex:pageBlockSectionItem rendered="NOT(isCNSAgency)">                
+                    <apex:pageBlockSectionItem rendered="{!NOT(isCNSAgency)}">                
                         <apex:panelGrid columns="10">
                             <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Billing_payment_Branch_Office__c==false,newForm.Billing_payment_Head_Office__c==false,newForm.Billing_payment_Another_Branch__c==false), 'requiredIndicator', '')}" title="billingpayment" value="{!newForm.Billing_payment_Head_Office__c}" onchange="forceOneSelection(this);" />
                             <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3_TXT1}&nbsp;&nbsp;&nbsp;&nbsp;"/>
