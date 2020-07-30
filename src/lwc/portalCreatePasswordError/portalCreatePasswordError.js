@@ -1,7 +1,3 @@
-/**
- * Created by bkaya01 on 05/09/2019.
- */
-
 import { LightningElement, api, track } from 'lwc';
 import CSP_PortalPath       from '@salesforce/label/c.CSP_PortalPath';
 import { navigateToPage }   from 'c/navigationUtils';
@@ -14,7 +10,8 @@ import loginNowLabel        from '@salesforce/label/c.CSP_Resend_Verification_Em
 import successMessageLabel  from '@salesforce/label/c.CSP_Expired_Email_Success_Msg';
 
 export default class PortalCreatePasswordError extends LightningElement {
-        @api params;
+		@api params;
+		@api pageParams; //this is not fetched from the URL because the parent component already handled the params
 
         @track success = false;
         successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
@@ -29,16 +26,16 @@ export default class PortalCreatePasswordError extends LightningElement {
         }
 
         handleSendEmail() {
-             ResendEmail({ paramStr : JSON.stringify(this.params) })
-             .then(result => {
+            ResendEmail({ paramStr : JSON.stringify(this.params), urlParam : this.pageParams })
+            .then(result => {
                 this.success = result;
-             })
-             .catch(error => {
+            })
+            .catch(() => {
                 this.success = false;
-             });
+            });
         }
 
         handleLogin() {
-            navigateToPage(CSP_PortalPath);
+            navigateToPage(CSP_PortalPath, this.pageParams);
         }
 }
