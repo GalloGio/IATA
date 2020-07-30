@@ -2354,7 +2354,7 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
     <fields>
         <fullName>Desired_commencment_date__c</fullName>
         <externalId>false</externalId>
-        <label>Desired commencment date</label>
+        <label>Desired commencement date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2878,6 +2878,33 @@ B. (for use only in jurisdictions where a tripartite agreement is required): EU 
         </valueSet>
     </fields>
     <fields>
+        <fullName>Form_of_payment_in_HOT_files__c</fullName>
+        <description>Used in ISSP_APCases to create new cases for EasyPay when the form of payment is HOT.
+This field identifies the type of HOT payment</description>
+        <externalId>false</externalId>
+        <label>Form of payment in HOT files</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CC</fullName>
+                    <default>false</default>
+                    <label>CC</label>
+                </value>
+                <value>
+                    <fullName>EP</fullName>
+                    <default>false</default>
+                    <label>EP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>GSSA_Address_Formula__c</fullName>
         <externalId>false</externalId>
         <formula>if(LEN(Case__r.Account.BillingStreet)&gt;0, Case__r.Account.BillingStreet&amp; &quot; &quot; , &quot;&quot; ) &amp; BR() &amp;
@@ -3144,6 +3171,50 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_1__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_2__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_3__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOT_File_Recipient_Remove_Email_4__c</fullName>
+        <description>HOT File recipient requested to be removed</description>
+        <externalId>false</externalId>
+        <label>HOT File Recipient Remove Email 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Hot_files_delivery_format__c</fullName>
         <description>Delivery format</description>
         <externalId>false</externalId>
@@ -3225,6 +3296,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <fullName>OUT</fullName>
                     <default>false</default>
                     <label>Opt-Out</label>
+                </value>
+                <value>
+                    <fullName>HOT</fullName>
+                    <default>false</default>
+                    <label>HOT</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -4005,6 +4081,72 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Stock_Management_Email_1__c</fullName>
+        <description>First email to add in Stock Management Section in AP Changes</description>
+        <externalId>false</externalId>
+        <label>Stock Management Email 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Stock_Management_Email_2__c</fullName>
+        <description>Second email to add in Stock Management Section in AP Changes</description>
+        <externalId>false</externalId>
+        <label>Stock Management Email 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Stock_Management_Email_3__c</fullName>
+        <description>Third email to add in Stock Management Section in AP Changes</description>
+        <externalId>false</externalId>
+        <label>Stock Management Email 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Stock_Management_Remove_Email_1__c</fullName>
+        <description>First email to remove in Stock Management Section in AP Changes</description>
+        <externalId>false</externalId>
+        <label>Stock Management Remove Email 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Stock_Management_Remove_Email_2__c</fullName>
+        <description>Second email to remove in Stock Management Section in AP Changes</description>
+        <externalId>false</externalId>
+        <label>Stock Management Remove Email 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Stock_Management_Remove_Email_3__c</fullName>
+        <description>Third email to remove in Stock Management Section in AP Changes</description>
+        <externalId>false</externalId>
+        <label>Stock Management Remove Email 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Submitted_to_IATA__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -4170,7 +4312,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <value>
                     <fullName>Change of Address</fullName>
                     <default>false</default>
-                    <label>Change of Address</label>
+                    <label>Change of Local Address</label>
                 </value>
                 <value>
                     <fullName>Tax Number</fullName>
@@ -4178,13 +4320,95 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <label>Tax Number</label>
                 </value>
                 <value>
-                    <fullName>BSPLink Master Table</fullName>
+                    <fullName>Master Table</fullName>
                     <default>false</default>
-                    <label>BSPLink Master Table</label>
+                    <label>Link Master Table</label>
+                </value>
+                <value>
+                    <fullName>Voluntary Withdrawal</fullName>
+                    <default>false</default>
+                    <label>Voluntary Withdrawal</label>
+                </value>
+                <value>
+                    <fullName>Report Options</fullName>
+                    <default>false</default>
+                    <label>Report Options</label>
+                </value>
+                <value>
+                    <fullName>Commission</fullName>
+                    <default>false</default>
+                    <label>Commission</label>
+                </value>
+                <value>
+                    <fullName>Stock Management</fullName>
+                    <default>false</default>
+                    <label>Stock Management</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Type_of_Report_Options__c</fullName>
+        <description>Only used when one of the selected values in &apos;Type_of_Change_Requested__c&apos; is &apos;Report Options&apos;</description>
+        <externalId>false</externalId>
+        <label>Type of Report Options</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HOT</fullName>
+                    <default>false</default>
+                    <label>HOT</label>
+                </value>
+                <value>
+                    <fullName>PDF</fullName>
+                    <default>false</default>
+                    <label>PDF</label>
+                </value>
+                <value>
+                    <fullName>Excel</fullName>
+                    <default>false</default>
+                    <label>Excel</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type_of_Settlement__c</fullName>
+        <description>Please indicate which type of settlement do you want to use for this market?</description>
+        <externalId>false</externalId>
+        <label>Type of Settlement</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Local Bank</fullName>
+                    <default>false</default>
+                    <label>A local bank account (account in the country and currency of the settlement)</label>
+                </value>
+                <value>
+                    <fullName>ICCS bank account</fullName>
+                    <default>false</default>
+                    <label>ICCS bank account (Cross border transfers)</label>
+                </value>
+                <value>
+                    <fullName>Settlement a la carte</fullName>
+                    <default>false</default>
+                    <label>Settlement a la carte (A percentage distribution between local bank account and ICCS bank account)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_of_participation_desired__c</fullName>
@@ -4216,6 +4440,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                     <fullName>Airline joining CASS through a GSSA</fullName>
                     <default>false</default>
                     <label>Airline joining CASS through a GSSA</label>
+                </value>
+                <value>
+                    <fullName>IFG</fullName>
+                    <default>false</default>
+                    <label>IFG (IATA Financial Gateway)</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -5070,6 +5299,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -5109,6 +5349,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -5402,15 +5646,61 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Options</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voluntary Withdrawal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6190,6 +6480,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Hot_files_delivery_format__c</picklist>
             <values>
                 <fullName>ASD %28applicable for China%29</fullName>
@@ -6206,6 +6507,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -6485,9 +6790,43 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Full %28direct participant%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7267,6 +7606,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -7306,6 +7656,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -7599,15 +7953,61 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Options</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voluntary Withdrawal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8387,6 +8787,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -8418,6 +8829,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -8701,6 +9116,36 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9491,6 +9936,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -9530,6 +9986,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -9823,15 +10283,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10635,6 +11125,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -10666,6 +11167,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -10955,15 +11460,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11759,6 +12294,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -11790,6 +12336,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -12079,15 +12629,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12874,6 +13454,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -12913,6 +13504,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -13214,7 +13809,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
+                <fullName>Master Table</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14358,15 +14953,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15162,6 +15787,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -15201,6 +15837,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -15502,15 +16142,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16306,6 +16976,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSSA_Contact_Salutation__c</picklist>
             <values>
                 <fullName>Mr</fullName>
@@ -16345,6 +17026,10 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IN</fullName>
                 <default>false</default>
@@ -16646,15 +17331,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>BSPLink Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16809,6 +17524,115 @@ OR(
         <errorMessage>Please accept the Terms and Conditions before submitting the Joining Application to IATA.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Check_dup_for_HOT_File_email1</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_1__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_1__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_1__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email2</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_2__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_2__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_2__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email3</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_3__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_3__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_HOT_File_email4</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for HOT files with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( HOT_File_Recipient_Remove_Email_4__c )),
+  OR(
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_1__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_2__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_3__c,
+    HOT_File_Recipient_Remove_Email_4__c ==  HOT_File_Recipient_Email_4__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_4__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_Stock_Management_email1</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for Stock Management with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( Stock_Management_Remove_Email_1__c)),
+  OR(
+    Stock_Management_Remove_Email_1__c ==  Stock_Management_Email_1__c,
+    Stock_Management_Remove_Email_1__c ==  Stock_Management_Email_2__c,
+    Stock_Management_Remove_Email_1__c ==  Stock_Management_Email_3__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_Stock_Management_email2</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for Stock Management with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( Stock_Management_Remove_Email_2__c)),
+  OR(
+    Stock_Management_Remove_Email_2__c ==  Stock_Management_Email_1__c,
+    Stock_Management_Remove_Email_2__c ==  Stock_Management_Email_2__c,
+    Stock_Management_Remove_Email_2__c ==  Stock_Management_Email_3__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_dup_for_Stock_Management_email3</fullName>
+        <active>true</active>
+        <description>This rule compares the email to remove for Stock Management with the fields for emails to add, must not be any repetition</description>
+        <errorConditionFormula>AND(
+  NOT(ISBLANK( Stock_Management_Remove_Email_3__c)),
+  OR(
+    Stock_Management_Remove_Email_3__c ==  Stock_Management_Email_1__c,
+    Stock_Management_Remove_Email_3__c ==  Stock_Management_Email_2__c,
+    Stock_Management_Remove_Email_3__c ==  Stock_Management_Email_3__c
+  )
+)</errorConditionFormula>
+        <errorDisplayField>HOT_File_Recipient_Remove_Email_3__c</errorDisplayField>
+        <errorMessage>This email is in the Emails to ADD section. Please review and then proceed with your application.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Derired_Date_to_start_ICH_Lower_than_SIS</fullName>
         <active>true</active>
         <description>The field Desired_date_to_start_in_ICH__c can&apos;t be earlier than field Desired_date_to_start_in_SIS__c</description>
@@ -16819,6 +17643,17 @@ OR(
 )</errorConditionFormula>
         <errorDisplayField>Desired_date_to_start_in_ICH__c</errorDisplayField>
         <errorMessage>Desired Date to start in ICH can&apos;t be earlier than Desired Date to start in SIS</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Desired_Commencement_date_too_short</fullName>
+        <active>true</active>
+        <description>BSP cases for Minor changes must have a Desired commencement date in more than 3 months</description>
+        <errorConditionFormula>AND(
+  INCLUDES(Type_of_Change_Requested__c, &quot;Voluntary Withdrawal&quot;),
+  Desired_commencment_date__c &lt; ADDMONTHS(TODAY(),3)
+)</errorConditionFormula>
+        <errorDisplayField>Desired_commencment_date__c</errorDisplayField>
+        <errorMessage>select a date at least 3 months away from today.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Russia_Double_Tax_avoiding_Treaty</fullName>
