@@ -91,6 +91,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public String amsLocationTypeLabelHq {get; set;}
 	public String amsLocationTypeLabel {get; set;}
 	public String amsIsGSA {get; set;}
+	public String noCLocationType {get; set;}
 	public String applyLanguage {get; set;}
 	public String displayLanguage {get; set;}
 	public string sector {get; set;}
