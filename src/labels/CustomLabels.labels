@@ -28572,14 +28572,6 @@ This service is free of charge.</value>
         <value>Countries/Territories to Opt-In:</value>
     </labels>
     <labels>
-        <fullName>ISSP_AP_IATA_EasyPay_Section_Description</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_IATA_EasyPay_Section_Description</shortDescription>
-        <value>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in &lt;b&gt;{0}&lt;/b&gt;. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AP_Error_No_Countries_available</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -28596,12 +28588,28 @@ This service is free of charge.</value>
         <value>One or more country/territory must be selected.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Form</fullName>
+        <categories>ISSP Case list page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Form</shortDescription>
+        <value>Joining form</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Form_of_Payment</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form_of_Payment</shortDescription>
         <value>Form of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_IATA_EasyPay_Section_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_IATA_EasyPay_Section_Description</shortDescription>
+        <value>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in &lt;b&gt;{0}&lt;/b&gt;. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Israel_Submit_Address</fullName>
@@ -28620,6 +28628,77 @@ Tel Aviv, ISRAEL</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Israel_Submit_Disclaimer</shortDescription>
         <value>Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Bank_Details</shortDescription>
+        <value>New Change of bank details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Req</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Req</shortDescription>
+        <value>New Change Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Joining_App</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Joining_App</shortDescription>
+        <value>New Joining Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyActivities</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyActivities</shortDescription>
+        <value>The Administrator in each company is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyAdmin</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyAdmin</shortDescription>
+        <value>Please provide the Name and E-mail address of each company staff that will act as administrator for PASS.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_CompanyRecomendation</fullName>
+        <categories>ISSP, PASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_CompanyRecomendation</shortDescription>
+        <value>Recommendation: Each company should have one or two PASS Administrators.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_FieldsFilled</fullName>
+        <categories>ISSP, PASS, ISSP_AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_FieldsFilled</shortDescription>
+        <value>All mandatory fields have been filled; you are ready to submit your application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_PASS_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
+        <value>Are you sure you want to withdraw the selected countries?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
+        <categories>ISSP AP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Partnership_Download_PDF</shortDescription>
+        <value>Use the link below to download the application form, sign it and upload it.</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Report_Options_Add_Emails</fullName>
@@ -28700,85 +28779,6 @@ Tel Aviv, ISRAEL</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Stock_Management_Remove_Emails</shortDescription>
         <value>Please list below any email addresses that you want to REMOVE from the distribution.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_Form</fullName>
-        <categories>ISSP Case list page</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_Form</shortDescription>
-        <value>Joining form</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_New_Change_Bank_Details</shortDescription>
-        <value>New Change of bank details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_New_Change_Req</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_New_Change_Req</shortDescription>
-        <value>New Change Request</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_New_Joining_App</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_New_Joining_App</shortDescription>
-        <value>New Joining Application</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_PASS_CompanyActivities</fullName>
-        <categories>ISSP, PASS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_CompanyActivities</shortDescription>
-        <value>The Administrator in each company is responsible for creating, updating, assigning permissions and deleting Users for the purpose of managing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the company.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_PASS_CompanyAdmin</fullName>
-        <categories>ISSP, PASS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_CompanyAdmin</shortDescription>
-        <value>Please provide the Name and E-mail address of each company staff that will act as administrator for PASS.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_PASS_CompanyRecomendation</fullName>
-        <categories>ISSP, PASS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_CompanyRecomendation</shortDescription>
-        <value>Recommendation: Each company should have one or two PASS Administrators.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_PASS_FieldsFilled</fullName>
-        <categories>ISSP, PASS, ISSP_AP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_FieldsFilled</shortDescription>
-        <value>All mandatory fields have been filled; you are ready to submit your application</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_PASS_Withdraw</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_PASS_Withdraw</shortDescription>
-        <value>Are you sure you want to withdraw the selected countries?</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
-        <categories>ISSP AP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AP_Partnership_Download_PDF</shortDescription>
-        <value>Use the link below to download the application form, sign it and upload it.</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Voluntary_Withdrawal_Disclaimer</fullName>

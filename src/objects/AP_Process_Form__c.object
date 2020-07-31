@@ -13809,15 +13809,45 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_Change_Requested__c</picklist>
             <values>
-                <fullName>Master Table</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Change of Address</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Report_Options__c</picklist>
+            <values>
+                <fullName>Excel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Settlement__c</picklist>
+            <values>
+                <fullName>ICCS bank account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settlement a la carte</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14609,6 +14639,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Form_of_payment_in_HOT_files__c</picklist>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
