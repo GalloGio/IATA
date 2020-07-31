@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Add_Service_On_Checked__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Checkbox_Fieldname__c</field>
@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Remove_Service_On_Unchecked__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
 </CustomMetadata>
