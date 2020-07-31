@@ -8238,7 +8238,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case Closure Success Message 48Hours</shortDescription>
-        <value>As we did not hear nothing from you within 48 hours, we had already closed the case below:</value>
+        <value>As we did not hear from your within 48 hours, we had already closed the case below:</value>
     </labels>
     <labels>
         <fullName>Case_Closure_Success_Title</fullName>
