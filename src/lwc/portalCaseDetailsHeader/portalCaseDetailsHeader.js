@@ -374,5 +374,8 @@ export default class PortalHomeCalendar extends LightningElement {
             });
     }
 
+	get displayExpiredMessage() {
+		return this.isExpired && this.caseDetails !== null && this.caseDetails.IsClosed;
+	}
 
 }

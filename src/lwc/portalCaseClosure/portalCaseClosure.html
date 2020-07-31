@@ -13,8 +13,8 @@
 			</div>
 			
 				<!-- Success message -->
-				<div if:true={isSuccess} class="customLightShadow background-white slds-var-m-top_x-large slds-var-p-around_large slds-align_absolute-center slds-size_5-of-8">
-					<div if:false={ignoreSurveyIntention}>
+				<div if:true={isSuccess} class="customLightShadow background-white slds-var-m-top_x-large slds-var-p-around_large slds-align_absolute-center slds-size_11-of-12 slds-medium-size_10-of-12 slds-large-size_5-of-8">
+					<div if:false={ignoreSurveyIntention} class="slds-size_1-of-1 slds-text-align_center">
 						<div class="success">
 							<div data-icon class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap slds-icon">
 								<span class="circleOutter slds-grid">
@@ -30,13 +30,13 @@
 						<div class="slds-align_absolute-center">
 							<c-iata-button variant="link" label={caseDetailsButtonLabel} onclick={goToCase}></c-iata-button>
 						</div>
-						<div class="text-xsmall slds-var-p-vertical_medium text-gray slds-align_absolute-center">{label.CaseClosureSurveyMessage}</div>
+						<div class="text-xsmall slds-var-p-vertical_medium text-gray slds-align_absolute-center slds-text-align_center">{label.CaseClosureSurveyMessage}</div>
 						<div class="slds-align_absolute-center slds-var-p-vertical_large">
 							<c-iata-button variant="outlined" label={label.CaseClosureIgnoreSurveyButton} onclick={ignoreSurvey} class="slds-var-p-horizontal_small"></c-iata-button>
 							<c-iata-button variant="contained" label={label.CaseClosureTakeSurveyButton} onclick={answerSurvey} class="slds-var-p-horizontal_small"></c-iata-button>
 						</div>
 					</div>
-					<div if:true={ignoreSurveyIntention}>
+					<div if:true={ignoreSurveyIntention} class="slds-size_1-of-1 slds-text-align_center">
 						<div class="success">
 							<div data-icon class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap slds-icon">
 								<span class="circleOutter slds-grid">
