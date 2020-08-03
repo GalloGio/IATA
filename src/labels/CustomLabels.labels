@@ -3638,7 +3638,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Breadcrumb_Support_ReachUs</shortDescription>
-        <value>Reach Us</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>CSP_Breadcrumb_Support_Title</fullName>
@@ -3661,6 +3661,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Buy Online</shortDescription>
         <value>Buy Online</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Call_Tile_SubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Call Tile Sub label</shortDescription>
+        <value>Give Us a Call</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -4439,6 +4447,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
         <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title when emergency option is selected on the Case Creation</shortDescription>
+        <value>You have selected Emergency option</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message when emergency option is selected on the Case Creation</shortDescription>
+        <value>Please note that the support provided through the Emergency channel is offered in &lt;b&gt;English&lt;/b&gt; and for the following critical situations:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Message2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Second Message when emergency option is selected on the Case Creation</shortDescription>
+        <value>If your query is not related to one of these situations, please click "&lt;b&gt;Submit as Query&lt;/b&gt;" below to create a case.</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Message</fullName>
@@ -7627,6 +7659,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_SubmitApproval</shortDescription>
         <value>Submit for Approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmitAsEmergency</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP submit Emergency query label</shortDescription>
+        <value>Submit as Emergency</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmitAsQuery</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP submit query label</shortDescription>
+        <value>Submit as Query</value>
     </labels>
     <labels>
         <fullName>CSP_SubmittedApproval</fullName>

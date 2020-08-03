@@ -1,0 +1,39 @@
+.circleInner{
+    height: 80px;
+    width: 80px;
+    background: linear-gradient(0deg, rgba(250, 200, 50, 0.8), rgba(250, 200, 50, 0.8)), #FFFFFF;
+    border-radius: 50%;
+}
+
+.circleOutter{
+    height: 96px;
+    width: 96px;
+    background: linear-gradient(0deg, rgba(250, 200, 50, 0.4), rgba(250, 200, 50, 0.4)), #FFFFFF;
+    border-radius: 50%;
+}
+
+
+.lineH{
+  line-height: 26px;  
+}
+
+.ContainerDim{
+    max-width:596px;
+}
+
+.modal{
+    z-index: 155;
+}
+
+ul {
+    list-style: none;
+  }
+  
+ul li::before {
+    content: "\2022";
+    color: #7884FC;
+    font-weight: bolder;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}

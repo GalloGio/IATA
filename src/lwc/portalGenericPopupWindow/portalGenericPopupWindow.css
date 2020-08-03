@@ -1,0 +1,45 @@
+.circleInner{
+    height: 80px;
+    width: 80px;
+    
+    border-radius: 50%;
+}
+
+.circleOutter{
+    height: 96px;
+    width: 96px;
+    
+    border-radius: 50%;
+}
+
+.warning .circleInner {
+    background: linear-gradient(0deg, rgba(250, 200, 50, 0.8), rgba(250, 200, 50, 0.8)), #FFFFFF;
+}
+
+.warning .circleOutter {
+    background: linear-gradient(0deg, rgba(250, 200, 50, 0.4), rgba(250, 200, 50, 0.4)), #FFFFFF;
+}
+
+.success .circleInner {
+    background: linear-gradient(0deg, rgba(40, 150, 50, 0.6), rgba(40, 150, 50, 0.6)), #FFFFFF;
+}
+
+.success .circleOutter {
+    background: linear-gradient(0deg, rgba(40, 150, 50, 0.3), rgba(40, 150, 50, 0.3)), #FFFFFF;
+}
+
+
+.ContainerDim{
+    max-width:596px;
+}
+
+.modal{
+    z-index: 155;
+}
+
+.iconSize{
+    width:56px;
+    height:56px;
+    background:white;
+    border-radius:50%;
+}

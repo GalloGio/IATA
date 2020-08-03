@@ -150,32 +150,27 @@ public static Contact getContact() {
 
 //Creates a Case once the user reaches the page and sends it over to the JS for further editting.
 @AuraEnabled(Cacheable=true)
-public static Case createCase(String countryiso, Boolean isConcernCase, String topic, String subtopic) {
+public static Case createCase(String countryiso, Boolean isConcernCase, String topic) {
 	Case newCase = new Case();
 	Map<String,String> recordTypeCountry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(CONTACT, countryiso.toUpperCase());
 	topic = topic + '__c';
-	subtopic = subtopic + '__c';
 
 	if(countryiso == null || countryiso == '') {
 		newCase.IFAP_Country_ISO__c = CONTACT.Account.Country_ISO_Code__c;
 		countryiso = CONTACT.Account.Country_ISO_Code__c;
-	}else{
+	}else{ 
 		newCase.IFAP_Country_ISO__c = countryiso;
 	}
 
 	if(recordTypeCountry != null) {
-		if(isConcernCase) {
-			List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic  + '%', true);
-			newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', complaintRecordType[0].RecordType__c);
+		
+		//fetch recordtype
+		ISSP_FAQ2Case_Record_Type__c rtSelected = setRecordType('%' + countryiso.toUpperCase() + '%', topic, isConcernCase);
+		
+		if(rtSelected != null){ 
+			newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rtSelected.recordtype__C);
 		}
-		else{
-			List<ISSP_FAQ2Case_Record_Type__c> caseRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic  + '%', '%' + subtopic + '%', false);
-			for(ISSP_FAQ2Case_Record_Type__c rt : caseRecordType) {
-				if(rt.Topic__c == topic || rt.SubTopic__c == subtopic) {
-					newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rt.RecordType__c);
-				}
-			}
-		}
+		
 		newCase.Region__c = recordTypeCountry.get('Region');
 		newCase.BSPCountry__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
 		newCase.Country_concerned_by_the_query__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
@@ -233,57 +228,32 @@ public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
 	return [SELECT Id, CaseNumber FROM Case WHERE id =: caseToInsert.Id LIMIT 1];
 }
 
-private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country, String topic, String subtopic, Boolean isComplaint){
+private static ISSP_FAQ2Case_Record_Type__c setRecordType (String country, String topic, Boolean isComplaint){
 
-
-	if(isComplaint) {
-
-		Map<String, ISSP_FAQ2Case_Record_Type__c> mapRecordType = new Map<String, ISSP_FAQ2Case_Record_Type__c>();
-		List<ISSP_FAQ2Case_Record_Type__c> finalRecordType = new  List<ISSP_FAQ2Case_Record_Type__c>();
-		List<ISSP_FAQ2Case_Record_Type__c> lstRecordType = [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
-															Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,Flag_Assignment_Rules__c
-															FROM ISSP_FAQ2Case_Record_Type__c
-															WHERE Complaint__c =: isComplaint
-																				 AND ( Country_concerned_by_the_query__c like: country
-																					   OR Country_concerned_by_the_query2__c like: country
-																					   OR Country_concerned_by_the_query3__c like: country)];
-		for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType)
-		{
-			if(rt.SubTopic__c != null && rt.SubTopic__c.contains(',')){
-				List<String> lstSubtopic = rt.SubTopic__c.split(',');
-				for(String subT : lstSubtopic){
-					mapRecordType.put(rt.Topic__c + '#' + subT, rt);
-				}
-			}else{
-				String keymap=(rt.Topic__c==null?'': rt.Topic__c)+'#'+(rt.SubTopic__c==null?'': rt.SubTopic__c);
-				mapRecordType.put(keymap, rt);
-			}
-		}
-
-		if(mapRecordType.containsKey(topic + '#' + subtopic)) {
-			finalRecordType.add(mapRecordType.get(topic + '#' + subtopic));
-			return finalRecordType;
-		}
-		else if(mapRecordType.containsKey(topic + '#')) {
-			finalRecordType.add(mapRecordType.get(topic + '#'));
-			return finalRecordType;
-		}
-		else{
-			finalRecordType.add(mapRecordType.get('#'));
-			return finalRecordType;
-		}
-
-	}else{
-
-		return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
-				Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c, Flag_Assignment_Rules__c
-				FROM ISSP_FAQ2Case_Record_Type__c
-				WHERE Complaint__c =: isComplaint AND (Topic__c =: topic
-								   OR SubTopic__c = : subtopic
-													OR Country_concerned_by_the_query__c like: country
-													OR Country_concerned_by_the_query2__c like: country
-													OR Country_concerned_by_the_query3__c like: country)];
+	Map<String, ISSP_FAQ2Case_Record_Type__c> mapRecordType = new Map<String, ISSP_FAQ2Case_Record_Type__c>();
+	ISSP_FAQ2Case_Record_Type__c finalRecordType = new ISSP_FAQ2Case_Record_Type__c();
+	List<ISSP_FAQ2Case_Record_Type__c> lstRecordType = [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
+														Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,Flag_Assignment_Rules__c
+														FROM ISSP_FAQ2Case_Record_Type__c
+														WHERE Complaint__c =: isComplaint
+																				AND ( Country_concerned_by_the_query__c like: country
+																					OR Country_concerned_by_the_query2__c like: country
+																					OR Country_concerned_by_the_query3__c like: country)];
+	for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType){
+		
+		String keymap=((rt.Topic__c==null?'': rt.Topic__c)+'#');
+		mapRecordType.put(keymap, rt);
+		
 	}
+
+	if(mapRecordType.containsKey(topic + '#')) {
+		finalRecordType=mapRecordType.get(topic + '#');
+		return finalRecordType;
+	}
+	else{
+		return mapRecordType.get('#');
+	}
+	
 }
 
 //Creates a CaseTeamMember with the contacts (related to the emails of course)

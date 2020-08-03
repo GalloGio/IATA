@@ -1,0 +1,46 @@
+<template>
+    <c-portal-generic-popup-window show-close variant='warning' onabortaction={abortRequest}>
+        <span slot="bodycontent" class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_full slds-p-around--medium text-bold text-small">                   
+                <span if:true={showClose}  class="slds-float_right slds-m-horizontal_xx-small"
+                    onclick={abortRequest} >
+                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer blackIcon"
+                        ></lightning-icon>
+                </span>
+            </div>
+            <div class="slds-align_absolute-center">
+                <div class="slds-size_11-of-12">
+                    <div class="slds-p-vertical_large text-small lineH">
+                        <p class="slds-text-align_center text-medium text-bold"> {label.CSP_Emergency_Selected_Case_Creation_Title}</p>
+                        <p class="slds-text-align_center slds-p-vertical_x-small">
+                            <lightning-formatted-rich-text                       
+                                value={label.CSP_Emergency_Selected_Case_Creation_Message}
+                            >
+                            </lightning-formatted-rich-text>
+                        </p>
+                        <span class="slds-grid slds-size_3-of-4 slds-align_absolute-center slds-p-vertical_small">
+                            <ul class="slds-list_dotted">
+                                <li>{label.CSP_Emergency_Selected_Reason1}</li>
+								<li>{label.CSP_Emergency_Selected_Reason2}</li>
+								<li>{label.CSP_Emergency_Selected_Reason3}</li>
+								<li>{label.CSP_Emergency_Selected_Reason4}</li>
+                            </ul>
+                        </span>
+                    </div>
+                    <p class="slds-p-bottom--xx-large slds-text-align_center text-small">
+                        <lightning-formatted-rich-text                       
+                                value={label.CSP_Emergency_Selected_Case_Creation_Message2}
+                        >
+                        </lightning-formatted-rich-text>
+                    </p>
+                </div>
+            </div>
+
+            <div class="slds-m-top--xxx-small slds-m-bottom--xx-large customWhiteBackground slds-clearfix slds-size--1-of-1">
+                <slot name="ButtonSection">
+                    <!--button slot -->
+                </slot>
+            </div>
+        </span>
+    </c-portal-generic-popup-window>
+</template>
