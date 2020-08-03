@@ -1,9 +1,9 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track,wire } from 'lwc';
 import getArticles from '@salesforce/apex/PortalFAQsCtrl.getArticlesWithParam';
 import TitleLabel from '@salesforce/label/c.csp_Suggestion_label';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
-
+import { refreshApex } from '@salesforce/apex';
 
 export default class PortalSupportTopArticles extends NavigationMixin(LightningElement) {
     label = {
@@ -35,6 +35,7 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
 
     set topic(value) {
        this._topic = value;
+       this.fetchTopArticles();
     }
 
     @api
@@ -54,6 +55,26 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
         return this.relatedArticles !== undefined && this.relatedArticles.length > 0;
     }
 
+    @track artListData;
+    @track searchParam='';
+
+    @wire(getArticles, { selectedParams: '$searchParam', limitParam: '$numberOfArticles'})
+    WireArticleList(result) {
+        this.artListData = result;
+        if (result.data) {
+            let articles = [];
+            result.data.forEach( article => {
+                articles.push({ id: article.Id, title: article.Title });
+            });
+            
+            this.relatedArticles = articles;
+        
+        }
+        this.loading = false;
+    }   
+
+  
+
     fetchTopArticles() {
         this.loading = true;
         let searchParam;
@@ -68,25 +89,12 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
             searchParam = this._subtopic + '__c';
         }
         if(searchParam === undefined) {
-            searchParam = 'All__c';
+            searchParam = '';
         }
+        this.searchParam=searchParam;
+        refreshApex(this.artListData);// refreshes document list
 
-        getArticles({ selectedParams: searchParam, limitParam: this.numberOfArticles })
-            .then(results => {
-                if(results && results.length) {
-                    let articles = [];
-                    results.forEach( article => {
-                        articles.push({ id: article.Id, title: article.Title });
-                    });
-                    
-                    this.relatedArticles = articles;
-                }
-                this.loading = false;
-            })
-            .catch(error => {
-                console.error('Top Articles error', JSON.parse(JSON.stringify(error)));
-                this.loading = false;
-            });
+        
     }
 
     navigateToArticle(event) {

@@ -1,10 +1,6 @@
 <template>
-    <div if:true={loading} class="spinnerContainer">
-        <lightning-spinner size="medium"></lightning-spinner>
-    </div>
-
-    <div if:false={loading} class="slds-align_absolute-center">
-        <div if:true={hasArticles} class="slds-m-around_large slds-p-around_x-large topLightGrayBorder bottomLightGrayBorder">
+    <div if:false={loading} class="slds-align_absolute-center ">
+        <div if:true={hasArticles} class="slds-grid slds-wrap slds-size--1-of-1 slds-m-vertical_xx-large">
             <div class="slds-p-vertical_medium text-bold text-medium slds-align_absolute-center">
                 <h1>{label.TitleLabel}</h1>
             </div>
