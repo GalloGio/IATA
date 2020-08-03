@@ -280,6 +280,7 @@ public static string getTopicsWithL2Dep(){
 			valMap.put('topicName',dc.topicName);
 			valMap.put('topicLabel',dc.topicLabel);
 			valMap.put('reqL2',String.valueOf(reqL2TopicSet.contains(dc.topicName)));
+			valMap.put('topicLabelEN',dc.topicLabelEn);
 
 			topicsMap.put(dc.topicName,valMap);
 		}

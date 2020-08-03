@@ -121,13 +121,15 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	liveAgentButtonInfo;
 	myResult;
 	contact;
+	@track userInfo;
 	allData = {};
 	categorization = {};
 	emergencyCategories = [];
 	recordTypeAndCountry;
 	myliveAgentButtonInfo;
 	l2topics = [];
-
+	topicEN;
+	
 	// Level 2 registration variables
 	@track isFirstLevelUser;
 	@track displaySecondLevelRegistrationPopup = false;
@@ -262,7 +264,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 						myTopicsList.push({
 							label: item.topicLabel,
 							value: item.topicName,
-							reqL2: item.reqL2 === 'true'
+							reqL2: item.reqL2 === 'true',
+							labelEn: item.topicLabelEN
 						});
 
 					}
@@ -301,6 +304,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 			//Get contact information from the logged user
 			getContactInfo()
 				.then(result => {
+					this.userInfo=result;
 					this.contact = result.Contact;
 					this.showRecentCasesList = result.Profile.Name.search('Airline') == -1; // In case airline user, hide recent List
 					this.isFirstLevelUser = this.contact.Account.Is_General_Public_Account__c;
@@ -337,6 +341,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 						return;
 					}
 					let even = { target: { value: this.topic, isEmergency: isEmergency } };
+					this.toggleSpinner();
 					this.topicHandler(even);
 				}
 				else if (this.topic !== undefined && this.topic !== '') {
@@ -359,8 +364,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	//handles topic selection
 	topicHandler(event) {
 		//set topic globally
-		this.toggleSpinner();
+		this.toggleSpinner();		
 		this.topic = event.target.value;
+		this.topicEN=this.topicOptions.filter(obj => {return obj.value === this.topic})[0].labelEn;
 		this.isEmergency = event.target.isEmergency ? event.target.isEmergency : false;
 
 		if (this.isFirstLevelUser && this.requiresL2(this.topic)) {

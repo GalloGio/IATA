@@ -139,8 +139,14 @@
 			</div>
 		</div>
 		<!-- Show Create Case -->
-		<c-portal-support-reach-us-create-new-case if:true={isCaseOpt} topic={topic} country-i-s-o={countryValue}
-			show-emergency={emergencyButton} is-emergency-case={isEmergency} class="slds-size_full">
+		<c-portal-support-reach-us-create-new-case if:true={isCaseOpt} 
+			topic={topic} 
+			country-i-s-o={countryValue}
+			show-emergency={emergencyButton} 
+			is-emergency-case={isEmergency} 
+			is-l1={isFirstLevelUser} 
+			topic-en={topicEN}
+			user-info={userInfo} class="slds-size_full">
 		</c-portal-support-reach-us-create-new-case>
 	</div>
 	<template if:true={displaySecondLevelRegistrationPopup}>
