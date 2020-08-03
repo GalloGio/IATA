@@ -9386,24 +9386,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>CGO Billing</fullName>
+                    <fullName>Interline Agreement Manager</fullName>
                     <default>false</default>
-                    <label>CGO Billing</label>
+                    <label>Interline Agreement Manager</label>
                 </value>
                 <value>
-                    <fullName>CGO Corresp.</fullName>
+                    <fullName>Passenger Protection Agreement</fullName>
                     <default>false</default>
-                    <label>CGO Corresp.</label>
+                    <label>Passenger Protection Agreement</label>
                 </value>
                 <value>
-                    <fullName>PAX Billing</fullName>
+                    <fullName>Interline Airline Generic Contact</fullName>
                     <default>false</default>
-                    <label>PAX Billing</label>
-                </value>
-                <value>
-                    <fullName>PAX Corresp.</fullName>
-                    <default>false</default>
-                    <label>PAX Corresp.</label>
+                    <label>Interline Airline Generic Contact</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -19615,19 +19610,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>MITA_Contact_Type__c</picklist>
             <values>
-                <fullName>CGO Billing</fullName>
+                <fullName>Interline Agreement Manager</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>CGO Corresp%2E</fullName>
+                <fullName>Passenger Protection Agreement</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PAX Billing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PAX Corresp%2E</fullName>
+                <fullName>Interline Airline Generic Contact</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
