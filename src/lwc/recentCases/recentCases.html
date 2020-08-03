@@ -43,8 +43,10 @@
 
                     <div if:true={specialCase} class="slds-text-align_center">
                         <h1 class={titleCss}> {title} </h1>
-                        <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText}</h2>
-                        <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText2}</h2>
+                        <div class="slds-m-vertical_small">
+                            <h2 class="text-xsmall removeFontWeight">{helpText}</h2>
+                            <h2 class="slds-p-top_xx-small text-xsmall removeFontWeight">{helpText2}</h2>
+                        </div>
                     </div>
 
                     <div if:true={dataRecords} class={tableClass}>
