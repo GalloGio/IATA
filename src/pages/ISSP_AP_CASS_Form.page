@@ -143,12 +143,13 @@
         <p><a href="#nav_one">1.Participation</a></p>
         <p><a href="#nav_two">2.Contact info</a></p>
         <p><a href="#nav_three">3.Airline info</a></p>
-        <p><a href="#nav_four">4.GSSA info</a></p>
+        <p id="pageNav-4"><a href="#nav_four">4.GSSA info</a></p>
         <p><a href="#nav_five">5.Billing</a></p>
         <p><a href="#nav_six">6.Reporting</a></p>
         <p><a href="#nav_seven">7.CASSLink</a></p>
         <p><a href="#nav_eight">8.Commission</a></p>
-        <apex:outputLink value="#nav_nine" rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='MX',apcountryisocode='PH',apcountryisocode='CO', apcountryisocode='IN')}">9.Additional Info</apex:outputLink>
+        <p><a id="pageNav-9" href="#nav_nine">9.Other Cargo services</a></p>
+        <p><a id="pageNav-10" href="#nav_ten"></a></p>
         <div style="border-top: 1px #fff dotted; padding-top: 5px; padding-bottom: 5px;">
             <a data-toggle="modal" data-target="#ModalCountryReqs" href="#">Country Requirements</a>
         </div>
@@ -172,6 +173,11 @@
     </apex:outputPanel>
 
     <apex:form id="CASSForm" styleClass="inline">
+        <script>
+            //execute this code when form is rerendered
+            var section4Display = "{!IF(newForm.Type_of_participation_desired__c='Airline joining CASS through a GSSA', 'block', 'none')}";
+            document.getElementById("pageNav-4").style.display = section4Display;
+        </script>
         <apex:pageBlock mode="edit">
             <style>
                 .pbTitle{
@@ -233,8 +239,10 @@
                         <div class="aplabel">CASS Country your Airline wishes to participate in: {!apCountry}</div>
                     </apex:outputtext>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="Operation specified:" style="color:#a31717; font-weight: bold !important;"/>
-                        <apex:outPutText value="{!MID(newCase.Subject, FIND("-", newCase.Subject) + 1, (LEN(newCase.Subject) - FIND("-", newCase.Subject)))}"/>
+                        <apex:outputLabel value="Type of participation desired" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.Type_of_participation_desired__c}">
+                            <apex:actionSupport event="onchange" rerender="CASSForm" status="WaitingStatus"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Desired commencement date" style="color:#a31717; font-weight: bold !important;"/>
@@ -366,7 +374,7 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!apcountryisocode='IT'}">
-                        <apex:outputLabel value="* Italian Fiscal code" style="color:#a31717; font-weight: bold !important;"/>
+                        <apex:outputLabel value="Italian Fiscal code"/>
                         <apex:inputField value="{!newForm.Other_TAX_Identification__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     
@@ -452,30 +460,30 @@
                     <apex:inputField label="Email 2" value="{!newForm.CASS_Defaults_Email_2__c}"/>
                 </apex:pageBlockSection>    
                 <span id="nav_four"></span>
-                <apex:pageBlockSection title="4. GSSA Information" columns="2" >
+                <apex:pageBlockSection title="4. GSSA Information" columns="2" rendered="{!newForm.Type_of_participation_desired__c='Airline joining CASS through a GSSA'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4.  GSSA Information"/>
                         </apex:outputpanel>
                     </apex:facet>
                     <apex:pageBlockSectionItem rendered="{!NOT(isGSSAUser)}">
-                        <apex:outputLabel value="Legal Name of GSSA"/>
+                        <apex:outputLabel value="Legal Name of GSSA" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Legal_Name__c}"/>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!(isGSSAUser)}">
-                        <apex:outputLabel value="Legal Name of GSSA"/>
+                        <apex:outputLabel value="Legal Name of GSSA" styleclass="ap-required"/>
                         <apex:outputText value="{!strGSSAName}" />
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!NOT(isGSSAUser)}">
-                        <apex:outputLabel value="GSSA Address"/>
+                        <apex:outputLabel value="GSSA Address" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Address__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!(isGSSAUser)}">
-                        <apex:outputLabel value="GSSA Address"/>
+                        <apex:outputLabel value="GSSA Address" styleclass="ap-required"/>
                         <apex:outputText value="{!strGSSAAddress}" label="" escape="false" />
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem helpText="If the GSSA is already a Participant in the CASS operation." rendered="{!NOT(isGSSAUser)}">
-                        <apex:outputLabel value="GSSA code"/>
+                        <apex:outputLabel value="GSSA code" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Code__c}"/>
                     </apex:pageBlockSectionItem>
                     <apex:outputText rendered="{!NOT(isGSSAUser)}"><!--empty: move following field to next row --></apex:outputText>
@@ -484,13 +492,34 @@
                         GSSA Contact details
                     </div>
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
-                    <apex:inputField label="Social title" value="{!newForm.GSSA_Contact_Salutation__c}"/>
-                    <apex:inputField label="First name" value="{!newForm.GSSA_Contact_F_Name__c}"/>
-                    <apex:inputField label="Last name" value="{!newForm.GSSA_Contact_L_Name__c}"/>
-                    <apex:inputField label="Job title" value="{!newForm.GSSA_Contact_JobTitle__c}"/>
-                    <apex:inputField label="Email address" value="{!newForm.GSSA_Contact_Email__c}"/>
-                    <apex:inputField label="Phone number" value="{!newForm.GSSA_Contact_Phone__c}"/>
-                    <apex:inputField label="Fax number" value="{!newForm.GSSA_Contact_FAX__c}"/>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Social title" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_Salutation__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="First name" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_F_Name__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Last name" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_L_Name__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Job title" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_JobTitle__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Email address" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_Email__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Phone number" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_Phone__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Fax number"/>
+                        <apex:inputField value="{!newForm.GSSA_Contact_FAX__c}"/>
+                    </apex:pageBlockSectionItem>
                     
                 </apex:pageBlockSection>
                 
@@ -676,11 +705,6 @@
                         <apex:outputLabel value="* Does the Airline pay commission to Agents?" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField value="{!newForm.Pay_Commission_to_agents__c}" label=""/>
                     </apex:pageBlockSectionItem>            
-                    <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
-                    <apex:pageBlockSectionItem helpText="Standard Commission will be applied where AWB Billing record indicates a Commission is to be paid on the billing file uploaded in CASSlink.">
-                        <apex:outputLabel value="If YES above, does the Airline provide a Standard Commission?" styleclass="ap-required"/>
-                        <apex:inputField value="{!newForm.Pay_Standard_Commission__c}" label=""/>
-                    </apex:pageBlockSectionItem>                      
                     <apex:inputField label="Standard Commission Rate (%)" value="{!newForm.Commission_Rate__c}"/>
                 </apex:pageBlockSection>    
                 
@@ -700,6 +724,7 @@
 
                  <!-- BRAZIL,MEXICO  - START -->
                 <apex:pageBlockSection id="section9" title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jurídicas)', 'Local VAT - RFC #')}"/>
@@ -739,6 +764,7 @@
                 
                 <!-- ARGENTINA - START -->
                 <apex:pageBlockSection title="9. Additional Information - Clave Bancaria Unificada (CBU)" columns="1" rendered="{!apcountryisocode='AR'}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Information - Clave Bancaria Unificada (CBU)"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - Clave Bancaria Unificada (CBU)"/>
@@ -763,6 +789,7 @@
                 
                 <!-- PHILIPPINES - START -->
                 <apex:pageBlockSection title="9. Additional Legal Requirements - CASS Philippines" columns="1" rendered="{!apcountryisocode='PH'}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Legal Requirements - CASS Philippines"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Additional Legal Requirements - CASS Philippines"/>
@@ -789,6 +816,7 @@
                 
                 <!-- COLOMBIA - START -->
                 <apex:pageBlockSection title="9. Additional Information - ICA Taxes" columns="2" rendered="{!apcountryisocode='CO'}">
+                    <script>document.getElementById("pageNav-9").innerHTML="9. Additional Information - ICA Taxes"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - ICA Taxes"/>
@@ -824,7 +852,9 @@
                 </apex:pageBlockSection>
 
                 <!-- INDIA - START -->
+                <span id="nav_ten"></span>
                 <apex:pageBlockSection title="10. Local VAT Information" columns="1" rendered="{!apcountryisocode='IN'}">                        
+                    <script>document.getElementById("pageNav-10").innerHTML="10. Local VAT Information"</script>
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="10. Local VAT Information"/>

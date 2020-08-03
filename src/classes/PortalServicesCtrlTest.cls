@@ -61,12 +61,16 @@ public class PortalServicesCtrlTest {
 			Name = 'Financial Securities',
 			Requestable__c = false
 		);
-	Portal_Applications__c serviceTest7 = new Portal_Applications__c (
-		Name = 'Treasury Dashboard - Premium',
-		Requestable__c = false
+		Portal_Applications__c serviceTest7 = new Portal_Applications__c (
+			Name = 'Treasury Dashboard - Premium',
+			Requestable__c = false
+		);
+		Portal_Applications__c serviceTest8 = new Portal_Applications__c (
+			Name = 'E&F APPS',
+			Requestable__c = true
 		);
 
-	insert new List<Portal_Applications__c> {easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4,serviceTest5,serviceTest6,serviceTest7};
+	insert new List<Portal_Applications__c> {easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4,serviceTest5,serviceTest6,serviceTest7,serviceTest8};
 
 	IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
 		Name = 'Portugal_test',
@@ -231,11 +235,10 @@ public class PortalServicesCtrlTest {
 		Right__c = 'Access Granted',
 		Contact__c = c4.Id
 		);
-
 	Portal_Application_Right__c appRight8 = new Portal_Application_Right__c(
-		Portal_Application__c = serviceTest3.id,
+		Portal_Application__c = serviceTest8.id,
 		Right__c = 'Access Granted',
-		Contact__c = c5.Id
+		Contact__c = c4.Id
 		);
 
 	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7};
@@ -819,6 +822,10 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		insert appRight;
 
 		Test.StartTest();
+			c.User_Portal_Status__c = 'Pending Approval';
+			c.Community__c = 'ISS Portal';
+			update c;
+
 			// Grant access to service
 			Boolean isSuccessGrant =PortalServicesCtrl.massGrantAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
 			system.assertEquals(isSuccessGrant,true);
@@ -827,10 +834,12 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			boolean isSuccessDeny =PortalServicesCtrl.massDenyAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
 			system.assertEquals(isSuccessDeny,true);
 			system.assertEquals('Access Denied',[select Right__c from Portal_Application_Right__c where id=:appRight.id ].Right__c);
+		
+			Boolean isSuccessGrantAgain =PortalServicesCtrl.massGrantAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
+			system.assertEquals(isSuccessGrantAgain,true);
+			system.assertEquals('Access Granted',[select Right__c from Portal_Application_Right__c where id=:appRight.id ].Right__c);
 		Test.StopTest();
 	}
-
-
 
 	//WMO-736 - ACAMBAS: Begin
 	@isTest
@@ -844,7 +853,7 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		}
 	}
 	//WMO-736 - ACAMBAS: End
-	
+
 	@isTest
 	public static void PortalServicesCtrlTest_verifyL3DataNegative() {
 
@@ -902,6 +911,16 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 			Test.StopTest();
 		}
 	}
-	
+
+	@isTest
+	public static void getPortalServiceDetailsEFTest() {
+		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+		System.runAs(portalUser) {
+			PortalServicesCtrl.getPortalServiceDetails('E&F APPS');
+		}
+	}
 }
 
