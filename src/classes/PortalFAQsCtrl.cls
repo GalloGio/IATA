@@ -84,7 +84,7 @@ public with sharing class PortalFAQsCtrl {
 		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c,ArticleTotalViewCount FROM FAQ__kav WHERE PublishStatus=\'Online\'';
 		String queryTwo = String.isNotBlank(language) ? ' AND Language = \'' + language + '\'' : '';
 		string queryException = expectionsSet!=null?' AND ArticleNumber NOT IN :expectionsSet ':'';		
-		String queryThree = ' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC ';
+		String queryThree =selectedParams==''?'':' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC ';
 		String limits=limitParam!=null?' LIMIT ' + limitParam:'';
 
 		String finalQuery = queryOne + queryTwo +queryException+ queryThree+limits;
