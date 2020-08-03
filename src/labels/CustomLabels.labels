@@ -33954,6 +33954,14 @@ this is the tiess topic help</value>
         <shortDescription>ISSP MIR Rates Link</shortDescription>
         <value>The exchange rate used to convert local currencies to US dollars for the Management Information Report is derived from the Five Day Rates (FDR) product. The FDR service is available for purchase and can be requested using this &lt;a href=&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=7031%2D01&amp;cs_catalog=Publications&quot; target=&quot;_blank&quot;&gt;&lt;font color=&quot;0000EE&quot;&gt;link&lt;/font&gt;&lt;/a&gt;.</value>
     </labels>
+	<labels>
+		<fullName>ISSP_MITA_Add_Contact</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP Mita Add Contact</shortDescription>
+		<value>Add MITA Contact</value>
+	</labels>
     <labels>
         <fullName>ISSP_MITA_Agreements_Service_Name</fullName>
         <categories>ISSP, MITA</categories>
@@ -33962,6 +33970,94 @@ this is the tiess topic help</value>
         <shortDescription>ISSP MITA Agreements Service Name</shortDescription>
         <value>MITA Agreements</value>
     </labels>
+	<labels>
+		<fullName>ISSP_MITA_Search_At_Least3Chars</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP Mita Search At Least 3 Chars</shortDescription>
+		<value>Please input at least 3 character</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_EditContactMsg</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP MITA Edit Contact message</shortDescription>
+		<value>Only MITA Contact type can be changed here, to make changes to other contact information like Name, Email or phone number, please contact your IATA portal administrator.</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_EditContactSuccess</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP MITA Edit Contact Success</shortDescription>
+		<value>Contact details changed succesfully</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_RemoveContactMsg</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP MITA Remove Contact message</shortDescription>
+		<value>By clicking on remove, all MITA Contact types will be cleared from this contact and the contact will be removed from the "Active MITA Contact list". Removing the contact here will not delete the contact from the airline account</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_Search_Button</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Search by email or name</shortDescription>
+		<value>Search by email or name</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_Search_Text01</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP Mita Search Text Above button</shortDescription>
+		<value>To add a new contact the "Active MITA Contacts" list, please search for an available contact by name or email and edit the MITA contact type.</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_Search_Text02</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP Mita Search Text Below button</shortDescription>
+		<value>If the contact you are attempting to add is not available in the airline contact list, please request your admin user to add the contact through IATA Customer Service Portal</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_Search_ValidInput</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>ISSP Mita Search Check Valid Input</shortDescription>
+		<value>Please input only characters and numbers or a valid email address</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_SUBTAB_01</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Active MITA Contacts</shortDescription>
+		<value>Active MITA Contacts</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_SUBTAB_02</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Airline Available Contacts</shortDescription>
+		<value>Airline Available Contacts</value>
+	</labels>
+	<labels>
+		<fullName>ISSP_MITA_TAB</fullName>
+		<categories>ISSP, MITA</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Airline Contacts</shortDescription>
+		<value>Airline Contacts</value>
+	</labels>
     <labels>
         <fullName>ISSP_MakeAdmin</fullName>
         <categories>ISSP</categories>
