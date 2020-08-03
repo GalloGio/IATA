@@ -1,0 +1,175 @@
+<apex:page controller="ADSRExportController" renderAs="pdf" applyBodyTag="false" >
+<head>
+	<style>
+		@page{
+			size: A4 landscape;
+			margin-left: 1.5cm;
+			margin-top: 2.5cm;
+			margin-bottom: 1cm;
+			margin-right: 1.5cm;
+			
+			@top-left {
+				background-image: url('{!$Resource.LogoIATANew}');
+				background-repeat: no-repeat;
+				background-position: 0 50%;
+				height: 200px;
+				width: 50%;
+			}
+
+			@bottom-left {
+				content: "Report Date: {!DAY(TODAY())} {!LEFT(CASE(MONTH( TODAY() ), 1, "January", 2, "February", 3, "March", 4, "April", 5, "May", 6, "June", 7, "July", 8, "August", 9, "September", 10, "October", 11, "November", 12, "December", ""), 3)} {!YEAR(TODAY())}";
+				font-family:Arial, Helvetica, sans-serif;
+				font-size: 80%;
+			}
+
+			@bottom-right {
+				content: "Page: " counter(page) " / " counter(pages);
+				font-family:Arial, Helvetica, sans-serif;
+				font-size: 80%;
+			}
+			
+		}      
+		
+	</style>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; font-weight: 400; font-size: 9pt;">
+	<h1 style="float: left; position: relative;">
+		<apex:outputText rendered="{! BEGINS(params['type'], 'market')}" value="Airline Default Summary by Operation"></apex:outputText>
+		<apex:outputText rendered="{! BEGINS(params['type'], 'agent')}" value="Airline Default Summary by Agent"></apex:outputText>
+	</h1>
+	<div style="float: left; width: 100%">
+	<table border="0" style="float: left; position: reltive; width: 50%">
+		<tbody>
+			<!-- Search By Operation -->
+			<apex:outputText rendered="{! BEGINS(params['type'], 'market')}">
+				<tr>
+					<th style="padding: 2pt; text-align: right; width:25%;">
+						<apex:outputText value="Region"/>
+					</th>
+					<td style="padding: 2pt;">
+						<apex:outputText value="{!params['region']}"/>
+					</td>
+				</tr>
+				<apex:outputText rendered="{! AND(NOT(params['selectedOperation']), NOT(BEGINS(filters['markets'],'_EMPTY_'))) }">
+					<tr>
+						<th style="padding: 2pt; text-align: right; width:25%;">
+							<apex:outputText value="Country / Territory"/>
+						</th>
+						<td style="padding: 2pt;">
+							<apex:outputText value="{!filters['markets']}"/>
+						</td>
+					</tr>
+				</apex:outputText>
+				<apex:outputText rendered="{! NOT(params['selectedOperation']) }">
+					<tr>
+						<th style="padding: 2pt; text-align: right; width:25%;">
+							<apex:outputText value="Service"/>
+						</th>
+						<td style="padding: 2pt;">
+							<apex:outputText value="{!filters['service']}"/>
+						</td>
+					</tr>
+				</apex:outputText>
+				<apex:outputText rendered="{! params['selectedOperation'] }">
+					<tr>
+						<th style="padding: 2pt; text-align: right; width:25%;">
+							<apex:outputText value="Operation"/>
+						</th>
+						<td style="padding: 2pt;">
+							<apex:outputText value="{!params['operation']}"/>
+						</td>
+					</tr>
+				</apex:outputText>
+			</apex:outputText>
+			<!-- Search By IATA Code-->
+			<apex:outputText rendered="{!BEGINS(params['type'], 'agent')}">
+				<tr>
+					<th style="padding: 2pt; text-align: right; width:25%;">
+						<apex:outputText value="IATA Code"/>
+					</th>
+					<td>
+						<apex:outputText value="{!params['agent']}"/>
+					</td>
+				</tr>
+			</apex:outputText>
+		</tbody>
+	</table>
+	<table border="0" style="float: right; position: reltive; width: 50%">
+		<tbody>
+			<apex:outputText rendered="{! AND(NOT(params['selectedOperation']), NOT(BEGINS(filters['market'],'_EMPTY_'))) }">
+				<tr>
+					<th style="padding: 2pt; text-align: right; width:25%;">
+						<apex:outputText value="Operation Search"/>
+					</th>
+					<td>
+						<apex:outputText value="'{!filters['market']}'"/>
+					</td>
+				</tr>
+			</apex:outputText>
+			<apex:outputText rendered="{! NOT(BEGINS(filters['iataCode'],'_EMPTY_'))}">
+				<tr>
+					<th style="padding: 2pt; text-align: right; width:25%;">
+						<apex:outputText value="IATA Code Search"/>
+					</th>
+					<td>
+						<apex:outputText value="'{!filters['iataCode']}'"/>
+					</td>
+				</tr>
+			</apex:outputText>
+		</tbody>	
+	</table>
+	</div>
+	<table border="0" cellspacing="0" style="float: left; width: 100%; margin-top: 15pt;">
+		<thead>
+			<tr>
+				<apex:repeat value="{!fields}" var="field">
+					<th style="padding: 2pt; border-collapse: collapse; border-bottom: 2px solid #000; border-left: 0; border-right: 0;" >
+						<a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+							<div style="font-weight: 600">
+								<span class="" title="{!field['label']}">
+									<apex:outputText value="{!field['label']}"></apex:outputText>
+								</span>
+							</div>
+						</a>							
+					</th>
+				</apex:repeat>
+			</tr>
+		</thead>
+		<tbody>
+			<apex:repeat value="{!data}" var="record">
+				<tr>
+					<apex:variable var="colIndex" value="{!0}" />
+					<apex:repeat value="{!fields}" var="field">
+						<td style="{! IF(colIndex = 0, 'font-weight: 600;', 'font-weight: 400;')} padding: 2pt; border-collapse: collapse; border-bottom: 2px solid #000; border-left: 0; border-right: 0;">
+							<apex:outputText rendered="{!IF(field['type'] = 'text', true, false)}" value="{!record[field['targetField']]}"></apex:outputText>
+							<apex:outputText rendered="{!IF(OR(field['type'] = 'number', field['type'] = 'currency', field['type'] = 'percent'), true, false)}" value="{! ROUND(record[field['targetField']], 2)}" ></apex:outputText>
+							<apex:variable var="colIndex" value="{!colIndex + 1}" />
+						</td>
+					</apex:repeat>
+				</tr>
+			</apex:repeat>
+		</tbody>
+	</table>
+	<div style="float: left; margin-top: 15pt;">
+		<apex:outputText rendered="{!params['detailTable']}">
+			<div style="padding:5pt; color: rgb(255, 255, 255); background-color: rgb(107, 109, 112);">
+				Note on Agents under Status Repayment Agreement:
+				<br/>
+				Agreement on repayment schedule plan has been reached. Agent will be reactivated after the completion of the repayment plan and satisfying the conditions of the resolutions. Failure to honor the repayment agreement will result in removal of the agent from the agency list. Last Installment date will be on the date identified in the table above.
+			</div>
+			<div style="padding:5pt; color: rgb(255, 255, 255); background-color: rgb(107, 109, 112); margin-top: 5pt;">
+				Airlines should note that the data provided by IATA is based on the data available to IATA at the time of publication. In some cases, the final amount recovered from an agent may differ to the amounts indicated herein, due to a variety of reasons beyond the control of IATA. Amongst these reasons, where an amount is indicated as pending encashment the data may not be current due to some financial securities not having been received at the time of publication.
+				<br/>
+				Additionally, there may be cases where IATA is required to adjust an agent's proration where discrepancies are detected. The information provided herein is therefore for reference only, and should not be used by the recipient for business or financial planning until the recipient has received confirmation from IATA that there will be no further adjustments to the data.
+			</div>			
+			<ol>
+			<apex:repeat value="{!fields}" var="field">
+				<apex:outputText rendered="{! NOT(BEGINS(field['description'], '_EMPTY_')) }">
+					<li><apex:outputText value="{!field['description']}" escape="false"></apex:outputText></li>
+				</apex:outputText>
+			</apex:repeat>
+			</ol>
+		</apex:outputText>
+	</div>
+</body>
+</apex:page>
