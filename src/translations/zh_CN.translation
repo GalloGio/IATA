@@ -161,6 +161,10 @@
         <name>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- ADSR_Description --></label>
+        <name>ADSR_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Automated Process Profile Name used in the AIMS Account Trigger (BU) --></label>
         <name>AIMSAccountBeforeUpdate_AutoProcess</name>
     </customLabels>
@@ -3030,6 +3034,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Confirmed_Requested_Service_EFApps_Message --></label>
+        <name>CSP_Confirmed_Requested_Service_EFApps_Message</name>
+    </customLabels>
+    <customLabels>
         <label>您的{0}访问请求已发送给门户网站管理员。如果您对此过程有任何疑问或要求，可以联系以下管理员：</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -4732,6 +4740,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>选择门户状态</label>
         <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_ADSR --></label>
+        <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>服务访问</label>
@@ -7430,6 +7442,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>EFComplianceReview</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Account --></label>
+        <name>EF_Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -7438,8 +7454,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>EF_Currency_Not_In_Contract_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Invitation Sent --></label>
+        <name>EF_Invitation_Sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invite --></label>
+        <name>EF_Invite</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF_Select --></label>
+        <name>EF_Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E&amp;F Welcome Email Body --></label>
+        <name>EF_Welcome_Email_Body</name>
     </customLabels>
     <customLabels>
         <label><!-- E-Bulletin Service Description --></label>
@@ -17422,8 +17454,40 @@ and
         <name>ISSP_AP_Cases</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Countries_Territories --></label>
+        <name>ISSP_AP_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Countries_to_optin --></label>
+        <name>ISSP_AP_Countries_to_optin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Countries_available --></label>
+        <name>ISSP_AP_Error_No_Countries_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Country_selected --></label>
+        <name>ISSP_AP_Error_No_Country_selected</name>
+    </customLabels>
+    <customLabels>
         <label>航空公司加入申请表</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Form_of_Payment --></label>
+        <name>ISSP_AP_Form_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_IATA_EasyPay_Section_Description --></label>
+        <name>ISSP_AP_IATA_EasyPay_Section_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Address --></label>
+        <name>ISSP_AP_Israel_Submit_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Disclaimer --></label>
+        <name>ISSP_AP_Israel_Submit_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
@@ -17460,6 +17524,50 @@ and
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Add_Emails --></label>
+        <name>ISSP_AP_Report_Options_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Excel_Selected --></label>
+        <name>ISSP_AP_Report_Options_Excel_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_HOT_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_HOT_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Header --></label>
+        <name>ISSP_AP_Report_Options_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_PDF_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_PDF_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Remove_Emails --></label>
+        <name>ISSP_AP_Report_Options_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Countries_Territories --></label>
+        <name>ISSP_AP_Select_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Form_of_Payment_in_HOT --></label>
+        <name>ISSP_AP_Select_Form_of_Payment_in_HOT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Add_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Remove_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AP Voluntary Withdrawal Disclaimer --></label>
+        <name>ISSP_AP_Voluntary_Withdrawal_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label>用户被授予航空公司加入业务的服务权限</label>
@@ -19227,6 +19335,10 @@ and
     <customLabels>
         <label>提交问询</label>
         <name>ISSP_General_enquiries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
@@ -31690,6 +31802,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB_2_Settings</name>
     </customTabs>
     <customTabs>
+        <label><!-- Portal Invitation --></label>
+        <name>Portal_Invitation</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
     </customTabs>
@@ -35853,6 +35969,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <description>访问门户网站服务</description>
         <label>访问门户网站服务</label>
         <name>Portal_Service_Access</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <name>Contact Information</name>
+        </sections>
         <sections>
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>

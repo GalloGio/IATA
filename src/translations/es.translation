@@ -161,6 +161,10 @@
         <name>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- ADSR_Description --></label>
+        <name>ADSR_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Automated Process Profile Name used in the AIMS Account Trigger (BU) --></label>
         <name>AIMSAccountBeforeUpdate_AutoProcess</name>
     </customLabels>
@@ -3032,6 +3036,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Confirmed_Requested_Service_EFApps_Message --></label>
+        <name>CSP_Confirmed_Requested_Service_EFApps_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Su {0} solicitud de acceso se ha entregado a los administradores del portal. Si tiene alguna pregunta o petición sobre el proceso, puede ponerse en contacto con un administrador a continuación:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
@@ -4735,6 +4743,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Seleccione el estado del portal</label>
         <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_ADSR --></label>
+        <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>Acceso al servicio</label>
@@ -7433,6 +7445,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>EFComplianceReview</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Account --></label>
+        <name>EF_Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -7441,8 +7457,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>EF_Currency_Not_In_Contract_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Invitation Sent --></label>
+        <name>EF_Invitation_Sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invite --></label>
+        <name>EF_Invite</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF_Select --></label>
+        <name>EF_Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E&amp;F Welcome Email Body --></label>
+        <name>EF_Welcome_Email_Body</name>
     </customLabels>
     <customLabels>
         <label><!-- E-Bulletin Service Description --></label>
@@ -17452,8 +17484,40 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AP_Cases</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Countries_Territories --></label>
+        <name>ISSP_AP_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Countries_to_optin --></label>
+        <name>ISSP_AP_Countries_to_optin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Countries_available --></label>
+        <name>ISSP_AP_Error_No_Countries_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Country_selected --></label>
+        <name>ISSP_AP_Error_No_Country_selected</name>
+    </customLabels>
+    <customLabels>
         <label>Formulario de acreditación de aerolíneas</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Form_of_Payment --></label>
+        <name>ISSP_AP_Form_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_IATA_EasyPay_Section_Description --></label>
+        <name>ISSP_AP_IATA_EasyPay_Section_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Address --></label>
+        <name>ISSP_AP_Israel_Submit_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Disclaimer --></label>
+        <name>ISSP_AP_Israel_Submit_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
@@ -17490,6 +17554,50 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Add_Emails --></label>
+        <name>ISSP_AP_Report_Options_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Excel_Selected --></label>
+        <name>ISSP_AP_Report_Options_Excel_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_HOT_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_HOT_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Header --></label>
+        <name>ISSP_AP_Report_Options_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_PDF_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_PDF_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Remove_Emails --></label>
+        <name>ISSP_AP_Report_Options_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Countries_Territories --></label>
+        <name>ISSP_AP_Select_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Form_of_Payment_in_HOT --></label>
+        <name>ISSP_AP_Select_Form_of_Payment_in_HOT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Add_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Remove_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AP Voluntary Withdrawal Disclaimer --></label>
+        <name>ISSP_AP_Voluntary_Withdrawal_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label>Al conceder al usuario acceso al Servicio de acreditación de aerolíneas</label>
@@ -19260,6 +19368,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Enviar una pregunta</label>
         <name>ISSP_General_enquiries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
@@ -31729,6 +31841,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>PKB_2_Settings</name>
     </customTabs>
     <customTabs>
+        <label><!-- Portal Invitation --></label>
+        <name>Portal_Invitation</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
     </customTabs>
@@ -35892,6 +36008,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <description>Acceso al servicio del portal</description>
         <label>Acceso al servicio del portal</label>
         <name>Portal_Service_Access</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <name>Contact Information</name>
+        </sections>
         <sections>
             <label>Informes</label>
             <name>Portal Service Access</name>

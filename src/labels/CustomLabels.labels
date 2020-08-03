@@ -17,6 +17,13 @@
         <value>The accepted payment methods is different from the parent product value. Please do not select any value to use the parent product accepted payment methods.</value>
     </labels>
     <labels>
+        <fullName>ADSR_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ADSR_Description</shortDescription>
+        <value>An overview of outstanding/recovered amounts for your airline at regional/country and defaulted agent level including the status of Financial Security Claim.</value>
+    </labels>
+    <labels>
         <fullName>AIMSAccountBeforeUpdate_AutoProcess</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7290,6 +7297,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_SelectPortalStatus</shortDescription>
         <value>Select Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_ADSR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_ADSR</shortDescription>
+        <value>ADSR</value>
     </labels>
     <labels>
         <fullName>CSP_Service_Access</fullName>
@@ -29046,7 +29060,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>Joining Change of Bank details</value>
+        <value>Bank Detail Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -29065,12 +29079,78 @@ This service is free of charge.</value>
         <value>Airline Participation</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Countries_Territories</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Countries_Territories</shortDescription>
+        <value>Countries/Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Countries_to_optin</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Countries_to_optin</shortDescription>
+        <value>Countries/Territories to Opt-In:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Error_No_Countries_available</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Error_No_Countries_available</shortDescription>
+        <value>There are no countries/territories available for this type of Form of payment.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Error_No_Country_selected</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Error_No_Country_selected</shortDescription>
+        <value>One or more country/territory must be selected.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Form</fullName>
         <categories>ISSP Case list page</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form</shortDescription>
         <value>Joining form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Form_of_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Form_of_Payment</shortDescription>
+        <value>Form of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_IATA_EasyPay_Section_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_IATA_EasyPay_Section_Description</shortDescription>
+        <value>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in &lt;b&gt;{0}&lt;/b&gt;. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Israel_Submit_Address</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Israel_Submit_Address</shortDescription>
+        <value>IATA Israel&lt;br/&gt;
+Trade Tower Building, 8th Floor 25 Hamereed Street&lt;br/&gt;
+Tel Aviv, ISRAEL</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Israel_Submit_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Israel_Submit_Disclaimer</shortDescription>
+        <value>Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
@@ -29142,6 +29222,94 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Partnership_Download_PDF</shortDescription>
         <value>Use the link below to download the application form, sign it and upload it.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Add_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Add_Emails</shortDescription>
+        <value>Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Excel_Selected</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Excel_Selected</shortDescription>
+        <value>Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_HOT_Files_Not_Required</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_HOT_Files_Not_Required</shortDescription>
+        <value>Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Header</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Header</shortDescription>
+        <value>Please select at least one of the options below to be modified:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_PDF_Files_Not_Required</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_PDF_Files_Not_Required</shortDescription>
+        <value>Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Remove_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Remove_Emails</shortDescription>
+        <value>Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Select_Countries_Territories</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Select_Countries_Territories</shortDescription>
+        <value>Select Countries/Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Select_Form_of_Payment_in_HOT</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Select_Form_of_Payment_in_HOT</shortDescription>
+        <value>Select form of payment in HOT:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Stock_Management_Add_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Stock_Management_Add_Emails</shortDescription>
+        <value>Please list below the email addresses that you want to ADD for distribution of the CASSLink Stock Management system. Please note that you can keep up until 3 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Stock_Management_Remove_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Stock_Management_Remove_Emails</shortDescription>
+        <value>Please list below any email addresses that you want to REMOVE from the distribution.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Voluntary_Withdrawal_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AP Voluntary Withdrawal Disclaimer</shortDescription>
+        <value>Voluntary Withdrawal will happen in selected date but the other changes will take place immediately.</value>
     </labels>
     <labels>
         <fullName>ISSP_APrequest_AdminEmail1</fullName>
@@ -30328,7 +30496,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>Joining Change Request</value>
+        <value>BSP / CASS Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
@@ -32587,6 +32755,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Ask a Question</value>
     </labels>
     <labels>
+        <fullName>ISSP_GoGlobal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_GoGlobal</shortDescription>
+        <value>GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_GoTo_Homepage</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -33517,7 +33692,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Join_BSP_CASS</shortDescription>
-        <value>Joining Settlement Services</value>
+        <value>Joining Settlement</value>
     </labels>
     <labels>
         <fullName>ISSP_Join_BSP_CASS_Description</fullName>
