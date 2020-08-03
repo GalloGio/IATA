@@ -32,7 +32,8 @@ export default class PortalCustomCardContainer extends LightningElement {
 
     connectedCallback() {
         if (this.specialCard){
-            this.customCardCss = "background-white fullHeightDiv";
+            this.customCardCss = "fullHeightDiv";
+            this.bodyStyle='';
             this.headerCss = "slds-p-bottom_x-small";
         }
 
