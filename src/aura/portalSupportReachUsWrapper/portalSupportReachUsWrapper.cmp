@@ -121,11 +121,7 @@
 
                 <c:portalSupportContactUsFooter topic="{!v.topic}" class="slds-col slds-size_4-of-5 maxContentWidth">
                 </c:portalSupportContactUsFooter>
-                <aura:if isTrue="{!v.topic}">
-                    <div class="slds-col slds-size_4-of-5 maxContentWidth topLightGrayBorder slds-p-vertical_x-large">
-                        <c:portalGiveFeedback></c:portalGiveFeedback>
-                    </div>
-                </aura:if>
+               
             </div>
         </div>
     </div>

@@ -1,0 +1,17 @@
+<template>   
+    <div class="slds-grid slds-wrap slds-size_full slds-align_absolute-center">            
+        <div class="slds-text-align_center slds-p-vertical_large">
+            <h1 class="text-medium text-bold">What do you think about the Customer Portal?</h1>
+            <h2 class="text-xsmall">Whether it's good or bad, your feedback is important for us to provide you a better service.</h2>
+        </div> 
+        <div class="slds-col slds-size_full slds-align_absolute-center">
+            <lightning-button class="showOnlyFavorites" variant="brand" label="Give Feedback" onclick={expandCmp}>
+            </lightning-button>
+        </div>
+    </div>
+    
+    <c-portal-support-reach-us-create-new-case if:true={isExpanded} 
+                class="slds-size_full"
+        >
+    </c-portal-support-reach-us-create-new-case>
+</template>

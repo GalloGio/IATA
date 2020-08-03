@@ -1,0 +1,11 @@
+<template >
+    <div class="slds-align--absolute-center">
+        <div class="slds-size_1-of-1">
+            <c-portal-support-top-articles topic={_topic}></c-portal-support-top-articles>
+        </div>
+    </div>
+
+    <div if:true={showGiveFeedback} class="slds-size_1-of-1 maxContentWidth topLightGrayBorder slds-p-vertical_x-large">
+        <c-portal-give-feedback></c-portal-give-feedback>
+    </div>
+</template>
