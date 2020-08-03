@@ -487,11 +487,12 @@
          
                     <apex:outputpanel rendered="{! OR(f.FieldPath == 'Service_Description__c', f.FieldPath == 'Application_icon__c')}">                    
                         <apex:outputText value="{!item.recordService[f.fieldPath]}" escape="false" rendered="{! f.fieldPath != 'Service_Description__c'}" />
-                        <apex:outputText value="{! IF( ISBLANK($Label[item.recordService['Service_Description_Label__c']]), item.recordService[f.fieldPath], $Label[item.recordService['Service_Description_Label__c']]) }" escape="false" rendered="{! f.fieldPath == 'Service_Description__c'}" />
+                        <apex:outputText value="{! IF( ISBLANK($Label[item.recordService['Service_Description_Label__c']]), item.recordService[f.fieldPath], $Label[item.recordService['Service_Description_Label__c']]) }" escape="false" rendered="{! AND(f.fieldPath == 'Service_Description__c', NOT(isCNSAgency))}" />
+                        <apex:outputText value="{!$Label.IATA_Acr_Changes_Service_Description_CNS}" escape="false" rendered="{!AND(f.fieldPath == 'Service_Description__c', isCNSAgency)}" />
                     </apex:outputpanel>
                           
                     <apex:outputpanel rendered="{!f.FieldPath == 'Name'}">
-                     <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
+                     <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!if(AND(isCNSAgency, communityName=='CNS'), SUBSTITUTE(item.recordService.ServiceName__c, 'IATA', 'CNS'), item.recordService.ServiceName__c)}</apex:outputLink>
                      <apex:outputText value="{!item.recordService.ServiceName__c}" rendered="{!IF(item.Status=='Access Granted',false,true)}" />
                     </apex:outputpanel>
                   </apex:column>

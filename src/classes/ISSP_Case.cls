@@ -53,6 +53,7 @@ public without sharing class ISSP_Case {
 	public String JSONcontactSelected { get; set; }
 	public String JSONcontactsHighPriority { get; set; }
 	public List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails { get; set; } 
+	public Boolean isCNSAgency {get; private set;}
 
 	public Id runningUserId {get; set;}
 	public Contact con {get; set;}
@@ -321,7 +322,12 @@ public without sharing class ISSP_Case {
 		SurveyLanguage = UserInfo.getLanguage() ;
 
 		popContact();
-
+		if(con != null){
+			isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
+		}else{
+			isCNSAgency = false;
+		}
+		
 		//TF - SP9-C5
 		ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
 		String recordTypeId = ApexPages.currentPage().getParameters().get('recordTypeId');
