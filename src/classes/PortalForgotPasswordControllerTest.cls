@@ -8,7 +8,7 @@ public class PortalForgotPasswordControllerTest {
 	@isTest
 	public static void unitTest(){
 		PortalForgotPasswordController.configInfo result = PortalForgotPasswordController.getInitialConfig();
-		PortalPasswordHandler.resultWrapper passResult   = PortalForgotPasswordController.handleResetPassword('test');
+		PortalPasswordHandler.resultWrapper passResult   = PortalForgotPasswordController.handleResetPassword('test', new Map<String,String>{'d'=>'d'});
 	}
 
 }
