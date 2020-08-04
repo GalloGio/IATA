@@ -4525,7 +4525,8 @@ public class AMS_OSCARTriggerHandler {
 			statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
 		else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
-			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
+			//Removed validation oscar.STEP35__c == AMS_Utils.PASSED - For NEW HE LITE no need to submit Financial Security
+			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c)
 				statusForCC = 'Active';
 			else
 				statusForCC = 'Non-Active';
