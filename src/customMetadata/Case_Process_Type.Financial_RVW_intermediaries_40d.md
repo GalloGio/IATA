@@ -16,11 +16,11 @@
     </values>
     <values>
         <field>Reason__c</field>
-        <value xsi:type="xsd:string">Financial RVW intermediaries</value>
+        <value xsi:type="xsd:string">Financial RVW Intermediaries</value>
     </values>
     <values>
         <field>Record_Type__c</field>
-        <value xsi:type="xsd:string">OSCAR_Communication</value>
+        <value xsi:type="xsd:string">ProcessEuropeSCE</value>
     </values>
     <values>
         <field>Type__c</field>
