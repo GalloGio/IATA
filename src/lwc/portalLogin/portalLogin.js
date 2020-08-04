@@ -1,11 +1,7 @@
-/**
- * Created by ukaya01 on 27/06/2019.
- */
-
 /* ==============================================================================================================*/
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
-import { LightningElement, track, wire} from 'lwc';
+import { LightningElement, track } from 'lwc';
 import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
 import RegistrationUtils from 'c/registrationUtils'
 import isGuest from '@salesforce/user/isGuest';
@@ -15,7 +11,7 @@ import login from '@salesforce/apex/PortalLoginCtrl.login';
 /* ==============================================================================================================*/
 /* Custom Labels
 /* ==============================================================================================================*/
-import Login                                from '@salesforce/label/c.login';
+import Login                                from '@salesforce/label/c.Login';
 import CSP_Email                            from '@salesforce/label/c.CSP_Email';
 import CSP_Password                         from '@salesforce/label/c.CSP_Password';
 import CSP_Change_Email                     from '@salesforce/label/c.CSP_Change_Email';
@@ -31,18 +27,6 @@ import OneId_CSP_Troubleshooting_Link       from '@salesforce/label/c.OneId_CSP_
 import CSP_Existing_User_Message            from '@salesforce/label/c.CSP_Existing_User_Message';
 import OneId_LoginFail                      from '@salesforce/label/c.OneId_LoginFail';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
-
-/*
-
-import CreateNewAccountLabel from '@salesforce/label/c.OneId_CreateNewAccount';
-import TroubleshootingLabel from '@salesforce/label/c.OneId_CSP_Troubleshooting';
-import FrozenUserLabel from '@salesforce/label/c.ISSP_Frozen_User_Alert_Message';
-import invalidMailFormatLabel from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
-import TroubleShootingUrl from '@salesforce/label/c.OneId_CSP_Troubleshooting_Link';
-*/
-
-
-
 
 export default class PortalLogin extends LightningElement {
 
@@ -69,10 +53,9 @@ export default class PortalLogin extends LightningElement {
     @track isLoginDisabled = false;
     @track isEmailInvalid = false;
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
-    startURL = "";
-    relayState = "";
     rendered = false;
 
+    _pageParams;
     _labels = {
         Login,
         CSP_Email,
@@ -90,7 +73,6 @@ export default class PortalLogin extends LightningElement {
         CSP_Existing_User_Message,
         OneId_LoginFail
     }
-
 
 
     get labels() {
@@ -114,32 +96,22 @@ export default class PortalLogin extends LightningElement {
 
     connectedCallback() {
 
-        let pageParams = getParamsFromPage();
-        console.info('pageParams: ', pageParams);
-
-        if(pageParams !== undefined){
-            if(pageParams.startURL !== undefined){
-                this.startURL = pageParams.startURL;
-            }
-            if(pageParams.RelayState !== undefined){
-                this.relayState = pageParams.RelayState;
-            }
-
-        }
+        this._pageParams = getParamsFromPage();
 
         const RegistrationUtilsJs = new RegistrationUtils();
 
         RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
-            if(result == false && isGuest == false){
-                navigateToPage(CSP_PortalPath + this.startURL,{});
-                return;
+            if(!result && !isGuest){
+                let startUrl = this._pageParams.startURL;
+                delete this._pageParams.startURL;
+                navigateToPage(startUrl ? startUrl : CSP_PortalPath,this._pageParams);
             }
         });
 
-        if(pageParams !== undefined && pageParams.email !== undefined){
-            this.email = decodeURIComponent(pageParams.email);
+        if(this._pageParams && this._pageParams.email){
+            this.email = this._pageParams.email;
             this.isEmailFieldReadOnly = true;
-            if(pageParams.redirect == "1"){
+            if(this._pageParams.redirect == "1"){
                 this.showPageMessage = true;
                 this.pageMessage = 'It seems you are already a portal user. You can login with your password.';
             }
@@ -156,28 +128,12 @@ export default class PortalLogin extends LightningElement {
                     config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                     config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
-                    config.selfRegistrationUrl += '?startURL='+ this.startURL;
 
-                    //todo remove this part - for testing only.
-                    //config.isUsernamePasswordEnabled = false;
-                    //------------------------------------------
-                    //this.isFrozen = true;
-                    //this.showLoginForm = false;
-                    //this.isLoading = false;
-                    //return;
-                    //todo end of remove
-                    if(config.isUsernamePasswordEnabled == false){
-                         this.showLoginForm = false;
-                         this.isLoginDisabled = true;
-                         this.isLoading = false;
-                         return;
-                    }
-                    this.showLoginForm = true;
+                    this.isLoginDisabled = !config.isUsernamePasswordEnabled;
+                    this.showLoginForm = config.isUsernamePasswordEnabled;
                     this.isLoading = false;
-
-
                 })
-                .catch(error => {
+                .catch(() => {
                     this.isLoading = false;
                 });
             }
@@ -192,31 +148,14 @@ export default class PortalLogin extends LightningElement {
             //If it is pre-filled apply specific style
             this._checkEmailField();
         }
-        /*
-        //disable autocomplete - 1 ( does not work )
-        var input = this.template.querySelector('[data-id="emailInput"]');
-        if(input.getAttribute("autocomplete") !== "off"){
-            input.setAttribute("autocomplete","off");
-        }
-
-        //disable autocomplete - 2 ( does not work )
-        if (document.getElementsByTagName) {
-            var inputElements = document.getElementsByTagName("input");
-            for(var i=0; inputElements[i]; i++) {
-                if(inputElements[i].className && (inputElements[i].className.indexOf("disableAutoComplete") != -1)) {
-                inputElements[i].setAttribute("autocomplete","off");
-                }
-            }
-        }
-        */
         if(!this.rendered){
-        	if(this.isEmailFieldReadOnly === true){
-        		this.template.querySelector('[data-id="passwordInput"]').focus();
-        	}
-        	else{
-        		this.template.querySelector('[data-id="emailInput"]').focus();
-        	}
-        	this.rendered = true;
+            if(this.isEmailFieldReadOnly === true){
+                this.template.querySelector('[data-id="passwordInput"]').focus();
+            }
+            else{
+                this.template.querySelector('[data-id="emailInput"]').focus();
+            }
+            this.rendered = true;
         }
     }
 
@@ -226,7 +165,7 @@ export default class PortalLogin extends LightningElement {
 
     handleEmailChange(event){
         this.email = event.target.value;
-
+        this.password = this.template.querySelector('[data-id="passwordInput"]').value;
         if(this.email.length > 0 && this.password.length > 0){
             this.loginButtonDisabled = false;
             this.template.querySelector('[data-id="loginButton"]').classList.remove('containedButtonDisabled');
@@ -244,23 +183,14 @@ export default class PortalLogin extends LightningElement {
         //this._checkEmailField();
     }
 
-    /*
-    handleEmailFocus(){
-        //disable autocomplete  ( does not work )
-        var input = this.template.querySelector('[data-id="emailInput"]');
-        if(input.getAttribute("autocomplete") !== "off"){
-            input.setAttribute("autocomplete","off");
-        }
-    }
-    */
 
-    handleEmailFocusOut(event){
+    handleEmailFocusOut(){
         this._checkEmailField();
     }
 
     handlePasswordChange(event){
         this.password = event.target.value;
-
+        this.email = this.template.querySelector('[data-id="emailInput"]').value;
         if(this.password.length > 0){
             this.template.querySelector('[data-id="passwordIcon"]').classList.remove('showPasswordIconDisabled');
             if(this.email.length > 0){
@@ -288,41 +218,42 @@ export default class PortalLogin extends LightningElement {
 
     }
 
-    handlePasswordFocusOut(event){
+    handlePasswordFocusOut(){
         this._checkPasswordField();
     }
 
-    handleLogin(event){
+    handleLogin(){
 
         this.isLoading = true;
 
         const RegistrationUtilsJs = new RegistrationUtils();
         RegistrationUtilsJs.checkEmailIsValid(`${this.email}`).then(result=> {
-            if(result == false){
+            if(!result){
                 this._showLoginError(true, this.labels.CSP_Invalid_Email, true);
                 this.isLoading = false;
-                return;
             }else{
-                login({username: this.email, password: this.password, landingPage: encodeURIComponent(this.startURL), relayState: this.relayState }).then(result => {
-                    var response = JSON.parse(JSON.stringify(result));
-                    if(response.isSuccess == true){
-                        navigateToPage(response.sessionUrl, {});
-                    }else{
-                        this.isFrozen = result.userIsFrozen;
-                        if(result.userIsFrozen == true){
-                            this.showLoginForm = false;
-                        }
-                        this._showLoginError(true, response.errorMessage, false);
-                        this.isLoading = false;
-                    }
-                })
-                .catch(error => {
-                    this.isLoading = false;
-                });
-            }
-        }).catch(error => {
-            this.isLoading = false;
-        });
+                let startURL = this._pageParams.startURL;
+                if(!startURL) startURL = "";
+                delete this._pageParams.startURL;
+
+                login({username: this.email, password: this.password, landingPage: encodeURIComponent(startURL), params: this._pageParams}).then(r => {
+					var response = JSON.parse(JSON.stringify(r));
+					if(response.isSuccess){
+						navigateToPage(response.sessionUrl, this._pageParams);
+					}else{
+						this.isFrozen = r.userIsFrozen;
+						this.showLoginForm = !r.userIsFrozen;
+						this._showLoginError(true, response.errorMessage, false);
+						this.isLoading = false;
+					}
+				})
+				.catch(() => {
+					this.isLoading = false;
+				});
+			}
+		}).catch(() => {
+			this.isLoading = false;
+		});
 
     }
 
@@ -339,11 +270,11 @@ export default class PortalLogin extends LightningElement {
     }
 
     handleNavigateToForgotPassword() {
-        navigateToPage(this.config.forgotPasswordUrl);
+        navigateToPage(this.config.forgotPasswordUrl, this._pageParams);
     }
 
     handleNavigateToSelfRegister() {
-        navigateToPage(this.config.selfRegistrationUrl);
+        navigateToPage(this.config.selfRegistrationUrl, this._pageParams);
     }
 
     handleNavigateToTroubleshooting() {

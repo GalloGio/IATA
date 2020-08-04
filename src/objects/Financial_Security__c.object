@@ -376,7 +376,7 @@
         <relationshipLabel>Financial Security Validation Case</relationshipLabel>
         <relationshipName>Financial_Securities2</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>

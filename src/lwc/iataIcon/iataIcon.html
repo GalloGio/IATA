@@ -1,0 +1,13 @@
+<template>
+    <svg if:true={isIconSVG}
+		class={iconClass}
+		style={iconStyling}
+		aria-hidden="true">
+		<use xlink:href={iconLocation}></use>
+	</svg>
+	<img if:true={isIconImage}
+		class={iconClass}
+		style={iconStyling}
+		aria-hidden="true"
+		src={iconLocation}/>
+</template>

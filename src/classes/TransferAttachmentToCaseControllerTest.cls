@@ -103,7 +103,8 @@ private class TransferAttachmentToCaseControllerTest {
 
 				//create attachments
 				AmazonFile aFile = WrapperAttachTest.createAmazonFile(c1);
-
+				insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 				Attachment att1 = new Attachment(ParentId = c1.Id, Name='att 1', Body = Blob.valueOf('Unit Test Attachment Body'));
 				Attachment att2 = new Attachment(ParentId = c1.Id, Name='test2', Body = Blob.valueOf('Unit Test Attachment Body'));
 				insert new List<Attachment>{att1, att2};

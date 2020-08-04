@@ -1,0 +1,37 @@
+<template>
+    <div class="slds-grid slds-wrap record-collection">
+        <template for:each={records} for:item="record" for:index="recordIndex">
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-gutters record-collection-row slds-grid_vertical-align-end" key={record._key}>
+                <template for:each={fields} for:item="field" for:index="fieldIndex">
+                    <c-record-field
+                        key={field.targetField}
+                        record-index={recordIndex}
+                        properties={field}
+                        record={record}
+                        records={records}
+                        onrecordfieldupdate={onRecordFieldUpdate}>
+                    </c-record-field>
+                </template>
+                <div class="slds-col slds-p-top_small deleteContainer">
+                    <lightning-button-icon
+                        icon-name="utility:delete"
+                        size="large"
+                        variant="bare"
+                        onclick={deleteRow}
+                        data-record-index={recordIndex}>
+                    </lightning-button-icon></div>
+            </div>
+        </template>
+        <div class="slds-col slds-size_12-of-12 slds-grid slds-wrap slds-m-top_medium">
+            <div class="slds-col slds-size_3-of-12">
+                <c-iata-button
+                    class="addButton"
+                    label={addRowLabel}
+                    onbtnclick={addNewRow}
+                    variant="text"
+                    disabled={addRowDisabled}>
+                </c-iata-button>
+            </div>
+        </div>
+    </div>
+</template>

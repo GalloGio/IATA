@@ -193,10 +193,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AccountStatus__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Segmentation__c</field>
             </layoutItems>
             <layoutItems>
@@ -881,7 +877,6 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ANG_RHC_Amount__c</fields>
         <fields>ANG_ConsumedRHC__c</fields>
