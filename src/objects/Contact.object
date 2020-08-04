@@ -19614,11 +19614,11 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger Protection Agreement</fullName>
+                <fullName>Interline Airline Generic Contact</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Interline Airline Generic Contact</fullName>
+                <fullName>Passenger Protection Agreement</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
