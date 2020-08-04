@@ -68,18 +68,10 @@ public with sharing class CaseCommentAutoReply implements Queueable {
 			Database.insert(toInsert);
 		}
 		if (!fieldBindingByGroupMap.isEmpty()) {
-			String templateName;
-			if(Test.isRunningTest()){
-				templateName = [SELECT Name FROM Notification_template__c LIMIT 1].Name;
-			}
-			else {
-				templateName = Label.Case_Comment_Notification_Template_Name;
-			}
-			System.debug('CMS :: reading name: ' + templateName);
 			Notification_template__c template = [SELECT Id, Name, Message__c, Subject__c, Language__c, Expire_in_days__c, Alert_Contact_By_Email__c,
 													 Type__c, Notification_color__c, CriticalNotification__c
 												 FROM Notification_template__c
-												 WHERE Name = :templateName
+												 WHERE Name = :Label.Case_Comment_Notification_Template_Name
 												 LIMIT 1];
 			
 			List<Contact> contacts = new List<Contact>();

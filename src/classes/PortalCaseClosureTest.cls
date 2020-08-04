@@ -16,8 +16,6 @@ public class PortalCaseClosureTest {
 		insert newCon1;
 
 		User newUser = ISSP_ObjectFactory.createPortalBasicAirlineUser(newCon1);
-		//newUser.PortalRole = 'Partner';
-		//update newUser;
 
 		Case newCase1 = new Case(Subject = 'Case Test 1', Region__c = 'Europe',
 								Origin = 'Portal', CaseArea__c = 'CargoIS', RecordTypeId = casesEurope, ContactId = newCon1.Id);
