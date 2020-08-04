@@ -1,0 +1,9 @@
+.tab-bar-background {
+    background: #E2E4E8;
+    left: 0;
+    right: 0;
+    height: 4rem;
+}
+.slds-tabs--default, .slds-tabs_default {
+	background-color: #E2E4E8;
+}

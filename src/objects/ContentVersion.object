@@ -711,6 +711,11 @@
                     <label>Mozambique</label>
                 </value>
                 <value>
+                    <fullName>Myanmar</fullName>
+                    <default>false</default>
+                    <label>Myanmar</label>
+                </value>
+                <value>
                     <fullName>Namibia</fullName>
                     <default>false</default>
                     <label>Namibia</label>
@@ -1755,6 +1760,11 @@
                     <label>Mozambique</label>
                 </value>
                 <value>
+                    <fullName>Myanmar</fullName>
+                    <default>false</default>
+                    <label>Myanmar</label>
+                </value>
+                <value>
                     <fullName>Namibia</fullName>
                     <default>false</default>
                     <label>Namibia</label>
@@ -2123,11 +2133,6 @@
                     <fullName>Zimbabwe</fullName>
                     <default>false</default>
                     <label>Zimbabwe</label>
-                </value>
-                <value>
-                    <fullName>Myanmar</fullName>
-                    <default>false</default>
-                    <label>Myanmar</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

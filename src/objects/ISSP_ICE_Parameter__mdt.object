@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This meta is used to store all variables used in the ISS Portal Application &apos;ICE&apos;.
+This app is in the page ISSP_AccountStatements.page</description>
+    <fields>
+        <fullName>Value__c</fullName>
+        <description>value for the parameter defined in the record Name</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Value</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>ISSP ICE Parameter</label>
+    <pluralLabel>ISSP ICE Parameters</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

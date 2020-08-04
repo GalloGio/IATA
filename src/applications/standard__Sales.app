@@ -8,7 +8,7 @@
     <tabs>standard-Account</tabs>
     <tabs>standard-Campaign</tabs>
     <tabs>standard-Opportunity</tabs>
-    <tabs>standard-AdvForecast</tabs>
+    <tabs>standard-Forecasting3</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>standard-Contract</tabs>
     <tabs>standard-Product2</tabs>
