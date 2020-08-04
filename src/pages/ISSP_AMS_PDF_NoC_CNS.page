@@ -1,0 +1,185 @@
+<apex:page renderAs="pdf" controller="ISSP_AMS_Accreditation"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           language="{!displayLanguage}"
+           applyBodyTag="false"
+           >
+    <head>
+        <style>
+            body { font-family: 'Arial Unicode MS'; font-size: 13px }
+            
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%}
+            
+            .pbSubheader {
+            color: #fff;
+            padding-left:10px;
+            padding-top: 1px;
+            padding-bottom: 0px;
+            font-weight:700;
+            background-color: #337ab7;
+            width:100%
+            }
+            
+            .pdf-label {
+                font-weight: 700;
+            }
+            
+            .pdfHeader {
+                font-weight: bold;
+                font-size: 110%;
+                background-color: rgb(242,242,242)
+            }
+            
+            .pdfFooter {
+                font-weight: bold;
+                font-size: 110%;
+                background-color: rgb(227,227,215)
+            }
+            th {
+                font-size: 110%;
+            }
+
+            @page {
+            margin-top: 3.5cm;
+            margin-bottom: 4cm;
+            margin-left: 2cm;
+            margin-right: 2cm;
+            @top-center {content: element(header);}
+            @bottom-left {content: element(footer);font-size: 80%;}
+            }
+
+            div.header {padding: 10px;position: running(header);}
+            div.footer {display: block;padding: 5px;position: running(footer);}
+          
+            .pagenumber:before {content: counter(page);}
+            .pagecount:before {content: counter(pages);}
+
+            table, th, td {
+                font-size: 13px;
+            }
+
+
+            .footerRight {
+                margin-left:65px;
+                font-size:9px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div>
+                <center>
+                    <apex:image height="70px" value="{!URLFOR($Resource.LogoIsCNSAgencyPDFNoC)}"/>
+                </center>
+                
+            </div>
+        </div>
+         <center>
+             <h2 class="panel-title"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_PDF_Title}"/></h2>        
+        </center>
+        <div class="footer">
+            <table border="0" width="100%">
+                <tr>
+                    <td width="33%" align="left" style="margin-top:50px;">
+                        <apex:image height="70px" style="margin-right:65px;" value="{!URLFOR($Resource.IATA_Logo_Large)}"/>
+                    </td>
+                    <td width="33%" align="center">
+                        <a href="http://www.cnsc.net" style="text-decoration:none">www.cnsc.net</a>
+                    </td>
+                    <td width="33%" align="right" style="text-align: left;color:#003399;">
+                        <apex:outputText styleClass="footerRight" value="{!$Label.ISSP_AMS_PDF_NoC_CNS_Address}" escape="false"/><br/>
+                        <apex:outputText styleClass="footerRight" value="{!$Label.ISSP_AMS_PDF_NoC_CNS_Address1}" escape="false"/><br/>
+                        <apex:outputText styleClass="footerRight" value="{!$Label.ISSP_AMS_PDF_NoC_CNS_Address2}" escape="false"/><br/>
+                        <apex:outputText styleClass="footerRight" value="{!$Label.ISSP_AMS_PDF_NoC_CNS_Address3}" escape="false"/><br/>
+                        <apex:outputText styleClass="footerRight" value="{!$Label.ISSP_AMS_PDF_NoC_CNS_Address4}" escape="false"/><br/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <apex:pageBlock >
+            <apex:include pageName="ISSP_AMS_NoC_ReadOnly"/>
+            <apex:form >
+                <div style="font-size:13px">             
+                    <p>    
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_TC_Change_First_CNS}"/>
+                    </p>
+                </div>
+                <div style="font-size:13px">             
+                    <p>    
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_TC_Change_CNS}"/>
+                    </p>
+                </div>
+                <div style="font-size:13px;">             
+                    <p>    
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_TC_Change_CNS2}"/>
+                    </p>
+                </div>
+
+                <apex:outputPanel>
+                    <table border="0" cellpadding="4">
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="text-align:right;">______________________________________<br/><div style="margin-left:66px;text-align: center;">{!$Label.ISSP_AMS_PDF_NoC_Name_of_Agent_Transferor_Seller}</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="text-align:right;">By: ______________________________________<br/><div style="width:80%;margin-left:65px;text-align:left;">{!$Label.ISSP_AMS_PDF_NoC_Authorized_signature_for_and_on_behalf_of_Agent}</div></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">______________________________________<br/>{!$Label.ISSP_AMS_PDF_NoC_Witness}</td>
+                            <td style="text-align:right;">______________________________________<br/><div style="width:80%;margin-left:65px;text-align:left;">{!$Label.ISSP_AMS_PDF_NoC_Name_Title_or_capacity_of_Person_signing}</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="text-align:right;">{!$Label.ISSP_Date}: ______________________________________</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="width:10%">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">______________________________________<br/>{!$Label.ISSP_AMS_PDF_NoC_Witness_2}</td>
+                            <td style="text-align:right;">______________________________________<br/><div style="width:80%;margin-left:65px;text-align:left;">{!$Label.ISSP_AMS_PDF_NoC_Name_of_Transferee_Buyer}</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="width:10%">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="text-align:right;">By: ______________________________________<br/><div style="width:80%;margin-left:65px;text-align:left;">{!$Label.ISSP_AMS_PDF_NoC_Authorized_Signature_for_and_on_behalf_of_Transferee_Buye}</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="text-align:right;">______________________________________<br/><div style="width:80%;margin-left:65px;text-align:left;">{!$Label.ISSP_AMS_PDF_NoC_Name_Title_or_capacity_of_Person_signing}</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">&nbsp;</td>
+                            <td style="text-align:right;">{!$Label.ISSP_Date}: ______________________________________</td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+            </apex:form>
+        </apex:pageBlock>
+    </body>
+</apex:page>
