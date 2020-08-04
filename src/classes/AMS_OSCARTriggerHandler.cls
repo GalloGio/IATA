@@ -5117,7 +5117,6 @@ public class AMS_OSCARTriggerHandler {
 				(list<AMS_Pax_Accreditation_Form__c>)Database.query(query)
 			);
 		}
-		System.debug('*** MAP_ACCREDITATION ' + MAP_ACCREDITATION );
 		return MAP_ACCREDITATION;
 	}
 
