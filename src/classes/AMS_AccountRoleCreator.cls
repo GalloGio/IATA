@@ -40,6 +40,10 @@ public with sharing class AMS_AccountRoleCreator
 		return toReturn.removeEnd(',');
 	}
 
+	public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Boolean isToGenerateIATACode, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar, Map<Id,Id> topParentByOscar) {
+		return runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, isToGenerateIATACode, oscars, locationTypeByOscar, topParentByOscar, null);
+	}
+
 	/**
 	This method processes the staging area owners and contacts into the AMS Account roles in the affected agencies.
 	If an Accreditation Contact has a direct link to the AMS_Account_role, it tries to update.
@@ -47,7 +51,7 @@ public with sharing class AMS_AccountRoleCreator
 
 	The aoMap parameter has a map between the Accreditation Area and the Agencies (accounts) involved in the process.
 	*/
-	public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Boolean isToGenerateIATACode, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar, Map<Id,Id> topParentByOscar) {
+	public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Boolean isToGenerateIATACode, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar, Map<Id,Id> topParentByOscar, Map<ID, String> mapOscarOrigin) {
 
 		Map<Id,OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,OldAndNewOwners>();
 		Set<Id> accountsToCloneOwnersFromHO = new Set<Id>(); //accounts from new br/sa processes
@@ -72,10 +76,26 @@ public with sharing class AMS_AccountRoleCreator
 		//check if the process should create new owners or if it's just to clone the owners from the HO
 		for(AMS_OSCAR__c osc: oscars.values()) {
 
-			if(processesBlockedToMigrateOwners.contains(osc.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isCorrectionProcess && osc.STEP10__c == 'Passed' && osc.STEP6__c == 'Passed') {
-
-				accountsToCloneOwnersFromHO.add(osc.Account__c);
-				newChildWithParent.put(osc.Account__c, topParentByOscar.get(osc.Id));
+			String caseOrigin = mapOscarOrigin != null ? mapOscarOrigin.get(osc.ID) : null;
+			/*
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations osc.STEP6__c: '+ osc.STEP6__c + ' osc.STEP10__c: ' + osc.STEP10__c);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations aoMap: '+ aoMap);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations isCorrectionProcess: '+ isCorrectionProcess);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations isToGenerateIATACode: '+ isToGenerateIATACode);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations oscars: '+ oscars);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations locationTypeByOscar: '+ locationTypeByOscar);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations topParentByOscar: '+ topParentByOscar);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations mapOscarOrigin: '+ mapOscarOrigin);
+			*/
+			
+			if(processesBlockedToMigrateOwners.contains(osc.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isCorrectionProcess && osc.STEP10__c == 'Passed' && osc.STEP6__c == 'Passed') { //Workaround to avoid duplicated contacts for process submited through Portal
+				//Avoid this if code, Case origin = Portal AND (FIN change code to be generated OR Step de Approval to Passed ) Should be only applied for Cargo???? TIDS - Passanger
+				if(caseOrigin != null && caseOrigin == AMS_Utils.CASE_ORIGIN_PORTAL && locationTypeByOscar.get(osc.Id) == AMS_Utils.BR && osc.Case_Reason__c == AMS_Utils.CASE_REASON_BR_IP){
+					accountToCheckOwners.add(osc.Account__c);
+				}else{
+					accountsToCloneOwnersFromHO.add(osc.Account__c);
+					newChildWithParent.put(osc.Account__c, topParentByOscar.get(osc.Id));
+				}
 
 			} else if(!processesBlockedToMigrateOwners.contains(osc.Process__c) && allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isToGenerateIATACode) {
 				accountsToCreateNewOwners.add(osc.Account__c);
@@ -93,6 +113,13 @@ public with sharing class AMS_AccountRoleCreator
 			}
 		}
 
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accountsToCloneOwnersFromHO: '+ accountsToCloneOwnersFromHO);
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations newChildWithParent: '+ newChildWithParent);
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accountsToCreateNewOwners: '+ accountsToCreateNewOwners);
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accountToCheckOwners: '+ accountToCheckOwners);
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accountsToChangeOwners: '+ accountsToChangeOwners);
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accountsToCloneRoles: '+ accountsToCloneRoles);
+
 		for(Id accId : aoMap.keySet())
 			accountIds.addAll(aoMap.get(accId));
 
@@ -108,15 +135,21 @@ public with sharing class AMS_AccountRoleCreator
 		//get all the accreditation contacts to create the new owners
 		Map<Id,AMS_Accreditation_Contact__c> accreditationContactsToProcess = new Map<Id,AMS_Accreditation_Contact__c>((List<AMS_Accreditation_Contact__c>)Database.query(query));
 
+		//Owners/Directores/Companies - Not trained staff
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accreditationContactsToProcess: '+ accreditationContactsToProcess);
+
+
+
 		Map<Id,List<AMS_Accreditation_Contact__c>> accreditationContactsPerAccount = new Map<Id,List<AMS_Accreditation_Contact__c>>();
 
 		for(AMS_Accreditation_Contact__c accCon : accreditationContactsToProcess.values()) {
-
+/*To delete
 			if(!accreditationContactsPerAccount.containsKey(accCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c))
 				accreditationContactsPerAccount.put(accCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, new List<AMS_Accreditation_Contact__c>());
 
 			accreditationContactsPerAccount.get(accCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c).add(accCon);
-
+			*/
+//END To delete	
 			if(accCon.Contact__c != null)
 				contactToGetIds.add(accCon.Contact__c);
 		}
@@ -126,6 +159,10 @@ public with sharing class AMS_AccountRoleCreator
 			FROM Contact
 			WHERE AccountId IN :accountIds OR Id IN :contactToGetIds]);
 
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations allContactsFromAccount: ' + allContactsFromAccount);
+
+// TO delete
+/*
 		Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
 
 		for(Contact con : allContactsFromAccount.values()) {
@@ -135,6 +172,8 @@ public with sharing class AMS_AccountRoleCreator
 
 			contactsPerAccount.get(con.AccountId).add(con);
 		}
+		*/
+// END - TO DELETE
 
 		//create a new bucket for each accreditation contact
 		Map<Id,AccreditationContactBucket> accConBucketList = new Map<Id,AccreditationContactBucket>();
@@ -146,7 +185,10 @@ public with sharing class AMS_AccountRoleCreator
 																				oscars.get(accreditationContact.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__c),
 																				accountsToCloneOwnersFromHO.contains(accreditationContact.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c),
 																				accountToCheckOwners.contains(accreditationContact.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c));
-
+			
+			
+			System.debug('JR Debug AccreditationContactBucket - bucket ' + bucket );
+			 
 			//select the contact or company for each accreditation contact
 			if(bucket.isCompany) {
 
@@ -226,15 +268,26 @@ public with sharing class AMS_AccountRoleCreator
 				Double totalCovered = totalCoveredOwnershipByAccount.containsKey(bucket.accountId) ? (totalCoveredOwnershipByAccount.get(bucket.accountId) + bucket.accreditationContact.Financial_interest__c) : bucket.accreditationContact.Financial_interest__c;
 				totalCoveredOwnershipByAccount.put(bucket.accountId, totalCovered);
 			}
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations totalCoveredOwnershipByAccount: '+ totalCoveredOwnershipByAccount);
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations accConBucketList: '+ accConBucketList);
+
 		}
 
 		//upsert contacts
 		AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
 
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations contactsToSearch: '+ contactsToSearch.values());
+
 		if(!contactsToSearch.isEmpty()){
 			for(Contact c :[SELECT id, Email FROM CONTACT WHERE EMAIL IN :contactsToSearch.keyset()]){
 				contactsToUpsert.put(c.email, c);
 				contactsToSearch.remove(c.Email);
+				/*Andre Santos fix 
+				Contact auxCon = contactsToUpsert.get(con.Email);
+                auxCon.Id = con.Id;
+                contactsToUpsert.put(con.Id, auxCon);
+				contactsToUpsert.remove(con.Email);
+				*/
 			}
 
 			//the remaining ones dont have a contact created
@@ -243,17 +296,23 @@ public with sharing class AMS_AccountRoleCreator
 				contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
 			}
 		}
-
+		//Owner & Director
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations contactsToUpsert: '+ contactsToUpsert.values());
+	
 		upsert contactsToUpsert.values();
 		AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
-
+		
 		//upsert companies
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations companiesToUpsert: '+ companiesToUpsert.values());
 		upsert companiesToUpsert.values();
 
 		//get all the roles from the affected accounts that there are active or the roles with persons to delete
 		Map<Id,AMS_Account_Role__c> activeRoles = new Map<Id,AMS_Account_Role__c>([SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name, Active__c
 																					FROM AMS_Account_role__c
 																					WHERE ((Account__c IN :accountIds OR Account__c IN :newChildWithParent.values()) AND Active__c = true) OR Id IN :personsIds]);
+
+
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations activeRoles: '+ activeRoles.values());
 
 		Map<Id,List<AMS_Account_Role__c>> oldRolesPerAccount = new Map<Id,List<AMS_Account_Role__c>>();
 
@@ -268,6 +327,8 @@ public with sharing class AMS_AccountRoleCreator
 				rolesWithPersonsId.add(role.Id);
 		}
 
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations rolesWithPersonsId: '+ rolesWithPersonsId);
+
 		//correct the roles with persons to delete
 		if(!rolesWithPersonsId.isEmpty())
 			rolesToUpsert.putAll(updateAMSRolesBeforePersonDeletion(activeRoles, rolesWithPersonsId, rolesToUpsert));
@@ -275,6 +336,9 @@ public with sharing class AMS_AccountRoleCreator
 		//delete persons
 		if(!personsIds.isEmpty())
 			delete [SELECT Id FROM AMS_Person__c WHERE Id IN :personsIds];
+
+
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations accreditationContactWithRole: '+ accreditationContactWithRole.values());
 
 		//link the accreditation contact old role with the bucket
 		for(Id accContId : accreditationContactWithRole.keySet()) {
@@ -297,6 +361,8 @@ public with sharing class AMS_AccountRoleCreator
 		Map<Id,List<AMS_Account_Role__c>> newRolesPerAccount = new Map<Id,List<AMS_Account_Role__c>>();
 
 		for(AccreditationContactBucket accConBucket : accConBucketList.values()) {
+
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations accConBucket: '+ accConBucket);
 
 			//Register New and Old Owners for EBulletion Report purposes
 			oldAndNewOwnersMap.put(accConBucket.accreditationId,getNewAndOldOwnersForChangeCodeCreation(activeRoles.values(),accreditationContactsToProcess.values(),accountIds));
@@ -327,13 +393,23 @@ public with sharing class AMS_AccountRoleCreator
 				if(!newRolesPerAccount.containsKey(accConBucket.accountId))
 					newRolesPerAccount.put(accConBucket.accountId, new List<AMS_Account_Role__c>());
 
-				newRolesPerAccount.get(accConBucket.accountId).add(accConBucket.newRole);
+				if(accConBucket.newRole != null) newRolesPerAccount.get(accConBucket.accountId).add(accConBucket.newRole); 
 			}
+
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations newRolesPerAccount: '+ newRolesPerAccount);
 
 		}
 
-		if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty())
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations rolesToUpsert V1: '+ rolesToUpsert);
+
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations newRolesPerAccount: '+ newRolesPerAccount);
+
+		if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty()){ // check the values of newRolesPerAccount
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations Empty newRolesPerAccount & accountsToCloneOwnersFromHO');
+			System.debug('JR Debug runRoleCreatorForOnlineAccreditations oldAndNewOwnersMap: ' + oldAndNewOwnersMap);
+
 			return oldAndNewOwnersMap;
+		}			
 
 		//clone the roles for each account in the hierarchy
 		List<AMS_Account_Role__c> listClonesRoles = new List<AMS_Account_Role__c>();
@@ -349,11 +425,15 @@ public with sharing class AMS_AccountRoleCreator
 			}
 		}
 
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations listClonesRoles - V1: '+ listClonesRoles);
+
 		//clone the roles for the new BRs
 		for(Id brAcc : accountsToCloneOwnersFromHO){
 			List<AMS_Account_Role__c> accRolesList = oldRolesPerAccount.get(newChildWithParent.get(brAcc));
 			listClonesRoles.addAll(assignOwners(brAcc, accRolesList == null ? new List<AMS_Account_Role__c>() : accRolesList));
 		}
+
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations listClonesRoles - V2: '+ listClonesRoles);
 
 		//Calculate the Coverage Ownership for the Cloned Account Roles - INC526933
 		for(AMS_Account_Role__c accountRole : listClonesRoles){
@@ -361,8 +441,12 @@ public with sharing class AMS_AccountRoleCreator
 			totalCoveredOwnershipByAccount.put(accountRole.Account__c, totalCovered);
 		}
 
+		System.debug('JR Debug runRoleCreatorForOnlineAccreditations totalCoveredOwnershipByAccount - V2: '+ totalCoveredOwnershipByAccount.values());
+
 		//add a termination date to the previous roles
 		rolesToUpsert.putAll(updateRolesTerminationDate(rolesToUpsert, oldRolesPerAccount, accountsToChangeOwners, accountToCheckOwners, rolesToCorrect));
+
+		//System.debug('JR Debug runRoleCreatorForOnlineAccreditations rolesToUpsert - V2: '+ rolesToUpsert.values());
 
 		//upsert roles
 		listClonesRoles.addAll(rolesToUpsert.values());
@@ -370,6 +454,8 @@ public with sharing class AMS_AccountRoleCreator
 			isAccountRoleCreationRunning = true;
 			upsert listClonesRoles;
 		}
+
+		//throw new AMS_ApplicationException('JR Debug Exception testing owners copy when FIN change code is processed - listClonesRoles:' + listClonesRoles);
 
 		// fill the accreditation contacts with the new roles ids
 		for(AMS_Account_Role__c roleAfterUpsert : listClonesRoles) {
@@ -399,9 +485,13 @@ public with sharing class AMS_AccountRoleCreator
 			}
 		}
 
+		//System.debug('JR Debug runRoleCreatorForOnlineAccreditations accreditationContactsToUpdate: '+ accreditationContactsToUpdate);
+		//System.debug('JR Debug runRoleCreatorForOnlineAccreditations oldAndNewOwnersMap: '+ oldAndNewOwnersMap);
+
 		//update accreditation contacts
 		update accreditationContactsToUpdate.values();
 
+		//throw new AMS_ApplicationException('Owners process - Failing owners copy - what the process is doing');
 		return oldAndNewOwnersMap;
 
 	}

@@ -401,9 +401,11 @@ public class AMS_AgencyAChangeCodeHandler {
 
 		if(oscarIds.isEmpty()) return;
 
-		oscarsToCopyData = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
+		oscarsToCopyData = [SELECT ID, STEP10__c, STEP6__c, Case_Reason__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
 		if(!oscarsToCopyData.isEmpty()){
+
+			System.debug('JR Debug oscarsToCopyData Start - FIN change code oscarsToCopyData: ' + oscarsToCopyData);
 
 			AMS_Utils.copyDataToAccount(oscarsToCopyData);
 
