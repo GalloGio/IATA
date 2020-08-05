@@ -8579,7 +8579,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Country_Heat_Map</shortDescription>
-        <value>Early Warning Indicators Heat Map</value>
+        <value>Country Heat Map</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Country_Profiles</fullName>
@@ -8737,7 +8737,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Heat_Map</shortDescription>
-        <value>Heat Map</value>
+        <value>Early Warning Indicators Heat Map</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_ICCS</fullName>
