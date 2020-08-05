@@ -497,17 +497,16 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
 
         if (this.newRecipient !== undefined && this.newRecipient !== '') {
             this.showWarningToast();
+        }else if (this.specialCase ===true && this.feedbackType ===null) {
+            let textinput = this.template.querySelector('[data-id="feedback-type"]');
+            textinput.className += ' missing-value';
+            this.showErrorToast();
         }
         else if (this.subject.trim() === '') {
             let textinput = this.template.querySelector('[data-id="subject"]');
             textinput.className += ' slds-has-error';
             this.showErrorToast();
-        }
-        else if (this.specialCase ===true && this.feedbackType ===null) {
-            let textinput = this.template.querySelector('[data-id="feedback-type"]');
-            textinput.className += ' missing-value';
-            this.showErrorToast();
-        }
+        }        
         else if (this.description.trim() === '') {
             let textarea = this.template.querySelector('lightning-textarea');
             textarea.className += ' slds-has-error';
