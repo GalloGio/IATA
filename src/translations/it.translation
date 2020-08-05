@@ -32329,6 +32329,23 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- AMS Online Accreditation with OSCAR with Case --></description>
+        <label><!-- AMS Online Accreditation with OSCAR with Case --></label>
+        <name>AMS_Online_Accreditation_with_OSCAR_with_Case</name>
+        <sections>
+            <label><!-- AMS Online Accreditations --></label>
+            <name>AMS Online Accreditations</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- OSCARs --></label>
+            <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- AMS Territories --></description>
         <label><!-- AMS Territories --></label>
         <name>AMS_Territories</name>
