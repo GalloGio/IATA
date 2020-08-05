@@ -1,17 +1,18 @@
 <template >
-    <div class="slds-align--absolute-center">
-        <div class="slds-size_1-of-1">
-            <c-portal-support-top-articles topic={_topic}></c-portal-support-top-articles>
-        </div>
-    </div>
+    <div class="slds-align--absolute-center slds-grid slds-size_1-of-1 slds-wrap">
 
-    <div if:true={showGiveFeedback} class="slds-size_1-of-1 maxContentWidth topLightGrayBorder slds-p-vertical_x-large">
-        <c-portal-give-feedback
-        topic={_topic}
-        country-value={_countryValue}
-        is-first-level-user ={_isFirstLevelUser}
-        topic-en={_topicEn}
-        user-info={_userInfo}
-        ></c-portal-give-feedback>
+        <div class="slds-col  slds-size--1-of-1 slds-align--absolute-center">
+            <c-portal-support-top-articles class="maxContentWidth slds-col slds-size--1-of-1" topic={_topic}></c-portal-support-top-articles>
+        </div>
+        
+        <div if:true={showGiveFeedback} class="slds-col slds-size--1-of-1">
+            <c-portal-give-feedback
+            topic={_topic}
+            country-value={_countryValue}
+            is-first-level-user ={_isFirstLevelUser}
+            topic-en={_topicEn}
+            user-info={_userInfo}
+            ></c-portal-give-feedback>
+        </div>
     </div>
 </template>

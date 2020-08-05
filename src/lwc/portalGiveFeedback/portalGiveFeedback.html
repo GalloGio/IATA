@@ -1,23 +1,26 @@
 <template>   
-    <div class="slds-grid slds-wrap slds-size_full slds-align_absolute-center">            
-        <div class="slds-text-align_center slds-p-vertical_large">
-            <h1 class="text-medium text-bold">What do you think about the Customer Portal?</h1>
-            <h2 class="text-xsmall">Whether it's good or bad, your feedback is important for us to provide you a better service.</h2>
-        </div> 
-        <div if:false={isExpanded}  class="slds-col slds-size_full slds-align_absolute-center">
-            <lightning-button class="showOnlyFavorites" variant="brand" label="Give Feedback" onclick={expandCmp}>
-            </lightning-button>
+    <div class=" slds-col slds-size_1-of-1 slds-p-vertical_x-large">
+
+        <div class="maxContentWidth topLightGrayBorder slds-grid slds-wrap slds-size--10-of-12 slds-align_absolute-center">            
+            <div class="slds-col slds-size_full slds-text-align_center slds-p-vertical_large">
+                <h1 class="text-medium text-bold">What do you think about the Customer Portal?</h1>
+                <h2 class="slds-p-top_small text-xsmall">Whether it's good or bad, your feedback is important for us to provide you a better service.</h2>
+            </div> 
+            <div if:false={isExpanded}  class="slds-col slds-size_full slds-align_absolute-center">
+                <lightning-button class="showOnlyFavorites" variant="brand" label="Give Feedback" onclick={expandCmp}>
+                </lightning-button>
+            </div>
         </div>
-    </div>
-    
-    <c-portal-support-reach-us-create-new-case if:true={isExpanded} 
-                class="slds-size_full"
-                special-case
-                topic={_topic}
-                country-i-s-o={_countryValue}
-                is-first-level-user ={_isFirstLevelUser}
-                topic-en={_topicEn}
-                user-info={_userInfo}
+            
+        <c-portal-support-reach-us-create-new-case if:true={isExpanded} 
+        class="slds-size_full"
+        special-case
+        topic={_topic}
+        country-i-s-o={_countryValue}
+        is-first-level-user ={_isFirstLevelUser}
+        topic-en={_topicEn}
+        user-info={_userInfo}
         >
-    </c-portal-support-reach-us-create-new-case>
+        </c-portal-support-reach-us-create-new-case>
+    </div>
 </template>

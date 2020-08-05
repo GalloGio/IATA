@@ -122,19 +122,16 @@
                     </div>
                 </aura:if>
             <!-- RELATED ARTICLES SECTION -->
-            <div class="slds-align--absolute-center slds-grid slds-size_1-of-1 slds-wrap">
-
-                <c:portalSupportContactUsFooter 
+            <c:portalSupportContactUsFooter 
                     topic="{!v.topic}" 
-                    class="slds-col slds-size_4-of-5 maxContentWidth"
+                    class="slds-col slds-grid slds-wrap slds-size--1-of-1"
                     countryValue="{!v.countryISO}"
                     isFirstLevelUser ="{!v.isFirstLevelUser}"
                     topicEn="{!v.ten}"
                     userInfo="{!v.userInfo}"
                 >
-                </c:portalSupportContactUsFooter>
+            </c:portalSupportContactUsFooter>
                
-            </div>
         </div>
     </div>
 </aura:component>

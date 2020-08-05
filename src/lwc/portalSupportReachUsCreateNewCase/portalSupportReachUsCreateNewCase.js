@@ -489,7 +489,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
 
     //validate fields and finish creating the case.
     finishCreatingCase(event) {
-        this.loading = true;  
+        
         this.originBtn= event.target.attributes.getNamedItem('data-id').value;
         if (this.agentProfile) {
             this.checkForErrors();
@@ -516,7 +516,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
             this.showConfirmBox=true;
         }
         else { // if no error found 
-
+            this.loading = true; 
             if(this.specialCase){ // In case of feedback mode (complaint/ compliment)
 
                 let topic= this.isConcernCase?this.topic:'';
