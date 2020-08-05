@@ -22936,6 +22936,15 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Thank you for submitting your request for a new MSO.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Submit_Case_error</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Submit_Case_error</shortDescription>
+        <value>There was an issue processing your request, please try again
+If the error persists, please contact support.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Termination_Confirmation_Text</fullName>
         <language>en_US</language>
         <protected>false</protected>
