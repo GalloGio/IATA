@@ -161,7 +161,8 @@
                         <div class="slds-p-bottom_large ">
                             <p class="text-xsmall">{label.csp_caseSubject.fieldApiName}</p>
                             <p class="text-xxsmall text-gray slds-p-bottom_small">
-                                {label.csp_CreateNewCaseMainInputSubLabel}</p>
+                                {sujectSubTitle}
+                            </p>
                             <lightning-input data-id="subject"
                                 class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
                                 required onchange={handleSubject}>
@@ -173,7 +174,7 @@
                         <div class=" slds-p-bottom_large">
                             <p class="text-xsmall">{label.csp_caseDescription.fieldApiName}</p>
                             <p class="text-xxsmall text-gray slds-m-bottom_small">
-                                {label.csp_CreateNewCaseMainInputBoxSubLabel}</p>
+                                {descriptSubTitle}</p>
                             <lightning-textarea class="hideInputLabel heightTextArea customTextArea" required
                                 onchange={handleDescription}>
                             </lightning-textarea>

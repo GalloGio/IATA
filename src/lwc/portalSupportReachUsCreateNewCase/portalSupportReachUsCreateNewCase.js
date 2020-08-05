@@ -43,15 +43,16 @@ import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 import csp_SearchNotPerformed from '@salesforce/label/c.csp_SearchNotPerformed';
-import CSP_SubmitAsQuery from '@salesforce/label/c.csp_SubmitAsQuery';
-import CSP_SubmitAsEmergency from '@salesforce/label/c.csp_SubmitAsEmergency';
+import CSP_SubmitAsQuery from '@salesforce/label/c.CSP_SubmitAsQuery';
+import CSP_SubmitAsEmergency from '@salesforce/label/c.CSP_SubmitAsEmergency';
 
 import CSP_SupportReachUs_Compliment from '@salesforce/label/c.csp_ComplimentInfo';
 import CSP_SupportReachUs_ComplimentInfo from '@salesforce/label/c.csp_Compliment';
 import csp_SupportReachUs_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
 import csp_SupportReachUs_Compliment_Label from '@salesforce/label/c.csp_Compliment_Label';
 import CSP_Submit from '@salesforce/label/c.CSP_Submit';
-
+import CSP_DescSubtitleCC from '@salesforce/label/c.CSP_DescSubtitleCC';
+import CSP_SubjectSubtitleCC from '@salesforce/label/c.CSP_SubjectSubtitleCC';
 
 import CSP_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
 import CSP_SupportReachUs_GoToHomepage from '@salesforce/label/c.csp_GoToHomepage';
@@ -109,7 +110,9 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         CSP_SupportReachUs_GoToHomepage,
         csp_SupportReachUs_Concern_Label,
         csp_SupportReachUs_Compliment_Label,
-        CSP_Submit
+        CSP_Submit,
+        CSP_DescSubtitleCC,
+        CSP_SubjectSubtitleCC
     }
 
     //spinner controller
@@ -333,6 +336,16 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
             this.createCaseTD(); 
         }
 
+    }
+
+
+
+    get sujectSubTitle(){
+        return this._isComplimentComplaint===true? this.label.CSP_SubjectSubtitleCC: this.label.csp_CreateNewCaseMainInputSubLabel
+    }
+
+    get descriptSubTitle(){
+        return this._isComplimentComplaint===true? this.label.CSP_DescSubtitleCC: this.label.csp_CreateNewCaseMainInputBoxSubLabel
     }
 
     createCaseCheck(){

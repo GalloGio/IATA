@@ -4094,6 +4094,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Deny Access</value>
     </labels>
     <labels>
+        <fullName>CSP_DescSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Description subtitle for complaint/compliment</shortDescription>
+        <value>Write a brief summary of feedback</value>
+    </labels>
+    <labels>
         <fullName>CSP_DocumentBookmarkAdded</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7683,6 +7691,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_SubmittedApproval</shortDescription>
         <value>The record was submitted for approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubjectSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subject subtitle for complaint/compliment</shortDescription>
+        <value>Please enter a short subject line</value>
     </labels>
     <labels>
         <fullName>CSP_Success</fullName>
