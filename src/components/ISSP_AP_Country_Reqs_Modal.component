@@ -57,7 +57,7 @@
                         <td>{!ctrl.countryRequirement.Type_of_address_accepted__c}</td>
                         <td><apex:outputField value="{!ctrl.countryRequirement.Type_of_address_accepted_com__c}" /></td></tr>
 
-                <tr><td scope="row"><strong>VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..:</strong></td>
+                <tr><td scope="row"><strong>VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..):</strong></td>
                     <td>{!ctrl.countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}</td>
                     <td><apex:outputField value="{!ctrl.countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}" /></td></tr>
                     </apex:outputPanel>
@@ -76,7 +76,7 @@
 
     <!-- for CASS show an Accept conditions box -->
     <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!AND(ctrl.isCASS,ctrl.strAreaType=='Airline Joining')}">
-    <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
+    <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing has to be submitted. The requirements for this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encountered during the testing process. Please make sure you read the documents below and make the necessary preparation.</div>
     <div class="row">
         <apex:outputPanel layout="block" styleclass="col center" rendered="{!ctrl.DocumentCASSSpecificationUrl!=null}">
             Download the&nbsp;<apex:outputLink value="{!ctrl.DocumentCASSSpecificationUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!ctrl.DocumentCASSSpecificationName}</apex:outputLink>&nbsp;(pdf)

@@ -1,0 +1,15 @@
+<template>
+    <div class={containerDivClass} role="status">
+		<div class="slds-media__figure">
+		  <span class={iconContainerClass} title={icon}>
+			<svg class="slds-icon slds-icon_small" aria-hidden="true">
+			  <use xlink:href={iconLink}></use>
+			</svg>
+			<span class="slds-assistive-text">{variant}</span>
+		  </span>
+		</div>
+		<div class="slds-media__body">
+		  <slot></slot>
+		</div>
+	  </div>
+</template>

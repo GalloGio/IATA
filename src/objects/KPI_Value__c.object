@@ -610,7 +610,7 @@
         <filters>
             <field>FDS_KPI_Reporting__c</field>
             <operation>contains</operation>
-            <value>collected</value>
+            <value>Receivable,collected</value>
         </filters>
         <filters>
             <field>Deadline__c</field>

@@ -53,23 +53,23 @@
                         </div>
                         <div class="panel-body" id="body-enquiries">
 
-                            <c:ISSP_APProcess_Progress step="{!stepNumber}"
-                                operationType="{!strOperationType}"
-                                areaType="{!strAreaType}"
-                                changeType="{!strChangeType}"
-                                isSIS="{!isSISMember}" />
-                            <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
-                                Any doubts? Please check out our&nbsp;
-                                <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
-                            </apex:outputPanel>
-                            
                             <apex:form id="step1-form" styleClass="form-horizontal">
+                                <c:ISSP_APProcess_Progress step="{!stepNumber}"
+                                    operationType="{!strOperationType}"
+                                    areaType="{!strAreaType}"
+                                    changeType="{!strChangeType}"
+                                    isSIS="{!isSISMember}" />
+                                <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
+                                    Any doubts? Please check out our&nbsp;
+                                    <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+                                </apex:outputPanel>
+
                                 <apex:actionFunction name="changeIsPassAirline" action="{!changeIsPassAirlineMethod}" immediate="true" rerender="step1-form,cmdButtonsBlock" status="WaitingStatus" oncomplete="refreshCountryList();">
-                                        <apex:param value="" assignTo="{!strOT}" name="strOT"/>
-                                    </apex:actionFunction>
-                                    <apex:actionFunction name="refreshCountryList" action="{!null}" reRender="countryList,cmdButtonsBlock" oncomplete="enableJoiningCountryDiv();$('.country-select').select2({width : 'resolve'});">
-                                      <apex:param value="" assignTo="{!strOT}" name="strOT"/>
-                                    </apex:actionFunction>
+                                    <apex:param value="" assignTo="{!strOT}" name="strOT"/>
+                                </apex:actionFunction>
+                                <apex:actionFunction name="refreshCountryList" action="{!null}" reRender="countryList,cmdButtonsBlock" oncomplete="enableJoiningCountryDiv();$('.country-select').select2({width : 'resolve'});">
+                                    <apex:param value="" assignTo="{!strOT}" name="strOT"/>
+                                </apex:actionFunction>
                                 <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
                                     <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
                                 </apex:actionFunction>
@@ -77,10 +77,10 @@
                                     <apex:pageBlockButtons location="bottom" style="padding-left:100px" >
                                         <apex:outputPanel id="cmdButtonsBlock">
                                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" onclick="if(!confirm('{!$Label.ISSP_AP_PASS_Withdraw}')){return false};" action="{!withdrawCountries}" rendered="{!changePass}" value="{!$Label.CSP_Continue}" status="WaitingStatus"  reRender="strmessages,countryListPassToWithdraw"/>
-                                                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" rendered="{!!changePass}" value="{!$Label.CSP_Continue}" />&nbsp;
-                                                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
-                                            </apex:outputPanel>
-                                </apex:pageBlockButtons>
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" rendered="{!!changePass}" value="{!$Label.CSP_Continue}" />&nbsp;
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
+                                        </apex:outputPanel>
+                                    </apex:pageBlockButtons>
                                     <apex:pageMessages id="strmessages" ></apex:pageMessages>
                                     <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
                                     <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 8 weeks, otherwise you will need to restart the process for each participation type and country.
@@ -101,14 +101,14 @@
                                     </div>
                                     <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && isGSSAUser== true))}">
                                         <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
-                                            <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
+                                            <label for="countryconcerned" class="col-sm-2 control-label">* Country / Territory</label>
                                             <div class="col-sm-10">
                                                 <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="{!listOptionCountries!=null}" size="1">
                                                     <apex:selectOptions value="{!listOptionCountries}"/>
                                                 </apex:selectList>
                                             </div>
                                         </div>
-									</apex:outputPanel>
+                                    </apex:outputPanel>
                                     <script>$('.country-select').select2({width : 'resolve'});</script>
                                     <apex:outputPanel layout="block" styleclass="form-group" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
                                         <label class="col-sm-2 control-label">* ICH Participation Type</label>

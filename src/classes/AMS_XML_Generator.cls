@@ -253,7 +253,7 @@ public with sharing class AMS_XML_Generator {
 
 			}
 			//Otherwise only send the case id if the account is new gen
-			else if(!isGDIorGDN && ag.Account__r.ANG_IsNewGenAgency__c && caseId != null){
+			else if(!isGDIorGDN && caseId != null){
 				getElementNode(liNode, 'CaseId', caseId);
 			}
 			/* NEWGEN-5164 END */

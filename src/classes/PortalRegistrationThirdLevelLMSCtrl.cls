@@ -347,6 +347,15 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String contIdToInactivate = '';
 			if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
 				if(contactInfo.flow == 'flow4'){
+					//validate if the logged user is the user to deactivate
+					if(contactInfo.Id == loggedUser.contactId){
+						RegistrationResult regResF4 = new RegistrationResult();
+						regResF4.isSuccess = false;
+						regResF4.message = Label.CSP_ErrorMsg_Flow4_Logout_LMS ;
+						regResF4.message = regResF4.message.replace('[Email]',contactInfo.Email);
+						Database.rollback(sp);
+						return regResF4;
+					}
 					contIdToInactivate = contactInfo.Id;
 				}else if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
 					contIdToInactivate = contactInfo.existingContactId;
@@ -603,6 +612,19 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					regRes.message = 'An Error Occured! Regitration Not Completed! ' + regRes.message;
 					Database.rollback(sp);
 				}
+				
+				Map<Id,sObject> mConts = new Map<Id,sObject>();
+				Contact c = new Contact();
+				c.Id = contactInfo.Id;
+				c.AccountId = contactInfo.AccountId;
+				mConts.put(contactInfo.Id, c);
+
+				if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+					System.enqueueJob(new AccountRolesAlignBatch(mConts));
+				}else{
+					AccountRolesAlignBatch.switchAccountRoles(mConts);
+				}
+				
 				return regRes;
 			}
 		}
