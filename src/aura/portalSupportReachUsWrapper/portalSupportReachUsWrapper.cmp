@@ -42,14 +42,14 @@
 
     <div class="slds-grid slds-grid_align-center">
         <div
-            class="slds-col slds-size_11-of-12 slds-medium-size_2-of-3 maxContainerWidth slds-theme_shade customCard slds-p-vertical_xx-large slds-align_absolute-center slds-wrap">
+            class="slds-col slds-size_11-of-12 slds-medium-size_2-of-3 maxContainerWidth slds-theme_shade customCard slds-p-vertical_xx-large slds-grid_align-center slds-wrap">
             <c:portalSupportContactUsHeader ontoggleSpinner="{!c.toggleSpinner}"
                 onalldatachange="{!c.handleLiveAgentChangeEvent}"
                 class="slds-size_full" />
                 <aura:if isTrue="{!v.showLAButtons}">
                     <div class="slds-col tile-column slds-text-align_center
                                     slds-size_1-of-1
-                                    slds-m-horizontal_small">
+                                   ">
                         <div class="slds-align_absolute-center slds-m-bottom_x-large">
                             <div
                                 class="slds-grid slds-wrap slds-size--4-of-5 slds-gutters_direct-xx-small slds-align-content-center maxContentWidth">
@@ -124,7 +124,7 @@
             <!-- RELATED ARTICLES SECTION -->
             <c:portalSupportContactUsFooter 
                     topic="{!v.topic}" 
-                    class="slds-col slds-grid slds-wrap slds-size--1-of-1"
+                    class="slds-col slds-size--1-of-1 slds-grid slds-wrap "
                     countryValue="{!v.countryISO}"
                     isFirstLevelUser ="{!v.isFirstLevelUser}"
                     topicEn="{!v.ten}"

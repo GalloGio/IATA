@@ -1,7 +1,15 @@
 import { LightningElement,track,api } from 'lwc';
- 
+
+import CSP_Give_Feedback_Message from '@salesforce/label/c.CSP_Give_Feedback_Message';
+import CSP_Give_Feedback_Title from '@salesforce/label/c.CSP_Give_Feedback_Title';
+import CSP_Give_Feedback_ButtonLabel from '@salesforce/label/c.CSP_Give_Feedback_ButtonLabel';
 export default class PortalGiveFeedback extends LightningElement {
 
+    @track label={
+        CSP_Give_Feedback_Message,
+        CSP_Give_Feedback_Title,
+        CSP_Give_Feedback_ButtonLabel
+    };
     @track isExpanded=false;
 
 

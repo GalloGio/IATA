@@ -3,12 +3,14 @@
 
         <div class="maxContentWidth topLightGrayBorder slds-grid slds-wrap slds-size--10-of-12 slds-align_absolute-center">            
             <div class="slds-col slds-size_full slds-text-align_center slds-p-vertical_large">
-                <h1 class="text-medium text-bold">What do you think about the Customer Portal?</h1>
-                <h2 class="slds-p-top_small text-xsmall">Whether it's good or bad, your feedback is important for us to provide you a better service.</h2>
+                <h1 class="text-medium text-bold">{label.CSP_Give_Feedback_Title}</h1>
+                <h2 class="slds-p-top_small text-xsmall">{label.CSP_Give_Feedback_Message}</h2>
             </div> 
             <div if:false={isExpanded}  class="slds-col slds-size_full slds-align_absolute-center">
-                <lightning-button class="showOnlyFavorites" variant="brand" label="Give Feedback" onclick={expandCmp}>
-                </lightning-button>
+                
+                <button class="showOnlyFavorites"  onclick={expandCmp}>
+                    {label.CSP_Give_Feedback_ButtonLabel}
+                </button>
             </div>
         </div>
             
