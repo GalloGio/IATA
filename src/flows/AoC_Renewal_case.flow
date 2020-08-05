@@ -286,7 +286,7 @@ BR()&amp;
             <targetReference>Start_flow_3_days_before_expiry_date</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AccountID</name>
         <dataType>String</dataType>
