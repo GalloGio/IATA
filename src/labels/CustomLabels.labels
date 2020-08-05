@@ -4800,14 +4800,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
     </labels>
     <labels>
-        <fullName>CSP_Call_Tile_SubLabel</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Call Tile Sub label</shortDescription>
-        <value>Give Us a Call</value>
-    </labels>
-    <labels>
         <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
