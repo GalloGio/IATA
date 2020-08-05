@@ -6,6 +6,12 @@
     </div>
 
     <div if:true={showGiveFeedback} class="slds-size_1-of-1 maxContentWidth topLightGrayBorder slds-p-vertical_x-large">
-        <c-portal-give-feedback></c-portal-give-feedback>
+        <c-portal-give-feedback
+        topic={_topic}
+        country-value={_countryValue}
+        is-first-level-user ={_isFirstLevelUser}
+        topic-en={_topicEn}
+        user-info={_userInfo}
+        ></c-portal-give-feedback>
     </div>
 </template>

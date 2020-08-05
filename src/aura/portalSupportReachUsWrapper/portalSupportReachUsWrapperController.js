@@ -50,6 +50,10 @@
         component.set("v.country", data.recordTypeAndCountry.Country);
         component.set("v.countryISO", data.CountryISO);
         component.set("v.contact", data.Contact);
+        component.set("v.isFirstLevelUser", data.IsFirstLevelUser);
+        component.set("v.userInfo", data.UserInfo);
+        
+        component.set("v.ten", data.TopicEN);
         
         component.set("v.showLAButtons", data.showChat);
         //must disconnect and delete in order to re-deploy

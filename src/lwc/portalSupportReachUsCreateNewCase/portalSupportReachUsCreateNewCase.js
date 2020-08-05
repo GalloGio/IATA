@@ -1,8 +1,8 @@
 import { LightningElement, track,api,wire } from 'lwc';
 import idOfUser from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { getParamsFromPage } from 'c/navigationUtils';
-import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import { NavigationMixin } from 'lightning/navigation';
+import { getParamsFromPage,navigateToPage } from 'c/navigationUtils';
 import searchAccounts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchAccounts';
 import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchContacts';
 import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
@@ -43,8 +43,18 @@ import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 import csp_SearchNotPerformed from '@salesforce/label/c.csp_SearchNotPerformed';
-import CSP_SubmitAsQuery from '@salesforce/label/c.CSP_SubmitAsQuery';
-import CSP_SubmitAsEmergency from '@salesforce/label/c.CSP_SubmitAsEmergency';
+import CSP_SubmitAsQuery from '@salesforce/label/c.csp_SubmitAsQuery';
+import CSP_SubmitAsEmergency from '@salesforce/label/c.csp_SubmitAsEmergency';
+
+import CSP_SupportReachUs_Compliment from '@salesforce/label/c.csp_ComplimentInfo';
+import CSP_SupportReachUs_ComplimentInfo from '@salesforce/label/c.csp_Compliment';
+import csp_SupportReachUs_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
+import csp_SupportReachUs_Compliment_Label from '@salesforce/label/c.csp_Compliment_Label';
+import CSP_Submit from '@salesforce/label/c.CSP_Submit';
+
+
+import CSP_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
+import CSP_SupportReachUs_GoToHomepage from '@salesforce/label/c.csp_GoToHomepage';
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
 import csp_caseSubject from '@salesforce/schema/Case.Subject';
@@ -52,7 +62,7 @@ import csp_caseDescription from '@salesforce/schema/Case.Description';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-export default class PortalSupportReachUsCreateNewCase extends LightningElement {
+export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(LightningElement) {
     //label construct
     label = {
         csp_CreateNewCaseTopLabel,
@@ -92,7 +102,14 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         CSP_NoSearchResults,
         csp_SearchNotPerformed,
         CSP_SubmitAsQuery,
-        CSP_SubmitAsEmergency
+        CSP_SubmitAsEmergency,
+        CSP_SupportReachUs_Compliment,
+        CSP_SupportReachUs_ComplimentInfo,
+        CSP_SupportReachUs_GoToSupport,
+        CSP_SupportReachUs_GoToHomepage,
+        csp_SupportReachUs_Concern_Label,
+        csp_SupportReachUs_Compliment_Label,
+        CSP_Submit
     }
 
     //spinner controller
@@ -132,7 +149,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track relatedContacts=[];
 	
     get relatedAccountsShow(){
-        return (this.agentProfile && this.relatedAccounts.length); 
+        return (this.agentProfile && this.relatedAccounts.length) && !this.isCompliment; 
     }
 
     //is the user a Level1 user? If he has not completed level 2 registration he is not
@@ -145,7 +162,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
     set topic(value){
         this._topic=value;
-
+        if(this._topic !=null)
         this.createCaseCheck();
     }
 
@@ -155,7 +172,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
     set countryISO(value){
         this._countryISO=value;
-        this.createCaseCheck();
+        if(this._countryISO !=null){
+            this.createCaseCheck();
+        }
     }
 
     @api
@@ -180,16 +199,19 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
     set userInfo(value){
         this.userContact=value;
+        if(this.userContact !=null){
 
-        this.agentProfile = this.userContact.Profile.Name.includes('ISS Portal Agency');
-
-        if(this.agentProfile === true && this.relatedAccounts.length>0 ) 
+            this.agentProfile = this.userContact.Profile.Name.includes('ISS Portal Agency');
+            
+            if(this.agentProfile === true && this.relatedAccounts.length>0 ) 
             this.singleresult = this.relatedAccounts.filter(x => x.id === this.userContact.Contact.AccountId);
-         
-
-        if(this.relatedContacts.length>0){
-            this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.userContact.ContactId);
+            
+            
+            if(this.relatedContacts.length>0){
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.userContact.ContactId);
+            }
         }
+        
     }
 
     @api
@@ -204,7 +226,19 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track _hasEmergencyOption=false;
     @track showConfirmBox=false;
 
-    @api isConcernCase=false;
+    @track isConcernCase=false;
+    @track isCompliment=false;
+
+    @track _isComplimentComplaint=false;
+
+    @api 
+    get specialCase(){
+        return this._isComplimentComplaint
+    }
+    set specialCase(value){
+        this.customTD=!value; //override if special case is identified
+        this._isComplimentComplaint=value;
+    };
 
     @api 
     get topicEn(){
@@ -219,6 +253,20 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track originBtn='';
     @track subtopicLabel;
     _topicEn='';
+
+    @track feedbackType=null;
+    get feedbackOptions(){
+        return [
+            {
+                label:this.label.csp_SupportReachUs_Compliment_Label,
+                value:'compliment'
+            },
+            {
+                label:this.label.csp_SupportReachUs_Concern_Label,
+                value:'complaint'
+            }
+        ]
+    }
     //countryISO;
 	
 
@@ -428,6 +476,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //validate fields and finish creating the case.
     finishCreatingCase(event) {
+        this.loading = true;  
         this.originBtn= event.target.attributes.getNamedItem('data-id').value;
         if (this.agentProfile) {
             this.checkForErrors();
@@ -441,6 +490,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             textinput.className += ' slds-has-error';
             this.showErrorToast();
         }
+        else if (this.specialCase ===true && this.feedbackType ===null) {
+            let textinput = this.template.querySelector('[data-id="feedback-type"]');
+            textinput.className += ' missing-value';
+            this.showErrorToast();
+        }
         else if (this.description.trim() === '') {
             let textarea = this.template.querySelector('lightning-textarea');
             textarea.className += ' slds-has-error';
@@ -448,8 +502,19 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         }else if(this._isEmergencyCase){
             this.showConfirmBox=true;
         }
-        else {
-            this.submitCase();
+        else { // if no error found 
+
+            if(this.specialCase){ // In case of feedback mode (complaint/ compliment)
+
+                let topic= this.isConcernCase?this.topic:'';
+                createCase({ countryiso: this.countryISO, isConcernCase: this.isConcernCase, topic: topic})
+                    .then(createCaseResult => {
+                        this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
+                        this.prepareCaseRecord();                
+                    });
+            } else {
+                this.prepareCaseRecord();
+            }
         }
     }
 
@@ -460,11 +525,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     removeEmergency(){
         
         this._isEmergencyCase=false;
-        this.submitCase();
+        this.prepareCaseRecord();
 
     }
 
-    submitCase(){  
+    prepareCaseRecord(){
         this.closeConfirmBox();
         const record = { 'sobjectType': 'Case' };
         //only for custom Treasury Dashboard case
@@ -478,9 +543,16 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
             this.customTD = false;
 
-        //for all other cases
-        }else{
+        
+        }else if(this.isCompliment){ //for compliments 
 
+            record.RecordTypeId = this.caseInitiated.RecordTypeId;
+            record.Subject = this.subject;
+            record.Compliment__c = true;
+            record.Description = this.description + '\n-COMPLIMENT-';
+            record.BSPCountry__c = this.caseInitiated.Country_concerned_by_the_query__c;
+
+        }else{//for all other cases
             //double check to make sure the topic is never empty
             if(this._topicEn==undefined ||this._topicEn==''||this._topicEn==null  ){
                 this.showErrorToast();
@@ -518,12 +590,15 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             record.Status = this.caseInitiated.Status;
             record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
             record.Subject = this.caseInitiated.Subject;
-            record.Description = this.caseInitiated.Description;
-
-           
-
+            record.Description = this.caseInitiated.Description;  
         }
 
+        this.submitCase(record);
+    }
+
+    //Submits the case record to the server
+    submitCase(record){  
+        
         this.loading = true;        
         //Yes. You can pass the record itself. Yes. It's doable. Yes, i know. It's awsome! Like Thor's Hammer! :D
         insertCase({ caseToInsert: record, recipientsToAdd: this.caseEmails })
@@ -633,17 +708,66 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //Simple navigate to the reach us page.
+    navigateToHomePage() {
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "home"
+            }
+        })
+            .then(url => navigateToPage(url, {}));
+    }
+    //Simple navigate to the reach us page.
     navigateToSupport() {
-        window.location.href = CSP_PortalPath + "support-reach-us";
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            }
+        })
+            .then(url => navigateToPage(url, {}));
     }
 
     //Simple navigate to the case details of the created case.
     navigateToCase() {
-        window.location.href = CSP_PortalPath + "case-details?caseId=" + this.caseID;
+       
+        let params={caseId:this.caseID};
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            }
+        })
+            .then(url => navigateToPage(url, params));
     }
 
     //it really, really, really navigates to all cases. Promise!
     navigateToAllCases() {
-        window.location.href = CSP_PortalPath + "cases-list";
+       
+
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "cases-list"
+            }
+        })
+            .then(url => navigateToPage(url, {}));
+    }
+
+
+    handleInputValueChange(event){
+
+
+        this.feedbackType=event.target.value;
+
+        if(this.feedbackType=='compliment'){
+            this.isCompliment=true;
+            this.isConcernCase=false;
+        }else{
+            this.isCompliment=false;
+            this.isConcernCase=true;
+        }
+        let textinput = this.template.querySelector('[data-id="feedback-type"]');
+        textinput.classList.remove('missing-value');
     }
 }

@@ -455,10 +455,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 		allData.recordTypeAndCountry = this.recordTypeAndCountry;
 		allData.CountryISO = this.countryValue;
 		allData.Emergency = this.isEmergency;
-		allData.Question = this.isQuestion;
 		allData.Contact = this.contact;
 		allData.Topic = this.topic;
-
+		allData.IsFirstLevelUser = this.isFirstLevelUser;
+		allData.TopicEN = this.topicEN;
+		allData.UserInfo = this.userInfo;
+		//test
 		allData.showChat = this.isChatOpt && this.myliveAgentButtonInfo && this.myliveAgentButtonInfo.length > 0;
 
 		// Fire the custom event

@@ -20,6 +20,10 @@
     max-height: 150px;
 }
 
+.missing-value{
+    border-color:red;
+}
+
 
 @media screen and (max-width: 640px) {
     .slds-p-horizontal_xx-large, .slds-p-horizontal--xx-large {

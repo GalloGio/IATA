@@ -26,6 +26,11 @@
     <aura:attribute name="caseRecordType" type="String" />
     <aura:attribute name="country" type="String" />
     <aura:attribute name="countryISO" type="String" />
+    <aura:attribute name="ten" type="String" />
+  
+    <aura:attribute name="isFirstLevelUser" type="Boolean" />
+    <aura:attribute name="userInfo" type="Object" />
+
 
     <aura:attribute name="loaded" type="Boolean" default="true" />
 
@@ -119,7 +124,14 @@
             <!-- RELATED ARTICLES SECTION -->
             <div class="slds-align--absolute-center slds-grid slds-size_1-of-1 slds-wrap">
 
-                <c:portalSupportContactUsFooter topic="{!v.topic}" class="slds-col slds-size_4-of-5 maxContentWidth">
+                <c:portalSupportContactUsFooter 
+                    topic="{!v.topic}" 
+                    class="slds-col slds-size_4-of-5 maxContentWidth"
+                    countryValue="{!v.countryISO}"
+                    isFirstLevelUser ="{!v.isFirstLevelUser}"
+                    topicEn="{!v.ten}"
+                    userInfo="{!v.userInfo}"
+                >
                 </c:portalSupportContactUsFooter>
                
             </div>
