@@ -332,7 +332,7 @@ public class AMS_OSCAR_TestDataFactory
 
 		insert cargoHO;
 
-		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
+		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670002',
 									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
 									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id,
 									Status__c = AMS_Utils.ACC_S9_APPROVED);

@@ -99,7 +99,7 @@ private class ISSP_ANG_CodeSearchTest {
 				Location_type__c = AMS_Utils.BR,
 				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
 				OwnerId = UserInfo.getUserId(),
-				IATACode__c = '87654321',
+				IATACode__c = '87654322',
 				Location_Class__c = 'P'
 			);
 
