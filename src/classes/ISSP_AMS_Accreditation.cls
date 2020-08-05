@@ -1570,6 +1570,19 @@ public without sharing class ISSP_AMS_Accreditation {
 		return member_airlines;
 	}
 
+	public List<SelectOption> getTrainingTypes() {
+		List<SelectOption> traingingTypes = new List<SelectOption>{new SelectOption('', '--None--')};
+		for(Schema.PicklistEntry trainingTypeValue : AMS_Accreditation_Contact__c.Type_Of_Certificate__c.getDescribe().getPicklistValues()){
+			System.debug('isocountry:'+isocountry);
+			System.debug('isocountry.EACP_Country__c:'+isocountry.EACP_Country__c);
+			System.debug('trainingTypeValue.getValue():'+trainingTypeValue.getValue());
+			if(isocountry != null && !isocountry.EACP_Country__c && trainingTypeValue.getValue() != 'DGA')
+				traingingTypes.add(new SelectOption(trainingTypeValue.getValue(), trainingTypeValue.getValue()));
+		}
+
+		return traingingTypes;
+	}
+
 	public Integer getContactAccountAEsChilds() {
 		List<String> l = new List<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION,
 			AMS_Utils.ACC_S8_CHANGESPROCESSED};
