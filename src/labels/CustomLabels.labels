@@ -4808,6 +4808,30 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Give Us a Call</value>
     </labels>
     <labels>
+        <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Button label</shortDescription>
+        <value>Give Feedback</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Message</shortDescription>
+        <value>Whether it's good or bad, your feedback is important for us to provide you a better service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback title</shortDescription>
+        <value>What do you think about the Customer Portal?</value>
+    </labels>
+    <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
