@@ -142,18 +142,18 @@
 
                         <!--FEEDBACK TYPE-->
                         <div if:true={specialCase} class="slds-p-bottom_large ">
-                            <p class="text-xsmall">This is a</p>
-                            
-                            <c-iata-radio-group 
-                                class="customTextInput slds-grid slds-p-around_small text-small feedbackTypeBox"
-                                options={feedbackOptions}   
-                                data-id="feedback-type"                     
-                                name='type'
-                                value={feedbackType}
-                                onchange={handleInputValueChange}
-                                display-horizontal=true>
-                            </c-iata-radio-group>
-                            
+                            <p class="text-xsmall">{label.CSP_Give_Feedback_Type_Title}</p>
+                            <div class="customTextInput slds-grid slds-p-around_small text-small feedbackTypeBox">
+                                    <c-iata-radio-group 
+                                    class="slds-is-absolute"
+                                    options={feedbackOptions}   
+                                    data-id="feedback-type"                     
+                                    name='type'
+                                    value={feedbackType}
+                                    onchange={handleInputValueChange}
+                                    display-horizontal=true>
+                                </c-iata-radio-group>
+                            </div>
                         </div>
                         <!--FEEDBACK TYPE-->
 

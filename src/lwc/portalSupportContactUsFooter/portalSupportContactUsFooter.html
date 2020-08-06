@@ -1,11 +1,11 @@
 <template >
-    <div class="slds-align--absolute-center slds-grid slds-size_1-of-1 slds-wrap">
+    <div class="slds-align_absolute-center slds-grid slds-size_1-of-1 slds-wrap">
 
-        <div class="slds-col  slds-size--1-of-1 slds-align--absolute-center">
-            <c-portal-support-top-articles class="maxContentWidth slds-col slds-size--1-of-1" topic={_topic}></c-portal-support-top-articles>
+        <div class="slds-col  slds-size_1-of-1 slds-align_absolute-center">
+            <c-portal-support-top-articles class="maxContentWidth slds-col slds-size_4-of-5" topic={_topic}></c-portal-support-top-articles>
         </div>
         
-        <div if:true={showGiveFeedback} class="slds-col slds-size--1-of-1">
+        <div if:true={showGiveFeedback} class="slds-col slds-size_1-of-1">
             <c-portal-give-feedback
             topic={_topic}
             country-value={_countryValue}
