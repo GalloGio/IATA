@@ -241,7 +241,7 @@ private class AMS_MigrationToolHelperTest {
 		Account account1 = new Account();
 		account1.Name = 'Test account';
 		account1.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
-		account1.IATACode__c = '4242424';
+		account1.IATACode__c = '4242425';
 		account1.Type = 'IATA Passenger Sales Agent';
 		account1.BillingCity = 'Montreal';
 		account1.BillingCountry = 'Canada';

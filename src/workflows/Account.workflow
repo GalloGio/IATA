@@ -263,6 +263,16 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Copy_IATACode</fullName>
+        <description>Makes a backup of the IATA Code in the field IATA_Code_duplicate_blocker__c</description>
+        <field>IATA_Code_duplicate_blocker__c</field>
+        <formula>IATACode__c</formula>
+        <name>Copy IATACode</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Data_quality_comment_history</fullName>
         <description>Historize the data quality feedback comment</description>
         <field>Data_quality_history__c</field>
@@ -694,6 +704,24 @@ Previously it was done only for ACLI process but now it applies always, includin
         <active>false</active>
         <description>Clears the Account Type field when the field should be filled by the user</description>
         <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type__c, &apos;Not Applicable&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Copy IATACode for duplication control</fullName>
+        <actions>
+            <name>Copy_IATACode</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used only for Agencies.
+It copies the value of IATAcode field to an auxiliary unique field. It allows us to have the IATA code unique but only for Agency Recordtype</description>
+        <formula>AND(
+  OR(
+    ISNEW(),
+    ISCHANGED(IATACode__c)
+  ),
+  RecordType.DeveloperName = &apos;IATA_Agency&apos;
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
