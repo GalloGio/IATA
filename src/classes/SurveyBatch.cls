@@ -3,8 +3,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 	// This batch is joining the old batches: SurveyCustomWorkflowBatch and SurveyCustomerRecoveryBatch
 	// The purpose of joining them in one single batch is to reduce the load on sfdc's batch scheduler
 
-	global set<Id> CasesPart1;
-
 	//----- VARIABLES USED BY PART 1 -----
 	global list<Case> cases;
 	global Set<Id> ContactIds;
@@ -37,6 +35,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 	//----- VARIABLES USED BY PART 2 -----
 	global list<Case> lstCases;
+	global set<Id> casesSet; // Set of Cases where a survey was created yesterday
 	public Date CreatedDate {get; set;}
 
 	global map<String, Id> mapComplaintQueuesPerName = new map<string, Id>();
@@ -57,6 +56,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
 	global List<Case> start(Database.BatchableContext BC) {
+		Set<Id> casesIdToBeProcessed = new Set<Id>();
 		List<Case> casesToBeProcessed = new List<Case>();
 		system.debug(LoggingLevel.error, '################### START() ###########################');
 		system.debug(LoggingLevel.error, '################### START() -> GETTING CASES FOR SENDING THE SURVEY ');
@@ -107,13 +107,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			templates.put(et.DeveloperName, et.Id);
 		}
 
-		system.debug('################# QUERY : WHERE ClosedDate > :' + startd + ' AND ClosedDate < :' + endd + '\n' +
-								 'AND ContactId <> NULL AND Contact.Email <> NULL \n' +
-								 'AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = \'\'\n)' +
-								 'AND Instant_Survey_Feedback_requested__c = false' +
-								 'AND ParentId == NULL');
-
-		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject, Customer_recovery__c, OwnerId,
 															 ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
 															 Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
 															 Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
@@ -131,12 +125,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 															 AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
 																	 ORDER BY ClosedDate DESC]);
 
-		CasesPart1 = new Set<Id>();
-		for (Case c : casesToBeProcessed)
-			CasesPart1.add(c.Id);
-
-
-
+		for(Case c : casesToBeProcessed){
+			casesIdToBeProcessed.add(c.Id);
+		}
 
 		system.debug(LoggingLevel.error, '################### START() -> PART 1 FOUND ' + casesToBeProcessed.size() + ' CASES');
 
@@ -175,16 +166,18 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			lstCaseIds.add(is.Relationship_to_Case__c);
 		}
 
-		system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
-
-		casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name,
-																	WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
+		List<Case> SurveyCases = [SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
 															 FROM Case
 															 WHERE Id IN :lstCaseIds
-															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR']);//WMO-571
+															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR'];//WMO-571
 
+		casesSet = new Set<Id>();
+		for (Case c : SurveyCases){
+			casesSet.add(c.Id);
+			if(!casesIdToBeProcessed.contains(c.Id))
+				casesToBeProcessed.add(c);
+		}
 		system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
-
 		return casesToBeProcessed;
 
 	}
@@ -198,14 +191,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 		List<Case> scopepart2 = new List<Case>();
 
 		for (Case c : scope) {
-			if (CasesPart1.contains(c.ID)){
+			if (!casesSet.contains(c.ID)){
 				scopepart1.add(c);
-			}
-
-			else {
+			} else {
 				scopepart2.add(c);
 			}
-
 		}
 
 		processSurveyEmail(scopepart1);

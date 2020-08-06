@@ -746,6 +746,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.editContactId = newContact.Id;
 
 			ctrl.getIATAMemberAirlines();
+			ctrl.getTrainingTypes();
 			ctrl.getOfficeTypes();
 			ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
 			ctrl.Save();
@@ -3708,21 +3709,13 @@ Location_Type__c = 'BR');
 		System.runAs(fetchUser('conChildIcc@test11.com')) {
 			String invalidISOsample = '∌';
 			ISSP_AMS_Accreditation accr = icc_initialize();
-
+			
 			accr.noCLocationType = 'xpto';
 
 			String str = accr.noCLocationType;
 
 			accr.txtHelpCurrency = 'xpto';
 			str = accr.txtHelpCurrency;
-
-			List<SelectOption> selectOptionList = new List<SelectOption>();
-
-			accr.isGSAList = selectOptionList;
-			accr.itemsYesNo = selectOptionList;
-
-			selectOptionList = accr.isGSAList;
-			selectOptionList = accr.itemsYesNo;
 
 			accr.fileName = 'xpto';
 			str = accr.fileName;
