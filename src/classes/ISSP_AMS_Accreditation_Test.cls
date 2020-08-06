@@ -102,6 +102,7 @@ private class ISSP_AMS_Accreditation_Test {
 
 		Account mcbranchAcc = new Account(
 			Name = 'MultiBranch',
+			RecordTypeId = rtIdBr,
 			Location_Type__c = 'HE',
 			Location_Class__c = 'P',
 			Sector__c = AMS_Utils.SECTOR_PASSENGER,
@@ -177,6 +178,7 @@ private class ISSP_AMS_Accreditation_Test {
 		Account accountParentAccreditation = new Account(
 			BillingCity = 'test',
 			Name = 'accountParentAccreditation',
+			RecordTypeId = rtIdBr,
 			Sector__c = AMS_Utils.SECTOR_PASS,
 			Category__c=AMS_Utils.categoryPass,
 			IATA_ISO_Country__c = country3.Id,
@@ -1670,7 +1672,6 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.saveAMSFormAndGoForward();
 			ctrl.saveAMSFormAndGoBack();
 			ctrl.saveAMSFormAndLeave();
-			Test.stopTest();
 			ctrl.setPageLegalStatusAfterChangeLabels();
 
 			ctrl.legalStatusAfterChange = 'association';
@@ -1686,6 +1687,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 			ctrl.goToFinalStep();
 			ctrl.validateDangerousGoods(5);
+			Test.stopTest();
 		}
 	}
 
@@ -4834,6 +4836,7 @@ Location_Type__c = 'BR');
 
 			insert new List<AMS_Facility__c>{facility1, facility2};
 
+			Test.startTest();
 			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
 
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
@@ -4853,6 +4856,7 @@ Location_Type__c = 'BR');
 
 			ctrl = new ISSP_AMS_Accreditation();
 			List<SelectOption> testListOpp = ctrl.legalStatusList;
+			Test.stopTest();
 
 			System.assert(ctrl.facilityList.isEmpty(), 'Facility list must NOT have records');
 		}
