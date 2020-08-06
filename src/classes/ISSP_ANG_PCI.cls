@@ -626,7 +626,7 @@ public with sharing class ISSP_ANG_PCI {
 
 	public Pagereference securityCheck() {
 
-		if ((newCase.Id != null && newCase.Status != 'Draft' && (newCase.Origin != 'Massive FOP Creation' && newCase.Origin != 'FoP automatic renewal')) || ((newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal')  && !newCase.Owner.Name.startsWith('NewGen PCI'))) {
+		if ((newCase.Id != null && newCase.Status != 'Draft' && (newCase.Origin != 'Massive FOP Creation' && newCase.Origin != 'FoP automatic renewal')) || ((newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal')  && !(newCase.OwnerId == '00G1r000002xun7EAA' || newCase.OwnerId == '00G1r000002xun8EAA' || newCase.OwnerId == '00G1r000002xun9EAA' || newCase.OwnerId == '00G1r000002xunAEAQ' || newCase.OwnerId == '00G1r000002xunBEAQ' || newCase.OwnerId == '00G1r000004SpvKEAS'))) {
 			return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
 		}
 

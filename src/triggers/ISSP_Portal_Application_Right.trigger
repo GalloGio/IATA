@@ -57,10 +57,17 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
 
+	//E&F APPS
+	EF_PortalApplicationRightHandler EF_handler = new EF_PortalApplicationRightHandler();
+	if (Trigger.isAfter && Trigger.isInsert) EF_handler.onAfterInsert();
+	if (Trigger.isAfter && Trigger.isUpdate) EF_handler.onAfterUpdate();
+	if (Trigger.isAfter && Trigger.isDelete) EF_handler.onAfterDelete();
+	//end of E&F APPS
+
 	List<Portal_Application_Right__c> passGrantPortalRights = new List<Portal_Application_Right__c>();
 	List<Portal_Application_Right__c> passReGrantPortalRights = new List<Portal_Application_Right__c>();
 	List<Portal_Application_Right__c> passDenyPortalRights = new List<Portal_Application_Right__c>();
-	if(!Trigger.isDelete && trigger.new!=null){
+	if(!Trigger.isDelete && trigger.new!=null && Trigger.isUpdate){
 		for(Portal_Application_Right__c portal : trigger.new){
 
 			if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Requested')){

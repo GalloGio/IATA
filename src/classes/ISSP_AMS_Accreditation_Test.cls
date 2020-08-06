@@ -77,10 +77,15 @@ private class ISSP_AMS_Accreditation_Test {
 			CASS_Import__c = 'Yes', Local_language_Agency_details_required__c = true
 		);
 
-		insert new List<IATA_ISO_Country__c>{country, country2, country3, country4, country5};
 
-			IATA_ISO_Country__c country23 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',EACP_Country__c=true);
-		insert country23;
+		IATA_ISO_Country__c country6 = new IATA_ISO_Country__c();
+		country6.Name = 'Czech Republic';
+		country6.ISO_Code__c = 'Cs';
+		country6.AIMS_Area_Name__c = 'Czech Republic';
+		country6.AIMS_Area_ID__c = '1';
+		country6.CNS_Country__c = true;
+
+		insert new List<IATA_ISO_Country__c>{country, country2, country3, country4, country5, country6};
 
 		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -4850,6 +4855,7 @@ Location_Type__c = 'BR');
 			ApexPages.currentPage().getParameters().put('caseId', testCaseWithoutForm.Id);
 
 			ctrl = new ISSP_AMS_Accreditation();
+			List<SelectOption> testListOpp = ctrl.legalStatusList;
 			Test.stopTest();
 
 			System.assert(ctrl.facilityList.isEmpty(), 'Facility list must NOT have records');
@@ -4857,6 +4863,154 @@ Location_Type__c = 'BR');
 
 	}
 
+	@isTest static void fetchFacilityListTest2(){
+
+		IATA_ISO_Country__c country = [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
+					IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
+					IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c, Hide_Tax_Number_VAT__c, Multicountry_Enabled__c
+				FROM IATA_ISO_Country__c
+				WHERE CNS_Country__c = : true];
+
+		Account acct = ISSP_ObjectFactory.createNewAccount();
+		acct.BillingStreet = 'Street Example';
+		acct.BillingCity = 'City Example';
+		acct.Name = 'Facility Test';
+		acct.sector__c = 'Cargo Agent';
+		acct.Location_Type__c = 'HO';
+		acct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		acct.IATACode__c = '100';
+		acct.IATA_ISO_Country__c = country.Id;
+		acct.CNS_Account__c = true;
+		insert acct;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acct.Id;
+		con.Email = 'contact@test.com';
+		insert con;
+
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser) {
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+			testCase.Reason1__c = 'Cargo Agent';
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Facilities Case Test';
+			testCase.Account_Concerned__c = acct.Id;
+			testCase.IFAP_Country_ISO__c = 'tp';
+			insert testCase;
+
+			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+			newForm.IsGSA__c = 'No';
+			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+			newForm.SAAM_Case__c = testCase.Id;
+			newForm.Validation_ERRORS__c = true;
+			insert newForm;
+
+			AMS_Facility__c facility1 = new AMS_Facility__c(
+				Is_the_warehouse_sub_contracted__c = 'Yes',
+				Is_the_office_warehouse_leased__c = 'Yes',
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office'),
+				AMS_Online_Accreditation__c = newForm.Id,
+				Are_Consignments_made_ready__c = 'Yes'
+			);
+
+			AMS_Facility__c facility2 = new AMS_Facility__c(
+				Is_the_warehouse_sub_contracted__c = 'Yes',
+				Is_the_office_warehouse_leased__c = 'Yes',
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Warehouse'),
+				AMS_Online_Accreditation__c = newForm.Id,
+				Are_Consignments_made_ready__c = 'Yes'
+			);
+
+			insert new List<AMS_Facility__c>{facility1, facility2};
+
+			Test.startTest();
+
+			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
+			
+			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+
+			System.assert(ctrl.facilityList.size() == 2, 'Facility list must have two records');
+
+			Case testCaseWithoutForm = ISSP_ObjectFactory.createNewCase();
+			testCaseWithoutForm.BSPCountry__c = 'Hong Kong (SAR), China';
+			testCaseWithoutForm.Reason1__c = 'Cargo Agent';
+			testCaseWithoutForm.Case_Language__c = 'English';
+			testCaseWithoutForm.Subject = 'Facilities Test';
+			testCaseWithoutForm.Account_Concerned__c = acct.Id;
+			testCaseWithoutForm.IFAP_Country_ISO__c = 'tp';
+			insert testCaseWithoutForm;
+
+			ApexPages.currentPage().getParameters().put('caseId', testCaseWithoutForm.Id);
+			
+			ctrl = new ISSP_AMS_Accreditation();
+
+			System.assert(ctrl.facilityList.isEmpty(), 'Facility list must NOT have records');
+
+			String auxStr = ctrl.amsAllLangCountryLabelForMC;
+		
+			testCase.Reason1__c = AMS_Utils.CASE_REASON_BR_IP;
+			update testCase;
+			ctrl.newCase = testCase;
+			auxStr = ctrl.lblCNSAgencyTitle;
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_BR);
+			
+			testCase.Reason1__c = AMS_Utils.CASE_REASON_BR_INDEPENDENT;
+			update testCase;
+			ctrl.lblCNSAgencyTitle = null;
+			ctrl.newCase = testCase;
+			auxStr = ctrl.lblCNSAgencyTitle;
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_CNS_ENDORSEMENT + ' - ' + Label.ISSP_AMS_NEW_INDEPENDENT_BR);
+			
+			testCase.Reason1__c = AMS_Utils.CASE_REASON_NEW_HO;
+			update testCase;
+			ctrl.lblCNSAgencyTitle = null;
+			ctrl.newCase = testCase;
+			auxStr = ctrl.lblCNSAgencyTitle;
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMSCNS_Endorsement_HO + ' - ' + Label.ISSP_AMS_NEW_HO);
+
+			testCase.Reason1__c = AMS_Utils.CASE_REASON_NEW_COMMERCIAL_HO;
+			update testCase;
+			ctrl.lblCNSAgencyTitle = null;
+			ctrl.newCase = testCase;
+			auxStr = ctrl.lblCNSAgencyTitle;
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_CASS_Commercial_Account_HO + ' - ' + Label.ISSP_AMS_NEW_HO);
+			
+			testCase.Reason1__c = AMS_Utils.CASE_REASON_BR_COMERCIAL;
+			update testCase;
+			ctrl.lblCNSAgencyTitle = null;
+			ctrl.newCase = testCase;
+			auxStr = ctrl.lblCNSAgencyTitle;
+			System.assertEquals(auxStr, Label.ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title + ' ' + Label.ISSP_AMS_New_Commercial_Account_BR + ' - ' + Label.ISSP_AMS_NEW_BR);
+
+
+			List<SelectOption> testListOpp = ctrl.legalStatusList;
+
+			String AuxACCREDITATION_MODEL_MC = ctrl.ACCREDITATION_MODEL_MC;
+			String mapToReturn = ctrl.mapToReturn;
+			Boolean isNewPortal = ctrl.isNewPortal;
+			String portalRedirectToCase = ctrl.portalRedirectToCase;
+			String portalRedirectToCaseList = ctrl.portalRedirectToCaseList;
+			String portalRedirectToSupport = ctrl.portalRedirectToSupport;
+			String portalRedirectToCompanyProfile = ctrl.portalRedirectToCompanyProfile;
+			String portalRedirectToMyProfile = ctrl.portalRedirectToMyProfile;
+			Boolean isPassAccreditation = ctrl.isPassAccreditation;
+			String goGlobalDocumentLink = ctrl.goGlobalDocumentLink;
+			List<SelectOption> mcNocCountryList = ctrl.mcNocCountryList;
+			ctrl.getDisablePrevious();
+			ctrl.Beginning();
+			ctrl.Previous();
+			ctrl.Next();
+			ctrl.selectAllCountries();
+
+			Test.stopTest();
+		}
+
+	}
+	
 	@isTest static void ISSP_AMS_Accreditation_PASS_HO_Positive()
 	{
 

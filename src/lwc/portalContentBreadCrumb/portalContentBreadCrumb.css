@@ -1,0 +1,13 @@
+.imgst{
+
+   height:100%;
+    position:absolute;
+    top:0px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.divHeigh{
+   height: 560px;
+}
+
