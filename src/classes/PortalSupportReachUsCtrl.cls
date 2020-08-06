@@ -267,12 +267,27 @@ public static string getTopicsWithL2Dep(){
 		reqL2TopicSet.add(pk.DataTopicName__c);
 	}
 
+	set<string> recentTopicSet= new set<string>();
+
+	Id contactId=[select contactId from user where id=:Userinfo.getUserId() limit 1].contactId;
+	list<case> mostRecentTopicList=[SELECT topic__c FROM case 
+	WHERE origin='Portal' 
+	AND Visible_on_ISS_Portal__c =true 
+	AND contactId=:contactId 
+	AND topic__c !=null 
+	AND createdDate =LAST_90_DAYS limit 100];
+	
+	for(Case c: mostRecentTopicList){
+		recentTopicSet.add(c.topic__c);
+	}
 
 	//retrieve full tree with the topics the user has access
 	List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> structureTreeList=PortalFAQsCtrl.getFAQsInfo();
 
 	List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> topicList = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
+	
 	map<string,map<string,string>> topicsMap= new map<string,map<string,string>>();
+
 	for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dc :structureTreeList){
 		//Matches the topics that require L2 with the topics the user has access
 		if (!topicsMap.containsKey(dc.topicName) && dc.topicName != 'All') {
@@ -281,6 +296,7 @@ public static string getTopicsWithL2Dep(){
 			valMap.put('topicLabel',dc.topicLabel);
 			valMap.put('reqL2',String.valueOf(reqL2TopicSet.contains(dc.topicName)));
 			valMap.put('topicLabelEN',dc.topicLabelEn);
+			valMap.put('recentTopic',String.valueOf(recentTopicSet.contains(dc.topicLabelEn)));
 
 			topicsMap.put(dc.topicName,valMap);
 		}

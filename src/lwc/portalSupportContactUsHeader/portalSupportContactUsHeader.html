@@ -20,11 +20,19 @@
 					{label.csp_SupportReachUs_Topic_Label}</p>
 				<p class="text-xsmall slds-m-vertical_small slds-text-align_center">
 					{label.csp_SupportReachUs_ActionForTopicPicklist}</p>
-				<lightning-combobox name="progress"
+				<!-- 	<lightning-combobox name="progress"
 					class="specialPickList cursorPointerComboBox text-xxsmall customPickList labelValue " value={topic}
 					options={topicOptions} dropdown-alignment="auto" onchange={topicHandler} placeholder=" ">
-				</lightning-combobox>
-			</div>
+				</lightning-combobox> -->
+				<!-- BEGIN SEARCH -->
+					<c-iata-combo-search-box
+					class="specialPickList"
+					topic-list={topicOptions}
+					recent-topic-list={recentTopicOptions}
+					onchange={handleTopicSelection}
+					></c-iata-combo-search-box>
+					<!--END SEARCH  -->
+				</div>
 			<div if:true={supOptionsPanel}
 				class="slds-col slds-grid slds-m-top_small slds-scrollable_x">
 				<div class="slds-grid slds-align-content-center">

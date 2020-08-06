@@ -83,7 +83,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	@track category;
 	@track topic;
 	@track topicOptions = [];
-	@track subTopicOptions = [];
+	@track recentTopicOptions = [];
 	@track subTopic;
 	@track topicCB = false;
 	@track countryCB = false;
@@ -260,12 +260,14 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 					let myTopicsList = [];
 
 					//Set first value on the list
-					for (const item of this.myResult) {
+					for (const item of this.myResult) {						
 						myTopicsList.push({
 							label: item.topicLabel,
 							value: item.topicName,
 							reqL2: item.reqL2 === 'true',
-							labelEn: item.topicLabelEN
+							labelEn: item.topicLabelEN,
+							title: item.topicLabel,
+							isRecentTopic :item.recentTopic==='true'
 						});
 
 					}
@@ -278,6 +280,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 					});
 
 					this.topicOptions = myTopicsList;
+					this.recentTopicOptions=this.topicOptions.filter(item => {
+						return item.isRecentTopic===true;
+					});
+				
 
 					resolve();
 				})
@@ -361,6 +367,11 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 		return this.topicOptions.some(obj => obj.value === topic && obj.reqL2 === true);
 	}
 
+	handleTopicSelection(event){
+		
+		let even = { target: {value : event.detail.value }};
+		this.topicHandler(even);
+	}
 	//handles topic selection
 	topicHandler(event) {
 		//set topic globally

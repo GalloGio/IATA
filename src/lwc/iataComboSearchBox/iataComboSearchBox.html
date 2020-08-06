@@ -1,0 +1,74 @@
+<template>
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="combobox-id-11"></label>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false"
+                    aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input type="text" class="slds-input slds-combobox__input" id="combobox-id-11"
+                            aria-autocomplete="list" aria-controls="listbox-id-9" autocomplete="off" role="textbox"
+                            placeholder="Search..." onfocus={expandList} onblur={colapseList} onkeyup={handleKeyUp} value={inputValue}/>
+                        <span
+                            class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+
+                        </span>
+                    </div>
+                    <div id="listbox-id-9" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                        role="listbox">
+                        
+                        <template if:true={showRecentTopics}>
+                            <ul class="slds-listbox slds-listbox_vertical" role="group" aria-label="Recent Topics">
+                                <li role="presentation" class="slds-listbox__item">
+                                    <div id="option0"
+                                        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                        role="presentation">
+                                        <h3 class="slds-listbox__option-header" role="presentation">Your Recent Topics</h3>
+                                    </div>
+                                </li>
+                                <template for:each={_recentTopicList} for:item="recentTopic">                                    
+                                    <li role="presentation" class="slds-listbox__item" key={recentTopic.value}                                        
+                                        >
+                                        <div id={recentTopic.value}
+                                            class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small "
+                                            role="option" data-label={recentTopic.title} data-value={recentTopic.value} onmousedown={handleSelectedOption}>
+                                            <span class="slds-media__figure slds-listbox__option-icon noPointerEvents"></span>
+                                            <span class="slds-media__body noPointerEvents">
+                                                <span class="slds-truncate"
+                                                    title={recentTopic.title}>{recentTopic.title}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>                            
+                            </ul>
+                        </template>
+                        <template if:true={currentTopicList}>
+                            <ul class="slds-listbox slds-listbox_vertical" role="group" aria-label="All Topics">
+                                <li if:false={searchMode} role="presentation" class="slds-listbox__item">
+                                    <div id="option1"
+                                        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                        role="presentation">
+                                        <h3 class="slds-listbox__option-header" role="presentation">Your All Topics</h3>
+                                    </div>
+                                </li>
+                                <template for:each={currentTopicList} for:item="recentTopic">                                    
+                                    <li role="presentation" class="slds-listbox__item" key={recentTopic.value}>
+                                        <div id={recentTopic.value}
+                                            class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                            role="option" data-label={recentTopic.title} data-value={recentTopic.value} onmousedown={handleSelectedOption}>
+                                            <span class="slds-media__figure slds-listbox__option-icon noPointerEvents"></span>
+                                            <span class="slds-media__body noPointerEvents">
+                                                <span class="slds-truncate"
+                                                    title={recentTopic.title}>{recentTopic.title}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>                            
+                            </ul>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
