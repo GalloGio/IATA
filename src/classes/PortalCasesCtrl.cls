@@ -702,7 +702,7 @@ public with sharing class PortalCasesCtrl {
 							WHERE RecordType.Id = :newCase.RecordType.Id
 								AND (RecordType.DeveloperName IN :validRecordtypes)];
 		
-		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO);
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13)) || isMSO);
 	}
 
 	private Static boolean isMSOcase(Case newCase){
