@@ -32721,6 +32721,27 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account with addresses roles and context or not --></description>
+        <label><!-- Account with addresses roles and context or not --></label>
+        <name>Account_with_addresses_roles_and_context_or_not</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses --></label>
+            <name>Addresses</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses Role --></label>
+            <name>Addresses Role</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account with cases with Archived attachments --></description>
         <label><!-- Account with cases with Archived attachments --></label>
         <name>Account_with_cases_with_Archived_attachments</name>
