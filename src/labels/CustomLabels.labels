@@ -17,6 +17,13 @@
         <value>The accepted payment methods is different from the parent product value. Please do not select any value to use the parent product accepted payment methods.</value>
     </labels>
     <labels>
+        <fullName>ADSR_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ADSR_Description</shortDescription>
+        <value>An overview of outstanding/recovered amounts for your airline at regional/country and defaulted agent level including the status of Financial Security Claim.</value>
+    </labels>
+    <labels>
         <fullName>AIMSAccountBeforeUpdate_AutoProcess</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3922,11 +3929,18 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>IATA Customer Portal Email Confirmation</value>
     </labels>
     <labels>
+        <fullName>CSP_Confirmed_Requested_Service_EFApps_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Confirmed_Requested_Service_EFApps_Message</shortDescription>
+        <value>Your E&amp;F APPS access has been successfully Granted.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Confirmed_Requested_Service_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
-        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
+        <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be found under your</value>
     </labels>
     <labels>
         <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
@@ -3935,6 +3949,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Us_Banner_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Us Banner Message</shortDescription>
+        <value>Get Detailed information and/or support throught IATA Customer portal or our extensive database of knowledge</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Us_Banner_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Us Banner Title</shortDescription>
+        <value>More Information</value>
     </labels>
     <labels>
         <fullName>CSP_Contacts_NoResults_text1</fullName>
@@ -4612,7 +4642,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Desc LMS</shortDescription>
-        <value>In order to get the full Training experience please log back in using a browser such as Google Chrome (please note Internet Explorer is no longer supported)</value>
+        <value>You're using a web browser we don't support. Try one of these options to have a better experience on the IATA Customer Portal: Microsoft Edge, Google Chrome, Safari, Firefox or Opera.</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
@@ -4628,7 +4658,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Title</shortDescription>
-        <value>Welcome to the IATA Customer Portal</value>
+        <value>Improve Your Experience</value>
     </labels>
     <labels>
         <fullName>CSP_ForYou</fullName>
@@ -6231,6 +6261,46 @@ You can easily create a company account in two steps</value>
         <value>Last Update</value>
     </labels>
     <labels>
+        <fullName>CSP_LeadCreator_AfterSubmitMessage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_AfterSubmitMessage</shortDescription>
+        <value>Your request has been submitted and we will be contacting you shortly via your preferred channel.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_ContactPreference_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_ContactPreference_label</shortDescription>
+        <value>I would like to be contacted via:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_SubTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_SubTitle</shortDescription>
+        <value>Get a free call from our experts and learn more about how this product can improve your business.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_ThankYou</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_ThankYou</shortDescription>
+        <value>Thank You!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LeadCreator_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LeadCreator_Title</shortDescription>
+        <value>Let&apos;s Talk</value>
+    </labels>
+    <labels>
         <fullName>CSP_Learn_More</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7227,6 +7297,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_SelectPortalStatus</shortDescription>
         <value>Select Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_ADSR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_ADSR</shortDescription>
+        <value>ADSR</value>
     </labels>
     <labels>
         <fullName>CSP_Service_Access</fullName>
@@ -9492,6 +9569,13 @@ This service is free of charge.</value>
         <value>E&amp;F Compliance Review</value>
     </labels>
     <labels>
+        <fullName>EF_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Account</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9506,11 +9590,39 @@ This service is free of charge.</value>
         <value>The currency select needs to be present in the related Contract</value>
     </labels>
     <labels>
+        <fullName>EF_Invitation_Sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Invitation Sent</shortDescription>
+        <value>Invitation email sent.</value>
+    </labels>
+    <labels>
+        <fullName>EF_Invite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Invite</shortDescription>
+        <value>Invite</value>
+    </labels>
+    <labels>
         <fullName>EF_Line_Item_Not_In_Contract_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
         <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>EF_Select</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF_Select</shortDescription>
+        <value>Select {0}...</value>
+    </labels>
+    <labels>
+        <fullName>EF_Welcome_Email_Body</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Welcome Email Body</shortDescription>
+        <value>You have been invited to a new service, please accept it by clicking &lt;a href=&quot;!!invitationLink!&quot;&gt;here&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>E_Bulletin_Service_Description</fullName>
@@ -10421,6 +10533,17 @@ As an IATA Accredited Agency, you&apos;ll stand out as a recognized industry par
 Through this IATA Accreditation &amp; Changes service you can directly apply to become an IATA Accredited Agency
 
 If you are already IATA Accredited, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Acr_Changes_Service_Description_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Acr Changes Service Description CNS</shortDescription>
+        <value>Through this CNS Endorsement &amp; Changes service you can directly apply to become a CNS Endorsed Agency. 
+
+If you are already CNS Endorsed, you can use this service to update information on a change of address, name and ownership. 
+
+You can also use this service to add additional branches or voluntarily terminate your CNS Code.</value>
     </labels>
     <labels>
         <fullName>IATA_Airl_Location_Codes_Service_Description</fullName>
@@ -19532,6 +19655,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Yes</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMSCNS_Endorsement_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS endorsement HO</shortDescription>
+        <value>CNS Endorsement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_ACCR_Alert1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -19573,6 +19704,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Accept TOS</shortDescription>
         <value>Please accept the Terms and Conditions before submitting your Agency Accreditation application to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Accept_TOS_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Accept TOS CNS</shortDescription>
+        <value>Please accept the Terms and Conditions before submitting your Agency Endorsement application to CNS.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Add_Company</fullName>
@@ -19643,6 +19782,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Agency_Accreditation</shortDescription>
         <value>Agency Accreditation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Agency_Endorsement</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Agency_Endorsement</shortDescription>
+        <value>Agency Endorsement</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Agency_Type</fullName>
@@ -19789,6 +19936,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Business_Activities_Field_Label</shortDescription>
         <value>* Give details of the parent business activities of your firm (customs house broker, ocean freight forwarder, travel agent, etc.)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CASS_Commercial_Account_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CASS Commercial Account HO</shortDescription>
+        <value>CASS Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CASS_Contact</fullName>
@@ -20358,6 +20513,86 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>STATEMENT / UNDERTAKING</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CNS_CASS_Contact</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS CASS Contact</shortDescription>
+        <value>/ CASS Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_Contact_Required</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS Contact Required</shortDescription>
+        <value>Please make sure at least one of the contacts in the form has one or more of the following roles: Security Contact, Financial Assessment, Portal Admin, Invoicing Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS DGR Trained Staff Members Alert</shortDescription>
+        <value>At least 2 DGR Trained Staff Members must be added in the form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS DGR Trained Staff Members Alert BR</shortDescription>
+        <value>At least 1 DGR Trained Staff Members must be added in the form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_ENDORSEMENT</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CNS_ENDORSEMENT</shortDescription>
+        <value>CNS Endorsement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_Error_Message_Section_3_Ownership</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS Error Message Section 3 Ownership</shortDescription>
+        <value>SECTION 3 - Agency Owners - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_FIN_Contact_Help</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS FIN Contact Help</shortDescription>
+        <value>The Financial Assessment Contact will be contacted by CNS when Financial Assessment information is required</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_Office_Alert</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS Office Alert</shortDescription>
+        <value>At least 1 Office must be added in the form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_Portal_Admin_Help</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS Portal Admin Help</shortDescription>
+        <value>The Portal Administrator is responsible for managing access to the CNS Customer Portal for all contacts in your agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CNS_warehouse_Alert</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CNS warehouse Alert</shortDescription>
+        <value>At least 1 Warehouse must be added in the form</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CONFIRM_CANCEL</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
@@ -20509,6 +20744,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Select at least one Authorised Signatory and one CASS Contact.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS</fullName>
+        <categories>SSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS</shortDescription>
+        <value>Select at least one Authorised Signatory and one CASS Contact.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -20534,7 +20777,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q2</shortDescription>
-        <value>he Head Office will also have access in CASSlink to this branch:</value>
+        <value>The Head Office will also have access in CASSlink to this branch:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION4_Q3</fullName>
@@ -20814,6 +21057,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Click here to continue with Agency Accreditation.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Click_here_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Click here CNS</shortDescription>
+        <value>Click here to continue with Agency Endorsement.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Compare_Accreditation_Types</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20929,6 +21180,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Download Accreditation Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Download_PDF_Copy_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Download_PDF_Copy_CNS</shortDescription>
+        <value>Download Endorsement Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Download_PDF_NOC</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -20989,6 +21248,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Empty_Location_Type</shortDescription>
         <value>Please Select Location Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Endorsement_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Endorsement CNS</shortDescription>
+        <value>Endorsement</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Expiry_date</fullName>
@@ -21468,6 +21735,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Facility Type</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Federal_EIN_Error_Message</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Federal EIN Error Message</shortDescription>
+        <value>* Federal EIN (IRS EIN number): Please enter a value</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_File_Upload_Issue</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -21537,6 +21812,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Form</shortDescription>
         <value>Accreditation form:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Form_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Form CNS</shortDescription>
+        <value>Endorsement form:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Form_Missing_Signed_File</fullName>
@@ -22070,6 +22353,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section6_Cargo</shortDescription>
         <value>6. Trained Staff</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section6_Financial_Cargo</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section6_Financial_Cargo</shortDescription>
+        <value>6. Financial</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section7</fullName>
@@ -22808,6 +23099,30 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Submit GoGlobal Application to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NEW_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NEW_BR</shortDescription>
+        <value>New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NEW_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NEW_HO</shortDescription>
+        <value>New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NEW_INDEPENDENT_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NEW_INDEPENDENT_BR</shortDescription>
+        <value>New Independent Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_All_Countries</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -22856,6 +23171,23 @@ For each section below either:&lt;br/&gt;
 &lt;/div&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NOC_Instructions_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Instructions CNS</shortDescription>
+        <value>&lt;div&gt;
+For each section below either:&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;Confirm that the Agency Details are correct&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;OR&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Notify CNS of the Change and update your Agency Details&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_Instructions_New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22885,7 +23217,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NOC StepD ProgressBar CNS</shortDescription>
-        <value>D. Submit to CNS</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;D&lt;/span&gt;Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_Updated_Companies</fullName>
@@ -22930,6 +23262,14 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP AMS Name of employer</shortDescription>
         <value>Name of employer:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_New_Commercial_Account_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS CASS Commercial Account BR</shortDescription>
+        <value>CASS Commercial Account</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_New_HO_details</fullName>
@@ -23719,6 +24059,16 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‘Company information’ above to make these statements and file this document.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_TC_CNS_Only</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_CNS_Only</shortDescription>
+        <value>I understand that by signing this agreement the endorsed agent and authorized intermediary as identified by the above listed CNS/IATA no. has authorized the addition of a branch office located at the address shown above. Responsibilities for payment of international air waybills other financial and operational compliance’s to the CNS Cargo agency and authorized intermediary agreement and any governmental regulations (DOT,FAA) regarding the handling of International Air Cargo remains the responsibility of the principle office of the endorsed agent and authorized intermediary.
+&lt;br/&gt;&lt;hr&gt;
+I certify that the preceding statements are true and correct to the best of my knowledge and believe and that I am authorized by the firm identified in the foregoing to make these statements and to file this application.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_CASS</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -23775,6 +24125,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>The transferor has informed the Transferee of the need to comply the IFACP Rules if the Transferee wishes to be entered on the IFACP List as a Registered Forwarder.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_Change_CNS</shortDescription>
+        <value>The Agent (Transferor-Seller) has informed the Transferee-Buyer of the need to comply with the standards of the corporation in order to enable the corporation to appoint the Transferee-Buyer on behalf of those airlines which have so authorized the corporation.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CNS2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_Change_CNS2</shortDescription>
+        <value>The undersigned Agent (Transferor-Seller) and Transferee-Buyer hereby agree that they are jointly and severally liable for any obligation to a CNS Member arising from the Agent’s (Transferor’s-Seller’s) Cargo Agency Agreement prior to the termination thereof or the date of receipt by the Corporation of this Notice, whichever is later.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_EACP</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -23797,6 +24163,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC TC Change EACP3</shortDescription>
         <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Cargo Intermediary Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Cargo Intermediary Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_First_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC_Change_First_CNS</shortDescription>
+        <value>The undersigned Transferee-Buyer knows and hereby agrees to accept responsibility for any violation by the Transferor-Seller which may have occurred within a period of two years immediately prior to the Change of Ownership where the Transferor-Seller is employed by, or retains a financial or beneficial interest, directly or indirectly, in the Agent following the Change of Ownership.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Transferee</fullName>
@@ -23876,12 +24249,28 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Please either confirm that the Agency Location details are correct or notify IATA of any changes.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_error_message2_CNS</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message2_CNS</shortDescription>
+        <value>Please either confirm that the Agency Location details are correct or notify CNS of any changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_error_message3</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_error_message3</shortDescription>
         <value>Please either confirm that the Agency Ownership details are correct or notify IATA of any changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message3_CNS</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message3_CNS</shortDescription>
+        <value>Please either confirm that the Agency Ownership details are correct or notify CNS of any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_error_message4</fullName>
@@ -23993,6 +24382,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Not Listed Msg</shortDescription>
         <value>As an Organisation whose shares are not listed, you are required to enter all shareholders&apos; details in the People and Company sections below.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Notify_Change_Legal_Details_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Notify_Change_Legal_Details_CNS</shortDescription>
+        <value>Notify CNS of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Number_of_Years_Traded_Field_Label</fullName>
@@ -24386,6 +24783,102 @@ Select at least one Authorised Signatory and PASS Contact, and choose the and Po
         <value>Initials here</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Authorized_Signature_for_and_on_behalf_of_Transferee_Buye</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Authorized Signature for and on behalf of Transferee-Buye</shortDescription>
+        <value>Authorized Signature for and on behalf of Transferee-Buyer</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Authorized_signature_for_and_on_behalf_of_Agent</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Authorized signature for and on behalf of  Agent</shortDescription>
+        <value>Authorized signature for and on behalf of  Agent (Transferor-Seller)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_CNS_Address</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC CNS Address</shortDescription>
+        <value>Cargo Network Services Corp.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_CNS_Address1</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC CNS Address1</shortDescription>
+        <value>703 Waterford Way</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_CNS_Address2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC CNS Address2</shortDescription>
+        <value>Suite 680</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_CNS_Address3</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC CNS Address3</shortDescription>
+        <value>Miami, FL 33126</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_CNS_Address4</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC CNS Address4</shortDescription>
+        <value>Tel: (786) 413-1000</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Name_Title_or_capacity_of_Person_signing</fullName>
+        <categories>Issp, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Name Title or capacity of Person signing</shortDescription>
+        <value>Name, Title or capacity of Person signing  (in type or print)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Name_of_Agent_Transferor_Seller</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Name of Agent Transferor-Seller</shortDescription>
+        <value>Name of Agent (Transferor-Seller)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Name_of_Transferee_Buyer</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Name of Transferee-Buyer</shortDescription>
+        <value>Name of Transferee-Buyer</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Witness</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Witness</shortDescription>
+        <value>Witness (1)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PDF_NoC_Witness_2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS PDF NoC Witness 2</shortDescription>
+        <value>Witness (2)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_PDF_Page</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -24436,6 +24929,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Please Upload</shortDescription>
         <value>Please upload the following file before submitting to IATA:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Please_Upload_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Please Upload CNS</shortDescription>
+        <value>Please upload the following file before submitting to CNS:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Portal_Admin</fullName>
@@ -24570,6 +25071,22 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>SECTION 1 - IATA Accredited Head Office Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</shortDescription>
+        <value>SECTION 1 - Commercial Account Head Office Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Branch_Title_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS STEP 3_1 Branch Title CNS</shortDescription>
+        <value>SECTION 1 - CNS Endorsed Head Office Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title_New</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24660,6 +25177,22 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Section 2 SubSection 2</shortDescription>
         <value>Section 2.2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Security_Contact</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Security Contact</shortDescription>
+        <value>Security Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Security_Contact_Message_Popup</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Security Contact Message Popup</shortDescription>
+        <value>The person in charge of your company that is the key contact for air cargo security</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Select_AEs</fullName>
@@ -24757,6 +25290,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Not sure which type of agency to apply for?&lt;br/&gt;Then please consult this</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_CNS_NEW_HO_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 CNS NEW HO BR</shortDescription>
+        <value>CNS Online Agency Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Change_Bank_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -24841,6 +25382,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
+        <value>Welcome to the online CNS Agency Endorsement application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</shortDescription>
         <value>Welcome to the online CNS Agency Endorsement application.</value>
     </labels>
     <labels>
@@ -25128,6 +25677,22 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Application for Approval as an CNS Passenger / Cargo Sales Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_Title_CNS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title CNS BR</shortDescription>
+        <value>Application for Approval as a CNS Endorsed Agent - New Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Title_CNS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title CNS HO</shortDescription>
+        <value>Application for Approval as a CNS Endorsed Agent</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_Title_New</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -25318,6 +25883,14 @@ You can update your Ownership details at any time by following the &lt;i&gt;IATA
 You can update you Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_4_CNS_Agency_Title</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_CNS_Agency_Title</shortDescription>
+        <value>SECTION 4 - Additional Applicant Info</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_4_Cargo_Agent_Title</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -25403,6 +25976,14 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People</shortDescription>
         <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_People_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 People CNS</shortDescription>
+        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact, Security contact, Invoicing Contact and Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_People_Intermediary</fullName>
@@ -25536,6 +26117,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the IATA rules and regulations?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_4_Q19_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Q19_CNS</shortDescription>
+        <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the former IATA resolutions or a CNS subscribing carrier?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_4_Q19_New</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -25572,6 +26161,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_4_Q1_Agency New</shortDescription>
         <value>* Has your firm ever previously held an IFACP Forwarder or an IATA Cargo Agency Agreement?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Q1_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>+        &lt;fullName&gt;ISSP_AMS_Step3_4_Q1_CNS&lt;/fullName&gt;</shortDescription>
+        <value>* Has your firm ever held an air freight agency appointment issued by IATA or Cargo Network Services or ever been issued a CASS-USA account number?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Q1_Intermediary</fullName>
@@ -25706,6 +26303,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 5 Premises Title</shortDescription>
         <value>SECTION 5 - Premises of Agency Location for which approval requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_5_Warehouse</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_5_Warehouse</shortDescription>
+        <value>SECTION 5 - Warehouse</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_6_Financial</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_6_Financial</shortDescription>
+        <value>SECTION 6 - Financial</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_6_Other_Info</fullName>
@@ -25890,6 +26503,21 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Branch Location</shortDescription>
         <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following IATA Approved agent:&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Branch_Location_CASS_Commercial</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 Branch Location CASS Commercial</shortDescription>
+        <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following Commercial Account Head Office:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Branch_Location_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 Branch Location CNS</shortDescription>
+        <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following CNS Endorsed Head Office:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Cash_Location</fullName>
@@ -26154,7 +26782,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
-        <value>E. Submit to CNS</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;E&lt;/span&gt;Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar_Validate_Data</fullName>
@@ -26278,6 +26906,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS StepsAll Cargo CASS Associate Title</shortDescription>
         <value>Application for approval as a CASS Associate</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepsAll Cargo CNS Agency Title</shortDescription>
+        <value>Application for approval as a</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title</fullName>
@@ -28425,7 +29060,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>Joining Change of Bank details</value>
+        <value>Bank Detail Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -28444,12 +29079,78 @@ This service is free of charge.</value>
         <value>Airline Participation</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Countries_Territories</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Countries_Territories</shortDescription>
+        <value>Countries/Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Countries_to_optin</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Countries_to_optin</shortDescription>
+        <value>Countries/Territories to Opt-In:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Error_No_Countries_available</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Error_No_Countries_available</shortDescription>
+        <value>There are no countries/territories available for this type of Form of payment.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Error_No_Country_selected</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Error_No_Country_selected</shortDescription>
+        <value>One or more country/territory must be selected.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Form</fullName>
         <categories>ISSP Case list page</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form</shortDescription>
         <value>Joining form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Form_of_Payment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Form_of_Payment</shortDescription>
+        <value>Form of Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_IATA_EasyPay_Section_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_IATA_EasyPay_Section_Description</shortDescription>
+        <value>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in &lt;b&gt;{0}&lt;/b&gt;. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Israel_Submit_Address</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Israel_Submit_Address</shortDescription>
+        <value>IATA Israel&lt;br/&gt;
+Trade Tower Building, 8th Floor 25 Hamereed Street&lt;br/&gt;
+Tel Aviv, ISRAEL</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Israel_Submit_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Israel_Submit_Disclaimer</shortDescription>
+        <value>Please note that a disclaimer should be sign when joining BSP Israel, please download the disclaimer below and send the original copy to our Israel Office:</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
@@ -28521,6 +29222,94 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Partnership_Download_PDF</shortDescription>
         <value>Use the link below to download the application form, sign it and upload it.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Add_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Add_Emails</shortDescription>
+        <value>Please list below the email addresses that you want to ADD for distribution of the HOT file. Please note that you can keep up until 4 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Excel_Selected</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Excel_Selected</shortDescription>
+        <value>Please note that possible charges can apply, for more details please review the FDS Price List in the Customer Portal Library.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_HOT_Files_Not_Required</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_HOT_Files_Not_Required</shortDescription>
+        <value>Please note that HOT will not be produced and if any email is currently registered to receive the HOT File will be deleted from the data base.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Header</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Header</shortDescription>
+        <value>Please select at least one of the options below to be modified:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_PDF_Files_Not_Required</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_PDF_Files_Not_Required</shortDescription>
+        <value>Please note that PDF will not be produce and if any email is currently registered to receive the PDF File will be deleted from the data base.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Report_Options_Remove_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Report_Options_Remove_Emails</shortDescription>
+        <value>Please list below any email addresses that you want to REMOVE from the distribution of the PDF file. Please note that you need to keep at least 1 email in the system if you want to use the option of E-mail and download; therefore, if all current registered emails are removed through this request, your configuration will be changed to Download only.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Select_Countries_Territories</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Select_Countries_Territories</shortDescription>
+        <value>Select Countries/Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Select_Form_of_Payment_in_HOT</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Select_Form_of_Payment_in_HOT</shortDescription>
+        <value>Select form of payment in HOT:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Stock_Management_Add_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Stock_Management_Add_Emails</shortDescription>
+        <value>Please list below the email addresses that you want to ADD for distribution of the CASSLink Stock Management system. Please note that you can keep up until 3 emails in the system so if with the new emails provided exceed this number, it will not be possible to complete your change.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Stock_Management_Remove_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Stock_Management_Remove_Emails</shortDescription>
+        <value>Please list below any email addresses that you want to REMOVE from the distribution.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_Voluntary_Withdrawal_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AP Voluntary Withdrawal Disclaimer</shortDescription>
+        <value>Voluntary Withdrawal will happen in selected date but the other changes will take place immediately.</value>
     </labels>
     <labels>
         <fullName>ISSP_APrequest_AdminEmail1</fullName>
@@ -29707,7 +30496,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>Joining Change Request</value>
+        <value>BSP / CASS Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
@@ -31966,6 +32755,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Ask a Question</value>
     </labels>
     <labels>
+        <fullName>ISSP_GoGlobal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_GoGlobal</shortDescription>
+        <value>GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_GoTo_Homepage</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -32896,7 +33692,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Join_BSP_CASS</shortDescription>
-        <value>Joining Settlement Services</value>
+        <value>Joining Settlement</value>
     </labels>
     <labels>
         <fullName>ISSP_Join_BSP_CASS_Description</fullName>
@@ -33159,12 +33955,108 @@ this is the tiess topic help</value>
         <value>The exchange rate used to convert local currencies to US dollars for the Management Information Report is derived from the Five Day Rates (FDR) product. The FDR service is available for purchase and can be requested using this &lt;a href=&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=7031%2D01&amp;cs_catalog=Publications&quot; target=&quot;_blank&quot;&gt;&lt;font color=&quot;0000EE&quot;&gt;link&lt;/font&gt;&lt;/a&gt;.</value>
     </labels>
     <labels>
+        <fullName>ISSP_MITA_Add_Contact</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Mita Add Contact</shortDescription>
+        <value>Add MITA Contact</value>
+    </labels>
+    <labels>
         <fullName>ISSP_MITA_Agreements_Service_Name</fullName>
         <categories>ISSP, MITA</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP MITA Agreements Service Name</shortDescription>
         <value>MITA Agreements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_EditContactMsg</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP MITA Edit Contact message</shortDescription>
+        <value>Only MITA Contact type can be changed here, to make changes to other contact information like Name, Email or phone number, please contact your IATA portal administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_EditContactSuccess</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP MITA Edit Contact Success</shortDescription>
+        <value>Contact details changed succesfully</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_RemoveContactMsg</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP MITA Remove Contact message</shortDescription>
+        <value>By clicking on remove, all MITA Contact types will be cleared from this contact and the contact will be removed from the &quot;Active MITA Contact list&quot;. Removing the contact here will not delete the contact from the airline account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_SUBTAB_01</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Active MITA Contacts</shortDescription>
+        <value>Active MITA Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_SUBTAB_02</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Airline Available Contacts</shortDescription>
+        <value>Airline Available Contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Search_At_Least3Chars</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Mita Search At Least 3 Chars</shortDescription>
+        <value>Please input at least 3 character</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Search_Button</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search by email or name</shortDescription>
+        <value>Search by email or name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Search_Text01</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Mita Search Text Above button</shortDescription>
+        <value>To add a new contact the &quot;Active MITA Contacts&quot; list, please search for an available contact by name or email and edit the MITA contact type.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Search_Text02</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Mita Search Text Below button</shortDescription>
+        <value>If the contact you are attempting to add is not available in the airline contact list, please request your admin user to add the contact through IATA Customer Service Portal</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Search_ValidInput</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Mita Search Check Valid Input</shortDescription>
+        <value>Please input only characters and numbers or a valid email address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_TAB</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Airline Contacts</shortDescription>
+        <value>Airline Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_MakeAdmin</fullName>
@@ -34323,6 +35215,30 @@ I, undersigned, hereby represents and declare that I am duty authorized to submi
         <protected>false</protected>
         <shortDescription>ISSP PASS Users</shortDescription>
         <value>If it&apos;s necessary to create PASS Users, please provide details.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Federal_EIN</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Federal EIN</shortDescription>
+        <value>Federal EIN (IRS EIN number)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Federal_EIN_Title</fullName>
+        <categories>ISSP, PAX, Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Federal EIN Title</shortDescription>
+        <value>Insert Federal EIN (IRS EIN number) according to the local country format, if applicable.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Validating_Federal_EIN</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating Federal EIN</shortDescription>
+        <value>Validating Federal EIN...</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number</fullName>
@@ -37976,6 +38892,13 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>Tracking ID Google Analitycs</shortDescription>
         <value>UA-4245951-8</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Trade_Name_DBA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trade Name (D/B/A)</shortDescription>
+        <value>*Trade Name (D/B/A)</value>
     </labels>
     <labels>
         <fullName>ISSP_Trade_name_of_Company</fullName>
@@ -43958,6 +44881,14 @@ Country {8}</value>
         <protected>false</protected>
         <shortDescription>SIS Operations</shortDescription>
         <value>SIS Operations</value>
+    </labels>
+    <labels>
+        <fullName>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SSP AMS Step5 ReviewBeforeSubmit CNS</shortDescription>
+        <value>Please review your application details before accepting the Terms &amp; Conditions below and submitting to CNS.&lt;br/&gt;Once you have submitted the form, you will be able to download a PDF copy.</value>
     </labels>
     <labels>
         <fullName>Salutation</fullName>

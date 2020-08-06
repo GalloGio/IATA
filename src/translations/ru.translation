@@ -161,6 +161,10 @@
         <name>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- ADSR_Description --></label>
+        <name>ADSR_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Automated Process Profile Name used in the AIMS Account Trigger (BU) --></label>
         <name>AIMSAccountBeforeUpdate_AutoProcess</name>
     </customLabels>
@@ -2773,7 +2777,7 @@
         <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_About --></label>
+        <label>Описание</label>
         <name>CSP_About</name>
     </customLabels>
     <customLabels>
@@ -2857,11 +2861,11 @@
         <name>CSP_Breadcrumb_CompanyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <label>Часто задаваемые вопросы</label>
         <name>CSP_Breadcrumb_FAQ_Title</name>
     </customLabels>
     <customLabels>
-        <label>Домой</label>
+        <label>В начало</label>
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
@@ -2917,7 +2921,7 @@
         <name>CSP_Cancel_Request</name>
     </customLabels>
     <customLabels>
-        <label>Вы можете отправлять и получать сообщения об этом случае через Сервис обслуживания клиентов Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Вы можете отправлять и получать сообщения в рамках данного запроса через Службу поддержки клиентов Международной ассоциации воздушного транспорта (ИАТА).</label>
         <name>CSP_CaseMessage_HelpText</name>
     </customLabels>
     <customLabels>
@@ -2925,7 +2929,7 @@
         <name>CSP_CaseMessage_InputPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Сообщения</label>
+        <label>Комментарии</label>
         <name>CSP_CaseMessage_MessageTitle</name>
     </customLabels>
     <customLabels>
@@ -2933,7 +2937,7 @@
         <name>CSP_CaseMessage_SubmitSuccess</name>
     </customLabels>
     <customLabels>
-        <label>Номер случая</label>
+        <label>Номер запроса</label>
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
@@ -2953,11 +2957,11 @@
         <name>CSP_Case_hasInvoicePaid</name>
     </customLabels>
     <customLabels>
-        <label>Случаи</label>
+        <label>Запрос</label>
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
-        <label>Изменить электронную почту</label>
+        <label>Изменить адрес электронной почты</label>
         <name>CSP_Change_Email</name>
     </customLabels>
     <customLabels>
@@ -2977,7 +2981,7 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, проверьте свою электронную почту, чтобы получить Ваши данные для доступа</label>
+        <label>Пожалуйста, проверьте вашу почту для получения доступа.</label>
         <name>CSP_Check_Email</name>
     </customLabels>
     <customLabels>
@@ -3001,7 +3005,7 @@
         <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
-        <label>Посмотреть случаи моей компании</label>
+        <label>Посмотреть запросы моей компании</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
     <customLabels>
@@ -3009,7 +3013,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label>Заполнить свой профиль</label>
+        <label>Заполнить данные Профиля</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -3029,12 +3033,24 @@
         <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Ваш запрос на доступ к {0} был доставлен администраторам портала. Если у Вас есть какие-либо вопросы или пожелания по поводу этого процесса, Вы можете связаться с администратором ниже:</label>
+        <label><!-- CSP_Confirmed_Requested_Service_EFApps_Message --></label>
+        <name>CSP_Confirmed_Requested_Service_EFApps_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш запрос на доступ к {0} был передан администраторам портала. Если у Вас есть какие-либо вопросы или пожелания по поводу этого процесса, Вы можете связаться с администратором ниже:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
         <label>Изменение имени Вашего профиля повлияет на действительность Вашей идентификационной карты. Пожалуйста, свяжитесь с нашей командой по работе с клиентами чтобы изменить имя Вашего профиля</label>
         <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Message --></label>
+        <name>CSP_Contact_Us_Banner_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Title --></label>
+        <name>CSP_Contact_Us_Banner_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
@@ -3053,11 +3069,11 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>Вы новичок на клиентском портале Международной ассоциации воздушного транспорта (ИАТА)?</label>
+        <label>Новый пользователь портала?</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Создать новый аккаунт</label>
+        <label>Создать новую учетную запись</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -3065,7 +3081,7 @@
         <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
-        <label>Создать пароль</label>
+        <label>Пожалуйста, введите новый пароль.</label>
         <name>CSP_Create_Password</name>
     </customLabels>
     <customLabels>
@@ -3137,11 +3153,20 @@
         <name>CSP_EF_Invoices</name>
     </customLabels>
     <customLabels>
-        <label>Электронный адрес</label>
+        <label>Адрес электронной почты</label>
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label>Спасибо за регистрацию на клиентском портале в Международной ассоциации воздушного транспорта (ИАТА). Вы всего в одном шаге от получения доступа!</label>
+        <label>Уважаемый, 
+Спасибо за регистрацию на клиентском портале ИАТА. Вы всего в одном шаге от получения доступа!
+
+Пожалуйста, подтвердите свой адрес электронной почты, нажав здесь.
+
+По соображениям безопасности эта ссылка действительна в течение 8 часов. По истечении времени Вы должны будете повторно подать запрос.
+
+Спасибо за то, что вы с ИАТА.
+
+Международная ассоциация воздушного транспорта (ИАТА)</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
@@ -3245,7 +3270,7 @@
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>Спасибо за участие в Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Спасибо за то, что вы с ИАТА.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -3253,7 +3278,7 @@
         <name>CSP_Email_Signature_Part_1_LMS</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 2 --></label>
+        <label>ИАТА</label>
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
@@ -3261,23 +3286,23 @@
         <name>CSP_Email_Signature_Part_2_LMS</name>
     </customLabels>
     <customLabels>
-        <label>Мы рады, что Вы с нами на нашем клиентском портале Международной ассоциации воздушного транспорта (ИАТА)!</label>
+        <label>Мы рады приветствовать Вас на нашем клиентстком портале ИАТА!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label>Клиентский портал Международной ассоциации воздушного транспорта (ИАТА) содержит полезные услуги, информацию о продукте, полезные советы и рекомендации, специально разработанные для Вас. Вы можете использовать его, чтобы легко связаться с нашей службой поддержки клиентов, в том числе в режиме реального времени в чате или непосредственно в нашем интернет-магазине. Это Ваши ворота в Международную ассоциацию воздушного транспорта (ИАТА)!</label>
+        <label>Клиентсктий портал ИАТА содержит перечень услуг, информацию о продуктах, полезные ссылки и советы, подобранные специально для Вас. С его помощью Вы можете как обратиться в нашу Службу по работе с клиентами, в том числе и через чат, либо напрямую совершить покупки в нашем онлайн магазине. Это ваш пропуск в ИАТА.</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Отведите меня на портал!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Войти на Портал!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label>Для еще большего улучшения Вашего опыта в клиентском портале Международной ассоциации воздушного транспорта (ИАТА), Вы можете заполнить информацию в своей учетной записи, когда Вы захотите. Вы можете легко сделать это, нажав</label>
+        <label>Для улучшения работы и Вашего восприятия, Вы можете дополнить информацию о своей учетной записи в любой момент. Для этого просто нажмите здесь.</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>Мы надеемся, что Вам понравится наш клиентский портал Международной ассоциации воздушного транспорта (ИАТА)!</label>
+        <label>Мы надеемся, что вам понравится наш клиентский портал!</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -3321,7 +3346,7 @@
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
-        <label>Создайте случай, общайтесь напрямую с представителем Международной ассоциации воздушного транспорта (ИАТА) или позвоните нам.</label>
+        <label>Создайте запрос, общайтесь напрямую с представителем Международной ассоциации воздушного транспорта (ИАТА) или позвоните нам.</label>
         <name>CSP_FAQReachUsBanner_Text</name>
     </customLabels>
     <customLabels>
@@ -3341,7 +3366,7 @@
         <name>CSP_FAQ_Subtitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FAQs_Title --></label>
+        <label>Часто задаваемые вопросы</label>
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
@@ -3373,7 +3398,7 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
-        <label>Ваша учетная запись была успешно создана! И теперь вы уже можете приступить к исследованию возможностей нашего портала. Для получения и просмотра более персонализированного содержания, пожалуйста, заполните свой профиль.</label>
+        <label>Ваша учетная запись успешно создана. Теперь вы можете познакомиться со стандартными функциями Портала. Некоторые дополнительные опции требуют больших дополнительных данных. Пожалуйста, заполните ваш профиль для полного доступа.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
@@ -3385,7 +3410,7 @@
         <name>CSP_First_Login_Desc_LMS_IE</name>
     </customLabels>
     <customLabels>
-        <label>Добро пожаловать на борт!</label>
+        <label>Добро пожаловать!</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -3397,7 +3422,7 @@
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>Забыли пароль?</label>
+        <label>Забыт пароль?</label>
         <name>CSP_Forgot_Password</name>
     </customLabels>
     <customLabels>
@@ -3405,7 +3430,7 @@
         <name>CSP_Forgot_Password_Error_Message</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, введите Ваш зарегистрированный адрес электронной почты, чтобы сбросить пароль. Мы вышлем Вам ссылку для сброса на Ваш адрес электронной почты.</label>
+        <label>Пожалуйста, введите свой адрес электронной почты, указанный при регистрации для воссттановления восстановления пароля. Мы вышлем Вам ссылку для восстановления пароля на электронную почту.</label>
         <name>CSP_Forgot_Password_Info</name>
     </customLabels>
     <customLabels>
@@ -3489,7 +3514,7 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
-        <label>Личное имя</label>
+        <label>Имя</label>
         <name>CSP_L1_First_Name</name>
     </customLabels>
     <customLabels>
@@ -3521,11 +3546,11 @@
         <name>CSP_L1_WorkPhone_LMS</name>
     </customLabels>
     <customLabels>
-        <label>Информация о компании</label>
+        <label>Данные об учетной записи организации</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
     <customLabels>
-        <label>Заполните информацию ниже, чтобы найти учетную запись вашей компании.</label>
+        <label>Заполните информацию ниже для поиска учетной записи вашей организации</label>
         <name>CSP_L2_Account_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3533,11 +3558,11 @@
         <name>CSP_L2_Account_Selection</name>
     </customLabels>
     <customLabels>
-        <label>Чтобы привести ваш личный профиль в соответствие с учетной записью вашей компании, нам нужны дополнительные сведения. Это поможет нам проверить, зарегистрирована ли ваша компания в ИАТА.</label>
+        <label>Для идентификации вашей учетной записи с вашей организацией нам необходима информация о ней. Ваша организация уже может иметь свою учетную запись в ИАТА, пожалуйста, проверьте это, прежде чем создавать новую.</label>
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
-        <label>Подробная информация</label>
+        <label>Дополнительные данные</label>
         <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
@@ -3577,7 +3602,7 @@
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>Выбор счета и подробная информация</label>
+        <label>Выбор учетной записи и дополнительные данные</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3937,7 +3962,7 @@
         <name>CSP_L2_SucessUpdate_Title_LMS</name>
     </customLabels>
     <customLabels>
-        <label>приветствие</label>
+        <label>Обращение</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -4197,6 +4222,26 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LeadCreator_AfterSubmitMessage --></label>
+        <name>CSP_LeadCreator_AfterSubmitMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ContactPreference_label --></label>
+        <name>CSP_LeadCreator_ContactPreference_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_SubTitle --></label>
+        <name>CSP_LeadCreator_SubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ThankYou --></label>
+        <name>CSP_LeadCreator_ThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_Title --></label>
+        <name>CSP_LeadCreator_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Узнать больше</label>
         <name>CSP_Learn_More</name>
     </customLabels>
@@ -4273,7 +4318,7 @@
         <name>CSP_Manage_Services_NoIEPAccount</name>
     </customLabels>
     <customLabels>
-        <label>Посмотреть мои случаи</label>
+        <label>Посмотреть мои запросы</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
@@ -4305,7 +4350,7 @@
         <name>CSP_Next_EmailValidation_LMS</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Next_LMS --></label>
+        <label>Далее</label>
         <name>CSP_Next_LMS</name>
     </customLabels>
     <customLabels>
@@ -4321,7 +4366,7 @@
         <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
-        <label>На данный момент у вас нет никаких случаев.</label>
+        <label>На данный момент у вас нет никаких запросов.</label>
         <name>CSP_NoCases1</name>
     </customLabels>
     <customLabels>
@@ -4357,19 +4402,19 @@
         <name>CSP_Password</name>
     </customLabels>
     <customLabels>
-        <label>Минимум 10 символов</label>
+        <label>Минимум 10 знаков</label>
         <name>CSP_Password_Rule_1</name>
     </customLabels>
     <customLabels>
-        <label>Как минимум 1 заглавная буква</label>
+        <label>Хотя бы 1 заглавную букву</label>
         <name>CSP_Password_Rule_2</name>
     </customLabels>
     <customLabels>
-        <label>Хотя бы 1 цифра</label>
+        <label>Хотя бы 1 цифру</label>
         <name>CSP_Password_Rule_3</name>
     </customLabels>
     <customLabels>
-        <label>Как минимум один из следующих символов: !@ # $% * () _ + ^ &amp;</label>
+        <label>Хотя бы один из символов (! @ # $ % * ( ) _ + ^ &amp;)</label>
         <name>CSP_Password_Rule_4</name>
     </customLabels>
     <customLabels>
@@ -4381,7 +4426,7 @@
         <name>CSP_PendingApproval</name>
     </customLabels>
     <customLabels>
-        <label>Нам нужно ваше мнение, чтобы продолжить изучение вашего случая.</label>
+        <label>Нам нужен ваш ответ, чтобы продолжить изучение вашего запроса.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
@@ -4405,7 +4450,7 @@
         <name>CSP_Portal_Login_Disabled_Message</name>
     </customLabels>
     <customLabels>
-        <label>Статус портала</label>
+        <label>Статус на портале</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
@@ -4439,7 +4484,7 @@
         <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
-        <label>Что такое случай и когда он мне нужен?</label>
+        <label>Что такое запрос и когда он мне нужен?</label>
         <name>CSP_Question1</name>
     </customLabels>
     <customLabels>
@@ -4447,7 +4492,7 @@
         <name>CSP_Question1URL</name>
     </customLabels>
     <customLabels>
-        <label>Как я могу увидеть и обновить детали случая?</label>
+        <label>Как я могу увидеть и обновить детали запроса?</label>
         <name>CSP_Question2</name>
     </customLabels>
     <customLabels>
@@ -4455,7 +4500,7 @@
         <name>CSP_Question2URL</name>
     </customLabels>
     <customLabels>
-        <label>Недавние случаи</label>
+        <label>Недавние запросы</label>
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
@@ -4535,7 +4580,7 @@
         <name>CSP_Registration_Existing_Work_Message_LMS_Profile</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, сначала проверьте вашу папку со спамом. Если вы не можете найти нужное сообщение в папке со спамом, еще раз попробуйте зарегистрироваться, нажав кнопку «Повторить попытку».</label>
+        <label>Пожалуйста, сначала проверьте папку с нежелательной почтой. Если вы не можете найти письмо там, повторите регистрацию, нажав на кнопку &quot;Попробовать повторно&quot;</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -4599,7 +4644,7 @@
         <name>CSP_Save</name>
     </customLabels>
     <customLabels>
-        <label>Сохранить и войти</label>
+        <label>Сохранить и зайти</label>
         <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
@@ -4647,7 +4692,7 @@
         <name>CSP_Search_FAQ_Topic</name>
     </customLabels>
     <customLabels>
-        <label>Найти услуги, случаи, поддержку и многое другое</label>
+        <label>Найти услуги, запросы, поддержку и многое другое</label>
         <name>CSP_Search_Home_Placeholder</name>
     </customLabels>
     <customLabels>
@@ -4663,7 +4708,7 @@
         <name>CSP_Search_NoResults_text2</name>
     </customLabels>
     <customLabels>
-        <label>Проверьте правильность написания Ваших ключевых слов или попробуйте еще раз другими.</label>
+        <label>Проверьте правильность написания Ваших ключевых слов или попробуйте еще раз с другими.</label>
         <name>CSP_Search_NoResults_text3</name>
     </customLabels>
     <customLabels>
@@ -4671,7 +4716,7 @@
         <name>CSP_Search_Services_Placeholder</name>
     </customLabels>
     <customLabels>
-        <label>Поиск поддержки</label>
+        <label>Поддержка поиска</label>
         <name>CSP_Search_Support_Placeholder</name>
     </customLabels>
     <customLabels>
@@ -4683,7 +4728,7 @@
         <name>CSP_Search_TypeIn_text1</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, введите что-то большее, чем 2 буквы, чтобы начать поиск.</label>
+        <label>Пожалуйста, введите более 2 букв, чтобы начать поиск.</label>
         <name>CSP_Search_TypeIn_text2</name>
     </customLabels>
     <customLabels>
@@ -4691,7 +4736,7 @@
         <name>CSP_Search_TypeIn_text3</name>
     </customLabels>
     <customLabels>
-        <label>Поиск по номеру дела, теме или описанию</label>
+        <label>Поиск по номеру запроса, теме или описанию</label>
         <name>CSP_SearchingOn</name>
     </customLabels>
     <customLabels>
@@ -4703,8 +4748,12 @@
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label>Выбрать статус портала</label>
+        <label>Выбрать статус  на портале</label>
         <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_ADSR --></label>
+        <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>Доступ к услугам</label>
@@ -4787,7 +4836,7 @@
         <name>CSP_Services_HeaderTitle</name>
     </customLabels>
     <customLabels>
-        <label>Управление сервисом</label>
+        <label>Управление услугой</label>
         <name>CSP_Services_ManageService</name>
     </customLabels>
     <customLabels>
@@ -4807,7 +4856,7 @@
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
     <customLabels>
-        <label>Просмотреть подробную информацию об услуге и запросить доступ к доступным услугам.</label>
+        <label>Просмотреть подробную информацию об услуге и запросить доступ к возможным услугам.</label>
         <name>CSP_Services_RequestServiceBannerSubtitle</name>
     </customLabels>
     <customLabels>
@@ -4835,7 +4884,7 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label>Пропустить сейчас</label>
+        <label>Пропустить на данном этапе</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
@@ -4855,7 +4904,7 @@
         <name>CSP_SubmittedApproval</name>
     </customLabels>
     <customLabels>
-        <label>Успешно!</label>
+        <label>Успешно</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -4915,11 +4964,11 @@
         <name>CSP_Troubleshooting_Info</name>
     </customLabels>
     <customLabels>
-        <label>Попробовать еще раз</label>
+        <label>Попробовать повторно</label>
         <name>CSP_Try_Again</name>
     </customLabels>
     <customLabels>
-        <label>Тип случая</label>
+        <label>Тип запроса</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
@@ -5047,15 +5096,15 @@
         <name>CSP_cpcc_Contact_Type_Status</name>
     </customLabels>
     <customLabels>
-        <label>Контакт финансовой оценки</label>
+        <label>Контакт для финансовой оценки</label>
         <name>CSP_cpcc_Financial_Assessment_Contact</name>
     </customLabels>
     <customLabels>
-        <label>Контакт счетов</label>
+        <label>Контакт по вопросам оплат счетов</label>
         <name>CSP_cpcc_Invoice_Contact</name>
     </customLabels>
     <customLabels>
-        <label>Новый контактный профиль</label>
+        <label>Профиль нового контактного лица</label>
         <name>CSP_cpcc_New_Contact_Profile</name>
     </customLabels>
     <customLabels>
@@ -5215,7 +5264,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label>Подтверждение пароля</label>
+        <label>Подтвердите пароль</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -7403,6 +7452,10 @@
         <name>EFComplianceReview</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Account --></label>
+        <name>EF_Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -7411,8 +7464,24 @@
         <name>EF_Currency_Not_In_Contract_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Invitation Sent --></label>
+        <name>EF_Invitation_Sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invite --></label>
+        <name>EF_Invite</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF_Select --></label>
+        <name>EF_Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E&amp;F Welcome Email Body --></label>
+        <name>EF_Welcome_Email_Body</name>
     </customLabels>
     <customLabels>
         <label><!-- E-Bulletin Service Description --></label>
@@ -7439,7 +7508,7 @@
         <name>Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label>Адрес эл. почты</label>
+        <label>Адрес электронной почты</label>
         <name>Email</name>
     </customLabels>
     <customLabels>
@@ -7909,6 +7978,10 @@
     <customLabels>
         <label><!-- IATA Acr Changes Service Description --></label>
         <name>IATA_Acr_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Acr Changes Service Description CNS --></label>
+        <name>IATA_Acr_Changes_Service_Description_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Airl Location Codes Service Description --></label>
@@ -10607,7 +10680,7 @@
         <name>ID_Card_NR_Form_First_Block_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ID Card Next button --></label>
+        <label>Далее</label>
         <name>ID_Card_Next_button</name>
     </customLabels>
     <customLabels>
@@ -12717,6 +12790,10 @@
         <name>ISSP_AMC_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CNS endorsement HO --></label>
+        <name>ISSP_AMSCNS_Endorsement_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_ACCR_Alert1 --></label>
         <name>ISSP_AMS_ACCR_Alert1</name>
     </customLabels>
@@ -12739,6 +12816,10 @@
     <customLabels>
         <label>Пожалуйста примите «Правила и условия», прежде чем отправить заявку на аккредитацию тур агентства в IATA.</label>
         <name>ISSP_AMS_Accept_TOS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Accept TOS CNS --></label>
+        <name>ISSP_AMS_Accept_TOS_CNS</name>
     </customLabels>
     <customLabels>
         <label>Добавить компанию</label>
@@ -12775,6 +12856,10 @@
     <customLabels>
         <label>Аккредитация агентства</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Agency_Endorsement --></label>
+        <name>ISSP_AMS_Agency_Endorsement</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Agency Type --></label>
@@ -12851,6 +12936,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Business_Activities_Field_Label --></label>
         <name>ISSP_AMS_Business_Activities_Field_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CASS Commercial Account HO --></label>
+        <name>ISSP_AMS_CASS_Commercial_Account_HO</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_CASS_Contact --></label>
@@ -13177,6 +13266,46 @@
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CNS CASS Contact --></label>
+        <name>ISSP_AMS_CNS_CASS_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Contact Required --></label>
+        <name>ISSP_AMS_CNS_Contact_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS DGR Trained Staff Members Alert --></label>
+        <name>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS DGR Trained Staff Members Alert BR --></label>
+        <name>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CNS_ENDORSEMENT --></label>
+        <name>ISSP_AMS_CNS_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Error Message Section 3 Ownership --></label>
+        <name>ISSP_AMS_CNS_Error_Message_Section_3_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS FIN Contact Help --></label>
+        <name>ISSP_AMS_CNS_FIN_Contact_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Office Alert --></label>
+        <name>ISSP_AMS_CNS_Office_Alert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Portal Admin Help --></label>
+        <name>ISSP_AMS_CNS_Portal_Admin_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS warehouse Alert --></label>
+        <name>ISSP_AMS_CNS_warehouse_Alert</name>
+    </customLabels>
+    <customLabels>
         <label>Вы действительно хотите произвести отмену?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
@@ -13259,6 +13388,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_New --></label>
@@ -13429,6 +13562,10 @@
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Click here CNS --></label>
+        <name>ISSP_AMS_Click_here_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Сравнение типов аккредитации</label>
         <name>ISSP_AMS_Compare_Accreditation_Types</name>
     </customLabels>
@@ -13489,6 +13626,10 @@
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Download_PDF_Copy_CNS --></label>
+        <name>ISSP_AMS_Download_PDF_Copy_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Download PDF NOC --></label>
         <name>ISSP_AMS_Download_PDF_NOC</name>
     </customLabels>
@@ -13519,6 +13660,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Empty_Location_Type --></label>
         <name>ISSP_AMS_Empty_Location_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Endorsement CNS --></label>
+        <name>ISSP_AMS_Endorsement_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Expiry_date --></label>
@@ -13761,6 +13906,10 @@
         <name>ISSP_AMS_Facility_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Federal EIN Error Message --></label>
+        <name>ISSP_AMS_Federal_EIN_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS File Upload Issue --></label>
         <name>ISSP_AMS_File_Upload_Issue</name>
     </customLabels>
@@ -13795,6 +13944,10 @@
     <customLabels>
         <label><!-- ISSP AMS Form --></label>
         <name>ISSP_AMS_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Form CNS --></label>
+        <name>ISSP_AMS_Form_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Form_Missing_Signed_File --></label>
@@ -14079,6 +14232,10 @@
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section6_Cargo --></label>
         <name>ISSP_AMS_LeftNav_Section6_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section6_Financial_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section6_Financial_Cargo</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section7 --></label>
@@ -14485,6 +14642,18 @@
         <name>ISSP_AMS_Multicountry_Submit_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NEW_BR --></label>
+        <name>ISSP_AMS_NEW_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NEW_HO --></label>
+        <name>ISSP_AMS_NEW_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NEW_INDEPENDENT_BR --></label>
+        <name>ISSP_AMS_NEW_INDEPENDENT_BR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NOC_All_Countries --></label>
         <name>ISSP_AMS_NOC_All_Countries</name>
     </customLabels>
@@ -14503,6 +14672,10 @@
     <customLabels>
         <label><!-- ISSP AMS NOC Instructions --></label>
         <name>ISSP_AMS_NOC_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Instructions CNS --></label>
+        <name>ISSP_AMS_NOC_Instructions_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NOC Instructions New --></label>
@@ -14539,6 +14712,10 @@
     <customLabels>
         <label><!-- ISSP AMS Name of employer --></label>
         <name>ISSP_AMS_Name_of_employer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CASS Commercial Account BR --></label>
+        <name>ISSP_AMS_New_Commercial_Account_BR</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS New HO details --></label>
@@ -14941,6 +15118,10 @@
         <name>ISSP_AMS_NoC_TC</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_CNS_Only --></label>
+        <name>ISSP_AMS_NoC_TC_CNS_Only</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change CASS --></label>
         <name>ISSP_AMS_NoC_TC_Change_CASS</name>
     </customLabels>
@@ -14969,6 +15150,14 @@
         <name>ISSP_AMS_NoC_TC_Change_CGO_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_CNS --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_CNS2 --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CNS2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP --></label>
         <name>ISSP_AMS_NoC_TC_Change_EACP</name>
     </customLabels>
@@ -14979,6 +15168,10 @@
     <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP3 --></label>
         <name>ISSP_AMS_NoC_TC_Change_EACP3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_First_CNS --></label>
+        <name>ISSP_AMS_NoC_TC_Change_First_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Transferee --></label>
@@ -15021,8 +15214,16 @@
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_CNS --></label>
+        <name>ISSP_AMS_NoC_error_message2_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
+        <name>ISSP_AMS_NoC_error_message3_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -15079,6 +15280,10 @@
     <customLabels>
         <label>&quot;Как организации, акции которой не котируются на бирже, вам необходимо указать данные всех акционеров в разделах «Физические лица» и «Компании» ниже.&quot;</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Notify_Change_Legal_Details_CNS --></label>
+        <name>ISSP_AMS_Notify_Change_Legal_Details_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Number_of_Years_Traded_Field_Label --></label>
@@ -15281,6 +15486,54 @@
         <name>ISSP_AMS_PDF_Initials_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS PDF NoC Authorized Signature for and on behalf of Transferee-Buye --></label>
+        <name>ISSP_AMS_PDF_NoC_Authorized_Signature_for_and_on_behalf_of_Transferee_Buye</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Authorized signature for and on behalf of  Agent --></label>
+        <name>ISSP_AMS_PDF_NoC_Authorized_signature_for_and_on_behalf_of_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address1 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address2 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address3 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address4 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name Title or capacity of Person signing --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_Title_or_capacity_of_Person_signing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name of Agent Transferor-Seller --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_of_Agent_Transferor_Seller</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name of Transferee-Buyer --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_of_Transferee_Buyer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Witness --></label>
+        <name>ISSP_AMS_PDF_NoC_Witness</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Witness 2 --></label>
+        <name>ISSP_AMS_PDF_NoC_Witness_2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS PDF Page --></label>
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
@@ -15307,6 +15560,10 @@
     <customLabels>
         <label><!-- ISSP AMS Please Upload --></label>
         <name>ISSP_AMS_Please_Upload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Please Upload CNS --></label>
+        <name>ISSP_AMS_Please_Upload_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Portal Admin --></label>
@@ -15377,6 +15634,14 @@
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Branch Title CNS --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_1 Branch Title New --></label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title_New</name>
     </customLabels>
@@ -15423,6 +15688,14 @@
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Security Contact --></label>
+        <name>ISSP_AMS_Security_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Security Contact Message Popup --></label>
+        <name>ISSP_AMS_Security_Contact_Message_Popup</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Select AEs --></label>
@@ -15477,6 +15750,10 @@
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 CNS NEW HO BR --></label>
+        <name>ISSP_AMS_Step0_CNS_NEW_HO_BR</name>
+    </customLabels>
+    <customLabels>
         <label>Изменение реквизитов банковского счета</label>
         <name>ISSP_AMS_Step0_Change_Bank_Details</name>
     </customLabels>
@@ -15519,6 +15796,10 @@
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro CNS --></label>
         <name>ISSP_AMS_Step0_Intro_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro New --></label>
@@ -15665,6 +15946,14 @@
         <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 Title CNS BR --></label>
+        <name>ISSP_AMS_Step1_Title_CNS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title CNS HO --></label>
+        <name>ISSP_AMS_Step1_Title_CNS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step1 Title New --></label>
         <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
@@ -15761,6 +16050,10 @@
         <name>ISSP_AMS_Step3_4_Branch_People_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_CNS_Agency_Title --></label>
+        <name>ISSP_AMS_Step3_4_CNS_Agency_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
         <name>ISSP_AMS_Step3_4_Cargo_Agent_Title</name>
     </customLabels>
@@ -15803,6 +16096,10 @@
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People --></label>
         <name>ISSP_AMS_Step3_4_People</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 4 People CNS --></label>
+        <name>ISSP_AMS_Step3_4_People_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People Intermediary --></label>
@@ -15869,6 +16166,10 @@
         <name>ISSP_AMS_Step3_4_Q19</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q19_CNS --></label>
+        <name>ISSP_AMS_Step3_4_Q19_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q19 New --></label>
         <name>ISSP_AMS_Step3_4_Q19_New</name>
     </customLabels>
@@ -15887,6 +16188,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Agency New --></label>
         <name>ISSP_AMS_Step3_4_Q1_Agency_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- +        &lt;fullName&gt;ISSP_AMS_Step3_4_Q1_CNS&lt;/fullName&gt; --></label>
+        <name>ISSP_AMS_Step3_4_Q1_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Intermediary --></label>
@@ -15955,6 +16260,14 @@
     <customLabels>
         <label><!-- ISSP AMS Step3 5 Premises Title --></label>
         <name>ISSP_AMS_Step3_5_Premises_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_5_Warehouse --></label>
+        <name>ISSP_AMS_Step3_5_Warehouse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_6_Financial --></label>
+        <name>ISSP_AMS_Step3_6_Financial</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 6 Other Info --></label>
@@ -16055,6 +16368,14 @@
     <customLabels>
         <label><!-- ISSP AMS Step3 Branch Location --></label>
         <name>ISSP_AMS_Step3_Branch_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 Branch Location CASS Commercial --></label>
+        <name>ISSP_AMS_Step3_Branch_Location_CASS_Commercial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 Branch Location CNS --></label>
+        <name>ISSP_AMS_Step3_Branch_Location_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_Cash_Location --></label>
@@ -16255,6 +16576,10 @@
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo CASS Associate Title --></label>
         <name>ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo CNS Agency Title --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo EACP Intermediary Title --></label>
@@ -17393,8 +17718,40 @@
         <name>ISSP_AP_Cases</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Countries_Territories --></label>
+        <name>ISSP_AP_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Countries_to_optin --></label>
+        <name>ISSP_AP_Countries_to_optin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Countries_available --></label>
+        <name>ISSP_AP_Error_No_Countries_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Country_selected --></label>
+        <name>ISSP_AP_Error_No_Country_selected</name>
+    </customLabels>
+    <customLabels>
         <label>Форма присоединения</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Form_of_Payment --></label>
+        <name>ISSP_AP_Form_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_IATA_EasyPay_Section_Description --></label>
+        <name>ISSP_AP_IATA_EasyPay_Section_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Address --></label>
+        <name>ISSP_AP_Israel_Submit_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Disclaimer --></label>
+        <name>ISSP_AP_Israel_Submit_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
@@ -17431,6 +17788,50 @@
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Add_Emails --></label>
+        <name>ISSP_AP_Report_Options_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Excel_Selected --></label>
+        <name>ISSP_AP_Report_Options_Excel_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_HOT_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_HOT_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Header --></label>
+        <name>ISSP_AP_Report_Options_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_PDF_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_PDF_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Remove_Emails --></label>
+        <name>ISSP_AP_Report_Options_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Countries_Territories --></label>
+        <name>ISSP_AP_Select_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Form_of_Payment_in_HOT --></label>
+        <name>ISSP_AP_Select_Form_of_Payment_in_HOT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Add_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Remove_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AP Voluntary Withdrawal Disclaimer --></label>
+        <name>ISSP_AP_Voluntary_Withdrawal_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label>Предоставляя пользователю доступ к Службе участия авиакомпании,</label>
@@ -17835,7 +18236,7 @@
         <name>ISSP_CCOthers_Add</name>
     </customLabels>
     <customLabels>
-        <label>Адрес эл. почты</label>
+        <label>Адрес электронной почты</label>
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
@@ -18164,7 +18565,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label>Вы связываетесь с нами по поводу курсов IATA ?</label>
+        <label>Вы обращаетесь по вопросу курсов ИАТА?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -18644,7 +19045,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Email_Dear_Post</name>
     </customLabels>
     <customLabels>
-        <label>Уважаемый/ая</label>
+        <label>Уважаемый</label>
         <name>ISSP_Email_Dear_Pre</name>
     </customLabels>
     <customLabels>
@@ -19199,6 +19600,10 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label>Задать вопрос</label>
         <name>ISSP_General_enquiries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
@@ -19801,8 +20206,56 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MIR_Rates_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Mita Add Contact --></label>
+        <name>ISSP_MITA_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP MITA Agreements Service Name --></label>
         <name>ISSP_MITA_Agreements_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Edit Contact message --></label>
+        <name>ISSP_MITA_EditContactMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Edit Contact Success --></label>
+        <name>ISSP_MITA_EditContactSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Remove Contact message --></label>
+        <name>ISSP_MITA_RemoveContactMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Active MITA Contacts --></label>
+        <name>ISSP_MITA_SUBTAB_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Airline Available Contacts --></label>
+        <name>ISSP_MITA_SUBTAB_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search At Least 3 Chars --></label>
+        <name>ISSP_MITA_Search_At_Least3Chars</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search by email or name --></label>
+        <name>ISSP_MITA_Search_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Text Above button --></label>
+        <name>ISSP_MITA_Search_Text01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Text Below button --></label>
+        <name>ISSP_MITA_Search_Text02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Check Valid Input --></label>
+        <name>ISSP_MITA_Search_ValidInput</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Airline Contacts --></label>
+        <name>ISSP_MITA_TAB</name>
     </customLabels>
     <customLabels>
         <label>Утвердить как администратор</label>
@@ -19869,7 +20322,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MyProfile_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label>Адрес эл. почты</label>
+        <label>Адрес электронной почты</label>
         <name>ISSP_MyProfile_EMAIL</name>
     </customLabels>
     <customLabels>
@@ -19893,7 +20346,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MyProfile_SALUTATION</name>
     </customLabels>
     <customLabels>
-        <label>Сектор</label>
+        <label>Род деятельности</label>
         <name>ISSP_MyProfile_SECTOR</name>
     </customLabels>
     <customLabels>
@@ -20400,6 +20853,18 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_PASS_Users</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP PAX Federal EIN --></label>
+        <name>ISSP_PAX_Federal_EIN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Federal EIN Title --></label>
+        <name>ISSP_PAX_Federal_EIN_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating Federal EIN --></label>
+        <name>ISSP_PAX_Validating_Federal_EIN</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
         <name>ISSP_PAX_Validating_VAT_Number</name>
     </customLabels>
@@ -20706,7 +21171,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Portal_further_clarification</name>
     </customLabels>
     <customLabels>
-        <label>Предпочитаемый язык</label>
+        <label>Предпочтительный язык</label>
         <name>ISSP_Preferred_Language</name>
     </customLabels>
     <customLabels>
@@ -20718,7 +21183,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_PriceList</name>
     </customLabels>
     <customLabels>
-        <label>Политика конфиденциальности</label>
+        <label>персональных данных</label>
         <name>ISSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
@@ -22223,7 +22688,7 @@ GSA - 3 буквы.
         <name>ISSP_TemporaryPassword</name>
     </customLabels>
     <customLabels>
-        <label>Условия использования</label>
+        <label>Условия политики</label>
         <name>ISSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -22276,6 +22741,10 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- Tracking ID Google Analitycs --></label>
         <name>ISSP_Tracking_ID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Trade Name (D/B/A) --></label>
+        <name>ISSP_Trade_Name_DBA</name>
     </customLabels>
     <customLabels>
         <label>Коммерческое наименование компании</label>
@@ -23312,7 +23781,7 @@ GSA - 3 буквы.
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label>Войти в систему</label>
+        <label>Логин</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -23512,7 +23981,7 @@ GSA - 3 буквы.
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>Информация об уведомлении</label>
+        <label>Содержание уведомления</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -23604,7 +24073,7 @@ GSA - 3 буквы.
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label>Создать новый аккаунт</label>
+        <label>Создать новую учетную запись</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -24128,7 +24597,7 @@ GSA - 3 буквы.
         <name>OneId_Press_to_Validate</name>
     </customLabels>
     <customLabels>
-        <label>Политика конфиденциальности</label>
+        <label>персональных данных</label>
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
@@ -25365,6 +25834,10 @@ GSA - 3 буквы.
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
+        <label><!-- SSP AMS Step5 ReviewBeforeSubmit CNS --></label>
+        <name>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Salutation --></label>
         <name>Salutation</name>
     </customLabels>
@@ -25589,11 +26062,11 @@ GSA - 3 буквы.
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
-        <label>ИАТА Политикой конфиденциальности</label>
+        <label>персональных данных</label>
         <name>TC_CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
-        <label>Условиями использования</label>
+        <label>Условия политики</label>
         <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -26289,7 +26762,7 @@ GSA - 3 буквы.
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
-        <label>Дополнительные детали</label>
+        <label>Дополнительные данные</label>
         <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
@@ -26313,7 +26786,7 @@ GSA - 3 буквы.
         <name>csp_CaseBeingWorked</name>
     </customLabels>
     <customLabels>
-        <label>Случай успешно создано.</label>
+        <label>Запрос успешно создан.</label>
         <name>csp_CaseCreatedSuccess</name>
     </customLabels>
     <customLabels>
@@ -26321,11 +26794,11 @@ GSA - 3 буквы.
         <name>csp_CaseResponseGuarantee</name>
     </customLabels>
     <customLabels>
-        <label>Вы можете добавить комментарии, документы и получателей в случае обновления. Вы можете отслеживать статус и делать обновления в</label>
+        <label>Вы можете добавить комментарии, документы и получателей при необходимости обновления. Вы можете отслеживать статус и вносить изменения в</label>
         <name>csp_CaseTracking</name>
     </customLabels>
     <customLabels>
-        <label>Создать случай</label>
+        <label>Создать запрос</label>
         <name>csp_Case_Panel_label</name>
     </customLabels>
     <customLabels>
@@ -26361,7 +26834,7 @@ GSA - 3 буквы.
         <name>csp_ComplimentInfo</name>
     </customLabels>
     <customLabels>
-        <label>Комплимент</label>
+        <label>Благодарность</label>
         <name>csp_Compliment_Label</name>
     </customLabels>
     <customLabels>
@@ -26377,11 +26850,11 @@ GSA - 3 буквы.
         <name>csp_CountryOrRegionIndicator</name>
     </customLabels>
     <customLabels>
-        <label>Создать дело и добавить вложение</label>
+        <label>Создать запрос и добавить вложение</label>
         <name>csp_CreateNewCaseAddAttachment</name>
     </customLabels>
     <customLabels>
-        <label>Укажите все детали, которые помогут нам расследовать ваш запрос</label>
+        <label>Укажите все детали, которые помогут нам изучить ваш запрос</label>
         <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
     </customLabels>
     <customLabels>
@@ -26409,7 +26882,7 @@ GSA - 3 буквы.
         <name>csp_CreateNewCaseMainPicklistLabel</name>
     </customLabels>
     <customLabels>
-        <label>Создать случай</label>
+        <label>Создать запрос</label>
         <name>csp_CreateNewCaseTopLabel</name>
     </customLabels>
     <customLabels>
@@ -26429,7 +26902,7 @@ GSA - 3 буквы.
         <name>csp_Emergency_Query</name>
     </customLabels>
     <customLabels>
-        <label>Финансовый обзор</label>
+        <label>Финансовая проверка</label>
         <name>csp_Financial_Review</name>
     </customLabels>
     <customLabels>
@@ -26505,11 +26978,11 @@ GSA - 3 буквы.
         <name>csp_LastLoginDate</name>
     </customLabels>
     <customLabels>
-        <label>Чат не доступен. Пожалуйста, позвоните или создайте случай.</label>
+        <label>Чат недоступен. Пожалуйста, позвоните или создайте запрос.</label>
         <name>csp_LiveAgentBadConfig</name>
     </customLabels>
     <customLabels>
-        <label>Время соединения чата истекло. Вы можете обновить страницу или создать случай</label>
+        <label>Время соединения в чате истекло. Вы можете обновить страницу или создать запрос</label>
         <name>csp_LiveAgentTimeout</name>
     </customLabels>
     <customLabels>
@@ -26517,11 +26990,11 @@ GSA - 3 буквы.
         <name>csp_LiveTimeout</name>
     </customLabels>
     <customLabels>
-        <label>Менеджер Мастер-кошелька</label>
+        <label>Ответственный за виртуальный кошелек</label>
         <name>csp_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>Функция работы</label>
+        <label>Должностные функции работы</label>
         <name>csp_MembershipFunction</name>
     </customLabels>
     <customLabels>
@@ -26529,7 +27002,7 @@ GSA - 3 буквы.
         <name>csp_My_Profile_Company</name>
     </customLabels>
     <customLabels>
-        <label>Электронный адрес</label>
+        <label>Адрес электронной почты</label>
         <name>csp_My_Profile_Email</name>
     </customLabels>
     <customLabels>
@@ -26565,7 +27038,7 @@ GSA - 3 буквы.
         <name>csp_Profile_IATACode</name>
     </customLabels>
     <customLabels>
-        <label>Личные контакты</label>
+        <label>Личные данные</label>
         <name>csp_Profile_PersonalContact</name>
     </customLabels>
     <customLabels>
@@ -26589,11 +27062,21 @@ GSA - 3 буквы.
         <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
-        <label>Ваше агентство в настоящее время не имеет открытый аккаунт Международной ассоциации воздушного транспорта EasyPay. &lt;br/&gt;&lt;br/&gt;Пожалуйста, свяжитесь с уполномоченным подписантом Вашего головного офиса, чтобы попросить их открыть аккаунт Международной ассоциации воздушного транспорта EasyPay. Как администратор портала Вы можете или обновить &lt;a href=&quot;/my-profile&quot;&gt;Личную информацию&lt;/a&gt; и назначить себя уполномоченным подписчиком, или назначьте правильного администратора портала на странице &lt;a href=&quot;/company-profile&quot;&gt;Администрации компании -&gt; Контакты&lt;/a&gt; и попросите их открыть Ваш аккаунт EasyPay.&lt;br/&gt;&lt;br/&gt;Пожалуйста, &lt;a href=&quot;/Support-Reach-Us&quot;&gt;свяжитесь со службой поддержки&lt;/а&gt;, если Вам понадобится помощь.</label>
+        <label>&quot;«Ваше агентство в настоящее время не имеет открытой учетной записи EasyPay Международной ассоциации воздушного транспорта. &lt;br/&gt;&lt;br/&gt;        Пожалуйста, свяжитесь с уполномоченным подписантом Вашего головного офиса, чтобы попросить открыть учетную запись EasyPay Международной ассоциации воздушного транспорта. 
+        Как администратор портала Вы можете или обновить 
+        &lt;a href=&quot;&quot;&quot;&quot;/my-profile&quot;&quot;&quot;&quot;&gt;Личную информацию&lt;/a&gt; 
+        и назначить себя уполномоченным подписчиком, или назначьте правильного администратора портала на странице 
+        &lt;a href=&quot;&quot;&quot;&quot;/company-profile&quot;&quot;&quot;&quot;&gt;Администрации компании -&gt; Контакты&lt;/a&gt; 
+        и попросите их открыть учетную запись EasyPay.
+        &lt;br/&gt;
+        &lt;br/&gt;
+        Пожалуйста, &lt;a href=&quot;&quot;&quot;&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&quot;&quot;&gt;свяжитесь со службой поддержки&lt;/а&gt;, если Вам понадобится помощь.&quot;&quot;&quot;</label>
         <name>csp_RequestService_ContactPortalAdmin_Alt</name>
     </customLabels>
     <customLabels>
-        <label>&quot;У Вашего агенства в настоящее время нет открытого счета Международной ассоциации воздушного транспорта EasyPay.&lt;br/&gt;&lt;br/&gt; Пожалуйста, свяжитесь с авторизированным подписантом из Вашего головного офиса, чтобы попросить их открыть счет Международной ассоциации воздушного транспорта EasyPay Для того, чтобы открыть учетную запись EasyPay Международной ассоциация воздушного транспорта (ИАТА). Вы должны быть администратором портала и авторизованным лицом, имеющим право подписи от своего агентства.&lt;br/&gt;&lt;br/&gt;Пожалуйста, обратитесь в &lt;a href=&quot;/Support-Reach-Us&quot;&gt;техническую поддержку&lt;/a&gt;, если Вам понадобится помощь.</label>
+        <label>&quot;У Вашего агенства агентства в настоящее время нет открытой учетной записи EasyPay Международной ассоциации воздушного транспорта.&lt;br/&gt;&lt;br/&gt; Пожалуйста, свяжитесь с авторизированным подписантом из Вашего головного офиса, чтобы попросить открыть учетную запись EasyPay Международной ассоциации воздушного транспорта.  Для того чтобы открыть учетную запись EasyPay Международной ассоциация воздушного транспорта (ИАТА), Вы должны быть администратором портала и авторизованным лицом, имеющим право подписи от своего агентства.        &lt;br/&gt;
+        &lt;br/&gt;
+        Пожалуйста, обратитесь в техническую поддержку, если Вам понадобится помощь.&quot;</label>
         <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
     </customLabels>
     <customLabels>
@@ -26661,7 +27144,7 @@ GSA - 3 буквы.
         <name>csp_SupportReachUs_Category</name>
     </customLabels>
     <customLabels>
-        <label>Комплимент</label>
+        <label>Благодарность</label>
         <name>csp_SupportReachUs_ComplimentTile</name>
     </customLabels>
     <customLabels>
@@ -26717,7 +27200,7 @@ GSA - 3 буквы.
         <name>csp_Support_Label</name>
     </customLabels>
     <customLabels>
-        <label>Эта панель позволяет каждой финансовой команде авиакомпании получить полную информацию о своих поступающих продажах по кредитным картам и загружаемый отчет о продажах по кредитным картам - в дополнение к просмотру денежных потоков, обрабатываемых каждой из основных расчетных систем Международной ассоциации воздушного транспорта: BSP (Система взаиморасчётов), CASS (система взаиморасчетов грузовых перевозок), ICCS (Служба таможенного оформления) и ICH (Расчетная палата Международной ассоциации воздушного транспорта).</label>
+        <label>Эта информационная панель позволяет казначеям в авиакомпании в дополнение к просмотру денежных потоков, обрабатываемых каждой из основных расчетных систем Международной ассоциации воздушного транспорта: BSP (Система взаиморасчётов), CASS (система взаиморасчетов грузовых перевозок), ICCS (Система клиринга BSP платежей) и ICH (Расчетная палата Международной ассоциации воздушного транспорта), получить полную информацию о поступающих платежах за продажи по кредитным картам и соответствующий загружаемый отчет об этих продажах.</label>
         <name>csp_TDP_ServiceRequest_MediumLabel1</name>
     </customLabels>
     <customLabels>
@@ -26725,15 +27208,15 @@ GSA - 3 буквы.
         <name>csp_TDP_ServiceRequest_MediumLabel2</name>
     </customLabels>
     <customLabels>
-        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. После нажатия кнопки «Подтвердить», вам будут отправлены все подробности о том, как подписаться на Премиум-финансовую панель Международной ассоциации воздушного транспорта на помесячной основе.</label>
+        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. При нажатии кнопки «Подтвердить» вам будут отправлены все подробности о том, как подписаться на услугу Treasury Dashboard Premium Международной ассоциации воздушного транспорта на ежемесячной основе.</label>
         <name>csp_TDP_ServiceRequest_TopLabel</name>
     </customLabels>
     <customLabels>
-        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. При нажатии кнопки «Подтвердить» вам будут отправлены все подробности о том, как подписаться на Финансовую панель Международной ассоциации воздушного транспорта на помесячной основе.</label>
+        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. При нажатии кнопки «Подтвердить» вам будут отправлены все подробности о том, как подписаться на услугу Treasury dashboard Международной ассоциации воздушного транспорта на ежемесячной основе.</label>
         <name>csp_TD_ServiceRequest_TopLabel</name>
     </customLabels>
     <customLabels>
-        <label>Выпуск билетов</label>
+        <label>Кто выписал билет</label>
         <name>csp_TicketIssuer</name>
     </customLabels>
     <customLabels>
@@ -26745,7 +27228,7 @@ GSA - 3 буквы.
         <name>csp_ToastWarningRecipientNotFound</name>
     </customLabels>
     <customLabels>
-        <label>Просмотреть обзор случая</label>
+        <label>Просмотреть обзор запроса</label>
         <name>csp_ViewCaseSummary</name>
     </customLabels>
     <customLabels>
@@ -26757,7 +27240,7 @@ GSA - 3 буквы.
         <name>csp_btn_Support_Label</name>
     </customLabels>
     <customLabels>
-        <label>Ошибка при создании дела</label>
+        <label>Ошибка при создании запроса</label>
         <name>csp_errorCreatingCase</name>
     </customLabels>
     <customLabels>
@@ -31681,6 +32164,10 @@ GSA - 3 буквы.
         <name>PKB_2_Settings</name>
     </customTabs>
     <customTabs>
+        <label><!-- Portal Invitation --></label>
+        <name>Portal_Invitation</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
     </customTabs>
@@ -32644,6 +33131,23 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Account Roles --></label>
             <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with Account Statements with Account Statement Transactions --></description>
+        <label><!-- Accounts with Account Statements with Account Statement Transactions --></label>
+        <name>Accounts_with_Account_Statements_with_Account_Statement_Transactions</name>
+        <sections>
+            <label><!-- Account Statement Transactions --></label>
+            <name>Account Statement Transactions</name>
+        </sections>
+        <sections>
+            <label><!-- Account Statements --></label>
+            <name>Account Statements</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -35827,6 +36331,14 @@ GSA - 3 буквы.
         <description><!-- Portal Service Access --></description>
         <label><!-- Portal Service Access --></label>
         <name>Portal_Service_Access</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <name>Contact Information</name>
+        </sections>
         <sections>
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>

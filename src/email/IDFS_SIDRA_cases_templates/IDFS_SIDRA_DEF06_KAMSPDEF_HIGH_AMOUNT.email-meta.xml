@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>email to management for KAM for high amounts</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IDFS_SIDRA_DEF06 KAM Short payment DEF email to management_HA</name>
+    <style>none</style>
+    <subject>HIGH_AMOUNT: Key Account Default for short/non payment - {!Account.Name} - {!Case.BSP_CASS__c} - {!Case.BSPCountry__c}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -656,7 +656,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>YESTERDAY,TODAY</value>
+            <value>TODAY</value>
         </filters>
         <filters>
             <field>System__c</field>
