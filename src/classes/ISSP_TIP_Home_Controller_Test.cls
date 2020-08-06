@@ -29,6 +29,8 @@ private class ISSP_TIP_Home_Controller_Test {
 		parent.IATACode__c = '1000';
 		parent.IATA_ISO_Country__c = country.id;
 		parent.category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER;
+		parent.Reason_for_creation__c = 'Other';
+		parent.Comments_Reason_for_creation__c = 'comments';
 		insert parent;
 
 		//create account role
