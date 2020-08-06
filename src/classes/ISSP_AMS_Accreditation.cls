@@ -114,7 +114,6 @@ public without sharing class ISSP_AMS_Accreditation {
 	public String amsLocationTypeLabel {get; set;}
 	public String amsIsGSA {get; set;}
 	public String noCLocationType {get; set;}
-	public boolean isGSARequired;
 	public String applyLanguage {get; set;}
 	public String displayLanguage {get; set;}
 	public string sector {get; set;}
@@ -259,19 +258,15 @@ public without sharing class ISSP_AMS_Accreditation {
 	public IATA_ISO_Country__c isocountry {get; set;}
 	public List<AMS_Accreditation_Requirement__c> List_CountryReqments {get; set;}
 	public AMS_Accreditation_Contact__c newContact {get; set;}
-	public List<AMS_Accreditation_Contact__c> amsDuplicateContactList {get; set;}
 	public ISSP_PDF_Per_Region__c PDFPerRegionCS {get; set;}
 
 	integer cntAgencyLookups;
 
 	public List<SelectOption> applyLanguageList {get; set;}
-	public List<SelectOption> isGSAList {get; set;}
-	public List<SelectOption> itemsYesNo {get; set;}
 	public List<SelectOption> OfficeTypes;
 	public List<String> noticeOfChangeList {get; set;}
 
 	public List<regionSelection> cargoRegionList {get; set;}
-	public List<regionSelection> cargoRegionListWithValue {get; set;}
 	public List<specialTraffic> specialTrafficList {get; set;}
 
 	public Boolean contactSaved {get; set;}
@@ -602,7 +597,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		trainedStaffContact = new AMS_Accreditation_Contact__c();
 		newInternationalSales = new ISSP_AMS_Statement_International_Sales__c();
 		baseUrl = url.getsalesforcebaseurl().toexternalform();
-		amsDuplicateContactList = new List<AMS_Accreditation_Contact__c>();
 		accountConcerned = new Account();
 		noticeOfChangeList = new List<String>();
 		agencyCodesConcerned = new List<SelectOption>();
@@ -1576,6 +1570,16 @@ public without sharing class ISSP_AMS_Accreditation {
 		return member_airlines;
 	}
 
+	public List<SelectOption> getTrainingTypes() {
+		List<SelectOption> traingingTypes = new List<SelectOption>{new SelectOption('', '--None--')};
+		for(Schema.PicklistEntry trainingTypeValue : AMS_Accreditation_Contact__c.Type_Of_Certificate__c.getDescribe().getPicklistValues()){
+			if(isocountry != null && !isocountry.EACP_Country__c && trainingTypeValue.getValue() != 'DGA')
+				traingingTypes.add(new SelectOption(trainingTypeValue.getValue(), trainingTypeValue.getValue()));
+		}
+
+		return traingingTypes;
+	}
+
 	public Integer getContactAccountAEsChilds() {
 		List<String> l = new List<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION,
 			AMS_Utils.ACC_S8_CHANGESPROCESSED};
@@ -2065,11 +2069,6 @@ public without sharing class ISSP_AMS_Accreditation {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
 				return null;
 			}
-
-			/*if (getIsGSARequired() && amsIsGSA == null) {
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
-				return null;
-			}*/
 
 			if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Separate_Entity_Null));
@@ -8301,16 +8300,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		upsert this.trainedStaffContact;
 	}
 
-	public boolean getIsGSARequired() {
-		Boolean isreq;
-		if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT) {
-			isreq = true;
-		} else {
-			isreq = false;
-		}
-		return isreq;
-	}
-
 	public void getCGORegionData() {
 		List<String> cargoAllRegionsList = new List<String>{'Africa', 'Australia & S. Pacific', 'Central America & Caribbean', 'Europe',
 			'Far East', 'Middle East', 'South America', 'USA / Canada'};
@@ -8318,7 +8307,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		Map<String, Map<String, String>> regionPerMap = new Map<String, Map<String, String>>();
 
 		cargoRegionList = new List<regionSelection>();
-		cargoRegionListWithValue = new List<regionSelection>();
 
 		if (newForm.CGO_Region_Selection__c != '' && newForm.CGO_Region_Selection__c != null) {
 			List<String> regionStringList = newForm.CGO_Region_Selection__c.split(';');
@@ -8349,8 +8337,6 @@ public without sharing class ISSP_AMS_Accreditation {
 					regionRecord.tons = regionPerMap.get(thisRegion).get('Tons');
 					regionRecord.airfreight = regionPerMap.get(thisRegion).get('AirFreight');
 					regionRecord.percentage = regionPerMap.get(thisRegion).get('Percentages');
-
-					cargoRegionListWithValue.add(regionRecord);
 				} else {
 					regionRecord.selected = false;
 					regionRecord.region = thisRegion;
