@@ -37,7 +37,14 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
 		// by default is today + 1 day (so TOMORROW) but it can be changed
 		DateTime remittanceDate = Date.today().addDays(this.daysToRemittance);
 		String remittanceDateStr = remittanceDate.formatGMT('yyyy-MM-dd');
-
+		String excludeRemitReminderStr = '';
+		List<ISSP_ICE_Parameter__mdt> excludeRemitReminder = [SELECT Value__c FROM ISSP_ICE_Parameter__mdt WHERE QualifiedApiName = 'Exclude_Remittance_Reminder'];
+		if (excludeRemitReminder.size()>0) {
+			ISSP_ICE_Parameter__mdt param = excludeRemitReminder[0];
+			for (String remmitance : param.Value__c.split(',')) {
+				excludeRemitReminderStr += ' AND (NOT Period__c LIKE \'%' + remmitance + '\') ';
+			}
+		}
 		/**
 			Find all contacts related to accounts
 			with right to access to Account statements application in Portal
@@ -50,7 +57,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
 		+ ' AND AccountId in ('
 		+ '   Select Account__c'
 		+ '   From Account_Statement__c'
-		+ '   where Remittance_Date__c = ' + remittanceDateStr + ')'
+		+ '   where Remittance_Date__c = ' + remittanceDateStr + excludeRemitReminderStr +')'
 		+ ' And id in ('
 		+ '   Select contact__c'
 		+ '   From Portal_Application_Right__c'
