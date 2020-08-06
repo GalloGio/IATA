@@ -224,7 +224,7 @@ public class ANG_RHC_Information_test{
 			Location_Class__c='P',
 			Type = 'IATA Cargo Agent',
 			IATA_ISO_Country__c=[select id from IATA_ISO_Country__c limit 1].get(0).id,
-			IATACode__c ='1234567',
+			IATACode__c ='1234568',
 			Remittance_frequency__c='M',
 			billingCountry = 'fr',
 			ANG_Accreditation_Model__c ='Cash',
