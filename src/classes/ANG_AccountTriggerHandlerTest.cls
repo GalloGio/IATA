@@ -335,7 +335,7 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
+													   ANG_RHC_Amount_Forecasted__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -409,7 +409,7 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
+													   ANG_RHC_Amount_Forecasted__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -497,7 +497,7 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
+													   ANG_RHC_Amount_Forecasted__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 

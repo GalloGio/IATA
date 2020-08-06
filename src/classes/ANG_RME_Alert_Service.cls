@@ -153,6 +153,7 @@ global class ANG_RME_Alert_Service {
 			List<Account> accs = [
 				SELECT Id, IATACode__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
 					 FROM RHC_Informations__r)
 				FROM Account
@@ -168,7 +169,7 @@ global class ANG_RME_Alert_Service {
 				Account acct = accs[0];
 
 				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
-					if(isEligibleForRhcExceptionalMonitoring(eventType, req)){
+					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
 						saveAlert(req, acct.Id, null);
 					} else {
 						//Ignore the request
@@ -225,9 +226,8 @@ global class ANG_RME_Alert_Service {
 		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
 	}
 
-	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request) {
-		return eventType == RHC_ALERT_EVENT_TYPE && request.direction == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
-			&& request.thresholdLevel == ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100;
+	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
+		return eventType == RHC_ALERT_EVENT_TYPE && (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel + request.direction));
 	}
 
 	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {
