@@ -479,7 +479,7 @@ public class ANG_RHCHelper {
 					riuw.rhcAmount = '';
 
 					if(rhc.ANG_RHC_Amount__c != NULL){
-						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.format();
+						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.setscale(2).format();
 					}
 
 					riuw.rhcEffectiveDate = '';
@@ -547,18 +547,16 @@ public class ANG_RHCHelper {
 
 			if(template == null) template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE);
 
-			Decimal rhcAmount = Decimal.valueOf(wrap.rhcAmount.remove(','));
-
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
-			htmlBody = htmlBody.replace('#RHC_AMOUNT#', rhcAmount.setScale(2) + ' ' + wrap.CurrencyIsoCode);
+			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
 			//htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
-			plainBody = plainBody.replace('#RHC_AMOUNT#', rhcAmount.setScale(2) + ' ' + wrap.CurrencyIsoCode);
+			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
 			//plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
@@ -594,11 +592,10 @@ public class ANG_RHCHelper {
 
 		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
 			RiskInformationUpdateWrapper riuw = riuwNotificationsMap.get(nt.Contact__c);
-			Decimal rhcAmount = Decimal.valueOf(riuw.rhcAmount.remove(','));
 			nt.Message__c = nt.Message__c
 							.replace('#RISK_STATUS#', riuw.riskStatus)
 							.replace('#CASH_CONDITION#', riuw.cashConditions)
-							.replace('#RHC_AMOUNT#', rhcAmount.setScale(2) + ' ' + riuw.CurrencyIsoCode);
+							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmount) + ' ' + riuw.CurrencyIsoCode);
 //							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcEffectiveDate == null ? '' :String.valueOf(riuw.rhcEffectiveDate)));
 			notifications.add(nt);
 		}
