@@ -121,6 +121,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
 
     //spinner controller
     @track loading = true;
+    @track fullPageLoading = false;
 
     //error gatherer
     @track errors = [];
@@ -519,7 +520,10 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
             this.showConfirmBox=true;
         }
         else { // if no error found 
-            this.loading = true; 
+            // Fire the custom event
+            this.fullPageLoading=true;
+		    //this.dispatchEvent(new CustomEvent('togglespinner')); 
+       
             if(this.specialCase){ // In case of feedback mode (complaint/ compliment)
 
                 let topic= this.isConcernCase?this.topic:'';
@@ -615,13 +619,14 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
     //Submits the case record to the server
     submitCase(record){  
         
-        this.loading = true;        
-        //Yes. You can pass the record itself. Yes. It's doable. Yes, i know. It's awsome! Like Thor's Hammer! :D
+      
+		 //Yes. You can pass the record itself. Yes. It's doable. Yes, i know. It's awsome! Like Thor's Hammer! :D
         insertCase({ caseToInsert: record, recipientsToAdd: this.caseEmails })
             .then(result => {
                 this.caseNumber = result.CaseNumber;
                 this.caseID = result.Id;
-                this.loading = false;
+                this.fullPageLoading=false;
+                //this.dispatchEvent(new CustomEvent('toggleSpinner',{ bubbles: true ,composed:true})); 
 
                 //Open the modal upon case insert with the success message if is the Create Case button pressed.
                 if (this.originBtn === 'Show_Success') {
