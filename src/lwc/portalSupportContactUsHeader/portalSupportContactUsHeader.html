@@ -95,7 +95,8 @@
 		if:true={supOptionsPanel}>
 		<div class="slds-col slds-size_4-of-5 maxContentWidth">
 			<p class="text-xsmall">{label.csp_SupportReachUs_Country_Label}</p>
-			<p class="text-xxsmall text-gray slds-p-bottom_small">{label.csp_SupportReachUs_CountryOrRegionIndicator}
+			<p class="text-xxsmall text-gray slds-p-bottom_small">
+				{label.csp_SupportReachUs_CountryOrRegionIndicator}
 			</p>
 			<lightning-combobox name="progress" class=" labelValue cursorPointerComboBox text-xsmall customPickList "
 				value={countryValue} placeholder=" " dropdown-alignment="auto" options={countryOptions}
@@ -107,7 +108,8 @@
 				</c-portal-support-emergency-box>
 				<div if:true={isEmergency}>
 					<div class="slds-p-top_large text-xxsmall lineH">
-						<p class="slds-text-align_center slds-p-vertical_x-small">{label.CSP_Emergency_Selected_Message}</p>
+						<p class="slds-text-align_center slds-p-vertical_x-small">
+							{label.CSP_Emergency_Selected_Message}</p>
 						<span class="slds-grid slds-size_3-of-4 slds-align_absolute-center slds-p-vertical_small">
 							<ul class="slds-list_dotted">
 								<li>{label.CSP_Emergency_Selected_Reason1}</li>
@@ -147,13 +149,15 @@
 		</div>
 		<!-- Show Create Case -->
 		<c-portal-support-reach-us-create-new-case if:true={isCaseOpt} 
+			class="slds-size_full" 
 			topic={topic} 
 			country-i-s-o={countryValue}
 			show-emergency={emergencyButton} 
 			is-emergency-case={isEmergency} 
 			is-l1={isFirstLevelUser} 
 			topic-en={topicEN}
-			user-info={userInfo} class="slds-size_full">
+			user-info={userInfo} 
+		>
 		</c-portal-support-reach-us-create-new-case>
 	</div>
 	<template if:true={displaySecondLevelRegistrationPopup}>
