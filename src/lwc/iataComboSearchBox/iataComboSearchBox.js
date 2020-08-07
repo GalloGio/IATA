@@ -4,6 +4,7 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import CSP_Contacts_NoResults_text1 from '@salesforce/label/c.CSP_Contacts_NoResults_text1';
 import CSP_Topic_Recent_Label from '@salesforce/label/c.CSP_Topic_Recent_Label';
 import CSP_Topic_All_Label from '@salesforce/label/c.CSP_Topic_All_Label';
+import CSP_Select_Topic_Placeholder from '@salesforce/label/c.CSP_Select_Topic_Placeholder';
 
 export default class IataComboSearchBox extends LightningElement {
 
@@ -20,7 +21,8 @@ export default class IataComboSearchBox extends LightningElement {
     @track label={
         CSP_Contacts_NoResults_text1,
         CSP_Topic_Recent_Label,
-        CSP_Topic_All_Label
+        CSP_Topic_All_Label,
+        CSP_Select_Topic_Placeholder
     }
     
 

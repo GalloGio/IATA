@@ -7428,6 +7428,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Select Portal Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Select_Topic_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Topic placeholder</shortDescription>
+        <value>Select Topic Here</value>
+    </labels>
+    <labels>
         <fullName>CSP_Service_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
