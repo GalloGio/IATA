@@ -6,7 +6,7 @@ import CSP_Topic_Recent_Label from '@salesforce/label/c.CSP_Topic_Recent_Label';
 import CSP_Topic_All_Label from '@salesforce/label/c.CSP_Topic_All_Label';
 import CSP_Select_Topic_Placeholder from '@salesforce/label/c.CSP_Select_Topic_Placeholder';
 
-export default class IataComboSearchBox extends LightningElement {
+export default class portalTopicComboSearchBox extends LightningElement {
 
     @api
         get topicList(){
@@ -15,6 +15,12 @@ export default class IataComboSearchBox extends LightningElement {
         set topicList(val){
             this._topicList=val;
             this.currentTopicList=val;
+            if(this.selectedValue.value!==undefined){
+                let item =this._topicList.filter(obj => {return obj.value === val})[0];
+                this.selectedValue=item;
+                this.inputValue=item.label; 
+            }
+
         }
     @track currentTopicList=[];
     @track _topicList=[];
@@ -33,13 +39,29 @@ export default class IataComboSearchBox extends LightningElement {
         set recentTopicList(val){
             this._recentTopicList=val;
         }
+
+     @api
+        get selectValue(){
+            return this.selectedValue;
+        }
+        set selectValue(val){
+            if(this.topicList.length>0){
+                let item =this.topicList.filter(obj => {return obj.value === val})[0];
+                this.selectedValue=item;
+                this.inputValue=item.label; 
+            }else{
+                this.selectedValue={value:val};
+            }
+        } 
+
     @track _recentTopicList=[];
-    @track selectedValue='';
+    @track selectedValue={};
     @track inputValue='';
     @track searchMode=false;
     
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
+
 
     expandList(){
 
@@ -55,7 +77,8 @@ export default class IataComboSearchBox extends LightningElement {
     } 
 
     colapseList(){
-        this.inputValue=this.selectedValue;
+
+        this.inputValue=this.selectedValue.label!==undefined?this.selectedValue.label:'' ;
         
         this.searchMode=false;
         this.currentTopicList=this._topicList;
@@ -63,8 +86,10 @@ export default class IataComboSearchBox extends LightningElement {
     }
 
     handleSelectedOption(event){
-        this.selectedValue = event.target.dataset.label;
-        this.inputValue = event.target.dataset.label;
+        
+        
+        this.selectedValue={label:event.target.dataset.label, value: event.target.dataset.value}
+        this.inputValue = this.selectedValue.label;
         this.colapseList();
         let val = event.target.dataset.value;
               

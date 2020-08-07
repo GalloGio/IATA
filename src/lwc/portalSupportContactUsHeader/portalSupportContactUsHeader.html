@@ -25,12 +25,13 @@
 					options={topicOptions} dropdown-alignment="auto" onchange={topicHandler} placeholder=" ">
 				</lightning-combobox> -->
 				<!-- BEGIN SEARCH -->
-				<c-iata-combo-search-box class="specialPickList text-xsmall" 
+				<c-portal-topic-combo-search-box class="specialPickList text-xsmall" 
 					topic-list={topicOptions}
 					selected-value={topic} 
 					recent-topic-list={recentTopicOptions} 
+					select-value={topic}
 					onchange={handleTopicSelection}>
-				</c-iata-combo-search-box>
+				</c-portal-topic-combo-search-box>
 				<!--END SEARCH  -->
 			</div>
 			<div if:true={supOptionsPanel} class="slds-col slds-grid slds-m-top_small slds-scrollable_x">
