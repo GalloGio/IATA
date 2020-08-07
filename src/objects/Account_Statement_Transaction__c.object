@@ -147,7 +147,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
@@ -162,6 +162,7 @@
         <precision>18</precision>
         <required>true</required>
         <scale>3</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -172,6 +173,7 @@
         <label>Details</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -194,6 +196,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Internal Type</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -210,6 +213,7 @@
         <inlineHelpText>Payment Types are: &quot;Automatic Match&quot; and &quot;Manual Match&quot;.
 Otherwise this transaction is considered as Billing.</inlineHelpText>
         <label>Is Payment</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -220,6 +224,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
         <label>Parent Key</label>
         <length>38</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -234,6 +239,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
         <relationshipName>Account_Statement_Transactions</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -246,6 +252,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
         <label>Transaction Id</label>
         <length>60</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -256,6 +263,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
         <externalId>false</externalId>
         <label>Transaction Type</label>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -316,6 +324,7 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
         <externalId>false</externalId>
         <label>Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -323,9 +332,11 @@ Otherwise this transaction is considered as Billing.</inlineHelpText>
     <nameField>
         <displayFormat>T-{0000000000}</displayFormat>
         <label>Account Statement Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Statement Transactions</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>ICE_Balance</fullName>
         <active>true</active>
