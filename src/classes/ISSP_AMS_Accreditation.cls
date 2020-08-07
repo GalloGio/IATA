@@ -1171,6 +1171,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		newCase = DAL_ISSP.getCase(attachCtrl.tmpCase.Id);
 
+		isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
+		
 		if(newCase.IFAP_Country_ISO__c != null) {
 			isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 			fetchAMSProcessForm();
