@@ -39,7 +39,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
 		String remittanceDateStr = remittanceDate.formatGMT('yyyy-MM-dd');
 		String excludeRemitReminderStr = '';
 		List<ISSP_ICE_Parameter__mdt> excludeRemitReminder = [SELECT Value__c FROM ISSP_ICE_Parameter__mdt WHERE QualifiedApiName = 'Exclude_Remittance_Reminder'];
-		if (excludeRemitReminder.size()>0) {
+		if (!excludeRemitReminder.isEmpty()) {
 			ISSP_ICE_Parameter__mdt param = excludeRemitReminder[0];
 			for (String remmitance : param.Value__c.split(',')) {
 				excludeRemitReminderStr += ' AND (NOT Period__c LIKE \'%' + remmitance + '\') ';
