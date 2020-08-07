@@ -4604,7 +4604,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQReachUsBanner_ButtonText</shortDescription>
-        <value>Reach Us</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_Text</fullName>
@@ -7809,6 +7809,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Topic_All_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All topics label</shortDescription>
+        <value>Your All Topics</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Topic_Recent_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recent Topics label</shortDescription>
+        <value>Your Recent Topics</value>
     </labels>
     <labels>
         <fullName>CSP_Track</fullName>

@@ -1,5 +1,10 @@
 import { LightningElement,api,track } from 'lwc';
  
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_Contacts_NoResults_text1 from '@salesforce/label/c.CSP_Contacts_NoResults_text1';
+import CSP_Topic_Recent_Label from '@salesforce/label/c.CSP_Topic_Recent_Label';
+import CSP_Topic_All_Label from '@salesforce/label/c.CSP_Topic_All_Label';
+
 export default class IataComboSearchBox extends LightningElement {
 
     @api
@@ -12,6 +17,12 @@ export default class IataComboSearchBox extends LightningElement {
         }
     @track currentTopicList=[];
     @track _topicList=[];
+    @track label={
+        CSP_Contacts_NoResults_text1,
+        CSP_Topic_Recent_Label,
+        CSP_Topic_All_Label
+    }
+    
 
     @api
         get recentTopicList(){
@@ -24,6 +35,9 @@ export default class IataComboSearchBox extends LightningElement {
     @track selectedValue='';
     @track inputValue='';
     @track searchMode=false;
+    
+
+    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
     expandList(){
 
@@ -32,6 +46,10 @@ export default class IataComboSearchBox extends LightningElement {
 
     get showRecentTopics(){
         return !this.searchMode;
+    } 
+
+    get showTopicList(){
+        return this.currentTopicList.length>0;
     } 
 
     colapseList(){
@@ -54,13 +72,13 @@ export default class IataComboSearchBox extends LightningElement {
     }
 
     handleKeyUp(event){
-        let searchText= event.target.value.trim();
+        let searchText= event.target.value;
         
         clearTimeout(this.timeout);
 
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
         this.inputValue=searchText;
+        searchText=searchText.trim();
         this.searchMode=searchText.length>0;
 
             if(searchText.length>=3){
@@ -68,6 +86,8 @@ export default class IataComboSearchBox extends LightningElement {
                 let keywordList= searchText.toLowerCase().split(' ').filter(function(el) {return el != ' '});
                 let tpList = this._topicList.filter(item =>{return keywordList.some(elem => item.label.toLowerCase().includes(elem)) })
                 this.currentTopicList=tpList;
+            }else if(searchText.length==0){
+                this.currentTopicList=this._topicList;
             }
         }, 500, this);
         console.log(searchText)
