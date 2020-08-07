@@ -59,8 +59,6 @@ public class EF_PortalApplicationRightHandler {
 			setUserId.add(u.Id);
 		}
 
-		//if(getConnApp() != null) return;
-
 		String sConnId = String.valueOf(connAppId).left(15); //to be sure is same length;
 
 		List<UserProvAccount> existingUPA = [SELECT ExternalUserId, ConnectedAppId FROM UserProvAccount WHERE SalesforceUserId IN: setUserId AND ConnectedAppId =: connAppId];

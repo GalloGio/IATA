@@ -24,7 +24,7 @@ public class PortalCreatePasswordControllerTest {
 		IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
 		insert isoCountry;
 
-		string paramsJson = '{"phone":"","lastName":"test","language":"en_us","firstName":"test","email":"test+xx@gmail.com","country":"' + isoCountry.id + '","contactId":"","accountId":"' + acc.Id + '", "registrationTime":"2019-10-02 09:29:02", "lms":"yas"}';
+		string paramsJson = '{"phone":"","lastName":"test","language":"en_us","firstName":"test","email":"test+xx@gmail.com","country":"' + isoCountry.id + '","contactId":"","accountId":"' + acc.Id + '", "registrationTime":"2019-10-02 09:29:02", "lms":"yas", "lmsCourse":"lmsCourse"}';
 		string enc = EncodingUtil.urlEncode(PortalPasswordHandler.EncryptString(paramsJson), 'UTF-8');
 		PortalCreatePasswordController.returnWrapper result = PortalCreatePasswordController.getParameters(enc);
 		boolean success = PortalCreatePasswordController.isUserExist('test@iata.com','');

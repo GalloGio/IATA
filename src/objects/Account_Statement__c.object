@@ -302,6 +302,13 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Account Statements</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>ICE_Balance</fullName>
+        <active>true</active>
+        <description>Client Balance detail for Account Statements (ICE)</description>
+        <label>ICE Balance</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

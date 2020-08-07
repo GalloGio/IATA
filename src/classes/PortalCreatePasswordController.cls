@@ -36,7 +36,7 @@ public without sharing class PortalCreatePasswordController {
 			if(!contactList.isEmpty()) isExist = true;
 		}
 
-		List<User> userList = [Select id from user where email =: email];
+		List<User> userList = [Select id from user where email =: email and contactId != ''];
 		if(!userList.isEmpty()) isExist = true;
 		return isExist;
 	}

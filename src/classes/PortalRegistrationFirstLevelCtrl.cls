@@ -178,6 +178,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	}
 
+	@AuraEnabled(cacheable=true)
 	public static CountryInformation getISOCountries() {
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 		IATA_ISO_Country__c noCountry;
@@ -339,7 +340,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static List<User> returnExistingUser(Set<Id> contactIds, String email){
 		//check if there is an existing user associated to the contact(s) found OR associated to the email provided
 		List<User> userList = new List<User>();
-		userList = [SELECT Id, Username FROM User WHERE contactId IN :contactIds OR email = :email];
+		userList = [SELECT Id, Username FROM User WHERE contactId IN :contactIds OR (email = :email and contactId != '')];
 		return userList;
 	}
 
@@ -595,7 +596,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				params.firstName = con.firstName;
 				registrationRequired = true;
 			}
-			ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
+			if(String.isNotBlank(params.termsAndUsageIds)) ServiceTermsAndConditionsUtils.createTermsConditionsAcceptancesForNewUser(con.id, params.termsAndUsageIds);
 
 			if(con == null){
 				result.isSuccess = false;

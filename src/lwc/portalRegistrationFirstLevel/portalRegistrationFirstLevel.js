@@ -55,6 +55,7 @@ import ISSP_Registration_MS						from '@salesforce/label/c.ISSP_Registration_MS'
 import CSP_L2_Country                           from '@salesforce/label/c.CSP_L2_Country';
 import CSP_L1_First_Name                        from '@salesforce/label/c.CSP_L1_First_Name';
 import CSP_L1_Last_Name                         from '@salesforce/label/c.CSP_L1_Last_Name';
+import OPTIONAL			                        from '@salesforce/label/c.ISSP_Optional';
 
 
 export default class PortalRegistrationFirstLevel extends LightningElement {
@@ -145,7 +146,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		ISSP_Registration_MS,
 		CSP_L2_Country,
 		CSP_L1_First_Name,
-		CSP_L1_Last_Name
+		CSP_L1_Last_Name,
+		OPTIONAL
 	}
 
 	get labels() {
@@ -281,7 +283,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 								if(this._pageParams){
 									if(this._pageParams.language){
-										this.registrationForm.language = this._pageParams.language.toLowerCase();;
+										this.registrationForm.language = this._pageParams.language.toLowerCase();
 									}
 
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {

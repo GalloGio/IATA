@@ -1,0 +1,50 @@
+.open-container {
+	height: unset;
+}
+
+.open-container .slds-dropdown,
+.open-container .slds-size_full {
+    max-width: unset;
+}
+
+.open-container .slds-size_full {
+	width: calc(100% - 5rem);
+}
+
+.open-container .slds-dropdown {
+    width: calc(100% - 8rem);
+}
+
+.collapsed-container {
+	height: 100%;
+}
+
+.slds-float_right {
+	right: 0;
+	top: 0;
+	text-align: right;
+}
+
+.slds-pill {
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+	background: #F7F8FC;
+}
+
+.slds-pill + .slds-pill {
+	margin-left: 0;
+}
+
+.slds-pill__action {
+	padding: 0.5rem;
+	padding-right: 1.75rem;
+	border: none;
+}
+
+.slds-pill__remove {
+	right: 0.5rem;
+}
+
+.slds-pill svg {
+	fill: #000000;
+}

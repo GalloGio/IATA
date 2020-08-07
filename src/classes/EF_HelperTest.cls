@@ -265,12 +265,34 @@ private class EF_HelperTest {
 
 		app = Database.query(query);
 
+		PortalServicesCtrl.contactWithUserSet.add(contact.Id);
+
 		List<PortalServicesCtrl.ContactWrapper> expected = new List<PortalServicesCtrl.ContactWrapper>();
 		expected.add(new PortalServicesCtrl.ContactWrapper(app));
 
 		Test.startTest();
 		List<PortalServicesCtrl.ContactWrapper> actualList = EF_Helper.getContacts(contact.Id, 'Contact', null, null, null, '');
 		Test.stopTest();
+
+		System.assertEquals(expected.get(0).cannotBeManagedByPortalAdmin, actualList.get(0).cannotBeManagedByPortalAdmin);
+		System.assertEquals(expected.get(0).contactId, actualList.get(0).contactId);
+		System.assertEquals(expected.get(0).contactName, actualList.get(0).contactName);
+		System.assertEquals(expected.get(0).country, actualList.get(0).country);
+		System.assertEquals(expected.get(0).emailAddress, actualList.get(0).emailAddress);
+		System.assertEquals(expected.get(0).hasNoContact, actualList.get(0).hasNoContact);
+		System.assertEquals(expected.get(0).hide, actualList.get(0).hide);
+		System.assertEquals(expected.get(0).iataCodeLoc, actualList.get(0).iataCodeLoc);
+		System.assertEquals(expected.get(0).isAdmin, actualList.get(0).isAdmin);
+		System.assertEquals(expected.get(0).isEasyPayService, actualList.get(0).isEasyPayService);
+		System.assertEquals(expected.get(0).isIFAPService, actualList.get(0).isIFAPService);
+		System.assertEquals(expected.get(0).isInactive, actualList.get(0).isInactive);
+		System.assertEquals(expected.get(0).isPendingAccess, actualList.get(0).isPendingAccess);
+		System.assertEquals(expected.get(0).portalRole, actualList.get(0).portalRole);
+		System.assertEquals(expected.get(0).serviceRight, actualList.get(0).serviceRight);
+		System.assertEquals(expected.get(0).showDeny, actualList.get(0).showDeny);
+		System.assertEquals(expected.get(0).showGrant, actualList.get(0).showGrant);
+		System.assertEquals(expected.get(0).showIfap, actualList.get(0).showIfap);
+		System.assertEquals(expected.get(0).userPortalStatus, actualList.get(0).userPortalStatus);
 
 	}
 }
