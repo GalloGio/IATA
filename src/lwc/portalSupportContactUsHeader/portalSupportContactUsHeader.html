@@ -25,16 +25,15 @@
 					options={topicOptions} dropdown-alignment="auto" onchange={topicHandler} placeholder=" ">
 				</lightning-combobox> -->
 				<!-- BEGIN SEARCH -->
-					<c-iata-combo-search-box
-					class="specialPickList"
+				<c-iata-combo-search-box class="specialPickList text-xsmall" 
 					topic-list={topicOptions}
-					recent-topic-list={recentTopicOptions}
-					onchange={handleTopicSelection}
-					></c-iata-combo-search-box>
-					<!--END SEARCH  -->
-				</div>
-			<div if:true={supOptionsPanel}
-				class="slds-col slds-grid slds-m-top_small slds-scrollable_x">
+					selected-value={topic} 
+					recent-topic-list={recentTopicOptions} 
+					onchange={handleTopicSelection}>
+				</c-iata-combo-search-box>
+				<!--END SEARCH  -->
+			</div>
+			<div if:true={supOptionsPanel} class="slds-col slds-grid slds-m-top_small slds-scrollable_x">
 				<div class="slds-grid slds-align-content-center">
 					<div onclick={tileClickHandler} data-option-tile data-id="001" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
 									slds-medium-size_1-of-3 slds-large-size_1-of-8 
