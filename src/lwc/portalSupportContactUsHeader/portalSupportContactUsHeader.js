@@ -412,6 +412,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	//handles country selection
 	countryHandler(event) {
 		this.countryValue = event.target.value;
+		this.updateTile('001');
 		this.supportOptionsHandler();
 	}
 

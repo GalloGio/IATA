@@ -57,6 +57,7 @@ import CSP_SubjectSubtitleCC from '@salesforce/label/c.CSP_SubjectSubtitleCC';
 import CSP_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
 import CSP_SupportReachUs_GoToHomepage from '@salesforce/label/c.csp_GoToHomepage';
 import CSP_Give_Feedback_Type_Title from '@salesforce/label/c.CSP_Give_Feedback_Type_Title';
+import CSP_Complaint_Select_Message from '@salesforce/label/c.CSP_Complaint_Select_Message';
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
 import csp_caseSubject from '@salesforce/schema/Case.Subject';
@@ -114,7 +115,8 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         CSP_Submit,
         CSP_DescSubtitleCC,
         CSP_SubjectSubtitleCC,
-        CSP_Give_Feedback_Type_Title
+        CSP_Give_Feedback_Type_Title,
+        CSP_Complaint_Select_Message
     }
 
     //spinner controller
