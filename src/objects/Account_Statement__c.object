@@ -243,7 +243,7 @@
         <label>Operation</label>
         <length>14</length>
         <required>true</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -255,7 +255,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>3</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -302,7 +302,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Account Statements</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>ICE_Balance</fullName>
         <active>true</active>
