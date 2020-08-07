@@ -257,12 +257,12 @@ public static string getTopicsWithL2Dep(){
 	set<string> reqL2TopicSet= new set<string>();
 	//Get topic list that require L2 Registration
 	list<PortalKnowledge__c> pkList= [SELECT Id, DataTopicName__c
-		FROM PortalKnowledge__c
-		WHERE DataCategoryName__c <> ''
-		AND DataTopicName__c <> ''
-		AND DataSubtopicName__c = ''
-		AND Requires_Level2_Registration__c = true];
-
+	FROM PortalKnowledge__c
+	WHERE DataCategoryName__c <> ''
+	AND DataTopicName__c <> ''
+	AND DataSubtopicName__c = ''
+	AND Requires_Level2_Registration__c = true];
+	
 	for(PortalKnowledge__c pk:pkList){
 		reqL2TopicSet.add(pk.DataTopicName__c);
 	}
@@ -270,15 +270,18 @@ public static string getTopicsWithL2Dep(){
 	set<string> recentTopicSet= new set<string>();
 
 	Id contactId=[select contactId from user where id=:Userinfo.getUserId() limit 1].contactId;
-	list<case> mostRecentTopicList=[SELECT topic__c FROM case 
+	list<AggregateResult> mostRecentTopicList=[SELECT topic__c, count(id) FROM case 
 	WHERE origin='Portal' 
 	AND Visible_on_ISS_Portal__c =true 
 	AND contactId=:contactId 
 	AND topic__c !=null 
-	AND createdDate =LAST_90_DAYS limit 100];
+	AND createdDate =LAST_90_DAYS 
+	GROUP BY topic__C 
+	ORDER BY count(id) DESC];
 	
-	for(Case c: mostRecentTopicList){
-		recentTopicSet.add(c.topic__c);
+
+	for(Integer i=0;i<3 && i<mostRecentTopicList.size() ;i++){ // we only want to retrieve the 3 topics, limit not possible in this SOQL 
+		recentTopicSet.add((String)mostRecentTopicList.get(i).get('topic__c'));
 	}
 
 	//retrieve full tree with the topics the user has access
