@@ -5,6 +5,9 @@
         <template if:true={loading}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
+        <template if:true={fullPageLoading}>
+            <lightning-spinner class="modal" alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
         <!--LOADING SPINNER-->
 
         <div class="slds-col slds-size_1-of-1 ">
