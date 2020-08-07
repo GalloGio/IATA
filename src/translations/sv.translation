@@ -14529,6 +14529,10 @@
         <name>ISSP_AMS_MSO_StepFinal_Thanks</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Submit_Case_error --></label>
+        <name>ISSP_AMS_MSO_Submit_Case_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Termination_Confirmation_Text --></label>
         <name>ISSP_AMS_MSO_Termination_Confirmation_Text</name>
     </customLabels>
@@ -32277,6 +32281,23 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- AMS Online Accreditation with OSCAR with Case --></description>
+        <label><!-- AMS Online Accreditation with OSCAR with Case --></label>
+        <name>AMS_Online_Accreditation_with_OSCAR_with_Case</name>
+        <sections>
+            <label><!-- AMS Online Accreditations --></label>
+            <name>AMS Online Accreditations</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- OSCARs --></label>
+            <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- AMS Territories --></description>
         <label><!-- AMS Territories --></label>
         <name>AMS_Territories</name>
@@ -32649,6 +32670,27 @@
         <sections>
             <label><!-- Agency Authorizations --></label>
             <name>Agency Authorizations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Account with addresses roles and context or not --></description>
+        <label><!-- Account with addresses roles and context or not --></label>
+        <name>Account_with_addresses_roles_and_context_or_not</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses --></label>
+            <name>Addresses</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses Role --></label>
+            <name>Addresses Role</name>
         </sections>
     </reportTypes>
     <reportTypes>

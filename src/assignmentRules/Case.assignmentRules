@@ -3949,22 +3949,29 @@ ISPICKVAL(Region__c, &quot;Europe&quot;)
         <ruleEntry>
             <assignedTo>L3_Training_LMS_Support</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND ( or( RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, RecordType.Name = &quot;Process&quot; ), ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;), ISPICKVAL(Reason1__c, &quot;Report issue / Technical issue&quot;) )</formula>
+            <formula>AND ( or( RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, RecordType.Name = &quot;Process&quot;,RecordType.Name = &quot;IATA Training&quot; ), ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;), ISPICKVAL(Reason1__c, &quot;Report issue / Technical issue&quot;) )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_Enrollment</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND ( 
-				or(
-								RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-								RecordType.Name = &quot;Process&quot; )
-				, 
-				ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-				OR ( 
-								ISPICKVAL(Reason1__c, &quot;Distance Learning – ATC Student Enrolment&quot;),
-								ISPICKVAL(Reason1__c, &quot;Distance Learning – Individual Student Enrolment&quot;)
-				)
+            <formula>AND (	
+or(	
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,	
+RecordType.Name = &quot;Process&quot;,	
+RecordType.Name = &quot;IATA Training&quot;)	
+,	
+ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),	
+OR (	
+ISPICKVAL(Reason1__c, &quot;General Information&quot;),	
+ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),	
+ISPICKVAL(Reason1__c, &quot;Refund Request&quot;),	
+ISPICKVAL(Reason1__c, &quot;Invoicing&quot;),	
+ISPICKVAL(Reason1__c, &quot;Sign Up / Join&quot;),	
+ISPICKVAL(Reason1__c, &quot;Payments&quot;),	
+ISPICKVAL(Reason1__c, &quot;Product Delivery Issue&quot;),	
+ISPICKVAL(Reason1__c, &quot;Orders/Subscriptions request&quot;)	
+)	
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -3977,249 +3984,314 @@ ISPICKVAL(Region__c, &quot;Europe&quot;)
         <ruleEntry>
             <assignedTo>L3_Training_Exam</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND ( or( RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, RecordType.Name = &quot;Process&quot; ), ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), ISPICKVAL(Reason1__c, &quot;Distance Learning – Exam&quot;) )</formula>
+            <formula>AND (
+or(
+
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;,
+RecordType.Name = &quot;IATA Training&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+OR (
+ISPICKVAL(Reason1__c, &quot;Exam/Certificate&quot;)
+)
+)</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_Partnership</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND ( 
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-), 
-
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-OR ( 
-ISPICKVAL(Reason1__c, &quot;Academic Partnership&quot;), 
-ISPICKVAL(Reason1__c, &quot;ATC Partnership&quot;), 
-ISPICKVAL(Reason1__c, &quot;ATS Partnership&quot;), 
-ISPICKVAL(Reason1__c, &quot;RTP Partnership&quot;) 
-) 
+            <formula>AND (		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+		
+ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),		
+OR (		
+ISPICKVAL(Reason1__c, &quot;Contract Query/Setup&quot;),		
+ISPICKVAL(Reason1__c, &quot;Annual Fees&quot;),		
+ISPICKVAL(Reason1__c, &quot;Pre-sales&quot;)		
+)		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Ysabel_Soriano</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRX008&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRX008&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Steven_Hathway</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRA003&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRA003&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Oscar_Leon</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;), 
-Product__r.Product_Section__c = &quot;TRQ003&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRQ003&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRS006&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRS006&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Ivica_Kovacic</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRX004&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRX004&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Filipa_Toscano</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-OR( 
-Product__r.Product_Section__c = &quot;TRS007&quot;, 
-Product__r.Product_Section__c = &quot;TRS002&quot; 
-) 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+OR(		
+Product__r.Product_Section__c = &quot;TRS007&quot;,		
+Product__r.Product_Section__c = &quot;TRS002&quot;		
+)		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Ellen_Kavmark</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRX005&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRX005&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Eli_Mandelawy</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-OR( 
-Product__r.Product_Section__c = &quot;TRA008&quot;, 
-Product__r.Product_Section__c = &quot;TRQ005&quot; 
-) 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+OR(		
+Product__r.Product_Section__c = &quot;TRA008&quot;,		
+Product__r.Product_Section__c = &quot;TRQ005&quot;		
+)		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Anca_Gosling</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;), 
-Product__r.Product_Section__c = &quot;TRS005&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRS005&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Dimitrios_Sanos</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or( 
-
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRA006&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRA006&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-
-or(
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-OR( 
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;) 
-), 
-Product__r.Product_Section__c = &quot;TRS011&quot; 
+            <formula>AND(		
+		
+or(		
+		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+OR(		
+	AND(	
+		ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
+		ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;)
+	),	
+	ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;)	
+),		
+Product__r.Product_Section__c = &quot;TRS011&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Madalina_Luntrar</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>OR( 
-AND(
-
-or( 
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;), 
-Product__r.Product_Section__c = &quot;TRS005&quot; 
-), 
-AND(
-
-or( 
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;, 
-RecordType.Name = &quot;Process&quot; 
-),
-ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;), 
-Product__r.Product_Section__c = &quot;TRS004&quot; 
-)
-
+            <formula>OR(		
+AND(		
+		
+or(		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;,		
+RecordType.Name = &quot;IATA Training&quot;		
+),		
+ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),		
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),		
+Product__r.Product_Section__c = &quot;TRS005&quot;		
+),		
+AND(		
+		
+or(		
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,		
+RecordType.Name = &quot;Process&quot;		
+),		
+ISPICKVAL(CaseArea__c, &quot;Instructor-led Training (individual)&quot;),		
+Product__r.Product_Section__c = &quot;TRS004&quot;		
+)		
+		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
