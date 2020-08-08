@@ -41,7 +41,8 @@ public class ISSP_ANG_CodeSearch {
 		this.isSpecialIATACodeSearchCountry = false;
 		this.RHCValueForSpecialCountry = null;
 
-		this.airlineId = [SELECT Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1].Contact.AccountId;
+		User u = [SELECT Contact.AccountId, Contact.Account.ParentId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+		this.airlineId = u.Contact.Account.ParentId != null ? u.Contact.Account.ParentId : u.Contact.AccountId;
 	}
 
 	public PageReference doSearch() {
