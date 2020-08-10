@@ -561,6 +561,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Case_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
