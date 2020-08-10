@@ -275,10 +275,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
             }
         ]
     }
-    //countryISO;
-	
-
-   
+      
     customTD = false;
 
     //childComponent data
@@ -550,6 +547,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
     }
 
     prepareCaseRecord(){
+        this.fullPageLoading=true;
         this.closeConfirmBox();
         const record = { 'sobjectType': 'Case' };
         //only for custom Treasury Dashboard case
