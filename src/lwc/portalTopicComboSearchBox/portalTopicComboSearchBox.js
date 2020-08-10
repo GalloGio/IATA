@@ -64,7 +64,7 @@ export default class portalTopicComboSearchBox extends LightningElement {
 
 
     expandList(){
-
+        this.inputValue='';
         this.template.querySelector('[role="combobox"]').classList.add('slds-is-open');
     }
 

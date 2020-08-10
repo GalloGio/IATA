@@ -99,11 +99,11 @@ public static testMethod void TestPortalSupportReachUsCtrl(){
 
 		List<PortalSupportReachUsCtrl.LVA_CallUsConfigClass> phoneNumbers = PortalSupportReachUsCtrl.getCallUsPhoneNumber();
 
-		Contact cont = PortalSupportReachUsCtrl.getContactInfo();
+		User usr = PortalSupportReachUsCtrl.getContactInfo();
 
-		myMapRTContry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(cont,'GB');
-		List<LiveAgentButtonSettings__c> labstest = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','GB',cont,false);
-		List<LiveAgentButtonSettings__c> labstests = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','',cont, true);
+		myMapRTContry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(usr.contact,'GB');
+		List<LiveAgentButtonSettings__c> labstest = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','GB',usr.contact,false);
+		List<LiveAgentButtonSettings__c> labstests = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','',usr.contact, true);
 		List<ISSP_FAQ2Case_Emergencies__c> caseEmergencies = PortalSupportReachUsCtrl.getEmergencyDependencies();
 		test.stopTest();
 	}
