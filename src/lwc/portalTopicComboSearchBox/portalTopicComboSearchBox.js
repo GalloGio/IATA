@@ -69,7 +69,7 @@ export default class portalTopicComboSearchBox extends LightningElement {
     }
 
     get showRecentTopics(){
-        return !this.searchMode;
+        return !this.searchMode && this._recentTopicList.length>0;
     } 
 
     get showTopicList(){

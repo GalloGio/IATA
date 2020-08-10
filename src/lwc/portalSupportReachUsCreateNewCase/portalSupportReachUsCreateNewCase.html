@@ -204,7 +204,7 @@
                                 <div class="slds-m-bottom_large slds-scrollable_y recipients-box">
                                     <template for:each={lstRecipients} for:item="recipient">
                                         <span key={recipient.id}
-                                            class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
+                                            class="slds-p-around_x-small slds-m-top_xx-small custom-recipients aroundLightGrayBorder">
                                             {recipient.email}
                                             <lightning-icon class="cursorPointer" key={recipient.id}
                                                 icon-name="utility:close" size="x-small" onclick={removeRecipient}
@@ -227,7 +227,7 @@
                                         {label.csp_CreateNewCaseTopLabel}
                                     </button>
                                 </div>
-                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small containedButton-size">
                                     <button onclick={finishCreatingCase} data-id="Add_Attachment"
                                         class="slds-p-horizontal_large containedButton fullWidth containedButton-size cursorPointer uiButton contactSupport slds-button_brand">
                                         {label.csp_CreateNewCaseAddAttachment}
