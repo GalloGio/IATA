@@ -56,7 +56,9 @@ export default class PortalGiveFeedback extends LightningElement {
     }
 
 
-    expandCmp(){
+    expandCmp(event){
         this.isExpanded=true;
+        let divToTop = event.target.offsetTop;
+		window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
     }
 }

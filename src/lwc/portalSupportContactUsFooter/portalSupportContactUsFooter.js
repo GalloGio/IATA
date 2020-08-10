@@ -49,7 +49,6 @@ export default class PortalSupportContactUsFooter extends LightningElement {
         return this._topic!=null;
     }
     connectedCallback(){
-        console.log('done');
     }
 
 
