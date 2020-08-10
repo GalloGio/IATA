@@ -4462,14 +4462,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Email Welcome Part 5</shortDescription>
         <value>We hope you enjoy our IATA Customer Portal!</value>
-    </labels>
+    </labels>    
     <labels>
-        <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
+        <fullName>CSP_Emergency_Box_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
-        <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
+        <shortDescription>Emergency box message</shortDescription>
+        <value> This is an &lt;b&gt;&lt;u&gt;Emergency&lt;/u&gt;&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Footer_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency box footer message</shortDescription>
+        <value>Emergency support is 24/7 and only offered in English.</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
@@ -4535,6 +4543,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>Emergency reason</shortDescription>
         <value>Suspicion of fraudulent activity</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Tooltip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency Tooltip</shortDescription>
+        <value>Please do not demand emergency support unless it's about fraud, ticketing or financial issues</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ErrorMsg_Flow4_Logout_LMS</shortDescription>
+        <value>In order to complete the Registration Process, please Logout from this user and Login with the following email - [Email]</value>
     </labels>
     <labels>
         <fullName>CSP_Error_Creating_Record</fullName>

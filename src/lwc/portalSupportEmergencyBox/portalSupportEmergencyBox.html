@@ -1,0 +1,26 @@
+<template>
+
+    <div
+        class="slds-grid slds-wrap slds-grid--vertical-align-center slds-p-around_medium outerboarder">
+        <span class="slds-col slds-size_1-of-12">
+            <lightning-input type="checkbox" variant="label-hidden" checked={isEmergencyCase}
+                onchange={handleIsEmergency}></lightning-input>
+        </span>
+        <div class="slds-col slds-grid slds-wrap slds-size_11-of-12">
+            <p class=" text-xsmall slds-col slds-size_full">
+                <span class="tooltip">
+                    <lightning-formatted-rich-text value={label.CSP_Emergency_Box_Message}></lightning-formatted-rich-text>
+                        <span if:true={showTooltip}
+                            class="background-gray slds-p-around_x-small slds-is-absolute slds-text-align_center text-white text-xxxsmall tooltiptext">
+                            {label.CSP_Emergency_Tooltip}
+                        </span>
+                </span>
+            </p>
+            <p class="slds-col slds-size_full text-xxsmall text-gray">
+                {label.CSP_Emergency_Footer_Message}</p>
+
+        </div>        
+    </div>
+
+
+</template>
