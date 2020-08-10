@@ -5,12 +5,13 @@
             <div class="slds-combobox_container">
                 <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false"
                     aria-haspopup="listbox" role="combobox">
-                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right " role="none">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-grid" role="none">
                         <input type="text" class="slds-input slds-combobox__input" id="combobox-id-11"
                             aria-autocomplete="list" aria-controls="listbox-id-9" autocomplete="off" role="textbox"
                             placeholder={label.CSP_Select_Topic_Placeholder} onfocus={expandList} onblur={colapseList} onkeyup={handleKeyUp} value={inputValue}/>
                         <span
-                            class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                            class="slds-media_center slds-is-absolute slds-grid slds-size_full iconWrapper slds-p-right_small slds-grid_align-end fullHeight">
+                                 
                             <img src={searchIconUrl}>
                         </span>
                     </div>
