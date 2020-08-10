@@ -300,27 +300,27 @@ public without sharing class ISSP_WS_Utilities {
 			mapContactAppId.put(appRight.Contact__c, appRight);
 		}
 
-        list<Portal_Application_Right__c> listRightsToUpsert = new list<Portal_Application_Right__c>();
-        for (Id contactId: listContactId) {
-            Portal_Application_Right__c appRight = mapContactAppId.get(contactId);
-            if (appRight==null){
-                //create new app right
-                try {
-                    listRightsToUpsert.add(createApp(app.Id, contactId));
-                } catch (Exception e) {
-                    System.debug('Error adding ' + app.Name + ' to Contact ' + contactId + ': ' + e.getMessage());
-                }
-            } else {
-                //grant access to already existing app right
-                if (appRight.Right__c != 'Access Granted'){
-                    appRight.Right__c = 'Access Granted';
-                    listRightsToUpsert.add(appRight);
-                }
-            }
-        }
-        if (!listRightsToUpsert.isEmpty()) {
-            Database.upsert(listRightsToUpsert,false);
-        }
-    }
+		list<Portal_Application_Right__c> listRightsToUpsert = new list<Portal_Application_Right__c>();
+		for (Id contactId: listContactId) {
+			Portal_Application_Right__c appRight = mapContactAppId.get(contactId);
+			if (appRight==null){
+				//create new app right
+				try {
+					listRightsToUpsert.add(createApp(app.Id, contactId));
+				} catch (Exception e) {
+					System.debug('Error adding ' + app.Name + ' to Contact ' + contactId + ': ' + e.getMessage());
+				}
+			} else {
+				//grant access to already existing app right
+				if (appRight.Right__c != 'Access Granted'){
+					appRight.Right__c = 'Access Granted';
+					listRightsToUpsert.add(appRight);
+				}
+			}
+		}
+		if (!listRightsToUpsert.isEmpty()) {
+			Database.upsert(listRightsToUpsert,false);
+		}
+	}
 	
 }
