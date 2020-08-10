@@ -61,7 +61,6 @@ import CSP_Emergency_Selected_Reason4 from '@salesforce/label/c.CSP_Emergency_Se
 import CSP_Emergency_Selected_Reason3 from '@salesforce/label/c.CSP_Emergency_Selected_Reason3';
 import CSP_Emergency_Selected_Reason2 from '@salesforce/label/c.CSP_Emergency_Selected_Reason2';
 import CSP_Emergency_Selected_Message from '@salesforce/label/c.CSP_Emergency_Selected_Message';
-import CSP_Emergency_Selected_Message1 from '@salesforce/label/c.CSP_Emergency_Selected_Message1';
 import CSP_Call_Tile_SubLabel from '@salesforce/label/c.CSP_Call_Tile_SubLabel';
 import LVA_CallUsDial from '@salesforce/label/c.LVA_CallUsDial';
 import LVA_CallUsAvailableHours from '@salesforce/label/c.LVA_CallUsAvailableHours';
@@ -184,7 +183,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 		CSP_Emergency_Selected_Reason3,
 		CSP_Emergency_Selected_Reason2,
 		CSP_Emergency_Selected_Message,
-		CSP_Emergency_Selected_Message1,
 		CSP_Call_Tile_SubLabel,
 		LVA_CallUsDial,
 		LVA_CallUsAvailableHours
@@ -324,7 +322,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 				let pageParams = getParamsFromPage();
 
 				if (pageParams.countryISO === undefined || pageParams.countryISO === '') {
-					this.countryValue = this.contact.ISO_Country__r.ISO_Code__c;
+					this.countryValue = this.contact.ISO_Country__r!== undefined?this.contact.ISO_Country__r.ISO_Code__c:null;
 				} else {
 					this.countryISO = pageParams.countryISO;
 				}
