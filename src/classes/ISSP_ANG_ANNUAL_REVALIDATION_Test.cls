@@ -775,10 +775,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.createAgencyContact();
 
-		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
-
-		System.assert(upd.countryList.size() > 0);
-		System.assert(upd.countryInfoByCountryNameMapString.startsWith('{'));
+		System.assert(ISSP_ANG_ANNUAL_REV_UPDATE.countryList.size() > 0);
+		System.assert(ISSP_ANG_ANNUAL_REV_UPDATE.countryInfoByCountryNameMapString.startsWith('{'));
 
 
 		Test.stopTest();
@@ -922,7 +920,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		List<SelectOption> bsl = upd.billingStateList;
 		List<SelectOption> ssl = upd.shippingStateList;
-		string slbcn = upd.stateListByCountryName;
+		string slbcn = ISSP_ANG_ANNUAL_REV_UPDATE.stateListByCountryName;
 		string si = upd.stateInfo;
 
 		Test.stopTest();
@@ -1000,7 +998,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newform.Geoname_Shipping_City__c = Id.valueOf(city.Id);
 		ctrl.confirmUpdate();	
 		upd.ca = ctrl.currentAccount;
-		String stateListByCountryName = upd.stateListByCountryName;	
+		String stateListByCountryName = ISSP_ANG_ANNUAL_REV_UPDATE.stateListByCountryName;	
 		String geonameBillingCityId = upd.geonameBillingCityId;
 		String geonameShippingCityId = upd.geonameShippingCityId;
 		upd.currentBillingStateCities();
@@ -1011,6 +1009,76 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		String cityName = ISSP_ANG_ANNUAL_REV_UPDATE.billingCityListNameStr;
 
 		
+	}
+
+	@isTest
+	static void closeCaseAfterSumbitValidAccountTest() {
+		IATA_ISO_Country__c country = [SELECT Id, Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c,
+									   IATA_Country_ZH__c, IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c,
+									   IATA_Country_SP__c, Case_BSP_Country__c, ANG_Enable_NewGen__c
+									   FROM IATA_ISO_Country__c
+									   WHERE Name = 'test'];
+
+		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
+													   FROM AMS_Accreditation_Country_CheckList__c
+													   WHERE Operation__c = 'Travel Agent'];
+
+		Account account = new Account(
+		BillingCity = 'test',
+		Name = 'test',
+		sector__c = Ams_Utils.SECTOR_PASSENGER,
+		Location_Type__c = AMS_Utils.HE,
+		RecordTypeId = rtAgency ,
+		IATACode__c = '12345670',
+		status__c = Ams_Utils.ACC_S9_APPROVED,
+		IATA_ISO_Country__c = country.Id,
+		Location_Class__c = 'P');
+		insert account;
+
+		Contact conMulticountry = ISSP_ObjectFactory.createNewContact();
+		conMulticountry.AccountId = account.Id;
+		conMulticountry.Email = 'multicountry@test11.com';
+		insert conMulticountry;
+
+		User userIcc = ISSP_ObjectFactory.createPortalUser(conMulticountry);
+		conMulticountry.OwnerId = userIcc.Id;
+		update conMulticountry;
+
+		System.runAs(userIcc){
+			Test.startTest();
+			AMS_OSCAR__c oscar = New AMS_OSCAR__c(Account__c = account.id, Process__c = 'ANG.ANNUAL.REVALIDATION', RecordTypeId = rtOscar);
+			insert oscar;
+
+			Case testcase = new Case (Account_Concerned__c = account.id,
+									  AccountId = account.id,
+									  OSCAR__c  = oscar.id,
+									  Reason1__c = 'Annual revalidation',
+									  Region__c = 'Europe',
+									  RecordTypeId = rtCase,
+									  Subject = 'Annual revalidation - GoStandard - test',
+									  Type = 'Case',
+									  Type_of_customer__c = 'IATA Travel Agent',
+									  CaseArea__c = 'something');
+
+			insert testcase;
+
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
+			System.currentPageReference().getParameters().put('caseId', testcase.id);
+
+			ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
+
+			ISSP_ANG_ANNUAL_REVALIDATION.setCaseVisibleInPortal(testcase);
+
+			ctrl.currentIataCode = '12345670';
+			ctrl.loadIataCode();
+			ctrl.confirmDetails();
+			ctrl.newCase.Region__c = 'Europe';
+			ctrl.newCase.ownerId=userIcc.Id;
+			Test.stopTest();
+			ctrl.submitForm();
+			system.assertEquals(AMS_Utils.CASE_STATUS_CLOSED, ctrl.oscar.Status__c, 'Case should be closed after all accounts be confirmed and submited.');
+		}
+
 	}
 
 }

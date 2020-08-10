@@ -24,7 +24,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_Country}<abbr class="slds-required" title="required">*</abbr>
+                        {labels.CSP_L2_Country}
                     </div>
                 </div>
                     
@@ -32,6 +32,7 @@
                     <div class="slds-form-element__control custTextInputSmall">
                         <lightning-combobox 
                             class="cursorPointerComboBox text-xxsmall"
+                            disabled={isCountryDisabled}
                             value={localAddress.countryId}
                             variant="label-hidden"
                             options={countryOptions}
@@ -47,10 +48,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay floatItem">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_State}
-                        <template if:true={isStateRequired}>
-                            <abbr class="slds-required" title="required">*</abbr>
-                        </template>
+                        {labels.CSP_L2_State}                       
                     </div>
                 </div>
 
@@ -92,7 +90,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_City}<abbr class="slds-required" title="required">*</abbr>
+                        {labels.CSP_L2_City}
                     </div>
                 </div>
 
@@ -148,10 +146,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_Postal_Code}
-                        <template if:true={isZipRequired}>
-                            <abbr class="slds-required" title="required">*</abbr>
-                        </template>
+                        {labels.CSP_L2_Postal_Code} ({labels.OPTIONAL_label})                        
                     </div>
                 </div>
 
@@ -180,7 +175,6 @@
                         <template if:false={localAddress.isPoBox}>
                             {labels.CSP_L2_Street}
                         </template>
-                        <abbr class="slds-required" title="required">*</abbr>
                     </div>
                 </div>
                 
@@ -192,6 +186,7 @@
                             class="slds-input"
                             placeholder=" "
                             data-fieldname="Street"
+                            maxlength="64"
                             value={localAddress.street}
                             onkeyup={handleFieldChange}
                             autocomplete="no"/>

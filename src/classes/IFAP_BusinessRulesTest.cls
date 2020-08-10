@@ -555,8 +555,36 @@ public class IFAP_BusinessRulesTest {
 		c2.Financial_Security_Template_chkbx__c = true;
 		c2.Financial_Security_Type_chkbx__c = true;
 		c2.Expiry_Date_chkbx__c = true;
-		IFAP_BusinessRules.FSValidationCheckBox(c1, p);
+		IFAP_BusinessRules.FSValidationCheckBox(c2, p);
+		p.Name = 'system administrator';
+		IFAP_BusinessRules.FSValidationCheckBox(c2, p);
+		p.Name = 'TEST';
+		c2.Agent_Name_chkbx__c = false;
+		IFAP_BusinessRules.FSValidationCheckBox(c2, p);
 
+	}
+
+	@isTest
+	static void testCheckIFAPFinancialYear() {
+		Case c1 = new Case();
+		c1.Status = 'agent notified (email)';
+		c1.IFAP_Financial_Year__c = '2020';
+		
+		System.assertEquals(false, IFAP_BusinessRules.checkIFAPFinancialYear(new List<Case> { c1 }, '2019'));
+		System.assertEquals(true, IFAP_BusinessRules.checkIFAPFinancialYear(new List<Case> { c1 }, '2020'));
+	}
+
+	@isTest
+	static void testIsPreviousIFAPStatusEquals() {
+		List<Case> cases = new List<Case>();
+
+		Case c = new Case();
+		cases.add(c);
+
+		System.assertEquals(false, IFAP_BusinessRules.isPreviousIFAPStatusEquals(null, '', '', '', ''));
+		System.assertEquals(false, IFAP_BusinessRules.isPreviousIFAPStatusEquals(cases, 'status', AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, '', ''));
+		System.assertEquals(false, IFAP_BusinessRules.isPreviousIFAPStatusEquals(cases, 'status', AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, '2020', AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL));
+		System.assertEquals(false, IFAP_BusinessRules.isPreviousIFAPStatusEquals(cases, 'status', AMS_Utils.ACCREDITATIONMODEL_CASH, '2020', ''));
 	}
 
 	@isTest

@@ -41,7 +41,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>GADM Account Service Detail</label>
-    <pluralLabel>GADM Account Service Details</pluralLabel>
+    <label>GADM Account Service Detail PE</label>
+    <pluralLabel>GADM Account Service Details PE</pluralLabel>
     <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

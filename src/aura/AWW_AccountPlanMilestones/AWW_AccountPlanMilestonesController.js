@@ -26,13 +26,14 @@
         modalCmp.showModal(record);
     },
     handleRowAction : function(component, event, helper) {
-        var action = event.getParam('action').name;
-        switch (action) {
+        var action = event.getParam('value');
+        let nameAction = action.split("-")
+        switch (nameAction[0]) {
             case 'edit_milestone':
-                helper.editRecord(component, event);
+                helper.editRecord(component, event, nameAction[1]);
                 break;
             case 'delete_milestone':
-                helper.deleteRecord(component, event);
+                helper.deleteRecord(component, event, nameAction[1]);
                 break;
         }
     },

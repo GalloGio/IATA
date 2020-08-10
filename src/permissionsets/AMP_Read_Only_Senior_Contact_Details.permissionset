@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assigns read-only rights on the Contact fields displayed in the Contact section "Senior Contact Details". DO NOT ASSIGN OR EDIT THIS PS UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Senior_Contact_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Senior_Contact_Fax__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Senior_Contact_Mobile__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Senior_Contact_Other_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Senior_Contact_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>AMP Read Only Senior Contact Details</label>
+</PermissionSet>

@@ -5,12 +5,13 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Email__c</fullName>
+        <description>List of recipient emails</description>
         <externalId>false</externalId>
+        <inlineHelpText>The emails must be separeted by colon &quot;,&quot;</inlineHelpText>
         <label>Email</label>
         <required>true</required>
         <trackTrending>false</trackTrending>
-        <type>Email</type>
-        <unique>false</unique>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>description__c</fullName>

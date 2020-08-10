@@ -41,6 +41,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>AccountStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>

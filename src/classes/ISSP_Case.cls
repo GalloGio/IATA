@@ -53,6 +53,7 @@ public without sharing class ISSP_Case {
 	public String JSONcontactSelected { get; set; }
 	public String JSONcontactsHighPriority { get; set; }
 	public List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails { get; set; } 
+	public Boolean isCNSAgency {get; private set;}
 
 	public Id runningUserId {get; set;}
 	public Contact con {get; set;}
@@ -206,22 +207,22 @@ public without sharing class ISSP_Case {
 						PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
 						return pr;
 					}
-			}else if(newCase.RecordType.name == 'OSCAR Communication' && (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') && newCase.Owner.Name.startsWith('NewGen PCI')){
+			}else if(newCase.RecordType.name == 'OSCAR Communication' && (newCase.Origin == 'Massive FOP Creation' || newCase.Origin == 'FoP automatic renewal') && (newCase.OwnerId == '00G1r000002xun7EAA' || newCase.OwnerId == '00G1r000002xun8EAA' || newCase.OwnerId == '00G1r000002xun9EAA' || newCase.OwnerId == '00G1r000002xunAEAQ' || newCase.OwnerId == '00G1r000002xunBEAQ' || newCase.OwnerId == '00G1r000004SpvKEAS')){
 						PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
 						return pr;
 			} else if (newCase.RecordType.name == 'OSCAR Communication' && newCase.Status == 'Draft' && (newCase.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || newCase.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT)) {
 				PageReference pr = new PageReference('/ISSP_ANG_PCI?caseId=' + caseId + commParam);
 				return pr;
-			}else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.Owner.Name.startsWith('Annual Revalidation')){
+			}else if(newCase.RecordType.name == 'OSCAR Communication' && newCase.Reason1__c == 'Annual revalidation' && newCase.OwnerId == '00G1r000003KX81EAG'){
 				PageReference pr = new PageReference('/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + caseId);
 				return pr;
-			} else if (newCase.RecordType.Name == 'OSCAR Communication' && newCase.Owner.Name.startsWith('Model A Onboarding')) {
+			} else if (newCase.RecordType.Name == 'OSCAR Communication' && (newCase.OwnerId == '00G1r00000329qFEAQ' || newCase.OwnerId == '00G1r00000329qGEAQ' || newCase.OwnerId == '00G1r00000329qHEAQ' || newCase.OwnerId == '00G1r00000329qIEAQ' || newCase.OwnerId == '00G1r00000329qJEAQ')) {
 				return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
 			}
 
 			//if case is a SIS Joining Form
 			if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
-					&& newCase.Status == 'Draft' && !newCase.isClosed && !newCase.Owner.Name.StartsWith('Recycle Bin')){
+					&& newCase.Status == 'Draft' && !newCase.isClosed && !(newCase.OwnerId == '00G20000000mDEUEA2' || newCase.OwnerId == '00G20000000mZCpEAM' || newCase.OwnerId == '00G20000000mZCzEAM' || newCase.OwnerId == '00G20000000mp9MEAQ' || newCase.OwnerId == '00G20000001MbtoEAC' || newCase.OwnerId == '00G20000001Mcq2EAC')){
 				return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
 			}
 			// If Case is an ICCS Case, redirect to ICCS Service
@@ -321,7 +322,12 @@ public without sharing class ISSP_Case {
 		SurveyLanguage = UserInfo.getLanguage() ;
 
 		popContact();
-
+		if(con != null){
+			isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
+		}else{
+			isCNSAgency = false;
+		}
+		
 		//TF - SP9-C5
 		ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
 		String recordTypeId = ApexPages.currentPage().getParameters().get('recordTypeId');
@@ -1548,28 +1554,30 @@ public without sharing class ISSP_Case {
 		Account concerned
 	**/
 	public void addListCCOthersToDPC(String stringEmails) {
-		// filter input emails
-		Set<String> setEmail = new Set<String>();
-		for(String s : stringEmails.split(',')) {
-			String email = s.trim();
-			if (!String.isBlank(email)) {
-				setEmail.add(email);
-			}
-		}
-		User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
-		List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
-		Set<String> lsNewEmails = new Set<String>();
 
 		//On DPC case creation with Priority, automatically add additional recipients
 		Set<String> setEmailPriority = new Set<String>();
 
-		String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
+		// filter input emails
+		for(String s : stringEmails.split(',')) {
+			String email = s.trim();
+			if (!String.isBlank(email)) {
+				setEmailPriority.add(email);
+			}
+		}
+		User myUser = [SELECT Id, ContactId, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
+		List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
+		Set<String> lsNewEmails = new Set<String>();
 
 		if(DPC2DPCCasesEmails != null){
-			if(emailCurrentAcc != ''){
+			if(String.isNotBlank(myUser.Contact.AccountId)){
 				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
-					if(d2dca.Name == emailCurrentAcc){
-						setEmailPriority.add(d2dca.Email__c);
+					if(d2dca.Name == myUser.Contact.AccountId){
+						for(String email : d2dca.Email__c.split(',')){
+							if(!String.isBlank(email)){
+								setEmailPriority.add(email);
+							}
+						}
 					}
 				}
 			}
@@ -1586,44 +1594,47 @@ public without sharing class ISSP_Case {
 		}
 
 		if(JSONcontactSelected != null && JSONcontactSelected != ''){
-			setEmailPriority.add(JSONcontactSelected.removeEnd(','));
+			setEmailPriority.addAll(JSONcontactSelected.split(','));
 		}
 
 		if(!setEmailPriority.isEmpty()){
 			List<User> lsUsersPriority =
 				[SELECT Id, Name, Email, AccountId, Contact.AccountId
 				 FROM User
-				 WHERE Email IN :setEmailPriority];
+				 WHERE Email IN :setEmailPriority AND isActive = true];
 
 			for(User user : lsUsersPriority) {
-				CaseTeamMember teammember = new CaseTeamMember(
-					ParentId = newCase.Id,
-					MemberId = user.Id,
-					TeamRoleId = PARTNER_USER_ROLE);
-				lsCaseTeamMembers.add(teammember);
-				lsNewEmails.add(user.Email);
-				setEmail.remove(user.Email);
+				if(!(isDPCUser && whoToContact != 'IATA' && user.Id == myUser.Id)) {
+					CaseTeamMember teammember = new CaseTeamMember(
+						ParentId = newCase.Id,
+						MemberId = user.Id,
+						TeamRoleId = PARTNER_USER_ROLE);
+					lsCaseTeamMembers.add(teammember);
+					lsNewEmails.add(user.Email);
+					setEmailPriority.remove(user.Email);
+				}
 			}
 		}
 
 		// Find the contacts for the emails not found
-		if (!setEmail.isEmpty()) {
+		if (!setEmailPriority.isEmpty()) {
 			list<Contact> listContact = [
 				SELECT Id,Email
 				FROM Contact
-				WHERE Email IN :setEmail
+				WHERE Email IN :setEmailPriority
 				AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')
 				AND Status__c = 'Active'
-				AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)
-				LIMIT 1];
+				AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
 
 			for(Contact contact : listContact) {
-				CaseTeamMember teammember = new CaseTeamMember(
+				if(!(isDPCUser && whoToContact != 'IATA' && contact.Id == myUser.ContactId)) {
+					CaseTeamMember teammember = new CaseTeamMember(
 					ParentId = newCase.Id,
 					MemberId = contact.Id,
 					TeamRoleId = PARTNER_USER_ROLE);
-				lsCaseTeamMembers.add(teammember);
-				lsNewEmails.add(contact.Email);
+					lsCaseTeamMembers.add(teammember);
+					lsNewEmails.add(contact.Email);
+				}
 			}
 		}
 
@@ -1651,35 +1662,50 @@ public without sharing class ISSP_Case {
 	}
 
 	public static void sendMassEmail(Id caseId, Id templateId) {
-		try {
-			OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
-			list<User> listUsers = [SELECT Id, ContactId
-				FROM User
-				WHERE ContactId != null AND Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
-				AND Contact.isEmailBounced = false 
-				AND (NOT Contact.Email LIKE '%.inactive')
-				AND isActive = true];
 
-			List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
-			for(User user : listUsers) {
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setOrgWideEmailAddressId(orgAddress.Id);
-				mail.setTargetObjectId(user.ContactId);
-				mail.setWhatId(caseId);
-				mail.setUseSignature(false);
-				mail.setBccSender(false);
-				mail.setSaveAsActivity(false);
-				mail.setTemplateId(templateId);
-				listEmail.add(mail);
+		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+		list<User> listUsers = [SELECT Id, ContactId, Email, Contact.Email
+			FROM User
+			WHERE Id IN (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
+			AND Contact.isEmailBounced = false 
+			AND (NOT Contact.Email LIKE '%.inactive')
+			AND isActive = true];
+
+		List<Contact> contactsList = [SELECT Id, Email
+			FROM Contact
+			WHERE Id in (SELECT MemberId FROM CaseTeamMember WHERE ParentId = :caseId)
+			AND Status__c = 'Active'];
+
+		List<String> listUserEmails = new List<String>();
+		Id contactId = null;
+
+		for(User usr : listUsers) {
+			if(usr.ContactId == null){
+				listUserEmails.add(usr.Email);
 			}
-
-			if (!listEmail.isEmpty()) {
-				Messaging.sendEmail(listEmail);
+			else{
+				listUserEmails.add(usr.Contact.email);
 			}
-
-		} catch (Exception e) {
-			System.debug('Error sending an email sendMassEmail(' + caseId + ',' + templateId + ')');
+			if(usr.ContactId != null && contactId == null){
+				contactId = usr.ContactId;
+			}
 		}
+
+		for(Contact cnt : contactsList){
+			listUserEmails.add(cnt.Email);
+		}
+
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		mail.setOrgWideEmailAddressId(orgAddress.Id);
+		mail.setTargetObjectId(contactId);
+		mail.setToAddresses(listUserEmails);
+		mail.setWhatId(caseId);
+		mail.setUseSignature(false);
+		mail.setBccSender(false);
+		mail.setSaveAsActivity(false);
+		mail.setTemplateId(templateId);
+
+		Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 	}
 
 	/**

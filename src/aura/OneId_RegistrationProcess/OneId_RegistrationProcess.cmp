@@ -44,7 +44,13 @@
         <div class="slds-grid">
             <div class="slds-p-horizontal--small slds-size--1-of-1">
                 <h1>{!$Label.c.OneId_Create_an_account}</h1>
-
+                <aura:if isTrue="{!and(v.serviceName == 'FRED',empty(v.invitationId))}">
+                  <p>
+                    <a href="{!$Label.c.OneId_FRED_RegistrationProcess_URL}">
+                    {!$Label.c.OneId_FRED_RegistrationProcess}
+                    </a>
+                  </p>
+                </aura:if>
                 <aura:if isTrue="{! and(v.serviceName=='FRED',v.isGuest == false)}">
                     <br/>
                     <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">

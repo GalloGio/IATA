@@ -382,6 +382,16 @@
                     <default>false</default>
                     <label>CASS Import via GHA</label>
                 </value>
+                <value>
+                    <fullName>PASS Participation</fullName>
+                    <default>false</default>
+                    <label>PASS Participation</label>
+                </value>
+                <value>
+                    <fullName>PASS Participation via GSSA</fullName>
+                    <default>false</default>
+                    <label>PASS Participation via GSSA</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

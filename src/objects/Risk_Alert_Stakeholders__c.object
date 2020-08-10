@@ -12,6 +12,25 @@
         <type>Email</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>RHC_Exceptional_Monitoring_Stakeholder__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Identifies that the stakeholder must be notified on the creation of SMAP cases upon reception of a RHC Alert 100% UP on BSP under the RHC exceptional monitoring</description>
+        <externalId>false</externalId>
+        <label>RHC Exceptional Monitoring Stakeholder</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Risk Alert Stakeholders</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>RHC_Exceptional_Monitoring_Stakeholder__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

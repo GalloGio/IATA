@@ -20,11 +20,15 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Reason1__c =, Origin =, Phone_Redirected_to_Web__c IS_FALSE</value>
+        <value xsi:type="xsd:string">Reason1__c =, Origin =</value>
     </values>
     <values>
         <field>Origin__c</field>
         <value xsi:type="xsd:string">Internal Case</value>
+    </values>
+    <values>
+        <field>OwnerID__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Reason1__c</field>

@@ -10,6 +10,8 @@ public class CSEnquiryTest {
 				insert a1;
 				Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname = 'test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 				insert co1;
+				insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 				CSEnquiry test = new CSEnquiry();
 

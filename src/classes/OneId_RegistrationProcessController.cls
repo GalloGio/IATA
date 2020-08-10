@@ -601,7 +601,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 			//check if the general public account have contacts
 			if(acc.Sector__c == 'General Public'){
-				List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id];
+				List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id LIMIT 1];
 				if(gpContact.isEmpty()) //in this case the Portal Status will be Pending Approval
 					con.User_Portal_Status__c = 'Active';
 			}
@@ -659,6 +659,12 @@ public without sharing class OneId_RegistrationProcessController {
 
 					if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
 						portalServiceNewAgency(con.Id);
+				}
+
+				if(acc.Sector__c == AMS_Utils.SECTOR_PASS && acc.Category__c == AMS_Utils.categoryPass){
+					portalServiceNewPASSAgency(con.Id);
+					permissionNewAgency(returnedString);
+					updatePortalUseProfile(returnedString);
 				}
 			}
 
@@ -921,7 +927,7 @@ public without sharing class OneId_RegistrationProcessController {
 			}
 		}
 
-		if (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent'){
+		if (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent' || acc.Sector__c =='Postal Service'){
 			profileName = ISSP_Constant.profilNameByUserTypeMap.get(userType).get('Agency');
 		}
 		else if (acc.Sector__c == 'Airline'){
@@ -1045,7 +1051,20 @@ public without sharing class OneId_RegistrationProcessController {
 
 		}
 	}
+	public static void portalServiceNewPASSAgency(String conId){
+		if (conId != null && conId != '') {
+			List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_PASS_SERVICE_NAME];
 
+			if(!pApplication.isEmpty()){
+				Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+				appRight.Contact__c = conId;
+				appRight.Portal_Application__c = pApplication[0].Id;
+				appRight.Right__c = 'Access Granted';
+				insert appRight;
+			}
+
+		}
+	}
 	@AuraEnabled
 	public static void checkConAvailable (Contact con){
 

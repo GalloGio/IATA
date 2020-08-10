@@ -3,11 +3,13 @@ private class AMS_CertificateTest {
 
 	@testSetup static void createData() {
 		id Art =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-		Account acc1 = new Account(Name = 'Test Account', IataCode__c = '1', Certificate_Generated_Current_Year__c = true, recordtypeid = Art);
-		Account acc2 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
+		Account acc1 = new Account(Name = 'Test Account', IataCode__c = '0', Certificate_Generated_Current_Year__c = true, recordtypeid = Art);
+		Account acc2 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '1', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
 		Account acc3 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
-		Account acc4 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
+		Account acc4 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '3', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
 		insert new List<Account>{acc1, acc2, acc3, acc4};
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
 	static testMethod void manager() {
@@ -32,7 +34,7 @@ private class AMS_CertificateTest {
 			con.parseFile();
 
 			//test success
-			con.fileBody = Blob.valueOf('"Iata Code"\n"1"\n"2"\n"3"');
+			con.fileBody = Blob.valueOf('"Iata Code"\n"1"\n"2"\n"0"');
 			con.yearText = System.today().year()+'';
 			con.parseFile();
 

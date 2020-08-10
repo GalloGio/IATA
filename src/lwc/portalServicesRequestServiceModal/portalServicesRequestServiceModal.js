@@ -9,6 +9,7 @@ import newServiceRequestlb from '@salesforce/label/c.ISSP_New_Service_Request';
 import newServiceAccessConfirmMsglb from '@salesforce/label/c.csp_ServiceAccessConfirm';
 import newServiceRequestConfirmMsglb from '@salesforce/label/c.csp_ServiceRequestConfirm';
 import confirmedRequestMsglb from '@salesforce/label/c.CSP_Confirmed_Requested_Service_Message';
+import confirmedRequestEFAppsMsglb from '@salesforce/label/c.CSP_Confirmed_Requested_Service_EFApps_Message';
 import goToServiceslb from '@salesforce/label/c.CSP_Services_GoToServices';
 import ANG_ISSP_ConfirmRequestIEP_1 from '@salesforce/label/c.ANG_ISSP_ConfirmRequestIEP_1';
 import ANG_ISSP_ConfirmRequestIEP_2 from '@salesforce/label/c.ANG_ISSP_ConfirmRequestIEP_2';
@@ -71,6 +72,9 @@ import performCheckonPoll from '@salesforce/apex/DAL_WithoutSharing.performCheck
 import ISSP_AvailableService_newAppsRequest2 from '@salesforce/apex/PortalServicesCtrl.newAppsRequest2';
 import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
+const AE = 'AE';
+const MULTICOUNTRY = 'Multicountry';
+
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
     //icons
@@ -82,6 +86,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         newServiceAccessConfirmMsglb,
         newServiceRequestConfirmMsglb,
         confirmedRequestMsglb,
+        confirmedRequestEFAppsMsglb,
         goToServiceslb,
         csp_RequestService_ContactPortalAdmin_LegalAuth,
         csp_RequestService_ContactPortalAdmin_Alt,
@@ -155,7 +160,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
-            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
+            if(this.serviceName == 'E&F APPS'){
+                this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
+            } else {
+                this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
+            }
             this.popUpHandler();
         }
     }
@@ -279,7 +288,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
                             this.userContactId = userOptions.User_ContactId;
                         }
-                        if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
+                        if (userOptions.Location_Type == AE && userOptions.Accreditation_model == MULTICOUNTRY) {
+                            let string3 = this.label.csp_RequestService_ContactSupport;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string3.link(link3));
+                        } else if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
                             let string3 = this.label.csp_RequestService_ContactSupport;
                             let link0 = window.location.toString().replace('/services', '');
                             let link3 = link0 + '/support-reach-us';
@@ -456,7 +470,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ShowIEPIntroMessage = false;
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
-        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true);
 		availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
 			.then(result => {
 			let myResults = JSON.parse(JSON.stringify(result));
@@ -720,20 +733,39 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showPopUp = true;
         this.showSpinner = true;
         let serviceNameaux = this.serviceName;
-        this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
+        if(this.serviceName == 'E&F APPS'){
+            this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
+        } else {
+            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
+        }
 
-        requestServiceAccess({ applicationId: this.trackedServiceId })
+        requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
             .then(() => {
                 //Show toas with confirmation            
-                //this.showSpinner = false;
-                if (this.isAdmin) {
-                    this.showPopUp = false; // for admins no success box
+                if(this.serviceName == 'E&F APPS'){
+                    this.showSpinner = false;
+                    this.showPopUp = true; // for e&f success box
                     this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                 } else {
-                    this.showSpinner = false;
+                    if (this.isAdmin) {
+                        this.showPopUp = false; // for admins no success box
+                        this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+                    } else {
+                        this.showSpinner = false;
+                    }
                 }
             }).catch(error => {
                 console.error(error);
+                this.showSpinner = false;
+                this.showPopUp = false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             });
     }
 

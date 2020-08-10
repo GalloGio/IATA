@@ -86,8 +86,21 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		);
 		insert con;
 
+		String cspath = PortalRegistrationSecondLevelCtrl.getCSPortalPath();
+		
 		/** USER */
 		User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+	}
+
+	@IsTest
+	static void testcheckAddress(){
+		Test.startTest();
+		Test.setMock(HttpCalloutMock.class, new OneId_AddressDoctorMockImpl());
+		List<OneId_AddressDoctor.AddressInfo> ADaddresses = OneId_AddressDoctor.quickSearch('Avenue avant-poste 5; 1005; Lausanne', 'CH');
+		ADaddresses[0].countryCode = 'CH';
+
+		List<OneId_AddressDoctor.AddressInfo> addressInfo = PortalRegistrationSecondLevelCtrl.checkAddress(JSON.serialize(ADaddresses[0]));
+		Test.stopTest(); 
 	}
 
 	@IsTest
@@ -115,12 +128,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		System.runAs(usr) {
 			Contact con = PortalRegistrationSecondLevelCtrl.getContactInfo();
 		}
-	}
-
-	@IsTest
-	static void testSaveContactInfo(){
-		Contact con = [SELECT Id FROM Contact WHERE LastName = 'L1 Contact'];
-		PortalRegistrationSecondLevelCtrl.saveContactInfo(con);
 	}
 
 	@IsTest
@@ -321,8 +328,7 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		Contact con = [SELECT Id FROM Contact WHERE LastName = 'L1 Contact'];
 		Account acc = [SELECT Id FROM Account WHERE Name = 'TEST ITP'];
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
-		insert portalApp;
+		
 
 		//Create Accounts Roles
 		List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
@@ -334,6 +340,13 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		accRolesList.add(accRolesAirlineSup);
 		insert accRolesList;
 
+		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+		Account_Role__c accRole = new Account_Role__c(account__c = acc.id, recordtypeid = RECTYPE_ITP_AccRole);
+		insert accRole;
+		Test.StartTest();
+		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
+		insert portalApp;
+
 		//Create Accounts Services'
 		List<Account_Role_Services__c> accRoleServicesList = new List<Account_Role_Services__c>();
 		Account_Role_Services__c accRoleServicesITP = new Account_Role_Services__c(Name = 'IFTP - ITP', Account_Roles__c = accRolesITP.Id, Portal_Service__c = portalApp.Id);
@@ -342,12 +355,8 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		accRoleServicesList.add(accRoleServicesAirline);
 		insert accRoleServicesList;
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-		Account_Role__c accRole = new Account_Role__c(account__c = acc.id, recordtypeid = RECTYPE_ITP_AccRole);
-		insert accRole;
-
 		Boolean success = PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount(acc, con);
-
+		Test.StopTest();
 	}
 
 }

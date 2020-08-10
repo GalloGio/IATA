@@ -145,7 +145,7 @@ private class AMS_OSCARTriggerHandlerTest {
 
 		update oscar;
 
-		Case cseIfap = new Case(RecordTypeID = AMS_Utils.RECTYPE_CASEIFAP , Status = 'Open',Region__c = 'Africa', 
+		Case cseIfap = new Case(RecordTypeID = AMS_Utils.RECTYPE_IFAP , Status = 'Open',Region__c = 'Africa',
 			CaseArea__c = 'Accreditation', Origin= 'Internal User', Reason1__c = 'Annual revalidation',
 			Subject =  'Annual revalidation', Type_of_customer__c = 'IATA Travel Agent', AccountId = oscar.Account__c, 
 			BSPCountry__c = 'US', IFAP_Area__c = 'asda', IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
@@ -338,5 +338,54 @@ private class AMS_OSCARTriggerHandlerTest {
 		}
 		
 		Test.stopTest();
+	}
+
+
+	@isTest static void testSetPromotion() {
+
+		Account account = new Account(
+			Name= 'Test Ag2',
+			RecordTypeId= AMS_utils.RECTYPE_IATAAGENCY,
+			Sector__c= 'Travel Agent',
+			Category__c= 'IATA Passenger Sales Agent',
+			IATACode__c= '145362',
+			Location_Class__c= 'T'
+		);
+		insert account;
+
+		Contact contact = new Contact (
+			FirstName = 'fname',
+			LastName = 'lname',
+			AccountId = account.Id
+		);
+		insert contact;
+
+		Case cse = new Case(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+			ContactId = contact.Id
+		);
+		insert cse;
+
+		// adding fake metadata for testing
+		Oscar_Promotion__mdt promotion = new Oscar_Promotion__mdt(
+			DeveloperName = 'TIDS_to_GoLite',
+			Oscar_Process__c = 'PROCESS',
+			Start_Date__c = Date.today(),
+			End_Date__c = Date.today()
+		);
+		
+		AMS_OSCARTriggerHandler.getMapActivePromotions();
+		AMS_OSCARTriggerHandler.MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Process__c = 'PROCESS',
+			Account__c = account.Id,
+			Oscar_Communication_Case_Id__c = cse.Id
+		);
+		Test.startTest();
+		insert oscar;
+		Test.stopTest();
+
+		AMS_OSCAR__c result = [SELECT Id, Promotions__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];
+		System.assertEquals(promotion.DeveloperName, result.Promotions__c);
 	}
 }

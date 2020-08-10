@@ -34,9 +34,17 @@ public class PortalFAQsCtrlTest {
 			kavObj.Title = 'Sample Article Portal Test';
 			kavObj.UrlName = 'Sample-Article-Portal-Test';
 			kavObj.Summary = 'Summary';
-			insert kavObj;
-
-			System.runAs(usr) {
+			kavObj.language = 'en_US';
+			
+			FAQ__kav kavObj2 = new FAQ__kav();
+			kavObj2.Title = 'Sample Article Portal Test';
+			kavObj2.UrlName = 'Sample-Article-Portal-Test';
+			kavObj2.Summary = 'Summary';
+			kavObj2.language = 'pt_BR';
+			
+			insert new list<FAQ__kav>{kavObj,kavObj2};
+			
+			System.runAs(usr) { 
 				PortalKnowledge__c faqCategory = new PortalKnowledge__c();
 				faqCategory.Name = 'Travel';
 				faqCategory.FAQsStructure__c = true;
@@ -65,19 +73,26 @@ public class PortalFAQsCtrlTest {
 			//retrieve master article Id created on FAQ__kav record insertion
 			//in order to get the KnowledgeArticleId
 			kavObj = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
-			//publish it
-			KbManagement.PublishingService.publishArticle(kavObj.KnowledgeArticleId, true);
-
+			kavObj2 = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj2.Id];
+			
 			DescribeDataCategoryGroupResult[] results = Schema.describeDataCategoryGroups(
 				new String[] { 'KnowledgeArticleVersion'}
-			);
-
+				);
+				
 			FAQ__DataCategorySelection tempCat = new FAQ__DataCategorySelection ();
 			tempCat.DataCategoryGroupName = results[0].getName();
 			tempCat.DataCategoryName = 'Travel';
 			tempCat.ParentId = kavObj.Id;
-
-			insert tempCat;
+			
+			FAQ__DataCategorySelection tempCat2 = new FAQ__DataCategorySelection ();
+			tempCat2.DataCategoryGroupName = results[0].getName();
+			tempCat2.DataCategoryName = 'Travel';
+			tempCat2.ParentId = kavObj2.Id;
+			
+			insert new list<FAQ__DataCategorySelection>{tempCat,tempCat2};
+			//publish it
+			KbManagement.PublishingService.publishArticle(kavObj.KnowledgeArticleId, true);
+			KbManagement.PublishingService.publishArticle(kavObj2.KnowledgeArticleId, true);
 		}
 	}
 
@@ -90,7 +105,8 @@ public class PortalFAQsCtrlTest {
 			PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
 			filtersWrapper.searchText = 'Test Publish Online';
 			filtersWrapper.faqsComponent = null;
-			filtersWrapper.language = 'en_US';
+			filtersWrapper.language = 'pt_BR';
+			filtersWrapper.guestUser = true;
 			CSP_Utils.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
 			filtersWrapper.language = '';
@@ -99,8 +115,11 @@ public class PortalFAQsCtrlTest {
 			PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
 			faqsComponent.faqSubtopicsList = new List<String>{'Travel'};
 			filtersWrapper.faqsComponent = faqsComponent;
-			filtersWrapper.language = 'en_US';
+			filtersWrapper.language = 'pt_BR';
+			filtersWrapper.guestUser = true;
 			CSP_Utils.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
+
+		   
 		}
 		Test.stopTest();
 	}
@@ -110,8 +129,12 @@ public class PortalFAQsCtrlTest {
 
 		Test.startTest();
 		System.runAs(testUser) {
-			List<FAQ__kav> article = PortalFAQsCtrl.getArticles('Travel__c');
-			List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('Travel__c', 'en_US');
+			List<FAQ__kav> articleList = PortalFAQsCtrl.getArticles('Travel__c');            
+			system.assertEquals(0,articleList.size());
+            
+			List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('Travel__c', 'pt_BR');
+			system.assertEquals(0,articleByLanguage.size());
+            
 		}
 		Test.stopTest();
 	}
@@ -133,9 +156,15 @@ public class PortalFAQsCtrlTest {
 		Test.stopTest();
 	}
 
+	@isTest static void testGetArticleTitle() {
+		FAQ__kav faqka=[SELECT KnowledgeArticleId FROM FAQ__kav limit 1];
+		String title=PortalFAQsCtrl.getArticleTitle(faqka.Id);
+		System.assertEquals('Sample Article Portal Test',title);
+
+	}
 	@isTest static void testUpdateArticleCategoriesAndApproval() {
 		FAQ__kav kavObj = [SELECT Id, Categories__c, PublishStatus, ValidationStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
-
+		
 		Test.startTest();
 			ApexMessageHandling articleToUpdate;
 			articleToUpdate = PortalFAQsCtrl.updateArticleCategories(new List<Id>{ kavObj.Id });
@@ -194,6 +223,30 @@ public class PortalFAQsCtrlTest {
 			filtersWrapper.language = 'en_US';
 
 			test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'FAQS');
+		}
+		Test.stopTest();
+	}
+
+	@isTest static void testGetArticleByURLName() {
+
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Test.startTest();
+		System.runAs(testUser) {
+			CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+
+			PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+			filtersWrapper.UrlName = 'Sample-Article-Portal-TESSST';
+			filtersWrapper.language = 'en_US';
+			filtersWrapper.guestUser = true;
+			
+			test = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+			
+			system.assertEquals(0,test.records.size());
+			
+			filtersWrapper.UrlName = 'Sample-Article-Portal-Test3';
+			test = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+			system.assertEquals(0,test.records.size());
 		}
 		Test.stopTest();
 	}

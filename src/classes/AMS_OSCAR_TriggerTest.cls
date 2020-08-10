@@ -28,6 +28,8 @@
 		AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'DIS-AMS', Change_Code__c = 'DIS');
 		AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'FIN-AMS', Change_Code__c = 'FIN');
 		upsert new List<AMS_ChangeCodes__c>{cc1, cc2};
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
 		insert pa;
@@ -98,6 +100,7 @@
 			Last_name__c = 'owner',
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
+			Agency_owner__c= true,
 			Financial_interest__c= 100,
 			AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
@@ -353,6 +356,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -683,7 +687,7 @@
 
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
-		Account a = [SELECT id,Status__c, CNS_Agency__c from Account where Name = 'Test1 Agency' LIMIT 1];
+		Account a = [SELECT id,Status__c, CNS_Agency__c, Sector__c, Location_Class__c, Category__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
 		ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
@@ -827,6 +831,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1137,6 +1142,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1329,6 +1335,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1431,6 +1438,7 @@
 			Email__c= 'owner.test@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
+			Agency_owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
 		);
@@ -1479,7 +1487,7 @@
 		System.assertEquals(result, 'VMFR Setup/Update');
 
 		result = AMS_OSCARTriggerHandler.fetchCaseReason('Minor shareholding');
-		System.assertEquals(result, 'CHG – Data Maintenance');
+		System.assertEquals(result, 'MCH – Minor Change of Shareholding');
 
 		result = AMS_OSCARTriggerHandler.fetchCaseReason('Hierarchy');
 		System.assertEquals(result, 'Change of Hierarchy');
@@ -1676,6 +1684,7 @@
 		owner.Phone__c = '123456789';
 		owner.Financial_interest__c = 100;
 		owner.AMS_Pax_Accreditation_Form__c = stagingArea.Id;
+		owner.Agency_Owner__c = true;
 		owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 		insert owner;
 

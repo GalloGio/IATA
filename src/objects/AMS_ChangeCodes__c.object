@@ -514,8 +514,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Reason_Code__c</columns>
         <columns>Reason_Code_Description__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
         <columns>Field1__c</columns>
         <columns>Field1Values__c</columns>
         <columns>Billable_Location_Class__c</columns>
@@ -523,7 +522,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>RCR,RTR,RTE,REI</value>
+            <value>NWD,REC,TER,CLO,DIS</value>
         </filters>
         <label>AMS_NOT</label>
         <language>en_US</language>
@@ -531,7 +530,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     <listViews>
         <fullName>AMS_debug</fullName>
         <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
         <columns>Change_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Billable__c</columns>
         <columns>Billable_Location_Class__c</columns>
@@ -539,15 +540,19 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Integration_RecId__c</columns>
         <columns>Account_status_change__c</columns>
         <columns>Reason_Code__c</columns>
-        <columns>Reason_Code_Description__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Billable__c</field>
+            <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>CHA,CNV,RRQ</value>
+        </filters>
+        <filters>
+            <field>Used_By_CNS__c</field>
+            <operation>equals</operation>
+            <value>0</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
@@ -561,10 +566,12 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Account_status_change__c</columns>
         <columns>Reason_Code__c</columns>
         <columns>Reason_Code_Description__c</columns>
+        <columns>Published_in_bulletin__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Calculate_Outstanding_Amount__c</columns>
         <columns>Field1__c</columns>
         <columns>Field1Values__c</columns>
+        <columns>Billable__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Used_By_CNS__c</field>

@@ -21,11 +21,12 @@ public class MITA_PortalTest {
 			Airline_Prefix__c = '456');
 		insert MyAirline;
 
+		
 		Contact MyContact = new Contact(FirstName = 'Name', LastName='My Contact', AccountId=MyAirline.Id, Email='contact@MyAirline.com');
 		insert MyContact;
 
 		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
-		portalUser = new User(Alias = 'standt', Email='standarduser@testorg.com',
+		portalUser = new User(Alias = 'standt', Email=DateTime.now().getTime()+'standarduser@testorg.com',
 							EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 							LocaleSidKey='en_US', ProfileId = p.Id, ContactId = MyContact.Id,
 							TimeZoneSidKey='America/Los_Angeles', UserName='standarduser@testorg.com');
@@ -41,8 +42,10 @@ public class MITA_PortalTest {
 		insert Airlines;
 
 		Contacts = new List<Contact>();
-		for(Account a : Airlines)
-			Contacts.add(new Contact(FirstName = 'Name', LastName='Contact '+a.Name, AccountId=a.Id, MITA_Contact__c = true, Email='contact@'+a.Name.replace(' ','')+'.com'));
+		for(Account a : Airlines){
+			Contacts.add(new Contact(FirstName = 'Name', LastName='Contact '+a.Name, AccountId=a.Id, MITA_Contact__c = true, MITA_Contact_Type__c= MITA_PortalMyAgreementsCtrl.MandatoryMITAType, Email='contact@'+a.Name.replace(' ','')+'.com'));
+			Contacts.add(new Contact(FirstName = 'NameNoMita', LastName='Contact No Mita '+a.Name, AccountId=a.Id, MITA_Contact__c = true, Email='contactNoMita@'+a.Name.replace(' ','')+'.com'));
+		}
 		insert Contacts;
 
 		Portal_Applications__c app = new Portal_Applications__c(Name = MITA_PortalMyAgreementsCtrl.APP_NAME);
@@ -107,10 +110,19 @@ public class MITA_PortalTest {
 		System.runAs(portalUser){
 			MITA_PortalMyAgreementsCtrl ctrl = new MITA_PortalMyAgreementsCtrl();
 			//system.assertEquals(2,ctrl.wrapperAgreements.size());
+
+			MITA_PortalMyAgreementsCtrl.SuggestedAirline sairTest = ctrl.sair;
+			string s1 = ctrl.MITAagreementid;
+			s1 = ctrl.BIETAagreementid;
+			s1 = ctrl.MITAairlineID;
+			s1 = ctrl.BIETAairlineID;
+			s1 = ctrl.getMITASuggestionTypes();
+			s1 = ctrl.getBIETASuggestionTypes();
+
+
+			
 			ctrl.getMITAAgreementTable();
 			ctrl.getBIETAAgreementTable();
-			ctrl.resetMITAsubmit();
-			ctrl.resetBIETAsubmit();
 
 			PageReference page = ctrl.initActions();
 			System.assert(page==null, 'No page should be returned');
@@ -118,92 +130,11 @@ public class MITA_PortalTest {
 			ctrl.getBIETAAgreementTypes();
 			ctrl.getMITASuggestionTable();
 			ctrl.getBIETASuggestionTable();
-			ctrl.selectMITAAgreement();
-			ctrl.selectBIETAAgreement();
-			ctrl.createMITAAgreement();
-			ctrl.createBIETAAgreement();
-			ctrl.resetMITAWithdrawals();
-			ctrl.resetBIETAWithdrawals();
-			ctrl.getMITASuggestionTypes();
-			ctrl.getBIETASuggestionTypes();
-			ctrl.deleteMITAAgreement();
-			ctrl.deleteBIETAAgreement();
-			ctrl.completeWithdrawal();
-			ctrl.completeSubmit();
 		}
 		Test.stopTest();
 	}
 
-/*
-	static TestMethod void testPortalMyAgreementsSubmission(){
-		initData();
-		setMITADates(MyAirline,date.today().addDays(-1));
-		setBIETADates(MyAirline,date.today().addDays(-1));
-		update MyAirline;
 
-		Airlines[0].MITA_Member__c = true;
-		Airlines[0].BIETA_Member__c = true;
-		setMITADates(Airlines[0],date.today().addDays(1));
-		setBIETADates(Airlines[0],date.today().addDays(1));
-
-		update Airlines[0];
-
-		Test.startTest();
-
-		System.runAs(portalUser){
-			MITA_PortalMyAgreementsCtrl ctrl = new MITA_PortalMyAgreementsCtrl();
-			system.assertEquals(Airlines.size(),ctrl.suggestedAirlines.size());
-			system.assertEquals(0,ctrl.wrapperAgreements.size());
-			system.assertEquals(false, ctrl.MITAwithdrawalMode);
-			system.assertEquals(false, ctrl.BIETAwithdrawalMode);
-			system.assertEquals(false, ctrl.MITAsubmitMode);
-			system.assertEquals(false, ctrl.BIETAsubmitMode);
-
-
-			// Check mita submission
-			ctrl.MITAairlineID = Airlines[0].Id;
-			ctrl.createMITAAgreement();
-			system.assertEquals(true,ctrl.MITAsubmitMode);
-				//system.assertEquals(MyAirline.Id, ctrl.agr.Airline_1__c);
-				//system.assertEquals(Airlines[0].Id, ctrl.agr.Airline_2__c);
-				//system.assertEquals('MITA', ctrl.agr.MITAorBIETA__c);
-
-				//ctrl.agr.Effective_date__c = date.today();
-				//ctrl.agr.Agreement_type__c = 'The Passenger Interline Agreement';
-			ctrl.completeSubmit();
-
-			ctrl.completeSubmit();
-			system.assertEquals(false,ctrl.MITAsubmitMode,'The process should now allow me to proceed and go back to the list');
-
-
-			// TODO: when the proper process will be set up (probably case creation) need to add assertions to test it!
-
-
-
-			ctrl.BIETAairlineID = Airlines[0].Id;
-			ctrl.createBIETAAgreement();
-			system.assertEquals(true,ctrl.BIETAsubmitMode);
-				//system.assertEquals(MyAirline.Id, ctrl.agr.Airline_1__c);
-				//system.assertEquals(Airlines[0].Id, ctrl.agr.Airline_2__c);
-				//system.assertEquals('BIETA', ctrl.agr.MITAorBIETA__c);
-			system.assertNotEquals(null, ctrl.sair);
-
-				//ctrl.agr.Cancellation_date__c = date.today();
-				//ctrl.agr.Agreement_type__c = 'One Way Passenger Issuing Airline';
-			ctrl.completeSubmit();
-			system.assertEquals(false,ctrl.BIETAsubmitMode,'The process should now allow me to proceed and go back to the list');
-
-
-			// TODO: when the proper process will be set up (probably case creation) need to add assertions to test it!
-
-
-			system.assertNOTEquals('',ctrl.getMITASuggestionTable());
-			system.assertNOTEquals('',ctrl.getBIETASuggestionTable());
-			ctrl.getMITAAgreementTable();
-			ctrl.getBIETAAgreementTable();
-		}
-	}
-	*/
 
 	static TestMethod void testSuggestedAirline(){
 		initData();
@@ -297,84 +228,74 @@ public class MITA_PortalTest {
 		system.assertEquals(false, found, '"One Way Passenger Issuing Airline" should not be one of the suggested agreement types');
 
 	}
-/*
-	static TestMethod void testPortalMyAgreementsWithdrawal(){
+
+	static TestMethod void testContacts(){
 		initData();
+		MyAirline.MITA_Member__c = true;
+		MyAirline.BIETA_Member__c = true;
 		setMITADates(MyAirline,date.today().addDays(-1));
 		setBIETADates(MyAirline,date.today().addDays(-1));
-		update MyAirline;
 
+		Airlines[0].MITA_Member__c = true;
+		Airlines[0].BIETA_Member__c = true;
 		setMITADates(Airlines[0],date.today());
 		setBIETADates(Airlines[0],date.today());
-		update Airlines[0];
+
+		update new list<Account>{MyAirline, Airlines[0]};
 
 		agreements = new List<MITA_Agreement__c>();
 		agreements.add(new MITA_Agreement__c(Airline_1__c = MyAirline.ID, Airline_2__c = Airlines[0].Id, MITAorBIETA__c='MITA', Agreement_Type__c = 'The Passenger Interline Agreement', Effective_date__c = Date.today()));
 		agreements.add(new MITA_Agreement__c(Airline_1__c = MyAirline.ID, Airline_2__c = Airlines[0].Id, MITAorBIETA__c='BIETA', Agreement_Type__c = 'One Way Passenger Issuing Airline', Effective_date__c = Date.today()));
 		insert agreements;
 
-		setMITADates(MyAirline,date.today().addDays(-1));
-		setBIETADates(MyAirline,date.today().addDays(-1));
-		update MyAirline;
-
-		Airlines[0].MITA_Member__c = true;
-		Airlines[0].BIETA_Member__c = true;
-		setMITADates(Airlines[0],date.today().addDays(1));
-		setBIETADates(Airlines[0],date.today().addDays(1));
-
-		update Airlines[0];
-
 		Test.startTest();
 
 		System.runAs(portalUser){
+			list<contact> OtherMyAirlineContacts = new list<contact>();
+			OtherMyAirlineContacts.add(new Contact(FirstName = 'NameNoMita', LastName='My Contact No Mita', AccountId=MyAirline.Id, Email='contactNoMita@MyAirline.com'));
+			OtherMyAirlineContacts.add(new Contact(FirstName = 'NameMita', LastName='My Contact Mita', AccountId=MyAirline.Id, Email='contactMita@MyAirline.com', MITA_Contact_Type__c = MITA_PortalMyAgreementsCtrl.MandatoryMITAType));
+			insert OtherMyAirlineContacts;
+			
 			MITA_PortalMyAgreementsCtrl ctrl = new MITA_PortalMyAgreementsCtrl();
-			system.assertEquals(Airlines.size(),ctrl.suggestedAirlines.size());
-			system.assertEquals(2,ctrl.wrapperAgreements.size());
-			system.assertEquals(false, ctrl.MITAwithdrawalMode);
-			system.assertEquals(false, ctrl.BIETAwithdrawalMode);
-			system.assertEquals(false, ctrl.MITAsubmitMode);
-			system.assertEquals(false, ctrl.BIETAsubmitMode);
+			PageReference page = ctrl.initActions();
+			string contType = ctrl.getContactTypes();
 
+			//testing other airline contacts view
+			string otherAirlineContTable = ctrl.RetrieveOtherAirlineContacts();
+			system.assert(string.isBlank(ctrl.OtherAirlineContactTable));
+			ctrl.selectedAirlineId=ctrl.EncryptId(Airlines[0].Id);
+			otherAirlineContTable = ctrl.RetrieveOtherAirlineContacts();
+			system.assert(!string.isBlank(ctrl.OtherAirlineContactTable));
 
-			// Check mita withdrawal
-			ctrl.MITAagreementid = agreements[0].id;
-			ctrl.deleteMITAAgreement();
-			system.assertEquals(true,ctrl.MITAwithdrawalMode);
-			system.assertEquals(agreements[0].Id, ctrl.agr.Id);
+			//testing my contact search
+			system.assert(string.isBlank(ctrl.myAllContactsTable));
+			ctrl.SearchCriteria = 'contactNoMita@MyAirline.com';
+			ctrl.SearchContact();
+			system.assert(string.isNotBlank(ctrl.myAllContactsTable));
 
-			ctrl.agr.Cancellation_date__c = date.today();
-			ctrl.completeWithdrawal();
+			//test edit contact
+			list<contact> myMitaCon = [select id, mita_contact_type__c, MITA_Teletype__c from contact where Email='contactMita@MyAirline.com'];
+			system.assertEquals(1,myMitaCon.size());
+			system.assertEquals(null, myMitaCon[0].mita_teletype__c);
+			ctrl.selectedContactToEdit = ctrl.EncryptId(myMitaCon[0].Id);
+			ctrl.retrieveContactToEdit();
+			system.assert(ctrl.ContactBeingEdited.id == myMitaCon[0].Id);
+			ctrl.ContactBeingEdited.MITA_Teletype__c = '123456';
+			ctrl.ValidateContact();
+			system.assert(string.isBlank(ctrl.SaveError));
+			ctrl.SaveTheContact();
+			myMitaCon = [select id, mita_contact_type__c, MITA_Teletype__c from contact where Email='contactMita@MyAirline.com' limit 1];
+			system.assertEquals('123456', myMitaCon[0].Mita_teletype__c);
 
-			system.assertEquals(false,ctrl.MITAwithdrawalMode,'The process should now allow me to proceed and go back to the list');
-
-
-			// TODO: when the proper process will be set up (probably case creation) need to add assertions to test it!
-
-
-
-			ctrl.BIETAagreementID = agreements[1].Id;
-			ctrl.deleteBIETAAgreement();
-			system.assertEquals(true,ctrl.BIETAWithdrawalMode);
-			system.assertEquals(agreements[1].Id, ctrl.agr.Id);
-
-			ctrl.agr.Cancellation_date__c = date.today();
-			ctrl.completeWithdrawal();
-			system.assertEquals(false,ctrl.BIETAWithdrawalMode,'The process should now allow me to proceed and go back to the list');
-
-
-			// TODO: when the proper process will be set up (probably case creation) need to add assertions to test it!
-
-
-			ctrl.getMITAAgreementTable();
-			ctrl.getBIETAAgreementTable();
-
-			ctrl.resetMITAsubmit();
-			ctrl.resetBIETAsubmit();
-			ctrl.resetMITAwithdrawals();
-			ctrl.resetBIETAwithdrawals();
-
+			//test remove contact
+			ctrl.selectedContactToRemove = ctrl.EncryptId(myMitaCon[0].Id);
+			ctrl.retrieveContactToRemove();
+			system.assert(ctrl.ContactBeingRemoved.id == myMitaCon[0].Id);
+			ctrl.ValidateContactRemoval();
+			system.assert(string.isNotBlank(ctrl.SaveError));
+			//remove anyway, just to test the method
+			ctrl.removeTheContact();
 		}
+		Test.stopTest();
 	}
-*/
-
 }

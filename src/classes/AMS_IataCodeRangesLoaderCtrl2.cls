@@ -259,16 +259,14 @@ public class AMS_IataCodeRangesLoaderCtrl2{
 						 ApexPages.addMessage(errorMessage);
 				}
 				if(b||b2||b3||b4){
-							List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-							List<String> receivers = new List<String>();
-							for(User u:[Select Id,Name,Email from User where Id=:userinfo.getuserId()])
-									receivers.add(u.Email);
-							Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-							mail.setSubject('[IATA CODE GENERATION] Loader Issue cause '+b+' / '+b2+' / '+b3+' / '+b4);
-							mail.setToAddresses(receivers) ;
-							mail.setPlainTextBody(sb.getStringValue());
-							emails.add( mail);
-							if(!Test.isRunningTest()) Messaging.sendEmail(emails);
+						List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+						mail.setSubject('[IATA CODE GENERATION] Loader Issue cause '+b+' / '+b2+' / '+b3+' / '+b4);
+						mail.setTargetObjectId(UserInfo.getuserId()) ;
+						mail.setPlainTextBody(sb.getStringValue());
+						mail.setSaveAsActivity(false);
+						emails.add( mail);
+						if(!Test.isRunningTest()) Messaging.sendEmail(emails);
 				}
 				ApexPages.Message errorMessage = new ApexPages.Message(ApexPages.severity.INFO,'Systems has loaded '+newIataCodeRanges.size()+' ranges');
 				ApexPages.addMessage(errorMessage);

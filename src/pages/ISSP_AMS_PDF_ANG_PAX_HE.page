@@ -102,13 +102,21 @@
                         <tr style="display: {!IF(isocountry.Hide_Tax_Number_VAT__c,'none','')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_VAT_number_input__c}</td>
-                        </tr>
+                        </tr> 
                         <tr>
                             <td class="label" width="40%">{!$Label.ISSP_AMS_Step3_Office_FullAddress}</td>
                             <td colspan="2">
                                 {!hqAccount.BillingStreet} <br/>
                                 {!hqAccount.BillingCity},&nbsp;{!hqAccount.BillingPostalCode} <br/>
                                 {!hqAccount.BillingState},&nbsp;{!hqAccount.BillingCountry}                 
+                            </td>
+						</tr>
+						<tr>
+                            <td class="label" width="40%">{!$Label.ISSP_Shipping_Address}</td>
+                            <td colspan="2">
+                                {!hqAccount.ShippingStreet} <br/>
+                                {!hqAccount.ShippingCity},&nbsp;{!hqAccount.ShippingPostalCode} <br/>
+                                {!hqAccount.ShippingState},&nbsp;{!hqAccount.ShippingCountry}                 
                             </td>
                         </tr>
                      </table>
@@ -166,7 +174,15 @@
                             <td colspan="2">
                                 {!newForm.Branch_Office_Street_name_number__c} <br/>
                                 {!newForm.Branch_Office_City__c},&nbsp;{!newForm.Branch_Office_Postal_code__c} <br/>
-                                {!newForm.State_Province__c},&nbsp;{!isocountry.Name}                 
+                                {!newForm.State_Province__c},&nbsp;{!isocountry.Name}
+                            </td>
+						</tr>
+						<tr>
+                            <td class="label" width="40%">{!$Label.ISSP_Shipping_Address}</td>
+                            <td colspan="2">
+                                {!newForm.Shipping_Street__c} <br/>
+                                {!newForm.Shipping_City__c},&nbsp;{!newForm.Shipping_Postal_Code__c} <br/>
+                                {!newForm.Shipping_State__c},&nbsp;{!newForm.Shipping_Country__c}
                             </td>
                         </tr>
                      </table>
@@ -305,20 +321,15 @@
                                                 </td>
                                                 <td class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.Agency_owner__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-                                                    <!-- <apex:inputCheckbox value="{!agencycon.Agency_owner__c}" disabled="true"/> -->
                                                 </td>
                                                 <td class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.Agency_role__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-                                                    <!-- <apex:inputCheckbox value="{!agencycon.Agency_role__c}" disabled="true"/> -->
                                                 </td>
                                                 <td class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.Authorised_signatory__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-                                                    <!-- <apex:inputCheckbox value="{!agencycon.Authorised_signatory__c}" disabled="true"/> -->
                                                 </td>
-                                                <!--<apex:outputText >type -> {!newForm.Agent_Type__c}</apex:outputText>-->
                                                 <td style="display:{!IF(OR(amsOfficeType != 'HO',newForm.Agent_Type__c=='Standard no Cash', newForm.Local_Agent_Type__c == 'Domestic'),'none','')}" class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
-                                                    <!-- <apex:inputCheckbox value="{!agencycon.Financial_Assessment_Contact__c}" disabled="true"/> -->
                                                 </td>
                                                 <td style="display:{!IF(amsOfficeType != 'HO','none','')}" class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
@@ -399,19 +410,17 @@
                                     <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
                                 </td>
                             </tr>
-                            <apex:outputPanel rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                                <tr>
+                                <tr style="display:{!IF(newForm.Agent_Type__c == 'Standard no Cash', 'none', '')}">
                                     <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
-                                    <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
+                                    <td colspan="2">{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
                                 </tr>
-                                <tr>
+                                <tr style="display:{!IF(newForm.Agent_Type__c == 'Standard no Cash', 'none', '')}">
                                     <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
-                                    <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
+                                    <td colspan="2">{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}&nbsp;{!newForm.CurrencyIsoCode}</td>
                                 </tr>
-                            </apex:outputPanel>
                             <tr>
                                 <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>                                
-                                <td style="padding:10px 10px">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
+                                <td colspan="2" style="padding:10px 10px">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
                             </tr>
                              <tr style="display:{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c != 'Yes','none','')}">
                                 <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}</td>
@@ -430,7 +439,11 @@
                             <tr style="display: {!IF(amsOfficeType=='HO','','none')}">
                                 <td class="label">{!$Label.ISSP_AMS_Step3_Indicate_GDSs}</td>
                                 <td colspan="2">{!newForm.ISSP_AMS_GDS_with_signed_contract__c}</td>
-                            </tr>                            
+							</tr>
+							<tr>
+								<td class="label">{!$Label.ISSP_NDC_Transaction_Question}</td>
+								<td colspan="2">{!newForm.NDC_Transactions__c}</td>
+							</tr>
                         </table>
                     </apex:pageBlock>
                 </div>

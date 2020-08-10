@@ -6,20 +6,31 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>Currency Center Monthly Survey Notification First</name>
     <style>freeForm</style>
-    <subject>Monthly Survey reminder</subject>
+    <subject>Currency Repatriation Issues - Monthly Survey Reminder</subject>
     <textOnly>Dear Currency Center users,
 
-In order to ensure complete and accurate reporting of the monthly currency repatriation report, we would be grateful for your time to fill in our data collection regarding blocked funds.
+In order to ensure complete and accurate reporting of the monthly currency repatriation report, we would be grateful for your time to fill in our data collection regarding blocked funds with the latest information.
+
 It is very important that you report back to us :
-Amount blocked in respective currencies as at month end
-Allocation amounts received
+
+Amount blocked in respective currencies as of the month end (previous month)
+Recent Allocation amounts received
 Any on ground activities/discussions being carried out from your end to unlock blocked funds situation.
 Any specific topic/subject matter you would like a particular focus on
+
 Please ensure you provide us with complete information by latest 14th {!CASE(MONTH(TODAY()),1,&apos;January&apos;,2,&apos;February&apos;,3,&apos;March&apos;,4,&apos;April&apos;,5,&apos;May&apos;,6,&apos;June&apos;,7,&apos;July&apos;,8,&apos;August&apos;,9,&apos;September&apos;,10,&apos;October&apos;,11,&apos;November&apos;,12,&apos;December&apos;,&apos;&apos;)}. Your participation is essential to IATA Currency Repatriation advocacy efforts.
+
 Should you have any queries or more feedback, please log a case in your IATA Customer Portal under the topic &quot;Currency Center&quot;.
 
+This monthly exercise is in continuity with the Annual Survey. Please note if you don&apos;t have any currency repatriation issues you can ignore this email.
+
+
 Kind regards,
-Currency Center Team</textOnly>
+Currency Center Team
+
+
+
+You can find Monthly Survey here.</textOnly>
     <type>html</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

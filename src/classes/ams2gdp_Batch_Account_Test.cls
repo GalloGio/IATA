@@ -26,6 +26,7 @@ private class ams2gdp_Batch_Account_Test
 			//settings.Notification_Email__c = 'hello@world.com';
 		upsert settings AMS_2_GDP_Settings__c.Id;
 
+		ams2gdp_TestDataGenerator.counter=1000;
 		Account new_account = ams2gdp_TestDataGenerator.generateAccounts(1,false)[0];
 		new_account.Website = ams2gdp_TestDataGenerator.generateRandomString(101);
 		insert new_account;
@@ -119,6 +120,7 @@ private class ams2gdp_Batch_Account_Test
 
 	@isTest static void negativeTestAccountBatch()
 	{
+		ams2gdp_TestDataGenerator.counter=2000;
 		Account new_account = ams2gdp_TestDataGenerator.generateAccounts(1,false)[0];
 		new_account.Website = ams2gdp_TestDataGenerator.generateRandomString(101);
 		insert new_account;
@@ -141,9 +143,14 @@ private class ams2gdp_Batch_Account_Test
 
 	@isTest static void negativeTestAccount2Batch()
 	{
+		ams2gdp_TestDataGenerator.counter=3000;
 		Account new_account = ams2gdp_TestDataGenerator.generateAccounts(1,false)[0];
 		new_account.Website = ams2gdp_TestDataGenerator.generateRandomString(101);
-		insert new_account;
+		try {
+			insert new_account;
+		} catch (Exception e) {
+			System.Assert(false, '** ' + new_account);
+		}
 
 		Test.startTest();
 			ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false, false);

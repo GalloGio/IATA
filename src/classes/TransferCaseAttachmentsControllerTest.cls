@@ -163,7 +163,10 @@ private class TransferCaseAttachmentsControllerTest {
 				//insert c5;
 				list<Case> lstCasesToInsert = new list<Case>{c3, c4, c5};
 				insert lstCasesToInsert;
-
+				
+            	insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia,ComplaintIDFS,'
+		+  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+            
 				// Create attachments on c2
 				Attachment att1 = new Attachment(ParentId = c2.Id, Name='att 1', Body = Blob.valueOf('Unit Test Attachment Body'));
 				//insert att1;
