@@ -2405,6 +2405,11 @@ SIS Charge Code Type.</description>
                     <label>Airlines. Magazine Subscription</label>
                 </value>
                 <value>
+                    <fullName>Airline Sustainability Reporting Handbook</fullName>
+                    <default>false</default>
+                    <label>Airline Sustainability Reporting Handbook</label>
+                </value>
+                <value>
                     <fullName>Airport Development Reference Manual</fullName>
                     <default>false</default>
                     <label>Airport Development Reference Manual</label>
@@ -14468,6 +14473,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Sustainability Reporting Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
