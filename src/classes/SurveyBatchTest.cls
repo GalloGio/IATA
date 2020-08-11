@@ -71,6 +71,13 @@ public class SurveyBatchTest {
 					LanguageLocaleKey='en_US');
 
 		insert u1;
+
+		System.runAs(u1) {
+			PermissionSetAssignment psa = new PermissionSetAssignment
+			(PermissionSetId = [Select Id From PermissionSet where name = 'Airline_HQ_ACLI'].id, AssigneeId = u1.id);
+			insert psa;
+		}
+		
 		SurveyBatchIgnoreUsers__c ign = new SurveyBatchIgnoreUsers__c();
 		ign.FirstName__c = 'Ángel';
 		ign.LastName__c = 'Peña';
