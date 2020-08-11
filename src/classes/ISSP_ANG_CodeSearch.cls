@@ -236,7 +236,7 @@ public class ISSP_ANG_CodeSearch {
 
 				if(agency.Accreditation_date__c != null){
 					Datetime output = agency.Accreditation_date__c;
-					AccreditationDateFormated = output.format('dd-MMM-YYYY');
+					AccreditationDateFormated = output.format('dd-MMM-yyyy');
 				}
 			} else {
 				this.activeError = true;
