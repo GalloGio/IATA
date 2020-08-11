@@ -2805,3 +2805,6 @@ html {
 .specialPickList .slds-combobox_container input[role="textbox"]{
   border-color:#1e32fa;
 }
+.MaxModalContainerDim{
+    max-width:596px;
+}
