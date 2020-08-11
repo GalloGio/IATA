@@ -1,15 +1,15 @@
 <template>
     <div class="modal ">
         <div class={variantCls}>
-            <div data-icon class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap slds-icon">
+            <div data-icon class="slds-align_absolute-center slds-col slds-size--3-of-4 slds-wrap slds-icon slds-is-relative">
                 <span class="circleOutter slds-grid">
-                    <span class="circleInner slds-align--absolute-center slds-grid">
-                        <img class="slds-col slds-align_absolute-center iconSize" src={iconSrc}/>
+                    <span class="circleInner slds-align_absolute-center">
+                        <img class="slds-col iconSize" src={iconSrc}/>
                     </span>
                 </span>
             </div>
         </div>
-        <div class="slds-size_full slds-align_absolute-center slds-wrap customWhiteBackground ContainerDim">
+        <div class="slds-align_absolute-center customWhiteBackground ContainerDim">
             <slot name="bodycontent" >
                 <!-- body content-->           
             </slot>
