@@ -14,7 +14,20 @@ public with sharing class CaseCommentAutoReply implements Queueable {
 	public static final String CLOSURE_STATUS_FINISHED_UNRESOLVED = 'Finished_Unresolved';
 	public static final String CLOSURE_STATUS_FINISHED_NEW_CASE = 'Finished_New_Case';
 	public static final String CLOSURE_STATUS_CLOSURE_DECLINED = 'Closure_Declined';
-	
+
+	public static Notification_template__c NOTIFICATION_TEMPLATE;
+	public static Notification_template__c getTemplate() {
+		if (NOTIFICATION_TEMPLATE==null) {
+			NOTIFICATION_TEMPLATE = [
+				SELECT Id, Name, Message__c, Subject__c, Language__c, Expire_in_days__c, Alert_Contact_By_Email__c,
+					Type__c, Notification_color__c, CriticalNotification__c
+				FROM Notification_template__c
+				WHERE Name = :Label.Case_Comment_Notification_Template_Name
+				LIMIT 1];
+		}
+		return NOTIFICATION_TEMPLATE;
+	}
+
 	public static final List<String> AUTO_REPLY_ELIGIBLE_STATUS = new List<String> {
 		CLOSURE_STATUS_STARTED, CLOSURE_STATUS_ONGOING, CLOSURE_STATUS_FINISHED_RESOLVED, CLOSURE_STATUS_FINISHED_UNRESOLVED, CLOSURE_STATUS_CLOSURE_DECLINED
 	};
@@ -68,18 +81,12 @@ public with sharing class CaseCommentAutoReply implements Queueable {
 			Database.insert(toInsert);
 		}
 		if (!fieldBindingByGroupMap.isEmpty()) {
-			Notification_template__c template = [SELECT Id, Name, Message__c, Subject__c, Language__c, Expire_in_days__c, Alert_Contact_By_Email__c,
-													 Type__c, Notification_color__c, CriticalNotification__c
-												 FROM Notification_template__c
-												 WHERE Name = :Label.Case_Comment_Notification_Template_Name
-												 LIMIT 1];
-			
 			List<Contact> contacts = new List<Contact>();
 			for (String contactId : fieldBindingByGroupMap.keySet()) {
 				contacts.add(new Contact(Id = contactId));
 			}
 			
-			ISSP_NotificationUtilities.sendNotification(contacts, template, null, fieldBindingByGroupMap, 'Id');
+			ISSP_NotificationUtilities.sendNotification(contacts, getTemplate(), null, fieldBindingByGroupMap, 'Id');
 		}
 		
 	}

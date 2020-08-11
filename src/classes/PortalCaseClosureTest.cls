@@ -99,6 +99,11 @@ public class PortalCaseClosureTest {
 	@isTest
 	public static void testMovePendingClosure() {
 		Case c1 = [SELECT Id, Status, RecordType.DeveloperName, Visible_on_ISS_Portal__c FROM Case WHERE Subject LIKE '%Test 1%' LIMIT 1];
+		CaseCommentAutoReply.NOTIFICATION_TEMPLATE =
+			[SELECT Id, Name, Message__c, Subject__c, Language__c, Expire_in_days__c, Alert_Contact_By_Email__c,
+					Type__c, Notification_color__c, CriticalNotification__c
+			FROM Notification_template__c
+			LIMIT 1];
 
 		Test.startTest();
 
