@@ -1793,7 +1793,7 @@ public without sharing class ISSP_Registration {
 					selectedAccId = accList[0].Id;
 				}
 			} else {
-				searchCountryISOCode = isAirline ? countryISOCodeMap.get(searchCountryAirline) : countryISOCodeMap.get(searchCountry);
+				searchCountryISOCode = isAirline ? countryISOCodeMap.get(searchCountryAirline) : countryISOCodeMap.get(searchCountry);	
 				searchCountryName = isAirline ?	countryMap.get(searchCountryAirline) : countryMap.get(searchCountry);
 				searchCountry = isAirline ? searchCountryAirline : searchCountry;
 				showCreateAccount = true;
@@ -1803,158 +1803,15 @@ public without sharing class ISSP_Registration {
 			}
 		}
 	}
-
-	//EM - To be removed
-	public static void fakemethod () {
-		if (Test.isRunningTest()) {
-			Integer i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-		}
-
-	}
-
+	
 	public static String isoStates {
 		get{
 			if(isoStates == null) {
-				List<IATA_ISO_State__c> lstStates = [SELECT IATA_ISO_Country__r.Name,Informatica_Value__c, IATA_ISO_Country__r.ISO_Code__c
-													 FROM IATA_ISO_State__c
+				List<IATA_ISO_State__c> lstStates = [SELECT IATA_ISO_Country__r.Name,Informatica_Value__c, IATA_ISO_Country__r.ISO_Code__c 
+													 FROM IATA_ISO_State__c 
 													 WHERE IATA_ISO_Country__r.Name IN ('Canada', 'United States', 'Brazil', 'Australia', 'Venezuela') AND Informatica_Value__c  != null
 													 ORDER BY IATA_ISO_Country__r.Name, Informatica_Value__c  ASC];
-
+				
 				Map<String,List<String>> mapStates = new Map<String,List<String>>();
 				for(IATA_ISO_State__c state : lstStates) {
 					List<String> states = mapStates.get(state.IATA_ISO_Country__r.ISO_Code__c);
@@ -1966,12 +1823,12 @@ public without sharing class ISSP_Registration {
 				}
 				isoStates = JSON.serialize(mapStates);
 			}
-
+			
 			return isoStates;
 		}
 		set;
 	}
-
+	
 	/* end */
-
+	
 }
