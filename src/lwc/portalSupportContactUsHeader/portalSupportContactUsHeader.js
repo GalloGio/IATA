@@ -324,7 +324,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 				if (pageParams.countryISO === undefined || pageParams.countryISO === '') {
 					this.countryValue = this.contact.ISO_Country__r!== undefined?this.contact.ISO_Country__r.ISO_Code__c:null;
 				} else {
-					this.countryISO = pageParams.countryISO;
+					this.countryValue = pageParams.countryISO;
 				}
 				if ('topic' in pageParams && pageParams.topic !== '') {
 					const checkTopic = obj => obj.value === pageParams.topic;
