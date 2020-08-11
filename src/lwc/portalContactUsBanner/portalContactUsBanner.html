@@ -1,0 +1,18 @@
+<template>
+    <div class="customCardWhite slds-align_absolute-center slds-p-around--xx-large slds-wrap">
+        <span class="slds-grid">
+            <span class="slds-col slds-align_absolute-center">
+                <img src={iconUrl}>
+            </span>
+        </span>
+        <span class="slds-col slds-m-top--medium slds-size--1-of-1 slds-text-align--center text-darkGray text-large text-bold">
+            <h2>{label.title}</h2>
+        </span>
+        <span class="slds-col slds-m-bottom--medium slds-p-around_medium slds-size--1-of-1 slds-text-align--center text-darkGray text-xsmall">
+            <h4 class="slds-align--absolute-center slds-size--1-of-1 slds-small-size--3-of-4 lineH">{label.msg}</h4>
+        </span>
+        <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-4">
+            <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Contact Us" variant="neutral" onclick={goTo}></lightning-button>
+        </div>
+    </div>
+</template>

@@ -43,7 +43,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 	global String countryToSearch;
 
 	global static final Map<String,String> typeOfChangeMap = new Map<String, String> {
-				'Ownership to non-IATA Agent' => 'Hierarchy;Ownership',
+				'Ownership to non-IATA Agent' => 'Ownership',
 				'Ownership to IATA Agent' => 'Hierarchy;Ownership',
 				'Location with inspection' => 'Location',
 				'Name' => 'Legal name',
@@ -251,14 +251,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		//Below code will fetch the job Id
 		AsyncApexJob a = [Select a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus, a.CreatedById, a.CompletedDate From AsyncApexJob a WHERE id = :BC.getJobId()];
 
-		System.debug('$$$ Jobid is'+BC.getJobId());
-
-		String userName = UserInfo.getUserName();
-		User activeUser = [Select Email From User where Username = : userName limit 1];
-		String userEmail = activeUser.Email;
-
 		//below code will send an email to User about the status
-		mail.setToAddresses( new String[] {userEmail} );
+		mail.setTargetObjectId(UserInfo.getUserId());
+		mail.setSaveAsActivity(false);
 		mail.setSenderDisplayName('Apex Newgen Conversion Batch Processing Module');
 		mail.setSubject('Batch Processing '+a.Status);
 

@@ -10,6 +10,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 	private static Contact C1;
 
 	private static void getUpdatedAccountData(){
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		List<Account> accs = [SELECT Id, Name, IATAcode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, ParentId, Status__c FROM Account];
 
 		for(Account acc: accs){
@@ -112,23 +114,42 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 		update oscar;
 
 		/*** AMSU-180 ***/
+		Id cId;
+		if(typeOfChange == 'Ownership to IATA Agent' && targetAgency <> null) {
+			C1.AccountId = targetAgency.Id;
+			update C1;
+
+			cId = C1.Id;
+			AMS_Account_Role__c targetOwner = new AMS_Account_Role__c(
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'),
+				Percentage__c = 100,
+				Contact__c = cId,
+				Account__c = targetAgency.Id
+			);
+			insert targetOwner;
+		}
+
 		AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
 			Name= 'test owner',
 			First_name__c= 'test',
 			Last_name__c = 'owner',
-			Email__c= 'owner.test@test.com',
+			Email__c= 'owner.test2@test.com',
 			Phone__c= '123456789',
 			Financial_interest__c= 100,
+			Contact__c = cId,
+			Agency_Owner__c= true,
 			AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')
 		);
 		insert owner;
 
-		return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
+		return oscar;
 
 	}
 
 	@testSetup static void setup() {
+
+		Test.startTest();
 
 		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -177,7 +198,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 								  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
 								  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'SA', ParentId = BR1.Id);
 
-		SA4 = new Account(RecordTypeId = rtAgency, Name = 'Beach Travels SA4', IATAcode__c = '7654323', IATA_ISO_Country__c = portugal.id,
+		SA4 = new Account(RecordTypeId = rtAgency, Name = 'Beach Travels SA4', IATAcode__c = '7654327', IATA_ISO_Country__c = portugal.id,
 								  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
 								  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'SA', ParentId = HO1.Id);
 
@@ -264,6 +285,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
 		//system.assertEquals(HO1.Id, null);
 
+		Test.stopTest();
 
 	}
 
@@ -854,10 +876,25 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 		insert pds;
 
 		Test.startTest();
+		AMS_Account_Role__c r = [SELECT Owner_Name__c, RecordTypeId, Percentage__c, Contact__c, Account__c FROM AMS_Account_Role__c WHERE Account__c = :HO2.Id LIMIT 1];
+		AMS_Account_Role__c r1 = r.clone(false,true,false,false);
+		r1.Account__c = BR1.Id;
+		AMS_Account_Role__c r2 = r.clone(false,true,false,false);
+		r2.Account__c = BR2.Id;
+		AMS_Account_Role__c r3 = r.clone(false,true,false,false);
+		r3.Account__c = SA1.Id;
+		AMS_Account_Role__c r4 = r.clone(false,true,false,false);
+		r4.Account__c = SA2.Id;
+		AMS_Account_Role__c r5 = r.clone(false,true,false,false);
+		r5.Account__c = SA3.Id;
+		AMS_Account_Role__c r6 = r.clone(false,true,false,false);
+		r6.Account__c = SA4.Id;
+		insert new List<AMS_Account_Role__c> {r1,r2,r3,r4,r5,r6};
 
 		//oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		update oscar;
+		Test.stopTest();
 
 		getUpdatedAccountDataV2();
 
@@ -921,7 +958,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 		//all the conditions inside the loop must happen
 		System.assertEquals(countConditions, 7);
 
-		Test.stopTest();
+        
 
 	}
 

@@ -17,7 +17,7 @@ private class ISSP_ANG_CodeSearchTest {
 				BSP_Country_free_text__c='HE'
 			);
 
-		insert portugal;
+		insert new list<IATA_ISO_Country__c>{portugal,switzerland};
 
 		Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
 
@@ -40,8 +40,6 @@ private class ISSP_ANG_CodeSearchTest {
 										  Name_on_AOC__c = 'Stuff',
 										  IATA_ISO_Country__c = portugal.Id,
 										  RecordTypeId = airlineHeadquartersRT);
-
-		insert headquarter;
 
 		/*
 			Travel agencies 8 digit IATA code
@@ -71,7 +69,7 @@ private class ISSP_ANG_CodeSearchTest {
 				IATACode__c = '12345678901'
 			);
 
-		insert new List<Account>{a1,a2};
+		insert new List<Account>{headquarter,a1,a2};
 
 		Account a3 = new Account (
 				name = 'Travel agency (child)',
@@ -87,8 +85,6 @@ private class ISSP_ANG_CodeSearchTest {
 				Location_Class__c = 'P'
 			);
 
-		insert a3;
-
 		Account a4 = new Account (
 				name = 'Travel agency (child)',
 				RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
@@ -99,11 +95,11 @@ private class ISSP_ANG_CodeSearchTest {
 				Location_type__c = AMS_Utils.BR,
 				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
 				OwnerId = UserInfo.getUserId(),
-				IATACode__c = '87654321',
+				IATACode__c = '87654322',
 				Location_Class__c = 'P'
 			);
 
-		insert a4;
+		insert new List<Account>{a3,a4};
 
 		Agency_Authorization__c aa = new Agency_Authorization__c (
 				ANG_FormOfPayment_ID__c = 'CC',
@@ -149,13 +145,12 @@ private class ISSP_ANG_CodeSearchTest {
 			ANG_CashCondition__c = true,
 			ANG_AccountId__c = a1.id
 		);
-		insert rhcInfoForPT;
 
 		ANG_RHC_Information__c rhcInfoForAE = new ANG_RHC_Information__c(
 			ANG_CashCondition__c = true,
 			ANG_AccountId__c = a4.id
 		);
-		insert rhcInfoForAE;
+		insert new list<ANG_RHC_Information__c>{rhcInfoForPT, rhcInfoForAE};
 
 
 		IATA_Code_Search_Special_Countries__mdt sCountry = new IATA_Code_Search_Special_Countries__mdt(

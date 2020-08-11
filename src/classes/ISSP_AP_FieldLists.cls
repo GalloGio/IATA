@@ -106,7 +106,6 @@ public class ISSP_AP_FieldLists {
 
 	//Mandatory BSP fields specific to Italy
 	public static final Map<String,String> bsp_IT_MandatoryFields = new Map<String,String>{
-		'Other_TAX_Identification__c'     		=> ''
 	};
 
 	//Mandatory BSP fields specific to Canada
@@ -175,7 +174,6 @@ public class ISSP_AP_FieldLists {
 
 	//Mandatory CASS fields specific to Italy
 	public static final Map<String,String> cass_IT_MandatoryFields = new Map<String,String>{
-		'Other_TAX_Identification__c'     		=> ''
 	};
 
 	public static final Map<String,Map<String,String>> cass_MandatoryFieldsbyCountry = new Map<String,Map<String,String>>{
@@ -193,7 +191,7 @@ public class ISSP_AP_FieldLists {
 	};
 
 	public static final Map<String,String> changeMandatoryFields = new Map<String,String>{
-			'Desired_commencment_date__c'				=> 'Desired commencment date',
+			'Desired_commencment_date__c'				=> 'DKesired commencement date',
 			'Type_of_Change_Requested__c'				=> 'Type of change requested',
 			'Contact_Resp_Job_Title__c'     			=> 'Contact Job Title',
 			'Contact_Resp_F_Name__c'                    => '',
@@ -224,6 +222,52 @@ public class ISSP_AP_FieldLists {
 			'Contact_Resp_Email__c'                     => '',
 			'Contact_Resp_Job_Title__c'                 => '',
 			'Contact_Resp_Phone__c'						=> ''
+	};
+
+	public static final Map<String,String> passMandatoryFields = new Map<String,String>{
+	'Desired_commencment_date__c' 					=> '',
+	'Contact_Resp_Salutation__c' 					=> '',
+	'Contact_Resp_F_Name__c' 						=> '',
+	'Contact_Resp_L_Name__c' 						=> '',
+	'Contact_Resp_Email__c' 						=> '',
+	'Contact_Resp_Job_Title__c'		 				=> '',
+	'Contact_Resp_Phone__c' 						=> '',
+	'CASSLink_Contact_Salutation__c' 				=> '',
+	'CASSLink_Contact_F_Name__c' 					=> '',
+	'CASSLink_Contact_L_Name__c' 					=> '',
+	'CASSLink_Contact_Job_Title__c' 				=> '',
+	'CASSLink_Contact_Email__c'						=> '',
+	'CASSLink_Contact_Phone__c' 					=> '',
+	'Billing_File_Emrgcy_Contact_Salutation__c' 	=> '',
+	'Billing_File_Emrgcy_Contact_F_Name__c' 		=> '',
+	'Billing_File_Emrgcy_Contact_L_Name__c' 		=> '',
+	'Billing_File_Emrgcy_Contact_Job_Title__c' 		=> '',
+	'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
+	'CASSLink_New_User_1_Salutation__c'				=> '',
+	'CASSLink_New_User_1_F_Name__c'					=> '',
+	'CASSLink_New_User_1_L_Name__c'					=> '',
+	'CASSLink_New_User_1_Email__c'					=> ''
+	};
+
+	public static final Map<String, String> passgssaMandatoryFields = new Map<String, String>{
+		'GSSA_Legal_Name__c'				=> '',
+		'GSSA_Code__c'						=> '',
+		'GSSA_HQ_Address__c'				=> '',
+		'GSSA_HQ_City__c'					=> '',
+		'GSSA_HQ_Post_Code__c'				=>'',
+		'GSSA_HQ_Country__c'				=>'',
+		'GSSA_Contact_Salutation__c'		=>'',
+		'GSSA_Contact_F_Name__c'			=>'',
+		'GSSA_Contact_L_Name__c'			=>'',
+		'GSSA_Contact_JobTitle__c'			=>'',
+		'GSSA_Contact_Email__c'				=>'',
+		'GSSA_Contact_Phone__c'				=>'',
+		'CASSLink_Contact_Salutation__c' 	=>'',
+		'CASSLink_Contact_F_Name__c'		=>'',
+		'CASSLink_Contact_L_Name__c'		=>'',
+		'CASSLink_Contact_Job_Title__c'		=>'',
+		'CASSLink_Contact_Email__c'			=>'',
+		'CASSLink_Contact_Phone__c'			=>''
 	};
 
 }

@@ -193,8 +193,7 @@ public without sharing class ISSP_ChangePassword {
 		displayPopup = false;
 	}
 
-    public void provisioning(){ 
-
+	public void provisioning(){
 		LightningConnectedAppHelper.submit('FRED', 'FRED Primary User');
 	}
 
@@ -214,7 +213,7 @@ public without sharing class ISSP_ChangePassword {
 
 			// This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field
 			// for the service and the same user could receive several invitations for different services
-			List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: userProvisining[0].SalesforceUser.Email limit 1];
+			List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: userProvisining[0].SalesforceUser.Email AND ServiceId__c = null limit 1];
 
 			if(!invitations.isEmpty()){
 				isPrimaryUser = invitations[0].Role__c == 'Primary';
@@ -269,7 +268,7 @@ public without sharing class ISSP_ChangePassword {
 			// String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
 
 			User userInfo = [SELECT id, accountId, ContactId, contact.user_portal_status__c FROM USER WHERE id=: UserInfo.getUserId()];
-			
+
 
 			List<Account_Contact_Role__c> accContRoleCheck = [SELECT id FROM Account_Contact_Role__c WHERE Service_Rendered__c = 'IFTP' AND Contact__c = :userInfo.ContactId];
 

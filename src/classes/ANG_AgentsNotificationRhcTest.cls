@@ -73,6 +73,8 @@ private class ANG_AgentsNotificationRhcTest {
 			 AND UserRoleId <> NULL
 			 LIMIT 1
 			];
+			insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+			+  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		System.runAs(adminWithRole) {
 
@@ -175,8 +177,7 @@ private class ANG_AgentsNotificationRhcTest {
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c = acct.Id,
 			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			ANG_Forecasted_RHC_Effective_date__c = System.today()
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO
 		);
 
 		insert rhcInfo;
@@ -236,7 +237,7 @@ private class ANG_AgentsNotificationRhcTest {
 			 LIMIT 1
 			];
 
-		System.assert(no2.Message__c.contains('RHC Amount: ' + String.valueOf(rhcInfo.ANG_RHC_Amount_Forecasted__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
+		System.assert(no2.Message__c.contains('RHC Amount: ' + String.valueOf([select ANG_RHC_Amount__c from ANG_RHC_Information__c  where id =:rhcInfo.Id limit 1].get(0).ANG_RHC_Amount__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
 
 		//Now checking that the blocking is working
 		Integer size = [SELECT Id FROM Notification__c ].size();

@@ -925,7 +925,6 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <controllingFieldValue>IATA Branded Merchandise</controllingFieldValue>
                 <valueName>New</valueName>
             </valueSettings>
             <valueSettings>
@@ -2406,6 +2405,11 @@ SIS Charge Code Type.</description>
                     <label>Airlines. Magazine Subscription</label>
                 </value>
                 <value>
+                    <fullName>Airline Sustainability Reporting Handbook</fullName>
+                    <default>false</default>
+                    <label>Airline Sustainability Reporting Handbook</label>
+                </value>
+                <value>
                     <fullName>Airport Development Reference Manual</fullName>
                     <default>false</default>
                     <label>Airport Development Reference Manual</label>
@@ -2471,9 +2475,9 @@ SIS Charge Code Type.</description>
                     <label>Cargo Tariff Coordinating Conference Resolutions Manuals</label>
                 </value>
                 <value>
-                    <fullName>Cargo-XML Tookit</fullName>
+                    <fullName>Cargo-XML Toolkit</fullName>
                     <default>false</default>
-                    <label>Cargo-XML Tookit</label>
+                    <label>Cargo-XML Toolkit</label>
                 </value>
                 <value>
                     <fullName>City Code Directory</fullName>
@@ -2586,9 +2590,19 @@ SIS Charge Code Type.</description>
                     <label>IATA Cargo Handling Manual</label>
                 </value>
                 <value>
+                    <fullName>IATA Clearing Services Exchange Rates</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing Services Exchange Rates</label>
+                </value>
+                <value>
                     <fullName>IATA Consolidated Exchange Rates</fullName>
                     <default>false</default>
                     <label>IATA Consolidated Exchange Rates</label>
+                </value>
+                <value>
+                    <fullName>IATA COVID-19 Passenger Survey</fullName>
+                    <default>false</default>
+                    <label>IATA COVID-19 Passenger Survey</label>
                 </value>
                 <value>
                     <fullName>IATA Exchange Rates</fullName>
@@ -2629,6 +2643,11 @@ SIS Charge Code Type.</description>
                     <fullName>International Aircraft Financing</fullName>
                     <default>false</default>
                     <label>International Aircraft Financing</label>
+                </value>
+                <value>
+                    <fullName>ISAGO Standards Manual</fullName>
+                    <default>false</default>
+                    <label>ISAGO Standards Manual</label>
                 </value>
                 <value>
                     <fullName>List of Ticket and Airport Taxes and Fees</fullName>
@@ -4228,11 +4247,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                     <default>false</default>
                     <label>data-and-statistics</label>
                 </value>
-                <value>
-                    <fullName>IATA Branded Merchandise</fullName>
-                    <default>false</default>
-                    <label>IATA Branded Merchandise</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -4783,6 +4797,11 @@ The product will only appear on the Online Store when the date entered in this f
                     <fullName>Academic Partnership</fullName>
                     <default>false</default>
                     <label>Academic Partnership</label>
+                </value>
+                <value>
+                    <fullName>Aircraft Maintenance</fullName>
+                    <default>false</default>
+                    <label>Aircraft Maintenance</label>
                 </value>
                 <value>
                     <fullName>Airport &amp; Civil Aviation</fullName>
@@ -8173,7 +8192,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo-XML Tookit</fullName>
+                <fullName>Cargo-XML Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8254,6 +8273,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing Services Exchange Rates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11305,7 +11328,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo-XML Tookit</fullName>
+                <fullName>Cargo-XML Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14453,6 +14476,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airline Sustainability Reporting Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
@@ -14509,7 +14536,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo-XML Tookit</fullName>
+                <fullName>Cargo-XML Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14589,7 +14616,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA COVID-19 Passenger Survey</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Cargo Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing Services Exchange Rates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14618,6 +14653,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>IATA and Aviation History</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISAGO Standards Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17513,7 +17552,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo-XML Tookit</fullName>
+                <fullName>Cargo-XML Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18631,10 +18670,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
-            <values>
-                <fullName>IATA Branded Merchandise</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
@@ -20764,7 +20799,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo-XML Tookit</fullName>
+                <fullName>Cargo-XML Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22098,6 +22133,10 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>Product_Segment__c</picklist>
             <values>
                 <fullName>Academic Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance</fullName>
                 <default>false</default>
             </values>
             <values>

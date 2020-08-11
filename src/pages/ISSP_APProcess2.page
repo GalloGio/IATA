@@ -38,6 +38,7 @@
                                 <center>
                                     <apex:pageBlock mode="edit">
                                         <apex:pageBlockButtons location="bottom">
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-left" action="{!goToStep1}" value="Previous" id="Previous" rendered="{!strLOB == 'PASS'}" />
                                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="Next" id="Next"/>&nbsp;
                                         </apex:pageBlockButtons>
                                     </apex:pageBlock>
@@ -56,6 +57,7 @@
                             <apex:form >
                                 <center>
                                     <apex:pageBlock >
+                                        <apex:commandButton styleclass="apbutton" action="{!goToStep1}" value="Previous" id="Previous" rendered="{!strLOB == 'PASS'}" />
                                         <apex:commandButton styleclass="apbutton" action="{!goToStep3}" disabled="True" value="Next" id="Next"/>
                                     </apex:pageBlock>
                                 </center>

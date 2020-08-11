@@ -152,7 +152,7 @@
                                     </apex:outputPanel>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel rendered="{!(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash')}">
+                                <apex:outputPanel rendered="{!AND(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', hqAccount.ANG_Accreditation_Model__c != ACCREDITATION_MODEL_MC)}">
                                     <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">Assessment Contact</apex:outputPanel>
                                     <apex:repeat value="{!List_IFAPAgencyContacts}" var="ifapCon">
                                         <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
@@ -206,7 +206,7 @@
                     </apex:panelGrid>
                         
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label)}" />
                     <apex:outputText ><img src="{!IF(newForm.Notify_Change_Legal_Details__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                            
@@ -239,12 +239,12 @@
                         <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Legal_Details__c)}"></apex:outputPanel>
                         
                         <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
-                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label)}" style="font-weight:bold; font-size:110%"/>
                                 <apex:outputField value="{!accountConcerned.VAT_Number__c}" />
                            </apex:panelGrid>
                           
                            <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2" rendered="{!newForm.Notify_Change_Legal_Details__c}">
-                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label)}" style="font-weight:bold; font-size:110%"/>
                                <apex:outputText value="{!IF(isEUcountry, newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_Number_Input__c,newForm.ISSP_AMS_VAT_Number_Input__c)}"/>
                            </apex:panelGrid>
                     </apex:panelGrid>
@@ -276,7 +276,7 @@
                     </apex:panelGrid>
                         
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label)}" />
                     <apex:outputText ><img src="{!IF(newForm.Notify_Change_Location__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                     <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
@@ -393,7 +393,7 @@
                 </apex:panelGrid>
                         
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label)}" />
                     <apex:outputText ><img src="{!IF(newForm.Notify_Change_Ownership__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
             
@@ -426,7 +426,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel ><!-- LHS --></apex:outputPanel>
-                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!newForm.Notify_Change_Ownership__c}">
+                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c)}">
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" />
@@ -526,7 +526,7 @@
                     <apex:outputPanel layout="block" rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"><!--In case no new companies--></apex:outputPanel>
 
                     <apex:outputPanel ><!-- LHS--></apex:outputPanel>
-                    <apex:outputPanel rendered="{!newForm.Notify_Change_Ownership__c}">
+                    <apex:outputPanel rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c)}">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Other_Owner}</apex:outputPanel>
 
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">

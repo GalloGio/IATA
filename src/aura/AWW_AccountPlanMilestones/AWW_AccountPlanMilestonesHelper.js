@@ -39,13 +39,19 @@
 
         $A.enqueueAction(action);
     },
-    editRecord : function(component,event) {
+    editRecord : function(component,event, idRow) {
+        component.set('v.milestoneView',true);
         var modalCmp = component.find('manage-record');
-        modalCmp.showModal(event.getParam('row'));
+        var data = component.get('v.data');
+        for(let i = 0; i < data.length; i++ ){
+            if(data[i].Id == idRow){
+                modalCmp.showModal(data[i]);
+            }
+        }
     },
-    deleteRecord : function(component, event) {
+    deleteRecord : function(component, event, idRow) {
         var modalCmp = component.find('delete-record');
-        modalCmp.showModal(event.getParam('row').Id);
+        modalCmp.showModal(idRow);
     },
     sortData : function(component,fieldName,sortDirection) {
         var data = component.get('v.data');

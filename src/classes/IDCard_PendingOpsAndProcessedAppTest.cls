@@ -250,6 +250,29 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 		Id rtmass =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 		Id rtcase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 
+		Promotion__c promo = new Promotion__c();
+		promo.Promotion_Value__c = 50;
+		promo.Promotion_Duration_Valid_From__c = Date.today().addDays(-365);
+		promo.Promotion_Duration_Valid_Up_to__c = Date.today().addDays(365);
+		promo.Promotion_Code__c = 'PROMOP';
+		promo.Type_of_Application__c = 'New;Reissue';
+		insert promo;
+
+		CanadianTax__c tax = new CanadianTax__c();
+		tax.Name = 'Tx';
+		tax.Tax_Name__c = 'Tx';
+		tax.Tax_Percentage__c = 10.000;
+		tax.Country__c = 'Australia';
+		tax.Province__c =  null;
+		insert tax;
+		tax = new CanadianTax__c();
+		tax.Name = 'Tx2';
+		tax.Tax_Name__c = 'Tx2';
+		tax.Tax_Percentage__c = 5.000;
+		tax.Country__c = 'Australia';
+		tax.Province__c = null;
+		insert tax;
+
 		List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 		for (integer i = 0; i < 10; i++) {
 			apps.add(new ID_Card_Application__c(VER_Number__c = cs[i].VER_Number_2__c,
@@ -259,6 +282,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 												Application_Status__c = 'Pending',
 												Type_Of_Application__c = 'New',
 												IATA_Code__c = a.IATAcode__c,
+												Promotion_Code__c = promo.Promotion_Code__c,
 												Applicable_fee__c = 50,
 												ID_Card_Fee__c = 50,
 												ITDI_Courses_Fee__c = 0,

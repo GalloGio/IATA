@@ -1,4 +1,4 @@
-<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+<aura:component controller="AMP_IssuesAndPrioritiesExtension" access="public">
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="reportId" type="String" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
@@ -24,7 +24,7 @@
                              'AM_Regional__c': false,
                              'AM_Local__c': false,
                              'AM_Issue_with_IATA__c': false,
-                             'AM_Public__c': false}"/>
+                             'AM_Public__c': true}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <!--<aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />-->
     <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.showDeletePopup" />
@@ -89,7 +89,7 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col">
+                        <th scope="col" class="medColumn">
                             <!-- <span class="slds-truncate">Name</span> -->
 
                                 <ui:outputText value="Division" title="Division__c" click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
@@ -196,31 +196,21 @@
                                     </aura:renderIf>
                                 </div>
                         </th>
-                        <th scope="col" class="narrowColumn">
-                            <!-- <span class="slds-truncate">Issue with IATA</span> -->
-                                <ui:outputText value="Issue with IATA" title="AM_Issue_with_IATA__c"  click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
-                                <span class="slds-assistive-text">Sort Column</span>
-                                <div class="slds-icon_container" title="Sort Column">
-                                    <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__c'}">
-                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
-                                    </aura:renderIf>
-                                    <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__cdesc'}">
-                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
-                                    </aura:renderIf>
-                                </div>
-                        </th>
-                        <th scope="col" class="narrowColumn">
-                            <!-- <span class="slds-truncate">Visible to all IATA</span> -->
-                                <ui:outputText value="Visible to all IATA" title="AM_Public__c"  click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
-                                <span class="slds-assistive-text">Sort Column</span>
-                                <div class="slds-icon_container" title="Sort Column">
-                                    <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__c'}">
-                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
-                                    </aura:renderIf>
-                                    <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__cesc'}">
-                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
-                                    </aura:renderIf>
-                                </div>
+                        <th scope="col" class="medColumn">
+                            <ui:outputText value="Issue with IATA" title="AM_Issue_with_IATA__c"  click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
+                            <span class="custom-help-text slds-icon_container slds-icon_container_circle slds-icon-action-description" title="{!$Label.c.issue_with_iata}">
+                                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/action-sprite/svg/symbols.svg#question_post_action'}" class="slds-icon slds-icon-text-default slds-icon--x-small" />
+                                <span class="slds-assistive-text">{!$Label.c.issue_with_iata}</span>
+                            </span>
+                            <span class="slds-assistive-text">Sort Column</span>
+                            <div class="slds-icon_container" title="Sort Column">
+                                <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__c'}">
+                                    <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                                </aura:renderIf>
+                                <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__cdesc'}">
+                                    <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                                </aura:renderIf>
+                            </div>
                         </th>
                     </tr>
                 </thead>

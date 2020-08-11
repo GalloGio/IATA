@@ -55,7 +55,7 @@
         <name>Prepare_SIS_Case</name>
         <label>Prepare SIS Case</label>
         <locationX>1080</locationX>
-        <locationY>478</locationY>
+        <locationY>477</locationY>
         <assignmentItems>
             <assignToReference>SisCase.Subject</assignToReference>
             <operator>Assign</operator>
@@ -117,6 +117,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>UserFlowLauncher.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SisCase.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SISCaseDescription</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -254,9 +261,23 @@
         <expression>SUBSTITUTE({!$Label.SisProcessEmailSubject}, &quot;{0}&quot;, {!Account.Name})</expression>
     </formulas>
     <formulas>
+        <name>SISCaseDescription</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!$Label.SISCaseDescription}, 
+&quot;{0}&quot;, {!Account.Legal_name__c}),
+&quot;{1}&quot;, {!EF_Contact.FirstName}),
+&quot;{2}&quot;, {!EF_Contact.LastName}),
+&quot;{3}&quot;, {!EF_Contact.Email}),
+&quot;{4}&quot;, {!Account.Business_Street__c}),
+&quot;{5}&quot;, {!Account.Business_Postal_Code__c}),
+&quot;{6}&quot;, {!Account.Business_City_Name__c}),
+&quot;{7}&quot;, {!Account.Business_State_Name__c}),
+&quot;{8}&quot;, {!Account.IATA_Iso_Country_Name__c})</expression>
+    </formulas>
+    <formulas>
         <name>SisCaseSubject</name>
         <dataType>String</dataType>
-        <expression>{!$Label.SisProcessCaseSubject}</expression>
+        <expression>{!$Label.SisProcessCaseSubject} &amp; &apos; - &apos; &amp; {!Account.Name}</expression>
     </formulas>
     <interviewLabel>Account Context Activation SIS Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Context Activation SIS Subflow</label>
@@ -290,7 +311,7 @@
         <locationY>245</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Prepare_SIS_Case</targetReference>
+            <targetReference>Get_EF_Account_Role</targetReference>
         </connector>
         <filters>
             <field>DeveloperName</field>
@@ -306,8 +327,8 @@
     <recordLookups>
         <name>Get_Case_RT_Internal_Case</name>
         <label>Get Case RT Internal Case</label>
-        <locationX>899</locationX>
-        <locationY>245</locationY>
+        <locationX>873</locationX>
+        <locationY>248</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Airline_Headoffice_Queue</targetReference>
@@ -329,6 +350,77 @@
         <object>RecordType</object>
         <outputReference>RTInternalCase</outputReference>
         <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_EF_Account_Role</name>
+        <label>Get EF Account Role</label>
+        <locationX>1239</locationX>
+        <locationY>241</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_EF_Contact_Role</targetReference>
+        </connector>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Account.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Functional_Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>E&amp;F</stringValue>
+            </value>
+        </filters>
+        <object>Account_Role__c</object>
+        <outputReference>EF_Account_Role</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_EF_Contact</name>
+        <label>Get EF Contact</label>
+        <locationX>1325</locationX>
+        <locationY>478</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Prepare_SIS_Case</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EF_Contact_Role.Contact__c</elementReference>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <outputReference>EF_Contact</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>FirstName</queriedFields>
+        <queriedFields>LastName</queriedFields>
+        <queriedFields>Email</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_EF_Contact_Role</name>
+        <label>Get EF Contact Role</label>
+        <locationX>1391</locationX>
+        <locationY>321</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_EF_Contact</targetReference>
+        </connector>
+        <filters>
+            <field>Account_Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>EF_Account_Role.Id</elementReference>
+            </value>
+        </filters>
+        <object>Account_Contact_Role__c</object>
+        <outputReference>EF_Contact_Role</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Contact__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_SIS_Case</name>
@@ -407,7 +499,7 @@
             <targetReference>Account_has_SIS_ID</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>Account</name>
         <dataType>SObject</dataType>
@@ -431,6 +523,30 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>EF_Account_Role</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account_Role__c</objectType>
+    </variables>
+    <variables>
+        <name>EF_Contact</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>EF_Contact_Role</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account_Contact_Role__c</objectType>
     </variables>
     <variables>
         <description>Determines if the flow has been relaunched by a process builder</description>

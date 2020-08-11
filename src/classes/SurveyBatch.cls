@@ -3,8 +3,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 	// This batch is joining the old batches: SurveyCustomWorkflowBatch and SurveyCustomerRecoveryBatch
 	// The purpose of joining them in one single batch is to reduce the load on sfdc's batch scheduler
 
-	global set<Id> CasesPart1;
-
 	//----- VARIABLES USED BY PART 1 -----
 	global list<Case> cases;
 	global Set<Id> ContactIds;
@@ -37,6 +35,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 	//----- VARIABLES USED BY PART 2 -----
 	global list<Case> lstCases;
+	global set<Id> casesSet; // Set of Cases where a survey was created yesterday
 	public Date CreatedDate {get; set;}
 
 	global map<String, Id> mapComplaintQueuesPerName = new map<string, Id>();
@@ -57,6 +56,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
 	global List<Case> start(Database.BatchableContext BC) {
+		Set<Id> casesIdToBeProcessed = new Set<Id>();
 		List<Case> casesToBeProcessed = new List<Case>();
 		system.debug(LoggingLevel.error, '################### START() ###########################');
 		system.debug(LoggingLevel.error, '################### START() -> GETTING CASES FOR SENDING THE SURVEY ');
@@ -107,33 +107,27 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			templates.put(et.DeveloperName, et.Id);
 		}
 
-		system.debug('################# QUERY : WHERE ClosedDate > :' + startd + ' AND ClosedDate < :' + endd + '\n' +
-								'AND ContactId <> NULL AND Contact.Email <> NULL \n' +
-								'AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = \'\'\n)' +
-								'AND Instant_Survey_Feedback_requested__c = false' +
-								'AND ParentId == NULL');
+		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject, Customer_recovery__c, OwnerId,
+															 ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
+															 Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
+															 Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
+															 Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
+															 Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
+															 WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
+															 WhoClosedCase__r.Profile.Name, CNSCase__c
+															 FROM Case
+															 WHERE ClosedDate > :startd AND ClosedDate < :endd
+															 AND ContactId <> NULL AND Contact.Email <> NULL
+															 AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
+															 AND Instant_Survey_Feedback_requested__c = false
+															 AND ParentId = NULL //PRB41539
+															 AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
+															 AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
+																	 ORDER BY ClosedDate DESC]);
 
-		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
-															ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
-															Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
-															Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
-															Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
-															Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
-															WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-															WhoClosedCase__r.Profile.Name, CNSCase__c
-															FROM Case
-															WHERE ClosedDate > :startd AND ClosedDate < :endd
-															AND ContactId <> NULL AND Contact.Email <> NULL
-															AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
-															AND Instant_Survey_Feedback_requested__c = false
-															AND ParentId = NULL //PRB41539
-															AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
-															AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
-																	ORDER BY ClosedDate DESC]);
-
-		CasesPart1 = new Set<Id>();
-		for (Case c : casesToBeProcessed)
-			CasesPart1.add(c.Id);
+		for(Case c : casesToBeProcessed){
+			casesIdToBeProcessed.add(c.Id);
+		}
 
 		system.debug(LoggingLevel.error, '################### START() -> PART 1 FOUND ' + casesToBeProcessed.size() + ' CASES');
 
@@ -167,16 +161,18 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			lstCaseIds.add(is.Relationship_to_Case__c);
 		}
 
-		system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
+		List<Case> SurveyCases = [SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
+															 FROM Case
+															 WHERE Id IN :lstCaseIds
+															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR'];//WMO-571
 
-		casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name,
-																	WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
-															FROM Case
-															WHERE Id IN :lstCaseIds
-															AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR']);//WMO-571
-
+		casesSet = new Set<Id>();
+		for (Case c : SurveyCases){
+			casesSet.add(c.Id);
+			if(!casesIdToBeProcessed.contains(c.Id))
+				casesToBeProcessed.add(c);
+		}
 		system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
-
 		return casesToBeProcessed;
 
 	}
@@ -190,14 +186,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 		List<Case> scopepart2 = new List<Case>();
 
 		for (Case c : scope) {
-			if (CasesPart1.contains(c.ID)){
+			if (!casesSet.contains(c.ID)){
 				scopepart1.add(c);
-			}
-
-			else {
+			} else {
 				scopepart2.add(c);
 			}
-
 		}
 
 		processSurveyEmail(scopepart1);
@@ -528,14 +521,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				c.Type_of_customer__c != 'Non-IATA Travel Agent' && c.Type_of_customer__c != 'Auditors' && c.Type_of_customer__c != 'General Public') &&
 				c.Type_of_customer__c != 'Airport Authorities' && c.Type_of_customer__c != 'Government Agencies' &&
 				(c.Origin != 'Agent Financial Review Notification' && c.Origin != 'Airline Participation' && c.Origin != 'Airline Suspension' &&
-				c.Origin != 'AIRS' && c.Origin != 'Code Transfers and Mergers' && c.Origin != 'Customer Portal' &&
-				c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
-				c.Origin != 'Internal Case' && c.Origin != 'IATA internal user' && c.Origin != 'Letter' && c.Origin != 'Monthly Report' &&
-				c.Origin != 'myIATA' && c.Origin != 'New ISS Deployment' && c.Origin != 'OLS' &&
-				c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' && c.Origin != 'E&F Client – Email to Case' &&
-				!c.Phone_Redirected_to_Web__c &&
-				c.Case_Group__c == 'Query' &&
-				RoleName != null)
+				 c.Origin != 'AIRS' && c.Origin != 'Code Transfers and Mergers' && c.Origin != 'Customer Portal' &&
+				 c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
+				 c.Origin != 'Internal Case' && c.Origin != 'IATA internal user' && c.Origin != 'Letter' && c.Origin != 'Monthly Report' &&
+				 c.Origin != 'myIATA' && c.Origin != 'New ISS Deployment' && c.Origin != 'OLS' &&
+				 c.Origin != 'Other' && c.Origin != 'Walk-in' && c.Origin != 'Web SAF' && c.Origin != 'E&F Client – Email to Case' &&
+				 !c.Phone_Redirected_to_Web__c &&
+				 (c.Case_Group__c == 'Query' || c.Case_Group__c == 'CNS Query')  &&
+				 RoleName != null)
 			) {
 				id userroleid = UserInfo.getUserRoleId();
 				system.debug(LoggingLevel.error, '################### Clicktools Workflow ');
@@ -575,7 +568,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 					template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
 				}
 				else if (c.CNSCase__c == true) {
-						template = templates.get('Clicktools_Contact_Email_EN_CNS');
+					template = templates.get('Clicktools_Contact_Email_CX_CNS_EN_AUG17');
 				}
 
 				else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){

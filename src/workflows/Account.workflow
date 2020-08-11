@@ -244,12 +244,32 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Airline_Designator_Backup</fullName>
+        <description>Copy the Airline Designator value to the field Airline Designator Old</description>
+        <field>Old_Airline_designator__c</field>
+        <formula>PRIORVALUE(Airline_designator__c)</formula>
+        <name>Airline Designator Backup</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AutoDDSOptIn</fullName>
         <field>DDS_Status__c</field>
         <literalValue>Opt-In</literalValue>
         <name>AutoDDSOptIn</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Copy_IATACode</fullName>
+        <description>Makes a backup of the IATA Code in the field IATA_Code_duplicate_blocker__c</description>
+        <field>IATA_Code_duplicate_blocker__c</field>
+        <formula>IATACode__c</formula>
+        <name>Copy IATACode</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -581,7 +601,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>AMS_PCI_Auto_Expire</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Is_PCI_compliant__c</field>
             <operation>equals</operation>
@@ -664,6 +684,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Airline Designator Backup</fullName>
+        <actions>
+            <name>Airline_Designator_Backup</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When the filed &apos;Airline Designator&apos; is changed in an Airline this process saves the old value in another field.
+Previously it was done only for ACLI process but now it applies always, including manual changes.</description>
+        <formula>AND(   OR(     RecordType.DeveloperName==&apos;IATA_Airline&apos;,     RecordType.DeveloperName==&apos;IATA_Airline_BR&apos;   ),   ISCHANGED(Airline_designator__c) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Clear Account Type when the field is applicable</fullName>
         <actions>
             <name>Update_Account_Type_to_empty</name>
@@ -672,6 +704,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>false</active>
         <description>Clears the Account Type field when the field should be filled by the user</description>
         <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type__c, &apos;Not Applicable&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Copy IATACode for duplication control</fullName>
+        <actions>
+            <name>Copy_IATACode</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used only for Agencies.
+It copies the value of IATAcode field to an auxiliary unique field. It allows us to have the IATA code unique but only for Agency Recordtype</description>
+        <formula>AND(   OR(     ISNEW(),     ISCHANGED(IATACode__c)   ),   RecordType.DeveloperName = &apos;IATA_Agency&apos; )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

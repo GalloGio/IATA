@@ -1,16 +1,14 @@
-.underLinded {
-    border-bottom: 1px solid #E1E1E1;
-    padding-bottom: 2%;
-    padding-top:2%;
-}​
+.underLined{
+border-bottom: 1px solid #F7F8FA;
+    
+}
 
-.noPadding {
-    padding: 0;
+.cellDefault, .cell{
+    height :65px;
 }
 
 .recordDetail {
-    background-color:#f7f8fa;
-    box-shadow: 0px 10px 15px -5px #e2e2e2 inset;
+    background-color:#f7f8fa;   
     white-space: normal;
     word-break: break-word;
 }
@@ -41,6 +39,42 @@
 }
 
 .titleTruncation {
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.dnicon{
+    background-image: url(./CSPortal/Images/Icons/download.svg);
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+.bkmicon{
+    background-image: url(./CSPortal/Images/Icons/bookmark_unchecked.svg);
+    background-repeat: no-repeat;
+    background-size: contain;    
+    cursor: pointer;
+    display: block;
+    height: 28px;
+    width: 29px;
+
+    -webkit-transition-duration: 0.3s; /* Safari */
+  	transition-duration: 0.3s;
+}
+
+
+
+.bkmicon:hover{
+    background-image: url(./CSPortal/Images/Icons/bookmark_checkedHover.svg);
+}
+
+.bookmarked{
+    background-image: url(./CSPortal/Images/Icons/bookmark_checked.svg);
+}
+
+.bookmarked:hover{
+    background-image: url(./CSPortal/Images/Icons/bookmark_uncheckedHover.svg);
 }

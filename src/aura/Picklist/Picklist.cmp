@@ -1,4 +1,4 @@
-<aura:component description="Picklist" extends="c:CustomInput">
+<aura:component access="public" description="Picklist" extends="c:CustomInput">
 
     <aura:attribute name="label" type="String" default=""/>
     <aura:attribute name="valueLabel" type="String" default=""/>

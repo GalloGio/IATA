@@ -599,6 +599,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Case_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -614,6 +615,16 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedTeamMemberList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>MessagingEndUser</fields>
+        <fields>Owner</fields>
+        <fields>StartTime</fields>
+        <fields>Status</fields>
+        <fields>EndTime</fields>
+        <fields>MessagingChannel</fields>
+        <relatedList>MessagingSession</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

@@ -15,6 +15,7 @@ public with sharing class PortalRecommendationCtrl {
 			'Recommendation_Visibility__r.EndDate__c',
 			'Recommendation_Visibility__r.Icon__c',
 			'Recommendation_Visibility__r.RecommendationTitle__c',
+			'Recommendation_Visibility__r.Content_Reference__c',
 			'Recommendation_Visibility__r.ActionButtonLink__c',
 			'Recommendation_Visibility__r.InformationButtonLink__c',
 			'Recommendation_Visibility__r.RecordTypeId',
@@ -93,29 +94,31 @@ public with sharing class PortalRecommendationCtrl {
 		recommendationList.addAll(recommendationListNonImportant);
 
 		String prodDescription = '';
+		String networkId=[select id from network where name ='E-commerce'].get(0).id;
+		String iecURL = '/servlet/networks/switch?networkId='+networkId.substring(0,15)+'&startURL=';
 		for(Card_Visibility__c rec : recommendationList) {
-			if (rec.Recommendation_Visibility__r.Product__c != null || availableAppNames.contains(rec.Recommendation_Visibility__r.PortalService__c) ) {
-				
-				IEC_Settings__c iecSettings = IEC_Settings__c.getOrgDefaults();
-				String iecURL = '';
-
-				if (rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId) {
-					prodDescription = getProductDescriptionWithUserLanguage(LANGUAGE, rec);
-					iecURL =  iecSettings.IEC_User_Portal_URL__c;
-				}
-
-				recommendations.add(new RecommendationWrapper(
-					rec.Recommendation_Visibility__r.Icon_URL__c,
-					rec.Recommendation_Visibility__r.RecordType.Name,
-					rec.Recommendation_Visibility__r.RecommendationTitle__c,
-					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? ( !String.isBlank(prodDescription) ? prodDescription : rec.Recommendation_Visibility__r.Product_Description__c): rec.Recommendation_Visibility__r.Service_Description__c),
-					learnMoreLabel,
-					rec.Recommendation_Visibility__r.InformationButtonLink__c,
-					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? buyOnlineLabel : (rec.Recommendation_Visibility__r.PortalService__r.Requestable__c ? (isPortalAdmin ? (rec.Recommendation_Visibility__r.PortalService__r.Cannot_be_managed_by_portal_admin__c == false ? enableThisServiceLabel : requestServiceLabel ) : requestServiceLabel) : goToServiceLabel) ),
-					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? iecURL + rec.Recommendation_Visibility__r.ActionButtonLink__c : rec.Recommendation_Visibility__r.ActionButtonLink__c),
-					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
-				));
+			Recommendations_Visibility__c rv= rec.Recommendation_Visibility__r;
+			if (rv.RecordTypeId == serviceRecommendationRecTypeId && rv.PortalService__c!=null && !availableAppNames.contains(rv.PortalService__c)) {
+				continue; 
 			}
+
+			if (rv.RecordTypeId != serviceRecommendationRecTypeId) {
+				prodDescription = getProductDescriptionWithUserLanguage(LANGUAGE, rec);
+			}
+			string prefix =String.isEmpty(rv.Content_Reference__c)?iecURL:'';
+			recommendations.add(new RecommendationWrapper(
+				rv.Icon_URL__c,
+				rv.RecordType.Name,
+				rv.RecommendationTitle__c,
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? ( !String.isBlank(prodDescription) ? prodDescription : rv.Product_Description__c): rv.Service_Description__c),
+				'',
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.InformationButtonLink__c: rv.InformationButtonLink__c),
+				learnMoreLabel,
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? prefix + rv.ActionButtonLink__c : rv.ActionButtonLink__c),
+				(rv.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
+			));
+			
+
 		}
 
 		return recommendations;
@@ -170,4 +173,22 @@ public with sharing class PortalRecommendationCtrl {
 			this.actionType = actionType;
 		}
 	}
+
+	@AuraEnabled
+	public static String getBaseURL() {
+		return URL.getSalesforceBaseUrl().toExternalForm();
+	}
+
+
+	//returns information about the recommendation related to the content reference
+	@AuraEnabled
+	public static Recommendations_Visibility__c getRecomendationDetails(string urlName) {
+
+		if(String.isEmpty(urlName)) return null;
+
+		Recommendations_Visibility__c rec=[select RecommendationTitle__c, PortalService__c, Is_Contact_Request_Visible__c, Is_More_Info_Banner_Visible__c from Recommendations_Visibility__c where Content_Reference__c=:urlName];
+
+		return rec;
+	}
+
 }

@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component access="public">
     <aura:registerEvent name="searchChange" type="c:UprSearchChange"/>
     
     <input type="ui:inputText" style="width:275px; height:32px;" onkeyup="{!c.searchQueryChange}" placeholder="Search App Name, Username, or Operation"/>
