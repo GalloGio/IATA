@@ -10,44 +10,39 @@
         </template>
         <!--LOADING SPINNER-->
 
-        <div class="slds-col slds-size_1-of-1 ">
+        <div class="slds-col slds-size_full">
             <!-- CASE CREATE MODAL -->
             <div class="topOfModal"></div>
             <!--Scroll Anchor-->
             <template if:true={bShowModal}>
                 <c-portal-generic-popup-window variant="success">
-                    <span if:false={isCompliment} slot="bodycontent" class="slds-align--absolute-center">
-                        <div class="slds-size--10-of-12">
-                            <div>
+                    <span if:false={isCompliment} slot="bodycontent">
+                        <div class="MaxModalContainerDim text-xxsmall">
+                            
                                 <h2 id="modal-heading-01"
                                     class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large text-medium text-bold">
                                     {label.csp_CaseCreatedSuccess}
-                                </h2>
-                            </div>
-                            <div class="slds-align_absolute-center">
-                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center text-gray">
+                                </h2>                            
+                                <h2 class=" slds-p-top_small slds-align_absolute-center text-gray">
                                     {label.csp_CaseBeingWorked}
-                                </h2>
-                            </div>
-                            <div class="slds-align_absolute-center">
-                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center text-gray">
+                                </h2>                            
+                                <h2 class=" slds-p-top_small slds-align_absolute-center text-gray">
                                     {label.csp_CaseResponseGuarantee}
                                 </h2>
-                            </div>
+                            
                             <div class="slds-p-vertical_x-large">
-                                <p class="slds-align_absolute-center slds-p-bottom_xx-small text-xxsmall">
+                                <p class="slds-align_absolute-center slds-p-bottom_xx-small ">
                                     {label.CSP_CaseNumber}
                                 </p>
                                 <div
                                     class="slds-box slds-theme_shade slds-align_absolute-center greybox-noborder background-anotherGray">
-                                    <p class="slds-align_absolute-center text-xsmall text-gray">
+                                    <p class="slds-text-align_center text-xsmall text-gray">
                                         {caseNumber}
                                     </p>
                                 </div>
                             </div>
                             <div class="slds-align_absolute-center  slds-p-top_small">
-                                <span class="text-xxsmall slds-text-align_center 
-                            slds-align_absolute-center text-lightGray">
+                                <span class=" slds-text-align_center slds-p-horizontal_large text-lightGray ">
                                     <p>
                                         {label.csp_CaseTracking} <a class="slds-text-link text-bold text-blue"
                                             onclick={navigateToAllCases}>
@@ -56,16 +51,16 @@
                                 </span>
                             </div>
                             <div class="slds-align_absolute-center slds-m-around_xx-large">
-                                <div class="slds-grid slds-gutters">
-                                    <div class="slds-col">
-                                        <button class="containedButtonAlt uiButton contactSupport text-bold text-xsmall"
+                                <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
+                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                        <button class="containedButtonAlt containedButton-size uiButton contactSupport text-bold text-xsmall"
                                             onclick={navigateToSupport}>
                                             {label.csp_GoToSupport}
                                         </button>
                                     </div>
-                                    <div class="slds-col">
+                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 containedButton-size slds-m-top_xx-small">
                                         <button
-                                            class="containedButton containedButton-size uiButton contactSupport text-bold text-xsmall"
+                                            class="containedButton fullHeight fullWidth uiButton contactSupport text-bold text-xsmall"
                                             onclick={navigateToCase}>
                                             {label.csp_ViewCaseSummary}
                                         </button>
@@ -74,28 +69,28 @@
                             </div>
                         </div>
                     </span>                
-                    <span if:true={isCompliment} slot="bodycontent" class="slds-align--absolute-center">
-                        <div class="slds-size--10-of-12">  
+                    <span if:true={isCompliment} slot="bodycontent">
+                        <div class="MaxModalContainerDim">  
                             <div class="slds-align_absolute-center slds-p-horizontal_xx-large slds-p-top_xx-large">
-                                <h2 class="text-medium text-bold slds-p-top_small slds-align_absolute-center text-gray">
+                                <h2 class="text-medium text-bold slds-p-top_small text-gray">
                                     {label.CSP_SupportReachUs_ComplimentInfo}
                                 </h2>
                             </div>
-                            <div class="slds-align_absolute-center">
-                                <h2 class="text-xsmall slds-p-top_small slds-align_absolute-center text-gray">
+                            <div class="slds-align_absolute-center slds-p-horizontal_xx-large">
+                                <h2 class="text-xsmall slds-p-top_small text-gray">
                                     {label.CSP_SupportReachUs_Compliment}
                                 </h2>
                             </div>
                             <div class="slds-align_absolute-center slds-m-around_xx-large">
-                                <div class="slds-grid slds-gutters">
-                                    <div class="slds-col">
-                                        <button class="containedButtonAlt uiButton contactSupport"
+                                <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
+                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                        <button class="containedButtonAlt containedButton-size uiButton contactSupport"
                                             onclick={navigateToSupport}>
                                             {label.CSP_SupportReachUs_GoToSupport}
                                         </button>
                                     </div>
-                                    <div class="slds-col">
-                                        <button class="containedButton containedButton-size uiButton contactSupport"
+                                    <div class="slds-col slds-size_1-of-1 containedButton-size slds-large-size_1-of-2 slds-m-top_xx-small">
+                                        <button class="containedButton fullHeight fullWidth uiButton contactSupport"
                                             onclick={navigateToHomePage}>
                                             {label.CSP_SupportReachUs_GoToHomepage}
                                         </button>
@@ -108,18 +103,19 @@
             </template>
             <template if:true={showConfirmBox}>               
                 <c-portal-support-emergency-popup show-close onabortaction={closeConfirmBox}>
-                    <span slot="ButtonSection" class="slds-align_absolute-center slds-size_full">
-                        <button class="containedButtonAlt containedButton-size
-                                cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={removeEmergency}>
-                            {label.CSP_SubmitAsQuery}
-                        </button>
-                        <button class="containedButton containedButton-size slds-m-horizontal_small"
-                            onclick={prepareCaseRecord}>
-                            {label.CSP_SubmitAsEmergency}
-                        </button>
+                    <span slot="ButtonSection" class="slds-grid slds-wrap slds-grid_vertical-stretch slds-m-around_medium slds-gutters_direct">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">  
+                            <button class="containedButtonAlt containedButton-size fullWidth cursorPointer uiButton contactSupport" onclick={removeEmergency}>
+                                {label.CSP_SubmitAsQuery}
+                            </button>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 containedButton-size slds-m-top_xx-small">
+                            <button class="slds-p-horizontal_large containedButton fullWidth fullHeight cursorPointer uiButton contactSupport slds-button_brand"
+                                onclick={prepareCaseRecord}>
+                                {label.CSP_SubmitAsEmergency}
+                            </button>
+                        </div>
                     </span>
-
-
                 </c-portal-support-emergency-popup>
             </template>          
             <div >                

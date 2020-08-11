@@ -256,10 +256,8 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         this._topicEn=value;
     };
 
-    subtopic;
     topicLabel;
     @track originBtn='';
-    @track subtopicLabel;
     _topicEn='';
 
     @track feedbackType=null;
