@@ -103,16 +103,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	@track showModal = false;
 	@track callUsPhoneNumberConfigs = [];
 	@track phoneNumber = '';
-	@track supOptionsPanel = false;
-	@track showChatTile = false;
-	@track showCallUsTile = false;
 
 	@track showRecentCasesList = true;
 	@track isCaseOpt = true;
 	@track isChatOpt = false;
 	@track isCallOpt = false;
 	@track ignoreCountry = false;
-	@track recordtypeid;
 	//@track suggestion;
 
 	//global variables
@@ -336,8 +332,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
 				this.topic = pageParams.topic;
 				let isEmergency = pageParams.emergency === 'true';
-				this.recordtypeid = pageParams.recordTypeId;
-
 				if (this.isFirstLevelUser && this.topic !== undefined && this.topic !== '') {
 					if (this.requiresL2(this.topic)) {
 						this.displaySecondLevelRegistrationPopup = true;
@@ -410,7 +404,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	//handles country selection
 	countryHandler(event) {
 		this.countryValue = event.target.value;
-		this.updateTile('001');
 		this.supportOptionsHandler();
 		this.template.querySelector('[data-name="countryselection"]').classList.remove('slds-has-error');
 	}

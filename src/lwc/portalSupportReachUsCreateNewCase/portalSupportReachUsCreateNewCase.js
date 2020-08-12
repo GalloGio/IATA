@@ -329,13 +329,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
 
     //Same as doInit() on aura
     connectedCallback() {      
-        let pageParams = getParamsFromPage();
-        if(pageParams !== null&& 'recordTypeId' in pageParams && pageParams.recordTypeId !== '') {
-            this.customTD = true;
-            this.recordTypeId = pageParams.recordTypeId;
-            this.createCaseTD(); 
-        }
-
+        
     }
 
 
@@ -351,7 +345,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
     createCaseCheck(){
         if(this.recordTypeId !=null){
             this.createCaseTD();
-        }else if( this.countryISO !== undefined && this.countryISO != '' && this.topic!== undefined && this.topic!='' ){
+        }else if( this.countryISO !== undefined && this.countryISO != ''&& this.countryISO != 'XX' && this.topic!== undefined && this.topic!='' ){
             this.createCase();
         }
 
@@ -493,8 +487,8 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         this.originBtn= event.target.attributes.getNamedItem('data-id').value;
         if (this.agentProfile) {
             this.checkForErrors();
-        }      
-        if (this.countryISO === undefined || this.countryISO === '' || this.countryISO === 'XX') {
+        }
+        if (this.specialCase===false && (this.countryISO === undefined || this.countryISO === '' || this.countryISO === 'XX')) {
            //is missing value
             this.dispatchEvent(new CustomEvent('missingcountry')); 
 
