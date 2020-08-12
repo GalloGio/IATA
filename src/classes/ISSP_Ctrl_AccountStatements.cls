@@ -176,7 +176,7 @@ global class ISSP_Ctrl_AccountStatements {
 
 		// get HQ account
 		this.account = this.currentUser.Contact.Account;
-		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
+		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.Account);
 		this.headquarter = this.account.Top_Parent__r == null? this.account: this.account.Top_Parent__r;
 		
 		// get Account Statements related with all accounts in the hierarchy
@@ -305,12 +305,13 @@ global class ISSP_Ctrl_AccountStatements {
 	/**
 	 * Get a list containing all account in the input account hirarchy
 	 */
-	private list<Account> getAllHierarchy(Id AccountId) {
+	private list<Account> getAllHierarchy(Account account) {
+		Id topParentId = account.Top_Parent__c == null? account.Id: account.Top_Parent__c;
 		return [
 			Select id, Name, ParentId
 			From Account
-			Where Id =:AccountId
-			Or Top_Parent__c = :AccountId
+			Where Id =:topParentId
+			Or Top_Parent__c = :topParentId
 		];
 	}
 
