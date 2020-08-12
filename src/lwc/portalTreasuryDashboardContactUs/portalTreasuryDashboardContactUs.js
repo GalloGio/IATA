@@ -27,7 +27,7 @@ export default class PortalTreasuryDashboardContactUs extends NavigationMixin(Li
                     this[NavigationMixin.GenerateUrl]({
                             type: "comm__namedPage",
                             attributes: {
-                                pageName: "support-reach-us-create-new-case"
+                                pageName: "support-reach-us"
                             }})
                         .then(url => this.supportReachUsCreateNewCaseURL = url);
                 }
@@ -47,9 +47,7 @@ export default class PortalTreasuryDashboardContactUs extends NavigationMixin(Li
 
         let params = {};
         if(this.recordTypeId !== undefined && this.recordTypeId !== null) {
-            params.recordTypeId = this.recordTypeId;
-            params.concerncase=false;
-            params.emergency=false;
+            params.topic = 'TD'
         }
 
         navigateToPage(this.supportReachUsCreateNewCaseURL, params);
