@@ -139,11 +139,11 @@
                         <!--LOOKUP-->
 
                         <!--FEEDBACK TYPE-->
-                        <div if:true={specialCase} class="slds-p-bottom_large ">
-                            <p class="text-xsmall">{label.CSP_Give_Feedback_Type_Title}</p>
-                            <div data-id="feedback-type" class="customTextInput feedbackTypeBox slds-grid slds-grid_align-center text-small">
+                        <div if:true={specialCase} class="slds-grid slds-wrap slds-p-bottom_large slds-grid">
+                            <p class="slds-col slds-size_full text-xsmall">{label.CSP_Give_Feedback_Type_Title}</p>
+                            <div data-id="feedback-type" class=" slds-col slds-grid slds-size_full slds-grid_vertical-stretch slds-p-left_medium customTextInput feedbackTypeBox text-small">
                                     <c-iata-radio-group 
-                                    class="slds-grid slds-grid_vertical-align-center slds-size--11-of-12"
+                                    class="slds-grid slds-grid_vertical-align-center slds-size_full"
                                     options={feedbackOptions}                                                         
                                     name='type'
                                     value={feedbackType}
