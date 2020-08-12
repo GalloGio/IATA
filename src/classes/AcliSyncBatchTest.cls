@@ -179,11 +179,21 @@ private class AcliSyncBatchTest {
 	
 			// CRON expression: Because this is a test, job executes immediately after Test.stopTest().
 			String CRON_EXP = '0 0 0 15 3 ? 2022';
-	
-			test.startTest();	
-				AcliSyncBatch batch = new AcliSyncBatch(CSV);
-				Database.executeBatch(batch);
-			test.stopTest();
+			
+			User u1  = ISSP_ObjectFactory.createAdminUser();
+
+			System.runAs(u1) {                
+				PermissionSetAssignment psa = new PermissionSetAssignment
+				(PermissionSetId = [Select Id From PermissionSet where name = 'Airline_HQ_ACLI'].id, AssigneeId = u1.id);
+				insert psa;
+			}
+			
+			System.runAs(u1) {                
+					test.startTest();	
+						AcliSyncBatch batch = new AcliSyncBatch(CSV);
+						Database.executeBatch(batch);
+					test.stopTest();
+			}		
 	
 			EI = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI.Id];
 			// check that all the info was updated
@@ -222,6 +232,30 @@ private class AcliSyncBatchTest {
 			system.assertNotEquals(null, sapAR);
 			system.assertEquals(true, sapAR.Airline_Coding__c);
 			system.assertEquals('0010000088', sapAR.SAP_ID__c);
+		}
+
+		@isTest	
+		static void testBatchFail() {
+			loadData();
+			// Create a new ISO Country
+			IATA_ISO_Country__c country_i = new IATA_ISO_Country__c(Name = 'Ireland', ISO_Code__c = 'IE');
+			insert country_i;
+
+			Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+			Account EI = new Account(Name = 'Aer Lingus INTENTIONAL TYPO', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000141', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
+						IATA_ISO_Country__c = country_i.Id);
+			insert EI;
+
+			
+			test.startTest();	
+						AcliSyncBatch batch = new AcliSyncBatch(CSV);
+						Database.executeBatch(batch);
+			test.stopTest();
+
+			EI = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI.Id];
+			// Check if it failied since its not an ACLI User
+			System.AssertEquals('Aer Lingus INTENTIONAL TYPO', EI.Name);
+
 		}
 
 }
