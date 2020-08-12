@@ -494,8 +494,12 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         if (this.agentProfile) {
             this.checkForErrors();
         }      
+        if (this.countryISO === undefined || this.countryISO === '' || this.countryISO === 'XX') {
+           //is missing value
+            this.dispatchEvent(new CustomEvent('missingcountry')); 
 
-        if (this.newRecipient !== undefined && this.newRecipient !== '') {
+            this.showErrorToast();
+        } else  if (this.newRecipient !== undefined && this.newRecipient !== '') {
             this.showWarningToast();
         }else if (this.specialCase ===true && this.feedbackType ===null) {
             let textinput = this.template.querySelector('[data-id="feedback-type"]');

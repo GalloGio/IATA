@@ -322,7 +322,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 				let pageParams = getParamsFromPage();
 
 				if (pageParams.countryISO === undefined || pageParams.countryISO === '') {
-					this.countryValue = this.contact.ISO_Country__r!== undefined?this.contact.ISO_Country__r.ISO_Code__c:null;
+					this.countryValue = this.contact.ISO_Country__r!== undefined?this.contact.Account.Country_ISO_Code__c:null;
 				} else {
 					this.countryValue = pageParams.countryISO;
 				}
@@ -412,6 +412,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 		this.countryValue = event.target.value;
 		this.updateTile('001');
 		this.supportOptionsHandler();
+		this.template.querySelector('[data-name="countryselection"]').classList.remove('slds-has-error');
+	}
+	handleMissingCountry(event){
+		this.template.querySelector('[data-name="countryselection"]').classList.add('slds-has-error');
 	}
 
 
