@@ -122,7 +122,7 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 private static List<Contact> searchRelatedContacts(String searchTerm) {
 
 	//prepare query
-	String finalQuery = 'SELECT Id, Name, Email FROM Contact WHERE Email != \'' + CONTACT.Email + '\'';
+	String finalQuery = 'SELECT Id, Name, Email FROM Contact WHERE Email != \'' + CONTACT.Email + '\' AND User_Portal_Status__c in (\'Approved Admin\',\'Approved User\') ';
 
 	if(String.isNotEmpty(searchTerm)) {
 		finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm) + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\') AND Status__c = \'Active\' AND (NOT Email LIKE \'%.inactive%\')';
