@@ -9386,9 +9386,9 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Interline Agreement Manager</fullName>
+                    <fullName>Interline Passenger Agreement Manager</fullName>
                     <default>false</default>
-                    <label>Interline Agreement Manager</label>
+                    <label>Interline Passenger Agreement Manager</label>
                 </value>
                 <value>
                     <fullName>Passenger Protection Agreement</fullName>
@@ -9399,6 +9399,11 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <fullName>Interline Airline Generic Contact</fullName>
                     <default>false</default>
                     <label>Interline Airline Generic Contact</label>
+                </value>
+                <value>
+                    <fullName>Interline Cargo Agreement Manager</fullName>
+                    <default>false</default>
+                    <label>Interline Cargo Agreement Manager</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -19610,11 +19615,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>MITA_Contact_Type__c</picklist>
             <values>
-                <fullName>Interline Agreement Manager</fullName>
+                <fullName>Interline Airline Generic Contact</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Interline Airline Generic Contact</fullName>
+                <fullName>Interline Cargo Agreement Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interline Passenger Agreement Manager</fullName>
                 <default>false</default>
             </values>
             <values>
