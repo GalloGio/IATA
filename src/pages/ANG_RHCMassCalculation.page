@@ -198,13 +198,6 @@
 						</apex:outputText>
 					</apex:column>
 					
-					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_ConsumedRHC__c.Label}">
-						<apex:outputText escape="false" value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00} <br/> ({1, number, ###,###,###,##0.00}%)" rendered="{!NOT(ISBLANK(agents[mapKey].rhcInfo.ANG_ConsumedRHC__c))}">
-							<apex:param value="{!agents[mapKey].rhcInfo.ANG_ConsumedRHC__c}"/>
-							<apex:param value="{!agents[mapKey].rhcInfo.ANG_ConsumedRHC_Percent__c}"/>
-						</apex:outputText>
-					</apex:column>
-					
 					<apex:column headerValue="Cacl.New Cons.RHC">
 						<apex:outputText value="{0, number, ###,###,###,##0.00}%" rendered="{!NOT(ISBLANK(agents[mapKey].calculatedConsumedRHC))}">
 							<apex:param value="{!agents[mapKey].calculatedConsumedRHC}"/>

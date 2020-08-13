@@ -333,7 +333,6 @@ public class ANG_RHCHelper {
 
 		Decimal newRHCForecastedValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
-		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
 
 		if(ApplyRHC){
 			Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
@@ -365,7 +364,6 @@ public class ANG_RHCHelper {
 		rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
-		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
 	}
 
 	/**

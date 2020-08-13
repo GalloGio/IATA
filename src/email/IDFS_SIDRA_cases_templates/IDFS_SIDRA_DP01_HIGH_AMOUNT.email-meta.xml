@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>email to management for KAM for high amounts</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IDFS_SIDRA_DP01_KAM case created assign to OCIT and notify SCE mgmt_HA</name>
+    <style>none</style>
+    <subject>HIGH AMOUNT: Key Account SIDRA case created - {!Account.Name} - {!Case.BSP_CASS__c} - {!Case.BSPCountry__c}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
