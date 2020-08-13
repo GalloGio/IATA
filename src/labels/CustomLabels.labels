@@ -39716,6 +39716,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Contact Us through Phone Number:</value>
     </labels>
     <labels>
+        <fullName>LVA_ChatWindowAlreadyOpen</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ChatWindowAlreadyOpen</shortDescription>
+        <value>You already have a Chat Open</value>
+    </labels>
+    <labels>
         <fullName>LVA_ChatWithUs</fullName>
         <categories>LVA</categories>
         <language>en_US</language>

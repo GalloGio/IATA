@@ -7,20 +7,33 @@
 
     //Begins chat for Online Default option
     startChatDefault: function (component, event, helper) {
-		document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineDefaultIdLanguage") + "; path=/";
-        liveagent.startChat(component.get("v.liveAgentOnlineDefault"));
+        var inChat = component.get('v.isChatOpen');
+        if(!inChat){
+            component.set('v.isChatOpen',true);
+            document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineDefaultIdLanguage") + "; path=/";
+            liveagent.startChat(component.get("v.liveAgentOnlineDefault"));
+        }
+		
     },
 
     //Begins chat for selected country language
     startChatWithLanguage: function (component, event, helper) {
-		document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineWithCountryLanguage") + "; path=/";
-        liveagent.startChat(component.get("v.liveAgentOnlineWithCountry"));
+        var inChat = component.get('v.isChatOpen');
+        if(!inChat){
+            component.set('v.isChatOpen',true);
+            document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineWithCountryLanguage") + "; path=/";
+            liveagent.startChat(component.get("v.liveAgentOnlineWithCountry"));
+        }
     },
 
     //Begins chat for portal language
     startChatNoLanguage: function (component, event, helper) {
-		document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineNoCountryLanguage") + "; path=/";
-        liveagent.startChat(component.get("v.liveAgentOnlineNoCountry"));
+        var inChat = component.get('v.isChatOpen');
+        if(!inChat){
+            component.set('v.isChatOpen',true);
+            document.cookie = "apex__chatlanguage=" + component.get("v.liveAgentOnlineNoCountryLanguage") + "; path=/";
+            liveagent.startChat(component.get("v.liveAgentOnlineNoCountry"));
+        }
     },
 
     //To toggle the spinner
@@ -44,6 +57,8 @@
     //prepares live agent chat under many possible cases.
     handleLiveAgentChangeEvent: function (component, event, helper) {
         var data = JSON.parse(JSON.stringify(event.getParam('allData')));
+        var currentTopic=component.get("v.topic");
+        
         component.set("v.topic", data.Topic);
         component.set("v.isEmergency", data.Emergency);
         component.set("v.caseRecordType", data.recordTypeAndCountry.RecordType);
@@ -55,6 +70,9 @@
         
         component.set("v.ten", data.TopicEN);
         
+        if(currentTopic!=data.Topic)
+        component.set('v.isChatOpen',false);
+
         component.set("v.showLAButtons", data.showChat);
         //must disconnect and delete in order to re-deploy
         if ((typeof liveagent == "object")) {

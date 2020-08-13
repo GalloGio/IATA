@@ -18,6 +18,7 @@
     <aura:attribute name="isNoCountryLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isWithCountryLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isEmergency" type="Boolean" default="false" />
+    <aura:attribute name="isChatOpen" type="Boolean" default="false" />
     
     <aura:attribute name="showLAButtons" type="Boolean" default="false" />
 
@@ -51,73 +52,78 @@
                                     slds-size_1-of-1
                                    ">
                         <div class="slds-align_absolute-center slds-m-bottom_x-large">
-                            <div
-                                class="slds-grid slds-wrap slds-size--4-of-5 slds-gutters_direct-xx-small slds-align-content-center maxContentWidth">
-                                <aura:if isTrue="{!v.isNoCountryLiveAgent}">
-                                    <div id="btnContainer1"
-                                        class="slds-col slds-size_3-of-7 selfServiceContactSupport forceCommunityCreateRecordButton">
-                                        <div class="sButton">
-                                            <button aura:id="liveAgentOnlineNoCountryId" id="liveAgentOnlineNoCountryId"
-                                                class="containedButtonLiveAgent uiButton contactSupport fullWidth "
-                                                style="display:none;" onclick="{!c.startChatNoLanguage}"
-                                                title="{!'Agent Online (' + v.liveAgentOnlineNoCountryName + ')'}">
-                                                {!v.liveAgentOnlineNoCountryLanguage}
-                                            </button>
-                                            <button aura:id="liveAgentOfflineNoCountryId"
-                                                id="liveAgentOfflineNoCountryId"
-                                                class="containedButtonOfflineLiveAgent uiButton contactSupport fullWidth disabled"
-                                                style="display:none;"
-                                                title="{!'Agent Unavailable (' + v.liveAgentOnlineNoCountryName + ')'}">
-                                                {!v.liveAgentOnlineNoCountryLanguage}
-                                            </button>
+                            <aura:if isTrue="{!v.isChatOpen}">
+                                {!$Label.c.LVA_ChatWindowAlreadyOpen}                  
+                            <aura:set attribute="else">
+                                <div
+                                    class="slds-grid slds-wrap slds-size--4-of-5 slds-gutters_direct-xx-small slds-align-content-center maxContentWidth">
+                                    <aura:if isTrue="{!v.isNoCountryLiveAgent}">
+                                        <div id="btnContainer1"
+                                            class="slds-col slds-size_3-of-7 selfServiceContactSupport forceCommunityCreateRecordButton">
+                                            <div class="sButton">
+                                                <button aura:id="liveAgentOnlineNoCountryId" id="liveAgentOnlineNoCountryId"
+                                                    class="containedButtonLiveAgent uiButton contactSupport fullWidth "
+                                                    style="display:none;" onclick="{!c.startChatNoLanguage}"
+                                                    title="{!'Agent Online (' + v.liveAgentOnlineNoCountryName + ')'}">
+                                                    {!v.liveAgentOnlineNoCountryLanguage}
+                                                </button>
+                                                <button aura:id="liveAgentOfflineNoCountryId"
+                                                    id="liveAgentOfflineNoCountryId"
+                                                    class="containedButtonOfflineLiveAgent uiButton contactSupport fullWidth disabled"
+                                                    style="display:none;"
+                                                    title="{!'Agent Unavailable (' + v.liveAgentOnlineNoCountryName + ')'}">
+                                                    {!v.liveAgentOnlineNoCountryLanguage}
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </aura:if>
-                                <aura:if isTrue="{!v.isWithCountryLiveAgent}">
-                                    <div id="btnContainer2"
-                                        class="slds-col slds-size_3-of-7 selfServiceContactSupport forceCommunityCreateRecordButton">
-                                        <div class="sButton">
-                                            <button aura:id="liveAgentOnlineWithCountryId"
-                                                id="liveAgentOnlineWithCountryId"
-                                                class="containedButtonLiveAgent uiButton contactSupport fullWidth "
-                                                onclick="{!c.startChatWithLanguage}" style="display:none;"
-                                                title="{!'Agent Online (' + v.liveAgentOnlineWithCountryName + ')'}">
-                                                {!v.liveAgentOnlineWithCountryLanguage}
-                                            </button>
-                                            <button aura:id="liveAgentOfflineWithCountryId"
-                                                id="liveAgentOfflineWithCountryId"
-                                                class="containedButtonOfflineLiveAgent uiButton contactSupport fullWidth disabled"
-                                                style="display:none;"
-                                                title="{!'Agent Unavailable (' + v.liveAgentOnlineWithCountryName + ')'}">
-                                                {!v.liveAgentOnlineWithCountryLanguage}
-                                            </button>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.isWithCountryLiveAgent}">
+                                        <div id="btnContainer2"
+                                            class="slds-col slds-size_3-of-7 selfServiceContactSupport forceCommunityCreateRecordButton">
+                                            <div class="sButton">
+                                                <button aura:id="liveAgentOnlineWithCountryId"
+                                                    id="liveAgentOnlineWithCountryId"
+                                                    class="containedButtonLiveAgent uiButton contactSupport fullWidth "
+                                                    onclick="{!c.startChatWithLanguage}" style="display:none;"
+                                                    title="{!'Agent Online (' + v.liveAgentOnlineWithCountryName + ')'}">
+                                                    {!v.liveAgentOnlineWithCountryLanguage}
+                                                </button>
+                                                <button aura:id="liveAgentOfflineWithCountryId"
+                                                    id="liveAgentOfflineWithCountryId"
+                                                    class="containedButtonOfflineLiveAgent uiButton contactSupport fullWidth disabled"
+                                                    style="display:none;"
+                                                    title="{!'Agent Unavailable (' + v.liveAgentOnlineWithCountryName + ')'}">
+                                                    {!v.liveAgentOnlineWithCountryLanguage}
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </aura:if>
-                                <aura:if isTrue="{!v.isTopicLiveAgent}">
-                                    <div id="btnContainer"
-                                        class="slds-col slds-size_3-of-7 selfServiceContactSupport forceCommunityCreateRecordButton">
-                                        <div class="sButton">
-                                            <button id="liveAgentOnlineDefaultId" aura:id="liveAgentOnlineDefaultId"
-                                                style="display:none;"
-                                                class="containedButtonLiveAgent uiButton contactSupport fullWidth"
-                                                onclick="{!c.startChatDefault}"
-                                                title="{!'Agent Online (' + v.liveAgentOnlineDefaultName + ')'}">
-                                                {!v.liveAgentOnlineDefaultIdLanguage}
-                                            </button>
-                                            <button id="liveAgentOfflineDefaultId" aura:id="liveAgentOfflineDefaultId"
-                                                class="containedButtonOfflineLiveAgent uiButton contactSupport fullWidth disabled"
-                                                style="display:none;"
-                                                title="{!'Agent Unavailable (' + v.liveAgentOnlineDefaultName + ')'}">
-                                                {!v.liveAgentOnlineDefaultIdLanguage}
-                                            </button>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.isTopicLiveAgent}">
+                                        <div id="btnContainer"
+                                            class="slds-col slds-size_3-of-7 selfServiceContactSupport forceCommunityCreateRecordButton">
+                                            <div class="sButton">
+                                                <button id="liveAgentOnlineDefaultId" aura:id="liveAgentOnlineDefaultId"
+                                                    style="display:none;"
+                                                    class="containedButtonLiveAgent uiButton contactSupport fullWidth"
+                                                    onclick="{!c.startChatDefault}"
+                                                    title="{!'Agent Online (' + v.liveAgentOnlineDefaultName + ')'}">
+                                                    {!v.liveAgentOnlineDefaultIdLanguage}
+                                                </button>
+                                                <button id="liveAgentOfflineDefaultId" aura:id="liveAgentOfflineDefaultId"
+                                                    class="containedButtonOfflineLiveAgent uiButton contactSupport fullWidth disabled"
+                                                    style="display:none;"
+                                                    title="{!'Agent Unavailable (' + v.liveAgentOnlineDefaultName + ')'}">
+                                                    {!v.liveAgentOnlineDefaultIdLanguage}
+                                                </button>
+                                            </div>
                                         </div>
+                                    </aura:if>
+                                    <div class="slds-col slds-size_full slds-m-top_x-large text-xxsmall">
+                                        <ui:outputRichText value="{!$Label.c.LVA_CallUsDefaultMessage}" />
                                     </div>
-                                </aura:if>
-                                <div class="slds-col slds-size_full slds-m-top_x-large text-xxsmall">
-                                    <ui:outputRichText value="{!$Label.c.LVA_CallUsDefaultMessage}" />
                                 </div>
-                            </div>
+                               </aura:set>
+                            </aura:if>                            
                         </div>
                     </div>
                 </aura:if>
