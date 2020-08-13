@@ -48,16 +48,17 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 	];
 
 // find the top parent
-	Id parentId = null;
-	if (currentAccount.ParentId == null || currentAccount.ParentId =='' ) {
+	string parentId = null;
+	if (currentAccount.ParentId == null ) {
 		parentId = currentAccount.Id;
-	} else if (currentAccount.Parent.ParentId == null || currentAccount.Parent.ParentId =='') {
+	} else if (currentAccount.Parent.ParentId == null) {
+        system.debug(currentAccount.ParentId);
 		parentId = currentAccount.ParentId;
-	} else if (currentAccount.Parent.Parent.ParentId == null || currentAccount.Parent.Parent.ParentId =='') {
+	} else if (currentAccount.Parent.Parent.ParentId == null) {
 		parentId = currentAccount.Parent.ParentId;
-	} else if (currentAccount.Parent.Parent.Parent.ParentId == null || currentAccount.Parent.Parent.Parent.ParentId =='') {
+	} else if (currentAccount.Parent.Parent.Parent.ParentId == null ) {
 		parentId = currentAccount.Parent.Parent.ParentId;
-	} else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null || currentAccount.Parent.Parent.Parent.Parent.ParentId =='') {
+	} else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null ) {
 		parentId = currentAccount.Parent.Parent.Parent.ParentId;
 	} else {
 		parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
