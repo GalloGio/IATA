@@ -6,10 +6,10 @@ global class ISSP_AmazonS3_Ctrl {
 
 	public String policy {get; set;}
 	public String signedPolicy {get; set;}
-	public static String actionStatus {get{return '201';} set;}
-	public String accessid {get{return CREDENTIALS.AWSAccessKeyId;} set;}
-	public static String allowedExtensions {get{return ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;} set;}
-	public static String maxFileSize {get{return ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;} set;}
+	public transient String actionStatus {get{return '201';} set;}
+	public transient String accessid {get{return CREDENTIALS.AWSAccessKeyId;} set;}
+	public transient String allowedExtensions {get{return ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;} set;}
+	public transient String maxFileSize {get{return ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;} set;}
 	public String caseStatus;
 
 	String storageFolder;
@@ -85,7 +85,7 @@ global class ISSP_AmazonS3_Ctrl {
 	private Case cse;
 	private Account acc {get;set;}
 
-	public string AMAZONURL {get{
+	public transient string AMAZONURL {get{
 		return AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL + AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
 	} private set;}
 
