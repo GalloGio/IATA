@@ -459,14 +459,11 @@ public with sharing class sendSingleTrackedEmailControllerTest {
 
 		controller.email.Subject__c = 'test error sending';
 		controller.email.Html_Body__c = 'test';
-		controller.email.TextBody__c = 'test';
+		controller.email.TextBody__c = 'test';           
 		controller.selectedFrom = 'agencymanagement@iata.org';
-
+	
 		controller.sendTrackedEmail();
-
-		//EM: To be removed
-		clsFinancialSecurityRequestController.fakecoverage();
-
+		
 		Test.stopTest();
 	}
 }
