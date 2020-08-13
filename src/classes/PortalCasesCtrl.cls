@@ -692,7 +692,7 @@ public with sharing class PortalCasesCtrl {
 	public static Boolean getHideForClosedCases(String caseId) {
 		set<String> validRecordtypes = new set<String> {
 			'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
-			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE'
+			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review'
 		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
