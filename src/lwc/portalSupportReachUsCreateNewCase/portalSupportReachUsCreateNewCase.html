@@ -52,13 +52,13 @@
                             </div>
                             <div class="slds-align_absolute-center slds-m-around_xx-large">
                                 <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
-                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
                                         <button class="containedButtonAlt containedButton-size uiButton contactSupport text-bold text-xsmall"
                                             onclick={navigateToSupport}>
                                             {label.csp_GoToSupport}
                                         </button>
                                     </div>
-                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2  slds-m-top_xx-small">
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2  slds-m-top_xx-small">
                                         <button class="slds-p-horizontal_large containedButton containedButton-size fullWidth fullHeight cursorPointer uiButton contactSupport slds-button_brand "
                                             onclick={navigateToCase}>
                                             {label.csp_ViewCaseSummary}
@@ -82,13 +82,13 @@
                             </div>
                             <div class="slds-align_absolute-center slds-m-around_xx-large">
                                 <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
-                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
                                         <button class="containedButtonAlt containedButton-size uiButton contactSupport"
                                             onclick={navigateToSupport}>
                                             {label.CSP_SupportReachUs_GoToSupport}
                                         </button>
                                     </div>
-                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2  slds-m-top_xx-small">
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2  slds-m-top_xx-small">
                                         <button class="slds-p-horizontal_large containedButton containedButton-size fullHeight cursorPointer uiButton contactSupport slds-button_brand "
                                             onclick={navigateToHomePage}>
                                             {label.CSP_SupportReachUs_GoToHomepage}
@@ -103,12 +103,12 @@
             <template if:true={showConfirmBox}>               
                 <c-portal-support-emergency-popup show-close onabortaction={closeConfirmBox}>
                     <span slot="ButtonSection" class="slds-grid slds-wrap slds-grid_vertical-stretch slds-m-around_medium slds-gutters_direct">
-                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">  
+                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">  
                             <button class="containedButtonAlt containedButton-size fullWidth cursorPointer uiButton contactSupport" onclick={removeEmergency}>
                                 {label.CSP_SubmitAsQuery}
                             </button>
                         </div>
-                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2  slds-m-top_xx-small">
+                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2  slds-m-top_xx-small">
                             <button class="slds-p-horizontal_large containedButton containedButton-size fullWidth fullHeight cursorPointer uiButton contactSupport slds-button_brand "
                                 onclick={prepareCaseRecord}>
                                 {label.CSP_SubmitAsEmergency}
@@ -215,19 +215,19 @@
                         </template>
                         <div class="slds-p-vertical_large">
                             <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
-                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
                                     <button onclick={finishCreatingCase} data-id="Show_Success"
                                         class="containedButtonAlt containedButton-size fullWidth cursorPointer uiButton contactSupport">
                                         {label.csp_CreateNewCaseTopLabel}
                                     </button>
                                 </div>
-                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
                                     <button onclick={finishCreatingCase} data-id="Add_Attachment"
                                         class="slds-p-horizontal_large containedButton fullWidth containedButton-size cursorPointer uiButton contactSupport slds-button_brand">
                                         {label.csp_CreateNewCaseAddAttachment}
                                     </button>
                                 </div>
-                                <div if:true={specialCase} class="slds-col slds-align_absolute-center slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_xx-small">
+                                <div if:true={specialCase} class="slds-col slds-align_absolute-center slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
                                     <button onclick={finishCreatingCase} data-id="Show_Success"
                                         class="containedButton containedButton-size fullWidth cursorPointer uiButton contactSupport">
                                        {label.CSP_Submit}
