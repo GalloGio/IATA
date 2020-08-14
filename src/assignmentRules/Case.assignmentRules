@@ -6958,7 +6958,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+            <booleanFilter>(1 OR 4) AND (2 OR 3)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -6973,6 +6973,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
                 <field>Case.Compliment__c</field>
                 <operation>equals</operation>
                 <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>NO COUNTRY</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
