@@ -509,6 +509,11 @@
             <operation>contains</operation>
             <value>Platform Events for</value>
         </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2020 12:00 AM</value>
+        </filters>
         <label>Platform Events Helper</label>
         <language>en_US</language>
     </listViews>
