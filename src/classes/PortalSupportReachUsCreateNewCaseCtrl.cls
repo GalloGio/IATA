@@ -52,7 +52,6 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 	if (currentAccount.ParentId == null ) {
 		parentId = currentAccount.Id;
 	} else if (currentAccount.Parent.ParentId == null) {
-        system.debug(currentAccount.ParentId);
 		parentId = currentAccount.ParentId;
 	} else if (currentAccount.Parent.Parent.ParentId == null) {
 		parentId = currentAccount.Parent.ParentId;
