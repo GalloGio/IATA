@@ -16,18 +16,25 @@ export default class PortalTreasuryDashboardContactUs extends NavigationMixin(Li
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
     connectedCallback() {
-
+        this.loading=false;
     }
 
 
     redirectToSupport(event) {
         event.preventDefault();
         event.stopPropagation();
-
+        this.loading=true;
         let params = {topic : 'TD'
         };
 
-        navigateToPage(this.supportReachUsCreateNewCaseURL, params);
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            }})
+            .then(url => {
+                navigateToPage(url, params);
+            });
     }
 
 }
