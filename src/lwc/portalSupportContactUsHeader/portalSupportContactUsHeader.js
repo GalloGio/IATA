@@ -104,7 +104,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 	@track callUsPhoneNumberConfigs = [];
 	@track phoneNumber = '';
 
-	@track showRecentCasesList = true;
+	@track showRecentCasesList = false;
 	@track isCaseOpt = true;
 	@track isChatOpt = false;
 	@track isCallOpt = false;

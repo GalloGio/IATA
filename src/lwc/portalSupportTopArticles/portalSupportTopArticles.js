@@ -17,7 +17,7 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
     @track _topic;
     @track _subtopic;
 
-    @api numberOfArticles = 5;
+    @api numberOfArticles = 3;
 
     @api
     get category() {
