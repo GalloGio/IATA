@@ -90,7 +90,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		"termsAndUsage" : false,
 		"termsAndUsageIds" : "",
 		"lmsRedirectFrom" : "",
-		"lmsCourse" : ""
+		"lmsCourse" : "",
+		"registrationValidity": ""
 	};
 	@track errorMessage = "";
 	@track displayError = false;
@@ -111,6 +112,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     phoneRegExp = /^\(?[+]\)?([()\d]*)$/
     @track rerender = false;
 	@track gcsPortalServiceId;
+	@track timeStamp;
+	@track canSubmit = false;
 
 
 	tcAcceptanceChanged(event){
@@ -385,6 +388,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 		this.isLoading = true;
 		const RegistrationUtilsJs = new RegistrationUtils();
+		this.handleStartTime();
 
 		RegistrationUtilsJs.checkEmailIsValid(`${this.registrationForm.email}`).then(result=> {
 
@@ -457,6 +461,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSubmit(){
 
+		this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
+		this.timeStamp = Math.floor(Date.now() / 1000); // reset time stamp for Try Again case
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
             this.registrationForm.phone = "";
@@ -465,32 +471,37 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
 
-		register({
-			registrationForm : JSON.stringify(this.registrationForm),
-			customerType : JSON.stringify(this.selectedMetadataCustomerType),
-			contactId : contactId,
-			accountId : accountId,
-			urlParams : this._pageParams,
-			userInfo : JSON.stringify(this.userInfo)
-		}).then(result => {
-			var dataAux = JSON.parse(JSON.stringify(result));
+		if(this.registrationForm.registrationValidity == "" && this.canSubmit){ // Validate hidden field and Timer 
+			register({ registrationForm : JSON.stringify(this.registrationForm),
+				customerType : JSON.stringify(this.selectedMetadataCustomerType),
+				contactId : contactId,
+				accountId : accountId,
+				urlParams : this._pageParams,
+				userInfo : JSON.stringify(this.userInfo)
+			}).then(result => {
+				var dataAux = JSON.parse(JSON.stringify(result));
 
-			if(dataAux.isSuccess == true){
-				//todo: show success message
-				this.isRegistrationComplete = true;
-				this.isLoading = false;
-			}else{
-				this.isLoading = false;
+				if(dataAux.isSuccess == true){
+					//todo: show success message
+					this.isRegistrationComplete = true;
+					this.isLoading = false;
+				}else{
+					this.isLoading = false;
+					this._showSubmitError(true, 'Error Creating User');
+				}
+
+			})
+			.catch(error => {
+				var dataAux = JSON.parse(JSON.stringify(error));
+				console.info(dataAux);
 				this._showSubmitError(true, 'Error Creating User');
-			}
-
-		})
-		.catch(error => {
-			var dataAux = JSON.parse(JSON.stringify(error));
-            console.info(dataAux);
-			this._showSubmitError(true, 'Error Creating User');
+				this.isLoading = false;
+			});
+		}
+		else{
+			this.isRegistrationComplete = true; //Fake Success
 			this.isLoading = false;
-		});
+		}
 
 	}
 
@@ -722,7 +733,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this.displaySubmitError = false;
 	}
 
+	handleRegistrationValidity(event){
+		this.registrationForm.registrationValidity = event.target.value;
+	}
 
+	handleStartTime(event) {
+        // Set Time Start
+        this.timeStamp = Math.floor(Date.now() / 1000);
+    }
 	/* ==============================================================================================================*/
 	/* Helper Methods
 	/* ==============================================================================================================*/
