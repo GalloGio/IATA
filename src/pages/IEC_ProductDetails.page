@@ -1,401 +1,465 @@
 <apex:page controller="IEC_ProductDetailsController" action="{!onLoadAction}" language="{!language}" id="thePageId"
-	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
-	
-	<!--[if lte IE 8]>
-	<html lang="en" class="ie lte-ie8 no-svg">
-	<![endif]-->
-	<!--[if IE 9]>
-		<html lang="en" class="ie ie9">
-	<![endif]-->
-	<!--[if !IE]><!-->
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="false">
+    
+    <!--[if lte IE 8]>
+    <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
    <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
 
 <script type="text/javascript">
-	function setHeightForCustomImages() {
-		
-		var imageDivs = document.getElementsByClassName('fileImage');
-		console.log(imageDivs);
-		for(i = 0; i<imageDivs.length; i++){
-			var img = imageDivs[i].childNodes[0];
-			console.log("here: " , img);
-			img.style = "height: 100%;";
-		}
-	};
-	
-	j$ = jQuery.noConflict(); 
+    function setHeightForCustomImages() {
+        
+        var imageDivs = document.getElementsByClassName('fileImage');
+        console.log(imageDivs);
+        for(i = 0; i<imageDivs.length; i++){
+            var img = imageDivs[i].childNodes[0];
+            console.log("here: " , img);
+            img.style = "height: 100%;";
+        }
+    };
+    
+    j$ = jQuery.noConflict(); 
    function blockme() {
-	   j$.blockUI({ css: {
-		   border: 'none',
-		   padding: '15px',
-		   backgroundColor: '#000',
-		   '-webkit-border-radius': '10px',
-		   '-moz-border-radius': '10px',
-		   opacity: .5,
-		   color: '#fff'
-		   } }); 
-	 }
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
 
-	function redirectToCart() {
-		var current = window.self.location.href;
-		
-		var prefix = current.substr(0, current.lastIndexOf("/"));
+    function redirectToCart() {
+        var current = window.self.location.href;
+        
+        var prefix = current.substr(0, current.lastIndexOf("/"));
 
-		window.location.href = prefix + '/IEC_ShoppingCart';
-	}
+        window.location.href = prefix + '/IEC_ShoppingCart';
+    }
    </script>
 
-	<html lang="{!language}">
-	<!--<![endif]-->
+    <html lang="{!language}">
+    <!--<![endif]-->
 
-		<head>
-			<!-- Google Tag Manager -->     
-			<script>
-				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-				})(window,document,'script','dataLayer','GTM-PWSNSM3');
-			</script>
-			<!-- End Google Tag Manager -->
-			<script>
-				function getDevice() {
-					if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
-						return "Tablet";
-					} else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
-						return "Mobile";
-					} else {
-						return "Desktop";
-					}
-				}
+        <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
 
-				window.dataLayer = window.dataLayer||[];
-				dataLayer.push({
-					"user": {
-						"email": "{!userDetails.userEmail}",
-						"loginStatus": "{!userDetails.userLoginStatus}",
-						"userId": "{!userDetails.userId}",   
-						"zipCode": "{!userDetails.userZipCode}",
-						"city": "{!userDetails.userCity}",
-						"region": "{!userDetails.userRegion}",
-						"country": "{!userDetails.userCountry}",
-						"companyName": "{!userDetails.userCompany}",
-						"userMemberStatus": "{!userDetails.userMemberStatus}",
-						"userGender": "{!userDetails.userGender}"
-					},
-					"page": {
-						"requestURI": window.location.pathname + window.location.search,
-						"device": getDevice(),
-						"breadcrumb": "Home > {!selectedCategory.label} > {!selectedTopicLabel}", 
-						"language": "{!language}"
-					},
-					"ecommerce": {!productWrapper}
-				});
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}",
+                        "userMemberStatus": "{!userDetails.userMemberStatus}",
+                        "userGender": "{!userDetails.userGender}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!selectedCategory.label} > {!selectedTopicLabel}", 
+                        "language": "{!language}"
+                    },
+                    "ecommerce": {!productWrapper}
+                });
 
-				function getDatalayerEcommerceObjectPos(){
-					for(var j = 0; j < dataLayer.length; j++){
-						if(dataLayer[j].ecommerce != undefined){
-							return j;
-							break;
-						}
-					}
-				}
 
-				function relatedProductPush(relProdDetails) {
-					var impressionsTmp = dataLayer[getDatalayerEcommerceObjectPos()].ecommerce.impressions;
-					for (var i = 0; i < impressionsTmp.length; i++) { 
-						if(impressionsTmp[i].id == relProdDetails){
-							var clickJson = impressionsTmp[i];
-							clickJson["position"] = i;
-							dataLayer.push({
-								"event": "productClick",
-								"ecommerce": {
-									"actionField": {"list": "Home > {!selectedCategory.label} > {!selectedTopicLabel}"},
-									"click": {
-										"products": [clickJson]
-									}
-								}
-							});
-							break;
-						}
-					}
-				}
+                function getDatalayerEcommerceObjectPos(){
+                    for(var j = 0; j < dataLayer.length; j++){
+                        if(dataLayer[j].ecommerce != undefined){
+                            return j;
+                            break;
+                        }
+                    }
+                }
 
-				function addToCartPush(){
-					var addToCartProduct = dataLayer[getDatalayerEcommerceObjectPos()].ecommerce.detail.products[0];
-					var productQuantity = document.getElementById('thePageId:frmAddToCart:orderQty').value;
-					addToCartProduct["quantity"] = productQuantity.valueOf();                    
-					dataLayer.push({
-						"event": "addToCart",
-						"ecommerce": {
-							"currencyCode": "{!currencyCode}",
-							"add": {
-								"products": [addToCartProduct]
-							}
-						}
-					});
-				}
+                function relatedProductPush(relProdDetails) {
+                    var impressionsTmp = dataLayer[getDatalayerEcommerceObjectPos()].ecommerce.impressions;
+                    for (var i = 0; i < impressionsTmp.length; i++) { 
+                        if(impressionsTmp[i].id == relProdDetails){
+                            var clickJson = impressionsTmp[i];
+                            clickJson["position"] = i;
+                            dataLayer.push({
+                                "event": "productClick",
+                                "ecommerce": {
+                                    "actionField": {"list": "Home > {!selectedCategory.label} > {!selectedTopicLabel}"},
+                                    "click": {
+                                        "products": [clickJson]
+                                    }
+                                }
+                            });
+                            break;
+                        }                        
+                    }
+                }
 
-			</script>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
-			<title>{!$Label.PageTitleProductDetails} - {!$Label.SiteTitle}</title>
-		</head>
+                function addToCartPush(){
+                    var addToCartProduct = dataLayer[getDatalayerEcommerceObjectPos()].ecommerce.detail.products[0];
+                    var productQuantity = document.getElementById('thePageId:frmAddToCart:orderQty').value;
+                    addToCartProduct["quantity"] = productQuantity.valueOf();                    
+                    dataLayer.push({
+                        "event": "addToCart",
+                        "ecommerce": {
+                            "currencyCode": "{!currencyCode}",
+                            "add": {
+                                "products": [addToCartProduct]
+                            }
+                        }
+                    });
+                }
 
-		<body data-media-size="" data-is-modal-open="false" id="page-top" onload="setHeightForCustomImages();">
-			<!-- Google Tag Manager (noscript) -->
-			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
-			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-			<!-- End Google Tag Manager (noscript) -->
-			<div id="js-breakpoint-finder">
-				<span class="device-xs screen-xsmall"/>
-				<span class="device-sm screen-small"/>
-				<span class="device-md screen-medium"/>
-				<span class="device-lg screen-large"/>
-				<span class="device-xl screen-xlarge"/>
-			</div>
-			
-			<div id="js-app-container" class="app-container">
+            </script>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+            <title>{!$Label.PageTitleProductDetails} - {!$Label.SiteTitle}</title>
+        </head>
 
-				<!-- Page Header -->
-				<c:IEC_PageHeader />
+        <body data-media-size="" data-is-modal-open="false" id="page-top" onload="setHeightForCustomImages();">
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+            <div id="js-breakpoint-finder">
+                <span class="device-xs screen-xsmall"/>
+                <span class="device-sm screen-small"/>
+                <span class="device-md screen-medium"/>
+                <span class="device-lg screen-large"/>
+                <span class="device-xl screen-xlarge"/>
+            </div>
+            
+            <div id="js-app-container" class="app-container">
 
-				<div id="js-page-container" class="page-container">
-					
-					<!-- Page Main Content -->
-					<main class="main-content product-details-page">
-						
-						<!-- Top Banner -->
-						<div class="reader-only" id="reader-main-content">Main Content</div>
-						<div class="section top-banner">
-							<div class="inner-wrapper">
-								<h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
-							</div>
-						</div>
+                <!-- Page Header -->
+                <c:IEC_PageHeader />
 
-						<apex:outputPanel layout="block" styleClass="inner-wrapper" rendered="{!product !=null}">                           
-							<!-- breadcrumb -->
-							<ol class="list breadcrumb">
-								<li><a href="{!$Site.BaseRequestURL}">{!$Label.Home}</a></li>
-								<li>
-									<a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
-									<apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
-								</li>
-								<li>
-									<a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
-									<apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
-								</li>
-								<li>{!product.ProductName}</li>
-							</ol>
+                <div id="js-page-container" class="page-container">
+                    
+                    <!-- Page Main Content -->
+                    <main class="main-content product-details-page">
+                        
+                        <!-- Top Banner -->
+                        <div class="reader-only" id="reader-main-content">Main Content</div>
+                        <div class="section top-banner">
+                            <div class="inner-wrapper">
+                                <h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+                            </div>
+                        </div>
 
-							<section class="product-details">
-								<apex:form id="frmAddToCart">
-									<h1 class="page-title item-name">{!product.ProductName} ({!product.Media})</h1>
+                        <apex:outputPanel layout="block" styleClass="inner-wrapper" rendered="{!product !=null}">                           
+                            <!-- breadcrumb -->
+                            <ol class="list breadcrumb">
+                                <li><a href="{!$Site.BaseRequestURL}">{!$Label.Home}</a></li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+                                </li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseRequestURL}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+                                </li>
+                                <li>{!product.ProductName}</li>
+                            </ol>
 
-									<!-- Error Messages -->
-									<apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
-										<apex:pageMessages escape="false"/>
-									</apex:outputPanel>
+                            <section class="product-details">
+                                <apex:form id="frmAddToCart">
+                                    <h1 class="page-title item-name">{!product.ProductName} ({!product.Media})</h1>
 
-									<div class="product-info">
-										<figure class="product-image">
-											<apex:outputPanel layout="block" style="height: 180px;" rendered="{!product.imageFile != '' }">
-												<div class="fileImage" layout="block" style="height: 180px;">
-													<apex:outputText value="{!product.imageFile}" escape="false"/>
-												</div>
-											</apex:outputPanel>
-											<apex:outputPanel rendered="{!product.imageFile == '' }">
-												<img src="{!URLFOR($Resource.Product_Images, product.ImageName)}" alt="{!product.ProductName}" />
-											</apex:outputPanel>
-										</figure>
+                                    <!-- Error Messages -->
+                                    <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+                                        <apex:pageMessages escape="false"/>
+                                    </apex:outputPanel>
 
-										<div class="table-container">
-											<table class="data-table table-product-data">                                           
-												<!-- Regular Price if exist -->
-												<apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0, product.Sell_Through_eCommerce) }">
-													<tr>
-														<th scope="row">{!$Label.regular_price}</th>
-														<td>
-															<apex:outputText styleClass="item-price regular-price {!IF(AND(product.CustomerPrice!=null , product.CustomerPrice>0),'line-stroke','')}" value="{0, number, currency}">
-																<apex:param value="{!product.RegularPrice}" />
-															</apex:outputText>
-														</td>
-													</tr>
-												</apex:variable>
+                                    <div class="product-info">
+                                        <figure class="product-image">
+                                            <apex:outputPanel layout="block" style="height: 180px;" rendered="{!product.imageFile != '' }">
+                                                <div class="fileImage" layout="block" style="height: 180px;">
+                                                	<apex:outputText value="{!product.imageFile}" escape="false"/>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!product.imageFile == '' }">
+                                                <img src="{!URLFOR($Resource.Product_Images, product.ImageName)}" alt="{!product.ProductName}" />
+                                            </apex:outputPanel>
 
-												<!-- Discounted Price if exist -->
-												<apex:variable var="discountedPrice" value="1" rendered="{! AND(product.CustomerPrice!=null , product.CustomerPrice>0) }">
-													<tr>
-														<th scope="row">{!$Label.discounted_price}</th>
-														<td>
-															<apex:outputText styleClass="item-price item-price discounted-price" value="{0, number, currency}">
-																<apex:param value="{!product.CustomerPrice}" />
-															</apex:outputText>
-														</td>
-													</tr>
-												</apex:variable>
+                                        </figure>
 
-												<!-- Setup fee if exist -->
-												<apex:variable var="setupFee" value="1" rendered="{! AND(product.setupFee != null , product.setupFee > 0) }">
-													<tr>
-														<th scope="row"><i>Flat fee</i></th>
-														<td>
-															<apex:outputText styleClass="item-price regular-price" value="{0, number, currency}">
-																<apex:param value="{!product.setupFee}" />
-															</apex:outputText>
-														</td>
-													</tr>
-												</apex:variable>
+                                        <div class="table-container">
+                                            <table class="data-table table-product-data">                                           
+                                                <!-- Regular Price if exist -->
+                                                <apex:variable var="regularPrice" value="1" rendered="{! AND(product.RegularPrice!=null , product.RegularPrice>0, product.Sell_Through_eCommerce) }">
+                                                    <tr>
+                                                        <th scope="row">{!$Label.regular_price}</th>
+                                                        <td>
+                                                            <apex:outputText styleClass="item-price regular-price {!IF(AND(product.CustomerPrice!=null , product.CustomerPrice>0),'line-stroke','')}" value="{0, number, currency}">
+                                                                <apex:param value="{!product.RegularPrice}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:variable>
+                                                    
+                                                <!-- Discounted Price if exist -->
+                                                <apex:variable var="discountedPrice" value="1" rendered="{! AND(product.CustomerPrice!=null , product.CustomerPrice>0) }">
+                                                    <tr>
+                                                        <th scope="row">{!$Label.discounted_price}</th>
+                                                        <td>
+                                                            <apex:outputText styleClass="item-price item-price discounted-price" value="{0, number, currency}">
+                                                                <apex:param value="{!product.CustomerPrice}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:variable>
 
-												<!-- Availability -->
-												<apex:outputPanel rendered="{!IF (product.InventoryStatus != '',true, false )}">
-													<tr>
-														<th scope="row">{!$Label.Availability}</th>
-														<td>
-															<!-- Scenario 1: In Stock -->
-															<apex:outputText styleClass="item-stock in-stock" rendered="{!bIsInStock}" value="{!product.InventoryStatus}" />
+                                                <!-- Setup fee if exist -->
+                                                <apex:variable var="setupFee" value="1" rendered="{! AND(product.setupFee != null , product.setupFee > 0) }">
+                                                    <tr>
+                                                        <th scope="row"><i>Flat fee</i></th>
+                                                        <td>
+                                                            <apex:outputText styleClass="item-price regular-price" value="{0, number, currency}">
+                                                                <apex:param value="{!product.setupFee}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:variable>
 
-															<!-- Scenario 2: Out of Stock -->
-															<apex:outputPanel layout="block" styleClass="item-stock" rendered="{!bIsOutOfStock}">
-																<apex:outputText styleClass="out-of-stock"  value="{!product.InventoryStatus}" />
-																&nbsp;- {!$Label.Available} 
-																<time datetime="{!product.AvailabilityDate}">
-																	<apex:outputText value="{0, date, medium}" >
-																		<apex:param value="{!product.AvailabilityDate}" /> 
-																	</apex:outputText>
-																</time>
-															</apex:outputPanel>
+                                                <!-- Availability -->
+                                                <apex:outputPanel rendered="{!IF (product.InventoryStatus != '',true, false )}">
+                                                    <tr>
+                                                        <th scope="row">{!$Label.Availability}</th>
+                                                        <td>
+                                                            <!-- Scenario 1: In Stock -->
+                                                            <apex:outputText styleClass="item-stock in-stock" rendered="{!bIsInStock}" value="{!product.InventoryStatus}" />
+    
+                                                            <!-- Scenario 2: Out of Stock -->
+                                                            <apex:outputPanel layout="block" styleClass="item-stock" rendered="{!bIsOutOfStock}">
+                                                                <apex:outputText styleClass="out-of-stock"  value="{!product.InventoryStatus}" />
+                                                                &nbsp;- {!$Label.Available} 
+                                                                <time datetime="{!product.AvailabilityDate}">
+                                                                    <apex:outputText value="{0, date, medium}" >
+                                                                        <apex:param value="{!product.AvailabilityDate}" /> 
+                                                                    </apex:outputText>
+                                                                </time>
+                                                            </apex:outputPanel>
+    
+                                                            
+                                                            <apex:outputPanel layout="block" styleClass="availability-note" rendered="{!bIsPreOrder}">
+                                                                <i>
+                                                                    {!$Label.ReleaseDateMessage}&nbsp; 
+                                                                    <apex:outputText value="{0, date, medium}" >
+                                                                        <apex:param value="{!product.EffectiveFrom}" /> 
+                                                                    </apex:outputText>
+                                                                </i>
+                                                            </apex:outputPanel>
+    
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputPanel>
 
-															<apex:outputPanel layout="block" styleClass="availability-note" rendered="{!bIsPreOrder}">
-																<i>
-																	{!$Label.ReleaseDateMessage}&nbsp; 
-																	<apex:outputText value="{0, date, medium}" >
-																		<apex:param value="{!product.EffectiveFrom}" /> 
-																	</apex:outputText>
-																</i>
-															</apex:outputPanel>
-														</td>
-													</tr>
-												</apex:outputPanel>
+                                                <!-- Product Number  -->
+                                                <tr>
+                                                    <th scope="row">{!$Label.Product_Number}</th>
+                                                    <td>{!product.ProductNumber}</td>
+                                                </tr>
 
-												<!-- Product Number  -->
-												<tr>
-													<th scope="row">{!$Label.Product_Number}</th>
-													<td>{!product.ProductNumber}</td>
-												</tr>
+                                                <!-- Media -->
+                                                <tr style="{! IF(isBlank(product.Media), 'display:none', '')}">
+                                                    <th scope="row">{!$Label.Media}</th>
+                                                    <td>{!product.Media}</td>
+                                                </tr>
 
-												<!-- Media -->
-												<tr style="{! IF(isBlank(product.Media), 'display:none', '')}">
-													<th scope="row">{!$Label.Media}</th>
-													<td>{!product.Media}</td>
-												</tr>
+                                                <!-- Language -->
+                                                <tr style="{! IF(isBlank(product.Language), 'display:none', '')}">
+                                                    <th scope="row">{!$Label.Language}</th>
+                                                    <td>{!product.Language}</td>
+                                                </tr>
 
-												<!-- Language -->
-												<tr style="{! IF(isBlank(product.Language), 'display:none', '')}">
-													<th scope="row">{!$Label.Language}</th>
-													<td>{!product.Language}</td>
-												</tr>
+                                                <!-- Edition -->
+                                                <tr style="{! IF(isBlank(product.Edition), 'display:none', '')}">
+                                                    <th scope="row">{!$Label.Edition}</th>
+                                                    <td>{!product.Edition}</td>
+                                                </tr>
 
-												<!-- Edition -->
-												<tr style="{! IF(isBlank(product.Edition), 'display:none', '')}">
-													<th scope="row">{!$Label.Edition}</th>
-													<td>{!product.Edition}</td>
-												</tr>
+                                                <!-- Effective Dates -->
+                                                <tr>
+                                                    <th scope="row">{!$Label.Effective_Date}</th>
+                                                    <td>
+                                                        <apex:outputText value="{0, date, medium}" style="{! IF(isBlank(product.EffectiveFrom), 'display:none', '')}">
+                                                            <apex:param value="{!product.EffectiveFrom}" /> 
+                                                        </apex:outputText>
+                                                        <apex:variable value="1" var="displayEffectiveTo" rendered="{!product.DisplayEffectiveTo}">
+                                                            {!$Label.Until}&nbsp;
+                                                            <apex:outputText value="{0, date, medium}" >
+                                                                <apex:param value="{!product.EffectiveTo}" /> 
+                                                            </apex:outputText>
+                                                        </apex:variable>
+                                                    </td>
+                                                </tr>
+                                            </table>
 
-												<!-- Effective Dates -->
-												<tr>
-													<th scope="row">{!$Label.Effective_Date}</th>
-													<td>
-														<apex:outputText value="{0, date, medium}" style="{! IF(isBlank(product.EffectiveFrom), 'display:none', '')}">
-															<apex:param value="{!product.EffectiveFrom}" /> 
-														</apex:outputText>
-														<apex:variable value="1" var="displayEffectiveTo" rendered="{!product.DisplayEffectiveTo}">
-															{!$Label.Until}&nbsp;
-															<apex:outputText value="{0, date, medium}" >
-																<apex:param value="{!product.EffectiveTo}" /> 
-															</apex:outputText>
-														</apex:variable>
-													</td>
-												</tr>
-											</table>
+                                            <!-- product components -->
+                                            <apex:outputPanel layout="none" rendered="{! product.ProductComponent.size > 0}">
+                                                <h4><apex:outputText value="{!labels['lblCombo']}" escape="false" /></h4>
+                                                <ul class="list product">
+                                                    <apex:repeat value="{!product.ProductComponent}" var="prod">
+                                                        <!-- <apex:variable var="icon" value="img/components/icons/{!LOWER(SUBSTITUTE(product.Media,' ','_'))}.png" /> -->
+                                                        <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
+                                                            <!-- background: url({!URLFOR($Resource.EcommerceAssets, icon)}) no-repeat 0 0 -->
+                                                            <!-- <h4 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4> -->
+                                                            <h4 class="item-name">{!prod.ProductName}</h4>
+                                                            <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                        </li>
+                                                    </apex:repeat>
+                                                </ul>
 
-											<!-- product components -->
-											<apex:outputPanel layout="none" rendered="{! product.ProductComponent.size > 0}">
-												<h4><apex:outputText value="{!labels['lblCombo']}" escape="false" /></h4>
-												<ul class="list product">
-													<apex:repeat value="{!product.ProductComponent}" var="prod">
-														<li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
-															<h4 class="item-name">{!prod.ProductName}</h4>
-															<div class="item-description">{!prod.ProductShortDesc}</div>
-														</li>
-													</apex:repeat>
-												</ul>
-											</apex:outputPanel>
-										</div>
-									</div>
+                                                <!-- <table>
+                                                    <tr>
+                                                        <td><apex:outputText value="{!labels['lblProdTitle']}" escape="false" /></td>
+                                                        <td><apex:outputText value="{!labels['lblProdNum']}" escape="false" /></td>
+                                                        <td><apex:outputText value="{!labels['lblEdition']}" escape="false" /></td>
+                                                        <td><apex:outputText value="{!labels['lblDate']}" escape="false" /></td>
+                                                    </tr>
+                                                    <apex:repeat value="{!product.ProductComponent}" var="bom">
+                                                        <tr>
+                                                            <td><apex:outputText value="{!bom.ProductName}" /></td>
+                                                            <td><apex:outputText value="{!bom.Media}" /></td>
+                                                            <td><apex:outputText value="{!bom.Edition}" /></td>
+                                                            <td>
+                                                                <apex:outputText value="{0, date, medium}" rendered="{!bom.EffectiveFrom != null}"><apex:param value="{!bom.EffectiveFrom}" /></apex:outputText>
+                                                                <apex:outputText value="{!labels['lblDateEnd']}" rendered="{!bom.EffectiveFrom != null && bom.EffectiveTo != null}" />
+                                                                <apex:outputText value="{0, date, medium}" rendered="{!bom.EffectiveTo != null}"><apex:param value="{!bom.EffectiveTo}" /></apex:outputText>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </table> -->
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
 
-									<!-- If direct Sales -->
-									<apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! or(and(bIsDirectSales , NOT(bIsProductCompliant)),bIsDirectSales, NOT(bIsProductCompliant))}">
-										<div class="contact-info">
-											<span class="icon phone-square">{!$Label.ContactDirectSalesMessage}</span>
-											<a class="phone-link" href="tel:1-800-716-6326">1 800 716 6326</a>
-										</div>
-									</apex:outputPanel>
-									<!-- Add to cart block -->
-									<apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! or(and(bIsDirectSales==false, bIsProductCompliant)) }">
-										<label class="input-label">
-											<span class="show-for-extra-small">{!$Label.QTY}:</span>
-											<span class="hide-for-extra-small">{!$Label.Quantity}:</span>
-											<apex:input type="number" styleClass="user-input quantity js-input-quantity" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" id="orderQty" value="{!product.OrderQuantity}" size="5"/> 
-										</label>
-										<apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="addToCartPush();blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.BuyNow)}" />
-									</apex:outputPanel>
-								</apex:form>
+                                    
+                                    <!-- If direct Sales -->
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! or(and(bIsDirectSales , NOT(bIsProductCompliant)),bIsDirectSales, NOT(bIsProductCompliant))}">
+                                        <div class="contact-info">
+                                            <span class="icon phone-square">{!$Label.ContactDirectSalesMessage}</span>
+                                            <a class="phone-link" href="tel:1-800-716-6326">1 800 716 6326</a>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <!-- Add to cart block -->
+                                    <apex:outputPanel layout="block" styleClass="product-quantity-container js-add-product" rendered="{! or(and(bIsDirectSales==false, bIsProductCompliant)) }">
+                                        <label class="input-label">
+                                            <span class="show-for-extra-small">{!$Label.QTY}:</span>
+                                            <span class="hide-for-extra-small">{!$Label.Quantity}:</span>
+                                            <apex:input type="number" styleClass="user-input quantity js-input-quantity" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" id="orderQty" value="{!product.OrderQuantity}" size="5"/> 
+                                            <!-- <input type="number" class="user-input quantity js-input-quantity" /> -->
+                                        </label>
 
-								<section class="group-container product-description">
-									<h2 class="group-title">{!$Label.Description}</h2>
-									<h3 class="title" style="{! IF(isBlank(product.Edition), 'display:none', '')}">Edition {!product.Edition}</h3>
-									<p>{!product.ProductDesc}</p> 
-								</section>
-							</section>
+                                        <apex:commandButton styleClass="button {!IF(bIsPreOrder,'pre-order', 'wide')}" reRender="frmAddToCart" onclick="addToCartPush();blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" value="{!IF(bIsPreOrder,$Label.PreOrderAddToCart, $Label.BuyNow)}" />
+                                  
+                                    </apex:outputPanel>
+                                </apex:form>
 
-							<div class="more-products">
-								<apex:variable var="relatedProducts" value="1" rendered="{! AND(lstRelatedProducts!=null, lstRelatedProducts.size > 0)}">
-									<section class="group-container related-products">
-										<h3 class="group-title icon chevron-triple-right">Related products and services</h3>
-										
-										<ul class="list product">
-											<apex:repeat value="{!lstRelatedProducts}" var="prod">
-												<li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
-													<h4 class="item-name"><a onclick="relatedProductPush('{!prod.ProductNumber}');" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
-													<div class="item-description">{!prod.ProductShortDesc}</div>
-												</li>
-											</apex:repeat>
-										</ul>
-									</section>
-								</apex:variable>
-							</div>
-						</apex:outputPanel>
+                                <section class="group-container product-description">
+                                    <h2 class="group-title">{!$Label.Description}</h2>
+                                    <h3 class="title" style="{! IF(isBlank(product.Edition), 'display:none', '')}">Edition {!product.Edition}</h3>
+                                    <p>{!product.ProductDesc}</p> 
+                                </section>
+                            </section>
 
-						<apex:outputPanel layout="block" styleClass="inner-wrapper" rendered="{!product ==null}">
-							<div class="alert error">{!$Label.Product_Not_Found}</div>
-						</apex:outputPanel>
-					</main>
+                            <div class="more-products">
+                                <!-- <apex:variable var="relatedProducts" value="1" rendered="{! AND(product.ProductComponent!=null, product.ProductComponent.size > 0)}">
+                                    <section class="group-container related-products">
+                                        <h3 class="group-title icon chevron-triple-right">Related products and services</h3>
+                                        
+                                        <ul class="list product">
+                                            <apex:repeat value="{!product.ProductComponent}" var="prod">
+                                                <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
+                                                    <h4 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                    <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </section>
+                                </apex:variable> -->
+                                <apex:variable var="relatedProducts" value="1" rendered="{! AND(lstRelatedProducts!=null, lstRelatedProducts.size > 0)}">
+                                    <section class="group-container related-products">
+                                        <h3 class="group-title icon chevron-triple-right">Related products and services</h3>
+                                        
+                                        <ul class="list product">
+                                            <apex:repeat value="{!lstRelatedProducts}" var="prod">
+                                                <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
+                                                    <h4 class="item-name"><a onclick="relatedProductPush('{!prod.ProductNumber}');" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                    <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </section>
+                                </apex:variable>
 
-					<!-- Page Footer  -->
-					<c:Footer />
-				</div>
-			</div>
-			<div class="modal-container is-hidden" id="js-modal">
-				<div class="overlay"></div>
-				<div class="modal-dialog" id="js-modal-dialog"></div>
-			</div>
+                                <!--section class="group-container you-may-also-like">
+                                    <h3 class="group-title icon chevron-triple-right">You may also like</h3>
+                                    <ul class="list product">
+                                        <apex:repeat value="{!recommendedProducts}" var="prod">
+                                            <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
+                                            style="min-height:40px;">
+                                                <h4 class="item-name"><a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                <apex:variable var="shortDesc" value="1" rendered="{!prod.ProductShortDesc != null && prod.ProductShortDesc != ''}">
+                                                    <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                </apex:variable>
+                                            </li>
+                                        </apex:repeat>
+                                    </ul>
+                                </section-->
+                            </div>
+                        </apex:outputPanel>
 
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
-		</body>
-	</html>
+                        <apex:outputPanel layout="block" styleClass="inner-wrapper" rendered="{!product ==null}">
+                            <div class="alert error">{!$Label.Product_Not_Found}</div>
+                        </apex:outputPanel>
+
+
+                    </main>
+
+                    <!-- Page Footer  -->
+                    <c:Footer />
+                </div>
+            </div>
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog"></div>
+            </div>
+
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+        </body>
+
+    </html>
 </apex:page>
