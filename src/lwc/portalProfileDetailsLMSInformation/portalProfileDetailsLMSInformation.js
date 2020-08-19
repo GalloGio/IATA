@@ -10,33 +10,16 @@ import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelL
 
 //custom labels
 import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information_LMS';
-import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
-import CSP_L2_Company_Information_Message from '@salesforce/label/c.CSP_L2_Company_Information_Message';
-import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
-import ISSP_MyProfile_SECTOR from '@salesforce/label/c.ISSP_MyProfile_SECTOR';
-import ISSP_MyProfile_CATEGORY from '@salesforce/label/c.ISSP_MyProfile_CATEGORY';
-import CSP_L2_Legal_Name from '@salesforce/label/c.CSP_L2_Legal_Name';
-import CSP_L2_Trade_Name from '@salesforce/label/c.CSP_L2_Trade_Name';
-import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
-import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
-import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
-import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message_LMS';
-import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
-import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
-import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
 
 import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
-import CSP_Invalid_Email from '@salesforce/label/c.CSP_Invalid_Email';
 import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS_Profile';
 import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingContact_LMS';
 import CSP_L3_ExistingContact_LMS2 from '@salesforce/label/c.CSP_L3_ExistingContact_LMS2';
-import CSP_L3_VerificationMailTitle_LMS from '@salesforce/label/c.CSP_L3_VerificationMailTitle_LMS';
 import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
 import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_VerificationToP2_LMS';
-import CSP_L2_VerificationToP3_LMS from '@salesforce/label/c.CSP_L2_VerificationToP3_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_Close from '@salesforce/label/c.CSP_Close';
 import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
@@ -86,32 +69,15 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	// labels
 	_labels = {
 		CSP_L2_Business_Address_Information,
-		CSP_L2_Create_New_Account,
-		CSP_L2_Company_Information_Message,
-		CSP_L2_Company_Information,
-		ISSP_MyProfile_SECTOR,
-		ISSP_MyProfile_CATEGORY,
-		CSP_L2_Legal_Name,
-		CSP_L2_Trade_Name,
-		CSP_L2_Phone_Number,
-		CSP_L2_Email_Address,
-		CSP_L2_Website,
-		CSP_L2_Business_Address_Information_Message,
-		CSP_L2_Back_to_Company_Information,
-		CSP_L2_Next_Confirmation,
-		CSP_Next_LMS,
 		SaveLabel,
 		CancelLabel,
 		CSP_L3_PersonalEmail_LMS,
 		CSP_Registration_Existing_User_Message_Not_Matching_F6,
-		CSP_Invalid_Email,
 		CSP_Registration_Existing_Work_Message_LMS,
 		CSP_L3_ExistingContact_LMS,
 		CSP_L3_ExistingContact_LMS2,
-		CSP_L3_VerificationMailTitle_LMS,
 		CSP_L2_VerificationToP1_LMS,
 		CSP_L2_VerificationToP2_LMS,
-		CSP_L2_VerificationToP3_LMS,
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_Close,
 		CSP_LogOut,
