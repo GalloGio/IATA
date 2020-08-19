@@ -29,7 +29,7 @@
           tooltip: { trigger: 'none' },
           datalessRegionColor: '{! IF(Country_Profile__c.Listed_In__c == 'Blocked Funds', '#B61257', IF(Country_Profile__c.Listed_In__c == 'Watch List', '#D4D9DB', '#D4D9DB')) }',
           defaultColor:'#FFFFFF',
-          backgroundColor: '{! IF(Country_Profile__c.Listed_In__c == 'Blocked Funds', '#E4166D', IF(Country_Profile__c.Listed_In__c == 'Watch List', '#F19200', '#61B31B')) }',
+          backgroundColor: '{! IF(Country_Profile__c.Listed_In__c == 'Blocked Funds', '#E4166D', IF(Country_Profile__c.Listed_In__c == 'Watch List', '#F19200', '#6ABAEB')) }',
           enableRegionInteractivity: 'false',
           top: 0,
           left: 0,
@@ -1359,6 +1359,7 @@
                               </apex:column>
                               <apex:column >
                                   <apex:facet name="header"></apex:facet>
+                                  &nbsp;
                                   <apex:outputText value="{!selectedCountry.country.Name}" />
                               </apex:column>
                           </apex:dataTable>
