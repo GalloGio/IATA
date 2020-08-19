@@ -2898,6 +2898,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label>Chiamaci</label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label>Annulla</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -2982,6 +2986,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Chatta in $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Controlli la sua posta elettronica per ricevere i dettagli di accesso</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3012,6 +3020,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Profilo aziendale</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Un reclamo richiede fino a 5 giorni lavorativi per essere risolto. Se avete una domanda o una richiesta, utilizzate l'opzione &lt;b&gt; Create un caso &lt;/b&gt; per permetterci di rispondervi più rapidamente.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Completi il suo profilo</label>
@@ -3112,6 +3124,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Negare l&apos;accesso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Scrivete un breve riassunto del feedback</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Documento aggiunto ai miei segnalibri</label>
@@ -3294,6 +3310,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Questa è &lt;b&gt;&lt;u&gt;un'emergenza&lt;/u&gt;&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Il supporto di emergenza è disponibile 24 ore su 24, 7 giorni su 7, e viene offerto solo in inglese.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Si prega di notare che il supporto fornito attraverso il canale di emergenza è offerto in &lt;b&gt; inglese &lt;/b&gt; e per le seguenti situazioni critiche:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Se la vostra richiesta non è correlata a una di queste situazioni, cliccate su "&lt;b&gt; Invia come richiesta &lt;/b&gt;" qui sotto per creare un caso.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>        
+        <label>Si prega di notare che il supporto fornito attraverso il canale di emergenza è solo per le seguenti situazioni critiche:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Problema di accesso al sistema o interruzione della piattaforma</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Problemi di fatturazione (questioni importanti/discrepanze)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sospensione del sistema</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Sospetto di attività fraudolente</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Avete selezionato l'opzione Emergenza</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Si prega di non richiedere supporto di emergenza, a meno che non si tratti di frode, biglietteria o problemi finanziari</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3436,6 +3496,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Visto che non ha effettuato nessun accesso negli ultimi 90 giorni, le abbiamo inviato un&apos;email con una nuova password.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Dare un feedback</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Alla IATA apportiamo costantemente miglioramenti ai nostri prodotti e servizi, in modo da potervi offrire un'esperienza eccellente. I vostri punti di vista e pensieri guidano questi miglioramenti. Clicca il pulsante qui sotto per fornire il tuo feedback.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Il vostro feedback è importante per noi</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Questo è un</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4503,6 +4579,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>I tuoi ultimi argomenti</label>
+        <name>CSP_RecentTopics</name>
+    </customLabels>
+    <customLabels>
         <label>Destinatari</label>
         <name>CSP_Recipients</name>
     </customLabels>
@@ -4739,6 +4819,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Seleziona qui l'argomento</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>Accesso ai servizi</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4875,6 +4959,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Si prega di inserire un breve oggetto del messaggio</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Invia</label>
         <name>CSP_Submit</name>
     </customLabels>
@@ -4885,6 +4973,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
         <name>CSP_SubmittedApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Inviare come Emergenza</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Invia come Richiesta</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label>Successo</label>
@@ -4917,6 +5013,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Titolo</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tutti gli argomenti</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>I tuoi ultimi argomenti</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>Traccia</label>
@@ -23058,6 +23162,14 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Basta comporre:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
+        <label>Se al momento la chat non è disponibile nella vostra lingua, si prega di &lt;b&gt; creare un caso &lt;/b&gt; o contattarci tramite &lt;b&gt; telefono &lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23072,6 +23184,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label>Puoi comunicare con un rappresentante IATA utilizzando il seguente numero:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>La finestra della chat è stata aperta</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Chatta con noi</label>
