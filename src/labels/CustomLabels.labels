@@ -8477,20 +8477,6 @@ This service is free of charge.</value>
         <value>All Other Countries / Territories</value>
     </labels>
     <labels>
-        <fullName>CurrencyCenter_All_Others</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CurrencyCenter_All_Others</shortDescription>
-        <value>All Other Countries</value>
-    </labels>
-    <labels>
-        <fullName>CurrencyCenter_All_Others_Country</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CurrencyCenter_All_Others_Country</shortDescription>
-        <value>All Others Country</value>
-    </labels>
-    <labels>
         <fullName>CurrencyCenter_Annual_Survey</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8538,6 +8524,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_BSP</shortDescription>
         <value>BSP</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_BSP_Launch_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_Launch_Date</shortDescription>
+        <value>BSP Launch Date</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_BSP_CASS_Proffile</fullName>
@@ -8589,13 +8582,6 @@ This service is free of charge.</value>
         <value>Blocked Funds Countries</value>
     </labels>
     <labels>
-        <fullName>CurrencyCenter_Blocked_Funds_Country</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CurrencyCenter_Blocked_Funds_Country</shortDescription>
-        <value>Blocked Funds Country</value>
-    </labels>
-    <labels>
         <fullName>CurrencyCenter_Bloomberg_Feeds</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8615,6 +8601,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_CASS_ICCS_Availability</shortDescription>
         <value>CASS ICCS Availability</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_CASS_Launch_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_CASS_Launch_Date</shortDescription>
+        <value>CASS Launch Date</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_CASS_Profile</fullName>
@@ -8659,6 +8652,13 @@ This service is free of charge.</value>
         <value>Countries Map</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Country_Heat_Map</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Country_Heat_Map</shortDescription>
+        <value>Country Heat Map</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Country_Profiles</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8671,6 +8671,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Currency</shortDescription>
         <value>CURRENCY</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Currency_Exchange_Rate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Currency_Exchange_Rate</shortDescription>
+        <value>Currency Exchange Rate</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_DeleteCountry_Confirmation_Question</fullName>
@@ -8807,7 +8814,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Heat_Map</shortDescription>
-        <value>Heat Map</value>
+        <value>Early Warning Indicators Heat Map</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_ICCS</fullName>
@@ -8978,6 +8985,13 @@ This service is free of charge.</value>
         <value>by Country Name or Region</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_See_World_Map</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_See_World_Map</shortDescription>
+        <value>See World Map</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Select_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9060,13 +9074,6 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
         <value>Watch List Countries / Territories</value>
-    </labels>
-    <labels>
-        <fullName>CurrencyCenter_Watch_List_Country</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CurrencyCenter_Watch_List_Country</shortDescription>
-        <value>Watch List Country</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_def_ACD_CCD</fullName>
