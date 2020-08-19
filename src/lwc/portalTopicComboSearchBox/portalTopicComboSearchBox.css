@@ -4,6 +4,11 @@
     pointer-events: none;
 }
 
+.modalHeight{
+    max-height: calc(21rem);
+    overflow-y: auto;
+}
+
 /* width */
 ::-webkit-scrollbar {
 	width: 6px;
