@@ -3,6 +3,7 @@ public without sharing class GDPR_Helper {
 	private static final String characters = 'ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmonpqrstuvwxyz';
 	public enum UserType{USER, CONTACT, LEAD, NONE, FORBID}
 
+	@AuraEnabled
 	public static Boolean isDisposalEmail(String email){
 		// Check if email domain is in the black list (disposal email)
 		String domain =  email.split('@')[1];
