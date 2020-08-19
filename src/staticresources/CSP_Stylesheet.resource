@@ -2808,3 +2808,21 @@ html {
 .MaxModalContainerDim{
     max-width:596px;
 }
+
+/* Re styling scrollbars*/
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 1px;
+	width: 6px;
+}
