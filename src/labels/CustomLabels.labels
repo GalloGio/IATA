@@ -4845,7 +4845,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Give Feedback Message</shortDescription>
-        <value>Whether it's good or bad, your feedback is important for us to provide you a better service.</value>
+        <value>At IATA, we are constantly making improvements to our products and services so we can provide you an excellent experience. Your views and thoughts drive these improvements. Click the button below to provide your feedback.</value>
     </labels>
     <labels>
         <fullName>CSP_Give_Feedback_Type_Title</fullName>
@@ -4861,7 +4861,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Give Feedback title</shortDescription>
-        <value>What do you think about the Customer Portal?</value>
+        <value>Your feedback is important to us</value>
     </labels>
     <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
@@ -7833,7 +7833,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>All topics label</shortDescription>
-        <value>Your All Topics</value>
+        <value>All Topics</value>
     </labels>
     <labels>
         <fullName>CSP_Topic_Recent_Label</fullName>
@@ -39707,7 +39707,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_ChatWindowAlreadyOpen</shortDescription>
-        <value>You already have a Chat Open</value>
+        <value>Chat window has been opened</value>
     </labels>
     <labels>
         <fullName>LVA_ChatWithUs</fullName>
