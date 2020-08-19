@@ -19,6 +19,7 @@ import getMetadataCustomerType                  from '@salesforce/apex/PortalReg
 import isGuest                                  from '@salesforce/user/isGuest';
 import getGCSServiceId                          from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
+import isDisposalEmail							from '@salesforce/apex/GDPR_Helper.isDisposalEmail';
 
 /* ==============================================================================================================*/
 /* External Resources
@@ -391,67 +392,74 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this.handleStartTime();
 
 		RegistrationUtilsJs.checkEmailIsValid(`${this.registrationForm.email}`).then(result=> {
-
 			if(result == false){
 				this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 				this.isLoading = false;
 			}else{
-				let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
-				RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
-					if(result == 'true'){
-					   //disposable email alert!
+				isDisposalEmail({email : this.registrationForm.email}).then(result => {
+					if(result == true){
 						this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 						this.isLoading = false;
-					}else{
-						//check if the email address is associated to a contact and/or a user
-						//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
-						//but the "E-Mail" field is pre-populated and, by default, not editable.
-						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
-						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
-						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
-							let userInfo = JSON.parse(JSON.stringify(result));
-
-							this.userInfo = userInfo;
-							if(userInfo.hasExistingContact == true){
-								if(userInfo.hasExistingUser == true){
-									//display message of existing user
-									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
-									this.isLoading = false;
-								}else{
-									//show Terms and Usage field to proceed submit
-									this.displayTermsAndUsage = true;
-									this.isEmailFieldReadOnly = true;
-									this.isLoading = false;
-								}
+					}
+					else{
+						let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
+						RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
+							if(result == 'true'){
+							//disposable email alert!
+								this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+								this.isLoading = false;
 							}else{
-								if(userInfo.hasExistingUser == true){
-									//display message of existing user
-									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
-									this.isLoading = false;
-								}else{
-									if(userInfo.isEmailAddressAvailable == true){
-											//show form
-										if(this.userCountry != ""){
-											this.registrationForm.country = this.userCountry;
+								//check if the email address is associated to a contact and/or a user
+								//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
+								//but the "E-Mail" field is pre-populated and, by default, not editable.
+								//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
+								//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
+								//button is displayed on the form.
+								getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
+									let userInfo = JSON.parse(JSON.stringify(result));
+
+									this.userInfo = userInfo;
+									if(userInfo.hasExistingContact == true){
+										if(userInfo.hasExistingUser == true){
+											//display message of existing user
+											this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+											this.isLoading = false;
+										}else{
+											//show Terms and Usage field to proceed submit
+											this.displayTermsAndUsage = true;
+											this.isEmailFieldReadOnly = true;
+											this.isLoading = false;
 										}
-
-										this.displayContactForm = true;
-										this.isEmailFieldReadOnly = true;
-										this.isLoading = false;
-										this._initializePhoneInput();
-
 									}else{
-											//inform user to pick another email
-										this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
-										this.isLoading = false;
+										if(userInfo.hasExistingUser == true){
+											//display message of existing user
+											this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+											this.isLoading = false;
+										}else{
+											if(userInfo.isEmailAddressAvailable == true){
+													//show form
+												if(this.userCountry != ""){
+													this.registrationForm.country = this.userCountry;
+												}
+
+												this.displayContactForm = true;
+												this.isEmailFieldReadOnly = true;
+												this.isLoading = false;
+												this._initializePhoneInput();
+
+											}else{
+													//inform user to pick another email
+												this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+												this.isLoading = false;
+											}
+										}
 									}
-								}
+								})
+								.catch(error => {
+									console.info('Error: ', error);
+									this.isLoading = false;
+								});
 							}
-						})
-						.catch(error => {
-                            console.info('Error: ', error);
-							this.isLoading = false;
 						});
 					}
 				});
