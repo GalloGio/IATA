@@ -2880,7 +2880,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>Liên lạc với chúng tôi</label>
+        <label>Liên hệ với chúng tôi</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2894,6 +2894,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Mua trực tuyến</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>Gọi cho chúng tôi</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>Hủy</label>
@@ -2980,6 +2984,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Trò chuyện trực tuyến bằng $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Quý khách vui lòng kiểm tra Email của mình để nhận chi tiết lịch sử truy cập của quý khách</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3010,6 +3018,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Hồ sơ công ty</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Đơn khiếu nại có thể mất 5 ngày làm việc để được xử lý. Nếu bạn có một câu hỏi hoặc yêu cầu, vui lòng chọn &lt;b&gt;Tạo trường hợp&lt;/b&gt; để chúng tôi hỗ trợ bạn nhanh hơn.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Hoàn thành Hồ sơ cá nhân</label>
@@ -3110,6 +3122,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Từ chối Truy cập</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Viết tóm tắt về phản hồi</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Tài liệu được thêm vào Dấu trang của tôi</label>
@@ -3292,6 +3308,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Đây là &lt;b&gt;&lt;u&gt;Trường hợp khẩn cấp&lt;/u&gt;&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Trường hợp khẩn cấp được hỗ trợ 24/7 và chỉ bằng tiếng Anh.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin lưu ý kênh hỗ trợ Khẩn cấp chỉ hỗ trợ bằng &lt;b&gt;tiếng Anh&lt;/b&gt;  và dành cho các tình huống quan trọng sau:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Nếu câu hỏi của bạn không liên quan đến một trong những tình huống này, vui lòng nhấp vào "&lt;b&gt; Gửi một Câu hỏi &lt;/b&gt;" bên dưới để tạo một trường hợp.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn đã chọn Kênh Khẩn cấp</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin lưu ý hỗ trợ qua kênh Khẩn cấp chỉ dành cho các tình huống quan trọng sau:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sự cố truy cập hệ thống hoặc nền tảng ngừng hoạt động</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Vấn đề về báo cáo (vấn đề lớn / chênh lệch báo cáo)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Hệ thống bị đình chỉ</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Nghi ngờ hoạt vi gian lận</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng không yêu cầu hỗ trợ khẩn cấp, trừ khi đó là vấn đề về gian lận, xuất vé hoặc vấn đề tài chính. </label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3328,7 +3388,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>Liên lạc với chúng tôi</label>
+        <label>Liên hệ với chúng tôi</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3434,6 +3494,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Vì bạn đã không đăng nhập trong 90 ngày qua, chúng tôi đã gửi cho bạn một email với mật khẩu mới.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Đưa ra phản hồi</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Tại IATA, chúng tôi không ngừng cải tiến các sản phẩm và dịch vụ của mình để có thể mang đến cho bạn trải nghiệm tuyệt vời. Quan điểm và suy nghĩ của bạn thúc đẩy những cải tiến này. Nhấp vào nút bên dưới để cung cấp phản hồi của bạn.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Phản hồi của bạn rất quan trọng với chúng tôi</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Đây là một</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4500,6 +4576,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>Chủ đề gần đây của bạn</label>
+        <name>CSP_RecentTopics</name>
+    </customLabels>
+    <customLabels>
         <label>Người nhận</label>
         <name>CSP_Recipients</name>
     </customLabels>
@@ -4736,6 +4816,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Chọn chủ đề tại đây</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>Truy cập dịch vụ</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4872,6 +4956,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Vui lòng nhập một dòng tiêu đề ngắn</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Gửi đi</label>
         <name>CSP_Submit</name>
     </customLabels>
@@ -4880,9 +4968,17 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SubmitApproval</name>
     </customLabels>
     <customLabels>
+        <label>Gửi dưới dạng trường hợp Khẩn cấp</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Gửi câu hỏi</label>
+        <name>CSP_SubmitAsQuery</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
         <name>CSP_SubmittedApproval</name>
-    </customLabels>
+    </customLabels>    
     <customLabels>
         <label>Thành công</label>
         <name>CSP_Success</name>
@@ -4918,6 +5014,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Theo dõi</label>
         <name>CSP_Track</name>
+    </customLabels>
+    <customLabels>
+        <label>Tất cả các chủ đề</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Chủ đề gần đây của bạn</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label><!-- Profile Training section --></label>
@@ -23049,6 +23153,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Nếu tính năng trò chuyện trực tuyến bằng ngôn ngữ của bạn hiện không khả dụng, vui lòng &lt;b&gt;tạo trường hợp&lt;/b&gt; hoặc liên hệ với chúng tôi qua &lt;b&gt;điện thoại&lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Chỉ cần gọi số: </label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23063,6 +23175,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>Bạn có thể sử dụng số sau đây để nói chuyện với một đại diện IATA:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Cửa sổ trò chuyện trực tuyến đã được mở</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Trò chuyện với Chúng tôi</label>
