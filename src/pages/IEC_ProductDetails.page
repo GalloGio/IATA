@@ -203,8 +203,8 @@
 
                                     <div class="product-info">
                                         <figure class="product-image">
-                                            <apex:outputPanel layout="block" style="height: 180px;" rendered="{!product.imageFile != '' }">
-                                                <div class="fileImage" layout="block" style="height: 180px;">
+                                            <apex:outputPanel layout="block" rendered="{!product.imageFile != '' }">
+                                                <div class="fileImage" layout="block">
                                                 	<apex:outputText value="{!product.imageFile}" escape="false"/>
                                                 </div>
                                             </apex:outputPanel>
