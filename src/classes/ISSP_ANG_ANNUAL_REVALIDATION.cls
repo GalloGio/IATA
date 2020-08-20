@@ -361,7 +361,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 									  WHERE Account__c = :currentAccount.account.Id
 									  AND Active__c = true
 									  AND RecordTypeId = :ownershipId]) {
-										  percentage += ar.Percentage__c;
+										  if(ar.Percentage__c>0){
+											  percentage += ar.Percentage__c;
+										  }
 									  }
 
 		return percentage == 100;
