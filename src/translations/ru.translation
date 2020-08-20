@@ -2877,7 +2877,7 @@
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>Связаться с нами</label>
+        <label>Свяжитесь с Нами</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2891,6 +2891,10 @@
     <customLabels>
         <label>Приобрести Онлайн</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>Позвоните нам</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>Отменить</label>
@@ -2977,6 +2981,10 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Чат в $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Пожалуйста, проверьте свою электронную почту, чтобы получить Ваши данные для доступа</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3007,6 +3015,10 @@
     <customLabels>
         <label>Профиль компании</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Рассмотрение жалобы занимает до 5 рабочих дней. Если у вас есть какой либо вопрос или запрос, воспользуйтесь, пожалуйста, опцией &lt;b&gt;Создать запрос &lt;/b&gt;, чтобы мы могли быстрее помочь вам.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Заполнить свой профиль</label>
@@ -3107,6 +3119,10 @@
     <customLabels>
         <label>Отказать в доступе</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Напишите краткое описание</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Документ добавлен в мои закладки</label>
@@ -3289,6 +3305,50 @@
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>&lt;b&gt;&lt;u&gt;Чрезвычайная ситуация&lt;/u&gt;&lt;/b&gt;.</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Экстренная поддержка предоставляется 24 часа, 7 дней в неделю и только на английском языке.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, обратите внимание, что поддержка, предоставляемая по каналу экстренной помощи, предлагается только на &lt;b&gt;английском языке &lt;/b&gt; и для следующих критических ситуаций:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Если ваш запрос не связан с одной из этих ситуаций, пожалуйста, нажмите "&lt;b&gt; Отправить как запрос &lt;/b&gt;" ниже, чтобы создать новый запрос.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы выбрали опцию ""Чрезвычайная ситуация"".</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, обратите внимание, что поддержка, предоставляемая по каналу экстренной помощи, предлагается только для следующих критических ситуаций.</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Проблемы доступа к системам или выходом из строя платформ</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Вопросы по выставленным счетам (крупные несоответствия)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Отключения систем</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Подозрительная активность и мошенничество</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, не запрашивайте экстренной помощи, если речь не идет о мошенничестве, продаже билетов или финансовых вопросах.</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3325,7 +3385,7 @@
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>Связаться с нами</label>
+        <label>Свяжитесь с Нами</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3431,6 +3491,18 @@
     <customLabels>
         <label>Поскольку Вы не входили в систему в течение последних 90 дней, мы отправили Вам электронное письмо с новым паролем.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Отзыв</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>В ИАТА мы постоянно совершенствуем наши продукты и услуги, чтобы предоставить наилучший сервис. Ваши отзывы и предложения являются движущей силой этих улучшений. Нажмите на кнопку ниже, чтобы оставить свой отзыв.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Это</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4499,6 +4571,10 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>Ваши последние темы</label>
+        <name>CSP_RecentTopics</name>
+    </customLabels>
+    <customLabels>
         <label>Получатели</label>
         <name>CSP_Recipients</name>
     </customLabels>
@@ -4735,6 +4811,10 @@
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Выберите тему </label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>Доступ к услугам</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4871,12 +4951,24 @@
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Пожалуйста, введите тему</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Отправить</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Отправить как экстренной запрос</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Отправить как запрос</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4913,6 +5005,14 @@
     <customLabels>
         <label>Название</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Все темы</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваши последние темы</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>Отслеживание</label>
@@ -23060,6 +23160,14 @@ GSA - 3 буквы.
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Если чат на вашем языке в данный момент недоступен, пожалуйста &lt;b&gt;создайтезапрос&lt;/b&gt; или &lt;b&gt;позвоните нам&lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Просто наберите номер:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23074,6 +23182,10 @@ GSA - 3 буквы.
     <customLabels>
         <label>Вы можете позвонить представителю IATA по следующему номеру:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Открыто окно чата</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Написать нам в чате</label>
