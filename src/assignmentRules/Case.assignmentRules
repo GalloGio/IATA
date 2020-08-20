@@ -111,7 +111,7 @@ ISPICKVAL(Reason1__c,&quot;General Information&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_MITA_Product</assignedTo>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
