@@ -2878,7 +2878,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>التواصل معنا</label>
+        <label>اتصل بنا</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2892,6 +2892,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>الشراء عبر الإنترنت</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>اتصل بنا</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>إلغاء</label>
@@ -3010,6 +3014,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>يستغرق حل الشكوى ما يصل إلى 5 أيام عمل. إذا كان لديك سؤال أو طلب ، فالرجاء استخدام خيار &lt;b&gt; إنشاء قضية&lt;/b&gt; حتى نتمكن من الرد عليك بشكل أسرع.</label>
+        <name>CSP_Complaint_Select_Message</name>
+    </customLabels>
+    <customLabels>
         <label>أكمل ملفك الشخصي</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
@@ -3108,6 +3116,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>منع الدخول</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>اكتب ملخصًا موجزًا ​​عن التعليقات</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>تمت إضافة المستند إلى إشاراتي المرجعية</label>
@@ -3290,6 +3302,54 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>هذه قضية &lt;b&gt;&lt;u&gt; طوارئ &lt;/u&gt;&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>يتوفر دعم الطوارئ على مدار الساعة طوال أيام الأسبوع ويتم تقديمه باللغة الإنجليزية فقط.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى ملاحظة أن الدعم المقدم من خلال قناة الطوارئ يتم تقديمه باللغة &lt;b&gt;الإنجليزية&lt;/b&gt; وللحالات الحرجة التالية:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>إذا لم يكن استفسارك متعلقًا بأحد هذه المواقف ، فالرجاء النقر فوق &quot;&lt;b&gt; إرسال كاستعلام &lt;/b&gt;&quot; أدناه لإنشاء قضية.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>لقد حددت خيار الطوارئ</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>:يرجى ملاحظة أن الدعم المقدم عبر قناة الطوارئ للحالات الحرجة التالية فقط</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message when emergency option is selected on the support page --></label>
+        <name>CSP_Emergency_Selected_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label>مشكلة الوصول إلى النظام أو انقطاع النظام الأساسي</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>مشاكل الفواتير (المشاكل الرئيسية / التناقضات)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>تعليق النظام</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>الاشتباه في نشاط احتيالي</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>من فضلك لا تطلب الدعم في حالات الطوارئ إلا إذا كان الأمر يتعلق بالاحتيال أو إصدار التذاكر أو الأمور المالية</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3326,7 +3386,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>التواصل معنا</label>
+        <label>اتصل بنا</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3432,6 +3492,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>.نظرًا لأنكم لم تقوموا بتسجيل الدخول في آخر 90 يوماً ، فقد أرسلنا لكم رسالة بريد إلكتروني تحتوي كلمة مرور جديدة</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ملاحظاتك مهمة بالنسبة لنا</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>في IATA ، نقوم باستمرار بإجراء تحسينات على منتجاتنا وخدماتنا حتى نتمكن من توفير تجربة ممتازة لك. آرائك وأفكارك تقود هذه التحسينات. انقر فوق الزر أدناه لتقديم ملاحظاتك.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ملاحظاتك مهمة بالنسبة لنا</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>هذا ال</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4498,6 +4574,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>مواضيعك الأخيرة</label>
+        <name>CSP_RecentTopics</name>
+    </customLabels>
+    <customLabels>
         <label>المستلمين</label>
         <name>CSP_Recipients</name>
     </customLabels>
@@ -4734,6 +4814,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>حدد موضوع هنا</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>الوصول إلى الخدمة</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4870,12 +4954,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>الرجاء إدخال سطر موضوع قصير</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>إرسال</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>إرسال كحالة الطوارئ</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>إرسال كاستعلام</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4912,6 +5008,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>العنوان</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>كل المواضيع</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>مواضيعك الأخيرة</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>المسار</label>
@@ -23035,6 +23139,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>إذا لم تكن الدردشة بلغتك متاحة في الوقت الحالي ، فيرجى &lt;b&gt; إنشاء ملف حالة &lt;/b&gt; أو اتصل بنا عبر &lt;b&gt; الهاتف &lt;/b&gt; .</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>الاتصال الهاتفي فقط:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23049,6 +23161,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>يمكنكم استخدام الرقم التالي للتحدث إلى أحد مندوبي &quot;أياتا&quot; (IATA):</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>تم فتح نافذة الدردشة</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>تحدثوا إلينا</label>
