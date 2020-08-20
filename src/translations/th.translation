@@ -2894,6 +2894,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label>โทรหาเรา</label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label>ยกเลิก</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -2978,6 +2982,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>แชทใน $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>โปรดตรวจสอบอีเมลของคุณเพื่อรับทราบรายละเอียดสำหรับการเข้าถึงของคุณ</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3008,6 +3016,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ข้อมูลบริษัท</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>การร้องเรียนใช้เวลาถึง 5 วันทำการในการแก้ไข หากคุณมีคำถามหรือคำขอโปรดใช้ตัวเลือก &lt;b&gt;สร้างเคส&lt;/b&gt; เพื่อให้เราติดต่อกลับได้เร็วขึ้น</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>กรอกข้อมูลส่วนบุคคลของคุณ</label>
@@ -3108,6 +3120,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เขียนสรุปความคิดเห็นสั้น ๆ</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>เพิ่มเอกสารในบุ๊คมาร์คของฉันแล้ว</label>
@@ -3290,6 +3306,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>นี่คือ&lt;b&gt;&lt;u&gt;เหตุฉุกเฉิน&lt;/u&gt;&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการช่วยเหลือฉุกเฉิน 24/7 และให้บริการเป็นภาษาอังกฤษเท่านั้น</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดทราบว่าการสนับสนุนที่มีให้ผ่านช่องทางฉุกเฉินมีให้บริการเป็นภาษา &lt;b&gt;อังกฤษ&lt;/b&gt; และสำหรับสถานการณ์ที่สำคัญต่อไปนี้:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>หากคำถามของคุณไม่เกี่ยวข้องกับสถานการณ์ใดสถานการณ์หนึ่งโปรดคลิก "&lt;b&gt;ส่งเป็นแบบสอบถาม&lt;/b&gt;" ด้านล่างเพื่อสร้างเคส</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณได้เลือกตัวเลือกฉุกเฉิน</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดทราบว่าการติดต่อผ่านช่องทางฉุกเฉินมีไว้สำหรับสถานการณ์วิกฤตต่อไปนี้เท่านั้น:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ปัญหาการเข้าถึงระบบหรือการหยุดทำงานของแพลตฟอร์ม</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>ปัญหาการเรียกเก็บเงิน (ปัญหาหลัก / ความคลาดเคลื่อน)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>ระบบระงับชั่วคราว</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อสงสัยเกี่ยวกับกิจกรรมฉ้อโกง</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดอย่าส่งคำร้องผ่านช่องทางฉุกเฉิน ยกเว้นแต่จะเกี่ยวกับการฉ้อโกงการออกตั๋วหรือปัญหาทางการเงิน</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3432,6 +3492,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>เนื่องจากคุณไม่ได้ลงชื่อเข้าใช้ใน 90 วันที่ผ่านมา เราจึงส่งอีเมลพร้อมรหัสผ่านใหม่ให้คุณ</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ให้ข้อเสนอแนะ</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่ IATA เราทำการปรับปรุงผลิตภัณฑ์และบริการของเราอย่างต่อเนื่องเพื่อให้เราสามารถมอบประสบการณ์ที่ยอดเยี่ยมแก่คุณได้ มุมมองและความคิดของคุณผลักดันการปรับปรุงเหล่านี้ คลิกปุ่มด้านล่างเพื่อแสดงความคิดเห็นของคุณ</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ความคิดเห็นของคุณเป็นสิ่งสำคัญสำหรับเรา</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>มันคือ</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4498,6 +4574,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>หัวข้อล่าสุดของคุณ</label>
+        <name>CSP_RecentTopics</name>
+    </customLabels>
+    <customLabels>
         <label>ผู้รับ</label>
         <name>CSP_Recipients</name>
     </customLabels>
@@ -4734,6 +4814,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>เลือกหัวข้อที่นี่</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>การเข้าถึงบริการ</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4870,12 +4954,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>กรุณาใส่หัวเรื่องสั้น ๆ</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>ส่ง</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่งเป็นกรณีฉุกเฉิน</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่งเป็นคำถาม</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4912,6 +5008,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>หัวข้อ</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อทั้งหมด</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อล่าสุดของคุณ</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>ลู่</label>
@@ -23052,6 +23156,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>การแชทที่เป็นภาษาของคุณไม่สามารถใช้งานได้ในขณะนี้โปรด &lt;b&gt;สร้างเคส&lt;/b&gt; หรือติดต่อเราทาง &lt;b&gt;โทรศัพท์&lt;/b&gt;</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>เพียงโทร:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23070,6 +23182,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>พูดคุยกับเรา</label>
         <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label>เปิดหน้าต่างแชทแล้ว</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
