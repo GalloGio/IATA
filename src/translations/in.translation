@@ -2897,6 +2897,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label>Hubungi Kami</label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label>Batalkan</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -3013,6 +3017,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>TIm kami membuthkan waktu hingga 5 hari kerja untuk meresponi Keluhan Anda. Jika Anda memiliki pertanyaan atau permintaan lainnya, harap gunakan opsi &lt;b&gt; Buat kasus &lt;/b&gt; agar kami dapat membantu Anda dengan lebih cepat.</label>
+        <name>CSP_Complaint_Select_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Lengkapi Profil Anda.</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
@@ -3111,6 +3119,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Akses ditolak</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Salurkan tanggapan Anda </label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Dokumen Ditambahkan ke Penanda Saya</label>
@@ -3293,6 +3305,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Ini adalah &lt;b&gt;&lt;u&gt;Darurat&lt;/u&gt;&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Dukungan darurat tersedia 24/7 dan hanya berlaku dalam bahasa Inggris.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Mohon diperhatikan bahwa dukungan yang diberikan melalui saluran Darurat ini hanyaberlaku dalam bahasa &lt;b&gt; Inggris &lt;/b&gt; dan untuk situasi kritis berikut:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Jika kueri Anda tidak berkaitan dengan salah satu situasi ini, harap klik "&lt;b&gt;Kirim sebagai Kueri&lt;/b&gt;" di bawah untuk membuat kasus.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda telah memilih opsi Darurat</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Dukungan yang diberikan melalui saluran Darurat hanya berlaku untuk situasi kritis berikut:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Masalah akses sistem atau pemadaman platform</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Masalah penagihan (masalah utama / ketidaksesuaian)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Masalah Penangguhan / Suspensi</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Kecurigaan atas aktivitas penipuan</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Mohon tidak menggunakan saluran bantuan darurat kecuali hal berkaitan penipuan, tiket atau masalah keuangan</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3435,6 +3491,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Karena Anda tidak login dalam 90 hari terakhir, kami telah mengirimi Anda email dengan kata sandi baru.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sampaikan pendapat Anda</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Di IATA, kami selalu berkomitmen untuk terus memberikan pelayanan yang unggul untuk pengalaman terbaik Anda. Opini dan pendapat Anda membantu perkembangan kami. Silakan klik tombol dibawah untuk menyampaikan tanggapan Anda.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Tanggapan Anda penting bagi kami</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ini adalah sebuah</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4502,6 +4574,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>Topik Terkini Anda</label>
+        <name>CSP_RecentTopics</name>
+    </customLabels>
+    <customLabels>
         <label>Penerima</label>
         <name>CSP_Recipients</name>
     </customLabels>
@@ -4738,6 +4814,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Pilih Topik Di Sini</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>Akses Layanan</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4874,12 +4954,24 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Mohon di isi Subjek secara singkat</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Kirim</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Kirim sebagai Darurat</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Kirim sebagai Kueri</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4916,6 +5008,14 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Judul</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Semua Topik</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Topik Terkini Anda</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>Jalur</label>
@@ -23059,6 +23159,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Jika saat ini chat dalam bahasa Anda tidak tersedia, &lt;b&gt;buat kasus&lt;/b&gt; atau hubungi kami melalui &lt;b&gt;telepon&lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan tekan:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23073,6 +23181,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>Anda dapat menggunakan nomor berikut untuk berbicara dengan perwakilan IATA:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Jendela chat telah dibuka</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Berbicara dengan Kami</label>
@@ -26356,6 +26468,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label>Beri tahu kami apa yang dapat kami bantu</label>
         <name>csp_Case_Panel_sub_label</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat  dalam $0</label>
+        <name>CSP_Chat_base_Label</name>
     </customLabels>
     <customLabels>
         <label>Mengobrol dengan Kami</label>
