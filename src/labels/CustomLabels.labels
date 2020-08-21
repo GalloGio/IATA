@@ -8477,6 +8477,13 @@ This service is free of charge.</value>
         <value>All Other Countries / Territories</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_All_Others_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_All_Others_Country</shortDescription>
+        <value>All Others Country</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Annual_Survey</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8526,13 +8533,6 @@ This service is free of charge.</value>
         <value>BSP</value>
     </labels>
     <labels>
-        <fullName>CurrencyCenter_BSP_Launch_Date</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CurrencyCenter_BSP_Launch_Date</shortDescription>
-        <value>BSP Launch Date</value>
-    </labels>
-    <labels>
         <fullName>CurrencyCenter_BSP_CASS_Proffile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8545,6 +8545,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_BSP_ICCS_Availability</shortDescription>
         <value>BSP ICCS Availability</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_BSP_Launch_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_Launch_Date</shortDescription>
+        <value>BSP Launch Date</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_BSP_Profile</fullName>
@@ -8580,6 +8587,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Blocked_Funds_Countries</shortDescription>
         <value>Blocked Funds Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Blocked_Funds_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Blocked_Funds_Country</shortDescription>
+        <value>Blocked Funds Country</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Bloomberg_Feeds</fullName>
@@ -9074,6 +9088,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
         <value>Watch List Countries / Territories</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Watch_List_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Watch_List_Country</shortDescription>
+        <value>Watch List Country</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_def_ACD_CCD</fullName>
@@ -16530,7 +16551,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SAP Customer Issue</shortDescription>
-        <value>There is an error with your customer account.&lt;br/&gt;Please contact CSR for assistance!</value>
+        <value>There is an error with your customer account.&lt;br/&gt;Please contact the IATA Online Store Support at onlinestoresupport@iata.org for assistance!</value>
     </labels>
     <labels>
         <fullName>IEC_SAP_Customer_Shipping_Address_Issue</fullName>
