@@ -2881,7 +2881,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>문의하기</label>
+        <label>문의 하기</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2895,6 +2895,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>온라인 구매</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>유선 문의</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>취소</label>
@@ -2981,6 +2985,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>무료 채팅 $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>접근 세부 정보를 얻으려면 고객님의 이메일을 확인하십시오</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3011,6 +3019,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>회사 프로필</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>불만 접수의 경우, 답변에 5일 정도 소요됩니다. 질의나 요청 사항은 &lt;b&gt; 사례 작성 &lt;/b&gt;으로 보내주시면, 빠른 답변 드리겠습니다. </label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>프로필 완성</label>
@@ -3111,6 +3123,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>간단한 의견 보내기 </label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>나의 즐겨찾기에 문서가 추가 되었습니다.</label>
@@ -3293,6 +3309,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>&lt;b&gt;&lt;u&gt;긴급 사례&lt;/u&gt;&lt;/b&gt; 입니다.</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급 사례는 영어로 하루 24시간 1년 내내 지원됩니다. </label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급사례는 아래 상황에 한해  &lt;b&gt; 영어 &lt;/b&gt;로 지원됩니다. </label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 질의가 긴급 상황에 해당하지 않는 경우, "&lt;b&gt; 사례 작성 &lt;/b&gt;을 통해 질의를 보내주시기 바랍니다. </label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급 지원을 선택하셨습니다. </label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>아래 상황에 한해서만 긴급 채널을 통한 서비스가 지원됩니다. </label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>시스템 접속 혹은 웹사이트 에러 </label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>빌링 문제 (영업에 큰 차질을 야기하는 민감한 문제/차액)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>시스템 중단</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>사기 의심 사례</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>사기 , 발권, 재정 관련 사례가 아닌 경우, 긴급 채널을 통한 지원을 요청하지 마십시오. </label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3329,7 +3389,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>문의하기</label>
+        <label>문의 하기</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3435,6 +3495,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>지난 90일 동안 로그인하지 않았기 때문에 새 비밀번호가 포함된 이메일을 보냈습니다.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>의견 보내기</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA에서 제공하는 제품/서비스 품질 향상을 위해 노력하고 있습니다. 귀하의 의견은 서비스 향상을 위한 소중한 자료가 됩니다. 아래 버튼을 클릭하시어 의견을 보내주실 수 있습니다. </label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA는 고객의 의견을 소중히 여깁니다.</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>이것은 </label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4737,6 +4813,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>여기서 주제를 선택하세요. </label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>서비스 액세스</label>
         <name>CSP_Service_Access</name>
     </customLabels>
@@ -4873,12 +4953,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>간단한 제목을 작성하세요</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>제출</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급 요청 보내기</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>질의 보내기</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4915,6 +5007,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>제목</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>모든 주제</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 최근 주제</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>과정</label>
@@ -23051,6 +23151,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>원하시는 언어로 채팅 서비스가 불가한 경우, &lt;b&gt; 사례 작성 &lt;/b&gt; 이나 &lt;b&gt; 유선 안내 &lt;/b&gt;를 선택하시기 바랍니다.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>전화주시기 바랍니다. </label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23065,6 +23173,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>IATA 담당자에게 연락하시려면 다음 전화번호를 이용해 주십시오:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>채팅창이 연결되었습니다. </label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>채팅</label>
