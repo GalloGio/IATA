@@ -8,7 +8,7 @@
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                     </div>
                     <div if:false={loading}>
-                        <div if:true={haveAccessToTIPReports}>
+                        <div if:true={haveAccessToService}>
                             <div if:true={viewResults} class="casesListWrapper">
                                 <lightning-datatable 
                                     key-field="id" 
@@ -22,8 +22,8 @@
                                 {label.CSP_Service_TIPReports_NoReports}
                             </div>
                         </div>
-                        <div if:false={haveAccessToTIPReports}>
-                            {label.CSP_Service_TIPReports_NoAccess}
+                        <div if:false={haveAccessToService}>
+                            {noAccessMessage}
                         </div>
                     </div>
                 </div>

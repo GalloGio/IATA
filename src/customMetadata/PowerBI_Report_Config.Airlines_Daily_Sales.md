@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">TIP_report</value>
+        <value xsi:type="xsd:string">Airline Daily Sales</value>
     </values>
 </CustomMetadata>

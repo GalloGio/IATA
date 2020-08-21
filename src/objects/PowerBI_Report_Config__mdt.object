@@ -74,6 +74,11 @@
                     <default>false</default>
                     <label>TIP report</label>
                 </value>
+                <value>
+                    <fullName>Airline Daily Sales</fullName>
+                    <default>false</default>
+                    <label>Airline Daily Sales</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

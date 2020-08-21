@@ -1,4 +1,5 @@
 import { LightningElement, track } from 'lwc';
+import { getPageName }    from 'c/navigationUtils';
 
 //import labels
 import ISSP_AMS_ACCR_Alert1 from '@salesforce/label/c.ISSP_AMS_ACCR_Alert1';
@@ -9,6 +10,7 @@ import CSP_Service_TIPReports_TextPostedDate from '@salesforce/label/c.CSP_Servi
 import CSP_Service_TIPReports_TextFileName from '@salesforce/label/c.CSP_Service_TIPReports_TextFileName';
 import CSP_Service_TIPReports_TextAction from '@salesforce/label/c.CSP_Service_TIPReports_TextAction';
 import CSP_Service_TIPReports_TextOpen from '@salesforce/label/c.CSP_Service_TIPReports_TextOpen';
+import CSP_Service_AirlineDailySales_NoAccess from '@salesforce/label/c.CSP_Service_AirlineDailySales_NoAccess';
 
 //import controller methods
 import getTIPReportPageWrapper from '@salesforce/apex/PortalServiceTIPReportsCtrl.getTIPReportPageWrapper';
@@ -25,12 +27,13 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 		CSP_Service_TIPReports_TextPostedDate,
 		CSP_Service_TIPReports_TextFileName,
 		CSP_Service_TIPReports_TextAction,
-		CSP_Service_TIPReports_TextOpen
+		CSP_Service_TIPReports_TextOpen,
+		CSP_Service_AirlineDailySales_NoAccess
     };
 
 	@track loading = true;
 	@track viewResults = false;
-	@track haveAccessToTIPReports = false;
+	@track haveAccessToService = false;
 	@track tipReportsTableColumns = [];
 	@track tipReportsList = [];
 
@@ -38,7 +41,19 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 	@track showReportPopup = false;
 	@track viewPopupFooter = false;
 
+	get noAccessMessage() {
+		if (this.pageName==='service-tipreports') {
+			return this.label.CSP_Service_TIPReports_NoAccess;
+		}
+		if (this.pageName==='airline-daily-sales') {
+			return this.label.CSP_Service_AirlineDailySales_NoAccess;
+		}
+		return '';
+	}
+
 	connectedCallback() {
+
+		this.pageName = getPageName();
 
 		this.tipReportsTableColumns = [
 			{label: this.label.CSP_Service_TIPReports_TextPostedDate , fieldName: 'lastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: ''}},
@@ -46,15 +61,15 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 			{label: this.label.CSP_Service_TIPReports_TextAction, type: 'button', typeAttributes: { label: this.label.CSP_Service_TIPReports_TextOpen, name: 'openReportOrFile', variant: 'base' }}
 		];
 
-		getTIPReportPageWrapper({})
+		getTIPReportPageWrapper({pageName : this.pageName})
 		.then(results => {
 			
 			let resultsAux = JSON.parse(JSON.stringify(results));
 
-			this.haveAccessToTIPReports = resultsAux.haveAccessToTIPReports;
+			this.haveAccessToService = resultsAux.haveAccessToTIPReports;
 
-			if(this.haveAccessToTIPReports === true){
-				this.viewResults = true;
+			if(this.haveAccessToService === true){
+				this.viewResults = resultsAux.lstTIPReports.length>0;
 				this.tipReportsList = resultsAux.lstTIPReports;
 
 			}else{
@@ -99,7 +114,7 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 				}
 			});
 
-			createDocumentTrackerRecord({fileId : selectedReportAux.id, reportId : selectedReportAux.isspExternalReportId})
+			createDocumentTrackerRecord({fileId : selectedReportAux.id, reportId : selectedReportAux.isspExternalReportId, pageName : this.pageName})
 			.then(() => {});
 		}
 	}
