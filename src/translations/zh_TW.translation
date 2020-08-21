@@ -32646,6 +32646,31 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account relationship with airport information --></description>
+        <label><!-- Account relationship with airport information --></label>
+        <name>Account_relationship_with_airport_information</name>
+        <sections>
+            <columns>
+                <label><!-- Parent Account ID --></label>
+                <name>Parent Account ID</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <label><!-- Airport account info --></label>
+            <name>Airport account info</name>
+        </sections>
+        <sections>
+            <label><!-- Manages / Operates --></label>
+            <name>Manages / Operates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account w cases and results --></description>
         <label><!-- Account w cases and results --></label>
         <name>Account_w_cases_and_results</name>
