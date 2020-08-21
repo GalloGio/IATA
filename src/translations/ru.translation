@@ -4571,10 +4571,6 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label>Ваши последние темы</label>
-        <name>CSP_RecentTopics</name>
-    </customLabels>
-    <customLabels>
         <label>Получатели</label>
         <name>CSP_Recipients</name>
     </customLabels>

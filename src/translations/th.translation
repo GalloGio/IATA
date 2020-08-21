@@ -4574,10 +4574,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label>หัวข้อล่าสุดของคุณ</label>
-        <name>CSP_RecentTopics</name>
-    </customLabels>
-    <customLabels>
         <label>ผู้รับ</label>
         <name>CSP_Recipients</name>
     </customLabels>

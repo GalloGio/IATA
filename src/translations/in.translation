@@ -4574,10 +4574,6 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label>Topik Terkini Anda</label>
-        <name>CSP_RecentTopics</name>
-    </customLabels>
-    <customLabels>
         <label>Penerima</label>
         <name>CSP_Recipients</name>
     </customLabels>

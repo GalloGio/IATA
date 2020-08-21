@@ -4573,10 +4573,6 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label>Son Konularınız</label>
-        <name>CSP_RecentTopics</name>
-    </customLabels>
-    <customLabels>
         <label>Alıcılar</label>
         <name>CSP_Recipients</name>
     </customLabels>
