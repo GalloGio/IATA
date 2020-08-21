@@ -48,7 +48,7 @@ public class PortalPasswordHandlerTest {
 			insert emailTemplate;
 
 			PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword('contact@bucketairline.com');
-			String url = PortalPasswordHandler.generateUrl(portalUser, 'password', 'pageName');
+			String url = PortalPasswordHandler.generateUrl(portalUser, 'password', 'pageName', new Map<String,String>{'d' => 'd'});
 			Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(portalUser, url);
 			boolean success = PortalPasswordHandler.sendEmail(portalUser.Id, 'test', emailMap);
 			PortalPasswordHandler.resultWrapper changeResult = PortalPasswordHandler.changePassword('test123!', 'New1234!', 'New1234!');

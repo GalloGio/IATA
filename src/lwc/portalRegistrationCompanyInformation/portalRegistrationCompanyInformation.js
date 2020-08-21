@@ -18,6 +18,7 @@ import CSP_L2_Website                       from '@salesforce/label/c.CSP_L2_Web
 import CSP_L2_Back_to_Account_Selection     from '@salesforce/label/c.CSP_L2_Back_to_Account_Selection';
 import CSP_L2_Next_Step                     from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
+import OPTIONAL_Label                       from '@salesforce/label/c.ISSP_Optional';
 
 export default class PortalRegistrationCompanyInformation extends LightningElement {
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
@@ -56,11 +57,12 @@ export default class PortalRegistrationCompanyInformation extends LightningEleme
     @track countryListSet = false;
 
     // labels
-    _labels = {
+    @track _labels = {
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
         CSP_L2_Website,
-        CSP_L2_Next_Step
+        CSP_L2_Next_Step,
+        OPTIONAL_Label
     }
     get labels() {
         return this._labels;

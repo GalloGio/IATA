@@ -41,7 +41,28 @@ private class ANG_RHCAlertTriggerHandler_test {
 				DeveloperName = 'emailTemplate',
 				TemplateType = 'text',
 				FolderId = UserInfo.getUserId()
-				);
+			);
+
+
+			insert new EmailTemplate(
+				isActive = true,
+				Name = 'RHC_Exceptional_Monitoring_SMAP_Notification',
+				DeveloperName = 'RHC_Exceptional_Monitoring_SMAP_Notification',
+				Body = 'A SMAP case has been created for ##COUNTRY## - ##AGENT_NAME## - ##IATA_CODE## because all amounts owing are exceeding FS ##RHC_AMOUNT## ##RHC_CURRENCY##.',
+				Subject = 'NonNewGen RHC Monitoring – ##COUNTRY## – ##AGENT_NAME## – ##IATA_CODE##',
+				TemplateType = 'text',
+				FolderId = UserInfo.getUserId()
+			);
+
+			insert new EmailTemplate(
+				isActive = true,
+				Name = 'RHC_Exceptional_Monitoring_100',
+				DeveloperName = 'RHC_Exceptional_Monitoring_100',
+				Body = '##COUNTRY## ##AGENT_NAME## ##IATA_CODE## all amounts owing are exceeding FS ##RHC_AMOUNT## ##RHC_CURRENCY##.',
+				Subject = 'NonNewGen RHC Monitoring – ##COUNTRY## – ##AGENT_NAME## – ##IATA_CODE##',
+				TemplateType = 'text',
+				FolderId = UserInfo.getUserId()
+			);
 		}
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
 
@@ -60,17 +81,26 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
 
-		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
-			Name = 'BSP-SG',
+		AMS_Settlement_System__c bspKZ = new AMS_Settlement_System__c(
+			Name = 'BSP-KZ',
 			CurrencyIsoCode = 'SGD',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
-			RHC_Exceptional_Monitoring__c = true
+			RHC_Exceptional_Monitoring__c = true,
+			Exc_RHC_Monitoring_Alert__c = '100%UP'
 		);
 
-		insert new List<AMS_Settlement_System__c>{iss, bspSG};
+		AMS_Settlement_System__c bspRU = new AMS_Settlement_System__c(
+			Name = 'BSP-RU',
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			RHC_Exceptional_Monitoring__c = true,
+			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN'
+		);
+
+		insert new List<AMS_Settlement_System__c>{iss, bspKZ, bspRU};
 	
 		Operational_Calendar__c opSG = new Operational_Calendar__c(
-			ISS_Operation__c = bspSG.Id,
+			ISS_Operation__c = bspKZ.Id,
 			First_Day__c = Date.today().addDays(-30),
 			Last_Day__c = Date.today().addDays(1),
 			Frequency_code__c = 'W',
@@ -82,14 +112,53 @@ private class ANG_RHCAlertTriggerHandler_test {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id, Region__c = 'Europe');
 		IATA_ISO_Country__c defCountry = new IATA_ISO_Country__c(Name = 'All Countries', ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE, ANG_Enable_NewGen__c = true);
 
-		IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c (
-			Name = 'Singapore',
-			ISO_Code__c = 'SG',
-			AMS_Settlement_System__c = bspSG.Id,
+		IATA_ISO_Country__c countryKZ = new IATA_ISO_Country__c (
+			Name = 'Kazakhstan',
+			ISO_Code__c = 'KZ',
+			AMS_Settlement_System__c = bspKZ.Id,
 			ANG_Enable_NewGen__c = false
 		);
 
-		insert new List<IATA_ISO_Country__c>{country, defCountry, countrySG};
+		IATA_ISO_Country__c countryRU = new IATA_ISO_Country__c (
+			Name = 'Russia',
+			ISO_Code__c = 'RU',
+			AMS_Settlement_System__c = bspRU.Id,
+			ANG_Enable_NewGen__c = false
+		);
+
+		insert new List<IATA_ISO_Country__c>{country, defCountry, countryKZ, countryRU};
+
+		list<AMS_Country_Specific_Attribute__c> lsAttr = new list<AMS_Country_Specific_Attribute__c>();
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = countryKZ.Id,
+														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
+														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
+														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_SMAP_Notification',
+														 Create_SMAP_Case__c = true,
+														 ANG_Send_Email_Agent__c = false,
+														 Stakeholders_email_list__c = 'test1@iata.org,' + BOB_STAKEHOLDER_EMAIL));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = countryRU.Id,
+														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
+														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
+														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_100',
+														 Create_SMAP_Case__c = false,
+														 ANG_Send_Email_Agent__c = false,
+														 Stakeholders_email_list__c = 'test1@iata.org,' + BOB_STAKEHOLDER_EMAIL));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = countryRU.Id,
+														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN, 
+														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
+														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Email_Template_Internal_Stakeholders__c = '',
+														 Create_SMAP_Case__c = false,
+														 ANG_Send_Email_Agent__c = false,
+														 Stakeholders_email_list__c = ''));
+		
+		insert lsAttr;
+
 
 		// Create an Airline HQ account
 		Account a = new Account(
@@ -108,12 +177,12 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Location_Type__c = AMS_Utils.HO,
 			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-			IATA_ISO_Country__c = countrySG.Id,
+			IATA_ISO_Country__c = countryKZ.Id,
 			Location_Class__c = AMS_Utils.LC_PASSENGER,
 			Remittance_frequency__c = 'W',
 			Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT,
 			Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT,
-			BillingCountry = 'Singapore'
+			BillingCountry = 'Kazakhstan'
 		);
 
 		insert new List<Account>{a, nonNewgenAgent};
@@ -194,10 +263,10 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP;
 		att.ANG_Percentage__c = '50%';
 		att.ANG_Create_Process_Case__c = true;
-		att.ANG_EmailTemplate_Legacy__c = 'emailTemplate';
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
+		att.ANG_Send_Email_Agent__c = true;
 		insert att;
 		
 		List<AMS_ChangeCodes__c> changeCodeList = new List<AMS_ChangeCodes__c> {
@@ -226,42 +295,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	}
 
-	private static testmethod void test_sucess_legacy(){
-
-		Test.startTest();
-
-		Contact contact = new Contact(
-			FirstName = 'test',
-			LastName = 'test', 
-			AccountId = [SELECT Id FROM Account][0].Id,
-			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
-			email = 'testiata@yopmail.com'
-			);
-		insert contact;
-
-		ISSP_ObjectFactory.createPortalUser(contact);
-
-		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
-		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
-			ANG_RHC_Information__c = rhcInfo.Id,
-			ANG_Account__c = rhcInfo.ANG_AccountId__c,
-			ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP,
-			ANG_Threshold_Level__c = '50%'
-			);
-
-		String processRecorType = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'CS_Process_IDFS_ISS');
-
-		System.assertEquals(0, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'No process should be created at this time');
-		
-		insert ara;
-
-
-		System.assertEquals(1, [SELECT Id FROM Case WHERE RecordTypeId = :processRecorType].size(), 'There should one Process Case Created');
-		Test.stopTest();
-
-		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was not sent');
-	}
-
 	private static testmethod voId test_sucess_newgen(){
 
 		Test.startTest();
@@ -270,10 +303,11 @@ private class ANG_RHCAlertTriggerHandler_test {
 		country.ANG_Enable_NewGen__c = true;
 		update country;
 
+		Account accnt = [select id from account where IATA_Iso_Country__c = :country.id];
 		Contact contact = new Contact(
 			FirstName = 'test',
 			LastName = 'test', 
-			AccountId = [SELECT Id FROM Account][0].Id,
+			AccountId = accnt.Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
 			email = 'testiata@yopmail.com'
 			);
@@ -301,7 +335,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 		insert ara;
 
 		Test.stopTest();
-
 		System.assert([SELECT Id,ANG_email_sent__c FROM ANG_Risk_Alert__c LIMIT 1].get(0).ANG_email_sent__c,'Email was not sent');
 	}
 
@@ -1155,9 +1188,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 		);
 		insert rhcAlert100Down;
 		
-		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(Id = nonNewgenAgent.IATA_ISO_Country__r.AMS_Settlement_System__c);
-		bspSG.RHC_Exceptional_Monitoring__c = false;
-		update bspSG;
+		AMS_Settlement_System__c bspKZ = new AMS_Settlement_System__c(Id = nonNewgenAgent.IATA_ISO_Country__r.AMS_Settlement_System__c);
+		bspKZ.RHC_Exceptional_Monitoring__c = false;
+		update bspKZ;
 
 		ANG_Risk_Alert__c rhcAlert100Up = new ANG_Risk_Alert__c(
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert'), 
@@ -1225,7 +1258,16 @@ private class ANG_RHCAlertTriggerHandler_test {
 		List<ANG_Risk_Alert__c> rhcAlertLst = new List<ANG_Risk_Alert__c>{ rhcAlert100Up };
 		Map<Id, Account> riskAlertAccountMap = new Map<Id, Account>{ rhcAlert100Up.Id => nonNewgenAgent};
 
-		List<Messaging.SingleEmailMessage> emailNotificationLst = rhchandler.createRhcExceptionalMonitoringNotifications(rhcAlertLst, riskAlertAccountMap);
+		map<id, list<string>> mapEmailPerAlert = new map<id, list<string>>();
+		map<id, string> mapTemplates = new map<id, string>();
+
+		list<string> lsEmailAddr = new list<string>{'test1@iata.org',BOB_STAKEHOLDER_EMAIL};
+		for(ANG_Risk_Alert__c ar:rhcAlertLst){
+			mapEmailPerAlert.put(ar.id, lsEmailAddr);
+			mapTemplates.put(ar.id, 'RHC_Exceptional_Monitoring_100');
+		}
+
+		List<Messaging.SingleEmailMessage> emailNotificationLst = rhchandler.createRhcExceptionalMonitoringNotifications(rhcAlertLst, riskAlertAccountMap, mapEmailPerAlert, mapTemplates);
 
 		Test.stopTest();
 
@@ -1234,6 +1276,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		Messaging.SingleEmailMessage emailNotification = emailNotificationLst.get(0);
 
 		List<String> emailAddressLst = emailNotification.getToAddresses();
+
 		Id targetUserId = emailNotification.getTargetObjectId(); 
 
 		String expectedSubject = 'NonNewGen RHC Monitoring – ' + nonNewgenAgent.IATA_ISO_Country__r.Name + ' – ' + nonNewgenAgent.Name + ' – ' + nonNewgenAgent.IATACode__c;

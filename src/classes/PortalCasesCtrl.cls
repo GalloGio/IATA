@@ -563,7 +563,7 @@ public with sharing class PortalCasesCtrl {
 							OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2'
 						};
 					}
-				} else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && record.Owner.Name.startsWith('NewGen PCI'))
+				} else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && (record.OwnerId == '00G1r000002xun7EAA' || record.OwnerId == '00G1r000002xun8EAA' || record.OwnerId == '00G1r000002xun9EAA' || record.OwnerId == '00G1r000002xunAEAQ' || record.OwnerId == '00G1r000002xunBEAQ' || record.OwnerId == '00G1r000004SpvKEAS'))
 					|| ((record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT))) {
 					return new Map<Id, String>{
 						record.Id =>
@@ -692,7 +692,7 @@ public with sharing class PortalCasesCtrl {
 	public static Boolean getHideForClosedCases(String caseId) {
 		set<String> validRecordtypes = new set<String> {
 			'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
-			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE'
+			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review'
 		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
@@ -702,7 +702,7 @@ public with sharing class PortalCasesCtrl {
 							WHERE RecordType.Id = :newCase.RecordType.Id
 								AND (RecordType.DeveloperName IN :validRecordtypes)];
 		
-		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO);
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13)) || isMSO);
 	}
 
 	private Static boolean isMSOcase(Case newCase){

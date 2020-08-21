@@ -216,7 +216,7 @@
         <description>Reports the cash conditions of the account. This information is filled by the account trigger and should no be updated manually. It&apos;s used on the calculation of RHC Amount and Forecasted RHC Amount</description>
         <externalId>false</externalId>
         <label>Cash Conditions Equal to FS</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -298,16 +298,6 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>ANG_Forecasted_RHC_Effective_date__c</fullName>
-        <description>Forecasted RHC Effective date based on the next 1st day of the Billing Period</description>
-        <externalId>false</externalId>
-        <label>Forecasted RHC Effective date</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
     </fields>
     <fields>
         <fullName>ANG_IATA_Code__c</fullName>

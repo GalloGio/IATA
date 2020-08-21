@@ -152,54 +152,92 @@ public class ISSP_AvailableServices_Test {
 	}
 
 	public static testMethod void testServices_1() {
-		ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-		ISSPServiceListView__c cs = new ISSPServiceListView__c();
-		cs.Name = 'Test';
-		cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
-		cs.Field_Set_API_Name__c = 'ISSP_Available_services';
-		cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
-		cs.Permission_set__c = '0PS200000004CryGAE';
-		insert cs;
+		Contact c = [select id from contact where lastName = 'ContactTest'];
+
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+		User testeUser1 = new User (
+				Alias = 'newUser', 
+				Email='newuser@testorg.com', 
+				EmailEncodingKey='UTF-8', 
+				LastName='Testing1', 
+				LanguageLocaleKey='en_US', 
+				ContactId = c.id,            
+				LocaleSidKey='en_US',
+				ProfileId = p.Id, 
+				TimeZoneSidKey='America/Los_Angeles', 
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+		);
 
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
 		insert app;
 
-		String communityName = cttr.communityName;
-		String tocDocId = cttr.TOCdocumentId;
-		String servId = cttr.ServId;
+		System.runAs(testeUser1) {
+			ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+			ISSPServiceListView__c cs = new ISSPServiceListView__c();
+			cs.Name = 'Test';
+			cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+			cs.Field_Set_API_Name__c = 'ISSP_Available_services';
+			cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+			cs.Permission_set__c = '0PS200000004CryGAE';
+			insert cs;
 
-		Boolean isIccsMembershipInactive = cttr.isIccsMembershipInactive;
-		Boolean isIccsMembershipProspect = cttr.isIccsMembershipProspect;
-		Boolean isIccsMembershipActive = cttr.isIccsMembershipActive;
-		Boolean isIccsMembershipMember = cttr.isIccsMembershipMember;
-		Boolean isIccsMembershipWithdrawn = cttr.isIccsMembershipWithdrawn;
-		Boolean isIccsMembershipSuspended = cttr.isIccsMembershipSuspended;
-		String iccsPortalApplicationName = cttr.iccsPortalApplicationName;
+			String communityName = cttr.communityName;
+			String tocDocId = cttr.TOCdocumentId;
+			String servId = cttr.ServId;
 
-		cttr.initialization();
+			Boolean isIccsMembershipInactive = cttr.isIccsMembershipInactive;
+			Boolean isIccsMembershipProspect = cttr.isIccsMembershipProspect;
+			Boolean isIccsMembershipActive = cttr.isIccsMembershipActive;
+			Boolean isIccsMembershipMember = cttr.isIccsMembershipMember;
+			Boolean isIccsMembershipWithdrawn = cttr.isIccsMembershipWithdrawn;
+			Boolean isIccsMembershipSuspended = cttr.isIccsMembershipSuspended;
+			String iccsPortalApplicationName = cttr.iccsPortalApplicationName;
 
-		cttr.getServiceList();
+			cttr.initialization();
 
-		cttr.getServices();
-		cttr.refresh();
+			cttr.getServiceList();
 
-		cttr.sortExpression = 'Name';
-		cttr.getServices();
-		cttr.refresh();
-		cttr.sortExpression = 'Case_creation_record_type__c';
-		cttr.getServices();
-		cttr.refresh();
+			cttr.getServices();
+			cttr.refresh();
 
-		cttr.setSortDirection('DESC');
-		system.assertEquals('DESC', cttr.getSortDirection());
-		cttr.sortExpression = 'ASC';
+			cttr.sortExpression = 'Name';
+			cttr.getServices();
+			cttr.refresh();
+			cttr.sortExpression = 'Case_creation_record_type__c';
+			cttr.getServices();
+			cttr.refresh();
+
+			cttr.setSortDirection('DESC');
+			system.assertEquals('DESC', cttr.getSortDirection());
+			cttr.sortExpression = 'ASC';
+		}
 	}
 
 	public static testMethod void testServices_2() {
 
-		ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+		Contact c = [select id from contact where lastName = 'ContactTest'];
 
-		cttr.initialization();
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+		User testeUser1 = new User (
+				Alias = 'newUser', 
+				Email='newuser@testorg.com', 
+				EmailEncodingKey='UTF-8', 
+				LastName='Testing1', 
+				LanguageLocaleKey='en_US', 
+				ContactId = c.id,            
+				LocaleSidKey='en_US',
+				ProfileId = p.Id, 
+				TimeZoneSidKey='America/Los_Angeles', 
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+		);
+
+		System.runAs(testeUser1) {
+			ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+			cttr.initialization();
+		}
 
 
 	}
@@ -213,15 +251,33 @@ public class ISSP_AvailableServices_Test {
 		insert con;
 		Test.stopTest();
 
+		Contact c = [select id from contact where lastName = 'ContactTest'];
+
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+		User testeUser1 = new User (
+				Alias = 'newUser', 
+				Email='newuser@testorg.com', 
+				EmailEncodingKey='UTF-8', 
+				LastName='Testing1', 
+				LanguageLocaleKey='en_US', 
+				ContactId = c.id,            
+				LocaleSidKey='en_US',
+				ProfileId = p.Id, 
+				TimeZoneSidKey='America/Los_Angeles', 
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+		);
+
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
 		insert app;
 
+		System.runAs(testeUser1) {
+			ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+			Apexpages.currentPage().getParameters().put('ServId', app.Id);
 
-		ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-		Apexpages.currentPage().getParameters().put('ServId', app.Id);
-
-		cttr.initialization();
-		cttr.doRequest();
+			cttr.initialization();
+			cttr.doRequest();
+		}
 		ISSP_AvailableServices.newAppsRequest(app.Id, app.Name, con.Id);
 
 	}
@@ -433,43 +489,41 @@ public class ISSP_AvailableServices_Test {
 		}
 	}
 
-
-
-
 	public static testMethod void testEasyPay5() {
 
-		Contact c = [select id from contact where lastName = 'ContactTest'];
+		Contact c3 = [select id from contact where lastName = 'ContactTest3'];
 
 		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)'];
 
-		//User testeUser1 = new User (
-		//        Alias = 'newUser',
-		//        Email='newuser@testorg.com',
-		//        EmailEncodingKey='UTF-8',
-		//        LastName='Testing1',
-		//        LanguageLocaleKey='en_US',
-		//        ContactId = c.id,
-		//        LocaleSidKey='en_US',
-		//        ProfileId = p.Id,
-		//        TimeZoneSidKey='America/Los_Angeles',
-		//        UserName='newuser@testorg.com'
-		//    );
+		User testeUser3 = new User (
+				Alias = 'newUser2',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing3',
+				LanguageLocaleKey='en_US',
+				ContactId = c3.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser2@testorg.com'
+			);
 
-		ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-		ISSPServiceListView__c cs = new ISSPServiceListView__c();
-		cs.Name = 'Test';
-		cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
-		cs.Field_Set_API_Name__c = 'ISSP_Available_services';
-		cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
-		cs.Permission_set__c = '0PS200000004CryGAE';
-		insert cs;
+		System.runAs(testeUser3) {
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
-		insert app;
+			ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+			ISSPServiceListView__c cs = new ISSPServiceListView__c();
+			cs.Name = 'Test';
+			cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+			cs.Field_Set_API_Name__c = 'ISSP_Available_services';
+			cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+			cs.Permission_set__c = '0PS200000004CryGAE';
+			insert cs;
 
-		cttr.initialization();
+			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			insert app;
 
-
+			cttr.initialization();
+		}
 
 	}
 
@@ -485,22 +539,36 @@ public class ISSP_AvailableServices_Test {
 
 		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)'];
 
-		ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-		ISSPServiceListView__c cs = new ISSPServiceListView__c();
-		cs.Name = 'Test';
-		cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
-		cs.Field_Set_API_Name__c = 'ISSP_Available_services';
-		cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
-		cs.Permission_set__c = '0PS200000004CryGAE';
-		insert cs;
+		User testeUser1 = new User (
+				Alias = 'newUser',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing1',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+			);
 
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
 		insert app;
 
-		cttr.initialization();
+		System.runAs(testeUser1){
 
+			ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+			ISSPServiceListView__c cs = new ISSPServiceListView__c();
+			cs.Name = 'Test';
+			cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+			cs.Field_Set_API_Name__c = 'ISSP_Available_services';
+			cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+			cs.Permission_set__c = '0PS200000004CryGAE';
+			insert cs;
 
-
+			cttr.initialization();
+		}
 	}
 
 	public static testMethod void testEasyPay7() {
@@ -515,19 +583,35 @@ public class ISSP_AvailableServices_Test {
 
 		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)'];
 
-		ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-		ISSPServiceListView__c cs = new ISSPServiceListView__c();
-		cs.Name = 'Test';
-		cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
-		cs.Field_Set_API_Name__c = 'ISSP_Available_services';
-		cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
-		cs.Permission_set__c = '0PS200000004CryGAE';
-		insert cs;
+		User testeUser3 = new User (
+				Alias = 'newUser2',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing3',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser2@testorg.com'
+			);
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
-		insert app;
+		System.runAs(testeUser3){
 
-		cttr.initialization();
+			ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+			ISSPServiceListView__c cs = new ISSPServiceListView__c();
+			cs.Name = 'Test';
+			cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
+			cs.Field_Set_API_Name__c = 'ISSP_Available_services';
+			cs.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+			cs.Permission_set__c = '0PS200000004CryGAE';
+			insert cs;
+
+			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			insert app;
+
+			cttr.initialization();
+		}
 	}
 
 	public static testMethod void testnewAppsRequest2() {

@@ -547,7 +547,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CCN,CHC,CHN,CLI,CHM,CHL,CNM,CIJ,COS,CSC,CHS,CHO</value>
+            <value>CHA,CNV,RRQ,SRM</value>
         </filters>
         <filters>
             <field>Used_By_CNS__c</field>
