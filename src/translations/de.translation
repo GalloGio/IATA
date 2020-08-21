@@ -3322,7 +3322,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Wenn sich Ihre Anfrage nicht auf eine dieser Situationen bezieht, klicken Sie bitte unten auf "&lt;b&gt; Submit as Query &lt;/b&gt;", um einen Fall zu erstellen.</label>
+        <label>Wenn sich Ihre Anfrage nicht auf eine dieser Situationen bezieht, klicken Sie bitte unten auf "&lt;b&gt; Als Anfrage einreichen &lt;/b&gt;", um einen Fall zu erstellen.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
