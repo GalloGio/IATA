@@ -32,7 +32,8 @@ public with sharing class PortalServicesCtrl {
 						' WHERE Visible__c = true' +
 						' AND Requestable__c = false' +
 						' AND ANG_Flag_Restrict_by_Agency_Category__c = true' +
-						' AND ANG_Accre_Tp__c = true';
+						' AND ANG_Accre_Tp__c = true' +
+						' AND Id NOT IN (Select Portal_Application__c from Portal_Application_Right__c where Contact__c =:contactId and Right__c = \'Access Denied\')';
 
 		if(con.Account.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId()){
 			//if contact is of type Agency we check the restriction by sector and category
