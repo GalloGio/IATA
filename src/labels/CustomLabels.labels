@@ -16551,7 +16551,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SAP Customer Issue</shortDescription>
-        <value>There is an error with your customer account.&lt;br/&gt;Please contact CSR for assistance!</value>
+        <value>There is an error with your customer account.&lt;br/&gt;Please contact the IATA Online Store Support at onlinestoresupport@iata.org for assistance!</value>
     </labels>
     <labels>
         <fullName>IEC_SAP_Customer_Shipping_Address_Issue</fullName>
