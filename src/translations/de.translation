@@ -2882,7 +2882,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>Kontaktieren Sie uns</label>
+        <label>Kontak</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2896,6 +2896,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Online kaufen</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>Rufen Sie uns an</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>Stornieren</label>
@@ -2982,6 +2986,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Chatten in $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Bitte überprüfen Sie Ihre E-Mail, um Ihre Zugangsdaten zu erhalten</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3012,6 +3020,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Firmenprofil</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Die Bearbeitung einer Beschwerde dauert bis zu 5 Werktage. Wenn Sie eine Frage oder ein Anliegen haben, verwenden Sie bitte die Option &lt;b&gt;Einen Fall erstellen&lt;/b&gt;, damit wir Ihnen schneller antworten können.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Vervollständigen Sie Ihr Profil</label>
@@ -3112,6 +3124,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Zugriff verweigern</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Schreiben Sie ein kurzes Feedback</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Dokument zu meinen Lesezeichen hinzugefügt</label>
@@ -3294,6 +3310,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Dies ist ein &lt;b&gt;&lt;u&gt; Notfall &lt;/u&gt;&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Unser englischsprachiger Notfalldienst steht rund um die Uhr, sieben Tage die Woche für Sie bereit.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte beachten Sie, dass der über den Notfallkanal angebotene Support in &lt;b&gt;Englisch&lt;/b&gt; und für die folgenden kritischen Situationen angeboten wird:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Wenn sich Ihre Anfrage nicht auf eine dieser Situationen bezieht, klicken Sie bitte unten auf "&lt;b&gt; Submit as Query &lt;/b&gt;", um einen Fall zu erstellen.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie haben die Option Notfall gewählt</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte beachten Sie, dass die geleistete Unterstützung über den Notfallkanal nur für die folgenden kritischen Situationen vorgesehen ist:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Probleme beim Einloggen oder Ausfall der Plattform</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Probleme mti der Abrechnung (hohe Diskrepanzen der Summe)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Systemausfall</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Verdacht auf betrügerische Aktivitäten</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte fordern Sie keine Soforthilfe an, es sei denn, es geht um Betrug, Ticketverkäufe oder finanzielle Anliegen.</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>    
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3330,7 +3390,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>Kontaktieren Sie uns</label>
+        <label>Kontakt</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3436,6 +3496,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Da Sie sich in den letzten 90 Tagen nicht eingeloggt haben, haben wir Ihnen eine E-Mail mit einem neuen Passwort gesendet.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Feedback geben</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>Bei der IATA arbeiten wir ständig an der Verbesserung unserer Produkte und Dienstleistungen, damit wir Ihnen eine ausgezeichnete Kundenerfahrung bieten können. Ihre Ansichten und Gedanken treiben diese Verbesserungen an. Klicken Sie auf die Schaltfläche unten, um uns Ihr Feedback zu geben.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ihr Feedback ist wichtig für uns</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Dies ist</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4732,6 +4808,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_SeeAll</name>
     </customLabels>
     <customLabels>
+        <label>Thema hier auswählen</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label>Wählen Sie die Community</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
@@ -4876,12 +4956,24 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Bitte geben Sie eine kurze Betreffzeile ein</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Einreichen</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Als Notfall einreichen</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Als Anfrage einreichen</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4918,6 +5010,14 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Titel</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Alle Themen</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Ihre kürzlichen Themen</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>Verfolgen Sie</label>
@@ -23056,6 +23156,14 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Wenn der Chat in Ihrer Sprache im Moment nicht verfügbar ist, erstellen Sie bitte &lt;b&gt;einen Fall&lt;/b&gt; oder kontaktieren Sie uns &lt;b&gt;telefonisch&lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Wählen Sie:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23074,6 +23182,10 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
     <customLabels>
         <label>Chatten Sie mit uns</label>
         <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Chat-Fenster wurde geöffnet</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
