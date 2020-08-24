@@ -5358,10 +5358,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_All_Other_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- CurrencyCenter_All_Others --></label>
-        <name>CurrencyCenter_All_Others</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
     </customLabels>
@@ -5402,6 +5398,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_BSP_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_Launch_Date --></label>
+        <name>CurrencyCenter_BSP_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -5438,6 +5438,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_CASS_Launch_Date --></label>
+        <name>CurrencyCenter_CASS_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
@@ -5462,12 +5466,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Countries_Map</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Country_Heat_Map --></label>
+        <name>CurrencyCenter_Country_Heat_Map</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Country_Profiles --></label>
         <name>CurrencyCenter_Country_Profiles</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Currency_Exchange_Rate --></label>
+        <name>CurrencyCenter_Currency_Exchange_Rate</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
@@ -5640,6 +5652,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CurrencyCenter_Search_Additional_Information --></label>
         <name>CurrencyCenter_Search_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_See_World_Map --></label>
+        <name>CurrencyCenter_See_World_Map</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Select_Country --></label>
@@ -32656,6 +32672,31 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Account relationship with airport information --></description>
+        <label><!-- Account relationship with airport information --></label>
+        <name>Account_relationship_with_airport_information</name>
+        <sections>
+            <columns>
+                <label><!-- Parent Account ID --></label>
+                <name>Parent Account ID</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <label><!-- Airport account info --></label>
+            <name>Airport account info</name>
+        </sections>
+        <sections>
+            <label><!-- Manages / Operates --></label>
+            <name>Manages / Operates</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -41,7 +41,7 @@ ISPICKVAL(Reason1__c,&quot;Database Related Query&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_BIS_Ops_Cargo_L3</assignedTo>
+            <assignedTo>GCS_Bis_Ops_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
@@ -111,7 +111,7 @@ ISPICKVAL(Reason1__c,&quot;General Information&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_MITA_Product</assignedTo>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(

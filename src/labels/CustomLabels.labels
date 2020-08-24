@@ -8477,13 +8477,6 @@ This service is free of charge.</value>
         <value>All Other Countries / Territories</value>
     </labels>
     <labels>
-        <fullName>CurrencyCenter_All_Others</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CurrencyCenter_All_Others</shortDescription>
-        <value>All Other Countries</value>
-    </labels>
-    <labels>
         <fullName>CurrencyCenter_All_Others_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8554,6 +8547,13 @@ This service is free of charge.</value>
         <value>BSP ICCS Availability</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_BSP_Launch_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_Launch_Date</shortDescription>
+        <value>BSP Launch Date</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_BSP_Profile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8617,6 +8617,13 @@ This service is free of charge.</value>
         <value>CASS ICCS Availability</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_CASS_Launch_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_CASS_Launch_Date</shortDescription>
+        <value>CASS Launch Date</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_CASS_Profile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8659,6 +8666,13 @@ This service is free of charge.</value>
         <value>Countries Map</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Country_Heat_Map</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Country_Heat_Map</shortDescription>
+        <value>Country Heat Map</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Country_Profiles</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8671,6 +8685,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Currency</shortDescription>
         <value>CURRENCY</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Currency_Exchange_Rate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Currency_Exchange_Rate</shortDescription>
+        <value>Currency Exchange Rate</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_DeleteCountry_Confirmation_Question</fullName>
@@ -8807,7 +8828,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Heat_Map</shortDescription>
-        <value>Heat Map</value>
+        <value>Early Warning Indicators Heat Map</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_ICCS</fullName>
@@ -8976,6 +8997,13 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Search_Additional_Information</shortDescription>
         <value>by Country Name or Region</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_See_World_Map</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_See_World_Map</shortDescription>
+        <value>See World Map</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Select_Country</fullName>
@@ -16523,7 +16551,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SAP Customer Issue</shortDescription>
-        <value>There is an error with your customer account.&lt;br/&gt;Please contact CSR for assistance!</value>
+        <value>There is an error with your customer account.&lt;br/&gt;Please contact the IATA Online Store Support at onlinestoresupport@iata.org for assistance!</value>
     </labels>
     <labels>
         <fullName>IEC_SAP_Customer_Shipping_Address_Issue</fullName>
