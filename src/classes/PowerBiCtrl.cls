@@ -296,9 +296,8 @@ public without sharing class PowerBiCtrl {
 
 
 	private static String buildBodyForEmbedToken(String userId, String reportId, String datasetId, PowerBI_Config__c conf) {
-		System.debug('userId:: '+ userId);
 		User user = [SELECT Id, FederationIdentifier FROM User WHERE Id = :userId];
-		System.debug('user:: '+ user);
+
 		IdentityData identityData = new IdentityData();
 		identityData.username = user.FederationIdentifier;
 
