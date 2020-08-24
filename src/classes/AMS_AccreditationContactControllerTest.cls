@@ -69,11 +69,11 @@ private class AMS_AccreditationContactControllerTest
 			Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(),
 			RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')));
 
-		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST', Financial_interest__c = 0,
+		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST', 
 			Company__c=acc2.Id, RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
 
 		acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST2',
-			Financial_interest__c = 0, RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
+			RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
 
 		insert acList;
 	}
@@ -603,7 +603,7 @@ private class AMS_AccreditationContactControllerTest
 			Type='Domestic Agent',
 			Sector__c = 'Travel Agent',
 			IATA_ISO_Country__c = chinaCountry.id,
-			IATAcode__c = '12345672',
+			IATAcode__c = '12345673',
 			RecordTypeId = accRtId
 		);
 
@@ -663,6 +663,34 @@ private class AMS_AccreditationContactControllerTest
 		System.debug(LoggingLevel.FINE, '____ [cls AMS_AccreditationContactController - blockOwnershipChinaConversionTest] blockOwnershipEdit: ' + ctrl.blockOwnershipEdit);
 
 		System.assert(ctrl.blockOwnershipEdit, 'The ownership modification must be blocked for China Conversions');
+
+	}
+
+	@isTest
+	static void verifyOwnershipOver100Error(){
+
+		setup();
+
+		Test.startTest();
+
+		ApexPages.StandardController sc = new ApexPages.StandardController(aoa);
+		AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
+
+		//add owner from contact
+		Contact c1 = new Contact(AccountId = acc.id, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = true);
+		insert c1;
+
+		ctrl.rowNumber = '00000000000000000000000000000000000000000000000000000000';
+		ctrl.linkedRecordId = c1.Id;
+		ctrl.acWrapper.get(0).ac.Financial_interest__c = 101;
+		ctrl.acWrapper.get(0).ac.Agency_owner__c = true;
+		ctrl.acWrapper.get(0).dateJoined = '2010-01-10';
+
+		ctrl.onSave();
+
+		System.assert(wasMessageAdded(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownership rate for all inserted contacts is ' + ctrl.acWrapper.get(0).ac.Financial_interest__c + '%. Please set it to at least 99.99% and less than 100.01% before saving.')));
+
+		Test.stopTest();
 
 	}
 

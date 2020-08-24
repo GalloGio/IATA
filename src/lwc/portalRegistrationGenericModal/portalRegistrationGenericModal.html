@@ -11,14 +11,18 @@
                     <div class="slds-m-horizontal_x-large">
                         <div class="cardBodyContent">
                             <div class="slds-card__body">
-                                <div class="slds-p-bottom_x-small textAlignCenter">
-                                    <span class="text-medium text-darkGray text-bold modalTitle">
-                                        <span>{title}</span>
-                                    </span>
-                                </div>
+                                <template if:true={title}>
+                                    <div class="slds-p-bottom_x-small textAlignCenter">
+                                        <span class="text-medium text-darkGray text-bold modalTitle">
+                                            <span>{title}</span>
+                                        </span>
+                                    </div>
+                                </template>
                                 <div class="slds-p-bottom_x-small textAlignCenter">
                                     <div class="slds-p-bottom_medium">
-                                        <span class="fixed-text text-gray">{message}</span>
+                                        <span class="fixed-text text-gray">
+                                            <lightning-formatted-rich-text value={message}></lightning-formatted-rich-text>
+                                        </span>
                                     </div>
 
                                     <div class="buttonsWrapper">

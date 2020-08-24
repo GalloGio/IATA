@@ -5,6 +5,15 @@
 @RestResource(urlMapping='/RME_ALERT_BALANCEUPDATE/*')
 global class ANG_RME_Alert_Service {
 
+	@TestVisible
+	private static final String RHC_ALERT_EVENT_TYPE = 'RHCAlert';
+	@TestVisible
+	private static final String RTS_ALERT_EVENT_TYPE = 'RTSAlert';
+	@TestVisible
+	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
+	@TestVisible
+	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+
 	public class RHCMessage{
 		//Basic info
 
@@ -141,39 +150,63 @@ global class ANG_RME_Alert_Service {
 			}
 
 			//fetch current information
-			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
-			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
+			List<Account> accs = [
+				SELECT Id, IATACode__c, 
+					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
+					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
+					 FROM RHC_Informations__r)
+				FROM Account
+				WHERE IATACode__c = :req.iataCode
+					AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
-			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
-			//handle Real Time Sales alert request
-			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
-
-			else if(req.eventType == 'EDSAlert'){
-				saveEDSAlert(req, accs[0].Id);
+			if(accs.isEmpty()) {
+				setResponse('No agent found with IATA Code '+req.iataCode, 404);
 			}
+			else {
+				Account acct = accs[0];
 
-			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
-			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
-			else{
-
-				//information found, validate values
-				ANG_RHC_Information__c rhcInfo = accs[0].RHC_informations__r[0];
-
-				String errorMessage = '';
-				//if(rhcInfo.ANG_RHC_Amount__c != req.storedRHCValue) errorMessage += '\n- RHC Amount mismatch. Request value: '+req.storedRHCValue+'. Current value: '+rhcInfo.ANG_RHC_Amount__c;
-				if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
-
-				if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
-				//validation passed, perform logic
-				else if(eventType == 'RHCAlert'){
-					updateRHC(req, rhcInfo);
-					saveAlert(req, rhcInfo);
+				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
+					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
+						saveAlert(req, acct.Id, null);
+					} else {
+						//Ignore the request
+						setResponse(null, 202);
+					}
 				}
-				else if(eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
-				else setResponse('Invalid Event Type: '+eventType, 405);
-			}
+				//handle Real Time Sales alert request
+				else if(req.eventType == RTS_ALERT_EVENT_TYPE) {
+					saveRTSAlert(req, acct.Id);
+				}
+				else if(req.eventType == EDS_ALERT_EVENT_TYPE){
+					saveEDSAlert(req, acct.Id);
+				}
+				else if(acct.RHC_Informations__r.isEmpty()) {
+					setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+				} 
+				else if(acct.RHC_informations__r.size()>1) {
+					setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+				} 
+				else{
+					//information found, validate values
+					ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
 
+					String errorMessage = '';
+					//if(rhcInfo.ANG_RHC_Amount__c != req.storedRHCValue) errorMessage += '\n- RHC Amount mismatch. Request value: '+req.storedRHCValue+'. Current value: '+rhcInfo.ANG_RHC_Amount__c;
+					if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+
+					if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
+					//validation passed, perform logic
+					else if(eventType == RHC_ALERT_EVENT_TYPE){
+						updateRHC(req, rhcInfo);
+						saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+					}
+					else if(eventType == BALANCE_UPDATE_EVENT_TYPE) updateRHC(req, rhcInfo);
+					else setResponse('Invalid Event Type: '+eventType, 405);
+				}
+			}
 		}catch(JSONException e){
 			setResponse('Malformed request: '+e.getMessage(), 400);
 		}
@@ -189,14 +222,18 @@ global class ANG_RME_Alert_Service {
 		Expose webservice as a RESTfull service for NewGen Mobile APP
 	*/
 	@HttpPost
-		global static void doPost(String accountId){
-			ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
-		}
+	global static void doPost(String accountId){
+		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
+	}
 
-	private static void saveAlert(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
+	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
+		return eventType == RHC_ALERT_EVENT_TYPE && (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel + request.direction));
+	}
+
+	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();
-		alert.ANG_Account__c = rhcInfo.ANG_AccountId__c;
-		alert.ANG_RHC_Information__c = rhcInfo.Id;
+		alert.ANG_Account__c = accountId;
+		alert.ANG_RHC_Information__c = rhcInfoId;
 		alert.ANG_EventId__c = message.eventId;
 		alert.ANG_Threshold_Level__c = message.thresholdLevel;
 		alert.ANG_Direction__c = message.direction;
@@ -340,18 +377,10 @@ global class ANG_RME_Alert_Service {
 		webservice String iataCode;
 		webservice ISSP_Web_Service_Log__c log;
 
-		private RHCMessage res;
+		public RHCMessage res;
 
 		private WebserviceResult(){
 			isSuccess = true;
-		}
-
-		public RHCMessage getResultMessage(){
-			return this.res;
-		}
-
-		public void setResultMessage(RHCMessage inRes){
-			this.res = inRes;
 		}
 	}
 
@@ -382,21 +411,18 @@ global class ANG_RME_Alert_Service {
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				result.isSuccess = false;
-				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW3', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
 				log.Error_Code__c = 'Currency Mismatch';
-				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW4', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedRHCValue != rounded){
 				result.isSuccess = false;
 				log.Error_Code__c = 'RHC Value Mismatch';
-				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW5', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
@@ -416,45 +442,38 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	webservice static WebserviceResult requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
-		return ANG_RME_Alert_Service.requestProvisionalRHCAux(accountId,flagUpdateProvisioning,true);
+	webservice static WebserviceResult requestProvisionalRHC(String accountId){
+		list<ANG_RHC_Information__c> rhcInfo = [SELECT id, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c,
+										  ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_Provisional_RHC_Last_Update__c
+										  FROM ANG_RHC_Information__c WHERE ANG_AccountId__c=:accountId];
+
+		return requestProvisionalRHC(rhcInfo[0], true);
+		//Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 	}
 
-	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
-	webservice static WebserviceResult requestProvisionalRHCAux(String accountId, Boolean flagUpdateProvisioning, Boolean updateResults){
-
-
-		Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
-
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov', acc.Location_Type__c); //results are saved on the private varible "result"
+	public static WebserviceResult requestProvisionalRHC(ANG_RHC_Information__c rhcInfo, boolean ProvisionalIsAppliedImmediately){
+		WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
 
-			if(result.res.iataCode != acc.IATACode__c){
-				log.Error_Code__c = 'Iata Code Mismatch';
-				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', acc.IATACode__c, log, result);
+			if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
+				if(ProvisionalIsAppliedImmediately){
+					log.Error_Code__c = 'Iata Code Mismatch';
+					ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				}
 			}
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
-				log.Error_Code__c = 'Currency Mismatch';
-				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', acc.IATACode__c, log, result);
+			else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
+				if(ProvisionalIsAppliedImmediately){
+					log.Error_Code__c = 'Currency Mismatch';
+					ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				}
 			}
-			//COMMENTED - we should not validate this for provisional RHC
-			/*else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
-				log.Error_Code__c = 'RHC Value Mismatch';
-				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-			}*/
-			else if(updateResults){
-				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+			else{
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
 				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
 
-				if(flagUpdateProvisioning) {
-					rhcInfo.ANG_RME_Amount__c = rhcInfo.ANG_RHC_Amount_Provisional__c;
-				}
-
-				update rhcInfo;
+				if(ProvisionalIsAppliedImmediately)
+					update rhcInfo;
 			}
 			if(String.isNotEmpty(log.Error_Code__c)) update log;
 		}
@@ -544,7 +563,7 @@ global class ANG_RME_Alert_Service {
 				log.Error_Message__c = res.getBody();
 				if(mappingName == 'ENDORS_CERT' && res.getStatusCode() >= 400)
 					ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
-				else if(res.getStatusCode() >= 400) //ServiceNow_Helper.sendRequestToSNOW('Mulesoft', (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), 'featurespace-system-service', 'RME', String.valueOf(result),  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				else if(res.getStatusCode() >= 400)
 					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'SNOW9': 'SNOW9.1'), iataCode, log, result);
 				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
@@ -568,4 +587,5 @@ global class ANG_RME_Alert_Service {
 
 		return result;
 	}
+
 }

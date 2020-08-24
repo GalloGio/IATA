@@ -280,6 +280,11 @@
                     <default>false</default>
                     <label>Maestro</label>
                 </value>
+                <value>
+                    <fullName>PASSLINK</fullName>
+                    <default>false</default>
+                    <label>PASSLINK</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -315,6 +320,64 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Exc_RHC_Monitoring_Alert__c</fullName>
+        <description>Define which type of RHC alert will be exceptionally monitored</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select which type of RHC alert will be exceptionally monitored</inlineHelpText>
+        <label>Exc. RHC  Monitoring Alert</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>100%UP</fullName>
+                    <default>false</default>
+                    <label>100%UP</label>
+                </value>
+                <value>
+                    <fullName>50%UP</fullName>
+                    <default>false</default>
+                    <label>50%UP</label>
+                </value>
+                <value>
+                    <fullName>75%UP</fullName>
+                    <default>false</default>
+                    <label>75%UP</label>
+                </value>
+                <value>
+                    <fullName>90%UP</fullName>
+                    <default>false</default>
+                    <label>90%UP</label>
+                </value>
+                <value>
+                    <fullName>100%DOWN</fullName>
+                    <default>false</default>
+                    <label>100%DOWN</label>
+                </value>
+                <value>
+                    <fullName>90%DOWN</fullName>
+                    <default>false</default>
+                    <label>90%DOWN</label>
+                </value>
+                <value>
+                    <fullName>75%DOWN</fullName>
+                    <default>false</default>
+                    <label>75%DOWN</label>
+                </value>
+                <value>
+                    <fullName>50%DOWN</fullName>
+                    <default>false</default>
+                    <label>50%DOWN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>ISS_Joining_fee_cluster__c</fullName>
@@ -402,6 +465,16 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>RHC_Exceptional_Monitoring__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to flag that the BSP is under the RHC Exception Monitoring (used on masterdata interface and reception of RHC alert from RME)</description>
+        <externalId>false</externalId>
+        <label>RHC Exceptional Monitoring</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Remittance_Frequency_per_State__c</fullName>
@@ -543,6 +616,41 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
+            <values>
+                <fullName>100%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>100%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Legacy_System__c</picklist>
             <values>
                 <fullName>AIMS1</fullName>
@@ -650,6 +758,179 @@
             </values>
             <values>
                 <fullName>CASSLINK</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
+            <values>
+                <fullName>100%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>100%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Legacy_System__c</picklist>
+            <values>
+                <fullName>AIMS1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIMS2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIMS3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAIMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEBSTAR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Settlement_Model__c</picklist>
+            <values>
+                <fullName>Funds Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reported Sales</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>PASS</fullName>
+        <active>true</active>
+        <label>PASS</label>
+        <picklistValues>
+            <picklist>BSP_Billing__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Americas</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASS_facilities__c</picklist>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DPC_System__c</picklist>
+            <values>
+                <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASSLINK</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DPC__c</picklist>
+            <values>
+                <fullName>AMADEUS</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>CASSLINK</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Exc_RHC_Monitoring_Alert__c</picklist>
+            <values>
+                <fullName>100%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>100%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75%25UP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90%25UP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

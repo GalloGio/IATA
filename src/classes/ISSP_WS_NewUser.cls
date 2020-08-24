@@ -167,7 +167,7 @@ global class ISSP_WS_NewUser {
 			return retResponseOne;
 		}
 		else{
-			String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,13}$';
+			String emailRegex = '^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$';
 			Pattern MyPattern = Pattern.compile(emailRegex);
 			Matcher MyMatcher = MyPattern.matcher(userEmail);
 			if (!MyMatcher.matches()){
@@ -236,7 +236,7 @@ global class ISSP_WS_NewUser {
 				}
 				else{
 					appId = appList[0].Id;
-					List <User> userList = [SELECT Id, ContactId, FederationIdentifier, FedContactId__c FROM User WHERE Email =: userEmail AND UserType = 'PowerPartner'];
+					List <User> userList = [SELECT Id, ContactId, FederationIdentifier, FedContactId__c FROM User WHERE IsActive = true AND Email =: userEmail AND UserType = 'PowerPartner'];
 					if (!userList.isEmpty()){
 						//found user
 						theUser = userList[0].Id;

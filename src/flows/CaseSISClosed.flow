@@ -165,37 +165,6 @@
                 <processMetadataValues>
                     <name>inputDataType</name>
                     <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.CaseArea__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>E&amp;F Operations</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
@@ -227,68 +196,6 @@
                 <processMetadataValues>
                     <name>inputDataType</name>
                     <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Reason1__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>New Airline/Operator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>InternalCasesEuropeSCE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
                         <stringValue>String</stringValue>
                     </value>
                 </processMetadataValues>
@@ -311,9 +218,9 @@
                     </value>
                 </processMetadataValues>
                 <leftValueReference>myVariable_current.Subject</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>StartsWith</operator>
                 <rightValue>
-                    <elementReference>formula_2_myRule_1_9200025061</elementReference>
+                    <elementReference>formula_2_myRule_1_0680897947</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -353,37 +260,6 @@
                 <processMetadataValues>
                     <name>inputDataType</name>
                     <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_old.CaseArea__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>E&amp;F Operations</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
@@ -415,68 +291,6 @@
                 <processMetadataValues>
                     <name>inputDataType</name>
                     <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_old.Reason1__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>New Airline/Operator</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_old.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>InternalCasesEuropeSCE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
                         <stringValue>String</stringValue>
                     </value>
                 </processMetadataValues>
@@ -499,9 +313,9 @@
                     </value>
                 </processMetadataValues>
                 <leftValueReference>myVariable_old.Subject</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>StartsWith</operator>
                 <rightValue>
-                    <elementReference>formula_3_myRule_1_pmetrule_9829490493</elementReference>
+                    <elementReference>formula_3_myRule_1_pmetrule_8882941859</elementReference>
                 </rightValue>
             </conditions>
             <label>Previously Met - Prev</label>
@@ -512,10 +326,10 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>$Label.SisProcessCaseSubject </stringValue>
+                <stringValue>$Label.SisProcessCaseSubject</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_9200025061</name>
+        <name>formula_2_myRule_1_0680897947</name>
         <dataType>String</dataType>
         <expression>{!$Label.SisProcessCaseSubject}</expression>
     </formulas>
@@ -523,14 +337,14 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>$Label.SisProcessCaseSubject </stringValue>
+                <stringValue>$Label.SisProcessCaseSubject</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_pmetrule_9829490493</name>
+        <name>formula_3_myRule_1_pmetrule_8882941859</name>
         <dataType>String</dataType>
         <expression>{!$Label.SisProcessCaseSubject}</expression>
     </formulas>
-    <interviewLabel>CaseSISClosed-2_InterviewLabel</interviewLabel>
+    <interviewLabel>CaseSISClosed-3_InterviewLabel</interviewLabel>
     <label>CaseSISClosed</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -558,7 +372,7 @@
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>myDecision</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

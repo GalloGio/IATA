@@ -77,10 +77,6 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RecordTypeId</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Origin</field>
             </layoutItems>
@@ -123,6 +119,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIDRA_exchange_rate_updated__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -815,6 +815,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reinstatement_Requirements__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Financial_Security_needed__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

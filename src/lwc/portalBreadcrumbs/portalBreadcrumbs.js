@@ -61,8 +61,26 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     @api showInWhite = false;
 
     @track lstBreadcrumbs = [];
+    @track _pageName;
 
-    pagename = '';
+    
+    
+    @api
+    get pagename(){
+         return this._pageName;
+    }
+    set pagename(value){
+        this._pageName=value;
+        getBreadcrumbs({ pageName : this._pageName })
+        .then(results => {
+            this.results = results;
+            this.processLstBreadcrumbs();
+        })
+        .catch(error => {                
+            this.loadingBreadcrumbs = false;
+        });
+
+    }
 
     @track loadingBreadcrumbs = true;
     @track guestUser = false;
@@ -72,7 +90,10 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
             if(results) this.guestUser = true;
         });
 
-        this.pagename = getPageName();
+        
+        if(this.pagename==undefined){            
+            this.pagename = getPageName();
+        }
 
         this.classNameAllBreadCrumbs = 'text-linkBlue';
         this.classNameLastBreadCrumb = 'text-black';

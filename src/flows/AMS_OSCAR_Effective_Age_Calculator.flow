@@ -3,7 +3,7 @@
     <assignments>
         <name>Calculate_Eff_Age</name>
         <label>Calculate Eff Age</label>
-        <locationX>50</locationX>
+        <locationX>94</locationX>
         <locationY>693</locationY>
         <assignmentItems>
             <assignToReference>EffectiveAge</assignToReference>
@@ -16,7 +16,7 @@
     <assignments>
         <name>Set_Total_Time</name>
         <label>Set Total Time</label>
-        <locationX>346</locationX>
+        <locationX>390</locationX>
         <locationY>50</locationY>
         <assignmentItems>
             <assignToReference>EffectiveAge</assignToReference>
@@ -32,7 +32,7 @@
     <assignments>
         <name>Subtract_Bank_Guarantee_Or_Agreement_Time</name>
         <label>Subtract Bank Guarantee Or Agreement Time</label>
-        <locationX>373</locationX>
+        <locationX>417</locationX>
         <locationY>303</locationY>
         <assignmentItems>
             <assignToReference>EffectiveAge</assignToReference>
@@ -48,7 +48,7 @@
     <assignments>
         <name>Subtract_Payment_Time</name>
         <label>Subtract Payment Time</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>56</locationY>
         <assignmentItems>
             <assignToReference>EffectiveAge</assignToReference>
@@ -64,7 +64,7 @@
     <assignments>
         <name>Subtract_Reconsideration_Time</name>
         <label>Subtract Reconsideration Time</label>
-        <locationX>1001</locationX>
+        <locationX>1045</locationX>
         <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>EffectiveAge</assignToReference>
@@ -77,7 +77,7 @@
     <decisions>
         <name>Bank_Guarantee_or_Agreement_Requested</name>
         <label>Bank Guarantee or Agreement Requested?</label>
-        <locationX>686</locationX>
+        <locationX>730</locationX>
         <locationY>296</locationY>
         <defaultConnector>
             <targetReference>Process_Reconsideration</targetReference>
@@ -85,7 +85,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes1</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>oscar.Bank_Guarantee_requested__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -100,6 +100,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>BankGuaranteeOrAgreementDate</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Subtract_Bank_Guarantee_Or_Agreement_Time</targetReference>
             </connector>
@@ -109,7 +116,7 @@
     <decisions>
         <name>Is_CLO_Closure</name>
         <label>Is CLO - Closure?</label>
-        <locationX>42</locationX>
+        <locationX>86</locationX>
         <locationY>266</locationY>
         <defaultConnector>
             <targetReference>Set_Total_Time</targetReference>
@@ -134,7 +141,7 @@
     <decisions>
         <name>Payment_Requested</name>
         <label>Payment Requested?</label>
-        <locationX>686</locationX>
+        <locationX>730</locationX>
         <locationY>52</locationY>
         <defaultConnector>
             <targetReference>Bank_Guarantee_or_Agreement_Requested</targetReference>
@@ -150,6 +157,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>oscar.Payment_requested__c</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Subtract_Payment_Time</targetReference>
             </connector>
@@ -159,7 +173,7 @@
     <decisions>
         <name>Process_Reconsideration</name>
         <label>Process Reconsideration?</label>
-        <locationX>687</locationX>
+        <locationX>730</locationX>
         <locationY>553</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -179,6 +193,27 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>oscar.Reconsideration_date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Bank_Guarantee_requested__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Disapproval_date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>oscar.Bank_Guarantee_requested__c</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Subtract_Reconsideration_Time</targetReference>
             </connector>
@@ -188,7 +223,7 @@
     <decisions>
         <name>Was_Rejected_Not_Accepted</name>
         <label>Was Rejected/Not Accepted?</label>
-        <locationX>44</locationX>
+        <locationX>88</locationX>
         <locationY>496</locationY>
         <defaultConnector>
             <targetReference>Calculate_Eff_Age</targetReference>
@@ -227,6 +262,11 @@
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>BankGuaranteeOrAgreementDate</name>
+        <dataType>Date</dataType>
+        <expression>IF({!oscar.Bank_Guarantee_requested__c} &gt; {!oscar.Agreement_requested__c}, {!oscar.Bank_Guarantee_requested__c} , {!oscar.Agreement_requested__c})</expression>
+    </formulas>
+    <formulas>
         <name>BankGuaranteeTime</name>
         <dataType>Number</dataType>
         <expression>IF(ISNULL({!oscar.Bank_Guarantee_requested__c}),
@@ -262,10 +302,11 @@
     <formulas>
         <name>ReconsiderationTime</name>
         <dataType>Number</dataType>
-        <expression>IF(ISNULL({!case_record.ClosedDate}),
-	TODAY(),
-	DATEVALUE({!case_record.ClosedDate})
-) - {!oscar.Reconsideration_date__c}</expression>
+        <expression>IF(
+    ISNULL({!oscar.Reconsideration_date__c}),
+    TODAY(),
+    {!oscar.Reconsideration_date__c}
+)  - {!oscar.Disapproval_date__c}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -310,7 +351,13 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <startElementReference>Is_CLO_Closure</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Is_CLO_Closure</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>case_record</name>

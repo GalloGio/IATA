@@ -1,12 +1,19 @@
 public with sharing class ANG_ISSP_AfpWrapper {
-	private static final String NO = 'glyphicon glyphicon-remove';
-	private static final String YES = 'glyphicon glyphicon-ok';
+	private static final String BANKING_MODEL = 'Banking Model';
 	public static final String DOMESTIC = AMS_Utils.CATEGORY_DOMESTIC_AGENT;
 	public static final String INTERNATIONAL = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
+	@TestVisible
+	private static final String AVAILABLE_SERVICES_OLD_PATH_CS_NAME = 'ISSP Available Services Old Path';
 
 	private Contact contact {get; set;}
 	private Account account {get; set;}
-	public Boolean isSearch {get; set;}
+
+	public Boolean isSearch {
+		get {
+			return contact == null;
+		}
+		set;
+	}
 
 	public Boolean isInternational {
 		get {
@@ -36,40 +43,12 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		private set;
 	}
 
-	public String isCash {
-		get {
-			return isCash == null ? NO : isCash;
-		}
-		set;
-	}
-
-	public String isIEP {
-		get {
-			return isIEP == null ? NO : isIEP;
-		}
-		set;
-	}
-
-	public String isCreditCard {
-		get {
-			return isCreditCard == null ? NO : isCreditCard;
-		}
-		set;
-	}
-
 	public String iepLinkLabel {get; set;}
 	public String iepLink {get; set;}
 
 	public String modalErrorMessage {
 		get {
 			return modalErrorMessage == null ? '' : modalErrorMessage;
-		}
-		private set;
-	}
-
-	public String modalErrorMessageFlag {
-		get {
-			return modalErrorMessageFlag == null ? '' : modalErrorMessageFlag;
 		}
 		private set;
 	}
@@ -133,48 +112,40 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		private set;
 	}
 
-	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, Account account, Boolean isSearch) {
+	public ANG_ISSP_AfpWrapper(Account account) {
+		this.account = account;
+		this.isIEPFlag = !isChinaAgent && iepModel != BANKING_MODEL && account.ANG_IEP_Status_FF__c == AMS_Utils.OPEN;
+		calculateAuthorizationFlags(account.Id);
+	}
+
+	public ANG_ISSP_AfpWrapper(Contact contact, Account account) {
 		this.contact = contact;
 		this.account = account;
-		this.isSearch = isSearch;
 
-		String availableServicesLink = CSP_Utils.isNewPortalActive() ? CSP_Utils.redirectfromPortalHeader('services?tab=availableServices') : '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
+		String availableServicesOldPath = ISSP_CS__c.getValues(AVAILABLE_SERVICES_OLD_PATH_CS_NAME).value__c;
+		String availableServicesLink = CSP_Utils.isNewPortalActive() ? CSP_Utils.redirectfromPortalHeader('services?tab=availableServices') : availableServicesOldPath;
 
-		List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
+		calculateAuthorizationFlags(account.Id);
 
-		if (contact != null) {
-			services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
-						FROM Portal_Application_Right__c
-						WHERE Contact__c = :contact.Id];
+		List<Portal_Application_Right__c> services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
+													FROM Portal_Application_Right__c
+													WHERE Contact__c = :contact.Id];
 
-			checkAccreditationChangesAccess(services);
-		}
-
-		calculateAuthorizationFlags(authorizations);
+		checkAccreditationChangesAccess(services);
 
 		if (isChinaAgent) {
 			this.iepLink = Label.ANG_ISSP_BOP_China_URL;
-		} else if (iepModel == 'Banking Model') {
+		} else if (iepModel == BANKING_MODEL) {
 			this.iepLink = '#';
 			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
-			this.modalErrorMessageFlag = '-';
-
-			if (account.IATA_ISO_Country__r.Iso_Code__c == 'IN') {
-				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_India_msg;
-			}
-
-			if (account.IATA_ISO_Country__r.Iso_Code__c == 'KR') {
-				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_SouthKorea_msg;
-			}
-		} else if (account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
-			this.isIEP = YES;
+		} else if (account.ANG_IEP_Status_FF__c == AMS_Utils.OPEN) {
 			this.isIEPFlag = true;
 
 			if (contact != null) {
 				Boolean hasAccess = false;
 
 				for(Portal_Application_Right__c par: services) {
-					if(par.Application_Name__c.startsWith(Label.ANG_ISSP_IATA_EasyPay) && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
+					if(par.Application_Name__c.startsWith(Label.ANG_ISSP_IATA_EasyPay) && par.Right__c == AMS_Utils.PORTAL_APP_ACCESS_GRANTED) {
 						hasAccess = true;
 						this.iepLinkLabel = Label.ANG_ISSP_REH_AccessEasyPay;
 						this.iepLink = par.Application_Start_URL__c;
@@ -187,7 +158,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 					this.iepLink = availableServicesLink;
 				}
 			}
-		} else if(account.ANG_IEP_Status_FF__c == Ams_Utils.NO_IEP_ACCOUNT) {
+		} else if(account.ANG_IEP_Status_FF__c == AMS_Utils.NO_IEP_ACCOUNT) {
 			List<Profile> profileList = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()];
 
 			Boolean isAdmin = false;
@@ -196,44 +167,47 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				isAdmin = true;
 			}
 
-			Boolean isAuthorisedSignatory = false;
-			if (contact != null) {
-				isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c);
-			}
-
-			Boolean isIEPAccountEnable = false;
-
 			// A user has accecss to easypay when:
 			// If the IEP status is open
 			// If the IEP status is not open and is an admin and the account is HO or HE
-			if(isAuthorisedSignatory && isAdmin && (account.Location_Type__c == AMS_Utils.HO || account.Location_Type__c == AMS_Utils.HE|| (account.Location_Type__c == AMS_Utils.AO && account.Status__c == AMS_Utils.ACC_S4_LISTED))) {
-				isIEPAccountEnable = true;
+			if(isAdmin && contact.Authorized_Signatory__c && (account.Location_Type__c == AMS_Utils.HO || account.Location_Type__c == AMS_Utils.HE|| (account.Location_Type__c == AMS_Utils.AO && account.Status__c == AMS_Utils.ACC_S4_LISTED))) {
 				this.iepLink = availableServicesLink;
-			}
-
-			if(!isIEPAccountEnable) {
+			} else {
 				if(account.Location_Type__c == AMS_Utils.HO || account.Top_Parent__r.Location_Type__c == AMS_Utils.HO){
 					this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
-				}else if(account.Location_Type__c == AMS_Utils.HE || account.Top_Parent__r.Location_Type__c == AMS_Utils.HE){
+				} else if(account.Location_Type__c == AMS_Utils.HE || account.Top_Parent__r.Location_Type__c == AMS_Utils.HE){
 					this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
 				} else if (account.Location_Type__c == AMS_Utils.AO || account.Top_Parent__r.Location_Type__c == AMS_Utils.AO) {
 					this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
 				}
-				this.iepLink = '#';
-			}
 
-			if(modalErrorMessage != '') {
-				this.modalErrorMessageFlag = '-';
+				this.iepLink = '#';
 			}
 
 			this.iepLinkLabel = Label.ANG_ISSP_Open_IATA_EasyPay_Account;
 		}
 
-		if (isIndonesiaAgent && account.Category__c == INTERNATIONAL) {
+		String modalMessageAux = fetchIEPModalMessageLabel(this.account.Location_Class__c, this.account.IATA_ISO_Country__c);
+
+		if(String.isNotBlank(modalMessageAux)){
 			this.iepLink = '#';
-			this.modalErrorMessageFlag = '-';
-			this.modalErrorMessage = Label.ANG_ISSP_IEP_Indonesia_msg;
+			this.modalErrorMessage = modalMessageAux;
 		}
+	}
+
+	private String fetchIEPModalMessageLabel(String locationClass, Id isoCountry) {
+		for (AMS_Country_Specific_Attribute__c attribute: [SELECT Id, IEP_Model_Banking_Message__c, Location_Class__c
+														FROM AMS_Country_Specific_Attribute__c
+														WHERE RecordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'EasyPay_Model_Config')
+															AND IATA_ISO_Country__c = :isoCountry
+															ORDER BY Location_Class__c DESC NULLS LAST]) {
+
+			if (attribute.Location_Class__c == null || attribute.Location_Class__c == locationClass) {
+				return AMS_Utils.getCustomLabel(attribute.IEP_Model_Banking_Message__c);
+			}
+		}
+
+		return null;
 	}
 
 	private void checkAccreditationChangesAccess(List<Portal_Application_Right__c> services) {
@@ -253,21 +227,22 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.creditCardMessage = hasAccess ? Label.ANG_ISSP_AFP_NoCreditCardMessage : Label.ANG_ISSP_AFP_CreditCardNoAccess;
 	}
 
-	private void calculateAuthorizationFlags(List<Agency_Authorization__c> authorizations) {
-		for(Agency_Authorization__c auth : authorizations) {
-			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {
-				this.isCash = YES;
+	private void calculateAuthorizationFlags(Id accountId) {
+		for(Agency_Authorization__c auth : [SELECT Id, ANG_FormOfPayment_ID__c
+										FROM Agency_Authorization__c
+										WHERE Account__c = :accountId
+										AND (Status__c = :AMS_Utils.ACTIVE OR Status__c = :AMS_Utils.AUTHORIZED)]) {
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.CA && !this.isCashless) {
 				this.isCashFlag = true;
 				this.authQuantity++;
 			}
 
-			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CC) {
-				this.isCreditCard = YES;
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
 				this.isCreditCardFlag = true;
 				this.authQuantity++;
 			}
 
-			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.BOP) {
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.BOP) {
 				this.isBOPFlag = true;
 				this.authQuantity++;
 			}

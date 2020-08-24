@@ -328,7 +328,7 @@
         <object>Account</object>
         <outputReference>Account</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Due_Diligence_Status__c</queriedFields>
+        <queriedFields>Clearance_level__c</queriedFields>
         <queriedFields>Date_of_last_clearance__c</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>SIS_ID__c</queriedFields>
@@ -343,6 +343,7 @@
         <queriedFields>Region_formula__c</queriedFields>
         <queriedFields>EF_SIS_Designator__c</queriedFields>
         <queriedFields>EF_SIS_Code__c</queriedFields>
+        <queriedFields>Legal_name__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Address_Role_Business_Context</name>
@@ -628,7 +629,7 @@
             <targetReference>Account_Id_is_filled</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Restart_Account_Context_Activation_E_F_Background_Subflow</name>
         <label>Restart Account Context Activation E&amp;F Background Subflow</label>

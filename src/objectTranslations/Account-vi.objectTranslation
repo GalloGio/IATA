@@ -56,6 +56,10 @@
             <translation>Nhà Cung ứng Vận tải Hàng không</translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation>Sân bay</translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation>Hiệp hội</translation>
         </picklistValues>
@@ -86,10 +90,6 @@
         <picklistValues>
             <masterLabel>Holding Company</masterLabel>
             <translation>Công ty Cổ phần</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation>Đối tác Cung cấp Cơ sở Hạ tầng</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Media</masterLabel>

@@ -2,88 +2,107 @@
 global class ISSP_Ctrl_AccountStatements {
 
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
+	public static final String AMAZON_ICE_PROOF_OF_PAYMENT = 'ICE POP';
 
-	public ContentVersion faq {get;set;}
-	public ContentVersion document {get;set;}
-	public Account account {get; set;}
-		public Account headofficeAccount {get; set;}
-	public DateTime lastUpdatedOn {get; set;}
-	public list<Account_Statement__c> listStatements {get; set;}
-	public list<WrapperStatement> listWrapper {get; set;}
-		public list<String> listCurrency {get; set;}
-	public list<String> listMessages {get; set;}
-	private User currentUser;
-		public Portal_Application_Right__c appRight {get; set;}
-	public String accountSelectedId {get; set;}
-	public String accountStatementSelectedId {get; set;}
-	public String accountSelectedName {get; set;}
-	public String accountStatementPeriod {get; set;}
-	public String billingAmount {get; set;}
-	public String amazonFileName {get; set;}
-	public Boolean showPopUp {get; set;}
-	public List<AmazonFile__c> listAttachments
-	{
-		get
-		{
-			if(accountSelectedId!= null && amazonFileName != null && listAttachments == null)
-			{
-				listAttachments = AmazonFile.getAccountRelatedAmazonFiles(accountSelectedId, amazonFileName);
-				for(AmazonFile__c recordAux : listAttachments)
-					{
-						String fileName = recordAux.Full_Name_Unique__c;
-						fileName = fileName.split('/')[2];
-						recordAux.Full_Name_Unique__c = fileName;
-					}
-			}
-			return listAttachments;
-		}
-		set;
-	}
-	public Id amazonRecordTypeId
-	{
-		get{
-			return RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c','File');
-		}
-	}
-	public static final String amazonFileStartName
-	{
-		get
-		{
-			return AmazonFile.ICE_proofOfPayment;
-			//return 'ICE POP';
-		}
-	}
-	public static final String amazonFileNameIdentifier
-	{
-		get
-		{
-			return amazonFileStartName.replace(' ','_');
-		}
-	}
-	public List<String> treePlacesCurrency{
-		get{
-			if (treePlacesCurrency == null) {
-				treePlacesCurrency = new List<String>();
-				Set<String> treePlacesCurrencySet = new Set<String>();
-				List<CurrencyType> treePlacesCurrList = new List<CurrencyType>();
-				treePlacesCurrList = [select id, IsoCode, DecimalPlaces from CurrencyType where DecimalPlaces = 3];
-				for (CurrencyType crrncTp : treePlacesCurrList) {
-					if(!treePlacesCurrencySet.contains(crrncTp.IsoCode)){
-						treePlacesCurrencySet.add(crrncTp.IsoCode);
-						treePlacesCurrency.add(crrncTp.IsoCode);
+	private static list<String> SELECT_FIELDS = new list<String>{
+		'Id',
+		'Period__c',
+		'Operation__c',
+		'Name',
+		'Key__c',
+		'CurrencyIsoCode',
+		'Account__c',
+		'Amount_to_be_Paid__c',
+		'Balance__c',
+		'Billing_Amount__c',
+		'Paid__c',
+		'Remittance_Date__c',
+		'Status__c',
+		'Billing_Adjustment__c',
+		'Group__c',
+		'Account__r.Site',
+		'Account__r.IATAcode__c',
+		'Account__r.Name',
+		'Account__r.BillingCity',
+		'LastModifiedDate'
+	};
+
+	/**
+	 * Conditions to be used in main Account Statements queries to exclude remittance codes
+	 * This list is retrieved from the custom metadata ISSP_ICE_Parameter__mdt
+	 */
+	public String conditionExcludeRemittance {
+		get {
+			if (conditionExcludeRemittance==null) {
+				conditionExcludeRemittance = '';
+				list<ISSP_ICE_Parameter__mdt> listParam = [SELECT Id, Value__c FROM ISSP_ICE_Parameter__mdt WHERE DeveloperName = 'Exclude_remittance_Codes' ];
+				if (listParam.size()>0) {
+					ISSP_ICE_Parameter__mdt param = listParam[0];
+					for (String remmitance : param.Value__c.split(',')) {
+						conditionExcludeRemittance += ' AND (NOT Period__c LIKE \'%' + remmitance + '\') ';
 					}
 				}
-				return treePlacesCurrency;
-			} else {
-				return treePlacesCurrency;
 			}
+			return conditionExcludeRemittance;
 		}
 		set;
 	}
 
 	/**
-		Start actions, check rights and terms and conditions
-	**/
+	 * Number of last remittance dates used to show data, retrieved from the custom metadata ISSP_ICE_Parameter__mdt
+	 */
+	public Integer nRowsDisplayed {
+		get {
+			if (nRowsDisplayed==null) {
+				nRowsDisplayed = 4;
+				list<ISSP_ICE_Parameter__mdt> listParam = [SELECT Id, Value__c FROM ISSP_ICE_Parameter__mdt WHERE DeveloperName = 'Displayed_Rows'];
+				if (listParam.size()>0) {
+					nRowsDisplayed = Integer.ValueOf(listParam[0].Value__c);
+				}
+			}
+			return nRowsDisplayed;
+		}
+		set;
+	}
+
+	public Account account {get; set;}
+	public Account headquarter {get; set;}
+	public DateTime lastUpdatedOn {get; set;}
+	public list<Account_Statement__c> listStatements {get; set;}
+	public map<String,WrapperStatement> mapWrapper {get; set;}
+	public list<WrapperStatement> listWrapper {get; set;}
+	public list<String> listCurrency {get; set;}
+	public list<String> listMessages {get; set;}
+	public  User currentUser;
+	public Portal_Application_Right__c appRight {get; set;}
+
+	//variabbles for modals
+	public String selectedKey {get;set;}
+	public WrapperStatement selectedWrapperStatement {get;set;}
+	public list<WrapperSummary> listWrapperSummary {get;set;}
+	public list<WrapperLocation> listWrapperLocation {get;set;}
+	public Boolean showAttachPopup {get; set;}
+	public Boolean showDetailPopUp {get; set;}
+
+	/**
+	 * map to store currency formats based on the currency
+	 */
+	public map<String,String> mapCurrencyFormat {
+		get{
+			if (mapCurrencyFormat == null) {
+				mapCurrencyFormat = new map<String,String>();
+				for (CurrencyType currencyType : [SELECT id, IsoCode, DecimalPlaces FROM CurrencyType]) {
+					mapCurrencyFormat.put(currencyType.IsoCode,'{0, number, ###,##0.' + '0'.repeat(currencyType.DecimalPlaces) + '}');
+				}
+			}
+			return mapCurrencyFormat;
+		}
+		set;
+	}
+
+	/**
+	 * Start actions, check rights and terms and conditions
+	 */
 	public PageReference initActions() {
 		try {
 			String strId = this.currentUser.ContactId;
@@ -124,24 +143,26 @@ global class ISSP_Ctrl_AccountStatements {
 		return URL.getSalesforceBaseUrl().toExternalForm();
 	}
 
-		public Pagereference updateAppRight() {
-				update this.appRight;
-				return null;
-		}
-
 	/**
-		CONSTRUCTOR
-	**/
+	 * CONSTRUCTOR
+	 */
 	public ISSP_Ctrl_AccountStatements() {
-		this.faq = getContentDoc('IATA Customer E-Statement (ICE)');
-		this.document = getContentDoc('IATA Customer E-Statement (ICE) User Guide');
-		this.showPopUp = false;
+		this.showAttachPopup = false;
+		this.showDetailPopUp = false;
 		this.listMessages = new list<String>();
 		// get current user
 		this.currentUser = [
-			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c,
-				Contact.Account.Sector__c,Contact.Name,
-				Contact.Account.Country_ISO_Code__c
+			Select Id, ContactId,
+				Contact.Name, Contact.AccountId,
+				Contact.Account.Status__c,
+				Contact.Account.Sector__c,
+				Contact.Account.Country_ISO_Code__c,
+				Contact.Account.Id,
+				Contact.Account.Name,
+				Contact.Account.IATACode__c,
+				Contact.Account.Top_Parent__c,
+				Contact.Account.Top_Parent__r.IATACode__c,
+				Contact.Account.Top_Parent__r.Name
 			From User
 			Where id = :UserInfo.getUserId()];
 
@@ -155,41 +176,24 @@ global class ISSP_Ctrl_AccountStatements {
 
 		// get HQ account
 		this.account = this.currentUser.Contact.Account;
-		Id parentAccountId = getMaxParentAccount(this.account.Id);
-		this.headofficeAccount = [Select Id, IATACode__c from Account where id = :parentAccountId];
-		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
-
+		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.Account);
+		this.headquarter = this.account.Top_Parent__r == null? this.account: this.account.Top_Parent__r;
+		
 		// get Account Statements related with all accounts in the hierarchy
-		this.listStatements = [
-							Select Id,
-									 Period__c,
-									 Operation__c,
-									 Name,
-									 Key__c,
-									 CurrencyIsoCode,
-									 Account__c,
-									 Amount_to_be_Paid__c,
-									 Balance__c,
-									 Billing_Amount__c,
-									 Paid__c,
-									 Remittance_Date__c,
-									 Status__c,
-									 Billing_Adjustment__c,
-									 Group__c,
-									 Account__r.Site,
-									 Account__r.Name,
-									 LastModifiedDate
-									 From Account_Statement__c
-									 Where Account__c in :listAccount
-									 And Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
-									 Order By Remittance_Date__c desc, Operation__c asc
-									 ];
-		system.debug('ISSP_Ctrl_AccountStatements AccountStatement' +this.listStatements);
+		Date minimumRemittance = getMinimumRemittanceDateToSearch(listAccount);
+		String query = ' SELECT ' + String.join(SELECT_FIELDS,',') +
+			' FROM Account_Statement__c' +
+			' WHERE Account__c IN :listAccount' +
+			' AND Remittance_Date__c >= ' + String.ValueOf(minimumRemittance) +
+			ConditionExcludeRemittance +
+			' ORDER BY Remittance_Date__c desc, Operation__c ASC';
+
+		this.listStatements = Database.query(query);
+
 		// create a list of wrappers with collected Account Statements
-		map<String,WrapperStatement> mapWrapper = new map<String,WrapperStatement>();
+		this.mapWrapper = new map<String,WrapperStatement>();
 		this.lastUpdatedOn = Datetime.newInstance(1900, 1, 1);
 		for (Account_Statement__c statement: this.listStatements) {
-			//String key = statement.Period__c + statement.Group__c + statement.Operation__c;
 			String key = statement.Period__c + statement.Group__c + statement.CurrencyIsoCode;
 			WrapperStatement wrapper = mapWrapper.get(key);
 			if (wrapper == null) {
@@ -201,21 +205,48 @@ global class ISSP_Ctrl_AccountStatements {
 			this.lastUpdatedOn = this.lastUpdatedOn<statement.LastModifiedDate? statement.LastModifiedDate: this.lastUpdatedOn;
 		}
 
+		// Assing operational calendars to Wraper Statements
+		map<String,Operational_Calendar__c> mapCalendars = getCalendarsPerKey(this.listStatements);
+		this.listWrapper = new list<WrapperStatement>();
+		for (WrapperStatement wrapper: mapWrapper.values() ) {
+			String key = wrapper.parent.Operation__c + '_' + wrapper.parent.Period__c;
+			wrapper.calendar = mapCalendars.get(key);
+		}
+
+		// Sort map per key
 		this.listWrapper = new list<WrapperStatement>();
 		for (String period: mapWrapper.keyset() ) {
 			WrapperStatement wrapper = mapWrapper.get(period);
-			wrapper.calculeLastUpdatedDate();
 			this.listWrapper.add(wrapper);
 		}
 		this.listWrapper.sort();
-		markLastUpdated();
-		markFirstOldPeriod();
-				initListCurrency();
+		initListCurrency();
 	}
 
 	/**
-		Get method for NewGenAPP mobile
-	**/
+	 * Set all related Operational calendars to wrapper Statements list
+	 */
+	private map<String,Operational_Calendar__c> getCalendarsPerKey(list<Account_Statement__c> listStatements) {
+		// find calendar keys in input Statements
+		map<String,Operational_Calendar__c> mapCalendars = new map<String,Operational_Calendar__c>();
+		for (Account_Statement__c statement: listStatements) {
+			String key = statement.Operation__c + '_' + statement.Period__c;
+			mapCalendars.put(key, null);
+		}
+		// populate the returning map with each calendar per key
+		for (Operational_Calendar__c calendar:
+				[SELECT Id, Settlement_Day__c, ExternalId__c
+				FROM Operational_Calendar__c
+				WHERE RecordType.DeveloperName = 'ISS_Calendar'
+				AND ExternalId__c IN :mapCalendars.keyset()]) {
+			mapCalendars.put(calendar.ExternalId__c, calendar);
+		}
+		return mapCalendars;
+	}
+
+	/**
+	 * Get method for NewGenAPP mobile
+	 */
 	@HttpGet
 	global static List <WrapperStatement> doGet(){
 		ISSP_Ctrl_AccountStatements acc = new ISSP_Ctrl_AccountStatements();
@@ -223,51 +254,36 @@ global class ISSP_Ctrl_AccountStatements {
 		if(acc.listWrapper != null && !acc.listWrapper.isEmpty()){
 			String disclaimer = Label.ISSP_Account_Statements_Disclaimer;
 
-					if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
-						disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
-					}
-
-					for(WrapperStatement wrapper : acc.listWrapper){
-						wrapper.disclaimer = disclaimer;
-						wrapper.listCurrency = acc.listCurrency;
-						wrapper.location = Label.ISSP_Account_Statement_Location;
-					}
+			if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
+				disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
 			}
+
+			for(WrapperStatement wrapper : acc.listWrapper){
+				wrapper.disclaimer = disclaimer;
+				wrapper.listCurrency = acc.listCurrency;
+				wrapper.location = Label.ISSP_Account_Statement_Location;
+			}
+		}
 
 		return acc.listWrapper;
 	}
 
 	/**
-		Get File document object from the library with given name
-	**/
-	private ContentVersion getContentDoc(String name) {
+	 * Find the lowest remitance date in last valid periods
+	 */
+	private Date getMinimumRemittanceDateToSearch(list<Account> listAccount) {
 		try {
-			return [
-				Select Id
-				From ContentVersion
-				Where isLatest = true
-				And title = :name
-				Limit 1];
-		} catch (Exception e) {
-			System.debug('ERROR, document "' + name + '" not found: ' + e.getMessage());
-			return null;
-		}
-	}
+			String query =
+				'SELECT Remittance_Date__c ' +
+				' FROM Account_Statement__c ' +
+				' WHERE Account__c IN :listAccount' +
+				' AND Remittance_Date__c <= TODAY ' +
+				ConditionExcludeRemittance +
+				' GROUP BY Remittance_Date__c ' +
+				' ORDER BY Remittance_Date__c DESC ' +
+				' LIMIT ' + nRowsDisplayed; // search last n Remittance dates
 
-	/**
-		Find the lowest remitance date in last valid periods
-	**/
-	private Date getMinimumRemmitanceDateToSearch(list<Account> listAccount) {
-		try {
-			list<AggregateResult> listResult = [
-				Select Remittance_Date__c
-				from Account_Statement__c
-				Where Account__c in :listAccount
-				and Remittance_Date__c <= TODAY
-				group by Remittance_Date__c
-				order by Remittance_Date__c desc
-				limit 3
-			]; // search last 3 Remittance dates
+			list<AggregateResult> listResult = Database.query(query);
 			AggregateResult ar = listResult.get( listResult.size()-1 );
 			return (Date)ar.get('Remittance_Date__c');
 		} catch (Exception e) {
@@ -276,8 +292,8 @@ global class ISSP_Ctrl_AccountStatements {
 	}
 
 	/**
-		populate list of available currencies
-	**/
+	 * Populate list of available currencies
+	 */
 	private void initListCurrency() {
 		set<String> setCurrency = new set<String>();
 		for(WrapperStatement wrapper: this.listWrapper) {
@@ -287,242 +303,234 @@ global class ISSP_Ctrl_AccountStatements {
 	}
 
 	/**
-		Mark last updated Wrapper in the warapper statements list
-	**/
-	private void markLastUpdated() {
-		WrapperStatement mark = null;
-		for (WrapperStatement wrapper: this.listWrapper) {
-			mark = mark!=null && mark.lastUpdatedDate>wrapper.lastUpdatedDate? mark: wrapper;
-		}
-		if (mark!=null) mark.lastUpdatedMark = true;
-	}
-
-	/**
-		Searches in the list of Account statments and marks first statement with an old date
-	**/
-	private void markFirstOldPeriod() {
-		for(WrapperStatement wrapper: this.listWrapper) {
-			wrapper.showSeparation = false;
-		}
-		for(WrapperStatement wrapper: this.listWrapper) {
-			if (wrapper.parent.Remittance_Date__c.addDays(2) < Date.today()) {
-				wrapper.showSeparation = true;
-				return;
-			}
-		}
-	}
-
-	/**
-		Get a list containing all account in the input account hirarchy
-	**/
-	private list<Account> getAllHierarchy(Id AccountId) {
-		Id maxParentId = getMaxParentAccount(accountId);
+	 * Get a list containing all account in the input account hirarchy
+	 */
+	private list<Account> getAllHierarchy(Account account) {
+		Id topParentId = account.Top_Parent__c == null? account.Id: account.Top_Parent__c;
 		return [
 			Select id, Name, ParentId
 			From Account
-			Where Id =:maxParentId
-			Or ParentId = :maxParentId
-			or Parent.ParentId = :maxParentId
-			or Parent.Parent.ParentId = :maxParentId
-			or Parent.Parent.Parent.ParentId = :maxParentId
-			or Parent.Parent.Parent.Parent.ParentId = :maxParentId
+			Where Id =:topParentId
+			Or Top_Parent__c = :topParentId
 		];
 	}
 
 	/**
-		Find Headquart account (parent top account in the hierarchy)
-	**/
-	private Id getMaxParentAccount(Id accountId) {
+	 * Update the app right record when the switch for Remittance Date Reminders is modified
+	 */
+	public Pagereference updateAppRight() {
 		try {
-			Account account = [
-				Select id, Name,
-					ParentId,
-					Parent.ParentId,
-					Parent.Parent.ParentId,
-					Parent.Parent.Parent.ParentId,
-					Parent.Parent.Parent.Parent.ParentId
-				From Account
-				Where id = :accountId ];
-
-			if (account.ParentId == null ) {
-				return account.Id;
-			}
-			if (account.Parent.ParentId == null ) {
-				return account.ParentId;
-			}
-			if (account.Parent.Parent.ParentId == null ) {
-				return account.Parent.ParentId;
-			}
-			if (account.Parent.Parent.Parent.ParentId == null ) {
-				return account.Parent.Parent.ParentId;
-			}
-			if (account.Parent.Parent.Parent.Parent.ParentId == null ) {
-				return account.Parent.Parent.Parent.ParentId;
-			}
-			return account.Parent.Parent.Parent.Parent.ParentId;
-
-		} catch (Exception e) {
-			return accountId;
-		}
-	}
-
-	/**
-	class to Show attachmenst Popup
-	**/
-
-	public void addAttachment()
-	{
-
-		//System.debug(accountSelectedId+' ###### '+ accountStatementSelectedId);
-		amazonFileName =amazonFileStartName+' '+accountStatementPeriod+' '+ billingAmount;
-		//listAttachments = AmazonFile.getAccountRelatedAmazonFiles(accountSelectedId, amazonFileName);
-		refreshList();
-
-		this.showPopUp = true ;
-
-
-	}
-
-
-	/**
-	class to close attachmenst Popup
-	**/
-
-	public void saveAttachment()
-	{
-				//System.debug('===============saveAttachment======== ');
-		this.showPopUp =false ;
-		//System.debug('===============saveAttachment======== '+this.showPopUp);
-
-	}
-
-	// UploadMultipleFileToAmazonButton compoenent attributes
-	// credentialName
-	public String credentialName  {
-		get { return WrapperAttach.CREDENTIAL_NAME; }
-	}
-
-	// amazonPath
-	public String amazonPath  {
-		get {
-			//String suffix = String.ValueOf(accountSelectedId).substring(0,3);
-			//return ''+ suffix + '/' + String.valueOf(accountSelectedId) + '/';}
-
-			return WrapperAttach.getAmazonFolder(this.accountSelectedId); }
-	}
-
-
-	/**
-		class to update attachmenst list
-	**/
-	public Pagereference refreshList() {
-
-		try {
-				this.listAttachments = AmazonFile.getAccountRelatedAmazonFiles(accountSelectedId, amazonFileName);
-				this.listAttachments.sort();
-				for(AmazonFile__c recordAux : this.listAttachments)
-					{
-						String fileName = recordAux.Full_Name_Unique__c;
-						fileName = fileName.split('/')[2];
-						recordAux.Full_Name_Unique__c = fileName;
-					}
-			} catch (Exception e ) {
-			System.debug('FATAL: ListController in function refreshList()  '  + e.getStackTraceString()  + '  '  + e.getMessage());
-		}
+			update this.appRight;
+		} catch (Exception e) {}
 		return null;
 	}
 
-
+	/**
+	 * Method to Show attachments Popup
+	 */
+	public void showAttachModalPopup() {
+		this.selectedWrapperStatement = this.mapWrapper.get(this.selectedKey);
+		this.showAttachPopup = this.selectedWrapperStatement!=null;
+	}
 
 	/**
-		class to store a list of Account Statements and the sumarized data
-	**/
+	 * Show detail Information in Popup
+	 */
+	public void showDetailModalPopup() {
+		this.selectedWrapperStatement = this.mapWrapper.get(this.selectedKey);
+		this.showDetailPopUp = this.selectedWrapperStatement!=null;
+		if(this.showDetailPopUp){
+			//query transactions
+			list<Account_Statement_Transaction__c> listTransaction = [
+				SELECT Id, Internal_Type__c, Amount__c, Value_Date__c, Details__c, Is_Payment__c,
+					Parent__c, Parent__r.CurrencyIsoCode,
+					Parent__r.Account__r.IATAcode__c, Parent__r.Account__r.BillingCity
+				FROM Account_Statement_Transaction__c
+				WHERE Parent__c IN :selectedWrapperStatement.listStatements
+				ORDER BY Value_Date__c DESC];
+
+			//populate map for Summary Tab 
+			map<String,WrapperSummary> mapWrapperSummary = new map<String,WrapperSummary>();
+			for (Account_Statement_Transaction__c trans: listTransaction) {
+				String key = trans.Internal_Type__c;
+				WrapperSummary wrapperSummary = mapWrapperSummary.get(key);
+				if (wrapperSummary==null) {
+					wrapperSummary = new wrapperSummary(key);
+				}
+				wrapperSummary.addTransaction(trans);
+				mapWrapperSummary.put(key, wrapperSummary);
+			}
+			this.listWrapperSummary = mapWrapperSummary.values();
+
+			//populate map for Location Tab 
+			map<String,WrapperLocation> mapWrapperLocation = new map<String,WrapperLocation>();
+			for (Account_Statement_Transaction__c trans: listTransaction) {
+				String key = trans.Parent__r.Account__r.IATAcode__c;
+				WrapperLocation wrapperLocation = mapWrapperLocation.get(key);
+				if (wrapperLocation==null) {
+					wrapperLocation = new wrapperLocation(trans.Parent__r);
+				}
+				wrapperLocation.addTransaction(trans);
+				mapWrapperLocation.put(key, wrapperLocation);
+			}
+			this.listWrapperLocation = mapWrapperLocation.values();
+		}
+	}
+
+	/**
+	 * Wrapper to create the table Summary
+	 */
+	global class WrapperSummary {
+		global String ref {get;set;}
+		global String item {get;set;}
+		global Decimal billing {get;set;}
+		global Decimal payment {get;set;}
+		global list<Account_Statement_Transaction__c> listTransaction {get;set;}
+
+		public WrapperSummary(String item) {
+			this.ref = item.replaceAll(' ', '-');
+			this.item = item;
+			this.billing = 0;
+			this.payment = 0;
+			this.listTransaction = new list<Account_Statement_Transaction__c>();
+		}
+
+		public void addTransaction(Account_Statement_Transaction__c trans) {
+			this.listTransaction.add(trans);
+			if (trans.Is_Payment__c) {
+				this.payment+= trans.Amount__c;
+			} else {
+				this.billing+= trans.Amount__c;
+			}
+		}
+	}
+
+	/**
+	 * Wrapper to create the table Per Location
+	 */
+	global class WrapperLocation {
+		global String code {get;set;}
+		global String location {get;set;}
+		global Decimal billing {get;set;}
+		global Decimal payment {get;set;}
+		global String isoCode {get;set;}
+		global list<Account_Statement_Transaction__c> listTransaction {get;set;}
+
+		public WrapperLocation(Account_Statement__c statement) {
+			this.code = statement.Account__r.IATAcode__c;
+			this.location = statement.Account__r.BillingCity;
+			this.billing = 0;
+			this.payment = 0;
+			this.isoCode = statement.CurrencyIsoCode;
+			this.listTransaction = new list<Account_Statement_Transaction__c>();
+		}
+
+		public void addTransaction(Account_Statement_Transaction__c trans) {
+			this.listTransaction.add(trans);
+			if (trans.Is_Payment__c) {
+				this.payment+= trans.Amount__c;
+			} else {
+				this.billing+= trans.Amount__c;
+			}
+		}
+	}
+
+	/**
+	 * Class to close attachmenst Popup
+	 */
+	public void closeAttachModalPopup() {
+		this.showAttachPopup =false ;
+	}
+
+	/**
+	 * Close Detail Popup
+	 */
+	public void closeDetailModalPopup() {
+		this.showDetailPopUp = false ;
+	}
+
+	/**
+	 * Class to store a list of Account Statements and the sumarized data
+	 */
 	global class WrapperStatement implements Comparable {
+		global String key {get;set;}
 		global Account_Statement__c parent {get;set;}
 		global list<Account_Statement__c> listStatements {get; set;}
-		global String accountSite {get;set;}
-		global Boolean showDetail {get;set;}
-		global DateTime lastUpdatedDate {get; set;}
-		global Boolean lastUpdatedMark {get; set;}
-				global Boolean showSeparation {get; set;}
-				global String disclaimer { get; set; }
-				global List <String> listCurrency {get; set;}
-				global String location { get; set;}
-		global String accountSatementId {get;set;}
-		global String accountName {get;set;}
+		global String disclaimer { get; set; }
+		global List <String> listCurrency {get; set;}
+		global String location { get; set;}
+		global Operational_Calendar__c calendar {get; set;}
 
 		global WrapperStatement(Account_Statement__c statement) {
+			this.key = statement.Period__c + statement.Group__c + statement.CurrencyIsoCode;
 			this.parent = statement.clone();
-			this.accountSatementId =statement.Id;
+			this.parent.Amount_to_be_Paid__c = nvl(this.parent.Amount_to_be_Paid__c);
+			this.parent.Billing_Amount__c = nvl(this.parent.Billing_Amount__c);
+			this.parent.Paid__c = nvl(this.parent.Paid__c);
+			this.parent.Balance__c = nvl(this.parent.Balance__c);
 			this.listStatements = new list<Account_Statement__c>();
 			this.listStatements.add(statement);
-			this.showDetail = false;
-			this.accountSite = statement.Account__r.Site;
-			this.accountName = statement.Account__r.Name;
-			this.showSeparation = false;
-			this.lastUpdatedMark = false;
-			this.disclaimer = '';
-			this.listCurrency = new List <String>();
-			this.location = '';
+			this.calendar = null;
 		}
 
 		/**
-			Get most recent modification date for all statements in this wrapper
-		**/
-		public void calculeLastUpdatedDate() {
-			DateTime lastUpdated = Datetime.newInstance(1900, 1, 1);
-			for (Account_Statement__c statement: this.listStatements) {
-				lastUpdated = statement!=null && lastUpdated>statement.LastModifiedDate? lastUpdated: statement.LastModifiedDate;
-			}
-			this.lastUpdatedDate = lastUpdated;
-		}
-
-		/**
-			Add a new statement in current statements list
-		**/
+		 * Add a new statement in current statements list
+		 */
 		public void addStatement(Account_Statement__c statement) {
 			this.listStatements.add(statement);
-			this.parent.Amount_to_be_Paid__c += statement.Amount_to_be_Paid__c;
-			this.parent.Billing_Amount__c += statement.Billing_Amount__c;
-			this.parent.Paid__c += statement.Paid__c;
-			this.parent.Balance__c += statement.Balance__c;
+			this.parent.Amount_to_be_Paid__c += nvl(statement.Amount_to_be_Paid__c);
+			this.parent.Billing_Amount__c += nvl(statement.Billing_Amount__c);
+			this.parent.Paid__c += nvl(statement.Paid__c);
+			this.parent.Balance__c += nvl(statement.Balance__c);
 			this.parent.Group__c = statement.Group__c;
 		}
 
 		/**
-			Get current status for parent statement
-		**/
+		 * Get current status for parent statement
+		 */
 		public String getParentStatus() {
 			if (this.parent.Balance__c == 0 ) {
-				return Label.ISSP_Fullpayment;
+				return 'Fullpayment';
 			}
 			if (this.parent.Balance__c > 0 ) {
-				return Label.ISSP_Pending;
+				return 'Pending';
 			}
-			return Label.ISSP_Excess;
+			return 'Excess';
 		}
 
-		/** WMO358 2018/11/02
-			Get payment prove available
-		**/
-		public Boolean getParentPaymentProof() {
-			if (this.parent.Balance__c == 0 ) {
-				return false;
-			}
-			if (this.parent.Balance__c > 0 ) {
-				return true;
-			}
-			return false;
+		/**
+		 * Used to show or hide the attachment button, only required when a proof of payment is needed
+		 */
+		public Boolean getShowPaymentProof() {
+			return ( this.parent.Balance__c > 0 );
 		}
 
-
-		public Decimal getParentBillingAdjustment() {
-			return this.parent.Billing_Amount__c - this.parent.Amount_to_be_Paid__c;
+		/**
+		 * USed to show or hide settlement info icon
+		 */
+		public Boolean getShowSettlementInfo() {
+			return ( this.parent.Billing_Amount__c < 0
+				&& this.calendar != null && this.calendar.Settlement_Day__c != null);
 		}
 
 		public Integer compareTo(Object compareTo) {
-
 			return this.parent.Period__c > ((WrapperStatement)compareTo).parent.Period__c? -1: 1;
 		}
+
+		/**
+		 * Returns the full Amazon file
+		 */
+		public String getAmazonFileName() {
+			String period = this.parent.Period__c;
+			Decimal billingAmount = this.parent.Billing_Amount__c;
+			return AMAZON_ICE_PROOF_OF_PAYMENT + ' ' + period + ' ' + billingAmount;
+		}
+	}
+
+	/**
+		Helper method for null values
+	 */
+	private static Decimal nvl(Decimal value) {
+		return value==null? 0: value;
 	}
 }

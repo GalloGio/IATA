@@ -3411,6 +3411,16 @@
         <trackTrending>false</trackTrending>
     </fields>
     <fields>
+        <fullName>Offer_exchange_rate_date__c</fullName>
+        <description>Offer exchange rate date coming from INT077 (external service)</description>
+        <externalId>false</externalId>
+        <label>Offer exchange rate date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Opportunity_Open_Duration__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(ISPICKVAL( StageName , &quot;7. Closed Sales / Sold&quot;),ISPICKVAL( StageName , &quot;z. Lost&quot;)) ,0, ROUND (NOW()- CreatedDate,0))</formula>
@@ -4545,6 +4555,32 @@
         <language>en_US</language>
         <sharedTo>
             <group>HUBMadrid</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MRO_SmartHub_Opportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>MRO</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>Smarthub</value>
+        </filters>
+        <label>MRO SmartHub Opportunities</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>MRO_SmartHub_External_Users</group>
         </sharedTo>
     </listViews>
     <listViews>

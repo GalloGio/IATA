@@ -24,6 +24,9 @@ public with sharing class sendSingleTrackedEmailControllerTest {
 			Token__c = 'token'
 		);
 		insert ste;
+        
+        insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia,ComplaintIDFS,'
+		+  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		Attachment att = new Attachment(
 			Name='Attachment 1',
@@ -456,14 +459,11 @@ public with sharing class sendSingleTrackedEmailControllerTest {
 
 		controller.email.Subject__c = 'test error sending';
 		controller.email.Html_Body__c = 'test';
-		controller.email.TextBody__c = 'test';
+		controller.email.TextBody__c = 'test';           
 		controller.selectedFrom = 'agencymanagement@iata.org';
-
+	
 		controller.sendTrackedEmail();
-
-		//EM: To be removed
-		clsFinancialSecurityRequestController.fakecoverage();
-
+		
 		Test.stopTest();
 	}
 }

@@ -149,6 +149,10 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Training_Contact_Role_Details__c.Account_Contact_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Contact_Roles_Name__c</fields>
         <fields>Status__c</fields>
         <fields>Service__c</fields>
@@ -171,6 +175,9 @@
         <fields>Airport_Details__c</fields>
         <fields>Primary__c</fields>
         <relatedList>Role_Address__c.Account_Contact_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

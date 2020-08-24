@@ -105,7 +105,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			List<LocalGovernance_Meeting__c> lms = [SELECT Name,Meeting_Responsible__c FROM LocalGovernance_Meeting__c];
 			system.assertEquals(1,lms.size());
-			system.assertEquals(ctrl.lm.Name, lms[0].Name);
+			system.assert(lms[0].Name.startsWith(ctrl.lm.Name));
 			system.assertEquals(ctrl.lm.Meeting_Responsible__c, lms[0].Meeting_Responsible__c);
 
 
@@ -141,7 +141,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			lms = [SELECT Name,Meeting_Responsible__c FROM LocalGovernance_Meeting__c];
 			system.assertEquals(1,lms.size());
-			system.assertEquals(ctrl.lm.Name, lms[0].Name);
+			system.assert(lms[0].Name.startsWith(ctrl.lm.Name));
 			system.assertEquals(ctrl.lm.Meeting_Responsible__c, lms[0].Meeting_Responsible__c);
 
 
@@ -159,7 +159,8 @@ public class NewLocalGroupMeetingCtrlTest{
 		}
 	}
 
-	static testmethod void testMeetingAndParticipants(){
+
+	static testMethod void testMeetingAndParticipants1(){
 		Integer NRECORDS = 5;
 		System.runAs(testUser){
 			initTestData(NRECORDS);
@@ -230,15 +231,64 @@ public class NewLocalGroupMeetingCtrlTest{
 			// Now a new participant should be created
 			atts = [SELECT ID FROM Meeting_Participant__c];
 			system.assertEquals(2, atts.size(), 'A new attendee should have been created');
+		}
+		Test.stopTest();
+
+	}
+
+	static testMethod void testMeetingAndParticipants2(){
+		Integer NRECORDS = 5;
+		System.runAs(testUser){
+			initTestData(NRECORDS);
+
+			Test.startTest();
+
+			// Create a new Local Group
+			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'))));
+
+			lgctrl.lg.Cargo_Passenger__c = 'BSP';
+			lgctrl.lg.Local_Governance_type__c = 'ICAP';
+			lgctrl.lg.Active__c = true;
+			lgctrl.lg.Country__c = isocs[0].ID;
+
+			lgctrl.MySave();
 
 
-			actrl = new NewMeetingAttendeeByEmailCtrl (new ApexPages.StandardController(new Meeting_Participant__c(Local_Governance_Meeting__c=mctrl.lm.Id)));
+			// Add 2 participants
+			ApexPages.currentPage().getParameters().put('retURL', '/' + lgctrl.lg.Id);
+
+			NewParticipantByEmailCtrl pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
+			pctrl.c.Email = conts[0].Email;
+			pctrl.MySave();
+
+			ApexPages.currentPage().getParameters().put('retURL', '/' + lgctrl.lg.Id);
+			pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
+			pctrl.c.Email = conts[1].Email;
+			pctrl.MySave();
+
+
+			// Create a local group meeting
+			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id)));
+
+			mctrl.lm.Name = 'theMeeting';
+			mctrl.lm.Meeting_Responsible__c = UserInfo.getUserId();
+
+
+			mctrl.atts[0].sel = true;
+
+			system.assertNotEquals(null, mctrl.MySave(), 'I should be able to save the meeting');
+
+			List<Meeting_Participant__c> atts = [SELECT Local_Governance_Participant__c, Participant_Contact__c FROM Meeting_Participant__c WHERE Local_Governance_Meeting__c = :mctrl.lm.Id];
+			system.assertEquals(1, atts.size(), 'There should be 1 participant related to the meeting');
+
+
+			NewMeetingAttendeeByEmailCtrl actrl = new NewMeetingAttendeeByEmailCtrl (new ApexPages.StandardController(new Meeting_Participant__c(Local_Governance_Meeting__c=mctrl.lm.Id)));
 			actrl.c.Email = contincomplete.Email;
 			system.assertEquals(null, actrl.MySave(), 'Cannot insert the same attendee twice');
 
 			// I can't insert twice the same participant
 			atts = [SELECT ID FROM Meeting_Participant__c];
-			system.assertEquals(2, atts.size());
+			system.assertEquals(1, atts.size());
 
 
 
@@ -251,11 +301,60 @@ public class NewLocalGroupMeetingCtrlTest{
 			actrl.chooseContact();
 
 			atts = [SELECT ID FROM Meeting_Participant__c];
-			system.assertEquals(3, atts.size());
+			system.assertEquals(2, atts.size());
 
+		}
+		Test.stopTest();
+
+	}
+
+	static testMethod void testMeetingAndParticipants3(){
+		Integer NRECORDS = 5;
+		System.runAs(testUser){
+			initTestData(NRECORDS);
+
+			Test.startTest();
+
+			// Create a new Local Group
+			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'))));
+
+			lgctrl.lg.Cargo_Passenger__c = 'BSP';
+			lgctrl.lg.Local_Governance_type__c = 'ICAP';
+			lgctrl.lg.Active__c = true;
+			lgctrl.lg.Country__c = isocs[0].ID;
+
+			lgctrl.MySave();
+
+
+			// Add 2 participants
+			ApexPages.currentPage().getParameters().put('retURL', '/' + lgctrl.lg.Id);
+
+			NewParticipantByEmailCtrl pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
+			pctrl.c.Email = conts[0].Email;
+			pctrl.MySave();
+
+			ApexPages.currentPage().getParameters().put('retURL', '/' + lgctrl.lg.Id);
+			pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
+			pctrl.c.Email = conts[1].Email;
+			pctrl.MySave();
+
+
+			// Create a local group meeting
+			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id)));
+
+			mctrl.lm.Name = 'theMeeting';
+			mctrl.lm.Meeting_Responsible__c = UserInfo.getUserId();
+
+
+			mctrl.atts[0].sel = true;
+
+			system.assertNotEquals(null, mctrl.MySave(), 'I should be able to save the meeting');
+
+			List<Meeting_Participant__c> atts = [SELECT Local_Governance_Participant__c, Participant_Contact__c FROM Meeting_Participant__c WHERE Local_Governance_Meeting__c = :mctrl.lm.Id];
+			system.assertEquals(1, atts.size(), 'There should be 1 participant related to the meeting');
 
 			// try again to insert an email shared by 2 contacts and choose one of them who is incomplete
-			actrl = new NewMeetingAttendeeByEmailCtrl (new ApexPages.StandardController(new Meeting_Participant__c(Local_Governance_Meeting__c=mctrl.lm.Id)));
+			NewMeetingAttendeeByEmailCtrl actrl = new NewMeetingAttendeeByEmailCtrl (new ApexPages.StandardController(new Meeting_Participant__c(Local_Governance_Meeting__c=mctrl.lm.Id)));
 			actrl.c.Email = contcomplete.Email;
 			system.assertEquals(null, actrl.MySave(), 'I should not be able to save because the mail belongs to two contacts');
 			system.assertEquals(true,actrl.chooseContact);
@@ -264,7 +363,7 @@ public class NewLocalGroupMeetingCtrlTest{
 			actrl.chooseContact();
 
 			atts = [SELECT ID FROM Meeting_Participant__c];
-			system.assertEquals(3, atts.size(), 'No new attendee should have inserted because the choosed one was incomplete');
+			system.assertEquals(1, atts.size(), 'No new attendee should have inserted because the choosed one was incomplete');
 
 		}
 		Test.stopTest();
@@ -273,6 +372,8 @@ public class NewLocalGroupMeetingCtrlTest{
 
 	static testmethod void testForInactiveGroup(){
 		Integer NRECORDS = 1;
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		System.runAs(testUser){
 			initTestData(NRECORDS);
 

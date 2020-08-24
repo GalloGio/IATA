@@ -138,6 +138,14 @@ body {
     font-size: 16px;
 }
 
+.searchInputContainer{
+    box-shadow: none;
+    border-color: lightgray;
+    border-radius: 0px;
+    height: 52px;
+    background: white;
+}
+
 /* creates a triangle for the card title */
 .triangleRight {
     width: 20px;
@@ -208,6 +216,9 @@ body {
     background-color: #f7f8fa;
 }
 
+.topSearchDiv{
+    height:52px;
+}
 .grayInputPlaceholder input::placeholder {
   	color: #999999;
 }
@@ -827,6 +838,11 @@ lightning-datatable .slds-th__action {
   	color: #3333ff;
 }
 
+.recentcases > .aroundLinkBlueBorder:hover{
+	-webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+  	border: solid 1px rgba(0, 0, 0, 0.08);
+}
 .outlinedButton.button-half-height,
 .outlinedButton.button-half-height button,
 .outlinedButton.button-half-height button:active,
@@ -2168,6 +2184,30 @@ visibility: hidden;
     display: inline-block;
 }
 
+.outlinedButtonBorderBlue button, 
+.outlinedButtonBorderBlue button:hover,
+.outlinedButtonBorderBlue button:focus,
+.outlinedButtonBorderBlue button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 40px;
+    word-break: break-word;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+    display: inline-block;
+}
+
 .languageSelection .slds-combobox_container input[role="textbox"]{
     border:none;
     background-color: transparent;
@@ -2642,6 +2682,22 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
     width: 100%;
 }
 
+
+.requestedService, .requestedService button{
+    color: #999999;
+}
+
+.requestedService button lightning-primitive-icon{
+    display:none;
+}
+
+.titleTruncation input{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.wordBreakNormal, .wordBreakNormal button{
+    word-break: normal;
+}
 /*#################################*/
 
 /*RS - START - Needed for IFTP app */
@@ -2718,3 +2774,14 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 
 /*RS - END - Needed for IFTP app */
+
+/* Override image padding on content Page : important required without possible work around*/
+.comm-page-managed-content-PortalRecommendationContent .slds-large-size_6-of-12
+{
+ padding: 0px !important;
+
+}
+
+html {
+  scroll-behavior: smooth;
+}

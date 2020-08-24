@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:type="xsd:string">IATA_Airline, IATA_Airline_BR, Operator</value>
+        <value xsi:type="xsd:string">Operator, Standard_Account</value>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>
@@ -53,6 +53,10 @@
     <values>
         <field>Parent__c</field>
         <value xsi:type="xsd:string">Airline</value>
+    </values>
+    <values>
+        <field>Partial_List_Order__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Placeholder_Custom_Label__c</field>

@@ -52,7 +52,7 @@ private class ANG_MasterData_Interface_test {
 						Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
 						ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
 						recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
-						IATACode__c ='999',
+						IATACode__c ='998',
 						Accreditation_date__c = Date.valueOf('2017-01-01'),
 						IATA_ISO_Country__c = isoCntr1.Id
 				);
@@ -80,7 +80,7 @@ private class ANG_MasterData_Interface_test {
 				Account accChild = new Account(
 						ParentId = acc.id,
 						name='acc3',
-						Location_Type__c=AMS_Utils.HE,
+						Location_Type__c=AMS_Utils.AE,
 						Location_Class__c= AMS_Utils.LC_PASSENGER,
 						Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
 						ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
@@ -186,13 +186,6 @@ private class ANG_MasterData_Interface_test {
 				RestResponse response = doCallOutToWS('888',true);
 				System.assertEquals(HTTP_NOT_FOUND, response.statusCode);
 		}
-
-		static testmethod void testHTTPrequestToWebserviceUnsuccessMultipleAccountMatch(){
-
-				RestResponse response = doCallOutToWS('999',false);
-				System.assertEquals(HTTP_MULTIPLE_FOUND, response.statusCode);
-		}
-
 
 		static testmethod void testHTTPrequestToWebserviceUnsuccessNoCodeSent(){
 
@@ -343,6 +336,16 @@ private class ANG_MasterData_Interface_test {
 			system.assert(payload.isPciDss == NULL, 'Payload isPciDss element must be NULL');
 
 			Test.stopTest();
+
+		}
+		@isTest
+		static void PASS_MasterDataPayloadConstructor() {
+				Account a = new Account(Name = 'a', Location_Class__c = 'L');
+
+				Test.startTest();
+						ANG_MasterData_Interface.MasterDataPayload mdp = new ANG_MasterData_Interface.MasterDataPayload(a, false, '123');
+				Test.stopTest();
+			System.assertEquals(AMS_Utils.passParticipation,mdp.externalSystems[0]);
 
 		}
 

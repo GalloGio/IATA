@@ -1,72 +1,217 @@
 <apex:page controller="ANG_RHCMassCalculation" tabStyle="ANG_RHC_Information__c" docType="html-5.0" title="RHC Mass Recalculation">
 
+	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 	<script>
+		function startLoading(LoadingStep){
+			$('#' + LoadingStep + '').show();
+			$('#loading').show();
+		}
+		function stopLoading(LoadingStep){
+			$('#' + LoadingStep + '').hide();
+			$('#loading').hide();
+		}
+		
 		function toggleAll(source) {
 			var checkboxes = document.querySelectorAll('input.itemCheck');
 			for(var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = source.checked;
+		}
+
+		function ResponseWrapper(bIsSuccess, ErrorDescription, RHCId, ANG_RHC_Amount_Forecasted, ANG_RHC_Amount_Provisional){
+			this.bIsSuccess = bIsSuccess;
+			this.ErrorDescription = ErrorDescription;
+			this.RHCId = RHCId;
+			this.ANG_RHC_Amount_Forecasted = ANG_RHC_Amount_Forecasted;
+			this.ANG_RHC_Amount_Provisional = ANG_RHC_Amount_Provisional;
+		}
+
+		var lsResponseWrapper = [];
+		var nProcessed = 0;
+		var nToProcess = 0;
+
+		function processAgencies(bCommitRHC){
+			var RHCIds = document.querySelectorAll('input.RHCId');
+			var checkboxes = document.querySelectorAll('input.itemCheck');
+
+			nToProcess = 0;
+			lsResponseWrapper = [];
+
+			for(var i = 0; i < checkboxes.length; i++){
+				if(checkboxes[i].checked){
+					nToProcess = nToProcess+1;
+				}
+			}
+			nProcessed = 1;
+			
+			for(var i = 0; i < checkboxes.length; i++){
+				if(checkboxes[i].checked){
+					var RHCId = RHCIds[i].value;
+					doRemoteAction(RHCId, bCommitRHC);
+				}
+			}
+		}
+		
+		function doRemoteAction(RHCId, bCommitRHC){
+			if(bCommitRHC) startLoading('ApplyRHCInProgress');
+			else startLoading('Processing');
+
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.ANG_RHCMassCalculation.RequestProvisionalAndCalculateRHC}',
+				RHCId,
+				bCommitRHC,
+				function(result, event){
+					var tmpWrap = new ResponseWrapper(false, '', RHCId, null, null);
+					if(event.type == 'exception'){ 
+						tmpWrap.bIsSuccess = false;
+						tmpWrap.ErrorDescription = event.message;
+					}else{
+						tmpWrap.bIsSuccess = result.bIsSuccess;
+						tmpWrap.ErrorDescription = result.ErrorDescription;
+						tmpWrap.ANG_RHC_Amount_Forecasted = result.ANG_RHC_Amount_Forecasted;
+						tmpWrap.ANG_RHC_Amount_Provisional = result.ANG_RHC_Amount_Provisional;
+					}
+					nProcessed++;
+					lsResponseWrapper.push(tmpWrap);
+
+					if(nProcessed>nToProcess){
+						afterProcess(JSON.stringify(lsResponseWrapper));
+					}
+				},{buffer: false, escape: false, timeout: 120000}
+			);
 		}
 	</script>
 
 	<apex:sectionHeader title="RHC Mass Recalculation"/>
 
 	<apex:form >
-		<apex:outputPanel id="tables">            
-			<apex:pageBlock title="Search">
+		<apex:actionFunction action="{!afterProcess}" name="afterProcess" oncomplete="stopLoading('Processing');stopLoading('ApplyRHCInProgress');" reRender="tables">
+			<apex:param name="myParam" assignTo="{!theSerializedResponse}" value=""/>
+		</apex:actionFunction>
+
+		<div id="loading" style="display: none">
+            <div style="height:100%;width:100%;z-index:100; position:fixed;background:black;opacity:0.5; top:0; left:0;"></div>
+            <div style="border:1px solid black; background:white; text-align:center;
+                        display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+                        position: fixed; top:400px; left:50%; z-index:101;">
+				<div id="SearchInProgress" style="display: none">Search in progress.</div>
+				<div id="Processing" style="display: none">Request provisional and calculate RHC in progress. <br/> The operation may take a while. Do not close the browser</div>
+				<div id="ApplyRHCInProgress" style="display: none">Apply Forecasted RHC in progress. <br/> The operation may take a while. Do not close the browser</div>
+            </div>
+		</div>
+		
+		<apex:outputPanel id="tables">
+			
+			<apex:pageBlock title="Notes">
+				<apex:pageBlockSection id="notes" columns="1">
+					<ul>
+						<li>For GoGlobal account, please request the recalculation on the RHC of the GE.</li>
+						<li>Please note that the system will look for agencies with:</li>
+						<ul>
+							<li>Accreditation type Cash</li>
+							<li>Cash condition false</li>
+							<li>No conditions RHC=%FS applied at IATA code or BSP level</li>
+						</ul>
+						<li>Select agencies from one page at a time, then click Request Provisional.</li>
+						<li>Once provisional is retrieved, select which agencies you'd like to confirm the forecasted and press the relative button</li>
+						<li>Move to the next page only after the processing on the current page is completed.</li>
+					</ul>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlock title="Search" id="searchForm">
 				<apex:pageBlockButtons location="bottom">
-					<apex:commandButton action="{!search}" reRender="tables" value="Search" disabled="{!running}"/>
+					<apex:commandButton action="{!search}" reRender="tables" value="Search" disabled="{!!validDays && !validCountry}" onclick="startLoading('SearchInProgress')" oncomplete="stopLoading('SearchInProgress')"/>
 				</apex:pageBlockButtons>
 
 				<apex:pageBlockSection collapsible="false" columns="2">
 					
 					<apex:pageBlockSectionItem >
 						<apex:outputLabel >Region</apex:outputLabel>
-						<apex:selectList value="{!userRegion}" size="1" multiselect="false" disabled="{!running}">
+						<apex:selectList value="{!userRegion}" size="1" multiselect="false">
+							<apex:actionSupport event="onchange" action="{!regionSelected}" reRender="searchForm"/>
 							<apex:selectOptions value="{!regions}"/>
+						</apex:selectList> 
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem>
+						<!-- empty for spacing -->
+					</apex:pageBlockSectionItem>
+
+					<apex:pageBlockSectionItem>
+						<apex:outputLabel>Country</apex:outputLabel>
+						<apex:selectList value="{!country}" size="1" multiselect="false" disabled="{!!validRegion || validDays}">
+							<apex:actionSupport event="onchange" reRender="searchForm"/>
+							<apex:selectOptions value="{!countries}"/>
 						</apex:selectList> 
 					</apex:pageBlockSectionItem>
 
 					<apex:pageBlockSectionItem >
-						<apex:outputLabel >Agents with IFAP closed whitin X days</apex:outputLabel>
-						<apex:input type="number" value="{!days}" html-min="0" html-step="1" disabled="{!running}"/>
+						<apex:outputLabel>Agents with IFAP closed whitin X days</apex:outputLabel>
+						<apex:input type="number" value="{!days}" html-min="0" html-step="1" disabled="{!!validRegion || validCountry}">
+							<apex:actionSupport event="onblur" reRender="searchForm"/>
+						</apex:input>
 					</apex:pageBlockSectionItem>
+
 				</apex:pageBlockSection>
 			</apex:pageBlock>
 		
 			<!-- Show notice if related list has no records -->
-			<apex:pageBlock title="Results" rendered="{!searched}">
-				<apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!agents.size == 0}">
+			<apex:pageBlock title="Results" rendered="{!searched}" id="theResults">
+				<apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!NOT(agentsFound)}">
 					No records to display
 				</apex:outputPanel>
-				<apex:pageBlockTable value="{!agents}" var="a" rendered="{!agents.size > 0}">
-
+				
+				<apex:pageBlockTable value="{!agents}" var="mapKey" rendered="{!agentsFound}" id="resultTable">
 					<apex:column >
 						<apex:facet name="header">
 							<apex:outputPanel >
-								<apex:inputCheckbox value="{!selectAll}" disabled="{!running}" styleClass="commandCheck" onclick="toggleAll(this);"/>
-								&nbsp;Action
+								<apex:inputCheckbox value="{!selectAll}" disabled="{!bProvisionalRequested}" styleClass="commandCheck" onclick="toggleAll(this);"/>
 							</apex:outputPanel>
 						</apex:facet>
 
-						<apex:inputCheckbox value="{!a.selected}" disabled="{!running}" styleClass="itemCheck"/>
+						<apex:inputCheckbox value="{!agents[mapKey].selected}" disabled="{!bProvisionalRequested}" styleClass="itemCheck"/>
+						<div style="display:none">
+							<apex:inputText value="{!agents[mapKey].rhcInfo.Id}" styleClass="RHCId"/>
+						</div>
 					</apex:column>
 
-					<apex:column value="{!a.rhcInfo.ANG_AccountId__c}"/>
-					<apex:column value="{!a.rhcInfo.ANG_AccountId__r.IATACode__c}"/>
-					<apex:column value="{!a.rhcInfo.ANG_AccountId__r.IATA_ISO_Country__c}"/>
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__c}"/>
+
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__r.IATACode__c}"/>
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__r.IATA_ISO_Country__c}"/>
 					<apex:column headerValue="Current RHC Amount">
-						<apex:outputText value="{!a.rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}">
-							<apex:param value="{!a.currentAmount}"/>
+						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].rhcInfo.ANG_RHC_Amount__c))}">
+							<apex:param value="{!agents[mapKey].rhcInfo.ANG_RHC_Amount__c}"/>
 						</apex:outputText>
 					</apex:column>
-					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Provisional__c}" rendered="{!a.hasResult}"/>
-					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount_Forecasted__c}" rendered="{!a.hasResult}"/>
-					<apex:column value="{!a.rhcInfo.ANG_RHC_Amount__c}" rendered="{!a.hasResult}"/>
+					
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Effective_Date__c.Label}"/>
+					
+					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Provisional__c.Label}">
+						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Provisional))}">
+							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Provisional}"/>
+						</apex:outputText>
+					</apex:column>
+
+					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Forecasted__c.Label}">
+						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Forecasted))}">
+							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Forecasted}"/>
+						</apex:outputText>
+					</apex:column>
+					
+					<apex:column headerValue="Cacl.New Cons.RHC">
+						<apex:outputText value="{0, number, ###,###,###,##0.00}%" rendered="{!NOT(ISBLANK(agents[mapKey].calculatedConsumedRHC))}">
+							<apex:param value="{!agents[mapKey].calculatedConsumedRHC}"/>
+						</apex:outputText>
+					</apex:column>
+
+					<apex:column headerValue="Error">
+						<apex:outputText value="{!agents[mapKey].ErrorDescription}" rendered="{!!agents[mapKey].bIsSuccess}"/>
+					</apex:column>
 
 				</apex:pageBlockTable>
 
-
 				<!-- Add pagination toolbar to bottom of table if pageSize is defined -->
-				<apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!AND(agents.size > 0, NOT(running))}">
+				<apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!agentsFound}">
 					<div class="paginator">
 						<span class="prevNextLinks">
 							<!-- First Button -->
@@ -131,18 +276,14 @@
 					</div>
 				</apex:outputPanel>
 
-				<apex:pageBlockButtons id="spinner">
-					
-					<apex:commandButton value="Submit" action="{!calculate}" reRender="tables" disabled="{!running}"/>
-					<apex:image  alt="running" value="/img/loading.gif" rendered="{!running}"/>
-					<!-- <apex:commandButton value="Check" action="{!fetchResults}" reRender="tables" rendered="{!running}"/> -->
+				<apex:pageBlockButtons id="btnPnl">
+					<apex:commandButton value="Calculate Forecasted RHC" action="{!doNothing}" onclick="processAgencies(false);return false;" reRender="tables, btnPnl" disabled="{!bProvisionalRequested}"/>
+					<apex:commandButton value="Confirm Forecasted RHC" action="{!doNothing}" onclick="processAgencies(true);return false;"  reRender="tables, btnPnl" disabled="{!!bProvisionalRequested}"/>
+					<!-- <apex:commandButton value="Submit" action="{!calculate}" reRender="tables" disabled="{!running}"/>-->
 				</apex:pageBlockButtons>
 			</apex:pageBlock>
 
 			<apex:pageMessages />
-			<apex:actionRegion renderRegionOnly="false">
-				<apex:actionPoller action="{!fetchResults}" interval="5" enabled="{!running}" reRender="tables, spinner"/>
-			</apex:actionRegion>
 		</apex:outputPanel>
 	</apex:form>
 </apex:page>

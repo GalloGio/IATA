@@ -883,6 +883,17 @@
                                              </apex:pageBlockSection>    
                                             <apex:outputField value="{!newFormDaily.Agency_Info_Reinstatements__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reinstatements}"/>
 
+                                            <apex:pageBlockSection columns="1" rendered="{!newFormDaily.Opt_in__c}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Forms_of_Payment__c}" id="DailyFormsOfPayment"/>
+                                                    <apex:outputPanel >
+                                                        <apex:outputLabel value="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.label}" for="DailyFormsOfPayment"/>
+                                                        <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.inlineHelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSectionItem>
+                                             </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Forms_of_Payment__c}" rendered="{!!newFormDaily.Opt_in__c}" label="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.label}"/>
+
                                         </apex:pageBlockSection>
                                     
 
@@ -1188,7 +1199,18 @@
                                                 </apex:pageBlockSectionItem>
                                             </apex:pageBlockSection>
                                             <apex:outputField value="{!newFormWeekly.Agency_Info_Agency_Changes__c}"  rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}"/>
-                                                  
+
+                                            <apex:pageBlockSection columns="1" rendered="{!newFormWeekly.Opt_in__c}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Forms_of_Payment__c}" id="WeeklyFormsOfPayment"/>
+                                                    <apex:outputPanel >
+                                                        <apex:outputLabel value="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.label}" for="WeeklyFormsOfPayment"/>
+                                                        <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.inlineHelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Forms_of_Payment__c}"  rendered="{!!newFormWeekly.Opt_in__c}" label="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.label}"/>
+
                                         </apex:pageBlockSection>
                             </apex:pageBlockSection>
 
@@ -1435,7 +1457,18 @@
                                                     </apex:pageBlockSectionItem>
                                                </td>
                                             </tr>
-                                            </table> 
+                                            <tr>
+                                                <td>
+                                                    <apex:pageBlockSectionItem >
+                                                        <apex:outputLabel value="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.label}"/>
+                                                        <apex:outputPanel >
+                                                            <apex:outputField value="{!newFormDaily.Agency_Info_Forms_of_Payment__c}"/>
+                                                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.inlineHelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
+                                                        </apex:outputPanel>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                        </table> 
 
                                             <br/>
 
@@ -1784,9 +1817,22 @@
                                                     </apex:pageBlockSectionItem>
                                                </td>
                                             </tr>
-                                            </table> 
+                                            <tr>
+                                                <td>
+                                                    <apex:pageBlockSectionItem >
+                                                        <apex:outputLabel value="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.label}"/>
+                                                        <apex:outputPanel >
+                                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Forms_of_Payment__c}" />
+                                                            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$ObjectType.AMS_eBulletin_Profile__c.fields.Agency_Info_Forms_of_Payment__c.inlineHelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                        </apex:outputPanel>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                        </table> 
 
-                                            <table width="100%">
+                                        <br/>
+
+                                        <table width="100%">
                                             <tr>
                                                 <td width="100%" class="title">
                                                     {!$Label.ISSP_AMS_eBulletin_GeographicArea}
@@ -1905,6 +1951,8 @@
                                         </td>
                                     </tr>
                                     </table>    
+
+                                    <br />
 
                                     <apex:outputpanel >
                                         <div class="title">

@@ -5,6 +5,7 @@ public with sharing class CSP_Utils {
 		public String selfRegistrationUrl {get;set;}
 	}
 
+	public class portalException extends Exception{}
 	@AuraEnabled
 	public static LoginConfig getAuthConfig(){
 		Id networkId = Network.getNetworkId();
@@ -63,12 +64,28 @@ public with sharing class CSP_Utils {
 	@AuraEnabled
 	public static User getLoggedUser() {
 
-		User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c,
-									Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c,
+		User loggedUser = [SELECT Id,Contact.FirstName,Contact.LastName,Contact.phone,Contact.ISO_Country_Formula__c,Contact.Email,Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c,
+									Contact.Account.Name,Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c,
 									Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c,
 									Contact.AccountId, Contact.User_Portal_Status__c, Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Membership_Function__c
 							 FROM User
 							 WHERE Id =: UserInfo.getUserId()];
+
+		return loggedUser;
+	}
+
+
+	/*
+	* @description Return current user information
+	* @return User 
+	* If guest User, return null
+	*/
+	@AuraEnabled
+	public static User getCurrentUserInfo() {
+		User loggedUser=null;
+		if(!isGuestUser()){
+			loggedUser=getLoggedUser();
+		}
 
 		return loggedUser;
 	}
@@ -79,8 +96,11 @@ public with sharing class CSP_Utils {
 	*/
 	@AuraEnabled
 	public static Boolean isAdmin() {
-		User loggedUser = getLoggedUser();
-		return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
+		Boolean isAdmin =false ;
+		if(!isGuestUser()){
+			isAdmin=getLoggedUser().Contact.User_Portal_Status__c == 'Approved Admin';
+		}
+		return isAdmin;
 	}
 
 	/*
@@ -282,11 +302,7 @@ public with sharing class CSP_Utils {
 				update con;
 			}
 		}
-
-
-		 /* Pagereference pr = new Pagereference(retURL);
-		pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
-	 }
+	}
 
 		 //Flag used to know if the new portal (CSPortal) is live or not.
 	@AuraEnabled
@@ -371,7 +387,7 @@ public with sharing class CSP_Utils {
 		return 'https://' + host + pageName;
 	}
 
-	 /*
+	/*
 	* @description Return if the user is an Airline User
 	* @return boolean is airline user
 	*/
@@ -395,8 +411,105 @@ public with sharing class CSP_Utils {
 		public String url { get; set; }
 		@AuraEnabled
 		public String recordsString { get; set; }
+	}
+
+	public class searchDetailsWrapper {
+		@AuraEnabled
+		public String searchInput {get; set;}
+		@AuraEnabled
+		public String firstLetter {get; set;}
+		@AuraEnabled
+		public String sortField {get; set;}
+		@AuraEnabled
+		public String sortDirection {get; set;}
+		@AuraEnabled
+		public Integer requestedPage {get; set;}
+	}
+
+
+	//trigger mechanism to generate the portal notifications of the new document version
+	//@param cvId: Content Version Id of the new version that was released
+	//Class covered in: PortalDocumentsCtrlTest	
+	@AuraEnabled
+	public static void triggerUserNotification(string cvId){
+		try{
+
+			if(string.isEmpty(cvId)){
+				return;
+			}
+			//To trigger the notification, the notify_users_date__c value needs to be larger than the createdDate,
+			//hence the current datetime being sent
+			update new contentVersion(
+				id=cvId,
+				notify_users_date__c=system.now()
+			);
+		}catch(Exception e){
+			//send email w/ errors
+			List<String> emailAddresses = new List<String>();
+			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){ 
+				emailAddresses.add(supportEmail.Support_Email__c);
+				//add more email addresses if needed
+			}
+
+			if (!emailAddresses.isEmpty()){
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setToAddresses(emailAddresses);    
+				mail.setSubject('ERROR - User has an issue triggering the Portal Notification Generation');
+				mail.setPlainTextBody('The user '+Userinfo.getName()+' id: '+Userinfo.getUserId()+' had the following error while triggering the notification generation for a new available version on the' + system.now() + '\n\nERRORS:\n' +e.getMessage());
+				Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+			}
+			
+			throw new portalException(Label.ISSP_ANG_GenericError);
+
+		}
 
 	}
 
 
+	public static Map<String, String> portalLanguages{
+		get{
+			if(portalLanguages == null){
+				portalLanguages = new Map<String, String>();
+				for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+					portalLanguages.put(portalLang.language__c, portalLang.languageLocalKey__c);
+				}
+			}
+			return portalLanguages;
+		}
+		private set;
+	}
+
+	// Method to assemble a number of params into a param query to add on an URL
+	// Does NOT return the ? sign, so you can add it to any query
+	public static String assembleParams(Map<String,String> params){
+		//need to check for null because aura/lwc can call a method with no params
+		if(params == null) return '';
+		//assemble parameters
+		List<String> p = new List<String>();
+		for(String key : params.keySet()) p.add(key + '=' + EncodingUtil.urlEncode(params.get(key), 'UTF-8'));
+
+		System.debug(loggingLevel.FINEST, '____ [cls CSP_Utils - assembleParams] final string - ' + String.join(p, '&'));
+		//add all parameters divided by an &
+		return String.join(p, '&');
+	}
+
+	//method to assemble a URL based on the current network login URL
+	//includes an encrypted part "c" and keeps all other parameters
+	public static String generateURl(String pageName, String toEncode, String lang, Map<String,String> params){
+
+		//need to check for null because aura can send a null param
+		if(params == null) params = new Map<String, String>();
+
+		if(lang != null) params.put('language', lang);
+		if(toEncode != null) params.put('c', PortalPasswordHandler.EncryptString(toEncode));
+
+		System.debug(loggingLevel.FINE, '____ [cls CSP_Utils - generateUrl] params - ' + params);
+
+		String prefix = '';
+		List<Network> csportal = [Select id from Network where name =: 'CS Portal' Limit 1];
+		String netWorkId = csportal.isEmpty() ? Network.getNetworkId() : csportal.get(0).Id;
+		if(netWorkId != null) prefix = Network.getLoginURL(netWorkId).subStringBeforeLast('/');
+
+		return prefix + '/' + pageName + '?' + CSP_Utils.assembleParams(params);
+	}
 }

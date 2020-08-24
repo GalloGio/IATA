@@ -1234,7 +1234,8 @@ public with sharing class TestDataGenerator
 		listCS.add(new Apex_Setting__c(Name='Account Record Type IDs to sync to SAP', Text_1__c='012w0000000QBMb'));
 		listCS.add(new Apex_Setting__c(Name='Contact fields to sync to SAP1', Text_1__c='FirstName,LastName,Phone,Email'));
 		listCS.add(new Apex_Setting__c(Name='ORDER_PAID_STATUS', Text_1__c='Payment Confirmed,Delivery,Invoiced'));
-
+		listCS.add(new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application'));
 		insert listCS;
 
 		generateUtilitySetting();

@@ -79,6 +79,10 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AccountStatus__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
@@ -176,6 +180,10 @@
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Iso_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -445,6 +453,14 @@
         <fields>IATA_ISO_Country__c</fields>
     </miniLayout>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Account_Statement__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ACCOUNT.NAME</fields>
         <fields>Quality__c</fields>
         <fields>ACCOUNT.SITE</fields>
@@ -479,6 +495,10 @@
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>

@@ -1,15 +1,12 @@
 <template>
-    <div class="bottomLightGrayBorder slds-m-around_small">
-        <img src={searchIconUrl}>
-        <lightning-input name="newRecipientTextInput" placeholder={label.CSP_SearchFAQ}
-            class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
-            value={searchText} onchange={onInputChange}>
-        </lightning-input>
+    <div if:false={hideSearchbar} class="slds-m-bottom_x-small">
+        <c-portal-search-box onsearchword={onInputChange}></c-portal-search-box>
+        
     </div>
     <!-- ARTICLES -->
     <div if:true={loading} class="spinnerContainer">
         <lightning-spinner size="medium"></lightning-spinner>
-    </div>
+    </div> 
 
     <div if:false={loading}>
         <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">

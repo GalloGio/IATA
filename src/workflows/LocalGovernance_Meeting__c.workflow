@@ -305,6 +305,15 @@
         <senderType>CurrentUser</senderType>
         <template>Local_Governance/Request_for_Legal_to_sign_off_APJC_Minutes</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>Update_Local_meeting_name</fullName>
+        <field>Name</field>
+        <formula>Name &amp;&quot; - &quot;&amp; Local_Governance__r.Name</formula>
+        <name>Update Local meeting name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>ALWG - Notification that Agenda have been rejected</fullName>
         <actions>
@@ -635,5 +644,15 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         </criteriaItems>
         <description>Request for legal to sign off APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG minutes. Used for IDFS ISS.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Meeting name has group name</fullName>
+        <actions>
+            <name>Update_Local_meeting_name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT(CONTAINS( Name , Local_Governance__r.Name ))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

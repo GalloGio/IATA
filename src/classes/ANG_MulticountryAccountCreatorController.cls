@@ -128,9 +128,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 				upsert listAccount;
 			}
 
-			if(Test.isRunningTest())
-				integer intTest =1/0;//exception for catch test coverage
-
 			return !hasErrors;
 
 		}
@@ -179,8 +176,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,'You need at least 2 accounts from different countries to have a multicountry hierarchy');
 				ApexPages.addMessage(myMsg);
 			}
-			if(Test.isRunningTest())
-				integer intTest =1/0;//exception for catch test coverage
 		}
 		catch(Exception e){
 			hasErrors = true;

@@ -27,6 +27,7 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 	if(Trigger.isAfter && Trigger.isInsert) {  
 		
 		List<Id> atts = new List<Id>();
+		List<String> lstRTValid = Apex_Setting__c.getValues('RT valid to reopen attachment trigger').Text_1__c.split(',');
 		
 		for(Attachment t : Trigger.new) {
 			if(t.ParentId.getSObjectType() == Case.SObjectType){
@@ -36,7 +37,8 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 		
 		if(atts.size()>0){
 
-			List<Case> caseList = [select id,Status from Case where id IN: atts AND Status = 'Closed'];
+			List<Case> caseList = [select id,Status, ClosedDate from Case where id IN: atts AND Status = 'Closed'
+			 AND RecordType.DeveloperName IN: lstRTValid  AND ClosedDate=LAST_N_DAYS:14 AND Origin != 'Chat'];
 
 			if(caseList.size() > 0){
 				for(case c: caseList){

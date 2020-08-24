@@ -26,11 +26,8 @@
                     <!-- ------------------------------- -->
                     <!--STEP 3 Display BSP/CASS/ICH FORM -->
                     <!-- ------------------------------- -->
-                    <apex:outputPanel rendered="{!isStep3}">
-                        <apex:include pageName="ISSP_AP_BSP_Form" rendered="{!AND(strAreaType=='Airline Joining', isBSP)}"/>     
-                        <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS)}"/>
-                        <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', OR(isBSP,isCASS))}"/>
-                        <apex:include pageName="ISSP_AP_ICH_Form" rendered="{!AND(isICH)}"/>
+                    <apex:outputPanel rendered="{!isStep3 && Step3Page!=null}">
+                        <apex:include pageName="{!Step3Page}" />
                     </apex:outputPanel>
                 </div>
             </div>
