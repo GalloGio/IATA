@@ -31,7 +31,7 @@ public class PowerBiCtrlTest {
 		configDev.Password__c = 'some-password';
 		configDev.Application_Identifier__c = 'TDdev';
 		configDev.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
-		configDev.Report_Resource__c = 'https://app.powerbi.com';
+		configDev.Report_Resource__c = 'https://app.powerbi.com/reportEmbed';
 		configsToInsert.add(configDev);
 
 		PowerBI_Config__c configProd = new PowerBI_Config__c();
@@ -43,7 +43,7 @@ public class PowerBiCtrlTest {
 		configProd.Password__c = 'some-password-prod';
 		configProd.Application_Identifier__c = 'TDprod';
 		configProd.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
-		configProd.Report_Resource__c = 'https://app.powerbi.com';
+		configProd.Report_Resource__c = 'https://app.powerbi.com/reportEmbed';
 		configsToInsert.add(configProd);
 
 		PowerBI_Config__c configDev2 = new PowerBI_Config__c();
@@ -56,7 +56,7 @@ public class PowerBiCtrlTest {
 		configDev2.Password__c = 'some-password';
 		configDev2.Application_Identifier__c = 'TDRepDev';
 		configDev2.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
-		configDev2.Report_Resource__c = 'https://app.powerbi.com';
+		configDev2.Report_Resource__c = 'https://app.powerbi.com/rdlEmbed';
 		configsToInsert.add(configDev2);
 
 		PowerBI_Config__c configProd2 = new PowerBI_Config__c();
@@ -69,7 +69,7 @@ public class PowerBiCtrlTest {
 		configProd2.Password__c = 'some-password-prod';
 		configProd2.Application_Identifier__c = 'TDRepProd';
 		configProd2.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
-		configProd2.Report_Resource__c = 'https://app.powerbi.com';
+		configProd2.Report_Resource__c = 'https://app.powerbi.com/rdlEmbed';
 		configsToInsert.add(configProd2);
 
 		insert configsToInsert;
@@ -299,7 +299,7 @@ public class PowerBiCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
+			result = PowerBiCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportId', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -337,15 +337,14 @@ public class PowerBiCtrlTest {
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
-
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			result= PowerBiCtrl.getServicePrincipalAccessToken(conf);
+			result= PowerBiCtrl.getNewAccessToken(conf);
 
 		}
 
@@ -364,7 +363,7 @@ public class PowerBiCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -372,7 +371,7 @@ public class PowerBiCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 
-			result = PowerBiCtrl.getServicePrincipalEmbedToken('accessToken', 'userId', 'groupId', 'reportId', conf);
+			result = PowerBiCtrl.getEmbedToken('accessToken', testUser.Id, 'groupId', 'reportId', null, conf);
 		}
 
 		Test.stopTest();
@@ -389,7 +388,7 @@ public class PowerBiCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -397,7 +396,7 @@ public class PowerBiCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBIServicePrincipalEmbedTokenErrorMock());
 
-			result = PowerBiCtrl.getServicePrincipalEmbedToken('accessToken', 'userId', 'groupId', 'reportId', conf);
+			result = PowerBiCtrl.getEmbedToken('accessToken', testUser.Id, 'groupId', 'reportId', null, conf);
 		}
 
 		Test.stopTest();

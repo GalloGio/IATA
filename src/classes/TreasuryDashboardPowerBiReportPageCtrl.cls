@@ -23,12 +23,12 @@ global with sharing class TreasuryDashboardPowerBiReportPageCtrl {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = TreasuryDashboardReportCtrl.getServicePrincipalAccessToken(conf);
+		PowerBiCtrl.OAuthResult result = TreasuryDashboardReportCtrl.getServicePrincipalAccessToken(conf);
 		String accessToken = result.access_token;
 
 		if(String.isNotBlank(accessToken)) {
 			String userId = UserInfo.getUserId();
-			PowerBiCtrl.ServicePrincipalEmbedTokenResult resultEmbed = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken(accessToken, userId, groupId, reportId, conf);
+			PowerBiCtrl.EmbedTokenResult resultEmbed = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken(accessToken, userId, groupId, reportId, null, conf);
 			toReturn = resultEmbed.token+'expiration='+resultEmbed.expiration;
 
 			return toReturn;

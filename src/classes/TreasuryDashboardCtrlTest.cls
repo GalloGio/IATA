@@ -571,7 +571,7 @@ public class TreasuryDashboardCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
+			result = TreasuryDashboardCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportId', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -645,7 +645,7 @@ public class TreasuryDashboardCtrlTest {
 			}
 
 
-			result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportid', 'datasetId',config);
+			result = TreasuryDashboardCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportid', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -678,7 +678,7 @@ public class TreasuryDashboardCtrlTest {
 			}
 
 
-			result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportid', 'datasetId',config);
+			result = TreasuryDashboardCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportid', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -705,7 +705,7 @@ public class TreasuryDashboardCtrlTest {
 			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
 
 			try{
-				result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
+				result = TreasuryDashboardCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportId', 'datasetId',config);
 			}catch(Exception e) {
 				testException = e;
 			}

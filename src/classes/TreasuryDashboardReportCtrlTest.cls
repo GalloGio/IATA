@@ -174,7 +174,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
@@ -198,7 +198,7 @@ public class TreasuryDashboardReportCtrlTest {
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.xyz.abc.test@somedomain.com'];
 
 		PowerBI_Config__c conf = null;
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		Test.startTest();
 
@@ -221,7 +221,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		//current time + one hour
 		Long expTime = (System.currentTimeMillis()/1000) + 3600;
@@ -256,7 +256,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 
 		//current time - 30 minutes
 		Long expTime = (System.currentTimeMillis()/1000) - 1800;
@@ -292,7 +292,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalAccessTokenResult result = null;
+		PowerBiCtrl.OAuthResult result = null;
 		Exception testException = null;
 
 		Test.startTest();
@@ -322,13 +322,13 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);
+			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', testUser.Id, 'groupid', 'reportid', null, conf);
 		}
 
 		Test.stopTest();
@@ -347,7 +347,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		//current time + one hour
 		Datetime now = Datetime.now().addMinutes(60);
@@ -365,7 +365,7 @@ public class TreasuryDashboardReportCtrlTest {
 				sessionPartition.put(conf.Application_Identifier__c + 'reportidexpireson',expTime);
 			}
 
-			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);
+			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', null, conf);
 		}
 
 		Test.stopTest();
@@ -385,7 +385,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
@@ -398,7 +398,7 @@ public class TreasuryDashboardReportCtrlTest {
 				sessionPartition.put('reportid', 'servicePrincipalSomeKey');
 			}
 
-			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);
+			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', testUser.Id, 'groupid', 'reportid', null, conf);
 		}
 
 		Test.stopTest();
@@ -417,7 +417,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		//current time + one hour
 		Datetime now = Datetime.now().addMinutes(-30);
@@ -435,7 +435,7 @@ public class TreasuryDashboardReportCtrlTest {
 				sessionPartition.put('reportidexpireson',expTime);
 			}
 
-			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);
+			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', testUser.Id, 'groupid', 'reportid', null, conf);
 		}
 
 		Test.stopTest();
@@ -453,14 +453,14 @@ public class TreasuryDashboardReportCtrlTest {
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.xyz.abc.test@somedomain.com'];
 
 		PowerBI_Config__c conf = null;
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 
 		Test.startTest();
 
 		System.runAs(testUser) {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);
+			result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', null, conf);
 
 		}
 
@@ -479,7 +479,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-		PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
+		PowerBiCtrl.EmbedTokenResult result = null;
 		Exception testException = null;
 
 		Test.startTest();
@@ -488,7 +488,7 @@ public class TreasuryDashboardReportCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBIServicePrincipalEmbedTokenErrorMock());
 			try{
-				result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);
+				result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', testUser.Id, 'groupid', 'reportid', null, conf);
 			}catch(Exception e) {
 				testException = e;
 			}
