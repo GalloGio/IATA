@@ -3,7 +3,10 @@
         <p class={gtitlesize}><b>{title}</b>
         <template if:true={editMode}>
             <img src={icon.plus} class="icon btn-icon pl-2 width-25 cursor-pt" onclick={evaluateDisplayFileUpload}>
-            <img src={icon.minus} class="icon btn-icon pl-2 width-25 cursor-pt"  onclick={evaluateHideImage}>
+            
+            <template if:true={lisImagesSize}>
+                <img src={icon.minus} class="icon btn-icon pl-2 width-25 cursor-pt"  onclick={evaluateHideImage}>
+            </template>
         </template>
         </p>
         <template if:true={showUnderline}>
@@ -17,35 +20,33 @@
                 </c-cw-intermediate-modal>
             </template>
 
-            <template if:true={showFileHideCarousel}>
-                <div class="demo-only">
-                    <div class="slds-m-around_xx-large">
-                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
-                            <div class="slds-modal__container">
-                                <header class="slds-modal__header slds-modal__header_empty">
-                                    <lightning-button-icon icon-name="utility:close" onclick={evaluateHideImage}
-                                        alternative-text="close" variant="bare" size="large" class="slds-modal__close">
-                                    </lightning-button-icon>
-                                </header>
-                                <div class="slds-modal__content padding-intermediate-modal overflow-auto" id="modal-content-id-2">
-                                    <div class="col-12 text-center">
-                                        <h3>{label.icg_carousel_info_delete}</h3>
-                                    </div>
-                                    <div class="row-no-margin col-12 mt-4">
-                                        <div class="col-6 text-left">
-                                            <button class="btn btn-primary-blue btn-action" data-name="cancel" onclick={evaluateHideImage}>{label.cancel}</button>
-                                        </div>
-                                        <div class="col-6 text-right">
-                                            <button class="btn btn-primary" data-name="delete" onclick={makeActionToImage}>{label.accept}</button>
-                                        </div>
-                                    </div>
-
+            <template if:true={showFileHideCarousel}> 
+                <div class="slds-m-around_xx-large">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header slds-modal__header_empty">
+                                <lightning-button-icon icon-name="utility:close" onclick={evaluateHideImage}
+                                    alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+                                </lightning-button-icon>
+                            </header>
+                            <div class="slds-modal__content padding-intermediate-modal overflow-auto" id="modal-content-id-2">
+                                <div class="col-12 text-center">
+                                    <h3>{label.icg_carousel_info_delete}</h3>
                                 </div>
+                                <div class="row-no-margin col-12 mt-4">
+                                    <div class="col-6 text-left">
+                                        <button class="btn btn-primary-blue btn-action" data-name="cancel" onclick={evaluateHideImage}>{label.cancel}</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button class="btn btn-primary" data-name="delete" onclick={makeActionToImage}>{label.accept}</button>
+                                    </div>
+                                </div>
+
                             </div>
-                        </section>
-                    </div>
-                    <div class="slds-backdrop slds-backdrop_open"></div>
+                        </div>
+                    </section>
                 </div>
+                <div class="slds-backdrop slds-backdrop_open"></div>           
             </template>
         </template>
 

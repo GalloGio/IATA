@@ -12,38 +12,37 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
     @track pageSelected = 1;
     @track letterSelected;
     @track showOnlySelected = false;
-    _preselectedFacilities;
+    selectedFacilities;
     @api userInfo;
     @api label;
-    @track _filterText;
+    @track filter;
     @api
     get filterText() {
-        return this._filterText;
+        return this.filter;
     }
     set filterText(val) {
-        this._filterText = val;
+        this.filter = val;
         if (this.letterSelected) this.unselectLetter();
     }
     @api
     get preselectedFacilities() {
-        return this._preselectedFacilities;
+        return this.selectedFacilities;
     }
     set preselectedFacilities(values) {
-        this._preselectedFacilities = values;
-        this._facilities.forEach(facility => {
-            this._preselectedFacilities.forEach(preselected => {
+        this.selectedFacilities = values;
+        this.facilityList.forEach(facility => {
+            this.selectedFacilities.forEach(preselected => {
                 if (facility.value === preselected.value) facility.selected = true;
             });
         });
     }
-    @track _facilities = [];
+    @track facilityList = [];
     @api
     get facilities() {
-        return this._facilities;
+        return this.facilityList;
     }
     set facilities(userFacilities) {
-        //this._facilities = JSON.parse(JSON.stringify(value));
-        this._facilities = [];
+        this.facilityList = [];
         userFacilities.forEach(facility => {
             if (facility && facility.isApproved__c) {
                 let address = concatinateAddressString(facility.addressStreetNr) + concatinateAddressString(facility.secondAddress) + concatinateFacilityAddress(facility);
@@ -65,21 +64,21 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
                     });
                 }
 
-                this._facilities.push(facilityInfo);
+                this.facilityList.push(facilityInfo);
 
             }
         });
         //ADD HEADERS
         let facilitiesDummy = [];
         let prevLetter;
-        this._facilities.forEach(facility => {
+        this.facilityList.forEach(facility => {
             if (!prevLetter || prevLetter !== facility.label.charAt(0).toUpperCase()) {
                 facilitiesDummy.push({ label: facility.label.charAt(0).toUpperCase(), isHeader: true });
             }
             prevLetter = facility.label.charAt(0).toUpperCase();
             facilitiesDummy.push(facility);
         });
-        this._facilities = facilitiesDummy;
+        this.facilityList = facilitiesDummy;
 
     }
 
@@ -108,7 +107,7 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
             this.dispatchEvent(new CustomEvent('toomanyfacilities', {})); 
         }
         else{
-            this._facilities.forEach(elem => { if (elem.value === name) { elem.selected = !elem.selected } });
+            this.facilityList.forEach(elem => { if (elem.value === name) { elem.selected = !elem.selected } });
             this.dispatchEvent(new CustomEvent('selectfacilities', { detail: this.allSelectedFacilities })); 
         }
     }
@@ -150,25 +149,7 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
             if (facilitiesToLoop && facilitiesToLoop.length >= this.pageSelected) return facilitiesToLoop.slice(((this.pageSelected - 1) * 10), ((this.pageSelected - 1) * 10 + 10));
             return dummyFacilities;
         }
-        /*
-        get facilitiesSecond(){
-            let dummyFacilities = [];
-            let facilitiesToLoop;
-            if(this.showOnlySelected) facilitiesToLoop = this.selectedFacilities;
-            else facilitiesToLoop = this.filteredFacilities;
-            if (facilitiesToLoop && facilitiesToLoop.length >= this.pageSelected + 10) return facilitiesToLoop.slice(((this.pageSelected -1) * 30 + 10), ((this.pageSelected -1) * 30 + 20));
-            return dummyFacilities;
-        }
-    
-        get facilitiesThird(){
-            let dummyFacilities = [];
-            let facilitiesToLoop;
-            if(this.showOnlySelected) facilitiesToLoop = this.selectedFacilities;
-            else facilitiesToLoop = this.filteredFacilities;
-            if (facilitiesToLoop && facilitiesToLoop.length >= this.pageSelected + 20) return facilitiesToLoop.slice(((this.pageSelected -1) * 30 + 20), ((this.pageSelected -1) * 30 + 30));
-            return dummyFacilities;
-        }
-        */
+        
     get selectedFacilities() {
         let selectedFacilities = [];
         let prevIsHeader = true;
@@ -187,7 +168,7 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
     get allSelectedFacilities() {
         let selectedFacilities = [];
         let prevIsHeader = true;
-        this._facilities.forEach(facility => {
+        this.facilityList.forEach(facility => {
             if (facility.isHeader || facility.selected) {
                 if (selectedFacilities.length > 0 && prevIsHeader && facility.label.charAt(0).toLowerCase() != selectedFacilities[selectedFacilities.length - 1].label.toLowerCase()) selectedFacilities.pop();
                 prevIsHeader = facility.isHeader;
@@ -205,7 +186,7 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
             return this.facilities;
         } else {
             let filteredFacilities = [];
-            this._facilities.forEach(facility => {
+            this.facilityList.forEach(facility => {
                 if ((facility.isHeader && facility.label.toLowerCase() === this.letterSelected.toLowerCase()) || this.letterSelected.toLowerCase() === facility.label.charAt(0).toLowerCase()) filteredFacilities.push(facility);
             });
             return filteredFacilities;
@@ -243,6 +224,4 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
         if (this.showOnlySelected) return ((this.pageSelected - 1) * 10 + 10) < this.selectedFacilities.length;
         else return ((this.pageSelected - 1) * 10 + 10) < this.filteredFacilities.length;
     }
-
-
 }

@@ -175,11 +175,8 @@ export function getSearchFieldWrapper(field, lstFields) {
 			field: "Account_Role_Detail_Capability__r." + field.name,
 			labels: field.label,
 			isOutOfQuery: true
-		};
-
-		//manejar exceptions
-
-		// } else
+        };
+        
 		if (field.options) {
 			row.value = "";
 			for (const option of field.options) {
@@ -544,7 +541,11 @@ export function getQueryParameters() {
 	var params = {};
 
 	var searchParams = [];
-	location.search.split("&").forEach(element => {
+
+	let search = location.search;
+	search = search.startsWith("?") ? search.substring(1) : search;
+
+	search.split("&").forEach(element => {
 		if (element.startsWith("?q=") || element.startsWith("q=")) {
 			let decompressedValue = decompressQueryParams(element.split("=")[1]);
 			searchParams.push("q=" + decompressedValue);
@@ -553,7 +554,6 @@ export function getQueryParameters() {
 		}
 	});
 
-	var search;
 	if (searchParams.length > 0) {
 		search = searchParams.join("&");
 	}
@@ -686,3 +686,7 @@ export function saveComparisonListToLocalStorage(array){
 	let filteredArray = array.filter(element => element.Id);
 	window.localStorage.setItem(LOCAL_STORAGE_COMPARE_FIELD, JSON.stringify(filteredArray));
 }
+
+/*export function MAX_FILTERS_ALLOWED() {
+	return 25;
+}*/

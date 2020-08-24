@@ -23,10 +23,8 @@ public with sharing class CW_GxA_Handler_Test {
 
 		IATA_ISO_Country__c isoCode = CW_TestDataFactory.newISOCountry();
 		insert isoCode;
-		handleTrace(PREFIX + 'IATA_ISO_Country__c insert');
 
 		List<RecordType> recTypes = getRecTypes();
-		handleTrace(PREFIX + 'recTypes => ' + recTypes);
 
 		Account acc = CW_TestDataFactory.TestAccount(isoCode.Id);
 		acc.RecordTypeId = recTypes[Integer.valueof((Math.random() * 1))].Id;
@@ -34,8 +32,6 @@ public with sharing class CW_GxA_Handler_Test {
 		acc.Airline_designator__c = 'AA';
 		acc.ICAO_designator__c = 'SSV';
 		insert acc;
-		handleTrace(PREFIX + 'HQ/operator insert');
-
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(isoCode.Id, acc.Id);
 		insert airport;
 
@@ -51,18 +47,14 @@ public with sharing class CW_GxA_Handler_Test {
 		airlines.add(acc3);
 
 		insert airlines;
-		handleTrace(PREFIX + 'Airlines insert');
 
 		Account_Role__c accRole = CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
 		insert accRole;
-		handleTrace(PREFIX + 'Account_Role__c insert');
-
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		ard.Name = 'Generic Cargo Handling';
 		insert ard;
 		ICG_Account_Role_Detail__c ard2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard2;
-		handleTrace(PREFIX + 'ICG_Account_Role_Detail__c insert');
 
 		ICG_Certification__c sfocCert = CW_TestDataFactory.newCertification();
 		sfocCert.Name = 'SF Operational Capacity';
@@ -70,13 +62,11 @@ public with sharing class CW_GxA_Handler_Test {
 		ICG_Certification__c ceivCert = CW_TestDataFactory.newCertification();
 		ceivCert.Certification_Type__c = 'Certifications of Excellency';
 		insert ceivCert;
-		handleTrace(PREFIX + 'ICG_Certification__c insert');
 
 		ICG_Capability_Assignment_Group__c ardCert = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, sfocCert.id);
 		insert ardCert;
 		ICG_Capability_Assignment_Group__c ardCert2 = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard2.id, ceivCert.id);
 		insert ardCert2;
-		handleTrace(PREFIX + 'ICG_Capability_Assignment_Group__c insert');
 
 		ICG_Capability_Assignment_Group__c assigmentGroup = new ICG_Capability_Assignment_Group__c();
 		assigmentGroup.Expiration_Date__c = Date.valueOf('2021-03-12');
@@ -399,12 +389,7 @@ public with sharing class CW_GxA_Handler_Test {
 		
 		Test.stopTest();
 	}
-
-	private static void handleTrace(String traceMsg) {
-		if (TRACEIT) {
-			system.debug(logginglevel.FINEST, traceMsg);
-		}
-	}
+	
 	private static List<RecordType> getRecTypes() {
 		return RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account');
 	}

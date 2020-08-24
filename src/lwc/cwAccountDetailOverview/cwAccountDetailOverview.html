@@ -23,10 +23,8 @@
                             </div>
                             <div class="facility-overview-item-content text-blue">
                                 <p class="text-truncate">
-                                    <span if:false={editOn}>{numberEmployeesFormatted} {label.employees}</span>                                   
-                                    <template if:true={editMode}>
-                                        <lightning-input class="input mr-4" if:true={editOn} name="NumberEmployees" type="number" value={facility.NumberEmployees} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
-                                    </template>
+                                    <span if:false={editOn}>{numberEmployeesFormatted} {label.employees}</span>                                                                  
+                                    <lightning-input class="input mr-4" if:true={editOn} name="NumberEmployees" type="number" value={facility.NumberEmployees} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>                                   
                                 </p>
                             </div>
                         </div>

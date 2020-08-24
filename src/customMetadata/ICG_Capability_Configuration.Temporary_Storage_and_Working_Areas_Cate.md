@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Temporary_Storage_And_Working_Areas_1;Temporary_Storage_And_Working_Areas_2</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Temporary_Storage_And_Working_Areas</value>
     </values>

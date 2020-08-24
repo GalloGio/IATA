@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">OTCEI_Max_ULD_Size_Dimensions_L__c;OTCEI_Max_ULD_Size_Dimensions_W__c;OTCEI_Max_ULD_Size_Dimensions_H__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Max. ULD Size Dimensions (in m)</value>
     </values>

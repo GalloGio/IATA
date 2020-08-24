@@ -160,7 +160,7 @@
                                                 <img class={getStyleImg} src={getIATAIcon} alt="type" />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 pr-0">
                                             <template if:true={editMode}>
                                                 <lightning-icon icon-name="utility:close" class="ml-2 cursor-pt position-absolute r-0" if:true={editOn} variant="error" title={label.close} onclick={showInput} size="x-small"></lightning-icon>
                                                 <lightning-icon icon-name="utility:edit" class="ml-2 cursor-pt position-absolute r-0" if:false={editOn}  title={label.icg_capab_magmnt_edit} onclick={showInput} size="x-small"></lightning-icon>
@@ -192,17 +192,21 @@
                                                     </div>
                                                 </div>
                                             </template>
-
-                                            <div class="col-12 col-no-padding-right text-right">
+                                            <template if:true={editMode}>
+                                                <div class="height-30"></div>
+                                            </template>
+                                        
+                                            <div class="col-12 pr-0 text-right div-btns-rol position-absolute b-0 r-0">
+                                            
                                                 <template if:true={shouldShowBecomeButton}>
                                                     <template if:true={showCompanyAdminsButton}>
                                                         <template if:false={isAlreadyRequested}>
                                                             <a href="javascript:{}" title={label.become_company_admin} onclick={becomeCompanyAdminJS}
                                                                 data-tosca="becomecompanyadmin"
-                                                                class="btn btn-primary btn-yellow link-button">{label.become_company_admin}</a>
+                                                                class="btn btn-primary btn-yellow pt-1">{label.become_company_admin}</a>
                                                         </template>
                                                         <template if:true={isAlreadyRequested}>
-                                                            <a class="btn btn-primary link-button no-margin-top disabled"
+                                                            <a class="btn btn-primary pt-1 no-margin-top disabled"
                                                                 data-tosca="nextaction" href="javascript:{}">{label.already_request}</a>
                                                         </template>
                                                     </template>
@@ -210,10 +214,10 @@
                                                         <template if:false={isAlreadyRequested}>
                                                             <a href="javascript:{}" title={label.become_station_manager} onclick={becomeFacilityAdminJS}
                                                             data-tosca="becomefacilitymanager" data-facility={facility.Id}
-                                                            class="btn btn-primary btn-yellow link-button">{label.become_station_manager}</a>
+                                                            class="btn btn-primary btn-yellow pt-1">{label.become_station_manager}</a>
                                                         </template>
                                                         <template if:true={isAlreadyRequested}>
-                                                            <a class="btn btn-primary link-button no-margin-top disabled"
+                                                            <a class="btn btn-primary pt-1 no-margin-top disabled"
                                                                 data-tosca="nextaction" href="javascript:{}">{label.already_request}</a>
                                                         </template>                                                    
                                                     </template>
@@ -222,10 +226,10 @@
 
                                                 <template if:true={shouldShowAdminManagerLabels}>
                                                     <template if:true={isCompanyAdmin}>
-                                                        <span class="text-blue">{label.company_admin}</span>
+                                                        <span class="label-button pr-4 no-margin-top">{label.company_admin}</span>
                                                     </template>
                                                     <template if:true={isFacilityManager}>
-                                                        <span class="text-blue">{label.station_manager}</span>
+                                                        <span class="label-button pr-4 no-margin-top">{label.station_manager}</span>
                                                     </template>
                                                 </template>
                                             </div>
@@ -421,9 +425,19 @@
                 <!--HIDDEN RESPONSIVE VERSION-->
                 <div class="col-3 hidden-md">
                     <template if:true={validLocation}>
-                        <lightning-map class="map-size bg-grey" map-markers={locations} markers-title={locations}
-                            zoom-level={zoomLevel}>
-                        </lightning-map>
+                        <c-cw-address-selector-map-container 
+                            class="width-100" 
+                            height="100%" 
+                            width="400px" 
+                            should-hide-expand-btn="true" 
+                            should-show-edit-btn="true" 
+                            onsetgeocoordinates={setGeocoordinates} 
+                            label={label} 
+                            address-text={facilityAddress}
+                            address-geo={addressGeo}
+                            edit-mode={editMode}
+                            collapsed="false">
+                        </c-cw-address-selector-map-container>
                     </template>
                     <template if:false={validLocation}>
                         <div class="col-12 map-size bg-cream"></div>

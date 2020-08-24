@@ -21,7 +21,7 @@ export default class CwValidationHistory extends LightningElement {
     firstTime = false;
     //icons
     tickSelection = this.icons + "ic-gsearch--selected.svg";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
     availableCertifications;
     @api userFacilities;
     _userManagedFacilities;
@@ -76,6 +76,7 @@ export default class CwValidationHistory extends LightningElement {
     }
 
     renderedCallback() {
+        this.exportExcel = this.icons + this.label.xlsx_icon;
         if (this.preSelectedFacility && !this.firstTime) {
             this.selectedFacility = this.preSelectedFacility;
             this.firstTime = true;

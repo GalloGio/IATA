@@ -40,7 +40,7 @@ public class CW_CapabilitiesManagerControllerTest {
 	@isTest
 	public static void getCapabilitiesFromAccountRoleDetailIdTest() {
 		String ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Mail_Tracking_and_Reporting' LIMIT 1].id;
+		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
@@ -94,7 +94,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		
 		Test.startTest();
 		
-		Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id));
+		Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id), capvalcert.id);
 		system.assertEquals(true, response.containsKey(CW_CapabilitiesUtilities.SUPERCATEGORIES), 'No superCategories found for this Account Role Detail');
 		
 		Test.stopTest();
@@ -141,7 +141,7 @@ public class CW_CapabilitiesManagerControllerTest {
 	@isTest
 	public static void createRelationshipsForNewCapabilities() {
 		String ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Mail_Tracking_and_Reporting' LIMIT 1].id;
+		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
@@ -241,13 +241,23 @@ public class CW_CapabilitiesManagerControllerTest {
 			listCap.add(convertItem);
 		}
 
+		ICG_Account_Role_Detail__c ard = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1];
+
+		ardCert.id = null;
+		ardCert.ICG_Account_Role_Detail__c = ard.id;
+		ardCert.ICG_Certification__c = cert.id;
+		ardCert.Certification_Id__c = 'testABC12345';
+		ardCert.Issue_Date__c = Date.valueOf('2019-12-12');
+		ardCert.Expiration_Date__c = Date.valueOf('2020-12-12');
+		string jsonCertificationToAdd = JSON.serialize(ardCert);
+
 		Test.startTest();
 		
-		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id));
+		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id), capvalcert.id);
 		
-		String response = CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, ardcert.id, listCap);
+		String response = CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, cert.id, listCap, jsonCertificationToAdd);
 		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
-		system.assertEquals(true, resp.success, 'createRelationshipsForNewCapabilities error');
+		system.assertEquals(true, resp.success, 'createRelationshipsForNewCapabilities');
 		
 		Test.stopTest();
 	}

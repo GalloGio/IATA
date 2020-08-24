@@ -110,7 +110,7 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 
 			Database.insert(capabilitiesToAdd);
 			for (Account_Role_Detail_Capability__c currentCapability : capabilitiesToAdd) {
-				assignmentsToAdd.add(new ICG_Account_Role_Capability_Assignment__c(ICG_Account_Role_Detail__c = currentScope.Order_Product__r.Station__c, ICG_Capability_Assignment_Group__c = currentScope.Id, Account_Role_Detail_Capability__c = currentCapability.Id, Deprecated__c = false));
+				assignmentsToAdd.add(new ICG_Account_Role_Capability_Assignment__c(ICG_Account_Role_Detail__c = currentScope.Order_Product__r.Station__c, ICG_Capability_Assignment_Group__c = currentScope.Id, Account_Role_Detail_Capability__c = currentCapability.Id));
 			}
 			Database.insert(assignmentsToAdd);
 

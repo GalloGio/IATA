@@ -39,7 +39,6 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 			if(this.propertyName === 'equipment__c'){
 				this.type = 'STRING';
 			}
-			//this.consData = JSON.parse(JSON.stringify(this.item));
 		}
 	}
 
@@ -201,16 +200,6 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 				}
 			});
 			this.dispatchEvent(newEvent);
-
-			// if(type === "checkbox" || (type !== "checkbox" && value)){
-			// 	const newEvent = new CustomEvent("fieldupdated", {
-			// 		detail: {
-			// 			data: this.consData
-			// 		}
-			// 	});
-			// 	this.dispatchEvent(newEvent);
-			// }
 		}
 	}
-
 }

@@ -17,7 +17,7 @@ public without sharing class CW_SearchEngine {
 	private static final String STRINGOR = ' OR ';
 	/* Conditional operatorANDOR depending on one input param */
 	private static String operatorANDOR = ' OR ';
-	/*Constant OR */
+	
 	private static List<Param> lstAfterQueryFilters = new List<Param>();
 
 	/*Available Languages*/
@@ -39,9 +39,7 @@ public without sharing class CW_SearchEngine {
 			}
 			String response;
 			final List<Param> wrapperParams = (List<Param>) JSON.deserialize(attributes, List<Param>.class);
-			System.debug(LoggingLevel.Fine, 'wrapperParams: ' + JSON.serialize(wrapperParams));
 			final String QUERY = generateQuery(wrapperParams, isMapQuery, getOpeningHours, getHandledAirlines, orderByOnAirport, isPendingApproval, limitRecords, offset);
-			System.debug(LoggingLevel.FINE, ':::CW_SearchEngine.getInfo QUERY:: ' + JSON.serialize(QUERY));
 			final List<ICG_Account_Role_Detail__c> lstResults = Database.query(QUERY);
 			List<ICG_Account_Role_Detail_Relationship__c> operatingStations = new List<ICG_Account_Role_Detail_Relationship__c>();
 			List<ICG_Account_Role_Detail__c> onAirportStations = new List<ICG_Account_Role_Detail__c>();
@@ -112,9 +110,9 @@ public without sharing class CW_SearchEngine {
 		Id rtAsgmtGroup = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
 
 		if (isMapQuery != true) {
-			querySelect = 'SELECT ' + 'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' + 'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' + 'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 'Account_Role__r.Account__r.RecordType.Name, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' + 'Is_Direct_Ramp_Access__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,' + 'Website__c,Online_Booking_System_Link__c,Available_Languages__c, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Deprecated__c = false AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY Expiration_Date__c desc NULLS FIRST) ';
+			querySelect = 'SELECT ' + 'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' + 'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' + 'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 'Account_Role__r.Account__r.RecordType.Name, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' + 'Is_Direct_Ramp_Access__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,' + 'Website__c,Online_Booking_System_Link__c,Available_Languages__c, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY Expiration_Date__c desc NULLS FIRST) ';
 		} else {
-			querySelect = 'Select ' + 'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,Secondary_Address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 'Postal_Code_FOR__c,State_Province_FOR__c,Street_Nr_FOR__c,Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.IATACode__c,Account_Role__r.Account__r.ICAO_designator__c,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Deprecated__c = false AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY ICG_Certification__r.Order__c asc,Expiration_Date__c desc NULLS FIRST)';
+			querySelect = 'Select ' + 'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,Secondary_Address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 'Postal_Code_FOR__c,State_Province_FOR__c,Street_Nr_FOR__c,Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.IATACode__c,Account_Role__r.Account__r.ICAO_designator__c,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY ICG_Certification__r.Order__c asc,Expiration_Date__c desc NULLS FIRST)';
 		}
 
 		if (getOpeningHours == true) {
@@ -201,8 +199,6 @@ public without sharing class CW_SearchEngine {
 		queryWhere = booleanValues(queryWhere);
 
 		queryWhere = !String.isBlank(queryWhere) ? ' WHERE ' + queryWhere : '';
-
-		System.debug(LoggingLevel.FINE, ':::CW_SearchEngine.getWhereClause queryWhere:: ' + JSON.serialize(queryWhere));
 		return queryWhere;
 	}
 
@@ -232,7 +228,7 @@ public without sharing class CW_SearchEngine {
 	private static String getInnerQueries(Map<String, List<Param>> mapRF) {
 		String innerQuery;
 		innerQuery = '';
-		String specialAsgmtGroup = ' AND Is_Expired__c = false AND Is_Deprecated__c = false ';
+		String specialAsgmtGroup = ' AND Is_Expired__c = false AND Is_Active__c = true ';
 
 		for (String relation : mapRF.keySet()) {
 			String selectClause;
@@ -320,7 +316,6 @@ public without sharing class CW_SearchEngine {
 		queryWhere = queryWhere.removeEnd(STRINGAND);
 		queryWhere += ' LIMIT 2000';
 		String query = querySelect + queryFrom + queryWhere;
-		System.debug(LoggingLevel.FINE, 'getAdditionalQuery query filterResultsAfterQuery ' + query);
 		return query;
 	}
 	/*

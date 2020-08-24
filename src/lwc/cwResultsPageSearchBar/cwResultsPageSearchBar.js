@@ -6,8 +6,7 @@ import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.get
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
 import { fillPredictiveValues, extractTypeFromLocation, removeGenericItemFromList, prepareSearchObjectFEICategories, checkIconType, translationTextJS, createKey, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
-
-const LIMITNUMBERFILTERS = 25;
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwResultsPageSearchBar extends LightningElement {
 	label = labels.labels();
@@ -74,6 +73,9 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	}
 	_customLocationFilter;
 
+	@wire(getEnvironmentVariables, {})
+	environmentVariables;
+	
 	@wire(getCompanyTypes, {})
 	wiredCompanyTypes({ data }) {
 		if (data) {
@@ -621,6 +623,9 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		if (!this.locationSearchValue || this.locationSearchValue.length < 3) {
 			return;
 		}
+		if(this.locationSearchValue.length >=3 && this.locationSearchValue.trim().length == 0){
+			return;
+		}
 		this.locationPredictiveValues = fillPredictiveValues(event.target.value, this.availableLocations);
 		this._switchPredictiveDisplay(true, "predictiveContainerLocation");
 	}
@@ -632,6 +637,9 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		this.companyNamesPredictiveValues = [];
 		this.companyNamesSearchValue = event.target.value;
 		if (!this.companyNamesSearchValue || this.companyNamesSearchValue.length < 3) {
+			return;
+		}
+		if(this.companyNamesSearchValue.length >=3 && this.companyNamesSearchValue.trim().length == 0){
 			return;
 		}
 		let searchValuesSplited = this.companyNamesSearchValue.split(" ");
@@ -793,11 +801,11 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	}
 
 	get visibilityFilters() {
-		return this.searchSummaryList.length < LIMITNUMBERFILTERS ? '' : 'hidden' ;
+		return this.searchSummaryList.length < this.environmentVariables.data.max_filters_allowed__c ? '' : 'hidden' ;
 	}
 
 	get limitReached() {
-		return this.searchSummaryList.length >= LIMITNUMBERFILTERS ? '' : 'hidden' ;
+		return this.searchSummaryList.length >= this.environmentVariables.data.max_filters_allowed__c ? '' : 'hidden' ;
 	}
 
 	setSelectedCategory(event) {

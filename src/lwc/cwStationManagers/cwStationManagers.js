@@ -36,6 +36,7 @@ export default class CwStationManagers extends LightningElement {
     @api userInfo;
     @track error;
     @track key;
+    @track keyContactId;
     @track keyacr;
     @track predictiveValues = [];
     @track isboxfocus;
@@ -50,6 +51,7 @@ export default class CwStationManagers extends LightningElement {
     @track isLoading = true;
 
     _facility = null;
+    removeMessage = '';
 
     @api
     get facility(){
@@ -143,7 +145,8 @@ export default class CwStationManagers extends LightningElement {
                     showDelete : this.isCompanyAdmin || this.userInfo.ContactId === contactRoleDetail.Account_Contact_Role__r.Contact__r.Id,
                     contactId: contactRoleDetail.Account_Contact_Role__r.Contact__c, 
                     companyId: contactRoleDetail.Account_Contact_Role__r.Account__c, 
-                    facilityId: contactRoleDetail.ICG_Account_Role_Detail__c
+                    facilityId: contactRoleDetail.ICG_Account_Role_Detail__c,
+                    keys: contactRoleDetail.Id + ',' + contactRoleDetail.Account_Contact_Role__r.Contact__c + ',' + nameAux
                 }
                 this.totalAccountContactRoles.push(JSON.parse(JSON.stringify(accountContactRoleInfo)));
             });
@@ -342,11 +345,19 @@ export default class CwStationManagers extends LightningElement {
     }
 
     deleteAccountContactRole(event) {
+        this.removeMessage = this.label.are_you_sure_delete_station_manager;
         this.openCreateAccountContactRole = false;
         this.openConfirm = true;
         this.showStationManagers = false;
-        this.key = event.target.dataset.key;
+        let splitKeys = event.target.dataset.key.split(',');
+        this.key = splitKeys[0];
+        this.keyContactId = splitKeys.length > 0 ? splitKeys[1] : this.keyContactId;
+
+        let keyContactName = splitKeys.length > 1 ? splitKeys[2] : '';
         this.keyacr = event.target.dataset.keyacr;
+        if (this.userInfo.ContactId !== this.keyContactId){
+            this.removeMessage = this.removeMessage.replace('yourself', keyContactName);
+        }
     }
 
     addStationManager(event){

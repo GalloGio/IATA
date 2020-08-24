@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Active_ULD_Equipment_1;Active_ULD_Equipment_2</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Active_ULD_Equipment</value>
     </values>

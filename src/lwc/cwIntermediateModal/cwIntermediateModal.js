@@ -1,28 +1,28 @@
 import { LightningElement,api,track } from 'lwc';
 
 export default class cwIntermediateModal extends LightningElement {
-    @track _modalMessage;
+    @track modal;
     @api extraClasses;
     @api titleheader = "";
     @api noBackDropGrey = false;
-    @track _modalStyles = 'slds-modal__container';
+    @track modalStyles = 'slds-modal__container';
     
     @api 
     get modalContainerWidth() {
-        return this._modalStyles;
+        return this.modalStyles;
     }
     set modalContainerWidth(value) {
         if(value) {
-            this._modalStyles = value;
+            this.modalStyles = value;
         }
     }
 
     @api 
     get modalMessage() {
-        return this._modalMessage;
+        return this.modal;
     }
     set modalMessage(value) {
-        this._modalMessage = value;
+        this.modal = value;
         if(value) {
             let elem = this.template.querySelector('[id*="modalmessage"]');
             if(elem) {

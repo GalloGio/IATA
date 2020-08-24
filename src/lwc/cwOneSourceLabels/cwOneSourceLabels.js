@@ -382,8 +382,43 @@ import icg_capab_magmnt_mantain_prev from "@salesforce/label/c.icg_capab_magmnt_
 import icg_display_table_in_public_site from "@salesforce/label/c.icg_display_table_in_public_site";
 import all_rights_reserved from "@salesforce/label/c.icg_all_rights_reserved";
 import submit from "@salesforce/label/c.icg_submit";
-
-
+import new_notification from "@salesforce/label/c.icg_new_notification";
+import icg_type_location from "@salesforce/label/c.icg_type_location";
+import icg_already_applied_filter from "@salesforce/label/c.icg_already_applied_filter";
+import the_station from "@salesforce/label/c.icg_the_station";
+import has_been_approved from "@salesforce/label/c.icg_has_been_approved";
+import now_pending_for_IATA_Approval from "@salesforce/label/c.icg_now_pending_for_IATA_Approval";
+import could_not_be_approved from "@salesforce/label/c.icg_could_not_be_approved";
+import need_to_be_company_admin_to_approve from "@salesforce/label/c.icg_need_to_be_company_admin_to_approve";
+import icg_registration_request_submitted1 from "@salesforce/label/c.icg_registration_request_submitted1";
+import icg_registration_request_submitted2 from "@salesforce/label/c.icg_registration_request_submitted2";
+import icg_registration_auto_approved from "@salesforce/label/c.icg_registration_auto_approved";
+import are_you_sure_you_want from "@salesforce/label/c.icg_are_you_sure_you_want";
+import booked from "@salesforce/label/c.icg_booked";
+import icg_activate from "@salesforce/label/c.icg_activate";
+import icg_cancel_edit from "@salesforce/label/c.icg_cancel_edit";
+import icg_manager_user_permission from "@salesforce/label/c.icg_manager_user_permission";
+import icg_approved_by from "@salesforce/label/c.icg_approved_by";
+import error_updating_record from "@salesforce/label/c.icg_error_updating_record";
+import edit_capabilities_certification from "@salesforce/label/c.icg_edit_capabilities_certification";
+import error_reading_certification_without_capabilities from "@salesforce/label/c.icg_error_reading_certification_without_capabilities";
+import error_reading_certification_id_to_assign from "@salesforce/label/c.icg_error_reading_certification_id_to_assign";
+import record_activated from "@salesforce/label/c.icg_record_activated";
+import record_updated from "@salesforce/label/c.icg_record_updated";
+import success from "@salesforce/label/c.icg_success";
+import certification_deleted from "@salesforce/label/c.icg_certification_deleted";
+import something_went_wrong from "@salesforce/label/c.icg_something_went_wrong";
+import certification_renewed from "@salesforce/label/c.icg_certification_renewed";
+import are_your_sure_you_want_replace_current_certification from "@salesforce/label/c.icg_are_your_sure_you_want_replace_current_certification";
+import icg_smart_facility_url from "@salesforce/label/c.icg_smart_facility_url";
+import icg_wcs_url from "@salesforce/label/c.icg_wcs_url";
+import icg_consulting_url from "@salesforce/label/c.icg_consulting_url";
+import icg_training_url from "@salesforce/label/c.icg_training_url";
+import icg_publications_url from "@salesforce/label/c.icg_publications_url";
+import icg_one_process_at_time_msg from "@salesforce/label/c.icg_one_process_at_time_msg";
+import icg_no_account_role_found_msg from "@salesforce/label/c.icg_no_account_role_found_msg";
+import find_info_on_IATA_ONE_Source from "@salesforce/label/c.icg_find_info_on_IATA_ONE_Source";
+import xlsx_icon from "@salesforce/label/c.icg_xlsx_icon";
 
 export function labels() {
 	let labels = {
@@ -717,8 +752,8 @@ export function labels() {
 		icg_capab_magmnt_edit_capab,
 		icg_confirmation_text,
 		icg_capab_magmnt,
-        icg_manage_remote_validations,
-        my_requests,
+		icg_manage_remote_validations,
+		my_requests,
 		type,
 		summary_capabilities,
 		icg_notifications,
@@ -727,23 +762,22 @@ export function labels() {
 		icg_notification_dismiss_all,
 		icg_notification_view_all,
 		icg_notification_collapse_all,
-        type,
-        CSP_PortalPath,
-        icg_join_now,
-        icg_join_now_title,
-        icg_join_now_popup_message11,
-        icg_join_now_popup_message12,
-        icg_join_now_popup_message21,
-        icg_join_now_popup_message22,
-        icg_join_now_popup_message31,
-        icg_join_now_popup_message32,
-        icg_join_now_popup_ok_button,
+		CSP_PortalPath,
+		icg_join_now,
+		icg_join_now_title,
+		icg_join_now_popup_message11,
+		icg_join_now_popup_message12,
+		icg_join_now_popup_message21,
+		icg_join_now_popup_message22,
+		icg_join_now_popup_message31,
+		icg_join_now_popup_message32,
+		icg_join_now_popup_ok_button,
 		icg_join_now_popup_have_account,
 		capability_management,
 		icg_validation_programs,
 		icg_export_to_excel,
-        icg_join_now_popup_ok_button,
-        icg_gridEmptyMessage,
+		icg_join_now_popup_ok_button,
+		icg_gridEmptyMessage,
 		icg_pilotInformation,
 		icg_capab_magmnt_enable,
 		icg_capab_magmnt_disable,
@@ -772,7 +806,44 @@ export function labels() {
 		icg_capab_magmnt_mantain_prev,
 		icg_display_table_in_public_site,
 		all_rights_reserved,
-		submit
+		submit,
+		new_notification,
+		icg_type_location,
+		icg_already_applied_filter,
+		the_station,
+		has_been_approved,
+		now_pending_for_IATA_Approval,
+		could_not_be_approved,
+		need_to_be_company_admin_to_approve,
+		icg_registration_request_submitted1,
+		icg_registration_request_submitted2,
+		icg_registration_auto_approved,
+		are_you_sure_you_want,
+		booked,
+		icg_activate,
+		icg_cancel_edit,
+		icg_manager_user_permission,
+		icg_approved_by,
+		error_updating_record,
+		edit_capabilities_certification,
+		error_reading_certification_without_capabilities,
+		error_reading_certification_id_to_assign,
+		record_activated,
+		record_updated,
+		success,
+		certification_deleted,
+		something_went_wrong,
+		certification_renewed,
+		are_your_sure_you_want_replace_current_certification,
+		icg_smart_facility_url,
+		icg_wcs_url,
+		icg_consulting_url,
+		icg_training_url,
+		icg_publications_url,
+		icg_one_process_at_time_msg,
+		icg_no_account_role_found_msg,
+		find_info_on_IATA_ONE_Source,
+		xlsx_icon
 	};
 
 	return labels;

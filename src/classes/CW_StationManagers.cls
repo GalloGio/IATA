@@ -19,15 +19,15 @@ public without sharing class CW_StationManagers {
                 //Send remove confirmation to removed station manager
                 templateName = 'Station_Manager_to_requestor_req_sent';
                 List<String> whoEmails = new List<String>{cRd.Account_Contact_Role__r.Contact__r.Email};
-                CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmails);
+                CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmails, true);
             
                 //Send remove confirmation to CompanyAdmins
                 templateName = 'Approve_Reject_Remov_to_comp_adm';
                 List<String> whoEmailsCompanyAdmins = new List<String>();
-                for (Contact cadmn : CW_Utilities.getCompanyadminContactsFromAccountId(cRd.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)){
+                for (Contact cadmn : CW_Utilities.getCompanyAdminContactsFromAccountId(cRd.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)){
                     whoEmailsCompanyAdmins.add(cadmn.Email);
                 }
-                CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsCompanyAdmins);
+                CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsCompanyAdmins, false);
 
                 if(whoEmailsCompanyAdmins.isEmpty()){
                     //Send remove confirmation to IATA
@@ -36,7 +36,7 @@ public without sharing class CW_StationManagers {
                     for(User u : CW_Utilities.getIATAStakeHoldersUsersList()){
                         if(u.email != null) whoEmailsIATA.add(u.email);
                     }
-                    CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsIATA);
+                    CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsIATA, false);
                 }
             }
 

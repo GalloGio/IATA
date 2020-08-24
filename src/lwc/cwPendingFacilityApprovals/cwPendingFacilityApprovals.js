@@ -7,7 +7,7 @@ export default class CwPendingFacilityApprovals extends LightningElement {
     @track filename = "pending_station_approvals.xlsx"; // Name of the file
        
     icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
 
     @api userManagedFacilities; 
     @api userInfo; 
@@ -20,6 +20,7 @@ export default class CwPendingFacilityApprovals extends LightningElement {
 
     initialized = false;
     renderedCallback() {
+        this.exportExcel = this.icons + this.label.xlsx_icon;
         if (!this.initialized) {
             this.initialized = true;
         }
@@ -153,5 +154,9 @@ export default class CwPendingFacilityApprovals extends LightningElement {
         else if (this.action === 'reject'){
             this.rejectStation();
         }
+    }
+
+    get confirmMessage() {
+        return this.label.are_you_sure_you_want + " " + this.label.icg_to.toLowerCase() + " " + this.action + " " + this.label.the_station.toLowerCase() + " " + this.facilityName + "?";
     }
 }

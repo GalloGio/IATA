@@ -1,4 +1,3 @@
-
 @isTest
 global class CW_GxA_MockHttpResponseGenerator implements HttpCalloutMock {
 	private String statusCode;

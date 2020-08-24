@@ -23,7 +23,7 @@ public class CW_ICG_Facility_Queuable implements Queueable, Database.AllowsCallo
                                                         Search_By_City__c, Search_By_Company__c, Search_By_Country__c
                                                         FROM ICG_Account_Role_Detail__c
                                                         WHERE Id IN :lstFacilities];
-        System.debug(LoggingLevel.FINE, 'updateSearchByFormulaValues.lstARDtoUpdate: ' + ardToUpdate);
+                                                        
         for(ICG_Account_Role_Detail__c facility : ardToUpdate) {
             Boolean toUpdate = false;
             if(facility.City_FOR__c != null 
@@ -50,7 +50,6 @@ public class CW_ICG_Facility_Queuable implements Queueable, Database.AllowsCallo
         }
         if (!ardFinal.isEmpty()) {
             Database.SaveResult [] updateResult = Database.update(ardFinal, false);
-            System.debug(LoggingLevel.FINE, 'updateResult : ' + JSON.serialize(updateResult));
 		}
     }
 }

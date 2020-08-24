@@ -8,9 +8,9 @@ export default class CwMyRequests extends LightningElement {
     @track xlsData = []; // store all tables data
     @track filename = "my_requests.xlsx"; // Name of the file
 
-    _userFacilities;
-    _userManagedFacilities;
-    _userInfo;
+    facilityList;
+    userManagedFacilityList;
+    user;
 
 	@track filterValue;
     @track filteredList = [];;
@@ -20,7 +20,7 @@ export default class CwMyRequests extends LightningElement {
     @track showModal = false;
     @track modalMessage = 'When you perform an action, this modal appears with extra info.';
     icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
     CHECKED_IMAGE = this.icons + 'ic-tic-green.svg';
     ERROR_IMAGE = this.icons + 'error-icon.svg';
     @track modalImage = this.CHECKED_IMAGE;
@@ -33,12 +33,12 @@ export default class CwMyRequests extends LightningElement {
 
     @api 
 	get userInfo(){
-		return this._userInfo;
+		return this.user;
     }
 
     set userInfo(value){
         if (value != null){
-            this._userInfo = value;
+            this.user = value;
             this.setUserManagedFacilitiesJS();
             this.setUserManagerRequests();
         }
@@ -46,13 +46,13 @@ export default class CwMyRequests extends LightningElement {
     
     @api 
 	get userFacilities(){
-		return this._userFacilities;
+		return this.facilityList;
     }
     
     set userFacilities(value){
         this.adminRequest = [];
-		this._userFacilities = value;
-		this._userFacilities.forEach(item =>{
+		this.facilityList = value;
+		this.facilityList.forEach(item =>{
             if (item.isPendingCompanyAdmin){
                 let itemDTO = { 
                     Type: 'Admin Requests', 
@@ -71,11 +71,11 @@ export default class CwMyRequests extends LightningElement {
     
     @api 
 	get userManagedFacilities(){
-		return this._userManagedFacilities;
+		return this.userManagedFacilityList;
     }
     
     set userManagedFacilities(value){
-        this._userManagedFacilities = value;
+        this.userManagedFacilityList = value;
         this.setUserManagedFacilitiesJS();
     }
 
@@ -83,12 +83,16 @@ export default class CwMyRequests extends LightningElement {
         return this.stationManagerRequest;
     }
 
+    renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
+    }
+
     setUserManagedFacilitiesJS(){
-        if (this._userInfo != null && this._userManagedFacilities != null){
+        if (this.user != null && this.userManagedFacilityList != null){
 
             this.stationCreationRequest = [];
-            this._userManagedFacilities.forEach(item =>{
-                if (item.isPendingApproval__c && item.CreatedById == this._userInfo.Id){
+            this.userManagedFacilityList.forEach(item =>{
+                if (item.isPendingApproval__c && item.CreatedById == this.user.Id){
                     let itemDTO = { 
                         Type: 'Station Creation Requests', 
                         Status: item.Status__c,
@@ -106,15 +110,15 @@ export default class CwMyRequests extends LightningElement {
     }
 
     setUserManagerRequests(){
-        if (this._userInfo != null && this.stationManagerRequest != null 
+        if (this.user != null && this.stationManagerRequest != null 
             && (this.stationManagerRequest.length === 0 || !this.stationManagerRequest) 
             && !this.facilitymanagercrinitialized){
              
             this.stationManagerRequest = [];
-            getFacilityManagerContactRolesFromStationListByUser({userId : this._userInfo.Id}).then(conRoles =>{
+            getFacilityManagerContactRolesFromStationListByUser({userId : this.user.Id}).then(conRoles =>{
                 this.facilitymanagercrinitialized = true;
                 conRoles.forEach(item => {
-                    if (item.isPendingApproval__c){
+                    if (item.isPendingApproval__c || (item.Status__c === 'Pending for Removal' && item.LastModifiedById === this.user.Id)){
                         var company = (item.Account_Contact_Role__r.Account__r != null) ? item.Account_Contact_Role__r.Account__r.Name : '';
                         var station = (item.ICG_Account_Role_Detail__r != null) ? item.ICG_Account_Role_Detail__r.Name : '';
 
@@ -123,8 +127,8 @@ export default class CwMyRequests extends LightningElement {
                             Status: item.Status__c,
                             Company: company,
                             Station: station, 
-                            CreatedDateDateFormat: (item.CreatedDate.split("-")[2]).split('T')[0] + "-" + item.CreatedDate.split("-")[1] + "-" + item.CreatedDate.split("-")[0],
-                            RequestedDate: item.CreatedDate
+                            CreatedDateDateFormat: (item.LastModifiedDate.split("-")[2]).split('T')[0] + "-" + item.LastModifiedDate.split("-")[1] + "-" + item.LastModifiedDate.split("-")[0],
+                            RequestedDate: item.LastModifiedDate
                         };
                         this.stationManagerRequest.push(itemDTO);
                         this.filteredList.push(itemDTO);

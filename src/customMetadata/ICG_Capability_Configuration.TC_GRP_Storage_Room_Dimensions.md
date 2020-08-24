@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">CRSTR_Storage_Room_Dimensions_L__c;CRSTR_Storage_Room_Dimensions_W__c;CRSTR_Storage_Room_Dimensions_H__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Storage Room Dimensions (in m)</value>
     </values>

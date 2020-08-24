@@ -2,21 +2,23 @@ import { LightningElement, track, api, wire } from 'lwc';
 import getProductSmartFacilityRemoteValidation from "@salesforce/apex/CW_RemoteValidationsController.getProductSmartFacilityRemoteValidation";
 import availablerecordtypes from "@salesforce/label/c.icg_available_rv_recordtypes";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
+import getIECSettingVariables from '@salesforce/apex/CW_Utilities.getIECSettingVariables';
 
 export default class CwPurchaseRemoteValidation extends LightningElement {
 	initialized = false;
 
 	@track xlsHeader = []; // store all the headers of the the tables
-    @track xlsData = []; // store all tables data
+	@track xlsData = []; // store all tables data
 	@track filename = "purchase_remote_validation.xlsx"; // Name of the file
 
 	icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+	exportExcel;
 
 	@track mapRemValAlreadyPurchased;
 	@track facilitiesToPurchase;
 	@api textFilter = '';
-	prodOrg = 'https://store.iata.org/IEC_ProductDetails';
+	
+	@track prodOrg;
 	preprodOrg = 'https://preprod-customer-portal-iata.cs109.force.com/iec/';
 	@track lstProductsRemoteVal;
 	@api isProduction;
@@ -29,6 +31,9 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 			this._setListToPurchase();
 		}
 	}
+
+	@wire(getIECSettingVariables, {})
+    IECSettingVariables;
 
 	@track _userManagedFacilities = [];
 	@api
@@ -55,13 +60,13 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 			});
 		}
 		this._setListToPurchase();
-    }
-    
-    get hasItem() {
-        if (this.facilitiesToPurchaseList){
-            return this.facilitiesToPurchaseList.length > 0;
-        }
-    }
+	}
+	
+	get hasItem() {
+		if (this.facilitiesToPurchaseList){
+			return this.facilitiesToPurchaseList.length > 0;
+		}
+	}
 
 	get facilitiesToPurchaseList() {
 		if (this.textFilter && this.facilitiesToPurchase) {
@@ -79,6 +84,12 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	}
 
 	renderedCallback() {
+		if(this.IECSettingVariables != null && this.IECSettingVariables.data != null && this.IECSettingVariables.data.IEC_User_Portal_URL__c != null){
+			this.prodOrg = this.IECSettingVariables.data.IEC_User_Portal_URL__c;
+		}else{
+			this.prodOrg = 'https://store.iata.org/IEC_ProductDetails';
+		}
+		this.exportExcel = this.icons + this.label.xlsx_icon;
 		if(this.initialized) {
 			return;
 		}
@@ -106,41 +117,41 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	}
 
 	get prepareToExcel(){
-        let prepareToExcel = [];
-        if(this.facilitiesToPurchaseList){
-            this.facilitiesToPurchaseList.forEach(function(elem) {
-                let station = elem.Name;
-                let address = elem.Street_Nr_FOR__c + "," + elem.Postal_Code_FOR__c + "," + elem.City_FOR__c + "," +elem.State_Province_FOR__c;
-                let date = elem.CreatedDateDateFormat;
-                let status = elem.Status__c;
-              
+		let prepareToExcel = [];
+		if(this.facilitiesToPurchaseList){
+			this.facilitiesToPurchaseList.forEach(function(elem) {
+				let station = elem.Name;
+				let address = elem.Street_Nr_FOR__c + "," + elem.Postal_Code_FOR__c + "," + elem.City_FOR__c + "," +elem.State_Province_FOR__c;
+				let date = elem.CreatedDateDateFormat;
+				let status = elem.Status__c;
+			  
 				prepareToExcel.push({
 					station: station,
 					address: address,
 					date: date,
 					status: status
 				});
-                
+				
 			});
-        }
-        return prepareToExcel;
-    }
+		}
+		return prepareToExcel;
+	}
 
-    excelFormat(){
-        if(this.prepareToExcel){
-            this.xlsFormatter(this.prepareToExcel);
-        }
-    }
+	excelFormat(){
+		if(this.prepareToExcel){
+			this.xlsFormatter(this.prepareToExcel);
+		}
+	}
 
-    xlsFormatter(data) {
-        let Header = Object.keys(data[0]);
-        this.xlsHeader.push(Header);
-        this.xlsData.push(data);
-        this.downloadExcel();
-    }
-    
-    downloadExcel() {
-        this.template.querySelector("c-cw-xlsx-main").download();
+	xlsFormatter(data) {
+		let Header = Object.keys(data[0]);
+		this.xlsHeader.push(Header);
+		this.xlsData.push(data);
+		this.downloadExcel();
+	}
+	
+	downloadExcel() {
+		this.template.querySelector("c-cw-xlsx-main").download();
 	}
 	goToFacilityPage(event) {
 		let idStation = event.target.getAttribute("id-station");

@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Safety_Personal_And_Protective_Equipment</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Safety_Personal_And_Protective_Equipment</value>
     </values>

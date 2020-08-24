@@ -5,11 +5,12 @@ import {
     checkIfDeselectAll,
     checkIfChangeSelectAllText
 } from 'c/cwUtilities';
-
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwValidationPrograms extends LightningElement {
     @track selectedText = 'Select All';
     @api label;
+    @api appliedFiltersCount;
     icons = resources + "/icons/";
     //icons
     tickSelection = this.icons + "ic-gsearch--selected.svg";
@@ -22,7 +23,9 @@ export default class CwValidationPrograms extends LightningElement {
         }
     }
 
-
+    @wire(getEnvironmentVariables, {})
+    environmentVariables;
+    
     onClickItem(event) {
         let eTarget = event.currentTarget;
         let name = eTarget.getAttribute("data-name");
@@ -31,7 +34,7 @@ export default class CwValidationPrograms extends LightningElement {
         let selected;
 
         this.certifications.forEach(element => {
-            if (element.Name === name) {
+            if (element.Name === name && (!this.reachedLimit || (this.reachedLimit && element.selected))) {
                 element.selected = !element.selected;
                 selectedProgram = [element];
                 selected = element.selected;
@@ -41,16 +44,19 @@ export default class CwValidationPrograms extends LightningElement {
         let items = this.template.querySelectorAll("[data-name='" + name + "']");
 
         if(selected){
-            this._selectItems(items);
+            if (!this.reachedLimit){
+                this._selectItems(items);
+
+                this.selectedText = checkIfChangeSelectAllText(this.certifications);
+                this.dispatchEvent(new CustomEvent('selectvalidationprograms', { detail: selectedProgram }));
+            }
         }
         else{
             this._unselectItems(items);
+
+            this.selectedText = checkIfChangeSelectAllText(this.certifications);
+            this.dispatchEvent(new CustomEvent('selectvalidationprograms', { detail: selectedProgram }));
         }
-
-        this.selectedText = checkIfChangeSelectAllText(this.certifications);
-
-
-        this.dispatchEvent(new CustomEvent('selectvalidationprograms', { detail: selectedProgram }));
     }
 
     selectAllCertifications() {
@@ -88,5 +94,27 @@ export default class CwValidationPrograms extends LightningElement {
             element.classList.remove('itemSelected');
             element.classList.add('itemUnselected');
         });
+    }
+
+    get reachedLimit(){
+		return  this.appliedFiltersCount >= this.environmentVariables.data.max_filters_allowed__c;
+    }
+
+    get reachedLimitWithAll(){
+        if (this.certifications){
+            let potentialSelect = 0;
+            this.certifications.forEach(element => {
+                if (!element.selected) {
+                    potentialSelect++;
+                }
+            });
+            return  (this.appliedFiltersCount + potentialSelect) > this.environmentVariables.data.max_filters_allowed__c;
+        }
+    }
+    
+    get selectAllVisible(){
+        if (this.certifications){
+            return !(this.selectedText === "Select All" && this.reachedLimitWithAll);
+        }
     }
 }

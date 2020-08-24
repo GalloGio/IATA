@@ -23,7 +23,7 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 				Id, RecordTypeId, CreatedById, Days_Until_Expiration__c, Upcoming_Expiration_Notification_Sent__c, Expired_Notification_Sent__c, ICG_Account_Role_Detail__c, ICG_Account_Role_Detail__r.Name, 
 				ICG_Account_Role_Detail__r.Formatted_Address__c, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, ICG_Account_Role_Detail__r.Account_Role__r.Account__r.RecordType.Name, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Department__c 
 			FROM ICG_Capability_Assignment_Group__c 
-			WHERE RecordTypeId IN :rtDevNameById.values() 
+			WHERE RecordTypeId IN :rtDevNameById.values() AND Is_Booked__c = false 
 			AND ((Upcoming_Expiration_Notification_Sent__c = false AND Days_Until_Expiration__c <= :expiringValidationDays AND Days_Until_Expiration__c > 0)
 			OR (Expired_Notification_Sent__c = false AND Days_Until_Expiration__c <= 0))
 			]);
@@ -91,9 +91,9 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 					(isUpcomingExpiration ? 'Expiration_upcoming_to_IATA_Cert_Man' : 'Expired_RV_to_IATA_Cert_Man');
 
 			
-			Boolean submitted = CW_Utilities.sendEmailTemplate(emailTemplateOne, asgmtGroup.Id, asgmtGroup.createdById, new List<String>(stationManagerCompanyAdminEmails));
+			Boolean submitted = CW_Utilities.sendEmailTemplate(emailTemplateOne, asgmtGroup.Id, asgmtGroup.createdById, new List<String>(stationManagerCompanyAdminEmails), true);
 			List<String> iataManagers = asgmtGroup.ICG_Certification__c != null && asgmtGroup.ICG_Certification__r.Department__c != null && !mapQueueDevNameListEmails.get(asgmtGroup.ICG_Certification__r.Department__c).isEmpty() ? mapQueueDevNameListEmails.get(asgmtGroup.ICG_Certification__r.Department__c) : iataAdminEmails;
-			submitted = submitted && CW_Utilities.sendEmailTemplate(emailTemplateTwo, asgmtGroup.Id, asgmtGroup.createdById, iataManagers);
+			submitted = submitted && CW_Utilities.sendEmailTemplate(emailTemplateTwo, asgmtGroup.Id, asgmtGroup.createdById, iataManagers, false);
 
 			String subject = 
 				isCertification ? (asgmtGroup.ICG_Certification__r.Name + ' certification/accreditation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Account_Role__r.Account__r.RecordType.Name + ', ' + (isUpcomingExpiration ? ' about to expire' : ' expired')) 
@@ -167,7 +167,7 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 		for (ICG_Contact_Role_Detail__c crd : CW_Utilities.getStationManagersContactRoleDetails(cert.ICG_Account_Role_Detail__c)) {
 			stationManagerCompanyAdmins.add(crd);
 		}
-		for (Contact cadmn : CW_Utilities.getCompanyadminContactsFromAccountId(cert.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)) {
+		for (Contact cadmn : CW_Utilities.getCompanyAdminContactsFromAccountId(cert.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)) {
 			stationManagerCompanyAdmins.add(cadmn);
 		}
 

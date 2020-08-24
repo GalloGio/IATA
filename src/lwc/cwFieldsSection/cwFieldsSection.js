@@ -1,134 +1,156 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, api, track, wire } from "lwc";
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwFieldsSection extends LightningElement {
-	initialized = false;
-	@track _currentCategory;
-	@track _currentCategoryPicklist = [];
-	@track _currentCategoryMultiPickList;
-	@track _currentCategoryOthers;
+	@track initialCount;
+	initialCountSet = false;
+	category;
 	@api label;
+	@api siteclass;
+	@api appliedFiltersCount;
 	@api
 	get currentCategory() {
-		return this._currentCategory;
-	}
-
-	initCurrentCategoryByType(){
-		let _currentCategoryPicklistTemp = [];
-		let _currentCategoryMultiPickListTemp = [];
-		let _currentCategoryOthersTemp = [];
-		this._currentCategory.fields.forEach((field) => {
-			if(field.isPicklist){
-				_currentCategoryPicklistTemp.push(field);
-			}
-			if(field.isMultipickList){
-				_currentCategoryMultiPickListTemp.push(field);
-			}
-			if(field.isOther){
-				_currentCategoryOthersTemp.push(field);
-			}
-		 });
-
-		 this._currentCategoryPicklist = _currentCategoryPicklistTemp;
-		 this._currentCategoryMultiPickList = _currentCategoryMultiPickListTemp;
-		 this._currentCategoryOthers = _currentCategoryOthersTemp;
+		return this.category;
 	}
 
 	set currentCategory(value) {
-		this._currentCategory = value;
-	}
+		let valueCopy = JSON.parse(JSON.stringify(value));
+		if(valueCopy.fields){
 
-	renderedCallback() {
-		if (this.initialized === true) {
-			return;
-		}
-		JSON.stringify("fields: " + JSON.stringify(this.fields));
-		this.initCurrentCategoryByType();
-		this.initialized = true;
-	}
-
-	get preselected(){
-
-		let value = this.label.select;
-
-		let preselectedValue = this._currentCategoryPicklist.some(obj => obj.selected);
-
-		if(preselectedValue){
-			this._currentCategoryPicklist.forEach(obj => {
-				if(obj.options){
-					obj.options.forEach(opt => {
-						if(opt.selected){
-							value = opt.value;
-						}
-					})
-				}
-			})
+			let handledFieldsAfterUpdate = valueCopy.fields.map(field => {
+				field.disable = !field.selected && this.reachedLimit;
+				return field;
+			});
+			valueCopy.fields = JSON.parse(JSON.stringify(handledFieldsAfterUpdate));
 		}
 
+		this.category = valueCopy;
 
-		return value;
+		if(!this.initialCountSet){
+			this.calculateInitialCount(valueCopy.fields);
+			this.initialCountSet = true;
+		}
 	}
 
-	get preselectedLabel(){
-		let value = this.label.select;
+	@wire(getEnvironmentVariables, {})
+	environmentVariables;
+	
+	calculateInitialCount(){
+		this.initialCount = this.getSelectedCount();
+	}
 
-		let preselectedValue = this._currentCategoryPicklist.some(obj => obj.selected);
-
-		if(preselectedValue){
-			this._currentCategoryPicklist.forEach(obj => {
-				if(obj.options){
-					obj.options.forEach(opt => {
-						if(opt.selected){
-							value = opt.label;
-						}
-					})
-				}
-			})
-		}
-
-
-		return value;
+	getSelectedCount(){
+		return this.currentCategory && this.currentCategory.fields ? this.currentCategory.fields.reduce((acc, field) => field.selected ? ++acc : acc, 0) : 0;
 	}
 
 	onClickItem(event) {
 		event.stopPropagation();
 
-		this._updateFields(event);
+		this.updateFields(event);
 	}
 
-	applyAction(event) {
+	applyAction() {
 		this.dispatchEvent(new CustomEvent("fieldupdate", { detail: { updatedCategory: this.currentCategory } }));
-		this.closeModal(event);
 	}
 
-	closeModal(event) {
+	removeInternalFilters(event) {
 		event.preventDefault();
-        this.dispatchEvent( new CustomEvent('closemodal', { detail: { updatedCategory: this.currentCategory } }));
+		let fieldsUpdated = [];
+		this.currentCategory.fields.forEach(field => {
+			let newField = JSON.parse(JSON.stringify(field));
+			newField.selected = false;
+
+			if (field.type === "picklist") {
+				newField.options.forEach(opt => {
+					opt.selected = false;
+				});
+			}
+
+			fieldsUpdated.push(newField);
+		});
+
+		this.updateCurrentCategory(fieldsUpdated);
+		this.applyAction();
 	}
 
-	_updateFields(event) {
+	updateCurrentCategory(fieldsUpdated) {
+		let categoryUpdated = JSON.parse(JSON.stringify(this.currentCategory));
+		categoryUpdated.fields = fieldsUpdated;
+		this.currentCategory = JSON.parse(JSON.stringify(categoryUpdated));
+	}
+
+	updateFields(event) {
 		let evItem = event.target;
+		this.updateFieldsAndApply(evItem);
+	}
+
+	updateFieldsAndApply(evItem) {
+
 		let fieldsUpdated = [];
-        this._currentCategory.fields.forEach(field => {
-            let newField = JSON.parse(JSON.stringify(field));
-			if(field.label === evItem.label
-					|| field.name === evItem.getAttribute("data-tosca")) {
+		this.currentCategory.fields.forEach(field => {
+			let newField = JSON.parse(JSON.stringify(field));
+			if (field.label === evItem.label || field.name === evItem.getAttribute("data-tosca")) {
 				newField.selected = evItem.checked;
-				
-				if(field.type === "picklist") {
+
+				if (field.type === "picklist") {
 					newField.options.forEach(opt => {
-						const checkSelected = opt.value === evItem.options[evItem.selectedIndex].value ? true : false
+						const checkSelected = opt.value === evItem.options[evItem.selectedIndex].value ? true : false;
 						opt.selected = checkSelected;
-						if(checkSelected) {
+						if (checkSelected) {
 							newField.selected = checkSelected;
 						}
 					});
- 
 				}
 			}
-            fieldsUpdated.push(newField);
-        });
-        let categoryUpdated = JSON.parse(JSON.stringify(this._currentCategory));
-        categoryUpdated.fields = fieldsUpdated;
-		this._currentCategory = JSON.parse(JSON.stringify(categoryUpdated));
+			fieldsUpdated.push(newField);
+		});
+
+		this.updateCurrentCategory(fieldsUpdated);
+		this.applyAction();
+	}
+
+	get isSearchBar() {
+		return this.siteclass === "searchbar";
+	}
+
+	get isAdvancedSearch() {
+		return this.siteclass === "advance";
+	}
+
+	get currentCategoryPicklist() {
+
+		let filteredList = [];
+
+		if(this.currentCategory && this.currentCategory.fields){
+			filteredList = this.currentCategory.fields.filter(field => field.isPicklist);
+		}
+
+		return filteredList;
+
+	}
+
+	get currentCategoryMultiPickList() {
+		let filteredList = [];
+
+		if(this.currentCategory && this.currentCategory.fields){
+			filteredList = this.currentCategory.fields.filter(field => field.isMultipickList);
+		}
+
+		return filteredList;
+	}
+
+	get currentCategoryOthers() {
+		let filteredList = [];
+
+		if(this.currentCategory && this.currentCategory.fields){
+			filteredList = this.currentCategory.fields.filter(field => field.isOther);
+		}
+
+		return filteredList;
+	}
+
+	get reachedLimit(){
+		let counter = this.isSearchBar ? this.appliedFiltersCount + (this.getSelectedCount() - this.initialCount) : this.appliedFiltersCount;
+		return counter >= this.environmentVariables.data.max_filters_allowed__c;
 	}
 }

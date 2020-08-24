@@ -9,24 +9,25 @@ export default class CwDetailedList extends LightningElement {
     @api urlResultPage;
 
     icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
 
     @track xlsHeaderAllValidations;
     @track xlsDataAllValidations;
     @track filename = "DetailedListSearchResults.xlsx"; // Name of the file
     downloadExcel = false;
 
-    _facilities = [];
+    facilityList = [];
     @api 
     get facilities(){
-        return this._facilities;
+        return this.facilityList;
     }
     set facilities(value){
-        this._facilities = value;
+        this.facilityList = value;
         this.isLoading = false;
     }
 
     renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
         if(this.downloadExcel){
             this.downloadExcel=false;
             this.downloadExcelSheet();

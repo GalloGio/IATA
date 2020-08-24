@@ -89,6 +89,12 @@
 											onfocus={handleOnFocus} onblur={handleOnBlur} onmouseover={closeSearchTypeCombo}
 											placeholder={searchBoxPlaceholder} list="predictiveresults-1"
 											onkeyup={predictiveSearch} autocomplete="off" readonly>
+											<span class="input-group-btn">					
+												<button onclick={resultsPage} data-tosca="search-btn" disabled
+													class="disabled-filter searchbutton btn search" type="button">
+													<img src={searchIcon} data-tosca="searchIcon" class="searchbuttonimg" alt="Search" />
+												</button>						
+											</span>
 									</template>
 									<template if:true={searchReady}>
 										<input id="searchbox" type="text" data-tosca="locationinput" data-mobile="false" disabled
@@ -96,15 +102,13 @@
 											onfocus={handleOnFocus} onblur={handleOnBlur} onmouseover={closeSearchTypeCombo}
 											placeholder={searchBoxPlaceholder} list="predictiveresults-1"
 											onkeyup={predictiveSearch} autocomplete="off">
+											<span class="input-group-btn">					
+												<button onclick={resultsPage} data-tosca="search-btn" disabled
+													class="disabled-filter searchbutton btn search" type="button">
+													<img src={searchIcon} data-tosca="searchIcon" class="searchbuttonimg" alt="Search" />
+												</button>						
+											</span>
 									</template>
-									<span class="input-group-btn">
-										<template if:true={searchReady}>
-											<button onclick={resultsPage} data-tosca="search-btn" disabled
-												class="disabled-filter searchbutton btn search" type="button">
-												<img src={searchIcon} data-tosca="searchIcon" class="searchbuttonimg" alt="Search" />
-											</button>
-										</template>
-									</span>
 								</div>
 							</div>
 						</div>

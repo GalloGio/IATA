@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">SC_Aperture_Size_Height_cm__c;SC_Aperture_Size_Width_cm__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Aperture Size (in cm)</value>
     </values>

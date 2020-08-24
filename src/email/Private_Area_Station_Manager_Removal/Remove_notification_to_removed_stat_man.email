@@ -10,7 +10,7 @@
                     <p style="line-height: 1.8rem;">You have been removed as Station Manager from the following station(s)</p> 
                                                    
                     <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>
-                    <c:CW_ApprovedBy stationData="{!relatedTo.Id}" ></c:CW_ApprovedBy>    
+                    <c:CW_ApprovedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_ApprovedBy>    
                                   
                     <p style="line-height: 1.8rem;">Thank you</p>
                 </div>

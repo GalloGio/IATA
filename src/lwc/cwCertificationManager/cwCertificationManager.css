@@ -30,6 +30,9 @@
 .bt-yellow:hover{
     background-color: rgb(228, 183, 47) !important;
 }
+.bt-yellow:disabled{
+    background-color: rgb(153, 154, 165) !important;
+}
 .bt-blue{
     background-color: rgb(30,50,250) !important;
     padding-left: 5px !important;
@@ -42,4 +45,13 @@
 }
 .bt-blue:disabled{
     background-color: rgb(153, 154, 165) !important;
+}
+
+.p-65{
+    padding: 0.65rem;
+}
+
+.edit-cancel-class{
+    padding-top: 1.4%;
+    padding-left: 1%;
 }

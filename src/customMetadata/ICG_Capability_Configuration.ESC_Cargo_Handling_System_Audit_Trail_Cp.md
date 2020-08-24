@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Extra_Data__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">Cargo_Messaging_Capacities#Cargo_Handling_System_Audit_Trail_Capacities</value>
+        <value xsi:type="xsd:string">Cargo_Handling_System_Audit_Trail_Capacities#Cargo_Handling_System_Audit_Trail_Capacities</value>
     </values>
     <values>
         <field>Order__c</field>

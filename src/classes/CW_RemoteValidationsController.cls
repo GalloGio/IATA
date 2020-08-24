@@ -7,7 +7,6 @@ public without sharing class CW_RemoteValidationsController {
 									Order.EffectiveDate, Order.CreatedBy.Name 
 								FROM OrderItem
 								WHERE product2.Smart_Facility_Remote_Validation__c = true 
-									AND Station__c != null 
 									AND Station__c IN :managedFacilitiesSet
 									AND IEC_Is_Paid__c = true
 								]);
@@ -24,7 +23,7 @@ public without sharing class CW_RemoteValidationsController {
 		Response res = new Response();
 		res.success = true;
 		try{
-			PriceBookEntry pre = [select Id, Product2Id, IsActive, UnitPrice, PriceBook2Id from pricebookentry where product2.Smart_Facility_Remote_Validation__c = true and IsActive = true limit 1];
+			PriceBookEntry pre = [select Id, PriceBook2Id from pricebookentry where product2.Smart_Facility_Remote_Validation__c = true and IsActive = true limit 1];
 			Order oOrder = new Order();
 			oOrder.Status = 'New';
 			oOrder.AccountId = [Select Account_Role__r.Account__c from ICG_Account_Role_Detail__c where Id =:stationId].Account_Role__r.Account__c;

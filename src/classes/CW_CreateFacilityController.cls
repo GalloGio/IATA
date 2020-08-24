@@ -1,135 +1,188 @@
 public without sharing class CW_CreateFacilityController {
-	@AuraEnabled
-	public static string createFacility(String accountId, String station, String logoInfo, String ardRelIds, String nearestAirportCode, Boolean isCompanyAdmin, Boolean isInternalUser, Boolean isNewAccount, String stationsToAdd, String stationsToRemove) {
+	final static String ONESOURCE = 'One Source';
+    @AuraEnabled
+	public static string createFacility(String accountId, String station, String logoInfo, String geoLocationInfo, String ardRelIds, String nearestAirportCode, Boolean isCompanyAdmin, Boolean isInternalUser, Boolean isNewAccount, String stationsToAdd, String stationsToRemove) {
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		Savepoint sp = null;
 		try {
-			LogoInfo facilityLogo;
-			//If logo exists and is not {} nor null
-			if (logoInfo != null && logoInfo.length() > 4)
-				facilityLogo = (LogoInfo) JSON.deserialize(logoInfo, LogoInfo.class);
-			ICG_Account_Role_Detail__c ard = (ICG_Account_Role_Detail__c) JSON.deserialize(station, ICG_Account_Role_Detail__c.class);
-			List<Account_Role__c> aroles = [SELECT id FROM Account_Role__c WHERE Account__c = :accountId AND Functional_Role__c = :'One Source'];
-			if (aroles.size() < 1) {
-				try {
-					Account_Role__c ar = createOneSourceAccRole(accountId);
-					insert ar;
-					ard.Account_Role__c = ar.Id;
-				} catch (Exception ex) {
-					res.success = false;
-					res.message = 'This account has no available Role to be parent of a station';
-					return JSON.serialize(res);
-				}
-			} else {
-				ard.Account_Role__c = aroles[0].id;
-			}
-			if(nearestAirportCode != null && nearestAirportCode != ''){
-				List<Airport_Detail__c> airportDetail = [Select Id from Airport_Detail__c where Code__c =:nearestAirportCode];
-				if (!airportDetail.isEmpty()) ard.Nearest_Airport__c = airportDetail[0].Id;
-			}
-			if (!Test.isRunningTest())
+
+			if (!Test.isRunningTest()) {
 				sp = Database.setSavepoint();
+			}
 
+			ICG_Account_Role_Detail__c ard = (ICG_Account_Role_Detail__c) JSON.deserialize(station, ICG_Account_Role_Detail__c.class);
+			ard.Account_Role__c = CW_CreateFacilityController.getAccountRoleForAccount(accountId);
+			if(ard.Account_Role__c == null) {
+				res.success = false;
+				res.message = 'This account has no available Role to be parent of a station';
+				return JSON.serialize(res);
+			}
+			ard = CW_CreateFacilityController.handleGeoLocations(ard, geoLocationInfo);
+			ard.Nearest_Airport__c = CW_CreateFacilityController.getNearestAirportForFacility(nearestAirportCode);
+			
 			insert ard;
-			if (facilityLogo != null) {
-				ContentVersion conVer = new ContentVersion();
-				conVer.ContentLocation = 'S'; // S specify this document is in SF, use E for external files
-				conVer.PathOnClient = facilityLogo.fileName; // The files name, extension is very important here which will help the file in preview.
-				conVer.Title = facilityLogo.fileName; // Display name of the files
-				conVer.VersionData = EncodingUtil.base64Decode(facilityLogo.base64Data); // converting your binary string to Blog
-				conVer.Is_Company_Logo__c = true;
-				insert conVer;
-				// First get the content document Id from ContentVersion
-				Id conDoc = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :conVer.Id].ContentDocumentId;
 
-				//Create ContentDocumentLink
-				ContentDocumentLink cDe = new ContentDocumentLink();
-				cDe.ContentDocumentId = conDoc;
-				cDe.LinkedEntityId = ard.Id; // you can use objectId,GroupId etc
-				cDe.ShareType = 'I';
-				cDe.Visibility = 'AllUsers';
-				insert cDe;
+			Id conDoc = CW_CreateFacilityController.createFacilityLogo(logoInfo, ard.Id);
+			if(conDoc != null){
+				ard.logoUrl__c = CW_CreateFacilityController.generateLogoURL(conDoc);
+			}
 
-				String URL_Base = ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
-				ard.logoUrl__c = URL_Base.removeEnd('/s/') + '/sfc/servlet.shepherd/document/download/' + conDoc;
-				update ard;
+			List<Contact> companyAdmins = CW_Utilities.getCompanyAdminContactsFromAccountId(accountId);
+
+			if(isInternalUser != true && hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)) {
+				ard.Status__c = 'Pending for IATA Approval';
 			}
-			if (!String.isBlank(ardRelIds)) {
-				List<ICG_Account_Role_Detail_Relationship__c> ardrelationship = new List<ICG_Account_Role_Detail_Relationship__c>();
-				for (String airId : ardRelIds.split(';')) {
-					//Handled airline points to Account, ICG ARD points to Account Role Detail.
-					ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = ard.id, Handled_Airline__c = airId.startsWith('001') ? airId : null));
-				}
-				if (!ardrelationship.isEmpty())
-					insert ardrelationship;
-			}
+
+			update ard;
+
+			CW_CreateFacilityController.createFacilityRelations(ardRelIds, ard.Id);
 
 			CW_HandledAirlinesController.saveAirlinesHandled(stationsToAdd, stationsToRemove, ard.Id);
-			
-			if(ard.Id != null && isInternalUser != true){
-				ICG_Account_Role_Detail__c createdArd = [Select id, Status__c,CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :ard.Id];
-				String whoId = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.ContactId : createdArd.CreatedById;
-				String templateName;
-				Boolean updateArd = false;
 
-				//Send email to approvers
-				List<String> whoEmails = new List<String>();
-				List<String> contactIds = new List<String>();
-				for(Contact c : CW_Utilities.getCompanyadminContactsFromAccountId(accountId)){
-					if(c.email != null) whoEmails.add(c.email);
-					contactIds.add(c.Id);
+			if(isInternalUser != true){
+				res = CW_CreateFacilityController.handleEmailsAndNotifications(isInternalUser, ard, companyAdmins, isCompanyAdmin, isNewAccount);
+
+				if(res.success == false && sp != null && !Test.isRunningTest()){
+					Database.rollback(sp);
 				}
-				if(whoEmails.isEmpty() || isCompanyAdmin == true){
-					whoEmails = new List<String>();
-					templateName = 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
-					for(User u : CW_Utilities.getIATAStakeHoldersUsersList()){
-						if(u.email != null) whoEmails.add(u.email);
-					}
-					createdArd.Status__c = 'Pending for IATA Approval';
-					updateArd = true;
-				}else{
-					templateName = 'Approve_Reject_to_company_admin';
-				}
-				Boolean submitted = !whoEmails.isEmpty() ? CW_Utilities.sendEmailTemplate(templateName, ard.Id, whoId, whoEmails) : false;
-
-				List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
-
-				String subject = 'New Station is pending approval';
-				String body = subject;
-				notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, ard, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-				if (submitted) {
-					res.success = true;
-					res.message = 'Your request has been submitted and is pending for approval from your Company Admin / IATA. You will receive a confirmation once your request has been processed.';
-				} else {
-					res.success = false;
-					res.message = 'Something went wrong. Please contact IATA. Comment: Approval Process not triggered';
-					if (sp != null && !Test.isRunningTest())
-						Database.rollback(sp);
-				}
-
-				//Send email to requestor
-				String whoEmail = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.Contact.Email : createdArd.CreatedBy.Email;
-				templateName = isNewAccount == true ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
-				CW_Utilities.sendEmailTemplate(templateName, ard.Id, whoId, new List<String> {whoEmail});
-				notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String> {createdArd.CreatedBy.ContactId}, ard, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA,false));
-
-				if(updateArd == true) update createdArd;
-
-				if(notifications.size() > 0){
-					insert notifications;
-				}
-
 			}else if(ard.Id != null){
 				res.success = true;
 			}
 			
 		} catch (Exception ex) {
-			if (sp != null && !Test.isRunningTest())
+			if (sp != null && !Test.isRunningTest()) {
 				Database.rollback(sp);
+			}
 			res.success = false;
 			res.message = ex.getMessage();
 		}
 		return JSON.serialize(res);
+	}
+
+	private static Boolean hasNoCompanyAdminsOrNotNeeded(List<Contact> companyAdmins, Boolean isCompanyAdmin){
+		return companyAdmins.isEmpty() || isCompanyAdmin == true;
+	}
+
+	private static CW_Utilities.ResponseBody handleEmailsAndNotifications(Boolean isInternalUser, ICG_Account_Role_Detail__c facility, List<Contact> companyAdmins, Boolean isCompanyAdmin, Boolean isNewAccount) {
+		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
+
+		ICG_Account_Role_Detail__c createdArd = [Select id, Status__c,CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :facility.Id];
+		String whoId = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.ContactId : createdArd.CreatedById;
+		String templateName;
+
+		//Send email to approvers
+		List<String> whoEmails = new List<String>();
+		List<String> contactIds = new List<String>();
+		for(Contact c : companyAdmins){
+			whoEmails.add(c.email);
+			contactIds.add(c.Id);
+		}
+		if(hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)){
+			whoEmails = new List<String>();
+			templateName = isNewAccount == true ? 'Approve_Reject_to_IATA_Admin_account' : 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
+			for(User u : CW_Utilities.getIATAStakeHoldersUsersList()){
+				if(u.email != null) {
+					whoEmails.add(u.email);
+				}
+			}
+		}else{
+			templateName = 'Approve_Reject_to_company_admin';
+		}
+		Boolean submitted = !whoEmails.isEmpty() ? CW_Utilities.sendEmailTemplate(templateName, facility.Id, whoId, whoEmails, false) : false;
+
+		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
+
+		String subject = 'New Station is pending approval';
+		String body = subject;
+		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+		if (submitted) {
+			res.success = true;
+			res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;
+		
+		} else {
+			res.success = false;
+			res.message = 'Something went wrong. Please contact IATA. Comment: Approval Process not triggered';
+		}
+
+		//Send email to requestor
+		String whoEmail = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.Contact.Email : createdArd.CreatedBy.Email;
+		templateName = isNewAccount == true ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
+		CW_Utilities.sendEmailTemplate(templateName, facility.Id, whoId, new List<String> {whoEmail}, true);
+		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String> {createdArd.CreatedBy.ContactId}, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA,false));
+
+		if(notifications.size() > 0){
+			insert notifications;
+		}
+
+		return res;
+	}
+
+	private static void createFacilityRelations(String ardRelIds, String facilityId) {
+		if (!String.isBlank(ardRelIds)) {
+			List<ICG_Account_Role_Detail_Relationship__c> ardrelationship = new List<ICG_Account_Role_Detail_Relationship__c>();
+			for (String airId : ardRelIds.split(';')) {
+				//Handled airline points to Account, ICG ARD points to Account Role Detail.
+				ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = facilityId, Handled_Airline__c = airId.startsWith('001') ? airId : null));
+			}
+			if (!ardrelationship.isEmpty()) {
+				insert ardrelationship;
+			}
+		}
+	}
+
+	private static Id getNearestAirportForFacility(String nearestAirportCode) {
+		if(nearestAirportCode != null && nearestAirportCode != ''){
+			List<Airport_Detail__c> airportDetail = [Select Id from Airport_Detail__c where Code__c =:nearestAirportCode];
+			if (!airportDetail.isEmpty()) return airportDetail[0].Id;
+		}
+
+		return null;
+	}
+
+	private static Id getAccountRoleForAccount(String accountId) {
+		List<Account_Role__c> aroles = [SELECT id FROM Account_Role__c WHERE Account__c = :accountId AND Functional_Role__c = :ONESOURCE];
+		if (aroles.isEmpty()) {
+			try {
+				Account_Role__c ar = createOneSourceAccRole(accountId);
+				insert ar;
+				return ar.Id;
+			} catch (Exception ex) {
+				return null;
+			}
+		} else {
+			return aroles[0].Id;
+		}
+	}
+
+	private static Id createFacilityLogo(String logoInfo, Id facilityId){
+		LogoInfo facilityLogo;
+		if (logoInfo != null && logoInfo.length() > 4){
+			facilityLogo = (LogoInfo) JSON.deserialize(logoInfo, LogoInfo.class);
+		}
+
+		if (facilityLogo != null) {
+			ContentVersion conVer = new ContentVersion();
+			conVer.ContentLocation = 'S'; // S specify this document is in SF, use E for external files
+			conVer.PathOnClient = facilityLogo.fileName; // The files name, extension is very important here which will help the file in preview.
+			conVer.Title = facilityLogo.fileName; // Display name of the files
+			conVer.VersionData = EncodingUtil.base64Decode(facilityLogo.base64Data); // converting your binary string to Blog
+			conVer.Is_Company_Logo__c = true;
+			insert conVer;
+			// First get the content document Id from ContentVersion
+			Id conDoc = conVer.ContentDocumentId != null ? conVer.ContentDocumentId : [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :conVer.Id].ContentDocumentId;
+
+			//Create ContentDocumentLink
+			ContentDocumentLink cDe = new ContentDocumentLink();
+			cDe.ContentDocumentId = conDoc;
+			cDe.LinkedEntityId = facilityId; // you can use objectId,GroupId etc
+			cDe.ShareType = 'I';
+			cDe.Visibility = 'AllUsers';
+			insert cDe;
+
+			return conDoc;
+		}
+
+		return null;
 	}
 
 	@AuraEnabled
@@ -183,44 +236,20 @@ public without sharing class CW_CreateFacilityController {
 	}
 
 	@AuraEnabled
-	public static Map<String, Object> updateFacility(String jsonInput, String logoInfo) {
+	public static Map<String, Object> updateFacility(String jsonInput, String logoInfo, String geoLocationInfo) {
 		
 		Map<String, Object> returnValue = new Map<String, Object>();
 
-		try {
-			LogoInfo facilityLogo;
-			if (logoInfo != null && logoInfo.length() > 4){
-				facilityLogo = (LogoInfo) JSON.deserialize(logoInfo, LogoInfo.class);
-			}
-			
+		try {			
 			ICG_Account_Role_Detail__c facilityToUpdate =(ICG_Account_Role_Detail__c) JSON.deserialize(jsonInput,ICG_Account_Role_Detail__c.class);
-			update facilityToUpdate;
 
-			if (facilityLogo != null) {
-				ContentVersion conVer = new ContentVersion();
-				conVer.ContentLocation = 'S'; // S specify this document is in SF, use E for external files
-				conVer.PathOnClient = facilityLogo.fileName; // The files name, extension is very important here which will help the file in preview.
-				conVer.Title = facilityLogo.fileName; // Display name of the files
-				conVer.VersionData = EncodingUtil.base64Decode(facilityLogo.base64Data); // converting your binary string to Blog
-				conVer.Is_Company_Logo__c = true;
-				insert conVer;
-				// First get the content document Id from ContentVersion
-				Id conDoc = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :conVer.Id].ContentDocumentId;
+			facilityToUpdate = CW_CreateFacilityController.handleGeoLocations(facilityToUpdate, geoLocationInfo);
 
-				//Create ContentDocumentLink
-				ContentDocumentLink cDe = new ContentDocumentLink();
-				cDe.ContentDocumentId = conDoc;
-				cDe.LinkedEntityId = facilityToUpdate.Id; // you can use objectId,GroupId etc
-				cDe.ShareType = 'I';
-				cDe.Visibility = 'AllUsers';
-				insert cDe;
-
-				String URL_Base = ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
-				facilityToUpdate.logoUrl__c = URL_Base.removeEnd('/s/') + '/sfc/servlet.shepherd/document/download/' + conDoc;
-				update facilityToUpdate;
+			Id conDoc = CW_CreateFacilityController.createFacilityLogo(logoInfo, facilityToUpdate.Id);
+			if(conDoc != null){
+				facilityToUpdate.logoUrl__c = CW_CreateFacilityController.generateLogoURL(conDoc);
 			}
-
-
+			update facilityToUpdate;
 
 			returnValue.put('result', new Map<String, String>{ 'status' => 'OK' });
 		} catch (Exception e) {
@@ -234,17 +263,51 @@ public without sharing class CW_CreateFacilityController {
 	public static void updateAccountCoordinates(String accId, Double latitude, Double longitude){
 		Account acc = [Select id, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s from Account where Id =:accId];
 		if (acc.Business_Geo_Coordinates__Latitude__s == null || acc.Business_Geo_Coordinates__Longitude__s == null){
-			acc.Business_Geo_Coordinates__Latitude__s = latitude;
-			acc.Business_Geo_Coordinates__Longitude__s = longitude;
-			update acc;
+			CW_CreateFacilityController.updateGeoLocationsForAccount(acc, latitude, longitude);
 		}
+	}
+
+	private static void updateGeoLocationsForAccount(Account acc, Double latitude, Double longitude) {
+		acc.Business_Geo_Coordinates__Latitude__s = latitude;
+		acc.Business_Geo_Coordinates__Longitude__s = longitude;
+		update acc;
+	}
+
+	private static ICG_Account_Role_Detail__c handleGeoLocations(ICG_Account_Role_Detail__c facilityToUpdate, String geoLocationInfo) {
+		GeoLocationInfo geoLocation;
+		if (geoLocationInfo != null && geoLocationInfo.length() > 4){
+			geoLocation = (GeoLocationInfo) JSON.deserialize(geoLocationInfo, GeoLocationInfo.class);
+		}
+
+		if(geoLocation != null && geoLocation.companyId != null) {
+			Account acc = [Select id, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s from Account where Id =:geoLocation.companyId];
+			Boolean accountCoordinatesAreDifferent = acc != null && (acc.Business_Geo_Coordinates__Latitude__s != geoLocation.latitude || acc.Business_Geo_Coordinates__Longitude__s != geoLocation.longitude);
+			Boolean newCoordinatesAreValid = geoLocation.latitude != null && geoLocation.longitude != null;
+			if(accountCoordinatesAreDifferent && newCoordinatesAreValid){
+				facilityToUpdate.Station_Geo_Coordinates__Latitude__s = geoLocation.latitude;
+				facilityToUpdate.Station_Geo_Coordinates__Longitude__s = geoLocation.longitude;
+			}
+
+			Boolean accountCoordinatesAreNotSet = acc != null && acc.Business_Geo_Coordinates__Latitude__s == null || acc.Business_Geo_Coordinates__Longitude__s == null;
+
+			if (accountCoordinatesAreNotSet && newCoordinatesAreValid){
+				CW_CreateFacilityController.updateGeoLocationsForAccount(acc, geoLocation.latitude, geoLocation.longitude);
+			}
+		}
+
+		return facilityToUpdate;
+	}
+
+	private static String generateLogoURL(Id conDoc) {
+		String URL_Base = ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
+		return URL_Base.removeEnd('/s/') + '/sfc/servlet.shepherd/document/download/' + conDoc;
 	}
 
 	private static Account_Role__c createOneSourceAccRole(Id accountId){
 		Account_Role__c ar = new Account_Role__c();
 		ar.Account__c = accountId;
-		ar.Account_Role_Name__c = 'One Source';
-		ar.Functional_Role__c = 'One Source';
+		ar.Account_Role_Name__c = ONESOURCE;
+		ar.Functional_Role__c = ONESOURCE;
 		ar.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c','Master');
 		return ar;
 	}
@@ -269,7 +332,7 @@ public without sharing class CW_CreateFacilityController {
 			for (ICG_Account_Role_Detail__c ard : onAirportStations) {
 				//If the onairport station is in the same airport as facility, then add.
 				Boolean selected =  false;
-				if(rtype == 'Airline'){
+				if(rtype == 'Airline' && ard.RecordType.DeveloperName == rtype){
 					for (ICG_Account_Role_Detail_Relationship__c ardr : operatingStations) {
 						//If the handled airline is the facility company airline and it's in the same airport, then add.
 						if (ard.Id == ardr.ICG_Account_Role_Detail__c){
@@ -296,5 +359,11 @@ public without sharing class CW_CreateFacilityController {
 		public String fileName;
 		public String base64Data;
 		public String contentType;
+	}
+
+	public class GeoLocationInfo {
+		public Double longitude;
+		public Double latitude;
+		public String companyId;
 	}
 }

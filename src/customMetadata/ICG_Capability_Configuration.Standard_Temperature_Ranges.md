@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">2_To_8_C;15_To_25_C;2_To_25_C</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Standard_Temperature_Ranges</value>
     </values>

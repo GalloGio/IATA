@@ -3,7 +3,7 @@ import getUserFacilities from "@salesforce/apex/CW_PrivateAreaController.getUser
 import getUserRemoteValidations from "@salesforce/apex/CW_RemoteValidationsController.getUserRemoteValidations";
 import getUserRequestedAudits from "@salesforce/apex/CW_ScheduleAuditsController.getUserRequestedAudits";
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
-import getCompanyadminContactsFromAccountId from "@salesforce/apex/CW_Utilities.getCompanyadminContactsFromAccountId";
+import getCompanyAdminContactsFromAccountId from "@salesforce/apex/CW_Utilities.getCompanyAdminContactsFromAccountId";
 import getActiveCertifications from "@salesforce/apex/CW_PrivateAreaController.getActiveCertifications";
 import getUserCompanyInfo from "@salesforce/apex/CW_PrivateAreaController.getUserCompanyInfo";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
@@ -35,6 +35,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	@track requestedAudits;
 	@track gxaUrl = '#';
 	@track sectionLoading;
+	@track contactRoleHandled;
 	label = labels.labels();
 	stationsInitialized;
 	managedFacilitiesIds;
@@ -62,7 +63,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	@track userHasAccess = false;
 
 	@wire(getEnvironmentVariables, {})
-    environmentVariables;
+	environmentVariables;
 
 	@wire(userHasOneSourceAccess,{})
 	wiredUserAccess(result){
@@ -125,13 +126,13 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				})
 				
 				let companyList = groupInfo.companyList;
-                let hasItem = (companyList.length>0);
+				let hasItem = (companyList.length>0);
 				let isCompanyAdmin = groupInfo.isCompanyAdmin;
 				let isPendingCompanyAdmin = groupInfo.isPendingCompanyAdmin;
 				let status = groupInfo.status;
 				let accountRoleDetailId  = groupInfo.id;
-                let createdDateDateFormat = groupInfo.createdDate ? (groupInfo.createdDate.split("-")[2]).split('T')[0] + "-" + groupInfo.createdDate.split("-")[1] + "-" + groupInfo.createdDate.split("-")[0] : null;
-                let createdDate = groupInfo.createdDate;
+				let createdDateDateFormat = groupInfo.createdDate ? (groupInfo.createdDate.split("-")[2]).split('T')[0] + "-" + groupInfo.createdDate.split("-")[1] + "-" + groupInfo.createdDate.split("-")[0] : null;
+				let createdDate = groupInfo.createdDate;
 				this.userFacilities.push({accountRoleDetailId, groupName, isCompanyAdmin,isPendingCompanyAdmin, companyList, numberOfStations, numberOfApprovedStations, status, createdDateDateFormat, createdDate, hasItem});
 			});
 			this.initializeCertifications();
@@ -146,18 +147,18 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.rawUserInfo = result;
 		if (result.data) {
 			this.userInfo = JSON.parse(result.data);
-			getCompanyadminContactsFromAccountId({ accountId: this.userInfo.AccountId })
+			getCompanyAdminContactsFromAccountId({ accountId: this.userInfo.AccountId })
 				.then(cadmins => {
 					if (cadmins) {
 						this.companyAdmins = cadmins;
 					} else {
 						this.companyAdmins = [];
 					}
-                })
+				})
 				.catch(err => {
 					this.companyAdmins = [];
 				});
-        }
+		}
 	}
 
 	@wire(getActiveCertifications, {})
@@ -175,7 +176,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	}
 
 	get showUserStats() {
-		return !this.showFacilityDetail && !this.showCreateNewFacility && !this.showBecomeCompanyAdmin && !this.showBecomeFacilityManager && !this.showScheduleAudits && !this.showValidationHistory && !this.showPurchaseRemoteValidation && !this.showOpenRemoteValidations && !this.showOpenRemoteValidationHistory && !this.showPendingUserApprovals && !this.showCompanyAdmins && !this.showAuditsRequested && !this.showPendingFacilityApprovals && !this.showStationManagers && !this.showMyRequests && !this.showAlertsAndEvents && !this.showCapabilityManagement;
+		return !this.showFacilityDetail && !this.showCreateNewFacility && !this.showBecomeCompanyAdmin && !this.showBecomeFacilityManager && !this.showScheduleAudits && !this.showValidationHistory && !this.showPurchaseRemoteValidation && !this.showOpenRemoteValidations && !this.showOpenRemoteValidationHistory && !this.showPendingUserApprovals && !this.showCompanyAdmins && !this.showAuditsRequested && !this.showPendingFacilityApprovals && !this.showManagerUserPermission && !this.showStationManagers && !this.showMyRequests && !this.showAlertsAndEvents && !this.showCapabilityManagement;
 	}
 	get showAlertsAndEvents() {
 		return this.menuItemSelected === "Alerts and Events" && this.userInfo;
@@ -194,6 +195,9 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	}
 	get showPendingFacilityApprovals() {
 		return this.menuItemSelected === "Pending Facility Approvals" && this.userInfo;
+	}
+	get showManagerUserPermission() {
+		return this.menuItemSelected === "Manager User Permission" && this.userInfo && this.companyAdmins;;
 	}
 	get showScheduleAudits() {
 		return this.menuItemSelected === "Schedule Audits" && this.userInfo;
@@ -324,13 +328,14 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				let modalMessage;
 				this.approvalSuccess = resp;
 				let approvalStation = this.getStation();
-
 				if (this.approvalSuccess) {
-					modalMessage = approvalStation ? approvalStation.Name : "The Station";
-					modalMessage += " has been approved. Now it is pending for IATA Approval.";
+					modalMessage = this.label.the_station;
+					modalMessage += approvalStation ?  " " + approvalStation.Name : "";
+					modalMessage += " " + this.label.has_been_approved + ". "+ this.label.now_pending_for_IATA_Approval + ".";
 				} else {
-					modalMessage = approvalStation ? approvalStation.Name : "The Station";
-					modalMessage += " could not be approved. You have to be Company Admin in order to approve this station.";
+					modalMessage = this.label.the_station;
+					modalMessage += approvalStation ?  " " + approvalStation.Name : "";
+					modalMessage += " " + this.label.could_not_be_approved + ". " + this.label.need_to_be_company_admin_to_approve + ".";
 				}
 				this.approvalModalMessage = modalMessage;
 				this.showApprovalModal = true;
@@ -353,10 +358,12 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				let approvalStation = this.getStation();
 
 				if (this.approvalSuccess) {
-					modalMessage = approvalStation ? approvalStation.Name : "The Station";
+					modalMessage = this.label.the_station;
+					modalMessage += approvalStation ?  " " + approvalStation.Name : "";
 					modalMessage += " has been rejected successfully.";
 				} else {
-					modalMessage = approvalStation ? approvalStation.Name : "The Station";
+					modalMessage = this.label.the_station;
+					modalMessage += approvalStation ?  approvalStation.Name : "";
 					modalMessage += " could not be rejected. You have to be Company Admin in order to reject this station.";
 				}
 				this.approvalModalMessage = modalMessage;
@@ -379,12 +386,14 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.approvalContactRoleId = null;
 		this.approvalStationId = event.detail;
 		this.removalContactRoleId = null;
+		this.contactRoleHandled = null;
 		this.approveStation(true);
 	}
 	rejectStationEvent(event) {
 		this.approvalContactRoleId = null;
 		this.approvalStationId = event.detail;
 		this.removalContactRoleId = null;
+		this.contactRoleHandled = null;
 		this.showRejectModal = true;
 	}
 
@@ -393,14 +402,14 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		approveCrdAutomaticProcess({ contactRoleDetailId: this.approvalContactRoleId })
 			.then(resp => {
 				this.approvalSuccess = resp;
-				let approvalContactRole = this.getUser();
+				this.contactRoleHandled = resp;
 
 				let modalMessage;
 				if (this.approvalSuccess) {
-					modalMessage = approvalContactRole ? approvalContactRole.Name : "The Contact Role";
+					modalMessage = this.contactRoleName ? this.contactRoleName : "The Contact Role";
 					modalMessage += " has been approved.";
 				} else {
-					modalMessage = approvalContactRole ? approvalContactRole.Name : "The Contact Role";
+					modalMessage = this.contactRoleName ? this.contactRoleName : "The Contact Role";
 					modalMessage += " could not be approved. You have to be Company Admin in order to approve this user.";
 				}
 				this.approvalModalMessage = modalMessage;
@@ -420,14 +429,15 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.approvalAction = "Reject";
 		rejectCrdAutomaticProcess({ contactRoleDetailId: this.approvalContactRoleId, rejectReason: this.rejectReasonContactRole })
 			.then(resp => {
-				let approvalContactRole = this.getUser();
 				this.approvalSuccess = resp;
+				this.contactRoleHandled = resp;
+
 				let modalMessage;
 				if (this.approvalSuccess) {
-					modalMessage = approvalContactRole ? approvalContactRole.Name : "The Contact Role";
+					modalMessage = this.contactRoleName ? this.contactRoleName : "The Contact Role";
 					modalMessage += " has been rejected successfully.";
 				} else {
-					modalMessage = approvalContactRole ? approvalContactRole.Name : "The Contact Role";
+					modalMessage = this.contactRoleName ? this.contactRoleName : "The Contact Role";
 					modalMessage += " could not be rejected. You have to be Company Admin in order to reject this station.";
 				}
 				this.approvalModalMessage = modalMessage;
@@ -468,21 +478,23 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	handleContactRoleRemoval(refresh, approvedRemoval) {
 		this.approvalAction = "HandleRemoval";
 		handleContactRoleDetailRemovalProcess({ contactRoleDetailId: this.removalContactRoleId, approvedRemoval: approvedRemoval })
-			.then(resp => {
-				let approvalContactRole = this.getUser();
+			.then(result => {
+				let resp = JSON.parse(result);
+				this.contactRoleHandled = resp.contactRole;
+				let message = resp.message;
 				let modalMessage;
-				if(resp === 'Successful'){
+				if(message === 'Successful'){
 					this.approvalSuccess = true;
-					modalMessage = approvalContactRole ? approvalContactRole.Name : "The Contact Role";
+					modalMessage = this.contactRoleName ? this.contactRoleName : "The Contact Role";
 					modalMessage += " has been removed.";
 				}
-				else if(resp === 'Unsuccessful'){
+				else if(message === 'Unsuccessful'){
 					this.approvalSuccess = true;
 					modalMessage = "The request to remove ";
-					modalMessage += approvalContactRole ? approvalContactRole.Name : " the contact";
+					modalMessage += this.contactRoleName ? this.contactRoleName : " the contact";
 					modalMessage += " has been rejected";
 				}
-				else if(resp === 'MissingRights'){
+				else if(message === 'MissingRights'){
 					modalMessage = 'You do not have sufficient rights for this operation.';
 					this.approvalSuccess = false;
 				}
@@ -495,6 +507,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				console.error(ex);
 				this.approvalSuccess = false;
 				this.isError = true;
+				this.approvalModalMessage = ex && ex.body ? 'Something went wrong: ' + ex.body.message : 'Something went wrong. Please contact IATA. Comment: Pending user request not handled properly.';
 				this.showApprovalModal = true;
 				this.isLoading = false;
 			});
@@ -675,18 +688,18 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	}
 
 	renderedCallback() {
-        Promise.all([
-                loadStyle(this, resources + "/css/main.css"),
-                loadStyle(this, resources + "/css/custom.css")
-            ])
-            .then(() => {
-                this.loadedCss = true;
-                pubsub.fire("loadedCss");
+		Promise.all([
+				loadStyle(this, resources + "/css/main.css"),
+				loadStyle(this, resources + "/css/custom.css")
+			])
+			.then(() => {
+				this.loadedCss = true;
+				pubsub.fire("loadedCss");
 			})
 			.then(() => {
 				this._isProdEnvironment()
 			})
-            .catch(err => {
+			.catch(err => {
 				this.isLoading = false;
 			});
 			
@@ -721,11 +734,13 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	
 	closeApprovalModal() {
 		this.showApprovalModal = false;
+		this.contactRoleHandled = null;
 		this.removeUrlParams();
 	}
 
 	closeRejectModal() {
 		this.showRejectModal = false;
+		this.contactRoleHandled = null;
 		this.removeUrlParams();
 	}
 
@@ -750,25 +765,18 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		return stationToReturn;
 	}
 
-	getUser() {
-		let userToReturn;
-
-		return userToReturn;
-	}
-
 	get rejectModalMessage() {
 		let modalMessage = "Are you sure you want to reject ";
 		let approvalStation = this.getStation();
-		let approvalContactRole = this.getUser();
 
 		if (approvalStation || this.approvalStationId) {
-			modalMessage += approvalStation ? approvalStation.Name + "?" : " this station?";
-		} else if (approvalContactRole || this.approvalContactRoleId) {
-			modalMessage += approvalContactRole ? approvalContactRole.Name + "?" : " this user?";
+			modalMessage += this.label.the_station.toLowerCase();
+			modalMessage += approvalStation ?  " " + approvalStation.Name + "?" : "?";
+		} else if (this.contactRoleName || this.approvalContactRoleId) {
+			modalMessage += this.contactRoleName ? this.contactRoleName + "?" : " this user?";
 		} else {
 			modalMessage = "Are you sure you want to confirm this reject action?";
 		}
-
 		return modalMessage;
 	}
 
@@ -826,5 +834,17 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	emptyMenuItemSelected(event){
 		event.preventDefault();
 		this.menuItemSelected = undefined;
+	}
+
+	get contactRoleName(){
+		let name = '';
+		if(	this.contactRoleHandled && 
+			this.contactRoleHandled.Account_Contact_Role__r &&
+			this.contactRoleHandled.Account_Contact_Role__r.Contact__r &&
+			this.contactRoleHandled.Account_Contact_Role__r.Contact__r.Name){
+				name = this.contactRoleHandled.Account_Contact_Role__r.Contact__r.Name;
+			}
+
+		return name;
 	}
 }

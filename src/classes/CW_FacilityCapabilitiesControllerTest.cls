@@ -84,7 +84,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 	@isTest
 	public static void getCapabilitiesFromAccountRoleDetailIdTest() {
 		Id ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Mail_Tracking_and_Reporting' LIMIT 1].id;
+		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
@@ -132,7 +132,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 	@isTest
 	public static void getCapabilitiesFromAccountRoleDetailIdTest2() {
 		String ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Mail_Tracking_and_Reporting' LIMIT 1].id;
+		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
@@ -231,7 +231,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 	@isTest
 	public static void createRelationshipsForNewCapabilitiesTest() {
 		String ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Mail_Tracking_and_Reporting' LIMIT 1].id;
+		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
@@ -423,5 +423,3 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Test.stopTest();
 	}
 }
-	
-   

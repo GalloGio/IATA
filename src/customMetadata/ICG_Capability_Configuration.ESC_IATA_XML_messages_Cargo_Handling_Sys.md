@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Extra_Data__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">Cargo_Messaging_Capacities#IATA_XML_messages_Cargo_Handling_System_capabilities</value>
+        <value xsi:type="xsd:string">IATA_XML_messages_Cargo_Handling_System_Capabilities#IATA_XML_messages_Cargo_Handling_System_Capabilities</value>
     </values>
     <values>
         <field>Order__c</field>

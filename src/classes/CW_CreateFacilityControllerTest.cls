@@ -79,7 +79,14 @@ public class CW_CreateFacilityControllerTest {
 		info.fileName = 'Test';
 		info.base64Data = 'Test';
 		info.contentType = 'Test';
-		system.assert((CW_CreateFacilityController.createFacility('Test', 'Test', JSON.serialize(info), 'Test', 'Test', false,false, false,'[]','[]')).containsIgnoreCase('false'));
+
+		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
+		geoLocations.companyId = null;
+		geoLocations.latitude = 1.32;
+		geoLocations.longitude = 2.45;
+		String geoLocationsJSON = JSON.serialize(geoLocations);
+
+		system.assert((CW_CreateFacilityController.createFacility('Test', 'Test', JSON.serialize(info), JSON.serialize(geoLocationsJSON), 'Test', 'Test', false,false, false,'[]','[]')).containsIgnoreCase('false'));
 		Test.stopTest();
 	}
 	
@@ -102,11 +109,17 @@ public class CW_CreateFacilityControllerTest {
 		List <IATA_ISO_Country__c> isoCodes = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 		Account accNew = new Account (Name = 'Account03', IATA_ISO_Country__c = isoCodes[0].Id);
 		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
-		
+
+		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
+		geoLocations.companyId = accRole.Id;
+		geoLocations.latitude = 1.32;
+		geoLocations.longitude = 2.45;
+		String geoLocationsJSON = JSON.serialize(geoLocations);
+
 		Test.startTest();
 
-		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), JSON.serialize(geoLocationsJSON), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), JSON.serialize(geoLocationsJSON), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
 	
 		Test.stopTest();
 	}
@@ -131,7 +144,7 @@ public class CW_CreateFacilityControllerTest {
 	@isTest
 	private static void updateFacility(){
 		Airport_Detail__c airport = [Select Id, IATA_ISO_Country__c from Airport_Detail__c limit 1];
-		Account_Role__c accRole = [Select Id from Account_Role__c limit 1];
+		Account_Role__c accRole = [Select Id, Account__c from Account_Role__c limit 1];
 
 		ICG_Account_Role_Detail__c accRoleDetail = CW_TestDataFactory.testICGAccountRoleDetail(
 			accRole.Id,
@@ -145,16 +158,25 @@ public class CW_CreateFacilityControllerTest {
 		info.contentType = 'Test';
 		String logoJson = JSON.serialize(info);
 
+		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
+		geoLocations.companyId = accRole.Account__c;
+		geoLocations.latitude = 1.32;
+		geoLocations.longitude = 2.45;
+		String geoLocationsJSON = JSON.serialize(geoLocations);
+
+
 		String id = accRoleDetail.Id;
 		String jsonInput = '{"Number_of_Employees__c":25001,"Overall_Facility_Size_m2__c":5410,"Overall_Airport_Size__c":2560,"Fleet__c":1500,"Is_On_Airport__c":true,"Is_Direct_Ramp_Access__c":true,"Road_Feeder_Services__c":true,"Customer_Service_Email__c":"info@genericcompany.com","Customer_Service_Phone_Number__c":"+34 900902902","Website__c":"www.genericairline.com","Online_Booking_System_Link__c":"www.genericairline.com","Available_Languages__c":"English;German;Spanish","General_Cargo__c":true,"Live_Animals__c":true,"Dangerous_Goods__c":true,"Airmail__c":true,"Perishables__c":false,"Pharmaceuticals__c":true,"Secondary_Address__c":"test","Id":"' + id +'"}';
 		Test.startTest();
-		CW_CreateFacilityController.updateFacility(jsonInput, null);
-		Map<String, Object> result = CW_CreateFacilityController.updateFacility(jsonInput, logoJson);
+		CW_CreateFacilityController.updateFacility(jsonInput, null, null);
+		Map<String, Object> result = CW_CreateFacilityController.updateFacility(jsonInput, logoJson, geoLocationsJSON);
 		Test.stopTest();
 		System.assert(!result.isEmpty(), 'The result is lacking attributes');
 		Map<String, String> resultValues = (Map<String, String>)result.get('result');
 		System.assertEquals('OK', resultValues.get('status'), 'Returned status is not "OK"');
-		ICG_Account_Role_Detail__c ardUpdated = [Select Id, Number_of_Employees__c, Overall_Facility_Size_m2__c, Overall_Airport_Size__c, Fleet__c, Is_On_Airport__c, Is_Direct_Ramp_Access__c, Road_Feeder_Services__c, Customer_Service_Email__c, Customer_Service_Phone_Number__c, Website__c, Online_Booking_System_Link__c, Available_Languages__c, General_Cargo__c, Live_Animals__c, Dangerous_Goods__c, Airmail__c, Perishables__c, Pharmaceuticals__c, Secondary_Address__c from ICG_Account_Role_Detail__c where Id=:id];
+		ICG_Account_Role_Detail__c ardUpdated = [Select Id, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s, Number_of_Employees__c, Overall_Facility_Size_m2__c, Overall_Airport_Size__c, Fleet__c, Is_On_Airport__c, Is_Direct_Ramp_Access__c, Road_Feeder_Services__c, Customer_Service_Email__c, Customer_Service_Phone_Number__c, Website__c, Online_Booking_System_Link__c, Available_Languages__c, General_Cargo__c, Live_Animals__c, Dangerous_Goods__c, Airmail__c, Perishables__c, Pharmaceuticals__c, Secondary_Address__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s, Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s from ICG_Account_Role_Detail__c where Id=:id];
+		System.assertEquals(geoLocations.latitude, ardUpdated.Station_Geo_Coordinates__Latitude__s, 'Latitude is not as expected');
+		System.assertEquals(geoLocations.longitude, ardUpdated.Station_Geo_Coordinates__Longitude__s, 'Longitude is not as expected');
 		System.assertEquals(25001, ardUpdated.Number_of_Employees__c, 'Number_of_Employees__c is not as expected');
 		System.assertEquals(5410, ardUpdated.Overall_Facility_Size_m2__c, 'Overall_Facility_Size_m2__c is not as expected');
 		System.assertEquals(2560, ardUpdated.Overall_Airport_Size__c, 'Overall_Airport_Size__c is not as expected');
@@ -189,10 +211,16 @@ public class CW_CreateFacilityControllerTest {
 		info.contentType = 'Test';
 		String logoJson = JSON.serialize(info);
 
+		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
+		geoLocations.companyId = null;
+		geoLocations.latitude = 1.32;
+		geoLocations.longitude = 2.45;
+		String geoLocationsJSON = JSON.serialize(geoLocations);
+
 		String id = 'Id';
 		String jsonInput = '{"Number_of_Employees__c":25001,"Overall_Facility_Size_m2__c":5410,"Overall_Airport_Size__c":2560,"Fleet__c":1500,"Is_On_Airport__c":true,"Is_Direct_Ramp_Access__c":true,"Road_Feeder_Services__c":true,"Customer_Service_Email__c":"info@genericcompany.com","Customer_Service_Phone_Number__c":"+34 900902902","Website__c":"www.genericairline.com","Online_Booking_System_Link__c":"www.genericairline.com","Available_Languages__c":"English;German;Spanish","General_Cargo__c":true,"Live_Animals__c":true,"Dangerous_Goods__c":true,"Airmail__c":true,"Perishables__c":false,"Pharmaceuticals__c":true,"Secondary_Address__c":"test","Id":"' + id +'"}';
 		Test.startTest();
-		Map<String, Object> result = CW_CreateFacilityController.updateFacility(jsonInput, logoJson);
+		Map<String, Object> result = CW_CreateFacilityController.updateFacility(jsonInput, logoJson, geoLocationsJSON);
 		Test.stopTest();
 		System.assert(!result.isEmpty(), 'The result is lacking attributes');
 		Map<String, String> resultValues = (Map<String, String>)result.get('exception');

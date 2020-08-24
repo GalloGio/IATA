@@ -48,6 +48,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	@track activeInfoWindow;
 	@track setFacilityNameAndType;
 	logoInfoObject;
+	geoLocationInfoObject;
 	@track logoImage;
 	@track showModal = false;
 	@track modalMessage =
@@ -70,7 +71,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	languageSelectorEventListenersAdded = false;
 	airportSelectorEventListenersAdded = false;
 	@track step = 1;
-	@track _userFacilities;
+	@track facilityList;
 	@track requesting;
 	@track availableLanguages;
 	@track hoveredCompany;
@@ -108,6 +109,18 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	@track creatingStation;
 	@track stationCreated;
 	@track errorCreatingStation;
+	
+	get creatingStationAccount(){
+		return this.creatingAccount || this.creatingStation;
+	}
+	
+	get stationAccountCreated(){
+		return this.accountCreated || this.stationCreated;
+	}
+	
+	get errorCreatingStationAccount(){
+		return this.errorCreatingAccount || this.errorCreatingStation;
+	}
 
 	//Determine if is an internal user who creates
 	//a station from Account page
@@ -135,35 +148,35 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	parentGroup; //Name of the ops hierarchy of the account
 
 	account = {
-        'legalname':'',
-        'tradename':'',
-        'phone':'',
-        'email':'',
-        'website':'',
-        'customerType':'',
-        'customerTypeSector':'',
-        'customerTypeCategory':'',
-        'sector':'',
+		'legalname':'',
+		'tradename':'',
+		'phone':'',
+		'email':'',
+		'website':'',
+		'customerType':'',
+		'customerTypeSector':'',
+		'customerTypeCategory':'',
+		'sector':'',
 		'category':'',
 		'opsHierarchy':''
 	};
 	address = {
-        'isPoBox':false,
-        'countryId':'',
-        'countryCode':'',
-        'countryName':'',
-        'stateId':'',
-        'stateName':'',
-        'cityId':'',
-        'cityName':'',
-        'street':'',
-        'zip':'',
-        'validationStatus':0,
-        'checkPerformed':false,
-        'inputModified':true,
-        'geonameWarning1':'',
-        'geonameWarning2':'',
-        'addressSuggestions':[]
+		'isPoBox':false,
+		'countryId':'',
+		'countryCode':'',
+		'countryName':'',
+		'stateId':'',
+		'stateName':'',
+		'cityId':'',
+		'cityName':'',
+		'street':'',
+		'zip':'',
+		'validationStatus':0,
+		'checkPerformed':false,
+		'inputModified':true,
+		'geonameWarning1':'',
+		'geonameWarning2':'',
+		'addressSuggestions':[]
 	};
 
 	createdCityId;
@@ -205,7 +218,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	}
 	@api
 	get userFacilities() {
-		return this._userFacilities || [];
+		return this.facilityList || [];
 	}
 	set userFacilities(values) {
 		let copiedValues = JSON.parse(JSON.stringify(values));
@@ -676,6 +689,12 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	setGeocoordinates(event){
 		this.updatedLatitude = event.detail.latitude;
 		this.updatedLongitude = event.detail.longitude;
+
+		this.geoLocationInfoObject = {
+			longitude: this.updatedLongitude,
+			latitude: this.updatedLatitude
+		}
+		
 	}
 
 	createFacilityJS() {
@@ -686,57 +705,22 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			this.creatingStation = true;
 			let account = this.registerNewAccount()
 			// Check first if we need to create a Geoname city
-            if(this.selectedAddressObject.stateId !== '' && this.selectedAddressObject.cityId === ''){
-                createIsoCity({name : this.selectedAddressObject.city, stateId: this.selectedAddressObject.stateId, isPoBox: false})
-                .then(result => {
-                    this.createdCityId = result;
-					createDummyCompany({account: JSON.stringify(account), opsHierarchy : this.account.opsHierarchy}).then(resp => {
-						let parsedRes = JSON.parse(resp);
-						this.creatingAccount = false;
-						this.accountCreated = parsedRes.success;
-						this.errorCreatingAccount = !parsedRes.success;
-						if (parsedRes.success){
-							this.parentCompany = parsedRes.message;
-							this.registerStation();
-						}else{
-							this.errorCreatingStation = true;
-							this.modalMessage = parsedRes.message;
-						}
-					}).catch( ex => {
-						this.creatingAccount = false;
-						this.accountCreated = false;
-						this.errorCreatingStation = true;
-						this.modalMessage = ex.body.message;
-					})
-                })
-                .catch(error => {
+			if(this.selectedAddressObject.stateId !== '' && this.selectedAddressObject.cityId === ''){
+				createIsoCity({name : this.selectedAddressObject.city, stateId: this.selectedAddressObject.stateId, isPoBox: false})
+				.then(result => {
+					this.createdCityId = result;
+					this.createCompany(account);
+				})
+				.catch(error => {
 					this.creatingAccount = false;
 					this.accountCreated = false;
 					this.errorCreatingStation = true;
 					this.modalMessage = ex.body.message;
-                });
-            }
-            else{
-				
-				createDummyCompany({account: JSON.stringify(account), opsHierarchy : this.account.opsHierarchy}).then(resp => {
-					let parsedRes = JSON.parse(resp);
-					this.creatingAccount = false;
-					this.accountCreated = parsedRes.success;
-					this.errorCreatingAccount = !parsedRes.success;
-					if (parsedRes.success){
-						this.parentCompany = parsedRes.message;
-						this.registerStation();
-					}else{
-						this.errorCreatingStation = true;
-						this.modalMessage = parsedRes.message;
-					}
-				}).catch( ex => {
-					this.creatingAccount = false;
-					this.accountCreated = false;
-					this.errorCreatingAccount = true;
-					this.modalMessage = ex.body.message;
-				})
-            }
+				});
+			}
+			else{
+				this.createCompany(account);
+			}
 		}else {
 			this.creatingStation = true;
 			if(!this.selectedCompany.accountInfo.Business_Geo_Coordinates__Longitude__s || !this.selectedCompany.accountInfo.Business_Geo_Coordinates__Latitude__s){
@@ -749,6 +733,27 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			}
 			this.registerStation();
 		}
+	}
+	
+	createCompany(account){
+		createDummyCompany({account: JSON.stringify(account), opsHierarchy : this.account.opsHierarchy}).then(resp => {
+			let parsedRes = JSON.parse(resp);
+			this.creatingAccount = false;
+			this.accountCreated = parsedRes.success;
+			this.errorCreatingAccount = !parsedRes.success;
+			if (parsedRes.success){
+				this.parentCompany = parsedRes.message;
+				this.registerStation();
+			}else{
+				this.errorCreatingStation = true;
+				this.modalMessage = parsedRes.message;
+			}
+		}).catch( ex => {
+			this.creatingAccount = false;
+			this.accountCreated = false;
+			this.errorCreatingStation = true;
+			this.modalMessage = ex.body.message;
+		});
 	}
 
 	get isCompanyAdminOfSelectedOpsHierarchy(){
@@ -781,12 +786,23 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			Secondary_Address__c : this.additionalData.stationsecondaddress,
 			Is_Direct_Ramp_Access__c : this.additionalData.directrampaccess
 		}
+
+		let accountId = this.parentCompany
+		? this.parentCompany
+		: this.userInfo.AccountId;
+		if(this.geoLocationInfoObject){
+			this.geoLocationInfoObject.companyId = accountId;
+		}
+		else {
+			this.geoLocationInfoObject = {
+				companyId: accountId
+			}
+		}
 		createFacility({
-			accountId: this.parentCompany
-				? this.parentCompany
-				: this.userInfo.AccountId,
+			accountId: accountId,
 			station : JSON.stringify(station),
 			logoInfo: JSON.stringify(this.logoInfoObject),
+			geoLocationInfo: JSON.stringify(this.geoLocationInfoObject),
 			ardRelIds : this.ardRelIds,
 			nearestAirportCode : this.selectedAirport ? this.selectedAirport.value : null,
 			isCompanyAdmin: this.isCompanyAdminOfSelectedOpsHierarchy,
@@ -799,6 +815,8 @@ export default class CwCreateFacilityComponent extends LightningElement {
 				let parsedRes = JSON.parse(resp);
 				this.creatingStation = false;
 				this.stationCreated = parsedRes.success;
+				this.creatingAccount = this.stationCreated ? false : this.creatingAccount;
+
 				this.errorCreatingStation = !parsedRes.success;
 				if (parsedRes.success) {
 					this.goToHome = true;
@@ -958,7 +976,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		let selector = '[data-name="top"]';
 		let scrollobjective = this.template.querySelector(selector);
 		scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
-    }
+	}
 
 	setSelectedAirlines(event) {
 		this.getAdditionalFormData();
@@ -1368,11 +1386,11 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	}
 
 	startLoading(){
-        this.requesting = true;
-    }
+		this.requesting = true;
+	}
 
-    stopLoading(){
-        this.requesting = false;
+	stopLoading(){
+		this.requesting = false;
 	}
 	
 	get opsHierarchyList(){
@@ -1618,11 +1636,11 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		return !(this.companyType === "Airline" || this.companyType === "Airport Operator");
 	}
 
-    registerNewAccount(){
-        // The event data needs to indicate if the creation form is fine. Let's say that if data is null, it means the form is invalid
-        // otherwise it should contain the account information
+	registerNewAccount(){
+		// The event data needs to indicate if the creation form is fine. Let's say that if data is null, it means the form is invalid
+		// otherwise it should contain the account information
 
-        let account = { 'sobjectType': 'Account' };
+		let account = { 'sobjectType': 'Account' };
 			account.Name = this.account.legalname;
 			account.Legal_name__c = this.account.legalname;
 			account.TradeName__c = this.account.tradename;
@@ -1685,15 +1703,15 @@ export default class CwCreateFacilityComponent extends LightningElement {
 				account.ShippingState = this.selectedAddressObject.state;
 			}
 			return account;
-            
+			
 	}
 	
 	get successMessage (){
-		let message = this.isInternalUser ? 'The station has been automatically approved' : 'The request has been sent to your Company Admins/IATA for approval.';
+		let message = this.isInternalUser ? this.icg_registration_auto_approved : this.label.icg_registration_request_submitted1;
 		return message;
 	}
 	get additionalMessage(){
-		let additionalMessage = this.selectedCompany ? null : 'Since you have requested the Account creation, the station will only be available when the new Account has been approved.';
+		let additionalMessage = this.selectedCompany ? null : this.label.icg_registration_request_submitted2;
 		return additionalMessage;
 	}
 	get errorCreatingStation(){
@@ -1706,7 +1724,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	getUserFacilitiesFromAccount(){
 		getUserFacilities({fromAccId : this.recordId}).then(result => {
 			if (result) {
-				this._userFacilities = [];
+				this.facilityList = [];
 				let objEntries = Object.entries(JSON.parse(result));
 				objEntries.forEach(opsHierarchyGroup => {
 					//0 is Group Name. 1 is Group Facilities. This is the result of object.entries.
@@ -1750,7 +1768,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 					let accountRoleDetailId  = groupInfo.id;
 					let createdDateDateFormat = groupInfo.createdDate ? (groupInfo.createdDate.split("-")[2]).split('T')[0] + "-" + groupInfo.createdDate.split("-")[1] + "-" + groupInfo.createdDate.split("-")[0] : null;
 					let createdDate = groupInfo.createdDate;
-					this._userFacilities.push({accountRoleDetailId, groupName, isCompanyAdmin,isPendingCompanyAdmin, companyList, numberOfStations, numberOfApprovedStations, status, createdDateDateFormat, createdDate});
+					this.facilityList.push({accountRoleDetailId, groupName, isCompanyAdmin,isPendingCompanyAdmin, companyList, numberOfStations, numberOfApprovedStations, status, createdDateDateFormat, createdDate});
 				});
 				this.isLoading = false;
 				this.initializeUserFacilities(this.userFacilities);
@@ -1801,11 +1819,23 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			})
 			
 		});
-		this._userFacilities = copiedValues;
+		this.facilityList = copiedValues;
 	}
 
 	get showDirectRampAccess(){
 		return this.isInternalUser && this.companyType === 'Cargo Handling Facility';
+	}
+
+	get addressGeo(){
+		let addressGeoObj;
+		if(this.selectedCompany && this.selectedCompany.accountInfo){
+			addressGeoObj = {
+				Latitude: this.selectedCompany.accountInfo.Business_Geo_Coordinates__Latitude__s,
+				Longitude: this.selectedCompany.accountInfo.Business_Geo_Coordinates__Longitude__s
+			}
+		}
+		
+		return addressGeoObj;
 	}
 	
 }

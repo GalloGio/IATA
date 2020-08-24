@@ -94,6 +94,14 @@
 	background: inherit;
 }
 
+.table thead .first-column-top {
+	position: -webkit-sticky;
+	position: sticky;
+	left: 0;
+	z-index: 20;
+	background: white;
+}
+
 .table thead .first-column {
 	position: -webkit-sticky;
 	position: sticky;

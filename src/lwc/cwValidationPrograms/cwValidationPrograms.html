@@ -23,9 +23,11 @@
             </template>
 
         </div>
-        <div class="col-12 text-right">
-            <a class="badge-results blueText" data-tosca="selectallcertifications"
-                onclick={selectAllCertifications}><b>{selectedText}</b></a>
-        </div>
+        <template if:true={selectAllVisible} class="row">
+            <div class="col-12 text-right">
+                <a class="badge-results blueText" data-tosca="selectallcertifications"
+                    onclick={selectAllCertifications}><b>{selectedText}</b></a>
+            </div>
+        </template>
     </div>
 </template>

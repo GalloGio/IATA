@@ -139,7 +139,7 @@ public without sharing class CW_OneSourceGxAProvision {
         CaseIFAPHandler.WrapperCompanyForJSON stationProvision = new CaseIFAPHandler.WrapperCompanyForJSON(station,'Active');
         CaseIFAPHandler.sendJSON(JSON.serialize(stationProvision), 'accounts');
         //Provision all company admins
-        List<Contact> contactsToProvision = CW_Utilities.getCompanyadminContactsFromAccountId(station.AccountId__c);
+        List<Contact> contactsToProvision = CW_Utilities.getCompanyAdminContactsFromAccountId(station.AccountId__c);
         Map<Id,User> mapContactIdUser = new Map<Id,User>();
         for(Contact con : contactsToProvision){
             mapContactIdUser.put(con.Id, null);

@@ -12,7 +12,7 @@
             </template>
             <template if:false={disabledLocation1}>
                 <img class="p-1-5 width-25 bg-red" src={searchbylocation} alt="" />
-                <input type="text" placeholder="Type a Location" onfocus={focusoninput} class="form-control height-auto"
+                <input type="text" placeholder={label.icg_type_location} onfocus={focusoninput} class="form-control height-auto"
                     data-tosca="locationinput1" disabled onkeyup={predictiveSearch} value={location1.value}
                     data-obj="ICG_Account_Role_Detail__c" data-field="City_FOR__c" data-operator="LIKE" autocomplete="off">
               
@@ -22,15 +22,12 @@
                 <template if:true={disabledLocation1}>
                     <span class="badge-results text-blue pt-1" data-tosca="removeLocation1" onclick={removeLocation}><b>{label.remove_location}</b></span>
                 </template>
-                <template if:false={disabledLocation1}>
-                    <button class="btn btn-primary no-margin-top" data-tosca="addlocationbutton1" onclick={addLocation}
-                        type="button">{label.add}</button>
-                </template>
             </div>
             <template if:false={disabledLocation1}>
                 <div data-tosca="predictiveContainer1" class="width-100">
                     <c-cw-predictive-values predictivevalues={locationPredictiveValues} eventnameinput="advancedinboxone" 
-                                            onadvancedinboxone={updateSearchbox1} customstyle="advancedsearch" 
+                                            onadvancedinboxone={updateSearchbox1}
+                                            data-tosca="addlocationbutton1" customstyle="advancedsearch" 
                                             first-row-written={location1.value} display-the-box={isbox1focus}>
                     </c-cw-predictive-values>
                 </div>
@@ -48,7 +45,7 @@
     </template>
     <template if:false={disabledLocation2}>
         <img class="p-1-5 width-25 bg-red" src={searchbylocation} alt="" />
-        <input type="text" placeholder="Type a Location" onfocus={focusoninput} class="form-control height-auto"
+        <input type="text" placeholder={label.icg_type_location} onfocus={focusoninput} class="form-control height-auto"
             data-tosca="locationinput2" disabled onkeyup={predictiveSearch} value={location2.value}
             data-obj="ICG_Account_Role_Detail__c" data-field="City_FOR__c" data-operator="LIKE">
         
@@ -59,16 +56,12 @@
         <template if:true={disabledLocation2}>
             <span class="badge-results text-blue pt-1" data-tosca="removeLocation2" onclick={removeLocation}><b>{label.remove_location}</b></span>
         </template>
-        <template if:false={disabledLocation2}>
-            <button class="btn btn-primary no-margin-top" data-tosca="addlocationbutton2" onclick={addLocation}
-                type="button">{label.add}</button>
-                
-        </template>
     </div>
     <template if:false={disabledLocation2}>
         <div data-tosca="predictiveContainer2" class="width-100">
             <c-cw-predictive-values predictivevalues={locationPredictiveValues} eventnameinput="advancedinboxtwo" 
-                                    onadvancedinboxtwo={updateSearchbox2} customstyle="advancedsearch" 
+                                    onadvancedinboxtwo={updateSearchbox2}
+                                    data-tosca="addlocationbutton2" customstyle="advancedsearch" 
                                     first-row-written={location2.value} display-the-box={isbox2focus}>
             </c-cw-predictive-values>
         </div>

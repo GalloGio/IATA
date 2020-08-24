@@ -23,12 +23,8 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	@track tooltipToDisplay = "";
 
 	initialized = false;
-	@track error;
-	@track isUpdating = false;
+	@track isLoading = true;
 
-	get isDataLoaded() {
-		return (this.facilitiesToCompare && this.comparisonSchema && this.comparisonSchema.superCategories) || this.isUpdating;
-	}
 	connectedCallback() {
 		if (window.LZString === undefined) {
 			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
@@ -36,14 +32,26 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 	renderedCallback() {
 		if (!this.initialized) {
+			this.isLoading = true;
 			this.initialized = true;
 			this.facilitiesToCompare = this.readFacilititiesToCompareFromLocalStorage();
-			this.loadComparisonData();
+			if(this.facilitiesToCompare){
+				let accountRoleDetailRT = this.facilitiesToCompare.reduce(((acc, element) => {
+					acc = !acc ? element.recordTypeDevName : acc;
+					return acc;
+				}), null);
+				this.loadComparisonData(accountRoleDetailRT);
+			}
+			else{
+				this.initialized = false;
+			}
 		}
 	}
 
 	readFacilititiesToCompareFromLocalStorage() {
-		let tmpFacilitiesToCompare = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_COMPARE_FIELD)) || [];
+		let tmpFacilitiesToCompare = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_COMPARE_FIELD));
+		tmpFacilitiesToCompare = tmpFacilitiesToCompare ? tmpFacilitiesToCompare : [];
+
 		tmpFacilitiesToCompare.forEach(function(currentFacility, currentFacilityIndex) {
 			currentFacility.cssClassColumn = currentFacilityIndex === 1 ? "col-3 middle-facility" : "col-3";
 			if (currentFacility.Id) {
@@ -63,27 +71,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 		return tmpFacilitiesToCompare;
 	}
 
-	@track _facilitiesToCompare = null;
-	get facilitiesToCompare() {
-		return this._facilitiesToCompare;
-	}
-
-	set facilitiesToCompare(value) {
-		try {
-			this._facilitiesToCompare = value;
-		} catch (error) {
-			this.showToast("Comparison", "Something went wrong", "error");
-		}
-	}
-
-	_accountRoleDetailRT = null;
-	get accountRoleDetailRT() {
-		if (this._accountRoleDetailRT == null && this.facilitiesToCompare.length > 0) {
-			this._accountRoleDetailRT = this.facilitiesToCompare[0].recordTypeDevName;
-		}
-
-		return this._accountRoleDetailRT;
-	}
+	@track facilitiesToCompare;
 
 	@wire(getURL, { page: "URL_ICG_ResultPage" })
 	urlResultPage;
@@ -94,59 +82,78 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	rawSchemaData;
 	frontKeyCounter = 0;
 
-	loadComparisonData() {
-		getComparisonSchema({ accountRoleDetailRT: this.accountRoleDetailRT })
+	loadComparisonData(accountRoleDetailRT) {
+		if(accountRoleDetailRT){
+			getComparisonSchema({ accountRoleDetailRT: accountRoleDetailRT })
 			.then(result => {
 				this.rawSchemaData = JSON.parse(JSON.stringify(result));
-				this.rawSchemaData.superCategories.forEach(supercategory => {
-					let key = supercategory.label;
-					key = key.toLowerCase();
-					key = key.replace(/ /g, "_");
-					supercategory.key = key;
-					supercategory.frontKey = key + this.frontKeyCounter++;
-				});
-
-				this.updateSchemaTable();
+				if(this.rawSchemaData){
+					this.rawSchemaData.superCategories.forEach(supercategory => {
+						let key = supercategory.label;
+						key = key.toLowerCase();
+						key = key.replace(/ /g, "_");
+						supercategory.key = key;
+						supercategory.frontKey = key + this.frontKeyCounter++;
+					});
+	
+					this.updateSchemaTable();
+				}
 			})
 			.catch(error => {
-				this.error = error;
+				this.isLoading = false;
 				console.error(error);
 			});
+		}
+		else{
+			this.isLoading = false;
+		}
+
 	}
 
 	handleComparisonSchema(array) {
-		let arrayCopy = JSON.parse(JSON.stringify(array));
+		return new Promise((resolve, reject) => {
+			try{
+				let arrayCopy = JSON.parse(JSON.stringify(array));
+				if(!arrayCopy){
+					arrayCopy = [];
+				}
 
-		// Loop comparison sections
-		arrayCopy.superCategories.forEach(compSuperCategory => {
-			compSuperCategory.sections.forEach(compSection => {
-				// Loop comparison Record Types
-				compSection.rts.forEach(compRt => {
-					// Loop comparison categories
-					compRt.categories.forEach(compCategory => {
-						// Loop comparison equipments
-						compCategory.equipments.forEach(compEquipment => {
-							// try to get data
-							// let dataFound = { auxType: undefined, rows: []};
-							let dataFound = this.getDataComparison(compSection.label, compRt.name, compCategory.value, compEquipment.label, compCategory.columns);
-							compCategory.auxType = dataFound.auxType;
-							compEquipment.auxType = dataFound.auxType;
-							if (!compEquipment.rows) {
-								compEquipment.rows = [];
-							}
-							dataFound.rows.forEach(currentRow => {
-								currentRow.frontKey = "row" + this.frontKeyCounter++;
-								compEquipment.rows.push(currentRow);
+				if(arrayCopy.superCategories){
+					// Loop comparison sections
+					arrayCopy.superCategories.forEach(compSuperCategory => {
+						compSuperCategory.sections.forEach(compSection => {
+							// Loop comparison Record Types
+							compSection.rts.forEach(compRt => {
+								// Loop comparison categories
+								compRt.categories.forEach(compCategory => {
+									// Loop comparison equipments
+									compCategory.equipments.forEach(compEquipment => {
+										// try to get data
+										// let dataFound = { auxType: undefined, rows: []};
+										let dataFound = this.getDataComparison(compSection.label, compRt.name, compCategory.value, compEquipment.label, compCategory.columns);
+										compCategory.auxType = dataFound.auxType;
+										compEquipment.auxType = dataFound.auxType;
+										if (!compEquipment.rows) {
+											compEquipment.rows = [];
+										}
+										dataFound.rows.forEach(currentRow => {
+											currentRow.frontKey = "row" + this.frontKeyCounter++;
+											compEquipment.rows.push(currentRow);
+										});
+									});
+								});
 							});
 						});
 					});
-				});
-			});
-		});
+				}
+				
+				resolve(JSON.parse(JSON.stringify(arrayCopy)));
+			}
+			catch(err){
+				reject(err);
+			}
 
-		this.error = undefined;
-		this.isUpdating = false;
-		return JSON.parse(JSON.stringify(arrayCopy));
+		});
 	}
 
 	@track comparisonSchema;
@@ -387,9 +394,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 
 	handleAddItem() {
-		let filteredValues = this.facilitiesToCompare.filter(entry => {
-			return entry.Id;
-		});
+		let filteredValues = this.facilitiesToCompare.filter(entry => entry.Id);
 
 		this.updateFacilitiesToCompareLocal(filteredValues, false);
 
@@ -430,9 +435,14 @@ export default class CwFacilityCompareContainer extends LightningElement {
 		});
 	}
 
-	handleRemoveItemFromComparison(event) {
-		this.isUpdating = true;
+	sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	async handleRemoveItemFromComparison(event) {
+		this.isLoading = true;
 		const id = event.currentTarget.getAttribute("data-item-id");
+		await this.sleep(2000);
 		this.removeFromComparison(id);
 	}
 
@@ -445,7 +455,16 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 
 	updateSchemaTable() {
-		this.comparisonSchema = this.handleComparisonSchema(this.rawSchemaData);
+		this.handleComparisonSchema(this.rawSchemaData)
+		.then(result => {
+			this.comparisonSchema = result;
+			this.isLoading = false;
+		})
+		.catch(err => {
+			console.error(err);
+			this.isLoading = false;
+		});
+		
 	}
 
 	removeFromComparison(idsToRemove) {

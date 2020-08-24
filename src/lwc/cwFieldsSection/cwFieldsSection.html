@@ -1,29 +1,34 @@
 <template>
     <div class="row justify-content-between text-truncate">
         <div class="col-12">
-            <h2>{_currentCategory.label}:</h2>
+            <h2>{currentCategory.label}:</h2>
             <hr class="yellow-underline-percent">
         </div>
+        <div if:true={reachedLimit} class="pt-2 pb-2">
+                    <div class="col-12 text-red">
+                        <p>{label.limit_filters_reached}</p>
+                    </div>
+                </div>
         <div class="row-no-margin col-12 mb-3">
-            <template for:each={_currentCategoryPicklist} for:item="currentField" for:index="fieldIndex">
+            <template for:each={currentCategoryPicklist} for:item="currentField" for:index="fieldIndex">
                 
                 <div class="slds-form-control company-type-content mb-2 col-6 mt-2 "
                     key={currentField.name} data-tosca={currentField.name} onclick={onClickItem}>
                     
                         <div class="slds-form-__label mb-1 mt-1 mr-2"> {currentField.label} :<span></span></div> 
                 
-                        <select class="slds-select form-control" data-tosca={currentField.name}
+                        <select disabled={currentField.disable} class="slds-select form-control" data-tosca={currentField.name}
                             data-parentlevel={currentCategory.name} onchange={onClickItem}>
-                            <option value={preselected}>{preselectedLabel}</option>
+                            <option value={label.select}>{label.select}</option>
                             <template for:each={currentField.options} for:item="option">
-                                <option key={option.label} value={option.value}>{option.label}</option>
+                                <option selected={option.selected} key={option.label} value={option.value}>{option.label}</option>
                             </template>
                         </select>          
                 </div><br key={currentField.name} /> 
             </template>
         </div>
 
-        <template for:each={_currentCategoryMultiPickList} for:item="currentField" for:index="fieldIndex">      
+        <template for:each={currentCategoryMultiPickList} for:item="currentField" for:index="fieldIndex">      
             <div class="slds-form-control company-type-content col-6  mb-2 mt-2"
                 key={currentField.name} onclick={onClickItem}>
                 <div class="slds-form-__label mb-1 mt-1"> {currentField.label}<span></span></div>
@@ -31,10 +36,10 @@
             </div><br key={currentField.name} />        
         </template>
 
-        <template for:each={_currentCategoryOthers} for:item="currentField" for:index="fieldIndex">
+        <template for:each={currentCategoryOthers} for:item="currentField" for:index="fieldIndex">
             <div class="slds-form-element__label company-type-content col-6 my-auto"
                 key={currentField.name} >
-                <lightning-input key={currentField.name} data-tosca={currentField.name}
+                <lightning-input disabled={currentField.disable} key={currentField.name} data-tosca={currentField.name}
                     data-parentlevel={currentCategory.name} type={currentField.type} checked={currentField.selected}
                     label={currentField.label} value={currentField.value} onclick={onClickItem}>
                 </lightning-input>
@@ -42,11 +47,8 @@
         </template>
 
         <div class="row-no-margin col-12 ">
-            <div class="col-6 text-right">
-                <button class="btn btn-primary-blue" onclick={closeModal}>{label.cancel}</button>
-            </div>
-            <div class="col-6 text-left">
-                <button class="btn btn-primary" onclick={applyAction}>{label.apply}</button>
+            <div class="col-12 text-center">
+                <button class="btn btn-primary-blue" onclick={removeInternalFilters}>{label.remove}</button>
             </div>
         </div>
     </div>

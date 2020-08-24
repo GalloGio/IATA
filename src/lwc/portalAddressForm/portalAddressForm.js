@@ -29,7 +29,6 @@ import AMS_DQ_City_Not_in_Database      from '@salesforce/label/c.AMS_DQ_City_No
 import AMS_DQ_Review_City               from '@salesforce/label/c.AMS_DQ_Review_City';
 import AMS_DQ_City_in_Another_State     from '@salesforce/label/c.AMS_DQ_City_in_Another_State';
 import AMS_DQ_Review_State_or_City      from '@salesforce/label/c.AMS_DQ_Review_State_or_City';
-import OPTIONAL_label                   from '@salesforce/label/c.ISSP_Optional';
 
 export default class PortalAddressForm extends LightningElement {
     @track portalPath = CSP_PortalPath;
@@ -143,7 +142,7 @@ export default class PortalAddressForm extends LightningElement {
     }
 
     /* labels */
-    @track _labels = {
+    _labels = {
         CSP_L2_Is_PO_Box_Address,
         CSP_L2_Country,
         CSP_L2_State,
@@ -156,8 +155,7 @@ export default class PortalAddressForm extends LightningElement {
         CSP_L2_Select_Address_Message,
         CSP_L2_Select,
         CSP_L2_No_Matching_Results,
-        CSP_L2_Address_Not_Found_Message,
-        OPTIONAL_label
+        CSP_L2_Address_Not_Found_Message
     }
 
     get labels() {

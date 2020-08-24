@@ -24,7 +24,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_Country}
+                        {labels.CSP_L2_Country}<abbr class="slds-required" title="required">*</abbr>
                     </div>
                 </div>
                     
@@ -48,7 +48,10 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay floatItem">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_State}                       
+                        {labels.CSP_L2_State}
+                        <template if:true={isStateRequired}>
+                            <abbr class="slds-required" title="required">*</abbr>
+                        </template>
                     </div>
                 </div>
 
@@ -90,7 +93,7 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_City}
+                        {labels.CSP_L2_City}<abbr class="slds-required" title="required">*</abbr>
                     </div>
                 </div>
 
@@ -146,7 +149,10 @@
             <lightning-layout-item size="6" class="addressItem IEFixDisplay">
                 <div class="formLabelContainer">
                     <div class="text-xxsmall">
-                        {labels.CSP_L2_Postal_Code} ({labels.OPTIONAL_label})                        
+                        {labels.CSP_L2_Postal_Code}
+                        <template if:true={isZipRequired}>
+                            <abbr class="slds-required" title="required">*</abbr>
+                        </template>
                     </div>
                 </div>
 
@@ -175,6 +181,7 @@
                         <template if:false={localAddress.isPoBox}>
                             {labels.CSP_L2_Street}
                         </template>
+                        <abbr class="slds-required" title="required">*</abbr>
                     </div>
                 </div>
                 

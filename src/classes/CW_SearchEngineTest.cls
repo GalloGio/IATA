@@ -59,9 +59,10 @@ public with sharing class CW_SearchEngineTest {
 
 		List<ICG_Capability_Assignment_Group__c> lstJoins = new List<ICG_Capability_Assignment_Group__c>();
 		ICG_Capability_Assignment_Group__c joinrow1 = new ICG_Capability_Assignment_Group__c();
+		joinrow1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
 		joinrow1.ICG_Certification__c = cert.Id;
 		joinrow1.Expiration_Date__c = Date.valueOf('2025-09-16');
-		joinrow1.Issue_Date__c = Date.valueOf('2020-09-09');
+		joinrow1.Issue_Date__c = Date.valueOf('2020-08-08');
 		joinrow1.ICG_Account_Role_Detail__c = accRoleDetail.Id;
 		lstJoins.add(joinrow1);
 		insert lstJoins;
@@ -73,14 +74,14 @@ public with sharing class CW_SearchEngineTest {
 		capability.ICG_Certification__c = cert.id;
 		capability.Category__c = 'CCTV';
 		capability.Equipment__c = 'CCTV';
-        insert capability;
+		insert capability;
 
-        Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
+		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
 		insert ardCap;
-        
-        ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(accRoleDetail.Id, ardCap.Id);
+		
+		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(accRoleDetail.Id, ardCap.Id);
 		assignment.ICG_Capability_Assignment_Group__c = joinrow1.id;
-        insert assignment;
+		insert assignment;
 	}
 	/*
 	* @author
@@ -92,9 +93,9 @@ public with sharing class CW_SearchEngineTest {
 		String queryLike = '[{"operator":"LIKE","value":"MAD","obj":"ICG_Account_Role_Detail__c","fields":["Nearest_Airport__r.name","Country_FOR__c","City_FOR__c"]}]';
 
 		Test.startTest();
-		String response = CW_SearchEngine.getInfo(queryLike, false, true, true, false, false, null, null, true);
+		String response = CW_SearchEngine.getInfo(queryLike, false, true, true, false, false, null, null, false);
 		List<CW_SearchEngine.OutputRow> wrapperParams = (List<CW_SearchEngine.OutputRow>) JSON.deserialize(response, List<CW_SearchEngine.OutputRow>.class);
-
+		System.assert(!wrapperParams.isEmpty(), 'No results were gotten');
 		System.assert(wrapperParams[0].isSuccess, 'communication with query mapquery fails');
 
 		Test.stopTest();
@@ -109,11 +110,11 @@ public with sharing class CW_SearchEngineTest {
 	@isTest
 	public static void queryCertificationsOK() {
 		String queryWithInner = '[{"obj":"ICG_Account_Role_Detail__c","field":"City_FOR__c","operator":"LIKE","value":"MAD","fields":["Nearest_Airport__r.name","Country_FOR__c","City_FOR__c"]},{"obj":"ICG_Capability_Assignment_Group__c","field":"ICG_Certification__r.Name","operator":"LIKE","relationfield":"ICG_Account_Role_Detail__c","value":"CEIV Security;CEIV Fresh;CEIV Live Animals","fields":["ICG_Certification__r.Name"]}]';
-
+		
 		Test.startTest();
 		String response = CW_SearchEngine.getInfo(queryWithInner, false, true, true, false, false, null, null, false);
 		List<CW_SearchEngine.OutputRow> wrapperParams = (List<CW_SearchEngine.OutputRow>) JSON.deserialize(response, List<CW_SearchEngine.OutputRow>.class);
-
+		System.assert(!wrapperParams.isEmpty(), 'No results were gotten');
 		System.assert(wrapperParams[0].isSuccess, 'Response is not success');
 
 		Test.stopTest();
@@ -128,9 +129,10 @@ public with sharing class CW_SearchEngineTest {
 		String queryLike = '[{"operator":"LIKE","value":"MAD","obj":"ICG_Account_Role_Detail__c","fields":["Nearest_Airport__r.name","Country_FOR__c","City_FOR__c"]}]';
 
 		Test.startTest();
-		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, true);
+		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, false);
 		List<CW_SearchEngine.OutputRow> wrapperParams = (List<CW_SearchEngine.OutputRow>) JSON.deserialize(response, List<CW_SearchEngine.OutputRow>.class);
 
+		System.assert(!wrapperParams.isEmpty(), 'No results were gotten');
 		System.assert(wrapperParams[0].isSuccess, 'communication with query mapquery fails');
 		Test.stopTest();
 	}
@@ -143,9 +145,10 @@ public with sharing class CW_SearchEngineTest {
 		String queryLike = '[{"obj":"ICG_Account_Role_Detail__c","fields":["Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s"],"operator":"<","value":"46.16867468034823"},{"obj":"ICG_Account_Role_Detail__c","fields":["Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s"],"operator":"<","value":"28.20297723702101"},{"obj":"ICG_Account_Role_Detail__c","fields":["Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s"],"operator":">","value":"36.4259997342448"},{"obj":"ICG_Account_Role_Detail__c","fields":["Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s"],"operator":">","value":"-26.42104620047899"}]';
 
 		Test.startTest();
-		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, true);
+		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, false);
 		List<CW_SearchEngine.OutputRow> wrapperParams = (List<CW_SearchEngine.OutputRow>) JSON.deserialize(response, List<CW_SearchEngine.OutputRow>.class);
 
+		System.assert(!wrapperParams.isEmpty(), 'No results were gotten');
 		System.assert(wrapperParams[0].isSuccess, 'communication with query mapquery fails');
 		Test.stopTest();
 	}
@@ -158,9 +161,9 @@ public with sharing class CW_SearchEngineTest {
 	public static void filterResultsAfterQueryTest() {
 		String queryLike = '[{"operator":"=","value":"Beneficial_Insects_Bees","obj":"ICG_Account_Role_Capability_Assignment__c", "field":"Account_Role_Detail_Capability__r.Equipment__c", "fields":["Account_Role_Detail_Capability__r.Equipment__c"], "isOutOfQuery": true}]';
 		Test.startTest();
-		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, true);
+		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, false);
 		List<CW_SearchEngine.OutputRow> wrapperParams = (List<CW_SearchEngine.OutputRow>) JSON.deserialize(response, List<CW_SearchEngine.OutputRow>.class);
-
+		System.assert(!wrapperParams.isEmpty(), 'No results were gotten');
 		System.assertEquals(wrapperParams[0].isSuccess, true, 'communication with query mapquery fails'+ response);
 		Test.stopTest();
 	}

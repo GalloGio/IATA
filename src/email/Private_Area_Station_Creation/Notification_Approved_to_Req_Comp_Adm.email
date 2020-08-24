@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="The below Station has been created" relatedToType="ICG_Account_Role_Detail__c">
+<messaging:emailTemplate subject="The below Station has been created" relatedToType="ICG_Contact_Role_Detail__c">
     <messaging:HtmlEmailBody >
         <html>
             <c:CW_EmailHead ></c:CW_EmailHead>
@@ -9,10 +9,10 @@
     
                     <p style="line-height: 1.8rem;">The below Station has been created, and the Requestor has been granted Station Manager Rights.</p>
                     
-                    <c:CW_RequestedBy stationData="{!relatedTo.Id}" ></c:CW_RequestedBy>  
-                    <c:CW_StationDetails stationData="{!relatedTo.Id}" ></c:CW_StationDetails>                                       
-                    <c:CW_ApprovedBy stationData="{!relatedTo.Id}" ></c:CW_ApprovedBy>                        
-                    <c:CW_LinkManageStationDetails stationData="{!relatedTo.Id}" ></c:CW_LinkManageStationDetails>
+                    <c:CW_RequestedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_RequestedBy>  
+                    <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>                                       
+                    <c:CW_ApprovedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_ApprovedBy>                        
+                    <c:CW_LinkManageStationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_LinkManageStationDetails>
                     
                     <p style="line-height: 1.8rem;">Thank you</p>
                 </div>

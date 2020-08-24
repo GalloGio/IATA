@@ -39,13 +39,10 @@
                 <div class="row ">
                     <div class="col-12 text-center col-no-padding min-height-140">
                         <div class="input-group">
-                            <input type="text" class="form-control height-auto" data-tosca="locationinput"
+                            <img class="p-1-5 width-25 bg-red" src={searchbylocation} alt="" />
+                            <input type="text" class="form-control height-auto" data-tosca="locationinput" placeholder={label.icg_type_location}
                                 onkeyup={predictiveSearch} value={locationWrapper.value} autocomplete="off"
                                 data-obj="ICG_Account_Role_Detail__c" data-field="City_FOR__c" data-operator="LIKE">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary no-margin-top" data-tosca="addlocationbutton"
-                                    onclick={nextStep} type="button">{label.btn_add_location}</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +51,7 @@
                 <div class="row text-right">
                     <div class="col-md-12 col-no-padding-right margin-top--60">
                         <div data-tosca="predictiveContainer" class="col-no-padding">
-                            <c-cw-predictive-values predictivevalues={locationPredictiveValues}
+                            <c-cw-predictive-values predictivevalues={locationPredictiveValues} 
                                 onpredictivevalueselected={updateSearchbox} customstyle="wizard"
                                 display-the-box={isboxfocus} first-row-written={locationWrapper.value}>
                             </c-cw-predictive-values>

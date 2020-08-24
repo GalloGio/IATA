@@ -1,6 +1,4 @@
 global without sharing class CW_GxA_Handler {
-	final static String INTEGRATION_MAPPING_VERSION = 'V4_19.05';
-
 	global final static String GXA_STATUS_IN_PROGRESS = 'InProgress';
 	global final static String GXA_STATUS_DONE = 'Done';
 	global final static String GXA_STATUS_FAILED = 'Failed';
@@ -238,8 +236,10 @@ global without sharing class CW_GxA_Handler {
 		}
 	}
 	private static Map<String, ICG_GxA_Integration_Mapping__c> getIntegrationMapping() {
+		ICG_Environment_Variables__c environmentVariables = CW_Utilities.getEnvironmentVariables();
+		String integrationMappingVersion = environmentVariables.Integration_Mapping_Version__c;
 		Map<String, ICG_GxA_Integration_Mapping__c> integrationMap = new Map<String, ICG_GxA_Integration_Mapping__c>();
-		for (ICG_GxA_Integration_Mapping__c currentMapping : [SELECT GxA_Is_Mandatory__c, GxA_Question_Id__c, GxA_Question_Parent_Id__c, GxA_Question_Type_Id__c, GxA_Sub_Survey_Id__c, GxA_Question_Text__c, GxA_Validation__c, SF_Equipment__c, SF_Data_Extra__c, SF_Target_Field__c, SF_Specific_Processing__c, SF_Options_Mapping__c, GxA_Options__c, SF_Target_Object__c, SF_Is_Mapping_Ok__c, SF_Process_Question__c FROM ICG_GxA_Integration_Mapping__c WHERE Version__c = :INTEGRATION_MAPPING_VERSION ORDER BY GxA_Question_Id__c]) {
+		for (ICG_GxA_Integration_Mapping__c currentMapping : [SELECT GxA_Is_Mandatory__c, GxA_Question_Id__c, GxA_Question_Parent_Id__c, GxA_Question_Type_Id__c, GxA_Sub_Survey_Id__c, GxA_Question_Text__c, GxA_Validation__c, SF_Equipment__c, SF_Data_Extra__c, SF_Target_Field__c, SF_Specific_Processing__c, SF_Options_Mapping__c, GxA_Options__c, SF_Target_Object__c, SF_Is_Mapping_Ok__c, SF_Process_Question__c FROM ICG_GxA_Integration_Mapping__c WHERE Version__c = :integrationMappingVersion ORDER BY GxA_Question_Id__c]) {
 			integrationMap.put(currentMapping.GxA_Question_Id__c, currentMapping);
 		}
 		return integrationMap;

@@ -294,8 +294,8 @@
                 <i>If the address of the station is not located where the map indicates, please <b>drag the marker to the right place</b>.
                 This will not update the address itself but the geocoordinates of the station.</i>
             </div>
-            <div class="row-no-margin col-12 mt-2 mb-2">
-                <c-cw-address-selector-map-container class="width-100" is-internal-user={isInternalUser} onsetgeocoordinates={setGeocoordinates} address-text={selectedAddressForMap} label={label} collapsed="true"></c-cw-address-selector-map-container>
+            <div class="row-no-margin col-12 mt-2 mb-2"> 
+                <c-cw-address-selector-map-container address-geo={addressGeo} class="width-100" is-internal-user={isInternalUser} onsetgeocoordinates={setGeocoordinates} address-text={selectedAddressForMap} label={label} collapsed="true"></c-cw-address-selector-map-container>
             </div>
             
             <div class="slds-form-element">
@@ -848,28 +848,18 @@
         <c-cw-intermediate-modal onclosemodal={closeStationCreationPrompt}>
             <div>
                 <div class="col-12 text-center">
-                    <h3 if:true={objectBeingCreated}>{label.icg_creating} {objectBeingCreated}</h3>
                     <h3 if:false={objectBeingCreated}>
                         <template if:true={stationCreationCompleted}>{label.process_finished}</template>
                         <template if:false={stationCreationCompleted}>{label.in_progress}...</template>
                     </h3>
                 </div>
                 <br />
-                <div class="row align-items-center" if:false={selectedCompany}>
-                    <div class="col-12 text-center">
-                        <c-cw-spinner if:true={creatingAccount} position="position-relative" width="20%"></c-cw-spinner>
-                        <img src={CHECKED_IMAGE} width="20px" if:true={accountCreated}/>
-                        <img src={ERROR_IMAGE} width="20px" if:true={errorCreatingAccount}/>
-
-                        <label class="pl-2">{label.account_creation}</label>
-                    </div>
-                </div>
                 <div class="row align-items-center">
                     <div class="col-12 text-center">
-                        <c-cw-spinner if:true={creatingStation} position="position-relative" width="20%"></c-cw-spinner>
-                        <img width="20px" src={CHECKED_IMAGE} if:true={stationCreated}/>
-                        <img width="20px" src={ERROR_IMAGE} if:true={errorCreatingStation}/>
-                        <label class="pl-2">{label.station_creation}</label>
+                        <c-cw-spinner if:true={creatingStationAccount} position="position-relative" width="20%"></c-cw-spinner>
+                        <img width="50px" src={CHECKED_IMAGE} if:true={stationAccountCreated}/>
+                        <img width="50px" src={ERROR_IMAGE} if:true={errorCreatingStationAccount}/>
+                        <!--<label class="pl-2">{label.station_creation}</label>-->
                     </div>
                 </div>
                 <br />

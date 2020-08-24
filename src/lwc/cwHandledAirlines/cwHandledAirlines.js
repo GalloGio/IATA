@@ -12,44 +12,44 @@ export default class CwHandledAirlines extends LightningElement {
 	@track pageSelected = 1;
 	@track letterSelected;
 	@track showOnlySelected = false;
-	_preselectedAirlines;
+	selectedAirlines;
 	@api recordType;
 	@api label;
 	@api facilityId;
 	@track offSetNum = 0;
-	@track _filterText;
+	@track filter;
 	@api
 	get filterText() {
-		return this._filterText;
+		return this.filter;
 	}
 	set filterText(val) {
-		this._filterText = val;
+		this.filter = val;
 		if (this.letterSelected) this.unselectLetter();
 	}
 	@api rawData;
-	@track _isreadonly;
+	@track readonly;
 	@api
 	get isreadonly() {
-		return this._isreadonly;
+		return this.readonly;
 	}
 	set isreadonly(val) {
 		if (val === true) {
-			this._isreadonly = true;
+			this.readonly = true;
 			this.showOnlySelected = true;
 		} else {
-			this._isreadonly = false;
+			this.readonly = false;
 			this.showOnlySelected = false;
 		}
 	}
 	@api
 	get preselectedAirlines() {
-		return this._preselectedAirlines;
+		return this.selectedAirlines;
 	}
 	set preselectedAirlines(values) {
-		this._preselectedAirlines = values;
+		this.selectedAirlines = values;
 		if (this.airlines) {
 			this.airlines.forEach(airline => {
-				this._preselectedAirlines.forEach(preselected => {
+				this.selectedAirlines.forEach(preselected => {
 					if (airline.value === preselected.value) airline.selected = true;
 					//else airline.selected = false;
 				});
@@ -159,9 +159,9 @@ export default class CwHandledAirlines extends LightningElement {
 	}
 
 	get allAirlinesToShow() {
-		let firstAirlines = this.airlinesFirst();
-		let secondAirlines = this.airlinesSecond();
-		let thirdAirlines = this.airlinesThird();
+		let firstAirlines = this.airlines(0, 5);
+		let secondAirlines = this.airlines(5, 10);
+		let thirdAirlines = this.airlines(10, 15);
 		let allAirlines = [];
 		allAirlines.push({
 			label: "first",
@@ -178,30 +178,12 @@ export default class CwHandledAirlines extends LightningElement {
 		return allAirlines;
 	}
 
-	airlinesFirst() {
+	airlines(numberAirlineSum, numberAirlineLoopSum) {
 		let dummyAirlines = [];
 		let airlinesToLoop;
 		if (this.showOnlySelected) airlinesToLoop = this.selectedAirlines;
 		else airlinesToLoop = this.filteredAirlines;
-		if (airlinesToLoop && airlinesToLoop.length >= this.pageSelected) return airlinesToLoop.slice((this.pageSelected - 1) * 15, (this.pageSelected - 1) * 15 + 5);
-		return dummyAirlines;
-	}
-
-	airlinesSecond() {
-		let dummyAirlines = [];
-		let airlinesToLoop;
-		if (this.showOnlySelected) airlinesToLoop = this.selectedAirlines;
-		else airlinesToLoop = this.filteredAirlines;
-		if (airlinesToLoop && airlinesToLoop.length >= this.pageSelected + 5) return airlinesToLoop.slice((this.pageSelected - 1) * 15 + 5, (this.pageSelected - 1) * 15 + 10);
-		return dummyAirlines;
-	}
-
-	airlinesThird() {
-		let dummyAirlines = [];
-		let airlinesToLoop;
-		if (this.showOnlySelected) airlinesToLoop = this.selectedAirlines;
-		else airlinesToLoop = this.filteredAirlines;
-		if (airlinesToLoop && airlinesToLoop.length >= this.pageSelected + 10) return airlinesToLoop.slice((this.pageSelected - 1) * 15 + 10, (this.pageSelected - 1) * 15 + 15);
+		if (airlinesToLoop && airlinesToLoop.length >= this.pageSelected + numberAirlineSum) return airlinesToLoop.slice((this.pageSelected - 1) * 15, (this.pageSelected - 1) * 15 + numberAirlineLoopSum);
 		return dummyAirlines;
 	}
 
@@ -327,7 +309,7 @@ export default class CwHandledAirlines extends LightningElement {
 							this.airlines.push(...airlinesAndHeaders);
 							if (this.preselectedAirlines) {
 								this.airlines.forEach(airline => {
-									this._preselectedAirlines.forEach(preselected => {
+									this.selectedAirlines.forEach(preselected => {
 										if (airline.value === preselected.value) airline.selected = true;
 									});
 								});
@@ -343,7 +325,7 @@ export default class CwHandledAirlines extends LightningElement {
 							this.airlines.push(...airlinesAndHeaders);
 							if (this.preselectedAirlines) {
 								this.airlines.forEach(airline => {
-									this._preselectedAirlines.forEach(preselected => {
+									this.selectedAirlines.forEach(preselected => {
 										if (airline.value === preselected.value) airline.selected = true;
 									});
 								});

@@ -277,6 +277,15 @@
 
 																		<template
 																			iterator:currentfield={currentheader.value}>
+																			<template if:true={currentheader.first}>
+																				<template if:true={currentfield.first}>						
+																					<th key={currentfield.value.name}
+																						scope="col"
+																						colspan={currentfield.value.colspan}
+																						class="first-column-top box-shadow-none">
+																					</th>
+																				</template>
+																			</template>
 																			<template if:false={currentheader.last}>
 																				<template
 																					if:false={currentfield.value.label.length}>

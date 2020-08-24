@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>ICG Stakeholders</name>
+    <name>OneSource Admins</name>
     <queueSobject>
         <sobjectType>ICG_Account_Role_Detail__c</sobjectType>
     </queueSobject>

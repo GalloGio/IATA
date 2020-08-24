@@ -7,7 +7,7 @@
                 <hr class="yellow-underline">
             </div>  
             <div class="col-6 text-right ">
-                <button if:true={allowSearch} class="btn btn-primary no-margin-top" data-tosca="searchbutton"
+                <button disabled={shouldDisableSearchBtn} class="btn btn-primary no-margin-top" data-tosca="searchbutton"
                 onclick={onSearch} type="button">{label.search}</button>
 
                 <div if:false={allowSearch} class="pt-2 pb-2">
@@ -18,22 +18,22 @@
             </div>
         </div>
       
-        <div class="row-no-margin mt-4r ">
+        <div class={mainBoxesClass}>
             <div class="col-xl-4 col-lg-4 col-md-12">
                 <div class="col-12 bg-grey p-3 height-100">
-                    <c-cw-add-location-search label={label} onselectlocations={setSelectedLocations}>
+                    <c-cw-add-location-search filters-applied={filtersApplied} label={label} onselectlocations={setSelectedLocations} applied-filters-count={filtersAppliedLength}>
                     </c-cw-add-location-search>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 ">
                 <div class="col-12 bg-grey p-3 height-100">
-                    <c-cw-cargo-commodities  label={label} onselectcommodities={setCommodities} >
+                    <c-cw-cargo-commodities  label={label} onselectcommodities={setCommodities} applied-filters-count={filtersAppliedLength}>
                     </c-cw-cargo-commodities>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 ">
                 <div class="col-12 bg-grey p-3 height-100">
-                    <c-cw-company-types label={label} onselectcompanytype={setCompanyTypes}>
+                    <c-cw-company-types label={label} onselectcompanytype={setCompanyTypes} applied-filters-count={filtersAppliedLength}>
                     </c-cw-company-types>
                 </div>
             </div>
@@ -41,14 +41,14 @@
 
         <div class="col-12 mt-3">
             <div class="col-12 bg-grey p-3 height-100">
-                <c-cw-validation-programs label={label} onselectvalidationprograms={setSelectedPrograms}>
+                <c-cw-validation-programs label={label} onselectvalidationprograms={setSelectedPrograms} applied-filters-count={filtersAppliedLength}>
                 </c-cw-validation-programs>
             </div>
         </div>
         
         <div class="col-12 big-section">
             <div class="col-12 componentStyleBase-full p-3 mt-3">
-                <c-cw-facility-equipment-infraestructure-wrapper label={label} onselectcategory={setSelectedCategory}>
+                <c-cw-facility-equipment-infraestructure-wrapper label={label} onselectcategory={setSelectedCategory} applied-filters-count={filtersAppliedLength}>
                 </c-cw-facility-equipment-infraestructure-wrapper>
             </div>
         </div>

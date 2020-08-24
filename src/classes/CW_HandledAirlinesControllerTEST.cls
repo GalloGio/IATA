@@ -7,10 +7,8 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 	static void makeData(){
 		IATA_ISO_Country__c isoCode = CW_TestDataFactory.newISOCountry();
 		insert isoCode;
-		handleTrace(PREFIX + 'IATA_ISO_Country__c insert');
 
 		List<RecordType> recTypes = getRecTypes();
-		handleTrace(PREFIX + 'recTypes => ' + recTypes);
 
 		Account acc = CW_TestDataFactory.TestAccount(isoCode.Id);
 		acc.RecordTypeId = recTypes[Integer.valueof((Math.random() * 1))].Id;
@@ -18,7 +16,6 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 		acc.Airline_designator__c = 'AA';
 		acc.ICAO_designator__c = 'SSV';
 		insert acc;
-		handleTrace(PREFIX + 'HQ/operator insert');
 				
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(isoCode.Id, acc.Id);
 		insert airport;
@@ -35,11 +32,9 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 		airlines.add(acc3);
 
 		insert airlines;
-		handleTrace(PREFIX + 'Airlines insert');
 		
 		Account_Role__c accRole = CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
 		insert accRole;
-		handleTrace(PREFIX + 'Account_Role__c insert');
 
 		List<ICG_Account_Role_Detail__c> lstARD = new List<ICG_Account_Role_Detail__c>();
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
@@ -49,8 +44,6 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 		ard2.Status__c = 'Approved';
 		lstARD.add(ard2);
 		insert lstARD;
-		handleTrace(PREFIX + 'ICG_Account_Role_Detail__c insert');
-		handleTrace(PREFIX + 'ICG_Account_Role_Detail_Relationship__c insert');
 	}
 
 	@isTest
@@ -58,8 +51,6 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 		test.startTest();
 		string result = CW_HandledAirlinesController.getAllAirlines();
 		test.stopTest();
-
-		handleTrace(PREFIX + 'testGetAllAirlines result = > ' + result);
 
 		System.assertEquals(false, String.isBlank(result), 'getAllAirlines validation');
 	}
@@ -69,15 +60,12 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 		string result = CW_HandledAirlinesController.getAirlinesByRT('Cargo Handling Facility');
 		test.stopTest();
 
-		handleTrace(PREFIX + 'getAirlinesByRT result = > ' + result);
-
 		System.assertEquals(false, String.isBlank(result), 'getAirlinesByRT validation');
 	}
 	@isTest
 	/**@descrip Validates the Addition of entries */
 	static void testSaveAirlinesHandledAdd(){
 		List<Account> airlines = [SELECT Id FROM Account WHERE Airline_designator__c != 'AA'];
-		handleTrace(PREFIX + 'SaveAirlinesHandledAdd::airlines => ' + airlines);
 
 		List<ICG_Account_Role_Detail__c> ard = [SELECT Id FROM ICG_Account_Role_Detail__c];
 
@@ -101,7 +89,6 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 	/**@descrip Validates the Deletion of entries */
 	static void testSaveAirlinesHandledDelete(){
 		List<Account> airlines = [SELECT Id FROM Account WHERE Airline_designator__c != 'AA'];
-		handleTrace(PREFIX + 'SaveAirlinesHandledDelete::airlines => ' + airlines);
 
 		List<ICG_Account_Role_Detail__c> ard = [SELECT Id FROM ICG_Account_Role_Detail__c];
 
@@ -111,7 +98,6 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 		if(ard.size() > 0){
 			test.startTest();
 			CW_HandledAirlinesController.saveAirlinesHandled(JSON.serialize(ids), null, ard[0].Id);
-			handleTrace(PREFIX + 'SaveAirlinesHandledDelete::airlines inserted => ' + airlines);
 
 			CW_HandledAirlinesController.saveAirlinesHandled(null, JSON.serialize(ids), ard[0].Id);
 			test.stopTest();
@@ -126,17 +112,14 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 	private static List<RecordType> getRecTypes(){
 		return [SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND Name in ('Airline Headquarters', 'Operator')];
 	}
-
-    private static void handleTrace(String traceMsg){ if(TRACEIT) { system.debug(traceMsg); } }
-    
-    @isTest
+	
+	@isTest
 	/**@descrip Validates the Deletion of entries */
 	static void testSaveHiddenOperatingStations(){
-        test.startTest();
+		test.startTest();
 		Id stationId = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-        Boolean result = CW_HandledAirlinesController.saveHiddenOperatingStations('', stationId );
-        system.assertEquals(true, result, 'erro on saveHiddenOperatingStations');
+		Boolean result = CW_HandledAirlinesController.saveHiddenOperatingStations('', stationId );
+		system.assertEquals(true, result, 'erro on saveHiddenOperatingStations');
 		test.stopTest();
 	}
-
 }

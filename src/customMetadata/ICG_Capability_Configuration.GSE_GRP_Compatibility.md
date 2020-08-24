@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">GSE_ULD_Compatibility_Type_AKE__c;GSE_ULD_Compatibility_Type_F10__c;GSE_ULD_Compatibility_Type_F20__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">ULD Compatibility</value>
     </values>

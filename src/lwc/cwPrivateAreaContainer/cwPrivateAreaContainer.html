@@ -76,6 +76,15 @@
 								</div>
 								<c-cw-pending-facility-approvals label={label} onapprove={approveStationEvent} onreject={rejectStationEvent} facilities={userFacilities} user-managed-facilities={userManagedFacilities} user-info={userInfo} onmenuitemselection={selectMenuItem} onrefresh={refreshData}> </c-cw-pending-facility-approvals>
 							</template>
+							<template if:true={showManagerUserPermission}>
+								<div class="pt-50">
+									<div class="pb-3">
+										<h3>{label.icg_manager_user_permission}</h3>
+										<hr class="yellow-underline">
+									</div>
+								</div>
+								<c-cw-manager-user-permission label={label} facilities={userFacilities} user-managed-facilities={userManagedFacilities} user-info={userInfo} > </c-cw-manager-user-permission>
+							</template>
 
 							<template if:true={showBecomeCompanyAdmin}>
 								<div class="pt-50">

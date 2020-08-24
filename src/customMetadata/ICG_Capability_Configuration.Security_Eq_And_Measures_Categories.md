@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">CCTV;Security_Patrol;Facility_Access_Control;Intruder_Alarm_System;Other_Security_Equipment_Measures</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Security_Equipment_And_Measures</value>
     </values>

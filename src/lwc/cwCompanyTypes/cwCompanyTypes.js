@@ -5,10 +5,12 @@ import {
     checkIfDeselectAll,
     checkIfChangeSelectAllText
 } from 'c/cwUtilities';
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 export default class CwCompanyTypes extends LightningElement {
     // @api file;
     @api label;
     @track selectedText = 'Select All';
+    @api appliedFiltersCount;
 
     @track companyTypes;
     @wire(getCompanyTypes, {})
@@ -18,6 +20,9 @@ export default class CwCompanyTypes extends LightningElement {
         }
     }
 
+    @wire(getEnvironmentVariables, {})
+    environmentVariables;
+
     onClickItem(event) {
         let eTarget = event.currentTarget;
         let name = eTarget.getAttribute("data-name");
@@ -26,7 +31,7 @@ export default class CwCompanyTypes extends LightningElement {
         let selected;
 
         this.companyTypes.forEach(element => {
-            if (element.name === name) {
+            if (element.name === name && (!this.reachedLimit || (this.reachedLimit && element.selected))) {
                 element.selected = !element.selected;
                 selectedCType = [element];
                 selected = element.selected;
@@ -36,16 +41,23 @@ export default class CwCompanyTypes extends LightningElement {
         let items = this.template.querySelectorAll("[data-name='" + name + "']");
 
         if(selected) {
-            this._selectItems(items);
+            if (!this.reachedLimit){
+                this._selectItems(items);
+
+                this.selectedText = checkIfChangeSelectAllText(this.companyTypes);
+        
+                pubsub.fire("stationTypeUpdated", selectedCType);
+                this.dispatchEvent(new CustomEvent('selectcompanytype', { detail: selectedCType }));
+            }
         }
         else{
             this._unselectItems(items);
+
+            this.selectedText = checkIfChangeSelectAllText(this.companyTypes);
+    
+            pubsub.fire("stationTypeUpdated", selectedCType);
+            this.dispatchEvent(new CustomEvent('selectcompanytype', { detail: selectedCType }));
         }
-
-        this.selectedText = checkIfChangeSelectAllText(this.companyTypes);
-
-        pubsub.fire("stationTypeUpdated", selectedCType);
-        this.dispatchEvent(new CustomEvent('selectcompanytype', { detail: selectedCType }));
     }
 
     searchAllCTypes() {
@@ -82,6 +94,28 @@ export default class CwCompanyTypes extends LightningElement {
             element.classList.remove('itemSelected');
             element.classList.add('itemUnselected');
         });
+    }
+
+    get reachedLimit(){
+		return  this.appliedFiltersCount >= this.environmentVariables.data.max_filters_allowed__c;
+    }
+
+    get reachedLimitWithAll(){
+        if (this.companyTypes){
+            let potentialSelect = 0;
+            this.companyTypes.forEach(element => {
+                if (!element.selected) {
+                    potentialSelect++;
+                }
+            });
+            return  (this.appliedFiltersCount + potentialSelect) > this.environmentVariables.data.max_filters_allowed__c;
+        }
+    }
+    
+    get selectAllVisible(){
+        if (this.companyTypes){
+            return !(this.selectedText === "Select All" && this.reachedLimitWithAll);
+        }
     }
 
 }

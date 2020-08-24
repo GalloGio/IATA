@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Ground_Service_Equipment;Screening_Equipment;Security_Equipment_And_Measures;Weight_Volume_And_Dimension_Equipment;Safety_Personal_And_Protective_Equipment;Scanners;Active_ULD_Equipment;Delivery_Pickup_Infrastructure</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Facility Equipment and Infrastructure</value>
     </values>

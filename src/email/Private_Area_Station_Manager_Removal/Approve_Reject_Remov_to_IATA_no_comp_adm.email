@@ -10,7 +10,7 @@
                     <p style="line-height: 1.8rem;">A new request to REMOVE STATION MANAGER rights is pending approval.</p>   
                                     
                     <c:CW_StationManagerRightRemoved contactRoleDetailData="{!relatedTo.Id}" ></c:CW_StationManagerRightRemoved>
-                    <c:CW_RequestedBy stationData="{!relatedTo.Id}" ></c:CW_RequestedBy>
+                    <c:CW_RequestedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_RequestedBy>
                     <c:CW_ListStationManager nameList="Current Station Managers" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_ListStationManager> 
                     
                     <p style="line-height: 1.8rem; color: #1e32fa; font-weight: 600;">ATTENTION: THIS REQUEST HAS TO BE MANAGED BY IATA.</p>

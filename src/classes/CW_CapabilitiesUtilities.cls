@@ -6,7 +6,6 @@
  */
 public with sharing class CW_CapabilitiesUtilities {
 
-    
     public static final String MAP_CATEGORIES_BY_RECORDTYPE_DEVNAME = 'mapCategoriesByRecordTypeDevName';
     public static final String MAP_ARD_ASSIGNMENT_RTS_BY_ID = 'mapAccountRoleDetailAssignmentRtsById';
     public static final String ARD_FOUND = 'accountRoleDetailFound';
@@ -156,7 +155,8 @@ public with sharing class CW_CapabilitiesUtilities {
      */
     public static Map<String, Object> generateReturnValue(
         String id,
-        Map<String, Object> generatedData
+        Map<String, Object> generatedData,
+        Boolean isCapabilityManager
     ){
 
         Set<String> listSectionsIncluded = (Set<String>) generatedData.get(CW_CapabilitiesUtilities.LIST_SECTIONS_INCLUDED);
@@ -193,7 +193,7 @@ public with sharing class CW_CapabilitiesUtilities {
                                     capabilityFound.put('check_detail', checkWrapperAux.detail);
                                     capabilityFound.put('show_summary', editModeAux ? editModeAux : checkWrapperAux.summary);
                                     capabilityFound.put('show_detail', editModeAux ? editModeAux : checkWrapperAux.detail);
-                                    capabilityFound.put('show_capability', editModeAux ? editModeAux : checkWrapperAux.summary == true || checkWrapperAux.detail == true);
+                                    capabilityFound.put('show_capability', editModeAux ? editModeAux : (checkWrapperAux.summary == true || checkWrapperAux.detail == true) || isCapabilityManager);
                                 }
                             }
 
@@ -477,6 +477,20 @@ public with sharing class CW_CapabilitiesUtilities {
         currentObject.put('isMultirecord', isMultiRecordCapabilities);
         currentObject.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
 		return currentObject;
-	}
+    }
+    
+    public static List<String> getCertificationsAllowedByDepartments(){
+        List<String> lstDepts = new List<String>();
+        List<String> lstCertiAllowed = new List<String>();
+		List<Group> lstGroup = [SELECT Name FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];
+		for (Group g : lstGroup) {
+			lstDepts.add(g.Name);
+        }
+        List<ICG_Certification__c> lstCerti = [SELECT Name FROM ICG_Certification__c WHERE Department__c IN : lstDepts ];
+		for (ICG_Certification__c c : lstCerti) {
+			lstCertiAllowed.add(c.Name);
+        }
+        return lstCertiAllowed;
+    }
 
 }

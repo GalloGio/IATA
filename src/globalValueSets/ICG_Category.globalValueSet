@@ -261,6 +261,11 @@
         <label>Environmental Compliance</label>
     </customValue>
     <customValue>
+        <fullName>GSE_In_Facility_2</fullName>
+        <default>false</default>
+        <label>GSE In Facility 2</label>
+    </customValue>
+    <customValue>
         <fullName>Temperature_Controlled_Ground_Service_Equipment_In_Facility</fullName>
         <default>false</default>
         <isActive>false</isActive>

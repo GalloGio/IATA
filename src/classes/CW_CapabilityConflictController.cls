@@ -5,7 +5,6 @@
  * @history			2020/06/02  |  sf-680  |  Creation.
  */
 public without sharing class CW_CapabilityConflictController {
-
 	public enum ConflictAction {
 		NONE,
 		STATUS_ADD,
@@ -19,10 +18,10 @@ public without sharing class CW_CapabilityConflictController {
 		ConflictAction reportTypeMatch = ConflictAction.NONE;
 
 		for (ConflictAction rt : ConflictAction.values()) {
-		if (rt.name() == rType) {
-			reportTypeMatch = rt;
-			break;
-		}
+			if (rt.name() == rType) {
+				reportTypeMatch = rt;
+				break;
+			}
 		}
 
 		return reportTypeMatch;
@@ -34,13 +33,13 @@ public without sharing class CW_CapabilityConflictController {
 	 * @return			Response containing success indicator and result message
 	 */
 	@AuraEnabled
-	public static string solveCapabilityConflicts(String handledCapabilitiesJSON){
-
+	public static string solveCapabilityConflicts(String handledCapabilitiesJSON) {
 		Savepoint sp = null;
-
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 
 		List<ICG_Account_Role_Capability_Assignment__c> assignmentsToUpsert = new List<ICG_Account_Role_Capability_Assignment__c>();
+		List<ICG_Account_Role_Capability_Assignment__c> assignmentsToDelete = new List<ICG_Account_Role_Capability_Assignment__c>();
+		
 
 		List<HandledCapability> handledCapabilities = (List<HandledCapability>) JSON.deserialize(handledCapabilitiesJSON, List<HandledCapability>.class);
 
@@ -48,18 +47,15 @@ public without sharing class CW_CapabilityConflictController {
 		Set<Id> capabilitiesRemove = new Set<Id>();
 		Map<Id, Id> capabilitiesReplacementMap = new Map<Id, Id>();
 
-		try{
-			for(HandledCapability handledCapability : handledCapabilities){
+		try {
+			for (HandledCapability handledCapability : handledCapabilities) {
 				ConflictAction action = extractEnumValueByString(handledCapability.action);
 
-				if(action == ConflictAction.STATUS_ADD){
+				if (action == ConflictAction.STATUS_ADD) {
 					capabilitiesAdd.add(handledCapability.id);
-				}
-				else if(action == ConflictAction.STATUS_REPLACE){
+				} else if (action == ConflictAction.STATUS_REPLACE) {
 					capabilitiesReplacementMap.put(handledCapability.id, handledCapability.target);
-
-				}
-				else if(action == ConflictAction.STATUS_REMOVE){
+				} else if (action == ConflictAction.STATUS_REMOVE) {
 					capabilitiesRemove.add(handledCapability.id);
 				}
 			}
@@ -70,24 +66,22 @@ public without sharing class CW_CapabilityConflictController {
 			combinedCapabilities.addAll(capabilitiesRemove);
 			combinedCapabilities.addAll(capabilitiesReplacementMap.values());
 
-			for(ICG_Account_Role_Capability_Assignment__c assignment : [Select Id, In_Conflict_With__c, Account_Role_Detail_Capability__c, Deprecated__c, Is_In_Conflict__c FROM ICG_Account_Role_Capability_Assignment__c where Account_Role_Detail_Capability__c in: combinedCapabilities]){
-
+			for (ICG_Account_Role_Capability_Assignment__c assignment : [SELECT Id, In_Conflict_With__c, Account_Role_Detail_Capability__c, Is_In_Conflict__c FROM ICG_Account_Role_Capability_Assignment__c WHERE Account_Role_Detail_Capability__c IN :combinedCapabilities]) {
 				Id capabilityId = assignment.Account_Role_Detail_Capability__c;
-				if(combinedCapabilities.contains(capabilityId)){
-					if(capabilitiesAdd.contains(capabilityId)){
+				if (combinedCapabilities.contains(capabilityId)) {
+					if (capabilitiesAdd.contains(capabilityId)) {
 						assignment.In_Conflict_With__c = '';
 						assignment.Is_In_Conflict__c = false;
-					}
-					else if(capabilitiesReplacementMap.containsKey(capabilityId)){
+						assignmentsToUpsert.add(assignment);
+					} else if (capabilitiesReplacementMap.containsKey(capabilityId)) {
 						assignment.Account_Role_Detail_Capability__c = capabilitiesReplacementMap.get(capabilityId);
 						assignment.In_Conflict_With__c = '';
 						assignment.Is_In_Conflict__c = false;
+						assignmentsToUpsert.add(assignment);
 					}
-					else if(capabilitiesRemove.contains(capabilityId) || capabilitiesReplacementMap.values().contains(capabilityId)){
-						assignment.Deprecated__c = true;
+					else if(capabilitiesRemove.contains(capabilityId) ){
+						assignmentsToDelete.add(assignment);
 					}
-
-					assignmentsToUpsert.add(assignment);
 				}
 			}
 
@@ -99,30 +93,35 @@ public without sharing class CW_CapabilityConflictController {
 			List<Account_Role_Detail_Capability__c> capabilitiesToUpsert = replaceCapabilities(capabilitiesToHandle, capabilitiesReplacementMap);
 			List<Account_Role_Detail_Capability__c> capabilitiesToDelete = generateCapabilitiesToDelete(capabilitiesToHandle, capabilitiesReplacementMap.keySet());
 
+
 			sp = Database.setSavepoint();
-			if(!assignmentsToUpsert.isEmpty()){
+			if (!assignmentsToUpsert.isEmpty()) {
 				upsert assignmentsToUpsert;
 			}
 
-			if(!capabilitiesToUpsert.isEmpty()){
+			if (!capabilitiesToUpsert.isEmpty()) {
 				upsert capabilitiesToUpsert;
 			}
 
-			if(!capabilitiesToDelete.isEmpty()){
-				delete capabilitiesToDelete;
+			if (!assignmentsToDelete.isEmpty()) {
+				Database.delete(assignmentsToDelete, false);
 			}
+
+			if (!capabilitiesToDelete.isEmpty()) {
+				Database.delete(capabilitiesToDelete, false);
+			}
+
+			
 
 			res.success = true;
 			res.message = 'Conflicting capabilities have been handled';
 			return JSON.serialize(res);
 		} catch (Exception exc) {
-			if (sp != null && !Test.isRunningTest()){
+			if (sp != null && !Test.isRunningTest()) {
 				Database.rollback(sp);
 			}
 			throw new AuraHandledException('Aura handled exception: ' + exc.getMessage() + ' Stacktrace: ' + exc.getStackTraceString());
 		}
-
-
 	}
 
 	/**
@@ -131,64 +130,64 @@ public without sharing class CW_CapabilityConflictController {
 	 * @return			List of assignments
 	 */
 	@AuraEnabled
-	public static List<ICG_Account_Role_Capability_Assignment__c> getConflictCapabilities(String stationId){
-
-		if(stationId == null || stationId == ''){
+	public static List<ICG_Account_Role_Capability_Assignment__c> getConflictCapabilities(String stationId) {
+		if (stationId == null || stationId == '') {
 			return new List<ICG_Account_Role_Capability_Assignment__c>();
 		}
 
-		return [SELECT Id, In_Conflict_With__c, Account_Role_Detail_Capability__c FROM ICG_Account_Role_Capability_Assignment__c WHERE  Deprecated__c = false AND Is_In_Conflict__c = true AND ICG_Account_Role_Detail__c =: stationId];
+		return [SELECT Id, In_Conflict_With__c, Account_Role_Detail_Capability__c FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Capability_Assignment_Group__r.Is_Active__c = true AND Is_In_Conflict__c = true AND ICG_Account_Role_Detail__c = :stationId];
 	}
 
-	private static List<Account_Role_Detail_Capability__c> generateCapabilitiesToDelete(Map<Id, Account_Role_Detail_Capability__c> capabilitiesToHandle, Set<Id> capabilityIdsToDelete){
+	private static List<Account_Role_Detail_Capability__c> generateCapabilitiesToDelete(Map<Id, Account_Role_Detail_Capability__c> capabilitiesToHandle, Set<Id> capabilityIdsToDelete) {
 		List<Account_Role_Detail_Capability__c> capabilitiesToDelete = new List<Account_Role_Detail_Capability__c>();
 
-		for(Id capabilityId : capabilityIdsToDelete){
-			capabilitiesToDelete.add(capabilitiesToHandle.get(capabilityId));
+		for (Id capabilityId : capabilityIdsToDelete) {
+			Account_Role_Detail_Capability__c capabilityToDelete = new Account_Role_Detail_Capability__c();
+			capabilityToDelete.Id = capabilityId;
+			capabilitiesToDelete.add(capabilityToDelete);
 		}
 
 		return capabilitiesToDelete;
 	}
 
-	private static Map<Id, Account_Role_Detail_Capability__c> generateCapabiltiesToHandleMap(Set<Id> combinedCapabilityIdsToHandle){
+	private static Map<Id, Account_Role_Detail_Capability__c> generateCapabiltiesToHandleMap(Set<Id> combinedCapabilityIdsToHandle) {
 		Map<Id, Account_Role_Detail_Capability__c> capabilitiesToHandle = new Map<Id, Account_Role_Detail_Capability__c>();
 		Map<String, Schema.SObjectField> fieldMap = Account_Role_Detail_Capability__c.sObjectType.getDescribe().fields.getMap();
 		Set<String> fieldNames = fieldMap.keySet();
 		List<Account_Role_Detail_Capability__c> capabilities = Database.query('select ' + String.join(new List<String>(fieldNames), ', ') + ' from Account_Role_Detail_Capability__c where Id in: combinedCapabilityIdsToHandle');
-		for(Account_Role_Detail_Capability__c capability : capabilities){
+		for (Account_Role_Detail_Capability__c capability : capabilities) {
 			capabilitiesToHandle.put(capability.Id, capability);
 		}
 		return capabilitiesToHandle;
 	}
 
-	private static List<Account_Role_Detail_Capability__c> replaceCapabilities(Map<Id, Account_Role_Detail_Capability__c> capabilitiesToHandle, Map<Id, Id> capabilitiesReplacementMap){
+	private static List<Account_Role_Detail_Capability__c> replaceCapabilities(Map<Id, Account_Role_Detail_Capability__c> capabilitiesToHandle, Map<Id, Id> capabilitiesReplacementMap) {
 		List<Account_Role_Detail_Capability__c> capabilitiesToUpsert = new List<Account_Role_Detail_Capability__c>();
 
-		for(Id capabilityId : capabilitiesReplacementMap.keySet()){
+		for (Id capabilityId : capabilitiesReplacementMap.keySet()) {
 			Id capabilityToBeReplacedId = capabilitiesReplacementMap.get(capabilityId);
 			Account_Role_Detail_Capability__c originalCapability = capabilitiesToHandle.get(capabilityId);
-			Account_Role_Detail_Capability__c capabilityToBeReplaced = originalCapability.clone(true, true, true, true);
-			capabilityToBeReplaced.Id = capabilityToBeReplacedId;
-			capabilitiesToUpsert.add(capabilityToBeReplaced);
+			if(originalCapability != null) {
+				originalCapability.Id = capabilityToBeReplacedId;
+				capabilitiesToUpsert.add(originalCapability);
+			}
 		}
 
 		return capabilitiesToUpsert;
 	}
-	
+
 	public class HandledCapability {
 		@AuraEnabled
-		public Id id {get; set;}
+		public Id id { get; set; }
 		@AuraEnabled
-		public String action {get; set;}
+		public String action { get; set; }
 		@AuraEnabled
-		public Id target {get; set;}
+		public Id target { get; set; }
 
-		public HandledCapability(Id id, String action, Id target){
+		public HandledCapability(Id id, String action, Id target) {
 			this.id = id;
 			this.action = action;
 			this.target = target;
 		}
-		
 	}
-	
 }

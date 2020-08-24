@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">CRSTR_Pharma_Dedicated__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">CRSTR_Pharma_Dedicated_Formula__c</value>
     </values>

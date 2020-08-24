@@ -9,9 +9,10 @@ public without sharing class CW_LoginController {
 
     @AuraEnabled (cacheable=true)
     public static String getOneSourceServiceId(){
-        String srvcId;
         List<Portal_Applications__c> oneSourceApp = [Select Id from Portal_Applications__c where Name = 'One Source' limit 1];
-        if(!oneSourceApp.isEmpty()) srvcId = oneSourceApp[0].Id;
-        return srvcId;
+        if(!oneSourceApp.isEmpty()){
+            return oneSourceApp[0].Id;
+        } 
+		return null;
     }
 }

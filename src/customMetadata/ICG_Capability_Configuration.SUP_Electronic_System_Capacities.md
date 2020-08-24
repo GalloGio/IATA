@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Cargo Messaging Capacities;Mail Tracking and Reporting</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Electronic System Capacities</value>
     </values>

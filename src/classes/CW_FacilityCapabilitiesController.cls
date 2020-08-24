@@ -16,7 +16,37 @@ public without sharing class CW_FacilityCapabilitiesController {
 	final static Map<String, List<String>> ESPECIAL_CATEGORIES = getMapConfig();
 	public final static Map<String, List<String>> EDITABLE_RECORDTYPES = getMapEditableRecordTypes();
 
-	@auraEnabled(cacheable = true)
+	public static String generateCapabilitiesStructureCsv() {
+		List<String> output = new List<String>();
+		output.add('StationType_DeveloperName,StationType_Name,Category_Value,Category_Label,Equipment_Value,Equipment_Label');
+
+		Map<String, RecordType> rtObjectByRtDevName = new Map<String, RecordType>();
+		for (RecordType currentRt : RecordTypeSingleton.getInstance().getRecordTypesBySObject('ICG_Account_Role_Detail__c')) {
+			rtObjectByRtDevName.put(currentRt.DeveloperName.toLowerCase(), currentRt);
+		}
+
+		Map<String, List<String>> categoriesByAccountRoleDetailRecordType = getMapCategoriesByAccountRoleDetailRecordType();
+		Map<String, List<String>> categoriesByRecordType = getMapCategoriesByRecordType();
+		Map<String, Schema.PicklistEntry> mapCategories = CW_FacilityCapabilitiesController.getPicklistEntryMapCapCategory();
+		Map<String, List<Map<String, Object>>> equipmentsByCategory = CW_Utilities.getPicklistFieldDependencies('Account_Role_Detail_Capability__c', 'Category__c', 'Equipment__c', true);
+
+		for (String currentAccountRoleDetailRtDevName : categoriesByAccountRoleDetailRecordType.keySet()) {
+			if (rtObjectByRtDevName.containsKey(currentAccountRoleDetailRtDevName)) {
+				for (String currentCategoryValue : categoriesByAccountRoleDetailRecordType.get(currentAccountRoleDetailRtDevName)) {
+					if (mapCategories.containsKey(currentCategoryValue) && equipmentsByCategory.containsKey(currentCategoryValue)) {
+						for (Map<String, Object> currentEquipment : equipmentsByCategory.get(currentCategoryValue)) {
+							// Add csv line
+							output.add(String.format('"{0}","{1}","{2}","{3}","{4}","{5}"', new List<String>{ rtObjectByRtDevName.get(currentAccountRoleDetailRtDevName).DeveloperName, rtObjectByRtDevName.get(currentAccountRoleDetailRtDevName).Name, mapCategories.get(currentCategoryValue).value, mapCategories.get(currentCategoryValue).label, (String) currentEquipment.get('value'), (String) currentEquipment.get('label') }));
+						}
+					}
+				}
+			}
+		}
+
+		return String.join(output, '\n');
+	}
+
+	@auraEnabled(cacheable=true)
 	public static Map<String, List<String>> getMapCategoriesByAccountRoleDetailRecordType() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_CATEGORIES_BY_ACCOUNT_ROLE_DETAIL_RT, SEARCH_ONLY_DATA)) {
@@ -99,11 +129,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 	}
 
 	private static List<ICG_capability_configuration__mdt> getCapabilityConfigurationMetadataByType(String type, String fieldsData) {
-		if(fieldsData.equalsIgnoreCase(SEARCH_WITH_EXTRADATA)){
-				return [SELECT Key__c, Extra_Data__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
+		if (fieldsData.equalsIgnoreCase(SEARCH_WITH_EXTRADATA)) {
+			return [SELECT Key__c, Extra_Data__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
 		}
-		return [SELECT Key__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];	
-	}	
+		return [SELECT Key__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
+	}
 	public static Map<String, List<String>> getMapConfig() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_CONFIG)) {
@@ -153,7 +183,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @param			accountRoleDetailCapabilityFields Fields to retrieve to populate the query
 	 * @return			List of <ICG_Account_Role_Capability_Assignment__c>
 	 */
-	public static List<ICG_Account_Role_Capability_Assignment__c> getAssignmentsByAccountRoleDetailAndRts(Id ardId, List<Id> recordTypesId, List<String> categoriesToRetrieve, List<String> accountRoleDetailCapabilityFields, List<String> capabilitiesIdForConflicts) {
+	private static List<ICG_Account_Role_Capability_Assignment__c> getAssignmentsByAccountRoleDetailAndRts(Id ardId, List<Id> recordTypesId, List<String> categoriesToRetrieve, List<String> accountRoleDetailCapabilityFields, List<String> capabilitiesIdForConflicts) {
 		List<ICG_Account_Role_Capability_Assignment__c> returnValue = new List<ICG_Account_Role_Capability_Assignment__c>();
 		if (String.isNotBlank(ardId) && recordTypesId != null && recordTypesId.size() > 0 && accountRoleDetailCapabilityFields != null && accountRoleDetailCapabilityFields.size() > 0) {
 			List<String> fieldsToRetrieve = new List<String>();
@@ -185,14 +215,14 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 			String optionalFilterConflicts = capabilitiesIdForConflicts == null || capabilitiesIdForConflicts.isEmpty() ? ' AND Is_In_Conflict__c = false' : 'AND ' + ardCapabilityR + '.Id IN (\'' + String.join((capabilitiesIdForConflicts), '\', \'') + '\')';
 
-			String query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE Deprecated__c = false ' + optionalFilterConflicts + ' AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') ';
+			String query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR + '.Is_Active__c = true ' + optionalFilterConflicts + ' AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') ';
 			returnValue = (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(query);
 		}
 
 		return returnValue;
 	}
 
-	private static Map<Id, List<AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments){
+	private static Map<Id, List<AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments) {
 		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<AsgmtGroupWrapper>>();
 
 		// Loop assignments to get certifications
@@ -224,15 +254,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return asgmtGroupByCapabilityId;
 	}
 
-	private static Map<String, Object> generateData(
-		String id, 
-		List<String> categoriesToRetrieve,
-		Map<String, List<String>> mapCategoriesByRecordTypeDevName,
-		Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
-		List<String> capabilitiesIdForConflicts,
-		ICG_Account_Role_Detail__c accountRoleDetailFound
-	){
-
+	private static Map<String, Object> generateData(String id, List<String> categoriesToRetrieve, Map<String, List<String>> mapCategoriesByRecordTypeDevName, Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById, List<String> capabilitiesIdForConflicts, ICG_Account_Role_Detail__c accountRoleDetailFound) {
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
 
@@ -283,29 +305,12 @@ public without sharing class CW_FacilityCapabilitiesController {
 				Map<String, Object> currentObject;
 				if (categoryFound != null && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
 					List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(CW_CapabilitiesUtilities.ROWS);
-					
 					if (!CW_CapabilitiesUtilities.isCapabilityAdded(capabilityGroupRowsFound, currentDetail.Id)) {
 						currentObject = convertCapabilityAssignmentToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
 						List<AsgmtGroupWrapper> certifications = asgmtGroupByCapabilityId.containsKey(currentDetail.Id) ? asgmtGroupByCapabilityId.get(currentDetail.Id) : new List<AsgmtGroupWrapper>();
 						certifications.sort();
-						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
-							currentObject, 
-							currentDetail.Id, 
-							currentDetail, 
-							certifications, 
-							currentAssignment.ICG_Capability_Assignment_Group__r.RecordTypeId, 
-							capabilityFound, 
-							mapFieldsByRecordTypeAndCategory, 
-							rtDevNameLC, 
-							mapEquipments, 
-							mapTooltipFieldsByField, 
-							fieldsMap,
-							false, 
-							true,
-							true
-						);
+						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(currentObject, currentDetail.Id, currentDetail, certifications, currentAssignment.ICG_Capability_Assignment_Group__r.RecordTypeId, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, mapEquipments, mapTooltipFieldsByField, fieldsMap, false, true, true);
 						capabilityGroupRowsFound.add(currentObject);
-
 					}
 				}
 				categoryFound.put('templateFields', currentObject);
@@ -314,7 +319,6 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 		Map<String, List<String>> capabilitiesByRecordTypeNotIncluded = new Map<String, List<String>>();
 		for (Map<String, Object> capability : (List<Map<String, Object>>) rawData.get(CW_CapabilitiesUtilities.CAPABILITIES)) {
-
 			// if recordtype is editable in private area
 			if ((Boolean) capability.get('isEditableRecordType')) {
 				capabilitiesByRecordTypeNotIncluded.put((String) capability.get('name'), new List<String>());
@@ -340,8 +344,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 					capabilityFound = CW_CapabilitiesUtilities.generateCapabilityFound(capabilityFound, currentDetail);
 					Map<String, Object> categoryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get(CW_CapabilitiesUtilities.CATEGORIES), 'value', currentDetail.Category__c);
 					categoryFound = CW_CapabilitiesUtilities.generateCategoryFound(categoryFound, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, mapFieldsByGroupField, columnsToHandle, false);
-	
-					if(!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)){
+
+					if (!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)) {
 						checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
 					}
 
@@ -349,22 +353,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 					if (categoryFound != null && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
 						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(CW_CapabilitiesUtilities.ROWS);
 						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
-							currentObject, 
-							'', 
-							currentDetail, 
-							new List<AsgmtGroupWrapper>(), 
-							'', 
-							capabilityFound, 
-							mapFieldsByRecordTypeAndCategory, 
-							rtDevNameLC, 
-							mapEquipments, 
-							mapTooltipFieldsByField, 
-							fieldsMap,
-							false, 
-							false,
-							false
-						);
+						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(currentObject, '', currentDetail, new List<AsgmtGroupWrapper>(), '', capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, mapEquipments, mapTooltipFieldsByField, fieldsMap, false, false, false);
 						capabilityGroupRowsFound.add(currentObject);
 					}
 					categoryFound.put('templateFields', currentObject);
@@ -399,16 +388,9 @@ public without sharing class CW_FacilityCapabilitiesController {
 				return returnValue;
 			}
 
-			Map<String, Object> generatedData = generateData(
-				id,
-				categoriesToRetrieve,
-				mapCategoriesByRecordTypeDevName,
-				mapAccountRoleDetailAssignmentRtsById,
-				capabilitiesIdForConflicts,
-				accountRoleDetailFound
-			);
+			Map<String, Object> generatedData = generateData(id, categoriesToRetrieve, mapCategoriesByRecordTypeDevName, mapAccountRoleDetailAssignmentRtsById, capabilitiesIdForConflicts, accountRoleDetailFound);
 
-			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData);
+			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData,false);
 		} catch (Exception e) {
 			returnValue.put('e_getMessage', e.getMessage());
 			returnValue.put('e_getStackTraceString', e.getStackTraceString());

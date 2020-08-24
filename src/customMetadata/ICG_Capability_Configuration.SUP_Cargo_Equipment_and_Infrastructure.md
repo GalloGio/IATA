@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Facility Equipment and Infrastructure;Temperature Control;Working Areas &amp; Temporary Storage;Live Animals Capacities;Veterinary, Phytosanitary And Pest Control</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Cargo Equipment and Infrastructure</value>
     </values>

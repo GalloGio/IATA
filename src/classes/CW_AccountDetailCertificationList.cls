@@ -9,7 +9,7 @@ public with sharing class CW_AccountDetailCertificationList {
 															TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) 
 																FROM ICG_Capability_Assignment_Group__c 
 																WHERE ICG_Account_Role_Detail__r.Id = :accountId
-																AND Is_Deprecated__c = false
+																AND Is_Active__c = true
 																AND Is_Expired__c = false
 																];
 

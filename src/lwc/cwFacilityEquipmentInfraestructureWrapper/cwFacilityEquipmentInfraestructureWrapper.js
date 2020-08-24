@@ -14,6 +14,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	@api siteclass = "advance";
 	@api label;
+	@api appliedFiltersCount;
 
 	@track tooltipObject;
 	@track error;
@@ -123,7 +124,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 			return;
 		}
 		if (this.superCategories && !this.eventListenersAdded) {
-			this._manageCollapsibleSections();
+			this.manageCollapsibleSections();
 			this.initialized = true;
 		}
 	}
@@ -143,13 +144,12 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 				this.lstRecordTypesChecked = removeFromArray(this.lstRecordTypesChecked, row.value.toLowerCase());
 			}
 		});
-		this._updateAvailableSections(this.lstRecordTypesChecked);
-		//this._manageCollapsibleSections();
+		this.updateAvailableSections(this.lstRecordTypesChecked);
 		this.initialized = false;
 		this.eventListenersAdded = false;
 	}
 
-	_updateAvailableSections(lstRtypes) {
+	updateAvailableSections(lstRtypes) {
 		this.availableSections = [];
 
 		lstRtypes.forEach(rtype => {
@@ -159,10 +159,10 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 				}
 			});
 		});
-		this._updateSuperCategoriesVisibility(this.availableSections, lstRtypes);
+		this.updateSuperCategoriesVisibility(this.availableSections, lstRtypes);
 	}
 
-	_updateSuperCategoriesVisibility(validSections, lstRtypes) {
+	updateSuperCategoriesVisibility(validSections, lstRtypes) {
 		let temporalMap = JSON.parse(JSON.stringify(this.superCategories));
 		temporalMap.forEach(superCat => {
 
@@ -188,7 +188,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 		this.superCategories = JSON.parse(JSON.stringify(temporalMap));
 	}
 
-	_manageCollapsibleSections() {
+	manageCollapsibleSections() {
 		let coll = this.template.querySelectorAll(".collapsible");
 		for (let i = 0; i < coll.length; i++) {
 			if (coll[i].getAttribute("data-listener") !== "true") {
@@ -212,16 +212,12 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 	}
 
 	get isSearchBar() {
-		let searchbar = false;
-		if (this.siteclass === "searchbar") {
-			searchbar = true;
-		}
-		return searchbar;
+		return this.siteclass === "searchbar";
 	}
 
 	get gsiteclass() {
 		let styleclass = "col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			styleclass = "col-12 col-no-padding";
 		}
 		return styleclass;
@@ -229,7 +225,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get titlesize() {
 		let classtitle = "filters-label h6Custom text-truncate";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			classtitle = "filters-label text-truncate color-second-label";
 		}
 		return classtitle;
@@ -237,7 +233,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get parentdivwhite() {
 		let classdivparent = "col-12 bg-white text-truncate mb-3";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			classdivparent = "col-12";
 		}
 		return classdivparent;
@@ -245,7 +241,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get parentclass() {
 		let classdparent = "";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			classdparent = "mb-3";
 		}
 		return classdparent;
@@ -253,7 +249,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get localpanel() {
 		let localpanel = "panel-filter-result localPanel width-100 row";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			localpanel = "";
 		}
 		return localpanel;
@@ -261,7 +257,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get labelSize() {
 		let labelsize = "filters-label sectionLabel cursor-pt";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			labelsize = "filters-label sectionLabel-search cursor-pt";
 		}
 		return labelsize;
@@ -269,7 +265,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get mainCollapseImg() {
 		let collapseposition = "expand-collapse-filter";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			collapseposition = "expand-collapse-filter-advance-search";
 		}
 		return collapseposition;
@@ -277,7 +273,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 
 	get hrmargin() {
 		let hrmrgn = "base-underline-100";
-		if (this.siteclass === "searchbar") {
+		if (this.isSearchBar) {
 			hrmrgn = "base-underline-100 mt-1 mb-0";
 		}
 		return hrmrgn;

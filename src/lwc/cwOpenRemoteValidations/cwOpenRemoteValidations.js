@@ -9,7 +9,7 @@ export default class CwOpenRemoteValidations extends LightningElement {
 	@track filename = "open_remote_validation.xlsx"; // Name of the file
 	
 	icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
 
 	@api textFilter = "";
 	@api gxaUrl;
@@ -28,6 +28,10 @@ export default class CwOpenRemoteValidations extends LightningElement {
 		}
 	}
 
+	renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
+	}
+	
 	filterRemoteValidations(event) {
 		this.textFilter = event.target.value;
 	}

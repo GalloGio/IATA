@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">VPPC_Quarantine_Room_Dimensions_H__c;VPPC_Quarantine_Room_Dimensions_W__c;VPPC_Quarantine_Room_Dimensions_L__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Quarantine Room Dimensions (in m)</value>
     </values>

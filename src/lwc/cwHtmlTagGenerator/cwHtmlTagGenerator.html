@@ -35,7 +35,7 @@
 		<!-- Aux type not defined - Start -->
 		<template if:false={isAuxTypeDefined}>
 			<div data-item="stamp-popover-4" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
-				<span>{getValue}</span>
+				<span>{getValueSubTitle}</span>
 				<c-cw-simple-tooltip item-id="stamp-popover-4" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 			</div>
 		</template>
@@ -54,7 +54,7 @@
 			<template if:true={isAuxTypeStandardTemperatureRanges}>
 				<diV class="display-flex">
 					<div data-item="stamp-popover-5" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
-						<span>{generateLabel}</span>
+						<span>{generateLabelTemperature}</span>
 						<c-cw-simple-tooltip item-id="stamp-popover-5" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 					</div>
 					<div data-item="stamp-popover-6" onmouseover={showPopover} onmouseleave={hidePopover} if:true={isComparisonFacilityView} class="content yellow">
@@ -68,7 +68,7 @@
 			<template if:true={isAuxTypeCustomTemperatureRanges}>
 				<div class="display-flex">
 					<div data-item="stamp-popover-8" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
-						<span>{generateLabel}</span>
+						<span>{generateLabelTemperature}</span>
 						<c-cw-simple-tooltip item-id="stamp-popover-8" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 					</div>
 				</div>
@@ -76,7 +76,7 @@
 
 			<template if:true={isAuxTypeTemperatureControlledGroundServiceEq}>
 				<div data-item="stamp-popover-9" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
-					<span>{generateLabel}</span>
+					<span>{generateLabelTemperature}</span>
 					<c-cw-simple-tooltip item-id="stamp-popover-9" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 				</div>
 			</template>

@@ -138,6 +138,14 @@ export default class CwResultsPageContainer extends LightningElement {
 					this.initialized = true;
 				}
 			}
+			else{
+				this.searchList = [];
+				this.initialSearch = this.searchList;
+				this.lastQueryEncodedString = 'all';
+				this.saveInLocalStorage("q", this.lastQueryEncodedString);
+				this.getRecordsFromEngine(null);
+				this.initialized = true;
+			}
 		}
 	}
 

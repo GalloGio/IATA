@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Temperature_Controlled_Transport_Trucks</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Transport_Vehicles</value>
     </values>

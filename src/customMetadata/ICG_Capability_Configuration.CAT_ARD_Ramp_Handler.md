@@ -4,7 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Gse_In_Facility;Temperature_Controlled_Transport_Trucks;Temperature_Controlled_Dollies_Trucks</value>
+        <value xsi:type="xsd:string">Gse_In_Facility;Temperature_Controlled_Dollies_Trucks</value>
+    </values>
+    <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Key__c</field>

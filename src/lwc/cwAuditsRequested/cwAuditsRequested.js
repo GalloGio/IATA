@@ -8,7 +8,7 @@ export default class CwAuditRequested extends LightningElement {
     @track filename = "pending_station_approvals.xlsx"; // Name of the file
     
     icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
 	
 	@api textFilter = '';
 	@api 
@@ -19,7 +19,11 @@ export default class CwAuditRequested extends LightningElement {
 
 	filterRequestedAudits(event){
 		this.textFilter = event.target.value;
-	}
+    }
+    
+    renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
+    }
 
 	get requestedAuditsFormat(){
 		if(this.textFilter) return this.auditRequestedList.filter(aud => {return aud.Station__r.Name.toLowerCase().indexOf(this.textFilter.toLowerCase())>-1});

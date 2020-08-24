@@ -57,8 +57,8 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		List<ICG_Account_Role_Detail__c> ardToUpdate = [SELECT Id, Company_FOR__c, City_FOR__c, Country_FOR__c,
 														Search_By_City__c, Search_By_Company__c, Search_By_Country__c
 														FROM ICG_Account_Role_Detail__c
-														WHERE Id IN :lstFacilities];
-		System.debug(LoggingLevel.FINE, 'updateSearchByFormulaValues.lstARDtoUpdate: ' + ardToUpdate);
+                                                        WHERE Id IN :lstFacilities];
+                                                        
 		for(ICG_Account_Role_Detail__c facility : ardToUpdate) {
 			Boolean toUpdate = false;
 			
@@ -111,13 +111,13 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		}
 		if (!ardFinal.isEmpty()) {
 			Database.SaveResult [] updateResult = Database.update(ardFinal, false);
-			System.debug(LoggingLevel.FINE, 'updateResult : ' + JSON.serialize(updateResult));
 		}
 	}
 	/**
 	 * @description		check formula values after update account row
 	 * 
-	 * @param			List<Account> lstFacilities
+	 * @param			Map<Id, Account> mapNews
+	 * @param			Map<Id, Account> mapOlds
 	 */
 	public static void checkFacilityFields(Map<Id, Account> mapNews, Map<Id, Account> mapOlds) {
 		Set<Id> lstAccIds = new Set<Id>();
@@ -129,14 +129,14 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		if(!lstAccIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__c IN :lstAccIds]);
 			Set<Id> resultIds = results.keySet();
-			System.debug(LoggingLevel.FINE, 'resultIds : ' + JSON.serialize(resultIds));
 			futureUpdateARDs(resultIds, true);
 		}
 	}
 	/**
 	 * @description		check formula values after update account row
 	 * 
-	 * @param			List<Account> lstFacilities
+	 * @param			Map<Id, IATA_ISO_City__c> mapNews
+	 * @param			Map<Id, IATA_ISO_City__c> mapOlds
 	 */
 	public static void checkFacilityFields(Map<Id, IATA_ISO_City__c> mapNews, Map<Id, IATA_ISO_City__c> mapOlds) {
 		Set<Id> lstCityIds = new Set<Id>();
@@ -148,14 +148,14 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		if(!lstCityIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__r.Business_City__c IN :lstCityIds]);
 			Set<Id> resultIds = results.keySet();
-			System.debug(LoggingLevel.FINE, 'resultIds : ' + JSON.serialize(resultIds));
 			futureUpdateARDs(resultIds, false);
 		}
 	}
 	/**
 	 * @description		check formula values after update account row
 	 * 
-	 * @param			List<Account> lstFacilities
+	 * @param			Map<Id, IATA_ISO_Country__c> mapNews
+	 * @param			Map<Id, IATA_ISO_Country__c> mapOlds
 	 */
 	public static void checkFacilityFields(Map<Id, IATA_ISO_Country__c> mapNews, Map<Id, IATA_ISO_Country__c> mapOlds) {
 		Set<Id> lstCountryIds = new Set<Id>();
@@ -163,12 +163,11 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 			if(mapNews.get(country.Id).Name != mapOlds.get(country.Id).Name) {
 				lstCountryIds.add(country.Id);
 			}
-		}
-		System.debug(LoggingLevel.FINE, 'lstCountryIds : ' + JSON.serialize(lstCountryIds));
+        }
+        
 		if(!lstCountryIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__r.Business_City__c IN :lstCountryIds]);
 			Set<Id> resultIds = results.keySet();
-			System.debug(LoggingLevel.FINE, 'resultIds : ' + JSON.serialize(resultIds));
 			futureUpdateARDs(resultIds, false);
 		}
 	}

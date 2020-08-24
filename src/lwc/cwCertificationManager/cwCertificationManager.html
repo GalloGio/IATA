@@ -32,7 +32,7 @@
 				<div class="slds-grid slds-gutters">
 					<template if:true={showScope}>
 						<div class="slds-col">
-							<lightning-dual-listbox scope="progress" label={label.scope} source-label="Available" selected-label="Selected" options={scope} required onchange={handleScopeChange}></lightning-dual-listbox>
+							<lightning-dual-listbox scope="progress" label={label.scope} source-label="Available" selected-label="Selected" options={scope} onchange={handleScopeChange} required></lightning-dual-listbox>
 						</div>
 					</template>									
 				</div>
@@ -40,95 +40,154 @@
 		  </div>
 		  <footer class="slds-modal__footer">
 			<button class="slds-button slds-button_neutral" onclick={closeModal}>{label.cancel}</button>
-			<button class="slds-button slds-button_brand" disabled={isCanSave} onclick={handleModalAccept}>{label.accept}</button>
+			<button class="slds-button slds-button_brand" onclick={handleModalAccept} disabled={isCanSave}>{label.accept}</button>
 		  </footer>
 		</div>
 	  </section>
 	  <div class="slds-backdrop slds-backdrop_open"></div>
 	</template>
 	<div class="slds-grid">
-		<div class="slds-col slds-size_1-of-8">
+		<div class="slds-col slds-size_1-of-12">
 			<lightning-input class="certificationItem" type="text" value={certificationInfo.certificationId} disabled></lightning-input>
 		</div>
 		<div class="slds-col slds-size_1-of-8">
 			<lightning-input class="certificationItem" type="text" value={certificationInfo.name} disabled></lightning-input>
 		</div>
 		<div class="slds-col slds-size_1-of-4">
-			<lightning-dual-listbox if:false={disableField} value={getValuesScope} label="" source-label="" selected-label="" data-name="scope-edition" options={certificationInfo.listScope} disabled={disableField} onblur={handleChangeEditMode}></lightning-dual-listbox>
+			<lightning-dual-listbox class="p-65" if:false={disableField} value={getValuesScope} size="4" label="" source-label="" selected-label="" data-id={certificationInfo.id} data-name="Scope" data-origin="Active-Cert" data-scopeused={certificationInfo.scopeToUse} options={certificationInfo.listScope} disabled={disableField} onblur={handleChangeEditMode}></lightning-dual-listbox>
 			<lightning-input if:true={disableField} class="certificationItem" type="text" value={getLabelScope} disabled></lightning-input>
-			
 		</div>
 		<div class="slds-col slds-size_1-of-12">
-			<lightning-input class="certificationItem" type="date" label="" onchange={handleChangeEditMode} value={certificationInfo.issuingDate} disabled={disableField} data-name="issuing-edition"></lightning-input>
+			<lightning-input class="certificationItem issuing-class" type="date" label="" onchange={handleChangeEditMode} value={issuingDate} date-style="medium" disabled={disableField} data-id={certificationInfo.id} data-name="Issue_Date__c" data-origin="Active-Cert"></lightning-input>
 		</div>
 		<div class="slds-col slds-size_1-of-12">
-			<lightning-input class="certificationItem" type="date" label="" onchange={handleChangeEditMode}  value={certificationInfo.expirationDate} min={formatedIssuedDate} disabled={disableField} data-name="expiriation-edition"></lightning-input>
+			<lightning-input class="certificationItem expiration-class" type="date" label="" onchange={handleChangeEditMode} value={expirationDate}  date-style="medium" disabled={disableField} data-id={certificationInfo.id} data-name="Expiration_Date__c" data-origin="Active-Cert"></lightning-input>
 		</div>
 		<div class="slds-col slds-size_1-of-12">
 			<lightning-input class="certificationItem" type="text" value={certificationInfo.status} disabled></lightning-input>
 		</div>
+		<div class="slds-col slds-size_1-of-10" style="padding-left: 1%;padding-top: 0.4%;">
+			<span class="slds-assistive-text"></span>
+			<label class="slds-form-element__label slds-no-flex"></label>
+			<div class="certificationItem slds-grid_align-center">
+				<lightning-input name="Booked" type="checkbox" label="" onchange={handleChangeEditMode} checked={certificationInfo.booked} disabled={disableField} data-id={certificationInfo.id} data-name="booked" data-origin="Active-Cert"></lightning-input>
+			</div>
+		</div>
 		<div class="slds-col slds-size_1-of-4">
 			<span class="slds-assistive-text"></span>
 			<label class="slds-form-element__label slds-no-flex"></label>
-			<div class="slds-col slds-grid slds-size_4-of-4 slds-p-left_small">
+			<div class="slds-col slds-grid slds-size_4-of-4">
 			<br />
+			<template if:false={isEditMode}>
 				<button class="slds-col slds-button slds-button_outline-brand bt-marine" onclick={handleHistory} disabled={hideButton}>{label.icg_history}</button>
 				<button class="slds-col slds-button slds-button_outline-brand bt-green" onclick={handleRenewCertification} disabled={hideButton}>{label.renew}</button>
-				<button class="slds-col slds-button slds-button_outline-brand bt-yellow" onclick={handleEditCertification} disabled={hideButton}>{label.icg_capab_magmnt_edit}</button>
-				<button class="slds-col slds-button slds-button_outline-brand bt-blue" onclick={handleEditCapabilities} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-yellow" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCertification} disabled={disableButtonsEdit}>{label.icg_capab_magmnt_edit}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-blue" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCapabilities} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
+			</template>
+			<template if:true={isEditMode}>
+				<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
+				<button class="slds-col slds-button slds-button_outline-brand slds-size_6-of-12" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleCancelEditCertification} disabled={disableButtonsEdit}>{label.icg_cancel_edit}</button>
+			</template>
 			</div>
 		</div>
 	</div>
-	<template if:true={showHistory}>
-		<template for:each={deprecatedCerts} for:item="item">
+
+	<template if:true={showUpcoming}>
+		<template for:each={upcomingCerts} for:item="item">
 			<div key={item.id} class = "slds-grid slds-p-left_xx-large">
-				<div class="slds-col slds-size_1-of-8">
+				<div class="slds-col slds-size_1-of-12">
 					<lightning-input type="text" disabled value={item.certificationId}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-8">
 					<lightning-input type="text" disabled value={item.name}></lightning-input>
 				</div>
-				<div class="slds-col slds-size_1-of-6">
-					<lightning-input type="text" disabled class="slds-truncate" value={item.scope}></lightning-input>
+				<div class="slds-col slds-size_1-of-4">
+					<lightning-dual-listbox class="p-65" if:false={item.disabled} value={item.scope} size="4" label="" source-label="" selected-label="" data-id={item.id} data-name="Scope" data-scopeused={item.scopeToUse} data-origin="Upcoming-Cert" options={certificationInfo.listScope} onblur={handleChangeEditMode}></lightning-dual-listbox>
+					<lightning-input if:true={item.disabled} type="text" disabled={item.disabled} class="slds-truncate" value={item.scopeLabel}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-8">
-					<lightning-input type="text" disabled value={item.issuingDate}></lightning-input>
+					<lightning-input class={item.issuingClass} type="date" label="" onchange={handleChangeEditMode} value={item.issuingDate} date-style="medium" disabled={item.disabled} data-id={item.id} data-name="Issue_Date__c" data-origin="Upcoming-Cert"></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-8">
-					<lightning-input type="text" disabled value={item.expirationDate}></lightning-input>
+					<lightning-input class={item.expirationClass} type="date" label="" onchange={handleChangeEditMode} value={item.expirationDate} date-style="medium" disabled={item.disabled} data-id={item.id} data-name="Expiration_Date__c" data-origin="Upcoming-Cert"></lightning-input>
 				</div>
-				<div class="slds-col slds-size_1-of-8">
+				<div class="slds-col slds-size_1-of-12">
 					<lightning-input type="text" disabled class="slds-truncate" value={item.status}></lightning-input>
 				</div>
+				<template if:true={item.isStatusToActivate}>
+						<div if:true={item.disabled} class="slds-col slds-grid slds-grid_vertical-align-end slds-size_1-of-5" style="padding-left: 2%;">
+							<button class="slds-col slds-button slds-button-brand" data-id={item.id} onclick={handleActivateGroup} >{label.icg_activate}</button>
+							<button class="slds-col slds-button slds-button_outline-brand" data-id={item.id} data-origin="Upcoming-Cert" onclick={handleEditCertification} disabled={disableButtonsEdit}>{label.icg_capab_magmnt_edit}</button>
+							<button class="slds-col slds-button slds-button_outline-brand bt-blue" data-id={item.id} onclick={handleEditCapabilitiesCertificationRest} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
+						</div>
+						<div if:false={item.disabled} class="slds-col slds-grid slds-grid_vertical-align-start slds-size_1-of-5 edit-cancel-class">
+							<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={item.id} data-origin="Upcoming-Cert" onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
+							<button class="slds-col slds-button slds-button_outline-brand slds-size_6-of-12" data-id={item.id} data-origin="Upcoming-Cert" onclick={handleCancelEditCertification} disabled={disableButtonsEdit}>{label.icg_cancel_edit}</button>
+						</div>
+				</template>
+			</div>
+		</template>
+	</template>
+
+	<template if:true={showHistory}>
+		<template for:each={deprecatedCerts} for:item="item">
+			<div key={item.id} class = "slds-grid slds-p-left_xx-large">
+				<div class="slds-col slds-size_1-of-12">
+					<lightning-input type="text" disabled value={item.certificationId}></lightning-input>
+				</div>
+				<div class="slds-col slds-size_1-of-8">
+					<lightning-input type="text" disabled value={item.name}></lightning-input>
+				</div>
+				<div class="slds-col slds-size_1-of-4">
+					<lightning-dual-listbox class="p-65" if:false={item.disabled} value={item.scope} size="4" label="" source-label="" selected-label="" data-id={item.id} data-name="Scope" data-origin="Rest-Cert" data-scopeused={item.scopeToUse} options={certificationInfo.listScope} onblur={handleChangeEditMode}></lightning-dual-listbox>
+					<lightning-input if:true={item.disabled} type="text" disabled={item.disabled} class="slds-truncate" value={item.scopeLabel}></lightning-input>				</div>
+				<div class="slds-col slds-size_1-of-8">
+					<lightning-input class={item.issuingClass} type="date" label="" onchange={handleChangeEditMode} value={item.issuingDate} date-style="medium" disabled={item.disabled} data-id={item.id} data-name="Issue_Date__c" data-origin="Rest-Cert"></lightning-input>
+				</div>
+				<div class="slds-col slds-size_1-of-8">
+					<lightning-input class={item.expirationClass} type="date" label="" onchange={handleChangeEditMode} value={item.expirationDate} date-style="medium" disabled={item.disabled} data-id={item.id} data-name="Expiration_Date__c" data-origin="Rest-Cert"></lightning-input>
+				</div>
+				<div class="slds-col slds-size_1-of-12">
+					<lightning-input type="text" disabled class="slds-truncate" value={item.status}></lightning-input>
+				</div>
+				<template if:true={item.isStatusToActivate}>
+					<div if:true={item.disabled} class="slds-col slds-grid slds-grid_vertical-align-end slds-size_1-of-5" style="padding-left: 2%;">
+						<button class="slds-col slds-button slds-button-brand" data-id={item.id} onclick={handleActivateGroup} >{label.icg_activate}</button>
+						<button class="slds-col slds-button slds-button_outline-brand" data-id={item.id} onclick={handleEditCertification} data-origin="Rest-Cert" disabled={disableButtonsEdit}>{label.icg_capab_magmnt_edit}</button>
+						<button class="slds-col slds-button slds-button_outline-brand bt-blue" data-id={item.id} data-origin="Rest-Cert" onclick={handleEditCapabilitiesCertificationRest} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
+					</div>
+					<div if:false={item.disabled} class="slds-col slds-grid slds-grid_vertical-align-start slds-size_1-of-5 edit-cancel-class">
+						<span class="slds-assistive-text"></span>
+						<label class="slds-form-element__label slds-no-flex"></label>
+						<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={item.id} data-origin="Rest-Cert" onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
+						<button class="slds-col slds-button slds-button_outline-brand slds-size_6-of-12" data-id={item.id} data-origin="Rest-Cert" onclick={handleCancelEditCertification} disabled={disableButtonsEdit}>{label.icg_cancel_edit}</button>
+					</div>
+				</template>
 			</div>
 		</template>
 	</template>
 
 	<template if:true={showConfirmationModal}>
-
-		<div class="demo-only">
-			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-				<div class="slds-modal__container">
-					<header class="slds-modal__header">
-						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConfirmationModal}>
-							<lightning-icon icon-name="utility:close" size="medium">
-							</lightning-icon>
-							<span class="slds-assistive-text">{label.close}</span>
-						</button>
-						<h2 id="modal-heading-confirmation" class="slds-text-heading_medium slds-hyphenate">{headerModal}</h2>
-					</header>
-					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-						<center><h2><b>{messageModal}</b></h2><br/>
-						</center>
-					</div>
-					<footer class="slds-modal__footer">
-						<lightning-button label={label.cancel} variant="neutral" onclick={closeConfirmationModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
-						<lightning-button label={label.accept} variant="brand" onclick={acceptConfirmationModal}></lightning-button>
-					</footer>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConfirmationModal}>
+						<lightning-icon icon-name="utility:close" size="medium">
+						</lightning-icon>
+						<span class="slds-assistive-text">{label.close}</span>
+					</button>
+					<h2 id="modal-heading-confirmation" class="slds-text-heading_medium slds-hyphenate">{headerModal}</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+					<center><h2><b>{messageModal}</b></h2><br/>
+					</center>
 				</div>
-			</section>
-			<div class="slds-backdrop slds-backdrop_open"></div>
-		</div>
-
+				<footer class="slds-modal__footer">
+					<lightning-button label={label.cancel} variant="neutral" onclick={closeConfirmationModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<lightning-button label={label.accept} variant="brand" onclick={acceptConfirmationModal}></lightning-button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
 	</template>
 </template>

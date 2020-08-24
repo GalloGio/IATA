@@ -1,121 +1,187 @@
 public without sharing class CW_ICG_Capability_Asgmt_Group_Handler {
-	public static void handleAfterInsert(Map<Id, ICG_Capability_Assignment_Group__c> newMap) {
-		updateCargoCommodities(newMap.values());
-		deprecateOldAsgmtGroupWithoutChildren(newMap);
-	}
-	public static void handleAfterUpdate(Map<Id, ICG_Capability_Assignment_Group__c> newMap) {
-		updateCargoCommodities(newMap.values());
-	}
+	// Data required for deprecation flow
+	private static Map<Id, ICG_Account_Role_Detail__c> accRoleDetailAffectedMap;
+	private static Map<Id, ICG_Certification__c> certificationsAffectedMap;
+	private static List<Id> asgmtGroupWithCertification;
 
-	public static void updateCargoCommodities(List<ICG_Capability_Assignment_Group__c> newList) {
-		Set<Id> certificationIds = new Set<Id>();
-		for (ICG_Capability_Assignment_Group__c accRoleDetailCert : newList) {
-			if (accRoleDetailCert.ICG_Certification__c != null) {
-				certificationIds.add(accRoleDetailCert.ICG_Certification__c);
+	private static List<String> keysToDeactivate;
+
+	public static void handleBulkBefore(List<ICG_Capability_Assignment_Group__c> newItems) {
+		// Initialize shared data
+		accRoleDetailAffectedMap = new Map<Id, ICG_Account_Role_Detail__c>();
+		asgmtGroupWithCertification = new List<Id>();
+		certificationsAffectedMap = new Map<Id, ICG_Certification__c>();
+		keysToDeactivate = new List<String>();
+
+		for (ICG_Capability_Assignment_Group__c item : newItems) {
+			accRoleDetailAffectedMap.put(item.ICG_Account_Role_Detail__c, null);
+			if (item.ICG_Certification__c != null) {
+				if (!asgmtGroupWithCertification.contains(item.Id)) {
+					asgmtGroupWithCertification.add(item.Id);
+				}
+				certificationsAffectedMap.put(item.ICG_Certification__c, null);
 			}
 		}
+		if (!accRoleDetailAffectedMap.isEmpty()) {
+			accRoleDetailAffectedMap = new Map<Id, ICG_Account_Role_Detail__c>([SELECT Id, Airmail__c, Dangerous_Goods__c, General_Cargo__c, Live_Animals__c, Perishables__c, Pharmaceuticals__c FROM ICG_Account_Role_Detail__c WHERE Id IN :accRoleDetailAffectedMap.keySet()]);
+		}
+		if (!certificationsAffectedMap.isEmpty()) {
+			certificationsAffectedMap = new Map<Id, ICG_Certification__c>([SELECT Id, Name FROM ICG_Certification__c WHERE Id IN :certificationsAffectedMap.keySet()]);
+		}
+	}
+	public static void handleBeforeInsert(List<ICG_Capability_Assignment_Group__c> newItems) {
+		setCalculatedFieldsInAsgmtGroup(null, newItems);
+	}
+	public static void handleAfterInsert(Map<Id, ICG_Capability_Assignment_Group__c> newMap) {
+		updateCargoCommodities(newMap);
+		// deprecateOldAsgmtGroupWithoutChildren(newMap);
+		deactivateAsgmtGroupRecords(newMap.keySet());
+	}
 
-		if (certificationIds.size() > 0) {
-			Map<Id, ICG_Certification__c> mapIdAccCert = new Map<Id, ICG_Certification__c>([SELECT Id, Name FROM ICG_Certification__c WHERE Id IN :certificationIds]);
-			Map<Id, ICG_Account_Role_Detail__c> mapAccRoleDetail = new Map<Id, ICG_Account_Role_Detail__c>();
+	public static void handleBeforeUpdate(Map<Id, ICG_Capability_Assignment_Group__c> oldMap, List<ICG_Capability_Assignment_Group__c> newItems) {
+		setCalculatedFieldsInAsgmtGroup(oldMap, newItems);
+	}
+	public static void handleAfterUpdate(Map<Id, ICG_Capability_Assignment_Group__c> oldMap, Map<Id, ICG_Capability_Assignment_Group__c> newMap) {
+		updateCargoCommodities(newMap);
+		deactivateAsgmtGroupRecords(newMap.keySet());
+	}
 
-			for (ICG_Capability_Assignment_Group__c accRoleDetailCert : newList) {
-				if (accRoleDetailCert.ICG_Certification__c != null) {
-					if (mapAccRoleDetail.get(accRoleDetailCert.ICG_Account_Role_Detail__c) == null) {
-						mapAccRoleDetail.put(accRoleDetailCert.ICG_Account_Role_Detail__c, new ICG_Account_Role_Detail__c(Id = accRoleDetailCert.ICG_Account_Role_Detail__c));
+	public static void updateCargoCommodities(Map<Id, ICG_Capability_Assignment_Group__c> newMap) {
+		Map<Id, ICG_Account_Role_Detail__c> accsRoleDetailToUpdate = new Map<Id, ICG_Account_Role_Detail__c>();
+		for (Id asgmGroupId : asgmtGroupWithCertification) {
+			if (newMap.containsKey(asgmGroupId)) {
+				ICG_Capability_Assignment_Group__c currentAsgmtGroup = newMap.get(asgmGroupId);
+				Id currentArdId = newMap.get(asgmGroupId).ICG_Account_Role_Detail__c;
+
+				switch on certificationsAffectedMap.get(newMap.get(asgmGroupId).ICG_Certification__c).Name {
+					when 'CEIV Pharma' {
+						if (accRoleDetailAffectedMap.get(currentArdId).Pharmaceuticals__c != true) {
+							accRoleDetailAffectedMap.get(currentArdId).Pharmaceuticals__c = true;
+							accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+						}
 					}
-					ICG_Account_Role_Detail__c accRoleDetail = mapAccRoleDetail.get(accRoleDetailCert.ICG_Account_Role_Detail__c);
-					String nameCert = mapIdAccCert.get(accRoleDetailCert.ICG_Certification__c).Name;
-
-					if (nameCert.equals('CEIV Pharma')) {
-						accRoleDetail.Pharmaceuticals__c = true;
+					when 'CEIV Live Animals' {
+						if (accRoleDetailAffectedMap.get(currentArdId).Live_Animals__c != true) {
+							accRoleDetailAffectedMap.get(currentArdId).Live_Animals__c = true;
+							accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+						}
 					}
-
-					if (nameCert.equals('CEIV Live Animals')) {
-						accRoleDetail.Live_Animals__c = true;
+					when 'CEIV Fresh' {
+						if (accRoleDetailAffectedMap.get(currentArdId).Perishables__c != true) {
+							accRoleDetailAffectedMap.get(currentArdId).Perishables__c = true;
+							accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+						}
 					}
-
-					if (nameCert.equals('CEIV Fresh')) {
-						accRoleDetail.Perishables__c = true;
-					}
-
-					if (nameCert.equals('Smart Facility Operational Capacity')) {
-						if (accRoleDetailCert.SFOC_Scope__c != null) {
-							List<String> listScope = accRoleDetailCert.SFOC_Scope__c.split(';');
-							for (String scope : listScope) {
-								if (scope.equals('General Cargo')) {
-									accRoleDetail.General_Cargo__c = true;
-								}
-								if (scope.equals('Dangerous Goods')) {
-									accRoleDetail.Dangerous_Goods__c = true;
-								}
-								if (scope.equals('Live Animals')) {
-									accRoleDetail.Live_Animals__c = true;
-								}
-								if (scope.equals('Pharmaceuticals')) {
-									accRoleDetail.Pharmaceuticals__c = true;
-								}
-								if (scope.equals('Perishables')) {
-									accRoleDetail.Perishables__c = true;
-								}
-								if (scope.equals('Airmail')) {
-									accRoleDetail.Airmail__c = true;
+					when 'Smart Facility Operational Capacity' {
+						if (String.isNotBlank(currentAsgmtGroup.SFOC_Scope__c)) {
+							for (String currentScope : currentAsgmtGroup.SFOC_Scope__c.split(';')) {
+								switch on currentScope {
+									when 'General Cargo' {
+										if (accRoleDetailAffectedMap.get(currentArdId).General_Cargo__c != true) {
+											accRoleDetailAffectedMap.get(currentArdId).General_Cargo__c = true;
+											accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+										}
+									}
+									when 'Dangerous Goods' {
+										if (accRoleDetailAffectedMap.get(currentArdId).Dangerous_Goods__c != true) {
+											accRoleDetailAffectedMap.get(currentArdId).Dangerous_Goods__c = true;
+											accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+										}
+									}
+									when 'Live Animals' {
+										if (accRoleDetailAffectedMap.get(currentArdId).Live_Animals__c != true) {
+											accRoleDetailAffectedMap.get(currentArdId).Live_Animals__c = true;
+											accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+										}
+									}
+									when 'Pharmaceuticals' {
+										if (accRoleDetailAffectedMap.get(currentArdId).Pharmaceuticals__c != true) {
+											accRoleDetailAffectedMap.get(currentArdId).Pharmaceuticals__c = true;
+											accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+										}
+									}
+									when 'Perishables' {
+										if (accRoleDetailAffectedMap.get(currentArdId).Perishables__c != true) {
+											accRoleDetailAffectedMap.get(currentArdId).Perishables__c = true;
+											accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+										}
+									}
+									when 'Airmail' {
+										if (accRoleDetailAffectedMap.get(currentArdId).Airmail__c != true) {
+											accRoleDetailAffectedMap.get(currentArdId).Airmail__c = true;
+											accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
+										}
+									}
 								}
 							}
 						}
 					}
 				}
 			}
+		}
+		if (!accsRoleDetailToUpdate.isEmpty()) {
+			update accsRoleDetailToUpdate.values();
+		}
+	}
 
-			if (!mapAccRoleDetail.isEmpty()) {
-				update mapAccRoleDetail.values();
+	public static void setCalculatedFieldsInAsgmtGroup(Map<Id, ICG_Capability_Assignment_Group__c> oldMap, List<ICG_Capability_Assignment_Group__c> newItems) {
+		Map<String, List<ICG_Capability_Assignment_Group__c>> asgmtGroupProcessed = new Map<String, List<ICG_Capability_Assignment_Group__c>>();
+
+		for (ICG_Capability_Assignment_Group__c item : newItems) {
+			String currentKey = item.ICG_Account_Role_Detail__c + '#' + item.RecordTypeId + '#' + item.ICG_Certification__c;
+
+			// Check if the group is active (Today between issue date and expiration date)
+			if (oldMap == null || oldMap.get(item.Id).Issue_Date__c != item.Issue_Date__c || oldMap.get(item.Id).Expiration_Date__c != item.Expiration_Date__c) {
+				if (!asgmtGroupProcessed.containsKey(currentKey)) {
+					asgmtGroupProcessed.put(currentKey, new List<ICG_Capability_Assignment_Group__c>());
+				}
+
+				if (Date.today() >= item.Issue_Date__c && Date.today() <= item.Expiration_Date__c) {
+					item.Is_Active__c = true;
+
+					if (!asgmtGroupProcessed.get(currentKey).isEmpty()) {
+						asgmtGroupProcessed.get(currentKey)[asgmtGroupProcessed.get(currentKey).size() - 1].Is_Active__c = false;
+					}
+					asgmtGroupProcessed.get(currentKey).add(item);
+				} else {
+					item.Is_Active__c = false;
+					if (asgmtGroupProcessed.get(currentKey).isEmpty()) {
+						asgmtGroupProcessed.get(currentKey).add(item);
+					} else {
+						asgmtGroupProcessed.get(currentKey).add(0, item);
+					}
+				}
+			}
+
+			// Check if the group is expired (Today > expiration date)
+			if (oldMap == null || oldMap.get(item.Id).Expiration_Date__c != item.Expiration_Date__c) {
+				item.Is_Expired__c = (Date.today() > item.Expiration_Date__c);
+			}
+
+			// Force not active if expired
+			if (item.Is_Expired__c == true) {
+				item.Is_Active__c = false;
+			}
+
+			// If Is_Active__c has been changed to true, deactivate others active of same type.
+			if ((oldMap == null || oldMap.get(item.Id).Is_Active__c != item.Is_Active__c) && item.Is_Active__c == true && !keysToDeactivate.contains(currentKey)) {
+				keysToDeactivate.add(currentKey);
 			}
 		}
 	}
 
-	public static void deprecateOldAsgmtGroupWithoutChildren(Map<Id, ICG_Capability_Assignment_Group__c> newMap) {
-		Map<String, Id> newAsgmGroupWithoutChildren = new Map<String, Id>();
-		Map<String, List<Id>> oldAsgmGroupWithoutChildren = new Map<String, List<Id>>();
-		List<ICG_Capability_Assignment_Group__c> asgmGroupToUpdate = new List<ICG_Capability_Assignment_Group__c>();
-
-		List<Id> accRoleDetailAffected = new List<Id>();
-		for (Id currentId : newMap.keySet()) {
-			if (!accRoleDetailAffected.contains(newMap.get(currentId).Id)) {
-				accRoleDetailAffected.add(newMap.get(currentId).ICG_Account_Role_Detail__c);
-			}
-		}
-
-		for (ICG_Capability_Assignment_Group__c currentRow : [
-			SELECT Id, RecordType.DeveloperName, ICG_Account_Role_Detail__c, ICG_Certification__r.Name 
-			FROM ICG_Capability_Assignment_Group__c 
-			WHERE (ICG_Account_Role_Detail__c IN :accRoleDetailAffected AND Is_Expired__c = false AND Total_Children__c = 0 AND Is_Deprecated_Without_Children__c != true) OR Id IN :newMap.keySet() 
-			ORDER BY CreatedDate DESC
-		]) {
-			String currentKey = currentRow.ICG_Account_Role_Detail__c + '#' + currentRow.RecordType.DeveloperName + '#' + (currentRow.ICG_Certification__r.Name != null ? currentRow.ICG_Certification__r.Name : '');
-			if (newMap.containsKey(currentRow.Id)) {
-				if (!newAsgmGroupWithoutChildren.containsKey(currentKey)) {
-					newAsgmGroupWithoutChildren.put(currentKey, currentRow.Id);
-				} else {
-					asgmGroupToUpdate.add(new ICG_Capability_Assignment_Group__c(Id = currentRow.Id, Is_Deprecated_Without_Children__c = true));
-				}
-			} else {
-				if (!oldAsgmGroupWithoutChildren.containsKey(currentKey)) {
-					oldAsgmGroupWithoutChildren.put(currentKey, new List<Id>());
-				}
-				oldAsgmGroupWithoutChildren.get(currentKey).add(currentRow.Id);
-			}
-		}
-
-		for (String currentKey : newAsgmGroupWithoutChildren.keySet()) {
-			if (oldAsgmGroupWithoutChildren.containsKey(currentKey)) {
-				for (Id currentAsgmGroupId : oldAsgmGroupWithoutChildren.get(currentKey)) {
-					asgmGroupToUpdate.add(new ICG_Capability_Assignment_Group__c(Id = currentAsgmGroupId, Is_Deprecated_Without_Children__c = true));
+	public static void deactivateAsgmtGroupRecords(Set<Id> idsToAvoid) {
+		if (keysToDeactivate != null && !keysToDeactivate.isEmpty()) {
+			List<ICG_Capability_Assignment_Group__c> asgmtGroupToDeactivate = new List<ICG_Capability_Assignment_Group__c>();
+			for (ICG_Capability_Assignment_Group__c item : [SELECT Id, RecordTypeId, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c IN :accRoleDetailAffectedMap.keySet() AND id NOT IN :idsToAvoid AND Is_Active__c = true]) {
+				if (keysToDeactivate.contains(item.ICG_Account_Role_Detail__c + '#' + item.RecordTypeId + '#' + item.ICG_Certification__c)) {
+					asgmtGroupToDeactivate.add(new ICG_Capability_Assignment_Group__c(Id = item.Id, Is_Active__c = false));
 				}
 			}
-		}
 
-		if (!asgmGroupToUpdate.isEmpty()) {
-			update asgmGroupToUpdate;
+			if (!asgmtGroupToDeactivate.isEmpty()) {
+				update asgmtGroupToDeactivate;
+			}
 		}
 	}
 }

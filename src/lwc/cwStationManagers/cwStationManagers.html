@@ -31,7 +31,7 @@
     <template if:true={openConfirm}>
         <div class="row content">
             <div class="col-12 slds-align_absolute-center">
-                <b>{label.are_you_sure_delete_station_manager}?</b>
+                <b>{removeMessage}?</b>
             </div> 
  
 
@@ -58,7 +58,7 @@
                     </p>
                 </div>
                 <div class="col-1 font-size-sm cursor-pt">
-                    <lightning-icon size=" x-small" if:true={currentAccCtoRol.showDelete} icon-name="utility:delete" variant="error" alternative-text="Delete" onclick={deleteAccountContactRole} data-key={currentAccCtoRol.id} data-keyacr={currentAccCtoRol.idAccountContactRole}></lightning-icon>
+                    <lightning-icon size=" x-small" if:true={currentAccCtoRol.showDelete} icon-name="utility:delete" variant="error" alternative-text="Delete" onclick={deleteAccountContactRole} data-key={currentAccCtoRol.keys} data-keyacr={currentAccCtoRol.idAccountContactRole}></lightning-icon>
                 </div>
             </div>
         </template>

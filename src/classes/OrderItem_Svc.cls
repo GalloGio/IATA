@@ -129,7 +129,6 @@ public without sharing class OrderItem_Svc {
 				if(lstMails.size() > 0)
 					Utility.sendBulkEmails(lstMails);
 			}catch(Exception ex){
-				system.debug('Error sendToCustomerShippedNotification() ' + ex.getMessage());
 			}
 		}
 
@@ -306,7 +305,7 @@ public without sharing class OrderItem_Svc {
 	public static void sendRemoteValidationConfirmationEmails(String orderItemId, String whoId){
 		User u = [Select id, email from user where id = :whoId];
 		//Send email to who purchased
-		CW_Utilities.sendEmailTemplate('Purchase_to_User_purchase_comp',orderItemId, whoId, new List<String>{u.email});
+		CW_Utilities.sendEmailTemplate('Purchase_to_User_purchase_comp',orderItemId, whoId, new List<String>{u.email}, true);
 		//Send email to IATA
 		List<String> whoEmailIata = new List<String>();
 		for(User us : CW_Utilities.getIATAStakeHoldersUsersList()) {
@@ -314,12 +313,12 @@ public without sharing class OrderItem_Svc {
 				whoEmailIata.add(us.email);
 			}
 		}
-		CW_Utilities.sendEmailTemplate('Purchase_to_IATA',orderItemId, whoId, whoEmailIata);
+		CW_Utilities.sendEmailTemplate('Purchase_to_IATA',orderItemId, whoId, whoEmailIata, false);
 	}
-    
-    
-    
-    
-    // End of Smart Facilities Remote Validations methods
+	
+	
+	
+	
+	// End of Smart Facilities Remote Validations methods
 
 }

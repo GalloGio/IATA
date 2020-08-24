@@ -4,26 +4,26 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 
 export default class CwCompanyAdmins extends LightningElement {
-	_userFacilities;
+	facilityList;
 
 	@track xlsHeader = [];
     @track xlsData = [];
 	@track filename = "Company_Admins.xlsx";
 
 	icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
 	
 	@track groupsAndAdmins = [];
 	@api label;
 	@api 
 	get userFacilities(){
-		return this._userFacilities;
+		return this.facilityList;
 	}
 	set userFacilities(value){
-		this._userFacilities = value;
+		this.facilityList = value;
 		let groups = [];
-		if(this._userFacilities){
-			this._userFacilities.forEach(grp =>{
+		if(this.facilityList){
+			this.facilityList.forEach(grp =>{
 				groups.push(grp.groupName);
 			})
 		}
@@ -37,7 +37,9 @@ export default class CwCompanyAdmins extends LightningElement {
 			});
 		});
 	}
-
+	renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
+    }
 	excelFormat(event){
         this.xlsHeaderAllValidations = [];
         this.xlsDataAllValidations = [];

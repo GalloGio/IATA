@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Temp_Controlled_Rooms;Cold_Rooms_Freezer</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Cold_Room_Freezers_Custom_Temperature_Ranges</value>
     </values>

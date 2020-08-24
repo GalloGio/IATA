@@ -154,8 +154,7 @@ public without sharing class CW_LandingSearchBarController {
 															(SELECT id FROM ICG_Capability_Assignment_Groups__r 
 																WHERE Is_Expired__c = false 
 																AND ICG_Account_Role_Detail__r.isApproved__c = true
-																AND is_Expired__c = false 
-																AND is_deprecated__c = false)
+																AND Is_Active__c = true)
 														FROM ICG_Certification__c 
 														WHERE Is_Visible__c = true]; //Check if cert is expired to avoid it
 

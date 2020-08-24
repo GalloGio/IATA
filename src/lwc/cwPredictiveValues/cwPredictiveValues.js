@@ -6,18 +6,18 @@ export default class CwPredictiveValues extends LightningElement {
 	@api customstyle;
 	@api eventnameinput;
 
-	@track _displayBox;
+	@track displayBox;
 	@track isPredictiveFocused;
-	@track _hideBottomSection = false;
-	@track _predictiveList;
+	@track hideBottomSectionField = false;
+	@track predictiveList;
 	@track firstRow;
 
 	@api
 	get predictivevalues() {
-		return this._predictiveList;
+		return this.predictiveList;
 	}
 	set predictivevalues(value) {
-		this._predictiveList = value;
+		this.predictiveList = value;
 	}
 
 	@api
@@ -31,22 +31,22 @@ export default class CwPredictiveValues extends LightningElement {
 
 	@api
 	get hideBottomSection() {
-		return this._hideBottomSection;
+		return this.hideBottomSectionField;
 	}
 	set hideBottomSection(value) {
-		this._hideBottomSection = value;
+		this.hideBottomSectionField = value;
 	}
 
 	@api
 	get displayTheBox() {
-		return this._displayBox;
+		return this.displayBox;
 	}
 	set displayTheBox(value) {
 		if (value) {
-			this._displayBox = value;
+			this.displayBox = value;
 		} else {
 			setTimeout(() => {
-				this._displayBox = value;
+				this.displayBox = value;
 			}, 150);
 		}
 	}
@@ -81,11 +81,11 @@ export default class CwPredictiveValues extends LightningElement {
 			code: null
 		}
 
-		let newListPredictive = JSON.parse(JSON.stringify(this._predictiveList));
+		let newListPredictive = JSON.parse(JSON.stringify(this.predictiveList));
 		newListPredictive.unshift(firstRowWrapper);
-		this._predictiveList = newListPredictive;
+		this.predictiveList = newListPredictive;
 
-		this._countValuesInput(firstRowWrapper, this._predictiveList);
+		this._countValuesInput(firstRowWrapper, this.predictiveList);
 	}
 
 	_countValuesInput(inputWrapper, listWrappers) {
@@ -116,9 +116,9 @@ export default class CwPredictiveValues extends LightningElement {
 			
 		});
 
-		let newListPredictive = JSON.parse(JSON.stringify(this._predictiveList));
+		let newListPredictive = JSON.parse(JSON.stringify(this.predictiveList));
 		newListPredictive.splice(0, 1, rowInput);
-		this._predictiveList = newListPredictive;
+		this.predictiveList = newListPredictive;
 	}
 
 	getlivalue(event) {

@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Veterinary_Phytosanitary_And_Pest_Control</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Veterinary, Phytosanitary And Pest Control</value>
     </values>

@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Cold_Room_Standard_Temperature_Ranges;Cold_Room_Freezers_Custom_Temperature_Ranges;Temperature_Controlled_Dollies_Trucks;Temperature_Controlled_Handling_Areas;Pre_Cooling;Other_Temperature_Control_Equipment_Infrastructure</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Temperature Control</value>
     </values>

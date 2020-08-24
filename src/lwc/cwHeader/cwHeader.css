@@ -17,6 +17,10 @@
 	padding-left: 15px;
 }
 
+.capacity-fin span{
+	font-size: 14px;
+}
+
 .home-icon {
 	width: 25px;
 	margin-top: -8px;
@@ -153,38 +157,6 @@ button.sign-up-btn:hover {
 
 .btn-primary:after { 
     border-width: 0 0 12px 12px !important;
-}
-.beta{
-	font-size: 14px;
-	font-weight: 600;
-}
-
-.join-div{
-	margin-top: 1.5rem
-}
-
-.numberCircle {
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border: 4px solid #fac832;
-    color: #fac832;
-    text-align: center;
-    font: 32px Arial, sans-serif;
-}
-
-
-
-.circe-shape{
-	height: 100%;
-	width: 100%;
-	background-color: white;
-	border-radius: 50%;
-}
-.big-label{
-	font-weight: 600;
-    font-size: 3rem;
 }
 
 .giant-label{

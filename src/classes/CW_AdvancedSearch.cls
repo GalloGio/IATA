@@ -107,10 +107,12 @@ public with sharing class CW_AdvancedSearch {
 											? currentCat
 											: mapCategories.get(currentCat).getLabel();
 
-					lstEquipments.add(new Equipment(((String) currentEquip.get('value')),
-														(String) currentEquip.get('label'),
-														getFieldsWrapper(mapFieldsByRTypeAndCategory.get(key.toLowerCase())),
-														categoryLabel, currentCat));
+					if (mapFieldsByRTypeAndCategory.containsKey(key.toLowerCase())){
+						lstEquipments.add(new Equipment(((String) currentEquip.get('value')),
+															(String) currentEquip.get('label'),
+															getFieldsWrapper(mapFieldsByRTypeAndCategory.get(key.toLowerCase())),
+															categoryLabel, currentCat));
+					}
 				}
 			}
 			capability = new CapabilityRT(recordTypeInput, rtLabel, lstEquipments);

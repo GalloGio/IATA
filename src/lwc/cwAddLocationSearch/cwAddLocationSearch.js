@@ -2,10 +2,13 @@ import { LightningElement, track, wire, api } from "lwc";
 import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.getLocationsList";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import { fillPredictiveValues, getPredictiveData } from "c/cwUtilities";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwAddLocationSearch extends LightningElement {
 	availableLocations;
 	@api label;
+	@api filtersApplied = [];
 	@track locationPredictiveValues = [];
 	@track location1 = { value: "" };
 	@track location2 = { value: "" };
@@ -13,10 +16,15 @@ export default class CwAddLocationSearch extends LightningElement {
 	@track disabledLocation2 = false;
 	@track isbox1focus;
 	@track isbox2focus;
+	@track searchValue = "";
+    @api appliedFiltersCount;
 
 	searchbylocation = resources + "/icons/ic-white-location.svg";
 	selectedlocation = resources + "/icons/search-by-location.svg";
 	showOption = resources + "/icons/ic-show--option.svg";
+
+	@wire(getEnvironmentVariables, {})
+    environmentVariables;
 
 	renderedCallback() {
 		if (this.initialized) {
@@ -69,9 +77,13 @@ export default class CwAddLocationSearch extends LightningElement {
 
 	updateSearchbox1(event) {
 		this.updateSearchbox(event, "1");
+		const eTargetButton = event.target.getAttribute("data-tosca");
+		this.addLocation(eTargetButton);
 	}
 	updateSearchbox2(event) {
 		this.updateSearchbox(event, "2");
+		const eTargetButton = event.target.getAttribute("data-tosca");
+		this.addLocation(eTargetButton);
 	}
 	updateSearchbox(event, inputNumber) {
 		if (inputNumber === "1") {
@@ -85,12 +97,14 @@ export default class CwAddLocationSearch extends LightningElement {
 	}
 
 	focusoninput(event) {
-		const eTargetButton = event.target.getAttribute("data-tosca");
+        if (!this.reachedLimit){
+            const eTargetButton = event.target.getAttribute("data-tosca");
 
-		const inputNumber = eTargetButton.includes("1") ? "1" : "2";
-		const alterInputNumber = eTargetButton.includes("1") ? "2" : "1";
-		this._switchPredictiveDisplay(true, inputNumber);
-		this._switchPredictiveDisplay(false, alterInputNumber);
+            const inputNumber = eTargetButton.includes("1") ? "1" : "2";
+            const alterInputNumber = eTargetButton.includes("1") ? "2" : "1";
+            this._switchPredictiveDisplay(true, inputNumber);
+            this._switchPredictiveDisplay(false, alterInputNumber);
+        }
 	}
 
 	_switchPredictiveDisplay(bool, number) {
@@ -102,25 +116,30 @@ export default class CwAddLocationSearch extends LightningElement {
 	}
 
 	predictiveSearch(event) {
-		this.locationPredictiveValues = [];
-		let num;
-		if (event.target.getAttribute("data-tosca") === "locationinput1") {
-			this.location1.value = event.target.value;
-			num = "1";
-		} else if (event.target.getAttribute("data-tosca") === "locationinput2") {
-			this.location2.value = event.target.value;
-			num = "2";
-		}
-		if (!event.target.value || event.target.value.length < 3) {
-			return;
-		}
+        if (!this.reachedLimit){
+            this.locationPredictiveValues = [];
+            let num;
+            this.searchValue = event.target ? event.target.value : "";
+            if (event.target.getAttribute("data-tosca") === "locationinput1") {
+                this.location1.value = this.searchValue;
+                num = "1";
+            } else if (event.target.getAttribute("data-tosca") === "locationinput2") {
+                this.location2.value = this.searchValue;
+                num = "2";
+            }
+            if (!this.searchValue || this.searchValue.length < 3) {
+                return;
+            }
+            if(this.searchValue.length >=3 && this.searchValue.trim().length == 0){
+                return;
+            }
 
-		this.locationPredictiveValues = fillPredictiveValues(event.target.value, this.availableLocations);
-		this._switchPredictiveDisplay(true, num);
+            this.locationPredictiveValues = fillPredictiveValues(this.searchValue, this.availableLocations);
+            this._switchPredictiveDisplay(true, num);
+        }
 	}
 
-	addLocation(event) {
-		const eTargetButton = event.target.getAttribute("data-tosca");
+	addLocation(eTargetButton) {
 		let locationFired;
 		let type;
 
@@ -145,7 +164,25 @@ export default class CwAddLocationSearch extends LightningElement {
 			customEvent = new CustomEvent("selectlocations", { detail: { location: locationFired, position: eTargetButton, action: "add" } });
 		}
 
-		this.dispatchEvent(customEvent);
+		let alreadyApplied = this.filtersApplied.some(filter => filter.label === locationFired);
+		if(alreadyApplied){
+
+			if (eTargetButton === "addlocationbutton1") {
+				this.disabledLocation1 = false;
+			} else {
+				this.disabledLocation2 = false;
+			}
+
+			const event = new ShowToastEvent({
+				title: 'Warning',
+				message: this.label.icg_already_applied_filter,
+				variant: 'warning'
+			});
+			this.dispatchEvent(event);
+		}
+		else{
+			this.dispatchEvent(customEvent);
+		}
 	}
 
 	removeLocation(event) {
@@ -164,4 +201,8 @@ export default class CwAddLocationSearch extends LightningElement {
 		this.initialized = false;
 		this.dispatchEvent(new CustomEvent("selectlocations", { detail: { location: locationFired, position: eTargetButton, action: "delete" } }));
 	}
+    
+    get reachedLimit(){
+		return  this.appliedFiltersCount >= this.environmentVariables.data.max_filters_allowed__c;
+    }
 }

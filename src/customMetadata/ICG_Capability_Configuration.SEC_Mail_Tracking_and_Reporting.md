@@ -4,7 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Mail_Tracking_and_Reporting</value>
+        <value xsi:type="xsd:string">System_For_Mail_Tracking_And_Reporting</value>
+    </values>
+    <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Key__c</field>

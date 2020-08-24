@@ -73,7 +73,7 @@ export default class CwBecomeFacilityManagerContainer extends LightningElement {
     }
 
     handleTooManyFacilities(){
-        this.modalMessage = 'The process can process One station at a time. Please try by selecting only one station';
+        this.modalMessage = this.label.icg_one_process_at_time_msg;
         this.modalImage = this.ERROR_IMAGE;
         this.showModal = true;
     }

@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">2_To_8_C;15_To_25_C;2_To_25_C;Temp_Controlled_Rooms;Cold_Rooms_Freezer;Temperature_Controlled_Transport_Trucks;Temperature_Controlled_Dollies_Trucks;Cargo_Handling_Warehouse_Management_System;Freezer</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Multi_Record_Capabilities</value>
     </values>

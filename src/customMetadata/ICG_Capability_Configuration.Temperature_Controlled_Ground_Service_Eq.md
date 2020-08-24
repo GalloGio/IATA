@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Temperature_Controlled_Ground_Service_Equipment_In_Facility;Temperature_Controlled_Transport_Trucks;Temperature_Controlled_Dollies_Trucks</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Temperature_Controlled_Ground_Service_Eq</value>
     </values>

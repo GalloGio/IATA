@@ -42,8 +42,42 @@ public with sharing class CW_CapabilityConflictControllerTest {
 		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCap.Id);
 		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
 		assignment.Is_In_Conflict__c = true;
-		assignment.Deprecated__c = false;
 		insert assignment;
+
+		List<ICG_Account_Role_Capability_Assignment__c> assignments = new List<ICG_Account_Role_Capability_Assignment__c>();
+
+		Account_Role_Detail_Capability__c ardCapToMaintain = CW_TestDataFactory.createAccountRoleDetailCapability('Non_Domesticated_Mammals', 'Live_Animals_Capacities_1', null);
+		insert ardCapToMaintain;
+		
+		Account_Role_Detail_Capability__c ardCapToAdd = CW_TestDataFactory.createAccountRoleDetailCapability('Pets', 'Live_Animals_Capacities_1', null);
+		insert ardCapToAdd;
+
+		Account_Role_Detail_Capability__c ardCapToRemove = CW_TestDataFactory.createAccountRoleDetailCapability('Reptiles_Amphibians', 'Live_Animals_Capacities_1', null);
+		insert ardCapToRemove;
+
+		Account_Role_Detail_Capability__c ardCapToReplace = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
+		insert ardCapToReplace;
+
+		Account_Role_Detail_Capability__c ardCapToReplaceBy = CW_TestDataFactory.createAccountRoleDetailCapability('Birds', 'Live_Animals_Capacities_1', null);
+		insert ardCapToReplaceBy;
+
+		ICG_Account_Role_Capability_Assignment__c assignmentAdd = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCapToAdd.Id);
+		assignmentAdd.Is_In_Conflict__c = true;
+		assignmentAdd.ICG_Capability_Assignment_Group__c = capvalcert.id;
+		assignmentAdd.In_Conflict_With__c = '["' + ardCapToRemove.Id + '"]';
+		assignments.add(assignmentAdd);
+
+		ICG_Account_Role_Capability_Assignment__c assignmentReplace = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCapToReplace.Id);
+		assignmentReplace.Is_In_Conflict__c = true;
+		assignmentReplace.ICG_Capability_Assignment_Group__c = capvalcert.id;
+		assignmentReplace.In_Conflict_With__c = '["' + ardCapToReplaceBy.Id + '"]';
+		assignments.add(assignmentReplace);
+
+		ICG_Account_Role_Capability_Assignment__c assignmentToRemove = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCapToRemove.Id);
+		assignmentToRemove.Is_In_Conflict__c = false;
+		assignmentToRemove.ICG_Capability_Assignment_Group__c = capvalcert.id;
+		assignments.add(assignmentToRemove);
+		insert assignments;
 	}
 	
 	@IsTest
@@ -70,45 +104,16 @@ public with sharing class CW_CapabilityConflictControllerTest {
 
 	@IsTest
 	public static void solveCapabilityConflicts(){
-		ICG_Account_Role_Detail__c ard = [Select Id from ICG_Account_Role_Detail__c Limit 1];
-		ICG_Capability_Assignment_Group__c capvalcert = [Select Id from ICG_Capability_Assignment_Group__c Limit 1];
-		List<ICG_Account_Role_Capability_Assignment__c> assignments = new List<ICG_Account_Role_Capability_Assignment__c>();
 
-		Account_Role_Detail_Capability__c ardCapToMaintain = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
-		insert ardCapToMaintain;
+		Account_Role_Detail_Capability__c ardCapToMaintain = [Select Id from Account_Role_Detail_Capability__c where Equipment__c = 'Non_Domesticated_Mammals' LIMIT 1];
+		Account_Role_Detail_Capability__c ardCapToAdd = [Select Id from Account_Role_Detail_Capability__c where Equipment__c = 'Pets' LIMIT 1];
+		Account_Role_Detail_Capability__c ardCapToRemove = [Select Id from Account_Role_Detail_Capability__c where Equipment__c = 'Reptiles_Amphibians' LIMIT 1];
+		Account_Role_Detail_Capability__c ardCapToReplace = [Select Id from Account_Role_Detail_Capability__c where Equipment__c = 'Beneficial_Insects_Bees' LIMIT 1];
+		Account_Role_Detail_Capability__c ardCapToReplaceBy = [Select Id from Account_Role_Detail_Capability__c where Equipment__c = 'Birds' LIMIT 1];
 		
-		Account_Role_Detail_Capability__c ardCapToAdd = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
-		insert ardCapToAdd;
 
-		Account_Role_Detail_Capability__c ardCapToRemove = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
-		insert ardCapToRemove;
+		Test.startTest();
 
-		Account_Role_Detail_Capability__c ardCapToReplace = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
-		insert ardCapToReplace;
-
-		Account_Role_Detail_Capability__c ardCapToReplaceBy = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
-		insert ardCapToReplaceBy;
-
-		ICG_Account_Role_Capability_Assignment__c assignmentAdd = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCapToAdd.Id);
-		assignmentAdd.Is_In_Conflict__c = true;
-		assignmentAdd.ICG_Capability_Assignment_Group__c = capvalcert.id;
-		assignmentAdd.Deprecated__c = false;
-		assignmentAdd.In_Conflict_With__c = '["' + ardCapToRemove.Id + '"]';
-		assignments.add(assignmentAdd);
-
-		ICG_Account_Role_Capability_Assignment__c assignmentReplace = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCapToReplace.Id);
-		assignmentReplace.Is_In_Conflict__c = true;
-		assignmentReplace.ICG_Capability_Assignment_Group__c = capvalcert.id;
-		assignmentReplace.Deprecated__c = false;
-		assignmentReplace.In_Conflict_With__c = '["' + ardCapToReplaceBy.Id + '"]';
-		assignments.add(assignmentReplace);
-
-		ICG_Account_Role_Capability_Assignment__c assignmentToRemove = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCapToRemove.Id);
-		assignmentToRemove.Is_In_Conflict__c = false;
-		assignmentToRemove.ICG_Capability_Assignment_Group__c = capvalcert.id;
-		assignmentToRemove.Deprecated__c = false;
-		assignments.add(assignmentToRemove);
-		insert assignments;
 		
 		Id emptyId;
 
@@ -136,13 +141,8 @@ public with sharing class CW_CapabilityConflictControllerTest {
 		System.assert(res.success, 'The operation did not succeed.');
 		System.assertEquals('Conflicting capabilities have been handled', res.message, 'The operation did not succeed. Message not corresponding');
 
-		List<ICG_Account_Role_Capability_Assignment__c> removedAssignments = [Select Deprecated__c from ICG_Account_Role_Capability_Assignment__c where Account_Role_Detail_Capability__c =: ardCapToRemove.Id];
-		System.assert(!removedAssignments.isEmpty(), 'No assignments for removed capability');
-		for(ICG_Account_Role_Capability_Assignment__c assignmentRemoved : removedAssignments){
-			System.assert(assignmentRemoved.Deprecated__c, 'Removed capability did not update assignment to deprecated');
-		}
 
-		List<ICG_Account_Role_Capability_Assignment__c> addedAssignments = [Select Id, In_Conflict_With__c, Account_Role_Detail_Capability__c, Deprecated__c, Is_In_Conflict__c from ICG_Account_Role_Capability_Assignment__c where Account_Role_Detail_Capability__c =: ardCapToAdd.Id];
+		List<ICG_Account_Role_Capability_Assignment__c> addedAssignments = [Select Id, In_Conflict_With__c, Account_Role_Detail_Capability__c, Is_In_Conflict__c from ICG_Account_Role_Capability_Assignment__c where Account_Role_Detail_Capability__c =: ardCapToAdd.Id];
 		System.assert(!addedAssignments.isEmpty(), 'No assignments for added capability');
 		for(ICG_Account_Role_Capability_Assignment__c addedAssignment : addedAssignments){
 			System.assert(!addedAssignment.Is_In_Conflict__c, 'Assignment still in conflict for added capability');
@@ -160,7 +160,7 @@ public with sharing class CW_CapabilityConflictControllerTest {
 			System.assertEquals(null, replacedAssignment.In_Conflict_With__c, 'Assignment still has references to capabilities for conflicts');
 		}
 
-
+		Test.stopTest();
 
 	}
 }

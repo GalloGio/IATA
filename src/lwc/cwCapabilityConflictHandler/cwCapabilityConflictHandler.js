@@ -54,14 +54,6 @@ export default class CwCapabilityConflictHandler extends LightningElement {
         this.template.querySelectorAll('[data-cell="conflict_selector"]').forEach(elem => {
             elem.classList.add('second-column-cell');
         });
-
-        //READY TO ADD data-hed and data-cell third column
-        /*this.template.querySelectorAll('[data-head=""]').forEach(elem => {
-            elem.classList.add('third-column-head');
-        });
-        this.template.querySelectorAll('[data-cell=""]').forEach(elem => {
-            elem.classList.add('third-column-cell');
-        });*/
     }
 
     getConflictCapabilitiesFromDB(){

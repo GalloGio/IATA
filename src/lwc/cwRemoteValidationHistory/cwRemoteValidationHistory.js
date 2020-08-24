@@ -4,10 +4,10 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 export default class CwRemoteValidationHistory extends LightningElement {
 
 	icons = resources + "/icons/";
-	exportExcel = this.icons + "export-to-excel.png";
+	exportExcel;
 	
 	@track xlsHeader = []; // store all the headers of the the tables
-    @track xlsData = []; // store all tables data
+	@track xlsData = []; // store all tables data
 	@track filename = "remote_validation_history.xlsx"; // Name of the file
 
 	@track pastRemoteValidationsList = [];
@@ -31,6 +31,10 @@ export default class CwRemoteValidationHistory extends LightningElement {
 		this.textFilter = event.target.value;
 	}
 
+	renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
+    }
+
 	goToFacilityPage(event) {
 		let idStation = event.target.getAttribute("id-station");
 
@@ -39,12 +43,12 @@ export default class CwRemoteValidationHistory extends LightningElement {
 		});
 		this.dispatchEvent(selectedFacilityEvent);
 	}
-    
-    get hasItem() {
-        if (this.pastRemoteValidations){
-            return this.pastRemoteValidations.length > 0;
-        }
-    }
+	
+	get hasItem() {
+		if (this.pastRemoteValidations){
+			return this.pastRemoteValidations.length > 0;
+		}
+	}
 
 	get pastRemoteValidations() {
 		if (this.textFilter && this.pastRemoteValidationsList)
@@ -56,15 +60,15 @@ export default class CwRemoteValidationHistory extends LightningElement {
 
 
 	get prepareToExcel(){
-        let prepareToExcel = [];
-        if(this.pastRemoteValidations){
-            this.pastRemoteValidations.forEach(function(elem) {
-                let station = elem.Station__r.Name;
-                let address = elem.Station__r.Street_Nr_FOR__c + "," + elem.Station__r.Postal_Code_FOR__c + "," + elem.Station__r.City_FOR__c + "," +elem.Station__r.State_Province_FOR__c;
+		let prepareToExcel = [];
+		if(this.pastRemoteValidations){
+			this.pastRemoteValidations.forEach(function(elem) {
+				let station = elem.Station__r.Name;
+				let address = elem.Station__r.Street_Nr_FOR__c + "," + elem.Station__r.Postal_Code_FOR__c + "," + elem.Station__r.City_FOR__c + "," +elem.Station__r.State_Province_FOR__c;
 				let date = elem.Order.EffectiveDate;
 				let requestBy = elem.Order.CreatedBy.Name;
-                let status = elem.Order.Remote_Validation_Status__c;
-              
+				let status = elem.Order.Remote_Validation_Status__c;
+			  
 				prepareToExcel.push({
 					station: station,
 					address: address,
@@ -72,26 +76,26 @@ export default class CwRemoteValidationHistory extends LightningElement {
 					requestBy: requestBy,
 					status: status
 				});
-                
+				
 			});
-        }
-        return prepareToExcel;
-    }
+		}
+		return prepareToExcel;
+	}
 
-    excelFormat(){
-        if(this.prepareToExcel){
-            this.xlsFormatter(this.prepareToExcel);
-        }
-    }
+	excelFormat(){
+		if(this.prepareToExcel){
+			this.xlsFormatter(this.prepareToExcel);
+		}
+	}
 
-    xlsFormatter(data) {
-        let Header = Object.keys(data[0]);
-        this.xlsHeader.push(Header);
-        this.xlsData.push(data);
-        this.downloadExcel();
-    }
-    
-    downloadExcel() {
-        this.template.querySelector("c-cw-xlsx-main").download();
-    }
+	xlsFormatter(data) {
+		let Header = Object.keys(data[0]);
+		this.xlsHeader.push(Header);
+		this.xlsData.push(data);
+		this.downloadExcel();
+	}
+	
+	downloadExcel() {
+		this.template.querySelector("c-cw-xlsx-main").download();
+	}
 }

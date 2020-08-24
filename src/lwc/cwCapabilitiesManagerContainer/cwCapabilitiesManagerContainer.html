@@ -40,10 +40,10 @@
 							data-action="detail">							
 							<div class="col-12 zui-wrapper">
 								<!-- Header button summary detail-->
-								<div class="row capability-header">
+								<div class="row capability-header slds-align_absolute-center">
 									
 									<!-- Edit Mode Start -->
-									<div class="col-12 text-right fontw-inherit col-no-padding slds-grid" if:true={editMode}>
+									<div class="col-12 font-inherit col-no-padding slds-grid text-center" if:true={editMode}>
 										<div class="slds-col">{label.icg_display_table_in_public_site}</div>
 										<div class="slds-col slds-grid">
 											<div class="slds-col">
@@ -140,11 +140,11 @@
 																	<template if:true={currentfield.value.label.length}>
 																		<th if:true={currentfield.first}
 																		 	key={currentfield.value.name} scope="col"
-																			colspan={currentfield.value.colspan} class="slds-truncate zui-sticky-col">																			
+																			colspan={currentfield.value.colspan} class="slds-truncate zui-sticky-col border-right-first-header">																			
 																		</th>
 																		<th if:false={currentfield.first}
 																		 	key={currentfield.value.name} scope="col"
-																			colspan={currentfield.value.colspan} class="slds-truncate">
+																			colspan={currentfield.value.colspan} class="slds-truncate border-right-first-header">
 																			{currentfield.value.label}
 																		</th>
 																	</template>
@@ -166,10 +166,12 @@
 																			{currentfield.value.label}
 																		</th>
 																	</template>
+																	
 
 																</template>	
 
 															</template>
+															
 															<!-- Second header-->
 															<template if:true={currentheader.last}>
 
@@ -200,13 +202,12 @@
 															<th key={currentheader.value.name}
 																scope="col" class="photo-colum-head">{label.photos}</th>
 															<th key={currentheader.value.name} scope="col"
-																class="certifications-stamp cert-colum">{label.capability_validated_by}</th>
+																class="certifications-stamp cert-colum-head">{label.capability_validated_by}</th>
 															 
 
-															<template if:true={certificationMode}>																
+															<template if:true={getCertificationMode}>																
 																<template if:true={currentCategory.isMultirecord}>
-																	<template if:false={getCertificationMode}>
-																		<th key={currentheader.value.name} class="zui-sticky-col-right" scope="col">
+																		<th if:false={isNotEditable} key={currentheader.value.name} class="zui-sticky-col-right" scope="col">
 																			<lightning-button-icon icon-name="utility:add"
 																			variant="brand" alternative-text="Add capability" title="Add item"
 																			data-action="Add"
@@ -217,8 +218,10 @@
 																			onclick={assigntCapability}>
 																			</lightning-button-icon>
 																		</th>
-																	</template>
-																</template>															
+																</template>	
+																<template if:false={currentCategory.isMultirecord}>
+																	<th if:false={isNotEditable}  key={currentheader.value.name} class="zui-sticky-col-right" scope="col"></th>
+																</template>														
 															</template>
 
 																															
@@ -311,7 +314,7 @@
 																<template for:each={row.certifications}
 																	for:item="cert">
 																		<template if:true={editMode}>
-																			<img key={cert.id} width="35px" src={cert.src}																	
+																			<img key={cert.id} width="35px" src={cert.src}													
 																				onmouseover={showHideStampHover}
 																				onmousemove={showHideStampHover}
 																				onmouseout={showHideStampHover}
@@ -329,34 +332,32 @@
 														</td>
 
 														
-															<template if:true={certificationMode}>																
-																<template if:true={getCertificationMode}>
-																	<template if:false={isNotEditable}>
-																		<td class="row-separator zui-sticky-col-right">
-																			<template if:true={row.isAssigned}>																	
-																				<lightning-button label={label.cancel} title={label.cancel} variant="destructive" data-action="Remove"
-																				data-super-categories-index={superCategoryIndex}
-																				data-section-index={sectionIndex}
-																				data-capability-index={capabilityIndex}
-																				data-category-index={categoryIndex}
-																				data-row-index={rowIndex}
-																				onclick={assigntCapability}></lightning-button>
-																			</template>
-
-																			<template if:false={row.isAssigned}>
-																				<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
-																					data-row={row} 
-																					data-super-categories-index={superCategoryIndex}
-																					data-section-index={sectionIndex}
-																					data-capability-index={capabilityIndex}
-																					data-category-index={categoryIndex}
-																					data-row-index={rowIndex}
-																				onclick={assigntCapability}></lightning-button>
-																			</template>
-																		</td>
+														<template if:true={getCertificationMode}>
+															<template if:false={isNotEditable}>
+																<td class="row-separator zui-sticky-col-right width-150">
+																	<template if:true={row.isAssigned}>																	
+																		<lightning-button label={label.cancel} title={label.cancel} variant="destructive" data-action="Remove"
+																		data-super-categories-index={superCategoryIndex}
+																		data-section-index={sectionIndex}
+																		data-capability-index={capabilityIndex}
+																		data-category-index={categoryIndex}
+																		data-row-index={rowIndex}
+																		onclick={assigntCapability}></lightning-button>
 																	</template>
-																</template>																
+
+																	<template if:false={row.isAssigned}>
+																		<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
+																			data-row={row} 
+																			data-super-categories-index={superCategoryIndex}
+																			data-section-index={sectionIndex}
+																			data-capability-index={capabilityIndex}
+																			data-category-index={categoryIndex}
+																			data-row-index={rowIndex}
+																		onclick={assigntCapability}></lightning-button>
+																	</template>
+																</td>
 															</template>
+														</template>																
 														
 
 													</tr>
@@ -425,36 +426,32 @@
 		</section>
 
 		<template if:true={showModal}>
-
-			<div class="demo-only">
-				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-					<div class="slds-modal__container">
-						<header class="slds-modal__header">
-							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
-								<lightning-icon icon-name="utility:close" size="medium">
-								</lightning-icon>
-								<span class="slds-assistive-text">{label.close}</span>
-							</button>
-							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{headerToShow}</h2>
-						</header>
-						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-							<center><h2><b>{label.icg_confirmation_text}</b></h2><br/>
-							</center>
-						</div>
-						<footer class="slds-modal__footer">
-							<lightning-button label={label.cancel} variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
-							<lightning-button label={label.accept} variant="brand" onclick={makeAction}></lightning-button>
-						</footer>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+							<lightning-icon icon-name="utility:close" size="medium">
+							</lightning-icon>
+							<span class="slds-assistive-text">{label.close}</span>
+						</button>
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{headerToShow}</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<center><h2><b>{label.icg_confirmation_text}</b></h2><br/>
+						</center>
 					</div>
-				</section>
-				<div class="slds-backdrop slds-backdrop_open"></div>
-			</div>
-
+					<footer class="slds-modal__footer">
+						<lightning-button label={label.cancel} variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+						<lightning-button label={label.accept} variant="brand" onclick={makeAction}></lightning-button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
 		</template>
 
 		<template if:true={editMode}>
 			<div class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
-				<div if:true={isSaveOption} class="slds-col margin-button-save">
+				<div class="slds-col margin-button-save">
 					<button class="slds-button slds-button--brand button-size-footer" onclick={saveCapabilities}>{label.save}</button>
 				</div>
 				<div class="slds-col"> 

@@ -12,10 +12,8 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void makeData() {
 		IATA_ISO_Country__c isoCode = CW_TestDataFactory.newISOCountry();
 		insert isoCode;
-		handleTrace(PREFIX + 'IATA_ISO_Country__c insert');
 
 		List<RecordType> recTypes = CW_TestDataFactory.getRecTypes('Account');
-		handleTrace(PREFIX + 'recTypes => ' + recTypes);
 
 		Account acc = CW_TestDataFactory.TestAccount(isoCode.Id);
 		acc.RecordTypeId = recTypes[Integer.valueof((Math.random() * 1))].Id;
@@ -23,7 +21,6 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		acc.Airline_designator__c = 'AA';
 		acc.ICAO_designator__c = 'SSV';
 		insert acc;
-		handleTrace(PREFIX + 'HQ/operator insert');
 
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(isoCode.Id, acc.Id);
 		insert airport;
@@ -40,17 +37,14 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		airlines.add(acc3);
 
 		insert airlines;
-		handleTrace(PREFIX + 'Airlines insert');
 
 		Account_Role__c accRole = CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
 		insert accRole;
-		handleTrace(PREFIX + 'Account_Role__c insert');
 
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard;
 		ICG_Account_Role_Detail__c ard2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard2;
-		handleTrace(PREFIX + 'ICG_Account_Role_Detail__c insert');
 
 		Group g1 = new Group(Name = 'TheTestQueue', type = 'Queue');
 		insert g1;
@@ -69,13 +63,11 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		ceivCert.Certification_Type__c = 'Certifications of Excellency';
 		sfocCert.Department__c = g1.Name;
 		insert ceivCert;
-		handleTrace(PREFIX + 'ICG_Certification__c insert');
 
 		ICG_Capability_Assignment_Group__c ardCert = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, sfocCert.id);
 		insert ardCert;
 		ICG_Capability_Assignment_Group__c ardCert2 = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard2.id, ceivCert.id);
 		insert ardCert2;
-		handleTrace(PREFIX + 'ICG_Capability_Assignment_Group__c insert');
 	}
 	@isTest
 	static void testGetFacilityCertifications() {
@@ -126,8 +118,8 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		string jsonCertificationToAdd = JSON.serialize(ardCert);
 		test.startTest();
 		
-		string certId = CW_CertificationsManagerController.createCertification(jsonCertificationToAdd);
-		System.assertNotEquals(null, certId, 'Certification not inserted');
+		ICG_Capability_Assignment_Group__c certId = CW_CertificationsManagerController.createCertification(jsonCertificationToAdd);
+		System.assertNotEquals(null, certId.id, 'Certification not inserted');
 		
 		test.stopTest();
 	}
@@ -137,15 +129,10 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		String newId = CW_CertificationsManagerController.renewCertification(null, null, null, null, null);
 		System.assertEquals(false, String.isBlank(newId), 'Certification not inserted');
 		
-		string certId = CW_CertificationsManagerController.createCertification(null);
+		ICG_Capability_Assignment_Group__c certId = CW_CertificationsManagerController.createCertification(null);
 		System.assertEquals(null, certId, 'Exception not thrown');
 		
 		test.stopTest();
-	}
-	private static void handleTrace(String traceMsg) {
-		if (TRACEIT) {
-			system.debug(logginglevel.FINEST, traceMsg);
-		}
 	}
 	
 	@isTest
@@ -160,7 +147,8 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	
 	@isTest
 	static void getNextCertificationID() {
-		
+		Account acc = [SELECT Id FROM Account WHERE Name = 'TEST Airline HQ/operator'];
+
 		ICG_Certification__c newcert = CW_TestDataFactory.newCertification();
 		newcert.name = 'CEIV Fresh';
 		newcert.certification_type__C = 'Certifications of Excellency';
@@ -180,30 +168,30 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		
 		test.startTest();
 		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c LIMIT 1];
-		String result = CW_CertificationsManagerController.getNextCertificationID(cert.id);
+		String result = CW_CertificationsManagerController.getNextCertificationID(cert.id,acc.Id);
 		System.assertNotEquals(result, '');
 
-		result = CW_CertificationsManagerController.getNextCertificationID(newcert.Id);
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert.Id,acc.Id);
 		System.assertNotEquals(result, '', 'Information not retrieved properly');
 		
-		result = CW_CertificationsManagerController.getNextCertificationID(newcert1.Id);
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert1.Id,acc.Id);
 		System.assertNotEquals(result, '', 'Information not retrieved properly');
 		
-		result = CW_CertificationsManagerController.getNextCertificationID(newcert2.Id);
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert2.Id,acc.Id);
 		System.assertNotEquals(result, '', 'Information not retrieved properly');
 		
-		result = CW_CertificationsManagerController.getNextCertificationID(newcert3.Id);
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert3.Id,acc.Id);
 		System.assertNotEquals(result, '', 'Information not retrieved properly');
 
 		test.stopTest();
 	}
 	
 	@isTest
-	static void getFacilityDeprecatedCertifications() {
+	static void getFacilityNotActiveCertifications() {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
 		
 		test.startTest();
-		String result = CW_CertificationsManagerController.getFacilityDeprecatedCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c);
+		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, 'Upcoming');
 		System.assertNotEquals(result, '');
 
 		test.stopTest();
@@ -213,9 +201,9 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void updateFieldEdited() {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
 		String jsonValue = JSON.serialize(ardCert);
-		
+		List<String> jsonGroup = new List<String>{jsonValue};
 		test.startTest();
-		Boolean result = CW_CertificationsManagerController.updateFieldEdited(jsonValue);
+		Boolean result = CW_CertificationsManagerController.updateFieldEdited(jsonGroup);
 		System.assertEquals(result, true);
 		
 		result = CW_CertificationsManagerController.updateFieldEdited(null);

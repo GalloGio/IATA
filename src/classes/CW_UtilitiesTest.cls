@@ -340,7 +340,7 @@ public class CW_UtilitiesTest {
 		List<EmailTemplate> eTemplate = [SELECT Id, DeveloperName FROM EmailTemplate WHERE isActive = true LIMIT 1];
 		Boolean aux = false;
 		test.startTest();
-		aux = CW_Utilities.sendEmailTemplate(eTemplate[0].DeveloperName, acc[0].Id, cnt[0].Id, new List<String>{ 'intent@gmail.com', 'intent2@gmail.com' });
+		aux = CW_Utilities.sendEmailTemplate(eTemplate[0].DeveloperName, acc[0].Id, cnt[0].Id, new List<String>{ 'intent@gmail.com', 'intent2@gmail.com' }, true);
 		test.stopTest();
 		System.assertEquals(true, aux, 'Email sender Fails');
 	}
@@ -360,10 +360,12 @@ public class CW_UtilitiesTest {
 		insert crd;
 		System.runAs(urs[0]) {
 			test.startTest();
-			String resultApproved = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
-			System.assertEquals('MissingRights', resultApproved, 'User were allowed to edit even without being a company admin');
-			String resultRejected = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, false);
-			System.assertEquals('MissingRights', resultRejected, 'User were allowed to edit even without being a company admin');
+			String resultApprovedJSON = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
+			CW_Utilities.HandledContactRole resultApproved = (CW_Utilities.HandledContactRole) JSON.deserialize(resultApprovedJSON, CW_Utilities.HandledContactRole.class);
+			System.assertEquals('MissingRights', resultApproved.message, 'User were allowed to edit even without being a company admin');
+			String resultRejectedJSON = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, false);
+			CW_Utilities.HandledContactRole resultRejected = (CW_Utilities.HandledContactRole) JSON.deserialize(resultRejectedJSON, CW_Utilities.HandledContactRole.class);
+			System.assertEquals('MissingRights', resultRejected.message, 'User were allowed to edit even without being a company admin');
 			test.stopTest();
 		}
 
@@ -385,18 +387,18 @@ public class CW_UtilitiesTest {
 		insert crd;
 		
 		test.startTest();
-		Boolean res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
-		system.assertEquals(res, false, 'rejected');
+		ICG_Contact_Role_Detail__c res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+		system.assertEquals(res, null, 'rejected');
 
 		crd.Status__c = 'Pending for Approval';
 		update crd;
 		res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
-		system.assertEquals(res, false, 'rejected');
+		system.assertEquals(res, null, 'rejected');
 
 		crd.ICG_Role__c = 'Company Admin';
 		update crd;
 		res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
-		system.assertEquals(res, false, 'rejected');
+		system.assertEquals(res, null, 'rejected');
 
 		test.stopTest();
 	}
@@ -500,17 +502,16 @@ public class CW_UtilitiesTest {
 
 		//For some reason I cannot yet see, this object cannot be created in the SETUP method
 		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-		crd.ICG_Role__c = 'Facility Manager';
 		crd.Account_Role__c = arc[0].Id;
 		insert crd;
 		System.runAs(urs[0]) {
 			test.startTest();
-			Boolean res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
-			system.assertEquals(res, false, 'approved');
+			ICG_Contact_Role_Detail__c res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
+			system.assertEquals(res, null, 'approved');
 
 			crd.Status__c = 'Pending for Approval';
 			res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
-			system.assertEquals(res, false, 'approved');
+			system.assertEquals(res, null, 'approved Pending for Approval');
 
 			test.stopTest();
 		}
@@ -606,8 +607,10 @@ public class CW_UtilitiesTest {
 			System.assertEquals('Company Admin', userRoleAdmin, 'not a company admin' + userRoleAdmin);
 
 			CW_Utilities.approveStationAutomaticProcess(ard[0].Id);
-			String crdRemovalProcess = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
-			System.assertEquals('Successful', crdRemovalProcess, 'removal error');
+			String crdRemovalProcessJSON = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
+			CW_Utilities.HandledContactRole crdRemovalProcess = (CW_Utilities.HandledContactRole) JSON.deserialize(crdRemovalProcessJSON, CW_Utilities.HandledContactRole.class);
+			
+			System.assertEquals('Successful', crdRemovalProcess.message, 'removal error');
 			
 			test.stopTest();
 		}

@@ -16,8 +16,8 @@ public with sharing class CW_CertificationsManagerController {
 	final static String CEIV_LIVE_ANIMALS = 'CEIV Live Animals';
 	final static String CEIV_PHARMA = 'CEIV Pharma';
 	final static String CEIV_FRESH = 'CEIV Fresh';
-	final static String IENVA_STAGE_1 = 'IEnVA Stage 1';
-	final static String IENVA_STAGE_2 = 'IEnVA Stage 2';
+	final static String IENVA_STAGE_1 = 'IEnvA';
+	final static String IENVA_STAGE_2 = 'IEnvA Stage 2';
 	final static String UNITED_FOR_WILDLIFE = 'United for Wildlife';
 	final static String SMART_FACILITY_OPERATIONAL_CAPACITY = 'Smart Facility Operational Capacity';
 	final static String SMART_FACILITY_REMOTE_VALIDATION = 'Smart Facility Remote Validation';
@@ -25,10 +25,12 @@ public with sharing class CW_CertificationsManagerController {
 	final static String CEIV_AVI = 'CEIV-AVI-';
 	final static String CEIV_PIL = 'CEIV-PIL-';
 	final static String CEIV_PER = 'CEIV-PER-';
-	final static String IENVA_QTR_AC = 'IEnVA-QTR-AC-';
-	final static String UFW_QTR_AC = 'UfW-QTR-AC-';
+	final static String IENVA_QTR_AC = 'IEnvA-';
+	final static String UFW_QTR_AC = 'UfW-';
 	final static String SFOC = 'SFOC-';
 	final static String RV_SF = 'RV-SF-';
+
+	final static String AUDITING_COMPANY = 'AC-';
 	
 	final static String ADMINSTRATIVE = 'Administrative';
 	final static String OPERATIONAL = 'Operational';
@@ -48,7 +50,53 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled
 	public static string getFacilityCertifications(string facilityId) {
-		return (JSON.serialize([SELECT id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IEnVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName  FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND Is_Deprecated__c = false AND RecordTypeId =: RT_CERTIFICATION ORDER BY CreatedDate ASC]));
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
+		List<ICG_Capability_Assignment_Group__c> returnList = new List<ICG_Capability_Assignment_Group__c>();
+
+		List<ICG_Capability_Assignment_Group__c> activeList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName
+		  FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
+		   Is_Active__c = true AND RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY CreatedDate DESC];
+		returnList.addAll(activeList);
+
+		List<ICG_Capability_Assignment_Group__c> upcomingList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName
+		   FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
+			Status__c = 'Upcoming' AND RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY CreatedDate DESC];
+
+		Boolean exist=false;
+		for(ICG_Capability_Assignment_Group__c upcoming : upcomingList){
+			for(ICG_Capability_Assignment_Group__c active : activeList){
+				if(upcoming.ICG_Certification__c == active.ICG_Certification__c){
+					exist=true;
+				}
+			}
+			if(!exist){
+				returnList.add(upcoming);
+			}
+			else{
+				exist=false;
+			}
+		}
+
+		List<ICG_Capability_Assignment_Group__c> expiredInactiveList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName
+		   FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
+			Status__c NOT IN ('Active','Upcoming') AND RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY CreatedDate DESC];
+
+		exist=false;
+		for(ICG_Capability_Assignment_Group__c expiredInactive : expiredInactiveList){
+			for(ICG_Capability_Assignment_Group__c active : returnList){
+				if(expiredInactive.ICG_Certification__c == active.ICG_Certification__c){
+					exist=true;
+				}
+			}
+			if(!exist){
+				returnList.add(expiredInactive);
+			}
+			else{
+				exist=false;
+			}
+		}
+
+		return (JSON.serialize(returnList));
 	}
 
 	/****************************************************************************
@@ -63,17 +111,24 @@ public with sharing class CW_CertificationsManagerController {
 		return getFacilityCertifications(facilityId);
 	}
 
+
 	/****************************************************************************
-	 * @Method			: getFacilityDeprecatedCertifications
+	 * @Method			: getFacilityUpcomingCertifications
 	 * @Created			: 22/01/2020
-	 * @Description		: get all certifications deprecated related to the facility
+	 * @Description		: get all certifications upcoming related to the facility
 	 * @param			: String facilityId - id of the facility
 	 * @param			: String certificationId - id of the certification
-	 * @Returns			: String relatedCertifications - json containing all the defrecated certifications
+	 * @Returns			: String relatedCertifications - json containing all the upcoming certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getFacilityDeprecatedCertifications(string facilityId, string certificationId) {
-		return (JSON.serialize([SELECT id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IEnVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName  FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND ICG_Certification__c = :certificationId AND RecordTypeId =: RT_CERTIFICATION AND Is_Deprecated__c = true Order by CreatedDate desc]));
+	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput) {
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
+        
+        String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
+             'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND ICG_Certification__r.Name IN (\'' + String.join((lstDepts), '\', \'') + '\')' + ' AND Status__c IN (\''+statusInput+'\') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
+		List<ICG_Capability_Assignment_Group__c> firtsList = (List<ICG_Capability_Assignment_Group__c>) Database.query(query);
+        
+		return (JSON.serialize(firtsList));
 	}
 
 	/****************************************************************************
@@ -84,12 +139,8 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled
 	public static string getAllCertifications() {
-		List<String> lstDepts = new List<String>();
-		List<Group> lstGroup = [SELECT Name FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];
-		for (Group g : lstGroup) {
-			lstDepts.add(g.Name);
-		}
-		return (JSON.serialize([SELECT id,Name,Certification_Type__c, Applicable_to__c,Expiration_Period__c FROM ICG_Certification__c WHERE Department__c IN: lstDepts]));
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
+		return (JSON.serialize([SELECT id,Name,Certification_Type__c, Applicable_to__c,Expiration_Period__c FROM ICG_Certification__c WHERE Name IN: lstDepts]));
 		
 	}
 	
@@ -156,20 +207,27 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: Map<String, Map<String,String>> filteredScopesByCertiAndStation - json containing all scopes filtered
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getNextCertificationID(String certiSelected) {
+	public static string getNextCertificationID(String certiSelected, String recordId) {
 		String nextCertificationID;
 		String parseYearSub = String.valueOf(Date.today().year()).substring(2);
 		String parseYearAll = String.valueOf(Date.today().year());
 		String initValue = '0001';
 
 		try{
+			ICG_Account_Role_Detail__c accRolDet = [SELECT Account_Role__r.Account__r.ICAO_designator__c FROM ICG_Account_Role_Detail__c WHERE Id =:recordId];
 			ICG_Certification__c getCertiToRead = [SELECT Name FROM ICG_Certification__c WHERE Id =:certiSelected];
-			ICG_Capability_Assignment_Group__c[] getLastCertiID = [SELECT Certification_Id__c,Name FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Id =:certiSelected order by CreatedDate desc limit 1 ];
+			ICG_Capability_Assignment_Group__c[] getLastCertiID = [SELECT Certification_Id__c,Name FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Id =:certiSelected AND Certification_Id__c != null order by CreatedDate desc limit 1 ];
 
 			String parseCertiID1;
 			Integer positionToSub1;
 			String nextNumber1;
 			Integer addCero=0;
+			String icaoDesignator='';
+			Boolean isIenvaORUfW=false;
+
+			if(String.isNotBlank(accRolDet.Account_Role__r.Account__r.ICAO_designator__c)){
+				icaoDesignator = accRolDet.Account_Role__r.Account__r.ICAO_designator__c;
+			}
 
 			switch on getCertiToRead.Name {
 				when 'CEIV Live Animals' {
@@ -181,14 +239,17 @@ public with sharing class CW_CertificationsManagerController {
 				when 'CEIV Fresh' {
 					nextCertificationID = CEIV_PER+parseYearSub+'-';
 				}
-				when 'IEnVA Stage 1' {
-					nextCertificationID = IENVA_QTR_AC+parseYearSub+'-';
+				when 'IEnvA' {
+					nextCertificationID = IENVA_QTR_AC+icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
+					isIenvaORUfW=true;
 				}
-				when 'IEnVA Stage 2' {
-					nextCertificationID = IENVA_QTR_AC+parseYearSub+'-';
+				when 'IEnvA Stage 2' {
+					nextCertificationID = IENVA_QTR_AC+icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
+					isIenvaORUfW=true;
 				}
 				when 'United for Wildlife' {
-					nextCertificationID = UFW_QTR_AC+parseYearSub+'-';
+					nextCertificationID = UFW_QTR_AC+icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
+					isIenvaORUfW=true;
 				}
 				when 'Smart Facility Operational Capacity' {
 					nextCertificationID = SFOC+parseYearSub+'-';
@@ -197,25 +258,26 @@ public with sharing class CW_CertificationsManagerController {
 					nextCertificationID = RV_SF+parseYearSub+'-';
 				}
 			}
-
-			if(getLastCertiID.size()>0){
-				parseCertiID1 = getLastCertiID[0].Certification_Id__c;
-				positionToSub1 = parseCertiID1.length()-4;
-				nextNumber1 = String.valueOf(Integer.valueOf(getLastCertiID[0].Certification_Id__c.substring(positionToSub1))+1);
-				addCero = 4 - nextNumber1.length();
-				if(addCero > 0){
-					nextNumber1 = nextNumber1.leftPad(4,'0');
+			if(!isIenvaORUfW){
+				if(getLastCertiID.size()>0){
+					parseCertiID1 = getLastCertiID[0].Certification_Id__c;
+					positionToSub1 = parseCertiID1.length()-4;
+					nextNumber1 = String.valueOf(Integer.valueOf(getLastCertiID[0].Certification_Id__c.substring(positionToSub1))+1);
+					addCero = 4 - nextNumber1.length();
+					if(addCero > 0){
+						nextNumber1 = nextNumber1.leftPad(4,'0');
+					}
 				}
+				else{
+					nextNumber1 = initValue;
+				}
+				nextCertificationID += nextNumber1;
 			}
-			else{
-				nextNumber1 = initValue;
-			}
-
-			nextCertificationID += nextNumber1;
+			
 			return nextCertificationID;
 		}
 		catch(Exception e){
-			return JSON.serialize(e.getMessage());
+			return JSON.serialize(e.getMessage()+e.getLineNumber()+e.getStackTraceString());
 		}
 	}
 
@@ -231,7 +293,7 @@ public with sharing class CW_CertificationsManagerController {
 	public static String renewCertification(string certificationId, string issuedDate, string expirationDate, string newCertificationId, string scopeValue) {
 		String result;
 		try {
-			ICG_Capability_Assignment_Group__c ardCertification = [SELECT id, Certification_Id__c, CEIV_Scope_List__c, SFOC_Scope__c,IEnVA_Scope__c, ICG_Certification__c, ICG_Certification__r.Certification_Type__c, ICG_Certification__r.Name, ICG_Account_Role_Detail__c,RecordTypeId FROM ICG_Capability_Assignment_Group__c WHERE id = :certificationId order by CreatedDate desc LIMIT 1];
+			ICG_Capability_Assignment_Group__c ardCertification = [SELECT id, Certification_Id__c, CEIV_Scope_List__c, SFOC_Scope__c,IENVA_Scope__c, ICG_Certification__c, ICG_Certification__r.Certification_Type__c, ICG_Certification__r.Name, ICG_Account_Role_Detail__c,RecordTypeId FROM ICG_Capability_Assignment_Group__c WHERE id = :certificationId order by CreatedDate desc LIMIT 1];
 			ICG_Capability_Assignment_Group__c ardCertificationToInsert = ardCertification.clone();
 			ardCertificationToInsert.Issue_Date__c = Date.valueOf(issuedDate);
 			ardCertificationToInsert.Expiration_Date__c = Date.valueOf(expirationDate);
@@ -243,7 +305,7 @@ public with sharing class CW_CertificationsManagerController {
 				ardCertificationToInsert.CEIV_Scope_List__c = scopeValue;
 			}
 			else if(ardCertificationToInsert.ICG_Certification__r.Name.contains('IEnvA')){
-				ardCertificationToInsert.IEnVA_Scope__c = scopeValue;
+				ardCertificationToInsert.IENVA_Scope__c = scopeValue;
 			}
 			insert ardCertificationToInsert;
 
@@ -259,12 +321,12 @@ public with sharing class CW_CertificationsManagerController {
 	 * @return			id <id of the new ICG_Capability_Assignment_Group__c created>
 	 */
 	@AuraEnabled
-	public static string createCertification(string jsonCertification) {
+	public static ICG_Capability_Assignment_Group__c createCertification(string jsonCertification) {
 		try {
 			ICG_Capability_Assignment_Group__c newCert = (ICG_Capability_Assignment_Group__c) JSON.deserialize(jsonCertification, ICG_Capability_Assignment_Group__c.class);
 			newCert.RecordTypeId = RT_CERTIFICATION;
 			insert newCert;
-			return newCert.id;
+			return newCert;
 		} catch (Exception e) {
 			return null;
 		}
@@ -276,10 +338,15 @@ public with sharing class CW_CertificationsManagerController {
 	 * @return			boolean with the result
 	 */
 	@AuraEnabled
-	public static Boolean updateFieldEdited(string jsonGroup) {
+	public static Boolean updateFieldEdited(List<String> jsonGroup) {
 		try {
-			ICG_Capability_Assignment_Group__c updateGroup = (ICG_Capability_Assignment_Group__c) JSON.deserialize(jsonGroup, ICG_Capability_Assignment_Group__c.class);
-			update updateGroup;
+			List<ICG_Capability_Assignment_Group__c> updateListGroup = new List<ICG_Capability_Assignment_Group__c>();
+			//Extract all group field from input
+			for (String field : jsonGroup) {
+				ICG_Capability_Assignment_Group__c updateGroup = (ICG_Capability_Assignment_Group__c) JSON.deserialize(field, ICG_Capability_Assignment_Group__c.class);
+				updateListGroup.add(updateGroup);
+			}
+			update updateListGroup;
 			return true;
 		} catch (Exception e) {
 			return false;

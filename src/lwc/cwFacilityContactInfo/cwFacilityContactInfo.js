@@ -26,6 +26,11 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 	set facility(value){
 		this._facility = JSON.parse(JSON.stringify(value));
+
+		if(!Array.isArray(this._facility.supportedLanguages) && this._facility.supportedLanguages.includes(';')){
+			this._facility.supportedLanguages = this._facility.supportedLanguages.split(';');
+		}
+
 		this._facility.supportedLanguages.forEach(lang => {
 			let picklistValue = (this._facility.availableLanguages.filter(elem => {return elem.value === lang}));
 			if(picklistValue.length > 0 && lang && lang !== '') this.langCalculator(lang, picklistValue[0].label);
@@ -56,7 +61,7 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 
 	get showOnlineBooking() {
-		return this.facility.recordTypeName !== "Airport Operator";
+		return this.facility.recordTypeName !== "Airport Operator" && (this.facility.onlineBooking || this.editOn);
 	}
 
 	showImportHours() {

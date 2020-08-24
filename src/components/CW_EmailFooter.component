@@ -8,28 +8,28 @@
                 </td>
                 <td width="5%" valign="top">
                     <a href="https://www.twitter.com" target="_blank" title="Twitter" >
-                        <img alt="Twitter" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-twitter.png"
+                        <img alt="Twitter" src="{!communityUrlForResources}resource/ICG_Resources/icons/social-twitter.png"
                             style="width: 18px; height: auto; max-height: 18px; padding: 5px; " width="18"
                         />
                     </a>
                 </td>
                 <td width="5%" valign="top">
                     <a href="https://www.facebook.com" target="_blank" title="facebook" >
-                        <img alt="facebook" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-facebook.png"
+                        <img alt="facebook" src="{!communityUrlForResources}resource/ICG_Resources/icons/social-facebook.png"
                             style="width: 18px; height: auto; max-height: 18px; padding: 5px;" width="12"
                         />
                     </a>
                 </td>
                 <td width="5%" valign="top">
                     <a href="https://www.linkedin.com" target="_blank" title="linkedin" >
-                        <img alt="linkedin" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-linkedin.png"
+                        <img alt="linkedin" src="{!communityUrlForResources}resource/ICG_Resources/icons/social-linkedin.png"
                             style="width: 18px; height: auto; max-height: 18px; padding: 5px;" width="18"
                         />
                     </a>
                 </td>
                 <td width="5%" valign="top">
                     <a href="https://www.youtube.com" target="_blank" title="Youtube" >
-                        <img alt="Youtube" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/social-youtube.png"
+                        <img alt="Youtube" src="{!communityUrlForResources}resource/ICG_Resources/icons/social-youtube.png"
                             style="width: 18px; height: auto; max-height: 18px; padding: 5px;" width="18"
                         />
                     </a>
@@ -57,7 +57,7 @@
                     </p>
                 </td>
                 <td width="15%" style="text-align: right;">
-                    <img alt="IATA Logo" src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/icons/iata-logo-other.png"
+                    <img alt="IATA Logo" src="{!communityUrlForResources}resource/ICG_Resources/icons/iata-logo-other.png"
                         width="100" />
                 </td>
             </tr>

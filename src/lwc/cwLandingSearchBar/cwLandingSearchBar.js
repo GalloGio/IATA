@@ -3,7 +3,6 @@ import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.get
 import getCompanyNamesList from "@salesforce/apex/CW_LandingSearchBarController.getCompanyNamesList";
 import getCertificationsList from "@salesforce/apex/CW_LandingSearchBarController.getCertificationsList";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
-import SEARCH_ICON from "@salesforce/resourceUrl/ICG_Search_Icon";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
 import { loadScript } from "lightning/platformResourceLoader";
@@ -23,7 +22,7 @@ export default class CwLandingSearchBar extends LightningElement {
 
 	icons = resources + "/icons/";
 
-	searchIcon = SEARCH_ICON;
+	searchIcon = this.icons + "ICG_Search_Icon.svg";
 	dropdownicon = this.icons + "icon-dropdown.svg";
 	bluearrow = this.icons + "blue-arrow.svg";
 	searchbycertification = this.icons + "search-by-certification.svg";
@@ -208,6 +207,9 @@ export default class CwLandingSearchBar extends LightningElement {
 		this.predictiveValues = [];
 		this.searchValue = event.target ? event.target.value : "";
 		if (!this.searchValue || this.searchValue.length < 3) {
+			return;
+		}
+		if(this.searchValue.length >=3 && this.searchValue.trim().length == 0){
 			return;
 		}
 

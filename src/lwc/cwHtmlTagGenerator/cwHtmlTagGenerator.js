@@ -69,6 +69,15 @@ export default class CwHtmlTagGenerator extends LightningElement {
 
 		return value;
 	}
+    
+    get getValueSubTitle(){
+        if (this.auxType === ''){
+            return '';
+        }
+        else{
+            return this.getValue;
+        }
+    }
 
 	get getValueNumber() {
 		let value = this.item[this.propertyName]
@@ -201,7 +210,7 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	}
 
 	get getCssClassNew(){
-		return this.item && this.item.isNew && this.item.isInvolvedInConflictProcess ? "content yellow" : "content";
+		return this.item && this.item.isNew && this.item.isInvolvedInConflictProcess && this.propertyname === 'equipment__c'? "content yellow" : "content";
 	}
 
 	handleConflictActionChanged(event){
@@ -232,13 +241,18 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	}
 
 	get generateLabel(){
-		if(!this.item.isInvolvedInConflictProcess){
+		if(!this.item.isInvolvedInConflictProcess || this.propertyName !== 'equipment__c'){
 			return this.getValue;
 		}
 
 		if(this.item && this.item.conflictLabel){
 			return this.item.conflictLabel;
 		}
+
+		return this.getValue;
+    }
+    
+    get generateLabelTemperature(){
 
 		if(this.isAuxTypeStandardTemperatureRanges || this.isAuxTypeCustomTemperatureRanges){
 			return this.label.room + " " + this.getRowIndexAddOne;
@@ -250,5 +264,4 @@ export default class CwHtmlTagGenerator extends LightningElement {
 
 		return this.getValue + " " + this.getRowIndexAddOne;
 	}
-	
 }

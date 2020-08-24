@@ -321,8 +321,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 	}
 
 	conTwitter() {
-		let textTwitter = "Find all information about this service provider’s infrastructure and capabilities on IATA ONE Source";
-		connectTwitter(encodeURIComponent(this.url), textTwitter);
+		connectTwitter(encodeURIComponent(this.url), this.label.find_info_on_IATA_ONE_Source);
 	}
 
 	conLinkedin() {

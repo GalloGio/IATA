@@ -21,7 +21,7 @@ export default class CwBecomeCompanyAdminContainer extends LightningElement {
             let parsedRes = JSON.parse(resp);
             if(parsedRes.success){
                 this.modalImage = this.CHECKED_IMAGE;
-                this.modalMessage = 'Your request has been submitted and is pending approval from your Company Admin / IATA.<br/><br/>You will receive a confirmation once your request has been processed.';
+                this.modalMessage = this.label.icg_registration_request_submitted1 + '<br/><br/>' + this.label.icg_registration_request_submitted2;
                 this.dispatchEvent( new CustomEvent('refresh'));
             }else{
                 this.modalMessage = parsedRes.message;

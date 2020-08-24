@@ -164,6 +164,9 @@ public without sharing virtual class IEC_Cart {
 		//If a product is related with a facility, store the id in this field.
 		public Id relatedFacility		{get;set;}			
 
+		//If a product is related with a facility, store the id in this field.
+		public Id relatedFacility		{get;set;}			
+
 		public CartItem(Id id, String productNumber, Decimal quantity, String coupon) {
 			initializeFields(id, productNumber, quantity, coupon, null);
 		}

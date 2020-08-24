@@ -5,7 +5,7 @@ import { prepareExcelRow } from "c/cwUtilities";
 export default class CwUserStatsTable extends LightningElement {
     @api label;
     icons = resources + "/icons/";
-    exportExcel = this.icons + "export-to-excel.png";
+    exportExcel;
     remoteValidationIcon = this.icons + "remote_validation_icon.svg";
 
     @api activeCertifications = [];
@@ -67,6 +67,10 @@ export default class CwUserStatsTable extends LightningElement {
     
     get hasListItems(){
         return this.listItems.length > 0;
+    }
+
+    renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
     }
 
     handleMoreInfo(event) {

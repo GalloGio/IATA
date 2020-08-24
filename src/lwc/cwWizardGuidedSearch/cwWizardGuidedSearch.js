@@ -29,8 +29,11 @@ export default class CsWizardGuidedSearch extends LightningElement {
 	@api availableLocations;
 	@track locationWrapper = { value: "" };
 	@track isboxfocus;
+	@track searchValue = "";
 
 	icons = resources + "/icons/";
+	searchbylocation = resources + "/icons/ic-white-location.svg";
+
 	//icons
 	tickSelection = this.icons + "ic-gsearch--selected.svg";
 
@@ -194,6 +197,7 @@ export default class CsWizardGuidedSearch extends LightningElement {
 		this.locationWrapper = event.detail;
 		this.locationWrapper = this.generateDescription(this.locationWrapper);
 		this._switchPredictiveDisplay(false);
+		this.nextStep();
 	}
 
 	_switchPredictiveDisplay(bool) {
@@ -391,11 +395,15 @@ export default class CsWizardGuidedSearch extends LightningElement {
 		}
 		this.locationPredictiveValues = [];
 		this.locationWrapper.value = event.target.value;
-		if (!event.target.value || event.target.value.length < 3) {
+		this.searchValue = event.target ? event.target.value : "";
+		if (!this.searchValue || this.searchValue.length < 3) {
+			return;
+		}
+		if(this.searchValue.length >=3 && this.searchValue.trim().length == 0){
 			return;
 		}
 
-		this.locationPredictiveValues = fillPredictiveValues(event.target.value, this.availableLocations);
+		this.locationPredictiveValues = fillPredictiveValues(this.searchValue, this.availableLocations);
 		this._switchPredictiveDisplay(true);
 	}
 

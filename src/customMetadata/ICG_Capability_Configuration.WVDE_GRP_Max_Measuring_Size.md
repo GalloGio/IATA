@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">WVDE_Max_Measuring_Size_h_cm__c;WVDE_Max_Measuring_Size_w_cm__c;WVDE_Max_Measuring_Size_l_cm__c</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Max. Measuring Size (in cm)</value>
     </values>

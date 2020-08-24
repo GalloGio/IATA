@@ -7,6 +7,7 @@ export default class CwUserStats extends LightningElement {
     
     
     downloadExcelAllValidations;
+    exportExcel;
     @track xlsHeaderAllValidations = [];
     @track xlsDataAllValidations = [];
     @track filenameAllValidations = "";
@@ -20,6 +21,8 @@ export default class CwUserStats extends LightningElement {
 
     urlResultPage;
     renderedCallback(){
+        this.exportExcel = this.icons + this.label.xlsx_icon;
+        console.log('this.label : ' + JSON.stringify(this.label.xlsx_icon));
         if(this.downloadExcelAllValidations){
             this.downloadExcelAllValidations=false;
             this.template.querySelector(".xlsxallvalidations").download();
@@ -34,7 +37,7 @@ export default class CwUserStats extends LightningElement {
 
     @api environmentVariables;
     tabarrow = this.icons + "ic-dashboard-tab--arrows.svg";
-	exportExcel = this.icons + "export-to-excel.png";
+	
 
     get companyFacilities() {
 

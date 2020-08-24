@@ -42,12 +42,6 @@
                 </div>
                 <input type="text" class="form-control height-35" data-tosca="locationinput" disabled
                     onkeyup={predictiveSearchLocation} list="locationpredictiveresults" autocomplete="off"></input>
-                <div class="input-group-prepend">
-                    <div class="input-group-text bg-blue" onclick={addLocation}>
-                        <lightning-icon size="x-small" icon-name="utility:add" variant="inverse"
-                            alternative-text="Add Location"></lightning-icon>
-                    </div>
-                </div>
             </div>
 
             <div data-tosca="predictiveContainerLocation" class="col-no-padding">
@@ -80,12 +74,6 @@
                 <input type="text" class="form-control height-35" data-tosca="companynameinput" disabled
                     onkeyup={predictiveSearchCompanyName} list="companynamespredictiveresults"
                     autocomplete="off"></input>
-                <div class="input-group-prepend">
-                    <div class="input-group-text bg-blue" onclick={addCompanyName}>
-                        <lightning-icon size="x-small" icon-name="utility:add" variant="inverse"
-                            alternative-text="Add Company Name"></lightning-icon>
-                    </div>
-                </div>
             </div>
 
             <div data-tosca="predictiveContainerCompanyName" class="col-no-padding">
@@ -176,7 +164,7 @@
 
     <div class="panel-filter-result-advance">
         <div class="componentStyleBase-full pb-3" if:true={initialLoadPerformed}>
-            <c-cw-facility-equipment-infraestructure-wrapper label={label} lst-fei-categories={lstFEICategories}
+            <c-cw-facility-equipment-infraestructure-wrapper applied-filters-count={searchSummaryListLength} label={label} lst-fei-categories={lstFEICategories}
                 onsectionsloaded={updateSectionLoaded} onselectcategory={setSelectedCategory} siteclass="searchbar">
             </c-cw-facility-equipment-infraestructure-wrapper>
         </div>

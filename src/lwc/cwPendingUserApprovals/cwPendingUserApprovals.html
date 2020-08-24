@@ -21,6 +21,7 @@
     <table class="table table-striped">
         <thead>
           <tr>
+            <th scope="col">{label.type}</th>
             <th scope="col">{label.firstname}</th>
             <th scope="col">{label.lastname}</th>
             <th scope="col">{label.email}</th>
@@ -36,7 +37,7 @@
         <tbody>        
             <template for:each={filteredFacilities} for:item="facility">
                 <tr key={facility.Id} if:false={facility.isPendingApproval__c}>
-                    
+                    <td class="align-middle">{facility.contactRole.Status__c}</td>
                     <td class="align-middle">{facility.contactRole.Account_Contact_Role__r.Contact__r.FirstName}</td>
                     <td class="align-middle">{facility.contactRole.Account_Contact_Role__r.Contact__r.LastName}</td>
                     <td class="align-middle">{facility.contactRole.Account_Contact_Role__r.Contact__r.Email}</td>
@@ -50,17 +51,17 @@
                         <div class="hidden-lg">
                             <div class="col-12 col-no-padding display-flex text-center">
                                 <div class="col-7 col-no-padding table-action-btn">
-                                    <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-conroleid={facility.contactRole.Id} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
+                                    <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-type={facility.contactRole.Status__c} data-conroleid={facility.contactRole.Id} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
                                 </div>
                                 <div class="col-5 col-no-padding table-action-btn">
-                                    <a data-conroleid={facility.contactRole.Id} data-action="reject" class="btn btn-primary no-margin-top pl-2 pr-3 pt-1" onclick={confirmApproval}>{label.reject}</a>
+                                    <a data-conroleid={facility.contactRole.Id} data-type={facility.contactRole.Status__c} data-action="reject" class="btn btn-primary no-margin-top pl-2 pr-3 pt-1" onclick={confirmApproval}>{label.reject}</a>
                                 </div>
                             </div>
                         </div>
                         <div class="visible-lg">
                             <div class="col-12 col-no-padding text-center table-action-btn">
-                                <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-conroleid={facility.contactRole.Id} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
-                                <a data-conroleid={facility.contactRole.Id} data-action="reject" class="btn btn-primary mt-1 pl-2 pr-3 pt-1" onclick={confirmApproval}>{label.reject}</a>
+                                <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-type={facility.contactRole.Status__c} data-conroleid={facility.contactRole.Id} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
+                                <a data-conroleid={facility.contactRole.Id} data-type={facility.contactRole.Status__c} data-action="reject" class="btn btn-primary mt-1 pl-2 pr-3 pt-1" onclick={confirmApproval}>{label.reject}</a>
                             </div>
                         </div>
                     </td>

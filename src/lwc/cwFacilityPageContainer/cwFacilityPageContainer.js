@@ -5,7 +5,7 @@ import getResults from "@salesforce/apex/CW_SearchEngine.getInfo";
 import getUserRole from "@salesforce/apex/CW_Utilities.getUserRole";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 // import demoFiles from "@salesforce/resourceUrl/demo_resource";
-import getCompanyAdmins from "@salesforce/apex/CW_Utilities.getCompanyadminContactsFromAccountId";
+import getCompanyAdmins from "@salesforce/apex/CW_Utilities.getCompanyAdminContactsFromAccountId";
 import getFacilityManagers from "@salesforce/apex/CW_Utilities.getStationManagersContactRoleDetails";
 import becomeFacilityAdmin from "@salesforce/apex/CW_Utilities.becomeFacilityAdmin";
 import becomeCompanyAdmin from "@salesforce/apex/CW_Utilities.becomeCompanyAdminFromStation";
@@ -14,7 +14,6 @@ import saveAirlinesHandled from "@salesforce/apex/CW_HandledAirlinesController.s
 import saveHiddenOperatingStations from "@salesforce/apex/CW_HandledAirlinesController.saveHiddenOperatingStations";
 import setFacilityInfo_ from "@salesforce/apex/CW_FacilityContactInfoController.setFacilityInfo";
 import { refreshApex } from "@salesforce/apex";
-import CHECKED_IMAGE from "@salesforce/resourceUrl/ic_tic_green";
 import updateFacility_ from "@salesforce/apex/CW_CreateFacilityController.updateFacility";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import labels from "c/cwOneSourceLabels";
@@ -24,6 +23,10 @@ import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, conn
 export default class CwFacilityPageContainer extends NavigationMixin(LightningElement) {
 	_facilityid;
 	label = labels.labels();
+
+	icons = resources + "/icons/";
+	CHECKED_IMAGE = this.icons + 'ic_tic_green.svg';
+	ERROR_IMAGE = this.icons + 'error-icon.svg';
 
 	@track tooltipObject;
 	@track tooltipToDisplay = "";
@@ -73,11 +76,11 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track filterTextOperatingCHF;
 	@track filterTextRampH;
 	@track modalMessage = "When you perform an action, this modal appears with extra info.";
-	@track modalImage = CHECKED_IMAGE;
+	@track modalImage = this.CHECKED_IMAGE;
 	@track editAirlines = true;
 	@track editCargoHandling = true;
 	@track editRampHandlers = true
-	checkedImage = CHECKED_IMAGE;
+	checkedImage = this.CHECKED_IMAGE;
 	@track loaded;
 	@track overviewValid = true;
 	@track contactInfoValid = true;
@@ -98,10 +101,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	
 	sendActionToSave = false;
 	isSaveCapabMangmn = false;
+	@track isSaveGeoLocation = false;
 	isPendingApproval = false;
 	isSendActionToCancel = false;
 	listCapabilitiesRow = [];
 	logoInfoObject;
+	geoLocationInfoObject;
 	logoImage;
 
 	icons = resources + "/icons/";
@@ -288,7 +293,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	getData(id) {
 		this.isSaveCapabMangmn=false;
-		
+		this.isSaveGeoLocation = false;
+
 		const searchCriterion = {
 			operator: "=",
 			value: id,
@@ -474,7 +480,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		})
 		.catch(err => {
 			this.modalMessage = err.message;
-			this.modalImage = "X";
+			this.modalImage = this.ERROR_IMAGE;
 			this.showModal = true;
 			this.loaded = true;
 		});
@@ -492,17 +498,18 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				let parsedRes = JSON.parse(resp);
 				if (parsedRes.success) {
 					this.modalMessage = parsedRes.message;
+					this.modalImage = this.CHECKED_IMAGE;
 					this.refreshInfo();
 				} else {
 					this.modalMessage = parsedRes.message;
-					this.modalImage = "X";
+					this.modalImage = this.ERROR_IMAGE;
 					this.loaded = true;
 				}
 				this.showModal = true;
 			})
 			.catch(err => {
 				this.modalMessage = err.message;
-				this.modalImage = "X";
+				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 				this.loaded = true;
 			});
@@ -518,17 +525,18 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				let parsedRes = JSON.parse(resp);
 				if (parsedRes.success) {
 					this.modalMessage = "Thank you for your request. IATA will contact you shortly.";
+					this.modalImage = this.CHECKED_IMAGE;
 					this.refreshInfo();
 				} else {
 					this.modalMessage = parsedRes.message;
-					this.modalImage = "X";
+					this.modalImage = this.ERROR_IMAGE;
 					this.loaded = true;
 				}
 				this.showModal = true;
 			})
 			.catch(err => {
 				this.modalMessage = err.message;
-				this.modalImage = "X";
+				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 				this.loaded = true;
 			});
@@ -893,10 +901,11 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		facilityCopy = facilityCopy.replace(/null/g, '""');
 		const differencesDetected = rawFacilityCopy != facilityCopy;
 		const isPrivateArea = this.areatype === "private";
-		return (this.contactInfoValid && this.overviewValid && differencesDetected && isPrivateArea) || this.isSaveActionCapabMangemnt;
+		return (this.contactInfoValid && this.overviewValid && differencesDetected && isPrivateArea) || this.isSaveActionCapabMangemnt || this.isSaveGeoLocation;
 	}
 
 	handleSaveChanges() {
+
 		let saveBtn = this.template.querySelector('[data-tosca="saveBtn"]');
 		if(saveBtn){
 			const btnClasses = saveBtn.classList.value;
@@ -942,12 +951,14 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		let jsonInput = JSON.stringify(objToSave);
 
 		this.loaded = false;
-		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject) })
+		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject), geoLocationInfo: JSON.stringify(this.geoLocationInfoObject) })
 			.then(response => {
 				if (response.result.status == "OK") {
 					this.showToast("Success", "Facility information successfully saved", "success");
-					if(this.facilityid){
-						this.getData(this.facilityid);
+
+					let facilityId = this.facilityid ? this.facilityid : this.facility.Id;
+					if(facilityId){
+						this.getData(facilityId);
 						if(this.logoInfoObject){
 							this.editOn = false;
 						}
@@ -978,7 +989,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	hideBarCancelSave(){
 		this.isSaveCapabMangmn=false;
+		this.isSaveGeoLocation = false;
 		this.isSendActionToCancel=true;
+		this.geoLocationInfoObject = undefined;
 	}
 
 	cancelChanges() {
@@ -1145,6 +1158,32 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	get isAlreadyRequested() {
 		return this.userRole === 'Pending Facility Manager' || this.userRole === 'Pending Company Admin'; 
+	}
+
+	setGeocoordinates(event) {
+		if(!event.detail.initialization){
+			let updatedLatitude = event.detail.latitude;
+			let updatedLongitude = event.detail.longitude;
+
+			if(this.geoLocationInfoObject && 
+				this.geoLocationInfoObject.longitude != updatedLongitude && 
+				this.geoLocationInfoObject.latitude != updatedLatitude){
+					this.isSaveGeoLocation = true;
+				}
+
+			this.geoLocationInfoObject = {
+				companyId: this.facility.companyId,
+				longitude: updatedLongitude,
+				latitude: updatedLatitude
+			}
+		}
+		
+		
+		
+	}
+
+	get addressGeo(){
+		return this.facility && this.facility.location && this.facility.location.location ? this.facility.location.location : null;
 	}
 
 }

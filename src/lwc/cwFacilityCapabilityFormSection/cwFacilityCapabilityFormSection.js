@@ -1,5 +1,6 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import resources from "@salesforce/resourceUrl/ICG_Resources";
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class cwFacilityCapabilityFormSection extends LightningElement {
     icons = resources + "/icons/";
@@ -11,19 +12,23 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
     @api siteclass;
     initialized = false;
     @track showModalFields = false;
+    @track categoryUpdated;
+    @api appliedFiltersCount;
 
-    @track _capability;
+    @track capabilityField;
 
     @api
     get capability() {
-        return this._capability;
+        return this.capabilityField;
     }
     set capability(value) {
-        this._capability = JSON.parse(JSON.stringify(value));
+        this.capabilityField = JSON.parse(JSON.stringify(value));
         this.initialized = false;
         this.updateElementClasses();
     }
 
+    @wire(getEnvironmentVariables, {})
+    environmentVariables;
 
     renderedCallback() {
         if (this.initialized === true) {
@@ -90,7 +95,16 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
     onClickEquipment(event) {
         event.stopPropagation();
         let evEquipment = event.currentTarget;
+        
+        if (!this.reachedLimit){
+            this.clickEquipment(evEquipment);
+        }
+        else if (this.reachedLimit && evEquipment.selected){
+            this.clickEquipment(evEquipment);
+        }
+    }
 
+    clickEquipment(evEquipment){
         evEquipment.classList.toggle('itemUnselected');
         evEquipment.classList.toggle('itemSelected');
         evEquipment.selected = !evEquipment.selected;
@@ -110,7 +124,13 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
             }
         })
         this.capability = JSON.parse(JSON.stringify(temporalCapability));
-        this.dispatchEvent(new CustomEvent('updatecategory', { detail: categoryUpdated}));
+
+        if(this.siteclass === 'advance'){
+            this.dispatchEvent(new CustomEvent('updatecategory', { detail: categoryUpdated}));
+        }
+        else{
+            this.categoryUpdated = categoryUpdated;
+        }
     }
 
     launchEventEquipmentSelected(evEquipment) {
@@ -140,15 +160,17 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
         let evEquipment = event.currentTarget;
         evEquipment.moreDetails = !evEquipment.moreDetails;
         this.initialized = false;
-
-        Object.keys(this.capability).forEach(element => {
-            Object.keys(this.capability[element]).forEach(category => {
-                if (this.capability[element][category].name === evEquipment.getAttribute("data-tosca")) {
-                    this.capability[element][category].moreDetails = true;
-                }
-            })
-        })
+        this.updateMoreDetails(evEquipment.getAttribute("data-tosca"));
         this.showModalFields = true;
+    }
+
+    updateMoreDetails(name){
+        let capabilityCopy = JSON.parse(JSON.stringify(this.capability));
+        capabilityCopy.categories.forEach(category => {
+            category.moreDetails = category.name === name;
+        })
+        this.capability = JSON.parse(JSON.stringify(capabilityCopy));
+
     }
 
     get gesiteclass() {
@@ -167,14 +189,16 @@ export default class cwFacilityCapabilityFormSection extends LightningElement {
         return mrglbl;
     }
 
-    closeModalFields(event) {
+    closeModalFields() {
         this.showModalFields = false;
-        let updatedCategory = event.detail.updatedCategory;
 
-        this.capability.categories.forEach(category => {
-            if(category.name === updatedCategory.name) {
-                category.moreDetails = false;
-            }
-        })
+        if(this.categoryUpdated){
+            this.dispatchEvent(new CustomEvent('updatecategory', { detail: this.categoryUpdated}));
+        }
+        
     }
+
+    get reachedLimit(){
+		return  this.appliedFiltersCount >= this.environmentVariables.data.max_filters_allowed__c;
+	}
 }

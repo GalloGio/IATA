@@ -50,10 +50,10 @@
             <value>0</value>
         </criteriaItems>
         <criteriaItems>
-            <column>ICG_Capability_Assignment_Group__c.Is_Deprecated__c</column>
+            <column>ICG_Capability_Assignment_Group__c.Is_Active__c</column>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>0</value>
+            <value>1</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>

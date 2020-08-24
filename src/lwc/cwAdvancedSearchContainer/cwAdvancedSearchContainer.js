@@ -3,8 +3,8 @@ import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import { loadScript } from "lightning/platformResourceLoader";
 import { removeFromArray, removeGenericItemFromList, prepareSearchObjectFEICategories, prepareSearchParams } from "c/cwUtilities";
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
-const MAX_FILTERS_ALLOWED = 25;
 let lstLocationTypes = {};
 let lstLocations = [];
 let lstValidationPrograms = [];
@@ -25,6 +25,9 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 		}
 	}
 
+	@wire(getEnvironmentVariables, {})
+	environmentVariables;
+	
 	connectedCallback(){
 		lstLocationTypes = {};
 		lstLocations = [];
@@ -92,8 +95,13 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 
 	updateAndCheckFiltersLimitReached() {
 		this.filtersApplied = this.getFilters();
-		this.allowSearch = this.filtersApplied.length <= MAX_FILTERS_ALLOWED;
+		this.allowSearch = this.filtersApplied.length < this.environmentVariables.data.max_filters_allowed__c;
 	}
+
+	get filtersAppliedLength(){
+		return this.filtersApplied.length;
+	}
+
 	setSelectedPrograms(event) {
 		const programInput = event.detail;
 
@@ -268,4 +276,17 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 		}
 		return searchList;
 	}
+
+	get shouldDisableSearchBtn(){
+		return !this.allowSearch;
+	}
+
+	get mainBoxesClass(){
+		let boxClass = "row-no-margin mt-4r";
+		if(!this.allowSearch){
+			boxClass = "row-no-margin mt-6r";
+		}
+		return boxClass;
+	}
+	
 }

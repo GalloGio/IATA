@@ -75,17 +75,12 @@ export default class CwScheduleAudits extends LightningElement {
         this.selectedFacility = null;
     }
     checkFormFields() {
-        const inputValid = [...this.template.querySelectorAll('input')]
-            .reduce((validSoFar, inputCmp) => {
-                if (validSoFar) inputCmp.reportValidity();
-                return validSoFar && inputCmp.checkValidity();
-            }, true);
         const selectValid = [...this.template.querySelectorAll('select')]
             .reduce((validSoFar, inputCmp) => {
                 if (validSoFar) inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        return inputValid && selectValid;
+        return  selectValid;
     }
     bookAudits() {
         if (this.checkFormFields() && this.template.querySelectorAll('input:checked') && this.template.querySelectorAll('input:checked').length > 0) {

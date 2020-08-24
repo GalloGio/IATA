@@ -73,7 +73,7 @@
     <template if:true={openConfirm}>
         <c-cw-intermediate-modal onclosemodal={handleCancel}>
             <div class="col-12 text-center">
-                <h3>{label.are_you_sure}&nbsp;<label class="lowercase">{label.icg_to}</label>&nbsp;{action}&nbsp;{facilityName}&nbsp;{label.station}?</h3>
+                <h3>{confirmMessage}</h3>
                 <button type="button" class="btn btn-primary-blue mr-2" data-tosca="backduplicatert" onclick={handleCancel}>{label.no}</button>
                 <button type="button" class="btn btn-primary ml-2" data-tosca="backduplicatert" onclick={handleConfirmDialogYes}>{label.yes}</button>              
             </div>

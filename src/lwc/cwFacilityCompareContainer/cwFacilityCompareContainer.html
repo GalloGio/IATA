@@ -1,10 +1,10 @@
 <template>
 
 	<div class="col-12 text-center">
-        <c-cw-spinner width="25%" if:false={isDataLoaded} position="position-relative"></c-cw-spinner>
+        <c-cw-spinner width="25%" if:true={isLoading} position="position-relative"></c-cw-spinner>
     </div>
     
-	<template if:true={isDataLoaded}>
+	<template if:false={isLoading}>
 		<div class="container container-search">
 
 			<!-- Header cards - Facility data header -->
@@ -17,8 +17,8 @@
 
 							<!-- Facility data -->
 							<div if:true={facility.Id} class="slds-theme_default result-card border-card">
-								<div class="row">
-									<div class="col-12 text-right"> <span class="cursor-pt"
+								<div key={facility.Id} class="row">
+									<div key={facility.Id} class="col-12 text-right"> <span class="cursor-pt"
 											onclick={handleRemoveItemFromComparison} data-item-id={facility.Id}><img
 												class="width-15" src={icons.close} /></span></div>
 								</div>
@@ -96,112 +96,114 @@
 			<div class="row mb-4">
 
 				<!-- Super Category Loop -->
-				<template iterator:it_supercategory={comparisonSchema.superCategories}>
+				<template if:true={comparisonSchema}>
+					<template  iterator:it_supercategory={comparisonSchema.superCategories}>
 
-					<!-- Super Category -->
-					<div key={it_supercategory.value.frontKey} data-item={it_supercategory.value.key} class="col-6 col-no-padding-left mt-3">
-						<h4><b>{it_supercategory.value.label}</b></h4>
-						<hr class="yellow-underline-150">
-					</div>
+						<!-- Super Category -->
+						<div key={it_supercategory.value.frontKey} data-item={it_supercategory.value.key} class="col-6 col-no-padding-left mt-3">
+							<h4><b>{it_supercategory.value.label}</b></h4>
+							<hr class="yellow-underline-150">
+						</div>
 
-					<div key={it_supercategory.value.key} class="col-3 col-no-padding middle-facility"></div>
-					<div key={it_supercategory.value.key} class="col-3 col-no-padding"></div>
-
-
-					<!-- Sections Loop -->
-					<template iterator:it_section={it_supercategory.value.sections}>
-
-						<!-- Record Type Lopp -->
-						<template iterator:it_rt={it_section.value.rts}>
-
-							<!-- Record Type Header -->
-							<div key={it_rt.value.name} data-item={it_rt.value.name} class="col-6 col-no-padding m-auto">
-								<p class="category-toggle">
-									<b>{it_rt.value.label}&nbsp;&nbsp;</b>
-									<lightning-icon class="cursor-pt" icon-name="utility:chevronup" size="x-small"
-										onclick={showHideContentRt} data-key-to-search={it_rt.value.name}>
-									</lightning-icon>
-								</p>
-								<c-cw-simple-tooltip key={it_rt.value.name} item-id={it_rt.value.name} tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
-							</div>
-
-							<div key={it_rt.value.name} class="col-3 col-no-padding col-design middle-facility">
-							</div>
-							<div key={it_rt.value.name} class="col-3 col-no-padding col-design"></div>
+						<div key={it_supercategory.value.key} class="col-3 col-no-padding middle-facility"></div>
+						<div key={it_supercategory.value.key} class="col-3 col-no-padding"></div>
 
 
-							<!-- Comparison Data -->
-							<div key={it_rt.value.name} data-key={it_rt.value.name}
-								class="row-no-margin-left col-12 col-no-padding">
+						<!-- Sections Loop -->
+						<template iterator:it_section={it_supercategory.value.sections}>
 
-								<!-- Category Loop -->
-								<template iterator:it_category={it_rt.value.categories}>
+							<!-- Record Type Lopp -->
+							<template iterator:it_rt={it_section.value.rts}>
 
-									<!-- Equipment Loop -->
-									<template iterator:it_equipment={it_category.value.equipments}>
+								<!-- Record Type Header -->
+								<div key={it_rt.value.name} data-item={it_rt.value.name} class="col-6 col-no-padding m-auto">
+									<p class="category-toggle">
+										<b>{it_rt.value.label}&nbsp;&nbsp;</b>
+										<lightning-icon class="cursor-pt" icon-name="utility:chevronup" size="x-small"
+											onclick={showHideContentRt} data-key-to-search={it_rt.value.name}>
+										</lightning-icon>
+									</p>
+									<c-cw-simple-tooltip key={it_rt.value.name} item-id={it_rt.value.name} tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+								</div>
 
-										<!-- Rows Loop -->
-										<template if:true={it_equipment.value.rows} iterator:it_row={it_equipment.value.rows}>
-											<div if:true={it_row.value.info} key={it_row.value.frontKey}
-												class={it_row.value.rowCss} data-is-first={it_row.value.isFirst} data-key={it_row.value.info.key}>
+								<div key={it_rt.value.name} class="col-3 col-no-padding col-design middle-facility">
+								</div>
+								<div key={it_rt.value.name} class="col-3 col-no-padding col-design"></div>
 
-												<!-- Equipment and fields -->
-												<div class="col-3 col-no-padding">
-													<div class={it_row.value.info.cssClass}>
-														<!-- First Column - Equipment -->
-														<template if:true={it_row.first}>
-															<lightning-icon class="cursor-pt"
-																icon-name="utility:add" size="x-small"
-																onclick={showHideContentEquipment}
-																data-key-to-search={it_row.value.info.key}>
-															</lightning-icon>
-															&nbsp;&nbsp;
-														</template>
-														<template if:true={it_row.value}>
-															<c-cw-html-tag-generator is-header="true"
-																key={it_row.value.frontKey}
-																label={label}
-																if:true={it_row.value.info} view-type="comparison-facility-view"
-																item={it_row.value.info} property-name="label"
-																aux-type={it_row.value.info.auxType}
-																row-index={it_row.index}>
-															</c-cw-html-tag-generator>
-														</template>
-													</div>
-												</div>
 
-												<!-- Comparison data -->
-												<template if:true={it_row.value.values}
-													iterator:it_row_value={it_row.value.values}>
-													<div key={it_row_value.value.frontKey}
-														class={it_row_value.value.valueCss}>
-														<div class={it_row.value.info.cssClassFacility}>
-															<template if:true={it_row_value.value}>
-																<c-cw-html-tag-generator 
-																	key={it_row_value.value.frontKey}
+								<!-- Comparison Data -->
+								<div key={it_rt.value.name} data-key={it_rt.value.name}
+									class="row-no-margin-left col-12 col-no-padding">
+
+									<!-- Category Loop -->
+									<template iterator:it_category={it_rt.value.categories}>
+
+										<!-- Equipment Loop -->
+										<template iterator:it_equipment={it_category.value.equipments}>
+
+											<!-- Rows Loop -->
+											<template if:true={it_equipment.value.rows} iterator:it_row={it_equipment.value.rows}>
+												<div if:true={it_row.value.info} key={it_row.value.frontKey}
+													class={it_row.value.rowCss} data-is-first={it_row.value.isFirst} data-key={it_row.value.info.key}>
+
+													<!-- Equipment and fields -->
+													<div class="col-3 col-no-padding">
+														<div class={it_row.value.info.cssClass}>
+															<!-- First Column - Equipment -->
+															<template if:true={it_row.first}>
+																<lightning-icon class="cursor-pt"
+																	icon-name="utility:add" size="x-small"
+																	onclick={showHideContentEquipment}
+																	data-key-to-search={it_row.value.info.key}>
+																</lightning-icon>
+																&nbsp;&nbsp;
+															</template>
+															<template if:true={it_row.value}>
+																<c-cw-html-tag-generator is-header="true"
+																	key={it_row.value.frontKey}
 																	label={label}
-																	item={it_row_value.value}
-																	property-name={it_row.value.info.name}
+																	if:true={it_row.value.info} view-type="comparison-facility-view"
+																	item={it_row.value.info} property-name="label"
+																	aux-type={it_row.value.info.auxType}
 																	row-index={it_row.index}>
 																</c-cw-html-tag-generator>
 															</template>
 														</div>
 													</div>
-												</template>
 
-												<!-- Separator Row -->
-												<div class="col-6 col-no-padding"> </div>
-												<div class="col-3 col-no-padding middle-facility equipment-separator"> &nbsp;</div>
-												<div class="col-3 col-no-padding"></div>
-											</div>
+													<!-- Comparison data -->
+													<template if:true={it_row.value.values}
+														iterator:it_row_value={it_row.value.values}>
+														<div key={it_row_value.value.frontKey}
+															class={it_row_value.value.valueCss}>
+															<div class={it_row.value.info.cssClassFacility}>
+																<template if:true={it_row_value.value}>
+																	<c-cw-html-tag-generator 
+																		key={it_row_value.value.frontKey}
+																		label={label}
+																		item={it_row_value.value}
+																		property-name={it_row.value.info.name}
+																		row-index={it_row.index}>
+																	</c-cw-html-tag-generator>
+																</template>
+															</div>
+														</div>
+													</template>
+
+													<!-- Separator Row -->
+													<div class="col-6 col-no-padding"> </div>
+													<div class="col-3 col-no-padding middle-facility equipment-separator"> &nbsp;</div>
+													<div class="col-3 col-no-padding"></div>
+												</div>
 
 
+											</template>
 										</template>
 									</template>
-								</template>
-							</div>
-						</template><!-- Record Type Lopp -->
-					</template><!-- Section Loop -->
+								</div>
+							</template><!-- Record Type Lopp -->
+						</template><!-- Section Loop -->
+					</template>
 				</template>
 			</div>
 		</div>

@@ -6,16 +6,16 @@
     <p style="margin-top: 25px; line-height: 1.8rem;">Manage Request:</p>
     <table border="0" cellpadding="10" cellspacing="10">
         <tr>
-            <td><a href="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/s/private-area?approveRemoveContactRole=aDD3N0000004CepWAE" style="cursor: pointer;"><img src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/img/approve.PNG" /></a></td>
+            <td><a href="{!approveUrl}" style="cursor: pointer;"><img src="{!communityUrlForResources}resource/ICG_Resources/img/approve.PNG" /></a></td>
             <td>
-                <a href="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/s/private-area?rejectRemoveContactRole=aDD3N0000004CepWAE" style="cursor: pointer;"><img src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/img/reject.PNG" /></a>
+                <a href="{!rejectUrl}" style="cursor: pointer;"><img src="{!communityUrlForResources}resource/ICG_Resources/img/reject.PNG" /></a>
             </td>
         </tr>
     </table>
     <table border="0" cellpadding="10" cellspacing="10">
         <tr>
             <td>
-                <a style="cursor: pointer;"><img src="https://nextlink2-customer-portal-iata.cs128.force.com/onesource/resource/ICG_Resources/img/replytorequest.PNG" /></a>
+                <a style="cursor: pointer;"><img src="{!communityUrlForResources}resource/ICG_Resources/img/replytorequest.PNG" /></a>
             </td>
         </tr>
     </table>

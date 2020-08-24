@@ -30,10 +30,19 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 	@api recordId = "";
 	@api certificationMode = false;
-	@api ardCertId;
-	@api certificationName = "";
+	@api certificationName = '';
+	@api groupId = "";
 
-	_isCapabCertiMode=false;
+	newCertification={};
+	@api
+	get jsonCertification(){
+		return this.newCertification;
+	}
+	set jsonCertification(value){
+		this.newCertification = JSON.parse(value);		
+	}
+
+	_isCapabCertiMode;
 	@api
 	get isCapabCertiMode(){
 		return this._isCapabCertiMode;
@@ -65,6 +74,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	@track existsRows;
 	@track rowSelected="";
 	@track listAddedRows = [];
+	@track listNewRows = [];
+	listPreviuosRows = [];
 	addAllRowsPrevious = false;
 	listPositionsRow = [];
 	rowIndexPhotoSelected;
@@ -121,7 +132,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	get isSaveOption(){
-		return (this.listAddedRows.length > 0) || (this.getCertificationMode && this.getStatusEditMode);
+		return this.getStatusEditMode;
 	}
 
 	get isNotEditable(){
@@ -339,6 +350,68 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.setSummaryDetailCheckJSON(this.recordId, JSON.stringify(item2));
 	}
 
+	calculateSpacesSticky(){
+		let editingBtn = this.template.querySelectorAll('.width-150');
+
+		
+
+
+
+
+		let certheaders = this.template.querySelectorAll('.cert-colum-head');
+		if (certheaders && certheaders.length > 0) {
+			certheaders.forEach(certheader => {
+				if(editingBtn.length > 0){
+					certheader.style.right = "150px";
+				}else{
+					certheader.style.right = "0px";
+				}
+				
+			});
+		}
+
+		let photoheaders = this.template.querySelectorAll('.photo-colum-head');
+		if (photoheaders && photoheaders.length > 0) {
+			photoheaders.forEach(photoheader => {
+				let certheader = photoheader.nextElementSibling;
+				let widthcertheader = certheader.clientWidth;
+				if(editingBtn.length > 0){
+					photoheader.style.right = widthcertheader + 150 + "px";
+				}else{
+					photoheader.style.right = widthcertheader + "px";
+				}
+				
+			});
+		}
+		let photocells = this.template.querySelectorAll('.photo-colum');
+		if (photocells && photocells.length > 0) {
+			photocells.forEach(photocell => {
+				let certcell = photocell.nextElementSibling;
+				let widthcertcell = certcell.clientWidth;
+				if(editingBtn.length > 0){
+					photocell.style.right = widthcertcell + 150 + "px";
+				}else{
+					photocell.style.right = widthcertcell + "px";
+				}
+			});
+		}
+		let certcells = this.template.querySelectorAll('.cert-colum');
+		if (certcells && certcells.length > 0) {
+			certcells.forEach(certcell => {
+				if(editingBtn.length > 0){
+					certcell.style.right = "150px";
+				}else{
+					certcell.style.right = "0px";
+				}
+				
+			});
+		}
+
+		
+
+
+	}
+
 	renderedCallback() {
 		if (!this.initialized) {
 			this.initialized = true;
@@ -351,79 +424,21 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				}
 				this.editMode = edit;			
 				this.checkCapabilities();
-			})			
+			})	
+			
+			
 		}
-
-		let certheaders = this.template.querySelectorAll('.cert-colum-head');
-		if (certheaders && certheaders.length > 0) {
-			certheaders.forEach(certheader => {
-				let actionheader = certheader.nextElementSibling;
-				if(actionheader){
-					let widthactionheader = actionheader.clientWidth;
-					certheader.style.right = widthactionheader + "px";
-				}else{
-					certheader.style.right = "0px";
-				}
-				
-			});
-		}
-
-		let certcells = this.template.querySelectorAll('.cert-colum');
-		if (certcells && certcells.length > 0) {
-			certcells.forEach(certcell => {
-				let actioncell = certcell.nextElementSibling;
-				if(actioncell){
-					let widthactioncell = actioncell.clientWidth;
-					certcell.style.right = widthactioncell + "px";
-				}else{
-					certcell.style.right = "0px";
-				}
-				
-			});
-		}
-
-
-
-
-		let photoheaders = this.template.querySelectorAll('.photo-colum-head');
-		if (photoheaders && photoheaders.length > 0) {
-			photoheaders.forEach(photoheader => {
-				let certheader = photoheader.nextElementSibling;
-				let widthcertheader = certheader.clientWidth;
-				let actionheader = certheader.nextElementSibling;
-				if(actionheader){
-					let widthactionheader = actionheader.clientWidth;
-					photoheader.style.right = widthactionheader + widthcertheader + "px";
-				}else{
-					photoheader.style.right = widthcertheader + "px";
-				}
-				
-			});
-		}
-
-		let photocells = this.template.querySelectorAll('.photo-colum');
-		if (photocells && photocells.length > 0) {
-			photocells.forEach(photocell => {
-				let certcell = photocell.nextElementSibling;
-				let widthcertcell = certcell.clientWidth;
-				let actioncell = certcell.nextElementSibling;
-				if(actioncell){
-					let widthactioncell = actioncell.clientWidth;
-					certcell.style.right = widthcertcell + widthactioncell + "px";
-				}
-				photocell.style.right = widthcertcell + "px";
-			});
-		}
+		this.calculateSpacesSticky();
 	}
 	
 	checkCapabilities(){
 		if(this.editMode === true){
 			this.labelButtonAddRowsToList = this.getisCapabCertiMode || !this.getCertificationMode ? this.label.icg_capab_magmnt_edit_capab : this.label.icg_capab_magmnt_mantain_prev;
 			if (this.getCertificationMode) {								
-				this.getCapabilitiesFromCertification(this.recordId, this.ardCertId);
+				this.getCapabilitiesFromCertification(this.recordId, this.newCertification.ICG_Certification__c, this.groupId);
 			}
 			else { 
-				this.getCapabilitiesFromCertification(this.recordId, null);
+				this.getCapabilitiesFromCertification(this.recordId, null, null);
 			}
 			
 			Promise.all([
@@ -437,8 +452,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		}
 	}
 
-	getCapabilitiesFromCertification(id, ardCertId , isCapabCertiMode) { 
-		getCapabilitiesForFacilityCertificationId({id,ardCertId, isCapabCertiMode}).then(result => {
+	getCapabilitiesFromCertification(id, certiId, groupId) { 
+		getCapabilitiesForFacilityCertificationId({id, certiId, groupId}).then(result => {
 			this.data = result;
 			this.existsRows = this.getexistsRows();
 			// Creates the event with the data and dispatches.
@@ -506,6 +521,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			value:""
 		};
 		let containField=false;
+		//update list to update
 		this.listAddedRows.forEach(function(element) {
 			if(element.equipment_value === data.equipment && element.position.toString() === data.rowIndex){ 
 				element.fields.forEach(field => {
@@ -530,39 +546,55 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.loading=true;
 		if(this.addAllRowsPrevious === true){
 			let listPositionsRow = [];
+			let groupId = this.groupId;
+			let isTabEditCapabilities = this.getCertificationMode;
 			this.data.superCategories.forEach(function(superCategory,i) {
 				superCategory.sections.forEach(function(section,j) {
-						section.capabilities.forEach(function(capability,k){
-							capability.categories.forEach(function(category,l){
-									category.rows.forEach(function(row,m){
-										if(row.isAssigned === false && row.isPeviouslyCertified === true){
-											
-											let positionRow = {
-												superCategoriesIndex: i,
-												sectionIndex: j,
-												capabilityIndex: k,
-												categoryIndex: l,
-												rowIndex:m
-											}
-											listPositionsRow.push(positionRow);
-										}																									
-									});
+					section.capabilities.forEach(function(capability,k){
+						capability.categories.forEach(function(category,l){
+							category.rows.forEach(function(row,m){
+								row.certifications.forEach(function(cert,n){
+									if((row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) ||
+									(row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && !isTabEditCapabilities)){
+									
+										let positionRow = {
+											superCategoriesIndex: i,
+											sectionIndex: j,
+											capabilityIndex: k,
+											categoryIndex: l,
+											rowIndex:m
+										}
+
+										let toFind = listPositionsRow.filter(
+											row => (row.superCategoriesIndex === positionRow.superCategoriesIndex && row.sectionIndex === positionRow.sectionIndex && 
+											row.capabilityIndex === positionRow.capabilityIndex && row.categoryIndex === positionRow.categoryIndex && 
+											row.rowIndex === positionRow.rowIndex)
+										);
+										if (toFind.length === 0) {
+											listPositionsRow.push(positionRow);													
+										}
+									}	
+								});
+																																
 							});
+						});
 					});							
 				});
 			});
-			this.listPositionsRow = listPositionsRow;
+			this.listPositionsRow = listPositionsRow;	
+					
 			this.operationCapabilities('assign');
 		}
 		else{
 			this.operationCapabilities('deallocate');
 		}
 		
+		this.calculateSpacesSticky();
 	}
 
 
 	operationCapabilities(action){
-		
+	
 		if(action === 'assign'){
 			this.listPositionsRow.forEach(elem =>{
 				let listDataRow = this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].categories[elem.categoryIndex].rows;
@@ -574,7 +606,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 				let newCapabilityRow = {
 					id: row.id,
-					position: elem.rowIndex,
+					position: elem.rowIndex.toString(),
 					rtypeId: this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].rtypeId,
 					category: this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].categories[elem.categoryIndex].value,
 					equipment_value: row.equipment_value,
@@ -588,7 +620,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					fieldsByColumns.forEach(element => {
 						let newField = {
 							field: element.name,
-							value: (row[element.name] != '' && row[element.name] != null && row[element.name] != undefined) ? row[element.name] : '',
+							value: (row[element.name] != '' && row[element.name] != null && row[element.name] != undefined) ? element.type === 'MULTIPICKLIST' ? row[element.name].join(';') :  row[element.name] : '',
 							label: element.label,
 							required: row.requiredFields.includes(element.name)
 						}
@@ -597,6 +629,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 						this.listAddedRows.push(newCapabilityRow);	
 					
 			});
+			this.listPreviuosRows = this.listAddedRows.map((x) => x);
+			
 		}
 
 		if(action === 'deallocate'){
@@ -660,7 +694,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			this.rowSelected = listDataRow[rowIndex];
 
 			let newCapabilityRow = {
-				position: rowIndex,
+				position: rowIndex.toString(),
 				id: this.rowSelected.id,
 				rtypeId: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].rtypeId,
 				category: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].value,
@@ -688,7 +722,16 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					
 				});
 
-				this.listAddedRows.push(newCapabilityRow);			
+				// let rowTofind = this.listPreviuosRows.filter(
+				// 	row => (row.category === newCapabilityRow.category && row.equipment_value === newCapabilityRow.equipment_value && row.position === newCapabilityRow.position )
+				// );
+				// if (rowTofind.length === 0) {
+				// 	this.listNewRows.push(newCapabilityRow);
+				// }
+				// else{
+				// 	this.listAddedRows.push(newCapabilityRow);
+				// }
+				this.listAddedRows.push(newCapabilityRow);
 				
 			}
 
@@ -703,14 +746,22 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				let index = 0;
 
 				this.listAddedRows.forEach(element => {
-					if(element.equipment_value === newCapabilityRow.equipment_value){
+					if(element.equipment_value === newCapabilityRow.equipment_value && element.position === rowIndex.toString()){
 						this.listAddedRows.splice(index,1);
 					}	
 					index++;			
-				});		
+				});	
 				
+				let indexRowFind;
+				this.listNewRows.forEach(function(row,n){
+					if(row.category === newCapabilityRow.category && row.equipment_value === newCapabilityRow.equipment_value && row.position === newCapabilityRow.position){
+						indexRowFind = n;
+					}
+				});
+				this.listNewRows.splice(indexRowFind,1);				
 			}
 		}
+
 	}
 
 	get checkRequiredFields(){
@@ -763,7 +814,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		else{
 			this.openModal(this.headerCapabManagement);
 		}
-		
+	
 	}
 	
 	cancelCapabilities(){
@@ -798,9 +849,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.showModal = false;
 	}
 
-	createRelationshipsForNewCapabilities(accRoleDet,ardCertId, listAddedRows)
+	createRelationshipsForNewCapabilities(accRoleDet,certiId, listAddedRows, jsonCertification)
 	{
-		createRelationshipsForNewCapabilities_({accRoleDet, ardCertId , listAddedRows})
+		createRelationshipsForNewCapabilities_({accRoleDet, certiId , listAddedRows, jsonCertification})
 		.then(res => {
 			let result = JSON.parse(res);
 			if(result.success)
@@ -824,9 +875,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		});
 	}
 
-	updateCapabilitiesEdited(accRoleDet,ardCertId,listAddedRows)
+	updateCapabilitiesEdited(accRoleDet,groupId,listAddedRows)
 	{
-		updateCapabilitiesEdited_({accRoleDet,ardCertId,listAddedRows})
+		updateCapabilitiesEdited_({accRoleDet,groupId,listAddedRows})
 		.then(res => {
 			let result = JSON.parse(res);
 			if(result.success)
@@ -855,18 +906,22 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		
 		if(this.actionToExecute.action === 'save' && this.actionToExecute.result)
 		{
-			if(this.listAddedRows.length>0){
+
 				this.loading = true;
-				if(this.getisCapabCertiMode || !this.getCertificationMode){
-					this.updateCapabilitiesEdited(this.recordId,this.ardCertId,this.listAddedRows);
+				//Option Edit Capabilities in Capabilities Tab
+				if(!this.getCertificationMode){
+					this.updateCapabilitiesEdited(this.recordId,null,this.listAddedRows);
 				}
-				else{					
-					this.createRelationshipsForNewCapabilities(this.recordId,this.ardCertId,this.listAddedRows);
-				}				
-			}
-			else{
-				this.closeCapabilitiesTab();
-			}
+				else{
+					//Option Edit Capabilities
+					if(this.getisCapabCertiMode){
+						this.updateCapabilitiesEdited(this.recordId,this.groupId,this.listAddedRows);
+					}				
+					else{//Option Create o Renew
+						this.createRelationshipsForNewCapabilities(this.recordId,this.newCertification.ICG_Certification__c,this.listAddedRows, JSON.stringify(this.jsonCertification));
+					}	
+				}
+			
 		}
 		if(this.actionToExecute.action === 'delete' && this.actionToExecute.result){
 			this.modalEditPhotos=false;
@@ -874,15 +929,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		}
 		if(this.actionToExecute.action === 'cancel' && this.actionToExecute.result)
 		{
-			if(this.getCertificationMode && !this.getisCapabCertiMode){
-				deleteRecord(this.ardCertId)
-				.then(() => {
-					this.closeCapabilitiesTab();
-				})
-			}
-			else{		
-				this.closeCapabilitiesTab();
-			}	
+			this.closeCapabilitiesTab();
 		}
 		
 	}

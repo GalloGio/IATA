@@ -25,7 +25,7 @@ public without sharing class CW_GxA_Integration_Queueable implements Queueable, 
 		Map<Id, Id> orderProductByOrderId = new Map<Id, Id>();
 		Map<Id, Id> stationByOrderId = new Map<Id, Id>();
 		for (Order currentOrder : [SELECT Id, (SELECT Id, Station__c FROM Orderitems WHERE Station__c != null AND Product2.Smart_Facility_Remote_Validation__c = true) FROM Order WHERE Id IN :orderIdsToProcess]) {
-			if (currentOrder.OrderItems.size() > 0) {
+			if (!currentOrder.OrderItems.isEmpty()) {
 				orderProductByOrderId.put(currentOrder.Id, currentOrder.OrderItems[0].Id);
 				stationByOrderId.put(currentOrder.Id, currentOrder.OrderItems[0].Station__c);
 			}
@@ -75,7 +75,7 @@ public without sharing class CW_GxA_Integration_Queueable implements Queueable, 
 				assignmentIds.add(currentAssignmentGroup.Id);
 			}
 		}
-		if (assignmentIds.size() > 0) {
+		if (!assignmentIds.isEmpty()) {
 			Database.executeBatch(new CW_GxA_Integration_Batch(assignmentIds), 1);
 		}
 	}

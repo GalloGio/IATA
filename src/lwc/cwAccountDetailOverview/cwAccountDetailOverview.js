@@ -7,11 +7,13 @@ export default class CwAccountDetailOverview extends LightningElement {
 	initialized = false;
 	isLoading = false;
 	mainCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3";
+	//The darker filter version
 	disabledFilter = " disabled-filter-dark";
 	textInformationHover = "Information not verified by IATA";
 
 	@track tooltipObject;
 	@track tooltipToDisplay = "";
+	//Define if they are editable fields for the private area or read only for the public part
 	@track editOn = false;
 
 	//icons
@@ -29,6 +31,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	@api saveOnTheFly = false;
 	@api label;
 
+	//Record types of sections
 	numberEmployeesRT = ["Cargo_Handling_Facility", "Freight_Forwarder", "Airline", "Airport_Operator", "Trucker", "Ramp_Handler"];
 	roadFeederRT = ["Airline"];
 	facilitySpaceRT = ["Cargo_Handling_Facility","Freight_Forwarder"];
@@ -99,6 +102,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 		this.updateDataValid(validated);
 	}
 
+	//Update facility data on parent component
 	updateFacilityOnParent() {
 		let customEvent = new CustomEvent("updatefacility", { detail: this.facility });
 		this.dispatchEvent(customEvent);
@@ -162,7 +166,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	}
 
 	get roadFeederCSS() {
-		return this.genericCSS(this.facility.roadFeederServices) + ' editable';
+		return this.genericCSS(this.facility.roadFeederServices);
 	}
 
 	get facilitySpaceCss() {
@@ -170,11 +174,11 @@ export default class CwAccountDetailOverview extends LightningElement {
 	}
 
 	get onAirportCss() {
-		return this.genericCSS(this.facility.IsOnAirport) + ' editable';
+		return this.genericCSS(this.facility.IsOnAirport);
 	}
 
 	get directAccessCss() {
-		return this.genericCSS(this.facility.DirectRampAccess) + ' editable';
+		return this.genericCSS(this.facility.DirectRampAccess);
 	}
 
 	get overallAirportCss() {
@@ -188,6 +192,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 		return this.genericCSS(this.facility.NumberEmployees);
 	}
 
+	//If the data is not available, a filter is applied to disable
 	genericCSS(capability) {
 		return capability ? this.mainCssCapability : this.mainCssCapability + this.disabledFilter;
 	}
@@ -197,6 +202,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 		this.dispatchEvent(customEvent);
 	}
 
+	//Tooltip with extra data only for public part
 	showPopover(event) {
 		if (this.editMode) {
 			return;

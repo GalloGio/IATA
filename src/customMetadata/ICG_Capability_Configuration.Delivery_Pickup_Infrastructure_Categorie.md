@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Delivery_Pickup_Infrastructure;Pre_Arrival_Slot_Booking_Capability;Truck_Parking;Truck_Docking_Gates;Documentation_Counters</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Delivery_Pickup_Infrastructure</value>
     </values>

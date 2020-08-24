@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Live_Animals_Capacities_1;Live_Animals_Capacities_2</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Live_Animals_Capacities</value>
     </values>

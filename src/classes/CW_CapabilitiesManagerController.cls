@@ -1,6 +1,7 @@
 public without sharing class CW_CapabilitiesManagerController {
 	final static String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
 	final static Map<String, List<String>> ESPECIAL_CATEGORIES = CW_FacilityCapabilitiesController.getMapConfig();
+	final static List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
 
 	/**
 	 * @description	Get JSON with ICG_Certification_Capability_Assignment__c filtered by certification Id
@@ -147,6 +148,14 @@ public without sharing class CW_CapabilitiesManagerController {
 							false,
 							true
 						);
+						Boolean isPermission=false;
+						for(Map<String,Object> cert : certifications){
+							if(CERTIFICATIONS_ALLOWED_USER.contains((String)cert.get('name'))){
+								isPermission=true;
+							}
+						}
+						currentObject.put('isPermissionByDepartment',isPermission);
+
 						capabilityGroupRowsFound.add(currentObject);
 					}
 				}
@@ -197,6 +206,7 @@ public without sharing class CW_CapabilitiesManagerController {
 							false,
 							false
 						);
+						currentObject.put('isPermissionByDepartment',true);
 						capabilityGroupRowsFound.add(currentObject);
 					}
 					categoryFound.put('templateFields', currentObject);
@@ -213,15 +223,21 @@ public without sharing class CW_CapabilitiesManagerController {
 
 	/**
 	 * @description	Get Map<String, Object> with Capabilities filtered by account role detail Id and account role detail certification
-	 * @param			id - Account Role Detail and ardCertId - Account Role Detail Certification Id to filter
+	 * @param			id - Account Role Detail and groupId - Account Role Detail Certification Id to filter
 	 * @return			Map<String, Object> with custom estructure that contains information on all capabilities
 	 */
 	@AuraEnabled
-	public static Map<String, Object> getCapabilitiesForFacilityCertificationId(String id, String ardCertId) { 
+	public static Map<String, Object> getCapabilitiesForFacilityCertificationId(String id, String certiId, String groupId) { 
 		Map<String, Object> returnValue = new Map<String, Object>{ CW_CapabilitiesUtilities.SUPERCATEGORIES => new List<Map<String, Object>>() };
-
+		String certificationId='';
 		try {
-			String certificationId = CW_CapabilitiesUtilities.generateCertificationId(ardCertId);
+			if(String.isNotBlank(groupId) && String.isNotEmpty(groupId)){
+				certificationId = CW_CapabilitiesUtilities.generateCertificationId(groupId);
+			}
+			else{
+				certificationId = certiId;
+			}
+			
 			Map<String, Object> prepareCapabilitiesData = CW_CapabilitiesUtilities.prepareCapabilityData(id);
 			Map<String, List<String>> mapCategoriesByRecordTypeDevName = (Map<String, List<String>>) prepareCapabilitiesData.get(CW_CapabilitiesUtilities.MAP_CATEGORIES_BY_RECORDTYPE_DEVNAME);
 			Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById = (Map<Id, RecordType>) prepareCapabilitiesData.get(CW_CapabilitiesUtilities.MAP_ARD_ASSIGNMENT_RTS_BY_ID);
@@ -240,7 +256,7 @@ public without sharing class CW_CapabilitiesManagerController {
 				certificationId,
 				accountRoleDetailFound
 			);
-			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData);
+			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData,true);
 		} catch (Exception e) {
 			returnValue.put('e_getMessage', e.getMessage());
 			returnValue.put('e_getStackTraceString', e.getStackTraceString());
@@ -407,10 +423,10 @@ public without sharing class CW_CapabilitiesManagerController {
 			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
 			String query;
 			if(certificationId != null){
-                query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Deprecated__c = false AND '  + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by ICG_Capability_Assignment_Group__r.ICG_Certification__r.Order__c';
+                query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Active__c = true AND '  + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by ICG_Capability_Assignment_Group__r.ICG_Certification__r.Order__c';
 			}
 			else{//if read all capabilities from station
-				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR +  '.Is_Deprecated__c = false AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by ICG_Capability_Assignment_Group__r.ICG_Certification__r.Order__c';
+				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR +  '.Is_Active__c = true AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by ICG_Capability_Assignment_Group__r.ICG_Certification__r.Order__c';
 			}
 			returnValue = (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(query);
 		}
@@ -467,15 +483,23 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @return			json - result (success,message)
 	 */
 	@AuraEnabled
-	public static String updateCapabilitiesEdited(String accRoleDet, String ardCertId,List<Object> listAddedRows) {
+	public static String updateCapabilitiesEdited(String accRoleDet, String groupId,List<Object> listAddedRows) {
 		ResponseBody res = new ResponseBody();
 		List<Account_Role_Detail_Capability__c> listAccRoleCapabInserted;
 			try {
-				//creation records capabilities
-				listAccRoleCapabInserted = createCapabilities(listAddedRows, true);
-
-				// Modify depreciation flow to allow editing and creation of new assignments
-				// res.success = assignCapabilityAndGroup(accRoleDet, ardCertId, listAccRoleCapabInserted);
+				if(String.isNotBlank(groupId) && String.isNotEmpty(groupId)){
+					//delete all previous assigment
+					res.success = deleteAssigmentPrevious(accRoleDet, groupId,listAddedRows);
+	
+					//creation records capabilities
+					listAccRoleCapabInserted = createCapabilities(listAddedRows, false);
+					// Modify depreciation flow to allow editing and creation of new assignments
+					res.success = assignCapabilityAndGroup(accRoleDet, groupId, listAccRoleCapabInserted);
+				}
+				else{
+					//update records capabilities
+					listAccRoleCapabInserted = createCapabilities(listAddedRows, false);	
+				}
 				res.success = true;
 
 			} catch (Exception e) {
@@ -488,26 +512,33 @@ public without sharing class CW_CapabilitiesManagerController {
 
 	/**
 	 * @description		create relationships for new capabilities certifications
-	 * @param			ardCertId - Account Role Detail Certi Id
+	 * @param			certiId - Account Role Detail Certi Id
 	 * @return			ICG_Capability_Assignment_Group__c Id
 	 */
 	@AuraEnabled
-	public static String createRelationshipsForNewCapabilities(String accRoleDet, String ardCertId, List<Object> listAddedRows) {
+	public static String createRelationshipsForNewCapabilities(String accRoleDet, String certiId, List<Object> listAddedRows, String jsonCertification) {
 		ResponseBody res = new ResponseBody();
 		List<Account_Role_Detail_Capability__c> listAccRoleCapabInserted;
+		ICG_Capability_Assignment_Group__c groupId;
 
-		if (!String.isBlank(ardCertId)) {
+		if (!String.isBlank(certiId)) {
 			try {
+				//create new group
+				groupId = CW_CertificationsManagerController.createCertification(jsonCertification);
+
 				//creation records capabilities
 				listAccRoleCapabInserted = createCapabilities(listAddedRows,false);
 
 				//creation records union AccRoleCapabAssigment for Capability
-				res.success = assignCapabilityAndGroup(accRoleDet, ardCertId, listAccRoleCapabInserted);
+				res.success = assignCapabilityAndGroup(accRoleDet, groupId.id, listAccRoleCapabInserted);
 
-				res.message = ardCertId;
+				res.message = groupId.id;
 			} catch (Exception e) {
 				res.success = false;
-				res.message = e.getMessage();
+				res.message = e.getMessage()+'-'+e.getStackTraceString();
+                if(groupId != null){
+					delete groupId;
+				}
 			}
 		}
 
@@ -520,7 +551,7 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @return			Boolean with result
 	 */
 	@AuraEnabled
-	public static List<Account_Role_Detail_Capability__c> createCapabilities(List<Object> capabilitiesList, Boolean isUpdate) {
+	public static List<Account_Role_Detail_Capability__c> createCapabilities(List<Object> capabilitiesList, Boolean isEditCapabilities) {
 		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
 		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
 		List<Account_Role_Detail_Capability__c> listToInsert = new List<Account_Role_Detail_Capability__c>();
@@ -534,12 +565,11 @@ public without sharing class CW_CapabilitiesManagerController {
 		//Read all capabilities wrapper
 		for (CapabilityWrapper c : listCapWrapper) {
 			SObject sObj = new Account_Role_Detail_Capability__c();
-			if(isUpdate){
-				if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
-					sObj.put('Id', c.id);
-				}				
-			}
 			
+			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id) && !isEditCapabilities){
+				sObj.put('Id', c.id);
+			}
+
 			sObj.put('RecordTypeId', c.rtypeId);
 			sObj.put('Category__c', c.category);
 			sObj.put('Equipment__c', c.equipment_value);						
@@ -575,28 +605,75 @@ public without sharing class CW_CapabilitiesManagerController {
 					}
 				}
 			}
-			Account_Role_Detail_Capability__c parseCapability = (Account_Role_Detail_Capability__c) sObj;
-			listToInsert.add(parseCapability);	
-			
+			Account_Role_Detail_Capability__c parseCapability = (Account_Role_Detail_Capability__c) sObj;		
+			listToInsert.add(parseCapability);
 		}
-		
 		upsert listToInsert;
 
 		return listToInsert;
 	}
 
 	/**
-	 * @description		assign Capability with Group
-	 * @param			accRoleDet - Account Role Detail Id, accRoleCapabId - Account Role Capab Id, capabAssigmenGroup - Capab Assigment Group and ardCertId - Account Role Detail Certi Id
+	 * @description		delete assigment previous of the group
+	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
 	 * @return			Boolean true or false
 	 */
-	private static Boolean assignCapabilityAndGroup(String accRoleDet, String capabAssigmenGroup, List<Account_Role_Detail_Capability__c> listAccRoleCapabId) {
+	private static Boolean deleteAssigmentPrevious(String accRoleDet, String capabAssigmenGroup, List<Object> capabilitiesList) {
 		Boolean result = true;
+		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
+		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
+		Set<Id> currentListId = new Set<Id>();
+
+		//Extract all capabilities from input
+		for (Object capability : capabilitiesList) {
+			CapabilityWrapper c = (CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CapabilityWrapper.class);
+			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
+				currentListId.add(c.id);
+			}	
+		}
+
+		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Id FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Capability_Assignment_Group__c =: capabAssigmenGroup AND ICG_Account_Role_Detail__c =: accRoleDet AND Account_Role_Detail_Capability__c NOT IN : currentListId];
+
+		try {
+			if(assigmentList.size() > 0){
+				delete assigmentList;
+			}
+
+		} catch (Exception e) {
+			result = false;
+		}
+
+		return result;
+	}
+
+	/**
+	 * @description		assign Capability with Group
+	 * @param			accRoleDet - Account Role Detail Id, accRoleCapabId - Account Role Capab Id, capabAssigmenGroup - Capab Assigment Group and groupId - Account Role Detail Certi Id
+	 * @return			Boolean true or false
+	 */
+	private static Boolean assignCapabilityAndGroup(String accRoleDet, String capabAssigmenGroup, List<Account_Role_Detail_Capability__c> listAccRoleCapab) {
+		Boolean result = true;
+		List<Id> listAccRolCapabId = new List<Id>();
 		List<ICG_Account_Role_Capability_Assignment__c> assigment = new List<ICG_Account_Role_Capability_Assignment__c>();
 
-		if (listAccRoleCapabId.size() > 0 && capabAssigmenGroup != null){
-			for (Account_Role_Detail_Capability__c capabToInsert : listAccRoleCapabId) {
-				assigment.add(new ICG_Account_Role_Capability_Assignment__c(Account_Role_Detail_Capability__c = capabToInsert.Id, ICG_Capability_Assignment_Group__c = capabAssigmenGroup, ICG_Account_Role_Detail__c = accRoleDet));
+		for(Account_Role_Detail_Capability__c capabId : listAccRoleCapab){
+			listAccRolCapabId.add(capabId.Id);
+		}
+
+		List<ICG_Account_Role_Capability_Assignment__c> assigmentPrevious = [SELECT Id,Account_Role_Detail_Capability__c FROM ICG_Account_Role_Capability_Assignment__c 
+		WHERE ICG_Capability_Assignment_Group__c =: capabAssigmenGroup AND ICG_Account_Role_Detail__c =: accRoleDet];
+
+		//read all AccRolDetCapabId Previous
+		List<Id> capabAssigmentPreviousId = new List<Id>();
+		for(ICG_Account_Role_Capability_Assignment__c ass : assigmentPrevious){
+			capabAssigmentPreviousId.add(ass.Account_Role_Detail_Capability__c);
+		}
+
+		if (listAccRolCapabId.size() > 0 && capabAssigmenGroup != null){
+			for (Id capabToInsert : listAccRolCapabId) {
+				if(!capabAssigmentPreviousId.contains(capabToInsert)){
+					assigment.add(new ICG_Account_Role_Capability_Assignment__c(Account_Role_Detail_Capability__c = capabToInsert, ICG_Capability_Assignment_Group__c = capabAssigmenGroup, ICG_Account_Role_Detail__c = accRoleDet));
+				}
 			}
 
 			insert assigment;
@@ -690,6 +767,7 @@ public without sharing class CW_CapabilitiesManagerController {
 
 	public class CapabilityFieldsWrapper {
 		public String field;
+		public String label;
 		public String value;
 		public Boolean required;
 

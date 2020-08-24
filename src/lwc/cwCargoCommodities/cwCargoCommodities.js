@@ -1,12 +1,14 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import {
     checkIfDeselectAll,
     checkIfChangeSelectAllText
 } from 'c/cwUtilities';
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 export default class CwCargoCommodities extends LightningElement {
     @api label;
     @track selectedText = 'Select All';
+    @api appliedFiltersCount;
 
     @track commodities = [{
             name: "General Cargo",
@@ -86,6 +88,9 @@ export default class CwCargoCommodities extends LightningElement {
         this.dispatchEvent(new CustomEvent('selectcommodities', { detail: allPrograms }));
     }
 
+    @wire(getEnvironmentVariables, {})
+    environmentVariables;
+
     _selectItems(items) {
         items.forEach(element => {
             element.classList.remove('itemUnselected');
@@ -108,7 +113,7 @@ export default class CwCargoCommodities extends LightningElement {
         let selected;
 
         this.commodities.forEach(element => {
-            if (element.name === name) {
+            if (element.name === name && (!this.reachedLimit || (this.reachedLimit && element.selected))) {
                 element.selected = !element.selected;
                 selectedComodity = [element];
                 selected = element.selected;
@@ -118,18 +123,20 @@ export default class CwCargoCommodities extends LightningElement {
         let items = this.template.querySelectorAll("[data-name='" + name + "']");
 
         if(selected){
-            this._selectItems(items);
+            if (!this.reachedLimit){
+                this._selectItems(items);
+                
+                this.selectedText = checkIfChangeSelectAllText(this.commodities);
+                this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
+            }
         }
         else{
             this._unselectItems(items);
+            
+            this.selectedText = checkIfChangeSelectAllText(this.commodities);
+            this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
         }
-
-        this.selectedText = checkIfChangeSelectAllText(this.commodities);
-
-        this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
     }
-
-
 
     _getCommodities(searchList) {
         Object.keys(this.commodities).forEach(element => {
@@ -145,5 +152,27 @@ export default class CwCargoCommodities extends LightningElement {
             }
         });
         return searchList;
+    }
+
+    get reachedLimit(){
+		return  this.appliedFiltersCount >= this.environmentVariables.data.max_filters_allowed__c;
+    }
+
+    get reachedLimitWithAll(){
+        if (this.commodities){
+            let potentialSelect = 0;
+            this.commodities.forEach(element => {
+                if (!element.selected) {
+                    potentialSelect++;
+                }
+            });
+            return  (this.appliedFiltersCount + potentialSelect) > this.environmentVariables.data.max_filters_allowed__c;
+        }
+    }
+    
+    get selectAllVisible(){
+        if (this.commodities){
+            return !(this.selectedText === "Select All" && this.reachedLimitWithAll);
+        }
     }
 }

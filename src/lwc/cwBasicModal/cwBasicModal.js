@@ -2,13 +2,13 @@ import { LightningElement,api,track } from 'lwc';
 
 export default class CwBasicModal extends LightningElement {
     @api label;
-    @track _modalMessage;
+    @track modal;
     @api 
     get modalMessage(){
-        return this._modalMessage;
+        return this.modal;
     }
     set modalMessage(value){
-        this._modalMessage = value;
+        this.modal = value;
         if(value){
             let elem = this.template.querySelector('[id*="modalmessage"]');
             if(elem) elem.innerHTML = value;

@@ -96,11 +96,6 @@
         <label>K9 Dogs</label>
     </customValue>
     <customValue>
-        <fullName>Other_Screening_Equipment</fullName>
-        <default>false</default>
-        <label>Other Screening Equipment</label>
-    </customValue>
-    <customValue>
         <fullName>CCTV</fullName>
         <default>false</default>
         <label>CCTV</label>
@@ -601,11 +596,6 @@
         <label>Airline Noise Obligations</label>
     </customValue>
     <customValue>
-        <fullName>Airside_Ground_Handling</fullName>
-        <default>false</default>
-        <label>Airside Ground Handling</label>
-    </customValue>
-    <customValue>
         <fullName>Airside_Ground_Handling_Noise_Obligations</fullName>
         <default>false</default>
         <label>Airside Ground Handling Noise Obligations</label>
@@ -626,14 +616,9 @@
         <label>Spill Kits</label>
     </customValue>
     <customValue>
-        <fullName>Palletized</fullName>
+        <fullName>Trucking Gates ULD</fullName>
         <default>false</default>
-        <label>Palletized</label>
-    </customValue>
-    <customValue>
-        <fullName>Noise_Obligations</fullName>
-        <default>false</default>
-        <label>Noise_Obligations</label>
+        <label>Trucking Gates ULD</label>
     </customValue>
     <masterLabel>ICG Equipment</masterLabel>
     <sorted>false</sorted>

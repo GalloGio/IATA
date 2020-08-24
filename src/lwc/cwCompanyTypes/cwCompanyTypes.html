@@ -13,9 +13,11 @@
                     </div>
                 </template>
             </template>
-            <div class="col-12 text-right mt-3">
-                <a class="badge-results blueText" data-tosca="selectallcompanytypes" onclick={searchAllCTypes}><b>{selectedText}</b></a>
-            </div>
+            <template if:true={selectAllVisible} class="row">
+                <div class="col-12 text-right mt-3">
+                    <a class="badge-results blueText" data-tosca="selectallcompanytypes" onclick={searchAllCTypes}><b>{selectedText}</b></a>
+                </div>
+            </template>
         </div>
     </div>
 

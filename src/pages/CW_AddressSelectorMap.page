@@ -45,35 +45,53 @@
 			function initMap() {
 				var map = new google.maps.Map(document.getElementById('map'), {
 					zoom: 16,
-					center: {lat: -34.397, lng: 150.644}
+                    center: {lat: -34.397, lng: 150.644},
+                    mapTypeControlOptions: {
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.TOP_RIGHT
+                    }
 				});
 				
 				var geocoder = new google.maps.Geocoder();
-				geocodeAddress(geocoder, map, data.initialAddress);
+				geocodeAddress(geocoder, map, data.initialAddress, data.draggable, data.initialization, data.initialGeo);
 			}
 
-			function geocodeAddress(geocoder, resultsMap, address) {
-				geocoder.geocode({'address': address}, function(results, status) {
-					if (status === 'OK') {
-						resultsMap.setCenter(results[0].geometry.location);
-						sendToLC({latitude : results[0].geometry.location.lat(), longitude: results[0].geometry.location.lng()})
-						initializeMarker(resultsMap, results[0].geometry.location);
-					} else {
-						initializeMarker(resultsMap, '46.2363,6.1057'); //By Default initialize in geneve airport
-					}
-				});
+			function geocodeAddress(geocoder, resultsMap, address, draggable, initialization, initialGeo) {
+
+                if(initialGeo){
+                    let location = {
+                        lat: initialGeo.Latitude,
+                        lng: initialGeo.Longitude
+                    }
+
+                    resultsMap.setCenter(location);
+                    sendToLC({latitude : location.lat, longitude: location.lng, initialization: initialization})
+                    initializeMarker(resultsMap, location, draggable, initialization);
+                }
+                else{
+                    geocoder.geocode({'address': address}, function(results, status) {
+                        if (status === 'OK') {
+                            resultsMap.setCenter(results[0].geometry.location);
+                            sendToLC({latitude : results[0].geometry.location.lat(), longitude: results[0].geometry.location.lng(), initialization: initialization})
+                            initializeMarker(resultsMap, results[0].geometry.location, draggable, initialization);
+                        } else {
+                            initializeMarker(resultsMap, '46.2363,6.1057', draggable, initialization); //By Default initialize in geneve airport
+                        }
+                    });
+                }
+
 			}
-			function initializeMarker(resultsMap, pos){
+			function initializeMarker(resultsMap, pos, draggable, initialization){
 				marker = new google.maps.Marker({
 							map: resultsMap,
 							position: pos,
-							draggable: true,
+							draggable: draggable,
 							animation: google.maps.Animation.DROP,
-							title:"Drag me!"
+							title: draggable ? "Drag me!" : ""
 						});
 						marker.addListener('click', toggleBounce);
 						marker.addListener('dragend', function(ev){
-							sendToLC({latitude : marker.getPosition().lat(), longitude: marker.getPosition().lng()})
+							sendToLC({latitude : marker.getPosition().lat(), longitude: marker.getPosition().lng(), initialization: initialization})
 						});
 			}
 			function toggleBounce() {
