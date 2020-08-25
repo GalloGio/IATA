@@ -87,6 +87,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
+                                                            <abbr class="slds-required" title="required">*</abbr>
                                                             {salutation.label}
                                                         </div>
                                                     </div>
@@ -113,6 +114,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
+                                                            <abbr class="slds-required" title="required">*</abbr>
                                                             {labels.CSP_L1_First_Name}
                                                         </div>
                                                     </div>
@@ -135,6 +137,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
+                                                            <abbr class="slds-required" title="required">*</abbr>
                                                             {labels.CSP_L1_Last_Name}
                                                         </div>
                                                     </div>
@@ -157,7 +160,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
-                                                            {labels.CSP_L2_Country} ({labels.OPTIONAL})
+                                                            {labels.CSP_L2_Country}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -182,7 +185,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
-                                                            {config.contactLabelMap.Phone} ({labels.OPTIONAL})
+                                                            {config.contactLabelMap.Phone}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -204,6 +207,7 @@
                                                     <div class="formElementContainer">
                                                         <div class="formLabelContainer">
                                                             <div style="width:100%;" class="text-xxsmall">
+                                                                <abbr class="slds-required" title="required">*</abbr>
                                                                 {sector.label}
                                                             </div>
                                                         </div>
@@ -234,6 +238,7 @@
                                                     <div class="formElementContainer">
                                                         <div class="formLabelContainer">
                                                             <div style="width:100%;" class="text-xxsmall">
+                                                                <abbr class="slds-required" title="required">*</abbr>
                                                                 {extraQuestion.label}
                                                             </div>
                                                         </div>
@@ -294,6 +299,7 @@
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
                                                         <div style="width:100%;" class="text-xxsmall">
+                                                            <abbr class="slds-required" title="required">*</abbr>
                                                             {config.contactLabelMap.Preferred_Language__c}
                                                         </div>
                                                     </div>
@@ -321,20 +327,18 @@
                                             </lightning-layout-item>
 
                                             <lightning-layout-item size="12">
-                                                <c-portal-services-terms-and-conditions
+                                                <!-- <c-portal-services-terms-and-conditions
                                                     portal-service-id={gcsPortalServiceId}
                                                     language={registrationForm.language}
                                                     onacceptancechanged={tcAcceptanceChanged}>
-                                                </c-portal-services-terms-and-conditions>
+                                                </c-portal-services-terms-and-conditions> -->
                                             </lightning-layout-item>
 
                                             <lightning-layout-item size="12">
                                                 <div style="height:60px;">
                                                 </div>
                                             </lightning-layout-item>
-                                            <!------------------------------------------      ANTI SPAM      ------------------------------------------- -->
 
-                                            <input type="hidden" name="RegValidity" value="" onchange={handleRegistrationValidity}/>
                                             <!------------------------------------------      Submit Button      ------------------------------------------- -->
                                             <lightning-layout-item size="12">
                                                 <div>
@@ -422,4 +426,5 @@
             <div class="slds-spinner__dot-b"></div>
         </div>
     </div>
+
 </template>
