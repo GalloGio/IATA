@@ -31,6 +31,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Integration_Mapping_Version__c</fullName>
+        <externalId>false</externalId>
+        <label>Integration Mapping Version</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>InternalRequestURL__c</fullName>
         <externalId>false</externalId>
         <label>InternalRequestURL</label>
@@ -49,5 +59,17 @@
         <label>Is Beta Org</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>max_filters_allowed__c</fullName>
+        <defaultValue>25</defaultValue>
+        <externalId>false</externalId>
+        <label>max filters allowed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
 </CustomObject>

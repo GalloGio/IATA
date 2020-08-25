@@ -165,6 +165,7 @@
     <visibility>Public</visibility>
     <fields>
         <fullName>Category__c</fullName>
+        <description>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</description>
         <externalId>false</externalId>
         <inlineHelpText>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</inlineHelpText>
         <label>Category</label>
@@ -441,6 +442,7 @@
     </fields>
     <fields>
         <fullName>Equipment__c</fullName>
+        <description>Equipment&apos;s description</description>
         <externalId>false</externalId>
         <label>Equipment</label>
         <required>true</required>
@@ -1138,14 +1140,6 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
-                <valueName>Airside_Ground_Handling</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
-                <valueName>Noise_Obligations</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
                 <valueName>Waste_Obligations</valueName>
             </valueSettings>
             <valueSettings>
@@ -1566,6 +1560,7 @@
     </fields>
     <fields>
         <fullName>ICG_Certification__c</fullName>
+        <description>Lookup to the Certification</description>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>ICG Certification</label>

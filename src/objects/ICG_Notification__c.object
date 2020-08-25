@@ -455,7 +455,7 @@
         <label>All</label>
     </listViews>
     <listViews>
-        <fullName>CEIV_Fresh_Auditors_ICG_Notification</fullName>
+        <fullName>CEIV_Fresh_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>
@@ -471,7 +471,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>CEIV_Live_Animals_Auditors_ICG_Notification</fullName>
+        <fullName>CEIV_Live_Animals_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>
@@ -487,7 +487,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>CEIV_Pharma_Auditors_ICG_Notification</fullName>
+        <fullName>CEIV_Pharma_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>
@@ -503,7 +503,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>CEIV_Security_Auditors_ICG_Notification</fullName>
+        <fullName>CEIV_Security_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>
@@ -520,15 +520,22 @@
     </listViews>
     <listViews>
         <fullName>ICG_Stakeholders_ICG_Notification</fullName>
+        <columns>NAME</columns>
+        <columns>ICG_Certification__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Station__c</columns>
+        <columns>Station_Company__c</columns>
+        <columns>Status__c</columns>
+        <columns>Short_Description__c</columns>
         <filterScope>Queue</filterScope>
-        <label>ICG Stakeholders</label>
+        <label>OneSource Stakeholders</label>
         <queue>ICG_Stakeholders</queue>
         <sharedTo>
             <allInternalUsers/>
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>IEnvA_Auditors_ICG_Notification</fullName>
+        <fullName>IEnvA_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>
@@ -544,7 +551,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>SFOC_Auditors_ICG_Notification</fullName>
+        <fullName>SFOC_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>
@@ -560,7 +567,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>United_for_Wildlife_Auditors_ICG_Notification</fullName>
+        <fullName>United_for_Wildlife_Managers_ICG_Notification</fullName>
         <columns>NAME</columns>
         <columns>ICG_Certification__c</columns>
         <columns>RECORDTYPE</columns>

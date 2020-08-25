@@ -14,6 +14,7 @@
     </fields>
     <fields>
         <fullName>Extra_Data__c</fullName>
+        <description>Extra data to be searched.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Extra Data</label>
@@ -23,6 +24,7 @@
     </fields>
     <fields>
         <fullName>Key__c</fullName>
+        <description>Language key. e.g: en_US</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Key</label>

@@ -7,6 +7,7 @@
     <visibility>Public</visibility>
     <fields>
         <fullName>Base_Path__c</fullName>
+        <description>Base Path</description>
         <defaultValue>&quot;SmartFacilityRemoteValidations/&quot;</defaultValue>
         <externalId>false</externalId>
         <label>Base Path</label>
@@ -18,6 +19,7 @@
     </fields>
     <fields>
         <fullName>Bucket__c</fullName>
+        <description>Bucket</description>
         <externalId>false</externalId>
         <label>Bucket</label>
         <length>255</length>
@@ -28,6 +30,7 @@
     </fields>
     <fields>
         <fullName>Index_File__c</fullName>
+        <description>Index File</description>
         <defaultValue>&quot;Result.json&quot;</defaultValue>
         <externalId>false</externalId>
         <label>Index File</label>
@@ -39,6 +42,7 @@
     </fields>
     <fields>
         <fullName>Named_Credential__c</fullName>
+        <description>Named Credential</description>
         <defaultValue>&quot;CW_AWS_S3_REMOTE_VALIDATIONS&quot;</defaultValue>
         <externalId>false</externalId>
         <label>Named Credential</label>

@@ -168,6 +168,7 @@
     <visibility>Public</visibility>
     <fields>
         <fullName>AccountId__c</fullName>
+        <description>Account</description>
         <externalId>false</externalId>
         <formula>Account_Role__r.Account__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -180,6 +181,7 @@
     </fields>
     <fields>
         <fullName>Account_Pending_Approval__c</fullName>
+        <description>Account pending for approval</description>
         <externalId>false</externalId>
         <formula>Account_Role__r.Account__r.RecordType.Name = &apos;Standard Account&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -815,6 +817,7 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
     </fields>
     <fields>
         <fullName>Company_Admin_Approver_Rejector__c</fullName>
+        <description>Who has Approved or Rejected the station </description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Company Admin Approver/Rejector</label>
@@ -857,9 +860,9 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
         <externalId>false</externalId>
         <label>Number of active Certifications</label>
         <summaryFilterItems>
-            <field>ICG_Capability_Assignment_Group__c.Is_Deprecated__c</field>
+            <field>ICG_Capability_Assignment_Group__c.Is_Active__c</field>
             <operation>equals</operation>
-            <value>False</value>
+            <value>True</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>ICG_Capability_Assignment_Group__c.Is_Expired__c</field>
@@ -1190,6 +1193,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
     </fields>
     <fields>
         <fullName>Pilot_Information__c</fullName>
+        <description>Pilot Information</description>
         <externalId>false</externalId>
         <label>Pilot Information</label>
         <required>false</required>
@@ -1212,6 +1216,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
     </fields>
     <fields>
         <fullName>Reject_Reason__c</fullName>
+        <description>Reason of the request was rejected</description>
         <externalId>false</externalId>
         <label>Reject Reason</label>
         <length>255</length>
@@ -1294,6 +1299,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
     </fields>
     <fields>
         <fullName>Station_Geo_Coordinates__c</fullName>
+        <description>Geo Coordinates of the station</description>
         <displayLocationInDecimal>true</displayLocationInDecimal>
         <externalId>false</externalId>
         <label>Station Geo Coordinates</label>
@@ -4685,7 +4691,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
     <listViews>
         <fullName>ICG_Stakeholders_ICG_Account_Role_Detail</fullName>
         <filterScope>Queue</filterScope>
-        <label>ICG Stakeholders</label>
+        <label>OneSource Stakeholders</label>
         <queue>ICG_Stakeholders</queue>
         <sharedTo>
             <allInternalUsers/>

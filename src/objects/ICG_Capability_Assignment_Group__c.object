@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>The certification / remote validation header where relevant data is stored</description>
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -144,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>The certification / remote validation header where relevant data is stored</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -174,7 +174,7 @@
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
@@ -225,6 +225,7 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Certification_Id__c</fullName>
@@ -399,14 +400,14 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>IEnVA_Scope__c</fullName>
+        <fullName>IENVA_Scope__c</fullName>
         <description>Contains the scope ienva selected</description>
         <externalId>false</externalId>
         <label>IEnvA Scope</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
@@ -433,6 +434,7 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Issue_Date__c</fullName>
@@ -445,23 +447,21 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Is_Deprecated_Without_Children__c</fullName>
+        <fullName>Is_Active__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Marks if a group is deprecated and has no children</description>
+        <description>Checkbox to specify if the record is active</description>
         <externalId>false</externalId>
-        <label>Is Deprecated Without Children</label>
+        <label>Is Active</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Is_Deprecated__c</fullName>
-        <description>Technical formula to indicate if is depcrecated</description>
+        <fullName>Is_Booked__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if a group is booked</description>
         <externalId>false</externalId>
-        <formula>Total_Children__c &gt; 0 &amp;&amp; Total_Children__c = Total_Deprecated_Children__c
-|| Is_Deprecated_Without_Children__c = true</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Is Deprecated</label>
+        <label>Booked</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -561,7 +561,7 @@
         <fullName>Status__c</fullName>
         <description>Field that shows the status of the certification depending on the expiration date and if a new certification has been created to update this one.</description>
         <externalId>false</externalId>
-        <formula>IF(Is_Expired__c,&apos;Expired&apos;,&apos;Active&apos;)</formula>
+        <formula>IF(Is_Expired__c,&apos;Expired&apos;,IF(Is_Active__c,&apos;Active&apos;,IF(Issue_Date__c &gt; TODAY(),&apos;Upcoming&apos;, &apos;Inactive&apos;)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status</label>
         <required>false</required>
@@ -587,22 +587,6 @@
         <description>Calculates the total amount of children for the group</description>
         <externalId>false</externalId>
         <label>Total Children</label>
-        <summaryForeignKey>ICG_Account_Role_Capability_Assignment__c.ICG_Capability_Assignment_Group__c</summaryForeignKey>
-        <summaryOperation>count</summaryOperation>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Summary</type>
-    </fields>
-    <fields>
-        <fullName>Total_Deprecated_Children__c</fullName>
-        <description>Number of children non depreciated linked to group</description>
-        <externalId>false</externalId>
-        <label>Total Deprecated Children</label>
-        <summaryFilterItems>
-            <field>ICG_Account_Role_Capability_Assignment__c.Deprecated__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </summaryFilterItems>
         <summaryForeignKey>ICG_Account_Role_Capability_Assignment__c.ICG_Capability_Assignment_Group__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
@@ -668,7 +652,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>IEnVA_Scope__c</picklist>
+            <picklist>IENVA_Scope__c</picklist>
             <values>
                 <fullName>CF</fullName>
                 <default>false</default>
@@ -746,7 +730,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>IEnVA_Scope__c</picklist>
+            <picklist>IENVA_Scope__c</picklist>
             <values>
                 <fullName>CF</fullName>
                 <default>false</default>
@@ -823,7 +807,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>IEnVA_Scope__c</picklist>
+            <picklist>IENVA_Scope__c</picklist>
             <values>
                 <fullName>CF</fullName>
                 <default>false</default>

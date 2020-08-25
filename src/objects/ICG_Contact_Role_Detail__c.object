@@ -180,6 +180,7 @@
     </fields>
     <fields>
         <fullName>Account_Name__c</fullName>
+        <description>Account Name</description>
         <externalId>false</externalId>
         <formula>Account_Role__r.Account_Name__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -206,6 +207,7 @@
     </fields>
     <fields>
         <fullName>Company_Admin_Approver_Rejector__c</fullName>
+        <description>Who has Approved or Rejected the station </description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Company Admin Approver/Rejector</label>
@@ -231,6 +233,7 @@
     </fields>
     <fields>
         <fullName>Contact_Email__c</fullName>
+        <description>Station Contact Email</description>
         <externalId>false</externalId>
         <formula>Account_Contact_Role__r.Contact__r.Email</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -243,6 +246,7 @@
     </fields>
     <fields>
         <fullName>Contact_Name__c</fullName>
+        <description>Station Contact Name</description>
         <externalId>false</externalId>
         <formula>Account_Contact_Role__r.Contact__r.FirstName +&apos; &apos;+ Account_Contact_Role__r.Contact__r.LastName</formula>
         <label>Contact Name</label>
@@ -282,6 +286,7 @@
     </fields>
     <fields>
         <fullName>isApproved__c</fullName>
+        <description>Checkbox to determine if the request is approved</description>
         <externalId>false</externalId>
         <formula>ISPICKVAL( Status__c ,&quot;Approved&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -292,6 +297,7 @@
     </fields>
     <fields>
         <fullName>isPendingApproval__c</fullName>
+        <description>Checkbox to determine if the request is pending for approval</description>
         <externalId>false</externalId>
         <formula>ISPICKVAL( Status__c , &quot;Pending for Approval&quot;) || ISPICKVAL( Status__c , &quot;Pending for IATA Approval&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -302,6 +308,7 @@
     </fields>
     <fields>
         <fullName>Reject_Reason__c</fullName>
+        <description>Reason of the request was rejected</description>
         <externalId>false</externalId>
         <label>Reject Reason</label>
         <length>255</length>
@@ -313,6 +320,7 @@
     </fields>
     <fields>
         <fullName>Station_Global_ID__c</fullName>
+        <description>Global Station Id</description>
         <externalId>false</externalId>
         <formula>ICG_Account_Role_Detail__r.Global_ID__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -361,12 +369,6 @@
                     <default>false</default>
                     <label>Pending for Removal</label>
                 </value>
-                <value>
-                    <fullName>Pending for IATA Approval</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Pending for IATA Approval</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -378,7 +380,7 @@
     <listViews>
         <fullName>ICG_Stakeholders_ICG_Contact_Role_Detail</fullName>
         <filterScope>Queue</filterScope>
-        <label>ICG Stakeholders</label>
+        <label>OneSource Stakeholders</label>
         <queue>ICG_Stakeholders</queue>
         <sharedTo>
             <allInternalUsers/>

@@ -166,6 +166,7 @@
     <visibility>Public</visibility>
     <fields>
         <fullName>Applied_Measurement_System__c</fullName>
+        <description>Applied Measurement System</description>
         <externalId>false</externalId>
         <label>Applied Measurement System</label>
         <length>1000</length>
@@ -235,6 +236,7 @@
     </fields>
     <fields>
         <fullName>CRSTR_Actions_Taken__c</fullName>
+        <description>Actions Taken</description>
         <externalId>false</externalId>
         <label>Actions Taken</label>
         <length>32768</length>
@@ -245,6 +247,7 @@
     </fields>
     <fields>
         <fullName>CRSTR_Alarm_Last_12M__c</fullName>
+        <description>Alarm</description>
         <externalId>false</externalId>
         <label>Alarm Last 12M</label>
         <length>32768</length>
@@ -255,6 +258,7 @@
     </fields>
     <fields>
         <fullName>CRSTR_Audio_Visual_Alarms__c</fullName>
+        <description>Audio Visual Alarms</description>
         <externalId>false</externalId>
         <label>Audio Visual Alarms</label>
         <length>32768</length>
@@ -275,6 +279,7 @@
     </fields>
     <fields>
         <fullName>CRSTR_Deviation_Reported__c</fullName>
+        <description>Deviation Reported</description>
         <externalId>false</externalId>
         <label>Deviation Reported</label>
         <length>32768</length>
@@ -285,6 +290,7 @@
     </fields>
     <fields>
         <fullName>CRSTR_Devices_Calibrated__c</fullName>
+        <description>Devices Calibrated</description>
         <externalId>false</externalId>
         <label>Devices Calibrated</label>
         <length>40000</length>
@@ -341,6 +347,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Explain_BUProcedure__c</fullName>
+        <description>Explain BU Procedure</description>
         <externalId>false</externalId>
         <label>Explain BU Procedure</label>
         <length>1000</length>
@@ -351,6 +358,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Frequently_Alarm_Tested__c</fullName>
+        <description>Frequently Alarm Tested</description>
         <externalId>false</externalId>
         <label>Frequently Alarm Tested</label>
         <length>2000</length>
@@ -361,6 +369,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Frequently__c</fullName>
+        <description>Frequently</description>
         <externalId>false</externalId>
         <label>Frequently</label>
         <length>50000</length>
@@ -371,6 +380,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Import_Export__c</fullName>
+        <description>Import / Export</description>
         <externalId>false</externalId>
         <label>Import / Export</label>
         <required>false</required>
@@ -401,6 +411,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Mapping_Done__c</fullName>
+        <description>Mapping Done</description>
         <externalId>false</externalId>
         <label>Mapping Done</label>
         <length>1000</length>
@@ -424,6 +435,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_N_Mapping_Devices__c</fullName>
+        <description>Mapping Devices</description>
         <externalId>false</externalId>
         <label>N Mapping Devices</label>
         <length>32768</length>
@@ -519,6 +531,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Record_Available_For_Complaint__c</fullName>
+        <description>Record Available For Complaint</description>
         <externalId>false</externalId>
         <label>Record Available For Complaint</label>
         <length>1000</length>
@@ -561,6 +574,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Spots_Identified__c</fullName>
+        <description>Spots Identified</description>
         <externalId>false</externalId>
         <label>Spots Identified</label>
         <required>false</required>
@@ -654,6 +668,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Temp_Monitored_247__c</fullName>
+        <description>Temp Monitored</description>
         <externalId>false</externalId>
         <label>Temp Monitored 247</label>
         <length>32768</length>
@@ -677,6 +692,7 @@ FALSE
     </fields>
     <fields>
         <fullName>CRSTR_Years_Record_On_File__c</fullName>
+        <description>Years Record On File</description>
         <externalId>false</externalId>
         <label>Years Record On File</label>
         <length>1000</length>
@@ -688,6 +704,7 @@ FALSE
     <fields>
         <fullName>Description__c</fullName>
         <externalId>false</externalId>
+        <description>Describes the description of the capabilities</description>
         <label>Description</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
@@ -849,10 +866,6 @@ FALSE
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
-                <valueName>Airside_Ground_Handling</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
                 <valueName>Airside_Ground_Handling_Noise_Obligations</valueName>
             </valueSettings>
             <valueSettings>
@@ -864,10 +877,6 @@ FALSE
                 <valueName>Emissions_Obligations</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
-                <valueName>Noise_Obligations</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Temperature_Controlled_Dollies_Trucks</controllingFieldValue>
                 <valueName>Temperature_Controlled_Dollies_Trucks</valueName>
             </valueSettings>
@@ -876,8 +885,14 @@ FALSE
                 <valueName>K9_Dogs</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Other_Screening_Equipment</controllingFieldValue>
-                <valueName>Other_Screening_Equipment</valueName>
+                <controllingFieldValue>GSE_In_Facility_2</controllingFieldValue>
+                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
+                <valueName>Live_Animals_Vehicles</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>GSE_In_Facility_2</controllingFieldValue>
+                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
+                <valueName>Valuable_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other_Security_Equipment_Measures</controllingFieldValue>
@@ -992,14 +1007,6 @@ FALSE
                 <valueName>Dollies_Tub_Carts</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
-                <valueName>Live_Animals_Vehicles</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
-                <valueName>Valuable_Vehicles</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Heavy_Vehicle</controllingFieldValue>
                 <valueName>Heavy_Vehicles</valueName>
             </valueSettings>
@@ -1037,7 +1044,7 @@ FALSE
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
-                <valueName>Palletized</valueName>
+                <valueName>Trucking Gates ULD</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Documentation_Counters</controllingFieldValue>
@@ -1311,6 +1318,7 @@ FALSE
     </fields>
     <fields>
         <fullName>ESC_System_Self_Carrier_Owned__c</fullName>
+        <description>System Self Carrier Owned</description>
         <externalId>false</externalId>
         <label>System Self Carrier Owned</label>
         <required>false</required>
@@ -1461,6 +1469,7 @@ FALSE
     </fields>
     <fields>
         <fullName>Is_Planned_To_Implement__c</fullName>
+        <description>Answer of the question, Do you plan to implement it?</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Do you plan to implement it?</label>
@@ -1904,6 +1913,7 @@ url: url where is stored the photo</inlineHelpText>
     </fields>
     <fields>
         <fullName>SEAM_Contract2__c</fullName>
+        <description>SEAM Contract 2</description>
         <externalId>false</externalId>
         <label>Contract2</label>
         <length>131072</length>
@@ -1914,6 +1924,7 @@ url: url where is stored the photo</inlineHelpText>
     </fields>
     <fields>
         <fullName>SEAM_Contract__c</fullName>
+        <description>SEAM Contract</description>
         <externalId>false</externalId>
         <label>Contract</label>
         <length>131072</length>
@@ -1924,6 +1935,7 @@ url: url where is stored the photo</inlineHelpText>
     </fields>
     <fields>
         <fullName>SEAM_Employee_Record2__c</fullName>
+        <description>SEAM Employee Record 2</description>
         <externalId>false</externalId>
         <label>Employee Record2</label>
         <length>131072</length>
@@ -1934,6 +1946,7 @@ url: url where is stored the photo</inlineHelpText>
     </fields>
     <fields>
         <fullName>SEAM_Employee_Record__c</fullName>
+        <description>SEAM Employee Record</description>
         <externalId>false</externalId>
         <label>Employee Record</label>
         <length>131072</length>
@@ -2179,6 +2192,7 @@ url: url where is stored the photo</inlineHelpText>
     </fields>
     <fields>
         <fullName>TCHA_Alarm_Range__c</fullName>
+        <description>Alarm Range</description>
         <externalId>false</externalId>
         <label>Alarm Range</label>
         <length>255</length>
@@ -2510,6 +2524,10 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Documentation_Counters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2863,10 +2881,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3294,6 +3308,10 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gse_In_Facility</fullName>
                 <default>false</default>
             </values>
@@ -3687,10 +3705,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other_Screening_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other_Security_Equipment_Measures</fullName>
                 <default>false</default>
             </values>
@@ -3993,9 +4007,9 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Cargo_Messaging_Capacities</fullName>
+        <fullName>Cargo_Handling_System_Audit_Trail_Capacities</fullName>
         <active>true</active>
-        <label>Cargo Messaging Capacities</label>
+        <label>Cargo Handling System Audit Trail Capacities</label>
         <picklistValues>
             <picklist>CRSTR_DGR_Dedicated__c</picklist>
             <values>
@@ -4056,26 +4070,10 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Cargo_Handling_System_Audit_Trail_Capacities</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
-                <fullName>Cargo_Handling_System_Capacities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Handling_System_Interface_Capacities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA_XML_Messages_Cargo_Handling_System_Capabilities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
+                <fullName>GSE_In_Facility_2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4400,7 +4398,2110 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other_Screening_Equipment</fullName>
+                <fullName>Other_Security_Equipment_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Temperature_Control_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal_Protective_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pest_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phytosanitary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pick_Up_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Piece_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarantine_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reptiles_Amphibians</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Room_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security_Patrol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallet_Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strong_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp_Controlled_Rooms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Track_And_Trace_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck_Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UNDEFINED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unserviceable_ULD_Storage_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacuum_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valuable_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Veterinary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume_And_Dimension_Measuring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vulnerable_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warehouse_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weight_Scales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCSN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFBL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFFM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFWB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFZB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Dual_View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Single_View</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Cargo_Handling_System_Capacities</fullName>
+        <active>true</active>
+        <label>Cargo Handling System Capacities</label>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Cargo_Handling_System_Capacities</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Equipment__c</picklist>
+            <values>
+                <fullName>15_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_8_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal_Attendant_Amenities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ball_Caster_Decks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Barcode_Scanners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery_Replacement_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Beneficial_Insects_Bees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Birds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Border_Inspection_Post</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Station_General</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Built_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CARDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCTV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Acceptance_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Crane</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Carriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Consigners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Shippers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous_Goods_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discrepancy_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dollies_Tub_Carts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empty_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Detection_System_EDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Express_Mail_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facility_Access_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farm_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire_Container_Covers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Firefighting_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fish_Aquatics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forced_Air_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Electric</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freezer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Heavy_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Horses</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human_Remains_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hydro_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Intruder_Alarm_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice_Billing_And_Settlement_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K9_Dogs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Cargo_Community_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance_Repair_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non_Domesticated_Mammals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_GSE_In_Facility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Pre_Cooling_Method</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Security_Equipment_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Temperature_Control_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal_Protective_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pest_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phytosanitary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pick_Up_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Piece_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarantine_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reptiles_Amphibians</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Room_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security_Patrol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallet_Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strong_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp_Controlled_Rooms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Track_And_Trace_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck_Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UNDEFINED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unserviceable_ULD_Storage_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacuum_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valuable_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Veterinary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume_And_Dimension_Measuring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vulnerable_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warehouse_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weight_Scales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCSN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFBL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFFM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFWB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFZB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Dual_View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Single_View</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Cargo_Handling_System_Interface_Capacities</fullName>
+        <active>true</active>
+        <label>Cargo Handling System Interface Capacities</label>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Cargo_Handling_System_Interface_Capacities</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Equipment__c</picklist>
+            <values>
+                <fullName>15_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_8_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline_Noise_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airside_Ground_Handling_Noise_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal_Attendant_Amenities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ball_Caster_Decks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Barcode_Scanners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery_Replacement_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Beneficial_Insects_Bees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Birds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Border_Inspection_Post</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Station_General</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Built_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CARDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCTV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Acceptance_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Crane</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Carriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Consigners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Shippers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous_Goods_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discrepancy_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dollies_Tub_Carts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emissions_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empty_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Detection_System_EDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Express_Mail_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facility_Access_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farm_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire_Container_Covers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Firefighting_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fish_Aquatics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forced_Air_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Electric</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freezer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Heavy_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Horses</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human_Remains_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hydro_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Intruder_Alarm_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice_Billing_And_Settlement_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K9_Dogs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Cargo_Community_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance_Repair_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non_Domesticated_Mammals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_GSE_In_Facility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Pre_Cooling_Method</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Security_Equipment_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Temperature_Control_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal_Protective_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pest_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phytosanitary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pick_Up_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Piece_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarantine_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reptiles_Amphibians</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Room_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security_Patrol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallet_Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spill_Kits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strong_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp_Controlled_Rooms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Transport_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Track_And_Trace_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck_Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trucking Gates ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UNDEFINED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unserviceable_ULD_Storage_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacuum_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valuable_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Veterinary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume_And_Dimension_Measuring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vulnerable_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warehouse_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weight_Scales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCSN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFBL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFFM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFWB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFZB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Dual_View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Single_View</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+        <active>true</active>
+        <label>Cargo Handling / Warehouse Management System</label>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Equipment__c</picklist>
+            <values>
+                <fullName>15_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_8_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal_Attendant_Amenities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ball_Caster_Decks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Barcode_Scanners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery_Replacement_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Beneficial_Insects_Bees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Birds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Border_Inspection_Post</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Station_General</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Built_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CARDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCTV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Acceptance_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Crane</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Carriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Consigners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Shippers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous_Goods_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discrepancy_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dollies_Tub_Carts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empty_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Detection_System_EDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Express_Mail_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facility_Access_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farm_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire_Container_Covers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Firefighting_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fish_Aquatics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forced_Air_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Electric</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freezer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Heavy_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Horses</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human_Remains_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hydro_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Intruder_Alarm_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice_Billing_And_Settlement_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K9_Dogs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Cargo_Community_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance_Repair_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non_Domesticated_Mammals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_GSE_In_Facility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Pre_Cooling_Method</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4772,6 +6873,10 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Temp_Controlled_Rooms</fullName>
                 <default>false</default>
             </values>
@@ -5074,10 +7179,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5456,6 +7557,10 @@ url: url where is stored the photo</inlineHelpText>
                 <fullName>2_To_8_C</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
@@ -5755,10 +7860,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6134,6 +8235,10 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
                 <default>false</default>
             </values>
@@ -6447,19 +8552,11 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other_Screening_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other_Security_Equipment_Measures</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Palletized</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6564,6 +8661,10 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Truck_Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trucking Gates ULD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6832,6 +8933,10 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7161,10 +9266,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7612,6 +9713,10 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gse_In_Facility</fullName>
                 <default>false</default>
             </values>
@@ -7794,10 +9899,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Airline_Noise_Obligations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airside_Ground_Handling</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8065,10 +10166,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Noise_Obligations</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Non_Domesticated_Mammals</fullName>
                 <default>false</default>
             </values>
@@ -8078,10 +10175,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8473,6 +10566,10 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gse_In_Facility</fullName>
                 <default>false</default>
             </values>
@@ -8782,10 +10879,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other_Screening_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other_Security_Equipment_Measures</fullName>
                 <default>false</default>
             </values>
@@ -9084,6 +11177,727 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>IATA_XML_Messages_Cargo_Handling_System_Capabilities</fullName>
+        <active>true</active>
+        <label>IATA XML Messages Cargo Handling System Capabilities</label>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA_XML_Messages_Cargo_Handling_System_Capabilities</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Equipment__c</picklist>
+            <values>
+                <fullName>15_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_8_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline_Noise_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airside_Ground_Handling_Noise_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal_Attendant_Amenities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ball_Caster_Decks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Barcode_Scanners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery_Replacement_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Beneficial_Insects_Bees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Birds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Border_Inspection_Post</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Station_General</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Built_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CARDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCTV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Acceptance_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Crane</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Carriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Consigners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Shippers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous_Goods_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discrepancy_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dollies_Tub_Carts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emissions_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empty_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Detection_System_EDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Express_Mail_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facility_Access_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farm_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire_Container_Covers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Firefighting_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fish_Aquatics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forced_Air_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Electric</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freezer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Heavy_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Horses</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human_Remains_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hydro_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Intruder_Alarm_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice_Billing_And_Settlement_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K9_Dogs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Cargo_Community_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance_Repair_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non_Domesticated_Mammals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_GSE_In_Facility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Pre_Cooling_Method</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Security_Equipment_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Temperature_Control_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal_Protective_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pest_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phytosanitary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pick_Up_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Piece_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarantine_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reptiles_Amphibians</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Room_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security_Patrol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallet_Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spill_Kits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strong_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp_Controlled_Rooms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Transport_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Track_And_Trace_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck_Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trucking Gates ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UNDEFINED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unserviceable_ULD_Storage_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacuum_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valuable_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Veterinary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume_And_Dimension_Measuring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vulnerable_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warehouse_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste_Obligations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weight_Scales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCSN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFBL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFFM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFWB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFZB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Dual_View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Single_View</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Live_Animals_Capacities</fullName>
         <active>true</active>
         <label>Live Animals Capacities</label>
@@ -9145,6 +11959,10 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Live_Animals_Capacities_1</fullName>
                 <default>false</default>
@@ -9452,723 +12270,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Security_Equipment_Measures</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Temperature_Control_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Perishables_Processing_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Personal_Protective_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pest_Control</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pets</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pharmaceuticals_Processing_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Phytosanitary_Inspection</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pick_Up_Counter</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Piece_Level</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Quarantine_Room</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RESDIT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reptiles_Amphibians</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room_Cooling</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Secured_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security_Patrol</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Slave_Pallet_Transport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Slave_Pallets</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Strong_Room</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Temp_Controlled_Rooms</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Track_And_Trace_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Truck_Parking</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ULD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ULD_Level</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>UNDEFINED</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unserviceable_ULD_Storage_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Vacuum_Cooling</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Valuable_Vehicles</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Veterinary_Inspection</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Volume_And_Dimension_Measuring</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Vulnerable_Cargo_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Warehouse_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weight_Scales</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XCSN</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XFBL</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XFFM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XFSU</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XFWB</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XFZB</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XRay_Dual_View</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>XRay_Single_View</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SC_Free_Running_And_REST__c</picklist>
-            <values>
-                <fullName>Free_Running</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Free_Running_And_REST</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>REST</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SEAM_Color__c</picklist>
-            <values>
-                <fullName>Black_Or_White</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Color</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
-            <values>
-                <fullName>Biometrics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Both</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ID_Card</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
-            <values>
-                <fullName>Fixed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pan</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
-            <values>
-                <fullName>Biometrics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Both</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ID Card</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SEAM_Resolution__c</picklist>
-            <values>
-                <fullName>1080p</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>4k</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>720p</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low_Resolution</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SEAM_Security_Patrol_Type__c</picklist>
-            <values>
-                <fullName>Both</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Company_Security_Staff</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Contracted</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SPPE_Method_Type__c</picklist>
-            <values>
-                <fullName>Hand_Held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Stationary_Automated</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Mail_Tracking_and_Reporting</fullName>
-        <active>true</active>
-        <label>Mail Tracking and Reporting</label>
-        <picklistValues>
-            <picklist>CRSTR_DGR_Dedicated__c</picklist>
-            <values>
-                <fullName>Entire_Room</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Segregated_Area_Whithin_Room</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>CRSTR_Import_Export__c</picklist>
-            <values>
-                <fullName>Export</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import_And_Export</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
-            <values>
-                <fullName>Entire_Room</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Segregated_Area_Whithin_Room</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>CRSTR_Spots_Identified__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Category__c</picklist>
-            <values>
-                <fullName>Cargo_Handling_System_Audit_Trail_Capacities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Handling_System_Capacities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Handling_System_Interface_Capacities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA_XML_Messages_Cargo_Handling_System_Capabilities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
-            <values>
-                <fullName>Carrier_Owned</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System_Self_Owned</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ESC_Type_Commodity__c</picklist>
-            <values>
-                <fullName>Airmail</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dangerous</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Live_Animals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Perishables</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pharmaceuticals</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Equipment__c</picklist>
-            <values>
-                <fullName>15_To_25_C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2_To_25_C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2_To_8_C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Animal_Attendant_Amenities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ball_Caster_Decks</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Barcode_Scanners</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Battery_Replacement_For_Active_ULDs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Beneficial_Insects_Bees</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Birds</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Border_Inspection_Post</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Build_Up_Break_Down_Station_General</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Built_ULDs_Storage_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CARDIT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CCTV</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Acceptance_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Dashboard</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Crane</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer_Management_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer_Management_Module_For_Carriers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer_Management_Module_For_Consigners</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer_Management_Module_For_Shippers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dangerous_Goods_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Delivery_Counter</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Discrepancy_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dollies_Tub_Carts</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Empty_ULDs_Storage_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Explosive_Detection_System_EDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Export_Handling_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Express_Mail_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Facility_Access_Control</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Farm_Animals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fire_Container_Covers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Firefighting_Equipment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fish_Aquatics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Flight_Level</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Forced_Air_Cooling</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Forklifts_Electric</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Forklifts_Fuel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Freezer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>HAWB_Level</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Heavy_Vehicles</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Horses</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Human_Remains_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hydro_Cooling</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import_Handling_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Intruder_Alarm_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoice_Billing_And_Settlement_Module</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>K9_Dogs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Live_Animals_Vehicles</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Local_Cargo_Community_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Local_Customs_System_Export</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Local_Customs_System_Import</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Loose_Cargo_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MAWB_Level</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Maintenance_Repair_Area</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non_Domesticated_Mammals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_GSE_In_Facility</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10536,6 +12637,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
                 <default>false</default>
             </values>
@@ -10842,10 +12947,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11213,6 +13314,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Pre_Cooling_Capacities</fullName>
                 <default>false</default>
             </values>
@@ -11515,10 +13620,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11886,6 +13987,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety_Personal_And_Protective_Equipment</fullName>
                 <default>false</default>
             </values>
@@ -12188,10 +14293,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12563,6 +14664,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Scanners</fullName>
                 <default>false</default>
             </values>
@@ -12865,10 +14970,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13236,6 +15337,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>K9_Dogs</fullName>
                 <default>false</default>
             </values>
@@ -13550,10 +15655,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13929,6 +16030,10 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Intruder_Alarm_System</fullName>
                 <default>false</default>
             </values>
@@ -14242,7 +16347,696 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other_Screening_Equipment</fullName>
+                <fullName>Other_Security_Equipment_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Temperature_Control_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal_Protective_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pest_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals_Processing_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Phytosanitary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pick_Up_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Piece_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pre_Arrival_Slot_Booking_Capability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarantine_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recharging_Power_Areas_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reptiles_Amphibians</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Room_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security_Patrol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Self_Check_In_System_Kiosk_For_Truckers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallet_Transport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slave_Pallets</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strong_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp_Controlled_Rooms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thermal_Covers_Blankets_Offered_For_Purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Track_And_Trace_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck_Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UNDEFINED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unserviceable_ULD_Storage_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacuum_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Valuable_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Veterinary_Inspection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume_And_Dimension_Measuring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vulnerable_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warehouse_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weight_Scales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XCSN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFBL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFFM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFSU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFWB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XFZB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Dual_View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XRay_Single_View</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
+        <active>true</active>
+        <label>System for Mail Tracking and Reporting</label>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Equipment__c</picklist>
+            <values>
+                <fullName>15_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_25_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_To_8_C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal_Attendant_Amenities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ball_Caster_Decks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Barcode_Scanners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery_Replacement_For_Active_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Beneficial_Insects_Bees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Birds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Border_Inspection_Post</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Station_General</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_20ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_AKE_10ft_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Build_Up_Break_Down_Stations_For_Special_Loads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Built_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CARDIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCTV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Carbon_Dioxide_CO2_Monitors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Acceptance_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Crane</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Carriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Consigners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Freight_Forwarders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer_Management_Module_For_Shippers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous_Goods_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery_Counter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discrepancy_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dollies_Tub_Carts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dry_Ice_Replenishment_For_ULDs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronic_Metal_Detection_Device_EDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Elevated_Transfer_Vehicles_ETV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empty_ULDs_Storage_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Detection_System_EDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Explosive_Trace_Detection_Device_ETD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Express_Mail_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facility_Access_Control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farm_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire_Container_Covers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Firefighting_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fish_Aquatics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forced_Air_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Electric</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forklifts_Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freezer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Heavy_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Horses</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human_Remains_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hydro_Cooling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_Handling_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Intruder_Alarm_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice_Billing_And_Settlement_Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K9_Dogs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals_Vehicles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Cargo_Community_System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local_Customs_System_Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loose_Cargo_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAWB_Level</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mail_Scanner_Mail_Registration_Device</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance_Repair_Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non_Domesticated_Mammals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_GSE_In_Facility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other_Pre_Cooling_Method</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14610,6 +17404,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
                 <default>false</default>
             </values>
@@ -14916,10 +17714,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15287,6 +18081,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Temperature_Controlled_Handling_Areas</fullName>
                 <default>false</default>
             </values>
@@ -15589,10 +18387,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15960,6 +18754,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Temporary_Storage_And_Working_Areas_1</fullName>
                 <default>false</default>
             </values>
@@ -16266,10 +19064,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16637,6 +19431,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
                 <default>false</default>
             </values>
@@ -16947,10 +19745,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17322,6 +20116,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ULD_Storage</fullName>
                 <default>false</default>
             </values>
@@ -17624,10 +20422,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17995,6 +20789,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Veterinary_Phytosanitary_And_Pest_Control_1</fullName>
                 <default>false</default>
             </values>
@@ -18309,10 +21107,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18680,6 +21474,10 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>GSE_In_Facility_2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Weight_Volume_And_Dimension_Equipment</fullName>
                 <default>false</default>
             </values>
@@ -18982,10 +21780,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Other_Pre_Cooling_Method</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other_Screening_Equipment</fullName>
                 <default>false</default>
             </values>
             <values>

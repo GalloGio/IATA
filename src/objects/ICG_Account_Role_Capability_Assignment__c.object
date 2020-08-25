@@ -178,16 +178,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Deprecated__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>When this check is marked, it doesnt appear in the detail profile (only history tracking).</description>
-        <externalId>false</externalId>
-        <label>Deprecated</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>ICG_Account_Role_Detail__c</fullName>
         <description>Shows the facility related.</description>
         <externalId>false</externalId>

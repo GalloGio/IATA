@@ -762,24 +762,6 @@
                     <default>false</default>
                     <label>Cancelled</label>
                 </value>
-                <value>
-                    <fullName>Rejected</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Rejected</label>
-                </value>
-                <value>
-                    <fullName>Validated</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Validated</label>
-                </value>
-                <value>
-                    <fullName>Waiting for Payment</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Waiting for Payment</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

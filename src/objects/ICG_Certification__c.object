@@ -274,6 +274,7 @@
     </fields>
     <fields>
         <fullName>Department__c</fullName>
+        <description>Types of certificates</description>
         <externalId>false</externalId>
         <label>Department</label>
         <required>false</required>
