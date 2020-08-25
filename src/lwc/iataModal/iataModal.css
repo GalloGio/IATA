@@ -1,0 +1,161 @@
+:host {
+	position: absolute;
+}
+
+.modalRadius {
+	border-radius: 4px;
+}
+
+.iconPosition {
+	position: relative;
+	overflow: visible;
+}
+
+.widthSmall {
+	width: 25%;
+}
+
+.oss-modal-button_home {
+	position: relative !important;
+	top: unset;
+	left: 0;
+	float: left;
+	width: 2rem;
+	height: 2rem;
+}
+
+button.slds-modal__close {
+	position: relative !important;
+	top: unset;
+	right: 0;
+	float: right;
+}
+
+.slds-modal__header {
+	background-color: #F7F8FC;
+	color: #333333;
+	text-align: left;
+	font-family: Aktiv Grotesk, Arial;
+	font-style: normal;
+	font-weight: 500;
+	border-bottom: none;
+}
+
+.slds-modal__header slot {
+    line-height: 32px;
+	font-size: 1.25rem;
+}
+
+.oss-modal_info .slds-modal__header {
+	background-color: #1e32fa;
+	color: #ffffff;
+}
+
+.slds-modal__footer {
+	border-top: 1px solid #E6E6E6;
+}
+
+.oss-modal_straight-corners header,
+.oss-modal_straight-corners > div.slds-modal__content,
+.oss-modal_straight-corners footer {
+	border-radius: 0;
+}
+
+@media (min-width: 48em) {
+	.slds-modal__container,
+	.slds-modal_small > .slds-modal__container {
+		margin: 0 auto;
+		width: 50%;
+		max-width: 40rem;
+		min-width: 20rem;
+	}
+
+	.slds-modal_large > .slds-modal__container,
+	.slds-modal--large > .slds-modal__container {
+		width: 90%;
+		max-width: none;
+		min-width: 40rem;
+	}
+
+	.slds-modal_medium > .slds-modal__container {
+		width: 70%;
+		max-width: 75rem;
+		min-width: 40rem;
+	}
+}
+
+/* ICON */
+.iconContainer {
+	border-radius: 50%;
+	background-color: white;
+	padding: 10px;
+}
+
+.innerCircle {
+	border-radius: 50%;
+	padding: 10px;
+}
+
+.outerCircle {
+	border-radius: 50%;
+	padding: 8px;
+	position: absolute;
+	top: -44px;
+}
+
+.innerCircleSuccess {
+	background-color: #7fc184;
+}
+
+.outerCircleSuccess {
+	background-color: #bedfc0;
+}
+
+.innerCircleWarning {
+	background-color: #fac643;
+}
+
+.outerCircleWarning {
+	background-color: #ffedbe;
+}
+
+.innerCircleError {
+	background-color: #ed4539;
+}
+
+.outerCircleError {
+	background-color: rgb(250, 151, 151);
+}
+
+.backGroundGray {
+	background-color: #f7f8fa;
+	position: relative;
+}
+
+.closePosition {
+	position: absolute;
+	right: 5px;
+	top: -40px;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 14px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 2px;
+	width: 7px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	/*background: #555;*/
+}

@@ -54,6 +54,7 @@ import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_
 import CSP_L3_Have_Work_Email from '@salesforce/label/c.CSP_L3_Have_Work_Email';
 import CSP_Registration_Existing_User_Message_Not_Matching_F4_2 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F4_2';
 import CSP_Registration_Existing_User_Message_Not_Matching_F6_2 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6_2';
+import CSP_Registration_Existing_User_Message_Not_Matching_F6_3 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6_3';
 import CSP_Registration_Existing_Work_Message_LMS_F8 from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS_F8';
 
 
@@ -207,6 +208,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_L3_Have_Work_Email,
 		CSP_Registration_Existing_User_Message_Not_Matching_F4_2,
 		CSP_Registration_Existing_User_Message_Not_Matching_F6_2,
+		CSP_Registration_Existing_User_Message_Not_Matching_F6_3,
 		CSP_Registration_Existing_Work_Message_LMS_F8
 	}
 	get labels() {
@@ -376,6 +378,13 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			//if not set yet, set Training info in case of already existing information in order to ByPass Training form
 			if(this.localContactInfo.Username !== '' && this.localContactInfo.UserId !== ''
 				&& this.userInfo.existingContactTrainingUsername !== undefined && this.userInfo.existingContactTrainingUserId !== undefined){
+					this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
+					this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
+					this.localContactInfo.ExistingTrainingInfo = true;
+			}
+			if(this.flow === 'flow4'
+				&& this.userInfo.existingContactTrainingUsername !== undefined 
+				&& this.userInfo.existingContactTrainingUserId !== undefined){
 					this.localContactInfo.Username = this.userInfo.existingContactTrainingUsername !== undefined ? this.userInfo.existingContactTrainingUsername : '';
 					this.localContactInfo.UserId = this.userInfo.existingContactTrainingUserId !== undefined ? this.userInfo.existingContactTrainingUserId : '';
 					this.localContactInfo.ExistingTrainingInfo = true;

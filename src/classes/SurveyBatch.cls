@@ -3,8 +3,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 	// This batch is joining the old batches: SurveyCustomWorkflowBatch and SurveyCustomerRecoveryBatch
 	// The purpose of joining them in one single batch is to reduce the load on sfdc's batch scheduler
 
-	global set<Id> CasesPart1;
-
 	//----- VARIABLES USED BY PART 1 -----
 	global list<Case> cases;
 	global Set<Id> ContactIds;
@@ -37,6 +35,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 	//----- VARIABLES USED BY PART 2 -----
 	global list<Case> lstCases;
+	global set<Id> casesSet; // Set of Cases where a survey was created yesterday
 	public Date CreatedDate {get; set;}
 
 	global map<String, Id> mapComplaintQueuesPerName = new map<string, Id>();
@@ -57,6 +56,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
 	global List<Case> start(Database.BatchableContext BC) {
+		Set<Id> casesIdToBeProcessed = new Set<Id>();
 		List<Case> casesToBeProcessed = new List<Case>();
 		system.debug(LoggingLevel.error, '################### START() ###########################');
 		system.debug(LoggingLevel.error, '################### START() -> GETTING CASES FOR SENDING THE SURVEY ');
@@ -107,13 +107,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			templates.put(et.DeveloperName, et.Id);
 		}
 
-		system.debug('################# QUERY : WHERE ClosedDate > :' + startd + ' AND ClosedDate < :' + endd + '\n' +
-								 'AND ContactId <> NULL AND Contact.Email <> NULL \n' +
-								 'AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = \'\'\n)' +
-								 'AND Instant_Survey_Feedback_requested__c = false' +
-								 'AND ParentId == NULL');
-
-		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+		casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, RecordTypeId, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject, Customer_recovery__c, OwnerId,
 															 ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
 															 Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
 															 Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
@@ -131,12 +125,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 															 AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
 																	 ORDER BY ClosedDate DESC]);
 
-		CasesPart1 = new Set<Id>();
-		for (Case c : casesToBeProcessed)
-			CasesPart1.add(c.Id);
-
-
-
+		for(Case c : casesToBeProcessed){
+			casesIdToBeProcessed.add(c.Id);
+		}
 
 		system.debug(LoggingLevel.error, '################### START() -> PART 1 FOUND ' + casesToBeProcessed.size() + ' CASES');
 
@@ -145,11 +136,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 		startd = Test.isRunningTest() ? Date.today() : Date.today().addDays(-1);
 		endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today();
-
-		/*For testing:
-		 startd =  Date.today();
-		 endd = Date.today().addDays(1);
-		 */
 
 		if (CreatedDate != null) {
 			startd =  CreatedDate;
@@ -175,16 +161,18 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			lstCaseIds.add(is.Relationship_to_Case__c);
 		}
 
-		system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
-
-		casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name,
-																	WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
+		List<Case> SurveyCases = [SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, RecordType.DeveloperName, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
 															 FROM Case
 															 WHERE Id IN :lstCaseIds
-															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR']);//WMO-571
+															 AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR'];//WMO-571
 
+		casesSet = new Set<Id>();
+		for (Case c : SurveyCases){
+			casesSet.add(c.Id);
+			if(!casesIdToBeProcessed.contains(c.Id))
+				casesToBeProcessed.add(c);
+		}
 		system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
-
 		return casesToBeProcessed;
 
 	}
@@ -198,14 +186,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 		List<Case> scopepart2 = new List<Case>();
 
 		for (Case c : scope) {
-			if (CasesPart1.contains(c.ID)){
+			if (!casesSet.contains(c.ID)){
 				scopepart1.add(c);
-			}
-
-			else {
+			} else {
 				scopepart2.add(c);
 			}
-
 		}
 
 		processSurveyEmail(scopepart1);
@@ -225,12 +210,12 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			log += 'No email were sent for the cases closed on ' + yesterdaydate + '\n';
 		else {
 			log += 'Instant survey email batch result.\n\n'
-						 + 'The batch ran on ' + totalCases + ' cases closed on ' + ClosedDatestr + ' with the following result: \n'
-						 + success + ' emails were successfully sent\n'
-						 + errors + ' emails failed because the contact\'s address is not recognized\n'
-						 + SpamAvoided + ' emails were blocked by anti spam filter.\n\n'
+						+ 'The batch ran on ' + totalCases + ' cases closed on ' + ClosedDatestr + ' with the following result: \n'
+						+ success + ' emails were successfully sent\n'
+						+ errors + ' emails failed because the contact\'s address is not recognized\n'
+						+ SpamAvoided + ' emails were blocked by anti spam filter.\n\n'
 
-						 + 'A brief table with survey emails sent for each region:\n';
+						+ 'A brief table with survey emails sent for each region:\n';
 
 			for (string region : countersMap.keyset())
 				log += region + ': ' + countersMap.get(region) + '\n';
@@ -266,7 +251,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			efa.setContentType('Text/csv');
 			efa.setFileName('InstantSurveyEmailAdvancedLog' + todaydate + '.txt');
 			efa.setBody(blob.valueOf('NO NATION AM\r\n' + nonationlog1 + '\r\n\r\nNO NATION ARM\r\n' + nonationlog2 + '\r\n\r\nNO NATION CLICKTOOL\r\n' + nonationlog3 +
-															 '\r\n\r\nSPAM AVOIDED\r\n' + spamavoidedlog + '\r\n\r\nIATATEAM\r\n' + IATAcaseslog));
+															'\r\n\r\nSPAM AVOIDED\r\n' + spamavoidedlog + '\r\n\r\nIATATEAM\r\n' + IATAcaseslog));
 			attachements.add(efa);
 
 
@@ -278,7 +263,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 		//system.debug(LoggingLevel.error,'################### EMAIL CON CONTATTI SOSTITUITI DA USER: '+usersreplaced);
 
 		UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
-		if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
+		if (!Test.isRunningTest() && sender != null) email.setOrgWideEmailAddressId(sender.value__c);
 		email.setBccAddresses(new list<string> {'aertsr@iata.org','rovedaa@iata.org','irturko@iata.org'});
 		email.setPlainTextBody(log);
 		email.setSubject('Instant survey email batch');
@@ -349,85 +334,55 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				AccountCountry = c.BSPCountry__c;
 			}
 
+	  /****** Clicktools Workflow_AM_CX_.... *****/      
+	  if (/*1*/ (c.RecordType.DeveloperName == 'ProcessEuropeSCE' || c.RecordType.DeveloperName == 'OSCAR_Communication') &&
+				/*2 aggregate the country for all the Clicktools AM_CX*/
+				/*3*/!c.Contact.Email.contains('@iata.org') &&
+				!c.Contact.Email.contains('@salesforce.com') &&
+				/*4*/c.IATA_Code__c != '953' && c.IATA_Code__c != '954' &&
+				/*5*/(c.Reason1__c == 'CHC – Change of Shareholding' || c.Reason1__c == 'CHL - Change of Location' || c.Reason1__c == 'CHN - Change of Name' ||
+					c.Reason1__c == 'CHO / CHS – Change of Ownership / Legal Status' ||
+					c.Reason1__c == 'New BR / IP' || c.Reason1__c == 'New HO' || c.Reason1__c == 'New SA / CHV – New Code')  &&
+				/*6*/c.Status == 'Closed'  &&
+				/*7*/(!c.Account.Name.contains('General Public') && !c.Account.Name.contains('Pubblico Italia')) &&
+				/*8*/c.Contact.HasOptedOutOfEmail == false &&
+				/*9*/String.isBlank(c.Contact.Instant_Survey_opt_out__c)
+				/*10*///c.Subject!=null && !c.Subject.contains('PROCOM-EDMC PROJECT')
+		){
+		system.debug(LoggingLevel.error, '################### Clicktools Workflow_AM_CX');
+		system.debug(LoggingLevel.error, '################### Region=-' + c.Region__c + '-');
+		system.debug(LoggingLevel.error, '################### BSPCountry__c=-' + c.BSPCountry__c + '-');
+		system.debug(LoggingLevel.error, '################### AccountCountry=-' + AccountCountry + '-');
 
-			/****** Clicktools Workflow_AM_CX_.... *****/
-			if (/*1*/ (c.RecordType.DeveloperName == 'ProcessEuropeSCE' || c.RecordType.DeveloperName == 'OSCAR_Communication') &&
-								/*2 aggregate the country for all the Clicktools AM_CX*/
-								/*3*/!c.Contact.Email.contains('@iata.org') &&
-								!c.Contact.Email.contains('@salesforce.com') &&
-								/*4*/c.IATA_Code__c != '953' && c.IATA_Code__c != '954' &&
-								/*5*/(c.Reason1__c == 'CHC – Change of Shareholding' || c.Reason1__c == 'CHL - Change of Location' || c.Reason1__c == 'CHN - Change of Name' ||
-											c.Reason1__c == 'CHO / CHS – Change of Ownership / Legal Status' ||
-											c.Reason1__c == 'New BR / IP' || c.Reason1__c == 'New HO' || c.Reason1__c == 'New SA / CHV – New Code')  &&
-								/*6*/ c.Status == 'Closed'  &&
-								/*7*/ (!c.Account.Name.contains('General Public') && !c.Account.Name.contains('Pubblico Italia')) &&
-								/*8*/ c.Contact.HasOptedOutOfEmail == false &&
-								/*9*/ String.isBlank(c.Contact.Instant_Survey_opt_out__c)
-								/*10*///c.Subject!=null && !c.Subject.contains('PROCOM-EDMC PROJECT')
-				 ) {
-				system.debug(LoggingLevel.error, '################### Clicktools Workflow_AM_CX');
-				system.debug(LoggingLevel.error, '################### Region=-' + c.Region__c + '-');
-				system.debug(LoggingLevel.error, '################### BSPCountry__c=-' + c.BSPCountry__c + '-');
-				system.debug(LoggingLevel.error, '################### AccountCountry=-' + AccountCountry + '-');
 
+		integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
+		countersMap.put(c.Region__c, ++n);
 
-				integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
-				countersMap.put(c.Region__c, ++n);
-
-				//start of INC310891
-				List<SurveyBatchIgnoreUsers__c> surveyIgnoreUsers = SurveyBatchIgnoreUsers__c.getAll().values();
-				Boolean ignore;
-				for(SurveyBatchIgnoreUsers__c siu : surveyIgnoreUsers){
-					ignore = false;
-					if(siu.FirstName__c == c.Owner.FirstName && siu.LastName__c == c.Owner.LastName){
-						IATAcases ++;
-						IATAcaseslog += c.id + ', ';
-						ignore = true;
-						break;
-					}
-				}
-				if(ignore==true)
-					continue;
-				//end of INC310891
-
-				// If the case is owned by some users the email should not start
-	 /*     if ((c.Owner.FirstName == 'Ángel' && c.Owner.LastName == 'Peña' ) ||
-						(c.Owner.FirstName == 'Alvaro' && c.Owner.LastName == 'Alonso' ) ||
-						(c.Owner.FirstName == 'Rafael' && c.Owner.LastName == 'Alarcon' ) ||
-						(c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
-						(c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
-						(c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
-						(c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
-						(c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
-						(c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
-						(c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
-						(c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela') ||
-						(c.Owner.FirstName == 'Victor Manuel' && c.Owner.LastName == 'Meana Solanas') ||
-						(c.Owner.FirstName == 'Raluca' && c.Owner.LastName == 'Dediu') ||
-						(c.Owner.FirstName =='Sara' && c.Owner.LastName == 'Oubrahim') ||
-						(c.Owner.FirstName == 'Taynara'&& c.Owner.LastName == 'Lorentz') ||
-						(c.Owner.FirstName == 'Marina'&& c.Owner.LastName == 'de Paula Loures') ||
-						(c.Owner.FirstName == 'José' && c.Owner.LastName == 'González-Cela de Cominges')) { //INC267186
-					IATAcases ++;
-					IATAcaseslog += c.id + ', ';
-					continue;
-				}*/
-
-		//system.debug(LoggingLevel.ERROR,'AccountCountry is... ' + AccountCountry);
-
-		/*String myvariable;
-		myvariable = AccountCountry;
-		throw new transformationException( 'Messsage for Susanna ' + myvariable);*/
+		//start of INC310891
+		List<SurveyBatchIgnoreUsers__c> surveyIgnoreUsers = SurveyBatchIgnoreUsers__c.getAll().values();
+		Boolean ignore;
+		for(SurveyBatchIgnoreUsers__c siu : surveyIgnoreUsers){
+			ignore = false;
+			if(siu.FirstName__c == c.Owner.FirstName && siu.LastName__c == c.Owner.LastName){
+			IATAcases ++;
+			IATAcaseslog += c.id + ', ';
+			ignore = true;
+			break;
+		}
+		}
+		if(ignore==true)
+		continue;
+		//end of INC310891
 
 				if (AccountCountry == 'People\'s Republic of China')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_ZH');
 				else if (AccountCountry == 'Canada')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_EN_FR');
 				else if (AccountCountry == 'Algeria' || AccountCountry == 'Benin' || AccountCountry == 'Burkina Faso' || AccountCountry == 'Cameroon' ||
-								 AccountCountry == 'Cape Verde' || AccountCountry == 'Central African Republic' || AccountCountry == 'Congo, the Democratic Republic of the' ||
-								 AccountCountry == 'Congo (Brazzaville)' || AccountCountry == 'Côte d\'Ivoire' || AccountCountry == 'Equatorial Guinea' || AccountCountry == 'France' ||
-								 AccountCountry == 'Gabon' || AccountCountry == 'Guinea' || AccountCountry == 'Guinea-Bissau' || AccountCountry == 'Mali' ||
-								 AccountCountry == 'Mauritania' || AccountCountry == 'Morocco' || AccountCountry == 'Niger' || AccountCountry == 'Senegal' || AccountCountry == 'Tchad')
+								AccountCountry == 'Cape Verde' || AccountCountry == 'Central African Republic' || AccountCountry == 'Congo, the Democratic Republic of the' ||
+								AccountCountry == 'Congo (Brazzaville)' || AccountCountry == 'Côte d\'Ivoire' || AccountCountry == 'Equatorial Guinea' || AccountCountry == 'France' ||
+								AccountCountry == 'Gabon' || AccountCountry == 'Guinea' || AccountCountry == 'Guinea-Bissau' || AccountCountry == 'Mali' ||
+								AccountCountry == 'Mauritania' || AccountCountry == 'Morocco' || AccountCountry == 'Niger' || AccountCountry == 'Senegal' || AccountCountry == 'Tchad')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_FR');
 				else if (AccountCountry == 'Austria' || AccountCountry == 'Germany')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_DE');
@@ -442,22 +397,22 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				else if (AccountCountry == 'Brazil' || AccountCountry == 'Portugal')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_PT');
 				else if (AccountCountry == 'Argentina' || AccountCountry == 'Belize' || AccountCountry == 'Bolivia' || AccountCountry == 'Chile' || AccountCountry == 'Colombia' ||
-								 AccountCountry == 'Costa Rica' || AccountCountry == 'Dominican Republic' || AccountCountry == 'Ecuador' || AccountCountry == 'El Salvador' ||
-								 AccountCountry == 'Guatemala' || AccountCountry == 'Honduras' || AccountCountry == 'Nicaragua' || AccountCountry == 'Panama' ||
-								 AccountCountry == 'Paraguay' || AccountCountry == 'Peru' || AccountCountry == 'Spain' || AccountCountry == 'Andorra' || AccountCountry == 'Uruguay' ||
-								 AccountCountry == 'Venezuela')
+								AccountCountry == 'Costa Rica' || AccountCountry == 'Dominican Republic' || AccountCountry == 'Ecuador' || AccountCountry == 'El Salvador' ||
+								AccountCountry == 'Guatemala' || AccountCountry == 'Honduras' || AccountCountry == 'Nicaragua' || AccountCountry == 'Panama' ||
+								AccountCountry == 'Paraguay' || AccountCountry == 'Peru' || AccountCountry == 'Spain' || AccountCountry == 'Andorra' || AccountCountry == 'Uruguay' ||
+								AccountCountry == 'Venezuela')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_ES');
 				else if (AccountCountry == 'Thailand')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_TH');
 				else if (AccountCountry == 'Vietnam')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_VI');
 				else if (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
-								 AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
+								AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
 					template = templates.get('Clicktools_Contact_Email_CX_AM_AR');
 					//start INC325289
 				else if(c.Account.Source_System__c == 'WEBSTAR' &&
 								(AccountCountry == 'United States' ||  AccountCountry == 'US TERRITORIES AND POSSESS' || AccountCountry == 'Northern Mariana Islands') &&
-							 (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) &&
+							(c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) &&
 							(c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
 								template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
 				} //end INC325289
@@ -465,9 +420,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				else if (
 
 					/*2*/((c.Region__c == 'Europe' &&
-								 /*3*/(AccountCountry != 'Russian Federation' && AccountCountry != 'France' && AccountCountry != 'Germany' &&
-											 AccountCountry != 'Italy' && AccountCountry != 'Portugal' && AccountCountry != 'Spain' && AccountCountry != 'Andorra' ) &&
-								 /*4*/!AccountCountry.contains('CIS')) ||
+								/*3*/(AccountCountry != 'Russian Federation' && AccountCountry != 'France' && AccountCountry != 'Germany' &&
+											AccountCountry != 'Italy' && AccountCountry != 'Portugal' && AccountCountry != 'Spain' && AccountCountry != 'Andorra' ) &&
+								/*4*/!AccountCountry.contains('CIS')) ||
 
 								/*12*/(c.Region__c == 'Asia & Pacific' &&
 											 /*13*/(AccountCountry == 'Australia' || AccountCountry == 'Bangladesh' || AccountCountry == 'Cambodia' ||
@@ -480,17 +435,17 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 								/*16*/(c.Region__c == 'Africa & Middle East' &&
 											 /*17+18*/ !(AccountCountry == 'Algeria' || AccountCountry == 'Benin' || AccountCountry == 'Burkina Faso' ||
-																	 AccountCountry == 'Cameroon' || AccountCountry == 'Cape Verde' || AccountCountry == 'Central African Republic' ||
-																	 AccountCountry == '"Congo, the Democratic Republic of the"' || AccountCountry == 'Congo (Brazzaville)' ||
-																	 AccountCountry == 'Côte d\'Ivoire' || AccountCountry == 'Equatorial Guinea' || AccountCountry == 'Gabon' ||
-																	 AccountCountry == 'Guinea' || AccountCountry == 'Guinea-Bissau' || AccountCountry == 'Mali' ||
-																	 AccountCountry == 'Mauritania' || AccountCountry == 'Morocco' || AccountCountry == 'Niger' || AccountCountry == 'Senegal' ||
-																	 AccountCountry == 'Tchad' || AccountCountry == 'Egypt' ||
-																	 AccountCountry == 'Iran, Islamic Republic of' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
-																	 AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')) ||
+																	AccountCountry == 'Cameroon' || AccountCountry == 'Cape Verde' || AccountCountry == 'Central African Republic' ||
+																	AccountCountry == '"Congo, the Democratic Republic of the"' || AccountCountry == 'Congo (Brazzaville)' ||
+																	AccountCountry == 'Côte d\'Ivoire' || AccountCountry == 'Equatorial Guinea' || AccountCountry == 'Gabon' ||
+																	AccountCountry == 'Guinea' || AccountCountry == 'Guinea-Bissau' || AccountCountry == 'Mali' ||
+																	AccountCountry == 'Mauritania' || AccountCountry == 'Morocco' || AccountCountry == 'Niger' || AccountCountry == 'Senegal' ||
+																	AccountCountry == 'Tchad' || AccountCountry == 'Egypt' ||
+																	AccountCountry == 'Iran, Islamic Republic of' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
+																	AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')) ||
 
 								/*19*/(c.Region__c == 'Americas' &&
-											 /*20*/(AccountCountry == 'Bermuda' || AccountCountry == 'Cayman Islands' || AccountCountry == 'Haiti' ||
+											/*20*/(AccountCountry == 'Bermuda' || AccountCountry == 'Cayman Islands' || AccountCountry == 'Haiti' ||
 															AccountCountry == 'Jamaica' || AccountCountry == 'Trinidad and Tobago' || AccountCountry == 'Turks and Caicos Islands')))
 
 				)
@@ -503,145 +458,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 					n = countersMap.get(c.Region__c);
 					if (n == 1)  countersMap.remove(c.Region__c);
-					else     countersMap.put(c.Region__c, --n);
+					else countersMap.put(c.Region__c, --n);
 
 				}
 
 
-
-
-				//start INC306722 - EXCLUDE the email invitation to fill in the survey from IFAP cases
-				/****** Clicktools Workflow_ARM_CX_.... *****/
-			/*} else if (*/
-			/*1*/
-			/*c.RecordType.DeveloperName == 'IATA_Financial_Review' &&*/
-											 /*2 */
-											 /*c.Status == 'Closed' &&
-											 !c.Contact.Email.contains('@iata.org') &&
-											 !c.Contact.Email.contains('@salesforce.com') &&*/
-											 /*3*/
-											 /*(c.Financial_Review_Result__c == 'Satisfactory - New Financial Security' ||
-															c.Financial_Review_Result__c == 'Satisfactory - Update Financial Security' ||
-															c.Financial_Review_Result__c == 'Unsatisfactory - New Financial Security' ||
-															c.Financial_Review_Result__c == 'Unsatisfactory - Update Financial Security') &&*/
-											 /*4*/
-											 /*c.Financial_Review_Type__c == 'Annual' &&*/
-											 /*5*/
-											 /*c.FS_Submitted_Date__c != null  &&*/
-											 /*6*/
-											 /*c.CreatedDate > Date.parse('1/1/2014')*/
-											 /*
-								) {
-				system.debug(LoggingLevel.error, '################### Clicktools Workflow_ARM_CX ');
-				system.debug(LoggingLevel.error, '################### Region=-' + c.Region__c + '-');
-				system.debug(LoggingLevel.error, '################### Account_Billing_Country__c=-' + c.Account_Billing_Country__c + '-');
-
-				integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
-				countersMap.put(c.Region__c, ++n);
-
-
-				if (c.Account_Billing_Country__c == 'China' || c.Account_Billing_Country__c == 'PEOPLE\'S REPUBLIC OF CHINA')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_ZH');
-				else if (c.Account_Billing_Country__c == 'Canada')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_EN_FR');
-				else if (c.Account_Billing_Country__c == 'Algeria' || c.Account_Billing_Country__c == 'Benin' || c.Account_Billing_Country__c == 'Burkina Faso' || c.Account_Billing_Country__c == 'Cameroon' ||
-								 c.Account_Billing_Country__c == 'Cape Verde' || c.Account_Billing_Country__c == 'Central African Republic' || c.Account_Billing_Country__c == 'Congo, the Democratic Republic of the' ||
-								 c.Account_Billing_Country__c == 'Congo' || c.Account_Billing_Country__c == 'CONGO, DEM. REP. OF' || c.Account_Billing_Country__c == 'Côte d\'Ivoire' ||
-								 c.Account_Billing_Country__c == 'Equatorial Guinea' || c.Account_Billing_Country__c == 'France' || c.Account_Billing_Country__c == 'Gabon' || c.Account_Billing_Country__c == 'Guinea' ||
-								 c.Account_Billing_Country__c == 'Guinea-Bissau' || c.Account_Billing_Country__c == 'Mali' || c.Account_Billing_Country__c == 'Mauritania' || c.Account_Billing_Country__c == 'Morocco' ||
-								 c.Account_Billing_Country__c == 'Niger' || c.Account_Billing_Country__c == 'Senegal' || c.Account_Billing_Country__c == 'Tchad' || c.Account_Billing_Country__c == 'Togo' ||
-								 c.Account_Billing_Country__c == 'Tunisia' || c.Account_Billing_Country__c == 'COTE D\'IVOIRE' || c.Account_Billing_Country__c == 'GUINEA BISSAU' || c.Account_Billing_Country__c == 'CHAD' ||
-								 c.Account_Billing_Country__c == 'FRENCH GUIANA' || c.Account_Billing_Country__c == 'FRENCH POLYNESIA')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_FR');
-				else if (c.Account_Billing_Country__c == 'Austria' || c.Account_Billing_Country__c == 'Germany')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_DE');
-				else if (c.Account_Billing_Country__c == 'Indonesia')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_ID');
-				else if (c.Account_Billing_Country__c == 'ITALY')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_IT');
-				else if (c.Account_Billing_Country__c == 'JAPAN')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_JA');
-				else if (c.Account_Billing_Country__c == 'Korea' || c.Account_Billing_Country__c == 'Democratic People\'s Republic of' ||
-								 c.Account_Billing_Country__c == 'Korea, Republic of' || c.Account_Billing_Country__c == 'KOREA DEM.PEOPLES REPUBLIC')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_KO');
-				else if (c.Account_Billing_Country__c == 'Brazil' || c.Account_Billing_Country__c == 'Portugal')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_PT');
-				else if (c.Account_Billing_Country__c == 'Argentina' || c.Account_Billing_Country__c == 'Belize' || c.Account_Billing_Country__c == 'Bolivia' || c.Account_Billing_Country__c == 'Chile' ||
-								 c.Account_Billing_Country__c == 'Colombia' || c.Account_Billing_Country__c == 'Costa Rica' || c.Account_Billing_Country__c == 'Dominican Republic' || c.Account_Billing_Country__c == 'Ecuador' ||
-								 c.Account_Billing_Country__c == 'El Salvador' || c.Account_Billing_Country__c == 'Guatemala' || c.Account_Billing_Country__c == 'Honduras' || c.Account_Billing_Country__c == 'Nicaragua' ||
-								 c.Account_Billing_Country__c == 'Panama' || c.Account_Billing_Country__c == 'Paraguay' || c.Account_Billing_Country__c == 'Peru' || c.Account_Billing_Country__c == 'Spain' ||
-								 c.Account_Billing_Country__c == 'Uruguay' || c.Account_Billing_Country__c == 'Venezuela' || c.Account_Billing_Country__c == 'SPAIN' || c.Account_Billing_Country__c == 'Andorra' ||
-								 c.Account_Billing_Country__c == 'Venezuela, Bolivarian Republic of')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_ES');
-				else if (c.Account_Billing_Country__c == 'THAILAND')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_TH');
-				else if (c.Account_Billing_Country__c == 'Viet Nam' || c.Account_Billing_Country__c == 'Vietnam')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_VI');
-				else if (c.Account_Billing_Country__c == 'Egypt' || c.Account_Billing_Country__c == 'Iraq' || c.Account_Billing_Country__c == 'Jordan' ||
-								 c.Account_Billing_Country__c == 'Libya' || c.Account_Billing_Country__c == 'Somalia' || c.Account_Billing_Country__c == 'South Sudan' || c.Account_Billing_Country__c == 'Sudan' ||
-								 c.Account_Billing_Country__c == 'Suriname' || c.Account_Billing_Country__c == 'Syria')
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_AR');
-
-				else if (*/
-					/*6*/
-					/*((c.Region__c == 'Europe' &&*/
-								 /*7*/
-								 /*(c.Account_Billing_Country__c != 'Spain' && c.Account_Billing_Country__c != 'Andorra' &&
-											 c.Account_Billing_Country__c != 'Republic of' && c.Account_Billing_Country__c != 'Russia' && c.Account_Billing_Country__c != 'Russian Federation' &&
-											 c.Account_Billing_Country__c != 'France' && c.Account_Billing_Country__c != 'Germany' && c.Account_Billing_Country__c != 'Italy' &&
-											 c.Account_Billing_Country__c != 'Portugal' && c.Account_Billing_Country__c != 'Spain & Andorra')) ||
-									*/
-								/*8*/
-								/*(c.Region__c == 'Asia & Pacific' &&*/
-											/*9*/
-											/*(c.Account_Billing_Country__c == 'Australia' || c.Account_Billing_Country__c == 'Bangladesh' || c.Account_Billing_Country__c == 'Cambodia' || c.Account_Billing_Country__c == 'India' ||
-														c.Account_Billing_Country__c == 'Malaysia' || c.Account_Billing_Country__c == 'Nepal' || c.Account_Billing_Country__c == 'New Zealand' || c.Account_Billing_Country__c == 'Pakistan' ||
-														c.Account_Billing_Country__c == 'Philippines' || c.Account_Billing_Country__c == 'Singapore' || c.Account_Billing_Country__c == 'Sri Lanka')) ||
-											*/
-								/*10*/
-								/*(c.Region__c == 'China & North Asia' &&*/
-											 /*11*/
-											 /*(c.Account_Billing_Country__c == 'Chinese Taipei' || c.Account_Billing_Country__c == 'Taiwan' || c.Account_Billing_Country__c == 'Province of China' ||
-															c.Account_Billing_Country__c == 'Hong Kong SAR, China' || c.Account_Billing_Country__c == 'Mongolia' || c.Account_Billing_Country__c == 'Hong Kong' ||
-															c.Account_Billing_Country__c == 'HONG KONG (SAR), CHINA')) ||
-								*/
-								/*12*/
-								/*(c.Region__c == 'Africa & Middle East' &&*/
-											 /*13 + 14*/
-											 /*(c.Account_Billing_Country__c != 'Algeria' && c.Account_Billing_Country__c != 'Benin' && c.Account_Billing_Country__c != 'Burkina Faso' && c.Account_Billing_Country__c != 'Cameroon' &&
-																	 c.Account_Billing_Country__c != 'Cape Verde' && c.Account_Billing_Country__c != 'Central African Republic' && c.Account_Billing_Country__c != 'Congo, the Democratic Republic of the' &&
-																	 c.Account_Billing_Country__c != 'Congo' && c.Account_Billing_Country__c != 'CONGO, DEM. REP. OF' && c.Account_Billing_Country__c != 'Côte d\'Ivoire' &&
-																	 c.Account_Billing_Country__c != 'Equatorial Guinea' && c.Account_Billing_Country__c != 'France' && c.Account_Billing_Country__c != 'Gabon' && c.Account_Billing_Country__c != 'Guinea' &&
-																	 c.Account_Billing_Country__c != 'Guinea-Bissau' && c.Account_Billing_Country__c != 'Mali' && c.Account_Billing_Country__c != 'Mauritania' && c.Account_Billing_Country__c != 'Morocco' &&
-																	 c.Account_Billing_Country__c != 'Niger' && c.Account_Billing_Country__c != 'Senegal' && c.Account_Billing_Country__c != 'Tchad' && c.Account_Billing_Country__c != 'Togo' && c.Account_Billing_Country__c != 'Tunisia' &&
-																	 c.Account_Billing_Country__c != 'COTE D\'IVOIRE' && c.Account_Billing_Country__c != 'GUINEA BISSAU' && c.Account_Billing_Country__c != 'CHAD' && c.Account_Billing_Country__c != 'FRENCH GUIANA' &&
-																	 c.Account_Billing_Country__c != 'FRENCH POLYNESIA' && c.Account_Billing_Country__c != 'Egypt' && c.Account_Billing_Country__c != 'Iraq' &&
-																	 c.Account_Billing_Country__c != 'Jordan' && c.Account_Billing_Country__c != 'Libya' && c.Account_Billing_Country__c != 'Somalia' && c.Account_Billing_Country__c != 'South Sudan' &&
-																	 c.Account_Billing_Country__c != 'Sudan' && c.Account_Billing_Country__c != 'Suriname' && c.Account_Billing_Country__c != 'Syria')) ||
-								*/
-								/*15*/
-								/*
-								(c.Region__c == 'Americas' &&*/
-											 /*16*/
-											 /*((c.Account_Billing_Country__c == 'Bermuda' || c.Account_Billing_Country__c == 'Cayman Islands' || c.Account_Billing_Country__c == 'Haiti' || c.Account_Billing_Country__c == 'Jamaica' ||
-															 c.Account_Billing_Country__c == 'Trinidad and Tobago' || c.Account_Billing_Country__c == 'Turks and Caicos Islands'))))
-				)
-					template = templates.get('Clicktools_Contact_Email_CX_ARM_EN');
-				else {
-					noNation2++;
-					noNationlog2 += c.id + ', ';
-
-					n = countersMap.get(c.Region__c);
-					if (n == 1)  countersMap.remove(c.Region__c);
-					else     countersMap.put(c.Region__c, --n);
-				}
-
-			*/
-			//end INC306722 - EXCLUDE the email invitation to fill in the survey from IFAP cases
-
-
-					/****** For Cases - Global Record Type******/
-			} else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
+		/****** For Cases - Global Record Type******/
+	} else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
 
 					template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
@@ -649,9 +472,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 				/****** New rule January 2015 ******/
 			} else if (c.RecordType.DeveloperName == 'FDS_ICCS_Email_to_Case' && /*FDS ICCS Generic Request Management*/
-								 !c.Contact.Email.contains('@iata.org') &&
-								 !c.Contact.Email.contains('@salesforce.com') &&
-								 c.Status == 'Closed'
+								!c.Contact.Email.contains('@iata.org') &&
+								!c.Contact.Email.contains('@salesforce.com') &&
+								c.Status == 'Closed'
 								) {
 
 				template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN');
@@ -660,10 +483,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 				/****** New rule January 2015 ******/
 			} else if (c.RecordType.DeveloperName == 'Cases_SIS_Help_Desk' &&
-								 !c.Contact.Email.contains('@iata.org') &&
-								 !c.Contact.Email.contains('@salesforce.com') &&
-								 c.Status == 'Closed' &&
-								 c.CaseArea__c == 'SIS'
+								!c.Contact.Email.contains('@iata.org') &&
+								!c.Contact.Email.contains('@salesforce.com') &&
+								c.Status == 'Closed' &&
+								c.CaseArea__c == 'SIS'
 
 								) {
 
@@ -673,10 +496,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 				/****** New rule January 2015 ******/
 			} else if (c.RecordType.DeveloperName == 'Cases_SIS_Help_Desk' &&
-								 !c.Contact.Email.contains('@iata.org') &&
-								 !c.Contact.Email.contains('@salesforce.com') &&
-								 c.Status == 'Closed' &&
-								 c.CaseArea__c == 'ICH'
+								!c.Contact.Email.contains('@iata.org') &&
+								!c.Contact.Email.contains('@salesforce.com') &&
+								c.Status == 'Closed' &&
+								c.CaseArea__c == 'ICH'
 								) {
 
 				template = templates.get('Clicktools_Contact_Email_CX_ICH_EN');
@@ -691,12 +514,12 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				c.Status == 'Closed' &&
 				(c.Reason1__c != 'Documentation received (IN)' && c.Reason1__c != 'Irregularity / default / reinstatement' && c.Reason1__c != 'Dispute') &&
 				(c.Instant_Survey_Last_survey_sent__c == null ||
-				 c.Instant_Survey_Feedback_requested__c == false) &&
+				c.Instant_Survey_Feedback_requested__c == false) &&
 				c.ParentId == null &&
 				(c.Type_of_customer__c != 'Third Party' && c.Type_of_customer__c != 'Legal Entities' && c.Type_of_customer__c != 'Global Distribution System (GDS)' &&
-				 c.Type_of_customer__c != 'Partner' && c.Type_of_customer__c != 'IATA Employee' && c.Type_of_customer__c != 'DPC' &&
-				 c.Type_of_customer__c != 'Non-IATA Travel Agent' && c.Type_of_customer__c != 'Auditors' && c.Type_of_customer__c != 'General Public') &&
-				 c.Type_of_customer__c != 'Airport Authorities' && c.Type_of_customer__c != 'Government Agencies' &&
+				c.Type_of_customer__c != 'Partner' && c.Type_of_customer__c != 'IATA Employee' && c.Type_of_customer__c != 'DPC' &&
+				c.Type_of_customer__c != 'Non-IATA Travel Agent' && c.Type_of_customer__c != 'Auditors' && c.Type_of_customer__c != 'General Public') &&
+				c.Type_of_customer__c != 'Airport Authorities' && c.Type_of_customer__c != 'Government Agencies' &&
 				(c.Origin != 'Agent Financial Review Notification' && c.Origin != 'Airline Participation' && c.Origin != 'Airline Suspension' &&
 				 c.Origin != 'AIRS' && c.Origin != 'Code Transfers and Mergers' && c.Origin != 'Customer Portal' &&
 				 c.Origin != 'Email' && c.Origin != 'Fax' && c.Origin != 'Funds Management' &&
@@ -740,7 +563,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				//Inc325289
 				else if(c.Account.Source_System__c == 'WEBSTAR' &&
 							AccountCountry == 'United States' &&
-							 (c.Account.Status__c != '' ||  c.Account.Status__c != null) &&
+							(c.Account.Status__c != '' ||  c.Account.Status__c != null) &&
 							(c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
 					template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
 				}
@@ -778,10 +601,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				else if (
 					rolesCanSendSurveysTo3Regions.contains(RoleName) &&
 					((c.Region__c == 'Europe' &&
-					 AccountCountry == 'France' )
+					AccountCountry == 'France' )
 					||
 					(c.Region__c == 'Africa & Middle East' &&
-					 (AccountCountry == 'Benin' || AccountCountry == 'Burkina Faso' || AccountCountry == 'Cameroon' || AccountCountry == 'Cape Verde'
+					(AccountCountry == 'Benin' || AccountCountry == 'Burkina Faso' || AccountCountry == 'Cameroon' || AccountCountry == 'Cape Verde'
 						|| AccountCountry == 'Tchad' || AccountCountry == 'Congo, the Democratic Republic of the' || AccountCountry == 'Congo (Brazzaville)'
 						|| AccountCountry == 'Equatorial Guinea' || AccountCountry == 'Gabon' || AccountCountry == 'Guinea'
 						|| AccountCountry == 'Guinea-Bissau' || AccountCountry == 'Côte d\'Ivoire' || AccountCountry == 'Mali' || AccountCountry == 'Mauritania'
@@ -791,21 +614,12 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_FR_AUG17');
 
-				/*
-				else if(
-				RoleName.contains('MAD Hub CS') &&
-				c.Region__c == 'Europe' &&
-				(AccountCountry == 'Greece' || AccountCountry == 'Cyprus')
-				)
-				template = templates.get('Clicktools_Contact_Email_CX_GR');
-				*/
-
-				else if (
-					rolesCanSendSurveysTo3Regions.contains(RoleName) &&
-					c.Region__c == 'Europe' &&
-					(AccountCountry == 'Austria' || AccountCountry == 'Germany')
-				)
-					template = templates.get('Clicktools_Contact_Email_CX_DE_AUG17');
+		else if (
+			rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+			c.Region__c == 'Europe' &&
+			(AccountCountry == 'Austria' || AccountCountry == 'Germany')
+		)
+		template = templates.get('Clicktools_Contact_Email_CX_DE_AUG17');
 
 
 				else if (
@@ -849,25 +663,16 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_PT_AUG17');
 
-				/*
-				else if(
-				RoleName.contains('MAD Hub CS') &&
-				c.Region__c == 'Europe' &&
-				AccountCountry == 'Romania & Moldova'
-				)
-				template = templates.get('Clicktools_Contact_Email_CX_RO');
-				*/
-
 				else if (
 						rolesCanSendSurveysTo3Regions.contains(RoleName) &&
 						(c.Region__c == 'Europe' &&
 						(AccountCountry == 'Spain' || AccountCountry == 'Andorra')) ||
 						(c.Region__c == 'Americas' &&
 						(AccountCountry == 'Ecuador' || AccountCountry == 'Costa Rica' || AccountCountry == 'Colombia' || AccountCountry == 'El Salvador' ||
-						 AccountCountry == 'Belize' || AccountCountry == 'Panama' || AccountCountry == 'Guatemala' || AccountCountry == 'Nicaragua' ||
-						 AccountCountry == 'Honduras' || AccountCountry == 'Chile' || AccountCountry == 'Dominican Republic' || AccountCountry == 'Mexico' ||
-						 AccountCountry == 'Bolivia' || AccountCountry == 'Peru' || AccountCountry == 'Venezuela' || AccountCountry == 'Argentina' ||
-						 AccountCountry == 'Paraguay' || AccountCountry == 'Uruguay' ))
+						AccountCountry == 'Belize' || AccountCountry == 'Panama' || AccountCountry == 'Guatemala' || AccountCountry == 'Nicaragua' ||
+						AccountCountry == 'Honduras' || AccountCountry == 'Chile' || AccountCountry == 'Dominican Republic' || AccountCountry == 'Mexico' ||
+						AccountCountry == 'Bolivia' || AccountCountry == 'Peru' || AccountCountry == 'Venezuela' || AccountCountry == 'Argentina' ||
+						AccountCountry == 'Paraguay' || AccountCountry == 'Uruguay' ))
 
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_ES_AUG17');
@@ -880,15 +685,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_TH_AUG17');
 
-				/*
-				else if(
-				RoleName.contains('MAD Hub CS') &&
-				c.Region__c == 'Europe' &&
-				AccountCountry == 'Turkey'
-				)
-				template = templates.get('Clicktools_Contact_Email_CX_TR');
-				*/
-
 				else if (
 					(RoleName.contains('A&P Customer Service') || RoleName.contains('Staff - Vietnam')) &&
 					c.Region__c == 'Asia & Pacific' &&
@@ -900,29 +696,29 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 					rolesCanSendSurveysTo3Regions.contains(RoleName) &&
 					c.Region__c == 'Africa & Middle East' &&
 					(AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
-					 AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
+					AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_AR_AUG17');
 
 				else if (
 					(RoleName.contains('A&P Customer Service') &&
-					 c.Region__c == 'Asia & Pacific' &&
-					 (AccountCountry == 'Philippines' || AccountCountry == 'India' || AccountCountry == 'Nepal' || AccountCountry == 'Bangladesh' ||
+					c.Region__c == 'Asia & Pacific' &&
+					(AccountCountry == 'Philippines' || AccountCountry == 'India' || AccountCountry == 'Nepal' || AccountCountry == 'Bangladesh' ||
 						AccountCountry == 'Pakistan' || AccountCountry == 'Singapore' || AccountCountry == 'Sri Lanka' || AccountCountry == 'Cambodia' ||
 						AccountCountry == 'New Zealand' || AccountCountry == 'Malaysia' ))
 					||
 					(rolesCanSendSurveysTo3Regions.contains(RoleName) &&
-					 c.Region__c == 'Europe' &&
-					 (AccountCountry != 'Israel' && AccountCountry != 'France' && AccountCountry != 'Germany' &&
+					c.Region__c == 'Europe' &&
+					(AccountCountry != 'Israel' && AccountCountry != 'France' && AccountCountry != 'Germany' &&
 						AccountCountry != 'Italy' && AccountCountry != 'Portugal' &&
 						AccountCountry != 'Spain' && AccountCountry != 'Andorra' && AccountCountry != 'Russian Federation'))
 					||
 					(RoleName.contains('China & N. Asia Customer Service') &&
-					 c.Region__c == 'China & North Asia' &&
-					 (AccountCountry == 'Mongolia' || AccountCountry == 'Chinese Taipei' || AccountCountry == 'Hong Kong (SAR), China' ))
+					c.Region__c == 'China & North Asia' &&
+					(AccountCountry == 'Mongolia' || AccountCountry == 'Chinese Taipei' || AccountCountry == 'Hong Kong (SAR), China' ))
 					||
-					 (rolesCanSendSurveysTo3Regions.contains(RoleName) &&
-					 (c.Region__c == 'Africa & Middle East' &&
+					(rolesCanSendSurveysTo3Regions.contains(RoleName) &&
+					(c.Region__c == 'Africa & Middle East' &&
 						AccountCountry != 'Benin' && AccountCountry != 'Burkina Faso' && AccountCountry != 'Cameroon' && AccountCountry != 'Cape Verde' &&
 						AccountCountry != 'Tchad' && AccountCountry != 'Congo, the Democratic Republic of the' && AccountCountry != 'Congo (Brazzaville)' &&
 						AccountCountry != 'Equatorial Guinea' && AccountCountry != 'Gabon' && AccountCountry != 'Guinea' && AccountCountry != 'Guinea-Bissau' &&
@@ -933,13 +729,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 						AccountCountry != 'Libya' && AccountCountry != 'Somalia' && AccountCountry != 'South Sudan' && AccountCountry != 'Sudan' &&
 						AccountCountry != 'Suriname' && AccountCountry != 'Syria')
 					||
-					 (c.Region__c == 'Americas' &&
-					 (AccountCountry == 'HAITI' || AccountCountry == 'JAMAICA' || AccountCountry == 'CAYMAN ISLANDS' ||
+					(c.Region__c == 'Americas' &&
+					(AccountCountry == 'HAITI' || AccountCountry == 'JAMAICA' || AccountCountry == 'CAYMAN ISLANDS' ||
 						AccountCountry == 'TURKS AND CAICOS ISLANDS' || AccountCountry == 'Trinidad and Tobago' || AccountCountry == 'BERMUDA' )))
 					||
 					(RoleName.contains('A&P Customer Service') &&
-					 c.Region__c == 'Asia & Pacific' &&
-					 AccountCountry == 'Australia')
+					c.Region__c == 'Asia & Pacific' &&
+					AccountCountry == 'Australia')
 				)
 					template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 				else {
@@ -948,16 +744,16 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 					n = countersMap.get(c.Region__c);
 					if (n == 1)  countersMap.remove(c.Region__c);
-					else     countersMap.put(c.Region__c, --n);
+					else countersMap.put(c.Region__c, --n);
 				}
 
 				//start INC292755 recordType = Airline Coding Application
 			}else if(c.RecordType.DeveloperName == 'Airline_Coding_Application' &&
-											 c.Status == 'Closed' &&
-											 !c.Contact.Email.contains('@iata.org') &&
-											 !c.Contact.Email.contains('@salesforce.com')){
+											c.Status == 'Closed' &&
+											!c.Contact.Email.contains('@iata.org') &&
+											!c.Contact.Email.contains('@salesforce.com')){
 				template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-			} //end INC292755
+			}//end INC292755
 
 			/****** Preparing the email *****/
 			if (template != null) {
@@ -966,16 +762,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
 				if (
-					//if the contact has received at least one survey request in the last week no email will be sent
-					/*INC246478
-					(c.Contact.Instant_Survey_Last_feedback_received__c == null &&
-					 c.Contact.Instant_Survey_Last_survey_sent__c > dateTime.now().addDays(-7))
-					||
-					*/
+
 					//if the contact answered to one survey in the last month no email will be sent
 					(c.Contact.Instant_Survey_Last_feedback_received__c != null &&
-					 c.Contact.Instant_Survey_Last_feedback_received__c > c.Contact.Instant_Survey_Last_survey_sent__c &&
-					 c.Contact.Instant_Survey_Last_feedback_received__c > dateTime.now().addDays(-31))
+					c.Contact.Instant_Survey_Last_feedback_received__c > c.Contact.Instant_Survey_Last_survey_sent__c &&
+					c.Contact.Instant_Survey_Last_feedback_received__c > dateTime.now().addDays(-31))
 					||
 					//the contact will receive other mails today
 					ContactIds.contains(c.contactid)
@@ -998,12 +789,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 			} else {system.debug('################### No mail template');}
 		}
 
-		/*Map<Id,Id> ContactIdToUserId = new Map<Id,Id>();
-		for(User u : [SELECT Id, ContactId FROM User WHERE ContactId IN : ContactIds]){
-		ContactIdToUserId.put(u.ContactId, u.Id);
-		}
-		system.debug('################### '+ContactIdToUserId.values().size()+' contacts replaced by users');
-		*/
+
 		// Sends the email
 		UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
 		UtilityCS__c senderCNS = UtilityCS__c.getInstance('SurveyEmailSenderCNS');
@@ -1017,11 +803,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 					}
 			}
 
-			//id userid = ContactIdToUserId.get(em.cas.ContactId);
-			//if(userid!=null){
-			//email.setTargetObjectId(userid);
-			//usersreplaced ++;
-			//}else
 			email.setTargetObjectId(em.cas.ContactId);
 			email.setTemplateId(em.templateId);
 			email.setWhatId(em.cas.Id);
@@ -1051,10 +832,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 	}
 
-
-
-
-
 	public void processCustomerRecovery(List<Case> scope) {
 
 		Id RT_ComplaintIDFS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
@@ -1078,583 +855,15 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				c.Customer_recovery__c = true ;
 				c.Status = 'Customer Recovery';
 				c.RecordTypeId = RT_ComplaintIDFS_Id;
-							//**INC301099** Delete this rule
-				/*if(RoleName.contains('Distribution - Airline Coding & MITA'))
-						c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
-				else*/
+
 						c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
-				lstCasesToUpdate.add(c);
-			}
-		}
-		system.debug(LoggingLevel.error, '################### lstCasesToUpdate.isEmpty() = ' + lstCasesToUpdate.isEmpty());
-		if (!lstCasesToUpdate.isEmpty()) {
-			Database.update(lstCasesToUpdate, false);
-		}
+		lstCasesToUpdate.add(c);
 	}
-
-	// to be removed
-	public void fakeMethod(){
-		Integer i = 0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		 i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
 	}
-
+	system.debug(LoggingLevel.error, '################### lstCasesToUpdate.isEmpty() = ' + lstCasesToUpdate.isEmpty());
+	if (!lstCasesToUpdate.isEmpty()) {
+		Database.update(lstCasesToUpdate, false);
 	}
+	}
+}

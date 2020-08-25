@@ -42,7 +42,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>Airline Account</label>
-    <pluralLabel>Airline Accounts</pluralLabel>
+    <label>Airline Account PE</label>
+    <pluralLabel>Airline Accounts PE</pluralLabel>
     <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

@@ -21,6 +21,56 @@
             </span>
         </c-portal-page-container>
     </div>
+    <div if:false={componentLoading} class="serviceInfoPanel slds-p-vertical_medium">
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div class="slds-grid slds-size--1-of-1 slds-grid_vertical-stretch slds-wrap slds-gutters-direct_x-small ">
+                    <div class="slds-col slds-p-vertical_medium slds-size_1-of-1 slds-medium-size--10-of-12">
+                        <lightning-formatted-rich-text class="introMessage text-xsmall" value={serviceRecord.serviceDescriptionLabel}>
+                        </lightning-formatted-rich-text>
+                    </div>
+                    <div if:false={displayAdminView} class="slds-grid slds-wrap slds-size--1-of-1 slds-medium-size--2-of-12 slds-grid_align-end slds-grid_vertical-align-center">
+                        <div if:false={renderRequest} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <div if:true={serviceRecord.accessGranted}>
+                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal" label={label.goToServicelb} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+
+                            <div if:false={serviceRecord.accessGranted}>
+                                <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidt wordBreakNormal" label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                        <div if:true={renderRequest} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <lightning-button-menu if:true={renderCancelRequest} class="text-bold text-xsmall outlinedButtonBorderBlue fullWidth requestedService" variant="container"  label="Access Requested" menu-alignment="right" onselect={cancelServiceAccessRequest}>
+                                <lightning-menu-item class="text-bold" value="cancel_request" label={label.cancelRequestlb}></lightning-menu-item>
+                            </lightning-button-menu>
+                        </div>
+                    </div>
+                    <div if:true={displayAdminView} class="slds-grid slds-wrap slds-size--1-of-1 slds-medium-size--2-of-12  slds-grid_align-end slds-grid_vertical-align-center">
+                        <div if:true={serviceRecord.accessGranted} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <lightning-button class="baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal"
+                                label={label.goToServicelb} onclick={handleTopAction}>
+                            </lightning-button>
+                        </div>
+
+
+                        <div if:false={serviceRecord.accessGranted} class="slds-col slds-size--1-of-1 slds-medium-size--3-of-4">
+                            <div if:true={isIFG_Service}>
+                                <span class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton wordBreakNormal">
+                                    {serviceRecord.btnLabel}
+                                </span>
+                            </div>
+                            <div if:false={isIFG_Service}>
+                                <lightning-button class=" slds-grid_align-end baseButton outlinedButtonBorderBlue text-xsmall fullWidth wordBreakNormal" label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
 
     <div class="body slds-m-top_xx-large">
         <c-portal-page-container>
@@ -107,18 +157,19 @@
                                     <div class="slds-col slds-p-top_small slds-size_1-of-1 slds-m-bottom_large">
                                         {label.manageUserslb}
                                     </div>
-                                    <div class="slds-grid slds-wrap">
-                                        <div class="slds-col slds-size_1-of-1">
-                                            <div class="slds-grid slds-wrap slds-gutters_direct-x-small slds-grid_align-end">
-                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                                    <!-- FILTER -->
-                                                    <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
-                                                        {label.CSP_Filtered}
-                                                        <img class="slds-float_right" src={filteredIconUrl}>
-                                                    </button>
-                                                    <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
-                                                        {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
-                                                    </button>
+                                    <div class="slds-grid slds-wrap slds-m-vertical--medium">
+                                        <!-- SEARCH -->
+                                        <div class="slds-col slds-grid slds-size_1-of-1 slds-medium-size_4-of-12 slds-order--2 slds-medium-order--1">
+                                            <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12  aroundLightGrayBorder searchBox borderlessInput searchInputContainer slds-p-horizontal_small text-xsmall inputFilter">
+                                                <img src={searchIconUrl}>
+                                                <lightning-input name="newRecipientTextInput"
+                                                    placeholder={label.searchContactPlaceholder}
+                                                    class="hideInputLabel grayInputPlaceholder titleTruncation"
+                                                    onchange={searchRecord}
+                                                    value={searchText}>
+                                                </lightning-input>
+                                                <div if:true={showCross}  class="searchBarIcon slds-m-right--large rotateIcon45Deg">
+                                                    <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
                                                 </div>
                                                 <!-- LIST VIEW -->
                                                 <template if:true={canAddUsers}>
@@ -134,19 +185,29 @@
                                                 </template>
                                             </div>
                                         </div>
-                                        <div class="slds-col slds-size_1-of-1">
-                                            <div class="slds-grid slds-wrap">
-                                                <!-- SEARCH -->
-                                                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2">
-                                                    <div class="bottomLightGrayBorder slds-m-around_small inputFilter" style="display: flex;">
-                                                            <img src={searchIconUrl} height="24" width="24" />
-                                                            <lightning-input name="newRecipientTextInput" placeholder={label.searchContactPlaceholder}
-                                                                class="hideInputLabel borderlessInput grayInputPlaceholder fullWidth"
-                                                            value={searchText} onchange={searchRecord}>
-                                                            </lightning-input>
-                                                    </div>
-                                                </div>
+                                        <div class="slds-grid slds-wrap slds-size--1-of-1  slds-medium-size_8-of-12 slds-order--1 slds-medium-order--2 slds-grid_align-end">
+                                            <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--2 slds-medium-order--1 ">
+                                                <!-- FILTER -->
+                                                <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
+                                                    {label.CSP_Filtered}
+                                                    <img class="slds-float_right" src={filteredIconUrl}>
+                                                </button>
+                                                <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
+                                                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+                                                </button>
                                             </div>
+                                            <!-- LIST VIEW -->
+                                            <template if:true={canAddUsers}>
+                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--1 slds-medium-order--2" if:true={showMassApprove}>
+                                                    <lightning-button label={label.grantAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassApproveAccess} ></lightning-button>
+                                                </div>
+                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--1 slds-medium-order--2" if:true={showMassDeny}>
+                                                    <lightning-button label={label.denyAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassDenyAccess} ></lightning-button>
+                                                </div>
+                                                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-order--1 slds-medium-order--2">
+                                                    <lightning-button label={label.addNewUser} class="containedButton fullWidth twoLines" onclick={toggleAddUserModal} ></lightning-button>
+                                                </div>
+                                            </template>
                                         </div>
                                     </div>
 
@@ -158,10 +219,10 @@
                                                              is-loading={loadingContacts}
                                                              resize-column-disabled=true
                                                              onrowselection={onRowSelection}
-                                            class="serviceContactList"> 
+                                            class="serviceContactList">
                                         </lightning-datatable>
                                         <!-- PAGINATION -->
-                                        
+
                                         <c-paginator
                                                 page-number={currentPageNumber}
                                                 page-size={PAGE_SIZE}
@@ -254,7 +315,7 @@
 
             <span slot="modalFooter">
                 <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
-                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                         <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={label.cancel} variant="neutral" onclick={handlePopupCancelAction}></lightning-button>
                     </div>
                     <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
@@ -322,7 +383,7 @@
                                 <p class="text-xxsmall text-gray userlookupLabel"> {label.addUsers}</p>
 
                                 <c-portal-services-add-users-lookup onsearch={handleContactSearch} item-name="contactlookup"
-                                                                    data-id="contactlookup" oncontactlookup={getAvailableContacts} required-class=''
+                                                                    data-id="contactlookup" required-class=''
                                                                     placeholder="" onselectionchange={addContactEntry}
                                                                     selection={contactsToAdd} onaddall={addAllContactEntries}>
                                 </c-portal-services-add-users-lookup>
@@ -345,7 +406,7 @@
 
             <span slot="modalFooter">
                 <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
-                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                         <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={label.cancel} variant="neutral" onclick={toggleAddUserModal}></lightning-button>
                     </div>
                     <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
@@ -396,6 +457,20 @@
         </div>
     </div>
 
+    <!--INVITE MODAL-->
+    <div if:true={showInviteModal} >
+        <c-portal-popup-container size="twoQuarters">
+            <span slot="modalHeader">
+                <span>{label.addNewUser}</span>
+            </span>
+
+            <span slot="modalBody">
+            <c-ef-invitation service-id={serviceId} oncancel={cancelInvite}></c-ef-invitation>
+            </span>
+
+        </c-portal-popup-container>
+    </div>
+
     <!-- FILTER MODAL -->
     <div if:true={viewServicesFiltersModal} >
         <c-portal-popup-container size="half">
@@ -423,7 +498,7 @@
 
             <span slot="modalFooter">
                 <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
-                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                         <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={label.CSP_RemoveAllFilters} variant="neutral" onclick={handleResetFilters}></lightning-button>
                     </div>
                     <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">

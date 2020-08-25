@@ -12,7 +12,6 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 	public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
 	public static final string CurrencyBSP = 'BspCurrency';
 	public static final string CurrencyMulticountry = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
-	public static final set<string> AccStatusToInclude = new set<string>{ AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S7_UNDERREVIEW, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S0_TERMINATED};
 
 	/***************************************
 				Constructor
@@ -106,13 +105,13 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 
 		string sQueryMD = 'select Guaranteed_amount__c, CurrencyIsoCode, Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,'
 							+' billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, '
-							+' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, '
+							+' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, IATA_ISO_Country__r.AMS_Settlement_System__c, '
 							+' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
 							+' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
-							+' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c, Is_PCI_compliant__c,'
-							+' Site, IMPC_Code__c ' //PASS
+							+' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c, Is_PCI_compliant__c, ' 
+							+' IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c, Site, IMPC_Code__c ' //PASS
 							+' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
-							+' , (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' AND status__c in :AccStatusToInclude)' //List of children
+							+' , (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\')' //List of children
 							+' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
 							+' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
 							+' , (select Hierarchy__c, Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name
@@ -126,7 +125,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 			sQueryMD = sQueryMD + ' where recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' and IATACode__c =:IATACode';
 		}
 
-		sQueryMD = sQueryMD  + ' AND status__c in :AccStatusToInclude order by Location_Type_Ordered__c asc';
+		sQueryMD = sQueryMD  + ' order by Location_Type_Ordered__c asc';
 
 		return database.query(sQueryMD);
 	}
@@ -155,7 +154,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 
 
 	/* RHC Information */
-
+	@TestVisible
 	private class RHCInfoClass{
 		public string RiskStatus;
 		public Decimal RHCAmount; //Number + currency
@@ -329,9 +328,9 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				/* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
 				if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
 					if(changeCode == 'MaddY')
-						this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
+						this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ? 'Passed' : 'Failed')));
 					else
-						this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));
+						this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ? acc.oscars__r[0].step17__c : 'Failed')));
 				}
 
 				list<theCurrency> lsCurrencies = new list<theCurrency>();
@@ -340,19 +339,26 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				lsCurrencies.add(new theCurrency(CurrencyBSP, sBSPCurrency));
 
 				//Risk Info
-				for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r){
+				for(ANG_RHC_Information__c rhc : acc.RHC_Informations__r){
 					this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
 					if(this.AccreditationType == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 						lsCurrencies.add(new theCurrency(CurrencyMulticountry, rhc.CurrencyIsoCode));
 					}
 				}
 
-				if(this.RHCInfo ==null)
-				this.RHCInfo = new RHCInfoClass(null,
-					null,
-					String.IsBlank(sBSPCurrency)?acc.CurrencyIsoCode:sBSPCurrency,
-					String.IsBlank(sBSPCurrency)?acc.Guaranteed_amount__c:ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode)
-				);
+				if(this.RHCInfo == null){
+					Decimal totalFsConverted = String.isBlank(sBSPCurrency)
+						? acc.Guaranteed_amount__c
+						: ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c, sBSPCurrency);
+
+					this.RHCInfo = new RHCInfoClass(
+						null,
+						//If the BSP is under RHC exceptional monitoring the RHC amount sent is the Total FS converted into the BSP currency
+						acc.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c ? totalFsConverted : null,
+						String.isBlank(sBSPCurrency) ? acc.CurrencyIsoCode : sBSPCurrency,
+						totalFsConverted
+					);
+				}
 
 				this.currencies = lsCurrencies;
 
@@ -380,13 +386,14 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				//externalSystems - NEWGEN-4276
 				this.externalSystems = new list<string>();
 				//EasyPay
-				if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c))
+				if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c)){
 					this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
+				}
 
 				//GDI - note: we do publish HE/HO only
-				if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
+				if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c)){
 					 this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
-
+				}
 				//Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank
 				if(String.isNotBlank(acc.ANG_IEP_Status_FF__c) && acc.ANG_IEP_Status_FF__c != AMS_Utils.NO_IEP_ACCOUNT){
 					this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
@@ -395,6 +402,12 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				// PASS
 				if(acc.Location_Class__c == 'L'){
 					this.externalSystems.add(AMS_Utils.passParticipation);
+				}
+
+				if(string.isNotBlank(acc.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+					if(string.isNotBlank(acc.Remittance_frequency__c)){
+						this.externalSystems.add(ANG_RestServiceHelper.ExternalService_RME);
+					}
 				}
 
 			}

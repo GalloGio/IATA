@@ -43,16 +43,8 @@ public with sharing class ISSP_CurrencyCenterHomeController {
 				return ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
 		}
 
-		public PageReference GoToBlockedFunds() {
-				return new PageReference('/ISSP_CurrencyCenterCountriesMap?type=Blocked Funds');
-		}
-
-		public PageReference GoToWatchList() {
-				return new PageReference('/ISSP_CurrencyCenterCountriesMap?type=Watch List');
-		}
-
-		public PageReference GoToAllOthers() {
-				return new PageReference('/ISSP_CurrencyCenterCountriesMap?type=All Others');
+		public PageReference GoToCountryHeatMap() {
+			return new PageReference('/ISSP_CurrencyCenterCountriesMap');
 		}
 
 		public PageReference GoToManageNotifications() {
