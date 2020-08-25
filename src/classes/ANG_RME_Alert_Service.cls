@@ -5,6 +5,15 @@
 @RestResource(urlMapping='/RME_ALERT_BALANCEUPDATE/*')
 global class ANG_RME_Alert_Service {
 
+	@TestVisible
+	private static final String RHC_ALERT_EVENT_TYPE = 'RHCAlert';
+	@TestVisible
+	private static final String RTS_ALERT_EVENT_TYPE = 'RTSAlert';
+	@TestVisible
+	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
+	@TestVisible
+	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+
 	public class RHCMessage{
 		//Basic info
 
@@ -141,39 +150,63 @@ global class ANG_RME_Alert_Service {
 			}
 
 			//fetch current information
-			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
-			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
+			List<Account> accs = [
+				SELECT Id, IATACode__c, 
+					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
+					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
+					 FROM RHC_Informations__r)
+				FROM Account
+				WHERE IATACode__c = :req.iataCode
+					AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 
-			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
-			//handle Real Time Sales alert request
-			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
-
-			else if(req.eventType == 'EDSAlert'){
-				saveEDSAlert(req, accs[0].Id);
+			if(accs.isEmpty()) {
+				setResponse('No agent found with IATA Code '+req.iataCode, 404);
 			}
+			else {
+				Account acct = accs[0];
 
-			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
-			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
-			else{
-
-				//information found, validate values
-				ANG_RHC_Information__c rhcInfo = accs[0].RHC_informations__r[0];
-
-				String errorMessage = '';
-				//if(rhcInfo.ANG_RHC_Amount__c != req.storedRHCValue) errorMessage += '\n- RHC Amount mismatch. Request value: '+req.storedRHCValue+'. Current value: '+rhcInfo.ANG_RHC_Amount__c;
-				if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
-
-				if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
-				//validation passed, perform logic
-				else if(eventType == 'RHCAlert'){
-					updateRHC(req, rhcInfo);
-					saveAlert(req, rhcInfo);
+				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
+					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
+						saveAlert(req, acct.Id, null);
+					} else {
+						//Ignore the request
+						setResponse(null, 202);
+					}
 				}
-				else if(eventType == 'BalanceUpdate') updateRHC(req, rhcInfo);
-				else setResponse('Invalid Event Type: '+eventType, 405);
-			}
+				//handle Real Time Sales alert request
+				else if(req.eventType == RTS_ALERT_EVENT_TYPE) {
+					saveRTSAlert(req, acct.Id);
+				}
+				else if(req.eventType == EDS_ALERT_EVENT_TYPE){
+					saveEDSAlert(req, acct.Id);
+				}
+				else if(acct.RHC_Informations__r.isEmpty()) {
+					setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+				} 
+				else if(acct.RHC_informations__r.size()>1) {
+					setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+				} 
+				else{
+					//information found, validate values
+					ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
 
+					String errorMessage = '';
+					//if(rhcInfo.ANG_RHC_Amount__c != req.storedRHCValue) errorMessage += '\n- RHC Amount mismatch. Request value: '+req.storedRHCValue+'. Current value: '+rhcInfo.ANG_RHC_Amount__c;
+					if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+
+					if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
+					//validation passed, perform logic
+					else if(eventType == RHC_ALERT_EVENT_TYPE){
+						updateRHC(req, rhcInfo);
+						saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+					}
+					else if(eventType == BALANCE_UPDATE_EVENT_TYPE) updateRHC(req, rhcInfo);
+					else setResponse('Invalid Event Type: '+eventType, 405);
+				}
+			}
 		}catch(JSONException e){
 			setResponse('Malformed request: '+e.getMessage(), 400);
 		}
@@ -189,14 +222,18 @@ global class ANG_RME_Alert_Service {
 		Expose webservice as a RESTfull service for NewGen Mobile APP
 	*/
 	@HttpPost
-		global static void doPost(String accountId){
-			ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
-		}
+	global static void doPost(String accountId){
+		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
+	}
 
-	private static void saveAlert(RHCMessage message, ANG_RHC_Information__c rhcInfo) {
+	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
+		return eventType == RHC_ALERT_EVENT_TYPE && (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel + request.direction));
+	}
+
+	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {
 		ANG_Risk_Alert__c alert = new ANG_Risk_Alert__c();
-		alert.ANG_Account__c = rhcInfo.ANG_AccountId__c;
-		alert.ANG_RHC_Information__c = rhcInfo.Id;
+		alert.ANG_Account__c = accountId;
+		alert.ANG_RHC_Information__c = rhcInfoId;
 		alert.ANG_EventId__c = message.eventId;
 		alert.ANG_Threshold_Level__c = message.thresholdLevel;
 		alert.ANG_Direction__c = message.direction;
@@ -550,4 +587,5 @@ global class ANG_RME_Alert_Service {
 
 		return result;
 	}
+
 }

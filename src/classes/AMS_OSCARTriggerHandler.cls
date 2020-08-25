@@ -218,7 +218,6 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
-
 	}
 
 	public static void handleBeforeInsert() {
@@ -231,6 +230,7 @@ public class AMS_OSCARTriggerHandler {
 
 		processGeneralActionsOnOscarBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);
 		performBackupANGBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);//Tick rollback in course
+		setPromotions(Trigger.new);
 	}
 
 	public static void handleAfterInsert() {
@@ -2323,9 +2323,10 @@ public class AMS_OSCARTriggerHandler {
 
 		try {
 			List<Case> lsCaseToUpdate = new List<Case>();
-			for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c from Case where OSCAR__c in:mapOscars.keySet() AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )]){
+			for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c, Account.CNS_Account__c, Account.IATA_ISO_Country__r.CNS_Country__c, Account.Sector__c from Case where OSCAR__c in:mapOscars.keySet() AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )]){
+				Boolean isCNSAgency = ca.Account.Sector__c == AMS_Utils.SECTOR_CARGO && ca.Account.IATA_ISO_Country__r.CNS_Country__c && ca.Account.CNS_Account__c;
 				lsCaseToUpdate.add(new case(id = ca.id
-											, Reason1__c = mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c != null ? mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c : ca.Reason1__c
+											, Reason1__c = (mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c != null && !isCNSAgency) ? mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c : ca.Reason1__c
 											, Process_Start_Date__c = mapOscars.get(ca.OSCAR__C).Process_Start_Date__c
 											, BSPCountry__c = ca.Account.IATA_ISO_Country__r.Name
 											, Region__c = ca.Account.Region_formula__c
@@ -2958,7 +2959,7 @@ public class AMS_OSCARTriggerHandler {
 					ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, 
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
-					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c,
+					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c, recordTypeID,
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -4524,7 +4525,8 @@ public class AMS_OSCARTriggerHandler {
 			statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
 		else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
-			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
+			//Removed validation oscar.STEP35__c == AMS_Utils.PASSED - For NEW HE LITE no need to submit Financial Security
+			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c)
 				statusForCC = 'Active';
 			else
 				statusForCC = 'Non-Active';
@@ -5059,6 +5061,62 @@ public class AMS_OSCARTriggerHandler {
 			return (acctLst.get(0).Status__c == targetStatus);
 		}
 		return false;
+	}
+
+	/**
+	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt
+	 */
+	public static map<String,Oscar_Promotion__mdt> MAP_PROMOTIONS = null;
+	public static map<String,Oscar_Promotion__mdt> getMapActivePromotions() {
+		if (MAP_PROMOTIONS==null) {
+			MAP_PROMOTIONS = new map<String,Oscar_Promotion__mdt>();
+			list<Oscar_Promotion__mdt> listPromotion = [
+				SELECT DeveloperName, Oscar_Process__c
+				FROM Oscar_Promotion__mdt
+				WHERE Start_Date__c <= TODAY
+				AND End_Date__c >= TODAY
+			];
+			for (Oscar_Promotion__mdt promotion: listPromotion) {
+				MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+			}
+		}
+		return MAP_PROMOTIONS;
+	}
+
+	/**
+	 * Set the value for promotion field, defined in Oscar_Promotion__mdt, if applicable
+	 */
+	private static void setPromotions(list<AMS_Oscar__c> listNew) {
+		// find only those oscar where we are setting the field Oscar_Communication_Case_Id__c
+		map<Id,AMS_Oscar__c> mapCaseOscar = new map<Id,AMS_Oscar__c>();
+		for (AMS_Oscar__c newOscar: listNew) {
+			if (newOscar.Oscar_Communication_Case_Id__c!=null) {
+				mapCaseOscar.put(Id.ValueOf(newOscar.Oscar_Communication_Case_Id__c),newOscar);
+			}
+		}
+		if (mapCaseOscar.isEmpty()) return;
+
+		// get Case.contact.accounts for each OSCAR
+		map<Id,Account> mapOscarAccounts = new map<Id,Account>();
+		list<Case> listCase = [SELECT Id, OSCAR__c, Contact.AccountId, Contact.Account.RecordTypeId, Contact.Account.Location_Class__c
+			FROM Case
+			WHERE Id IN :mapCaseOscar.keyset()
+			AND ContactId != null];
+		for (Case cse: listCase) {
+			AMS_Oscar__c oscar = mapCaseOscar.get(cse.Id);
+			Account account = cse.Contact.Account;
+			mapOscarAccounts.put(oscar.Id, account);
+		}
+		// assign promotions, if applicable, for the incoming oscar records
+		for(AMS_Oscar__c oscar: mapCaseOscar.values()){
+			Account acc = mapOscarAccounts.get(oscar.Id);
+			if ( acc!=null && acc.RecordTypeId == AMS_utils.RECTYPE_IATAAGENCY && acc.Location_Class__c == 'T') {
+				Oscar_Promotion__mdt promotion = getMapActivePromotions().get(oscar.Process__c);
+				if (promotion != null) {
+					oscar.Promotions__c = promotion.DeveloperName;
+				}
+			}
+		}
 	}
 
 }

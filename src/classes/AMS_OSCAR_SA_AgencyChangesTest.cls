@@ -10,6 +10,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 	private static Contact C1;
 
 	private static void getUpdatedAccountData(){
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		List<Account> accs = [SELECT Id, Name, IATAcode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, ParentId, Status__c FROM Account];
 
 		for(Account acc: accs){
@@ -196,7 +198,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 								  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
 								  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'SA', ParentId = BR1.Id);
 
-		SA4 = new Account(RecordTypeId = rtAgency, Name = 'Beach Travels SA4', IATAcode__c = '7654323', IATA_ISO_Country__c = portugal.id,
+		SA4 = new Account(RecordTypeId = rtAgency, Name = 'Beach Travels SA4', IATAcode__c = '7654327', IATA_ISO_Country__c = portugal.id,
 								  Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Status__c = AMS_Utils.ACC_S9_APPROVED,
 								  Location_Class__c = LOCCLASSPAX, Location_Type__c = 'SA', ParentId = HO1.Id);
 

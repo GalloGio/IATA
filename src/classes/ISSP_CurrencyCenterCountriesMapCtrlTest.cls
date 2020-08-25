@@ -19,10 +19,10 @@ private class ISSP_CurrencyCenterCountriesMapCtrlTest {
 		Test.setCurrentPage(pageRef);
 		ISSP_CurrencyCenterCountriesMapCtrl ctrl = new ISSP_CurrencyCenterCountriesMapCtrl();
 
-		// list should contain only 1 country (as the 2nd one is on watch list)
-		system.assertEquals(1,ctrl.lstCountries.size());
-		// listType should be Blocked Funds
-		system.assertEquals('Blocked Funds',ctrl.listType);
+		system.assertEquals(2,ctrl.lstCountries.size());
+
+		ctrl.getListRegionOptions();
+		ctrl.getListTypeOptions();
 
 		List<Boolean> icl = ctrl.isChangedList;
 		PageReference pr = ctrl.checkAccess();

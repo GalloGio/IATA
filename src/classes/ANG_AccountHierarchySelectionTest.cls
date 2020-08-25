@@ -30,7 +30,11 @@ private class ANG_AccountHierarchySelectionTest {
 		// call data creating classes and other setup
 		// data created here must be queried in order
 		// to be accessed on test methods
+		
 		Test.startTest();
+
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		IATA_ISO_Country__c ctry 	  = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
 		IATA_ISO_Country__c chinaCtry = new IATA_ISO_Country__c (Name='	China (People\'s Republic of)',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, Enable_NewGen_Pilot__c = true);
@@ -79,7 +83,7 @@ private class ANG_AccountHierarchySelectionTest {
 
 		insert new List<Account>{HE, chinaHE};
 
-		Account AE = new Account(IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = HE.Id, Status__c = AMS_Utils.ACC_S9_APPROVED);
+		Account AE = new Account(IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='1234577',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = HE.Id, Status__c = AMS_Utils.ACC_S9_APPROVED);
 
 		Account chinaAE = new Account();
 		chinaAE.IATA_ISO_Country__c = chinaCtry.id;
@@ -558,7 +562,7 @@ private class ANG_AccountHierarchySelectionTest {
 		Account GE1 = new Account();
 		GE1.Name = 'Main GE1 PT Account';
 		GE1.Sector__c = 'Travel Agent';
-		GE1.IATACode__c = '12345678';
+		GE1.IATACode__c = '02345678';
 		GE1.Category__c = 'IATA Passenger Sales Agent';
 		GE1.Location_Class__c = 'P';
 		GE1.Location_Type__c = AMS_Utils.GE;
@@ -575,7 +579,7 @@ private class ANG_AccountHierarchySelectionTest {
 		Account GE2 = new Account();
 		GE2.Name = 'Main GE2 PT Account';
 		GE2.Sector__c = 'Travel Agent';
-		GE2.IATACode__c = '12345678';
+		GE2.IATACode__c = '22345678';
 		GE2.Category__c = 'IATA Passenger Sales Agent';
 		GE2.Location_Class__c = 'P';
 		GE2.Location_Type__c = AMS_Utils.GE;
@@ -595,7 +599,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='12345679',
+			IATACode__c='32345679',
 			Name='Account HE1 GE1',
 			Short_Name__c='Account HE1 GE1',
 			Category__c = 'IATA Passenger Sales Agent',
@@ -611,7 +615,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='12345679',
+			IATACode__c='42345679',
 			Name='Account HE2 GE2',
 			Short_Name__c='Account HE2 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
@@ -628,7 +632,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='12345679',
+			IATACode__c='52345679',
 			Name='Account AE1 GE1',
 			Short_Name__c='Account AE1 GE1',
 			Category__c = 'IATA Passenger Sales Agent',
@@ -644,7 +648,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='12345679',
+			IATACode__c='62345679',
 			Name='Account AE2 GE1',
 			Short_Name__c='Account AE2 GE1',
 			Category__c = 'IATA Passenger Sales Agent',
@@ -660,7 +664,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='12345679',
+			IATACode__c='72345679',
 			Name='Account AE3 GE2',
 			Short_Name__c='Account AE3 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
@@ -676,7 +680,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='12345679',
+			IATACode__c='82345679',
 			Name='Account AE4 GE2',
 			Short_Name__c='Account AE4 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
@@ -692,7 +696,7 @@ private class ANG_AccountHierarchySelectionTest {
 			ANG_IEP_Status__c = null,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = accountAgencyRT,
-			IATACode__c='123452679',
+			IATACode__c='923452679',
 			Name='Account AE5 GE2',
 			Short_Name__c='Account AE5 GE2',
 			Category__c = 'IATA Passenger Sales Agent',

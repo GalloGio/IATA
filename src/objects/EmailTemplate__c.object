@@ -786,6 +786,22 @@
         <label>ID Card Email Templates</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>ID_Card_Email_Templates</fullName>
+        <columns>Email_Template_Number__c</columns>
+        <columns>NAME</columns>
+        <columns>Template_Language__c</columns>
+        <columns>Template_Type__c</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>EmailTemplate__c.ID_Card_Application</value>
+        </filters>
+        <label>ID Card Email Templates</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Template Name</label>
         <trackHistory>false</trackHistory>

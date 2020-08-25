@@ -28,6 +28,11 @@ public class ANG_RHCHelper {
 	//Risk Alert
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
 	public static final String RISK_ALERT_DIRECTION_DOWN = 'DOWN';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_100 = '100%';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_75 = '75%';
+	public static final String RISK_ALERT_THRESHOLD_LEVEL_50 = '50%';
+	
+
 	//RHC Portal Service Name
 	public static final String RISK_PROFILE_AND_RHC_PORTAL_SERVICE ='Risk Profile and RHC';
 
@@ -328,7 +333,6 @@ public class ANG_RHCHelper {
 
 		Decimal newRHCForecastedValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
-		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
 
 		if(ApplyRHC){
 			Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
@@ -360,7 +364,6 @@ public class ANG_RHCHelper {
 		rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
-		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
 	}
 
 	/**
@@ -549,15 +552,13 @@ public class ANG_RHCHelper {
 
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
-			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
+			//ENHC0013943 htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
-			//htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
-			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
+			//ENHC0013943 - plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
-			//plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
 				emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
@@ -573,7 +574,7 @@ public class ANG_RHCHelper {
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - triggerRiskOrForecastedRhcAmountNotifications] Email List - ' + emailLst);
 
-		if(!System.isBatch() && !System.isQueueable()){
+		if(!System.isBatch() && !System.isQueueable() && ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)){
 			System.enqueueJob(new RiskAlertMailService(emailLst, null));
 		}
 		else {
