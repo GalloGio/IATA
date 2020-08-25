@@ -175,7 +175,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '101',
 								IATA_ISO_Country__c = countryList[1].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -190,7 +190,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '102',
 								IATA_ISO_Country__c = countryList[2].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -205,7 +205,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '103',
 								IATA_ISO_Country__c = countryList[3].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -220,7 +220,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '104',
 								IATA_ISO_Country__c = countryList[4].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -235,7 +235,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '105',
 								IATA_ISO_Country__c = countryList[5].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)

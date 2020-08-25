@@ -692,7 +692,7 @@ public with sharing class PortalCasesCtrl {
 	public static Boolean getHideForClosedCases(String caseId) {
 		set<String> validRecordtypes = new set<String> {
 			'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
-			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE'
+			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review'
 		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
@@ -702,7 +702,7 @@ public with sharing class PortalCasesCtrl {
 							WHERE RecordType.Id = :newCase.RecordType.Id
 								AND (RecordType.DeveloperName IN :validRecordtypes)];
 		
-		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO);
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13)) || isMSO);
 	}
 
 	private Static boolean isMSOcase(Case newCase){

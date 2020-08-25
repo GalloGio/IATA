@@ -457,6 +457,10 @@
         <relatedList>Account_Statement__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ACCOUNT.NAME</fields>
         <fields>Quality__c</fields>
         <fields>ACCOUNT.SITE</fields>
@@ -491,6 +495,10 @@
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
