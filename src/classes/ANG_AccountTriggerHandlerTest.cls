@@ -77,7 +77,7 @@ private class ANG_AccountTriggerHandlerTest {
 				Location_Type__c = AMS_Utils.HE,
 				Location_Class__c = 'P',
 				ANG_FA_Opt_out__c = false,
-				IATACode__c='12345678',
+				IATACode__c='12345671',
 				IATA_ISO_Country__c = countries[0].Id,
 				BillingCountry='Iso Country Name Test',
 				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
@@ -95,7 +95,7 @@ private class ANG_AccountTriggerHandlerTest {
 				Location_Type__c = AMS_Utils.GE,
 				Location_Class__c = 'P',
 				ANG_FA_Opt_out__c = false,
-				IATACode__c='12345678',
+				IATACode__c='12345675',
 				IATA_ISO_Country__c = countries[0].Id,
 				BillingCountry='Iso Country Name Test',
 				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
@@ -113,7 +113,7 @@ private class ANG_AccountTriggerHandlerTest {
 				Location_Type__c = AMS_Utils.HE,
 				Location_Class__c = 'P',
 				ANG_FA_Opt_out__c = false,
-				IATACode__c='12345677',
+				IATACode__c='12345672',
 				IATA_ISO_Country__c = countries[1].Id,
 				BillingCountry='Iso Country Name Test2',
 				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
@@ -131,7 +131,7 @@ private class ANG_AccountTriggerHandlerTest {
 				Location_Type__c = AMS_Utils.HE,
 				Location_Class__c = 'P',
 				ANG_FA_Opt_out__c = false,
-				IATACode__c='12345699',
+				IATACode__c='12345673',
 				IATA_ISO_Country__c = ukCountry.Id,
 				BillingCountry='UK Test',
 				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
@@ -221,10 +221,10 @@ private class ANG_AccountTriggerHandlerTest {
 
 		Test.startTest();
 
-		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
+		a = [SELECT Id, ANG_RiskStatus__c, IATACode__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_B, a.ANG_RiskStatus__c);
 		System.assertEquals(1, a.Cases.size());
-		System.assertEquals('Test - 12345678 - Downgrade Risk Status', a.Cases[0].Subject);
+		System.assertEquals('Test - ' + a.IATACode__c + ' - Downgrade Risk Status', a.Cases[0].Subject);
 
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] third update should be C');
@@ -335,7 +335,7 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
+													   ANG_RHC_Amount_Forecasted__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -409,7 +409,7 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
+													   ANG_RHC_Amount_Forecasted__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -455,7 +455,7 @@ private class ANG_AccountTriggerHandlerTest {
 
 	static testMethod void test_updateRHCInformation_OptIN_OptOUT_2() {
 
-		Account a = [SELECT Id FROM Account][0];
+		Account a = [SELECT Id, IATACode__c FROM Account][0];
 
   		Contact cont = new Contact(
 				lastName ='lastName',
@@ -497,7 +497,7 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
+													   ANG_RHC_Amount_Forecasted__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -514,7 +514,7 @@ private class ANG_AccountTriggerHandlerTest {
 		message.storedBaseCurrency = 'USD';
 		message.consumedRHCAmount = 100;
 		message.consumedRHCPercentage = 0.1;
-		message.iataCode = '12345678';
+		message.iataCode = a.IATACode__c;
 		message.eventTime = System.now();
 		message.storedRHCValue = 200;
 

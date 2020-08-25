@@ -363,6 +363,7 @@
         <columns>OBJECT_ID</columns>
         <columns>Account_Contact_Role__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
