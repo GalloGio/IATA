@@ -1,0 +1,1834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents a finer grained aspect of a Case that has an independent lifecycle defined outside of Salesforce. Records typically represent a subset of data from an external system, such as for incident management, where data can be integrated for reporting and workflow purpsoses such as a delegation of an aspect of a Salesforce Case to an IATA incident management system for resolution.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>Case Item</label>
+    <nameField>
+        <displayFormat>CI-{0000000000}</displayFormat>
+        <label>Case Item Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Case Items</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Business_Process__c</fullName>
+        <description>Defines the IATA Business Service that this Case Item details.</description>
+        <externalId>false</externalId>
+        <label>Business Process</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Clearing House Admin Tools</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing House Admin Tools</label>
+                </value>
+                <value>
+                    <fullName>ICER</fullName>
+                    <default>false</default>
+                    <label>ICER</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Abatements</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Abatements</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Bank Movements</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Bank Movements</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Bank Statement Files</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Bank Statement Files</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Deposit Management</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Deposit Management</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Emails</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Emails</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Fees</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Fees</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Non-Revenue Inv (SIS)</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Non-Revenue Inv (SIS)</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Prot./ Adj. Request</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Prot./ Adj. Request</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Reporting</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Reporting</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Revenue Inv (SAP)</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Revenue Inv (SAP)</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Settlement</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Settlement</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Special Clearance</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Special Clearance</label>
+                </value>
+                <value>
+                    <fullName>ICH - FX Deals</fullName>
+                    <default>false</default>
+                    <label>ICH - FX Deals</label>
+                </value>
+                <value>
+                    <fullName>ICH - Interface Bank</fullName>
+                    <default>false</default>
+                    <label>ICH - Interface Bank</label>
+                </value>
+                <value>
+                    <fullName>ICH - Interface SAP</fullName>
+                    <default>false</default>
+                    <label>ICH - Interface SAP</label>
+                </value>
+                <value>
+                    <fullName>ICH - Interface SIS</fullName>
+                    <default>false</default>
+                    <label>ICH - Interface SIS</label>
+                </value>
+                <value>
+                    <fullName>ICH - Member Configuration</fullName>
+                    <default>false</default>
+                    <label>ICH - Member Configuration</label>
+                </value>
+                <value>
+                    <fullName>ICH MIS</fullName>
+                    <default>false</default>
+                    <label>ICH MIS</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS / Members Reporting</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS / Members Reporting</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Archiving</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Archiving</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Emails</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Emails</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS F1/F3 Generation</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS F1/F3 Generation</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Invoice Crosscheck/Discrepancies</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Invoice Crosscheck/Discrepancies</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Period Initialization</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Period Initialization</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Rates Files</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Rates Files</label>
+                </value>
+                <value>
+                    <fullName>ICH - Other</fullName>
+                    <default>false</default>
+                    <label>ICH - Other</label>
+                </value>
+                <value>
+                    <fullName>ICH servers</fullName>
+                    <default>false</default>
+                    <label>ICH servers</label>
+                </value>
+                <value>
+                    <fullName>ICH - User Administration</fullName>
+                    <default>false</default>
+                    <label>ICH - User Administration</label>
+                </value>
+                <value>
+                    <fullName>ICH - User Interface</fullName>
+                    <default>false</default>
+                    <label>ICH - User Interface</label>
+                </value>
+                <value>
+                    <fullName>ICHWeb</fullName>
+                    <default>false</default>
+                    <label>ICHWeb</label>
+                </value>
+                <value>
+                    <fullName>ICH Web Services</fullName>
+                    <default>false</default>
+                    <label>ICH Web Services</label>
+                </value>
+                <value>
+                    <fullName>iiNET</fullName>
+                    <default>false</default>
+                    <label>iiNET</label>
+                </value>
+                <value>
+                    <fullName>iiNET.Automation</fullName>
+                    <default>false</default>
+                    <label>iiNET.Automation</label>
+                </value>
+                <value>
+                    <fullName>iiNET.eMail communication</fullName>
+                    <default>false</default>
+                    <label>iiNET.eMail communication</label>
+                </value>
+                <value>
+                    <fullName>iiNET.Network issue (connection issue)</fullName>
+                    <default>false</default>
+                    <label>iiNET.Network issue (connection issue)</label>
+                </value>
+                <value>
+                    <fullName>iiNET.System request (Deploy , improve script..)</fullName>
+                    <default>false</default>
+                    <label>iiNET.System request (Deploy , improve script..)</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - Get Logs (Transaction Log, Event Log)</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - Get Logs (Transaction Log, Event Log)</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - System Operations</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - System Operations</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - Work with Clients</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - Work with Clients</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - Work with Files</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - Work with Files</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - File Transmission (Submit, Retrieve)</fullName>
+                    <default>false</default>
+                    <label>iiNET API - File Transmission (Submit, Retrieve)</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Get File Tracking Report</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Get File Tracking Report</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Get Recent Senders / Recipients</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Get Recent Senders / Recipients</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Get UTC Date &amp; Time</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Get UTC Date &amp; Time</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Login to / Logout from iiNET</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Login to / Logout from iiNET</label>
+                </value>
+                <value>
+                    <fullName>iiNET Billing</fullName>
+                    <default>false</default>
+                    <label>iiNET Billing</label>
+                </value>
+                <value>
+                    <fullName>iiNET Data Issue</fullName>
+                    <default>false</default>
+                    <label>iiNET Data Issue</label>
+                </value>
+                <value>
+                    <fullName>iiNET Debug</fullName>
+                    <default>false</default>
+                    <label>iiNET Debug</label>
+                </value>
+                <value>
+                    <fullName>iiNET Direct - Push a File</fullName>
+                    <default>false</default>
+                    <label>iiNET Direct - Push a File</label>
+                </value>
+                <value>
+                    <fullName>iiNET Direct - Submit a File</fullName>
+                    <default>false</default>
+                    <label>iiNET Direct - Submit a File</label>
+                </value>
+                <value>
+                    <fullName>iiNET Enhancement</fullName>
+                    <default>false</default>
+                    <label>iiNET Enhancement</label>
+                </value>
+                <value>
+                    <fullName>iiNET Interfaces</fullName>
+                    <default>false</default>
+                    <label>iiNET Interfaces</label>
+                </value>
+                <value>
+                    <fullName>iiNET Massive files repush</fullName>
+                    <default>false</default>
+                    <label>iiNET Massive files repush</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Account Management</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Account Management</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Data Issue</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Data Issue</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - File Transmission (User Login/Automation)</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - File Transmission (User Login/Automation)</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Interfaces</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Interfaces</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Monitoring</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Monitoring</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Others</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Others</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Performance</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Performance</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Reporting</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Reporting</label>
+                </value>
+                <value>
+                    <fullName>iiNET Monitoring</fullName>
+                    <default>false</default>
+                    <label>iiNET Monitoring</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - Account Info</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - Account Info</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - Billing History</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - Billing History</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - File Tracking</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - File Tracking</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - File Transmission (Submit, Retrieve)</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - File Transmission (Submit, Retrieve)</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - iiNET Profile</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - iiNET Profile</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - Push on Demand</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - Push on Demand</label>
+                </value>
+                <value>
+                    <fullName>iiNET Others</fullName>
+                    <default>false</default>
+                    <label>iiNET Others</label>
+                </value>
+                <value>
+                    <fullName>iiNET Performance</fullName>
+                    <default>false</default>
+                    <label>iiNET Performance</label>
+                </value>
+                <value>
+                    <fullName>iiNET Reporting</fullName>
+                    <default>false</default>
+                    <label>iiNET Reporting</label>
+                </value>
+                <value>
+                    <fullName>iiNET Weekly work (weekly table, check incs)</fullName>
+                    <default>false</default>
+                    <label>iiNET Weekly work (weekly table, check incs)</label>
+                </value>
+                <value>
+                    <fullName>ISS Customer Service</fullName>
+                    <default>false</default>
+                    <label>ISS Customer Service</label>
+                </value>
+                <value>
+                    <fullName>SIS IATA Legal Archiving Tool</fullName>
+                    <default>false</default>
+                    <label>SIS IATA Legal Archiving Tool</label>
+                </value>
+                <value>
+                    <fullName>Xrates</fullName>
+                    <default>false</default>
+                    <label>Xrates</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <description>The Case record that this Case Item relates to and represents a more specific part of the Case that is not managed as part of Global Customer Service scope.</description>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Case Items</relationshipLabel>
+        <relationshipName>Case_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Details</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <description>An reference to an external system for integration purposes.</description>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Business_Process__c</fullName>
+        <description>Defines the IATA Business Process that this Case Item details.</description>
+        <externalId>false</externalId>
+        <label>IATA Business Process</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Clearing House Admin Tools</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing House Admin Tools</label>
+                </value>
+                <value>
+                    <fullName>ICER</fullName>
+                    <default>false</default>
+                    <label>ICER</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Abatements</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Abatements</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Bank Movements</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Bank Movements</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Bank Statement Files</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Bank Statement Files</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Deposit Management</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Deposit Management</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Emails</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Emails</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Fees</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Fees</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Non-Revenue Inv (SIS)</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Non-Revenue Inv (SIS)</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Prot./ Adj. Request</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Prot./ Adj. Request</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Reporting</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Reporting</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Revenue Inv (SAP)</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Revenue Inv (SAP)</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Settlement</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Settlement</label>
+                </value>
+                <value>
+                    <fullName>ICH - FIN Special Clearance</fullName>
+                    <default>false</default>
+                    <label>ICH - FIN Special Clearance</label>
+                </value>
+                <value>
+                    <fullName>ICH - FX Deals</fullName>
+                    <default>false</default>
+                    <label>ICH - FX Deals</label>
+                </value>
+                <value>
+                    <fullName>ICH - Interface Bank</fullName>
+                    <default>false</default>
+                    <label>ICH - Interface Bank</label>
+                </value>
+                <value>
+                    <fullName>ICH - Interface SAP</fullName>
+                    <default>false</default>
+                    <label>ICH - Interface SAP</label>
+                </value>
+                <value>
+                    <fullName>ICH - Interface SIS</fullName>
+                    <default>false</default>
+                    <label>ICH - Interface SIS</label>
+                </value>
+                <value>
+                    <fullName>ICH - Member Configuration</fullName>
+                    <default>false</default>
+                    <label>ICH - Member Configuration</label>
+                </value>
+                <value>
+                    <fullName>ICH MIS</fullName>
+                    <default>false</default>
+                    <label>ICH MIS</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS / Members Reporting</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS / Members Reporting</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Archiving</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Archiving</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Emails</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Emails</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS F1/F3 Generation</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS F1/F3 Generation</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Invoice Crosscheck/Discrepancies</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Invoice Crosscheck/Discrepancies</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Period Initialization</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Period Initialization</label>
+                </value>
+                <value>
+                    <fullName>ICH - OPS Rates Files</fullName>
+                    <default>false</default>
+                    <label>ICH - OPS Rates Files</label>
+                </value>
+                <value>
+                    <fullName>ICH - Other</fullName>
+                    <default>false</default>
+                    <label>ICH - Other</label>
+                </value>
+                <value>
+                    <fullName>ICH servers</fullName>
+                    <default>false</default>
+                    <label>ICH servers</label>
+                </value>
+                <value>
+                    <fullName>ICH - User Administration</fullName>
+                    <default>false</default>
+                    <label>ICH - User Administration</label>
+                </value>
+                <value>
+                    <fullName>ICH - User Interface</fullName>
+                    <default>false</default>
+                    <label>ICH - User Interface</label>
+                </value>
+                <value>
+                    <fullName>ICHWeb</fullName>
+                    <default>false</default>
+                    <label>ICHWeb</label>
+                </value>
+                <value>
+                    <fullName>ICH Web Services</fullName>
+                    <default>false</default>
+                    <label>ICH Web Services</label>
+                </value>
+                <value>
+                    <fullName>iiNET</fullName>
+                    <default>false</default>
+                    <label>iiNET</label>
+                </value>
+                <value>
+                    <fullName>iiNET.Automation</fullName>
+                    <default>false</default>
+                    <label>iiNET.Automation</label>
+                </value>
+                <value>
+                    <fullName>iiNET.eMail communication</fullName>
+                    <default>false</default>
+                    <label>iiNET.eMail communication</label>
+                </value>
+                <value>
+                    <fullName>iiNET.Network issue (connection issue)</fullName>
+                    <default>false</default>
+                    <label>iiNET.Network issue (connection issue)</label>
+                </value>
+                <value>
+                    <fullName>iiNET.System request (Deploy , improve script..)</fullName>
+                    <default>false</default>
+                    <label>iiNET.System request (Deploy , improve script..)</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - Get Logs (Transaction Log, Event Log)</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - Get Logs (Transaction Log, Event Log)</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - System Operations</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - System Operations</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - Work with Clients</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - Work with Clients</label>
+                </value>
+                <value>
+                    <fullName>iiNET Admin Tools - Work with Files</fullName>
+                    <default>false</default>
+                    <label>iiNET Admin Tools - Work with Files</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - File Transmission (Submit, Retrieve)</fullName>
+                    <default>false</default>
+                    <label>iiNET API - File Transmission (Submit, Retrieve)</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Get File Tracking Report</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Get File Tracking Report</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Get Recent Senders / Recipients</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Get Recent Senders / Recipients</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Get UTC Date &amp; Time</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Get UTC Date &amp; Time</label>
+                </value>
+                <value>
+                    <fullName>iiNET API - Login to / Logout from iiNET</fullName>
+                    <default>false</default>
+                    <label>iiNET API - Login to / Logout from iiNET</label>
+                </value>
+                <value>
+                    <fullName>iiNET Billing</fullName>
+                    <default>false</default>
+                    <label>iiNET Billing</label>
+                </value>
+                <value>
+                    <fullName>iiNET Data Issue</fullName>
+                    <default>false</default>
+                    <label>iiNET Data Issue</label>
+                </value>
+                <value>
+                    <fullName>iiNET Debug</fullName>
+                    <default>false</default>
+                    <label>iiNET Debug</label>
+                </value>
+                <value>
+                    <fullName>iiNET Direct - Push a File</fullName>
+                    <default>false</default>
+                    <label>iiNET Direct - Push a File</label>
+                </value>
+                <value>
+                    <fullName>iiNET Direct - Submit a File</fullName>
+                    <default>false</default>
+                    <label>iiNET Direct - Submit a File</label>
+                </value>
+                <value>
+                    <fullName>iiNET Enhancement</fullName>
+                    <default>false</default>
+                    <label>iiNET Enhancement</label>
+                </value>
+                <value>
+                    <fullName>iiNET Interfaces</fullName>
+                    <default>false</default>
+                    <label>iiNET Interfaces</label>
+                </value>
+                <value>
+                    <fullName>iiNET Massive files repush</fullName>
+                    <default>false</default>
+                    <label>iiNET Massive files repush</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Account Management</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Account Management</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Data Issue</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Data Issue</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - File Transmission (User Login/Automation)</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - File Transmission (User Login/Automation)</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Interfaces</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Interfaces</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Monitoring</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Monitoring</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Others</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Others</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Performance</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Performance</label>
+                </value>
+                <value>
+                    <fullName>iiNET MFT - Reporting</fullName>
+                    <default>false</default>
+                    <label>iiNET MFT - Reporting</label>
+                </value>
+                <value>
+                    <fullName>iiNET Monitoring</fullName>
+                    <default>false</default>
+                    <label>iiNET Monitoring</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - Account Info</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - Account Info</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - Billing History</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - Billing History</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - File Tracking</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - File Tracking</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - File Transmission (Submit, Retrieve)</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - File Transmission (Submit, Retrieve)</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - iiNET Profile</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - iiNET Profile</label>
+                </value>
+                <value>
+                    <fullName>iiNET Online - Push on Demand</fullName>
+                    <default>false</default>
+                    <label>iiNET Online - Push on Demand</label>
+                </value>
+                <value>
+                    <fullName>iiNET Others</fullName>
+                    <default>false</default>
+                    <label>iiNET Others</label>
+                </value>
+                <value>
+                    <fullName>iiNET Performance</fullName>
+                    <default>false</default>
+                    <label>iiNET Performance</label>
+                </value>
+                <value>
+                    <fullName>iiNET Reporting</fullName>
+                    <default>false</default>
+                    <label>iiNET Reporting</label>
+                </value>
+                <value>
+                    <fullName>iiNET Weekly work (weekly table, check incs)</fullName>
+                    <default>false</default>
+                    <label>iiNET Weekly work (weekly table, check incs)</label>
+                </value>
+                <value>
+                    <fullName>ISS Customer Service</fullName>
+                    <default>false</default>
+                    <label>ISS Customer Service</label>
+                </value>
+                <value>
+                    <fullName>SIS IATA Legal Archiving Tool</fullName>
+                    <default>false</default>
+                    <label>SIS IATA Legal Archiving Tool</label>
+                </value>
+                <value>
+                    <fullName>Xrates</fullName>
+                    <default>false</default>
+                    <label>Xrates</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>IATA_Business_Service__c</fullName>
+        <description>Defines the IATA Business Service that this Case Item details.</description>
+        <externalId>false</externalId>
+        <label>IATA Business Service</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>IATA Clearing House - ICH</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing House - ICH</label>
+                </value>
+                <value>
+                    <fullName>iiNET Services</fullName>
+                    <default>false</default>
+                    <label>iiNET Services</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Impact__c</fullName>
+        <description>A categorisation of the severity of this Case Item.
+High = All users impacted (e.g. Email server down) Medium = A group of users impacted (e.g. Printer no working) Low = 1 user impacted (e.g. Lost password)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>High = All users impacted (e.g. Email server down) Medium = A group of users impacted (e.g. Printer no working) Low = 1 user impacted (e.g. Lost password)</inlineHelpText>
+        <label>Impact</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 - High</fullName>
+                    <default>false</default>
+                    <label>1 - High</label>
+                </value>
+                <value>
+                    <fullName>2 - Medium</fullName>
+                    <default>false</default>
+                    <label>2 - Medium</label>
+                </value>
+                <value>
+                    <fullName>3 - Low</fullName>
+                    <default>false</default>
+                    <label>3 - Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Is_Published__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether information on the Case Item can be aggregated to the Case. This acts as flag to prevent internal comments and attachments from external systems from being exposed to the Case where a Contact would have visibility.</description>
+        <externalId>false</externalId>
+        <label>Is Published</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Super_User_Contacted__c</fullName>
+        <externalId>false</externalId>
+        <label>Super User Contacted?</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>I am a super user</fullName>
+                    <default>false</default>
+                    <label>I am a super user</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <defaultValue>&quot;Open&quot;</defaultValue>
+        <description>The lifecycle stage of this Case Item.</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Closed (Closed)</fullName>
+                    <default>false</default>
+                    <label>Closed (Closed)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Summary__c</fullName>
+        <description>A brief description of the Case Item.</description>
+        <externalId>false</externalId>
+        <label>Summary</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <recordTypes>
+        <fullName>MASTER</fullName>
+        <active>true</active>
+        <description>Master record type</description>
+        <label>MASTER</label>
+        <picklistValues>
+            <picklist>Business_Process__c</picklist>
+            <values>
+                <fullName>IATA Clearing House Admin Tools</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Abatements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Bank Movements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Bank Statement Files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Deposit Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Emails</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Non-Revenue Inv %28SIS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Prot%2E%2F Adj%2E Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Revenue Inv %28SAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Special Clearance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FX Deals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Interface Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Interface SAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Interface SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Member Configuration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS %2F Members Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Archiving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Emails</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS F1%2FF3 Generation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Invoice Crosscheck%2FDiscrepancies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Period Initialization</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Rates Files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - User Administration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - User Interface</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH MIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Web Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH servers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICHWeb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS IATA Legal Archiving Tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Xrates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - File Transmission %28Submit%2C Retrieve%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Get File Tracking Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Get Recent Senders %2F Recipients</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Get UTC Date %26 Time</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Login to %2F Logout from iiNET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - Get Logs %28Transaction Log%2C Event Log%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - System Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - Work with Clients</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - Work with Files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Data Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Debug</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Direct - Push a File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Direct - Submit a File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Enhancement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Interfaces</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Account Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Data Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - File Transmission %28User Login%2FAutomation%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Interfaces</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Performance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Massive files repush</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - Account Info</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - Billing History</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - File Tracking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - File Transmission %28Submit%2C Retrieve%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - Push on Demand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - iiNET Profile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Performance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Weekly work %28weekly table%2C check incs%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2EAutomation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2ENetwork issue %28connection issue%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2ESystem request %28Deploy %2C improve script%2E%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2EeMail communication</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Business_Process__c</picklist>
+            <values>
+                <fullName>IATA Clearing House Admin Tools</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Abatements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Bank Movements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Bank Statement Files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Deposit Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Emails</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Non-Revenue Inv %28SIS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Prot%2E%2F Adj%2E Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Revenue Inv %28SAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FIN Special Clearance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - FX Deals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Interface Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Interface SAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Interface SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Member Configuration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS %2F Members Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Archiving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Emails</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS F1%2FF3 Generation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Invoice Crosscheck%2FDiscrepancies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Period Initialization</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - OPS Rates Files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - User Administration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - User Interface</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH MIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Web Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH servers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICHWeb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS IATA Legal Archiving Tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Xrates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - File Transmission %28Submit%2C Retrieve%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Get File Tracking Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Get Recent Senders %2F Recipients</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Get UTC Date %26 Time</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET API - Login to %2F Logout from iiNET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - Get Logs %28Transaction Log%2C Event Log%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - System Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - Work with Clients</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Admin Tools - Work with Files</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Data Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Debug</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Direct - Push a File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Direct - Submit a File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Enhancement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Interfaces</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Account Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Data Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - File Transmission %28User Login%2FAutomation%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Interfaces</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Performance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET MFT - Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Massive files repush</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Monitoring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - Account Info</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - Billing History</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - File Tracking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - File Transmission %28Submit%2C Retrieve%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - Push on Demand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Online - iiNET Profile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Performance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Weekly work %28weekly table%2C check incs%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2EAutomation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2ENetwork issue %28connection issue%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2ESystem request %28Deploy %2C improve script%2E%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET%2EeMail communication</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Business_Service__c</picklist>
+            <values>
+                <fullName>IATA Clearing House - ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET Services</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Impact__c</picklist>
+            <values>
+                <fullName>1 - High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 - Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 - Low</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_Super_User_Contacted__c</picklist>
+            <values>
+                <fullName>I am a super user</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Closed %28Closed%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+</CustomObject>
