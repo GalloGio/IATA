@@ -1370,7 +1370,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			FROM Currency_Center_Survey__c
 			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
 			AND Airline__c = :airlineId
-			Order By Reporting_Date__c DESC
+			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC
 			LIMIT 1];
 		if (listSurveys.isEmpty()) return false;
 		return listSurveys.get(0).Id == this.parentQueryResult.Id;
@@ -1386,7 +1386,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
 			AND Airline__c = :airlineId
 			AND Status__c = 'Submitted'
-			Order By Reporting_Date__c DESC
+			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC
 			LIMIT 1];
 		if (listSurveys.isEmpty()) return null;
 		return listSurveys.get(0);
