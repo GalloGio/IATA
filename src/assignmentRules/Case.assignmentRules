@@ -10379,7 +10379,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>AgencyManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR (2 AND 3 AND 4)) OR (5 AND 6) OR (4 AND 7)</booleanFilter>
+            <booleanFilter>(1 OR (2 AND 3 AND 4)) OR (5 AND 6) OR (4 AND 7 AND 8)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -10414,6 +10414,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>SAAM,OSCAR Communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CNSCase__c</field>
+                <operation>equals</operation>
+                <value>False</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -10526,7 +10531,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>AgencyManagementAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(((1 AND 2 AND 3) OR 4 OR (5 and 6)) and 7 and 8) OR (1 AND 8 AND 9)</booleanFilter>
+            <booleanFilter>(((1 AND 2 AND 3) OR 4 OR (5 and 6)) and 7 and 8) OR (1 AND 8 AND 9) OR (9 and 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -10571,6 +10576,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>SAAM,OSCAR Communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CNSCase__c</field>
+                <operation>equals</operation>
+                <value>True</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
