@@ -517,7 +517,7 @@
             <targetReference>Fetch_More_User_Info</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>Details</name>
         <dataType>String</dataType>
