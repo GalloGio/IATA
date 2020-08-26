@@ -5474,7 +5474,8 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   (IF( 
   OR( 
   CONTAINS( $Profile.Name,&quot;ISS Portal&quot;), 
-  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;), 
+  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),
+  CONTAINS( $Profile.Name,&quot;CS Portal Profile&quot;),
   CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;) 
   ), 
   &quot;IATA Partner&quot;, 
