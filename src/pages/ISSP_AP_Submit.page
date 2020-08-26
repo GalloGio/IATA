@@ -58,7 +58,7 @@
             </style>
             <apex:pageBlockButtons location="bottom">
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus" />
-                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" />
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" rendered="{! NOT(isPassAirline && managePASS)}"/>
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
             </apex:pageBlockButtons>
             
@@ -67,7 +67,7 @@
             <!-- BASP/CASS Submit section -->
             <apex:outputPanel rendered="{!OR(isBSP,isCASS,isPassAirline,managePASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
-                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
+                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false" rendered="{! NOT(isPassAirline && managePASS)}">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,$Label.ISSP_AP_PASS_FieldsFilled,'You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Settlement instructions & Bank Accounts information" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions') && !isPassAirline}" collapsible="false">
@@ -118,11 +118,13 @@
                         </div>
                         
                         <!-- Agreements PASS -->
-                        <div class="aplabel">
-                            <apex:outputText value="{!$Label.ISSP_PASS_Agreement}" escape="false" styleclass="aplabel"/>
-                        </div>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=FormOfAuthorization"
-                            height="190px" width="100%" scrolling="false" rendered="true"/>
+                        <apex:outputPanel rendered="{!showPASSAgreement}">
+                            <div class="aplabel">
+                                <apex:outputText value="{!$Label.ISSP_PASS_Agreement}" escape="false" styleclass="aplabel"/>
+                            </div>
+                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=PASSAgreement"
+                                height="190px" width="100%" scrolling="false" rendered="true"/>
+                        </apex:outputPanel>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!isPassAirline && OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
                         <!-- Upload Bank Mandate section (Without ICCS) -->

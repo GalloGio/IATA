@@ -1859,6 +1859,7 @@ private class ISSP_APProcess_Test
 			ctrl.isCASS=true;
 			ctrl.getShowCounterIndemnity();
 			ctrl.getDocumentGuide();
+			ctrl.getShowPASSAgreement();
 			ISSP_APProcess.updateGuideCounter(ctrl.newCase.Id);
 
 			System.assert(ctrl.thisController!=null);

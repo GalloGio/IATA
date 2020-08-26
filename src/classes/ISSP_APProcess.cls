@@ -1692,7 +1692,7 @@ global without sharing class ISSP_APProcess {
 				listMandatoryFiles.add('SignedSISISPAForm');
 			}
 		}
-		if(isPassAirline){
+		if(getShowPASSAgreement()){
 			listMandatoryFiles.add('PASSAgreement');
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
@@ -2368,6 +2368,7 @@ global without sharing class ISSP_APProcess {
 			BSP_CI_Valid__c, CASS_CI_Valid__c, BSP_FOC_Valid__c, CASS_FOC_Valid__c, RecordType.DeveloperName,
 			ICH_Member__c, Country_ISO_Code__c, IATA_ISO_Country__c,Email__c,Legal_name__c,IATA_ISO_Country__r.Name,
 			SIS_Status__c, SIS_Sub_Status__c, Date_of_last_clearance__c, EF_SIS_Code__c, EF_SIS_Designator__c, SIS_ID__c,VAT_Number__c,
+			PASS_Participant_formula__c,
 			(SELECT Id FROM Authorized_Signatories_Packages__r)
 			FROM Account
 			WHERE Id = :hqId
@@ -2780,7 +2781,7 @@ global without sharing class ISSP_APProcess {
 	public void retrieveAccountToShowSections() {
 		if(isGSSAUser && category <> 'IBCS consolidator') {
 			Id topParentId = this.con.Account.Top_Parent__c==null? this.con.AccountId: this.con.Account.Top_Parent__c;
-			this.accountToShowSections= [SELECT Id, BSP_CI_Valid__c, BSP_FOC_Valid__c, CASS_CI_Valid__c, Membership_status__c, Sector__c,
+			this.accountToShowSections= [SELECT Id, BSP_CI_Valid__c, BSP_FOC_Valid__c, CASS_CI_Valid__c, Membership_status__c, Sector__c, PASS_Participant_formula__c,
 				(SELECT Id FROM Authorized_Signatories_Packages__r)
 				FROM Account
 				WHERE Id = :topParentId ];
@@ -2895,6 +2896,13 @@ global without sharing class ISSP_APProcess {
 			&& accountToShowSections!=null
 			&& accountToShowSections.Sector__c=='Airline'
 			&& accountToShowSections.Membership_status__c!='IATA member';
+	}
+
+	/**
+		Returns true if the PASS agreement is visible, it will happen when it's the first PASS agreement to sign
+	**/
+	public Boolean getShowPASSAgreement() {
+		return this.isPassAirline && this.accountToShowSections.PASS_Participant_formula__c == 'No';
 	}
 
 	/**
