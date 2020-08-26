@@ -163,18 +163,19 @@ public class ISSP_AMC_Baggage_Tag_Range_Test {
 		ISSP_AMC_ParticipationFactory.createBaggageRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Baggage_Tag_Range;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createBaggageParticipation('testName', true, true, true).Id);
 					ISSP_AMC_Baggage_Tag_Range controller = new ISSP_AMC_Baggage_Tag_Range();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testBaggageUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -185,6 +186,5 @@ public class ISSP_AMC_Baggage_Tag_Range_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 }
