@@ -488,11 +488,11 @@ public without sharing class PowerBiCtrl {
 			TransformationHelper.sendEmailSupport('FATAL: PowerBI Access token: ' + conf.Name + ' ' + result.error, 'PowerBI Access token: ' + conf.Name + ' ' +result.error);
 			throw new transformationException('PowerBI Access token: ' + result.error);
 		}
-		else if(result.access_token != null && result.expires_on != null && result.refresh_token != null) {
+		else if(result.access_token != null && result.expires_on != null) {
 			String applicationSufix = conf.Application_Identifier__c;
 			orgPartition.put(accessTokenKey + applicationSufix, result.access_token, 3600);
 			orgPartition.put(expiresOnKey + applicationSufix, result.expires_on, 3600);
-			if(refreshTokenKey != null) {
+			if(refreshTokenKey != null && result.refresh_token != null) {
 				orgPartition.put(refreshTokenKey + applicationSufix, result.refresh_token, 3600);
 			}
 		}
