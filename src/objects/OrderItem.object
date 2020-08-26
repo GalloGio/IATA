@@ -638,19 +638,6 @@ CASE(UPPER(Carrier_Name__c),
         <type>Text</type>
         <unique>false</unique>
     </fields>
-	<fields>
-        <fullName>Station__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Lookup to the ICG Account Role Detail (Facility) related to the item</description>
-        <externalId>false</externalId>
-        <label>Station</label>
-        <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>Order Products</relationshipLabel>
-        <relationshipName>Order_Products</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
-    </fields>
     <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>

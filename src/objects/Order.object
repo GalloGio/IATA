@@ -720,16 +720,6 @@
         <fullName>PoNumber</fullName>
         <trackHistory>true</trackHistory>
     </fields>
-    <fields>
-        <fullName>Renewal_Notification_URL__c</fullName>
-        <externalId>false</externalId>
-        <formula>$Setup.IEC_Settings__c.IEC_User_Portal_URL__c + &apos;/IEC_ShoppingCart?order=&apos; +  OrderNumber</formula>
-        <label>Renewal Notification URL</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
 	<fields>
         <fullName>Remote_Validation_Status__c</fullName>
         <externalId>false</externalId>
@@ -791,6 +781,25 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Renewal_Notification_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>$Setup.IEC_Settings__c.IEC_User_Portal_URL__c + &apos;/IEC_ShoppingCart?order=&apos; +  OrderNumber</formula>
+        <label>Renewal Notification URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remote_Validation_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>Remote Validation Link</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>SAP_Invoice__c</fullName>
