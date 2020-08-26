@@ -922,6 +922,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 		}
 		/*trgCaseEscalationMailNotificationICH Trigger*/
+
+		/** WMO-810 **/
+		CaseTriggerHelper.handleAutoReplies(Trigger.newMap, Trigger.oldMap);
 	}
 	/*Share trigger code*/
 

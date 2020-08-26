@@ -39,6 +39,7 @@ public with sharing class PortalCasesCtrl {
 	public static List <AP_Process_Form__c> apList;
 	public static ISSP_Portal_Service_Ids__c serviceIdInstance;
 	public static Boolean adminProfile = CSP_Utils.isAdmin();
+	public static Boolean updatingClosureStatus = false;
 
 	public static Integer RESULTS_PER_PAGE = 10;
 	private static PortalSearchFilterWrapper filtersWrapper;
@@ -542,10 +543,10 @@ public with sharing class PortalCasesCtrl {
 								OneIdUtils.getOrgUrl() + '/ISSP_AMSCases'
 							};
 						} else {
-							return new Map<Id, String>{
-								record.Id =>
-								OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2'
-							};
+						return new Map<Id, String>{
+							record.Id =>
+							OneIdUtils.getOrgUrl() +  '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2'
+						};
 						}
 					} else if(record.Reason1__c == 'CLO – Closure') {
 						return new Map<Id, String>{
@@ -668,12 +669,12 @@ public with sharing class PortalCasesCtrl {
 	public static Case getCaseById(String caseId) {
 		Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c,
 						Remittance_Date__c, CurrencyIsoCode, Update_AIMS_IRR__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c,ClosedDate,
-						CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
+						CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c, IsClosed,
 						Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c,
 						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,Has_the_agent_paid_invoice__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
 						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName,
-						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c
 						FROM Case 
 						WHERE Id = :caseId];
 
@@ -702,13 +703,14 @@ public with sharing class PortalCasesCtrl {
 							WHERE RecordType.Id = :newCase.RecordType.Id
 								AND (RecordType.DeveloperName IN :validRecordtypes)];
 		
-		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13)) || isMSO);
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13))
+			|| (newCase.Status == 'Pending Closure' && newCase.Portal_Closure_Status__c == 'Started') || isMSO);
 	}
-
+	
 	private Static boolean isMSOcase(Case newCase){
 		return (newCase.RecordType.DeveloperName == 'OSCAR_Communication' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
 	}
-
+	
 	private Static Case buildSubject(Case caseAux){
 		String subJ = '';
 
@@ -732,10 +734,12 @@ public with sharing class PortalCasesCtrl {
 		}
 
 		Id profileId = Userinfo.getProfileId();
-		String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
+		String profileName = [SELECT Id, Name FROM Profile where Id = :profileId].Name;
+		List<User> closedUserType = [SELECT Id, UserType FROM User WHERE Id = :newCase.WhoClosedCase__c];
 		ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
-		String userRole =  newCase.WhoClosedCase__c != null ? DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
-
+		String userRole = closedUserType.isEmpty() || closedUserType[0].UserType == 'Guest' ? '' :
+							newCase.WhoClosedCase__c != null ?
+								DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
 		String caseType = ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);
 
 		String surveyLanguage = UserInfo.getLanguage();
@@ -783,39 +787,78 @@ public with sharing class PortalCasesCtrl {
 	* Returns the comments for a case, given the case id
 	*/
 	@AuraEnabled
-public static List<MessageWrapper> getCaseMessages(String caseId){
-	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
+	public static List<MessageWrapper> getCaseMessages(String caseId){
+		List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
+		Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
-	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
-											CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
-											FROM CaseComment
-											WHERE ParentId = :caseId AND IsDeleted = false
-																					 ORDER BY CreatedDate ASC];
+		List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
+												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+												FROM CaseComment
+												WHERE ParentId = :caseId AND IsDeleted = false
+																						ORDER BY CreatedDate ASC];
 
-	String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
+		String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
-	lstToReturn.add(new MessageWrapper(caseDescription,
-										 caseToFirstComment.CreatedDate,
-										 caseToFirstComment.CreatedBy.Name,
-										 true,
-										 caseToFirstComment.Id));
+		lstToReturn.add(new MessageWrapper(caseDescription,
+											caseToFirstComment.CreatedDate,
+											caseToFirstComment.CreatedBy.Name,
+											true,
+											caseToFirstComment.Id));
 
-	if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()) {
-		for(CaseComment caseCommentAux : lstCaseCommentsAux) {
-			Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
-			lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody,
-												 caseCommentAux.CreatedDate,
-												 caseCommentAux.CreatedBy.Name,
-												 isSelfAux,
-												 caseCommentAux.Id));
-		}
+		lstToReturn.addAll(getMessageWrapper(lstCaseCommentsAux));
+
+		return lstToReturn;
 	}
 
-	return lstToReturn;
-}
+	/*
+	 * Updates the case closure status
+	 */
+	@AuraEnabled
+	public static List<MessageWrapper> updateClosureStatus(String caseId, String status) {
+		Datetime transactionStart = Datetime.now();
+		List<MessageWrapper> result = new List<MessageWrapper>();
+		
+		try {
+			CaseComment comment = new CaseComment();
+			comment.ParentId = caseId;
+			comment.CommentBody = CaseCommentAutoReply.USER_ANSWER_ID + ' ' + status;
+			comment.IsPublished = true;
+			insert comment;
 
+			PortalCasesCtrl.updatingClosureStatus = true;
+			Case c = new Case(Id = caseId, Portal_Closure_Status__c = status);
+			update c;
+		} catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
+		}
+		
+
+		List<CaseComment> caseComments = [SELECT Id, ParentId, IsPublished, IsDeleted, CommentBody, CreatedDate, CreatedById, CreatedBy.Name
+										  FROM CaseComment
+										  WHERE ParentId = :caseId
+											  AND CreatedDate >= :transactionStart
+											  AND IsDeleted = false
+											  ORDER BY CreatedDate ASC];
+		
+		result.addAll(getMessageWrapper(caseComments));
+		
+		return result;
+	}
+	
+	private static List<MessageWrapper> getMessageWrapper(List<CaseComment> comments) {
+		List<MessageWrapper> result = new List<MessageWrapper>();
+		if (comments != null && !comments.isEmpty()) {
+			for (CaseComment caseCommentAux : comments) {
+				Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
+				result.add(new MessageWrapper(caseCommentAux.CommentBody, caseCommentAux.CreatedDate, caseCommentAux.CreatedBy.Name,
+					isSelfAux, caseCommentAux.Id));
+			}
+		}
+		
+		return result;
+	}
+	
 	/*
 	* Method that adds a new Recipient for this case
 	*/
@@ -978,15 +1021,20 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 		public Boolean isSelf{get; set;}
 		@AuraEnabled
 		public String id{get; set;}
+		@AuraEnabled
+		public Boolean buttonsDisabled {get; set;}
 
-		public MessageWrapper(){}
+		public MessageWrapper(){
+			this.buttonsDisabled = true;
+		}
 
-		public MessageWrapper(String messageTextAux, Datetime timeStampAux, String senderNameAux, Boolean isSelfAux, String idAux){
-			this.messageText = messageTextAux;
-			this.timeStamp = timeStampAux;
-			this.isSelf = isSelfAux;
-			this.id = idAux;
-			this.senderName = senderNameAux;
+		public MessageWrapper(String messageBody, Datetime timeStamp, String senderName, Boolean isSelf, String id) {
+			this();
+			this.messageText = messageBody;
+			this.timeStamp = timeStamp;
+			this.isSelf = isSelf;
+			this.id = id;
+			this.senderName = senderName;
 		}
 
 	}
