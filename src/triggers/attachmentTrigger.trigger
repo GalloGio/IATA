@@ -1,4 +1,7 @@
-trigger attachmentTrigger on Attachment (before insert, before update, before delete, after insert) {
+trigger attachmentTrigger on Attachment (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
+	//domain class
+	Attachments attachments;
+
 	if(Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
 		List<Id> lsParentIds = new List<Id>();
 		for(Attachment t : Trigger.new) {
@@ -24,11 +27,10 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 		}
 	}
 	
-	if(Trigger.isAfter && Trigger.isInsert) {  
-		
+	if(Trigger.isAfter && Trigger.isInsert) {  		
 		List<Id> atts = new List<Id>();
 		List<String> lstRTValid = Apex_Setting__c.getValues('RT valid to reopen attachment trigger').Text_1__c.split(',');
-		
+
 		for(Attachment t : Trigger.new) {
 			if(t.ParentId.getSObjectType() == Case.SObjectType){
 				atts.add(t.ParentId);
@@ -46,6 +48,25 @@ trigger attachmentTrigger on Attachment (before insert, before update, before de
 				} 
 				update caseList;
 			}
+		}
+	}
+
+	if(Trigger.isAfter){
+		if(Trigger.isInsert) {
+			attachments = new Attachments(Trigger.newMap);
+			attachments.onAfterInsert();
+		}
+		if(Trigger.isUpdate){
+			attachments = new Attachments(Trigger.newMap);
+			attachments.onAfterUpdate();
+		}
+		if(Trigger.isDelete){
+			attachments = new Attachments(Trigger.oldMap);
+			attachments.onAfterDelete();
+		}
+		if(Trigger.isUndelete){
+			attachments = new Attachments(Trigger.newMap);
+			attachments.onAfterUndelete();
 		}
 	}
 }
