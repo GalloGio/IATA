@@ -213,15 +213,18 @@
         }
         var popupStatus = 0;
         
-        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Notionsessent\\'lentarifetbillet-FR,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#SocialMediaforTravelIndustry-EN,#Acc\\.Fin\\.Mgmtforagencies-EN,#BSPAgentBillingReportsProcedures-EN,#BSPAgentRemittanceProcedures-EN,#BSPEssentialsforTravelAgents-EN,#BSPStandardDocumentsProcedures-EN,#IntrototheBSPSystemLanguage-EN").click(function() {
+        $("#DistributionAirlinesRetailingwithNDC-EN,#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Notionsessent\\'lentarifetbillet-FR,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#SocialMediaforTravelIndustry-EN,#Acc\\.Fin\\.Mgmtforagencies-EN,#BSPAgentBillingReportsProcedures-EN,#BSPAgentRemittanceProcedures-EN,#BSPEssentialsforTravelAgents-EN,#BSPStandardDocumentsProcedures-EN,#IntrototheBSPSystemLanguage-EN").click(function() {
             
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
             var popupHeight = $("#popupLogin").height();
             var popupWidth = $("#popupLogin").width();
-            
+          
             // change the popupLogin content
+            if ($(this).is("#DistributionAirlinesRetailingwithNDC-EN")) {
+                $("#popup_Content").html("{!Distribution_Airlines_Retailing_with_NDC}");
+            }
             if ($(this).is("#DestinationGeography-EN")) {
                 $("#popup_Content").html("{!destinationGeography_Description}");
             }

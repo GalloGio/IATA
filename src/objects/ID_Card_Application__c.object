@@ -1441,9 +1441,9 @@ Completed: Process is complete</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Travel Agency Fees - EN</fullName>
+                    <fullName>Distribution &amp; Airlines Retailing with NDC - EN</fullName>
                     <default>false</default>
-                    <label>Travel Agency Fees - EN</label>
+                    <label>Distribution &amp; Airlines Retailing with NDC - EN</label>
                 </value>
                 <value>
                     <fullName>Assist Travelers Special Needs - EN</fullName>
@@ -1451,14 +1451,14 @@ Completed: Process is complete</inlineHelpText>
                     <label>Assist Travelers Special Needs - EN</label>
                 </value>
                 <value>
+                    <fullName>Travel Agency Fees - EN</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Fees - EN</label>
+                </value>
+                <value>
                     <fullName>Fundamentals Journey Pricing - EN</fullName>
                     <default>false</default>
                     <label>Fundamentals Journey Pricing - EN</label>
-                </value>
-                <value>
-                    <fullName>Notions essent&apos;l en tarif et billet - FR</fullName>
-                    <default>false</default>
-                    <label>Notions essent&apos;l en tarif et billet - FR</label>
                 </value>
                 <value>
                     <fullName>Adv. Skills Journey Price&amp;Ticket - EN</fullName>
@@ -1476,29 +1476,14 @@ Completed: Process is complete</inlineHelpText>
                     <label>Serving the Travel  Customer - EN</label>
                 </value>
                 <value>
-                    <fullName>Le service au client voyageur - FR</fullName>
-                    <default>false</default>
-                    <label>Le service au client voyageur - FR</label>
-                </value>
-                <value>
                     <fullName>Selling Intl Rail Transportation - EN</fullName>
                     <default>false</default>
                     <label>Selling Intl Rail Transportation - EN</label>
                 </value>
                 <value>
-                    <fullName>Social Media for Travel Industry - EN</fullName>
-                    <default>false</default>
-                    <label>Social Media for Travel Industry - EN</label>
-                </value>
-                <value>
                     <fullName>Destination Geography - EN</fullName>
                     <default>false</default>
                     <label>Destination Geography - EN</label>
-                </value>
-                <value>
-                    <fullName>Repricing, Exchange and Reissue - EN</fullName>
-                    <default>false</default>
-                    <label>Repricing, Exchange and Reissue - EN</label>
                 </value>
                 <value>
                     <fullName>Acc. &amp; Fin. Mgmt for agencies -EN</fullName>

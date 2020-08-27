@@ -9559,6 +9559,14 @@ This service is free of charge.</value>
         <value>Discounted Amount</value>
     </labels>
     <labels>
+        <fullName>Distribution_Airlines_Retailing_with_NDC</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Distribution &amp; Airlines Retailing with NDC</shortDescription>
+        <value>The Distribution and Airline Retailing with NDC Course illustrates how airlines optimally distribute their products and services through their own website channels and how the industry is working to replicate the same functionality in indirect channels used by travel agents. Through media-rich and interactive animation, this course will satisfy your curiosity, dispel potential myths, simulate NDC distribution and describe enhancements – all to create an improved user and customer experience, thanks to New Distribution Capability. More Details &lt;a href=\&quot;https://www.iata.org/en/training/courses/distribution-retailing-ndc/1031/en/&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>Documents_POP</fullName>
         <categories>ICE Service</categories>
         <language>en_US</language>
