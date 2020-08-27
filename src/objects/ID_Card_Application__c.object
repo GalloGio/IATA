@@ -1466,11 +1466,6 @@ Completed: Process is complete</inlineHelpText>
                     <label>Adv. Skills Journey Price&amp;Ticket - EN</label>
                 </value>
                 <value>
-                    <fullName>Geography in Travel Planning - EN</fullName>
-                    <default>false</default>
-                    <label>Geography in Travel Planning - EN</label>
-                </value>
-                <value>
                     <fullName>Serving the Travel  Customer - EN</fullName>
                     <default>false</default>
                     <label>Serving the Travel  Customer - EN</label>
