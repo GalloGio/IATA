@@ -12,6 +12,7 @@ private class CaseBeforeTriggerTest {
 	public static final String PAX = 'Travel Agent';
 	public static final String CARGO = 'Cargo Agent';
 
+	private final static Id IATAFinancialReview = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
 	@isTest static void unitTest1() {
 		ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
@@ -2724,4 +2725,139 @@ private class CaseBeforeTriggerTest {
 
 		return con;
 	}
+
+	@isTest
+	static void twoIFAPCasesError() {
+
+		Boolean isSuccess = false;
+
+		IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c();
+			isoCountry.name = 'suisse'; 
+			isoCountry.ISO_Code__c = 'SS';
+			isoCountry.AIMS_Area_Name__c = 'suisse';
+			isoCountry.AIMS_Area_ID__c = '1';
+		insert isoCountry;
+
+		Account acc = new Account();
+			acc.IATACode__c = '12345678';
+			acc.Name = 'Test account2';
+			acc.BillingCity = 'Montreal';
+			acc.BillingCountry = 'Canada';
+			acc.BillingStreet = 'some street';
+			acc.Type = 'IATA Passenger Sales Agent';
+			acc.Location_Type__c = 'HO';
+			acc.IATA_ISO_Country__c = isoCountry.id;
+		insert acc;
+		
+		Contact con = new Contact();
+			con.FirstName = 'Dummy';
+			con.LastName = 'Contact';
+			con.Type_of_Contact__c = 'IFAP Contact';
+			con.AccountId = acc.Id;
+			con.Email = 'some@email.org';
+			con.Financial_Assessment_Contact__c = true;
+		insert con;
+
+		Case cas1 = new Case();
+			cas1.RecordTypeId = IATAFinancialReview;
+			cas1.Financial_Review_Type__c = 'Annual';
+			cas1.Status = 'Assessment Performed';
+			cas1.Origin = 'test';
+			cas1.IFAP_Area__c = 'test';
+			cas1.Subject = 'IFAP';
+			cas1.IFAP_Financial_Year__c = '2050';
+			cas1.Deadline_Date__c = Date.today().adddays(30);
+			cas1.contactid = con.id;
+			cas1.AccountId = acc.id;
+		insert cas1;
+
+		Case cas2 = new case();
+			cas2.RecordTypeId = IATAFinancialReview;
+			cas2.Financial_Review_Type__c = 'Annual';
+			cas2.Status = 'Assessment Performed';
+			cas2.Origin = 'test';
+			cas2.IFAP_Area__c = 'test';
+			cas2.Subject = 'IFAP';
+			cas2.IFAP_Financial_Year__c = '2050';
+			cas2.Deadline_Date__c = Date.today().adddays(30);
+			cas2.contactid = con.id;
+			cas2.AccountId = acc.id;
+		
+		Test.startTest();
+			try {
+				insert cas2;
+			} catch (Exception e) {
+				isSuccess = true;
+				System.assert(e.getMessage().contains('The selected account already has open IFAP cases. An account can only have two IFAP cases if they are Annual and Major Changes.'));
+			}
+		Test.stopTest();
+		System.assert(isSuccess);
+		
+	}
+
+	@isTest
+	static void twoIFAPCases() {
+
+		IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c();
+			isoCountry.name = 'suisse';
+			isoCountry.ISO_Code__c = 'SS';
+			isoCountry.AIMS_Area_Name__c = 'suisse';
+			isoCountry.AIMS_Area_ID__c = '1';
+		insert isoCountry;
+
+		Account acc = new Account();
+			acc.IATACode__c = '12345678';
+			acc.Name = 'Test account2';
+			acc.BillingCity = 'Montreal';
+			acc.BillingCountry = 'Canada';
+			acc.BillingStreet = 'some street';
+			acc.Type = 'IATA Passenger Sales Agent';
+			acc.Location_Type__c = 'HO';
+			acc.IATA_ISO_Country__c = isoCountry.id;
+		insert acc;
+		
+		Contact con = new Contact();
+			con.FirstName = 'Dummy';
+			con.LastName = 'Contact';
+			con.Type_of_Contact__c = 'IFAP Contact';
+			con.AccountId = acc.Id;
+			con.Email = 'some@email.org';
+			con.Financial_Assessment_Contact__c = true;
+		insert con;
+
+		Case cas1 = new Case();
+			cas1.RecordTypeId = IATAFinancialReview;
+			cas1.Financial_Review_Type__c = 'Annual';
+			cas1.Status = 'Assessment Performed';
+			cas1.Origin = 'test';
+			cas1.IFAP_Area__c = 'test';
+			cas1.Subject = 'IFAP';
+			cas1.IFAP_Financial_Year__c = '2050';
+			cas1.Deadline_Date__c = Date.today().adddays(30);
+			cas1.contactid = con.id;
+			cas1.AccountId = acc.id;
+		insert cas1;
+
+		Case cas2 = new case();
+			cas2.RecordTypeId = IATAFinancialReview;
+			cas2.Financial_Review_Type__c = 'Major Changes';
+			cas2.Status = 'Assessment Performed';
+			cas2.Origin = 'test';
+			cas2.IFAP_Area__c = 'test';
+			cas2.Subject = 'IFAP';
+			cas2.IFAP_Financial_Year__c = '2050';
+			cas2.Deadline_Date__c = Date.today().adddays(30);
+			cas2.contactid = con.id;
+			cas2.AccountId = acc.id;
+		
+
+		Test.startTest();
+			insert cas2;
+		Test.stopTest();
+
+		List<Case> lstCases = [SELECT Id FROM Case WHERE RecordTypeId = :IATAFinancialReview AND AccountId = :acc.id];
+		System.AssertEquals(2, lstCases.size());
+
+	}
+	
 }

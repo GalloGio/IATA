@@ -305,6 +305,9 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_EDS = 'EDS';
 	public static final String CASE_REASON_NONNEWGEN_RHC = 'NonNewGen RHC';
 
+	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
+	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
+
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_QUARTERLY = 'Multicountry Quarterly';
@@ -342,6 +345,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_STATUS_RE_OPENED = 'Re-open/ed';
 	public static final String CASE_STATUS_SUBMITTED = 'Submitted';
 	public static final String CASE_STATUS_ASSESSMENT_CANCELED = 'Assessment Cancelled';
+	public static final String CASE_STATUS_FINANCIAL_ASSESSMENT_CHALLENGED = 'Financial Assessment Challenged';
 
 	public static final Set<String> IFAP_CLOSED_STATUS = new Set<String>{
 		CASE_STATUS_CLOSED,
