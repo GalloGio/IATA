@@ -1381,15 +1381,28 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	 */
 	private Currency_Center_Survey__c findSurveyToClone() {
 		List<Currency_Center_Survey__c> listSurveys = [
-			SELECT Id
+			SELECT Id, Year_Survey__c, Month_Survey__c
 			FROM Currency_Center_Survey__c
 			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
 			AND Airline__c = :airlineId
 			AND Status__c = 'Submitted'
-			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC
-			LIMIT 1];
+			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC];
 		if (listSurveys.isEmpty()) return null;
-		return listSurveys.get(0);
+
+		map<Integer,Currency_Center_Survey__c> mapSurvey = new map<Integer,Currency_Center_Survey__c>();
+		for (Currency_Center_Survey__c survey: listSurveys ) {
+			String month = survey.Month_Survey__c;
+			month = month.length()==1? '0' + month: month; // convert month to 2 char string
+			String key = survey.Year_Survey__c + month;
+			if (key.isNumeric()) {
+				mapSurvey.put(Integer.ValueOf(key), survey);
+			}
+		}
+		if (mapSurvey.isEmpty()) return null;
+		// return the last survey in the list, so the most recent
+		list<Integer> listSortedKeys = new list<Integer>(mapSurvey.keyset());
+		listSortedKeys.sort();
+		return mapSurvey.get(listSortedKeys.get(listSortedKeys.size()-1));
 	}
 
 	/**
