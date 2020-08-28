@@ -35139,11 +35139,18 @@ Please download, sign and upload the PASS agreement.</value>
         <value>Link of Airline Joining Checklist</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Authorized_Signatories_Header_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Authorized_Signatories_Header_Text</shortDescription>
+        <value>As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order to activate your Participation please download, complete, sign and upload the package in the link below, once validated by us, you will be requested to send the originals to our office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_BankMandate</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP PASS BankMandate</shortDescription>
-        <value>The participant needs to provide a Bank Account Mandate to IATA, so that the PASS proceedings can be settled. Please upload Bank Account Mandate of the local bank account and in the ISS country and currency of settlement as a scanned document.</value>
+        <value>The Participant needs to provide a valid local Bank Account to IATA, per each country whether the company participates, so that the PASS funds can be settled. Please upload Local Bank Account Beneficiary forms. These instructions must indicate a local bank account in the PASS Country, in the currency of settlement established by IATA and the signed of two of the latest approved Authorized Signatories.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Checklist</fullName>
@@ -35214,6 +35221,13 @@ Please download, sign and upload the PASS agreement.</value>
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Participation_Checklist</shortDescription>
         <value>Link of participation checklist</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Supporting_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Supporting_Documents</shortDescription>
+        <value>Supporting Documents - Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Terms_And_Conditions</fullName>

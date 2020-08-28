@@ -1692,8 +1692,21 @@ global without sharing class ISSP_APProcess {
 				listMandatoryFiles.add('SignedSISISPAForm');
 			}
 		}
-		if(getShowPASSAgreement()){
-			listMandatoryFiles.add('PASSAgreement');
+		if (isPASS) {
+			if(getShowPASSAgreement()){
+				listMandatoryFiles.add('PASSAgreement');
+			}
+			if (getShowUploadBankMandateForPASS()) {
+				//check Bank_Mandate
+				listMandatoryFiles.add('Bank_Mandate');
+			}
+			if (getShowUploadASPForPASS()) {
+				//check Bank_Mandate
+				listMandatoryFiles.add('ASP');
+			}
+			for(passCountriesWrapper wrapperRecord:wrapperPassCountries) {
+				listMandatoryFiles.add(wrapperRecord.identifier);
+			}
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;
@@ -2835,6 +2848,20 @@ global without sharing class ISSP_APProcess {
 	}
 
 	/**
+		Returns true if the account meets the conditions to show Upload Bank Mandate section
+	**/
+	public Boolean getShowUploadBankMandateForPASS() {
+		return this.isPassAirline;
+	}
+
+	/**
+		Returns true if the account meets the conditions to show Upload ASP (Authorized Signatories Package)
+	**/
+	public Boolean getShowUploadASPForPASS() {
+		return this.isPassAirline && getAuthorizedSignatories().isEmpty();
+	}
+
+	/**
 		Show IATA Easypay section in submit page only for BSP joining and Minor Changes, and when the country is Easypay eligible
 	 */
 	public Boolean getShowIATAEasyPay() {
@@ -3121,6 +3148,13 @@ global without sharing class ISSP_APProcess {
 	}
 	public String getSponsorshipLetterName() {
 		return getDocumentName('Sponsorship_Letter');
+	}
+
+	public String getPASSAuthorizedSignatoriesPackageUrl() {
+		return getDocumentUrl('PASS_Authorized_Signatories_Package');
+	}
+	public String getPASSAuthorizedSignatoriesPackageName() {
+		return getDocumentName('PASS_Authorized_Signatories_Package');
 	}
 
 	/**
@@ -3521,9 +3555,9 @@ global without sharing class ISSP_APProcess {
 															FROM AP_Country_Requierment__c
 															WHERE Line_of_business__c =:AMS_Utils.passParticipation AND Country__r.ISO_Code__c IN:isocodeList ORDER by Name];
 
+		Integer counter = 100;
 		for(AP_Country_Requierment__c isoJoining : isoListJoining) {
-			passCountryAux=new passCountriesWrapper(isoJoining.Country__r.Name,isoJoining.Country__r.ISO_Code__c,isoJoining.Country__r.Id);
-			passCountries.add(passCountryAux);
+			passCountries.add(new passCountriesWrapper(counter++, isoJoining));
 		}
 		return passCountries;
 	}
@@ -3561,16 +3595,18 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public class passCountriesWrapper{
-		public String countryName{get;set;}
-		public String countryIsoCode{get;set;}
-		public transient Blob countryFileBody {get;set;}
-		public String countryFileName {get;set;}
+		public Integer counter {get;set;}
+		public String countryIsoCode {get;set;}
 		public Id countryIsoCodeId {get;set;}
+		public String reqName {get;set;}
+		public String identifier {get;set;}
 
-		public passCountriesWrapper(String countryNameWrapper,String countryIsoCodeWrapper,Id countryIsoCodeIdWrapper){
-			countryName=countryNameWrapper;
-			countryIsoCode=countryIsoCodeWrapper;
-			countryIsoCodeId=countryIsoCodeIdWrapper;
+		public passCountriesWrapper(Integer counter, AP_Country_Requierment__c countryReq){
+			this.counter = counter;
+			this.countryIsoCode = countryReq.Country__r.ISO_Code__c;
+			this.countryIsoCodeId = countryReq.Country__r.Id;
+			this.reqName = 'Bank Account Details - ' + countryReq.Country__r.Name;
+			this.identifier = 'Bank_Details_' + this.countryIsoCode;
 		}
 	}
 

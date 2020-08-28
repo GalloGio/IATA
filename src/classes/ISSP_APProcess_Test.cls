@@ -1851,6 +1851,8 @@ private class ISSP_APProcess_Test
 			ctrl.getBSPVoluntaryWithdrawalName();
 			ctrl.getCASSVoluntaryWithdrawalUrl();
 			ctrl.getCASSVoluntaryWithdrawalName();
+			ctrl.getShowUploadBankMandateForPASS();
+			ctrl.getShowUploadASPForPASS();
 			ctrl.isBSP=true;
 			ctrl.isCASS=false;
 			ctrl.getShowCounterIndemnity();
@@ -1924,6 +1926,8 @@ private class ISSP_APProcess_Test
 			ctrl.getAssociateAggregatorMemberApplicationName();
 			ctrl.getSponsorshipLetterUrl();
 			ctrl.getSponsorshipLetterName();
+			ctrl.getPASSAuthorizedSignatoriesPackageUrl();
+			ctrl.getPASSAuthorizedSignatoriesPackageName();
 			ctrl.getICHCurrencyClearanceOptions();
 			ctrl.getIsSISMember();
 			ctrl.getIsValidDueDiligence();
