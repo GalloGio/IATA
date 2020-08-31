@@ -39,7 +39,12 @@
       </div>
       <!--Comment Accordion other component moved here on MTSL-811-->
       <div class="topLightGrayBorder">
-        <c-portal-case-details-messaging expired={trackedIsExpired} is-collection={isICollectionCase}></c-portal-case-details-messaging>
+		<c-portal-case-details-messaging
+			expired={trackedIsExpired}
+			is-collection={isICollectionCase}
+			case-details={caseDetails}
+			onupdatedcase={handleUpdatedCase}
+			></c-portal-case-details-messaging>
       </div>
     </template>
   </div>

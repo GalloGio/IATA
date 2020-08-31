@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Case status has been changed to Pending Closure and and Case has not been closed for 24 hours</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Case Closure 24H Notification</name>
+    <style>none</style>
+    <subject>Reminder on case {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>{!$Label.ISSP_Email_Dear_Pre} {!Case.Contact},
+
+{!$Label.Auto_Case_Comment_24Hours_Notification_1} {!Case.CaseNumber} {!$Label.Auto_Case_Comment_24Hours_Notification_2}. {!$Label.Auto_Case_Comment_24Hours_Notification_3} {!$Label.CSP_IATA_Customer_Portal}
+
+------
+{!Case.E2CP__Most_Recent_Public_Comment__c}
+------
+
+{!$Label.Case_Comment_Have_Been_Resolved_1}
+
+{!$Label.ISSP_No}      {!$Label.ISSP_Yes}
+
+{!$Label.Auto_Case_Comment_24Hours_Notification_4}
+
+{!$Label.Auto_Case_Comment_24Hours_Notification_5}
+
+{!$Label.CSP_IATA_CSC_Email_Greetings}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
