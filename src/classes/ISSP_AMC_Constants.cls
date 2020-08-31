@@ -103,6 +103,7 @@ public class ISSP_AMC_Constants {
 
 	// Case
 	// Constantes for Case Status
+	public static final String AMC_CASE_STATUS_DRAFT = 'Draft';
 	public static final String AMC_CASE_STATUS_OPEN = 'Open';
 	public static final String AMC_CASE_STATUS_SUBMITTED = 'Submitted';
 	// Constantes for CaseArea
