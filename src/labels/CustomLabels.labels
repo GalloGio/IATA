@@ -35160,6 +35160,13 @@ Please download, sign and upload the PASS agreement.</value>
         <value>While completing your application, please refer to the Checklist for the details:</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Click_Here</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Click_Here</shortDescription>
+        <value>Click here to continue with your PASS process</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_Download_Documents</fullName>
         <language>en_US</language>
         <protected>false</protected>

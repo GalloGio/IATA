@@ -764,10 +764,17 @@
 
                                        	<apex:outputfield value="{!newCase.Update_AIMS_REI_DEFWITH__c}" label="{!$Label.ISSP_SIDRA_Reinstatement_Date}" rendered="{!AND(caseType =='SIDRA',newCase.Update_AIMS_REI_DEFWITH__c!=null)}" />
 
-                                        <apex:pageblocksectionitem rendered="{!showAP}">
+                                        <apex:pageblocksectionitem rendered="{!showAP && !CONTAINS(newCase.Reason1__c,'PASS')}">
                                             <apex:outputlabel value="{!$Label.ISSP_AP_Form}" for="apFormLink" />
                                             <apex:outputlink value="/ISSP_APProcess2?caseId={!newCase.Id}&step=2" id="apFormLink">
                                                 {!CASE(newCase.Reason1__c, 'Minor database changes', 'Click here to continue with your BSP/CASS Change Request', 'Bank Account Instructions', 'Click here to continue with your BSP/CASS Bank Account Change',  $Label.ISSP_Click_Here)}
+                                            </apex:outputlink>
+                                        </apex:pageblocksectionitem>
+
+                                        <apex:pageblocksectionitem rendered="{!showAP && CONTAINS(newCase.Reason1__c,'PASS')}">
+                                            <apex:outputlabel value="{!$Label.ISSP_AP_Form}" for="passFormLink" />
+                                            <apex:outputlink value="/ISSP_APProcess4?caseId={!newCase.Id}&step=4&airline=PASS" >
+                                                {!$Label.ISSP_PASS_Click_Here}
                                             </apex:outputlink>
                                         </apex:pageblocksectionitem>
 
