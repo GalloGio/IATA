@@ -183,7 +183,7 @@
 
                             <section class="product-details">
                                 <apex:form id="frmAddToCart">
-                                    <h1 class="page-title item-name">{!product.ProductName} ({!product.Media})</h1>
+                                    <h1 class="page-title item-name">{!product.ProductName}</h1>
 
                                     <!-- Error Messages -->
                                     <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
