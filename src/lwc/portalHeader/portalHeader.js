@@ -359,8 +359,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 						if(pageParams.RelayState){
 							url = result.split('&RelayState')[0];
 							params.RelayState = pageParams.RelayState;
-						} else {
-							params.RelayState = '';
 						}
 						params.RelayState += pageParams._ga ? ('&_ga=' + pageParams._ga) : '';
 						params.RelayState += pageParams.utm_source ? ('&utm_source=' + pageParams.utm_source) : '';
