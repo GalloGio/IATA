@@ -949,6 +949,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			}
 		}
 		/*trgProcessISSCase */
+
+		/** WMO-810 **/
+		CaseTriggerHelper.handleClosureStatus(Trigger.new, Trigger.oldMap);
+		CaseTriggerHelper.avoidSavingLastAutoCommentsInCase(Trigger.new, Trigger.oldMap);
 	}
 /*Share trigger code*/
 

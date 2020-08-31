@@ -5,7 +5,7 @@ import { getParamsFromPage } from'c/navigationUtils';
 
 //custom labels
 import CSP_Print from '@salesforce/label/c.CSP_Print';
-import CSP_Printed_Date from '@salesforce/label/c.CSP_Printed_Date';
+import CSP_Printed_Date from '@salesforce/label/c.CSP_Printed_date';
 
 export default class PortalCaseDetailsPage extends LightningElement {
     @track now = '';
@@ -39,10 +39,14 @@ export default class PortalCaseDetailsPage extends LightningElement {
         window.print();
     }
 
- @track isExpired;
+	@track isExpired;
 
     handleExpired(event) {
-        this.isExpired = event.detail;
-      }
+    	this.isExpired = event.detail;
+	}
+	  
+	handleUpdatedCase(event) {
+		this.template.querySelector('c-portal-case-details-header').loadCase();
+	}
 
 }
