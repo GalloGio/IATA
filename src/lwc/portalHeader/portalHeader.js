@@ -354,11 +354,18 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 					if(result !== 'not_complete'){
 						let url = result;
 						let params = {};
+                        params.RelayState = '';
 
 						if(pageParams.RelayState){
 							url = result.split('&RelayState')[0];
 							params.RelayState = pageParams.RelayState;
-						}
+						} else {
+                            params.RelayState = '';
+                        }
+                        params.RelayState += pageParams._ga ? ('&_ga=' + pageParams._ga) : '';
+                        params.RelayState += pageParams.utm_source ? ('&utm_source=' + pageParams.utm_source) : '';
+                        params.RelayState += pageParams.utm_campaign ? ('&utm_campaign=' + pageParams.utm_campaign) : '';
+                        params.RelayState += pageParams.utm_medium ? ('&utm_medium=' + pageParams.utm_medium) : '';
 
 						navigateToNewPage(url, params);
 					}
