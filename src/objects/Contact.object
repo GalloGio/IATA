@@ -20475,6 +20475,16 @@ or(
 $User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
 $UserRole.Name &lt;&gt; &quot;GDP&quot; 
 )	,	
+or(
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;,
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot; 
+) ,	
+
+or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;,
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot; 
+) ,	
+
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;
 
 )</errorConditionFormula>
