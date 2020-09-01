@@ -54,7 +54,7 @@ export default class PortalProfilePageHeader extends LightningElement {
 
         get isAirlineUser(){
             if(!this.loggedUser.Customer_type__c || 0 === this.loggedUser.Customer_type__c.length) return false;  
-            else return this.loggedUser.Customer_type__c.toLowerCase() == 'airline';             
+            else return this.loggedUser.Customer_type__c.toLowerCase() == 'airline' || this.loggedUser.Customer_type__c.toLowerCase() == 'airlineich';             
         }
 
         connectedCallback() {
