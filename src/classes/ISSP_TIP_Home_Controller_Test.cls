@@ -114,7 +114,7 @@ private class ISSP_TIP_Home_Controller_Test {
 	}
 
 	private static void loadVars() {
-		user = [SELECT Id, ContactId FROM User ORDER BY CreatedDate DESC LIMIT 1];
+		user = [SELECT Id, ContactId FROM User where username like '%@test' + UserInfo.getOrganizationId() + '.org' AND IsActive = true ORDER BY CreatedDate DESC LIMIT 1];
 		account = [
 			SELECT Id, Name, IATA_ISO_Country__r.region__c, IATA_ISO_Country__r.Name
 			FROM Account ORDER BY CreatedDate DESC LIMIT 1];
