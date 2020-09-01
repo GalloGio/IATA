@@ -251,7 +251,19 @@ private class ContactHandlerTest {
 
 	@isTest
 	private static void testGrantAccessToPortalAppsOnInsert() {
-		Account airline  = new Account(Name='testAirline', Sector__c = 'Airline');
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name = 'Spain',
+			ISO_Code__c = 'ES'
+		);
+		insert country;
+
+		Account airline  = new Account(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
+			Name='testAirline',
+			Sector__c = 'Airline',
+			Location_Class__c = 'D',
+			Location_Type__c = 'HO',
+			IATA_ISO_Country__c = country.Id);
 		insert airline;
 
 		Portal_Application_Contact_Visibility__mdt visibility = [
@@ -291,6 +303,76 @@ private class ContactHandlerTest {
 			WHERE Id = :contact.Id
 		];
 		System.assertEquals(1,result.Portal_Application_Rights__r.size());
+	}
+
+	@isTest
+	private static void testRevokeAccessToPortalAppsOnUpdate() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name = 'Spain',
+			ISO_Code__c = 'ES'
+		);
+		insert country;
+
+		Account airline  = new Account(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
+			Name='testAirline',
+			Sector__c = 'Airline',
+			Location_Class__c = 'D',
+			Location_Type__c = 'HO',
+			IATA_ISO_Country__c = country.Id);
+		insert airline;
+
+		Portal_Application_Contact_Visibility__mdt visibility = [
+				SELECT Id, Checkbox_Fieldname__c, Parent__r.MasterLabel
+				FROM Portal_Application_Contact_Visibility__mdt
+				WHERE Add_Service_On_Checked__c = true
+				AND Remove_Service_On_Unchecked__c = true
+				AND Parent__r.MasterLabel='Management Information Report'
+				LIMIT 1];
+		System.assert(visibility!=null);
+		System.assert(visibility.Checkbox_Fieldname__c!=null);
+		System.assert(visibility.Parent__r.MasterLabel!=null);
+
+		// create app
+		Portal_Applications__c app = new Portal_Applications__c(
+			Name=visibility.Parent__r.MasterLabel
+		);
+		insert app;
+
+		Contact contact = new Contact(
+			FirstName = 'fname',
+			LastName = 'lname',
+			AccountId = airline.Id,
+			Membership_Function__c = 'Cargo',
+			User_Portal_Status__c = 'Approved Admin'
+			);
+		contact.put(visibility.Checkbox_Fieldname__c,true);
+		insert contact;
+
+		Contact result = [
+			SELECT Id,
+				(SELECT Id FROM Portal_Application_Rights__r
+				WHERE Portal_Application__c = :app.Id
+				AND Right__c = 'Access Granted')
+			FROM Contact
+			WHERE Id = :contact.Id
+		];
+		System.assertEquals(1,result.Portal_Application_Rights__r.size());
+
+		Test.startTest();
+		contact.put(visibility.Checkbox_Fieldname__c,false);
+		update contact;
+		Test.stopTest();
+
+		result = [
+			SELECT Id,
+				(SELECT Id FROM Portal_Application_Rights__r
+				WHERE Portal_Application__c = :app.Id
+				AND Right__c = 'Access Granted')
+			FROM Contact
+			WHERE Id = :contact.Id
+		];
+		System.assertEquals(0,result.Portal_Application_Rights__r.size());
 	}
 
 	@isTest
@@ -392,5 +474,20 @@ private class ContactHandlerTest {
 			System.assert(true);
 		}
 		Test.stopTest();
+	}
+
+	@isTest
+	private static void testcheckCountry() {
+		Test.StartTest();
+		System.assertEquals(true,PortalApplicationSettingHelper.checkCountry('ALL','ES'));
+		System.assertEquals(false,PortalApplicationSettingHelper.checkCountry('','ES'));
+		System.assertEquals(true,PortalApplicationSettingHelper.checkCountry('-','ES'));
+		System.assertEquals(false,PortalApplicationSettingHelper.checkCountry('ES,FR,PT','US'));
+		System.assertEquals(true,PortalApplicationSettingHelper.checkCountry('-ES,FR,PT','US'));
+		System.assertEquals(true,PortalApplicationSettingHelper.checkCountry('ES,FR,PT','ES'));
+		System.assertEquals(false,PortalApplicationSettingHelper.checkCountry('-ES,FR,PT','ES'));
+		System.assertEquals(true,PortalApplicationSettingHelper.checkCountry('ES','ES'));
+		System.assertEquals(false,PortalApplicationSettingHelper.checkCountry('-ES','ES'));
+		Test.StopTest();
 	}
 }
