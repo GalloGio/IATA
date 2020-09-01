@@ -2,12 +2,13 @@
 private class ISSP_TIP_Home_Controller_Test {
 
 	static User user = new User();
-	static Case newCase = new Case();
+	static Account account;
+	static Case newCase;
 	static Partner_products__c prod = new Partner_products__c();
 	static ISSP_TIP_Home_Controller controller;
 
+	@TestSetup
 	static void setRecords() {
-		Test.startTest();
 		//create isocountry
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
 				IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
@@ -29,6 +30,8 @@ private class ISSP_TIP_Home_Controller_Test {
 		parent.IATACode__c = '1000';
 		parent.IATA_ISO_Country__c = country.id;
 		parent.category__c = TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER;
+		parent.Reason_for_creation__c = 'Other';
+		parent.Comments_Reason_for_creation__c = 'comments';
 		insert parent;
 
 		//create account role
@@ -44,18 +47,6 @@ private class ISSP_TIP_Home_Controller_Test {
 		contactRole.Name = 'Test User';
 		contactRole.RecordTypeId = externalRecordTypeId;
 		insert contactRole;
-
-		//create case
-		newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
-		newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
-		newcase.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
-		newcase.Status = 'Open';
-		newcase.Subject = TIP_Utils.CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER + ' - ' + parent.name;
-		newCase.Description = TIP_Utils.CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER;
-		newcase.Region__c = parent.IATA_ISO_Country__r.region__c;
-		newcase.Origin = 'Portal';
-		newcase.BSPCountry__c = parent.IATA_ISO_Country__r.Name;
-		newcase.Country_concerned_by_the_query__c = parent.IATA_ISO_Country__r.Name;
 
 		//create partner product
 		prod.Name = 'test prod';
@@ -112,12 +103,48 @@ private class ISSP_TIP_Home_Controller_Test {
 		Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
 		insert pa;
 
+		parent.Account_Role__c = 'Payment Provider';
+		update parent;
+
+		PortalServiceAccessTriggerHandler.privetTrigger = true;
+		PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c (
 			Right__c = 'Access Granted', Contact__c = user.ContactId, Portal_Application__c = pa.id);
 		insert appRight;
+	}
 
-		Test.stopTest();
+	private static void loadVars() {
+		user = [SELECT Id, ContactId FROM User where username like '%@test' + UserInfo.getOrganizationId() + '.org' AND IsActive = true ORDER BY CreatedDate DESC LIMIT 1];
+		account = [
+			SELECT Id, Name, IATA_ISO_Country__r.region__c, IATA_ISO_Country__r.Name
+			FROM Account ORDER BY CreatedDate DESC LIMIT 1];
 
+		prod = [SELECT Id FROM Partner_products__c ORDER BY CreatedDate DESC LIMIT 1];
+		newCase = createCase();
+	}
+
+	private static Case createCase() {
+		Case newCase = new Case();
+		//create case
+		newcase.RecordTypeid = TIP_Utils.CASE_PROCESS_IDFS_RECORD_TYPE_ID;
+		newcase.Reason1__c = TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT;
+		newcase.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
+		newcase.Status = 'Open';
+		newcase.Subject = TIP_Utils.CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER + ' - ' + account.name;
+		newCase.Description = TIP_Utils.CASE_DESC_REQUEST_FOR_ENLISTMENT_PAYMENT_PROVIDER;
+		newcase.Region__c = account.IATA_ISO_Country__r.region__c;
+		newcase.Origin = 'Portal';
+		newcase.BSPCountry__c = account.IATA_ISO_Country__r.Name;
+		newcase.Country_concerned_by_the_query__c = account.IATA_ISO_Country__r.Name;
+		return newCase;
+	}
+
+	@isTest
+	static void testGetCases() {
+
+		loadVars();
+
+		Test.startTest();
 		System.runAs(user) {
 			insert newCase;
 			PageReference pageRef = Page.ISSP_TIP_Home;
@@ -125,61 +152,72 @@ private class ISSP_TIP_Home_Controller_Test {
 			controller = new ISSP_TIP_Home_Controller();
 		}
 
-	}
-
-	@isTest
-	static void testGetCases() {
-
-		setRecords();
-		//setupTest();
 		List<Case> cases = controller.getCases();
 		System.assertEquals(1, cases.size());
 
 		List<ISSP_TIP_Home_Controller.productWrapper> products = controller.products;
 		System.assertEquals(1, products.size());
 		controller.initActions();
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testDraftProduct() {
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+
 		controller.acceptedTransactionVal = new String[] {'Payment'} ;
 		controller.paymentGuaranteeVal = new String[] {'COMMERCIAL_DISPUTE'};
-		//setupTest();
 		System.runAs(user) {
 			controller.NewEditProduct();
 			controller.saveDraft();
 		}
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testEditProduct() {
 
-		//setupTest();
-		//setupTest();
-		setRecords();
-		//System.runAs(user){
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+
 		List<selectOption> t = controller.acceptedTransactionsOptList;
 		List<selectOption> tt = controller.paymentGuaranteeOptList;
 
 		System.currentPageReference().getParameters().put('prodId', prod.id);
 		controller.NewEditProduct();
-		//controller.fillContactList();
-		//controller.saveAccountEnrolmentAsDraft();
 		controller.cancelNewEditProd();
-		//Test.stopTest();
-		//}
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testbinRanges() {
 
-		//setupTest();
-		//setupTest();
-		setRecords();
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+
 		controller.NewEditProduct();
 
 		ID prodid = [Select id from Partner_products__c limit 1].id;
@@ -208,22 +246,25 @@ private class ISSP_TIP_Home_Controller_Test {
 
 		controller.changePaymentNetwork();
 
-		//controller.paymentNetworkMap;
-
 		controller.cancelNewEditProd();
 
 		System.currentPageReference().getParameters().put('binRangeRecPos', '0');
 		controller.deleteBinRange();
 		system.assertEquals(0, controller.binRangeList.size());
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testCreateNewContact() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
 		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
 			controller.getISOCountry();
 			controller.setContactToEdit();
 			controller.newContact.lastName = 'testLastName';
@@ -237,17 +278,22 @@ private class ISSP_TIP_Home_Controller_Test {
 			system.assertEquals(2, [select id from contact].size());
 
 		}
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	//------------------------------test for enrolment methods-------------------
 	@isTest
 	static void testEditContact() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+	
+		Test.startTest();
 		System.runAs(user){
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
 			Apexpages.currentPage().getParameters().put('contactIDToEdit',[select id from contact limit 1].id);
+			controller = new ISSP_TIP_Home_Controller();
 			controller.startEnrolmentAccount();
 			controller.setContactToEdit();
 			controller.newContact.lastName = 'testLastName';
@@ -256,30 +302,39 @@ private class ISSP_TIP_Home_Controller_Test {
 			system.assertEquals(1, [select id from contact].size());
 
 		}
-		//Test.stopTest();
+		Test.stopTest();
 	}
-
-
 
 	@isTest
 	static void testsaveAccountEnrolmentAsDraft() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
 		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
 			controller.startEnrolmentAccount();
 			controller.saveAccountEnrolmentAsDraft();
 			system.assertEquals(2, [select id from case].size());
 		}
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testsubmitAccountEnrolmentToIATA() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
 		System.runAs(user){
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+
 			controller.startEnrolmentAccount();
 			//legal name missing
 			controller.account.Name = '';
@@ -312,47 +367,49 @@ private class ISSP_TIP_Home_Controller_Test {
 			controller.TheAccountRole.HQ_Location__c = [select id from IATA_ISO_Country__c limit 1].id;
 
 			//Primary contact missing
-			//controller.contactList.get(0).Primary_Contact__c=false;
 			controller.submitAccountEnrolmentToIATA();
 
 			Apexpages.currentPage().getParameters().put('contactIDToEdit',controller.contactList.get(0).id);
 			controller.updateRadioButtonStatus();
 
-			//controller.contactList.get(0).Primary_Contact__c=true;
 			controller.AccountContactRoleList.get(0).Contact_Role__c = 'Primary Contact';
-			////setupTest();
 			controller.submitAccountEnrolmentToIATA();
-			////Test.stopTest();
-			//controller.saveAccountEnrolmentAsDraft();
 		}
-		//Test.stopTest();
+		Test.stopTest();
 	}
+
 	@isTest
 	static void testsecurityCheck() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
 		System.runAs(user) {
+			Test.startTest();
+			insert newCase;
 			PageReference pageRef = Page.ISSP_TIP_Home;
 			Test.setCurrentPage(pageRef);
 			System.currentPageReference().getParameters().put('caseId', newCase.id);
+			controller = new ISSP_TIP_Home_Controller();
 			controller.updateCase();
 			upsert controller.newCase;
-			//controller.startEnrolmentAccount();
-			//controller.saveAccountEnrolmentAsDraft();
 			controller.securityCheckForEnrolmentPage();
-			//Test.stopTest();
+			Test.stopTest();
 		}
 	}
 
 	@isTest
 	static void testCountryConfigs() {
 
-		//setupTest();
-		setRecords();
-		controller.NewEditProduct();
+		loadVars();
 
-		//setupTest();
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+		controller.NewEditProduct();
 
 		//new prod config
 		controller.newEditCountryConfig();
@@ -374,9 +431,6 @@ private class ISSP_TIP_Home_Controller_Test {
 		controller.deleteCountryConfig();
 		system.assertEquals(0, controller.provProdConfList.size());
 
-
-		/**/
-
 		controller.NewEditProduct();
 
 		//new prod config
@@ -393,15 +447,22 @@ private class ISSP_TIP_Home_Controller_Test {
 		controller.deleteMassCountryConfig();
 		system.assertEquals(0, controller.provProdConfList.size());
 
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testsubmitProduct() {
 
-		//setupTest();
-		//setupTest();
-		setRecords();
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+
 		TIP_Payment_Network_Config__c paymentNetworkConfig = new TIP_Payment_Network_Config__c(Name = 'Amex Config', Maximum_Length__c = 15,
 				Payment_Network__c = 'AX');
 		insert paymentNetworkConfig;
@@ -457,14 +518,22 @@ private class ISSP_TIP_Home_Controller_Test {
 		system.assertEquals(1, controller.provProdConfList.size());
 
 		controller.submitProduct();
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testAcceptTermsAndConditions() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+
 		controller.rejectTerms();
 		Portal_Application_Right__c ar = [SELECT Terms_Acceptance__c FROM Portal_Application_Right__c LIMIT 1];
 		System.assertEquals(ar.Terms_Acceptance__c, false);
@@ -476,14 +545,22 @@ private class ISSP_TIP_Home_Controller_Test {
 		controller.acceptTerms();
 		ar = [SELECT Terms_Acceptance__c FROM Portal_Application_Right__c LIMIT 1];
 		System.assertEquals(ar.Terms_Acceptance__c, true);
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testTerminateProduct() {
-		//setupTest();
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
+
 		ID prodid = [Select id from Partner_products__c limit 1].id;
 		System.currentPageReference().getParameters().put('prodId', prod.id);
 		controller.NewEditProduct();
@@ -495,20 +572,27 @@ private class ISSP_TIP_Home_Controller_Test {
 		controller.submitProductTerminationRequest();
 
 		System.assertEquals('Product Termination Request - test / test prod', controller.newcase.Subject);
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest
 	static void testSubmitVoluntaryRelinquishment() {
-		//setupTest();
-		setRecords();
+
+		loadVars();
+
+		Test.startTest();
+		System.runAs(user) {
+			insert newCase;
+			PageReference pageRef = Page.ISSP_TIP_Home;
+			Test.setCurrentPage(pageRef);
+			controller = new ISSP_TIP_Home_Controller();
+		}
 		controller.voluntaryReliqReason = 'Retirement';
 		controller.voluntaryReliqDate = string.valueof(Date.today());
-		//setupTest();
 		controller.submitVoluntaryRelinquishmentReq();
 
 		System.assertEquals('ATM Provide Account Closure - test', controller.newcase.Subject);
-		//Test.stopTest();
+		Test.stopTest();
 	}
 
 }
