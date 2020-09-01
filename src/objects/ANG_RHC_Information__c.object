@@ -448,6 +448,20 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Amount_At_Risk__c</fullName>
+        <description>Amount at Risk is the provisional amount coming from RME divided 2</description>
+        <externalId>false</externalId>
+        <formula>ANG_RHC_Amount_Provisional__c/2</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Amount At Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>RHC_Amount_Equals_FS_Percent__c</fullName>
         <description>Percentage of Financial Security to be applied on RHC calculation when &quot;RHC Amount Equals FS&quot; is true</description>
         <externalId>false</externalId>
