@@ -75,6 +75,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Tier__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Amount_At_Risk__c</field>
             </layoutItems>
             <layoutItems>

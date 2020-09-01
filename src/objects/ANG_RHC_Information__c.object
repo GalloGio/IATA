@@ -326,7 +326,7 @@
         <fullName>ANG_Provisional_RHC_Last_Update__c</fullName>
         <description>The date of the Provisional RHC Amount last update. This information comes from an external system and should not be updated manually.</description>
         <externalId>false</externalId>
-        <label>Provisional RHC Amount Last Update</label>
+        <label>Amount At Risk Last Update</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -473,6 +473,52 @@
         <trackTrending>false</trackTrending>
         <type>Percent</type>
     </fields>
+    <fields>
+        <fullName>RHC_Amount_USD__c</fullName>
+		<description>RHC Amount exchanged from RHC currency into Org currency</description>
+        <externalId>false</externalId>
+        <formula>ANG_RHC_Amount__c /CURRENCYRATE( TEXT(CurrencyIsoCode ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RHC Amount (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tier__c</fullName>
+        <description>Indicates the Tier the agency belong to. Used to calculate the RHC</description>
+        <externalId>false</externalId>
+        <label>Tier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <label>RHC Information</label>
     <nameField>
         <displayFormat>RHCI-{000000000}</displayFormat>
@@ -486,6 +532,21 @@
         <fullName>RHC_Information</fullName>
         <active>true</active>
         <label>RHC Information</label>
+        <picklistValues>
+            <picklist>Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
