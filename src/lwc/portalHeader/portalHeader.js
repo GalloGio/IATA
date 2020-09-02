@@ -1,4 +1,4 @@
-import { LightningElement, track, wire, api } from 'lwc';
+FRimport { LightningElement, track, wire, api } from 'lwc';
 
 // language
 import userId from '@salesforce/user/Id';
@@ -360,10 +360,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 							url = result.split('&RelayState')[0];
 							params.RelayState = pageParams.RelayState;
 						}
-						params.RelayState += pageParams._ga ? ('&_ga=' + pageParams._ga) : '';
-						params.RelayState += pageParams.utm_source ? ('&utm_source=' + pageParams.utm_source) : '';
-						params.RelayState += pageParams.utm_campaign ? ('&utm_campaign=' + pageParams.utm_campaign) : '';
-						params.RelayState += pageParams.utm_medium ? ('&utm_medium=' + pageParams.utm_medium) : '';
+						params.RelayState += pageParams._ga ? ((params.RelayState.indexOf('?') > -1) ? '&' : '?') + '_ga=' + pageParams._ga : '';
+						params.RelayState += pageParams.utm_source ? ((params.RelayState.indexOf('?') > -1) ? '&' : '?') + 'utm_source=' + pageParams.utm_source : '';
+						params.RelayState += pageParams.utm_campaign ? ((params.RelayState.indexOf('?') > -1) ? '&' : '?') + 'utm_campaign=' + pageParams.utm_campaign : '';
+						params.RelayState += pageParams.utm_medium ? ((params.RelayState.indexOf('?') > -1) ? '&' : '?') + 'utm_medium=' + pageParams.utm_medium : '';
 
 						navigateToNewPage(url, params);
 					}
