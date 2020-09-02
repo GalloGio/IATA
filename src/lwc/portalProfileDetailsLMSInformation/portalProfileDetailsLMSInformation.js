@@ -13,6 +13,8 @@ import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Busi
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
+import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
+
 
 import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
 import CSP_Registration_Existing_Work_Message_LMS from '@salesforce/label/c.CSP_Registration_Existing_Work_Message_LMS_Profile';
@@ -35,11 +37,15 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	@api recordId;
 	@api contactId;
 	@api additionalEmail;
+	@api otherPhone;
 	
 	@track localAddress;
 	@track localAdditionalEmail;
+	@track localOtherPhone;
 	@track isSaving = false;
 	@track savedForm = 0;
+	@track contForm;
+	@track addrForm;
 
 	@track errorMessage = ""; 
 	@track displayError = false;
@@ -58,6 +64,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	@track validated = false;
 	@track isFullNameMatching = true;
 	@track isMailChanged = false;
+	@track isPhoneChanged = false;
 	@track initialMail = '';
 
 	@track openVerificationMailSuccessModal = false;
@@ -65,6 +72,25 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
 	// flag to enable/disable the "Next Step / Confirmation" button
 	@track isConfirmationButtonDisabled;
+
+	phoneRegExp = /^\(?[+]\)?([()\d]*)$/
+
+	@track contactSubmit = {
+		'OtherPhone':''
+	};
+	@track addressSubmit = {
+		'PO_Box_Address__c':'',
+		'Country_Reference__c':'',
+		'countryCode':'',
+		'Country__c':'',
+		'State_Reference__c':'',
+		'State_Name__c':'',
+		'City_Reference__c':'',
+		'City_Name__c':'',
+		'Street__c':'',
+		'Street2__c':'',
+		'Postal_Code__c':''
+	};
 
 	// labels
 	_labels = {
@@ -81,7 +107,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_Close,
 		CSP_LogOut,
-		CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof
+		CSP_Registration_Existing_User_Message_Not_Matching_F6_Prof,
+		CSP_L_WorkPhone_LMS
 	}
 
 
@@ -99,10 +126,19 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		//Set the initial mail to test if after changing the email to check if the change is equal to the initial email
 		this.initialMail = this.additionalEmail;
 		this.localAdditionalEmail = '';
+		this.localOtherPhone = '';
 
 		if(this.additionalEmail !== null && this.additionalEmail !== '' && this.additionalEmail != undefined){
 			this.validated = true;
 			this.localAdditionalEmail = this.additionalEmail;
+		}else{
+			this.validated = false;
+		}
+		if(this.otherPhone !== null && this.otherPhone !== '' && this.otherPhone != undefined){
+			this.validated = true;
+			this.localOtherPhone = this.otherPhone;
+		}else{
+			this.validated = false;
 		}
 
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
@@ -136,6 +172,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
 		})
+		
+	
 		
 	}
 
@@ -188,36 +226,39 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		this.isSaving = true;
 		
 		this.localAddress = JSON.parse(JSON.stringify(this.getAddressInformation() ));
-		let contactSubmit = {
-			'Additional_Email__c':''
-		};
-		let addressSubmit = {
-			'PO_Box_Address__c':'',
-			'Country_Reference__c':'',
-			'countryCode':'',
-			'Country__c':'',
-			'State_Reference__c':'',
-			'State_Name__c':'',
-			'City_Reference__c':'',
-			'City_Name__c':'',
-			'Street__c':'',
-			'Street2__c':'',
-			'Postal_Code__c':''
-		};
-
-		contactSubmit.Additional_Email__c = this.localAdditionalEmail;
-		addressSubmit.Country_Reference__c = this.localAddress.countryId; 
-		addressSubmit.Country__c = this.localAddress.countryName;
-		addressSubmit.State_Reference__c = this.localAddress.stateId;
-		addressSubmit.State_Name__c = this.localAddress.stateName;
-		addressSubmit.City_Reference__c = this.localAddress.cityId;
-		addressSubmit.City_Name__c = this.localAddress.cityName;
-		addressSubmit.Street__c = this.localAddress.isPoBox === false ? this.localAddress.street : '';
-		addressSubmit.Street2__c = this.localAddress.street2;
-		addressSubmit.Postal_Code__c = this.localAddress.zip;
-		addressSubmit.PO_Box_Address__c = this.localAddress.isPoBox === true ? this.localAddress.PO_Box_Address__c : '';
 		
-		this.template.querySelector('lightning-record-edit-form').submit(addressSubmit);
+		this.contactSubmit.OtherPhone = this.localOtherPhone;
+		this.addressSubmit.Country_Reference__c = this.localAddress.countryId; 
+		this.addressSubmit.Country__c = this.localAddress.countryName;
+		this.addressSubmit.State_Reference__c = this.localAddress.stateId;
+		this.addressSubmit.State_Name__c = this.localAddress.stateName;
+		this.addressSubmit.City_Reference__c = this.localAddress.cityId;
+		this.addressSubmit.City_Name__c = this.localAddress.cityName;
+		this.addressSubmit.Street__c = this.localAddress.isPoBox === false ? this.localAddress.street : '';
+		this.addressSubmit.Street2__c = this.localAddress.street2;
+		this.addressSubmit.Postal_Code__c = this.localAddress.zip;
+		this.addressSubmit.PO_Box_Address__c = this.localAddress.isPoBox === true ? this.localAddress.PO_Box_Address__c : '';
+		
+		let editForm = this.template.querySelectorAll('lightning-record-edit-form');
+		
+		if(editForm[0].name === 'contactForm'){
+			this.contForm = editForm[0];
+			this.addrForm = editForm[1];
+		}else{
+			this.contForm = editForm[1];
+			this.addrForm = editForm[0];
+		}
+		
+		if(this.isPhoneChanged){
+			this.contForm.submit(this.contactSubmit);	
+		}else{
+			this.addrForm.submit(this.addressSubmit);
+		}
+		
+	}
+	
+	handleSucessContact(event) {
+		this.addrForm.submit(this.addressSubmit);
 	}
 	
 	handleSucess(event) {
@@ -238,6 +279,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 			this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
 			this.localContactInfo.existingContactAccount = this.localContactInfo.existingContactAccount;
 			this.localContactInfo.Additional_Email__c = this.localAdditionalEmail;
+			this.localContactInfo.OtherPhone = this.localOtherPhone;
 
 			//Move address info into ContactInfo
 			this.localContactInfo.isPoBox = this.localAddress.isPoBox;
@@ -318,6 +360,21 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		this.existingPersonalUsernameVisibility = false;
 		this.existingUsernameVisibility = false;
 		this.existingUsernameNotMatchingF6Visibility = false;
+	}
+
+	changeOtherPhone(event){
+		this.localOtherPhone = this.validatePhone( event.target.value);
+		this.isPhoneChanged = true;
+		this.validated = true;
+	}
+
+	validatePhone(phoneValue){
+		let inputValue = phoneValue;
+		let isValid = this.phoneRegExp.test(inputValue);
+		if(isValid == false){
+			inputValue = inputValue.replace(/[^0-9()+]|(?!^)\+/g, '');
+		}
+		return inputValue;
 	}
 
 	button1Action(){
