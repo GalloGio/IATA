@@ -8,7 +8,7 @@
 
  IF(RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;,  CASESAFEID(BSP__c) &amp;&apos;.&apos;&amp;  CASESAFEID(RecordTypeId) ,
 
-  IF(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, CASESAFEID(BSP__c)&amp;&apos;.&apos;&amp; CASESAFEID(RecordTypeId) &amp;&apos;.&apos;&amp; TEXT(Risk_Status__c) &amp; 
+  IF(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, CASESAFEID(BSP__c)&amp;&apos;.&apos;&amp; CASESAFEID(RecordTypeId) &amp;&apos;.&apos;&amp; TEXT( Tier__c ) &amp;&apos;.&apos;&amp; TEXT(Risk_Status__c) &amp; 
   
   
   (IF(ISBLANK(TEXT(Min_FA_Points__c)),&apos;&apos;,&apos;.&apos;&amp;  TEXT(Min_FA_Points__c))), &apos;&apos;)
