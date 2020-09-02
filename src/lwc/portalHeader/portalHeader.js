@@ -1,4 +1,4 @@
-FRimport { LightningElement, track, wire, api } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 
 // language
 import userId from '@salesforce/user/Id';
