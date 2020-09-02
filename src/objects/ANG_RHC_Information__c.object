@@ -193,7 +193,7 @@
         <relationshipName>RHC_Informations</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -328,7 +328,7 @@
         <externalId>false</externalId>
         <label>Amount At Risk Last Update</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -462,39 +462,12 @@
         <type>Currency</type>
     </fields>
     <fields>
-        <fullName>RHC_Amount_Equals_FS_Percent__c</fullName>
-        <description>Percentage of Financial Security to be applied on RHC calculation when &quot;RHC Amount Equals FS&quot; is true</description>
+        <fullName>Forecasted_Tier__c</fullName>
+        <description>What will be the Tier if the Confirm Forecasted RHC button is pressed</description>
         <externalId>false</externalId>
-        <label>RHC Amount Equals FS %</label>
-        <precision>18</precision>
+        <label>Forecasted Tier</label>
         <required>false</required>
-        <scale>0</scale>
         <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Percent</type>
-    </fields>
-    <fields>
-        <fullName>RHC_Amount_USD__c</fullName>
-		<description>RHC Amount exchanged from RHC currency into Org currency</description>
-        <externalId>false</externalId>
-        <formula>ANG_RHC_Amount__c /CURRENCYRATE( TEXT(CurrencyIsoCode ))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>RHC Amount (USD)</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Tier__c</fullName>
-        <description>Indicates the Tier the agency belong to. Used to calculate the RHC</description>
-        <externalId>false</externalId>
-        <label>Tier</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -519,6 +492,76 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>RHC_Amount_Equals_FS_Percent__c</fullName>
+        <description>Percentage of Financial Security to be applied on RHC calculation when &quot;RHC Amount Equals FS&quot; is true</description>
+        <externalId>false</externalId>
+        <label>RHC Amount Equals FS %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RHC_Amount_USD__c</fullName>
+        <description>RHC Amount exchanged from RHC currency into Org currency</description>
+        <externalId>false</externalId>
+        <formula>ANG_RHC_Amount__c /CURRENCYRATE( TEXT(CurrencyIsoCode ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RHC Amount (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tier__c</fullName>
+        <description>Indicates the Tier the agency belong to. Used to calculate the RHC</description>
+        <externalId>false</externalId>
+        <label>Tier</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tiered_Provisional_Amount__c</fullName>
+        <description>Is the result of the Tier calculation</description>
+        <externalId>false</externalId>
+        <label>Tiered Provisional Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
     <label>RHC Information</label>
     <nameField>
         <displayFormat>RHCI-{000000000}</displayFormat>
@@ -532,6 +575,21 @@
         <fullName>RHC_Information</fullName>
         <active>true</active>
         <label>RHC Information</label>
+        <picklistValues>
+            <picklist>Forecasted_Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Tier__c</picklist>
             <values>

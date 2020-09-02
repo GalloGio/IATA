@@ -162,7 +162,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -177,7 +177,7 @@
         <precision>10</precision>
         <required>false</required>
         <scale>4</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -190,7 +190,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -228,7 +228,7 @@ X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Class Type</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -354,7 +354,7 @@ J-Joint Vent</inlineHelpText>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -403,7 +403,7 @@ J-Joint Vent</inlineHelpText>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -444,7 +444,7 @@ J-Joint Vent</inlineHelpText>
         <externalId>false</externalId>
         <label>Remittance Frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -516,7 +516,7 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -531,7 +531,7 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -560,7 +560,7 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <externalId>false</externalId>
         <label>Tier</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
