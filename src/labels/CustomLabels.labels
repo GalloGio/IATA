@@ -7326,7 +7326,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Service_AirlineDailySales_Title</shortDescription>
-        <value>Transparency in Payments (TIP) - Reports</value>
+        <value>Airline Daily Sales Dashboard</value>
     </labels>
     <labels>
         <fullName>CSP_Service_TIPReports_AmazonType</fullName>
