@@ -58,6 +58,8 @@ import CSP_L2_Postal_Code from '@salesforce/label/c.CSP_L2_Postal_Code';
 import CSP_L2_PO_Box_Number from '@salesforce/label/c.CSP_L2_PO_Box_Number';
 import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
+import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
+
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -111,6 +113,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track iconUrl;
     @track sisPage;
     @track additionalEmail;
+    @track otherPhone;
 
     timeout = null;
 
@@ -172,7 +175,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_L2_Postal_Code,
         CSP_L2_PO_Box_Number,
         CSP_L2_Street,
-        CSP_L3_PersonalEmail_LMS
+        CSP_L3_PersonalEmail_LMS,
+        CSP_L_WorkPhone_LMS
     };
 
     @api tabName;
@@ -278,6 +282,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                     this.address.countryId = contact3.shippingCountryRef;
                     this.address.countryName = contact3.shippingCountry;
                     this.additionalEmail = contact3.Additional_Email__c;
+                    this.otherPhone = contact3.OtherPhone;
 
 
 
