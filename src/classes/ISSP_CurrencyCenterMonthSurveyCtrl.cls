@@ -53,6 +53,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public Map<String, Country_Profile__c>				countriesProfileMap				{ get; set; }
 	public Map<String, List<String>>					countriesKeysMap 				{ get; set; }
 	public Map<String, wrapperCurrencyCenterSurvey> 	wccsObjectMap 					{ get; set; }					//map with all countries from the survey
+	public Currency_Center_Survey__c					surveyToClone					{ get; set; }
 	/* LOAD variables */
 	public String 										countriesSurveyString 			{ get; set; }
 	public List<Id> 									countryIds 						{ get; set; }
@@ -62,7 +63,6 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public List<Currency_Center_Survey__c> 				reportingTypesResult 			{ get; set; }
 	public List<Currency_Center_Survey__c> 				bankResult 						{ get; set; }
 	public Map<String, Country_Profile__c>				countriesProfileIdMap			{ get; set; }
-
 
 	public static Map<String, IATA_ISO_Country__c>	iataIsoCountryMap{
 		get{
@@ -286,6 +286,9 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 		//default Currency
 		selectedCurrency = 'AED';
+
+		//find survey to clone
+		surveyToClone = findSurveyToClone();
 	}
 
 	public void  closePopupDeleteSection() {
@@ -1172,7 +1175,6 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 					 if(report.Reporting_Type__c == 'Blocked Amount' && report.Currency__c == countryCurrency){
 						 key = '1' + key;
 					 }
-
 				 	wccsObjectMap.get(report.Country_Name__c).typeReportMap.put(key, report);
 
 				 	reportingTypesIds.add(report.Id);
@@ -1353,4 +1355,156 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public void none() {
 
 	}
+
+	/**
+	 * True if the clone button is visible in the page
+	 * If current survey is not in status Draft the button is not available
+	 * If there is no Survey to be cloned then the button is not available
+	 * Only the last survey has the clone button available
+	 */
+	public Boolean getShowCloneButton() {
+		if (surveyToClone==null || this.parentQueryResult.Status__c != 'Draft') return false;
+
+		List<Currency_Center_Survey__c> listSurveys = [
+			SELECT Id
+			FROM Currency_Center_Survey__c
+			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
+			AND Airline__c = :airlineId
+			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC
+			LIMIT 1];
+		if (listSurveys.isEmpty()) return false;
+		return listSurveys.get(0).Id == this.parentQueryResult.Id;
+	}
+
+	/**
+	 * Finds the most recent survey for this airline which was submitted, it will be the source survey
+	 */
+	private Currency_Center_Survey__c findSurveyToClone() {
+		List<Currency_Center_Survey__c> listSurveys = [
+			SELECT Id, Year_Survey__c, Month_Survey__c
+			FROM Currency_Center_Survey__c
+			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
+			AND Airline__c = :airlineId
+			AND Status__c = 'Submitted'
+			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC];
+		if (listSurveys.isEmpty()) return null;
+
+		map<Integer,Currency_Center_Survey__c> mapSurvey = new map<Integer,Currency_Center_Survey__c>();
+		for (Currency_Center_Survey__c survey: listSurveys ) {
+			String month = survey.Month_Survey__c;
+			month = month.length()==1? '0' + month: month; // convert month to 2 char string
+			String key = survey.Year_Survey__c + month;
+			if (key.isNumeric()) {
+				mapSurvey.put(Integer.ValueOf(key), survey);
+			}
+		}
+		if (mapSurvey.isEmpty()) return null;
+		// return the last survey in the list, so the most recent
+		list<Integer> listSortedKeys = new list<Integer>(mapSurvey.keyset());
+		listSortedKeys.sort();
+		return mapSurvey.get(listSortedKeys.get(listSortedKeys.size()-1));
+	}
+
+	/**
+	 * Clone method used in the clone button, on top of the page
+	 * 1. Removes all existing survey records associated to current survey
+	 * 2. Launches the clone method, it will replicate the hierarhcial structure of the surce survey into current survey
+	 * 3. refresh the page
+	 */
+	public PageReference cloneSurvey() {
+		deleteSurveyHiearchy(this.parentQueryResult.Id);
+		cloneHierarchySurvey( surveyToClone , this.parentQueryResult);
+
+		//refresh tha page
+		Pagereference page = Page.ISSP_CurrencyCenterReportingActionsMonth;
+		page.getParameters().put('Id',this.parentQueryResult.Id);
+		page.setRedirect(true);
+		return page;
+	}
+
+	/**
+	 * Returns a list with 3 maps, having all surveys in the hirarchy
+	 * each map in the list is a level, in level 1 there are the Countries, in 2 Reports
+	 * and in the last level Banks
+	 */
+	private List<map<Id,Currency_Center_Survey__c>> getSurveyHierarchy(Id parentId) {
+		// query first level: Countries
+		map<Id,Currency_Center_Survey__c> mapChildrenLevel1 = new map<Id,Currency_Center_Survey__c>([
+			SELECT Id,Name,RecordTypeId,CurrencyIsoCode,Airline__c,Allocation_of_Funds__c,Amount__c,Amounts_Blocked_Delayed__c,Amount_USD__c,Average_Exchange_Rate__c,Bank__c,Bank_Name__c,Bank_Percentage__c,Comments__c,Contact__c,Country__c,Country_Comments__c,Country_Name__c,Currency__c,Current_Balance_Amount__c,Date__c,Last_Allocation_Date__c,Delay_in_day__c,IATA_ISO_Country__c,ICCS__c,Last_Allocation_Amount__c,Local_Currency__c,Month_Survey__c,Nov_Dec_Sales__c,Other_Currency_Business__c,Parent_Id__c,Reporting_Date__c,Reporting_Type__c,Report_Type_Comments__c,SalesFundsAwaintingRepatriation__c,Sales_Period_End_Date__c,Sales_Period_Start_Date__c,Sales_Period__c,Section__c,Status__c,Survey__c,Total_Currency__c,Last_Allocation_Total_Amount_USD__c,Total_Amount_USD__c,Total_Blocked_Delayed_Amount__c,Type_of_Operations__c,Type_Of_Operations_Percentage__c,Type_of_Revenues__c,Year_Survey__c
+			FROM Currency_Center_Survey__c
+			WHERE Parent_Id__c = :parentId
+			AND (Section__c = 'Country Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyCountry)]);
+		// query second level: Reports
+		map<Id,Currency_Center_Survey__c> mapChildrenLevel2 = new map<Id,Currency_Center_Survey__c>([
+			SELECT Id,Name,RecordTypeId,CurrencyIsoCode,Airline__c,Allocation_of_Funds__c,Amount__c,Amounts_Blocked_Delayed__c,Amount_USD__c,Average_Exchange_Rate__c,Bank__c,Bank_Name__c,Bank_Percentage__c,Comments__c,Contact__c,Country__c,Country_Comments__c,Country_Name__c,Currency__c,Current_Balance_Amount__c,Date__c,Last_Allocation_Date__c,Delay_in_day__c,IATA_ISO_Country__c,ICCS__c,Last_Allocation_Amount__c,Local_Currency__c,Month_Survey__c,Nov_Dec_Sales__c,Other_Currency_Business__c,Parent_Id__c,Reporting_Date__c,Reporting_Type__c,Report_Type_Comments__c,SalesFundsAwaintingRepatriation__c,Sales_Period_End_Date__c,Sales_Period_Start_Date__c,Sales_Period__c,Section__c,Status__c,Survey__c,Total_Currency__c,Last_Allocation_Total_Amount_USD__c,Total_Amount_USD__c,Total_Blocked_Delayed_Amount__c,Type_of_Operations__c,Type_Of_Operations_Percentage__c,Type_of_Revenues__c,Year_Survey__c
+			FROM Currency_Center_Survey__c
+			WHERE Parent_Id__c IN :mapChildrenLevel1.keyset()
+			AND (Section__c = 'Report Type Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyReportType)]);
+		// query third level: Banks
+		map<Id,Currency_Center_Survey__c> mapChildrenLevel3 = new map<Id,Currency_Center_Survey__c>([
+			SELECT Id,Name,RecordTypeId,CurrencyIsoCode,Airline__c,Allocation_of_Funds__c,Amount__c,Amounts_Blocked_Delayed__c,Amount_USD__c,Average_Exchange_Rate__c,Bank__c,Bank_Name__c,Bank_Percentage__c,Comments__c,Contact__c,Country__c,Country_Comments__c,Country_Name__c,Currency__c,Current_Balance_Amount__c,Date__c,Last_Allocation_Date__c,Delay_in_day__c,IATA_ISO_Country__c,ICCS__c,Last_Allocation_Amount__c,Local_Currency__c,Month_Survey__c,Nov_Dec_Sales__c,Other_Currency_Business__c,Parent_Id__c,Reporting_Date__c,Reporting_Type__c,Report_Type_Comments__c,SalesFundsAwaintingRepatriation__c,Sales_Period_End_Date__c,Sales_Period_Start_Date__c,Sales_Period__c,Section__c,Status__c,Survey__c,Total_Currency__c,Last_Allocation_Total_Amount_USD__c,Total_Amount_USD__c,Total_Blocked_Delayed_Amount__c,Type_of_Operations__c,Type_Of_Operations_Percentage__c,Type_of_Revenues__c,Year_Survey__c
+			FROM Currency_Center_Survey__c
+			WHERE Parent_Id__c IN :mapChildrenLevel2.keyset()
+			AND (Section__c = 'Bank Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyBank)]);
+
+		return new List<map<Id,Currency_Center_Survey__c>>{mapChildrenLevel1, mapChildrenLevel2, mapChildrenLevel3};
+	}
+
+	/**
+	 * Deletes the whole survey structure for a parent
+	 */
+	private void deleteSurveyHiearchy(Id parentId) {
+		list<Currency_Center_Survey__c> listSurveys = new list<Currency_Center_Survey__c>();
+		for(map<Id,Currency_Center_Survey__c> mapSurvey: getSurveyHierarchy(parentId)) {
+			listSurveys.addAll(mapSurvey.values());
+		}
+		delete listSurveys;
+	}
+
+	/**
+	 * Finds all surveys related to the source Survey and makes a copy,
+	 * keeping the hierarchy structure, into the destination Survey
+	 */
+	private void cloneHierarchySurvey(Currency_Center_Survey__c source, Currency_Center_Survey__c dest) {
+		Map<Id,Id> mapReplaceParent = new Map<Id,Id>();
+		mapReplaceParent.put(source.Id, dest.Id);
+	
+		for(Map<Id,Currency_Center_Survey__c> mapSurvey: getSurveyHierarchy(source.Id)) {
+			List<Currency_Center_Survey__c> listSurvey = mapSurvey.values();
+			// this method contains a DML operation and it's inside a for, but it will never run be more than 3 times
+			cloneSurveyList(listSurvey, mapReplaceParent);
+		}
+
+		//if the clone action went well set the last modified date to now
+		dest.Cloned_From__c = source.Id;
+		update dest;
+	}
+
+	/**
+	 * Helper class for cloneSurveys, if clones a level of the hierarchy.
+	 * listSurvey is the param that contains all Surveys in the same hierarchy level from the source.
+	 * And mapParentReplacement contains the old Id in the source and the Id to be replaced in the cloned new survey,
+	 * allowing to keep the hierarchy structure
+	 */
+	private void cloneSurveyList(List<Currency_Center_Survey__c> listSurvey, Map<Id,Id> mapParentReplacement) {
+		list<Currency_Center_Survey__c> listNewSurvey = new list<Currency_Center_Survey__c>();
+		for(Currency_Center_Survey__c survey: listSurvey) {
+			Id newParentId = mapParentReplacement.get(survey.Parent_Id__c);
+			if (newParentId != null) {
+				Currency_Center_Survey__c clonedSurvey = survey.clone();
+				clonedSurvey.Parent_Id__c = newParentId;
+				listNewSurvey.add(clonedSurvey);
+			}
+		}
+		if (!listNewSurvey.isEmpty()) {
+			insert listNewSurvey;
+		}
+		// update the map for Id replacement for the next clone call
+		for(Integer i=0; i<listNewSurvey.size(); i++) {
+			Id originId = listSurvey[i].Id;
+			Id newId = listNewSurvey[i].Id;
+			mapParentReplacement.put(originId, newId);
+		}
+	}
+
 }
