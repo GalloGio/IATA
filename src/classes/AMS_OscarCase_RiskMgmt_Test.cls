@@ -40,6 +40,9 @@ private class AMS_OscarCase_RiskMgmt_Test {
 		lsConf.add(new AMS_ChangeCodes__c(Name='DWD', CHANGE_CODE__C='DWD', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='NOT Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
 		lsConf.add(new AMS_ChangeCodes__c(Name='REI', CHANGE_CODE__C='REI', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
 		lsConf.add(new AMS_ChangeCodes__c(Name = 'ANG32b', Account_status_change__c = 'PREV;RVW', Billable__c = TRUE, Bulletin_Memo_Text__c = 'Agent reinstated after default following: <SIDRA Lite Reason>', Change_Code__c = 'SDR', Reason_Code_Description__c = 'PREV;RVW', Reason_Code__c = 'PREV;RVW', Integration_RecId__c = 'C', Apply_to_hierarchy__c = TRUE, Class_Type__c = 'P', Field1Values__c = 'VALUES:Agent Complied;Commissioner decision', Field1__c = 'Reason_of_REI_WD__c', Field2Values__c = 'Not Blank', Field2__c = 'Shut_Down_TKT_System_GDS_and_BSPlink__c', Field3Values__c = 'NOT Blank', Field3__c = 'Ticketing_Authority_Re_assigned__c', Field4Values__c = 'VALUES:Approved', Field4__c = 'REI_ApprovalRejectin__c', Field5Values__c = 'Not Blank', Field5__c = 'Update_AIMS_REI_DEFWITH__c', Field6Values__c = 'VALUES:DEF/SUS REI', Field6__c = 'Type_of_REI_WD__c', Publish_HO_Only__c = TRUE, Published_in_bulletin__c = TRUE, Record_Type__c = 'SIDRA_Lite', Risk_ChangeCode__c = TRUE, Extra_memo_text_for_HO__c = '<PLEASE NOTE CHANGE APPLIES TO THE ENTIRE HIERARCHY>', Billable_Location_Class__c = 'P;D', Accreditation_Model__c = 'NEWGEN', Field7Values__c = 'VALUES:Group', Field7__c = 'Group_Single_Agent__c'));
+		lsConf.add(new AMS_ChangeCodes__c(Name='ANG15', CHANGE_CODE__C='NOT', REASON_CODE__C='60', REASON_CODE_DESCRIPTION__C='NON COMPLIANCE TO ACCREDITATION CRITERIA', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Security Non-compliance;Non submission of legal document;Non submission of PSAA;Non payment of change fees', FIELD2__C='DEF_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='Reason_for_Default__c', FIELD3VALUES__C='VALUES:Disapproval of Change', FIELD4__C='Update_AIMS_DEF__c', FIELD4VALUES__C='NOT Blank', ACCOUNT_STATUS_CHANGE__C='6', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='Change of <OSCAR Type> disapproved due to <SIDRA Lite Reason> to take effect as of <Inform GDS to Shut Down TKT System>. Ticketing Authority withdrawn.', INTEGRATION_RECID__C='C', PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, Accreditation_Model__c='NEWGEN', Publish_HO_Only__c=TRUE, Extra_memo_text_for_HO__c='<PLEASE NOTE CHANGE APPLIES TO THE ENTIRE HIERARCHY>'));
+		lsConf.add(new AMS_ChangeCodes__c(Name='30', CHANGE_CODE__C='NOT', REASON_CODE__C='60', REASON_CODE_DESCRIPTION__C='NON COMPLIANCE TO ACCREDITATION CRITERIA', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Security Non-compliance;Non submission of legal document;Non submission of PSAA;Non payment of change fees', FIELD2__C='DEF_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='Reason_for_Default__c', FIELD3VALUES__C='VALUES:Disapproval of Change', FIELD4__C='Update_AIMS_DEF__c', FIELD4VALUES__C='NOT Blank', ACCOUNT_STATUS_CHANGE__C='6', CLASS_TYPE__C='P;D;C;R', BULLETIN_MEMO_TEXT__C='Change of <OSCAR Type> disapproved due to <SIDRA Lite Reason> to take effect as of <Inform GDS to Shut Down TKT System>. Ticketing Authority withdrawn.', INTEGRATION_RECID__C='C', PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, Publish_HO_Only__c=TRUE, Extra_memo_text_for_HO__c='<PLEASE NOTE CHANGE APPLIES TO THE ENTIRE HIERARCHY>'));
+		
 		insert lsConf;
 
 		list<String> listAirlineId = new list<String>();
@@ -922,6 +925,110 @@ private class AMS_OscarCase_RiskMgmt_Test {
 			system.assert(e.getMessage().contains('The field has already been set'), 'The exception message should be: \'The field has already been set\'');
 		}
 
+	}
+
+	@isTest 
+	static void sMemoTextIsNewGenAgency(){
+
+		
+		id oscarRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+
+		IATA_ISO_Country__c ctry = [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = true;
+		ctry.Enable_Risk_Change_Codes__c = true;
+		update ctry;
+
+		Account acc = [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Class__c = 'P';
+		acc.Location_Type__c = 'HE';
+		update acc;
+
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = acc.Id);
+		insert parent;
+
+		Case SidraLiteCase = new Case();
+		SidraLiteCase.AccountId = acc.Id;
+		SidraLiteCase.recordtypeId = SIDRALiteRTId;
+		SidraLiteCase.ParentId = parent.Id;
+		SidraLiteCase.SIDRA_Lite_Default_Date__c = system.today();
+		insert SidraLiteCase;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc.Id);
+		oscar.ANG_Type_Of_Change__c  = 'Ownership';
+		oscar.recordtypeId = oscarRecordTypeId;
+		insert oscar;
+
+		parent.OSCAR__c = oscar.Id;
+		update parent;
+
+		AMS_OscarCase_RiskMgmt.EndRun();
+
+		Test.startTest();
+			SidraLiteCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+			SidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
+			SidraLiteCase.Reason_for_Default__c = 'Disapproval of Change';
+			SidraLiteCase.Update_AIMS_DEF__c = system.now();
+			update SidraLiteCase;
+		Test.stopTest();
+
+		List<Agency_applied_change_code__c> changeCode = [SELECT Bulletin_Information__c, Change_code__c FROM Agency_applied_change_code__c WHERE SIDRA_Case__c = :SidraLiteCase.Id];		
+		System.assertEquals(1, changeCode.size());
+		System.assert(changeCode[0].Bulletin_Information__c.containsIgnoreCase('Ownership'));
+		System.assert(!changeCode[0].Bulletin_Information__c.containsIgnoreCase('<OSCAR Type>'));
+		System.assertEquals('NOT', changeCode[0].Change_code__c);
+	
+	}
+
+	@isTest 
+	static void sMemoTextIsNotNewGenAgency(){
+
+		
+		id oscarRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+
+		IATA_ISO_Country__c ctry = [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = false;
+		ctry.Enable_Risk_Change_Codes__c = true;
+		update ctry;
+
+		Account acc = [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Class__c = 'P';
+		acc.Location_Type__c = 'HO';
+		update acc;
+
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = acc.Id);
+		insert parent;
+
+		Case SidraLiteCase = new Case();
+		SidraLiteCase.AccountId = acc.Id;
+		SidraLiteCase.recordtypeId = SIDRALiteRTId;
+		SidraLiteCase.ParentId = parent.Id;
+		SidraLiteCase.SIDRA_Lite_Default_Date__c = system.today();
+		insert SidraLiteCase;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc.Id);
+		oscar.Type_of_change__c  = 'Name';
+		oscar.recordtypeId = oscarRecordTypeId;
+		insert oscar;
+
+		parent.OSCAR__c = oscar.Id;
+		update parent;
+
+		AMS_OscarCase_RiskMgmt.EndRun();
+
+		Test.startTest();
+			SidraLiteCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+			SidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
+			SidraLiteCase.Reason_for_Default__c = 'Disapproval of Change';
+			SidraLiteCase.Update_AIMS_DEF__c = system.now();
+			update SidraLiteCase;
+		Test.stopTest();
+
+		List<Agency_applied_change_code__c> changeCode = [SELECT Bulletin_Information__c, Change_code__c FROM Agency_applied_change_code__c WHERE SIDRA_Case__c = :SidraLiteCase.Id];		
+		System.assertEquals(1, changeCode.size());
+		System.assert(changeCode[0].Bulletin_Information__c.containsIgnoreCase('Name'));
+		System.assert(!changeCode[0].Bulletin_Information__c.containsIgnoreCase('<OSCAR Type>'));
+		System.assertEquals('NOT', changeCode[0].Change_code__c);
+	
 	}
 
 }

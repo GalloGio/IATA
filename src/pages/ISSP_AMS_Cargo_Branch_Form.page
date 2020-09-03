@@ -827,7 +827,7 @@
                             "/>
                         </apex:panelGrid>
                     </apex:pageBlockSectionItem>    
-                    <apex:outputPanel id="payvia" style="{!IF(newForm.Billing_payment_Branch_Office__c==false,'display:none','display:block')}" rendered="NOT(isCNSAgency)">
+                    <apex:outputPanel id="payvia" style="{!IF(newForm.Billing_payment_Branch_Office__c==false,'display:none','display:block')}" rendered="{!NOT(isCNSAgency)}">
                         <apex:outputText value="{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION4_Q4}" />
 
                         <apex:pageBlockSectionItem >                

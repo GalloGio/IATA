@@ -141,7 +141,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -157,11 +156,11 @@ private class ISSP_AMC_Location_Identifier_Test {
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = 'Submit';
+				Test.StartTest();
 				controller.saveParticipation();
 				controller.init();
+				Test.stopTest();
 			}
-
-			Test.stopTest();
 
 		}
 	}
@@ -221,7 +220,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -237,13 +235,13 @@ private class ISSP_AMC_Location_Identifier_Test {
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = 'Submit';
+				Test.StartTest();
 				controller.saveParticipation();
 				controller.init();
+				Test.stopTest();
 
 
 			}
-
-			Test.stopTest();
 
 		}
 	}
@@ -338,7 +336,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -355,14 +352,15 @@ private class ISSP_AMC_Location_Identifier_Test {
 				String testComName = controller.communityName;
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
+				//controller.participation = ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'RailwayStation', false);
+				Test.StartTest();
 				controller.saveParticipation();
 
 				ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
+				Test.stopTest();
 
 
 			}
-
-			Test.stopTest();
 
 		}
 	}
@@ -454,7 +452,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -471,12 +468,13 @@ private class ISSP_AMC_Location_Identifier_Test {
 				String testComName = controller.communityName;
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
+				//controller.participation = ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'BusStation', false);
+				Test.StartTest();
 				controller.saveParticipation();
 
 				ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
+				Test.stopTest();
 			}
-
-			Test.stopTest();
 
 		}
 	}
@@ -530,7 +528,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -547,12 +544,12 @@ private class ISSP_AMC_Location_Identifier_Test {
 				String testComName = controller.communityName;
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
+				Test.StartTest();
 				controller.saveParticipation();
 
 				ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
+				Test.stopTest();
 			}
-
-			Test.stopTest();
 
 		}
 	}
@@ -680,43 +677,41 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		System.runAs(myUser){
+			System.runAs(myUser){
 
-		User portalUser = ISSP_AMC_ParticipationFactory.portalSetupNoSIS();
+			User portalUser = ISSP_AMC_ParticipationFactory.portalSetupNoSIS();
 
-		Account acc = [SELECT id, Name,
-								Airline_Code__c,
-								Baggage_Tag_Range_Code__c,
-								Airline_designator__c,
-								IATACode__c,
-								Airline_Prefix__c,
-								AOC_Expiry_Date__c,
-								Legal_name__c,
-								TradeName__c,
-								Sector__c,
-								Category__c,
-								IATA_ISO_Country__r.Name,
-								Region_formula__c,
-								Phone,
-								Email__c,
-								Website,
-								ShippingStreet,
-								ShippingAddress,
-								ShippingCity,
-								ShippingState,
-								ShippingPostalCode,
-								ShippingCountry,
-								IATA_ISO_Country__c,
-								SIS_Status__c
-						FROM account
+			Account acc = [SELECT id, Name,
+									Airline_Code__c,
+									Baggage_Tag_Range_Code__c,
+									Airline_designator__c,
+									IATACode__c,
+									Airline_Prefix__c,
+									AOC_Expiry_Date__c,
+									Legal_name__c,
+									TradeName__c,
+									Sector__c,
+									Category__c,
+									IATA_ISO_Country__r.Name,
+									Region_formula__c,
+									Phone,
+									Email__c,
+									Website,
+									ShippingStreet,
+									ShippingAddress,
+									ShippingCity,
+									ShippingState,
+									ShippingPostalCode,
+									ShippingCountry,
+									IATA_ISO_Country__c,
+									SIS_Status__c
+							FROM account
 
-						LIMIT 1];
-			acc.SIS_Status__c = 'Terminated';
-			update acc;
+							LIMIT 1];
+				acc.SIS_Status__c = 'Terminated';
+				update acc;
 
 			System.runAs(portalUser){
-
-				Test.StartTest();
 
 				System.debug('SIS_Status__c '+ISSP_AMC_DAO.getAccountInfo().SIS_Status__c);
 				Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Location_Identifier'));
@@ -725,10 +720,13 @@ private class ISSP_AMC_Location_Identifier_Test {
 				controller.Participation.Location_Type__c = 'Airport';
 				controller.CalculateWhichComponentsToShow();
 				controller.step = '1';
+				Test.StartTest();
 				controller.saveParticipation();
-
 				Test.stopTest();
+
+				//ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
 			}
+
 		}
 	}
 
@@ -783,7 +781,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -799,11 +796,11 @@ private class ISSP_AMC_Location_Identifier_Test {
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = 'Submit';
+				Test.StartTest();
 				controller.saveParticipation();
 				controller.init();
+				Test.stopTest();
 			}
-
-			Test.stopTest();
 
 		}
 	}

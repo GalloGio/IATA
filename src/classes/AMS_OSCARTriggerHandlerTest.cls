@@ -388,4 +388,120 @@ private class AMS_OSCARTriggerHandlerTest {
 		AMS_OSCAR__c result = [SELECT Id, Promotions__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];
 		System.assertEquals(promotion.DeveloperName, result.Promotions__c);
 	}
+
+	@isTest static void testLocationTypeIsNewGenPass() {
+
+		IATA_ISO_Country__c ctry = [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = true;
+		update ctry;
+
+		Account acc = [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Type__c = 'HO';
+		update acc;
+
+		Case cse = [SELECT id FROM Case LIMIT 1][0];
+		
+		AMS_OSCAR__c oscar = [SELECT Id, RecordTypeID, Process__c, Type_Of_Change__c, STEP4__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1][0];
+		
+		AMS_Accreditation_Contact__c owner1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c, Agency_Owner__c = true, Financial_interest__c = 100,
+		RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'),
+		Last_name__c = 'test');
+		insert owner1;
+
+		Test.startTest();
+			oscar.STEP6__c = 'Passed';
+			try{
+				update oscar;
+			}catch (Exception e){
+				System.assert(e.getMessage().contains('Cannot pass the sanity check if the Location Type is non NewGen.'));
+			}
+		Test.stopTest();
+	}
+
+	@isTest static void testLocationTypeIsNonNewGenPass() {
+
+		IATA_ISO_Country__c ctry = [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = false;
+		update ctry;
+
+		Account acc = [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Type__c = 'HE';
+		update acc;
+
+		Case cse = [SELECT id FROM Case LIMIT 1][0];
+		
+		AMS_OSCAR__c oscar = [SELECT Id, RecordTypeID, Process__c, Type_Of_Change__c, STEP4__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1][0];
+		
+		AMS_Accreditation_Contact__c owner1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c, Agency_Owner__c = true, Financial_interest__c = 100,
+		RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'),
+		Last_name__c = 'test');
+		insert owner1;
+
+		Test.startTest();
+			oscar.STEP6__c = 'Passed';
+			try{
+				update oscar;
+			}catch (Exception e){
+				System.assert(e.getMessage().contains('Cannot pass the sanity check if the Location Type is NewGen.'));
+			}
+		Test.stopTest();
+	}
+
+	@isTest static void testLocationTypeIsNonNewGenNoPass() {
+
+		IATA_ISO_Country__c ctry = [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = false;
+		update ctry;
+
+		Account acc = [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Type__c = 'HO';
+		update acc;
+
+		Case cse = [SELECT id FROM Case LIMIT 1][0];
+		
+		AMS_OSCAR__c oscar = [SELECT AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1][0];
+		
+		AMS_Accreditation_Contact__c owner1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c, Agency_Owner__c = true, Financial_interest__c = 100,
+		RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'),
+		Last_name__c = 'test');
+		insert owner1;
+
+		Test.startTest();
+			oscar.STEP6__c = 'Passed';
+			update oscar;
+		Test.stopTest();
+
+		AMS_OSCAR__c oscar1 = [SELECT Id, STEP6__c FROM AMS_OSCAR__c LIMIT 1][0];
+		
+		System.assertEquals(AMS_Utils.PASSED,oscar1.STEP6__c);
+	}
+
+	@isTest static void testLocationTypeIsNewGenNoPass() {
+
+		IATA_ISO_Country__c ctry = [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = true;
+		update ctry;
+
+		Account acc = [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Type__c = 'HE';
+		update acc;
+
+		Case cse = [SELECT id FROM Case LIMIT 1][0];
+		
+		AMS_OSCAR__c oscar = [SELECT AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1][0];
+		
+		AMS_Accreditation_Contact__c owner1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c, Agency_Owner__c = true, Financial_interest__c = 100,
+		RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'),
+		Last_name__c = 'test');
+		insert owner1;
+
+		Test.startTest();
+			oscar.STEP6__c = 'Passed';
+			update oscar;
+		Test.stopTest();
+
+		AMS_OSCAR__c oscar1 = [SELECT Id, STEP6__c FROM AMS_OSCAR__c LIMIT 1][0];
+		
+		System.assertEquals(AMS_Utils.PASSED,oscar1.STEP6__c);
+	}
 }
