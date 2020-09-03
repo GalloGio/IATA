@@ -46,6 +46,7 @@ global with sharing class IDCard_TrainingCoursesListWebService
 		'BSP Essentials for Travel Agents - EN' => Label.IDCard_BSP_Essentials_for_Travel_Agents,
 		'BSP Standard Documents & Procedures - EN' => Label.IDCard_BSP_Standard_Documents_Procedures,
 		'Intro to the BSP System & Language - EN' => Label.IDCard_Intro_to_the_BSP_System_Language
+		'Distribution & Airlines Retailing with NDC - EN' => Label.Distribution_Airlines_Retailing_with_NDC
 	};
 
 	private static String getCourseDescription(String course)
