@@ -42,7 +42,7 @@ public class PlatformEvents_Helper implements Queueable {
 				'Contact' => 'Contact__e',
 				'Account_Contact_Role__c' => 'AccountContactRole__e',
 				'Account_Role__c' => 'AccountRole__e',
-				'Address_Role_Business_Context__c' => 'AddressRoleBusinessContext__e',
+				'Address_Role_Business_Context__c' => 'AddressRoleBusinessContext__e',								  
 				'Partner_products__c' => 'PartnerProduct__e',
 				'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
 				'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
@@ -50,9 +50,9 @@ public class PlatformEvents_Helper implements Queueable {
 				'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e',
 				'Training_Contact_Role_Details__c' => 'Training_Contact_Role_Detail__e',
 				'AP_Process_Form__c' => 'Airline_Account__e',
-				'Services_Rendered__c' => 'Service_Rendered__e'
+				'Services_Rendered__c' => 'Service_Rendered__e',
+				'Case_Item__c' => 'Case_Item_PE__e'
 		};
-
 
 		string sEventType = '';
 		if(bIsInsert) sEventType = 'Create';
@@ -94,25 +94,20 @@ public class PlatformEvents_Helper implements Queueable {
 					else if(FieldSource=='Id')
 						sObj.put(MapMapping.get(FieldSource), ObjId);
 				}
-
 				lstSObjs.add(sObj);
 			}
 
-
-			if (!Test.isRunningTest()) {
-				for (Database.SaveResult sr : EventBus.publish(lstSObjs)) {
-					if (!sr.isSuccess()){
-						for(Database.Error err : sr.getErrors()) {
-							lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
-									 , err.getStatusCode() + ' - ' + err.getMessage()
-									 , PE_Name
-									 ,'PlatformEvents_Helper.publishEvents'
-									 ,'One of the following: ' + ObjectMap.keyset()));
-						}
+			for (Database.SaveResult sr : EventBus.publish(lstSObjs)) {
+				if (!sr.isSuccess()){
+					for(Database.Error err : sr.getErrors()) {
+						lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
+									, err.getStatusCode() + ' - ' + err.getMessage()
+									, PE_Name
+									,'PlatformEvents_Helper.publishEvents'
+									,'One of the following: ' + ObjectMap.keyset()));
 					}
 				}
 			}
-
 		}catch(exception e){
 			lsLogs.add(CreateLog('Platform Events for ' + ObjSource + '. Event Type: ' + sEventType
 								 , e.getMessage()
@@ -138,9 +133,9 @@ public class PlatformEvents_Helper implements Queueable {
 			};
 		}
 
-		if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj == 'GadmAccountServiceDetail__e'
-			|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'|| sObj=='Service_Rendered__e'
-			|| sObj=='Airline_Account__e' || sObj=='AddressRoleBusinessContext__e' || sObj=='Training_Contact_Role_Detail__e'){
+		if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj == 'GadmAccountServiceDetail__e'|| sObj=='Product_Country_Config__e' 
+			|| sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e' || sObj=='Training_Contact_Role_Detail__e'
+			|| sObj=='Service_Rendered__e' || sObj=='Airline_Account__e' || sObj=='AddressRoleBusinessContext__e' || sObj=='Case_Item_PE__e'){
 			return new map<String,String>{
 				'Id' => 'RecordId__c',
 				'Recordtype' => 'RecordType__c',
