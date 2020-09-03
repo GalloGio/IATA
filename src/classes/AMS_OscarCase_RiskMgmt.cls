@@ -76,7 +76,7 @@ public class AMS_OscarCase_RiskMgmt {
 			'Parent.OSCAR__c', 'Parent.Status', 'IRR_Approval_Rejection_Date__c', 'IRR_Type__c', 'Termination_date__c', 'Outstanding_Amount__c', 'Reason_of_REI_WD__c', 'External_ID__c', 'ParentId', 'Parent.RecordtypeId', 'Parent.AccountId',
 			'CaseArea__c', 'Reason1__c', 'Account.Location_Class__c', 'AccountId', 'Account.Status__c', 'Account.PreviousStatus__c', 'Account.Previous_Reason__c', 'Account.Reason__c', 'Account.Accumulated_Irregularities__c',
 			'Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c', 'Account.AIMS_ID__c', 'Account.WebStar_ID__c', 'Account.IATACode__c', 'Account.ANG_IsNewGenAgency__c', 'Account.ParentId', 'Account.Parent.ParentId', 'Account.Parent.Parent.ParentId',
-			'Account.CNS_Agency__c', 'Currency__c', 'OSCAR__r.ANG_Type_Of_Change__c', 'Parent.IFAP_Financial_Year__c', 'Group_Single_Agent__c', 'Account_Location_Type__c', 'Parent.Financial_Review_Type__c', 'Account.ANG_Accreditation_Model__c' };
+			'Account.CNS_Agency__c', 'Currency__c', 'OSCAR__r.ANG_Type_Of_Change__c', 'Parent.IFAP_Financial_Year__c', 'Group_Single_Agent__c', 'Account_Location_Type__c', 'Parent.Financial_Review_Type__c', 'Account.ANG_Accreditation_Model__c', 'Account.ANG_IsNewGenAgency__c', 'Parent.OSCAR__r.ANG_Type_Of_Change__c' };
 
 			for(Schema.FieldSetMember fieldSetMember : Schema.SObjectType.Case.FieldSets.AMS_Change_Code_Fields.getFields()){
 				caseFieldsToQuery.add(fieldSetMember.getFieldPath());
@@ -1002,7 +1002,11 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 
 			if(sMemoText.containsIgnoreCase('<OSCAR Type>')){
-				sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c==null?'Nil':theCase.Parent.OSCAR__r.Type_of_change__c);
+				if (theCase.Account.ANG_IsNewGenAgency__c){
+					sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.ANG_Type_Of_Change__c ==null?'Nil':theCase.Parent.OSCAR__r.ANG_Type_Of_Change__c);
+				} else {
+					sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c==null?'Nil':theCase.Parent.OSCAR__r.Type_of_change__c);
+				}
 			}
 
 			if(sMemoText.containsIgnoreCase('<Termination Reason>')){
