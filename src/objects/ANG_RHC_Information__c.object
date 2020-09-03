@@ -359,7 +359,7 @@
         <fullName>ANG_RHC_Amount_Provisional__c</fullName>
         <description>Expected RHC Amount calculated by RME. The agent can request a new calculation via a button on the layout. The information comes from an external system and should not be updated manually.</description>
         <externalId>false</externalId>
-        <label>Provisional RHC Amount</label>
+        <label>Amount At Risk</label>
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>
@@ -446,20 +446,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
-    </fields>
-    <fields>
-        <fullName>Amount_At_Risk__c</fullName>
-        <description>Amount at Risk is the provisional amount coming from RME divided 2</description>
-        <externalId>false</externalId>
-        <formula>ANG_RHC_Amount_Provisional__c/2</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Amount At Risk</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>4</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
     </fields>
     <fields>
         <fullName>Forecasted_Tier__c</fullName>

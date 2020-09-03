@@ -79,7 +79,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Amount_At_Risk__c</field>
+                <field>ANG_RHC_Amount_Provisional__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
