@@ -1006,23 +1006,23 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(docNameIdMap.get(footerImageName) != null) footerImageUrl = documentURL.replace('#id#', docNameIdMap.get(footerImageName));
 
 		Map<String, String> mapBodyParams = new map<String, String>{
-				'{!HeaderUrl}'                                   => headerImageUrl,
-				'{!FooterUrl}'                                   => footerImageUrl,
-				'{!Receiving_User.FirstName}'                    => params.Firstname,
-				'{!ExistingContactName}'                         => params.existingContactName,
-				'{!ExistingContactEmail}'                        => params.existingContactEmail,
-				'{!ExistingContactAdditionalEmail}'              => params.existingContactAdditionalEmail,
-				'{!ExistingContactAccount}'                      => params.existingContactAccount,
-				'{!ExistingContactUsername}'                     => params.existingContactUsername,
-				'{!Community_Url}'                               => oneTimeLink,
-				'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
-				'{!$Label.ISSP_Email_do_not_reply}'              => Label.ISSP_Email_do_not_reply,
-				'{!$Label.CSP_Dear}'                             => Label.CSP_Dear,
-				'{!$Label.CSP_Email_Confirmation_Body_Part_1}'   => Label.CSP_Email_Confirmation_Body_Part_1,
-				'{!$Label.CSP_Email_Confirmation_Body_Part_2}'   => Label.CSP_Email_Confirmation_Body_Part_2,
-				'{!$Label.CSP_Email_Confirmation_Body_Part_3}'   => Label.CSP_Email_Confirmation_Body_Part_3,
-				'{!$Label.CSP_Email_Signature_Part_1}'           => Label.CSP_Email_Signature_Part_1,
-				'{!$Label.CSP_Email_Signature_Part_2}'           => Label.CSP_Email_Signature_Part_2
+				'{!HeaderUrl}'									=> headerImageUrl,
+				'{!FooterUrl}'									=> footerImageUrl,
+				'{!Receiving_User.FirstName}'					=> params.Firstname,
+				'{!ExistingContactName}'						=> params.existingContactName,
+				'{!ExistingContactEmail}'						=> params.existingContactEmail,
+				'{!ExistingContactAdditionalEmail}'				=> params.existingContactAdditionalEmail,
+				'{!ExistingContactAccount}'						=> params.existingContactAccount,
+				'{!ExistingContactUsername}'					=> params.existingContactUsername,
+				'{!Community_Url}'								=> oneTimeLink,
+				'{!$Label.CSP_Email_Here}'						=> Label.CSP_Email_Here,
+				'{!$Label.ISSP_Email_do_not_reply}'				=> Label.ISSP_Email_do_not_reply,
+				'{!$Label.CSP_Dear}'							=> Label.CSP_Dear,
+				'{!$Label.CSP_Email_Confirmation_Body_Part_1}'	=> Label.CSP_Email_Confirmation_Body_Part_1,
+				'{!$Label.CSP_Email_Confirmation_Body_Part_2}'	=> Label.CSP_Email_Confirmation_Body_Part_2,
+				'{!$Label.CSP_Email_Confirmation_Body_Part_3}'	=> Label.CSP_Email_Confirmation_Body_Part_3,
+				'{!$Label.CSP_Email_Signature_Part_1}'			=> Label.CSP_Email_Signature_Part_1,
+				'{!$Label.CSP_Email_Signature_Part_2}'			=> Label.CSP_Email_Signature_Part_2
 		};
 
 		return mapBodyParams;
