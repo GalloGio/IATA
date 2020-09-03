@@ -3,8 +3,8 @@
     <assignments>
         <name>Assign_Contact_with_Service</name>
         <label>Assign Contact with Service</label>
-        <locationX>1072</locationX>
-        <locationY>47</locationY>
+        <locationX>1332</locationX>
+        <locationY>124</locationY>
         <assignmentItems>
             <assignToReference>CaseContact</assignToReference>
             <operator>Assign</operator>
@@ -19,8 +19,8 @@
     <assignments>
         <name>Portal_Admin</name>
         <label>Portal Admin</label>
-        <locationX>1072</locationX>
-        <locationY>193</locationY>
+        <locationX>1332</locationX>
+        <locationY>270</locationY>
         <assignmentItems>
             <assignToReference>CaseContact</assignToReference>
             <operator>Assign</operator>
@@ -32,6 +32,22 @@
             <targetReference>Create_AoC_Renewal_case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Relate_the_flow_to_the_account</name>
+        <label>Relate the flow to the account</label>
+        <locationX>179</locationX>
+        <locationY>216</locationY>
+        <assignmentItems>
+            <assignToReference>$Flow.CurrentRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountID</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_existing_paused_interviews</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>Subject</name>
         <dataType>String</dataType>
@@ -40,10 +56,35 @@
         </value>
     </constants>
     <decisions>
+        <name>Are_there_interviews_to_delete</name>
+        <label>Are there interviews to delete?</label>
+        <locationX>320</locationX>
+        <locationY>446</locationY>
+        <defaultConnector>
+            <targetReference>Start_flow_3_days_before_expiry_date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Delete_interviews</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RelationshipID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_related_paused_interviews</targetReference>
+            </connector>
+            <label>Delete interviews</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Contacts_with_Airline_Coding_Service_or_Admins</name>
         <label>Contacts with Airline Coding Service or Admins</label>
-        <locationX>762</locationX>
-        <locationY>121</locationY>
+        <locationX>1008</locationX>
+        <locationY>197</locationY>
         <defaultConnector>
             <targetReference>Assign_Contact_with_Service</targetReference>
         </defaultConnector>
@@ -97,8 +138,8 @@ BR()&amp;
     <recordCreates>
         <name>Create_AoC_Renewal_case</name>
         <label>Create AoC Renewal case</label>
-        <locationX>1270</locationX>
-        <locationY>127</locationY>
+        <locationX>1530</locationX>
+        <locationY>204</locationY>
         <inputAssignments>
             <field>AccountId</field>
             <value>
@@ -173,11 +214,28 @@ BR()&amp;
         </inputAssignments>
         <object>Case</object>
     </recordCreates>
+    <recordDeletes>
+        <name>Delete_related_paused_interviews</name>
+        <label>Delete related paused interviews</label>
+        <locationX>329</locationX>
+        <locationY>698</locationY>
+        <connector>
+            <targetReference>Start_flow_3_days_before_expiry_date</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InterviewToDelete</elementReference>
+            </value>
+        </filters>
+        <object>FlowInterview</object>
+    </recordDeletes>
     <recordLookups>
         <name>Get_account_information_to_copy_to_case</name>
         <label>Get account information to copy to case</label>
-        <locationX>382</locationX>
-        <locationY>142</locationY>
+        <locationX>632</locationX>
+        <locationY>389</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contact_with_Airline_coding_service</targetReference>
@@ -210,8 +268,8 @@ BR()&amp;
     <recordLookups>
         <name>Get_Contact_with_Airline_coding_service</name>
         <label>Get Contact with Airline coding service</label>
-        <locationX>556</locationX>
-        <locationY>59</locationY>
+        <locationX>813</locationX>
+        <locationY>389</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Portal_Admin</targetReference>
@@ -244,10 +302,36 @@ BR()&amp;
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <name>Get_existing_paused_interviews</name>
+        <label>Get existing paused interviews</label>
+        <locationX>328</locationX>
+        <locationY>209</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Are_there_interviews_to_delete</targetReference>
+        </connector>
+        <filters>
+            <field>RelatedRecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountID</elementReference>
+            </value>
+        </filters>
+        <object>FlowRecordRelation</object>
+        <outputAssignments>
+            <assignToReference>RelationshipID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>InterviewToDelete</assignToReference>
+            <field>ParentId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Portal_Admin</name>
         <label>Get Portal Admin</label>
-        <locationX>551</locationX>
-        <locationY>211</locationY>
+        <locationX>813</locationX>
+        <locationY>195</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Contacts_with_Airline_Coding_Service_or_Admins</targetReference>
@@ -283,7 +367,7 @@ BR()&amp;
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Start_flow_3_days_before_expiry_date</targetReference>
+            <targetReference>Relate_the_flow_to_the_account</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -344,6 +428,20 @@ BR()&amp;
         <isOutput>true</isOutput>
     </variables>
     <variables>
+        <name>InterviewToDelete</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>PausedInterviews</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>PortalAdminID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -357,11 +455,18 @@ BR()&amp;
         <isInput>true</isInput>
         <isOutput>true</isOutput>
     </variables>
+    <variables>
+        <name>RelationshipID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <waits>
         <name>Start_flow_3_days_before_expiry_date</name>
         <label>Start flow 3 days before expiry date</label>
-        <locationX>199</locationX>
-        <locationY>141</locationY>
+        <locationX>645</locationX>
+        <locationY>625</locationY>
         <defaultConnectorLabel>Default Path</defaultConnectorLabel>
         <waitEvents>
             <name>Always_pause</name>

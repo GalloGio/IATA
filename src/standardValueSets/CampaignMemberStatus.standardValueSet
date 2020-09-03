@@ -267,6 +267,11 @@
         <label>Consulting (medium)</label>
     </standardValue>
     <standardValue>
+        <fullName>Contacted</fullName>
+        <default>false</default>
+        <label>Contacted</label>
+    </standardValue>
+    <standardValue>
         <fullName>Contact made - need to follow-up</fullName>
         <default>false</default>
         <label>Contact made - need to follow-up</label>
@@ -275,6 +280,11 @@
         <fullName>Contact Wrong Info</fullName>
         <default>false</default>
         <label>Contact Wrong Info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Converted</fullName>
+        <default>false</default>
+        <label>Converted</label>
     </standardValue>
     <standardValue>
         <fullName>Declined</fullName>
@@ -735,6 +745,11 @@
         <fullName>Left Voice Message</fullName>
         <default>false</default>
         <label>Left Voice Message</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Lost</fullName>
+        <default>false</default>
+        <label>Lost</label>
     </standardValue>
     <standardValue>
         <fullName>Mail returned</fullName>
@@ -1205,6 +1220,11 @@
         <fullName>offer created</fullName>
         <default>false</default>
         <label>offer created</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Open</fullName>
+        <default>false</default>
+        <label>Open</label>
     </standardValue>
     <standardValue>
         <fullName>Opened</fullName>
