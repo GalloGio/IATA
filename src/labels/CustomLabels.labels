@@ -8118,13 +8118,6 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>CHG – Data Maintenance,CHL - Change of Location,New SA / CHV – New Code,CLO - Closure,VMFR Setup/Update,New AE</value>
     </labels>
     <labels>
-        <fullName>Case_KPI_Medium25d</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Case_KPI_Medium25d</shortDescription>
-        <value>IATAN Re-designation, IATAN Conversion</value>
-    </labels>
-    <labels>
         <fullName>Case_KPI_Risk</fullName>
         <language>en_US</language>
         <protected>false</protected>
