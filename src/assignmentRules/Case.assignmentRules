@@ -6505,7 +6505,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Status</field>
                 <operation>equals</operation>
-                <value>Open</value>
+                <value>Draft</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
@@ -6575,7 +6575,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Status</field>
                 <operation>notEqual</operation>
-                <value>Open</value>
+                <value>Draft</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
