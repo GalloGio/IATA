@@ -12,7 +12,7 @@ public with sharing class Attachments {
 			//map of Attachment Ids and related Case Ids
 			Map<Id,Id> attachmentIdToCaseIdMap = getCaseIdWithAttachments(recordsMap.values());
 			//list of CaseItems that have a related Case with inserted Attachment
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];
 			
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));
@@ -27,7 +27,7 @@ public with sharing class Attachments {
 			//map of Attachment Ids and related Case Ids
 			Map<Id,Id> attachmentIdToCaseIdMap = getCaseIdWithAttachments(recordsMap.values());
 			//list of CaseItems that have a related Case with updated Attachment
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];
 
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));
@@ -42,7 +42,7 @@ public with sharing class Attachments {
 			//map of Attachment Ids and related Case Ids
 			Map<Id,Id> attachmentIdToCaseIdMap = getCaseIdWithAttachments(recordsMap.values());
 			//list of CaseItems that have a related Case with deleted Attachment
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];         
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];         
 			
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));
@@ -57,7 +57,7 @@ public with sharing class Attachments {
 			///map of Attachment Ids and related Case Ids
 			Map<Id,Id> attachmentIdToCaseIdMap = getCaseIdWithAttachments(recordsMap.values());
 			//list of CaseItems that have a related Case with undeleted Attachment
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];         
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :attachmentIdToCaseIdMap.values()];         
 			
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));

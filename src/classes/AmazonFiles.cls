@@ -13,7 +13,7 @@ public with sharing class AmazonFiles {
 			//map of Amazon File Ids and related Case Ids
 			Map<Id,Id> amazonFileIdToCaseIdMap = getCaseIdWithAmazonFiles(recordsMap.values());
 			//list of CaseItems that have a related Case with inserted Attachment
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
 
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));
@@ -28,7 +28,7 @@ public with sharing class AmazonFiles {
 			//map of Amazon File Ids and related Case Ids
 			Map<Id,Id> amazonFileIdToCaseIdMap = getCaseIdWithAmazonFiles(recordsMap.values());
 			//list of CaseItems that have a related Case with updated Amazon File
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
 
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));
@@ -43,7 +43,7 @@ public with sharing class AmazonFiles {
 			//map of Amazon File Ids and related Case Ids
 			Map<Id,Id> amazonFileIdToCaseIdMap = getCaseIdWithAmazonFiles(recordsMap.values());
 			//list of CaseItems that have a related Case with deleted Amazon File
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
 
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));
@@ -58,7 +58,7 @@ public with sharing class AmazonFiles {
 			///map of Amazon File Ids and related Case Ids
 			Map<Id,Id> amazonFileIdToCaseIdMap = getCaseIdWithAmazonFiles(recordsMap.values());
 			//list of CaseItems that have a related Case with undeleted Amazon File
-			List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
+			List<Case_Item__c> caseItemList = [SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :amazonFileIdToCaseIdMap.values()];
 
 			//call update on related case items to fire integration
 			CaseItems caseItems = new CaseItems(new Map<Id,Case_Item__c>(caseItemList));

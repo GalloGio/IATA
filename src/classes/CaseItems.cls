@@ -35,7 +35,7 @@ public with sharing class CaseItems {
 	public static void publishCaseItemsPlatformEvent(Map<Id, Case_Item__c> recordsMap, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
 		//only fire platform event if user is not integration user
 		if(! CaseItems.getIsIntegrationUser()){
-			PlatformEvents_Helper.publishEvents(recordsMap, 'Case_PE__e', 'Case_Item__c', isInsert, isUpdate, isDelete, isUndelete);
+			PlatformEvents_Helper.publishEvents(recordsMap, 'Case_Item_PE__e', 'Case_Item__c', isInsert, isUpdate, isDelete, isUndelete);
 		}
 	}
 
