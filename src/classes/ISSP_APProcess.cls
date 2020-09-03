@@ -1696,16 +1696,16 @@ global without sharing class ISSP_APProcess {
 			if(getShowPASSAgreement()){
 				listMandatoryFiles.add('PASSAgreement');
 			}
-			if (getShowUploadBankMandateForPASS()) {
-				//check Bank_Mandate
-				listMandatoryFiles.add('Bank_Mandate');
-			}
 			if (getShowUploadASPForPASS()) {
-				//check Bank_Mandate
 				listMandatoryFiles.add('ASP');
 			}
+			if (getShowUploadPASSAuthorizationForm()) {
+				listMandatoryFiles.add('PASSAuthorizationForm');
+			}
 			for(passCountriesWrapper wrapperRecord:wrapperPassCountries) {
-				listMandatoryFiles.add(wrapperRecord.identifier);
+				if (wrapperRecord.requiredFile) {
+					listMandatoryFiles.add(wrapperRecord.identifier);
+				}
 			}
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
@@ -2848,10 +2848,10 @@ global without sharing class ISSP_APProcess {
 	}
 
 	/**
-		Returns true if the account meets the conditions to show Upload Bank Mandate section
+		Returns true if the for for PASS Authorization si visible, only for GSSA users
 	**/
-	public Boolean getShowUploadBankMandateForPASS() {
-		return this.isPassAirline;
+	public Boolean getShowUploadPASSAuthorizationForm() {
+		return this.isPassAirline && isGSSAUser && listGSSAPASSServicesForThisAirline.isEmpty();
 	}
 
 	/**
@@ -2927,9 +2927,15 @@ global without sharing class ISSP_APProcess {
 
 	/**
 		Returns true if the PASS agreement is visible, it will happen when it's the first PASS agreement to sign
+		For GSSA user we have to find existing agreements from the Service REndered object
+		For non GSSA we can reuse the calculated field PASS_Participant_formula__c
 	**/
 	public Boolean getShowPASSAgreement() {
-		return this.isPassAirline && this.accountToShowSections.PASS_Participant_formula__c == 'No';
+		if (isGSSAUser){
+			return this.isPassAirline && listGSSAPASSAllServices.isEmpty();
+		} else {
+			return this.isPassAirline && this.accountToShowSections.PASS_Participant_formula__c == 'No';
+		}
 	}
 
 	/**
@@ -3555,11 +3561,27 @@ global without sharing class ISSP_APProcess {
 															FROM AP_Country_Requierment__c
 															WHERE Line_of_business__c =:AMS_Utils.passParticipation AND Country__r.ISO_Code__c IN:isocodeList ORDER by Name];
 
+		Set<String> setPASSCountries = new Set<String>();
+		if(isGSSAUser) {
+			for (Services_Rendered__c service: listGSSAPASSAllServices) {
+				setPASSCountries.add(service.ISO_Country_Code__c);
+			}
+		}
+
 		Integer counter = 100;
 		for(AP_Country_Requierment__c isoJoining : isoListJoining) {
-			passCountries.add(new passCountriesWrapper(counter++, isoJoining));
+			Boolean requiredFile = !setPASSCountries.contains(isoJoining.Country__r.ISO_Code__c);
+			passCountries.add(new passCountriesWrapper(counter++, isoJoining, requiredFile));
 		}
 		return passCountries;
+	}
+
+	public List<passCountriesWrapper> getWrapperPassCountriesRequired() {
+		List<passCountriesWrapper> listWrapper = new List<passCountriesWrapper>();
+		for (passCountriesWrapper wrapper: WrapperPassCountries) {
+			if (wrapper.requiredFile) listWrapper.add(wrapper);
+		}
+		return listWrapper;
 	}
 
 	public Map<String,IATA_ISO_Country__c> fetchISOCountryMap(List<String> isoCodeList) {
@@ -3574,6 +3596,44 @@ global without sharing class ISSP_APProcess {
 		}
 
 		return isoCountryMap;
+	}
+
+	/**
+	 * Return the list of active services for GSSA PASS participation where contacts Airline is the Provider
+	 */
+	public List<Services_Rendered__c> listGSSAPASSAllServices {
+		get {
+			if (listGSSAPASSAllServices==null) {
+				listGSSAPASSAllServices =[
+					SELECT Id,ISO_Country_Code__c, Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Top_Parent__c
+					FROM Services_Rendered__c
+					WHERE Services_Rendered_Status__c = :AMS_Utils.ACTIVE
+					AND Services_Rendered_Type__c = :AMS_Utils.passGSSACaseReason
+					AND Services_Rendered_By__c = :con.accountId];
+			}
+			return listGSSAPASSAllServices;
+		}
+		set;
+	}
+
+	/**
+	 * Return the list of active services for GSSA PASS participation if the selected airline in step 1 (the consumer)
+	 * has already a active service to any other country
+	**/
+	public List<Services_Rendered__c> listGSSAPASSServicesForThisAirline {
+		get {
+			if (listGSSAPASSServicesForThisAirline==null) {
+				listGSSAPASSServicesForThisAirline = new List<Services_Rendered__c>();
+				for (Services_Rendered__c service: listGSSAPASSAllServices) {
+					if (service.Services_Rendered_to_Airline__c == cassairlineid ||
+						service.Services_Rendered_to_Airline__r.Top_Parent__c == cassairlineid) {
+							listGSSAPASSServicesForThisAirline.add(service);
+					}
+				}
+			}
+			return listGSSAPASSServicesForThisAirline;
+		}
+		set;
 	}
 
 	public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
@@ -3597,16 +3657,20 @@ global without sharing class ISSP_APProcess {
 	public class passCountriesWrapper{
 		public Integer counter {get;set;}
 		public String countryIsoCode {get;set;}
+		public String countryName {get;set;}
 		public Id countryIsoCodeId {get;set;}
 		public String reqName {get;set;}
 		public String identifier {get;set;}
+		public Boolean requiredFile {get;set;}
 
-		public passCountriesWrapper(Integer counter, AP_Country_Requierment__c countryReq){
+		public passCountriesWrapper(Integer counter, AP_Country_Requierment__c countryReq, Boolean requiredFile){
 			this.counter = counter;
 			this.countryIsoCode = countryReq.Country__r.ISO_Code__c;
+			this.countryName = countryReq.Country__r.Name;
 			this.countryIsoCodeId = countryReq.Country__r.Id;
 			this.reqName = 'Bank Account Details - ' + countryReq.Country__r.Name;
 			this.identifier = 'Bank_Details_' + this.countryIsoCode;
+			this.requiredFile = requiredFile;
 		}
 	}
 

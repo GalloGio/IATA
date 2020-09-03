@@ -133,12 +133,19 @@
                                 <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false"/>
                             </p>
                             <br/>
-                            <p>
+                            <apex:outputPanel layout="block" rendered="{! !isGSSAUser || WrapperPassCountriesRequired.size=0}">
                                 <b>Please download the Bank Mandate form using the link below:</b>
                                 <div id="bankmandatelink_p">
                                     <u><a href="{!URLFOR($Resource.Airline_PASS_Local_Account_Beneficiary)}" target="_blank">BSP / CASS  / PASS Local Bank Account Beneficiary</a></u>
                                 </div>
-                            </p>
+                            </apex:outputPanel>
+                            <apex:repeat value="{!wrapperPassCountries}" var="passCountry" rendered="{! isGSSAUser && WrapperPassCountriesRequired.size>0}">
+                                <apex:outputPanel layout="block" styleclass="alert alert-warning" rendered="{! !passCountry.requiredFile}">
+                                    <apex:outputText value="{!$Label.ISSP_PASS_BankMandate_Not_Required}" >
+                                        <apex:param value="{!passCountry.countryName}"/>
+                                    </apex:outputText>
+                                </apex:outputPanel>
+                            </apex:repeat>
 
                             <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}">
                                 {!$Label.ISSP_PASS_Authorized_Signatories_Header_Text}<br/>
@@ -172,12 +179,14 @@
                             <apex:iframe scrolling="false" height="180px"
                                 src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
                         </apex:outputPanel>
-                        <apex:outputPanel layout="block" rendered="{!showUploadBankMandateForPASS}">
+
+                        <apex:outputPanel layout="block" rendered="{!showUploadPASSAuthorizationForm}">
                             <apex:iframe scrolling="false" height="180px"
-                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=Please upload the completed Bank Mandates.&reqIdentifier=Bank_Mandate"/>
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=16&reqRequired=Mandatory&reqName=PASS Authotization Form&reqDescription=Please sign and upload the completed form&reqIdentifier=PASSAuthorizationForm"/>
                         </apex:outputPanel>
+
                         <apex:repeat value="{!wrapperPassCountries}" var="passCountry" >
-                            <apex:iframe scrolling="false" height="180px"
+                            <apex:iframe scrolling="false" height="180px" rendered="{! passCountry.requiredFile}"
                                 src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt={!passCountry.counter}&reqRequired=Mandatory&reqName={!passCountry.reqName}&reqDescription=&reqIdentifier={!passCountry.identifier}"/>
                         </apex:repeat>
                     </apex:pageBlockSection>

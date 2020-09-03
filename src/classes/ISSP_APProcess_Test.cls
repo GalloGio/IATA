@@ -1851,7 +1851,6 @@ private class ISSP_APProcess_Test
 			ctrl.getBSPVoluntaryWithdrawalName();
 			ctrl.getCASSVoluntaryWithdrawalUrl();
 			ctrl.getCASSVoluntaryWithdrawalName();
-			ctrl.getShowUploadBankMandateForPASS();
 			ctrl.getShowUploadASPForPASS();
 			ctrl.isBSP=true;
 			ctrl.isCASS=false;
