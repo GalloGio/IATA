@@ -1,0 +1,19 @@
+<template>
+    <div class={commentContainerClass}>
+		<div class={commentAreaClass}>
+			<lightning-formatted-text if:true={hasCommentBodyAttribute} value={comment.messageText} class="breakWord">
+			</lightning-formatted-text>
+			<slot class="breakWord"></slot>
+		</div>
+		<div if:false={hideInfo}
+			class={infoAreaClass}>
+			{comment.senderName},&nbsp;
+			<lightning-formatted-date-time value={comment.timeStamp} year="numeric" month="short"
+				day="numeric">
+			</lightning-formatted-date-time>,&nbsp;
+			<lightning-formatted-date-time value={comment.timeStamp} hour="2-digit" minute="2-digit"
+				hour12="true">
+			</lightning-formatted-date-time>
+		</div>
+	</div>
+</template>

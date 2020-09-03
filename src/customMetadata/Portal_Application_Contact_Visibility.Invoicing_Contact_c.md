@@ -11,6 +11,18 @@
         <value xsi:type="xsd:string">Invoicing_Contact__c</value>
     </values>
     <values>
+        <field>Country__c</field>
+        <value xsi:type="xsd:string">ALL</value>
+    </values>
+    <values>
+        <field>Location_Class__c</field>
+        <value xsi:type="xsd:string">ALL</value>
+    </values>
+    <values>
+        <field>Location_Type__c</field>
+        <value xsi:type="xsd:string">ALL</value>
+    </values>
+    <values>
         <field>Parent__c</field>
         <value xsi:type="xsd:string">SIS</value>
     </values>

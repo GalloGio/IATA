@@ -1,0 +1,13 @@
+<template>
+    <div class="headerContainer borderTransition" if:true={displayPublicHeader}>
+		<div class="slds-grid slds-wrap maxWidthHeader">
+			<div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
+			<div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
+				<span onclick={navigateToHomePage}>
+					<img src={logoIcon}>
+				</span>
+			</div>
+			<div class="slds-col customBlueBackground headerBar headerBarRight slds-show_medium"></div>
+		</div>
+	</div>
+</template>
