@@ -6794,7 +6794,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PortalBaseURL</shortDescription>
-        <value>https://portal.iata.com</value>
+        <value>https://portal.iata.org</value>
     </labels>
     <labels>
         <fullName>CSP_PortalPath</fullName>
@@ -8403,7 +8403,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_Comment_Have_Been_Resolved_1</shortDescription>
-        <value>Has your query been resolved?</value>
+        <value>Has your query been addressed?</value>
     </labels>
     <labels>
         <fullName>Case_Comment_Have_Been_Resolved_2</fullName>
@@ -8960,6 +8960,20 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Cancel_Monthly_Survey</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Clone_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Clone_Confirmation_Title</shortDescription>
+        <value>Clone last submitted Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Clone_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Clone_Confirmation_Question</shortDescription>
+        <value>Are you sure you want to proceed? Cloning data from the last submitted survey will delete any data you have created for this survey.</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Countries</fullName>
