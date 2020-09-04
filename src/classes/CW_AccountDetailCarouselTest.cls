@@ -90,7 +90,11 @@ public class CW_AccountDetailCarouselTest {
 			currentCarMap.get('fileExtension'),
 			'txt',
 			'fileExtension expected: .txt'
-		);
+        );
+        
+        String jsonValue = CW_AccountDetailCarousel.hideImageSelected(testContent.Id);
+        CW_AccountDetailCarousel.Result response = (CW_AccountDetailCarousel.Result) JSON.deserialize(jsonValue,CW_AccountDetailCarousel.Result.class);
+		System.assertEquals(response.success, true, 'error hideImageSelected =' + response.message);
 
 		Test.stopTest();
 	}
