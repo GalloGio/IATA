@@ -1,8 +1,11 @@
 <apex:component access="global" controller="CW_EmailTemplateData">
     <div style="width: 100%;">
-        <img src="{!communityUrlForResources}resource/ICG_Resources/img/iata-logo-cut.png" style="width: 100px; padding: 20px;" alt="IATA" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<img src="{!communityUrlForResources}resource/ICG_Resources/img/iata-logo-cut.png" width="100"  alt="IATA" />
+        <br /> <br />
         <div style="background-color: #1e32fa; text-align: center;">
-            <img src="{!communityUrlForResources}resource/ICG_Resources/img/one-source--logo.png" style="padding: 15px 0px; width: 40%; max-width: 350px;" />
+            <br />
+            <img src="{!communityUrlForResources}resource/ICG_Resources/img/one-source--logo.png" width="350" style="width: 40% !important; max-width: 350px !important;" />
+            <br /> <br /> <br />
         </div>
     </div>
     <div style="width: 100%; text-align:right;">

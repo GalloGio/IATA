@@ -34,7 +34,6 @@ const fire = (eventName, payload) => {
             try {
                 callback(payload);
             } catch (error) {
-                console.log(error);
                 // fail silently
             }
         });

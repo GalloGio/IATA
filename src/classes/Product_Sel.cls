@@ -451,8 +451,6 @@ public class Product_Sel extends Selector
 
 				//retrieve the product availability object by SAP material number
 				ProductAvailabilityCheck_Soap.ProductAvailability_element productAvailabilityObj = materialNumbers_availabilityObjc.get(product.SAP_Material_Number__c);
-				system.debug('productAvailabilityObj.Status ' + productAvailabilityObj.Status);
-
 				if(productAvailabilityObj != null){
 
 					product.Expected_Availability_Date__c = null;
@@ -807,7 +805,6 @@ public class Product_Sel extends Selector
 		List<EComProduct_DTO> listEComProduct = new List<EComProduct_DTO>();
 
 		//*** get products list and prepare for additional information
-		system.debug('SOQL::'+SOQL);
 		listProduct = Database.query(SOQL);
 
 		// Filter products based on compliance requirements
@@ -1044,7 +1041,6 @@ public class Product_Sel extends Selector
 
 		List<Product2> listProducts;
 
-		system.debug('SOQL::'+SOQL);
 		listProducts = Database.query(SOQL);
 
 		return listProducts;

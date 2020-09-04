@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">International Air Transport Association (IATA) 2018. All rights reserved.</value>
+        <value xsi:type="xsd:string">International Air Transport Association (IATA)</value>
     </values>
     <values>
         <field>Link__c</field>

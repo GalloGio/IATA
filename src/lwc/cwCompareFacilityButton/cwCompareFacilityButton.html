@@ -1,5 +1,6 @@
 <template>
     <template if:true={isFacilityLoaded}>
         <button data-name="btnCompare" type="button" onclick={handleOnClick} class={cssView}>{text}</button>
+        <c-cw-spinner width="25%" class="spinnerBtnCmpr hidden" position="position-fixed"></c-cw-spinner>
     </template>
 </template>

@@ -1,6 +1,7 @@
 <messaging:emailTemplate subject="A request to create the below Account and Station profile has been sent" relatedToType="ICG_Account_Role_Detail__c">
     <messaging:HtmlEmailBody >
         <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
             <body>
                 <c:CW_EmailHeader ></c:CW_EmailHeader>
                 <div style="padding: 30px; font-size: 0.9rem;">
