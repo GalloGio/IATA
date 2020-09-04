@@ -545,7 +545,23 @@ alert(&apos;Provisional RHC cannot be enforced as RHC amount because the agent h
 var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
 rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
 
-rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;)); 
+//Decprecated due to some Countrie like Spain decimal number separated by &apos;,&apos; instead of &apos;.&apos;
+//rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;));
+
+var provisional = &apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;;
+if(provisional.lastIndexOf(&quot;.&quot;) &gt;  provisional.lastIndexOf(&quot;,&quot;)){
+//Provisional example: EUR 97,500.55 -&gt; Split to remove the Currency (EUR) and remove the decimal numbers
+   provisional = provisional.split(&quot;.&quot;)[0].split(&quot; &quot;)[1];
+   provisional = provisional.replace(&quot;,&quot;,&quot;&quot;);
+}else {
+   provisional = provisional.split(&quot;,&quot;)[0].split(&quot; &quot;)[1];
+   provisional = provisional.replace(&quot;.&quot;,&quot;&quot;);
+}
+
+console.log(&quot;Provisional to be set: &quot; + provisional);
+
+rhcInfo.ANG_RME_Amount__c = provisional;
+console.info(&quot;rhcInfo.ANG_RME_Amount__c: &quot; + rhcInfo.ANG_RME_Amount__c); 
 
 var result = sforce.connection.update([rhcInfo]); 
 
