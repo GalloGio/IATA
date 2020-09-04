@@ -40,6 +40,7 @@ public class ANG_RHCHelper {
 
 	public static final String RHC_AMOUNT_CALC_TYPE_FIXED_PERC = 'Fixed Percentage';
 	public static final String RHC_AMOUNT_CALC_TYPE_FORMULA = 'Formula';
+	public static final String RHC_AMOUNT_CALC_TYPE_TIER = 'Tier';
 
 	private static final Set<String> skipPercentageCalcBspSet = new Set<String>{
 		'BSP-HK',
@@ -170,9 +171,42 @@ public class ANG_RHCHelper {
 			}
 		}
 
-		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = fetchBSPAttributesConfig(accountsBspMap.values());
+		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
+
+		if(!accountsBspMap.values().isEmpty()){
+			for(ANG_BSP_Attributes__c bspAttr : [SELECT
+							Id,
+							BSP__c,
+							BSP__r.Name,
+							UniqueKey__c,
+							RecordTypeId,
+							Risk_Status__c,
+							FS_Percentage__c,
+							Min_FA_Points__c,
+							Max_FA_Points__c,
+							RHC_Amnt_Calc_Type__c,
+							Limit_Cash_Condition__c,
+							Amount_At_Risk_From_USD__c,
+							Amount_At_Risk_Multiplier__c,
+							Amount_At_Risk_To_USD__c,
+							Tier__c,
+							Tier_RHC_Formula_Deduct_USD__c,
+							Tier_RHC_Formula_TopUp_USD__c
+						FROM ANG_BSP_Attributes__c
+						WHERE BSP__c IN :accountsBspMap.values()
+						AND (recordtypeID =: RECTYPE_RHC_AMOUNT_CONFIG OR recordtypeID =: RECTYPE_CASH_CONDITION_CONFIG)
+						]
+				){
+				//For RHC Amount Conf Rec Type the unique key is:
+				//	BSP Id + RHC Amount Conf Record Type Id
+				//For Cash Condition Conf Rec Type the unique key is:
+				//	BSP Id + Cash Condition Conf Record Type Id + Tier + Risk Status + Min FA Points
+				bspAttributesMap.put(bspAttr.UniqueKey__c, bspAttr);
+			}
+		}
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
+			string Tier = determineTier(rhc.Amount_At_Risk_USD__c, bspAttributesMap.values());
 
 			Account acct = accountsMap.get(rhc.ANG_AccountId__c);
 
@@ -224,7 +258,7 @@ public class ANG_RHCHelper {
 				continue;
 			}
 
-			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + acct.ANG_RiskStatus__c);
+			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + acct.ANG_RiskStatus__c);
 
 			ANG_BSP_Attributes__c bspAttrRhc = null;
 
@@ -233,13 +267,13 @@ public class ANG_RHCHelper {
 			//If the agent contains Financial Assessment Points finds the BSP attribute
 			//that contains the interval [Min FA Points ~ Max FA Points]
 			for(ANG_BSP_Attributes__c bspAttr : bspAttributesMap.values()){
-
 				if(bspAttr.RecordTypeId == RECTYPE_CASH_CONDITION_CONFIG){
 					continue;
 				}
 
 				String bspAttrKey = (String.valueOf(bspAttr.BSP__c) +
 									 String.valueOf(bspAttr.RecordTypeId) +
+									 bspAttr.Tier__c + 
 									 bspAttr.Risk_Status__c);
 
 				//If the agent has financial assessment points
@@ -364,50 +398,6 @@ public class ANG_RHCHelper {
 		rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
-	}
-
-	/**
-	* Fetches the BSP Attributes configuration
-	* for a given set of BSP Ids
-	*
-	* @param bspIdSet: List<Id>
-	* @return bspAttributesLst: Map<String, ANG_BSP_Attributes__c>
-	*
-	*/
-	private static Map<String, ANG_BSP_Attributes__c> fetchBSPAttributesConfig(List<Id> bspIdSet){
-
-		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
-
-		if(bspIdSet.isEmpty()) return bspAttributesMap;
-
-		List<ANG_BSP_Attributes__c> bspAttributesLst = new List<ANG_BSP_Attributes__c>(
-			[SELECT
-				Id,
-				BSP__c,
-				BSP__r.Name,
-				UniqueKey__c,
-				RecordTypeId,
-				Risk_Status__c,
-				FS_Percentage__c,
-				Min_FA_Points__c,
-				Max_FA_Points__c,
-				RHC_Amnt_Calc_Type__c,
-				Limit_Cash_Condition__c
-			 FROM ANG_BSP_Attributes__c
-			 WHERE BSP__c IN :bspIdSet
-			]
-		);
-
-		for(ANG_BSP_Attributes__c bspAttr : bspAttributesLst){
-			//For RHC Amount Conf Rec Type the unique key is:
-			//	BSP Id + RHC Amount Conf Record Type Id
-			//For Cash Condition Conf Rec Type the unique key is:
-			//	BSP Id + Cash Condition Conf Record Type Id + Risk Status + Min FA Points
-			bspAttributesMap.put(bspAttr.UniqueKey__c, bspAttr);
-		}
-
-		return bspAttributesMap;
-
 	}
 
 	public static void handleRiskOrForecastedRhcAmountUpdates(Set<Id> accountIdSet){
@@ -693,5 +683,13 @@ public class ANG_RHCHelper {
 
 			update alerts;
 		}
+	}
+
+	private static string determineTier(decimal AmntAtRiskUSD, list<ANG_BSP_Attributes__c> lsBspAttr){
+		string Tier = '';
+		for(ANG_BSP_Attributes__c attr:lsBspAttr)
+			if(attr.RecordType.developerName == RHC_AMOUNT_CALC_TYPE_TIER && AmntAtRiskUSD>=attr.Amount_At_Risk_From_USD__c && AmntAtRiskUSD<attr.Amount_At_Risk_To_USD__c)
+				return attr.Tier__c;
+		return Tier;
 	}
 }
