@@ -412,6 +412,16 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>is_Accepted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True when a user accepts the invitation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>True when a user accepts the invitation</inlineHelpText>
+        <label>is Accepted</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Invitation</label>
     <listViews>
         <fullName>All</fullName>
