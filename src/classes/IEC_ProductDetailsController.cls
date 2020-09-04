@@ -92,7 +92,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		//Fetch Page params
 		pageParams = ApexPages.currentPage().getParameters();
 
-		labels = Utility.buildMapFromString(Label.Labels_IECProductDetail, '\n', ':');
+		labels = Utility.buildMapFromString(Label.Labels_IECProductDetail +'\n' + label.LabelsVF_Order2, '\n', ':');
 
 	}
 
@@ -187,7 +187,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			//Validate Product compliance
 			validateCountryCompliance();
 			if (!isCountryCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
-				addErrorMessage(labels.get('msgErrorProductNotCompliant'));
+				addErrorMessage(labels.get('msgWarnProductNotCompliant'));
 			//*** get category
 			selectedCategory = new SelectOption('', '');
 			for(SelectOption so : categories)

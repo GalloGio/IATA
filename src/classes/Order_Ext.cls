@@ -124,7 +124,7 @@ global class Order_Ext
 	****************************************************************************************************/
 	public Order_Ext(ApexPages.StandardController controller) {
 
-		labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2 + '\n' + Label.LabelsVF_Order3, '\n', ':');
+		labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2 + '\n' + Label.LabelsVF_Order3 + '\n' + Label.Labels_IECProductDetail, '\n', ':');
 
 		//*** get order's record
 		vfOrder = (Order) controller.getRecord();
@@ -2142,7 +2142,7 @@ global class Order_Ext
 			isCountryCompliant = IECUtil.validateCountriesCompliance(setOrderCountryCode);
 
 			if(!isCountryCompliant) {
- 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, labels.get('msgWarnProductNotCompliant')));
+ 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, labels.get('msgErrorProductNotCompliant')));
 			}
 		}
 	} //*** end of "CheckOrderCompliance"
