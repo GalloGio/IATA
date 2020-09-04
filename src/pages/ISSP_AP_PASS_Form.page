@@ -1,4 +1,6 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <c:iss_ap_css />
 
     <div class="pageNav" style="display:{!IF(isStep3&&isCASS,'inline-block','none')}">
@@ -38,21 +40,22 @@
                 <apex:actionFunction name="showHidePdfReportsPreferenceMethod" action="{!showHidePdfReportsPreferenceMethod}" reRender="pdfReportsSection"/>
                 <apex:pageBlock mode="edit">
 
+                    <style>.pbTitle{display:none;}</style>
                     <apex:pageBlockButtons location="bottom">
                         <apex:actionStatus id="blockButtons">
                             <apex:facet name="start">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton disabled="true" value="Previous"/>
-                                    <apex:commandButton disabled="true" value="Next"/>
-                                    <apex:commandButton disabled="true" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" disabled="true" value="Previous"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" style="margin-left:25%;" disabled="true" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
 
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/>
-                                    <apex:commandButton action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
-                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="WaitingStatus" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>
@@ -191,6 +194,7 @@
                             <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" style="color:#a31717; font-weight: bold !important;" />
                             <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                         </apex:pageBlockSection>
+
                         <span id="nav_four"></span>
                         <apex:pageBlockSection rendered="{!isGSSAUser}" title="4. Participant Information (GSSA)" columns="1" >
                             <apex:facet name="header">
@@ -306,6 +310,102 @@
                                 <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" />
                                 <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                             </apex:pageBlockSection>
+
+                            <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && isSISActive}">
+                                <div class="aplabel">
+                                    SIS Company Information
+                                </div>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Name_of_company__c.label}"/>
+                                    <apex:inputField value="{!newForm.Legal_Name_of_company__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Trade_Name}" />
+                                    <apex:inputField value="{!newForm.Airline_trade_name__c}"/>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Company_Registration_ID__c.label}"/>
+                                    <apex:inputField value="{!newForm.Company_Registration_ID__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.TAX_VAT_Registration_Number__c.label}"/>
+                                    <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_Address}" />
+                                    <apex:inputField value="{!newForm.Company_address__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_City_Name}" />
+                                    <apex:inputField value="{!newForm.Company_city__c}"/>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.Postal_code}" />
+                                    <apex:inputField value="{!newForm.Postal_code__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_State_Name}" />
+                                    <apex:inputField value="{!newForm.Company_State__c}"/>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Head_Office_Country}" />
+                                    <apex:selectList value="{!newForm.Company_Country__c}" styleclass="form-country select2 required" style="border-radius: 0px; border-color: grey;">
+                                        <apex:selectOptions value="{!ListCountryOptions}"/>
+                                    </apex:selectList>
+                                </apex:pageBlockSectionItem>
+
+                                <script>
+                                    $(".select2").select2();
+                                </script>
+                            </apex:pageBlockSection>
+
+                            <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && isSISActive}">
+                                <div class="aplabel">
+                                    SIS Contact Person
+                                </div>
+
+                                <tr><td colspan="4"><div class="strong-label">
+                                    {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle1}<br/>
+                                    {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle2}<br/>
+                                </div></td></tr>
+                                <apex:outputText ></apex:outputText>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.First_name}"/>
+                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_F_Name__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.Email}"/>
+                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.Last_name}"/>
+                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_L_Name__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="{!$Label.Phone}"/>
+                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="{!$Label.ISSP_Title}"/>
+                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Job_Title__c}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Who_requested_to_join_TOU}"/>
+                                    <apex:inputField value="{!newForm.Who_requested_to_join_TOU__c}"/>
+                                </apex:pageBlockSectionItem>
+
+                            </apex:pageBlockSection>
+
                         </apex:pageBlockSection>
 
                         <span id="nav_five"></span>

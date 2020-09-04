@@ -270,4 +270,18 @@ public class ISSP_AP_FieldLists {
 		'CASSLink_Contact_Phone__c'			=>''
 	};
 
+	public static final Map<String, String> passSISMandatoryFields = new Map<String, String>{
+		'Legal_Name_of_company__c' => '',
+		'Airline_trade_name__c' => '',
+		'Company_address__c' => '',
+		'Company_city__c' => '',
+		'Postal_code__c' => '',
+		'Company_State__c' => '',
+		'Company_Country__c' => '',
+		'Billing_File_Emrgcy_Contact_F_Name__c' => '',
+		'Billing_File_Emrgcy_Contact_Email__c' => '',
+		'Billing_File_Emrgcy_Contact_L_Name__c' => '',
+		'Who_requested_to_join_TOU__c' => ''
+	};
+
 }

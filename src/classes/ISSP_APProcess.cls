@@ -480,6 +480,8 @@ global without sharing class ISSP_APProcess {
 
 			apCountry = countryRequirement.Name;  //Used for country display on Country Reqs pages
 
+			retrieveAccountToShowSections();
+
 			if(apcountryisocode == 'CN') {
 				bspLinkContact='ASD';
 			} else {
@@ -541,7 +543,34 @@ global without sharing class ISSP_APProcess {
 					if(String.isBlank(newForm.GSSA_HQ_Country__c)){
 						newForm.GSSA_HQ_Country__c = con.Account.BillingCountry;
 					}
-
+					if (isPassAirline && strAreaType=='Airline Joining' && getisSISActive()) {
+						if (String.isBlank(newForm.Legal_Name_of_company__c)) {
+							newForm.Legal_Name_of_company__c = con.Account.Name;
+						}
+						if (String.isBlank(newForm.Airline_trade_name__c)) {
+							newForm.Airline_trade_name__c = con.Account.TradeName__c;
+						}
+						if (String.isBlank(newForm.Company_address__c)) {
+							newForm.Company_address__c = con.Account.BillingStreet + ', ' + con.Account.BillingCity + ', ' + con.Account.BillingState + ', ' + con.Account.BillingPostalCode + ', ' +  con.Account.BillingCountry;
+						}
+						if (String.isBlank(newForm.Company_city__c)) {
+							newForm.Company_city__c = con.Account.BillingCity;
+						}
+						if (String.isBlank(newForm.Postal_code__c)) {
+							newForm.Postal_code__c = con.Account.BillingPostalCode;
+						}
+						if (String.isBlank(newForm.Company_State__c)) {
+							newForm.Company_State__c = con.Account.BillingState;
+						}
+						if (String.isBlank(newForm.Company_Country__c)) {
+							list<IATA_ISO_Country__c> listCountries =
+								[SELECT Id FROM IATA_ISO_Country__c
+								WHERE Name = :con.Account.BillingCountry];
+							if (!listCountries.isEmpty()) {
+								newForm.Company_Country__c = listCountries[0].Id;
+							}
+						}
+					}
 				}
 				getCityData();//TF
 				newForm.Submitted_to_IATA__c = FALSE;
@@ -739,6 +768,9 @@ global without sharing class ISSP_APProcess {
 
 							if(isPASSGSSA) {
 								ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passgssaMandatoryFields);
+								if(getisSISActive()) {
+									ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passSISMandatoryFields);
+								}
 							}
 
 							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet())
@@ -790,7 +822,6 @@ global without sharing class ISSP_APProcess {
 		if(stepNumber == '4') {
 			wrapperPassCountries=fetchWrapperCaseCountries(newCase);
 		}
-		retrieveAccountToShowSections();
 
 		if (ApexPages.currentPage().getUrl().containsIgnoreCase('ISSP_APCases')) {
 			populateCountriesMap();
@@ -802,15 +833,7 @@ global without sharing class ISSP_APProcess {
 
 	private void popContact(){
 		User user = [SELECT Id,ContactId FROM USER WHERE Id=:Userinfo.getUserId()];
-		con = [SELECT Title,FirstName,LastName,Email,AccountId,Account.Category__c,Account.Top_Parent__c,Account.Airline_designator__c,Account.IATACode__c,Account.Name,Account.Id,Account.Category_Other_Value__c,
-						Account.BillingStreet,
-						Account.BillingCity,
-						Account.BillingState,
-						Account.BillingPostalCode,
-						Account.BillingCountry
-			   FROM Contact
-			   WHERE Id=:user.ContactId];
-
+		con = retrieveContact(user.ContactId);
 	}
 
 	public void retrieveAPProcessForm(){
@@ -865,7 +888,9 @@ global without sharing class ISSP_APProcess {
 			'Receive_PDF_Reports__c,PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,Receive_XLS_Reports__c,'+
 			'Accept_Online_Corrections__c,CASSLink_New_User_1_Salutation__c,CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,'+
 			'CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,'+
-			'CASSLink_New_User_2_System_Functions__c,CASSLink_Extra_New_Users__c,PASSLink_Extra_New_Users__c';
+			'CASSLink_New_User_2_System_Functions__c,CASSLink_Extra_New_Users__c,PASSLink_Extra_New_Users__c,Legal_Name_of_company__c,Airline_trade_name__c,Company_address__c,'+
+			'Company_city__c,Company_State__c,Postal_code__c,Company_Country__c,TAX_VAT_Registration_Number__c,Contact_First_Name__c,Contact_Last_Name__c,Contact_Title__c,'+
+			'Contact_Email__c,Contact_number__c,Who_requested_to_join_TOU__c';
 		}
 
 		queryString += ' FROM AP_Process_Form__c WHERE Case__c=\'' + newCase.Id + '\' LIMIT 1';
@@ -931,13 +956,21 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Contact retrieveContact (String vContactID){
-		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c, Title,
-									Account.BillingStreet,
-									Account.BillingCity,
-									Account.BillingState,
-									Account.BillingPostalCode,
-									Account.BillingCountry
-								 FROM Contact where Id = :vContactID ];
+		List<Contact> contact = [
+			SELECT Title,FirstName,LastName,Email,AccountId,
+				Account.Category__c,
+				Account.Top_Parent__c,
+				Account.Airline_designator__c,
+				Account.IATACode__c,
+				Account.Name,Account.Id,
+				Account.Category_Other_Value__c,
+				Account.BillingStreet,
+				Account.BillingCity,
+				Account.BillingState,
+				Account.BillingPostalCode,
+				Account.BillingCountry,
+				Account.TradeName__c
+			FROM Contact where Id = :vContactID ];
 		if(contact.size()>0){
 			return contact[0];
 		}else{
@@ -999,6 +1032,28 @@ global without sharing class ISSP_APProcess {
 		}else{
 			countryRequirementFound = false;
 		}
+	}
+
+	/**
+	 * List of countries used to populate picklists
+	 **/
+	public list<SelectOption> getListCountryOptions() {
+		list<SelectOption> listOptions = new list<SelectOption>();
+		for (IATA_ISO_Country__c country: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
+			listOptions.add(new SelectOption(country.Id,country.Name));
+		}
+		return listOptions;
+	}
+
+	public IATA_ISO_Country__c HqAccountBillingCountry {
+		get {
+			if (HqAccountBillingCountry==null) {
+				HqAccountBillingCountry = [
+					SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name = :this.hqAccount.BillingCountry];
+			}
+			return HqAccountBillingCountry;
+		}
+		set;
 	}
 
 	private boolean isDupeDraft(Id vAccountConcerned, String joiningType, String changeType) {
@@ -2795,6 +2850,7 @@ global without sharing class ISSP_APProcess {
 		if(isGSSAUser && category <> 'IBCS consolidator') {
 			Id topParentId = this.con.Account.Top_Parent__c==null? this.con.AccountId: this.con.Account.Top_Parent__c;
 			this.accountToShowSections= [SELECT Id, BSP_CI_Valid__c, BSP_FOC_Valid__c, CASS_CI_Valid__c, Membership_status__c, Sector__c, PASS_Participant_formula__c,
+				SIS_Status__c, SIS_Sub_Status__c,
 				(SELECT Id FROM Authorized_Signatories_Packages__r)
 				FROM Account
 				WHERE Id = :topParentId ];
@@ -3249,6 +3305,13 @@ global without sharing class ISSP_APProcess {
 			options.add(new SelectOption(p.getValue(), p.getLabel()));
 		}
 		return options;
+	}
+
+	/**
+		Returns true if parent account has an active SIS membership, with any substatus
+	**/
+	public Boolean getisSISActive() {
+		return this.accountToShowSections.SIS_Status__c=='Active';
 	}
 
 	/**
