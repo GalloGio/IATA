@@ -540,34 +540,16 @@ try{
 
 if(&apos;{!AND(NOT(CONTAINS(LOWER($Profile.Name), &apos;system administrator&apos;)), ANG_RHC_Information__c.ANG_CashCondition__c, OR(ANG_RHC_Information__c.ANG_Financial_Security__c = 0, ISNULL(ANG_RHC_Information__c.ANG_Financial_Security__c)))}&apos;.toLowerCase() == &apos;true&apos;){ 
 alert(&apos;Provisional RHC cannot be enforced as RHC amount because the agent has cash condition equal to FS. If the agent has no valid FS, please contact your administrator&apos;); 
-}else{ 
-
-var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
-rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
-
-//Decprecated due to some Countrie like Spain decimal number separated by &apos;,&apos; instead of &apos;.&apos;
-//rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;));
-
-var provisional = &apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;;
-if(provisional.lastIndexOf(&quot;.&quot;) &gt;  provisional.lastIndexOf(&quot;,&quot;)){
-//Provisional example: EUR 97,500.55 -&gt; Split to remove the Currency (EUR) and remove the decimal numbers
-   provisional = provisional.split(&quot;.&quot;)[0].split(&quot; &quot;)[1];
-   provisional = provisional.replace(&quot;,&quot;,&quot;&quot;);
-}else {
-   provisional = provisional.split(&quot;,&quot;)[0].split(&quot; &quot;)[1];
-   provisional = provisional.replace(&quot;.&quot;,&quot;&quot;);
 }
+else{ 
 
-rhcInfo.ANG_RME_Amount__c = provisional;
-var result = sforce.connection.update([rhcInfo]); 
+var rhcID= &apos;{!ANG_RHC_Information__c.Id}&apos;;
+var result = sforce.apex.execute(&quot;AMS_OSCAR_Webservice&quot;,&quot;updateRME_Amount&quot;,{rhcID: rhcID});
 
-console.info(&quot;result&quot;); 
-console.info(result[0]); 
-
-if (result[0].success == &quot;true&quot;) { 
-window.location.reload(); 
+if (result != &apos;&apos;) { 
+   alert(result);
 } else { 
-alert(result[0].errors.message); 
+   window.location.reload(); 
 } 
 
 }//end if-else profile check</url>
