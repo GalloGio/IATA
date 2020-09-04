@@ -5,8 +5,10 @@
     </messaging:emailHeader>
     <messaging:htmlEmailBody >
         <div style="margin:auto; width:600px">
-            <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+            <span style="font-family:'Arial','sans-serif'; color:#000000;">  
                 <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+                <br/>
+                <br/>
                 {!$Label.ISSP_Email_aNewComment}
                 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
                     <a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">{!relatedTo.CaseNumber}</a>.
@@ -61,7 +63,7 @@
                 <br/>
                 <apex:outputPanel rendered="{!relatedTo.Groups__c = 'ICCS Team'}">
                     <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
-                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #000000; FONT-SIZE: 12pt">
                                 IATA Currency Clearance Service (ICCS) Team
                                 <br/>
                             </span></b>
@@ -69,11 +71,11 @@
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!relatedTo.Groups__c = 'AP Team'}">
                     <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
-                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #000000; FONT-SIZE: 12pt">
                                 Global Airline Participation Team - IATA
                                 <br/>
                             </span></b>
-                        <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                        <span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #000000; FONT-SIZE: 12pt">
                             Financial and Distribution Services
                             <br/>
                         </span>
@@ -81,7 +83,7 @@
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c && relatedTo.Groups__c = 'Default'}">
                     <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
-                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #000000; FONT-SIZE: 12pt">
                                 IATA Customer Service center
                                 <br/>International Air Transport Association
                             </span></b>
@@ -96,7 +98,7 @@
                     </apex:outputPanel>
     
                     <apex:outputPanel rendered="{!relatedTo.Groups__c = 'AGM Team'}">
-                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
+                        <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: COLOR: #000000; FONT-SIZE: 12pt">
                                 IATA Agency Management
                             </span></b>
                         <br/>
