@@ -558,11 +558,7 @@ if(provisional.lastIndexOf(&quot;.&quot;) &gt;  provisional.lastIndexOf(&quot;,&
    provisional = provisional.replace(&quot;.&quot;,&quot;&quot;);
 }
 
-console.log(&quot;Provisional to be set: &quot; + provisional);
-
 rhcInfo.ANG_RME_Amount__c = provisional;
-console.info(&quot;rhcInfo.ANG_RME_Amount__c: &quot; + rhcInfo.ANG_RME_Amount__c); 
-
 var result = sforce.connection.update([rhcInfo]); 
 
 console.info(&quot;result&quot;); 
