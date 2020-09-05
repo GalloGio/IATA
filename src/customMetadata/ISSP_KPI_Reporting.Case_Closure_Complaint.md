@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>Status_To__c</field>
-        <value xsi:type="xsd:string">Closed</value>
+        <value xsi:type="xsd:string">Closed,Pending Closure</value>
     </values>
     <values>
         <field>Type_of_Task__c</field>
