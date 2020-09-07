@@ -3733,7 +3733,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Breadcrumb_Support_ReachUs</shortDescription>
-        <value>Reach Us</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>CSP_Breadcrumb_Support_Title</fullName>
@@ -3756,6 +3756,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Buy Online</shortDescription>
         <value>Buy Online</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Call_Tile_SubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Call Tile Sub label</shortDescription>
+        <value>Give Us a Call</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3918,6 +3926,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
     </labels>
     <labels>
+        <fullName>CSP_Chat_base_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chat base label</shortDescription>
+        <value>Chat in $0</value>
+    </labels>
+    <labels>
         <fullName>CSP_Check_Email</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3977,6 +3993,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_CompanyProfile</shortDescription>
         <value>Company Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Complaint_Select_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>complaint select message</shortDescription>
+        <value>A complaint can take up to 5 business days for resolution. If you have a question or request, please select &lt;b&gt;create a case&lt;/b&gt; for us to resolve your question quicker.</value>
     </labels>
     <labels>
         <fullName>CSP_Complete_Profile</fullName>
@@ -4178,6 +4202,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
         <value>Deny Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DescSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Description subtitle for complaint/compliment</shortDescription>
+        <value>Write a brief summary of feedback</value>
     </labels>
     <labels>
         <fullName>CSP_DocumentBookmarkAdded</fullName>
@@ -4525,6 +4557,95 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Email Welcome Part 5</shortDescription>
         <value>We hope you enjoy our IATA Customer Portal!</value>
+    </labels>    
+    <labels>
+        <fullName>CSP_Emergency_Box_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency box message</shortDescription>
+        <value> This is an &lt;b&gt;emergency&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Footer_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency box footer message</shortDescription>
+        <value>Emergency support is 24/7 and is only offered in English.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title when emergency option is selected on the Case Creation</shortDescription>
+        <value>You have selected the emergency option</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message when emergency option is selected on the Case Creation</shortDescription>
+        <value>Please note that the support provided through the Emergency channel is offered in &lt;b&gt;English&lt;/b&gt; and limited to the following critical situations:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Message2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Second Message when emergency option is selected on the Case Creation</shortDescription>
+        <value>If your query is not related to any of these situations, please click &lt;b&gt; Submit as Query &lt;/b&gt; below to create a case.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message when emergency option is selected on the support page</shortDescription>
+        <value>Please note that the support provided
+            through the Emergency channel is only for the following critical situations:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>System access issue or platform outage</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Billing issues (major issues/discrepancies)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>System suspension</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Suspicion of fraudulent activity</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Tooltip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency Tooltip</shortDescription>
+        <value>Please do not demand emergency support unless it's about fraud, ticketing or financial issues</value>
     </labels>
     <labels>
         <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
@@ -4602,7 +4723,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQReachUsBanner_ButtonText</shortDescription>
-        <value>Reach Us</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_Text</fullName>
@@ -4811,6 +4932,38 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Button label</shortDescription>
+        <value>Give Feedback</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Message</shortDescription>
+        <value>At IATA, we are constantly making improvements to our products and services so we can provide you an excellent experience. Your views and thoughts drive these improvements. Click the button below to provide your feedback.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Type_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Type title</shortDescription>
+        <value>This is a</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback title</shortDescription>
+        <value>Your feedback is important to us</value>
     </labels>
     <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
@@ -7411,6 +7564,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Select Portal Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Select_Topic_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Topic placeholder</shortDescription>
+        <value>Select Topic Here</value>
+    </labels>
+    <labels>
         <fullName>CSP_Service_ADSR</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7705,12 +7865,36 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Submit for Approval</value>
     </labels>
     <labels>
+        <fullName>CSP_SubmitAsEmergency</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP submit Emergency query label</shortDescription>
+        <value>Submit as Emergency</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmitAsQuery</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP submit query label</shortDescription>
+        <value>Submit as Query</value>
+    </labels>
+    <labels>
         <fullName>CSP_SubmittedApproval</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_SubmittedApproval</shortDescription>
         <value>The record was submitted for approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubjectSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subject subtitle for complaint/compliment</shortDescription>
+        <value>Please enter a short subject line</value>
     </labels>
     <labels>
         <fullName>CSP_Success</fullName>
@@ -7775,6 +7959,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Topic_All_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All topics label</shortDescription>
+        <value>All Topics</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Topic_Recent_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recent Topics label</shortDescription>
+        <value>Your Recent Topics</value>
     </labels>
     <labels>
         <fullName>CSP_Track</fullName>
@@ -40688,6 +40888,23 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Available Period:</value>
     </labels>
     <labels>
+        <fullName>LVA_CallUsDefaultMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsDefaultMessage</shortDescription>
+        <value>If chat for your language is not available, you can &lt;b&gt;create a
+            case&lt;/b&gt; or contact us through &lt;b&gt;phone&lt;/b&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsDial</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsDial</shortDescription>
+        <value>Just Dial:</value>
+    </labels>
+    <labels>
         <fullName>LVA_CallUsEmergencyAvailableHours</fullName>
         <categories>LVA</categories>
         <language>en_US</language>
@@ -40718,6 +40935,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_CallUsThruPhoneNum</shortDescription>
         <value>Contact Us through Phone Number:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ChatWindowAlreadyOpen</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ChatWindowAlreadyOpen</shortDescription>
+        <value>A chat window has been opened</value>
     </labels>
     <labels>
         <fullName>LVA_ChatWithUs</fullName>
@@ -46585,7 +46810,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>At IATA we strive to provide an excellent customer service and itâ€™s rewarding to know that you care too. We consider any feedback you give us.</value>
+        <value>At IATA we strive to provide an excellent customer service and it's rewarding to know that you care too. We consider any feedback you give us.</value>
     </labels>
     <labels>
         <fullName>csp_Compliment_Label</fullName>
@@ -47784,6 +48009,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>true</protected>
         <shortDescription>Tagalog</shortDescription>
         <value>Tagalog</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_tr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Turkish</shortDescription>
+        <value>Türk</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ur</fullName>

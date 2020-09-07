@@ -1,0 +1,89 @@
+<template>
+    <div class="slds-form-element">
+        <label class="slds-form-element__label slds-hide" for="combobox-id-11">TopicCombobox</label>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false"
+                    aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-grid" role="none">
+                        <input type="text" class="slds-input slds-combobox__input" id="combobox-id-11"
+                            aria-autocomplete="list" aria-controls="listbox-id-9" autocomplete="off" role="textbox"
+                            placeholder={label.CSP_Select_Topic_Placeholder} onfocus={expandList} onblur={colapseList} onkeyup={handleKeyUp} value={inputValue}/>
+                        <span
+                            class="slds-media_center slds-is-absolute slds-grid slds-size_full iconWrapper slds-p-right_small slds-grid_align-end fullHeight">
+                                 
+                            <img src={searchIconUrl}>
+                        </span>
+                    </div>
+                    <div id="listbox-id-9" class="slds-dropdown modalHeight slds-dropdown_fluid"
+                        role="listbox">
+                        
+                        <template if:true={showRecentTopics}>
+                            <ul class="slds-listbox slds-listbox_vertical" role="group" aria-label="Recent Topics">
+                                <li role="presentation" class="slds-listbox__item">
+                                    <div id="option0"
+                                        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                        role="presentation">
+                                        <span class="text-lightGray text-xxsmall" role="presentation">{label.CSP_Topic_Recent_Label}</span>
+                                    </div>
+                                </li>
+                                <template for:each={_recentTopicList} for:item="recentTopic">                                    
+                                    <li role="presentation" class="slds-listbox__item" key={recentTopic.value}                                        
+                                        >
+                                        <div id={recentTopic.value}
+                                            class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small  borderStyle"
+                                            role="option" data-label={recentTopic.title} data-value={recentTopic.value} onmousedown={handleSelectedOption}>
+                                            <span class="slds-media__figure slds-listbox__option-icon noPointerEvents"></span>
+                                            <span class="slds-media__body noPointerEvents">
+                                                <span class="slds-truncate"
+                                                    title={recentTopic.title}>{recentTopic.title}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>                            
+                            </ul>
+                        </template>
+                        <template if:true={showTopicList}>
+                            <ul class="slds-listbox slds-listbox_vertical" role="group" aria-label="All Topics">
+                                <li if:false={searchMode} role="presentation" class="slds-listbox__item">
+                                    <div id="option1"
+                                        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                        role="presentation">
+                                        <span class=" text-lightGray text-xxsmall" role="presentation">{label.CSP_Topic_All_Label}</span>
+                                    </div>
+                                </li>
+                                <template for:each={currentTopicList} for:item="recentTopic">                                    
+                                    <li role="presentation" class="slds-listbox__item" key={recentTopic.value}>
+                                        <div id={recentTopic.value}
+                                            class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small borderStyle"
+                                            role="option" data-label={recentTopic.title} data-value={recentTopic.value} onmousedown={handleSelectedOption}>
+                                            <span class="slds-media__figure slds-listbox__option-icon noPointerEvents"></span>
+                                            <span class="slds-media__body noPointerEvents">
+                                                <span class="slds-truncate"
+                                                    title={recentTopic.title}>{recentTopic.title}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>                            
+                            </ul>
+                        </template>
+                        <template if:false={showTopicList}>
+                            <ul class="slds-listbox slds-listbox_vertical" role="group" aria-label="All Topics">
+                                <li role="presentation" class="slds-listbox__item">
+                                    <div id="noResultOpt"
+                                        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                        role="presentation">
+                                        <span class="slds-media__body noPointerEvents">
+                                            <span class="slds-truncate"
+                                                title={label.CSP_Contacts_NoResults_text1}>{label.CSP_Contacts_NoResults_text1}</span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul> 
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

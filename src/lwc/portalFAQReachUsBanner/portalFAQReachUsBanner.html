@@ -1,16 +1,18 @@
 <template>
-    <div class="customCard slds-p-left_x-large">
-        <div class="slds-grid slds-wrap">
-            <div class="slds-col slds-size_12-of-12 slds-large-size_6-of-12 slds-p-around_medium" >
-                <div class="text-large text-black text-bold slds-p-top_medium">{label.CSP_FAQReachUsBanner_Title}</div>
-                <div class="text-small text-black text-bold slds-p-bottom_large">{label.CSP_FAQReachUsBanner_Text}</div>
-                <div class="slds-col slds-size_12-of-12 slds-large-size_6-of-12">
-                    <lightning-button label={label.CSP_FAQReachUsBanner_ButtonText} class="containedButton reachusButton fullWidth" onclick={redirectToSupport}></lightning-button>
+    <div class="customCard">
+        <div class="slds-grid slds-wrap slds-p-vertical_x-large">
+            <div class="slds-col slds-size_12-of-12 slds-large-size_6-of-12 slds-align_absolute-center" >
+                <div class="slds-size--10-of-12">
+                    <div class="text-large text-black text-bold slds-p-top_medium">{label.CSP_FAQReachUsBanner_Title}</div>
+                    <div class="text-small text-black text-bold slds-p-bottom_large">{label.CSP_FAQReachUsBanner_Text}</div>
+                    <div class="slds-size_12-of-12 slds-large-size_2-of-3">
+                        <lightning-button label={label.CSP_FAQReachUsBanner_ButtonText} class="containedButton reachusButton fullWidth" onclick={redirectToSupport}></lightning-button>
+                    </div>
                 </div>
             </div>
-            <div class="slds-col slds-size_6-of-12 slds-p-around_x-large ballonsContainer" >
-                <div class="ballons">
-                    <img src={conversationImageURL} />
+            <div class="slds-col slds-size_6-of-12 slds-grid slds-show_large slds-align-content-center" >
+                <div class="slds-grid slds-grid_align-end slds-size--10-of-12">
+                    <img class="ballons" src={conversationImageURL} />
                 </div>
             </div>
         </div>

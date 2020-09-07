@@ -106,11 +106,10 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
 			List<PortalLookupSearchResult> lstSearchAccountsNoEntry = PortalSupportReachUsCreateNewCaseCtrl.searchAccounts('');
 			List<PortalLookupSearchResult> lstSearchContacts = PortalSupportReachUsCreateNewCaseCtrl.searchContacts('Test@test22.com');
 			List<PortalLookupSearchResult> lstSearchContactsNoEntry = PortalSupportReachUsCreateNewCaseCtrl.searchContacts('');
-
-			Case newcase = PortalSupportReachUsCreateNewCaseCtrl.createCase('GB', true, 'Airline_Management__c', 'MITA_Interline_Agreements__c');
-
-			Case newcaseNoEntry = PortalSupportReachUsCreateNewCaseCtrl.createCase('GB', false, 'TIESS__c', 'TIESS_Link_request_to_Supplier__c');
-
+			
+			Case newcase = PortalSupportReachUsCreateNewCaseCtrl.createCase('GB', true, 'Airline_Management__c');
+			
+			Case newcaseNoEntry = PortalSupportReachUsCreateNewCaseCtrl.createCase('GB', false, 'TIESS__c');
 			Contact cont = PortalSupportReachUsCreateNewCaseCtrl.getContact();
 
 			String profile = PortalSupportReachUsCreateNewCaseCtrl.getProfile();

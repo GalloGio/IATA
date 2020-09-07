@@ -90,20 +90,15 @@ public static Map<String,String> getCountryList(){
 @AuraEnabled (cacheable=true)
 public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicName, String country, Contact contactInfo, Boolean isEmergency){
 
-	if(isEmergency) {
-		return [SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c, Language__c, Region__c, Sectors__c, Topic__c
-						FROM LiveAgentButtonSettings__c
-						WHERE Name =: 'Emergency'];
-	}
-
 	//lower cases the country value;
 	country = country.toLowerCase();
 
-	//adds __c to end of Topic value. Check Custom Settings or query below.
-	topicName = '%' + topicName + '__c' + '%';
+	topicName = topicName + '__c';
 
 	Contact con = contactInfo;
 
+
+	String countryLbl=System.Label.ISSP_Topics_To_Exclude_Country_PL;
 	//Make sector ready for LIKE search
 	String sector = con.Account.Sector__c != null ? con.Account.Sector__c : '';
 	sector = '%' + sector + '%';
@@ -123,21 +118,37 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 	}else{
 		selectedCountryRegion =  con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
 	}
-
-	if(country != null && country != '') {
-		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-						 Language__c, Region__c, Sectors__c, Topic__c
-						 FROM LiveAgentButtonSettings__c
-						 WHERE Sectors__c Like : sector
-						 AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
-									OR (Language__c =: lang AND Region__c =: selectedCountryRegion))];
+	
+	String query='SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,'+
+	'Language__c, Region__c, Sectors__c, Topic__c '+
+	'FROM LiveAgentButtonSettings__c ';
+	string criteria='';
+	if(isEmergency) {
+		criteria='WHERE Name = \'Emergency\'';
+	}else 
+	if(country != null && country != '' && countryLbl.indexOf(topicName)==-1 ) {
+		criteria='WHERE Sectors__c Like : sector '+
+				' AND ((Language__c = \'en\' AND Region__c =: selectedCountryRegion) '+
+				' OR (Language__c =: lang AND Region__c =: selectedCountryRegion))';
 	}
 	else{
-		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-						 Language__c, Region__c, Sectors__c, Topic__c
-						 FROM LiveAgentButtonSettings__c
-						 WHERE Topic__c Like : topicName];
+
+		//adds __c to end of Topic value. Check Custom Settings or query below.
+		topicName = '%' + topicName + '%';
+		criteria='WHERE Topic__c Like : topicName';
 	}
+
+	list<LiveAgentButtonSettings__c> btnList=Database.query(query+criteria);
+	//update btn label
+	for(LiveAgentButtonSettings__c lbt:btnList ){
+		string lbkey=lbt.language__c.substring(0,2).toLowerCase();
+		if(CSP_Utils.langlabelMap.containskey(lbkey)){				
+			lbt.language__C=CSP_Utils.langlabelMap.get(lbkey);				
+		}
+	}
+
+	return btnList;
+
 }
 
 
@@ -197,15 +208,12 @@ public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, Stri
 
 
 @AuraEnabled (cacheable=true)
-public static Contact getContactInfo(){
-	//Grabs User info
-	User user = [SELECT Id,ContactId FROM User WHERE Id =:Userinfo.getUserId()];
-
-	//Grabs User's associated Contact
-	return [SELECT ID, FirstName, Name, Email, Phone, Account.Name, Account.Sector__c,
-					Account.Category__c, Account.id, Account.Country_ISO_Code__c,
-					Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
-
+public static User  getContactInfo(){
+	//Grabs User info		
+	return [SELECT profile.name,contactID, contact.FirstName, contact.Name, contact.Email, contact.Phone,contact.Account.Name, contact.Account.Sector__c,
+			contact.Account.Category__c, contact.Account.id, contact.Account.Country_ISO_Code__c,contact.ISO_Country__r.ISO_Code__c,
+			contact.Account.Region_formula__c,contact.Account.Is_General_Public_Account__c
+			FROM User WHERE Id =:Userinfo.getUserId()];
 }
 
 @AuraEnabled (cacheable=true)
@@ -239,6 +247,65 @@ public static List<LVA_CallUsConfigClass> getCallUsPhoneNumber(){
 	}
 
 	return listCallConfigs;
+
+}
+
+//Returns the list of topics that the user has access to and if they are L2 dependent
+@AuraEnabled (cacheable=true)
+public static string getTopicsWithL2Dep(){
+
+	set<string> reqL2TopicSet= new set<string>();
+	//Get topic list that require L2 Registration
+	list<PortalKnowledge__c> pkList= [SELECT Id, DataTopicName__c
+	FROM PortalKnowledge__c
+	WHERE DataCategoryName__c <> ''
+	AND DataTopicName__c <> ''
+	AND DataSubtopicName__c = ''
+	AND Requires_Level2_Registration__c = true];
+	
+	for(PortalKnowledge__c pk:pkList){
+		reqL2TopicSet.add(pk.DataTopicName__c);
+	}
+
+	set<string> recentTopicSet= new set<string>();
+
+	Id contactId=[select contactId from user where id=:Userinfo.getUserId() limit 1].contactId;
+	list<AggregateResult> mostRecentTopicList=[SELECT topic__c, count(id) FROM case 
+	WHERE origin='Portal' 
+	AND Visible_on_ISS_Portal__c =true 
+	AND contactId=:contactId 
+	AND topic__c !=null 
+	AND createdDate =LAST_90_DAYS 
+	GROUP BY topic__C 
+	ORDER BY count(id) DESC];
+	
+
+	for(Integer i=0;i<3 && i<mostRecentTopicList.size() ;i++){ // we only want to retrieve the 3 topics, limit not possible in this SOQL 
+		recentTopicSet.add((String)mostRecentTopicList.get(i).get('topic__c'));
+	}
+
+	//retrieve full tree with the topics the user has access
+	List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> structureTreeList=PortalFAQsCtrl.getFAQsInfo();
+
+	List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> topicList = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
+	
+	map<string,map<string,string>> topicsMap= new map<string,map<string,string>>();
+
+	for(DescribeDataCategoryGroupStructures.DataCategoryWrapper dc :structureTreeList){
+		//Matches the topics that require L2 with the topics the user has access
+		if (!topicsMap.containsKey(dc.topicName) && dc.topicName != 'All') {
+			Map<string,string> valMap= new Map<string,string>();
+			valMap.put('topicName',dc.topicName);
+			valMap.put('topicLabel',dc.topicLabel);
+			valMap.put('reqL2',String.valueOf(reqL2TopicSet.contains(dc.topicName)));
+			valMap.put('topicLabelEN',dc.topicLabelEn);
+			valMap.put('recentTopic',String.valueOf(recentTopicSet.contains(dc.topicLabelEn)));
+
+			topicsMap.put(dc.topicName,valMap);
+		}
+	}		
+
+	return JSON.serialize(topicsMap.values());
 
 }
 

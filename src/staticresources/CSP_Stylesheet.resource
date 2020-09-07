@@ -995,6 +995,9 @@ lightning-datatable .slds-th__action {
     color: #999999;
 }
 
+.text-superLightGray{
+    color-color: #f0f2f5;
+}
 .text-linkBlue{
     color: #1e32fa;
 }
@@ -2784,4 +2787,42 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 
 html {
   scroll-behavior: smooth;
+}
+
+.maxContentWidth{
+    max-width:512px;
+}
+
+.maxContainerWidth{
+    max-width:928px;
+}
+
+
+.specialPickList .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: white;
+}
+
+.specialPickList .slds-combobox_container input[role="textbox"]{
+  border-color:#1e32fa;
+}
+.MaxModalContainerDim{
+    max-width:596px;
+}
+
+/* Re styling scrollbars*/
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 1px;
+	width: 6px;
 }
