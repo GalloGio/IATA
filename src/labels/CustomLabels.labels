@@ -3905,7 +3905,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>complaint select message</shortDescription>
-        <value>A complaint takes up to 5 business days for resolution. If you have a question or request, please use  &lt;b&gt;Create a case &lt;/b&gt; option in order for us to get back you quicker.</value>
+        <value>A complaint can take up to 5 business days for resolution. If you have a question or request, please select &lt;b&gt;create a case&lt;/b&gt; for us to resolve your question quicker.</value>
     </labels>
     <labels>
         <fullName>CSP_Complete_Profile</fullName>
@@ -4462,7 +4462,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Emergency box message</shortDescription>
-        <value> This is an &lt;b&gt;&lt;u&gt;Emergency&lt;/u&gt;&lt;/b&gt;</value>
+        <value> This is an &lt;b&gt;&lt;u&gt;emergency&lt;/u&gt;&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Footer_Message</fullName>
@@ -4470,7 +4470,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Emergency box footer message</shortDescription>
-        <value>Emergency support is 24/7 and only offered in English.</value>
+        <value>Emergency support is 24/7 and is only offered in English.</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
@@ -4478,7 +4478,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Title when emergency option is selected on the Case Creation</shortDescription>
-        <value>You have selected Emergency option</value>
+        <value>You have selected the emergency option</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Case_Creation_Message</fullName>
@@ -4486,7 +4486,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Message when emergency option is selected on the Case Creation</shortDescription>
-        <value>Please note that the support provided through the Emergency channel is offered in &lt;b&gt;English&lt;/b&gt; and for the following critical situations:</value>
+        <value>Please note that the support provided through the Emergency channel is offered in &lt;b&gt;English&lt;/b&gt; and limited to the following critical situations:</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Case_Creation_Message2</fullName>
@@ -4494,7 +4494,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Second Message when emergency option is selected on the Case Creation</shortDescription>
-        <value>If your query is not related to one of these situations, please click "&lt;b&gt;Submit as Query&lt;/b&gt;" below to create a case.</value>
+        <value>If your query is not related to any of these situations, please click &lt;b&gt; Submit as Query &lt;/b&gt; below to create a case.</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Message</fullName>
@@ -39658,7 +39658,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_CallUsDefaultMessage</shortDescription>
-        <value>If chat for your language is not available at the moment, please &lt;b&gt;create a
+        <value>If chat for your language is not available, you can &lt;b&gt;create a
             case&lt;/b&gt; or contact us through &lt;b&gt;phone&lt;/b&gt;.</value>
     </labels>
     <labels>
@@ -39707,7 +39707,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LVA_ChatWindowAlreadyOpen</shortDescription>
-        <value>Chat window has been opened</value>
+        <value>A chat window has been opened</value>
     </labels>
     <labels>
         <fullName>LVA_ChatWithUs</fullName>
