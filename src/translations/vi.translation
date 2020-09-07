@@ -3308,7 +3308,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
-        <label>Đây là &lt;b&gt;&lt;u&gt;Trường hợp khẩn cấp&lt;/u&gt;&lt;/b&gt;</label>
+        <label>Đây là &lt;b&gt;Trường hợp khẩn cấp&lt;/b&gt;</label>
         <name>CSP_Emergency_Box_Message</name>
     </customLabels>
     <customLabels>

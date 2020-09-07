@@ -4462,7 +4462,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Emergency box message</shortDescription>
-        <value> This is an &lt;b&gt;&lt;u&gt;emergency&lt;/u&gt;&lt;/b&gt;</value>
+        <value> This is an &lt;b&gt;emergency&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Footer_Message</fullName>

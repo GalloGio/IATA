@@ -3310,7 +3310,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
-        <label>Dies ist ein &lt;b&gt;&lt;u&gt; Notfall &lt;/u&gt;&lt;/b&gt;</label>
+        <label>Dies ist ein &lt;b&gt; Notfall &lt;/b&gt;</label>
         <name>CSP_Emergency_Box_Message</name>
     </customLabels>
     <customLabels>

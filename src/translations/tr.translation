@@ -3305,7 +3305,7 @@
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
-        <label>Bu bir &lt;b&gt;&lt;u&gt;Acil Durum&lt;/u&gt;&lt;/b&gt;</label>
+        <label>Bu bir &lt;b&gt;Acil Durum&lt;/b&gt;</label>
         <name>CSP_Emergency_Box_Message</name>
     </customLabels>
     <customLabels>
