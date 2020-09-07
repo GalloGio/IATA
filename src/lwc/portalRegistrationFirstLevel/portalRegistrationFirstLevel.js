@@ -19,6 +19,7 @@ import getMetadataCustomerType                  from '@salesforce/apex/PortalReg
 import isGuest                                  from '@salesforce/user/isGuest';
 import getGCSServiceId                          from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
+import isDisposalEmail							from '@salesforce/apex/GDPR_Helper.isDisposalEmail';
 
 /* ==============================================================================================================*/
 /* External Resources
@@ -90,7 +91,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		"termsAndUsage" : false,
 		"termsAndUsageIds" : "",
 		"lmsRedirectFrom" : "",
-		"lmsCourse" : ""
+		"lmsCourse" : "",
+		"registrationValidity": ""
 	};
 	@track errorMessage = "";
 	@track displayError = false;
@@ -111,6 +113,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     phoneRegExp = /^\(?[+]\)?([()\d]*)$/
     @track rerender = false;
 	@track gcsPortalServiceId;
+	@track timeStamp;
+	@track canSubmit = false;
 
 
 	tcAcceptanceChanged(event){
@@ -385,69 +389,77 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 		this.isLoading = true;
 		const RegistrationUtilsJs = new RegistrationUtils();
+		this.handleStartTime();
 
 		RegistrationUtilsJs.checkEmailIsValid(`${this.registrationForm.email}`).then(result=> {
-
 			if(result == false){
 				this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 				this.isLoading = false;
 			}else{
-				let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
-				RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
-					if(result == 'true'){
-					   //disposable email alert!
+				isDisposalEmail({email : this.registrationForm.email}).then(result => {
+					if(result == true){
 						this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 						this.isLoading = false;
-					}else{
-						//check if the email address is associated to a contact and/or a user
-						//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
-						//but the "E-Mail" field is pre-populated and, by default, not editable.
-						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
-						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
-						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
-							let userInfo = JSON.parse(JSON.stringify(result));
-
-							this.userInfo = userInfo;
-							if(userInfo.hasExistingContact == true){
-								if(userInfo.hasExistingUser == true){
-									//display message of existing user
-									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
-									this.isLoading = false;
-								}else{
-									//show Terms and Usage field to proceed submit
-									this.displayTermsAndUsage = true;
-									this.isEmailFieldReadOnly = true;
-									this.isLoading = false;
-								}
+					}
+					else{
+						let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
+						RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
+							if(result == 'true'){
+							//disposable email alert!
+								this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+								this.isLoading = false;
 							}else{
-								if(userInfo.hasExistingUser == true){
-									//display message of existing user
-									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
-									this.isLoading = false;
-								}else{
-									if(userInfo.isEmailAddressAvailable == true){
-											//show form
-										if(this.userCountry != ""){
-											this.registrationForm.country = this.userCountry;
+								//check if the email address is associated to a contact and/or a user
+								//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
+								//but the "E-Mail" field is pre-populated and, by default, not editable.
+								//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
+								//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
+								//button is displayed on the form.
+								getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
+									let userInfo = JSON.parse(JSON.stringify(result));
+
+									this.userInfo = userInfo;
+									if(userInfo.hasExistingContact == true){
+										if(userInfo.hasExistingUser == true){
+											//display message of existing user
+											this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+											this.isLoading = false;
+										}else{
+											//show Terms and Usage field to proceed submit
+											this.displayTermsAndUsage = true;
+											this.isEmailFieldReadOnly = true;
+											this.isLoading = false;
 										}
-
-										this.displayContactForm = true;
-										this.isEmailFieldReadOnly = true;
-										this.isLoading = false;
-										this._initializePhoneInput();
-
 									}else{
-											//inform user to pick another email
-										this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
-										this.isLoading = false;
+										if(userInfo.hasExistingUser == true){
+											//display message of existing user
+											this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+											this.isLoading = false;
+										}else{
+											if(userInfo.isEmailAddressAvailable == true){
+													//show form
+												if(this.userCountry != ""){
+													this.registrationForm.country = this.userCountry;
+												}
+
+												this.displayContactForm = true;
+												this.isEmailFieldReadOnly = true;
+												this.isLoading = false;
+												this._initializePhoneInput();
+
+											}else{
+													//inform user to pick another email
+												this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+												this.isLoading = false;
+											}
+										}
 									}
-								}
+								})
+								.catch(error => {
+									console.info('Error: ', error);
+									this.isLoading = false;
+								});
 							}
-						})
-						.catch(error => {
-                            console.info('Error: ', error);
-							this.isLoading = false;
 						});
 					}
 				});
@@ -457,6 +469,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSubmit(){
 
+		this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
+		this.timeStamp = Math.floor(Date.now() / 1000); // reset time stamp for Try Again case
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
             this.registrationForm.phone = "";
@@ -465,32 +479,37 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
 
-		register({
-			registrationForm : JSON.stringify(this.registrationForm),
-			customerType : JSON.stringify(this.selectedMetadataCustomerType),
-			contactId : contactId,
-			accountId : accountId,
-			urlParams : this._pageParams,
-			userInfo : JSON.stringify(this.userInfo)
-		}).then(result => {
-			var dataAux = JSON.parse(JSON.stringify(result));
+		if(this.registrationForm.registrationValidity == "" && this.canSubmit){ // Validate hidden field and Timer 
+			register({ registrationForm : JSON.stringify(this.registrationForm),
+				customerType : JSON.stringify(this.selectedMetadataCustomerType),
+				contactId : contactId,
+				accountId : accountId,
+				urlParams : this._pageParams,
+				userInfo : JSON.stringify(this.userInfo)
+			}).then(result => {
+				var dataAux = JSON.parse(JSON.stringify(result));
 
-			if(dataAux.isSuccess == true){
-				//todo: show success message
-				this.isRegistrationComplete = true;
-				this.isLoading = false;
-			}else{
-				this.isLoading = false;
+				if(dataAux.isSuccess == true){
+					//todo: show success message
+					this.isRegistrationComplete = true;
+					this.isLoading = false;
+				}else{
+					this.isLoading = false;
+					this._showSubmitError(true, 'Error Creating User');
+				}
+
+			})
+			.catch(error => {
+				var dataAux = JSON.parse(JSON.stringify(error));
+				console.info(dataAux);
 				this._showSubmitError(true, 'Error Creating User');
-			}
-
-		})
-		.catch(error => {
-			var dataAux = JSON.parse(JSON.stringify(error));
-            console.info(dataAux);
-			this._showSubmitError(true, 'Error Creating User');
+				this.isLoading = false;
+			});
+		}
+		else{
+			this.isRegistrationComplete = true; //Fake Success
 			this.isLoading = false;
-		});
+		}
 
 	}
 
@@ -722,7 +741,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this.displaySubmitError = false;
 	}
 
+	handleRegistrationValidity(event){
+		this.registrationForm.registrationValidity = event.target.value;
+	}
 
+	handleStartTime(event) {
+        // Set Time Start
+        this.timeStamp = Math.floor(Date.now() / 1000);
+    }
 	/* ==============================================================================================================*/
 	/* Helper Methods
 	/* ==============================================================================================================*/

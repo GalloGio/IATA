@@ -2462,8 +2462,8 @@ private class CaseBeforeTriggerTest {
 		caseParent.IFAP_Financial_Year__c = '2012';
 		caseParent.firstFAnonComplianceDate__c = date.today();
 		caseParent.secondFAnonComplianceDate__c = null;
-		caseParent.Deadline_Date__c = date.newinstance(2020, 06, 29);
-		caseParent.FA_Second_Deadline_Date__c = date.newinstance(2020, 06, 30);
+		caseParent.Deadline_Date__c = date.newinstance(2021, 06, 29);
+		caseParent.FA_Second_Deadline_Date__c = date.newinstance(2021, 06, 30);
 		insert caseParent;
 
 	Case caseChild3 = new case ();

@@ -1283,15 +1283,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		let inputCmp = this.template.querySelector('[data-id="contactlookup"]').getSelection();//[0].id;
 		let comp = this.template.querySelector('[data-name="selectionList"]');
 
-		let values = inputCmp;
-		inputCmp = [];
 		comp.focus();
 
 		let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
 
 		let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
-		values.forEach((c, pos, arr) => {
+		inputCmp.forEach((c, pos, arr) => {
 			let contact = availableContacts.find(function (con) { return c.id === con.id; });
 			contact.deleteIcon = 'utility:delete';
 
@@ -1328,7 +1326,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	handleContactSearch(event) {
 		let details = event.detail;
 
-		if (details.searchTerm !== undefined && details.searchTerm.length > 0) {
+		if (details.searchTerm !== undefined && details.searchTerm.length > 0 && this.searchText != details.searchTerm) {
+			this.searchText = details.searchTerm;
 			getContactsForAssignment({ serviceId: this.serviceId, queryString: details.searchTerm })
 				.then(results => {
 					let availableContacts = JSON.parse(JSON.stringify(results));
@@ -1340,12 +1339,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 						c.status = c.extraFields.status;
 						return !toAdd.some(contact => contact.id === c.id)
 					});
-
+					this.availableContacts = available;
 					this.template.querySelector('[data-id="contactlookup"]').setSearchResults(available);
 					this.requiredClass = '';
 				})
-		} else {
+		} else if(details.searchTerm.length == 0){
 			this.getContactsForAssignment();
+			this.getAvailableContacts();
 		}
 	}
 

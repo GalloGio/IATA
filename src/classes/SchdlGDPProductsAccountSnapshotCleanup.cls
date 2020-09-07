@@ -1,5 +1,5 @@
 global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Database.Batchable<sObject> {
-	global static String query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Agency_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c, Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) From GDP_Products_Account_View__c';
+	global static String query = 'Select Id From GDP_Products_Account_View__c';
 
 	global SchdlGDPProductsAccountSnapshotCleanup() {}
 
@@ -9,13 +9,36 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 	}
 
 	global void execute(Database.BatchableContext BC, List<GDP_Products_Account_View__c> scope){
+		Set<Id> gdpids = new Set<Id>();
+		for(GDP_Products_Account_View__c o:scope){
+			gdpids.add(o.Id);
+		}
+		List<GDP_Products_Account_View__c> gdplist = new List<GDP_Products_Account_View__c>();
+		gdplist = [Select Zip_Postal_Code__c,
+					Id,
+					Agency_Status_Code__c,
+					Agency_Code__c,
+					Trading_Name__c,
+					Sub_Continent__c,
+					State_Province_Code__c,
+					Related_Accreditation_Class_Table__c,
+					Related_Accreditation_Class_Code__c,
+					Location_Type_Name__c, Legal_Name__c,
+					IATA_Code__c, Country_ISO_Code__c,
+					City__c,
+					Check_Digit__c,
+					AIMS_ID__c, 
+					(Select Id From GDP_Products_Accounts_Snapshot__r)
+		From GDP_Products_Account_View__c
+		Where Id=:gdpids];
+
 		List<Id> gpassIdToBeDelete = new List<Id>();
 		List<GDP_Products_Account_Snapshot__c> gpassToBeUpsert = new List<GDP_Products_Account_Snapshot__c>();
 
-		for(GDP_Products_Account_View__c gpav : scope) {
+		for(GDP_Products_Account_View__c gpav : gdplist) {
 			Boolean hasSnapshotVersion = gpav.GDP_Products_Accounts_Snapshot__r != null && gpav.GDP_Products_Accounts_Snapshot__r.size() > 0;
 
-			if (gpav.Agency_Status_Code__c >= 4) {
+			if(gpav.Agency_Status_Code__c >= 4) {
 				GDP_Products_Account_Snapshot__c gpas = new GDP_Products_Account_Snapshot__c(
 					Zip_Postal_Code__c = gpav.Zip_Postal_Code__c,
 					Trading_Name__c = gpav.Trading_Name__c,
@@ -34,22 +57,22 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 					Account_View__c = gpav.Id,
 					Name = gpav.Trading_Name__c
 				);
-				if (hasSnapshotVersion) {
+				if(hasSnapshotVersion) {
 					gpas.Id = gpav.GDP_Products_Accounts_Snapshot__r[0].Id;
 				}
 
 				gpassToBeUpsert.add(gpas);
-			} else if (hasSnapshotVersion) {
+			} else if(hasSnapshotVersion) {
 				for(GDP_Products_Account_Snapshot__c tbd : gpav.GDP_Products_Accounts_Snapshot__r) {
 					gpassIdToBeDelete.add(tbd.Id);
 				}
 			}
 		}
 
-		if (gpassToBeUpsert.size() > 0) {
+		if(gpassToBeUpsert.size() > 0) {
 			upsert gpassToBeUpsert;
 		}
-		if (gpassIdToBeDelete.size() > 0) {
+		if(gpassIdToBeDelete.size() > 0) {
 			delete [Select Id From GDP_Products_Account_Snapshot__c Where Id in :gpassIdToBeDelete];
 		}
 	}
@@ -73,8 +96,8 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 	}
 
 	public static void schedule(String sch) {
-
-		if (sch == null) {
+  
+		if(sch == null) {
 			sch = '0 0 3 * * ?';
 		}
 		String jobName = (Test.isRunningTest())? 'Test_'+Datetime.now().time() : 'Snapshot Cleanup';

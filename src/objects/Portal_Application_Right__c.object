@@ -1292,7 +1292,7 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
     </validationRules>
     <validationRules>
         <fullName>Restrict_IAC_request</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Internal users must not be able to assign an IATA Accreditation &amp; Changes portal service with Access Status = Access Requested to a contact under accounts registered as Freight Forwarders in a CNS country.</description>
         <errorConditionFormula>AND(
     OR(

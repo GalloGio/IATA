@@ -1705,6 +1705,50 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Auto renew payment method error --></label>
         <name>Auto_renew_payment_method_error</name>
     </customLabels>
@@ -3462,8 +3506,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP IATA Customer Portal --></label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -4430,6 +4482,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -5190,6 +5246,106 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Ignore Survey Button --></label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Success Message --></label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Success Message 48Hours --></label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Success_Title --></label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Survey_Message --></label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Take Survey Button --></label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Survey_Message --></label>
+        <name>Case_Comment_Survey_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
     </customLabels>
@@ -5358,10 +5514,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_All_Other_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- CurrencyCenter_All_Others --></label>
-        <name>CurrencyCenter_All_Others</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
     </customLabels>
@@ -5402,6 +5554,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_BSP_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_Launch_Date --></label>
+        <name>CurrencyCenter_BSP_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -5438,6 +5594,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_CASS_Launch_Date --></label>
+        <name>CurrencyCenter_CASS_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
@@ -5454,6 +5614,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -5462,12 +5630,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Countries_Map</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Country_Heat_Map --></label>
+        <name>CurrencyCenter_Country_Heat_Map</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Country_Profiles --></label>
         <name>CurrencyCenter_Country_Profiles</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Currency_Exchange_Rate --></label>
+        <name>CurrencyCenter_Currency_Exchange_Rate</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
@@ -5640,6 +5816,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CurrencyCenter_Search_Additional_Information --></label>
         <name>CurrencyCenter_Search_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_See_World_Map --></label>
+        <name>CurrencyCenter_See_World_Map</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Select_Country --></label>
@@ -21009,6 +21189,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Pending Documents --></label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
@@ -32676,6 +32860,31 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account relationship with airport information --></description>
+        <label><!-- Account relationship with airport information --></label>
+        <name>Account_relationship_with_airport_information</name>
+        <sections>
+            <columns>
+                <label><!-- Parent Account ID --></label>
+                <name>Parent Account ID</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <label><!-- Airport account info --></label>
+            <name>Airport account info</name>
+        </sections>
+        <sections>
+            <label><!-- Manages / Operates --></label>
+            <name>Manages / Operates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account w cases and results --></description>
         <label><!-- Account w cases and results --></label>
         <name>Account_w_cases_and_results</name>
@@ -34552,8 +34761,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Cases with created by user --></label>
         <name>Cases_with_created_by_user</name>
         <sections>
+            <label><!-- Account information --></label>
+            <name>Account information</name>
+        </sections>
+        <sections>
             <label><!-- Cases --></label>
             <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- Contact information --></label>
+            <name>Contact information</name>
         </sections>
         <sections>
             <label><!-- Created by user --></label>
@@ -34869,8 +35086,8 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Contacts without Cases --></description>
-        <label><!-- Contacts without Cases --></label>
+        <description><!-- Contacts with or without Cases --></description>
+        <label><!-- Contacts with or without Cases --></label>
         <name>Contacts_without_Cases</name>
         <sections>
             <label><!-- Cases --></label>

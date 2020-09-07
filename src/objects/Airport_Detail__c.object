@@ -273,6 +273,8 @@
     <label>Airport Detail</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>Airport_Name__c</columns>
+        <columns>Account__c</columns>
         <columns>NAME</columns>
         <columns>City__c</columns>
         <columns>Code__c</columns>

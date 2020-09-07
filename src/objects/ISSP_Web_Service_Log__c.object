@@ -495,6 +495,29 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Platform_Events_Helper</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Method__c</columns>
+        <columns>System__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System__c</field>
+            <operation>contains</operation>
+            <value>Platform Events for</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2020 12:00 AM</value>
+        </filters>
+        <label>Platform Events Helper</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>SAP_syncCustomerWithSAP1</fullName>
         <columns>NAME</columns>
         <columns>Error_Code__c</columns>

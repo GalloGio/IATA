@@ -373,20 +373,17 @@
     </listViews>
     <listViews>
         <fullName>Valid_for_Ecommerce</fullName>
-        <columns>NAME</columns>
         <columns>IATA_ISO_Country__c</columns>
+        <columns>NAME</columns>
         <columns>ISO_Code__c</columns>
-        <columns>ISO_CODE_STANDARD__c</columns>
-        <columns>Local_Language__c</columns>
-        <columns>IEC_Valid_SAP__c</columns>
         <columns>Valid_for_Address__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>IEC_Valid_SAP__c</field>
+            <field>Valid_for_Address__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>Valid for Ecommerce</label>
+        <label>Valid for Address</label>
         <language>en_US</language>
     </listViews>
     <listViews>
