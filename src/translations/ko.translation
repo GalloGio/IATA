@@ -2985,7 +2985,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
-        <label>무료 채팅 $0</label>
+        <label>$0 무료 채팅</label>
         <name>CSP_Chat_base_Label</name>
     </customLabels>
     <customLabels>
