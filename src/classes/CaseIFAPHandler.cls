@@ -24,7 +24,7 @@ public class CaseIFAPHandler {
 			switch on (String.valueOf(listIds[0].getSObjectType())) {
   				when 'Contact' {
 					contactIds = new Set<Id>(listIds);
-					isUser = true;
+					isUser = false;
 				}
 				when 'Case'{
 					// get information about Company and Case
@@ -111,7 +111,6 @@ public class CaseIFAPHandler {
 
 		// only execute if the imput parameter is a case
 		if(caseList != null && caseList.size() > 0 && userList.size() > 0){
-
 			for(Case cs : caseList){
 				// for each case
 				wrapperListCompany.add(new WrapperCompanyForJSON(cs));
