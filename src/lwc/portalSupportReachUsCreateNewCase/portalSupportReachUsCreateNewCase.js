@@ -182,6 +182,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         this._countryISO=value;
         if(this._countryISO !=null){
             this.createCaseCheck();
+            this.validateForm();
         }
     }
 
@@ -437,11 +438,13 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
     //grabs subject
     handleSubject(event) {
         this.subject = event.target.value;
+        this.validateForm();
     }
 
     //grabs description
     handleDescription(event) {
         this.description = event.target.value;
+        this.validateForm();
     }
 
     //grabs recipient
@@ -479,6 +482,25 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         }
 
         this.lstRecipients = lstAdditionalCCFinal;
+    }
+
+
+    validateForm(){
+         let countryCheck= this.specialCase===false? (this.countryISO !== undefined && this.countryISO !== '' && this.countryISO !== 'XX'):true;
+          
+         let feedbacktypeCheck=this.specialCase ===true? this.feedbackType !==null:true;
+         
+         let fieldcheck = this.subject.trim() !== '' && this.description.trim() !== '';
+
+        //remove disabled
+        this.template.querySelectorAll("[data-submit-btn]").forEach(elem =>{
+            if(countryCheck && feedbacktypeCheck && fieldcheck){
+                elem.removeAttribute("disabled");
+            }else{
+                elem.setAttribute("disabled",true);
+            }
+        });
+        
     }
 
     //validate fields and finish creating the case.
@@ -784,5 +806,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         }
         let textinput = this.template.querySelector('[data-id="feedback-type"]');
         textinput.classList.remove('missing-value');
+
+        this.validateForm();
     }
 }

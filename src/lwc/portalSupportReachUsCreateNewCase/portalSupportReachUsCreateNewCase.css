@@ -23,6 +23,14 @@
     border-color:red;
 }
 
+.containedButton[disabled]{
+    background: #999999;
+}
+.containedButtonAlt[disabled]{
+    color: #999999;
+    border-color: #999999;
+}
+
 .feedbackTypeBox{
     box-shadow: none;
     border-radius: 0;
