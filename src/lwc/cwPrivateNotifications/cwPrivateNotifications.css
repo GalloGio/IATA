@@ -39,3 +39,14 @@
 .btn-primary-blue:after, .btn-primary:after {
     border-width: 0 0 12px 12px;
 }
+
+.w-80p{
+    width: 80%;
+}
+.w-10p{
+    width: 10%;
+}
+
+.pl-1p{
+    padding-left: 1%;
+}

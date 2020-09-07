@@ -97,7 +97,6 @@ export default class CwScheduleAudits extends LightningElement {
                 this.showModal = true;
                 this.saving = false;
             }).catch(err => {
-                console.log(err)
                 this.dispatchEvent(new ShowToastEvent({
                     title: 'Something went wrong',
                     message: 'Please, contact IATA support if error continues.',

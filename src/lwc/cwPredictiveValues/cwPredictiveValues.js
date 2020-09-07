@@ -93,28 +93,27 @@ export default class CwPredictiveValues extends LightningElement {
 		rowInput.value = 0;
 		let stationsIdsChecked = [];
 		listWrappers.filter(entry => {
-			if (entry.searchValues
-				&& (entry.searchValues.toLowerCase().indexOf(translationTextJS(rowInput.label)) > -1 
-					|| entry.searchValues.toLowerCase().indexOf(translationUmlauteTextJS(rowInput.label)) > -1)) {
-				if(stationsIdsChecked.length === 0){
+
+			const hasSearchValues = entry.searchValues
+			&& (entry.searchValues.toLowerCase().indexOf(translationTextJS(rowInput.label) > -1)
+				|| entry.searchValues.toLowerCase().indexOf(translationUmlauteTextJS(rowInput.label)) > -1);
+
+			if (hasSearchValues || entry.stationsIds) {
+				if(entry.stationsIds) {
+					let counter = 0;
+					entry.stationsIds.split('#').forEach(stid => {
+						if(stid && stid != 'null' && !stationsIdsChecked.includes(stid)) {
+							counter++;
+							stationsIdsChecked.push(stid);
+						}
+					})
+					rowInput.value+=counter;
+				}
+				else{
 					rowInput.value += entry.value;
-					if(entry.stationsIds) stationsIdsChecked = entry.stationsIds.split('#');
-				}else{
-					if(entry.stationsIds){
-						let counter = 0;
-						entry.stationsIds.split('#').forEach(stid => {
-							if(!stationsIdsChecked.includes(stid)) {
-								counter++;
-								stationsIdsChecked.push(stid);
-							}
-						})
-						rowInput.value+=counter;
-					}
-					else{
-						rowInput.value += entry.value;
-					}
-				} 
-			}
+				}
+			} 
+			
 		});
 
 		let newListPredictive = JSON.parse(JSON.stringify(this._predictiveList));

@@ -25,7 +25,6 @@ export default class CwStationManagers extends LightningElement {
 
     @api title;
     @api label;
-    @api facility = null;
     @api editMode = false;
     @track accountContactRoles;
     @track seeMoreLabel = '';
@@ -48,21 +47,41 @@ export default class CwStationManagers extends LightningElement {
     @track openCreateContactRoleDetail = false;
     @track showStationManagers = false;
     availableContacts = [];
+    @track isLoading = true;
+
+    _facility = null;
+
+    @api
+    get facility(){
+        return this._facility;
+    }
+
+    set facility(value) {
+        this._facility = value;
+        this.init();
+    }
 
     renderedCallback() {
         if (this.initialized) {
             return;
         }
-    
-        this.getAllAccountContactRolesJS(this.facility.Id);
-        this.getContactsToAddJS(this.facility.Id);
-        this.showStationManagers = true;
-        
-        this.isboxfocus = false;
+        this.init();
         this.initialized = true;
     }
 
+    init() {    
+        this.getAllAccountContactRolesJS(this.facility.Id);
+        this.getContactsToAddJS(this.facility.Id);
+        this.showStationManagers = true;
+        this.openCreateAccountContactRole = false;
+        this.openCreateContactRoleDetail = false;
+        this.isboxfocus = false;
+        this.openConfirm = false;
+    }
+
     getContactsToAddJS(facilityId) {
+        this.isLoading = true;
+        this.availableContacts = [];
         getContactsToAdd({ stationId: facilityId }).then(data => {
             if(data){
                 data = JSON.parse(data); 
@@ -76,6 +95,7 @@ export default class CwStationManagers extends LightningElement {
                     });
                 });
             }
+            this.isLoading = false;
             
         }).catch(err => {
             console.error('Error getting contacts to add', err);
@@ -86,10 +106,12 @@ export default class CwStationManagers extends LightningElement {
                     variant: 'error'
                 })
             );
+            this.isLoading = false;
         });
     }
 
     getAllAccountContactRolesJS(facId) {
+        this.isLoading = true;
         getAllAccountContactRoles({ accountRoleDetailId: facId }).then(data => {
             this.accountContactRoles = [];
             this.totalAccountContactRoles = [];
@@ -146,8 +168,10 @@ export default class CwStationManagers extends LightningElement {
                 }
                 
             }
+            this.isLoading = false;
         }).catch(err => {
             console.error('Error getting all contacts', err);
+            this.isLoading = false;
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error getting all contacts',
@@ -163,6 +187,7 @@ export default class CwStationManagers extends LightningElement {
     }
 
     deleteAccountContactRoleJS(cRdI, isCompanyAdmin) {
+        this.isLoading = true;
         deleteAccountContactRole({ contactRoleDetailId: cRdI, isCompanyAdmin: isCompanyAdmin }).then(data => {
             let msg = '';         
             if(data === 'Removed'){
@@ -179,9 +204,10 @@ export default class CwStationManagers extends LightningElement {
                     variant: 'success'
                 })
             );
-            
+            this.isLoading = false;
         }).catch(err => {
             console.error('Error removing station manager', err);
+            this.isLoading = false;
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error removing station manager',
@@ -208,8 +234,9 @@ export default class CwStationManagers extends LightningElement {
     }
 
     becomeFacilityAdminToDB(companyId, facilityIds, contactId){
-
+        this.isLoading = true;
         let isDuplicate = this.checkIfIsDuplicatedStationManager(companyId, facilityIds, contactId);
+
         let filteredValues = this.availableContacts.filter(entry => {
             return entry.key.toLowerCase() == contactId.toLowerCase()
         });
@@ -236,6 +263,7 @@ export default class CwStationManagers extends LightningElement {
                     variant: 'warning'
                 })
             );
+            this.isLoading = false;
             return;
         }
 
@@ -258,8 +286,19 @@ export default class CwStationManagers extends LightningElement {
                         variant: 'success'
                     })
                 );
+                this.showModal = true;
+
             }
-            this.showModal = true;
+            else{
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: parsedRes.message,
+                        variant: 'error'
+                    })
+                );
+            }
+            this.isLoading = false;
         }).catch(err => {
             console.error(err);
             this.dispatchEvent(
@@ -269,6 +308,7 @@ export default class CwStationManagers extends LightningElement {
                     variant: 'error'
                 })
             );
+            this.isLoading = false;
         });
     }
     
@@ -326,6 +366,15 @@ export default class CwStationManagers extends LightningElement {
             this.searchValue = '';
             this.searchValueId = '';
         }
+        else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'No contact with the specified name',
+                    variant: 'error'
+                })
+            );
+        }
     }
 
     updateSearchbox(event) {
@@ -354,12 +403,15 @@ export default class CwStationManagers extends LightningElement {
         });
 
         filteredValues.forEach(element => {
-            this.predictiveValues.push({
-                key: element.key,
-                value: element.label,
-                label: element.label,
-                icon: checkIconType('person')
-            });
+            const alreadyAdded =  this.predictiveValues.some(obj => obj.key === element.key);
+            if(!alreadyAdded){
+                this.predictiveValues.push({
+                    key: element.key,
+                    value: element.label,
+                    label: element.label,
+                    icon: checkIconType('person')
+                });
+            }
         });
         this.isboxfocus = true;
     }

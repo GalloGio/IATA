@@ -33,3 +33,10 @@ ul {
   font-size: .8rem;
   align-items: inherit;
 }
+
+.hidden2{
+  display: none !important;
+}
+.visible2{
+  display: block !important;
+}

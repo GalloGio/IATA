@@ -3,6 +3,8 @@ import getCertifications from "@salesforce/apex/CW_CertificationSection.getCerti
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import swipe from "c/cwSwipe";
 import { prepareSearchParams } from "c/cwUtilities";
+import resources from "@salesforce/resourceUrl/ICG_Resources";
+import { loadScript } from "lightning/platformResourceLoader";
 
 export default class CwCertificationCarousel extends LightningElement {
 	urlResultPage;
@@ -137,7 +139,6 @@ export default class CwCertificationCarousel extends LightningElement {
 	}
 
 	nextHandler() {
-		console.log('in next handler');
 		clearInterval(this.interval);
         this.resetInterval();
 		let index = this.findIndex();
@@ -215,5 +216,10 @@ export default class CwCertificationCarousel extends LightningElement {
 	}
 	renderedCallback() {
 		this.initializeSwipe();
+	}
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
 	}
 }

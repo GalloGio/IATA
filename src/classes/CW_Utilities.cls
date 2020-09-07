@@ -22,9 +22,9 @@ public without sharing class CW_Utilities {
 		ICG_Portal_URL__mdt metadata = [SELECT Id,MasterLabel, DeveloperName, Link__c, Description__c 
 										FROM ICG_Portal_URL__mdt WHERE DeveloperName =: page LIMIT 1];
 
-		String URL_Base = getCommunityUrlBase();
+		String urlBase = getCommunityUrlBase();
 
-			result = URL_Base +  metadata.Description__c;
+			result = urlBase +  metadata.Description__c;
 
 		return result;
 	}
@@ -49,18 +49,12 @@ public without sharing class CW_Utilities {
  
 				if(!station.isEmpty()) {
 					List<ICG_Contact_Role_Detail__c> userFacilityRelationList = [Select id, ICG_Role__c, Status__c, Account_Role__c, isPendingApproval__c, isApproved__c from ICG_Contact_Role_Detail__c where Account_Contact_Role__r.Contact__c = :usr[0].ContactId and
-                    ((ICG_Account_Role_Detail__c = :facilityId AND ICG_Role__c = 'Facility Manager') OR ICG_Role__c = 'Company Admin')];
+                    (ICG_Account_Role_Detail__c = :facilityId AND ICG_Role__c = 'Facility Manager')];
                     
 					if (userFacilityRelationList.size()>0) {
 						Set<Id> accountRolesCompanyAdmin = new Set<Id>();
 						Set<Id> accountRolesPendingCompanyAdmin = new Set<Id>();
 						for (ICG_Contact_Role_Detail__c crd : userFacilityRelationList) {
-							if (crd.ICG_Role__c == 'Company Admin' && crd.isApproved__c == true) {
-								accountRolesCompanyAdmin.add(crd.Account_Role__c);
-							} else if (crd.ICG_Role__c == 'Company Admin' && crd.isPendingApproval__c == true) {
-								accountRolesPendingCompanyAdmin.add(crd.Account_Role__c);
-							}
-
 							if (crd.ICG_Role__c == 'Facility Manager' && crd.isApproved__c) {
 								userRole = 'Facility Manager';
 							} else if (crd.ICG_Role__c == 'Facility Manager' && crd.isPendingApproval__c) {
@@ -68,45 +62,26 @@ public without sharing class CW_Utilities {
 							}
 
 						}
-						if((!accountRolesPendingCompanyAdmin.isEmpty() || !accountRolesCompanyAdmin.isEmpty()) && station[0].Account_Role__c != null) {
-							//Get station ops hierarchy
-							String opsHierarchyGroup = station[0].Account_Role__c != null ? station[0].Account_Role__r.Account__r.Name : 'Default Group';
-							List<Account_Role__c> stationAccRole = [Select id, Account__c, Account__r.Global_Ultimate_Account_Global_ID__c, (Select id,Ops_Hierarchy_Group__c, To__c, To__r.Account__c from From_Relationships__r where (To__c != null OR Ops_Hierarchy_Group__c != null)) From Account_Role__c where Id =:station[0].Account_Role__c];
-							if(!stationAccRole.isEmpty()) {
-								if(!stationAccRole[0].From_Relationships__r.isEmpty()) {
-									Set<Id> parentAccRoles = new Set<Id>();
-									Set<String> opsHierarchyGroups = new Set<String>();
-									for(Account_Role_Relationship__c accr : stationAccRole[0].From_Relationships__r) {
-										if(accr.To__c != null) parentAccRoles.add(accr.To__c);
-										if(accr.Ops_Hierarchy_Group__c != null) opsHierarchyGroups.add(accr.Ops_Hierarchy_Group__c);
-									}
-									if(!parentAccRoles.isEmpty()) {
-										List<Account_Role_Relationship__c> accRoleRelOpsHierarchy = [Select Id, Relationship_Name__c FROM Account_Role_Relationship__c WHERE From__c IN :parentAccRoles and Relationship_Name__c != null];
-										if(!accRoleRelOpsHierarchy.isEmpty()) opsHierarchyGroup = accRoleRelOpsHierarchy[0].Relationship_Name__c;
-									}else if(!opsHierarchyGroups.isEmpty()) {
-										opsHierarchyGroup = (new list<string>(opsHierarchyGroups))[0];
-									}
+					}
+					//Get station ops hierarchy
+					String opsHierarchyGroup = getOpsHierarchyNameFromStationId(station[0].Id);
+					List<Contact> companyAdminsFromGroup = getCompanyAdminContactsFromGroupName(opsHierarchyGroup);
 
-								} else {
-									List<Account> acc = [Select id, Name from account where Global_ID__c = :stationAccRole[0].Account__r.Global_Ultimate_Account_Global_ID__c];
-									if(!acc.isEmpty()) opsHierarchyGroup = acc[0].Name;
-								}
+					for(Contact con : companyAdminsFromGroup) {
+						if(con.Id == usr[0].contactId) {
+							userRole = 'Company Admin';
+						}
+					}
+					if(userRole != 'Facility Manager' && userRole != 'Company Admin') {
+						List<Contact> pendingCompanyAdminsFromGroup = getCompanyAdminContactsFromGroupNameByStatus(opsHierarchyGroup, 'Pending for Approval');
+						for(Contact con : pendingCompanyAdminsFromGroup) {
+							if(con.Id == usr[0].contactId) {
+								userRole = 'Pending Company Admin';
 							}
-
-							Boolean isCompanyAdmin = [Select Id from Account_Role__c where Id IN :accountRolesCompanyAdmin and Id IN (Select From__c from Account_Role_Relationship__c where (Relationship_Name__c != null AND Relationship_Name__c =:opsHierarchyGroup) OR (Ops_Hierarchy_Group__c != null AND Ops_Hierarchy_Group__c =:opsHierarchyGroup))].size()>0;
-
-                            if(!isCompanyAdmin) isCompanyAdmin = [Select Id from Account_Role__c where Id IN :accountRolesCompanyAdmin and Account__r.Name =:opsHierarchyGroup].size()>0;
-							if(isCompanyAdmin) {
-								userRole = 'Company Admin';
-							} else {
-								Boolean isPendingCompanyAdmin = [Select Id from Account_Role__c where Id IN :accountRolesPendingCompanyAdmin and Id IN (Select From__c from Account_Role_Relationship__c where (Relationship_Name__c != null AND Relationship_Name__c =:opsHierarchyGroup) OR (Ops_Hierarchy_Group__c != null AND Ops_Hierarchy_Group__c =:opsHierarchyGroup))].size()>0;
-								if(!isPendingCompanyAdmin) isPendingCompanyAdmin = [Select Id from Account_Role__c where Id IN :accountRolesPendingCompanyAdmin and Account__r.Name =:opsHierarchyGroup].size()>0;
-								if(isPendingCompanyAdmin) userRole = 'Pending Company Admin';
-							}
-
 						}
 					}
 				}
+
 			}
 		}
 		
@@ -114,11 +89,11 @@ public without sharing class CW_Utilities {
 	}
 
 	@AuraEnabled (cacheable = true)
-	public static Boolean getPermissionToEdit(){
+	public static Boolean getPermissionToEdit() {
 		Boolean result=false;
-		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'One_Source_Backend_Admin'];
-		if(exist.size()>0){
-			if(Integer.valueOf(exist[0].get('expr0')) > 0){
+		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin' OR PermissionSet.Name = 'One_Source_Certification_Manager')];
+		if(exist.size()>0) {
+			if(Integer.valueOf(exist[0].get('expr0')) > 0) {
 				result = true;
 			}
 		}
@@ -139,7 +114,9 @@ public without sharing class CW_Utilities {
 					String templateName = 'Approve_Reject_IATA_Adm_after_comp_appro';
 					List<String> whoEmails = new List<String>();
 					for(User u : CW_Utilities.getIATAStakeHoldersUsersList()) {
-						if(u.email != null) whoEmails.add(u.email);
+						if(u.email != null) {
+							whoEmails.add(u.email);
+						}
 					}
 					Boolean approved = CW_Utilities.sendEmailTemplate(templateName, ard.Id, whoId, whoEmails);
 					return approved;
@@ -169,8 +146,9 @@ public without sharing class CW_Utilities {
 
 			if (userRole == null && crd.Account_Role__c != null) {
 				for (Contact con : getCompanyadminContactsFromAccountId(crd.Account_Role__r.Account__c)) {
-					if (approver.ContactId == con.Id)
+					if (approver.ContactId == con.Id) {
 						userRole = 'Company Admin';
+					}
 				}
 			}
 			if (userRole == 'Company Admin') {
@@ -196,7 +174,9 @@ public without sharing class CW_Utilities {
 			User approver = [Select id, contactId from User where id = :UserInfo.getUserId()];
 			if(userRole == null && crd.Account_Role__c != null) {
 				for (Contact con : getCompanyadminContactsFromAccountId(crd.Account_Role__r.Account__c)) {
-					if (approver.ContactId == con.Id) userRole = 'Company Admin';
+					if (approver.ContactId == con.Id) {
+						userRole = 'Company Admin';
+					}
 				}
 			}
 			if (userRole == 'Company Admin' || userRole == 'Facility Manager') {
@@ -224,7 +204,9 @@ public without sharing class CW_Utilities {
 			User approver = [Select id, contactId from User where id = :UserInfo.getUserId()];
 			if(userRole == null && crd.Account_Role__c != null) {
 				for (Contact con : getCompanyadminContactsFromAccountId(crd.Account_Role__r.Account__c)) {
-					if (approver.ContactId == con.Id) userRole = 'Company Admin';
+					if (approver.ContactId == con.Id) {
+						userRole = 'Company Admin';
+					}
 				}
 			}
 			if (userRole == 'Company Admin' || userRole == 'Facility Manager') {
@@ -315,7 +297,9 @@ public without sharing class CW_Utilities {
 			// Resource URL
 			return '/resource/' + resourceList[0].SystemModStamp.getTime() + '/' + (namespace != null && namespace != '' ? namespace + '__' : '') + resourceName; 
 		}
-		else return '';
+		else {
+			return '';
+		}
 	}
 
 	public class CompanyType {
@@ -356,7 +340,7 @@ public without sharing class CW_Utilities {
 					Boolean submitted = true;
 					List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 					Contact con = [Select id, email from contact where id = :contactId];
-					if(skipApprovalProcess != true){
+					if(skipApprovalProcess != true) {
 						//ONLY PREPARED TO BE SENT TO ONE! It's controled above.
 						for(ICG_Contact_Role_Detail__c crdti : crdsToInsert) {
 							//Send Email to Requestor
@@ -399,7 +383,7 @@ public without sharing class CW_Utilities {
 						res.message = 'Something went wrong. Please contact IATA. Comment: Approval Process not triggered';                
 					}
 
-					if(notifications.size() > 0){
+					if(notifications.size() > 0) {
 						insert notifications;
 					}
 				}
@@ -425,71 +409,103 @@ public without sharing class CW_Utilities {
 		List<ICG_Contact_Role_Detail__c> crdsToInsert = new List<ICG_Contact_Role_Detail__c>();
 		List<String> facilityIdsToLoop = facilityIds.replaceAll('[^a-zA-Z0-9,\\s+]', '').split(',');
 		ICG_Contact_Role_Detail__c crd; 	
-		List<Account_Contact_Role__c> acr = [Select id from Account_Contact_Role__c where Contact__c = :contactId and Account__c = :companyId and Functional_Role__c = 'One Source'];
-		if(!acr.isEmpty()) {
-			for (String facId : facilityIdsToLoop) {
-				crd = new ICG_Contact_Role_Detail__c();
-				crd.ICG_Role__c = 'Facility Manager';
-				crd.Status__c = status;
-				crd.Account_Contact_Role__c = acr[0].id;
-				crd.ICG_Account_Role_Detail__c = facId;
-				crdsToInsert.add(crd);
-			}
+
+		List<Account_Role__c> accountRoles = [Select Id from Account_Role__c where Account__c =: companyId and Functional_Role__c = 'One Source'];
+		Id accountRoleId = !accountRoles.isEmpty() ? accountRoles[0].Id : null;
+
+		List<Account_Contact_Role__c> acr = getAccountContactRole(companyId, contactId, accountRoleId);
+		
+		for (String facId : facilityIdsToLoop) {
+			crd = new ICG_Contact_Role_Detail__c();
+			crd.ICG_Role__c = 'Facility Manager';
+			crd.Status__c = status;
+			crd.Account_Contact_Role__c = acr[0].id;
+			crd.ICG_Account_Role_Detail__c = facId;
+			crdsToInsert.add(crd);
 		}
 		return crdsToInsert;
+	}
+
+	private static List<Account_Contact_Role__c> getAccountContactRole(String companyId, String contactId, Id accountRoleId) {
+
+		String accRoleId = accountRoleId;
+
+
+		if(accountRoleId == null) {
+			Account_Role__c accRole = new Account_Role__c();
+			accRole.Account__c = companyId;
+			accRole.Functional_Role__c = 'One Source';
+			insert accRole;
+
+			accRoleId = accRole.Id;
+		}
+		
+		List<Account_Contact_Role__c> acr = [Select id from Account_Contact_Role__c where Contact__c = :contactId and Account__c = :companyId and Functional_Role__c = 'One Source'];
+
+		if(acr.isEmpty()) {	
+
+
+			Account_Contact_Role__c acrObj = new Account_Contact_Role__c();
+			acrObj.Account__c = companyId;
+			acrObj.Contact__c = contactId;
+			acrObj.Functional_Role__c = 'One Source';
+			acrObj.Account_Role__c = accRoleId;
+			acrObj.Service_Rendered__c = 'TIP';
+			acr.add(acrObj);
+			insert acr;
+		}
+
+		return acr;
+	}
+
+    @AuraEnabled
+	public static String becomeCompanyAdminFromStation(String stationId, String companyId, String contactId) {
+		return becomeCompanyAdmin(getOpsHierarchyNameFromStationId(stationId), companyId, contactId);
 	}
 
 	@AuraEnabled
 	public static String becomeCompanyAdmin(String groupName, String companyId, String contactId) {
 		ResponseBody res = new ResponseBody();
-		List<Account_Contact_Role__c> acr = [Select id from Account_Contact_Role__c where Contact__c = :contactId and Account__c = :companyId and Functional_Role__c = 'One Source'];
-		if(acr.isEmpty()) {
-			res.success = false;
-			res.message = 'No Account Contact Role found for this contact. Please contact IATA.';
-		} else {
-			List<Account_Role__c> accRole = [Select id from Account_Role__c where Functional_Role__c = 'One Source' AND id IN (select From__c from Account_Role_Relationship__c where Relationship_Name__c LIKE :groupName and Relationship_Name__c != null)];
-			if(accRole.isEmpty()) {
-				//Get Ops Hierarchy -- Encapsulate
-				List<Account> acc = [Select id,Global_Ultimate_Account_Global_ID__c,(Select id from Account_Roles__r where Functional_Role__c = 'One Source') from Account where id =: companyId];
-				if(!acc.isEmpty()) {
-					List<Account> accList = [Select id, Name,(Select id from Account_Roles__r where Functional_Role__c = 'One Source') from Account where (Global_ID__c != null AND Global_ID__c = :acc[0].Global_Ultimate_Account_Global_ID__c) OR Id = :companyId];
-					List<Account_Role__c> accRoles = new List<Account_Role__c>();
-					String defaultGroupName;
-					for(Account loopacc : accList) {
-						//Create account roles for the company (parent or user company) if they do not have
-						if(loopacc.Account_Roles__r.isEmpty() && (accList.size()==1 || loopacc.Id != CompanyId)) {
-							Account_Role__c accr = new Account_Role__c();
-							accr.Account__c = acc[0].Id;
-							accr.Functional_Role__c = 'One Source';
-							accRoles.add(accr);
-							defaultGroupName = loopacc.Name;
+		Set<Id> accRolesIds = getAccountsRolesToSearch(groupName);
+
+
+		if(accRolesIds.isEmpty()) {
+			//Get Ops Hierarchy -- Encapsulate
+			List<Account> acc = [Select id,Global_Ultimate_Account_Global_ID__c,(Select id from Account_Roles__r where Functional_Role__c = 'One Source') from Account where Name = :groupName];
+			if(!acc.isEmpty()) {
+				List<Account_Role__c> accRoles = acc[0].Account_Roles__r;
+				if(accRoles.isEmpty()) {
+					//Create account roles for the company (parent or user company) if they do not have
+					Account_Role__c accr = new Account_Role__c();
+					accr.Account__c = acc[0].Id;
+					accr.Functional_Role__c = 'One Source';
+					accRoles.add(accr);
+				}
+				
+				Id accountRoleId;
+				if(!accRoles.isEmpty()) {
+					insert accRoles;
+					accountRoleId = accRoles[0].id;
+				} else {
+					for(Account loopacc : acc) {
+						//Once the opsHierarchyName is populated, create account roles for the company (parent or user company) if they do not have
+						if(!loopacc.Account_Roles__r.isEmpty()) {
+							accountRoleId = loopacc.Account_Roles__r[0].Id;
 						}	
 					}
-					Id accountRoleId;
-					if(!accRoles.isEmpty()) {
-						insert accRoles;
-						accountRoleId = accRoles[0].id;
-					} else {
-						for(Account loopacc : accList) {
-							//Once the opsHierarchyName is populated, create account roles for the company (parent or user company) if they do not have
-							if(!loopacc.Account_Roles__r.isEmpty() && (accList.size()==1 || loopacc.Id != CompanyId)) {
-								accountRoleId = loopacc.Account_Roles__r[0].Id;
-							}	
-						}
-						List<Account_Role_Relationship__c> accRel = [select Relationship_Name__c from Account_Role_Relationship__c where Relationship_Name__c != null AND To__c = :accountRoleId];
-						if(!accRel.isEmpty()) defaultGroupName = accRel[0].Relationship_Name__c;
-					}
-					
-					res = createCompanyAdminContactRoleDetail(acr[0].Id,accountRoleId, defaultGroupName, contactId);				
-
-				} else {
-					res.success=false;
-					res.message = 'You do not belong to any company. Please contact your IATA Administrator.';
 				}
+				List<Account_Contact_Role__c> acr = getAccountContactRole(companyId, contactId, accountRoleId);
+				res = createCompanyAdminContactRoleDetail(acr[0].Id,accountRoleId, groupName, contactId);				
+
 			} else {
-				res = createCompanyAdminContactRoleDetail(acr[0].Id,accRole[0].Id, groupName, contactId);
+				res.success=false;
+				res.message = 'You do not belong to any company. Please contact your IATA Administrator.';
 			}
+		} else {
+			List<Account_Contact_Role__c> acr = getAccountContactRole(companyId, contactId, new List<Id>(accRolesIds)[0]);
+			res = createCompanyAdminContactRoleDetail(acr[0].Id,new List<Id>(accRolesIds)[0], groupName, contactId);
 		}
+		
 		return JSON.serialize(res);
 	}
 	private static ResponseBody createCompanyAdminContactRoleDetail(String accContactRole, String accRoleId, String groupName, Id contactId ) {
@@ -541,7 +557,9 @@ public without sharing class CW_Utilities {
 		
 		Set<Id> contactsIds = new Set<Id>();
 		for (ICG_Contact_Role_Detail__c crd : getCompanyAdminContactRolesFromGroupNameByStatus(groupName, status)) {
-			if(crd.ContactId__c != null) contactsIds.add(crd.ContactId__c);
+			if(crd.ContactId__c != null) {
+				contactsIds.add(crd.ContactId__c);
+			}
 		}
 		List<Contact> adminContacts = [Select Id, Firstname, Lastname, Email, Title, Phone from Contact where ID IN :contactsIds];
 		return adminContacts;
@@ -556,26 +574,30 @@ public without sharing class CW_Utilities {
 		return [Select Id, CreatedDate, ContactId__c, Account_Contact_Role__r.Contact__r.FirstName, Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Account__c, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where Account_Role__c IN:accountRolesToSearch];
 	}
 
-	public static Set<Id> getRelatedAccountsByStation(String stationId){
+	public static Set<Id> getRelatedAccountsByStation(String stationId) {
 		List<ICG_Contact_Role_Detail__c> relatedContacts = getRelatedContactsFromGroupName(getOpsHierarchyNameFromStationId(stationId));
 		Set<Id> accountsIds = new Set<Id>(); 
 
-		for(ICG_Contact_Role_Detail__c crd: relatedContacts){
+		for(ICG_Contact_Role_Detail__c crd: relatedContacts) {
 			accountsIds.add(crd.Account_Contact_Role__r.Account__c);
 		}
 
 		return accountsIds;
 	}
 
-	private static Set<Id> getAccountsRolesToSearch(String groupName){
+	private static Set<Id> getAccountsRolesToSearch(String groupName) {
 		Set<Id> accountRolesToSearch = new Set<Id>();
 		//Select Parent Groups AccountRoles
 		Map<Id,Account_Role__c> accRolesParentOfGroups = new Map<Id,Account_Role__c>([Select id from Account_Role__c where ID IN (Select From__c from Account_Role_Relationship__c where Relationship_Name__c =:groupName)]);
 
 		List<Account_Role_Relationship__c> accountRoleRelatioships = [Select id, From__c, To__c from Account_Role_Relationship__c where Relationship_Name__c =:groupName or To__c IN :accRolesParentOfGroups.keySet() or (Ops_Hierarchy_Group__c =:groupName and To__c = null)];
 		for (Account_Role_Relationship__c accrRel : accountRoleRelatioships) {
-			if(accrRel.To__c != null) accountRolesToSearch.add(accrRel.To__c);
-			if(accrRel.From__c != null) accountRolesToSearch.add(accrRel.From__c);
+			if(accrRel.To__c != null) {
+				accountRolesToSearch.add(accrRel.To__c);
+			}
+			if(accrRel.From__c != null) {
+				accountRolesToSearch.add(accrRel.From__c);
+			}
 		}
 		if(accountRolesToSearch.isEmpty()) {
 			List<Account_Role__c> accountsRoleToSearch = [Select Id from Account_Role__c where Functional_Role__c = 'One Source' and Account__r.Name =:groupName];
@@ -592,7 +614,7 @@ public without sharing class CW_Utilities {
 		return getCompanyAdminContactsFromGroupNameByStatus(groupName, 'Approved');
 	}
 
-	@AuraEnabled
+	@AuraEnabled (cacheable = false)
 	public static List<ICG_Contact_Role_Detail__c> getPendingCompanyAdminContactRolesFromGroupName (String groupName) {
 		return getCompanyAdminContactRolesFromGroupNameByStatus(groupName, 'Pending for Approval');
 	}
@@ -631,13 +653,21 @@ public without sharing class CW_Utilities {
 				if(accRole[0].From_Relationships__r[0].To__c != null && accRole[0].From_Relationships__r[0].To__c != accRole[0].From_Relationships__r[0].From__c) {
 					List<Account_Role_Relationship__c> rel = [Select Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c where From__c = :accRole[0].From_Relationships__r[0].To__c];
 					if(!rel.isEmpty()) {
-						if(rel[0].Relationship_Name__c != null) opsHierarchy = rel[0].Relationship_Name__c;
-						else if (rel[0].Ops_Hierarchy_Group__c != null) opsHierarchy = rel[0].Ops_Hierarchy_Group__c;
+						if(rel[0].Relationship_Name__c != null) {
+							opsHierarchy = rel[0].Relationship_Name__c;
+						}
+						else if (rel[0].Ops_Hierarchy_Group__c != null) {
+							opsHierarchy = rel[0].Ops_Hierarchy_Group__c;
+						}
 					}
 				}
 				if(opsHierarchy == null) {
-					if(accRole[0].From_Relationships__r[0].Relationship_Name__c != null) opsHierarchy = accRole[0].From_Relationships__r[0].Relationship_Name__c;
-					else if (accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c != null) opsHierarchy = accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c;
+					if(accRole[0].From_Relationships__r[0].Relationship_Name__c != null) {
+						opsHierarchy = accRole[0].From_Relationships__r[0].Relationship_Name__c;
+					}
+					else if (accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c != null) {
+						opsHierarchy = accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c;
+					}
 				}
 			}
 		}
@@ -806,7 +836,9 @@ public without sharing class CW_Utilities {
 		whoEmails.add(whoEmail);
 		List<String> contactIds = new List<String>();
 		for(Contact c : getCompanyadminContactsFromAccountId(ard.Account_Role__r.Account__c)) {
-			if(c.email != null) whoEmails.add(c.email);
+			if(c.email != null) {
+				whoEmails.add(c.email);
+			}
 			contactIds.add(c.Id);
 		}
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
@@ -822,9 +854,13 @@ public without sharing class CW_Utilities {
 			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, newStation, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
 							
 			List<ICG_Contact_Role_Detail__c> crdsToInsert = CW_Utilities.getContactRoleDetailsToInsert(ard.Account_Role__r.Account__c, newStation.Id, ard.CreatedBy.ContactId, 'Approved');
-			if (!crdsToInsert.isEmpty()) insert crdsToInsert;
-		}else if (newStation.Status__c == 'Rejected' && oldStation.Status__c != 'Rejected') {
-			if(ard.CreatedBy.ContactId != null) updateAllStationManagementRecords(ard.CreatedBy.ContactId, newStation.Id, 'Rejected');
+			if (!crdsToInsert.isEmpty()) {
+				insert crdsToInsert;
+			}
+		} else if (newStation.Status__c == 'Rejected' && oldStation.Status__c != 'Rejected') {
+			if(ard.CreatedBy.ContactId != null) {
+				updateAllStationManagementRecords(ard.CreatedBy.ContactId, newStation.Id, 'Rejected');
+			}
 			sendEmailTemplate('Notification_Rejected_to_Req_Comp_Adm', newStation.Id, whoId, whoEmails);
 			subject +=  ' rejected';
 			body +=  ' rejected';
@@ -832,7 +868,7 @@ public without sharing class CW_Utilities {
 			cleanupAccount(ard);
 		}
 
-		if(notifications.size() > 0){
+		if(notifications.size() > 0) {
 			insert notifications;
 		}
 	}
@@ -871,7 +907,7 @@ public without sharing class CW_Utilities {
 
 		List<String> whoEmailIata = new List<String>();
 		for(User u : CW_Utilities.getIATAStakeHoldersUsersList()) {
-			if(u.email != null){
+			if(u.email != null) {
 				whoEmailIata.add(u.email);
 			}
 		}
@@ -886,7 +922,7 @@ public without sharing class CW_Utilities {
 					whoEmailsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__r.Email);
 				}
 
-			}else if(newContactRole.ICG_Role__c == 'Company Admin') {
+			} else if(newContactRole.ICG_Role__c == 'Company Admin') {
 				templateNameIata = 'Notification_Com_Adm_Req_appr_to_IATA';
 				templateNameContact = 'Notification_CA_Approv_to_Requestor';
 				templateNameCompAdmStationManagers = 'Notification_CA_Appro_to_Comp_Adm';
@@ -897,7 +933,7 @@ public without sharing class CW_Utilities {
 			if(newContactRole.ICG_Role__c == 'Facility Manager') {
 				templateNameContact = 'Notification_rejected_to_User';
 				subject = 'Facility manager rejected';
-			}else if(newContactRole.ICG_Role__c == 'Company Admin') {
+			} else if(newContactRole.ICG_Role__c == 'Company Admin') {
 				templateNameIata = 'Notification_CA_Rejected_to_IATA';
 				templateNameContact = 'Notification_CA_Rejected_to_Requestor';
 				templateNameCompAdmStationManagers = 'Notification_CA_Rejected_to_Comp_Adm';
@@ -929,7 +965,7 @@ public without sharing class CW_Utilities {
 
 
 		//Create notifications
-		if(subject != null){
+		if(subject != null) {
 			String body = subject;
 			CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>(notificationReceivers), newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
@@ -940,7 +976,9 @@ public without sharing class CW_Utilities {
 		for (ICG_Contact_Role_Detail__c crd : crds) {
 			crd.Status__c = status;
 		}
-		if(!crds.isEmpty()) update crds;
+		if(!crds.isEmpty()) {
+			update crds;
+		}
 	}
 
 	@AuraEnabled
@@ -973,11 +1011,11 @@ public without sharing class CW_Utilities {
 		}
 	}
 
-	public class picklistVal {
+	public class PicklistVal {
 		public string api;
 		public string label;
 
-		public pickListVal(string api, string label) {
+		public PicklistVal(string api, string label) {
 			this.api = api;
 			this.label = label;
 		}

@@ -80,9 +80,7 @@ export default class CwPrivateNotifications extends LightningElement {
 		getNotificationsFromUser_({viewAlertsEvents})
 			.then(result => {
                 let parseResult = JSON.parse(JSON.stringify(result));
-                console.log(parseResult);
 				this.data = JSON.parse(parseResult);
-
                 if(this.data){
                     this.checkRedirectionAndDate();
 
@@ -102,45 +100,98 @@ export default class CwPrivateNotifications extends LightningElement {
 	}
     
     checkRedirectionAndDate(){
-        this.data.forEach(elem=>{
-            if( (elem.Station__c != '' && elem.Station__c != undefined ) || (elem.Short_Description__c.includes('remote') || elem.Short_Description__c.includes('validation'))){
-                elem.isRedirection = true;
-                if(elem.Station__c != '' && elem.Station__c != undefined){
-                    elem.destiny = 'Station';
-                }
-                if(elem.Short_Description__c.includes('remote') || elem.Short_Description__c.includes('validation')){
-                    elem.destiny = 'Remote';
-                }
-            }
-            else{
-                elem.isRedirection = false;
-            }
+		getUserInfo().then(result => {
+			this.userInfo = JSON.parse(result);
 
-            //parse Dates
-            let parseDate = new Date(elem.CreatedDate);
-            let endDate = parseDate.getDate() + '/' + parseDate.getMonth() + '/' + parseDate.getFullYear();
-            elem.CreatedDate = endDate;
+			this.data.forEach(elem=>{
+				let description = elem.Short_Description__c.toLowerCase();
+				if( (elem.Station__c != '' && elem.Station__c != undefined ) || 
+					(description.includes('remote') || description.includes('validation')) ||
+					description.includes('pending approval') ||
+					description.includes('station manager') ||
+					description.includes('facility manager') ||
+					description.includes('company admin') ||
+					description.includes('audit schedule') ){
+					elem.isRedirection = true;
+					if(description.includes('pending approval') && (elem.Station__c != '' && elem.Station__c != undefined)){
+						if (elem.CreatedById === this.userInfo.Id){
+							elem.destiny = 'my requests';
+						}
+						else{
+							elem.destiny = 'pending user approval';
+						}
+					}
+					else if(description.includes('pending approval')){
+						elem.destiny = 'pending user approval';
+					}
+					else if(description.includes('audit schedule')){
+						elem.destiny = 'audit schedule';
+					}
+					else if(elem.Station__c != '' && elem.Station__c != undefined){
+						elem.destiny = 'station';
+					}
+					else if(description.includes('station manager') || description.includes('facility manager')){
+						elem.destiny = 'station managers';
+					}
+					else if(description.includes('company admin')){
+						elem.destiny = 'company admin';
+					}                
+					if(description.includes('remote') || description.includes('validation')){
+						elem.destiny = 'remote';
+					}
+				}
+				else{
+					elem.isRedirection = false;
+				}
 
-        });
+				//parse Dates
+				let parseDate = new Date(elem.CreatedDate);
+				let endDate = parseDate.getDate() + '/' + (parseDate.getMonth()+1) + '/' + parseDate.getFullYear();
+				elem.CreatedDate = endDate;
 
+			});
+		});
     }
 
     handleNavigate(event){
-        let destiny = event.currentTarget.getAttribute("data-destiny");
+        let destiny = event.currentTarget.getAttribute("data-destiny").toLowerCase();
         let url='';
-        if(destiny === 'Station'){
+        if(destiny === 'station'){
             url = '#ID:' + event.currentTarget.getAttribute("data-id");
             window.open(url, "_blank");
         }
-        if(destiny === 'Remote'){
+        else if(destiny === 'pending station approval'){
+            url = '#Pending Facility Approvals';
+            window.open(url, "_blank");
+        }
+        else if(destiny === 'pending user approval'){
+            url = '#Pending User Approvals';
+            window.open(url, "_blank");
+        }
+        else if(destiny === 'station managers'){
+            url = '#Station Managers';
+            window.open(url, "_blank");
+        } 
+        else if(destiny === 'company admin'){
+            url = '#Company Admins';
+            window.open(url, "_blank");
+        }
+        else if(destiny === 'audit schedule'){
+            url = '#Schedule Audits';
+            window.open(url, "_blank");
+        }  
+        else if(destiny === 'my requests'){
+            url = '#My Requests';
+            window.open(url, "_blank");
+        }  
+        else if(destiny === 'remote'){
             let description = event.currentTarget.getAttribute("data-description").toLowerCase();
             //redirection depend to the action...
-            console.log(description);
             if(description.includes('granted') || description.includes('approved') || description.includes('accepted')){
                 url = '#ID:' + event.currentTarget.getAttribute("data-id");
                 window.open(url, "_blank");
             }
-            else if(description.includes('declined') || description.includes('rejected')){
+            else if(description.includes('expired') || description.includes('rejected')){
                 url = '#Remote Validation History';
                 window.open(url, "_blank");
             }

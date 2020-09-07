@@ -232,12 +232,12 @@ public without sharing class CW_CreateFacilityController {
 
 	@AuraEnabled
 	public static void updateAccountCoordinates(String accId, Double latitude, Double longitude){
-		Account acc = new Account(
-			Id = accId,
-			Business_Geo_Coordinates__Latitude__s = latitude,
-			Business_Geo_Coordinates__Longitude__s = longitude
-		);
-		update acc;
+		Account acc = [Select id, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s from Account where Id =:accId];
+		if (acc.Business_Geo_Coordinates__Latitude__s == null || acc.Business_Geo_Coordinates__Longitude__s == null){
+			acc.Business_Geo_Coordinates__Latitude__s = latitude;
+			acc.Business_Geo_Coordinates__Longitude__s = longitude;
+			update acc;
+		}
 	}
 
 	private static Account_Role__c createOneSourceAccRole(Id accountId){

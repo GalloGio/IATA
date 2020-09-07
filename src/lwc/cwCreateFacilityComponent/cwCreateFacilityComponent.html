@@ -461,8 +461,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-8 middle">
-                    <div class="col-12 text-center">
+                <div class="col-4 middle">
+                    <div class="col-8 text-center m-auto">
                         <img lwc:dom="manual" id="logopreview" src="" />
                     </div>
                     <div class="col-12 text-center">
@@ -716,7 +716,7 @@
                 </div>
                 <div class="col-6 text-right">
                     <a class="btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="nextaction" href="javascript:{}"
-                        onclick={createFacilityJS}>{label.save}</a>
+                        onclick={createFacilityJS}>{label.submit}</a>
                 </div>
             </div>
         </form>
@@ -906,7 +906,7 @@
                 <template for:each={hoveredFacilities} for:item="facility">
                     <div class="pr-3" key={facility.Id}>
                         <div class="row">
-                            <div class="col-2 m-auto" style="display: flex;">
+                            <div class="col-2 m-auto display-flex">
                                 <img src={facility.thumbnail} class="width-100" />
                             </div>
 
@@ -917,7 +917,7 @@
                                     </a>
                                 </div>
                                 <div class="col-12">
-                                    <img style="width:20px;" src={facility.ctypeimage} alt="type" />
+                                    <img class="width-20" src={facility.ctypeimage} alt="type" />
                                     <span><b>{facility.RecordType.Name}</b></span>
                                 </div>
                                 <div class="col-12" if:true={facility.canRequestAccess}>

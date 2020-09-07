@@ -193,10 +193,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Capability_Asgmt_Group_Helper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_ICG_Facility_Queuable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1080,6 +1076,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ICG_Capability_Assignment_Group__c.ICG_Certification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ICG_Capability_Assignment_Group__c.Is_Deprecated_Without_Children__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

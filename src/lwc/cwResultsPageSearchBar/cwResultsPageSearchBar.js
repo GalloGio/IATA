@@ -7,6 +7,8 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
 import { fillPredictiveValues, extractTypeFromLocation, removeGenericItemFromList, prepareSearchObjectFEICategories, checkIconType, translationTextJS, createKey, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
 
+const LIMITNUMBERFILTERS = 25;
+
 export default class CwResultsPageSearchBar extends LightningElement {
 	label = labels.labels();
 	deletetag = resources + "/icons/ic-delete-tag.svg";
@@ -661,7 +663,8 @@ export default class CwResultsPageSearchBar extends LightningElement {
 				value: element.info.value,
 				label: label,
 				icon: checkIconType(element.info.type),
-				basekey: element.key
+				basekey: element.key,
+				stationsIds: element.info.stationsIds
 			});
 		});
 
@@ -787,6 +790,14 @@ export default class CwResultsPageSearchBar extends LightningElement {
 
 	get searchSummaryListLength() {
 		return this.searchSummaryList.length;
+	}
+
+	get visibilityFilters() {
+		return this.searchSummaryList.length < LIMITNUMBERFILTERS ? '' : 'hidden' ;
+	}
+
+	get limitReached() {
+		return this.searchSummaryList.length >= LIMITNUMBERFILTERS ? '' : 'hidden' ;
 	}
 
 	setSelectedCategory(event) {

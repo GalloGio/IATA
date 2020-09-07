@@ -3,12 +3,13 @@ import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import getComparisonSchema from "@salesforce/apex/CW_FacilityCapabilitiesController.getComparisonSchema";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { loadScript } from "lightning/platformResourceLoader";
 
 const LOCAL_STORAGE_COMPARE_FIELD = "facilitiesToCompare";
 const MAX_ITEMS_TO_COMPARE = 3;
 
-import { concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, removeFromComparisonCommon } from "c/cwUtilities";
+import { concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, removeFromComparisonCommon, saveComparisonListToLocalStorage } from "c/cwUtilities";
 
 export default class CwFacilityCompareContainer extends LightningElement {
 	icons = {
@@ -28,7 +29,11 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	get isDataLoaded() {
 		return (this.facilitiesToCompare && this.comparisonSchema && this.comparisonSchema.superCategories) || this.isUpdating;
 	}
-
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
+	}
 	renderedCallback() {
 		if (!this.initialized) {
 			this.initialized = true;
@@ -64,12 +69,11 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 
 	set facilitiesToCompare(value) {
-		try{
+		try {
 			this._facilitiesToCompare = value;
-		}catch (error) {
-			this.showToast('Comparison',"Something went wrong", "error");
-		  }
-		
+		} catch (error) {
+			this.showToast("Comparison", "Something went wrong", "error");
+		}
 	}
 
 	_accountRoleDetailRT = null;
@@ -111,7 +115,6 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 
 	handleComparisonSchema(array) {
-
 		let arrayCopy = JSON.parse(JSON.stringify(array));
 
 		// Loop comparison sections
@@ -132,7 +135,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 								compEquipment.rows = [];
 							}
 							dataFound.rows.forEach(currentRow => {
-								currentRow.frontKey = 'row' + this.frontKeyCounter++;
+								currentRow.frontKey = "row" + this.frontKeyCounter++;
 								compEquipment.rows.push(currentRow);
 							});
 						});
@@ -274,7 +277,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 				let tmpValue = {};
 				tmpValue[currentRow.info.name] = currentRow.values[index];
 				tmpValue.valueCss = this.calculateValueCss(index);
-				tmpValue.frontKey = 'value' + this.frontKeyCounter++;
+				tmpValue.frontKey = "value" + this.frontKeyCounter++;
 				newValues.push(tmpValue);
 			}
 			currentRow.values = newValues;
@@ -309,7 +312,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 						dummyValue[rowToAdd.info.name] = rowToAdd.info.name.toLowerCase() === "equipment__c" ? false : null;
 					}
 					dummyValue.valueCss = this.calculateValueCss(x);
-					dummyValue.frontKey = 'value' + this.frontKeyCounter++;
+					dummyValue.frontKey = "value" + this.frontKeyCounter++;
 					rowToAdd.values.push(dummyValue);
 				}
 				let isFirst = index === 0;
@@ -323,13 +326,13 @@ export default class CwFacilityCompareContainer extends LightningElement {
 		return returnValue;
 	}
 
-	calculateRowToAdd(currentRow){
+	calculateRowToAdd(currentRow) {
 		return {
-			isFirst : currentRow.isFirst,
+			isFirst: currentRow.isFirst,
 			rowCss: currentRow.rowCss,
 			values: currentRow.values,
 			info: currentRow.info
-		}
+		};
 	}
 
 	extractRowInfo(dataFound, rowIndex, facilitiesToCompareNumber) {
@@ -420,8 +423,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 			if (element.classList.contains("hidden")) {
 				element.classList.remove("hidden");
 				event.currentTarget.iconName = "utility:chevronup";
-			}
-			else {
+			} else {
 				element.classList.add("hidden");
 				event.currentTarget.iconName = "utility:chevrondown";
 			}
@@ -435,7 +437,7 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 
 	updateFacilitiesToCompareLocal(value, updateSchema) {
-		window.localStorage.setItem(LOCAL_STORAGE_COMPARE_FIELD, JSON.stringify(value));
+		saveComparisonListToLocalStorage(value);
 		this.facilitiesToCompare = this.readFacilititiesToCompareFromLocalStorage();
 		if (updateSchema) {
 			this.updateSchemaTable();
@@ -443,21 +445,21 @@ export default class CwFacilityCompareContainer extends LightningElement {
 	}
 
 	updateSchemaTable() {
-		 this.comparisonSchema = this.handleComparisonSchema(this.rawSchemaData);
+		this.comparisonSchema = this.handleComparisonSchema(this.rawSchemaData);
 	}
 
 	removeFromComparison(idsToRemove) {
 		const updatedFacilitiesToCompare = removeFromComparisonCommon(idsToRemove, this.facilitiesToCompare);
-		if(updatedFacilitiesToCompare){
+		if (updatedFacilitiesToCompare) {
 			this.updateFacilitiesToCompareLocal(updatedFacilitiesToCompare, true);
 		}
 	}
-	showToast(title,message, variant) {
-        const event = new ShowToastEvent({
-            title: title,
+	showToast(title, message, variant) {
+		const event = new ShowToastEvent({
+			title: title,
 			message: message,
 			variant: variant
-        });
-        this.dispatchEvent(event);
+		});
+		this.dispatchEvent(event);
 	}
 }

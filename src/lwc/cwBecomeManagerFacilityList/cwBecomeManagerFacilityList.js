@@ -45,7 +45,7 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
         //this._facilities = JSON.parse(JSON.stringify(value));
         this._facilities = [];
         userFacilities.forEach(facility => {
-            if (facility && facility.isApproved__c && ((this.userInfo && this.userInfo.isCompanyAdmin != true) || !this.userInfo)) {
+            if (facility && facility.isApproved__c) {
                 let address = concatinateAddressString(facility.addressStreetNr) + concatinateAddressString(facility.secondAddress) + concatinateFacilityAddress(facility);
                 address = removeLastCommaAddress(address);  
                 let facilityInfo = {
@@ -58,8 +58,8 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
                 }
                 facilityInfo.address = facilityInfo.address.replace('undefined', '');
                 if (facility.ICG_Contact_Role_Details__r && facility.ICG_Contact_Role_Details__r.totalSize > 0) {
-                    facilityInfo.clickable = false;
                     facility.ICG_Contact_Role_Details__r.records.forEach(role => {
+                        if(role.Status__c != 'Removed' && role.Status__c != 'Rejected') facilityInfo.clickable = false;
                         if (role.isApproved__c && role.ICG_Role__c === 'Facility Manager') facilityInfo.userManaged = true;
                         if (!facilityInfo.userManaged && role.isPendingApproval__c && role.ICG_Role__c === 'Facility Manager') facilityInfo.pendingUserManaged = true;
                     });

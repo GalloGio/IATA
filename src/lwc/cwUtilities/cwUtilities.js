@@ -1,7 +1,3 @@
-// import { LightningElement } from 'lwc';
-
-// export default class CwUtilities extends LightningElement {}
-
 export function removeFromArray(array, value) {
 	return array.filter(function (element) {
 		return element !== value;
@@ -124,7 +120,7 @@ export function checkIfChangeSelectAllText(array) {
 }
 
 export function prepareSearchObjectFEICategories(array, searchList) {
-	let searchObject = JSON.parse(JSON.stringify(searchList));//[];
+	let searchObject = JSON.parse(JSON.stringify(searchList));
 	let lstFields = [];
 	let equipmentObject = {
 		value: "",
@@ -471,7 +467,23 @@ export function prepareSearchParams(searchList) {
 
 	const urlParams = !emptySearch ? hashedParams : "all";
 
-	return urlParams;
+	return compressQueryParams(urlParams);
+}
+
+export function compressQueryParams(input) {
+	if (window.LZString) {
+		const compressInput = window.LZString.compressToEncodedURIComponent(input);
+		return compressInput;
+	}
+	return input;
+}
+
+export function decompressQueryParams(input) {
+	if (window.LZString) {
+		const decompressInput = window.LZString.decompressFromEncodedURIComponent(input);
+		return decompressInput;
+	}
+	return input;
 }
 
 export function checkIfEmptySearch(searchList) {
@@ -530,12 +542,22 @@ export function checkKeyUpValue(event) {
 
 export function getQueryParameters() {
 	var params = {};
-	var search = location.search.substring(1);
 
-	if (search) {
-		if (search.substring(search.length - 1) === "=") {
-			search = search.substring(0, search.length - 1);
+	var searchParams = [];
+	location.search.split("&").forEach(element => {
+		if (element.startsWith("?q=") || element.startsWith("q=")) {
+			let decompressedValue = decompressQueryParams(element.split("=")[1]);
+			searchParams.push("q=" + decompressedValue);
+		} else {
+			searchParams.push(element);
 		}
+	});
+
+	var search;
+	if (searchParams.length > 0) {
+		search = searchParams.join("&");
+	}
+	if (search) {
 		try {
 			params = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => {
 				return key === "" ? value : decodeURIComponent(value);
@@ -657,4 +679,10 @@ export function removeGenericItemFromList(label, array) {
 	});
 
 	return { auxList: auxList, auxListLabels: auxListLabels };
+}
+
+export function saveComparisonListToLocalStorage(array){
+	const LOCAL_STORAGE_COMPARE_FIELD = "facilitiesToCompare";
+	let filteredArray = array.filter(element => element.Id);
+	window.localStorage.setItem(LOCAL_STORAGE_COMPARE_FIELD, JSON.stringify(filteredArray));
 }

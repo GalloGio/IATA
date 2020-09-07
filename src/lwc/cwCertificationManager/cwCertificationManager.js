@@ -4,6 +4,7 @@ import renewCertification_ from "@salesforce/apex/CW_CertificationsManagerContro
 import getDeprecatedCert from "@salesforce/apex/CW_CertificationsManagerController.getFacilityDeprecatedCertifications";
 import updateFieldEdited_ from "@salesforce/apex/CW_CertificationsManagerController.updateFieldEdited";
 import getNextCertificationID from '@salesforce/apex/CW_CertificationsManagerController.getNextCertificationID';
+import getCertificationWithoutCapabilities from '@salesforce/apex/CW_CertificationsManagerController.getCertificationWithoutCapabilities';
 import {refreshApex} from '@salesforce/apex';
 export default class CwCertificationManager extends LightningElement {
 	@api recordId;
@@ -26,6 +27,8 @@ export default class CwCertificationManager extends LightningElement {
 	@track selectedScope ='';
 	@track scope = [];
 	@track scopeToUse;
+	_labelScope;
+	_valuesScope=[];
 
 	@track deprecatedCerts = [];
 
@@ -37,12 +40,7 @@ export default class CwCertificationManager extends LightningElement {
 
 	initialized = false;
 
-	@wire(getNextCertificationID, {})
-    wiredCertificationID({ data }) {
-        if (data) {
-			this.mapForCertifiID = JSON.parse(JSON.parse(JSON.stringify(data)));
-        }
-	}
+	certificationsWithoutCapab;	
 
 	get hideButton() {
 
@@ -72,21 +70,80 @@ export default class CwCertificationManager extends LightningElement {
 		return this.selectedScope === '';
 	}
 
+	get disableButtonEditCapab(){
+		if(this.certificationsWithoutCapab != undefined && this.certificationsWithoutCapab != null){
+			let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.certificationInfo.value);
+			if(includeCapabilities.length !== 0){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
 
+	get getLabelScope(){
+		return this._labelScope;
+	}
+
+	get getValuesScope(){
+		return this._valuesScope;
+	}
 
 	renderedCallback(){
 		if(!this.initialized){
 			this.initialized = true;
 			this.newCertId = this.certificationInfo.certificationId;
+			this._labelScope = this.certificationInfo.scopeLabel;
+			this._valuesScope = this.certificationInfo.scope;
+
+			getCertificationWithoutCapabilities({})
+			.then(result => {
+				if (result) {
+					this.certificationsWithoutCapab = result;
+				}						
+			})
+			.catch(error => {
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: 'Error reading certifications without capabilities',
+						message: error,
+						variant: 'error'
+					})
+				);
+			});	
+
 		}
 	}
 	
+	getNextCertificationID(certiSelected){
+		getNextCertificationID({certiSelected})
+			.then(result => {
+				if (result) {
+					this.handleRenew(result);
+				}						
+			})
+			.catch(error => {
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: 'Error reading certification Id to assign',
+						message: error,
+						variant: 'error'
+					})
+				);
+			});	
+	}
+
+	handleRenewCertification(){
+		this.getNextCertificationID(this.certificationInfo.value);
+	}
+
 	handleEditCertification() {
 		this.isRenewMode = false;
 		this.isEditMode = !this.isEditMode;
 	}
 
-	handleRenew() {
+	handleRenew(nextCertiId) {
 		let today = new Date();
 		let dd = String(today.getDate()).padStart(2, "0");
 		let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -96,7 +153,7 @@ export default class CwCertificationManager extends LightningElement {
 		this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,this.certificationInfo.expirationPeriod);
 		this.showScope = true;
 		this.scope = this.certificationInfo.listScope;
-		this.newCertId = this.mapForCertifiID[0][this.certificationInfo.name];
+		this.newCertId = nextCertiId;
 		this.showModal = true;
 		this.isRenewMode = true;
 		this.isEditMode = false;
@@ -113,7 +170,10 @@ export default class CwCertificationManager extends LightningElement {
 		this.closeConfirmationModal();
 		this.dispatchEvent(
 			new CustomEvent("editonlycapabilitiesbycerti", {
-				detail: { certificationId: this.certificationInfo.id }
+				detail: { 
+					certificationId: this.certificationInfo.id,
+					certId: this.certificationInfo.value
+				}
 			})
 		);
 	}
@@ -127,35 +187,42 @@ export default class CwCertificationManager extends LightningElement {
 	}
 	handleChangeEditMode(event){
 		let name = event.target.dataset.name;
-		let value = event.detail.value;
+		let value;
+		let label;
 		let fieldToUpdate = {};
 		if(name === 'scope-edition'){
+			label = event.target.value.join(';');
+			value = event.target.value;
 			if(this.certificationInfo.scopeToUse === "CEIV_Scope_List__c"){
 				fieldToUpdate = {
 					Id: this.certificationInfo.id,
-					CEIV_Scope_List__c: value				
+					CEIV_Scope_List__c: label
 				};
 			}
-			if(this.certificationInfo.scopeToUse === "SFOC_Scope__c"){
+			if(this.certificationInfo.scopeToUse === "SFOC_Scope__c"){				
 				fieldToUpdate = {
 					Id: this.certificationInfo.id,
-					SFOC_Scope__c : value					
+					SFOC_Scope__c : label
 				};
 			}	
 			if(this.certificationInfo.scopeToUse === "IEnvA_Scope__c"){
 				fieldToUpdate = {
 					Id: this.certificationInfo.id,
-					IEnvA_Scope__c : value					
+					IEnvA_Scope__c : label
 				};
-			}				
+			}
+			this._labelScope = label;
+			this._valuesScope = value;				
 		}
 		if(name === 'issuing-edition'){
+			value = event.detail.value;
 				fieldToUpdate = {
 					Id: this.certificationInfo.id,				
 					Issue_Date__c : value			
 				};
 		}
 		if(name === 'expiriation-edition'){
+			value = event.detail.value;
 			fieldToUpdate = {
 				Id: this.certificationInfo.id,				
 				Expiration_Date__c : value			
@@ -248,7 +315,7 @@ export default class CwCertificationManager extends LightningElement {
 			if (response) {
 				this.dispatchEvent(
 					new CustomEvent("certificationrenewed", {
-						detail: { certificationId: certificationId }
+						detail: { certificationId: response, certId: this.certificationInfo.value}
 					})
 				);
 				this.showToast(this.certificationInfo.name,"Certification renewed", "success");

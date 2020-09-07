@@ -50,7 +50,6 @@ export default class CwMyRequests extends LightningElement {
     }
     
     set userFacilities(value){
-        console.log('userFacilities');
         this.adminRequest = [];
 		this._userFacilities = value;
 		this._userFacilities.forEach(item =>{
@@ -76,7 +75,6 @@ export default class CwMyRequests extends LightningElement {
     }
     
     set userManagedFacilities(value){
-        console.log('userManagedFacilities');
         this._userManagedFacilities = value;
         this.setUserManagedFacilitiesJS();
     }

@@ -1,4 +1,6 @@
 import { LightningElement,api,track,wire } from 'lwc';
+import { loadScript } from "lightning/platformResourceLoader";
+import { compressQueryParams } from "c/cwUtilities";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import pubsub from 'c/cwPubSub';
 import swipe from 'c/cwSwipe';
@@ -45,7 +47,6 @@ export default class CwBody extends LightningElement {
 
     renderedCallback() {
         if (!this.initialized) {
-            console.log(this.label);
             this.initialized = true;
             let hash = window.location.hash;
             //Delay to let the screen load and set ids
@@ -73,6 +74,9 @@ export default class CwBody extends LightningElement {
         window.scrollBy(0,-110);
     }
     connectedCallback(){
+        if (window.LZString === undefined) {
+            Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+        }
         this.scrollToSectionCallback = this.scrollToSection.bind(this); 
         this.register();
     }
@@ -119,7 +123,7 @@ export default class CwBody extends LightningElement {
     }
 
     seeAllResults() { 
-        window.location.href = this.urlResultPage + "?q=all";
+        window.location.href = this.urlResultPage + "?q=" + compressQueryParams( "all");
     }
     getNextCarouselElementId(){
         let activeItem = this.template.querySelector(".item-active").dataset.targetId;

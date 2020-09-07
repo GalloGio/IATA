@@ -31,7 +31,7 @@
                 <template for:each={days} for:item="currentDay">
                     <div key={currentDay.name} class="row">
 
-                        <div class="col-4 pl-1">
+                        <div class="col-4 p-0">
                             <p class="font-size-sm">
                                 {currentDay.label}
                             </p>
@@ -43,8 +43,8 @@
                                     <div class={closedColorClass}>{label.closed}</div>
                                 </template>
                                 <template if:true={currentDay.open}>
-                                    <div class="col-3 font-size-sm">{currentDay.startAtPretty}</div>
-                                    <div class="col-3 font-size-sm">{currentDay.endAtPretty}</div>
+                                    <div class="col-3 font-size-sm pl-0">{currentDay.startAtPretty}</div>
+                                    <div class="col-3 font-size-sm pl-2">{currentDay.endAtPretty}</div>
                                 </template>
                             </template>
                         </template>
@@ -55,13 +55,13 @@
                                 <div class="col-6 font-size-sm txt-center">{label.closed}</div>
                             </template>
                             <template if:true={currentDay.open}>
-                                <div class="col-3 font-size-sm">
+                                <div class="col-3 font-size-sm pl-0">
                                     <c-cw-html-select-with-selected-value attrib-name={currentDay.startAtKey}
                                         attrib-class="form-control-sm m-0 p-0" items={timeValues}
                                         selected-value={currentDay.startAt} onchange={handleChangeHour}>
                                     </c-cw-html-select-with-selected-value>
                                 </div>
-                                <div class="col-3 font-size-sm">
+                                <div class="col-3 font-size-sm pl-2">
                                     <c-cw-html-select-with-selected-value attrib-name={currentDay.endAtKey}
                                         attrib-class="form-control-sm m-0 p-0" items={timeValues}
                                         selected-value={currentDay.endAt} onchange={handleChangeHour}>
@@ -70,7 +70,7 @@
                             </template>
                         </template>
 
-                        <div class="col-2 font-size-sm">
+                        <div class="col-2 font-size-sm display-inline-flex">
 
                             <template if:true={editMode}>
                                 <img if:true={currentDay.open} src={checkedIcon} class="icon btn-icon"

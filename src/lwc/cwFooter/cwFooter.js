@@ -8,9 +8,10 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import NAME_FIELD from "@salesforce/schema/ICG_Portal_URL__mdt.MasterLabel";
 import URL_FIELD from "@salesforce/schema/ICG_Portal_URL__mdt.Link__c";
 import DESCRIPTION_FIELD from "@salesforce/schema/ICG_Portal_URL__mdt.Description__c";
-import { concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, removeFromComparisonCommon } from "c/cwUtilities";
+import { concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, removeFromComparisonCommon, saveComparisonListToLocalStorage } from "c/cwUtilities";
 import labels from 'c/cwOneSourceLabels';
 
+import { loadScript } from "lightning/platformResourceLoader";
 const LOCAL_STORAGE_COMPARE_FIELD = "facilitiesToCompare";
 const MIN_ITEMS_TO_COMPARE = 2;
 
@@ -29,6 +30,9 @@ export default class cwFooter extends LightningElement {
 
 	@track loadedCss = false;
 	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
 		this.cssLoadedCallback = this.cssLoaded.bind(this);
 		this.comparisonUpdatedCallback = this.comparisonUpdated.bind(this);
 		this.register();
@@ -150,7 +154,7 @@ export default class cwFooter extends LightningElement {
 	metadataFooterCopyright;
 
 	get FooterCopyrightDescription() {
-		return this.metadataFooterCopyright.data ? getSObjectValue(this.metadataFooterCopyright.data, DESCRIPTION_FIELD) : "";
+		return this.metadataFooterCopyright.data ? getSObjectValue(this.metadataFooterCopyright.data, DESCRIPTION_FIELD) + ' ' + new Date().getFullYear() + '. ' +this.label.all_rights_reserved + '.' : "";
 	}
 
 	logoOther = resources + "/icons/iata-logo-other.svg";
@@ -239,7 +243,7 @@ export default class cwFooter extends LightningElement {
 		return tmpFacilitiesToCompare;
 	}
 	set facilitiesToCompare(value) {
-		window.localStorage.setItem(LOCAL_STORAGE_COMPARE_FIELD, JSON.stringify(value));
+		saveComparisonListToLocalStorage(value);
 	}
 	handleRemoveItemFromComparison(event) {
 		const id = event.currentTarget.getAttribute("data-item-id");

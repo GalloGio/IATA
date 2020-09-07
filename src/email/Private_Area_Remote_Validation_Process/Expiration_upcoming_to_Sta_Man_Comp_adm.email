@@ -1,6 +1,7 @@
 <messaging:emailTemplate subject="A Smart Facility Remote Validation is expiring" relatedToType="ICG_Capability_Assignment_Group__c">
     <messaging:HtmlEmailBody >
         <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
             <body>
                 <c:CW_EmailHeader ></c:CW_EmailHeader>
                 <div style="padding: 30px; font-size: 0.9rem;">

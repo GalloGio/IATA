@@ -2,8 +2,9 @@ import { LightningElement, track, wire } from "lwc";
 import getResults from "@salesforce/apex/CW_SearchEngine.getInfo";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
+import { loadScript } from "lightning/platformResourceLoader";
 import getCertifications from "@salesforce/apex/CW_ResultsPageSearchBarController.getCertifications";
-import { checkIfEmptySearch, getQueryParameters } from "c/cwUtilities";
+import { checkIfEmptySearch, getQueryParameters, compressQueryParams } from "c/cwUtilities";
 import labels from 'c/cwOneSourceLabels';
 
 export default class CwResultsPageContainer extends LightningElement {
@@ -120,7 +121,11 @@ export default class CwResultsPageContainer extends LightningElement {
 			//this.template.querySelector('.big-blue-span').innerHTML = "Filters (6)";
 		}
 	}
-
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
+	}
 	renderedCallback() {
 		if (!this.initialized) {
 			let urlParams = getQueryParameters();
@@ -180,20 +185,31 @@ export default class CwResultsPageContainer extends LightningElement {
 							getHandledAirlines: false, 
 							orderByOnAirport: orderByOnAirport, 
 							isPendingApproval: false, 
-							limitRecords: this.recordsPerPage })
+							limitRecords: this.recordsPerPage,
+							isStrongFilter: true
+						})
 				.then(result => {
 					this.results = result ? JSON.parse(result) : null;
 					this.selectedPage = 1;
 					if (this.results) {
 						this.isLoading = false;
-						if (!this.initialLoadPerformed) this.initialLoadPerformed = true;
+						if (!this.initialLoadPerformed) {
+							this.initialLoadPerformed = true;
+						}
 						this.certimage = null;
 						this.generateMapRecords(searchWrapper, orderByOnAirport);
+
+						if(this.results.length < 1) {
+							this.paginateLogic();
+						}
 					} else {
 						this.mapData = null;
 						this.updateMapOptions();
 						this.isLoading = false;
-						if (!this.initialLoadPerformed) this.initialLoadPerformed = true;
+						if (!this.initialLoadPerformed) {
+							this.initialLoadPerformed = true;
+						}
+						
 					}
 				})
 				.catch(error => {
@@ -314,14 +330,15 @@ export default class CwResultsPageContainer extends LightningElement {
 												"Nearest_Airport__r.IATA_ISO_Country__r.Name",
 												"Search_By_City__c",
 												"Search_By_Country__c", 
-												"Nearest_Airport__r.Airport_Name__c"];
+												"Nearest_Airport__r.Airport_Name__c",
+												"City_For__c"];
 					lstLocat.push(this.searchList[i]);
                     break;
                 case "RECORDTYPE.DEVELOPERNAME":
 					lstCoType.push(this.searchList[i]);
 					break;
 				case "COMPANY_FOR__C":
-					this.searchList[i].fields = ["Search_By_Company__c","Name"];
+					this.searchList[i].fields = ["Search_By_Company__c","Name","Company_For__c"];
 					lstCoName.push(this.searchList[i]);
 					break;
 				case "ICG_CERTIFICATION__R.NAME":
@@ -386,6 +403,7 @@ export default class CwResultsPageContainer extends LightningElement {
 					key = "q" + i.toString();
 				} 
 			}
+			value = compressQueryParams(value);
 		}
 		window.localStorage.setItem(key, value);
 	}
@@ -397,11 +415,11 @@ export default class CwResultsPageContainer extends LightningElement {
 			let newUrl;
 			let params = getQueryParameters();
 			if (params.q) {
-				newUrl = currentUrl.replace(params.q, this.lastQueryEncodedString.replace("=", ""));
+				newUrl = currentUrl.replace(compressQueryParams(params.q), compressQueryParams(this.lastQueryEncodedString.replace("=", "")));
 			} else if (Object.keys(params).length > 0 && this.lastQueryEncodedString) {
-				newUrl = currentUrl + "&q=" + this.lastQueryEncodedString.replace("=", "");
+				newUrl = currentUrl + "&q=" + compressQueryParams(this.lastQueryEncodedString.replace("=", ""));
 			} else if (this.lastQueryEncodedString) {
-				newUrl = currentUrl + "?q=" + this.lastQueryEncodedString.replace("=", "");
+				newUrl = currentUrl + "?q=" + compressQueryParams(this.lastQueryEncodedString.replace("=", ""));
 			}
 			window.history.pushState({}, null, newUrl);
 		}

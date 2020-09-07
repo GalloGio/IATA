@@ -111,7 +111,7 @@ public without sharing class CW_PrivateAreaController {
 
 	@AuraEnabled(cacheable=true)
 	public static String getActiveCertifications() {
-		return JSON.serialize([SELECT Id, Description__c, link__c, Name, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true]);
+		return JSON.serialize([SELECT Id, Description__c, link__c, Name, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c]);
 	}
 
 	@AuraEnabled(cacheable=true)

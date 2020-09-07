@@ -122,7 +122,7 @@ public with sharing class CW_GxA_Integration_BatchTest {
 		Id batchId = Database.executeBatch(batchNotif);
 
 		List<ICG_Capability_Assignment_Group__c> listcag = [SELECT Id, Order_Product__r.Station__c, GxA_Error_Message__c, GxA_Error_StackTrace__c, GxA_Result_Json__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId = :remoteValidationRtId AND Id IN :enterParameter];
-		System.assertEquals(listcag[0].GxA_Error_Message__c, '');
+		System.assertEquals(listcag[0].GxA_Error_Message__c, null);
 
 		Test.stopTest();
 

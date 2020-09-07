@@ -39,7 +39,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 	set lstResults(value) {
 		this._lstResults = value;
 		if (!this.isLoading) this.companyType = "All";
-		this.filterFacility();
+		if(this._lstResults) this.filterFacility();
 	}
 	//all data showed in map, to count records
 	@api mapData;
@@ -48,7 +48,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 
 	initialized = false;
 	index = 0;
-	@track companyType;
+	@track companyType = 'All';
 
 	renderedCallback() {
 		if (!this.initialized) {
@@ -314,7 +314,6 @@ export default class CwSearchResultWrapper extends LightningElement {
 		return window.location.href;
 	}
 	goToPreregister() {
-		console.log("this.labels.icg_registration_url " + this.label.icg_registration_url);
 		window.open(this.label.icg_registration_url, "_blank");
 	}
 	conFacebook() {

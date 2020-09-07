@@ -7,8 +7,14 @@
                 <hr class="yellow-underline">
             </div>  
             <div class="col-6 text-right ">
-                <button class="btn btn-primary no-margin-top" data-tosca="searchbutton"
+                <button if:true={allowSearch} class="btn btn-primary no-margin-top" data-tosca="searchbutton"
                 onclick={onSearch} type="button">{label.search}</button>
+
+                <div if:false={allowSearch} class="pt-2 pb-2">
+                    <div class="col-12 text-red">
+                        <p>{label.limit_filters_reached}</p>
+                    </div>
+                </div>
             </div>
         </div>
       

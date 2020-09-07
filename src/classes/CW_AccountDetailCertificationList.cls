@@ -4,7 +4,14 @@ public with sharing class CW_AccountDetailCertificationList {
 		Set<String> certificationsNameList = new Set<String>();
 		Map<String, ICG_Capability_Assignment_Group__c> accRolDetCerMap = new Map<String, ICG_Capability_Assignment_Group__c>();
 
-		List<ICG_Capability_Assignment_Group__c> asgmtGroup = [SELECT Id, Name, ICG_Certification__r.Name, ICG_Certification__r.Id, ICG_Certification__r.Image__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__r.Id = :accountId];
+		List<ICG_Capability_Assignment_Group__c> asgmtGroup = [SELECT Id, Name, ICG_Certification__r.Name, ICG_Certification__r.Id,
+															ICG_Certification__r.Image__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c,
+															TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) 
+																FROM ICG_Capability_Assignment_Group__c 
+																WHERE ICG_Account_Role_Detail__r.Id = :accountId
+																AND Is_Deprecated__c = false
+																AND Is_Expired__c = false
+																];
 
 		for (ICG_Capability_Assignment_Group__c accRoleCert : asgmtGroup) {
 			accRolDetCerMap.put(accRoleCert.ICG_Certification__r.Name, accRoleCert);

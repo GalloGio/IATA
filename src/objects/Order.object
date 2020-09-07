@@ -722,6 +722,7 @@
     </fields>
 	<fields>
         <fullName>Remote_Validation_Status__c</fullName>
+        <description>GXA Remote Validation Integration to check the status of the remote validation process.</description>
         <externalId>false</externalId>
         <label>Remote Validation Status</label>
         <required>false</required>

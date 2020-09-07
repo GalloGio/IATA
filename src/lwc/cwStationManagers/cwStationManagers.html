@@ -1,4 +1,7 @@
 <template>
+    <template if:true={isLoading}>
+		<lightning-spinner alternative-text="Loading..."></lightning-spinner>
+	</template>
     <div class="title" if:true={title}>
         <p><b>{title}</b></p>
         <hr class="yellow-underline mt-2">

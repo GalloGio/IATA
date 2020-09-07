@@ -42,13 +42,24 @@ public with sharing class CW_BatchNotifyCertificationExpiryTest {
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard;
 		ICG_Account_Role_Detail__c ard2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
-		insert ard2;
+        insert ard2;
+        
+        Group g1 = new Group(Name = 'TheTestQueue', type = 'Queue');
+		insert g1;
+		System.runAs(new User(Id = UserInfo.getUserId())) {
+			GroupMember member = new GroupMember();
+			member.UserOrGroupId = UserInfo.getUserId();
+			member.GroupId = g1.Id;
+			insert member;
+		}
 
 		ICG_Certification__c sfocCert = CW_TestDataFactory.newCertification();
 		sfocCert.Name = 'SF Operational Capacity';
+		sfocCert.Department__c = g1.Name;
 		insert sfocCert;
 		ICG_Certification__c ceivCert = CW_TestDataFactory.newCertification();
 		ceivCert.Certification_Type__c = 'Certifications of Excellency';
+		sfocCert.Department__c = g1.Name;
 		insert ceivCert;
 
 		ICG_Capability_Assignment_Group__c ardCert = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, sfocCert.id);

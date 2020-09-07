@@ -67,16 +67,15 @@
                 <div class="slds-grid slds-grid_vertical-align-center slds-size_12-of-12">
                 
                     <div class="slds-col padding-header slds-size_1-of-12"> <!-- Img -->
-                        <lightning-icon class="slds-col" icon-name="utility:warning" alternative-text="Notification" style="width: auto; padding-left: 1%;"></lightning-icon>
+                        <lightning-icon class="slds-col width-auto pl-1p" icon-name="utility:warning" alternative-text="Notification"></lightning-icon>
                     </div>
                     <div class="slds-col padding-header slds-size_7-of-12"> <!-- row count -->
                     <b>{numberRegisterToShow} {label.icg_news_alerts_of} {dataSize}</b>                   
                     </div>
-                    <div class="slds-col padding-header slds-size_2-of-12"> <!-- Dismiss all -->
-                        <button if:false={getViewAll} title={label.icg_notification_view_all} onclick={setViewAll} class="btn btn-primary-blue" data-view=true>{label.icg_notification_view_all}</button>
-                        <button if:true={getViewAll} title={label.icg_notification_collapse_all} onclick={setViewAll} class="btn btn-primary-blue" data-view=false>{label.icg_notification_collapse_all}</button>
-                    </div>
-                    <div class="slds-col padding-header slds-size_2-of-12" > <!-- View all -->
+                    <div class="slds-col padding-header slds-size_4-of-12 text-right"> <!-- Dismiss all -->
+                        <button if:false={getViewAll} title={label.icg_notification_view_all} onclick={setViewAll} class="btn btn-primary-blue mr-3" data-view=true>{label.icg_notification_view_all}</button>
+                        <button if:true={getViewAll} title={label.icg_notification_collapse_all} onclick={setViewAll} class="btn btn-primary-blue mr-3" data-view=false>{label.icg_notification_collapse_all}</button>
+
                         <button title={label.icg_notification_dismiss_all} onclick={setDismissAll} class="btn btn-primary-blue">{label.icg_notification_dismiss_all}</button>
                     </div>
                 </div>
@@ -84,16 +83,16 @@
                     <tbody>  <!-- Show notification loop -->
                         <template for:each={dataLimit} for:item="notification" for:index="notificationIndex">
                         <tr key={notification.Id}>
-                            <td class="align-cell-start">
+                            <td class="align-cell-start w-80p">
                                 <p if:false={notification.isRedirection} class="padding-header" title={notification.Body__c}>{notification.Short_Description__c}</p>
                                 <template if:true={notification.isRedirection}>
                                     <p class="padding-header cursor-pt" title={notification.Body__c} onclick={handleNavigate} data-key={notification.Id} data-position={notificationIndex} data-id={notification.Station__c} data-read={notification.Read__c} data-description={notification.Short_Description__c} data-destiny={notification.destiny}>{notification.Short_Description__c}</p>
                                 </template>
                             </td>
-                            <td class="align-cell-start">
+                            <td class="align-cell-start w-10p">
                                 <p class="padding-header" >{notification.CreatedDate}</p>
                             </td>
-                            <td>
+                            <td class="w-10p">
                                 <a href="javascript:void(0)" data-key={notification.Id} data-position={notificationIndex} onclick={setDismissSelected}>
                                     {label.icg_notification_dismiss}
                                 </a>

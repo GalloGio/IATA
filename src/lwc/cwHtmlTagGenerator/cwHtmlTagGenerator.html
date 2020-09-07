@@ -6,7 +6,7 @@
 		<!-- Aux type defined - Start -->
 		<template if:true={isAuxTypeDefined}>
 			<template if:true={isAuxTypeStandardTemperatureRanges}>
-				<div data-item="stamp-popover-1" onmouseover={showPopover} onmouseleave={hidePopover} class="content bold yellow capitalize">
+				<div data-item="stamp-popover-1" onmouseover={showPopover} onmouseleave={hidePopover} class="content bold yellow ">
 					<span>{label.temperature_range}: {getValue}</span>
 					<c-cw-simple-tooltip item-id="stamp-popover-1" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 				</div>
@@ -15,7 +15,7 @@
 			</template>
 
 			<template if:true={isAuxTypeCustomTemperatureRanges}>
-				<div data-item="stamp-popover-2" onmouseover={showPopover} onmouseleave={hidePopover} class="content capitalize">
+				<div data-item="stamp-popover-2" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
 					<span>{getValue}</span>
 					<c-cw-simple-tooltip item-id="stamp-popover-2" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 				</div>
@@ -23,7 +23,7 @@
 			</template>
 
 			<template if:true={isAuxTypeTemperatureControlledGroundServiceEq}>
-				<div data-item="stamp-popover-3" onmouseover={showPopover} onmouseleave={hidePopover} class="content capitalize">
+				<div data-item="stamp-popover-3" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
 					<span>{getValue}</span>
 					<c-cw-simple-tooltip item-id="stamp-popover-3" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 				</div>
@@ -34,7 +34,7 @@
 
 		<!-- Aux type not defined - Start -->
 		<template if:false={isAuxTypeDefined}>
-			<div data-item="stamp-popover-4" onmouseover={showPopover} onmouseleave={hidePopover} class="content capitalize">
+			<div data-item="stamp-popover-4" onmouseover={showPopover} onmouseleave={hidePopover} class="content">
 				<span>{getValue}</span>
 				<c-cw-simple-tooltip item-id="stamp-popover-4" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 			</div>

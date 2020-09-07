@@ -606,33 +606,6 @@ export default class CwCreateFacilityComponent extends LightningElement {
 				this.requesting = false;
 			});
 	}
-	becomeCompanyAdminJS() {
-		this.requesting = true;
-		becomeCompanyAdmin({
-			companyId: this.userInfo.AccountId,
-			contactId: this.userInfo.ContactId
-		})
-			.then(resp => {
-				let parsedRes = JSON.parse(resp);
-				if (parsedRes.success) {
-					this.modalMessage =
-						"Thank you for your request. IATA will contact you shortly.";
-					this.modalImage = this.CHECKED_IMAGE;
-					this.dispatchEvent(new CustomEvent("refresh"));
-				} else {
-					this.modalMessage = parsedRes.message;
-					this.modalImage = this.ERROR_IMAGE;
-				}
-				this.showModal = true;
-				this.requesting = false;
-			})
-			.catch(err => {
-				this.modalMessage = err.message;
-				this.modalImage = this.ERROR_IMAGE;
-				this.showModal = true;
-				this.requesting = false;
-			});
-	}
 
 	selectParentAccount(event) {
 		this.parentCompany = event.currentTarget.dataset.companyid;
@@ -766,20 +739,15 @@ export default class CwCreateFacilityComponent extends LightningElement {
             }
 		}else {
 			this.creatingStation = true;
-			//Not using standard UpdateRecord because we need to avoid sharing to update any Account
-			updateAccountCoordinates({
+			if(!this.selectedCompany.accountInfo.Business_Geo_Coordinates__Longitude__s || !this.selectedCompany.accountInfo.Business_Geo_Coordinates__Latitude__s){
+				//Not using standard UpdateRecord because we need to avoid sharing to update any Account
+				updateAccountCoordinates({
 					accId : this.selectedCompany.accountInfo.Id,
 					latitude : this.updatedLatitude,
 					longitude : this.updatedLongitude
-			}).then(() => {
-				this.registerStation();
-			}).catch(error => {
-				console.log(error);
-				this.creatingStation = false;
-				this.stationCreated = false;
-				this.errorCreatingStation = true;
-				this.modalMessage = error.body.message;
-			});
+				})
+			}
+			this.registerStation();
 		}
 	}
 
@@ -841,7 +809,6 @@ export default class CwCreateFacilityComponent extends LightningElement {
 				}
 			})
 			.catch(err => {
-				console.log(err);
 				this.creatingStation = false;
 				this.stationCreated = false;
 				this.errorCreatingStation = true;

@@ -3,6 +3,7 @@ public without sharing class CW_EmailTemplateData {
     public String contactRoleDetailId {get; set;}
     public String orderItemId {get; set;}
     public Boolean isRemove {get;set;}
+    public Boolean isToIata {get;set;}
     List<ICG_Account_Role_Detail__c> station;
     List<ICG_Contact_Role_Detail__c> contactRoleDetail;
     List<OrderItem> orderItem;
@@ -172,10 +173,11 @@ public without sharing class CW_EmailTemplateData {
     }
 
     public String getStationUrl(){
-        String url = getPrivateAreaUrl();
+        String url = isToIata == true ? CW_Utilities.getEnvironmentVariables().InternalRequestURL__c : getPrivateAreaUrl() + '/#ID:';
         if (getStationDetails() != null){
-            url += '/#ID:'+station[0].Id;
+            url += String.valueOf(station[0].Id);
         }
+        
         return url;
     }
     public String getPublicStationUrl(){

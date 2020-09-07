@@ -1,14 +1,17 @@
 <template>
-	<template if:true={isLoading}>
-		<div class="spinner-div">
-			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-		</div>
-	</template>
-	<template if:false={isLoading}>
+	<div if:true={isLoading} class="spinner-div">
+		<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+	</div>
+	<template if:true={dataInformed}>
 		
 		<template if:true={editMode}>
-			<div if:true={existsRows} class="slds-grid slds-grid_align-end">
-				<lightning-button label={labelButtonAddRowsToList} title={labelButtonAddRowsToList} variant="brand" class="slds-col" onclick={addPreviuosCapabilities}></lightning-button>
+			<div if:true={existsRows} class="slds-grid">
+				<div class="slds-col">
+					<h2 if:true={getCertificationMode} class="slds-text-heading_medium slds-hyphenate custom-certifi-title">Certification Name: {getCertificationName} </h2>
+				</div>
+				<div class="slds-col slds-grid slds-grid_align-end">
+					<button class="slds-button slds-button_outline-brand bt-blue pr-2 pl-2" onclick={addPreviuosCapabilities}>{labelButtonAddRowsToList}</button>
+				</div>
 			</div>
 			<div if:false={existsRows} class="slds-grid slds-grid_align-center">
 				<h2 id="message-result-data" class="slds-text-heading_medium slds-hyphenate">{messageToShow}</h2>
@@ -24,12 +27,7 @@
 		<lightning-accordion if:true={currentSuperCategory.containsData} key={currentSuperCategory.label} allow-multiple-sections-open active-section-name={currentSuperCategory.label}>
 		<lightning-accordion-section name={currentSuperCategory.label} label={currentSuperCategory.label} data-key={currentSuperCategory.label}>
 		<template for:each={currentSuperCategory.sections} for:item="currentSection" for:index="sectionIndex">
-			<lightning-accordion if:true={currentSection.containsData} key={currentSection.label} allow-multiple-sections-open active-section-name={currentSection.label}>
-			<div key={currentSection.label} class="slds-accordion">
-				<div key={currentSection.label}>
-					<lightning-accordion-section name={currentSection.label} label={currentSection.label} data-key={currentSection.label}
-						data-section="content">
-						<template if:true={currentCapability.containsData} for:each={currentSection.capabilities}
+			<template if:true={currentCapability.containsData} for:each={currentSection.capabilities}
 							for:item="currentCapability" for:index="capabilityIndex">
 							<lightning-accordion if:true={currentCapability.containsData} key={currentCapability.label} allow-multiple-sections-open active-section-name={currentCapability.label}>
 							
@@ -46,20 +44,22 @@
 									
 									<!-- Edit Mode Start -->
 									<div class="col-12 text-right fontw-inherit col-no-padding slds-grid" if:true={editMode}>
-										<div class="slds-col">{label.display_in_public_site}</div>
+										<div class="slds-col">{label.icg_display_table_in_public_site}</div>
 										<div class="slds-col slds-grid">
 											<div class="slds-col">
 												<lightning-input data-key={currentCapability.name} name="Summary"
 												type="checkbox" label="Summary"
 												checked={currentCapability.check_summary}
-												onchange={handleChangeChecks}>
+												onchange={handleChangeChecks}
+												disabled={isNotEditable}>
 												</lightning-input>
 											</div>
 											<div class="slds-col">
 												<lightning-input data-key={currentCapability.name} name="Details"
 												type="checkbox" label="Details"
 												checked={currentCapability.check_detail}
-												onchange={handleChangeChecks}>
+												onchange={handleChangeChecks}
+												disabled={isNotEditable}>
 												</lightning-input>
 											</div>											
 											<div class={cargoHandlingCapabilitiesCss} role="alert"></div>
@@ -125,8 +125,14 @@
 
 																		<template if:true={currentfield.last}>
                                                                             <th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
-                                                                            <th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
-                                                                            <th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
+																			<th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
+																			<template if:true={certificationMode}>																
+																				<template if:true={currentCategory.isMultirecord}>
+																					<template if:false={getCertificationMode}>
+																						<th key={currentfield.value.name} scope="col" colspan="1" class="box-shadow-none"></th>
+																					</template>
+																				</template>
+																			</template>
                                                                         </template>
 																		
 																	</template>
@@ -134,8 +140,7 @@
 																	<template if:true={currentfield.value.label.length}>
 																		<th if:true={currentfield.first}
 																		 	key={currentfield.value.name} scope="col"
-																			colspan={currentfield.value.colspan} class="slds-truncate zui-sticky-col">
-																			{currentfield.value.label}
+																			colspan={currentfield.value.colspan} class="slds-truncate zui-sticky-col">																			
 																		</th>
 																		<th if:false={currentfield.first}
 																		 	key={currentfield.value.name} scope="col"
@@ -193,28 +198,30 @@
 
 														<template if:true={currentheader.last}>
 															<th key={currentheader.value.name}
-																scope="col">{label.photos}</th>
+																scope="col" class="photo-colum-head">{label.photos}</th>
 															<th key={currentheader.value.name} scope="col"
-																class="certifications-stamp"></th>
-															<th key={currentheader.value.name} class="zui-sticky-col-right" scope="col"> 
+																class="certifications-stamp cert-colum">{label.capability_validated_by}</th>
+															 
 
-															<template if:true={certificationMode}>
+															<template if:true={certificationMode}>																
 																<template if:true={currentCategory.isMultirecord}>
-
-																		<lightning-button-icon icon-name="utility:add"
-																		variant="brand" alternative-text="Add capability" title="Add item"
-																		data-action="Add"
-																			data-super-categories-index={superCategoryIndex}
-																			data-section-index={sectionIndex}
-																			data-capability-index={capabilityIndex}
-																			data-category-index={categoryIndex}
-																		onclick={assigntCapability}>
-																		</lightning-button-icon>
-
-																</template>
+																	<template if:false={getCertificationMode}>
+																		<th key={currentheader.value.name} class="zui-sticky-col-right" scope="col">
+																			<lightning-button-icon icon-name="utility:add"
+																			variant="brand" alternative-text="Add capability" title="Add item"
+																			data-action="Add"
+																				data-super-categories-index={superCategoryIndex}
+																				data-section-index={sectionIndex}
+																				data-capability-index={capabilityIndex}
+																				data-category-index={categoryIndex}
+																			onclick={assigntCapability}>
+																			</lightning-button-icon>
+																		</th>
+																	</template>
+																</template>															
 															</template>
 
-															</th>																
+																															
 														</template>
 													</tr>
 
@@ -261,7 +268,7 @@
 															</template>
 														</template>
 
-														<td class="row-separator" 
+														<td class="row-separator photo-colum" 
 														data-super-categories-index={superCategoryIndex}
 																		data-section-index={sectionIndex}
 																		data-capability-index={capabilityIndex}
@@ -281,9 +288,8 @@
 															
 
 															   <button if:true={row.photosAvailable}
-																	class="p-0 bg-transp border-0"
-																	style="cursor: pointer;"
-																	data-tosca="edit_photos" title="Edit photos" disabled={editMode}>
+																	class="p-0 bg-transp border-0 cursor-pt"
+																	data-tosca="edit_photos" title="Edit photos" disabled={row.isNotEditable}>
 																	<img src={infoIcon} width="20px"
 																	data-super-categories-index={superCategoryIndex}
 																		data-section-index={sectionIndex}
@@ -292,7 +298,7 @@
 																		data-row-index={rowIndex}
 																		onclick={openModalEditPhotos}/>
 																</button>
-
+																
 																<button if:false={row.photosAvailable} disabled
 																	class="p-0 bg-transp border-0 disabled-filter">
 																	<img src={infoIcon} width="20px" />
@@ -300,7 +306,7 @@
 															
 														</td>
 
-														<td class="certifications-stamp">
+														<td class="certifications-stamp cert-colum">
 															<div class="stamp-inline">
 																<template for:each={row.certifications}
 																	for:item="cert">
@@ -322,33 +328,36 @@
 															</div>
 														</td>
 
-														<td class="row-separator zui-sticky-col-right">
-															<template if:true={certificationMode}>
-																<template if:false={getisCapabCertiMode}>
-																<template if:true={row.isAssigned}>
-																	
-																	<lightning-button label={label.cancel} title={label.cancel} variant="destructive" data-action="Remove"
-																	data-super-categories-index={superCategoryIndex}
-																	data-section-index={sectionIndex}
-																	data-capability-index={capabilityIndex}
-																	data-category-index={categoryIndex}
-																	data-row-index={rowIndex}
-																	onclick={assigntCapability}></lightning-button>
-																</template>
+														
+															<template if:true={certificationMode}>																
+																<template if:true={getCertificationMode}>
+																	<template if:false={isNotEditable}>
+																		<td class="row-separator zui-sticky-col-right">
+																			<template if:true={row.isAssigned}>																	
+																				<lightning-button label={label.cancel} title={label.cancel} variant="destructive" data-action="Remove"
+																				data-super-categories-index={superCategoryIndex}
+																				data-section-index={sectionIndex}
+																				data-capability-index={capabilityIndex}
+																				data-category-index={categoryIndex}
+																				data-row-index={rowIndex}
+																				onclick={assigntCapability}></lightning-button>
+																			</template>
 
-																<template if:false={row.isAssigned}>
-																	<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
-																		data-row={row} 
-																		data-super-categories-index={superCategoryIndex}
-																		data-section-index={sectionIndex}
-																		data-capability-index={capabilityIndex}
-																		data-category-index={categoryIndex}
-																		data-row-index={rowIndex}
-																	onclick={assigntCapability}></lightning-button>
-																</template>
-																</template>
+																			<template if:false={row.isAssigned}>
+																				<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
+																					data-row={row} 
+																					data-super-categories-index={superCategoryIndex}
+																					data-section-index={sectionIndex}
+																					data-capability-index={capabilityIndex}
+																					data-category-index={categoryIndex}
+																					data-row-index={rowIndex}
+																				onclick={assigntCapability}></lightning-button>
+																			</template>
+																		</td>
+																	</template>
+																</template>																
 															</template>
-														</td>
+														
 
 													</tr>
 												</template>
@@ -364,12 +373,8 @@
 							</div><!-- Capability Loop End -->
 		
 						</lightning-accordion>
-						</template>
-					</lightning-accordion-section>
-				</div>
-			</div>
+			</template>
 
-		</lightning-accordion>
 		</template>
 		</lightning-accordion-section>
 		</lightning-accordion>
@@ -391,7 +396,7 @@
 							<div class="row">
 								<lightning-carousel disable-auto-scroll>
 									<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
-										<lightning-button-icon key={photo.id} data-id={photo.id} data-position="photoIndex" icon-name="utility:delete" onclick={deletePhotoCarousel}
+										<lightning-button-icon if:true={isSaveOption} key={photo.id} data-id={photo.id} data-position="photoIndex" icon-name="utility:delete" onclick={deletePhotoCarousel}
 											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">
 										</lightning-button-icon>
 										<lightning-carousel-image if:true={photo.visible} key={photo.id}
@@ -448,8 +453,8 @@
 		</template>
 
 		<template if:true={editMode}>
-			<div if:true={isSaveOption} class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
-				<div class="slds-col margin-button-save">
+			<div class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
+				<div if:true={isSaveOption} class="slds-col margin-button-save">
 					<button class="slds-button slds-button--brand button-size-footer" onclick={saveCapabilities}>{label.save}</button>
 				</div>
 				<div class="slds-col"> 

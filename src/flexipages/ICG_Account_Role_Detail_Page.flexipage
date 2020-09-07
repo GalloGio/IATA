@@ -51,7 +51,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>cwCertificationManagerConsoleHandler</componentName>
+            <componentName>cwCertificationsManagerContainer</componentName>
         </componentInstances>
         <name>Facet-9dfec202-1931-474e-96fa-9619baa64ad3</name>
         <type>Facet</type>

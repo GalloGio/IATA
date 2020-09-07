@@ -3,8 +3,8 @@
         <div class="title">
             <p><b>{title}</b>
                 <template if:true={editMode}>
-                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable hidden" variant="error" data-item="editable" title="Close" onclick={showInput} size="x-small"></lightning-icon>
-                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable" title="Edit" data-item="editable" onclick={showInput} size="x-small"></lightning-icon>
+                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOn} variant="error" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOn} title="Edit" onclick={showInput} size="x-small"></lightning-icon>
                 </template>
             </p>
             <hr class="yellow-underline mt-2">
@@ -23,9 +23,9 @@
                             </div>
                             <div class="facility-overview-item-content text-blue">
                                 <p class="text-truncate">
-                                    <span class="editable">{numberEmployeesFormatted} {label.employees}</span>                                   
+                                    <span if:false={editOn}>{numberEmployeesFormatted} {label.employees}</span>                                   
                                     <template if:true={editMode}>
-                                        <lightning-input class="input editable mr-4 hidden" name="NumberEmployees" type="number" value={facility.NumberEmployees} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                        <lightning-input class="input mr-4" if:true={editOn} name="NumberEmployees" type="number" value={facility.NumberEmployees} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                                     </template>
                                 </p>
                             </div>
@@ -82,13 +82,13 @@
                                     <img src={icon.airlines} />
                                 </div>
                                 <div class="facility-overview-item-content text-blue">
-                                    <p class="text-truncate editable">
+                                    <p class="text-truncate" if:false={editOn}>
                                         {label.total_facility_space}
                                     </p>
-                                    <p class="text-truncate editable">
+                                    <p class="text-truncate" if:false={editOn}>
                                         {facilitySizeFormatted} m<sup>2</sup>
                                     </p>                               
-                                    <lightning-input class="input editable mr-4 hidden" name="FacilitySize" type="number" value={facility.FacilitySize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                    <lightning-input class="input mr-4" if:true={editOn} name="FacilitySize" type="number" value={facility.FacilitySize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                                 </div>
                             </div>
                             <c-cw-simple-tooltip item-id="total-facility-space-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
@@ -99,7 +99,7 @@
 
             <template if:true={showOnAirport}>
                 <!-- IsOnAirport NEW UI-->            
-                <div data-css="on-airport-hover" class={onAirportCss}>
+                <div data-css="on-airport-hover" class={onAirportCss} if:false={editOn}>
                     <!--HIDDEN RESPONSIVE VERSION-->
                     <div data-tosca="on-airport-hover" class="hidden-md">
                         <div data-item="on-airport-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
@@ -120,8 +120,10 @@
                     </div>
                 </div>
                 
-                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3 editable hidden">
-                    <lightning-input type="checkbox" label={label.on_airport} name="IsOnAirport" checked={facility.IsOnAirport} onchange={handleInputChangeValue}></lightning-input>
+                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">
+                    <div if:true={editOn}>
+                        <lightning-input type="checkbox" label={label.on_airport} name="IsOnAirport" checked={facility.IsOnAirport} onchange={handleInputChangeValue}></lightning-input>
+                    </div>
                 </div>
             </template>
 
@@ -129,7 +131,7 @@
 
             <template if:true={showDirectRampAccess}>
                 <!-- DirectRampAccess NEW UI-->
-                <div class={directAccessCss}>
+                <div if:false={editOn} class={directAccessCss}>
                     <!--HIDDEN RESPONSIVE VERSION-->
                     <div class="hidden-md ">
                         <div class="facility-overview-item width-100 text-truncate">
@@ -148,14 +150,16 @@
                         </div>
                     </div>
                 </div>
-                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3 editable hidden">
-                    <lightning-input type="checkbox" label={label.direct_ramp_access} name="DirectRampAccess" checked={facility.DirectRampAccess} onchange={handleInputChangeValue}></lightning-input>
+                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">
+                    <div if:true={editOn}>
+                        <lightning-input type="checkbox" label={label.direct_ramp_access} name="DirectRampAccess" checked={facility.DirectRampAccess} onchange={handleInputChangeValue}></lightning-input>
+                    </div>
                 </div>
             </template>
 
             <template if:true={showRoadFeeder}>
                 <!-- Road Feeder Services NEW UI-->           
-                <div data-css="road-feeder-hover" class={roadFeederCSS}>
+                <div data-css="road-feeder-hover" if:false={editOn} class={roadFeederCSS}>
                     <!--HIDDEN RESPONSIVE VERSION-->
                     <div data-tosca="road-feeder-hover" class="hidden-md ">
                         <div data-item="road-feeder-hover" onmouseover={showPopover} onmouseleave={hidePopover} class="facility-overview-item width-100 text-truncate">
@@ -175,8 +179,10 @@
                         </div>
                     </div>
                 </div>               
-                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3 editable hidden">
-                    <lightning-input type="checkbox" label={label.road_feeder_services} name="roadFeederServices" checked={facility.roadFeederServices} onchange={handleInputChangeValue}></lightning-input>
+                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">
+                    <div if:true={editOn}>
+                        <lightning-input type="checkbox" label={label.road_feeder_services} name="roadFeederServices" checked={facility.roadFeederServices} onchange={handleInputChangeValue}></lightning-input>
+                    </div>
                 </div>
             </template>
 
@@ -209,14 +215,14 @@
                                     <img src={icon.airlines} />
                                 </div>
                                 <div class="facility-overview-item-content">
-                                    <p class="text-truncate text-blue editable">
+                                    <p class="text-truncate text-blue" if:false={editOn}>
                                         {overallSizeFormatted} m<sup>2</sup>
                                     </p>
-                                    <p class="text-truncate text-blue editable">
+                                    <p class="text-truncate text-blue" if:false={editOn}>
                                         {label.overall_airport_size}
                                     </p>
                                     
-                                    <lightning-input class="input editable mr-4 hidden" name="overallAirportSize" type="number" value={facility.overallAirportSize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                    <lightning-input class="input mr-4" if:true={editOn} name="overallAirportSize" type="number" value={facility.overallAirportSize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                                 </div>
                             </div>
                             <c-cw-simple-tooltip item-id="total-facility-space-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
@@ -234,9 +240,9 @@
                         </div>
                         <div class="facility-overview-item-content text-blue">
                             <p class="text-truncate">
-                                <span class="editable">{numberTrucksFormatted} {label.trucks}</span>
+                                <span if:false={editOn}>{numberTrucksFormatted} {label.trucks}</span>
                                 <template if:true={editMode}>
-                                    <lightning-input class="input editable mr-4 hidden" name="fleet" type="number" value={facility.fleet} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
+                                    <lightning-input class="input mr-4" if:true={editOn} name="fleet" type="number" value={facility.fleet} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                                 </template>
                             </p>
                         </div>

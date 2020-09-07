@@ -218,11 +218,8 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 
     handleInputValueChange(event){
 		var inputName = event.target.name;
-		console.log(inputName);
 		var inputValue = event.target.value;
-		console.log(inputValue);
 		this.localAccount[inputName] = inputValue;
-		console.log(this.localAccount[inputName]);
 
         if(inputName === 'email'){
             this.displayInvalidEmailMessage = false;
@@ -252,7 +249,8 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
         return true;
     }
 
-    goNext(){
+    goNext(event){
+        event.preventDefault();
         if(this.getEmailValidity()){
             this.dispatchEvent(new CustomEvent('next'));
         }

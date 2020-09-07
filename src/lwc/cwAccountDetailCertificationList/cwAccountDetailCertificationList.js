@@ -72,7 +72,6 @@ export default class CwAccountDetailCertificationList extends LightningElement {
 				this.orderImagesList(certificationImages);
 			})
 			.catch(error => {
-				console.log("Error read cert list: ", error);
 				this.error = error;
 			});
 

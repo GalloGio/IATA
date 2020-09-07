@@ -73,10 +73,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 	get actionSave(){
 		return this._actionSave;
 	}
-	set actionSave(value){
-		this._actionSave = value;
+	set actionSave(data){
+		let saveListRow = JSON.parse(JSON.stringify(data));
+		this._actionSave = saveListRow.isSave;
 		if(this._actionSave === true){
-			this.handleSaveChanges();
+			this.handleSaveChanges(saveListRow.listRow);
 		}	
 		
 	}
@@ -106,7 +107,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 	}
 
 	get collapsedOrnot(){
-		if(this.isRecordTypeEditable){
+		if(this.isRecordTypeEditable && this.isPrivateArea && this.isStationManager){
 			return "col-12 no-collapsed mb-4";
 		}
 		else{
@@ -461,10 +462,17 @@ export default class CwFacilityCapabilities extends LightningElement {
 				issueDate: issueDateFormatted,
 				expirationDate: expirationDateFormatted
 			};
+			let windowWidth = window.innerWidth;
 			stampPopover.classList.remove("hidden");
 			let popupBounds = stampPopover.getBoundingClientRect();
-			stampPopover.style.top = (event.clientY + 25) + "px";
-			stampPopover.style.left = ((event.clientX - popupBounds.width)+20) + "px";
+			if(windowWidth > 1199 && windowWidth < 1681){
+				stampPopover.style.top = ((event.clientY * 1.25) + 25) + "px";
+				stampPopover.style.left = (((event.clientX * 1.25) - popupBounds.width)+20) + "px";
+			}else{
+				
+				stampPopover.style.top = (event.clientY + 25) + "px";
+				stampPopover.style.left = ((event.clientX - popupBounds.width)+20) + "px";
+			}
 		} else {
 			this.dataHoverInfoStamp = null;
 			stampPopover.classList.add("hidden");
@@ -603,15 +611,13 @@ export default class CwFacilityCapabilities extends LightningElement {
 									
 				});
 			});
-
 			if(isDisabled){
 				this.listAddedRows = [];
 			}
 			else{
 				this.listAddedRows = tempAddedRows;
 			}
-
-			// Creates the event with the data and dispatches.
+			// Show or not save and cancel bar.
 			const newEvent = new CustomEvent("saveaction", {
 				detail: {
 					data: !isDisabled
@@ -646,6 +652,14 @@ export default class CwFacilityCapabilities extends LightningElement {
 				}
 			}			
 		});
+
+		// Show or not save and cancel bar.
+		const newEvent = new CustomEvent("sendlistrows", {
+			detail: {
+				data: this.listAddedRows
+			}
+		});
+		this.dispatchEvent(newEvent);
 	}
 
 	actionsCapability(event){
@@ -756,11 +770,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 		return returnValue;
 	}
 
-	handleSaveChanges(){
-		if(this.listAddedRows.length > 0){
+	handleSaveChanges(listAddedRows){
+		if(listAddedRows.length > 0){
 			if(this.checkRequiredFields === true){
 				this.isLoading = true;
-				this.createRelationshipsForNewCapabilities(this.recordId,this.listAddedRows);
+				this.createRelationshipsForNewCapabilities(this.recordId,listAddedRows);
 			}
 			else{
 				this.showToast("Error", "Complete required fields", "error");
@@ -783,10 +797,18 @@ export default class CwFacilityCapabilities extends LightningElement {
 			{
 				this.showToast("Error", result.message, "error");
 			}
+
+			this._actionSave=false;
+			// Set to false save action.
+			const newEvent = new CustomEvent("savesuccessful", {
+				detail: {
+					data: false
+				}
+			});
+			this.dispatchEvent(newEvent);
 			
 		})
 		.finally(() => {
-			this.enableOptions();
 			this.isLoading = false;
 		});
 	}

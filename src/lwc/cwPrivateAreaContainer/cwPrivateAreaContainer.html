@@ -201,10 +201,10 @@
     </template>
 	<template if:true={showRejectModal}>
 		<c-cw-intermediate-modal onclosemodal={closeRejectModal}>
-			<div>
+			<div class="col-12">
                 <h3>{rejectModalMessage}</h3>
                 <br />
-                <div class="row">
+                <div>
        				 <lightning-textarea 
 						class="width-100"
                         name="reject-reason-input" 
@@ -213,12 +213,9 @@
                         onchange={handleRejectReasonChanged}
                      ></lightning-textarea>
                 </div>
-                <div class="row text-center">
-                    <a class="col btn btn-primary-blue no-margin-top pl-2 pr-4 pt-1" data-tosca="backduplicatert"
-                        href="javascript:{}" onclick={handleConfirmReject}>YES</a>
-
-                    <a class="col btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="backduplicatert"
-                        href="javascript:{}" onclick={closeRejectModal}>NO</a>
+                <div class="col-12 text-center">	
+					<button type="button" class="btn btn-primary-blue mr-2" data-tosca="backduplicatert" onclick={closeRejectModal}>{label.no}</button>
+					<button type="button" class="btn btn-primary ml-2" data-tosca="backduplicatert" onclick={handleConfirmReject}>{label.yes}</button>					
                 </div>
             </div>
         </c-cw-intermediate-modal>

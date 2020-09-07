@@ -27,6 +27,7 @@ export default class CwDisplayList extends LightningElement {
 	@track isLoading = false;
 	@track editModeActive = false;
 	@api saveOnTheFly = false;
+	@track editOn = false;
 
 	@api listDetailCertFacility;
 	@api label;
@@ -244,15 +245,17 @@ export default class CwDisplayList extends LightningElement {
 
 
 	showInput(event){
-		let elementName = event.target.dataset.item;
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
-		if(event.target.title == 'Edit'){
+		this.editOn = !this.editOn;
+		if(this.editOn){
 			this.editModeActive = true;
 		}else{
 			this.editModeActive = false;
 		}
+	}
+
+	@api editOff(){		
+		this.editOn = false;
+		this.editModeActive = false;
 	}
 
 }

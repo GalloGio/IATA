@@ -11,11 +11,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 	final static String MD_EDITABLE_RECORDTYPES = 'Editable_RecordTypes';
 	final static String SEARCH_ONLY_DATA = 'Data__c';
 	final static String SEARCH_WITH_EXTRADATA = 'Extra_Data__c';
-	final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 	final static String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
 	final static String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 	final static Map<String, List<String>> ESPECIAL_CATEGORIES = getMapConfig();
-	final static Map<String, List<String>> EDITABLE_RECORDTYPES = getMapEditableRecordTypes();
+	public final static Map<String, List<String>> EDITABLE_RECORDTYPES = getMapEditableRecordTypes();
 
 	@auraEnabled(cacheable = true)
 	public static Map<String, List<String>> getMapCategoriesByAccountRoleDetailRecordType() {
@@ -30,7 +29,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	public static List<Map<String, Object>> getMapSectionsBySupercategory() {
 		List<Map<String, Object>> output = new List<Map<String, Object>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_SECTIONS_BY_SUPERCATEGORY, SEARCH_ONLY_DATA)) {
-			output.add(new Map<String, Object>{ 'order' => currentConfig.Order__c, 'label' => currentConfig.Key__c, 'sections' => (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';') });
+			output.add(new Map<String, Object>{ 'order' => currentConfig.Order__c, 'label' => currentConfig.Key__c, CW_CapabilitiesUtilities.SECTIONS => (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';') });
 		}
 
 		return output;
@@ -193,6 +192,193 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return returnValue;
 	}
 
+	private static Map<Id, List<AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments){
+		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<AsgmtGroupWrapper>>();
+
+		// Loop assignments to get certifications
+		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
+			if (currentAssignment.ICG_Capability_Assignment_Group__r != null) {
+				ICG_Capability_Assignment_Group__c currentGroup = currentAssignment.ICG_Capability_Assignment_Group__r;
+
+				if (!asgmtGroupByCapabilityId.containsKey(currentAssignment.Account_Role_Detail_Capability__c)) {
+					asgmtGroupByCapabilityId.put(currentAssignment.Account_Role_Detail_Capability__c, new List<AsgmtGroupWrapper>());
+				}
+				AsgmtGroupWrapper asgmtGroupToAdd = new AsgmtGroupWrapper();
+				asgmtGroupToAdd.id = currentGroup.Id;
+				asgmtGroupToAdd.type = currentGroup.RecordType.DeveloperName;
+				asgmtGroupToAdd.name = Label.icg_smart_facility_remote_validation;
+				asgmtGroupToAdd.expirationDate = currentGroup.Expiration_Date__c;
+				asgmtGroupToAdd.issueDate = currentGroup.Issue_Date__c;
+				asgmtGroupToAdd.src = '/resource/ICG_Resources/icons/remote_validation_icon.svg';
+				if (currentGroup.ICG_Certification__c != null) {
+					asgmtGroupToAdd.order = currentGroup.ICG_Certification__r.Order__c;
+					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
+					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
+				}
+				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
+					asgmtGroupByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(asgmtGroupToAdd);
+				}
+			}
+		}
+
+		return asgmtGroupByCapabilityId;
+	}
+
+	private static Map<String, Object> generateData(
+		String id, 
+		List<String> categoriesToRetrieve,
+		Map<String, List<String>> mapCategoriesByRecordTypeDevName,
+		Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
+		List<String> capabilitiesIdForConflicts,
+		ICG_Account_Role_Detail__c accountRoleDetailFound
+	){
+
+		Set<String> listSectionsIncluded = new Set<String>();
+		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
+
+		//Get recordtypes id for category
+		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
+
+		// Get Fields to build the soql query and the tables.
+		Map<String, List<String>> mapFieldsByRecordTypeAndCategory = CW_FacilityCapabilitiesController.getMapFieldsByRecordTypeAndCategory();
+		Map<String, List<String>> mapTooltipFieldsByField = CW_FacilityCapabilitiesController.getMapTooltipFieldsByField();
+		List<String> fieldsToRetrieve = CW_CapabilitiesUtilities.generateFieldsToRetrieve(mapFieldsByRecordTypeAndCategory, mapTooltipFieldsByField);
+
+		// Get grouped fields
+		Map<String, List<String>> mapFieldsByGroupField = CW_FacilityCapabilitiesController.getMapFieldsByGroupField();
+
+		// Get equipments map
+		Map<String, Schema.PicklistEntry> mapEquipments = CW_FacilityCapabilitiesController.getPicklistEntryMapCapEquipment();
+
+		Map<String, Object> rawData = CW_CapabilitiesUtilities.generateRawData(mapCategoriesByRecordTypeDevName, mapAccountRoleDetailAssignmentRtsById, categoriesToRetrieve);
+
+		// Schemas to validity fields
+		Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.Account_Role_Detail_Capability__c.fields.getMap();
+
+		List<ICG_Account_Role_Capability_Assignment__c> assignments = getAssignmentsByAccountRoleDetailAndRts(id, new List<Id>(mapAccountRoleDetailAssignmentRtsById.keySet()), categoriesToRetrieve, validateFieldsOfObject('Account_Role_Detail_Capability__c', fieldsToRetrieve, fieldsMap), capabilitiesIdForConflicts);
+		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
+
+		Map<String, String> columnsToHandle = new Map<String, String>();
+		columnsToHandle.put('more_info_document__c', null);
+
+		// Loop assignments and fill the output data model
+		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
+			// Populate data for Account_Role_Detail_Capability__c
+			Account_Role_Detail_Capability__c currentDetail = currentAssignment.Account_Role_Detail_Capability__r;
+
+			listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
+
+			String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
+			if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
+				// We look for the Capability, Category to which it belongs
+				Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) rawData.get(CW_CapabilitiesUtilities.CAPABILITIES), 'name', rtDevNameLC);
+				capabilityFound = CW_CapabilitiesUtilities.generateCapabilityFound(capabilityFound, currentDetail);
+				Map<String, Object> categoryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get(CW_CapabilitiesUtilities.CATEGORIES), 'value', currentDetail.Category__c);
+				categoryFound = CW_CapabilitiesUtilities.generateCategoryFound(categoryFound, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, mapFieldsByGroupField, columnsToHandle, false);
+
+				if (currentAssignment.ICG_Account_Role_Detail__r.Summary_Detail_Check_JSON__c != null) {
+					checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(currentAssignment.ICG_Account_Role_Detail__r.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
+				}
+
+				Map<String, Object> currentObject;
+				if (categoryFound != null && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
+					List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(CW_CapabilitiesUtilities.ROWS);
+					
+					if (!CW_CapabilitiesUtilities.isCapabilityAdded(capabilityGroupRowsFound, currentDetail.Id)) {
+						currentObject = convertCapabilityAssignmentToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
+						List<AsgmtGroupWrapper> certifications = asgmtGroupByCapabilityId.containsKey(currentDetail.Id) ? asgmtGroupByCapabilityId.get(currentDetail.Id) : new List<AsgmtGroupWrapper>();
+						certifications.sort();
+						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
+							currentObject, 
+							currentDetail.Id, 
+							currentDetail, 
+							certifications, 
+							currentAssignment.ICG_Capability_Assignment_Group__r.RecordTypeId, 
+							capabilityFound, 
+							mapFieldsByRecordTypeAndCategory, 
+							rtDevNameLC, 
+							mapEquipments, 
+							mapTooltipFieldsByField, 
+							fieldsMap,
+							false, 
+							true,
+							true
+						);
+						capabilityGroupRowsFound.add(currentObject);
+
+					}
+				}
+				categoryFound.put('templateFields', currentObject);
+			}
+		}
+
+		Map<String, List<String>> capabilitiesByRecordTypeNotIncluded = new Map<String, List<String>>();
+		for (Map<String, Object> capability : (List<Map<String, Object>>) rawData.get(CW_CapabilitiesUtilities.CAPABILITIES)) {
+
+			// if recordtype is editable in private area
+			if ((Boolean) capability.get('isEditableRecordType')) {
+				capabilitiesByRecordTypeNotIncluded.put((String) capability.get('name'), new List<String>());
+				for (Map<String, Object> sum : (List<Map<String, Object>>) capability.get('summary')) {
+					if (!(Boolean) sum.get('contains')) {
+						capabilitiesByRecordTypeNotIncluded.get((String) capability.get('name')).add((String) sum.get('value'));
+					}
+				}
+			}
+		}
+
+		if (capabilitiesByRecordTypeNotIncluded.size() > 0) {
+			//Read missing Capabilities by mapRecordTypeIdByCategory
+			List<Account_Role_Detail_Capability__c> accountCapabNotInluded = getCapabilitiesNotIncludedDetail(capabilitiesByRecordTypeNotIncluded, mapRecordTypeIdByCategory);
+
+			for (Account_Role_Detail_Capability__c currentDetail : accountCapabNotInluded) {
+				listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
+
+				String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
+				if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
+					// We look for the Capability, Category to which it belongs
+					Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) rawData.get(CW_CapabilitiesUtilities.CAPABILITIES), 'name', rtDevNameLC);
+					capabilityFound = CW_CapabilitiesUtilities.generateCapabilityFound(capabilityFound, currentDetail);
+					Map<String, Object> categoryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get(CW_CapabilitiesUtilities.CATEGORIES), 'value', currentDetail.Category__c);
+					categoryFound = CW_CapabilitiesUtilities.generateCategoryFound(categoryFound, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, mapFieldsByGroupField, columnsToHandle, false);
+	
+					if(!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)){
+						checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
+					}
+
+					Map<String, Object> currentObject;
+					if (categoryFound != null && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
+						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(CW_CapabilitiesUtilities.ROWS);
+						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
+						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
+							currentObject, 
+							'', 
+							currentDetail, 
+							new List<AsgmtGroupWrapper>(), 
+							'', 
+							capabilityFound, 
+							mapFieldsByRecordTypeAndCategory, 
+							rtDevNameLC, 
+							mapEquipments, 
+							mapTooltipFieldsByField, 
+							fieldsMap,
+							false, 
+							false,
+							false
+						);
+						capabilityGroupRowsFound.add(currentObject);
+					}
+					categoryFound.put('templateFields', currentObject);
+				}
+			}
+		}
+
+		Map<String, Object> returnValue = new Map<String, Object>();
+		returnValue.put(CW_CapabilitiesUtilities.LIST_SECTIONS_INCLUDED, listSectionsIncluded);
+		returnValue.put(CW_CapabilitiesUtilities.CHECKS_MAP, checksMap);
+		returnValue.put(CW_CapabilitiesUtilities.RAW_DATA, rawData);
+		return returnValue;
+	}
+
 	@AuraEnabled
 	public static Map<String, Object> getCapabilitiesFromAccountRoleDetailId(String id) {
 		return getCapabilitiesInternal(id, null);
@@ -200,466 +386,29 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 	@AuraEnabled
 	public static Map<String, Object> getCapabilitiesInternal(String id, List<String> capabilitiesIdForConflicts) {
-		Map<String, Object> returnValue = new Map<String, Object>{ 'superCategories' => new List<Map<String, Object>>() };
+		Map<String, Object> returnValue = new Map<String, Object>{ CW_CapabilitiesUtilities.SUPERCATEGORIES => new List<Map<String, Object>>() };
 
 		try {
-			Map<String, Object> rawData = new Map<String, Object>{ 'capabilities' => new List<Map<String, Object>>() };
+			Map<String, Object> prepareCapabilitiesData = CW_CapabilitiesUtilities.prepareCapabilityData(id);
+			Map<String, List<String>> mapCategoriesByRecordTypeDevName = (Map<String, List<String>>) prepareCapabilitiesData.get(CW_CapabilitiesUtilities.MAP_CATEGORIES_BY_RECORDTYPE_DEVNAME);
+			Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById = (Map<Id, RecordType>) prepareCapabilitiesData.get(CW_CapabilitiesUtilities.MAP_ARD_ASSIGNMENT_RTS_BY_ID);
+			ICG_Account_Role_Detail__c accountRoleDetailFound = (ICG_Account_Role_Detail__c) prepareCapabilitiesData.get(CW_CapabilitiesUtilities.ARD_FOUND);
+			List<String> categoriesToRetrieve = (List<String>) prepareCapabilitiesData.get(CW_CapabilitiesUtilities.CATEGORIES_TO_RETRIEVE);
 
-			// Get all record types of Account_Role_Detail_Capability__c configured. If there are no valid record types, we leave.
-			Map<String, List<String>> mapCategoriesByRecordTypeDevName = getMapCategoriesByRecordType();
-			Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById = new Map<Id, RecordType>();
-			for (RecordType currentRt : RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Role_Detail_Capability__c')) {
-				if (mapCategoriesByRecordTypeDevName.containsKey(currentRt.DeveloperName.toLowerCase())) {
-					mapAccountRoleDetailAssignmentRtsById.put(currentRt.Id, currentRt);
-				}
-			}
-			if (mapAccountRoleDetailAssignmentRtsById.size() == 0) {
+			if (mapAccountRoleDetailAssignmentRtsById.isEmpty() || categoriesToRetrieve == null) {
 				return returnValue;
 			}
 
-			// Get account role detail to determine which categories need to show. If there are no categories, we leave.
-			ICG_Account_Role_Detail__c accountRoleDetailFound = [SELECT Id, RecordType.DeveloperName,Summary_Detail_Check_JSON__c FROM ICG_Account_Role_Detail__c WHERE Id = :id];
-			List<String> categoriesToRetrieve = getMapCategoriesByAccountRoleDetailRecordType().get(accountRoleDetailFound.RecordType.DeveloperName.toLowerCase());
-			if (categoriesToRetrieve == null) {
-				return returnValue;
-			} else {
-				Map<String, List<String>> mapCategoriesByRecordTypeDevNameTmp = new Map<String, List<String>>();
-				for (String currentKey : mapCategoriesByRecordTypeDevName.keySet()) {
-					List<String> foundCategories = new List<String>();
-					for (String currentCategory : mapCategoriesByRecordTypeDevName.get(currentKey)) {
-						if (categoriesToRetrieve.contains(currentCategory)) {
-							foundCategories.add(currentCategory);
-						}
-					}
-					if (foundCategories.size() > 0) {
-						mapCategoriesByRecordTypeDevNameTmp.put(currentKey, foundCategories);
-					}
-				}
-				mapCategoriesByRecordTypeDevName = mapCategoriesByRecordTypeDevNameTmp;
-			}
-
-			//Get recordtypes id for category
-			Map<String, String> mapRecordTypeIdByCategory = getRecordTypesIdByCategoryName();
-
-			// Get Fields to build the soql query and the tables.
-			Map<String, List<String>> mapFieldsByRecordTypeAndCategory = getMapFieldsByRecordTypeAndCategory();
-			List<String> fieldsToRetrieve = new List<String>();
-			for (List<String> fieldsGroup : mapFieldsByRecordTypeAndCategory.values()) {
-				for (String field : fieldsGroup) {
-					fieldsToRetrieve.add(field);
-				}
-			}
-
-			// Get fields to use like a tooltip.
-			Map<String, List<String>> mapTooltipFieldsByField = getMapTooltipFieldsByField();
-			for (List<String> fieldsGroup : mapTooltipFieldsByField.values()) {
-				for (String field : fieldsGroup) {
-					if (!fieldsToRetrieve.contains(field)) {
-						fieldsToRetrieve.add(field);
-					}
-				}
-			}
-
-			// Get equipments defined by category
-			Map<String, List<Map<String, Object>>> equipmentsByCategory = CW_Utilities.getPicklistFieldDependencies('Account_Role_Detail_Capability__c', 'Category__c', 'Equipment__c', true);
-
-			// Get fields for specific processing
-			Map<String, List<String>> mapEquipmentValuesBySpecificProcessing = getMapEquipmentValuesBySpecificProcessing();
-
-			// Get grouped fields
-			Map<String, List<String>> mapFieldsByGroupField = getMapFieldsByGroupField();
-
-			// Get categoires map
-			Map<String, Schema.PicklistEntry> mapCategories = getPicklistEntryMap('Account_Role_Detail_Capability__c', 'Category__c');
-
-			// Get equipments map
-			Map<String, Schema.PicklistEntry> mapEquipments = getPicklistEntryMap('Account_Role_Detail_Capability__c', 'Equipment__c');
-
-			// Loop the record types to build the output data model
-			for (RecordType currentRecordType : mapAccountRoleDetailAssignmentRtsById.values()) {
-				String rtDevNameLC = currentRecordType.DeveloperName.toLowerCase();
-
-				if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
-					Map<String, Object> currentCapatibility = new Map<String, Object>();
-					currentCapatibility.put('name', rtDevNameLC);
-					currentCapatibility.put('label', currentRecordType.Name);
-					currentCapatibility.put('check_summary', true);
-					currentCapatibility.put('check_detail', true);
-					currentCapatibility.put('show_summary', true);
-					currentCapatibility.put('show_detail', true);
-					currentCapatibility.put('first_load_check', true);
-					currentCapatibility.put('show_capability', true);
-					currentCapatibility.put('categories', new List<Map<String, Object>>());
-					currentCapatibility.put('summary', new List<Map<String, Object>>());
-					currentCapatibility.put('containsData', false);
-					currentCapatibility.put('isEditableRecordType', EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC) ? true : false);
-
-					// Categories
-					for (String currentCategory : mapCategoriesByRecordTypeDevName.get(rtDevNameLC)) {
-						if (mapCategories.containsKey(currentCategory.toLowerCase()) && categoriesToRetrieve.contains(currentCategory.toLowerCase())) {
-							// Check if the current category needs a specific processing
-							String auxType = '';
-							for (String currentKey : mapEquipmentValuesBySpecificProcessing.keySet()) {
-								if (String.isBlank(auxType) && mapEquipmentValuesBySpecificProcessing.get(currentKey).contains(mapCategories.get(currentCategory.toLowerCase()).getValue().toLowerCase())) {
-									auxType = currentKey.toLowerCase();
-								}
-							}
-
-							((List<Object>) currentCapatibility.get('categories')).add(new Map<String, Object>{ 'value' => mapCategories.get(currentCategory).getValue().toLowerCase(), 'label' => mapCategories.get(currentCategory).getLabel(), 'auxType' => auxType, 'rows' => new List<Map<String, Object>>(), 'hasRows' => false });
-						}
-					}
-
-					// Summary fields
-					for (String currentCategory : mapCategoriesByRecordTypeDevName.get(rtDevNameLC)) {
-						if (categoriesToRetrieve.contains(currentCategory)) {
-							if (equipmentsByCategory.containsKey(currentCategory.toLowerCase())) {
-								for (Map<String, Object> currentEquipment : equipmentsByCategory.get(currentCategory.toLowerCase())) {
-									((List<Map<String, Object>>) currentCapatibility.get('summary')).add(new Map<String, Object>{ 'value' => ((String) currentEquipment.get('value')).toLowerCase(), 'label' => currentEquipment.get('label'), 'contains' => false });
-								}
-							}
-						}
-					}
-
-					((List<Object>) rawData.get('capabilities')).add(currentCapatibility);
-				}
-			}
-
-			//List Categories includes
-			Set<String> listSectionsIncluded = new Set<String>();
-
-			// Schemas to validity fields
-			Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.Account_Role_Detail_Capability__c.fields.getMap();
-
-			Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<AsgmtGroupWrapper>>();
-			SectionsWrapper checksMap;
-
-			// Retrieve all the assignments
-			List<ICG_Account_Role_Capability_Assignment__c> assignments = getAssignmentsByAccountRoleDetailAndRts(id, new List<Id>(mapAccountRoleDetailAssignmentRtsById.keySet()), categoriesToRetrieve, validateFieldsOfObject('Account_Role_Detail_Capability__c', fieldsToRetrieve, fieldsMap), capabilitiesIdForConflicts);
-
-			// Loop assignments to get certifications
-			for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
-				if (currentAssignment.ICG_Capability_Assignment_Group__r != null) {
-					ICG_Capability_Assignment_Group__c currentGroup = currentAssignment.ICG_Capability_Assignment_Group__r;
-
-					if (!asgmtGroupByCapabilityId.containsKey(currentAssignment.Account_Role_Detail_Capability__c)) {
-						asgmtGroupByCapabilityId.put(currentAssignment.Account_Role_Detail_Capability__c, new List<AsgmtGroupWrapper>());
-					}
-					AsgmtGroupWrapper asgmtGroupToAdd = new AsgmtGroupWrapper();
-					asgmtGroupToAdd.id = currentGroup.Id;
-					asgmtGroupToAdd.type = currentGroup.RecordType.DeveloperName;
-					asgmtGroupToAdd.name = Label.icg_smart_facility_remote_validation;
-					asgmtGroupToAdd.expirationDate = currentGroup.Expiration_Date__c;
-					asgmtGroupToAdd.issueDate = currentGroup.Issue_Date__c;
-					asgmtGroupToAdd.src = '/resource/ICG_Resources/icons/remote_validation_icon.svg';
-					if (currentGroup.ICG_Certification__c != null) {
-						asgmtGroupToAdd.order = currentGroup.ICG_Certification__r.Order__c;
-						asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
-						asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
-					}
-					if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
-						asgmtGroupByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(asgmtGroupToAdd);
-					}
-				}
-			}
-
-			// Loop assignments and fill the output data model
-			for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
-				// Populate data for Account_Role_Detail_Capability__c
-				Account_Role_Detail_Capability__c currentDetail = currentAssignment.Account_Role_Detail_Capability__r;
-
-				listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
-
-				String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
-				if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
-					// We look for the Capability, Category to which it belongs
-					Map<String, Object> capabilityFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) rawData.get('capabilities'), 'name', rtDevNameLC);
-					Map<String, Object> categoryFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) capabilityFound.get('categories'), 'value', currentDetail.Category__c);
-
-					capabilityFound.put('rtypeId', currentDetail.RecordTypeId);
-
-					if (currentAssignment.ICG_Account_Role_Detail__r.Summary_Detail_Check_JSON__c != null) {
-						checksMap = (SectionsWrapper) JSON.deserialize(currentAssignment.ICG_Account_Role_Detail__r.Summary_Detail_Check_JSON__c, SectionsWrapper.class);
-					}
-
-					if ((Boolean) capabilityFound.get('containsData') == false) {
-						capabilityFound.put('containsData', true);
-					}
-
-					if (capabilityFound != null && !capabilityFound.containsKey('columns')) {
-						List<String> columns = mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase());
-						if (columns.contains('more_info_document__c')) {
-							columns.remove(columns.indexOf('more_info_document__c'));
-						}
-						// if (columns.contains('crstr_import_export__c')) {
-						// 	columns.remove(columns.indexOf('crstr_import_export__c'));
-						// }
-
-						if (columns != null && categoryFound != null) {
-							categoryFound.put('columns', getColumnsByRtAndGroup(currentDetail, columns, mapFieldsByGroupField));
-						}
-					}
-
-					if (categoryFound != null && (Boolean) categoryFound.get('hasRows') == false) {
-						categoryFound.put('hasRows', true);
-					}
-
-					categoryFound.put('isEditableRecordType', EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC) ? true : false);
-
-					Map<String, Object> currentObject;
-					if (categoryFound != null && categoryFound.containsKey('rows')) {
-						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get('rows');
-
-						Boolean capabilityAdded = false;
-						for (Map<String, Object> currentCapabilityGroupRow : (List<Map<String, Object>>) capabilityGroupRowsFound) {
-							if (!capabilityAdded && currentCapabilityGroupRow.get('id') == currentDetail.Id) {
-								capabilityAdded = true;
-							}
-						}
-						if (!capabilityAdded) {
-							// Set data for summary
-							Map<String, Object> capabilitySummaryFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) capabilityFound.get('summary'), 'value', currentDetail.Equipment__c.toLowerCase());
-							if (capabilitySummaryFound != null && (Boolean) capabilitySummaryFound.get('contains') == false) {
-								capabilitySummaryFound.put('contains', true);
-							}
-
-							currentObject = convertCapabilityAssignmentToObject(currentDetail, maPfieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-
-							List<String> requiredFields = CW_CapabilitiesManagerController.getRequiredFieldsForCapability(currentDetail, maPfieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-							currentObject.put('requiredFields', requiredFields);
-
-							// Set processed info.
-							currentObject.put('id', currentDetail.Id);
-							currentObject.put('equipment__c', mapEquipments.get(currentDetail.Equipment__c.toLowerCase()).getLabel());
-							currentObject.put('equipment_value', currentDetail.Equipment__c);
-							if (asgmtGroupByCapabilityId.containsKey(currentDetail.Id)) {
-								asgmtGroupByCapabilityId.get(currentDetail.Id).sort();
-								currentObject.put('certifications', asgmtGroupByCapabilityId.get(currentDetail.Id));
-								currentObject.put('isPeviouslyCertified', true);
-							}
-
-							// Set tooltips
-							Map<String, String> tooltips = new Map<String, String>();
-							for (String tooltipFieldKey : mapTooltipFieldsByField.keySet()) {
-								tooltipFieldKey = tooltipFieldKey.toLowerCase();
-								if (currentObject.containsKey(tooltipFieldKey)) {
-									String tooltip = '';
-									for (String tooltipField : mapTooltipFieldsByField.get(tooltipFieldKey)) {
-										tooltip += currentDetail.get(tooltipField);
-									}
-									tooltips.put(tooltipFieldKey, tooltip);
-								}
-							}
-							currentObject.put('tooltips', (tooltips.size() > 0) ? tooltips : null);
-
-							if (String.isBlank(currentDetail.Photos__c)) {
-								currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
-							}
-							try {
-								currentObject.put('photos', JSON.deserializeUntyped(currentDetail.Photos__c));
-							} catch (Exception e_photos) {
-								currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
-								currentObject.put('photos', JSON.deserializeUntyped(currentDetail.Photos__c));
-							}
-							if (currentAssignment.ICG_Capability_Assignment_Group__r.RecordTypeId == RT_REMOTE_VALIDATION) {
-								currentObject.put('remotevalidation', true);
-							} else {
-								currentObject.put('remotevalidation', false);
-							}
-							currentObject.put('photosAvailable', ((String) currentDetail.Photos__c).remove(' ').toLowerCase().countMatches('"visible":true') > 0);
-							currentObject.put('isAssigned', true);
-							currentObject.put('isNotEditable', true);
-							currentObject.put('isAditional', false);
-
-							currentObject.put('isEditableRecordType', EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC) ? true : false);
-
-							capabilityGroupRowsFound.add(currentObject);
-						}
-					}
-					categoryFound.put('templateFields', currentObject);
-				}
-			}
-
-			Map<String, List<String>> capabilitiesByRecordTypeNotIncluded = new Map<String, List<String>>();
-			for (Map<String, Object> capability : (List<Map<String, Object>>) rawData.get('capabilities')) {
-
-				// if recordtype is editable in private area
-				if ((Boolean) capability.get('isEditableRecordType')) {
-					capabilitiesByRecordTypeNotIncluded.put((String) capability.get('name'), new List<String>());
-					for (Map<String, Object> sum : (List<Map<String, Object>>) capability.get('summary')) {
-						if (!(Boolean) sum.get('contains')) {
-							capabilitiesByRecordTypeNotIncluded.get((String) capability.get('name')).add((String) sum.get('value'));
-						}
-					}
-				}
-			}
-
-			if (capabilitiesByRecordTypeNotIncluded.size() > 0) {
-				//Read missing Capabilities by mapRecordTypeIdByCategory
-				List<Account_Role_Detail_Capability__c> accountCapabNotInluded = getCapabilitiesNotIncludedDetail(capabilitiesByRecordTypeNotIncluded, mapRecordTypeIdByCategory);
-
-				for (Account_Role_Detail_Capability__c currentDetail : accountCapabNotInluded) {
-					listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
-
-					String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
-					if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
-						// We look for the Capability, Category to which it belongs
-						Map<String, Object> capabilityFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) rawData.get('capabilities'), 'name', rtDevNameLC);
-						Map<String, Object> categoryFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) capabilityFound.get('categories'), 'value', currentDetail.Category__c);
-
-						if(!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)){
-							checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
-						}
-
-						capabilityFound.put('rtypeId', currentDetail.RecordTypeId);
-
-						if ((Boolean) capabilityFound.get('containsData') == false) {
-							capabilityFound.put('containsData', true);
-						}
-
-						if (capabilityFound != null && !capabilityFound.containsKey('columns')) {
-							List<String> columns = mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase());
-							if (columns.contains('more_info_document__c')) {
-								columns.remove(columns.indexOf('more_info_document__c'));
-							}
-							if (columns != null && categoryFound != null) {
-								categoryFound.put('columns', getColumnsByRtAndGroup(currentDetail, columns, mapFieldsByGroupField));
-							}
-						}
-
-						if (categoryFound != null && (Boolean) categoryFound.get('hasRows') == false) {
-							categoryFound.put('hasRows', true);
-						}
-
-						categoryFound.put('isEditableRecordType', EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC) ? true : false);
-
-						Map<String, Object> currentObject;
-						if (categoryFound != null && categoryFound.containsKey('rows')) {
-							List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get('rows');
-
-							// Set data for summary
-							Map<String, Object> capabilitySummaryFound = (Map<String, Object>) getItemInMap((List<Map<String, Object>>) capabilityFound.get('summary'), 'value', currentDetail.Equipment__c.toLowerCase());
-							if (capabilitySummaryFound != null && (Boolean) capabilitySummaryFound.get('contains') == false) {
-								capabilitySummaryFound.put('contains', false);
-							}
-
-							currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, maPfieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-
-							List<String> requiredFields = CW_CapabilitiesManagerController.getRequiredFieldsForCapability(currentDetail, maPfieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-							currentObject.put('requiredFields', requiredFields);
-
-							// Set processed info.
-							currentObject.put('id', '');
-							currentObject.put('equipment__c', mapEquipments.get(currentDetail.Equipment__c.toLowerCase()).getLabel());
-							currentObject.put('equipment_value', currentDetail.Equipment__c);
-							currentObject.put('certifications', new List<Map<String, Object>>());
-							currentObject.put('isPeviouslyCertified', false);
-
-							// Set tooltips
-							Map<String, String> tooltips = new Map<String, String>();
-							for (String tooltipFieldKey : mapTooltipFieldsByField.keySet()) {
-								tooltipFieldKey = tooltipFieldKey.toLowerCase();
-								if (currentObject.containsKey(tooltipFieldKey)) {
-									String tooltip = '';
-									for (String tooltipField : mapTooltipFieldsByField.get(tooltipFieldKey)) {
-										tooltip += currentDetail.get(tooltipField);
-									}
-									tooltips.put(tooltipFieldKey, tooltip);
-								}
-							}
-							currentObject.put('tooltips', (tooltips.size() > 0) ? tooltips : null);
-
-							if (String.isBlank(currentDetail.Photos__c)) {
-								currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
-							}
-							try {
-								currentObject.put('photos', JSON.deserializeUntyped(currentDetail.Photos__c));
-							} catch (Exception e_photos) {
-								currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
-								currentObject.put('photos', JSON.deserializeUntyped(currentDetail.Photos__c));
-							}
-
-							currentObject.put('remotevalidation', false);
-
-							currentObject.put('photosAvailable', ((String) currentDetail.Photos__c).remove(' ').toLowerCase().countMatches('"visible":true') > 0);
-
-							currentObject.put('isAssigned', false);
-
-							currentObject.put('isNotEditable', true);
-
-							currentObject.put('isAditional', false);
-
-							currentObject.put('isEditableRecordType', EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC) ? true : false);
-
-							capabilityGroupRowsFound.add(currentObject);
-						}
-						categoryFound.put('templateFields', currentObject);
-					}
-				}
-			}
-
-			String userRoleAux = CW_Utilities.getUserRole(id);
-			Boolean editModeAux = userRoleAux == 'Company Admin' || userRoleAux == 'Facility Manager';
-
-			// Reorganice data in Super Categories and Sections
-			List<Map<String, Object>> superCategories = (List<Map<String, Object>>) returnValue.get('superCategories');
-
-			for (Map<String, Object> currentSuperCategory : CW_FacilityCapabilitiesController.getMapSectionsBySupercategory()) {
-				Map<String, Object> currentSuperCategoryMap = new Map<String, Object>{ 'label' => currentSuperCategory.get('label'), 'order' => currentSuperCategory.get('order'), 'sections' => new List<Object>(), 'categoriesAvailables' => 0, 'containsData' => false };
-				List<String> sectionsInCurrentSuperCategory = (List<String>) currentSuperCategory.get('sections');
-				Boolean containDataSuperCategory = false;
-
-				// Order capabilities by section
-				List<Map<String, Object>> currentSections = new List<Map<String, Object>>();
-				List<Map<String, Object>> mapRecordTypesBySection = CW_FacilityCapabilitiesController.getMapRecordTypesBySection();
-				for (Map<String, Object> cSection : mapRecordTypesBySection) {
-					Boolean includeSection = sectionsInCurrentSuperCategory.contains((String) cSection.get('label'));
-
-					if (includeSection) {
-						Boolean containDataSection = false;
-						for (String currentRecordType : (List<String>) cSection.get('rts')) {
-							Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) rawData.get('capabilities'), 'name', currentRecordType.toLowerCase());
-							if (capabilityFound != null) {
-								if (checksMap != null) {
-									String nameAux = (String) capabilityFound.get('name');
-									CW_FacilityCapabilitiesController.ChecksWrapper checkWrapperAux = checksMap.capabilitiesMap.get(nameAux);
-									if (checkWrapperAux != null) {
-										capabilityFound.put('check_summary', checkWrapperAux.summary);
-										capabilityFound.put('check_detail', checkWrapperAux.detail);
-										capabilityFound.put('show_summary', editModeAux ? editModeAux : checkWrapperAux.summary);
-										capabilityFound.put('show_detail', editModeAux ? editModeAux : checkWrapperAux.detail);
-										capabilityFound.put('show_capability', editModeAux ? editModeAux : checkWrapperAux.summary == true || checkWrapperAux.detail == true);
-									}
-								}
-
-								Map<String, Object> currentSectionObject = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', (String) cSection.get('label'));
-								if (currentSectionObject == null) {
-									currentSectionObject = new Map<String, Object>{ 'label' => (String) cSection.get('label'), 'capabilities' => new List<Map<String, Object>>(), 'containsData' => false };
-									currentSections.add(currentSectionObject);
-								}
-								if (listSectionsIncluded.contains(currentRecordType)) {
-									containDataSection = true;
-									containDataSuperCategory = true;
-								}
-
-								((List<Map<String, Object>>) currentSectionObject.get('capabilities')).add(capabilityFound);
-
-								currentSuperCategoryMap.put('categoriesAvailables', ((Integer) currentSuperCategoryMap.get('categoriesAvailables') + ((List<Object>) capabilityFound.get('categories')).size()));
-							}
-						}
-						//If it contains any sections from a capability
-						if (containDataSection) {
-							currentSections.get(currentSections.indexOf((Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', (String) cSection.get('label')))).put('containsData', true);
-						}
-					}
-				}
-				if (((Integer) currentSuperCategoryMap.get('categoriesAvailables')) > 0) {
-					if (containDataSuperCategory) {
-						currentSuperCategoryMap.put('containsData', true);
-					}
-					currentSuperCategoryMap.put('sections', currentSections);
-					superCategories.add(currentSuperCategoryMap);
-				}
-			}
+			Map<String, Object> generatedData = generateData(
+				id,
+				categoriesToRetrieve,
+				mapCategoriesByRecordTypeDevName,
+				mapAccountRoleDetailAssignmentRtsById,
+				capabilitiesIdForConflicts,
+				accountRoleDetailFound
+			);
+
+			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData);
 		} catch (Exception e) {
 			returnValue.put('e_getMessage', e.getMessage());
 			returnValue.put('e_getStackTraceString', e.getStackTraceString());
@@ -738,7 +487,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 			// Loop Rt and check the section
 			for (Map<String, Object> currentRtsBySection : rtBySections) {
-				if (((List<String>) cSuperCategoryMap.get('sections')).contains((String) currentRtsBySection.get('label'))) {
+				if (((List<String>) cSuperCategoryMap.get(CW_CapabilitiesUtilities.SECTIONS)).contains((String) currentRtsBySection.get('label'))) {
 					// Create wrapper section
 					ComparisonSectionWrapper sectionToAdd = new ComparisonSectionWrapper();
 					sectionToAdd.label = (String) currentRtsBySection.get('label');
@@ -758,7 +507,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 									currentCategoryWrapper.columns = new List<ComparisonColumnWrapper>();
 
-									List<List<Map<String, Object>>> columnsByRtAndGroup = getColumnsByRtAndGroup(new Account_Role_Detail_Capability__c(), fieldsByRecordTypeAndCategory.get(currentRt.toLowerCase() + '#' + currentCategory), fieldsByGroupField);
+									List<List<Map<String, Object>>> columnsByRtAndGroup = CW_FacilityCapabilitiesController.getColumnsByRtAndGroup(new Account_Role_Detail_Capability__c(), fieldsByRecordTypeAndCategory.get(currentRt.toLowerCase() + '#' + currentCategory), fieldsByGroupField);
 
 									Map<String, Integer> mapIndexByField = new Map<String, Integer>();
 									for (List<Map<String, Object>> currentHeaderColumnsByRtAndGroup : columnsByRtAndGroup) {
@@ -822,7 +571,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 				supercategories.add(superCategoryToAdd);
 			}
 
-			returnValue.put('superCategories', supercategories);
+			returnValue.put(CW_CapabilitiesUtilities.SUPERCATEGORIES, supercategories);
 		}
 		return returnValue;
 	}

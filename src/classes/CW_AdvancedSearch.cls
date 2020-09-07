@@ -42,7 +42,7 @@ public with sharing class CW_AdvancedSearch {
 				currentSupercategory.order = (Decimal) currentSectionsBySupercategory.get('order');
 				currentSupercategory.sections = new List<SectionRT>();
 
-				List<String> currentSectionSC = (List<String>) currentSectionsBySupercategory.get('sections');
+				List<String> currentSectionSC = (List<String>) currentSectionsBySupercategory.get(CW_CapabilitiesUtilities.SECTIONS);
 
 				for (Map<String, Object> currentSection : rtBySection) {
 					if (currentSectionSC.contains((String) currentSection.get('label'))) {
@@ -110,7 +110,7 @@ public with sharing class CW_AdvancedSearch {
 					lstEquipments.add(new Equipment(((String) currentEquip.get('value')),
 														(String) currentEquip.get('label'),
 														getFieldsWrapper(mapFieldsByRTypeAndCategory.get(key.toLowerCase())),
-														categoryLabel));
+														categoryLabel, currentCat));
 				}
 			}
 			capability = new CapabilityRT(recordTypeInput, rtLabel, lstEquipments);
@@ -137,8 +137,29 @@ public with sharing class CW_AdvancedSearch {
 															.get(apiField)
 															.getDescribe();
 
+
 			Field fieldWrapper = new Field();
 			fieldWrapper.name = apiField;
+
+			if(fieldWrapper.name.equalsIgnoreCase('CRSTR_DGR_Dedicated_Formula__c')) {
+				fieldDescribe = sObjectTypeRow.getDescribe()
+											.fields
+											.getMap()
+											.get('CRSTR_DGR_Dedicated__c')
+											.getDescribe();
+				fieldWrapper.name = 'CRSTR_DGR_Dedicated__c';
+			}
+
+			if(fieldWrapper.name.equalsIgnoreCase('CRSTR_Pharma_Dedicated_Formula__c')) {
+				fieldDescribe = sObjectTypeRow.getDescribe()
+											.fields
+											.getMap()
+											.get('CRSTR_Pharma_Dedicated__c')
+											.getDescribe();
+				fieldWrapper.name = 'CRSTR_Pharma_Dedicated__c';
+			}
+
+			
 			fieldWrapper.type = fieldDescribe.getType()
 												.name()
 												.toLowerCase();
@@ -149,14 +170,15 @@ public with sharing class CW_AdvancedSearch {
 				fieldWrapper.type = 'checkbox';	
 			}
 
-			if(fieldWrapper.type.equalsIgnoreCase('integer') || fieldWrapper.type.equalsIgnoreCase('double') || fieldWrapper.type.equalsIgnoreCase('string')) {
+			if(fieldWrapper.type.equalsIgnoreCase('integer') || fieldWrapper.type.equalsIgnoreCase('double') 
+				|| fieldWrapper.type.equalsIgnoreCase('multipicklist') || fieldWrapper.type.equalsIgnoreCase('string')) {
 				continue;
 			}
 
 			fieldWrapper.label = fieldDescribe.getLabel();
 			fieldWrapper.selected = false;
 
-			if(fieldWrapper.type.equalsIgnoreCase('picklist') || fieldWrapper.type.equalsIgnoreCase('multipicklist')) {
+			if(fieldWrapper.type.equalsIgnoreCase('picklist')) {
 				List<Options> lstOptions = new List<Options>();
 				List<Schema.PicklistEntry> ple = fieldDescribe.getPicklistValues();
 				for(Schema.PicklistEntry row : ple) {
@@ -256,6 +278,8 @@ public with sharing class CW_AdvancedSearch {
 		@AuraEnabled
 		public String category { get; set; }
 		@AuraEnabled
+		public String categoryDevName { get; set; }
+		@AuraEnabled
 		public List<Field> fields { get; set; }
 		@AuraEnabled
 		public Boolean selected { get; set; }
@@ -264,13 +288,14 @@ public with sharing class CW_AdvancedSearch {
 		/*
 		 * Constructor: params (String name, String label, String category)
 		 */
-		public Equipment(String name, String label, List<Field> lstFields, String category) {
+		public Equipment(String name, String label, List<Field> lstFields, String category, String categoryDevName) {
 			this.label = label;
 			this.name = name;
 			this.selected = false;
 			this.category = category;
 			this.fields = lstFields;
 			this.moreDetails = false;
+			this.categoryDevName = categoryDevName;
 		}
 	}
 	/**

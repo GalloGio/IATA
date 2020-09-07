@@ -20,6 +20,9 @@ public class CW_UtilitiesTest {
 		Account acc = CW_TestDataFactory.TestAccount(country.Id);
 		acc.Business_City__c = city.Id;
 		insert acc;
+		
+		Account ac2 = new Account(Name = 'Account02', IATA_ISO_Country__c = country.Id, Business_City_Name__c = 'Madrid');
+		insert ac2;
 
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(country.Id, acc.Id);
 		insert airport;
@@ -161,21 +164,6 @@ public class CW_UtilitiesTest {
 		System.assert(result == '', 'Validates an empty resultset');
 	}
 
-	/**@description Validates the "No Account Contact Role" section of the BecomeFacilityAdmin Method
-	 */
-	@isTest
-	static void testBecomeFacilityAdminNoAccountContactRole() {
-		List<ICG_Account_Role_Detail__c> accRoleDetail = [SELECT Id FROM ICG_Account_Role_Detail__c WHERE Nearest_Airport__r.Code__c = 'MAD' AND IATA_ISO_Country__r.Name = 'Spain' AND City_FOR__c = 'Madrid'];
-
-		List<Contact> cont = [SELECT Id FROM Contact WHERE FirstName = 'Test'];
-
-		test.startTest();
-		String result = CW_Utilities.becomeFacilityAdmin('88', accRoleDetail[0].Id, cont[0].Id, false);
-		test.stopTest();
-
-		System.assert(result.contains('No Account Contact Role'), 'No Account Contact Role response validation');
-	}
-
 	/**@description Validates the "Submitted == true" section of the BecomeFacilityAdmin Method
 	 */
 	@isTest
@@ -209,31 +197,32 @@ public class CW_UtilitiesTest {
 	 */
 	@isTest
 	static void testBecomeCompanyAdminOK() {
+		List<Account_Role_Relationship__c> lstARR = [SELECT Id, Relationship_Name__c FROM Account_Role_Relationship__c];
 		List<Account> acct = [SELECT Id, Name FROM Account WHERE Name = 'Account01'];
 		List<Contact> cont = [SELECT Id FROM Contact WHERE FirstName = 'Test'];
 
-		test.startTest();
-		String result = CW_Utilities.becomeCompanyAdmin(acct[0].Name, acct[0].Id, cont[0].Id);
-		test.stopTest();
+		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
+		List<ICG_Account_Role_Detail__c> ard = [SELECT id FROM ICG_Account_Role_Detail__c];
+		List<Account_Contact_Role__c> acr = [SELECT Id FROM Account_Contact_Role__c];
+		List<Account_Role__c> arc = [SELECT Id FROM Account_Role__c LIMIT 1];
+		
+		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
+		crd.ICG_Role__c = 'Company Admin';
+		crd.Status__c = 'Approved';
+		crd.Account_Role__c = arc[0].Id;
+		insert crd;
 
-		System.debug(LoggingLevel.FINE, 'AB:: result => ' + result);
+		test.startTest();
+		
+		CW_Utilities.becomeCompanyAdmin('Account02', acct[0].Id, cont[0].Id);
+		CW_Utilities.becomeCompanyAdmin('test1', acct[0].Id, cont[0].Id);
+
+		String result = CW_Utilities.becomeCompanyAdmin(lstARR[1].Relationship_Name__c, acct[0].Id, cont[0].Id);
 
 		System.assert(result.contains('Thank you for your request'), 'Not succesfull Submition request');
-	}
 
-	/**@description Validates the "No Account Contact Role" section of the BecomeCompanyAdmin Method
-	 */
-	@isTest
-	static void testBecomeCompanyAdminNoAccountContactRole() {
-		List<Contact> cont = [SELECT Id FROM Contact WHERE FirstName = 'Test'];
 
-		test.startTest();
-		String result = CW_Utilities.becomeCompanyAdmin(null, '88', cont[0].Id);
 		test.stopTest();
-
-		System.debug(LoggingLevel.FINE, 'AB:: result => ' + result);
-
-		System.assert(result.contains('No Account Contact Role'), 'No Account Contact Role response validation');
 	}
 
 	/**@description Validates the getFacilityLanguages method
@@ -394,21 +383,22 @@ public class CW_UtilitiesTest {
 		crd.Account_Role__c = arc[0].Id;
 
 		insert crd;
-		System.runAs(urs[0]) {
-			test.startTest();
-			Boolean res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
-			system.assertEquals(res, false);
+		
+		test.startTest();
+		Boolean res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+		system.assertEquals(res, false, 'rejected');
 
-			crd.Status__c = 'Pending for Approval';
-			res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
-			system.assertEquals(res, false);
+		crd.Status__c = 'Pending for Approval';
+		update crd;
+		res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+		system.assertEquals(res, false, 'rejected');
 
-			crd.ICG_Role__c = 'test';
-			res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
-			system.assertEquals(res, false);
+		crd.ICG_Role__c = 'Company Admin';
+		update crd;
+		res = CW_Utilities.rejectContactRoleDetailAutomaticProcess(crd.Id, 'test reject reason');
+		system.assertEquals(res, false, 'rejected');
 
-			test.stopTest();
-		}
+		test.stopTest();
 	}
 
 	@IsTest
@@ -427,7 +417,7 @@ public class CW_UtilitiesTest {
 			test.startTest();
 			
 			Set<Id> listResult = CW_Utilities.getRelatedAccountsByStation(crd.Id);
-			System.assertNotEquals(listResult.size(), 0);
+			System.assertNotEquals(listResult.size(), 0, 'list empty');
 			
 			test.stopTest();
 		}
@@ -449,7 +439,7 @@ public class CW_UtilitiesTest {
 			
 			test.startTest();
 			List<ICG_Contact_Role_Detail__c> res = CW_Utilities.getFacilityManagerContactRolesFromStationListByUser(urs[0].Id);
-			system.assertNotEquals(res.size(), 0, 'test=' + res.size());
+			system.assertNotEquals(res.size(), 0, 'list empty');
 			test.stopTest();
 		}
 	}
@@ -496,7 +486,7 @@ public class CW_UtilitiesTest {
 		   
 			List<ICG_Notification__c> notifications = [SELECT Id FROM ICG_Notification__c];
 			
-			system.assertNotEquals(notifications.size(), 0);
+			system.assertNotEquals(notifications.size(), 0, 'list empty');
 			test.stopTest();
 		}
 	}
@@ -516,43 +506,14 @@ public class CW_UtilitiesTest {
 		System.runAs(urs[0]) {
 			test.startTest();
 			Boolean res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
-			system.assertEquals(res, false);
+			system.assertEquals(res, false, 'approved');
 
 			crd.Status__c = 'Pending for Approval';
 			res = CW_Utilities.approveContactRoleDetailAutomaticProcess(crd.Id);
-			system.assertEquals(res, false);
+			system.assertEquals(res, false, 'approved');
 
 			test.stopTest();
 		}
-	}
-
-	@IsTest
-	public static void sendApproveOrRejectMailsTest() {
-		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
-		List<ICG_Account_Role_Detail__c> ard = [SELECT id, Account_Role__r.Account__r.RecordType.DeveloperName FROM ICG_Account_Role_Detail__c];
-		List<Account_Contact_Role__c> acr = [SELECT Id FROM Account_Contact_Role__c];
-		List<Account_Role__c> arc = [SELECT Id FROM Account_Role__c LIMIT 1];
-		String contactId = [SELECT Id FROM Contact LIMIT 1].Id;
-
-		//For some reason I cannot yet see, this object cannot be created in the SETUP method
-		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-		crd.ICG_Role__c = 'Facility Manager';
-		crd.Status__c = 'Approved';
-		crd.Account_Role__c = arc[0].Id;
-
-		ICG_Contact_Role_Detail__c crd1 = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-		crd1.ICG_Role__c = 'Facility Manager';
-		crd1.Status__c = 'Rejected';
-		crd1.Account_Role__c = arc[0].Id;
-		insert crd;
-
-		test.startTest();
-
-		ard[0].Status__c = 'Approved';
-		ard[1].Status__c = 'Rejected';
-		CW_Utilities.sendApproveOrRejectMails(ard[0], ard[1]);
-
-		test.stopTest();
 	}
 
 	@IsTest
@@ -580,7 +541,7 @@ public class CW_UtilitiesTest {
 
 		CW_Utilities.updateAllStationManagementRecords(ard[0].CreatedBy.ContactId, ard[0].Id, 'Rejected');
 		List<ICG_Contact_Role_Detail__c> crds = [Select id from ICG_Contact_Role_Detail__c where ICG_Account_Role_Detail__c =:ard[0].Id AND Status__c =: 'Rejected'];
-		system.assertNotEquals(crds.size(), 0);
+		system.assertNotEquals(crds.size(), 0, 'list empty');
 
 		test.stopTest();
 	}
@@ -602,7 +563,7 @@ public class CW_UtilitiesTest {
 			test.startTest();
 			String groupName = CW_Utilities.getOpsHierarchyNameFromStationId(crd.Id);
 			List<ICG_Contact_Role_Detail__c> listResult = CW_Utilities.getPendingCompanyAdminContactRolesFromGroupName(groupName);
-			System.assertNotEquals(listResult.size(), 0);
+			System.assertNotEquals(listResult.size(), 0, 'list empty');
 			test.stopTest();
 		}
 	}
@@ -646,7 +607,7 @@ public class CW_UtilitiesTest {
 
 			CW_Utilities.approveStationAutomaticProcess(ard[0].Id);
 			String crdRemovalProcess = CW_Utilities.handleContactRoleDetailRemovalProcess(crd.Id, true);
-			System.assertEquals('Successful', crdRemovalProcess);
+			System.assertEquals('Successful', crdRemovalProcess, 'removal error');
 			
 			test.stopTest();
 		}
@@ -685,9 +646,39 @@ public class CW_UtilitiesTest {
 			CW_Utilities.rejectStationAutomaticProcess(ard[0].Id, 'the reason');
 		} catch (Exception ex) {
 			Boolean res = ex.getMessage().contains('Aura handled exception');
-			system.assertEquals(res, true);
+			system.assertEquals(res, true, 'reject dennied');
 		}
 
+		test.stopTest();
+	}
+	
+	@isTest
+	static void testGetPermissionToEdit() {
+		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
+
+		System.runAs(urs[0]) {
+			test.startTest();
+
+			Boolean result = CW_Utilities.getPermissionToEdit();
+			system.assertEquals(result, false, 'has permisson');
+
+			test.stopTest();
+		}
+	}
+	
+	
+	@isTest
+	static void testGetContactRoleDetailsToInsert() {
+		List<Account> acct = [SELECT Id FROM Account WHERE Name = 'Account02'];
+		List<ICG_Account_Role_Detail__c> accRoleDetail = [SELECT Id FROM ICG_Account_Role_Detail__c WHERE Nearest_Airport__r.Code__c = 'MAD' AND IATA_ISO_Country__r.Name = 'Spain' AND City_FOR__c = 'Madrid'];
+		List<Contact> cont = [SELECT Id FROM Contact WHERE FirstName = 'Test'];
+
+		test.startTest();
+		
+		List<ICG_Contact_Role_Detail__c> result = CW_Utilities.getContactRoleDetailsToInsert(acct[0].Id, accRoleDetail[0].Id, cont[0].Id, 'Pending for Approval');
+	   
+		system.assertNotEquals(result.size(), 0, 'empty list');
+		
 		test.stopTest();
 	}
 }

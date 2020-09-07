@@ -9,6 +9,7 @@ import setSummaryDetailCheckJSON_ from "@salesforce/apex/CW_FacilityCapabilities
 import createRelationshipsForNewCapabilities_ from "@salesforce/apex/CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities";
 import updateCapabilitiesEdited_ from "@salesforce/apex/CW_CapabilitiesManagerController.updateCapabilitiesEdited";
 import labels from 'c/cwOneSourceLabels';
+import pubsub from 'c/cwPubSub';
 import { loadStyle } from 'lightning/platformResourceLoader';
 
 export default class CwCapabilitiesManagerContainer extends LightningElement {
@@ -30,7 +31,16 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	@api recordId = "";
 	@api certificationMode = false;
 	@api ardCertId;
-	@api isCapabCertiMode = false;
+	@api certificationName = "";
+
+	_isCapabCertiMode=false;
+	@api
+	get isCapabCertiMode(){
+		return this._isCapabCertiMode;
+	}
+	set isCapabCertiMode(value){
+		this._isCapabCertiMode = value;		
+	}
 
 	label = labels.labels();
 
@@ -98,8 +108,24 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		return this.data != null ? true : false;
 	}
 
+	get getCertificationMode(){
+		return this.certificationMode === 'true' ? true : false;
+	}
+
+	get getCertificationName(){
+		return this.certificationName;
+	}
+
+	get getStatusEditMode(){
+		return this.addAllRowsPrevious === true;
+	}
+
 	get isSaveOption(){
-		return this.editMode === true && (this.certificationMode || this.getexistsRows()) ? true : false;
+		return (this.listAddedRows.length > 0) || (this.getCertificationMode && this.getStatusEditMode);
+	}
+
+	get isNotEditable(){
+		return this.isSaveOption === false;
 	}
 
 	getexistsRows()
@@ -118,7 +144,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	get getisCapabCertiMode(){
-		return this.isCapabCertiMode === 'true' ||  this.isCapabCertiMode === true;
+		return this.isCapabCertiMode;
 	}
 
 	get isLoading(){
@@ -185,7 +211,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.rowSelected.photos.splice(Number(position),1);
 		if(this.rowSelected.photos.length >0){
 			this.setPhotosValue(JSON.stringify(this.rowSelected.photos));	
-			this.modalEditPhotos=true;		
 		}
 		else{			
 			this.rowSelected.photosAvailable=false;
@@ -234,6 +259,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 								previousPhotoList.push(photo);
 							});
 							photosToUpsert = JSON.stringify(previousPhotoList);
+						}
+						else{
+							previousPhotoList = currentPhotoListParse;
 						}
 						this.rowSelected.photos = previousPhotoList;
 						this.rowSelected.photosAvailable=true;
@@ -325,16 +353,77 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				this.checkCapabilities();
 			})			
 		}
+
+		let certheaders = this.template.querySelectorAll('.cert-colum-head');
+		if (certheaders && certheaders.length > 0) {
+			certheaders.forEach(certheader => {
+				let actionheader = certheader.nextElementSibling;
+				if(actionheader){
+					let widthactionheader = actionheader.clientWidth;
+					certheader.style.right = widthactionheader + "px";
+				}else{
+					certheader.style.right = "0px";
+				}
+				
+			});
+		}
+
+		let certcells = this.template.querySelectorAll('.cert-colum');
+		if (certcells && certcells.length > 0) {
+			certcells.forEach(certcell => {
+				let actioncell = certcell.nextElementSibling;
+				if(actioncell){
+					let widthactioncell = actioncell.clientWidth;
+					certcell.style.right = widthactioncell + "px";
+				}else{
+					certcell.style.right = "0px";
+				}
+				
+			});
+		}
+
+
+
+
+		let photoheaders = this.template.querySelectorAll('.photo-colum-head');
+		if (photoheaders && photoheaders.length > 0) {
+			photoheaders.forEach(photoheader => {
+				let certheader = photoheader.nextElementSibling;
+				let widthcertheader = certheader.clientWidth;
+				let actionheader = certheader.nextElementSibling;
+				if(actionheader){
+					let widthactionheader = actionheader.clientWidth;
+					photoheader.style.right = widthactionheader + widthcertheader + "px";
+				}else{
+					photoheader.style.right = widthcertheader + "px";
+				}
+				
+			});
+		}
+
+		let photocells = this.template.querySelectorAll('.photo-colum');
+		if (photocells && photocells.length > 0) {
+			photocells.forEach(photocell => {
+				let certcell = photocell.nextElementSibling;
+				let widthcertcell = certcell.clientWidth;
+				let actioncell = certcell.nextElementSibling;
+				if(actioncell){
+					let widthactioncell = actioncell.clientWidth;
+					certcell.style.right = widthcertcell + widthactioncell + "px";
+				}
+				photocell.style.right = widthcertcell + "px";
+			});
+		}
 	}
 	
 	checkCapabilities(){
 		if(this.editMode === true){
-			if (this.certificationMode === true) {								
-				this.labelButtonAddRowsToList = this.getisCapabCertiMode || this.certificationMode === false ? 'Edit capabilities' : "Maintain previous capabilities";
-				this.getCapabilitiesFromCertification(this.recordId, this.ardCertId, this.getisCapabCertiMode);
+			this.labelButtonAddRowsToList = this.getisCapabCertiMode || !this.getCertificationMode ? this.label.icg_capab_magmnt_edit_capab : this.label.icg_capab_magmnt_mantain_prev;
+			if (this.getCertificationMode) {								
+				this.getCapabilitiesFromCertification(this.recordId, this.ardCertId);
 			}
 			else { 
-				this.getCapabilitiesFromCertification(this.recordId, null, this.getisCapabCertiMode);
+				this.getCapabilitiesFromCertification(this.recordId, null);
 			}
 			
 			Promise.all([
@@ -359,6 +448,15 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				}
 			});
 			this.dispatchEvent(newEvent);
+		})
+		.catch(error => {
+			this.dispatchEvent(
+				new ShowToastEvent({
+					title: 'Error reading capabilities',
+					message: error.body.message,
+					variant: 'error'
+				})
+			);
 		})
 		.finally(() => {
 			this.loading = false;
@@ -675,11 +773,16 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	closeCapabilitiesTab(){
-		var close = true;
-		const closeclickedevt = new CustomEvent('closecapabilitiestab', {
-			detail: { close },
-		});
-		 this.dispatchEvent(closeclickedevt);
+		if(this.getStatusEditMode){
+			this.addPreviuosCapabilities();
+		}	
+		let p1 = new Promise(
+		
+		function(resolve, reject) {
+			resolve(pubsub.fire("certificationupdate"));
+		}
+		);
+		this.dispatchEvent(new CustomEvent('closecapabilitiestab',{}));		
 	}
 
 	closeModalEditPhotos() {
@@ -721,9 +824,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		});
 	}
 
-	updateCapabilitiesEdited(listAddedRows)
+	updateCapabilitiesEdited(accRoleDet,ardCertId,listAddedRows)
 	{
-		updateCapabilitiesEdited_({listAddedRows})
+		updateCapabilitiesEdited_({accRoleDet,ardCertId,listAddedRows})
 		.then(res => {
 			let result = JSON.parse(res);
 			if(result.success)
@@ -754,10 +857,10 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		{
 			if(this.listAddedRows.length>0){
 				this.loading = true;
-				if(this.getisCapabCertiMode || this.certificationMode === false){
-					this.updateCapabilitiesEdited(this.listAddedRows);
+				if(this.getisCapabCertiMode || !this.getCertificationMode){
+					this.updateCapabilitiesEdited(this.recordId,this.ardCertId,this.listAddedRows);
 				}
-				else{
+				else{					
 					this.createRelationshipsForNewCapabilities(this.recordId,this.ardCertId,this.listAddedRows);
 				}				
 			}
@@ -771,13 +874,13 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		}
 		if(this.actionToExecute.action === 'cancel' && this.actionToExecute.result)
 		{
-			if(!this.getisCapabCertiMode && this.certificationMode === true){
+			if(this.getCertificationMode && !this.getisCapabCertiMode){
 				deleteRecord(this.ardCertId)
 				.then(() => {
 					this.closeCapabilitiesTab();
 				})
 			}
-			else{
+			else{		
 				this.closeCapabilitiesTab();
 			}	
 		}

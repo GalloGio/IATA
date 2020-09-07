@@ -24,7 +24,6 @@ export default class CwAddressSelectorMapContainer extends LightningElement {
 
 	@wire(getURL, { page: 'URL_ICG_AddressSelectorMap' })
     wiredURLResultPage(result) {
-		console.log('Url',result);
         if (result.data) {
             this._urlGMap = result.data;
         }

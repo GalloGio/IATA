@@ -61,10 +61,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Capability_Asgmt_Group_Helper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_ICG_Facility_Queuable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -998,11 +994,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>ICG_Account_Role_Detail__c.Account_pending_for_approval__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>ICG_Account_Role_Detail__c.Airmail__c</field>
         <readable>true</readable>
@@ -1188,6 +1179,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ICG_Account_Role_Detail__c.Station_Geo_Coordinates__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ICG_Account_Role_Detail__c.Street_Nr_FOR__c</field>
         <readable>true</readable>
@@ -1260,6 +1256,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ICG_Capability_Assignment_Group__c.ICG_Certification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ICG_Capability_Assignment_Group__c.Is_Deprecated_Without_Children__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

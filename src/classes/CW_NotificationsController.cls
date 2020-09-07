@@ -46,11 +46,11 @@ public without sharing class CW_NotificationsController {
             
             if(viewAlertsEvents)
             {
-                notificationList  = [SELECT id,Subject__c, Body__c,Status__c,Short_Description__c,Read__c,Station__c,Station_Company__c,Station_Name__c, RecordTypeId, CreatedDate FROM ICG_Notification__c WHERE RecordTypeId =: RT_NOTIFICATION_PRIVATE_AREA AND Target_Contact__c =: user.ContactId Order by CreatedDate desc LIMIT 25]; 
+                notificationList  = [SELECT id,Subject__c, Body__c,Status__c,Short_Description__c,Read__c,Station__c,Station_Company__c,Station_Name__c, RecordTypeId, CreatedDate, CreatedById FROM ICG_Notification__c WHERE RecordTypeId =: RT_NOTIFICATION_PRIVATE_AREA AND Target_Contact__c =: user.ContactId Order by CreatedDate desc LIMIT 25]; 
             }
             else
             {
-                notificationList = [SELECT id,Subject__c, Body__c,Status__c,Short_Description__c,Read__c,Station__c,Station_Company__c,Station_Name__c, RecordTypeId, CreatedDate FROM ICG_Notification__c WHERE Read__c =: false AND RecordTypeId =: RT_NOTIFICATION_PRIVATE_AREA AND Target_Contact__c =: user.ContactId Order by CreatedDate desc]; 
+                notificationList = [SELECT id,Subject__c, Body__c,Status__c,Short_Description__c,Read__c,Station__c,Station_Company__c,Station_Name__c, RecordTypeId, CreatedDate, CreatedById FROM ICG_Notification__c WHERE Read__c =: false AND RecordTypeId =: RT_NOTIFICATION_PRIVATE_AREA AND Target_Contact__c =: user.ContactId Order by CreatedDate desc]; 
             }
             returnValue = JSON.serialize(notificationList);
             

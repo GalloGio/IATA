@@ -7,11 +7,12 @@ export default class CwAccountDetailOverview extends LightningElement {
 	initialized = false;
 	isLoading = false;
 	mainCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3";
-	disabledFilter = " disabled-filter";
+	disabledFilter = " disabled-filter-dark";
 	textInformationHover = "Information not verified by IATA";
 
 	@track tooltipObject;
 	@track tooltipToDisplay = "";
+	@track editOn = false;
 
 	//icons
 	icon = {
@@ -125,7 +126,6 @@ export default class CwAccountDetailOverview extends LightningElement {
 				})
 				.catch(error => {
 					this.isLoading = false;
-					console.log("error", error);
 				});
 		} else {
 			this.isLoading = false;
@@ -231,10 +231,10 @@ export default class CwAccountDetailOverview extends LightningElement {
 	}
 
 	showInput(event){
-		let elementName = event.target.dataset.item;
-		console.log('elementName : ' + elementName);
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
+		this.editOn = !this.editOn;
+	}
+
+	@api editOff(){		
+		this.editOn = false;
 	}
 }

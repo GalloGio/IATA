@@ -26,24 +26,7 @@ export default class CwPendingUserApprovals extends LightningElement {
 	}
 	set userFacilities(value){
 		this._userFacilities = value;
-		let groups = [];
-		if(this._userFacilities){
-			this._userFacilities.forEach(grp =>{
-				if(grp.isCompanyAdmin) groups.push(grp.groupName);
-			})
-		}
-		groups.forEach(grname =>{
-			let group = {groupName : grname, companyAdmins : []};
-			getPendingCompanyAdminContactRolesFromGroupName({groupName : grname}).then(conRoles =>{
-                group.companyAdmins = conRoles;
-                group.hasItemCompanyAdmin = conRoles.size() > 0;
-				group.companyAdmins.forEach(conrole => {
-					conrole.CreatedDateDateFormat = (conrole.CreatedDate.split("-")[2]).split('T')[0] + "-" + conrole.CreatedDate.split("-")[1] + "-" + conrole.CreatedDate.split("-")[0];
-				})
-			}).finally(()=>{
-				if(group.companyAdmins.length > 0) this.groupsAndAdmins.push(group);
-			});
-		});
+		this.fillPendingForApprovalContactRoles();
 	}
 	handleMoreInfo(event) {
         let url = window.location.pathname + '?#ID:' +
@@ -61,32 +44,7 @@ export default class CwPendingUserApprovals extends LightningElement {
 	}
 	set userManagedFacilities(value){
 		this._userManagedFacilities = JSON.parse(JSON.stringify(value));
-		let stations = [];
-		this.pendingStationsWithContactRoles = [];
-		if(this._userManagedFacilities){
-			this._userManagedFacilities.forEach(station =>{
-				if(station.isApproved__c) stations.push(station.Id);
-			})
-		}
-
-		getFacilityManagerContactRolesFromStationListByStatus({stationIds : stations, status: 'Pending for Approval'}).then(conRoles =>{
-			console.log(conRoles);
-			conRoles.forEach(conrole => {
-				let stationsfound = this._userManagedFacilities.filter(st =>{
-					return st.Id === conrole.ICG_Account_Role_Detail__c;
-				});
-				if (stationsfound.length > 0){
-					conrole = JSON.parse(JSON.stringify(conrole));
-					conrole.CreatedDateDateFormat = (conrole.CreatedDate.split("-")[2]).split('T')[0] + "-" + conrole.CreatedDate.split("-")[1] + "-" + conrole.CreatedDate.split("-")[0];
-					stationsfound.forEach(stf =>{
-						stf.contactRole = conrole;
-						console.log(stf);
-						console.log(conrole);
-						this.pendingStationsWithContactRoles.push(stf);
-					})
-				}
-			});
-		})
+		this.fillPendingForApprovalContactRoles();
 	}
 
 	searchContactRole(value, element){
@@ -120,7 +78,6 @@ export default class CwPendingUserApprovals extends LightningElement {
                 return !this.stationManagerFilterValue || this.searchContactRole(this.stationManagerFilterValue, station);
             })
         } 
-		console.log(filteredFacilities);
 		return filteredFacilities;
 	}
     
@@ -156,7 +113,8 @@ export default class CwPendingUserApprovals extends LightningElement {
     handleConfirmDialogYes(){
         this.openConfirm = false;
         if (this.action === 'approve'){
-            this.approveCrd();
+			this.approveCrd();
+			this.fillPendingForApprovalContactRoles();
         }
         else if (this.action === 'reject'){
             this.rejectCrd();
@@ -217,5 +175,50 @@ export default class CwPendingUserApprovals extends LightningElement {
         this.template.querySelector("c-cw-xlsx-main").download();
     }
 	
+	fillPendingForApprovalContactRoles(){
+		if(this._userFacilities){
+			let groups = [];
+			this._userFacilities.forEach(grp =>{
+				if(grp.isCompanyAdmin) groups.push(grp.groupName);
+			})
+			groups.forEach(grname =>{
+				let group = {groupName : grname, companyAdmins : []};
+				getPendingCompanyAdminContactRolesFromGroupName({groupName : grname}).then(conRoles =>{
+					this.groupsAndAdmins = [];
+					group.companyAdmins = conRoles;
+					group.hasItemCompanyAdmin = conRoles && conRoles.length > 0;
+					group.companyAdmins.forEach(conrole => {
+						conrole.CreatedDateDateFormat = (conrole.CreatedDate.split("-")[2]).split('T')[0] + "-" + conrole.CreatedDate.split("-")[1] + "-" + conrole.CreatedDate.split("-")[0];
+					})
+				}).finally(()=>{
+					if(group.companyAdmins.length > 0) this.groupsAndAdmins.push(group);
+				});
+			});
+		}
+		if(this._userManagedFacilities){
+			let stations = [];
+		
+			this._userManagedFacilities.forEach(station =>{
+				if(station.isApproved__c) stations.push(station.Id);
+			})
 
+
+			getFacilityManagerContactRolesFromStationListByStatus({stationIds : stations, status: 'Pending for Approval'}).then(conRoles =>{
+				this.pendingStationsWithContactRoles = [];
+				conRoles.forEach(conrole => {
+					let stationsfound = this._userManagedFacilities.filter(st =>{
+						return st.Id === conrole.ICG_Account_Role_Detail__c;
+					});
+					if (stationsfound.length > 0){
+						conrole = JSON.parse(JSON.stringify(conrole));
+						conrole.CreatedDateDateFormat = (conrole.CreatedDate.split("-")[2]).split('T')[0] + "-" + conrole.CreatedDate.split("-")[1] + "-" + conrole.CreatedDate.split("-")[0];
+						stationsfound.forEach(stf =>{
+							stf.contactRole = conrole;
+							this.pendingStationsWithContactRoles.push(stf);
+						})
+					}
+				});
+			})
+		}
+	}
 }

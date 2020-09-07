@@ -76,11 +76,10 @@ public without sharing class Order_Dom {
 	}
 
 	private void onAfterInsert() {
-		// getData(true, true);
+		//getData(true, true);
 	}
 
 	private void onAfterUpdate() {
-		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 		//This is a custom setting for order max upload
 		//Avoid the order triggers to fire when mass upload Orders
 		if (Utility.getNumericSetting('Execute Order Trigger for mass upload') != 1) return;

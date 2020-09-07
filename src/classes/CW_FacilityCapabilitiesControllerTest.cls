@@ -126,7 +126,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Test.startTest();
 		Map<String, Object> response = CW_FacilityCapabilitiesController.getCapabilitiesFromAccountRoleDetailId(ardid);
 		Test.stopTest();
-		system.assertEquals(true, response.containsKey('superCategories'), 'No superCategories found for this Account Role Detail');
+		system.assertEquals(true, response.containsKey(CW_CapabilitiesUtilities.SUPERCATEGORIES), 'No superCategories found for this Account Role Detail');
 	}
 
 	@isTest
@@ -197,8 +197,8 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ICG_Account_Role_Detail__c ard = [SELECT id, RecordType.DeveloperName FROM ICG_Account_Role_Detail__c LIMIT 1];
 		Test.startTest();
 		Map<String, Object> response = (Map<String, Object>) CW_FacilityCapabilitiesController.getComparisonSchema(ard.RecordType.DeveloperName);
-		system.assertEquals(true, response.containsKey('superCategories'), 'No superCategories property found in Comparison schema');
-		List<CW_FacilityCapabilitiesController.ComparisonSuperCategoryWrapper> superCategories = (List<CW_FacilityCapabilitiesController.ComparisonSuperCategoryWrapper>) response.get('superCategories');
+		system.assertEquals(true, response.containsKey(CW_CapabilitiesUtilities.SUPERCATEGORIES), 'No superCategories property found in Comparison schema');
+		List<CW_FacilityCapabilitiesController.ComparisonSuperCategoryWrapper> superCategories = (List<CW_FacilityCapabilitiesController.ComparisonSuperCategoryWrapper>) response.get(CW_CapabilitiesUtilities.SUPERCATEGORIES);
 		system.assertEquals(2, superCategories.size(), 'Response does not contain supercategories');
 
 		for (CW_FacilityCapabilitiesController.ComparisonSuperCategoryWrapper superCategory : superCategories) {
@@ -395,4 +395,33 @@ public class CW_FacilityCapabilitiesControllerTest {
 		
 		Test.stopTest();
 	}
+
+	@isTest
+	public static void AsgmtGroupWrapperCompareTest() {
+		Test.startTest();
+		
+		CW_FacilityCapabilitiesController.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_FacilityCapabilitiesController.AsgmtGroupWrapper();
+		CW_FacilityCapabilitiesController.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_FacilityCapabilitiesController.AsgmtGroupWrapper();
+		
+		Integer result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
+		system.assertEquals(result, 0);
+
+		asgmtGroupToAdd1.order = 1;
+		asgmtGroupToAdd2.order = 1;
+
+		result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
+		system.assertEquals(result, 0);
+
+		asgmtGroupToAdd1.order = 2;
+		result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
+		system.assertEquals(result, 1);
+
+		asgmtGroupToAdd2.order = 3;
+		result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
+		system.assertEquals(result, -1);
+		
+		Test.stopTest();
+	}
 }
+	
+   

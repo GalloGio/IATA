@@ -6,8 +6,22 @@ export default class CwSearchResult extends LightningElement {
 	icons = resources + "/icons/";
 	searchbylocation = this.icons + "search-by-location.svg";
 	@api label;
-	@api input;
 	@api urlResultPage;
+
+	_input;
+
+	@api 
+	get input(){
+		return this._input;
+	}
+
+	set input(value){
+		let valueCopy = JSON.parse(JSON.stringify(value));
+		let facilityCopy = JSON.parse(JSON.stringify(valueCopy.facility));
+		facilityCopy.lstAvailableCertifications = JSON.parse(JSON.stringify(value.lstAvailableCertifications)); 
+		valueCopy.facility = facilityCopy;
+		this._input = valueCopy;
+	}
 
 	handleMoreInfo() {
 		//var currenturl = location.href;

@@ -4,7 +4,8 @@ import getCertifications from "@salesforce/apex/CW_ResultsPageSearchBarControlle
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import getCompanyTypes from "@salesforce/apex/CW_Utilities.getCompanyTypes";
-import { fillPredictiveValues, extractTypeFromLocation, prepareSearchParams, checkKeyUpValue } from "c/cwUtilities";
+import { fillPredictiveValues, extractTypeFromLocation, prepareSearchParams, checkKeyUpValue, compressQueryParams } from "c/cwUtilities";
+import { loadScript } from "lightning/platformResourceLoader";
 
 export default class CsWizardGuidedSearch extends LightningElement {
 	@api label;
@@ -154,7 +155,11 @@ export default class CsWizardGuidedSearch extends LightningElement {
 		}
 	}
 
-
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
+	}
 	renderedCallback() {
 		if (this.initialized) {
 			return;
@@ -440,7 +445,7 @@ export default class CsWizardGuidedSearch extends LightningElement {
 
 		let urlParams = prepareSearchParams(searchList);
 		if (urlParams === "all" && this.isEmptySearchWithWorldwide(searchList)) {
-			urlParams = "all-worldwide";
+			urlParams = compressQueryParams("all-worldwide");
 		}
 		window.location.href = this.urlResultPage + "?q=" + urlParams;
 	}

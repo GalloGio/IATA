@@ -31,6 +31,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
     
     public String facilityId {get;set;}
 
+    public String facilityId {get;set;}
+
 	/*** ENHCS-2018-7 ***/
 	public String productWrapper {
 		get {

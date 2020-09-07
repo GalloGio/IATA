@@ -28,9 +28,9 @@
                             </div>
                         </div>
                         <div class="col-12 no-padding height-45 ml-0 bg-transparent">
-                            <div class="row">
+                            <div class="row mr-0">
                                 <div class="col-10 no-padding">
-                                    <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15">
+                                    <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15 pr-0">
 
                                         <template if:true={showMenu}>
                                             <div>
@@ -83,12 +83,12 @@
                                     </nav>
 
                                 </div>
-                                <div if:true={environmentVariables.data} class="col-2 no-padding flex-right">
+                                <div if:true={environmentVariables.data} class="col-2 no-padding-right flex-right">
                                     <template if:false={isBetaOrg}>
                                         <template if:false={userInfoLoggedIn}>
                                             <template if:true={urlPrivateArea}>
-                                                <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15" style='padding:0px;'>
-                                                    <button class="login-btn account-btn text-white mt-0 btn btn-primary" type="button" 
+                                                <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15 p-0">
+                                                    <button class="login-btn account-btn text-white mt-0 btn btn-primary mr-0" type="button" 
                                                     onclick={goToPrivateArea} >
                                                         <span>{label.login}</span>
                                                     </button>
@@ -96,7 +96,7 @@
                                                         width="50px">
                                                 </nav>
                                             </template>
-                                            <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15" style='padding:0px;'>
+                                            <nav class="navbar navbar-expand-lg navbar-light text-black font-size-15 p-0">
                                                 <button class="login-btn account-btn text-white mt-0 btn btn-primary" type="button"
                                                     onclick={showJoinNowModal}><span>{label.icg_join_now}
                                                         </span>
@@ -111,7 +111,7 @@
                                         </template>
                                     </template>
                                     <template if:true={isBetaOrg}>
-                                        <button class="login-btn account-btn text-white mt-0 btn btn-primary " type="button"
+                                        <button class="login-btn account-btn text-white mt-0 btn btn-primary mr-0" type="button"
                                                 onclick={goToPreRegister}><span>{label.icg_pre_register}
                                                     </span></button>
                                     </template>
@@ -152,30 +152,55 @@
 
                 <!-- Collapsible content -->
                 <template if:true={showMenu}>
-                    <div class="collapse navbar-collapse">
+                    <div class="collapse navbar-collapse box-shadow">
                         <!-- Links -->
                         <ul class="navbar-nav mr-auto menu-resp">
                             <li class="nav-item active">
                                 <a class="nav-link" onclick={handleClick} data-target-id="search">{label.menu_home}<span
-                                        class="float-right">&gt;</span></a>
+                                        class="float-right"><img class="mr-2 width-20" src={menuresponsiveitem}/></span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" onclick={handleClick} data-target-id="abouticg">{label.menu_about_one_source}<span class="float-right">&gt;</span></a>
+                                <a class="nav-link" onclick={handleClick} data-target-id="abouticg">{label.menu_about_one_source}<span class="float-right"><img class="mr-2 width-20" src={menuresponsiveitem}/></span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" onclick={handleClick} data-target-id="validationprog">{label.menu_validation_programs}<span class="float-right">&gt;</span></a>
+                                <a class="nav-link" onclick={handleClick} data-target-id="validationprog">{label.menu_validation_programs}<span class="float-right"><img class="mr-2 width-20" src={menuresponsiveitem}/></span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" onclick={handleClick} data-target-id="sfremote">{label.menu_remote_validations}<span class="float-right">&gt;</span></a>
+                                <a class="nav-link" onclick={handleClick} data-target-id="sfremote">{label.menu_remote_validations}<span class="float-right"><img class="mr-2 width-20" src={menuresponsiveitem}/></span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" onclick={handleClick} data-target-id="latestnews">{label.menu_latest_news}<span
-                                        class="float-right">&gt;</span></a>
+                                        class="float-right"><img class="mr-2 width-20" src={menuresponsiveitem}/></span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" onclick={handleClick} data-target-id="aboutiata">{label.menu_about_IATA}<span
-                                        class="float-right">&gt;</span></a>
+                                        class="float-right"><img class="mr-2 width-20" src={menuresponsiveitem}/></span></a>
                             </li>
+
+                            <div if:true={environmentVariables.data} class="m-3">
+                                <template if:false={isBetaOrg}>
+                                    <template if:false={userInfoLoggedIn}>
+                                        <template if:true={urlPrivateArea}>                                   
+                                            <button class="login-btn account-btn text-white mt-0 btn btn-primary mr-0" type="button" 
+                                            onclick={goToPrivateArea} >
+                                                <span>{label.login}</span>
+                                            </button>
+    
+                                        </template>    
+                                        <button class="login-btn account-btn text-white mt-0 btn btn-primary ml-2" type="button"
+                                            onclick={showJoinNowModal}><span>{label.icg_join_now}
+                                                </span>
+                                        </button>
+                                    </template>
+                                </template>
+                                <template if:true={isBetaOrg}>
+                                    <button class="login-btn account-btn text-white mt-0 btn btn-primary mr-0" type="button"
+                                            onclick={goToPreRegister}><span>{label.icg_pre_register}
+                                                </span>
+                                    </button>
+                                </template>                                                       
+                            </div>
+
                         </ul>
                         <!-- Links -->
                     </div>

@@ -134,9 +134,9 @@ export default class CwPrivateAreaContainer extends LightningElement {
                 let createdDate = groupInfo.createdDate;
 				this.userFacilities.push({accountRoleDetailId, groupName, isCompanyAdmin,isPendingCompanyAdmin, companyList, numberOfStations, numberOfApprovedStations, status, createdDateDateFormat, createdDate, hasItem});
 			});
+			this.initializeCertifications();
 			this.isLoading = false;
 		}else{
-			console.log(result);
 			this.isLoading = false;
 		}
 	}
@@ -164,6 +164,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	wiredCertifications({ data }) {
 		if (data) {
 			this.activeCertifications = JSON.parse(data);
+			this.initializeCertifications();
 		}
 	}
 	@wire(getUserCompanyInfo, {})
@@ -268,6 +269,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	}
 
 	refreshData() {
+		this.stationsInitialized = false;
 		refreshApex(this.rawUserInfo);
 		refreshApex(this.rawFacilities);
 		this.isLoading = false;
@@ -467,7 +469,6 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.approvalAction = "HandleRemoval";
 		handleContactRoleDetailRemovalProcess({ contactRoleDetailId: this.removalContactRoleId, approvedRemoval: approvedRemoval })
 			.then(resp => {
-				console.log('resp handleremoval', resp);
 				let approvalContactRole = this.getUser();
 				let modalMessage;
 				if(resp === 'Successful'){
@@ -642,7 +643,6 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				});
 			})
 			.catch(error => {
-				console.log(error);
 				this.isLoading = false;
 			});
 	}
@@ -660,7 +660,6 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				});
 			})
 			.catch(error => {
-				console.log(error);
 				this.isLoading = false;
 			});
 	}
@@ -688,10 +687,13 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				this._isProdEnvironment()
 			})
             .catch(err => {
-				console.log(err);
 				this.isLoading = false;
 			});
 			
+		this.initializeCertifications();
+		this.getUserDependentData();
+	}
+	initializeCertifications(){
 		if(!this.stationsInitialized && this.userFacilities && this.activeCertifications){
 			this.userFacilities.forEach(group =>{
 				group.companyList.forEach(company => {
@@ -714,7 +716,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 			})
 			this.stationsInitialized = true;
 		}
-		this.getUserDependentData();
+		
 	}
 	
 	closeApprovalModal() {

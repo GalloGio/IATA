@@ -4,7 +4,8 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import pubsub from "c/cwPubSub";
 
 import {
-  removeFromComparisonCommon
+  removeFromComparisonCommon,
+  saveComparisonListToLocalStorage
 } from 'c/cwUtilities';
 
 import getCapabilitiesFromAccountRoleDetailId_ from "@salesforce/apex/CW_FacilityCapabilitiesController.getCapabilitiesFromAccountRoleDetailId";
@@ -32,24 +33,6 @@ export default class CwCompareFacilityButton extends LightningElement {
       JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_COMPARE_FIELD)) ||
       [];
 
-    let invalidValuesFromLS = false;
-
-    tmpFacilitiesToCompare.forEach(element => {
-      if(!element.Id){
-        invalidValuesFromLS = true;
-      }
-    });
-
-    if(invalidValuesFromLS){
-
-      tmpFacilitiesToCompare = [];
-
-      window.localStorage.setItem(
-        LOCAL_STORAGE_COMPARE_FIELD,
-        JSON.stringify(tmpFacilitiesToCompare)
-      );
-    }
-
     this.isFacilityInComparison =
       tmpFacilitiesToCompare.find(curFac => curFac.Id === this.facility.Id) !==
       undefined;
@@ -57,10 +40,7 @@ export default class CwCompareFacilityButton extends LightningElement {
     return tmpFacilitiesToCompare;
   }
   set facilitiesToCompare(value) {
-    window.localStorage.setItem(
-      LOCAL_STORAGE_COMPARE_FIELD,
-      JSON.stringify(value)
-    );
+    saveComparisonListToLocalStorage(value);
   }
 
   get isFacilityLoaded() {
@@ -121,7 +101,8 @@ export default class CwCompareFacilityButton extends LightningElement {
         compareButton.classList.add('disabled-btn');
       }
       else{
-        compareButton.classList.remove('disabled-btn');
+		compareButton.classList.remove('disabled-btn');
+		this.template.querySelector('.spinnerBtnCmpr').classList.add('hidden');
       }
     }
   }
@@ -158,7 +139,7 @@ export default class CwCompareFacilityButton extends LightningElement {
   }
 
   handleOnClick() {
-
+	this.template.querySelector('.spinnerBtnCmpr').classList.remove('hidden');
     let objDisabled = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_COMPARE_FIELD_DISABLED));
 
     let disabled = false;

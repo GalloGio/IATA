@@ -2,6 +2,7 @@ import { LightningElement, wire, api } from "lwc";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import { prepareSearchParams } from "c/cwUtilities";
+import { loadScript } from "lightning/platformResourceLoader";
 
 export default class CwTextContainer extends LightningElement {
 	@api firstext = false;
@@ -103,6 +104,12 @@ export default class CwTextContainer extends LightningElement {
 			mStyle = "first-blue";
 		}
 		return mStyle;
+	}
+
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
 	}
 
 	renderedCallback() {

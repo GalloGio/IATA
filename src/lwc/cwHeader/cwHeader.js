@@ -16,6 +16,7 @@ export default class CwHeader extends LightningElement {
 
     //icons
     menuresponsive = this.icons + "responsive/ic-menu--open.svg";
+    menuresponsiveitem = this.icons + "responsive/ic-responsive-menu.png";
     loginIcon = this.icons + "user.svg";
 
     //images

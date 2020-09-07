@@ -292,3 +292,7 @@
 .btn-primary-blue:after, .btn-primary:after {
     border-width: 0 0 12px 12px;
 }
+
+.height-16{
+    height:16px;
+}

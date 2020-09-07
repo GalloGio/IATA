@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The certification / remote validation header where relevant data is stored</description>
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -239,6 +240,7 @@
     </fields>
     <fields>
         <fullName>Days_Until_Expiration__c</fullName>
+        <description>Calculates the remaining days until expiration</description>
         <externalId>false</externalId>
         <formula>ROUND(Expiration_Date__c - TODAY(), 0)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -385,6 +387,7 @@
     <fields>
         <fullName>ICG_Certification__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Certification</description>
         <externalId>false</externalId>
         <label>ICG Certification</label>
         <referenceTo>ICG_Certification__c</referenceTo>
@@ -442,10 +445,21 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Is_Deprecated_Without_Children__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Marks if a group is deprecated and has no children</description>
+        <externalId>false</externalId>
+        <label>Is Deprecated Without Children</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Deprecated__c</fullName>
         <description>Technical formula to indicate if is depcrecated</description>
         <externalId>false</externalId>
-        <formula>Total_Children__c &gt; 0 &amp;&amp; Total_Children__c = Total_Deprecated_Children__c</formula>
+        <formula>Total_Children__c &gt; 0 &amp;&amp; Total_Children__c = Total_Deprecated_Children__c
+|| Is_Deprecated_Without_Children__c = true</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Deprecated</label>
         <trackHistory>false</trackHistory>
@@ -547,7 +561,7 @@
         <fullName>Status__c</fullName>
         <description>Field that shows the status of the certification depending on the expiration date and if a new certification has been created to update this one.</description>
         <externalId>false</externalId>
-        <formula>IF(Is_Deprecated__c,&apos;Inactive&apos;,IF(Is_Expired__c,&apos;Expired&apos;,&apos;Active&apos;))</formula>
+        <formula>IF(Is_Expired__c,&apos;Expired&apos;,&apos;Active&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status</label>
         <required>false</required>
@@ -570,6 +584,7 @@
     </fields>
     <fields>
         <fullName>Total_Children__c</fullName>
+        <description>Calculates the total amount of children for the group</description>
         <externalId>false</externalId>
         <label>Total Children</label>
         <summaryForeignKey>ICG_Account_Role_Capability_Assignment__c.ICG_Capability_Assignment_Group__c</summaryForeignKey>

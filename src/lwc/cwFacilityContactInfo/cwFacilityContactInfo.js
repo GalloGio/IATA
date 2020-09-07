@@ -15,7 +15,8 @@ export default class CwFacilityContactInfo extends LightningElement {
 	@track isLoading = false;
 	@track showLanguagesContent = true;
 	@track editHours = false;
-	
+	@track editOn = false;
+
 	@api label;
 	_facility;
 
@@ -114,6 +115,9 @@ export default class CwFacilityContactInfo extends LightningElement {
 			});
 			this.languageSelectorEventListenersAdded = true;
 		}
+
+
+
 	}
 
 	updateDataValid(validated) {
@@ -374,17 +378,19 @@ export default class CwFacilityContactInfo extends LightningElement {
         return !this._facility || !this._facility.pilotInformation;
 	}
 	
-	showInput(event){
-		let elementName = event.target.dataset.item;
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
-		if(event.target.title == 'Edit'){
+	showInput(){
+		this.editOn = !this.editOn;
+		if(this.editOn){
 			this.editHours = true;
 		}else{
 			this.editHours = false;
 		}
 
+	}
+
+	@api editOff(){		
+		this.editOn = false;
+		this.editHours = false;
 	}
 
 	get showPilotInformation() {

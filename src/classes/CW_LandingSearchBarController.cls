@@ -81,7 +81,7 @@ public without sharing class CW_LandingSearchBarController {
 												Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, 
 												Nearest_Airport__r.City__c, Nearest_Airport__r.IATA_ISO_Country__r.Name, Country_FOR__c
 												FROM ICG_Account_Role_Detail__c
-												WHERE Status__c = 'Approved']) {
+												WHERE isApproved__c = true]) {
 
 			// locCity
 			String locCityKey = (accd.City_FOR__c + '#' + CITYSTR).toLowerCase();
@@ -151,7 +151,11 @@ public without sharing class CW_LandingSearchBarController {
 	public static String getCertificationsList() {
 		final Map<String, RowInfo> mapUpdated = new Map<String, RowInfo> ();
 		final List<ICG_Certification__c> certDetails = [SELECT name, Certification_Type__c, Alias__c,
-															(SELECT id FROM ICG_Capability_Assignment_Groups__r where Is_Expired__c = false AND ICG_Account_Role_Detail__r.isApproved__c = true)
+															(SELECT id FROM ICG_Capability_Assignment_Groups__r 
+																WHERE Is_Expired__c = false 
+																AND ICG_Account_Role_Detail__r.isApproved__c = true
+																AND is_Expired__c = false 
+																AND is_deprecated__c = false)
 														FROM ICG_Certification__c 
 														WHERE Is_Visible__c = true]; //Check if cert is expired to avoid it
 

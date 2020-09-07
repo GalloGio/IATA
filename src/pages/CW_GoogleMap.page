@@ -253,11 +253,12 @@
                 var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
                 //iterate through map data for each point (even if 1)
+                // initial coordanates at geneva
                 var mapData = data.mapData;              
-                var lat_min = 0;
-                var lat_max = 0;
-                var lng_min = 0;
-                var lng_max = 0;                 
+                var lat_min = 46.2309188;
+                var lat_max = 46.2309188;
+                var lng_min = 6.1096637;
+                var lng_max = 6.1096637;                 
                 
                 if(mapData){
                     for(var i=0, j=mapData.length; i<j; i++){
@@ -286,7 +287,6 @@
                 ));
 
                 map.addListener('zoom_changed', function() {
-                    console.log(map.getZoom());
                     if(activeInfoWindow) {
                         activeInfoWindow.close();
                         activeInfoWindow = null;

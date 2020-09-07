@@ -56,7 +56,6 @@ public without sharing class CW_OneSourceGxAProvision {
                     wrapper.emailId = roleToProvisionDeserialized.Contact_Email__c;
                     wrapper.salesForceUserEmailId = UserInfo.getOrganizationId().substring(0, 15) + '@' + user[0].UserName;
                     wrapper.contactStatus = 'Disable';
-                    system.debug('Disable User');
                     CaseIFAPHandler.sendJSON(JSON.serialize(wrapper), 'users');
                 }
             }
@@ -130,14 +129,12 @@ public without sharing class CW_OneSourceGxAProvision {
 
     @future(callout=true)
     public static void deProvisionStation(String serializedStation){
-        system.debug('Station deprovisioned');
         ICG_Account_Role_Detail__c station = (ICG_Account_Role_Detail__c)JSON.deserialize(serializedStation, ICG_Account_Role_Detail__c.class);
         CaseIFAPHandler.WrapperCompanyForJSON stationDeprovision = new CaseIFAPHandler.WrapperCompanyForJSON(station,'Disable');
         CaseIFAPHandler.sendJSON(JSON.serialize(stationDeprovision), 'accounts');
     }
     @future(callout=true)
     public static void provisionStation(String serializedStation){
-        system.debug('Station provisioned');
         ICG_Account_Role_Detail__c station = (ICG_Account_Role_Detail__c)JSON.deserialize(serializedStation, ICG_Account_Role_Detail__c.class);
         CaseIFAPHandler.WrapperCompanyForJSON stationProvision = new CaseIFAPHandler.WrapperCompanyForJSON(station,'Active');
         CaseIFAPHandler.sendJSON(JSON.serialize(stationProvision), 'accounts');
@@ -156,12 +153,10 @@ public without sharing class CW_OneSourceGxAProvision {
     }
 
     public static void provisionUserRole(String salesForceUserEmailId, String contactEmail,String stationGlobalId){
-        system.debug('Provision user role');
         CaseIFAPHandler.WrapperUserRoleForJSON roleBody = new CaseIFAPHandler.WrapperUserRoleForJSON(salesForceUserEmailId, contactEmail, stationGlobalId, 'Active');
         CaseIFAPHandler.sendJSON(JSON.serialize(roleBody), 'roles');
     }
     public static void deProvisionUserRole(String salesForceUserEmailId, String contactEmail,String stationGlobalId){
-        system.debug('Deprovision user role');
         CaseIFAPHandler.WrapperUserRoleForJSON roleBody = new CaseIFAPHandler.WrapperUserRoleForJSON(salesForceUserEmailId, contactEmail, stationGlobalId, 'Disable');
         CaseIFAPHandler.sendJSON(JSON.serialize(roleBody), 'roles');
     }

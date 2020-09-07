@@ -164,6 +164,13 @@
     background-color: white;
   }
 
+  .custom-certifi-title{
+    padding-left: 3%;
+    padding-top: 3%;
+    color: blue;
+    font-weight: bold;
+  }
+
   .plus-icon{
     font-size: x-large !important;
   }
@@ -331,6 +338,9 @@
   
   .spinner-div {
     min-height: 25vw;
+    position: fixed;
+    left: 50%;
+    z-index: 30;
   }
   
   .fontw-inherit {
@@ -352,3 +362,42 @@
   .margin-button-save {
     margin-right: 2%;
   }
+
+  .bt-blue{
+    background-color: rgb(30,50,250) !important;
+    padding-left: 5px !important;
+    color: white !important;
+    width: max-content;
+    padding: inherit;
+}
+.bt-blue:hover{
+    background-color: rgb(24, 40, 220) !important;
+}
+
+.photo-colum {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 20;
+	background: white;
+}
+
+.photo-colum-head {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 20;
+	background: #fafaf9;
+}
+
+.cert-colum {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 20;
+	background: white;
+}
+
+.cert-colum-head {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 20;
+	background: #fafaf9;
+}

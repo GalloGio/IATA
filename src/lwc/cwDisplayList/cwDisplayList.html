@@ -5,8 +5,8 @@
             <!-- Icon Temporary Disabled-->
             <!--<img if:false={facility.listAccCert} class="img-company-type" src={icons.cargoCompanyType} alt="type"/> -->
             <template if:true={editMode}>
-                <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt editable hidden" variant="error" data-item="editable" title="Close" onclick={showInput} size="x-small"></lightning-icon>
-                <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt editable" title="Edit" data-item="editable" onclick={showInput} size="x-small"></lightning-icon>
+                <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOn} variant="error" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOn} title="Edit" onclick={showInput} size="x-small"></lightning-icon>
             </template>
         </p>
         <template if:true={isTitleFacilityPageType}>

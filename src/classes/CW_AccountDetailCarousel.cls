@@ -78,7 +78,7 @@ public without sharing class CW_AccountDetailCarousel {
 	}
 	
 	public class Result{
-		private Boolean success;
-		private String message;
+		public Boolean success;
+		public String message;
 	}
 }

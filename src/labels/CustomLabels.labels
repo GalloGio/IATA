@@ -47563,7 +47563,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg_capab_magmnt_edit_capab</shortDescription>
-        <value>Edit capabilities</value>
+        <value>Edit Capabilities</value>
     </labels>
     <labels>
         <fullName>icg_capab_magmnt_enable</fullName>
@@ -47572,6 +47572,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg_capab_magmnt_enable</shortDescription>
         <value>Edit section</value>
+    </labels>
+    <labels>
+        <fullName>icg_capab_magmnt_mantain_prev</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_capab_magmnt_mantain_prev</shortDescription>
+        <value>Maintain previous capabilities</value>
     </labels>
     <labels>
         <fullName>icg_capability_management</fullName>
@@ -47966,6 +47974,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Customer Website</value>
     </labels>
     <labels>
+        <fullName>ICG_Data_Submission_no_access</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>You don´t have permission</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
         <fullName>icg_date</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48020,6 +48036,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg display in public site</shortDescription>
         <value>Display in public site</value>
+    </labels>
+    <labels>
+        <fullName>icg_display_table_in_public_site</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg display title in public site</shortDescription>
+        <value>Display Table in public site</value>
     </labels>
     <labels>
         <fullName>icg_display_publicly</fullName>
@@ -48526,6 +48550,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Legal Name</value>
     </labels>
     <labels>
+        <fullName>icg_limit_filters_reached</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg limit filters reached</shortDescription>
+        <value>Filter limit reached - Remove one or multiple filters before adding new ones.</value>
+    </labels>
+    <labels>
         <fullName>icg_link</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48579,7 +48611,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage remote validations</shortDescription>
-        <value>Manage Remote Validations in your GxA Panel</value>
+        <value>Manage Remote Validations</value>
     </labels>
     <labels>
         <fullName>icg_manage_user_permission</fullName>
@@ -50051,7 +50083,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg what is the IATA One Source videoUrl</shortDescription>
-        <value>https://www.youtube.com/embed/BDs7ol6f1ME</value>
+        <value>https://www.youtube.com/embed/LViVYrezsDQ</value>
     </labels>
     <labels>
         <fullName>icg_which_station_to_manage</fullName>
@@ -50116,6 +50148,30 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
+    </labels>
+    <labels>
+        <fullName>icg_watch_video</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg watch video</shortDescription>
+        <value>Watch Video</value>
+    </labels>
+    <labels>
+        <fullName>icg_all_rights_reserved</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg all rights reserved</shortDescription>
+        <value>All rights reserved</value>
+    </labels>
+    <labels>
+        <fullName>icg_submit</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg submit</shortDescription>
+        <value>Submit</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>
@@ -50497,14 +50553,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>true</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
         <value>中國的</value>
-    </labels>
-    <labels>
-        <fullName>regular_price</fullName>
-        <categories>IEC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>regular price</shortDescription>
-        <value>Regular Price</value>
     </labels>
     <labels>
         <fullName>resetPasswordConfirmMessage</fullName>

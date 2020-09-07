@@ -6,11 +6,13 @@ import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import SEARCH_ICON from "@salesforce/resourceUrl/ICG_Search_Icon";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
+import { loadScript } from "lightning/platformResourceLoader";
 
 import { checkIconType, createKey, prepareSearchParams, translationTextJS, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
 
 export default class CwLandingSearchBar extends LightningElement {
 	initialized = false;
+	searchReady = false;
 	label = labels.labels();
 
 	searchtypelocation = "location";
@@ -42,14 +44,13 @@ export default class CwLandingSearchBar extends LightningElement {
 	@track showLandingBar = true;
 	@track showSearchAssistantcmp = false;
 	@track showAdvanceSearchcmp = false;
-	@track isboxfocus;
-	@track isboxMfocus;
+	@track isboxfocus = false;
+	@track isboxMfocus = false;
 
 	@track availableLocations;
 	availableCompanyNames;
 	availableCertifications;
 	urlResultPage;
-	urlAdvancedSearchPage;
 
 	@track tooltipObject;
 	@track tooltipToDisplay = "";
@@ -59,12 +60,13 @@ export default class CwLandingSearchBar extends LightningElement {
 	wiredURLResultPage({ data }) {
 		if (data) {
 			this.urlResultPage = data;
+			this.searchReady = true;
 		}
 	}
-	@wire(getURL, { page: "URL_ICG_AdvancedSearchPage" })
-	wiredUrlAdvancedSearchPage({ data }) {
-		if (data) {
-			this.urlAdvancedSearchPage = data;
+
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
 		}
 	}
 	renderedCallback() {
@@ -74,11 +76,6 @@ export default class CwLandingSearchBar extends LightningElement {
 		if (this.initialized) {
 			return;
 		}
-
-		this.isboxfocus = false;
-		this.isboxMfocus = false;
-		this._addFocusOnSearchListener();
-
 		getPredictiveData("getLocationsList", getLocationsList()).then(response => {
 			this.inputEnabled = true;
 			this.availableLocations = response;
@@ -96,24 +93,23 @@ export default class CwLandingSearchBar extends LightningElement {
 		this.initialized = true;
 	}
 
-	_addFocusOnSearchListener() {
-		let box = this.template.querySelector('[data-tosca="locationinput"]');
-		if (box) {
-			box.addEventListener("focus", event => {
-				this.isboxfocus = true;
-			});
-			box.addEventListener("blur", event => {
-				this.isboxfocus = false;
-			});
+	handleOnFocus(event){
+		if(event.target.dataset.mobile == "true"){
+			this.isboxMfocus = true;
 		}
-		let boxM = this.template.querySelector('[data-tosca="locationinputMobile"]');
-		if (boxM) {
-			boxM.addEventListener("focus", event => {
-				this.isboxMfocus = true;
-			});
-			boxM.addEventListener("blur", event => {
-				this.isboxMfocus = false;
-			});
+		else{
+			this.isboxfocus = true;
+		}
+
+		this.closeSearchTypeCombo();
+	}
+
+	handleOnBlur(event){
+		if(event.target.dataset.mobile == "true"){
+			this.isboxMfocus = false;
+		}
+		else{
+			this.isboxfocus = false;
 		}
 	}
 

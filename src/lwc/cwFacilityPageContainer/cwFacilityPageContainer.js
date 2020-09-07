@@ -8,7 +8,7 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import getCompanyAdmins from "@salesforce/apex/CW_Utilities.getCompanyadminContactsFromAccountId";
 import getFacilityManagers from "@salesforce/apex/CW_Utilities.getStationManagersContactRoleDetails";
 import becomeFacilityAdmin from "@salesforce/apex/CW_Utilities.becomeFacilityAdmin";
-import becomeCompanyAdmin from "@salesforce/apex/CW_Utilities.becomeCompanyAdmin";
+import becomeCompanyAdmin from "@salesforce/apex/CW_Utilities.becomeCompanyAdminFromStation";
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
 import saveAirlinesHandled from "@salesforce/apex/CW_HandledAirlinesController.saveAirlinesHandled";
 import saveHiddenOperatingStations from "@salesforce/apex/CW_HandledAirlinesController.saveHiddenOperatingStations";
@@ -18,8 +18,8 @@ import CHECKED_IMAGE from "@salesforce/resourceUrl/ic_tic_green";
 import updateFacility_ from "@salesforce/apex/CW_CreateFacilityController.updateFacility";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import labels from "c/cwOneSourceLabels";
-
-import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, connectTwitter, connectLinkedin, sendMail, concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, getImageString, getIataSrc, getIataTooltip, hideHover } from "c/cwUtilities";
+import { loadScript } from "lightning/platformResourceLoader";
+import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, connectTwitter, connectLinkedin, sendMail, concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, getImageString, getIataSrc, getIataTooltip, hideHover, compressQueryParams } from "c/cwUtilities";
 
 export default class CwFacilityPageContainer extends NavigationMixin(LightningElement) {
 	_facilityid;
@@ -42,8 +42,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	set facilityid(value) {
 		this._facilityid = value;
+		let urlParams = this.getQueryParameters();
+		if (urlParams.pending) {
+			this.isPendingApproval = urlParams.pending;
+		}
 		this.getData(this._facilityid);
 		this.getUserRoleJS(this._facilityid);
+		this.isSaveCapabMangmn=false;
 	}
 	@track facility;
 	@track rawFacility;
@@ -76,6 +81,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track loaded;
 	@track overviewValid = true;
 	@track contactInfoValid = true;
+	@track editOn = false;
+	@track editOnAirline = false;
+	@track editOnCargoHandling = false;
+	@track editOnRampHandlers = false;
 
 	//Handled Airlines tracks
 	@track toDeleteSelectedAirlines = [];
@@ -86,10 +95,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track toAddRampHandlers = [];
 	@track toDeleteRampHandlers = [];
 	
+	
 	sendActionToSave = false;
 	isSaveCapabMangmn = false;
 	isPendingApproval = false;
 	isSendActionToCancel = false;
+	listCapabilitiesRow = [];
 	logoInfoObject;
 	logoImage;
 
@@ -161,6 +172,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 	}
 
+	connectedCallback() {
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
+	}
+
 	renderedCallback() {
 		if (!this.initialized) {
 
@@ -168,7 +185,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			let id = this._facilityid;
 			if (!id) {
 				let urlParams = this.getQueryParameters();
-
 				if (urlParams.pending) {
 					this.isPendingApproval = urlParams.pending;
 				}
@@ -271,6 +287,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	getData(id) {
+		this.isSaveCapabMangmn=false;
+		
 		const searchCriterion = {
 			operator: "=",
 			value: id,
@@ -313,7 +331,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				} else {
 					this.setLoadedStatus();
 				}
-				this.isLoading = false;
+				this.loaded = true;
 			})
 			.catch(error => {
 				console.error("error", error);
@@ -452,10 +470,18 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				tmpEditMode = this.userRole === "Company Admin" || this.userRole === "Facility Manager";
 			}
 			this._editMode = tmpEditMode;
+			this.loaded = true;
+		})
+		.catch(err => {
+			this.modalMessage = err.message;
+			this.modalImage = "X";
+			this.showModal = true;
+			this.loaded = true;
 		});
 	}
 
 	becomeFacilityAdminJS(event) {
+		this.loaded = false;
 		let facilityId = event.target.dataset.facility;
 		becomeFacilityAdmin({
 			companyId: this.facility.companyId,
@@ -465,11 +491,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			.then(resp => {
 				let parsedRes = JSON.parse(resp);
 				if (parsedRes.success) {
-					this.modalMessage = "Thank you for your request. IATA will contact you shortly.";
+					this.modalMessage = parsedRes.message;
 					this.refreshInfo();
 				} else {
 					this.modalMessage = parsedRes.message;
 					this.modalImage = "X";
+					this.loaded = true;
 				}
 				this.showModal = true;
 			})
@@ -477,11 +504,14 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.modalMessage = err.message;
 				this.modalImage = "X";
 				this.showModal = true;
+				this.loaded = true;
 			});
 	}
 	becomeCompanyAdminJS() {
-		becomeCompanyAdmin({
-			companyId: this.facility.companyId,
+		this.loaded = false;
+		becomeCompanyAdmin({ 
+			stationId: this.facility.Id,
+			companyId: this.userInfo.AccountId,
 			contactId: this.userInfo.ContactId
 		})
 			.then(resp => {
@@ -492,6 +522,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				} else {
 					this.modalMessage = parsedRes.message;
 					this.modalImage = "X";
+					this.loaded = true;
 				}
 				this.showModal = true;
 			})
@@ -499,6 +530,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.modalMessage = err.message;
 				this.modalImage = "X";
 				this.showModal = true;
+				this.loaded = true;
 			});
 	}
 	refreshInfo() {
@@ -632,11 +664,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			console.error(exception);
 		});
 	}
-
-
-
-
-
 
 	filterAirlinesHandled(event) {
 		this.filterTextAirlines = event.detail;
@@ -808,7 +835,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	setFacilityInfo(id, key, value) {
-		this.isLoading = true;
+		this.loaded = false;
 		this.facility = JSON.parse(JSON.stringify(this.facility));
 		
 		if (this.saveOnTheFly) {
@@ -817,22 +844,30 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					if (response.result.status === "OK") {
 						this.facility[response.result.key] = response.result.value;
 					}
-					this.isLoading = false;
+					this.loaded = true;
 					this.facility = JSON.parse(JSON.stringify(this.facility));
 				})
 				.catch(error => {
-					this.isLoading = false;
+					this.loaded = true;
 					console.error("error", error);
 				});
 		} else {
 			this.facility[key] = value;
-			this.isLoading = false;
+			this.loaded = true;
 			this.facility = JSON.parse(JSON.stringify(this.facility));
 		}
 	}
 
 	updateFacility(event) {
 		this.facility = event.detail;	
+	}
+
+	handleSendListRows(event){
+		this.listCapabilitiesRow = event.detail.data;
+	}
+
+	handleSaveSuccesfull(event){
+		this.sendActionToSave = event.detail.data;
 	}
 
 	handleSaveAction(event){
@@ -844,7 +879,11 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	get isSendActionToSave(){
-		return this.sendActionToSave === true;
+		let actionSave = {
+			isSave: this.sendActionToSave === true,
+			listRow : this.listCapabilitiesRow
+		}
+		return actionSave;
 	}
 
 	get isDirty(){
@@ -902,7 +941,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 		let jsonInput = JSON.stringify(objToSave);
 
-		this.isLoading = true;
+		this.loaded = false;
 		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject) })
 			.then(response => {
 				if (response.result.status == "OK") {
@@ -910,32 +949,40 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					if(this.facilityid){
 						this.getData(this.facilityid);
 						if(this.logoInfoObject){
-							this.template.querySelectorAll('.editable').forEach(elem =>{
-								elem.classList.toggle("hidden");
-							})
+							this.editOn = false;
 						}
 					}
 					else{
-						this.isLoading = false;
+						this.loaded = true;
 					}
 				} else if (response.result.status == "error") {
 					this.showToast("Error", "Something went wrong while updating the facility", "error");
-					this.isLoading = false;
+					this.loaded = true;
 				}
 			})
 			.catch(error => {
-				this.isLoading = false;
+				this.loaded = true;
 				console.error("error", error);
 			});
 		this.saveSelectedAirlines();
 		this.saveCargoStations();
 		this.saveRampHandlers();
-		
+		this.editOn = false;
+		this.editOnAirline = false;
+		this.editOnCargoHandling = false;
+		this.editOnRampHandlers = false;
+		this.template.querySelectorAll('.cmpEditable').forEach(elem =>{
+			elem.editOff();
+		})		
+	}
+
+	hideBarCancelSave(){
+		this.isSaveCapabMangmn=false;
+		this.isSendActionToCancel=true;
 	}
 
 	cancelChanges() {
-		this.isSaveCapabMangmn=false;
-		this.isSendActionToCancel=true;
+		this.hideBarCancelSave();	
 		refreshApex(this.getData(this._facilityid));
 	}
 
@@ -1008,11 +1055,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		return !this.hideOverlay;
 	}
 
-	showInput(event){
-		let elementName = event.target.dataset.item;
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
+	showInput(){
+		this.editOn = !this.editOn;
 	}
 
 	setFileInfo(file, base64Data) {
@@ -1068,11 +1112,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	showInputAirlines(event){
-		let elementName = event.target.dataset.item;
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
-		if(event.target.title == 'Edit'){
+		this.editOnAirline = !this.editOnAirline;
+		if(this.editOnAirline){
 			this.editAirlines = false;
 		}else{
 			this.editAirlines = true;
@@ -1081,32 +1122,29 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	showInputCargoHandling(event){
-		let elementName = event.target.dataset.item;
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
-		if(event.target.title == 'Edit'){
+		this.editOnCargoHandling = !this.editOnCargoHandling;
+		if(this.editOnCargoHandling){
 			this.editCargoHandling = false;
 		}else{
 			this.editCargoHandling = true;
 		}
-
 	}
 
 	showInputRampHandlers(event){
-		let elementName = event.target.dataset.item;
-		this.template.querySelectorAll('.'+elementName).forEach(elem =>{
-			elem.classList.toggle("hidden");
-		})
-		if(event.target.title == 'Edit'){
+		this.editOnRampHandlers = !this.editOnRampHandlers;
+		if(this.editOnRampHandlers){
 			this.editRampHandlers = false;
 		}else{
 			this.editRampHandlers = true;
 		}
-
 	}
 
 	setDefaultImg(event){
 		event.target.src = resources + "/img/no-image.svg";
 	}
+
+	get isAlreadyRequested() {
+		return this.userRole === 'Pending Facility Manager' || this.userRole === 'Pending Company Admin'; 
+	}
+
 }

@@ -189,16 +189,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Account_pending_for_approval__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account_Role__r.Account__r.RecordType.Name = &apos;Standard Account&apos;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account pending for approval</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Account_Role__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <description>Lookup to Account_Role__c</description>
@@ -876,6 +866,11 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
             <operation>equals</operation>
             <value>False</value>
         </summaryFilterItems>
+        <summaryFilterItems>
+            <field>ICG_Capability_Assignment_Group__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Certification</value>
+        </summaryFilterItems>
         <summaryForeignKey>ICG_Capability_Assignment_Group__c.ICG_Account_Role_Detail__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
@@ -1296,6 +1291,17 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Station_Geo_Coordinates__c</fullName>
+        <displayLocationInDecimal>true</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Station Geo Coordinates</label>
+        <required>false</required>
+        <scale>8</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Location</type>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -4533,7 +4539,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <columns>IATA_ISO_Country__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>
@@ -4560,7 +4566,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Airline</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>
@@ -4593,7 +4599,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Airport_Operator</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>
@@ -4633,7 +4639,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Cargo_Handling_Facility</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>
@@ -4665,7 +4671,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Freight_Forwarder</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>
@@ -4724,7 +4730,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Ramp_Handler</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>
@@ -4754,7 +4760,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Shipper</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>
@@ -4802,7 +4808,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <value>ICG_Account_Role_Detail__c.Trucker</value>
         </filters>
         <filters>
-            <field>Account_pending_for_approval__c</field>
+            <field>Account_Pending_Approval__c</field>
             <operation>equals</operation>
             <value>0</value>
         </filters>

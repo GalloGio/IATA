@@ -1,7 +1,10 @@
-import { LightningElement, wire, api } from "lwc";
+import { LightningElement, wire, api, track } from "lwc";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
+import resources from "@salesforce/resourceUrl/ICG_Resources";
+import { loadScript } from "lightning/platformResourceLoader";
 import { removeFromArray, removeGenericItemFromList, prepareSearchObjectFEICategories, prepareSearchParams } from "c/cwUtilities";
 
+const MAX_FILTERS_ALLOWED = 25;
 let lstLocationTypes = {};
 let lstLocations = [];
 let lstValidationPrograms = [];
@@ -12,6 +15,8 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 	@api label;
 	urlResultPage;
 	@api modalContainerWidth;
+	@track allowSearch = true;
+	@track filtersApplied = [];
 
 	@wire(getURL, { page: "URL_ICG_ResultPage" })
 	wiredURLResultPage({ data }) {
@@ -20,27 +25,104 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 		}
 	}
 
+	connectedCallback(){
+		lstLocationTypes = {};
+		lstLocations = [];
+		lstValidationPrograms = [];
+		lstCommodities = [];
+		lstCompanyTypes = [];
+		lstFEICategories = [];
+		if (window.LZString === undefined) {
+			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
+		}
+	}
+
+	getFilters() {
+		let filters = [];
+
+		if (lstLocations){
+			lstLocations.forEach(item => {
+				filters.push({'label':item, 'value':item});
+			});
+		}
+
+		if (lstCommodities){
+			lstCommodities.forEach(item => {
+				filters.push({'label': item.name, 'value': item.name});
+			});
+		}
+
+		if (lstCompanyTypes){
+			lstCompanyTypes.forEach(item => {
+				filters.push({'label': item.name, 'value': item.name});
+			});
+		}
+
+		if (lstValidationPrograms){
+			lstValidationPrograms.forEach(item=>{
+				filters.push({'label': item.Name, 'value': item.Name});
+			});
+		}
+
+		if (lstFEICategories){
+			lstFEICategories.forEach(category => {
+				if(category.selected){
+					filters.push({ 'label': category.label, 'value': category.label});
+
+					if(category.fields){
+						category.fields.forEach(field => {
+							if(field.selected){
+								if(field.type === 'picklist' && field.options){
+									field.options.forEach(opt => {
+										if(opt.selected){
+											filters.push({ label: opt.label + ' (' + category.label + ')', value: opt.label });
+										}
+									});
+								} else if(field.type !== 'picklist') {
+									filters.push({ label: field.label + ' (' + category.label + ')', value: field.label });
+								}
+							}
+						});
+					}
+				}
+			});
+		}
+		return filters;
+	}
+
+	updateAndCheckFiltersLimitReached() {
+		this.filtersApplied = this.getFilters();
+		this.allowSearch = this.filtersApplied.length <= MAX_FILTERS_ALLOWED;
+	}
 	setSelectedPrograms(event) {
 		const programInput = event.detail;
 
 		programInput.forEach(element => {
 			if (element.selected) {
-				lstValidationPrograms.push(element);
+				let itemFound = lstValidationPrograms.find( obj => { return obj.Id === element.Id; }, element);
+				if (!itemFound){
+					lstValidationPrograms.push(element);
+				}
 			} else {
 				lstValidationPrograms = removeFromArray(lstValidationPrograms, element);
 			}
 		});
+		this.updateAndCheckFiltersLimitReached();
 	}
 
 	setCompanyTypes(event) {
 		const cTypeInput = event.detail;
 		cTypeInput.forEach(element => {
 			if (element.selected) {
-				lstCompanyTypes.push(element);
+				let itemFound = lstCompanyTypes.find( obj => { return obj.value === element.value; }, element);
+				if (!itemFound){
+					lstCompanyTypes.push(element);
+				}
 			} else {
 				lstCompanyTypes = removeFromArray(lstCompanyTypes, element);
 			}
 		});
+		this.updateAndCheckFiltersLimitReached();
 	}
 
 	setCommodities(event) {
@@ -48,11 +130,15 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 
 		commodityInput.forEach(element => {
 			if (element.selected) {
-				lstCommodities.push(element);
+				let itemFound = lstCommodities.find( obj => { return obj.name === element.name; }, element);
+				if (!itemFound){
+					lstCommodities.push(element);
+				}
 			} else {
 				lstCommodities = removeFromArray(lstCommodities, element);
 			}
 		});
+		this.updateAndCheckFiltersLimitReached();
 	}
 
 	setSelectedLocations(event) {
@@ -77,6 +163,7 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 			lstLocations = removeFromArray(lstLocations, locationInput.location);
 			delete lstLocationTypes[locationInput.location];
 		}
+		this.updateAndCheckFiltersLimitReached();
 	}
 
 	setSelectedCategory(event) {
@@ -94,6 +181,7 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 			const updatedList = removeGenericItemFromList(categoryInput.label, lstFEICategories);
 			lstFEICategories = updatedList.auxList;
 		}
+		this.updateAndCheckFiltersLimitReached();
 	}
 
 	onSearch() {

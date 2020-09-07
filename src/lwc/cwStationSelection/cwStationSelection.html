@@ -26,8 +26,13 @@
                     <img class="typeButton width-20" src={getCompanyTypeImage} alt="type"/>&nbsp;&nbsp;<strong class="align-middle">{recordTypeName}</strong>
                 </div>
             </div>
-            <div class="col-md-5 slds-grid slds-grid_vertical-align-center slds-grid_align-end">
-                <span class="cursor-pt"><img class="width-20" src={searchbylocation}/>{address}</span>
+            <div class="col-md-5 slds-grid slds-grid_align-end">
+                <div class="col-1 pr-0 pl-0">
+                    <img class="width-20" src={searchbylocation}/>
+                </div>
+                <div class="col-11 pl-0">
+                    <span class="cursor-pt">{address}</span>
+                </div>
             </div>
         </div>
         <br />

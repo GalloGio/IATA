@@ -101,7 +101,7 @@ public with sharing class CW_ICG_Acc_Role_Cap_Assignment_Handler {
 
 		// Get the extra data linked to assignments or data to check
 		//   PART 1: asgmtGroups(new), detailCapabilities - affectedEquipments
-		asgmtGroups = new Map<Id, ICG_Capability_Assignment_Group__c>([SELECT Id, RecordType.DeveloperName, Expiration_Date__c, ICG_Certification__r.Certification_Type__c FROM ICG_Capability_Assignment_Group__c WHERE Id IN :asgmtGroups.keySet()]);
+		asgmtGroups = new Map<Id, ICG_Capability_Assignment_Group__c>([SELECT Id, RecordType.DeveloperName, Expiration_Date__c, ICG_Certification__r.Certification_Type__c, ICG_Certification__r.Name FROM ICG_Capability_Assignment_Group__c WHERE Id IN :asgmtGroups.keySet()]);
 		List<String> affectedEquipments = new List<String>();
 		for (Account_Role_Detail_Capability__c currentCapability : (List<Account_Role_Detail_Capability__c>) Database.query(String.format('SELECT Id, {0} FROM Account_Role_Detail_Capability__c WHERE Id IN {1}', new List<String>{ String.join(capabilityFields, ','), '(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(detailCapabilities.keySet()), List<String>.class), '\',\'') + '\')' }))) {
 			detailCapabilities.put(currentCapability.Id, currentCapability);
@@ -111,7 +111,7 @@ public with sharing class CW_ICG_Acc_Role_Cap_Assignment_Handler {
 		}
 
 		//   PART 2: asgmtGroups(prev), detailCapabilities(prev), asgmts(prev) - asgmtGroupsByStationPrev, asgmtsByStationAndAsgmtGroupPrev, asgmtsByStationAndEquipmentPrev
-		String dataToCheckQuery = String.format('SELECT Id, ICG_Account_Role_Detail__c, ICG_Capability_Assignment_Group__r.RecordType.DeveloperName, ICG_Capability_Assignment_Group__r.Expiration_Date__c, ICG_Capability_Assignment_Group__r.ICG_Certification__r.Certification_Type__c, {0} FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c IN {1} AND (Deprecated__c = false AND ICG_Capability_Assignment_Group__r.Expiration_Date__c > TODAY) ', new List<String>{ 'Account_Role_Detail_Capability__r.' + String.join(capabilityFields, ', Account_Role_Detail_Capability__r.'), '(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(affectedStations), List<String>.class), '\',\'') + '\')' });
+		String dataToCheckQuery = String.format('SELECT Id, ICG_Account_Role_Detail__c, ICG_Capability_Assignment_Group__r.RecordType.DeveloperName, ICG_Capability_Assignment_Group__r.Expiration_Date__c, ICG_Capability_Assignment_Group__r.ICG_Certification__r.Certification_Type__c,ICG_Capability_Assignment_Group__r.ICG_Certification__r.Name, {0} FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c IN {1} AND (Deprecated__c = false AND ICG_Capability_Assignment_Group__r.Expiration_Date__c > TODAY) ', new List<String>{ 'Account_Role_Detail_Capability__r.' + String.join(capabilityFields, ', Account_Role_Detail_Capability__r.'), '(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(affectedStations), List<String>.class), '\',\'') + '\')' });
 		Map<String, List<Id>> asgmtsByStationAndAsgmtGroupPrev = new Map<String, List<Id>>();
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(dataToCheckQuery)) {
 			asgmtGroups.put(currentAssignment.ICG_Capability_Assignment_Group__c, currentAssignment.ICG_Capability_Assignment_Group__r);
@@ -157,7 +157,7 @@ public with sharing class CW_ICG_Acc_Role_Cap_Assignment_Handler {
 					if (
 						asgmtGroupPrev.RecordType == asgmtGroupNew.RecordType &&
 						(asgmtGroupPrev.ICG_Certification__c == null || // Remote Validation
-						asgmtGroupPrev.ICG_Certification__r.Certification_Type__c == asgmtGroupNew.ICG_Certification__r.Certification_Type__c) // Certification of same type
+						asgmtGroupPrev.ICG_Certification__r.Name == asgmtGroupNew.ICG_Certification__r.Name) // Certification of same type
 					) {
 						// * Yes: Deprecate all ICG Account Role Capability Assignment linked to previous Certification / Remote Validation
 						for (Id asgmtFoundToDeprecateId : asgmtsByStationAndAsgmtGroupPrev.get(stationId + '#' + asgmtGroupPrev.Id)) {

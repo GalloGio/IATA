@@ -94,8 +94,8 @@ public class CW_CapabilitiesManagerControllerTest {
 		
 		Test.startTest();
 		
-		Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id),false);
-		system.assertEquals(true, response.containsKey('superCategories'), 'No superCategories found for this Account Role Detail');
+		Map<String, Object> response = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id));
+		system.assertEquals(true, response.containsKey(CW_CapabilitiesUtilities.SUPERCATEGORIES), 'No superCategories found for this Account Role Detail');
 		
 		Test.stopTest();
 	}
@@ -243,7 +243,7 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		Test.startTest();
 		
-		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id),false);
+		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id));
 		
 		String response = CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, ardcert.id, listCap);
 		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
@@ -257,7 +257,7 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		Test.startTest();
 		
-		String response = CW_CapabilitiesManagerController.updateCapabilitiesEdited(null);
+		String response = CW_CapabilitiesManagerController.updateCapabilitiesEdited(null,null,null);
 		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
 		system.assertEquals(false, resp.success, 'updateCapabilitiesEditedCatchTest error');
 		

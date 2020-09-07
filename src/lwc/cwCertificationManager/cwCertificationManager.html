@@ -53,30 +53,29 @@
 		<div class="slds-col slds-size_1-of-8">
 			<lightning-input class="certificationItem" type="text" value={certificationInfo.name} disabled></lightning-input>
 		</div>
-		<div class="slds-col slds-size_1-of-8">
-			<lightning-combobox if:true={isCEIVcope} class="certificationItem" scope="progress" label="" value={certificationInfo.scope} placeholder={certificationInfo.scope} options={certificationInfo.listScope} disabled={disableField} data-name="scope-edition" onchange={handleChangeEditMode} ></lightning-combobox>
-			<lightning-input if:false={isCEIVcope} class="certificationItem" type="text" disabled={disableField} value={certificationInfo.scope} data-name="scope-edition" onblur={handleChangeEditMode}></lightning-input>
+		<div class="slds-col slds-size_1-of-4">
+			<lightning-dual-listbox if:false={disableField} value={getValuesScope} label="" source-label="" selected-label="" data-name="scope-edition" options={certificationInfo.listScope} disabled={disableField} onblur={handleChangeEditMode}></lightning-dual-listbox>
+			<lightning-input if:true={disableField} class="certificationItem" type="text" value={getLabelScope} disabled></lightning-input>
+			
 		</div>
-		<div class="slds-col slds-size_1-of-8">
+		<div class="slds-col slds-size_1-of-12">
 			<lightning-input class="certificationItem" type="date" label="" onchange={handleChangeEditMode} value={certificationInfo.issuingDate} disabled={disableField} data-name="issuing-edition"></lightning-input>
 		</div>
-		<div class="slds-col slds-size_1-of-8">
+		<div class="slds-col slds-size_1-of-12">
 			<lightning-input class="certificationItem" type="date" label="" onchange={handleChangeEditMode}  value={certificationInfo.expirationDate} min={formatedIssuedDate} disabled={disableField} data-name="expiriation-edition"></lightning-input>
 		</div>
-		<div class="slds-col slds-size_1-of-8">
+		<div class="slds-col slds-size_1-of-12">
 			<lightning-input class="certificationItem" type="text" value={certificationInfo.status} disabled></lightning-input>
 		</div>
-		<div class="slds-col slds-size_1-of-8">
-			<div class="slds-col slds-size_2-of-6">
-			</div>
-			<div class="slds-col slds-size_4-of-6 slds-p-left_small">
+		<div class="slds-col slds-size_1-of-4">
+			<span class="slds-assistive-text"></span>
+			<label class="slds-form-element__label slds-no-flex"></label>
+			<div class="slds-col slds-grid slds-size_4-of-4 slds-p-left_small">
 			<br />
-				<lightning-button-group>
-					<lightning-button label={label.icg_history} variant="brand" onclick={handleHistory}></lightning-button>
-					<lightning-button label={label.renew} variant="success" onclick={handleRenew} disabled={hideButton}></lightning-button>
-					<button class="slds-button slds-button_outline-brand bt-yellow" onclick={handleEditCertification} disabled={hideButton}>{label.icg_capab_magmnt_edit}</button>
-					<button class="slds-button slds-button_outline-brand bt-blue" onclick={handleEditCapabilities} disabled={hideButton}>{label.icg_capab_magmnt_edit_capab}</button>
-				</lightning-button-group>
+				<button class="slds-col slds-button slds-button_outline-brand bt-marine" onclick={handleHistory} disabled={hideButton}>{label.icg_history}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-green" onclick={handleRenewCertification} disabled={hideButton}>{label.renew}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-yellow" onclick={handleEditCertification} disabled={hideButton}>{label.icg_capab_magmnt_edit}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-blue" onclick={handleEditCapabilities} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
 			</div>
 		</div>
 	</div>
@@ -89,7 +88,7 @@
 				<div class="slds-col slds-size_1-of-8">
 					<lightning-input type="text" disabled value={item.name}></lightning-input>
 				</div>
-				<div class="slds-col slds-size_1-of-8 ">
+				<div class="slds-col slds-size_1-of-6">
 					<lightning-input type="text" disabled class="slds-truncate" value={item.scope}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-8">

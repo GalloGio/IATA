@@ -1,6 +1,7 @@
 <messaging:emailTemplate subject="A new Station Manager request is pending approval" relatedToType="ICG_Contact_Role_Detail__c">
     <messaging:HtmlEmailBody >
         <html>
+            <c:CW_EmailHead ></c:CW_EmailHead>
             <body>
                 <c:CW_EmailHeader ></c:CW_EmailHeader>
                 <div style="padding: 30px; font-size: 0.9rem;">
@@ -10,7 +11,6 @@
                                     
                     <c:CW_RequestedBy contactRoleDetailData="{!relatedTo.Id}" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_RequestedBy>  
                     <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>                                  
-                    <c:CW_ManageRequest contactRoleDetailData="{!relatedTo.Id}" stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_ManageRequest>
                     <c:CW_NoCompanyAdminForOpeHierGroup stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_NoCompanyAdminForOpeHierGroup>                   
                     <c:CW_LinkManageRequest contactRoleDetailData="{!relatedTo.Id}"></c:CW_LinkManageRequest>
                     

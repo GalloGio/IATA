@@ -10,9 +10,11 @@ export default class CwPendingFacilityApprovals extends LightningElement {
     exportExcel = this.icons + "export-to-excel.png";
 
     @api userManagedFacilities; 
+    @api userInfo; 
     @api label;
     @track filterValue;
     @track openConfirm;
+    @track facilityName;
     action;
     stid;   
 
@@ -49,9 +51,12 @@ export default class CwPendingFacilityApprovals extends LightningElement {
 
     get filteredFacilities() {
         let filteredFacilities = [];
-        if(this.userManagedFacilities){
+        if(this.userManagedFacilities && this.userInfo){
+
             filteredFacilities = this.userManagedFacilities.filter(station => {
-                return !this.filterValue || this.searchFacility(this.filterValue, station);
+                return (station.CreatedById !== this.userInfo.Id) 
+                        && (station.isPendingApproval__c) 
+                        && (!this.filterValue || this.searchFacility(this.filterValue, station));
             })
             .slice().sort(function(a,b){
 
@@ -126,6 +131,7 @@ export default class CwPendingFacilityApprovals extends LightningElement {
 
     confirmApproval(event){
         this.action = event.target.dataset.action;
+        this.facilityName = event.target.dataset.name;
         this.stid = event.target.dataset.stid;
         if (this.action === 'approve') {
             this.openConfirm = true;

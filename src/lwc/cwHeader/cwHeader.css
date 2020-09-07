@@ -198,3 +198,7 @@ button.sign-up-btn:hover {
 .popup_message22, .popup_message32{
  font-weight: bold;
 }
+
+.box-shadow{
+	box-shadow: 0 5px 4px rgba(41,51,57,.75);
+}

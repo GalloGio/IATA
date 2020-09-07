@@ -98,8 +98,8 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void testRenewSFOCCertification() {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
 		test.startTest();
-		Boolean isRenewed = CW_CertificationsManagerController.renewCertification(ardCert.id, '2019-12-12', '2020-12-12', 'testCertId', 'Pharmaceuticals');
-		System.assertEquals(true, isRenewed, 'Certification is not renewed');
+		String newId = CW_CertificationsManagerController.renewCertification(ardCert.id, '2019-12-12', '2020-12-12', 'testCertId', 'Pharmaceuticals');
+		System.assertNotEquals(true, String.isBlank(newId), 'Certification not inserted');
 
 		test.stopTest();
 	}
@@ -107,10 +107,10 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void testRenewCEIVCertification() {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Certification_Type__c = 'Certifications of Excellency' LIMIT 1];
 		test.startTest();
-		Boolean isRenewed = CW_CertificationsManagerController.renewCertification(ardCert.id, '2019-12-12', '2020-12-12', 'testCertId', '');
-		System.assertEquals(true, isRenewed, 'Certification is not renewed');
+		String newId = CW_CertificationsManagerController.renewCertification(ardCert.id, '2019-12-12', '2020-12-12', 'testCertId', '');
+		System.assertNotEquals(true, String.isBlank(newId), 'Certification not inserted');
 
-        test.stopTest();
+		test.stopTest();
 	}
 	@isTest
 	static void testCreateCertification() {
@@ -125,27 +125,102 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		ardCert.Expiration_Date__c = Date.valueOf('2020-12-12');
 		string jsonCertificationToAdd = JSON.serialize(ardCert);
 		test.startTest();
+		
 		string certId = CW_CertificationsManagerController.createCertification(jsonCertificationToAdd);
 		System.assertNotEquals(null, certId, 'Certification not inserted');
-
-		// Boolean isCertDeleted = CW_CertificationsManagerController.deleteCertification(certId);
-		// System.assertEquals(true, isCertDeleted, 'Certification not deleted');
+		
 		test.stopTest();
 	}
 	@isTest
 	static void testExceptions() {
 		test.startTest();
-		Boolean isRenewed = CW_CertificationsManagerController.renewCertification(null, null, null, null, null);
-		System.assertEquals(false, isRenewed, 'Exception not thrown');
-		// Boolean isDeprecated = CW_CertificationsManagerController.deleteCertification(null);
-		// System.assertEquals(false, isDeprecated, 'Exception not thrown');
+		String newId = CW_CertificationsManagerController.renewCertification(null, null, null, null, null);
+		System.assertEquals(false, String.isBlank(newId), 'Certification not inserted');
+		
 		string certId = CW_CertificationsManagerController.createCertification(null);
 		System.assertEquals(null, certId, 'Exception not thrown');
+		
 		test.stopTest();
 	}
 	private static void handleTrace(String traceMsg) {
 		if (TRACEIT) {
 			system.debug(logginglevel.FINEST, traceMsg);
 		}
+	}
+	
+	@isTest
+	static void getScopeByCertificationAndStation() {
+		
+		test.startTest();
+		String result = CW_CertificationsManagerController.getScopeByCertificationAndStation();
+		System.assertNotEquals(result, '');
+
+		test.stopTest();
+	}
+	
+	@isTest
+	static void getNextCertificationID() {
+		
+		ICG_Certification__c newcert = CW_TestDataFactory.newCertification();
+		newcert.name = 'CEIV Fresh';
+		newcert.certification_type__C = 'Certifications of Excellency';
+		insert newcert;
+		ICG_Certification__c newcert1 = CW_TestDataFactory.newCertification();
+		newcert1.Name = 'CEIV Pharma';
+		newcert1.Certification_Type__c = 'Assessments';
+		insert newcert1;
+		ICG_Certification__c newcert2 = CW_TestDataFactory.newCertification();
+		newcert2.name = 'Smart Facility Operational Capacity';
+		newcert2.certification_type__C = 'Certifications of Compliance';
+		insert newcert2;
+		ICG_Certification__c newcert3 = CW_TestDataFactory.newCertification();
+		newcert3.name = 'Smart Facility Remote Validation';
+		newcert3.certification_type__C = 'Certifications of Compliance';
+		insert newcert3;
+		
+		test.startTest();
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c LIMIT 1];
+		String result = CW_CertificationsManagerController.getNextCertificationID(cert.id);
+		System.assertNotEquals(result, '');
+
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert.Id);
+		System.assertNotEquals(result, '', 'Information not retrieved properly');
+		
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert1.Id);
+		System.assertNotEquals(result, '', 'Information not retrieved properly');
+		
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert2.Id);
+		System.assertNotEquals(result, '', 'Information not retrieved properly');
+		
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert3.Id);
+		System.assertNotEquals(result, '', 'Information not retrieved properly');
+
+		test.stopTest();
+	}
+	
+	@isTest
+	static void getFacilityDeprecatedCertifications() {
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		
+		test.startTest();
+		String result = CW_CertificationsManagerController.getFacilityDeprecatedCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c);
+		System.assertNotEquals(result, '');
+
+		test.stopTest();
+	}
+	
+	@isTest
+	static void updateFieldEdited() {
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		String jsonValue = JSON.serialize(ardCert);
+		
+		test.startTest();
+		Boolean result = CW_CertificationsManagerController.updateFieldEdited(jsonValue);
+		System.assertEquals(result, true);
+		
+		result = CW_CertificationsManagerController.updateFieldEdited(null);
+		System.assertEquals(result, false);
+
+		test.stopTest();
 	}
 }

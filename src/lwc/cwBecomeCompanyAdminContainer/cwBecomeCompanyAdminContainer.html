@@ -44,7 +44,7 @@
             <tbody>        
                 <template for:each={facilities} for:item="group">
                     <tr key={group.groupName}>
-                        <td><p class="text-blue cursor-pt" data-id={group.groupName}>{group.groupName}</p></td>
+                        <td><p class="text-blue" data-id={group.groupName}>{group.groupName}</p></td>
                         <td>{group.companyList.length}</td>
                         <td if:false={group.isCompanyAdmin}>
                             <template if:false={group.isPendingCompanyAdmin}>
@@ -53,7 +53,7 @@
                             href="javascript:{}" onclick={becomeCompanyAdminJS}>{label.become_company_admin}</a>
                             </template>
                             <template if:true={group.isPendingCompanyAdmin}>
-                                <a class="btn btn-primary link-button no-margin-top"
+                                <a class="btn btn-primary link-button no-margin-top disabled"
                             data-tosca="nextaction" href="javascript:{}">{label.already_request}</a>
                             </template>
                         </td>

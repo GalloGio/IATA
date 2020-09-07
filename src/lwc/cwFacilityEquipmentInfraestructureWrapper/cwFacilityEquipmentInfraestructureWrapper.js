@@ -37,6 +37,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 					section.capabilityRT.forEach(crt => {
 						crt.isVisible = true;
 						crt.categories.forEach(category => {
+							category.isVisible = true;
 							let categoryNew = this.lstFeiCategories.filter(cat => cat.label === category.label);
 							if(categoryNew && categoryNew.length === 1){
 								category.selected = categoryNew[0].selected;
@@ -71,6 +72,19 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 	wiredStructureFacilities({ error, data }) {
 		if (data) {
 			this.superCategories = JSON.parse(data);
+			this.superCategories.forEach(superCategory => {
+				superCategory.isVisible = true;
+				superCategory.sections.forEach(section => {
+					section.capabilityRT.forEach(crt => {
+						crt.isVisible = true;
+						crt.categories.forEach(category => {
+							category.isVisible = true;
+						});
+					});
+					section.capabilityRT = JSON.parse(JSON.stringify(section.capabilityRT));
+				});
+			});
+			
 			this.error = undefined;
 			this.loaded = true;
 			this.dispatchEvent(new CustomEvent("sectionsloaded", { detail: this.loaded }));
@@ -145,29 +159,31 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 				}
 			});
 		});
-		this._updateSuperCategoriesVisibility(this.availableSections);
+		this._updateSuperCategoriesVisibility(this.availableSections, lstRtypes);
 	}
 
-	_updateSuperCategoriesVisibility(validSections) {
+	_updateSuperCategoriesVisibility(validSections, lstRtypes) {
 		let temporalMap = JSON.parse(JSON.stringify(this.superCategories));
 		temporalMap.forEach(superCat => {
-			superCat.sections.forEach(section => {
-				if (section.capabilityRT) {
-					let visibleChild = false;
-					section.capabilityRT.forEach(crt => {
-						if (validSections.length === 0) {
-							crt.isVisible = true;
-							visibleChild = true;
-						} else if (validSections.includes(crt.name.toLowerCase())) {
-							crt.isVisible = true;
-							visibleChild = true;
-						} else {
-							crt.isVisible = false;
-						}
-					});
-					section.isVisible = visibleChild;
-				}
-			});
+
+			if(lstRtypes.length > 0 && validSections.length === 0){
+				superCat.isVisible = false;
+			}
+			else{
+				superCat.sections.forEach(section => {
+					if (section.capabilityRT) {
+						section.capabilityRT.forEach(crt => {
+							crt.categories = crt.categories.map(cat => {
+								cat.isVisible = validSections.length === 0 ? true : validSections.includes(cat.categoryDevName.toLowerCase());
+								return cat;
+							});
+							crt.isVisible = crt.categories.some(cat => cat.isVisible);
+						});
+						section.isVisible = section.capabilityRT.some(crt => crt.isVisible);
+					}
+				});
+				superCat.isVisible = lstRtypes.length > 0 && validSections.length === 0 ? false : superCat.sections.some(section => section.isVisible);
+			}
 		});
 		this.superCategories = JSON.parse(JSON.stringify(temporalMap));
 	}

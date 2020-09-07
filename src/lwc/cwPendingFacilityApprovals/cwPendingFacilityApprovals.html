@@ -11,7 +11,7 @@
             </div>
             <div class="col-4 text-right">
                 <template if:true={hasItem}>
-                    <a href="javascript:{}" data-tosca="pending-station-approvals-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-60 mb--15" /></a> 
+                    <a href="javascript:{}" data-tosca="pending-station-approvals-to-excel" title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a> 
                 </template>
             </div>
         </div>
@@ -32,7 +32,7 @@
         </thead>
         <tbody>        
             <template for:each={filteredFacilities} for:item="facility">
-                <tr key={facility.Id} if:true={facility.isPendingApproval__c}>
+                <tr key={facility.Id}>
                     <td class="align-middle"><p class="text-blue cursor-pt" onclick={handleMoreInfo} data-id={facility.Id}>{facility.Name}</p></td>
                     <td class="align-middle"><img title={facility.RecordType.Name} width="25" src={facility.ctypeimage}/></td>
                     <td class="align-middle">{facility.groupName}</td>
@@ -45,10 +45,10 @@
                                 <div class="hidden-lg">
                                     <div class="col-12 col-no-padding display-flex text-center">
                                         <div class="col-7 col-no-padding table-action-btn">
-                                            <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-stid={facility.Id} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
+                                            <a class="btn btn-primary-blue no-margin-top pl-2 pr-3 pt-1" data-stid={facility.Id} data-name={facility.Name} data-action="approve" onclick={confirmApproval}>{label.approve}</a>
                                         </div>
                                         <div class="col-5 col-no-padding table-action-btn">
-                                            <a data-stid={facility.Id} data-action="reject" class="btn btn-primary no-margin-top pl-2 pr-3 pt-1" onclick={confirmApproval}>{label.reject}</a>
+                                            <a data-stid={facility.Id} data-action="reject" class="btn btn-primary no-margin-top pl-2 pr-3 pt-1" data-name={facility.Name} onclick={confirmApproval}>{label.reject}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -72,16 +72,10 @@
 
     <template if:true={openConfirm}>
         <c-cw-intermediate-modal onclosemodal={handleCancel}>
-            <div>
-                <h3>{label.are_you_sure}?</h3>
-                <br />
-                <div class="row text-center">
-                    <a class="col btn btn-primary-blue no-margin-top pl-2 pr-4 pt-1" data-tosca="backduplicatert"
-                        href="javascript:{}" onclick={handleConfirmDialogYes}>{label.yes}</a>
-
-                    <a class="col btn btn-primary no-margin-top pl-2 pr-4 pt-1" data-tosca="backduplicatert"
-                        href="javascript:{}" onclick={handleCancel}>{label.no}</a>
-                </div>
+            <div class="col-12 text-center">
+                <h3>{label.are_you_sure}&nbsp;<label class="lowercase">{label.icg_to}</label>&nbsp;{action}&nbsp;{facilityName}&nbsp;{label.station}?</h3>
+                <button type="button" class="btn btn-primary-blue mr-2" data-tosca="backduplicatert" onclick={handleCancel}>{label.no}</button>
+                <button type="button" class="btn btn-primary ml-2" data-tosca="backduplicatert" onclick={handleConfirmDialogYes}>{label.yes}</button>              
             </div>
         </c-cw-intermediate-modal>
     </template>
