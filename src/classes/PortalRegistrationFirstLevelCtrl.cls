@@ -68,6 +68,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public Boolean isNewAccount{get;set;}
 		public String selectedCustomerType {get;set;}
 		public String registrationTime {get;set;}
+		public String sourceService {get;set;}
 		public String termsAndUsageIds {get;set;}
 
 		/*YAS info for matching contact based on additional email temporary*/
@@ -473,14 +474,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}
 
 			RegistrationParameters params = new RegistrationParameters();
-			params.email     = (inputMap.get('email') != null) ? string.valueOf(inputMap.get('email')) : '';
-			params.salutation = (inputMap.get('salutation') != null) ? string.valueOf(inputMap.get('salutation')) : '';
-			params.firstName = (inputMap.get('firstName') != null) ? string.valueOf(inputMap.get('firstName')) : '';
-			params.lastName  = (inputMap.get('lastName') != null) ? string.valueOf(inputMap.get('lastName')) : '';
-			params.phone     = (inputMap.get('phone') != null) ? string.valueOf(inputMap.get('phone')) : '';
-			params.country   = (inputMap.get('country') != null) ? string.valueOf(inputMap.get('country')) : '';
-			params.language  = (inputMap.get('language') != null) ? string.valueOf(inputMap.get('language')) : '';
-			params.sourceService = (inputMap.get('sourceService') != null) ? string.valueOf(inputMap.get('sourceService')) : '';
+			params.email     = (inputMap.get('email') != null) ? String.valueOf(inputMap.get('email')) : '';
+			params.salutation = (inputMap.get('salutation') != null) ? String.valueOf(inputMap.get('salutation')) : '';
+			params.firstName = (inputMap.get('firstName') != null) ? String.valueOf(inputMap.get('firstName')) : '';
+			params.lastName  = (inputMap.get('lastName') != null) ? String.valueOf(inputMap.get('lastName')) : '';
+			params.phone     = (inputMap.get('phone') != null) ? String.valueOf(inputMap.get('phone')) : '';
+			params.country   = (inputMap.get('country') != null) ? String.valueOf(inputMap.get('country')) : '';
+			params.language  = (inputMap.get('language') != null) ? String.valueOf(inputMap.get('language')) : '';
+			params.sourceService = (inputMap.get('sourceService') != null) ? String.valueOf(inputMap.get('sourceService')) : '';
 			params.contactId = contactId != null ? contactId : '';
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? String.valueOf(inputMap.get('selectedCustomerType')) : '';
@@ -985,16 +986,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static String generateOneTimeUrl(RegistrationParameters params, String lang, Map<String,String> urlParams){
 		String paramsJson = JSON.serialize(params);
 		paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
-		string encryptedStr = PortalPasswordHandler.EncryptString(paramsJson);
-		String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
+		if(params.sourceService != null && params.sourceService != '') {
+			if(urlParams == null) urlParams = new Map<String,String>();
+			urlParams.put('sourceService',params.sourceService);
+		}
 
-		String prefix = '';
-		if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
-		String oneTimeUrl = prefix + '/' + 'createPassword' + '?' + encodedPart;
-		if(params.sourceService != null && params.sourceService != '') oneTimeUrl += '&sourceService='+params.sourceService;
+		String oneTimeUrl =  CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
 		return oneTimeUrl;
-
-		return CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
 	}
 
 	public static Map<String,String> generateEmailBodyParamsForConfirmation(RegistrationParameters params, String oneTimeLink){
@@ -1318,11 +1316,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public static void UpdateContactEmailsToInactivate(String contactId){
 		Contact conToInactivate = [SELECT Id,Email,Additional_Email__c FROM Contact WHERE Id = :contactId];
-		conToInactivate.Email = conToInactivate.Email + '.inactive';
-		if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-			conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
-		}
-		update conToInactivate;
+		String theResult = ISSP_PortalUserStatusChange.runAction((Id)contactId, conToInactivate.Email, 'DisableTheUser', '', 'Retired', null);
 	}
 
 

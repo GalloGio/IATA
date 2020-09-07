@@ -80,6 +80,14 @@ public without sharing class PortalCreatePasswordController {
             } 
 
 			try{
+				if(result.isGeneralPublicAccount) {
+					startUrl += '?firstLogin=true';
+				}
+
+				if(params.sourceService != null && params.sourceService != ''){
+					startUrl += (startUrl.containsIgnoreCase('?')) ? '&' : '?';
+					startUrl += 'serviceId='+params.sourceService+'%26startService=true';
+				}
 				System.PageReference pageRef = Site.login(result.username, password, startUrl);
 				result.message = pageRef.getUrl();
 			}
