@@ -17,7 +17,7 @@ import { navigateToPage, getParamsFromPage } from 'c/navigationUtils';
 
 
 // Import custom labels
-import csp_SupportReachUs_IntentionOnThisPage from '@salesforce/label/c.csp_IntentionOnThisPage';
+import csp_SupportReachUs_IntentionOnThisPage from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 import csp_SupportReachUs_ChooseOption from '@salesforce/label/c.csp_ChooseOption';
 import csp_SupportReachUs_Ask_Label from '@salesforce/label/c.csp_SupportReachUs_AskTile';
 import csp_SupportReachUs_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
