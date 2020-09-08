@@ -17,6 +17,8 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
     @track _topic;
     @track _subtopic;
 
+    @track topContainerClasses="slds-grid slds-m-top--medium slds-size--1-of-1 slds-wrap topLightGrayBorder slds-p-vertical_medium";
+    
     @api numberOfArticles = 3;
 
     @api
@@ -84,6 +86,9 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
         }
         if(this._topic !== undefined && this._topic.length > 0) {
             searchParam = this._topic + '__c';
+            if(this.topContainerClasses.indexOf('topLightGrayBorder')!=-1)
+            this.topContainerClasses=this.topContainerClasses.substring(0,this.topContainerClasses.indexOf('topLightGrayBorder'));
+            this.topContainerClasses= this.topContainerClasses+'slds-p-bottom--large bottomLightGrayBorder ';
         }
         if(this._subtopic !== undefined && this._subtopic.length > 0) {
             searchParam = this._subtopic + '__c';
