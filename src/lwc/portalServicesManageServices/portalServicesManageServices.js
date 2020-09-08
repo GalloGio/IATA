@@ -5,6 +5,9 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+
 
 //import labels
 import aboutlb from '@salesforce/label/c.CSP_About';
@@ -32,7 +35,7 @@ import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
 import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
-import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered'; 
+import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered';
 
 import Email from '@salesforce/label/c.Email';
 import Status from '@salesforce/label/c.Status';
@@ -82,7 +85,6 @@ import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDet
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import getEFContacts from '@salesforce/apex/EF_Helper.getContacts';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import massGrantUserAccess from '@salesforce/apex/PortalServicesCtrl.massGrantAccess';
@@ -99,7 +101,6 @@ import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNew
 import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-
 
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -463,8 +464,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 				this.canAddUsers = result;
 			});
 	}
-	
-	populateIataCodeDropdown(contactList){		
+
+	populateIataCodeDropdown(contactList){
 		if(contactList==undefined)return;
 
 		let optionslist=JSON.parse(JSON.stringify(this.optionsIATACodes));

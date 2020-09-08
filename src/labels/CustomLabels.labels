@@ -47101,30 +47101,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <shortDescription>doubleHash</shortDescription>
         <value>##</value>
     </labels>
-	<labels>
-        <fullName>icg_IATA_Validation_Programs</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg IATA Validation Programs</shortDescription>
-        <value>IATA Validation Programs</value>
-    </labels>
-    <labels>
-        <fullName>icg_about_IATA</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg about IATA</shortDescription>
-        <value>About IATA</value>
-    </labels>
-    <labels>
-        <fullName>icg_about_IATA_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg about IATA text1</shortDescription>
-        <value>The International Air Transport Association (IATA) is the trade association for the world’s airlines, representing some 290 airlines or 82% of total air traffic. We support many areas of aviation activity and help formulate industry policy on critical aviation issues.</value>
-    </labels>
     <labels>
         <fullName>icg_accept</fullName>
         <categories>ICG One Source</categories>
@@ -47182,22 +47158,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Account Name</value>
     </labels>
     <labels>
-        <fullName>icg_accredited_agent</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA Accredited Agent</shortDescription>
-        <value>IATA Accredited Agent</value>
-    </labels>
-    <labels>
-        <fullName>icg_accredited_airline</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA Member Airline</shortDescription>
-        <value>IATA Member Airline</value>
-    </labels>
-    <labels>
         <fullName>icg_action</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -47252,30 +47212,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg address information</shortDescription>
         <value>Address Information</value>
-    </labels>
-    <labels>
-        <fullName>icg_advanced_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg advanced search</shortDescription>
-        <value>Advanced Search</value>
-    </labels>
-    <labels>
-        <fullName>icg_air_cargo_and_ecommerce</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg air cargo and ecommerce</shortDescription>
-        <value>Air cargo and e-commerce, enabling global trade</value>
-    </labels>
-    <labels>
-        <fullName>icg_air_cargo_and_ecommerce_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg air cargo and ecommerce	text1</shortDescription>
-        <value>The air cargo industry is transforming to capitalize on e-commerce by building global standards, creating partnerships and fostering innovation. IATA works with the industry in embracing new initiatives and technologies that enable speed, visibility, and predictability.</value>
     </labels>
     <labels>
         <fullName>icg_airline</fullName>
@@ -47462,62 +47398,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Become Station Manager</value>
     </labels>
     <labels>
-        <fullName>icg_beta</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg beta</shortDescription>
-        <value>beta</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_add_location</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn add location</shortDescription>
-        <value>ADD LOCATION</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_go_to_station_profile</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn go to station profile</shortDescription>
-        <value>GO TO STATION PROFILE</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_learn_more</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn learn more</shortDescription>
-        <value>LEARN MORE</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_more_info</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn more info</shortDescription>
-        <value>MORE INFO</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_register_now</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn register now</shortDescription>
-        <value>PRE-REGISTER NOW</value>
-    </labels>
-    <labels>
-        <fullName>icg_btn_show_certified_entities</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg btn show certified entities</shortDescription>
-        <value>SHOW CERTIFIED ENTITIES</value>
-    </labels>
-    <labels>
         <fullName>icg_cancel</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -47654,46 +47534,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Certification Id</value>
     </labels>
     <labels>
-        <fullName>icg_certification_of_excellence</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certification of excellence</shortDescription>
-        <value>Certifications of Excellence</value>
-    </labels>
-    <labels>
-        <fullName>icg_certification_of_excellence_description</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certification of excellence description</shortDescription>
-        <value>Validate excellence beyond adherence to IATA standards. These certifications improve the level of competency, operational and technical preparedness in the handling and transport of special cargo, identifying the &apos;best in class&apos; industry stakeholders</value>
-    </labels>
-    <labels>
-        <fullName>icg_certification_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certification search</shortDescription>
-        <value>certification</value>
-    </labels>
-    <labels>
-        <fullName>icg_certifications_of_compliance</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certifications of compliance</shortDescription>
-        <value>Certifications of Compliance</value>
-    </labels>
-    <labels>
-        <fullName>icg_certifications_of_compliance_description</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg certifications of compliance description</shortDescription>
-        <value>Validate companies&apos; compliance with IATA standards, guidelines and recommended practices for handling operations and environmental management.</value>
-    </labels>
-    <labels>
         <fullName>icg_change</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -47766,22 +47606,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Closed</value>
     </labels>
     <labels>
-        <fullName>icg_cns_endorsed_agent</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CNS Endorsed Agent</shortDescription>
-        <value>CNS Endorsed Agent</value>
-    </labels>
-    <labels>
-        <fullName>icg_comming_soon</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg comming soon</shortDescription>
-        <value>Coming Soon</value>
-    </labels>
-    <labels>
         <fullName>icg_commodity</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -47812,30 +47636,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg company logo</shortDescription>
         <value>Company Logo</value>
-    </labels>
-    <labels>
-        <fullName>icg_company_name</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg company name</shortDescription>
-        <value>Company Name</value>
-    </labels>
-    <labels>
-        <fullName>icg_company_name_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg company name search</shortDescription>
-        <value>company name</value>
-    </labels>
-    <labels>
-        <fullName>icg_compare</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg compare</shortDescription>
-        <value>COMPARE</value>
     </labels>
     <labels>
         <fullName>icg_condensed_list</fullName>
@@ -48062,22 +47862,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Do you have an online booking platform? (Add link)</value>
     </labels>
     <labels>
-        <fullName>icg_do_you_manage_a_Cargo_Station</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg do you manage a Cargo Station</shortDescription>
-        <value>Do you want to be listed?</value>
-    </labels>
-    <labels>
-        <fullName>icg_do_you_manage_a_Cargo_Station_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg do you manage a Cargo Station text1</shortDescription>
-        <value>Attract new customers by creating a free profile on the IATA One Source. Stand out from your competitors and highlight your facility&apos;s capacities and IATA certifications and accreditations.</value>
-    </labels>
-    <labels>
         <fullName>icg_do_you_want_to_request_manager_rights</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48102,14 +47886,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Dolly/Truck</value>
     </labels>
     <labels>
-        <fullName>icg_ecommerce_video</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg ecommerce video</shortDescription>
-        <value>https://www.youtube.com/embed/oimgyps8nEI</value>
-    </labels>
-    <labels>
         <fullName>icg_email</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48124,14 +47900,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg employees</shortDescription>
         <value>Employees</value>
-    </labels>
-    <labels>
-        <fullName>icg_enabled_ids</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg enabled ids for demo</shortDescription>
-        <value>aDA3N0000004CkVWAU;aDA3N0000004CkaWAE;aDA3N0000004CkfWAE;aDA3N0000004CkuWAE;aDA9E00000000efWAA;aDA3N0000004CkpWAE;aDA3N0000004CkkWAE</value>
     </labels>
     <labels>
         <fullName>icg_enter_station_name</fullName>
@@ -48222,14 +47990,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>File Name</value>
     </labels>
     <labels>
-        <fullName>icg_find_your_aviation_business_partner</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg find your aviation business partner</shortDescription>
-        <value>Find your aviation business partner</value>
-    </labels>
-    <labels>
         <fullName>icg_firstname</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48308,14 +48068,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg hybrid view</shortDescription>
         <value>Hybrid View</value>
-    </labels>
-    <labels>
-        <fullName>icg_iata_base_url</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg IATA base url</shortDescription>
-        <value>https://www.iata.org</value>
     </labels>
     <labels>
         <fullName>icg_id</fullName>
@@ -48518,30 +48270,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Lastname</value>
     </labels>
     <labels>
-        <fullName>icg_latest</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg latest</shortDescription>
-        <value>LATEST</value>
-    </labels>
-    <labels>
-        <fullName>icg_latest_news</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg latest news</shortDescription>
-        <value>LATEST NEWS</value>
-    </labels>
-    <labels>
-        <fullName>icg_latest_validation_updates</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg latest validation updates</shortDescription>
-        <value>Latest Validation Updates</value>
-    </labels>
-    <labels>
         <fullName>icg_legal_name</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48574,30 +48302,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>List of Airlines Handled</value>
     </labels>
     <labels>
-        <fullName>icg_location_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg location search</shortDescription>
-        <value>location</value>
-    </labels>
-    <labels>
-        <fullName>icg_login</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg login</shortDescription>
-        <value>Login</value>
-    </labels>
-    <labels>
-        <fullName>icg_main_one_source</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg main one source</shortDescription>
-        <value>ONE SOURCE</value>
-    </labels>
-    <labels>
         <fullName>icg_manage_photos</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48620,86 +48324,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg manage user permission</shortDescription>
         <value>Manage User Permission</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines</shortDescription>
-        <value>Why</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines2</shortDescription>
-        <value>should you be listed?</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines_modal</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines modal</shortDescription>
-        <value>ONE Source lists aviation service stations for all company types along the transportation chain from Shippers, Freight Forwarders, Truckers, Cargo Handling Facilities, Ground Handlers to Airlines. Currently, you find all stations with existing CEIV, SFOC, IEnvA and United for Wildlife certifications.</value>
-    </labels>
-    <labels>
-        <fullName>icg_members_airlines_modal2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg members airlines modal2</shortDescription>
-        <value>Soon the registration will be opened to all stations regardless of whether they already have an IATA Certification. Ensure to pre-register now to be the first in line to list your stations on ONE Source.</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_about_IATA</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu about IATA</shortDescription>
-        <value>ABOUT IATA</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_about_one_source</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu about one source</shortDescription>
-        <value>ABOUT ONE SOURCE</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_home</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu home</shortDescription>
-        <value>HOME</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_latest_news</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu latest news</shortDescription>
-        <value>LATEST NEWS</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_remote_validations</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu remote validations</shortDescription>
-        <value>REMOTE VALIDATIONS</value>
-    </labels>
-    <labels>
-        <fullName>icg_menu_validation_programs</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg menu validation programs</shortDescription>
-        <value>VALIDATION PROGRAMS</value>
     </labels>
     <labels>
         <fullName>icg_my_facilities</fullName>
@@ -49158,14 +48782,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Please rotate your device to show the details</value>
     </labels>
     <labels>
-        <fullName>icg_pre_register</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg pre-register</shortDescription>
-        <value>PRE-REGISTER</value>
-    </labels>
-    <labels>
         <fullName>icg_preferable_audit_date</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -49228,14 +48844,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg ramp handler</shortDescription>
         <value>Ramp Handler</value>
-    </labels>
-    <labels>
-        <fullName>icg_received</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg received</shortDescription>
-        <value>received</value>
     </labels>
     <labels>
         <fullName>icg_register</fullName>
@@ -49444,46 +49052,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg search</shortDescription>
         <value>Search</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_assistant</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search assistant</shortDescription>
-        <value>Search Assistant</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by</shortDescription>
-        <value>Search by</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by_certification</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by certification</shortDescription>
-        <value>Search by certification</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by_company_name</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by company name</shortDescription>
-        <value>Search by company name</value>
-    </labels>
-    <labels>
-        <fullName>icg_search_by_location</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg search by location</shortDescription>
-        <value>Search by location</value>
     </labels>
     <labels>
         <fullName>icg_search_in_the_list</fullName>
@@ -49782,14 +49350,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Station Overview</value>
     </labels>
     <labels>
-        <fullName>icg_station_to_compare</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg station to compare</shortDescription>
-        <value>STATIONS TO COMPARE</value>
-    </labels>
-    <labels>
         <fullName>icg_station_type</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -49982,14 +49542,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Trucks</value>
     </labels>
     <labels>
-        <fullName>icg_type_search</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg type search</shortDescription>
-        <value>Type</value>
-    </labels>
-    <labels>
         <fullName>icg_unselected_all</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -50054,38 +49606,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Welcome back</value>
     </labels>
     <labels>
-        <fullName>icg_what_is_the_IATA_One_Source</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what_is_the_IATA_One_Source</shortDescription>
-        <value>What is ONE Source?</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source_text1</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what is the IATA One Source text1</shortDescription>
-        <value>IATA ONE Source is the industry platform for validated aviation capability and infrastructure information. Find the right business partner for your needs, from specific infrastructure requirements such as temperature-controlled rooms to IATA certifications. The platform makes it easier for you to find the right services where you need them.</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source_text2</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what is the IATA One Source text2</shortDescription>
-        <value>ONE Source only lists information verified through the different IATA validation programs. It guarantees that all the data is accurate, enabling you to make better decisions for your business.</value>
-    </labels>
-    <labels>
-        <fullName>icg_what_is_the_IATA_One_Source_videoUrl</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg what is the IATA One Source videoUrl</shortDescription>
-        <value>https://www.youtube.com/embed/LViVYrezsDQ</value>
-    </labels>
-    <labels>
         <fullName>icg_which_station_to_manage</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -50100,14 +49620,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg which validation programs to renew archieve</shortDescription>
         <value>Which Validation Programs do you want to achieve/renew</value>
-    </labels>
-    <labels>
-        <fullName>icg_wizard_title_location</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg wizard title location</shortDescription>
-        <value>Are you looking for a specific</value>
     </labels>
     <labels>
         <fullName>icg_worldwide_search</fullName>
@@ -50172,6 +49684,486 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg submit</shortDescription>
         <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>icg_iata_base_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg IATA base url</shortDescription>
+        <value>https://www.iata.org</value>
+    </labels>
+    <labels>
+        <fullName>icg_IATA_Validation_Programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg IATA Validation Programs</shortDescription>
+        <value>IATA Validation Programs</value>
+    </labels>
+    <labels>
+        <fullName>icg_about_IATA</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg about IATA</shortDescription>
+        <value>About IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_about_IATA_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg about IATA text1</shortDescription>
+        <value>The International Air Transport Association (IATA) is the trade association for the world’s airlines, representing some 290 airlines or 82% of total air traffic. We support many areas of aviation activity and help formulate industry policy on critical aviation issues.</value>
+    </labels>
+    <labels>
+        <fullName>icg_accredited_agent</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Accredited Agent</shortDescription>
+        <value>IATA Accredited Agent</value>
+    </labels>
+    <labels>
+        <fullName>icg_accredited_airline</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Member Airline</shortDescription>
+        <value>IATA Member Airline</value>
+    </labels>
+    <labels>
+        <fullName>icg_advanced_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg advanced search</shortDescription>
+        <value>Advanced Search</value>
+    </labels>
+    <labels>
+        <fullName>icg_air_cargo_and_ecommerce</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg air cargo and ecommerce</shortDescription>
+        <value>Air cargo and e-commerce, enabling global trade</value>
+    </labels>
+    <labels>
+        <fullName>icg_air_cargo_and_ecommerce_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg air cargo and ecommerce	text1</shortDescription>
+        <value>The air cargo industry is transforming to capitalize on e-commerce by building global standards, creating partnerships and fostering innovation. IATA works with the industry in embracing new initiatives and technologies that enable speed, visibility, and predictability.</value>
+    </labels>
+    <labels>
+        <fullName>icg_beta</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg beta</shortDescription>
+        <value> beta</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_add_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn add location</shortDescription>
+        <value>ADD LOCATION</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_go_to_station_profile</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn go to station profile</shortDescription>
+        <value>GO TO STATION PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_learn_more</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn learn more</shortDescription>
+        <value>LEARN MORE</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_more_info</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn more info</shortDescription>
+        <value>WATCH VIDEO</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_register_now</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn register now</shortDescription>
+        <value>PRE-REGISTER NOW</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_show_certified_entities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg btn show certified entities</shortDescription>
+        <value>SHOW CERTIFIED ENTITIES</value>
+    </labels>
+    <labels>
+        <fullName>icg_enabled_ids</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg enabled ids for demo</shortDescription>
+        <value>aDA3N0000004CkVWAU;aDA3N0000004CkaWAE;aDA3N0000004CkfWAE;aDA3N0000004CkuWAE;aDA9E00000000efWAA;aDA3N0000004CkpWAE;aDA3N0000004CkkWAE</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_of_excellence</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification of excellence</shortDescription>
+        <value>Certifications of Excellence</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_of_excellence_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification of excellence description</shortDescription>
+        <value>Validate excellence beyond adherence to IATA standards. These certifications improve the level of competency, operational and technical preparedness in the handling and transport of special cargo, identifying the &#39;best in class&#39; industry stakeholders</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification search</shortDescription>
+        <value>certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_certifications_of_compliance</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certifications of compliance</shortDescription>
+        <value>Certifications of Compliance</value>
+    </labels>
+    <labels>
+        <fullName>icg_certifications_of_compliance_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certifications of compliance description</shortDescription>
+        <value>Validate companies&#39; compliance with IATA standards, guidelines and recommended practices for handling operations and environmental management.</value>
+    </labels>
+    <labels>
+        <fullName>icg_cns_endorsed_agent</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CNS Endorsed Agent</shortDescription>
+        <value>CNS Endorsed Agent</value>
+    </labels>
+    <labels>
+        <fullName>icg_comming_soon</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg comming soon</shortDescription>
+        <value>Coming Soon</value>
+    </labels>
+    <labels>
+        <fullName>icg_company_name_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg company name search</shortDescription>
+        <value>company name</value>
+    </labels>
+    <labels>
+        <fullName>icg_compare</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg compare</shortDescription>
+        <value>COMPARE</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_manage_a_Cargo_Station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you manage a Cargo Station</shortDescription>
+        <value>Do you want to be listed?</value>
+    </labels>
+    <labels>
+        <fullName>icg_do_you_manage_a_Cargo_Station_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg do you manage a Cargo Station text1</shortDescription>
+        <value>Attract new customers by creating a free profile on the IATA One Source. Stand out from your competitors and highlight your facility&#39;s capacities and IATA certifications and accreditations.</value>
+    </labels>
+    <labels>
+        <fullName>icg_ecommerce_video</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg ecommerce video</shortDescription>
+        <value>https://www.youtube.com/embed/oimgyps8nEI</value>
+    </labels>
+    <labels>
+        <fullName>icg_find_your_aviation_business_partner</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg find your aviation business partner</shortDescription>
+        <value>Find your aviation business partner</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest</shortDescription>
+        <value>LATEST</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest news</shortDescription>
+        <value>LATEST NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_latest_validation_updates</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg latest validation updates</shortDescription>
+        <value>Latest Validation Updates</value>
+    </labels>
+    <labels>
+        <fullName>icg_location_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg location search</shortDescription>
+        <value>location</value>
+    </labels>
+    <labels>
+        <fullName>icg_login</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg login</shortDescription>
+        <value>Login</value>
+    </labels>
+    <labels>
+        <fullName>icg_main_one_source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg main one source</shortDescription>
+        <value>ONE SOURCE</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines</shortDescription>
+        <value>Why</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines2</shortDescription>
+        <value>should you be listed?</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines_modal</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines modal</shortDescription>
+        <value>ONE Source lists aviation service stations for all company types along the transportation chain from Shippers, Freight Forwarders, Truckers, Cargo Handling Facilities, Ground Handlers to Airlines. Currently, you find all stations with existing CEIV, SFOC, IEnvA and United for Wildlife certifications.</value>
+    </labels>
+    <labels>
+        <fullName>icg_members_airlines_modal2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg members airlines modal2</shortDescription>
+        <value>Soon the registration will be opened to all stations regardless of whether they already have an IATA Certification. Ensure to pre-register now to be the first in line to list your stations on ONE Source.</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_about_IATA</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu about IATA</shortDescription>
+        <value>ABOUT IATA</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_about_one_source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu about one source</shortDescription>
+        <value>ABOUT ONE SOURCE</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_home</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu home</shortDescription>
+        <value>HOME</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_latest_news</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu latest news</shortDescription>
+        <value>LATEST NEWS</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_remote_validations</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu remote validations</shortDescription>
+        <value>REMOTE VALIDATIONS</value>
+    </labels>
+    <labels>
+        <fullName>icg_menu_validation_programs</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg menu validation programs</shortDescription>
+        <value>VALIDATION PROGRAMS</value>
+    </labels>
+    <labels>
+        <fullName>icg_pre_register</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg pre-register</shortDescription>
+        <value>PRE-REGISTER</value>
+    </labels>
+    <labels>
+        <fullName>icg_received</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg received</shortDescription>
+        <value>received</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_assistant</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search assistant</shortDescription>
+        <value>Search Assistant</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by</shortDescription>
+        <value>Search by</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by certification</shortDescription>
+        <value>Search by certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_company_name</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by company name</shortDescription>
+        <value>Search by company name</value>
+    </labels>
+    <labels>
+        <fullName>icg_search_by_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg search by location</shortDescription>
+        <value>Search by location</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_to_compare</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station to compare</shortDescription>
+        <value>STATIONS TO COMPARE</value>
+    </labels>
+    <labels>
+        <fullName>icg_type_search</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg type search</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what_is_the_IATA_One_Source</shortDescription>
+        <value>What is ONE Source?</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_text1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source text1</shortDescription>
+        <value>IATA ONE Source is the industry platform for validated aviation capability and infrastructure information. Find the right business partner for your needs, from specific infrastructure requirements such as temperature-controlled rooms to IATA certifications. The platform makes it easier for you to find the right services where you need them.</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_text2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source text2</shortDescription>
+        <value>ONE Source only lists information verified through the different IATA validation programs. It guarantees that all the data is accurate, enabling you to make better decisions for your business.</value>
+    </labels>
+    <labels>
+        <fullName>icg_what_is_the_IATA_One_Source_videoUrl</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg what is the IATA One Source videoUrl</shortDescription>
+        <value>https://www.youtube.com/embed/BDs7ol6f1ME</value>
+    </labels>
+    <labels>
+        <fullName>icg_wizard_title_location</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg wizard title location</shortDescription>
+        <value>Are you looking for a specific</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>

@@ -82,6 +82,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactAccount{get;set;}
 		public String existingContactUsername{get;set;}
 		public String emailConfirmationTemplate{get;set;}
+		public String existingContactURL{get;set;}
 	}
 
 	public class UserInformation {
@@ -991,8 +992,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			urlParams.put('sourceService',params.sourceService);
 		}
 
-		String oneTimeUrl =  CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
-		return oneTimeUrl;
+		return CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
 	}
 
 	public static Map<String,String> generateEmailBodyParamsForConfirmation(RegistrationParameters params, String oneTimeLink){
@@ -1316,7 +1316,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 	public static void UpdateContactEmailsToInactivate(String contactId){
 		Contact conToInactivate = [SELECT Id,Email,Additional_Email__c FROM Contact WHERE Id = :contactId];
-		String theResult = ISSP_PortalUserStatusChange.runAction((Id)contactId, conToInactivate.Email, 'DisableTheUser', '', 'Retired', null);
+		conToInactivate.Email = conToInactivate.Email + '.inactive';
+		if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+			conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+		}
+		update conToInactivate;
 	}
 
 
