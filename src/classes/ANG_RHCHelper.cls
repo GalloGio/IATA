@@ -249,21 +249,13 @@ public class ANG_RHCHelper {
 				continue;
 			}
 
-			//If we are processing a RHC information record
-			//related with a multicountry hierarchy
-			//jump into the formula calculation
-			if(isMulticountry){
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
-				continue;
-			}
 
 			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + acct.ANG_RiskStatus__c);
 
 			ANG_BSP_Attributes__c bspAttrRhc = null;
 
 			//Find the correct BSP Attribute configuration based on
-			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Agent Risk Status.
+			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
 			//If the agent contains Financial Assessment Points finds the BSP attribute
 			//that contains the interval [Min FA Points ~ Max FA Points]
 			for(ANG_BSP_Attributes__c bspAttr : bspAttributesMap.values()){
@@ -291,6 +283,15 @@ public class ANG_RHCHelper {
 
 			}
 
+			//If we are processing a RHC information record
+			//related with a multicountry hierarchy
+			//jump into the formula calculation
+			if(isMulticountry){
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
+				continue;
+			}
+
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
 
 			//If the field "RHC Amount Calculation Type" is "Fixed Percentage",
@@ -314,7 +315,7 @@ public class ANG_RHCHelper {
 			}
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
+				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
 			}
 
 		}
@@ -329,15 +330,15 @@ public class ANG_RHCHelper {
 	 * @param  isoCountries               maps the Id with the ISO Country Code
 	 * @param  attributes                 country specific attributes of type 'Minimum RHC Amount'
 	 */
-	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC)
+	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC, string Tier, ANG_BSP_Attributes__c bspAttrRhc)
 	{
 		Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
-		Decimal provisional = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
+		Decimal AmountAtRiskUSD = rhc.Amount_At_Risk_USD__c == null ? 0 : rhc.Amount_At_Risk_USD__c;
 		Decimal minFs = rhc.ANG_Minimum_Financial_Security__c == null ? 0 : rhc.ANG_Minimum_Financial_Security__c;
 		Decimal fs = fsAmount;
 
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] rmeAmount: ' + rmeAmount);
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] provisionalRHC: ' + provisional);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] AmountAtRiskUSD: ' + AmountAtRiskUSD);
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] minFs: ' + minFs);
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] fs: ' + fs);
 
@@ -361,7 +362,11 @@ public class ANG_RHCHelper {
 
 		// MAX between FS, minimumRHCAmount and the new RHC ammount
 		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
-		Decimal newRhcAmountForecasted = provisional + (percentageOfExceedingFs * provisional).setScale(0);
+		decimal Tiered_Provisional_Amount = (bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c) + bspAttrRhc.Amount_At_Risk_Multiplier__c * (AmountAtRiskUSD - (bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c));
+		rhc.Tiered_Provisional_Amount__c = Tiered_Provisional_Amount;
+		rhc.Forecasted_Tier__c = Tier;
+
+		Decimal newRhcAmountForecasted = Tiered_Provisional_Amount + (percentageOfExceedingFs * Tiered_Provisional_Amount).setScale(0);
 
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] newRhcAmountForecasted: ' + newRhcAmountForecasted);
 
@@ -369,7 +374,8 @@ public class ANG_RHCHelper {
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
 
 		if(ApplyRHC){
-			Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
+			rhc.Tier__c = rhc.Forecasted_Tier__c;
+			Decimal newRHCAmount = Tiered_Provisional_Amount + (percentageOfExceedingFs * Tiered_Provisional_Amount).setScale(0);
 
 			Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
 			rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
