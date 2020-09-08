@@ -50547,6 +50547,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>中國的</value>
     </labels>
     <labels>
+        <fullName>regular_price</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>regular price</shortDescription>
+        <value>Regular Price</value>
+    </labels>
+    <labels>
         <fullName>resetPasswordConfirmMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
