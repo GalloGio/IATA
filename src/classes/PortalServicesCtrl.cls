@@ -32,7 +32,8 @@ public with sharing class PortalServicesCtrl {
 						' WHERE Visible__c = true' +
 						' AND Requestable__c = false' +
 						' AND ANG_Flag_Restrict_by_Agency_Category__c = true' +
-						' AND ANG_Accre_Tp__c = true';
+						' AND ANG_Accre_Tp__c = true' +
+						' AND Id NOT IN (Select Portal_Application__c from Portal_Application_Right__c where Contact__c =:contactId and Right__c = \'Access Denied\')';
 
 		if(con.Account.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId()){
 			//if contact is of type Agency we check the restriction by sector and category
@@ -243,6 +244,13 @@ public with sharing class PortalServicesCtrl {
 		// Second search based in Custom Metadata for all those remaining apps
 		User userAux = [SELECT Id, contact.account.Sector__c, contact.account.Category__c FROM User WHERE Id = :UserInfo.getUserId()];
 		List<String> requestableAppNameList = PortalApplicationSettingHelper.getVisibleApplicationNames(userAux.Contact.Account);
+
+		List<Invitation__c> invitations = new List<Invitation__c>();
+		invitations = [SELECT Id, ServiceId__r.Name FROM Invitation__c WHERE Email__c =: UserInfo.getUserEmail() AND is_Accepted__c = false AND ServiceId__c != null];
+		if(!invitations.isEmpty()){
+			for(Invitation__c inv : invitations)
+				requestableAppNameList.add(inv.ServiceId__r.Name);
+		}
 
 		finalQuery = 'SELECT ' + extraQueryFields + fieldsStr +
 					 +' FROM Portal_Applications__c'

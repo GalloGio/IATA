@@ -2935,6 +2935,94 @@ SF Workflow Process</value>
         <value>Attention</value>
     </labels>
     <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_1</shortDescription>
+        <value>The comment below was posted on your case</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_2</shortDescription>
+        <value>yesterday.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_3</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_3</shortDescription>
+        <value>Please let us know if your query has been resolved or there is anything else we can help you with on this case by using the buttons below or accessing the case from</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_4</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_4</shortDescription>
+        <value>You can let us know by accessing the query in the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_5</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_5</shortDescription>
+        <value>We will be closing the case automatically in case we do not receive any further feedback from you within 24 hours.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_48Hours_Notification_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_48Hours_Notification_1</shortDescription>
+        <value>We are closing the case</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_48Hours_Notification_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_48Hours_Notification_2</shortDescription>
+        <value>as we have not received further feedback from you in last 48 hours.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_48Hours_Notification_3</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_48Hours_Notification_3</shortDescription>
+        <value>Should you require further assistance on this case, you can add a comment or contact us through a new case in</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_1</shortDescription>
+        <value>We have just added a reply to your case, with number</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_2</shortDescription>
+        <value>You can go to case details to view the reply.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_3</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_3</shortDescription>
+        <value>You can let us know by accessing the query in the IATA Customer Portal.</value>
+    </labels>
+    <labels>
         <fullName>Auto_renew_payment_method_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4765,11 +4853,27 @@ If you are already CNS Endorsed, you can use this service to update information 
 	&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
     </labels>
     <labels>
+        <fullName>CSP_IATA_CSC_Email_Greetings</fullName>
+        <categories>CS Portal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IATA_CSC_Email_Greetings</shortDescription>
+        <value>Kind Regards,&lt;br/&gt;IATA Customer Service Center</value>
+    </labels>
+    <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_IATA_Country</shortDescription>
         <value>IATA Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IATA_Customer_Portal</fullName>
+        <categories>CS Potal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATA Customer Portal</shortDescription>
+        <value>IATA Customer Portal</value>
     </labels>
     <labels>
         <fullName>CSP_IATA_Invoices</fullName>
@@ -6685,6 +6789,14 @@ You can easily create a company account in two steps</value>
         <value>Personal Information</value>
     </labels>
     <labels>
+        <fullName>CSP_PortalBaseURL</fullName>
+        <categories>CS Portal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PortalBaseURL</shortDescription>
+        <value>https://portal.iata.org</value>
+    </labels>
+    <labels>
         <fullName>CSP_PortalPath</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8160,6 +8272,204 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Case Classification</value>
     </labels>
     <labels>
+        <fullName>Case_Closure_Error_Cannot_Close</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Error_Cannot_Close</shortDescription>
+        <value>This case cannot be closed or it&apos;s already closed.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Error_Expired_Link</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Error_Expired_Link</shortDescription>
+        <value>The link has expired.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Go_To_CS_Portal_Button</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Go_To_CS_Portal_Button</shortDescription>
+        <value>Go to Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Ignore_Survey</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Ignore_Survey</shortDescription>
+        <value>Thanks, your answer has been saved.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Ignore_Survey_Button</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Ignore Survey Button</shortDescription>
+        <value>Not Right Now</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Redirect_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Redirect_Survey</shortDescription>
+        <value>You are being redirected to the survey.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Success_Message</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Success Message</shortDescription>
+        <value>We have closed the case below:</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Success_Message_48Hours</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Success Message 48Hours</shortDescription>
+        <value>As we did not hear from your within 48 hours, we had already closed the case below:</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Success_Title</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Success_Title</shortDescription>
+        <value>Thank you for the confirmation!</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Survey_Link_Error</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Survey_Link_Error</shortDescription>
+        <value>An error occured while redirecting you to the survey.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Survey_Message</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Survey_Message</shortDescription>
+        <value>At IATA, we are constantly making improvements to our services so we can provide you with an excellent Customer Experience. This is why we would like to ask your opinion on some points we consider crucial, it shouldn’t take more than two minutes.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Take_Survey_Button</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Take Survey Button</shortDescription>
+        <value>Take the Survey</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Answer_Not_Clear</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Answer_Not_Clear</shortDescription>
+        <value>The answer was not clear</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Can_Close_Case</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Can_Close_Case</shortDescription>
+        <value>You can close this case now</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Go_To_Contact_Us</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Comment Button Go To Contact Us</shortDescription>
+        <value>Go to Contact Us</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Have_New_Query</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Have_New_Query</shortDescription>
+        <value>I have a new Query</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Have_Been_Resolved_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Have_Been_Resolved_1</shortDescription>
+        <value>Has your query been addressed?</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Have_Been_Resolved_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Have_Been_Resolved_2</shortDescription>
+        <value>Should we not hear from you over the next 48 hours, we will take it that you no longer require assistance and we will close the case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_How_Can_Assist_You</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_How_Can_Assist_You</shortDescription>
+        <value>Please let us know how we can further assist you with this query.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_New_Query_Confirmation_Message</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Comment New Query Confirmation Message</shortDescription>
+        <value>As you have a new query, we have closed the case {arg0} and you can create the new query by clicking the button below in order for us to get back to you as soon as possible.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_New_Query_Confirmation_Title</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Comment New Query Confirmation Title</shortDescription>
+        <value>Thanks for your confirmation</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Notification_Template_Name</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Notification_Template_Name</shortDescription>
+        <value>NT-2006</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Provide_Aditional_Feedback</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Provide_Aditional_Feedback</shortDescription>
+        <value>Please provide additional comments in order for us to continue working on this case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Survey_Lik_Label</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Survey_Lik_Label</shortDescription>
+        <value>this survey</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Survey_Message</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Survey_Message</shortDescription>
+        <value>We value your opinion. Please let us know your feedback about IATA&apos;s Support in</value>
+    </labels>
+    <labels>
         <fullName>Case_Defect_Issue</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8650,6 +8960,20 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Cancel_Monthly_Survey</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Clone_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Clone_Confirmation_Question</shortDescription>
+        <value>Are you sure you want to proceed? Cloning data from the last submitted survey will delete any data you have created for this survey.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Clone_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Clone_Confirmation_Title</shortDescription>
+        <value>Clone last submitted Survey</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Countries</fullName>
@@ -35569,6 +35893,13 @@ Please note that many IATA invoices for accredited agents are collected through 
         <protected>false</protected>
         <shortDescription>ISSP_HomePage</shortDescription>
         <value>Pending Approval</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Pending_Closure</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Pending Closure</shortDescription>
+        <value>Pending Closure</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending_Documents</fullName>

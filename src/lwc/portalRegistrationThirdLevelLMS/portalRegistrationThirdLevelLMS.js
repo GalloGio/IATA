@@ -199,6 +199,18 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				if(pageParams !== undefined && pageParams.RelayState !== undefined ){
 					this.contactInfo.lmsCourse =  pageParams.RelayState.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
 				}
+				if(pageParams !== undefined && pageParams._ga !== undefined ){
+					this.contactInfo.lmsCourse +=  '&_ga=' + pageParams._ga.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
+				}
+				if(pageParams !== undefined && pageParams.utm_source !== undefined ){
+					this.contactInfo.lmsCourse +=  '&utm_source=' + pageParams.utm_source.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
+				}
+				if(pageParams !== undefined && pageParams.utm_campaign !== undefined ){
+					this.contactInfo.lmsCourse +=  '&utm_campaign=' + pageParams.utm_campaign.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
+				}
+				if(pageParams !== undefined && pageParams.utm_medium !== undefined ){
+					this.contactInfo.lmsCourse +=  '&utm_medium=' + pageParams.utm_medium.replace(new RegExp('%40_%40','g'),'%26').replace(new RegExp('@_@', 'g'), '&');
+				}
 
 				if(pageParams !== undefined && pageParams.firstLogin !== undefined ){
 					this.contactInfo.firstLogin =  pageParams.firstLogin;
