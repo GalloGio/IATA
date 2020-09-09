@@ -20,6 +20,42 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Country__c</fullName>
+        <defaultValue>&quot;ALL&quot;</defaultValue>
+        <description>This field must contain a comma separated Country ISO Codes, and optionally a - sign to exclude countries instead of include them</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Country</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Class__c</fullName>
+        <defaultValue>&quot;ALL&quot;</defaultValue>
+        <description>This field must match with Account.Location_Class field</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Location Class</label>
+        <length>3</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type__c</fullName>
+        <defaultValue>&quot;ALL&quot;</defaultValue>
+        <description>This field must match with Account.Location_Type field</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Location Type</label>
+        <length>3</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Parent__c</fullName>
         <description>Metadata Relationship(Portal Application Setting)</description>
         <externalId>false</externalId>

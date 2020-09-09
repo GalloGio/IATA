@@ -98,7 +98,7 @@ public without sharing class EF_Helper {
 	}
 
 	public static void requestAccessEF(String applicationId, String applicationName, User userAux) {
-		List<Invitation__c> inv = [SELECT Id, AccountId__c, AccountRoleId__c, Role__c FROM Invitation__c WHERE Email__c =: userAux.Contact.Email AND ServiceId__r.Name =: EFAPPS ORDER BY CreatedDate DESC];
+		List<Invitation__c> inv = [SELECT Id, AccountId__c, AccountRoleId__c, Role__c, is_Accepted__c FROM Invitation__c WHERE Email__c =: userAux.Contact.Email AND ServiceId__r.Name =: EFAPPS ORDER BY CreatedDate DESC];
 
 		if(inv.isEmpty()){
 			throw new PortalServiceException('The user has no invitation for this service.');
@@ -123,6 +123,10 @@ public without sharing class EF_Helper {
 			if(i.Role__c == 'Service Admin') crd.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Service_Admin');
 			else crd.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('E_and_F_Contact_Role_Detail__c', 'Standard_User');
 			insert crd;
+
+			//update invitation
+			i.is_Accepted__c = true;
+			update i;
 		}
 
 		//create service access right Access Granted
