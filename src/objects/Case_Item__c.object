@@ -1152,6 +1152,18 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
             </values>
             <values>
                 <fullName>Open</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Pending Business Feedback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending External Supplier Feedback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending ITS Feedback</fullName>
                 <default>false</default>
             </values>
             <values>
