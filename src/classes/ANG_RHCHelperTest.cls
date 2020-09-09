@@ -137,11 +137,11 @@ private class ANG_RHCHelperTest {
 									FROM ANG_RHC_Information__c LIMIT 1];
 
 		rhc.ANG_RHC_Amount_Provisional__c = 50000.50;
-        update rhc;
+		update rhc;
 		AMS_OSCAR_Webservice.updateRME_Amount(rhc.Id);
 		rhc = [SELECT id, ANG_RHC_Amount_Provisional__c, ANG_RME_Amount__c	FROM ANG_RHC_Information__c LIMIT 1];
 
-        Test.stopTest();
+		Test.stopTest();
 
 		System.assertEquals(rhc.ANG_RHC_Amount_Provisional__c.round(System.RoundingMode.DOWN), rhc.ANG_RME_Amount__c);
 	}
@@ -151,13 +151,13 @@ private class ANG_RHCHelperTest {
 		Set<ID> accountIdSet = new Set<ID>();
 		for(Account a : [Select id FROM Account])
 			accountIdSet.add(a.ID);
-        
-        ANG_RHCHelper.createRHCInfo(accountIdSet, false);
+		
+		ANG_RHCHelper.createRHCInfo(accountIdSet, false);
 		ANG_RHC_Information__c rhc = [SELECT id, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c LIMIT 1];
 
 		Test.startTest();		
 		String result = AMS_OSCAR_Webservice.updateRME_Amount(rhc.Id);
 		Test.stopTest();
-       	System.assert(result != '');
+		System.assert(result != '');
 	}
 }
