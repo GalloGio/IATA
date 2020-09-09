@@ -88,7 +88,7 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
             searchParam = this._topic + '__c';
             if(this.topContainerClasses.indexOf('topLightGrayBorder')!=-1)
             this.topContainerClasses=this.topContainerClasses.substring(0,this.topContainerClasses.indexOf('topLightGrayBorder'));
-            this.topContainerClasses= this.topContainerClasses+'slds-p-bottom--large bottomLightGrayBorder ';
+            this.topContainerClasses= this.topContainerClasses+'slds-p-bottom_x-large bottomLightGrayBorder ';
         }
         if(this._subtopic !== undefined && this._subtopic.length > 0) {
             searchParam = this._subtopic + '__c';
