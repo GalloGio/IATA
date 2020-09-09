@@ -712,9 +712,9 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
                     <label>Open</label>
                 </value>
                 <value>
-                    <fullName>In Progress</fullName>
+                    <fullName>Work in progress</fullName>
                     <default>false</default>
-                    <label>In Progress</label>
+                    <label>Work in progress</label>
                 </value>
                 <value>
                     <fullName>Completed</fullName>
@@ -722,9 +722,24 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
                     <label>Completed</label>
                 </value>
                 <value>
-                    <fullName>Closed (Closed)</fullName>
+                    <fullName>Closed</fullName>
                     <default>false</default>
-                    <label>Closed (Closed)</label>
+                    <label>Closed</label>
+                </value>
+                <value>
+                    <fullName>Pending Business Feedback</fullName>
+                    <default>false</default>
+                    <label>Pending Business Feedback</label>
+                </value>
+                <value>
+                    <fullName>Pending External Supplier Feedback</fullName>
+                    <default>false</default>
+                    <label>Pending External Supplier Feedback</label>
+                </value>
+                <value>
+                    <fullName>Pending ITS Feedback</fullName>
+                    <default>false</default>
+                    <label>Pending ITS Feedback</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1098,7 +1113,7 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1106,11 +1121,11 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
                 <default>false</default>
             </values>
             <values>
-                <fullName>In Progress</fullName>
+                <fullName>Open</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Open</fullName>
+                <fullName>Work in progress</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
