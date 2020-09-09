@@ -467,7 +467,7 @@ private class AMS_MigrationToolHelperTest {
 
 		AMS_MigrationToolHelper.performValidations(c, 'New HO');
 
-		account3.Category__c = 'Handling Agent';
+		account3.Category__c = 'Airport Handling Agent';
 		update account3;
 
 		casesList = [SELECT id, Account.ParentId, Account.Category__c, Account.Location_Class__c, Account.Location_Type__c , Financial_Assessment_compliant__c, Status, RecordType__c, Reason1__c, AccountId, BSPCountry__c , Financial_Assessment_received__c, Bank_Guarantee_amount__c, Bank_Guarantee_deadline__c, Bank_Guarantee_received__c, Bank_Guarantee_requested__c, Change_effective_as_of__c, Criteria_remarks__c, Documentation_remarks__c, Dossier_reception_date__c, Fees_refund_requested__c, Finalization_checklist__c, Financial_Assessment_deadline__c, Financial_Assessment_requested__c, Financial_Review_Result__c, Invoice_number__c, Local_Inspection_compliant__c, Local_Inspection_deadline__c, Local_Inspection_received__c, Local_Inspection_requested__c, Process_Start_Date__c, Proof_of_payment_received__c, PSAA_EACP_Agreement_received__c, PSAA_signed_copy_sent__c, SAAM_Deadline_Date__c, AIMS_updated__c, Finalized_in_AIMS__c from case];
