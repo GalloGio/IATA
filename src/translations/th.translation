@@ -26411,7 +26411,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>บริการการเข้าถึง</label>
+        <label>ช่องทางการสนับสนุนที่ใช้ได้จะปรากฏขึ้นเมื่อคุณเลือกหัวข้อคำถามของคุณแล้ว</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26471,7 +26471,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>รับบริการช่วนเหลือโดยตรงผ่านพอร์ทัล IATA ทางโทรศัพท์หรือทางแชท</label>
+        <label>ติดต่อเรา เริ่มต้นด้วยการเลือกหัวข้อคำถามของคุณ</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26619,7 +26619,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>ติดต่อฝ่ายบริการช่วยเหลือ</label>
+        <label>ติดต่อเรา</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

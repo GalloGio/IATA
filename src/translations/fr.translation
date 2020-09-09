@@ -26455,7 +26455,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Service d&apos;accès</label>
+        <label>Les canaux de soutien disponibles apparaissent une fois que vous avez sélectionné le sujet de votre question</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26515,7 +26515,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Obtenez de l&apos;aide directement via le portail IATA, par téléphone ou par chat.</label>
+        <label>Prenez contact avec nous. Commencez par sélectionner le sujet de votre question</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26663,7 +26663,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Service client</label>
+        <label>Contactez-nous</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

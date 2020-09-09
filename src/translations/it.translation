@@ -26417,7 +26417,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Accedi al servizio</label>
+        <label>I canali di supporto disponibili appaiono una volta selezionato l'argomento della domanda</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26477,7 +26477,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Può ricevere assistenza direttamente attraverso il portale IATA, per telefono o via chat.</label>
+        <label>Mettiamoci in contatto. Iniziate selezionando l'argomento della vostra domanda</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26625,7 +26625,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Contatta assistenza</label>
+        <label>Contattateci</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

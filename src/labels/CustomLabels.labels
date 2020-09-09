@@ -45416,7 +45416,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Available support channels will appear once you have selected the topic of your question.</value>
+        <value>Available support channels appear once you have selected the topic of your question</value>
     </labels>
     <labels>
         <fullName>csp_ActionIndicator</fullName>
@@ -45535,7 +45535,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Let's get in touch. Start by selecting the topic of your question.</value>
+        <value>Let's get in touch. Start by selecting the topic of your question</value>
     </labels>
     <labels>
         <fullName>csp_CompanyContact_Section_label</fullName>

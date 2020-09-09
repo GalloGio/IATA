@@ -26394,7 +26394,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>خدمة الوصول</label>
+        <label>تظهر قنوات الدعم المتاحة بمجرد تحديد موضوع سؤالك</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26454,7 +26454,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>احصل على الدعم مباشرة من خلال بوابة الاتحاد الدولي للنقل الجوي (إياتا - IATA)، عن طريق الهاتف أو الدردشة.</label>
+        <label>دعونا الحصول على اتصال. ابدأ بتحديد موضوع سؤالك</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26602,7 +26602,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>التواصل مع الدعم</label>
+        <label>اتصل بنا</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

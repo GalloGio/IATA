@@ -26414,7 +26414,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Layanan Akses</label>
+        <label>Saluran dukungan yang tersedia muncul setelah Anda memilih topik pertanyaan Anda</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26478,7 +26478,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Dapatkan dukungan langsung melalui portal IATA (International Air Transport Association), melalui telepon, atau obrolan.</label>
+        <label>Mari berhubungan. Mulailah dengan memilih topik pertanyaan Anda</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26626,7 +26626,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Kontak Dukungan</label>
+        <label>Hubungi kami</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

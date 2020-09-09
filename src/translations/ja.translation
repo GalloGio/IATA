@@ -26413,7 +26413,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>サービスにアクセス</label>
+        <label>質問のトピックを選択すると、利用可能なサポートチャンネルが表示されます。</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26473,7 +26473,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>電話またはチャットで、IATAポータルから直接サポートを受けてください。</label>
+        <label>連絡してみましょう。ご質問のトピックを選択してください。</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
