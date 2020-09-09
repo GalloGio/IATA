@@ -17,7 +17,7 @@ private class CaseItemsTest {
 		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Item__c', 'MASTER');
 		Case_Item__c caseItem1 = new Case_Item__c(Status__c = 'Open', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
 		insert caseItem1;
-		Case_Item__c caseItem2 = new Case_Item__c(Status__c = 'Closed (Closed)', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
+		Case_Item__c caseItem2 = new Case_Item__c(Status__c = 'Closed', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
 		insert caseItem2;
 	}
 
@@ -44,20 +44,28 @@ private class CaseItemsTest {
 		Case_Item__c caseItem = new Case_Item__c(Status__c = 'Open', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
 		insert caseItem;
 		Test.stopTest();
+
+		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c];
+		System.assertEquals(false, caseItemList.isEmpty(), 'Expected non empty Case Item list');
 	}
 
 	@IsTest static void testOnAfterUpdate(){
+		Test.startTest();
 		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Open' LIMIT 1];
 		caseItem.Status__c = 'Closed (Closed)';
 		update caseItem;
+		Test.stopTest();
 
 		caseItem = [SELECT Id, Status__c FROM Case_Item__c WHERE Id = :caseItem.Id];
 		System.assertEquals('Closed (Closed)', caseItem.Status__c);
 	}
 
 	@IsTest static void testOnAfterDelete(){
+		Test.startTest();
 		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)' LIMIT 1];
+		
 		delete caseItem;
+		Test.stopTest();
 
 		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)'];
 		System.assertEquals(0, caseItemList.size(), 'Expected no Case Items with Status Closed (Closed)');
@@ -80,5 +88,19 @@ private class CaseItemsTest {
 		Database.delete(caseItemList, false);
 		caseItemList = [SELECT Id FROM Case_Item__c];
 		System.assertEquals(1, caseItemList.size(), 'Expected 1 Case Item to be deleted and 1 to remain. Instead there are ' + caseItemList.size());
+	}
+
+	@IsTest static void testOnBeforeUpdate(){
+		Case_Item__c caseItem = [SELECT Id, Status__c FROM Case_Item__c LIMIT 1];
+		caseItem.Status__c = 'Completed';
+		Database.SaveResult saveResult = Database.update(caseItem, false);
+		caseItem = [SELECT Id, Status__c FROM Case_Item__c WHERE Id = :caseItem.Id];
+		System.assertNotEquals('Completed', caseItem.Status__c);
+
+		User user = [SELECT Id FROM User WHERE IsActive = TRUE AND Profile.Name = :CaseItems.integrationUserProfileName LIMIT 1];
+		System.runAs(user){
+			saveResult = Database.update(caseItem, false);
+		}
+		System.assertEquals(true, saveResult.success);
 	}
 }

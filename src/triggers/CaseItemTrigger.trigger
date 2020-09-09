@@ -1,8 +1,12 @@
-trigger CaseItemTrigger on Case_Item__c (before delete, after insert, after update, after delete, after undelete) {
+trigger CaseItemTrigger on Case_Item__c (before update, before delete, after insert, after update, after delete, after undelete) {
 	//domain class
 	CaseItems caseItems;
 
 	if(Trigger.isBefore){
+		if(Trigger.isUpdate){
+			caseItems = new CaseItems(Trigger.oldMap);
+			caseItems.onBeforeUpdate(Trigger.newMap);
+		}
 		if(Trigger.isDelete){
 			caseItems = new CaseItems(Trigger.oldMap);
 			caseItems.onBeforeDelete();

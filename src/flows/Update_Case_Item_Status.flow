@@ -176,7 +176,7 @@
         </rules>
     </decisions>
     <description>When a Case Status is Closed, all related Case Item records must also be Closed.</description>
-    <interviewLabel>Update_Case_Item_Status-1_InterviewLabel</interviewLabel>
+    <interviewLabel>Update_Case_Item_Status-2_InterviewLabel</interviewLabel>
     <label>Update Case Item Status</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -278,7 +278,7 @@
             </processMetadataValues>
             <field>Status__c</field>
             <value>
-                <stringValue>Closed (Closed)</stringValue>
+                <stringValue>Closed</stringValue>
             </value>
         </inputAssignments>
         <object>Case_Item__c</object>

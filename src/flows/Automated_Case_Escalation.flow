@@ -294,7 +294,7 @@
         </rules>
     </decisions>
     <description>Automated, rule based Case Item record creation.</description>
-    <interviewLabel>Automated_Case_Escalation-2_InterviewLabel</interviewLabel>
+    <interviewLabel>Automated_Case_Escalation-5_InterviewLabel</interviewLabel>
     <label>Automated Case Escalation</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -354,6 +354,42 @@
             <field>Case__c</field>
             <value>
                 <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Details</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Details__c</field>
+            <value>
+                <elementReference>myVariable_current.Description</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -462,7 +498,7 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>Picklist</stringValue>
+                    <stringValue>String</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -474,7 +510,7 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Status</stringValue>
+                    <stringValue>Summary</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -486,12 +522,12 @@
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>Picklist</stringValue>
+                    <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>Status__c</field>
+            <field>Summary__c</field>
             <value>
-                <stringValue>Open</stringValue>
+                <elementReference>myVariable_current.Subject</elementReference>
             </value>
         </inputAssignments>
         <object>Case_Item__c</object>
@@ -535,6 +571,42 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Details</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Details__c</field>
+            <value>
+                <elementReference>myVariable_current.Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
                     <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
@@ -559,6 +631,42 @@
             <field>IATA_Business_Service__c</field>
             <value>
                 <stringValue>IATA Clearing House - ICH</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Summary</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Summary__c</field>
+            <value>
+                <elementReference>myVariable_current.Subject</elementReference>
             </value>
         </inputAssignments>
         <object>Case_Item__c</object>
