@@ -142,7 +142,7 @@ public class ANG_RHCMassCalculation {
 			String query = '' // 
 					+ ' SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, ' // 
 					+ '	ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount_Provisional__c, ANG_RHC_Effective_Date__c, ANG_ConsumedRHC_Percent__c, ' // 
-					+ '	ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, ANG_Financial_Security__c ' // 
+					+ '	ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, ANG_Financial_Security__c, Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c ' // 
 					+ ' FROM ANG_RHC_Information__c' // 
 					+ ' WHERE ANG_CashCondition__c = false' // 
 					+ ' 	AND ANG_AccountId__r.IATACode__c <> \'\' ' // 
@@ -228,6 +228,9 @@ public class ANG_RHCMassCalculation {
 		public decimal ANG_RHC_Amount_ProvisionalTMP	{get; set;}
 		public decimal ANG_RHC_Amount_Forecasted	{get; set;}
 		
+		public string Tier	{get; set;}
+		public string Forecaster_Tier	{get; set;}
+		
 		private Agent(ANG_RHC_Information__c r){
 			this.selected = false;
 			this.bIsSuccess = false;
@@ -239,6 +242,8 @@ public class ANG_RHCMassCalculation {
 			this.ANG_RHC_Amount_Provisional = null;
 			this.ANG_RHC_Amount_ProvisionalTMP = null;
 			this.ANG_RHC_Amount_Forecasted = null;
+			this.Tier = null;
+			this.Forecaster_Tier = null;
 		}
 	}
 
