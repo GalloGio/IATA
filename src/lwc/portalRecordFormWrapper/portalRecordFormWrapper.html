@@ -347,6 +347,16 @@
                                                 {staticFieldsLocal.Additional_Email__c}
                                             </div>
                                         </div>
+                                        </br>
+                                        <div class="slds-form-element__label">
+                                            {labels.CSP_L_WorkPhone_LMS}
+                                        </div>
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFieldsLocal.OtherPhone}
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                     <div key={labels.CSP_L2_Business_Address_Information_LMS}
                                         class=" slds-col slds-size_1-of-1 labelValue slds-form-element_stacked slds-m-bottom--small">
@@ -517,7 +527,8 @@
                             record-id={trainingId}
                             contact-id={recordId}
                             address={address}
-                            additional-email={additionalEmail}
+                            additional-email={staticFieldsLocal.Additional_Email__c}
+                            other-phone={staticFieldsLocal.OtherPhone}
                             country-id={selectedCountryId}
                             onclosemodal={closeModalAddress}>
                         </c-portal-profile-details-l-m-s-information>
