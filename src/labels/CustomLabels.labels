@@ -45829,7 +45829,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Contact Support</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>csp_InvalidPhoneValue</fullName>
