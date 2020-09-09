@@ -27039,7 +27039,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Zugang zum Service</label>
+        <label>Verfügbare Supportkanäle erscheinen, sobald Sie das Thema Ihrer Frage ausgewählt haben</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27099,7 +27099,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Erhalten Sie Support direkt über das IATA Portal, per Telefon oder Chat.&quot;</label>
+        <label>Lassen Sie uns Kontakt aufnehmen. Beginnen Sie mit der Auswahl des Themas Ihrer Frage</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27247,7 +27247,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Support kontaktieren</label>
+        <label>Kontakt aufnehmen</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

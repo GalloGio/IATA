@@ -27032,7 +27032,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Dịch vụ truy cập</label>
+        <label>Các kênh hỗ trợ có sẵn sẽ xuất hiện khi bạn đã chọn chủ đề câu hỏi của mình</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27092,7 +27092,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Nhận hỗ trợ trực tiếp qua cổng IATA, qua điện thoại hoặc trò chuyện.</label>
+        <label>Hãy giữ liên lạc. Bắt đầu bằng cách chọn chủ đề câu hỏi của bạn</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27240,7 +27240,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Liên hệ Hỗ trợ</label>
+        <label>Liên hệ chúng tôi</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

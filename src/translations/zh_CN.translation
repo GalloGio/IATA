@@ -27028,7 +27028,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>访问服务</label>
+        <label>当您选择了您的问题主题后，可用的支持渠道就会出现。</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27088,7 +27088,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>通过 IATA 门户、致电或聊天直接获得支持。</label>
+        <label>让我们取得联系。从选择您的问题主题开始。</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27236,7 +27236,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>联系支持</label>
+        <label>联系我们</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

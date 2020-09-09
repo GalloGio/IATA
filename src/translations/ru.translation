@@ -27050,7 +27050,7 @@ GSA - 3 буквы.
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Служба доступа</label>
+        <label>Доступные каналы поддержки появляются после выбора темы вопроса</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27110,7 +27110,7 @@ GSA - 3 буквы.
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Получите поддержку напрямую через портал Международной ассоциации воздушного транспорта (ИАТА), по телефону или в чате.</label>
+        <label>Давайте свяжемся с вами. Начните с выбора темы вопроса</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27258,7 +27258,7 @@ GSA - 3 буквы.
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Техническая поддержка</label>
+        <label>Связаться с нами</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

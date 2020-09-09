@@ -27034,7 +27034,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>액세스 서비스</label>
+        <label>질문 주제를 선택하면 사용 가능한 지원 채널이 나타납니다.</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27094,7 +27094,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>전화나 채팅으로 국제항공운송협회 (IATA) 포털을 통해 직접 문의하십시오.</label>
+        <label>연락합시다. 질문의 주제를 선택하여 시작하십시오.</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27242,7 +27242,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>지원 문의</label>
+        <label>문의하기</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

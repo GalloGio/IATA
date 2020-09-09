@@ -27039,7 +27039,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Hizmete Erişin</label>
+        <label>Sorunuzun konusunu seçtikten sonra mevcut destek kanallarını görebilirsiniz</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27099,7 +27099,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Telefon veya sohbet yoluyla, IATA (Uluslararası Hava Taşımacılığı Birliği) portalı üzerinden doğrudan destek alın.</label>
+        <label>Sorunuzun konusunu seçerek başlayın</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27247,7 +27247,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>İletişim Desteği</label>
+        <label>Bize Ulaşın</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>

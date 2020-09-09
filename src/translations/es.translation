@@ -27067,7 +27067,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Servicio de acceso</label>
+        <label>Los canales de soporte disponibles aparecen una vez que ha seleccionado el tema de su pregunta</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27127,7 +27127,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Obtenga asistencia directamente a través del portal IATA, por teléfono o chat.</label>
+        <label>Pongámonos en contacto. Empieza por seleccionar el tema de tu pregunta</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27275,7 +27275,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Contactar con Asistencia</label>
+        <label>Contáctanos</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
