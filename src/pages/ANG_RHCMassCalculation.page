@@ -184,13 +184,15 @@
 						</apex:outputText>
 					</apex:column>
 					
-					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Effective_Date__c.Label}"/>
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="RHC Amnt Eff.Date"/>
 					
 					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Provisional__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Provisional))}">
 							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Provisional}"/>
 						</apex:outputText>
 					</apex:column>
+					
+					<apex:column value="{!agents[mapKey].rhcInfo.Tier__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.Tier__c.Label}"/>
 
 					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Forecasted__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Forecasted))}">
@@ -203,6 +205,8 @@
 							<apex:param value="{!agents[mapKey].calculatedConsumedRHC}"/>
 						</apex:outputText>
 					</apex:column>
+
+					<apex:column value="{!agents[mapKey].rhcInfo.Forecasted_Tier__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.Forecasted_Tier__c.Label}"/>
 
 					<apex:column headerValue="Error">
 						<apex:outputText value="{!agents[mapKey].ErrorDescription}" rendered="{!!agents[mapKey].bIsSuccess}"/>
