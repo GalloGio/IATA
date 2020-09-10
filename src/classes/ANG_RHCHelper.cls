@@ -180,6 +180,7 @@ public class ANG_RHCHelper {
 							BSP__r.Name,
 							UniqueKey__c,
 							RecordTypeId,
+							RecordType.DeveloperName,
 							Risk_Status__c,
 							FS_Percentage__c,
 							Min_FA_Points__c,
