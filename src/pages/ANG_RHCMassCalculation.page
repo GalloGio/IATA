@@ -185,6 +185,7 @@
 					</apex:column>
 					
 					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="RHC Amnt Eff.Date"/>
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__r.ANG_RiskStatus__c}" headerValue="Risk Status"/>
 					
 					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Provisional__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Provisional))}">
