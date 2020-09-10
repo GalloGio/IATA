@@ -476,22 +476,22 @@ IF({!Type_of_OSCAR_process_in} = {!NewProcessBRAbroad_var}  , {!AccountToProcess
     <formulas>
         <name>AccountRoleFirstName</name>
         <dataType>String</dataType>
-        <expression>IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.FirstName} ,IF (AMSAccountRoleToProcess.Person__c &lt;&gt; null , {!AMSAccountRoleToProcess.Person__r.First_Name__c} , &apos;&apos;))</expression>
+        <expression>IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.FirstName} ,IF ({!AMSAccountRoleToProcess.Person__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Person__r.First_Name__c} , &apos;&apos;))</expression>
     </formulas>
     <formulas>
         <name>AccountRoleId</name>
         <dataType>String</dataType>
-        <expression>If({!Type_of_OSCAR_process_in} = {!NewProcessOscarCorrection_var} , AMSAccountRoleToProcess.Id , null)</expression>
+        <expression>If({!Type_of_OSCAR_process_in} = {!NewProcessOscarCorrection_var} , {!AMSAccountRoleToProcess.Id} , null)</expression>
     </formulas>
     <formulas>
         <name>AccountRoleLastName</name>
         <dataType>String</dataType>
-        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.LastName},IF (AMSAccountRoleToProcess.Person__c &lt;&gt; null , IF({!AMSAccountRoleToProcess.Person__r.Lastname__c} = null , &apos;_&apos; , {!AMSAccountRoleToProcess.Person__r.Lastname__c}),&apos;_&apos;)))</expression>
+        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.LastName},IF ({!AMSAccountRoleToProcess.Person__c} &lt;&gt; null , IF({!AMSAccountRoleToProcess.Person__r.Lastname__c} = null , &apos;_&apos; , {!AMSAccountRoleToProcess.Person__r.Lastname__c}),&apos;_&apos;)))</expression>
     </formulas>
     <formulas>
         <name>AccreditationContactName</name>
         <dataType>String</dataType>
-        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , If({!AMSAccountRoleToProcess.Owner_Account__c} = null ,(IF({!AMSAccountRoleToProcess.Contact__c} != null , ({!AMSAccountRoleToProcess.Contact__r.FirstName} &amp; &apos; &apos; &amp; {!AMSAccountRoleToProcess.Contact__r.LastName}) ,IF (AMSAccountRoleToProcess.Person__c != null , {!AMSAccountRoleToProcess.Person__r.Name} ,  AMSAccountRoleToProcess.Owner_Name__c )) ) ,{!AMSAccountRoleToProcess.Owner_Account__r.Name}))</expression>
+        <expression>IF( ({!AMSAccountRoleToProcess.Owner_Account__c} = null &amp;&amp;  {!AMSAccountRoleToProcess.Contact__c} = null &amp;&amp; {!AMSAccountRoleToProcess.Person__c} = null ) , {!AMSAccountRoleToProcess.Owner_Name__c} , If({!AMSAccountRoleToProcess.Owner_Account__c} = null ,(IF({!AMSAccountRoleToProcess.Contact__c} != null , ({!AMSAccountRoleToProcess.Contact__r.FirstName} &amp; &apos; &apos; &amp; {!AMSAccountRoleToProcess.Contact__r.LastName}) ,IF ({!AMSAccountRoleToProcess.Person__c} != null , {!AMSAccountRoleToProcess.Person__r.Name} ,  {!AMSAccountRoleToProcess.Owner_Name__c} )) ) ,{!AMSAccountRoleToProcess.Owner_Account__r.Name}))</expression>
     </formulas>
     <formulas>
         <name>AccreditationContactNameFormula</name>
@@ -506,7 +506,7 @@ IF({!Type_of_OSCAR_process_in} = {!NewProcessBRAbroad_var}  , {!AccountToProcess
     <formulas>
         <name>AreThePremissesInAirportFormula</name>
         <dataType>String</dataType>
-        <expression>IF(AccountToProcess.In_a_Airport__c = true,&apos;Yes&apos;,&apos;No&apos;)</expression>
+        <expression>IF({!AccountToProcess.In_a_Airport__c} = true,&apos;Yes&apos;,&apos;No&apos;)</expression>
     </formulas>
     <formulas>
         <name>CaseOriginFormula</name>
@@ -550,7 +550,7 @@ IF( ({!Type_of_OSCAR_process_in} = {!NewProcessAHA_var} &amp;&amp;  {!AccountLoc
 IF( ({!Type_of_OSCAR_process_in} = {!Agency_changes_var} &amp;&amp;  {!AccountCategory}  = &apos;MSO Member Sales Office&apos; ) , &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_in} = {!Agency_changes_var} &amp;&amp;  {!AccountCategory}  = &apos;GSA General Sales Agent&apos; ) , &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_in} = {!Agency_changes_var} &amp;&amp;  {!AccountCategory}  = &apos;GSSA Cargo&apos; ), &apos;NOK&apos; , 
-IF( ({!Type_of_OSCAR_process_in} = {!Agency_changes_var} &amp;&amp;  {!AccountCategory}  = &apos;Handling Agent&apos; ), &apos;NOK&apos; , &apos;OK&apos;
+IF( ({!Type_of_OSCAR_process_in} = {!Agency_changes_var} &amp;&amp;  {!AccountCategory}  = &apos;Airport Handling Agent&apos; ), &apos;NOK&apos; , &apos;OK&apos;
 )))))</expression>
     </formulas>
     <formulas>
