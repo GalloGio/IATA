@@ -759,7 +759,7 @@ export default class PortalSupportReachUsCreateNewCase extends NavigationMixin(L
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: "support-reach-us"
+                pageName: "support"
             }
         })
             .then(url => navigateToPage(url, {}));
