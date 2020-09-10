@@ -180,6 +180,7 @@ public class ANG_RHCHelper {
 							BSP__r.Name,
 							UniqueKey__c,
 							RecordTypeId,
+							RecordType.DeveloperName,
 							Risk_Status__c,
 							FS_Percentage__c,
 							Min_FA_Points__c,
@@ -694,7 +695,7 @@ public class ANG_RHCHelper {
 	private static string determineTier(decimal AmntAtRiskUSD, list<ANG_BSP_Attributes__c> lsBspAttr){
 		string Tier = '';
 		for(ANG_BSP_Attributes__c attr:lsBspAttr)
-			if(attr.RecordType.developerName == RHC_AMOUNT_CALC_TYPE_TIER && AmntAtRiskUSD>=attr.Amount_At_Risk_From_USD__c && AmntAtRiskUSD<attr.Amount_At_Risk_To_USD__c)
+			if(attr.recordTypeId == RECTYPE_RHC_AMOUNT_CONFIG && attr.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_TIER && AmntAtRiskUSD>=attr.Amount_At_Risk_From_USD__c && AmntAtRiskUSD<attr.Amount_At_Risk_To_USD__c)
 				return attr.Tier__c;
 		return Tier;
 	}
