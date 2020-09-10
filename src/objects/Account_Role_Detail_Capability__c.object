@@ -703,8 +703,8 @@ FALSE
     </fields>
     <fields>
         <fullName>Description__c</fullName>
-        <externalId>false</externalId>
         <description>Describes the description of the capabilities</description>
+        <externalId>false</externalId>
         <label>Description</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
@@ -895,6 +895,10 @@ FALSE
                 <valueName>Valuable_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Other_Screening_Equipment</controllingFieldValue>
+                <valueName>Other_Screening_Equipment</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Other_Security_Equipment_Measures</controllingFieldValue>
                 <valueName>Other_Security_Equipment_Measures</valueName>
             </valueSettings>
@@ -1036,11 +1040,7 @@ FALSE
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
-                <valueName>Loose_Cargo</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
-                <valueName>ULD</valueName>
+                <valueName>Trucking_Gate_For_Loose_Cargo</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
@@ -2852,10 +2852,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -2996,7 +2992,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3673,10 +3669,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -3817,7 +3809,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4366,10 +4358,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -4510,7 +4498,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5059,10 +5047,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -5203,7 +5187,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5764,10 +5748,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -5920,7 +5900,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6473,10 +6453,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -6617,7 +6593,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7150,10 +7126,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -7294,7 +7266,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7831,10 +7803,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -7975,7 +7943,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8520,10 +8488,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -8668,7 +8632,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9237,10 +9201,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -9381,7 +9341,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10146,10 +10106,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -10294,7 +10250,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10847,10 +10803,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -10991,7 +10943,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11548,10 +11500,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -11704,7 +11652,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12241,10 +12189,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -12385,7 +12329,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12918,10 +12862,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -13062,7 +13002,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13591,10 +13531,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -13735,7 +13671,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14264,10 +14200,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -14412,7 +14344,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14941,10 +14873,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -15085,7 +15013,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15626,10 +15554,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -15770,7 +15694,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16315,10 +16239,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -16459,7 +16379,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17008,10 +16928,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -17152,7 +17068,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17685,10 +17601,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -17829,7 +17741,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -18358,10 +18270,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -18502,7 +18410,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -19035,10 +18943,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -19179,7 +19083,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -19716,10 +19620,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -19864,7 +19764,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20393,10 +20293,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -20537,7 +20433,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21078,10 +20974,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -21222,7 +21114,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21751,10 +21643,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Loose_Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Loose_Cargo_Area</fullName>
                 <default>false</default>
             </values>
@@ -21895,7 +21783,7 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ULD</fullName>
+                <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                 <default>false</default>
             </values>
             <values>

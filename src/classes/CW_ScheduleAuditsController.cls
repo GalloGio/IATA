@@ -24,13 +24,11 @@ public without sharing class CW_ScheduleAuditsController {
 
 	private static Map<Id,List<String>> includeStakeholders(Id stakeHoldersId, Map<Id,List<String>> managersPerQueueId){
 		if(stakeHoldersId != null){
-			for(User u : CW_Utilities.getIATAStakeHoldersUsersList()) {
-				if(u.Email != null) {
-					if(managersPerQueueId.get(stakeHoldersId) == null) {
-						managersPerQueueId.put(stakeHoldersId,new List<String>());
-					}
-					managersPerQueueId.get(stakeHoldersId).add(u.Email);
+			for(String email : CW_Utilities.getIATAStakeholdersEmails()) {
+				if(managersPerQueueId.get(stakeHoldersId) == null) {
+					managersPerQueueId.put(stakeHoldersId,new List<String>());
 				}
+				managersPerQueueId.get(stakeHoldersId).add(email);
 			}
 		}
 

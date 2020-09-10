@@ -6,18 +6,15 @@
                     <div key={list.label} class="col-4 text-truncate">
                         <template for:each={list.value} for:item="item">
                             <template if:false={item.isHeader}>
-                                <template if:false={item.selected}>
-                                    <div key={item.value} data-tosca={item.value}
-                                        data-name={item.value} class={readonlystyle}>
-                                        <span class="pl-0 item-filter" title={item.label}>{item.label}</span>
-                                    </div>
-                                </template>
-                                <template if:true={item.selected}>
-                                    <div key={item.value} data-tosca={item.value}
-                                        data-name={item.value} class={readonlystyle}>
-                                        <span class="pl-0 item-filter" title={item.label}><a href={item.url} target="_blank">{item.label}</a></span>
-                                    </div>
-                                </template>
+								<div key={item.value} data-tosca={item.value}
+									data-name={item.value} class={readonlystyle}>
+									<template if:false={item.selected}>
+										<span class="pl-0 item-filter" title={item.label}>{item.label}</span>
+									</template>
+									<template if:true={item.selected}>
+										<span class="pl-0 item-filter" title={item.label}><a href={item.url} target="_blank">{item.label}</a></span>
+									</template>
+								</div>
                             </template>
                             <template if:true={item.isHeader}>
                                 <div key={item.label}>

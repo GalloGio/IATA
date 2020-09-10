@@ -148,7 +148,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>ICG Account Role Detail Page</masterLabel>
+    <masterLabel>ONE Source Account Role Detail Page</masterLabel>
     <sobjectType>ICG_Account_Role_Detail__c</sobjectType>
     <template>
         <name>flexipage:recordHomeSingleColTemplateDesktop</name>

@@ -154,13 +154,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Read</externalSharingModel>
-    <label>ICG Contact Role Detail</label>
+    <label>ONE Source Contact Role Detail</label>
     <nameField>
-        <label>ICG Contact Role Detail Name</label>
+        <label>ONE Source Contact Role Detail Name</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>ICG Contact Role Details</pluralLabel>
+    <pluralLabel>ONE Source Contact Role Details</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
@@ -171,7 +171,7 @@
         <externalId>false</externalId>
         <label>Account Contact Role</label>
         <referenceTo>Account_Contact_Role__c</referenceTo>
-        <relationshipLabel>ICG Contact Role Details</relationshipLabel>
+        <relationshipLabel>ONE Source Contact Role Details</relationshipLabel>
         <relationshipName>ICG_Contact_Role_Details</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -198,7 +198,7 @@
         <externalId>false</externalId>
         <label>Account Role</label>
         <referenceTo>Account_Role__c</referenceTo>
-        <relationshipLabel>ICG Contact Role Details</relationshipLabel>
+        <relationshipLabel>ONE Source Contact Role Details</relationshipLabel>
         <relationshipName>ICG_Contact_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -257,13 +257,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Role_Remove_Requestor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Keep track of which user has requested the removal of a contact role detail.</description>
+        <externalId>false</externalId>
+        <label>Contact Role Remove Requestor</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>ICG_Contact_Role_Details</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ICG_Account_Role_Detail__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Relationship between the ICG Contact role detail, and the facility.</description>
         <externalId>false</externalId>
-        <label>ICG Account Role Detail</label>
+        <label>ONE Source Account Role Detail</label>
         <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>ICG Contact Role Details</relationshipLabel>
+        <relationshipLabel>ONE Source Contact Role Details</relationshipLabel>
         <relationshipName>ICG_Contact_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -274,7 +287,7 @@
         <fullName>ICG_Role__c</fullName>
         <description>To define the visibility and functionalities availables for a specific contact in the ICG Portal</description>
         <externalId>false</externalId>
-        <label>ICG Role</label>
+        <label>ONE Source Role</label>
         <required>true</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

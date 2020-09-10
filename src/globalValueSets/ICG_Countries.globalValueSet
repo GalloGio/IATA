@@ -1160,6 +1160,6 @@
         <default>false</default>
         <label>Zimbabwe</label>
     </customValue>
-    <masterLabel>ICG Countries</masterLabel>
+    <masterLabel>ONE Source Countries</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>

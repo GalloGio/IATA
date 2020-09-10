@@ -1,178 +1,170 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import {
-    checkIfDeselectAll,
-    checkIfChangeSelectAllText
+	checkIfDeselectAll,
+	checkIfChangeSelectAllText,
+	reachedLimit,
+	reachedLimitWithAll
 } from 'c/cwUtilities';
-import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 export default class CwCargoCommodities extends LightningElement {
-    @api label;
-    @track selectedText = 'Select All';
-    @api appliedFiltersCount;
+	@api label;
+	@track selectedText = 'Select All';
+	@api appliedFiltersCount;
 
-    @track commodities = [{
-            name: "General Cargo",
-            selected: false,
-            enabled: true,
-            field: "General_Cargo__c",
-            obj: "icg_account_role_detail__c",
-            image: resources + "/icons/ic-gsearch--selected.svg",
-            type: 'commodity'
-        },
-        {
-            name: "Dangerous Goods",
-            selected: false,
-            enabled: true,
-            field: "Dangerous_Goods__c",
-            obj: "icg_account_role_detail__c",
-            image: resources + "/icons/ic-gsearch--selected.svg",
-            type: 'commodity'
-        },
-        {
-            name: "Live Animals",
-            selected: false,
-            enabled: true,
-            field: "Live_Animals__c",
-            obj: "icg_account_role_detail__c",
-            image: resources + "/icons/ic-gsearch--selected.svg",
-            type: 'commodity'
-        },
-        {
-            name: "Airmail",
-            selected: false,
-            enabled: true,
-            field: "Airmail__c",
-            obj: "icg_account_role_detail__c",
-            image: resources + "/icons/ic-gsearch--selected.svg",
-            type: 'commodity'
-        },
-        {
-            name: "Perishables",
-            selected: false,
-            enabled: true,
-            field: "Perishables__c",
-            obj: "icg_account_role_detail__c",
-            image: resources + "/icons/ic-gsearch--selected.svg",
-            type: 'commodity'
-        },
-        {
-            name: "Pharmaceuticals",
-            selected: false,
-            enabled: true,
-            field: "Pharmaceuticals__c",
-            obj: "icg_account_role_detail__c",
-            image: resources + "/icons/ic-gsearch--selected.svg",
-            type: 'commodity'
-        }
-    ]
+	@track commodities = [{
+			name: "General Cargo",
+			selected: false,
+			enabled: true,
+			field: "General_Cargo__c",
+			obj: "icg_account_role_detail__c",
+			image: resources + "/icons/ic-gsearch--selected.svg",
+			type: 'commodity'
+		},
+		{
+			name: "Dangerous Goods",
+			selected: false,
+			enabled: true,
+			field: "Dangerous_Goods__c",
+			obj: "icg_account_role_detail__c",
+			image: resources + "/icons/ic-gsearch--selected.svg",
+			type: 'commodity'
+		},
+		{
+			name: "Live Animals",
+			selected: false,
+			enabled: true,
+			field: "Live_Animals__c",
+			obj: "icg_account_role_detail__c",
+			image: resources + "/icons/ic-gsearch--selected.svg",
+			type: 'commodity'
+		},
+		{
+			name: "Airmail",
+			selected: false,
+			enabled: true,
+			field: "Airmail__c",
+			obj: "icg_account_role_detail__c",
+			image: resources + "/icons/ic-gsearch--selected.svg",
+			type: 'commodity'
+		},
+		{
+			name: "Perishables",
+			selected: false,
+			enabled: true,
+			field: "Perishables__c",
+			obj: "icg_account_role_detail__c",
+			image: resources + "/icons/ic-gsearch--selected.svg",
+			type: 'commodity'
+		},
+		{
+			name: "Pharmaceuticals",
+			selected: false,
+			enabled: true,
+			field: "Pharmaceuticals__c",
+			obj: "icg_account_role_detail__c",
+			image: resources + "/icons/ic-gsearch--selected.svg",
+			type: 'commodity'
+		}
+	]
 
-    searchAllTCargo() {
-        let shouldDeselectAll = checkIfDeselectAll(this.commodities);
-        let allPrograms = [];
+	searchAllTCargo() {
+		let shouldDeselectAll = checkIfDeselectAll(this.commodities);
+		let allPrograms = [];
 
-        this.commodities.forEach(element => {
-            element.selected = !shouldDeselectAll;
-            allPrograms.push(element);
-        });
+		this.commodities.forEach(element => {
+			element.selected = !shouldDeselectAll;
+			allPrograms.push(element);
+		});
 
-        let items = this.template.querySelectorAll("[data-type='commodity']");
-        if(shouldDeselectAll){
-            this._unselectItems(items);
-        }
-        else {
-            this._selectItems(items);
-        }
-        this.selectedText = checkIfChangeSelectAllText(this.commodities);
+		let items = this.template.querySelectorAll("[data-type='commodity']");
+		if(shouldDeselectAll){
+			this._unselectItems(items);
+		}
+		else {
+			this._selectItems(items);
+		}
+		this.selectedText = checkIfChangeSelectAllText(this.commodities);
 
 
-        this.dispatchEvent(new CustomEvent('selectcommodities', { detail: allPrograms }));
-    }
+		this.dispatchEvent(new CustomEvent('selectcommodities', { detail: allPrograms }));
+	}
 
-    @wire(getEnvironmentVariables, {})
-    environmentVariables;
+	@api environmentVariables;
 
-    _selectItems(items) {
-        items.forEach(element => {
-            element.classList.remove('itemUnselected');
-            element.classList.add('itemSelected');
-        });
-    }
+	_selectItems(items) {
+		items.forEach(element => {
+			element.classList.remove('itemUnselected');
+			element.classList.add('itemSelected');
+		});
+	}
 
-    _unselectItems(items){
-        items.forEach(element => {
-            element.classList.remove('itemSelected');
-            element.classList.add('itemUnselected');
-        });
-    }
+	_unselectItems(items){
+		items.forEach(element => {
+			element.classList.remove('itemSelected');
+			element.classList.add('itemUnselected');
+		});
+	}
 
-    onClickItem(event) {
-        let eTarget = event.currentTarget;
-        let name = eTarget.getAttribute("data-name");
+	onClickItem(event) {
+		let eTarget = event.currentTarget;
+		let name = eTarget.getAttribute("data-name");
 
-        let selectedComodity;
-        let selected;
+		let selectedComodity;
+		let selected;
 
-        this.commodities.forEach(element => {
-            if (element.name === name && (!this.reachedLimit || (this.reachedLimit && element.selected))) {
-                element.selected = !element.selected;
-                selectedComodity = [element];
-                selected = element.selected;
-            }
-        });
+		this.commodities.forEach(element => {
+			if (element.name === name && (!this.reachedLimit || (this.reachedLimit && element.selected))) {
+				element.selected = !element.selected;
+				selectedComodity = [element];
+				selected = element.selected;
+			}
+		});
 
-        let items = this.template.querySelectorAll("[data-name='" + name + "']");
+		let items = this.template.querySelectorAll("[data-name='" + name + "']");
 
-        if(selected){
-            if (!this.reachedLimit){
-                this._selectItems(items);
-                
-                this.selectedText = checkIfChangeSelectAllText(this.commodities);
-                this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
-            }
-        }
-        else{
-            this._unselectItems(items);
-            
-            this.selectedText = checkIfChangeSelectAllText(this.commodities);
-            this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
-        }
-    }
+		if(selected){
+			if (!this.reachedLimit){
+				this._selectItems(items);
+				
+				this.selectedText = checkIfChangeSelectAllText(this.commodities);
+				this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
+			}
+		}
+		else{
+			this._unselectItems(items);
+			
+			this.selectedText = checkIfChangeSelectAllText(this.commodities);
+			this.dispatchEvent(new CustomEvent('selectcommodities', { detail: selectedComodity }));
+		}
+	}
 
-    _getCommodities(searchList) {
-        Object.keys(this.commodities).forEach(element => {
-            if (this.commodities[element].selected) {
-                const searchObject = {
-                    value: this.commodities[element].selected,
-                    operator: "=",
-                    obj: this.commodities[element].obj,
-                    relationfield: this.commodities[element].relationfield,
-                    field: this.commodities[element].field
-                };
-                searchList.push(searchObject);
-            }
-        });
-        return searchList;
-    }
+	_getCommodities(searchList) {
+		Object.keys(this.commodities).forEach(element => {
+			if (this.commodities[element].selected) {
+				const searchObject = {
+					value: this.commodities[element].selected,
+					operator: "=",
+					obj: this.commodities[element].obj,
+					relationfield: this.commodities[element].relationfield,
+					field: this.commodities[element].field
+				};
+				searchList.push(searchObject);
+			}
+		});
+		return searchList;
+	}
 
-    get reachedLimit(){
-		return  this.appliedFiltersCount >= this.environmentVariables.data.max_filters_allowed__c;
-    }
+	get reachedLimit(){
+		return reachedLimit(this.environmentVariables, this.appliedFiltersCount);
+	}
 
-    get reachedLimitWithAll(){
-        if (this.commodities){
-            let potentialSelect = 0;
-            this.commodities.forEach(element => {
-                if (!element.selected) {
-                    potentialSelect++;
-                }
-            });
-            return  (this.appliedFiltersCount + potentialSelect) > this.environmentVariables.data.max_filters_allowed__c;
-        }
-    }
-    
-    get selectAllVisible(){
-        if (this.commodities){
-            return !(this.selectedText === "Select All" && this.reachedLimitWithAll);
-        }
-    }
+	get reachedLimitWithAll(){
+		return reachedLimitWithAll(this.environmentVariables, this.commodities, this.appliedFiltersCount);
+	}
+	
+	get selectAllVisible(){
+		if (this.commodities){
+			return !(this.selectedText === "Select All" && this.reachedLimitWithAll);
+		}
+	}
 }

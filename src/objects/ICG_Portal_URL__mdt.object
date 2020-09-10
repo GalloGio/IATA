@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>The object stores information about the links for One Source Pages</description>
-    <label>ICG Portal URL</label>
-    <pluralLabel>ICG Portal URLs</pluralLabel>
+    <label>ONE Source Portal URL</label>
+    <pluralLabel>ONE Source Portal URLs</pluralLabel>
     <visibility>Public</visibility>
     <fields>
         <fullName>Description__c</fullName>

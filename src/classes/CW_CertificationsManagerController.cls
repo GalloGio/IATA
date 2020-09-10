@@ -11,7 +11,6 @@
 
 public with sharing class CW_CertificationsManagerController {
 	final static String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
-	final static List<String> stationType = new List<String>{'Airline','Airport','Freight_Forwarder','Trucker','Shipper'};
 
 	final static String CEIV_LIVE_ANIMALS = 'CEIV Live Animals';
 	final static String CEIV_PHARMA = 'CEIV Pharma';
@@ -40,6 +39,27 @@ public with sharing class CW_CertificationsManagerController {
 	final static String RAMP_HANDLER = 'Ramp_Handler';
 	final static String LABEL = 'label';
 	final static String VALUE = 'value';
+
+	final static String MD_RECORDTYPES_ACCROLEDET = 'RecordTypes_AccountRoleDetail';
+	final static String MD_SCOPES_BY_RECORDTYPE = 'Scopes_by_AccRoleDet_RT';
+
+	public static Map<String, List<String>> getRecordTypeFromAccRolDet() {
+		Map<String, List<String>> output = new Map<String, List<String>>();
+		for (ICG_capability_configuration__mdt currentConfig : CW_FacilityCapabilitiesController.getCapabilityConfigurationMetadataByType(MD_RECORDTYPES_ACCROLEDET)) {
+			output.put(currentConfig.Key__c, (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';'));
+		}
+
+		return output;
+	}
+
+	public static Map<String, List<String>> getScopesByAccRoleDetRecordTypes() {
+		Map<String, List<String>> output = new Map<String, List<String>>();
+		for (ICG_capability_configuration__mdt currentConfig : CW_FacilityCapabilitiesController.getCapabilityConfigurationMetadataByType(MD_SCOPES_BY_RECORDTYPE)) {
+			output.put(currentConfig.Key__c, (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';'));
+		}
+
+		return output;
+	}
 
 	/****************************************************************************
 	 * @Method			: getFacilityCertifications
@@ -125,7 +145,7 @@ public with sharing class CW_CertificationsManagerController {
 		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
         
         String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
-             'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND ICG_Certification__r.Name IN (\'' + String.join((lstDepts), '\', \'') + '\')' + ' AND Status__c IN (\''+statusInput+'\') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
+             'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND ICG_Certification__r.Name IN (\'' + String.join((lstDepts), '\', \'') + '\')' + ' AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
 		List<ICG_Capability_Assignment_Group__c> firtsList = (List<ICG_Capability_Assignment_Group__c>) Database.query(query);
         
 		return (JSON.serialize(firtsList));
@@ -165,37 +185,35 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled(cacheable=true)
 	public static string getScopeByCertificationAndStation() {
+		List<List<String>> recordTypesList = new List<List<String>>();
+		Map<String, List<String>> recordTypesFromAccRoleDet = getRecordTypeFromAccRolDet();		
+		Map<String, List<String>> scopesByAccRoleDet = getScopesByAccRoleDetRecordTypes();
+
+		List<String> recordTypes1 = recordTypesFromAccRoleDet.get('RecordTypes_AccRoleDet_1');
+		List<String> recordTypes2 = recordTypesFromAccRoleDet.get('RecordTypes_AccRoleDet_2');
+		List<String> recordTypes3 = recordTypesFromAccRoleDet.get('RecordTypes_AccRoleDet_3');
+		recordTypesList.add(recordTypes1);
+		recordTypesList.add(recordTypes2);
+		recordTypesList.add(recordTypes3);
 
 		Map<String, List<Map<String,String>>> scopesFiltered = new Map<String, List<Map<String,String>>>();
-		List<Map<String,String>> scopeList = new List<Map<String,String>>();
-		Map<String,String> ceivScopes = new Map<String,String>();
-
-		ceivScopes.put(LABEL,ADMINSTRATIVE);
-		ceivScopes.put(VALUE,ADMINSTRATIVE);
-		scopeList.add(ceivScopes);
-
-		ceivScopes = new Map<String,String>();
-		ceivScopes.put(LABEL,OPERATIONAL);
-		ceivScopes.put(VALUE,OPERATIONAL);
-		scopeList.add(ceivScopes);
-
-		for(String station : stationType){			
-			scopesFiltered.put(station,scopeList);
+		List<Map<String,String>> scopeList;
+		Map<String,String> ceivScopes;
+		
+		for(List<String> recordTypes : recordTypesList){
+			for(String rt : recordTypes){
+				scopeList = new List<Map<String,String>>();
+				for(String scope : scopesByAccRoleDet.get(rt)){
+						ceivScopes = new Map<String,String>();
+						ceivScopes.put(LABEL,scope.replace('_', ' '));
+						ceivScopes.put(VALUE,scope);
+						scopeList.add(ceivScopes);	
+				}
+				if(!scopesFiltered.containsKey(rt)){
+					scopesFiltered.put(rt,scopeList);
+				}
+			}
 		}
-
-		scopeList = new List<Map<String,String>>();
-		ceivScopes = new Map<String,String>();
-		ceivScopes.put(LABEL,CARGO_FACILITY_OPERATIONS);
-		ceivScopes.put(VALUE,CARGO_FACILITY_OPERATIONS.replace(' ', '_'));
-		scopeList.add(ceivScopes);
-		scopesFiltered.put(CARGO_HANDLING_FACILITY,scopeList);
-
-		scopeList = new List<Map<String,String>>();
-		ceivScopes = new Map<String,String>();
-		ceivScopes.put(LABEL,RAMP_OPERATIONS);
-		ceivScopes.put(VALUE,RAMP_OPERATIONS.replace(' ', '_'));
-		scopeList.add(ceivScopes);
-		scopesFiltered.put(RAMP_HANDLER,scopeList);
 
 		return JSON.serialize(scopesFiltered);
 	}

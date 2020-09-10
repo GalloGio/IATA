@@ -3,7 +3,7 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <description>Object to host all the params needed for ICG project, that can change between environments and do not have to be deployed.</description>
     <enableFeeds>false</enableFeeds>
-    <label>ICG Environment Variables</label>
+    <label>ONE Source Environment Variables</label>
     <visibility>Public</visibility>
     <fields>
         <fullName>EXPIRING_VALIDATION_DAYS__c</fullName>

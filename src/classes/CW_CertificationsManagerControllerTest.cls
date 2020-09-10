@@ -191,7 +191,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
 		
 		test.startTest();
-		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, 'Upcoming');
+		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'');
 		System.assertNotEquals(result, '');
 
 		test.stopTest();

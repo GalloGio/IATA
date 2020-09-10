@@ -599,15 +599,9 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		})
 			.then(resp => {
 				let parsedRes = JSON.parse(resp);
-				if (parsedRes.success) {
-					this.modalMessage =
-						"Thank you for your request. IATA will contact you shortly.";
-					this.modalImage = this.CHECKED_IMAGE;
-					this.dispatchEvent(new CustomEvent("refresh"));
-				} else {
-					this.modalMessage = parsedRes.message;
-					this.modalImage = this.ERROR_IMAGE;
-				}
+				this.modalMessage = parsedRes.message;
+				this.modalImage = this.CHECKED_IMAGE;
+				this.dispatchEvent(new CustomEvent("refresh"));
 				this.showModal = true;
 				this.requesting = false;
 				this.removeHoverDiv();

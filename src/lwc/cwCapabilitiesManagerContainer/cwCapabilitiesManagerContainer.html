@@ -9,8 +9,11 @@
 				<div class="slds-col">
 					<h2 if:true={getCertificationMode} class="slds-text-heading_medium slds-hyphenate custom-certifi-title">Certification Name: {getCertificationName} </h2>
 				</div>
-				<div class="slds-col slds-grid slds-grid_align-end">
+				<div if:false={isRenewMode} class="slds-col slds-grid slds-grid_align-end">
 					<button class="slds-button slds-button_outline-brand bt-blue pr-2 pl-2" onclick={addPreviuosCapabilities}>{labelButtonAddRowsToList}</button>
+				</div>
+				<div if:true={isRenewMode} class="slds-col slds-grid slds-grid_align-end">
+					<button class="slds-button slds-button_outline-brand bt-blue pr-2 pl-2" onclick={resetAllCapabilities}>{labelButtonAddRowsToList}</button>
 				</div>
 			</div>
 			<div if:false={existsRows} class="slds-grid slds-grid_align-center">
@@ -359,6 +362,32 @@
 															</template>
 														</template>																
 														
+														<template if:false={getCertificationMode}>
+															<template if:false={isNotEditable}>
+																<td class="row-separator zui-sticky-col-right width-150">
+																	<template if:true={row.isAssigned}>																	
+																		<lightning-button label={label.remove} title={label.cancel} variant="destructive" data-action="Remove"
+																		data-super-categories-index={superCategoryIndex}
+																		data-section-index={sectionIndex}
+																		data-capability-index={capabilityIndex}
+																		data-category-index={categoryIndex}
+																		data-row-index={rowIndex}
+																		onclick={removeCapabilities}></lightning-button>
+																	</template>
+
+																	<template if:false={row.isAssigned}>
+																		<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
+																			data-row={row} 
+																			data-super-categories-index={superCategoryIndex}
+																			data-section-index={sectionIndex}
+																			data-capability-index={capabilityIndex}
+																			data-category-index={categoryIndex}
+																			data-row-index={rowIndex}
+																		onclick={assigntCapability}></lightning-button>
+																	</template>
+																</td>
+															</template>
+														</template>	
 
 													</tr>
 												</template>
@@ -401,7 +430,7 @@
 											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">
 										</lightning-button-icon>
 										<lightning-carousel-image if:true={photo.visible} key={photo.id}
-											src={photo.url} header={photoIndex} description={photoIndex}>
+											src={photo.url} header={photo.label}>
 										</lightning-carousel-image>
 									</template>
 								</lightning-carousel>
@@ -436,13 +465,39 @@
 						</button>
 						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{headerToShow}</h2>
 					</header>
-					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-						<center><h2><b>{label.icg_confirmation_text}</b></h2><br/>
-						</center>
+					<div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+						<template if:true={isMultiValidated}>
+
+							<div class="slds-grid slds-grid_align-center slds-gutters">
+							<template for:each={certiAvailablesRow}
+							for:item="cert">
+								<div key={cert.id} class="slds-col">
+								<template if:false={cert.isDeleted}>
+									<img key={cert.id} width="55px" src={cert.src} title={cert.name} style="cursor: pointer;"
+										onclick={certiSelectedToRemove}
+										data-id={cert.id}
+										data-name={cert.name}>
+								</template>
+								<template if:true={cert.isDeleted}>
+									<img key={cert.id} width="55px" src={cert.src} title={cert.name} class="certifications-disabled">
+								</template>
+								</div>
+							</template>
+							</div>
+
+						</template>
+
+						<template if:false={isMultiValidated}>
+							<center><h2><b>{label.icg_confirmation_text}</b></h2><br/>
+							</center>
+						</template>
+						
 					</div>
 					<footer class="slds-modal__footer">
+						<template if:false={isMultiValidated}>
 						<lightning-button label={label.cancel} variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
 						<lightning-button label={label.accept} variant="brand" onclick={makeAction}></lightning-button>
+						</template>
 					</footer>
 				</div>
 			</section>

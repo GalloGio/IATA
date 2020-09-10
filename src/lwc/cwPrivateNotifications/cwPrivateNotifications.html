@@ -70,12 +70,11 @@
 						<lightning-icon class="slds-col width-auto pl-1p" icon-name="utility:warning" alternative-text="Notification"></lightning-icon>
 					</div>
 					<div class="slds-col padding-header slds-size_7-of-12"> <!-- row count -->
-					<!--<b>{numberRegisterToShow} {label.icg_news_alerts_of} {dataSize}</b>-->
 					<b>{labelNewNotifications}</b>                 
 					</div>
 					<div class="slds-col padding-header slds-size_4-of-12 text-right"> <!-- Dismiss all -->
-						<button if:false={getViewAll} title={label.icg_notification_view_all} onclick={setViewAll} class="btn btn-primary-blue mr-3" data-view=true>{label.icg_notification_view_all}</button>
-						<button if:true={getViewAll} title={label.icg_notification_collapse_all} onclick={setViewAll} class="btn btn-primary-blue mr-3" data-view=false>{label.icg_notification_collapse_all}</button>
+						<button if:false={viewAll} title={label.icg_notification_view_all} onclick={setViewAll} class="btn btn-primary-blue mr-3" data-view=true>{label.icg_notification_view_all}</button>
+						<button if:true={viewAll} title={label.icg_notification_collapse_all} onclick={setViewAll} class="btn btn-primary-blue mr-3" data-view=false>{label.icg_notification_collapse_all}</button>
 
 						<button title={label.icg_notification_dismiss_all} onclick={setDismissAll} class="btn btn-primary-blue">{label.icg_notification_dismiss_all}</button>
 					</div>

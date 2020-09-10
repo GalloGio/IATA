@@ -325,18 +325,18 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.approvalAction = "Approve";
 		approveStationAutomaticProcess({ stationId: this.approvalStationId })
 			.then(resp => {
-				let modalMessage;
-				this.approvalSuccess = resp;
+				this.approvalSuccess = true;
 				let approvalStation = this.getStation();
-				if (this.approvalSuccess) {
-					modalMessage = this.label.the_station;
-					modalMessage += approvalStation ?  " " + approvalStation.Name : "";
-					modalMessage += " " + this.label.has_been_approved + ". "+ this.label.now_pending_for_IATA_Approval + ".";
+				let modalMessage = this.label.the_station;
+				modalMessage += approvalStation ?  " " + approvalStation.Name : "";
+				modalMessage += " " + this.label.has_been_approved + ". "
+
+				if (resp) {
+					modalMessage += this.label.now_pending_for_IATA_Approval + ".";
 				} else {
-					modalMessage = this.label.the_station;
-					modalMessage += approvalStation ?  " " + approvalStation.Name : "";
-					modalMessage += " " + this.label.could_not_be_approved + ". " + this.label.need_to_be_company_admin_to_approve + ".";
+					modalMessage += this.label.icg_something_went_wrong_emails;
 				}
+
 				this.approvalModalMessage = modalMessage;
 				this.showApprovalModal = true;
 				if (refresh) this.refreshData();
@@ -353,17 +353,15 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.approvalAction = "Reject";
 		rejectStationAutomaticProcess({ stationId: this.approvalStationId, rejectReason: this.rejectReasonStation })
 			.then(resp => {
-				let modalMessage;
+
 				this.approvalSuccess = resp;
 				let approvalStation = this.getStation();
-
+				let modalMessage = this.label.the_station;
+				modalMessage += approvalStation ?  " " + approvalStation.Name : "";
+				
 				if (this.approvalSuccess) {
-					modalMessage = this.label.the_station;
-					modalMessage += approvalStation ?  " " + approvalStation.Name : "";
 					modalMessage += " has been rejected successfully.";
 				} else {
-					modalMessage = this.label.the_station;
-					modalMessage += approvalStation ?  approvalStation.Name : "";
 					modalMessage += " could not be rejected. You have to be Company Admin in order to reject this station.";
 				}
 				this.approvalModalMessage = modalMessage;

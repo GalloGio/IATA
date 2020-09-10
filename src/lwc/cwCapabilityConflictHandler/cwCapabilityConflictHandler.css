@@ -56,14 +56,14 @@
 .second-column-head{
 	position: sticky;
 	z-index: 20;
-	left: 250px;
+	left: 266px;
 	background: white;
 	min-width: 261px;
 }
 .second-column-cell{
 	position: sticky;
 	z-index: 20;
-	left: 250px;
+	left: 266px;
 	background: inherit;
 	box-shadow: none !important;
 	min-width: 261px;
@@ -87,6 +87,14 @@
 	position: -webkit-sticky;
 	position: sticky;
 	left: 0;
+	z-index: 20;
+	background: white;
+}
+
+.table thead .second-column-top {
+	position: -webkit-sticky;
+	position: sticky;
+	left: 266px;
 	z-index: 20;
 	background: white;
 }

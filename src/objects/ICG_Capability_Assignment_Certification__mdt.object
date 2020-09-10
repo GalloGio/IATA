@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Establishes mandatory relationships between Equipments and Certifications</description>
-    <label>ICG_Capability Assignment Certification</label>
-    <pluralLabel>ICG_Capability Assignment Certifications</pluralLabel>
+    <label>OS_Capability Assignment Certification</label>
+    <pluralLabel>OS_Capability Assignment Certifications</pluralLabel>
     <visibility>Public</visibility>
     <fields>
         <fullName>Certifications__c</fullName>

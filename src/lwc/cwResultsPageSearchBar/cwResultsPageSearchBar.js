@@ -5,7 +5,7 @@ import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.get
 
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
-import { fillPredictiveValues, extractTypeFromLocation, removeGenericItemFromList, prepareSearchObjectFEICategories, checkIconType, translationTextJS, createKey, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
+import { fillPredictiveValues, extractTypeFromLocation, removeGenericItemFromList, prepareSearchObjectFEICategories, checkIconType, translationTextJS, createKey, checkKeyUpValue, getPredictiveData, reachedLimit } from "c/cwUtilities";
 import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwResultsPageSearchBar extends LightningElement {
@@ -29,6 +29,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	companyNameItems = [];
 
 	@api filterCountResponsive;
+	@api isbeta;
 
 	availableLocations;
 	availableLocationsCalloutPerformed;
@@ -801,11 +802,11 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	}
 
 	get visibilityFilters() {
-		return this.searchSummaryList.length < this.environmentVariables.data.max_filters_allowed__c ? '' : 'hidden' ;
+		return !reachedLimit(this.environmentVariables, this.searchSummaryList.length) ? '' : 'hidden' ;
 	}
 
 	get limitReached() {
-		return this.searchSummaryList.length >= this.environmentVariables.data.max_filters_allowed__c ? '' : 'hidden' ;
+		return reachedLimit(this.environmentVariables, this.searchSummaryList.length) ? '' : 'hidden' ;
 	}
 
 	setSelectedCategory(event) {
@@ -834,6 +835,11 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		this.onchangeFunction();
 	}
 
+	goToLogin(event){
+		event.preventDefault();
+		this.dispatchEvent( new CustomEvent('gotologin'));
+	}
+	
 	updateSectionLoaded() {
 		this.lstFEICategories = [...this.lstFEICategories];
 	}

@@ -87,7 +87,7 @@ export default class CwScheduleAudits extends LightningElement {
             this.getFormData();
             this.saving = true;
             scheduleAudit({icgNotificationObj: JSON.stringify(this.auditData), certificationList: JSON.stringify(this.selectedCertifications)}).then(resp => {
-                this.modalMessage = 'Thank you for your request. IATA will contact you shortly.';
+                this.modalMessage = this.label.icg_thank_you_iata_contact;
                 this.modalImage = this.checkedImage;
                 this.showModal = true;
                 this.saving = false;

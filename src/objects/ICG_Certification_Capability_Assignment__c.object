@@ -153,13 +153,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>ICG Certification Capability Assignment</label>
+    <label>OS Certification Capability Assignment</label>
     <nameField>
-        <label>ICG Certification Capability Assignment</label>
+        <label>OS Certification Capability Assignment</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>ICG Certification Capability Assignments</pluralLabel>
+    <pluralLabel>OS Certification Capability Assignments</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
@@ -1069,6 +1069,16 @@
                     <default>false</default>
                     <label>Emissions Obligations</label>
                 </value>
+                <value>
+                    <fullName>Trucking Gates ULD</fullName>
+                    <default>false</default>
+                    <label>Trucking Gates ULD</label>
+                </value>
+                <value>
+                    <fullName>Spill_Kits</fullName>
+                    <default>false</default>
+                    <label>Spill_Kits</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Temporary_Storage_And_Working_Areas_1</controllingFieldValue>
@@ -1140,6 +1150,10 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
+                <valueName>Airside_Ground_Handling_Noise_Obligations</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Environmental_Compliance</controllingFieldValue>
                 <valueName>Waste_Obligations</valueName>
             </valueSettings>
             <valueSettings>
@@ -1205,6 +1219,10 @@
             <valueSettings>
                 <controllingFieldValue>Safety_Personal_And_Protective_Equipment</controllingFieldValue>
                 <valueName>Personal_Protective_Equipment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Safety_Personal_And_Protective_Equipment</controllingFieldValue>
+                <valueName>Spill_Kits</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Scanners</controllingFieldValue>
@@ -1307,6 +1325,10 @@
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
                 <valueName>ULD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
+                <valueName>Trucking Gates ULD</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Documentation_Counters</controllingFieldValue>
@@ -1560,12 +1582,12 @@
     </fields>
     <fields>
         <fullName>ICG_Certification__c</fullName>
-        <description>Lookup to the Certification</description>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>Lookup to the Certification</description>
         <externalId>false</externalId>
-        <label>ICG Certification</label>
+        <label>ONE Source Certification</label>
         <referenceTo>ICG_Certification__c</referenceTo>
-        <relationshipLabel>ICG Certification Capability Assignments</relationshipLabel>
+        <relationshipLabel>ONE Source Certification Capability Assignments</relationshipLabel>
         <relationshipName>ICG_Certification_Capability_Assignments</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>

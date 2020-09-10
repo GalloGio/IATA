@@ -5,6 +5,19 @@ import setDismiss_ from "@salesforce/apex/CW_NotificationsController.setDismissN
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
 import labels from "c/cwOneSourceLabels";
 
+const REMOTE = 'remote';
+const VALIDATION = 'validation';
+const PENDING_APPROVAL = 'pending approval';
+const STATION_MANAGER = 'station manager';
+const FACILITY_MANAGER = 'facility manager';
+const COMPANY_ADMIN = 'company admin';
+const AUDIT_SCHEDULE = 'audit schedule';
+const STATION_MANAGERS = 'station managers';
+const STATION = 'station';
+const PENDING_USER_APPROVAL = 'pending user approval';
+const MY_REQUESTS = 'my requests';
+const PENDING_STATION_APPROVAL = 'pending station approval';
+const CONFLICT = 'conflict';
 export default class CwPrivateNotifications extends LightningElement {
 	initialized = false;
 
@@ -12,13 +25,12 @@ export default class CwPrivateNotifications extends LightningElement {
 	
 	label = labels.labels();
 
-    @track data = [];
-    @track dataLimit = [];
-    @track showModal = false;
-    @track modalMessage = "When you perform an action, this modal appears with extra info.";
-    checkedImage = this.icons + 'ic_tic_green.svg';
-    ERROR_IMAGE = this.icons + 'error-icon.svg';
-    @track modalImage = this.checkedImage;
+	@track data = [];
+	@track showModal = false;
+	@track modalMessage = "When you perform an action, this modal appears with extra info.";
+	checkedImage = this.icons + 'ic_tic_green.svg';
+	ERROR_IMAGE = this.icons + 'error-icon.svg';
+	@track modalImage = this.checkedImage;
 	
 
 	@api companyAdmins;
@@ -26,7 +38,7 @@ export default class CwPrivateNotifications extends LightningElement {
 	@api userInfo;
 	@api gxaUrl;
 
-	viewAll = false;
+	@track viewAll = false;
 	registerToShow = 5;
 
 	@api viewAlertsEvents;
@@ -34,50 +46,27 @@ export default class CwPrivateNotifications extends LightningElement {
 	renderedCallback() {
 		if (!this.initialized) {
 			this.initialized = true;
-			if (this.viewAlertsEvents === "true") {
-				this.viewAlertsEvents = true;
-				this.getNotificationsFromUser(true);
-			}
-			else { 
-				this.viewAlertsEvents = false;
-				this.getNotificationsFromUser(false);
-			}
+			this.viewAlertsEvents = this.viewAlertsEvents === 'true';
+			this.getNotificationsFromUser(this.viewAlertsEvents);
 		}
 	}
 
 	closeModal() {
 		this.showModal = false;
 	}
-	
-	get getViewAll()
-	{
-		return this.viewAll;
-	}
 
 	get dataInformed() {
-		return this.data.length > 0 ? true : false;
+		return this.data.length > 0;
 	}
 	
 	
 	get labelNewNotifications(){
 		let label="";
 		if(this.dataInformed){
-			if(this.numberRegisterToShow > 1){
-				label = this.numberRegisterToShow + " " + this.label.icg_news_alerts_of;
-			}else{
-				label = this.numberRegisterToShow + " " + this.label.new_notification;
-			}
+			label = this.dataSize + " ";
+			label += this.dataSize > 1 ? this.label.icg_news_alerts_of : this.label.new_notification;
 		}
 		return label;
-	}
-
-	get numberRegisterToShow(){
-		if(this.dataInformed){
-			return this.data.length;
-		}
-		else{
-			return 0;
-		}
 	}
 
 	get dataSize(){
@@ -92,21 +81,66 @@ export default class CwPrivateNotifications extends LightningElement {
 				this.data = JSON.parse(parseResult);
 				if(this.data){
 					this.checkRedirectionAndDate();
-
-					if(this.data.length > 5 && !this.viewAlertsEvents && !this.getViewAll){
-						this.limitData();
-					}
-					else{
-						this.dataLimit = this.data;
-					}
-				}           
+				}
 			})
 			.catch(err => {
-                console.error('Error during fetch of notifications', err);
+				console.error('Error during fetch of notifications', err);
 				this.modalMessage = err.body ? err.body.message : 'Error during fetch of notifications';
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 			});
+	}
+
+	notificationStationIsDefined(elem) {
+		return elem.Station__c != '' && elem.Station__c != undefined;
+	}
+
+	descriptionHasValidValue(description) {
+		return description.includes(REMOTE) || description.includes(VALIDATION) ||
+		description.includes(PENDING_APPROVAL) ||
+		description.includes(STATION_MANAGER) ||
+		description.includes(FACILITY_MANAGER) ||
+		description.includes(COMPANY_ADMIN) ||
+		description.includes(AUDIT_SCHEDULE);
+	}
+
+	generateNotificationDestiny(elem, description) {
+
+		let destiny; 
+		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem)){
+			if (elem.CreatedById === this.userInfo.Id){
+				destiny = MY_REQUESTS;
+			}
+			else if(description.includes(STATION)){
+				destiny = PENDING_STATION_APPROVAL;
+			}
+			else{
+				destiny = PENDING_USER_APPROVAL;
+			}
+		}
+		else if(description.includes(CONFLICT)){
+			destiny = CONFLICT;
+		}
+		else if(description.includes(PENDING_APPROVAL)){
+			destiny = PENDING_USER_APPROVAL;
+		}
+		else if(description.includes(AUDIT_SCHEDULE)){
+			destiny = AUDIT_SCHEDULE;
+		}
+		else if(description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)){
+			destiny = STATION_MANAGERS;
+		}
+		else if(description.includes(COMPANY_ADMIN)){
+			destiny = COMPANY_ADMIN;
+		}                
+		else if(description.includes(REMOTE) || description.includes(VALIDATION)){
+			destiny = REMOTE;
+		}
+		else if(this.notificationStationIsDefined(elem)){
+			destiny = STATION;
+		}
+
+		return destiny;
 	}
 	
 	checkRedirectionAndDate(){
@@ -115,43 +149,10 @@ export default class CwPrivateNotifications extends LightningElement {
 
 			this.data.forEach(elem=>{
 				let description = elem.Short_Description__c.toLowerCase();
-				if( (elem.Station__c != '' && elem.Station__c != undefined ) || 
-					(description.includes('remote') || description.includes('validation')) ||
-					description.includes('pending approval') ||
-					description.includes('station manager') ||
-					description.includes('facility manager') ||
-					description.includes('company admin') ||
-					description.includes('audit schedule') ){
-					elem.isRedirection = true;
-					if(description.includes('pending approval') && (elem.Station__c != '' && elem.Station__c != undefined)){
-						if (elem.CreatedById === this.userInfo.Id){
-							elem.destiny = 'my requests';
-						}
-						else{
-							elem.destiny = 'pending user approval';
-						}
-					}
-					else if(description.includes('pending approval')){
-						elem.destiny = 'pending user approval';
-					}
-					else if(description.includes('audit schedule')){
-						elem.destiny = 'audit schedule';
-					}
-					else if(elem.Station__c != '' && elem.Station__c != undefined){
-						elem.destiny = 'station';
-					}
-					else if(description.includes('station manager') || description.includes('facility manager')){
-						elem.destiny = 'station managers';
-					}
-					else if(description.includes('company admin')){
-						elem.destiny = 'company admin';
-					}                
-					if(description.includes('remote') || description.includes('validation')){
-						elem.destiny = 'remote';
-					}
-				}
-				else{
-					elem.isRedirection = false;
+				elem.isRedirection = this.notificationStationIsDefined(elem) || this.descriptionHasValidValue(description);
+
+				if(elem.isRedirection){
+					elem.destiny = this.generateNotificationDestiny(elem, description);
 				}
 
 				//parse Dates
@@ -163,52 +164,64 @@ export default class CwPrivateNotifications extends LightningElement {
 		});
 	}
 
-	handleNavigate(event){
-		let destiny = event.currentTarget.getAttribute("data-destiny").toLowerCase();
-		let url='';
-		if(destiny === 'station'){
+	generateUrl(event, destiny) {
+
+		let url;
+
+		if(destiny === STATION){
 			url = '#ID:' + event.currentTarget.getAttribute("data-id");
-			window.open(url, "_blank");
 		}
-		else if(destiny === 'pending station approval'){
+		else if(destiny === PENDING_STATION_APPROVAL){
 			url = '#Pending Facility Approvals';
-			window.open(url, "_blank");
 		}
-		else if(destiny === 'pending user approval'){
+		else if(destiny === PENDING_USER_APPROVAL){
 			url = '#Pending User Approvals';
-			window.open(url, "_blank");
+			
 		}
-		else if(destiny === 'station managers'){
+		else if(destiny === STATION_MANAGERS){
 			url = '#Station Managers';
-			window.open(url, "_blank");
+			
 		} 
-		else if(destiny === 'company admin'){
+		else if(destiny === COMPANY_ADMIN){
 			url = '#Company Admins';
-			window.open(url, "_blank");
+			
 		}
-		else if(destiny === 'audit schedule'){
+		else if(destiny === AUDIT_SCHEDULE){
 			url = '#Schedule Audits';
-			window.open(url, "_blank");
 		}  
-		else if(destiny === 'my requests'){
+		else if(destiny === CONFLICT){
+			url = '#' + this.label.capability_management;
+		}
+		else if(destiny === MY_REQUESTS){
 			url = '#My Requests';
-			window.open(url, "_blank");
+			
 		}  
-		else if(destiny === 'remote'){
+		else if(destiny === REMOTE){
 			let description = event.currentTarget.getAttribute("data-description").toLowerCase();
 			//redirection depend to the action...
 			if(description.includes('granted') || description.includes('approved') || description.includes('accepted')){
 				url = '#ID:' + event.currentTarget.getAttribute("data-id");
-				window.open(url, "_blank");
+				
 			}
 			else if(description.includes('expired') || description.includes('rejected')){
 				url = '#Remote Validation History';
-				window.open(url, "_blank");
+				
 			}
 			else{
 				url = this.gxaUrl;
-				window.open(url, "_blank");
+				
 			}
+		}
+
+		return url;
+
+	}
+
+	handleNavigate(event){
+		let destiny = event.currentTarget.getAttribute("data-destiny").toLowerCase();
+		let url = this.generateUrl(event, destiny); 
+		if(url){
+			window.open(url, "_blank");
 		}
 
 		if(event.currentTarget.getAttribute("data-read") === 'false'){
@@ -217,14 +230,9 @@ export default class CwPrivateNotifications extends LightningElement {
 		
 	}
 
-	limitData()
-	{
-		let getLimit=[];
-		for(let i=0;i<this.registerToShow;i++){
-			getLimit.push(this.data[i]);
-		}
-		this.dataLimit = getLimit;
-		
+	get dataLimit() {
+		let shouldLimitData = this.dataSize > this.registerToShow && !this.viewAlertsEvents && !this.viewAll;
+		return shouldLimitData ? this.data.filter((notification, index) => index < this.registerToShow) : this.data;
 	}
 
 	setDismiss(notificationList,mode) {
@@ -232,19 +240,19 @@ export default class CwPrivateNotifications extends LightningElement {
 			.then(result => {
 				let parsedRes = JSON.parse(result);
 				if (parsedRes.success) {
-                    if(mode === 'all'){
-                        this.modalMessage = "Operation successfull.";
-                        this.modalImage = this.checkedImage;
-                        this.showModal = true; 
-                    }
-                    
-                    this.getNotificationsFromUser(this.viewAlertsEvents);
+					if(mode === 'all'){
+						this.modalMessage = "Operation successfull.";
+						this.modalImage = this.checkedImage;
+						this.showModal = true; 
+					}
+					
+					this.getNotificationsFromUser(this.viewAlertsEvents);
 				} else {
 					this.modalMessage = parsedRes.message;
-                    this.modalImage = this.ERROR_IMAGE;
-                    this.showModal = true; 
-                }
-                
+					this.modalImage = this.ERROR_IMAGE;
+					this.showModal = true; 
+				}
+				
 			})
 			.catch(err => {
 				this.modalMessage = err.message;
@@ -259,11 +267,7 @@ export default class CwPrivateNotifications extends LightningElement {
 		let position = event.target.dataset.position;
 
 		this.dataLimit[position].Read__c = true;
-		this.data.forEach(elemen => {
-			if(elemen.Id === notificationId){
-				elemen.Read__c = true;
-			}
-		});
+		this.data = this.data.map(element => element.Read__c = element.Id === notificationId);
 
 		let notificationList = [];
 		notificationList.push(notificationId);
@@ -283,13 +287,6 @@ export default class CwPrivateNotifications extends LightningElement {
 
 	setViewAll(event){
 		let view = event.target.dataset.view;
-		if(view === 'false'){
-			this.limitData();
-			this.viewAll = false;
-		}
-		else{
-			this.dataLimit = this.data;
-			this.viewAll = true;
-		}
+		this.viewAll = view;
 	}
 }

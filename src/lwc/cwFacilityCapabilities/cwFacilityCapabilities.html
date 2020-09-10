@@ -305,21 +305,22 @@
 																				</template>
 																			</template>
 																			<template if:true={currentheader.last}>
-
-																				<th if:true={currentfield.first}
-																					key={currentfield.value.name}
-																					scope="col"
-																					colspan={currentfield.value.colspan}
-																					class="first-column">
-																					<p>
-																						<c-cw-html-tag-generator
-																							label={label} is-header="true"
-																							item={currentCategory}
-																							property-name="label"
-																							aux-type={currentCategory.auxType}>
-																						</c-cw-html-tag-generator>
-																					</p>
-																				</th>
+																				<template if:false={currentCategory.isEditableRecordType}>
+																					<th if:true={currentfield.first}
+																						key={currentfield.value.name}
+																						scope="col"
+																						colspan={currentfield.value.colspan}
+																						class="first-column">
+																						<p>
+																							<c-cw-html-tag-generator
+																								label={label} is-header="true"
+																								item={currentCategory}
+																								property-name="label"
+																								aux-type={currentCategory.auxType}>
+																							</c-cw-html-tag-generator>
+																						</p>
+																					</th>
+																				</template>
 
 																				<template if:true={editMode}>
 																					<template if:true={isPrivateArea}>

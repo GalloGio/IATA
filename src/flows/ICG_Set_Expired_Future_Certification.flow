@@ -186,7 +186,7 @@
 &amp;&amp; TODAY() &lt;= {!myVariable_old.Expiration_Date__c}</expression>
     </formulas>
     <interviewLabel>ICG_Set_Expired_Future_Certification-1_InterviewLabel</interviewLabel>
-    <label>ICG Set Expired Future Certification</label>
+    <label>ONE Source Set Expired Future Certification</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>

@@ -154,14 +154,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>ICG Capability Assignment Group</label>
+    <label>ONE Source Capability Assignment Group</label>
     <nameField>
         <displayFormat>OSC-{0000000}</displayFormat>
-        <label>ICG Capability Assignment Group</label>
+        <label>ONE Source Capability Assignment Group</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>ICG Capability Assignment Groups</pluralLabel>
+    <pluralLabel>ONE Source Capability Assignment Groups</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
@@ -374,9 +374,9 @@
         <fullName>ICG_Account_Role_Detail__c</fullName>
         <description>Master detail to facility</description>
         <externalId>false</externalId>
-        <label>ICG Account Role Detail</label>
+        <label>ONE Source Account Role Detail</label>
         <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>ICG Capability Assignment Groups</relationshipLabel>
+        <relationshipLabel>ONE Source Capability Assignment Groups</relationshipLabel>
         <relationshipName>ICG_Capability_Assignment_Groups</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -390,9 +390,9 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Lookup to the Certification</description>
         <externalId>false</externalId>
-        <label>ICG Certification</label>
+        <label>ONE Source Certification</label>
         <referenceTo>ICG_Certification__c</referenceTo>
-        <relationshipLabel>ICG Capability Assignment Groups</relationshipLabel>
+        <relationshipLabel>ONE Source Capability Assignment Groups</relationshipLabel>
         <relationshipName>ICG_Capability_Assignment_Groups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -483,7 +483,7 @@
         <externalId>false</externalId>
         <label>Order Product</label>
         <referenceTo>OrderItem</referenceTo>
-        <relationshipLabel>ICG Capability Assignment Groups</relationshipLabel>
+        <relationshipLabel>ONE Source Capability Assignment Groups</relationshipLabel>
         <relationshipName>ICG_Capability_Assignment_Groups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>

@@ -3356,7 +3356,7 @@ public without sharing class Order_Svc
 		}
 
 		//*** save changes
-		Savepoint sp = Database.setSavepoint();
+		Savepoint sp = CW_DBTransactionHandler.setSavepoint();
 		try
 		{
 			upsert lstOrderItem;
@@ -3372,7 +3372,7 @@ public without sharing class Order_Svc
 		} catch (Exception e)
 		{
 			system.debug('Exception ' + e.getStackTraceString());
-			Database.rollback(sp);
+			CW_DBTransactionHandler.doRollback(sp);
 			return String.valueOf(e);
 		}
 	} //*** end of "setPriceToOrder"
@@ -4329,12 +4329,7 @@ public without sharing class Order_Svc
             
             notifications.addAll(AddNotifications(gxaOrderIds));
 
-			List<String> whoEmailIata = new List<String>();
-			for(User u : CW_Utilities.getIATAStakeHoldersUsersList()) {
-				if(u.email != null){
-					whoEmailIata.add(u.email);
-				}
-			}
+			List<String> whoEmailIata = CW_Utilities.getIATAStakeholdersEmails();
 			if (pendingToFulfillOrderIds.size() > 0) {
 				List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN : pendingToFulfillOrderIds];
 				for(OrderItem orditem : orderItems){
@@ -4394,7 +4389,7 @@ public without sharing class Order_Svc
     private static List<ICG_Notification__c> AddCorrectionNotifications(List<Id> needsCorrectionOrderIds){
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
         if (needsCorrectionOrderIds.size() > 0) {
-            List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :needsCorrectionOrderIds];
+            List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.ContactId, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :needsCorrectionOrderIds];
             for(OrderItem orditem : orderItems){
                 //Insert System Notification
                 if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){

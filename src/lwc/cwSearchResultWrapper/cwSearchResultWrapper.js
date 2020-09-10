@@ -32,6 +32,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 	@track filteredFacilities;
 	@api isDetailed;
 	@track _lstResults;
+	@api isbeta;
 	@api
 	get lstResults() {
 		return this._lstResults;
@@ -49,6 +50,8 @@ export default class CwSearchResultWrapper extends LightningElement {
 	initialized = false;
 	index = 0;
 	@track companyType = 'All';
+
+
 
 	renderedCallback() {
 		if (!this.initialized) {
@@ -313,6 +316,13 @@ export default class CwSearchResultWrapper extends LightningElement {
 	get url() {
 		return window.location.href;
 	}
+
+
+	goToLogin(event){
+		event.preventDefault();
+		this.dispatchEvent( new CustomEvent('gotologin'));
+	}
+	
 	goToPreregister() {
 		window.open(this.label.icg_registration_url, "_blank");
 	}

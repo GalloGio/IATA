@@ -34,7 +34,7 @@ public without sharing class CW_CapabilityConflictController {
 	 */
 	@AuraEnabled
 	public static string solveCapabilityConflicts(String handledCapabilitiesJSON) {
-		Savepoint sp = null;
+		Savepoint sp;
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 
 		List<ICG_Account_Role_Capability_Assignment__c> assignmentsToUpsert = new List<ICG_Account_Role_Capability_Assignment__c>();
@@ -94,7 +94,7 @@ public without sharing class CW_CapabilityConflictController {
 			List<Account_Role_Detail_Capability__c> capabilitiesToDelete = generateCapabilitiesToDelete(capabilitiesToHandle, capabilitiesReplacementMap.keySet());
 
 
-			sp = Database.setSavepoint();
+			sp = CW_DBTransactionHandler.setSavepoint();
 			if (!assignmentsToUpsert.isEmpty()) {
 				upsert assignmentsToUpsert;
 			}
@@ -117,9 +117,7 @@ public without sharing class CW_CapabilityConflictController {
 			res.message = 'Conflicting capabilities have been handled';
 			return JSON.serialize(res);
 		} catch (Exception exc) {
-			if (sp != null && !Test.isRunningTest()) {
-				Database.rollback(sp);
-			}
+			CW_DBTransactionHandler.doRollback(sp);
 			throw new AuraHandledException('Aura handled exception: ' + exc.getMessage() + ' Stacktrace: ' + exc.getStackTraceString());
 		}
 	}

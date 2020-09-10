@@ -176,12 +176,14 @@ public with sharing class CW_ICG_Acc_Role_Cap_Assignment_Handler {
 				contactIds.add(c.Id);
 			}
 
-			String subject = 'Some capabilities are in conflict and needs to be handled manually';
-			String body = subject;
-			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, station, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-
-			if (!notifications.isEmpty()) {
-				Database.insert(notifications);
+			if(!capabilitiesInConflict.isEmpty()){
+				String subject = 'Some capabilities are in conflict and needs to be handled manually';
+				String body = subject;
+				notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, station, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+	
+				if (!notifications.isEmpty()) {
+					Database.insert(notifications);
+				}
 			}
 		}
 	}

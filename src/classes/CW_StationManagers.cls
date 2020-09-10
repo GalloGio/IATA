@@ -9,8 +9,9 @@ public without sharing class CW_StationManagers {
 	public static string deleteAccountContactRole(String contactRoleDetailId, Boolean isCompanyAdmin){
         try {
             String status =  isCompanyAdmin ? 'Removed' : 'Pending for Removal';
-            ICG_Contact_Role_Detail__c cRd = [Select Id, ContactId__c, status__c, Account_Contact_Role__r.Contact__r.Email, ICG_Account_Role_Detail__r.Account_Role__r.Account__c from ICG_Contact_Role_Detail__c where Id=:contactRoleDetailId];  
-            cRd.status__c = status;   
+            ICG_Contact_Role_Detail__c cRd = [Select Id, ContactId__c, status__c, Contact_Role_Remove_Requestor__c, Account_Contact_Role__r.Contact__r.Email, ICG_Account_Role_Detail__r.Account_Role__r.Account__c from ICG_Contact_Role_Detail__c where Id=:contactRoleDetailId];  
+			cRd.status__c = status;
+			cRd.Contact_Role_Remove_Requestor__c = UserInfo.getUserId();
             upsert cRd;
 
             if(status.equals('Pending for Removal')){
@@ -32,10 +33,7 @@ public without sharing class CW_StationManagers {
                 if(whoEmailsCompanyAdmins.isEmpty()){
                     //Send remove confirmation to IATA
                     templateName = 'Approve_Reject_Remov_to_IATA_no_comp_adm';
-                    List<String> whoEmailsIATA = new List<String>();
-                    for(User u : CW_Utilities.getIATAStakeHoldersUsersList()){
-                        if(u.email != null) whoEmailsIATA.add(u.email);
-                    }
+                    List<String> whoEmailsIATA = CW_Utilities.getIATAStakeholdersEmails();
                     CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsIATA, false);
                 }
             }

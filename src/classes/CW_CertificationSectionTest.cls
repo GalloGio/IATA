@@ -28,8 +28,9 @@ public class CW_CertificationSectionTest {
 
 		IATA_ISO_Country__c country = CW_TestDataFactory.newISOCountry();
 		insert country;
-
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account acc = new Account(Name = 'Account01', IATA_ISO_Country__c = country.Id);
+		acc.RecordTypeId = agencyRT;
 		insert acc;
 
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(country.Id, acc.Id);

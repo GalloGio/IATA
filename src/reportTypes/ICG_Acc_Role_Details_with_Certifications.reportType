@@ -4,7 +4,7 @@
     <category>accounts</category>
     <deployed>true</deployed>
     <description>We have Account role detail information with certification information related</description>
-    <label>ICG Acc. Role Details with Certifications</label>
+    <label>ONE Source Acc. Role Details with Certifications</label>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
@@ -271,6 +271,6 @@
             <field>Nearest_Airport__c.Code__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
-        <masterLabel>ICG Account Role Details</masterLabel>
+        <masterLabel>ONE Source Account Role Details</masterLabel>
     </sections>
 </ReportType>

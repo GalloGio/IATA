@@ -102,7 +102,7 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 		// ------------------------------------------------------------------
 		Savepoint sp;
 		try {
-			sp = Database.setSavepoint();
+			sp = CW_DBTransactionHandler.setSavepoint();
 
 			// Set id for the station
 			stationDataToUpdate.Id = currentScope.Order_Product__r.Station__c;
@@ -116,7 +116,7 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 
 			currentScope.GxA_Integration_Status__c = GXA_STATUS_DONE;
 		} catch (Exception e) {
-			Database.rollback(sp);
+			CW_DBTransactionHandler.doRollback(sp);
 
 			currentScope.GxA_Integration_Status__c = GXA_STATUS_FAILED;
 			currentScope.GxA_Error_Message__c = e.getMessage();

@@ -154,12 +154,12 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>ICG GxA Integration Mapping</label>
+    <label>ONE Source GxA Integration Mapping</label>
     <nameField>
         <label>Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>ICG GxA Integration Mapping</pluralLabel>
+    <pluralLabel>ONE Source GxA Integration Mapping</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
@@ -734,7 +734,7 @@ It must be in the same order and the same number of items than the field &apos;G
                 <value>
                     <fullName>ICG_Account_Role_Detail__c</fullName>
                     <default>false</default>
-                    <label>ICG Account Role Detail</label>
+                    <label>ONE Source Account Role Detail</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

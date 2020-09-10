@@ -1,9 +1,16 @@
 <template>
 
     <div class="divPreRegistration hidden-sm">
-        <a href={label.icg_registration_url} class="text-white" target="_blank">
-            <img src={animatedBanner}></img>
-        </a>
+        <template if:true={isbeta}>
+            <a href={label.icg_registration_url} class="text-white" target="_blank">
+                <img src={animatedBanner}></img>
+            </a>
+        </template>
+        <template if:false={isbeta}>
+            <a onclick={goToLogin} class="text-white" >
+                <img src={animatedBanner}></img>
+            </a>
+        </template>
     </div>
 
     
@@ -157,14 +164,21 @@
         </div>
     </div>
     <div class="divPreRegistration m-auto visible-sm">
-        <a href={label.icg_registration_url} class="text-white" target="_blank">
-            <img src={animatedBanner}></img>
-        </a>
+        <template if:true={isbeta}>
+            <a href={label.icg_registration_url} class="text-white" target="_blank">
+                <img src={animatedBanner}></img>
+            </a>
+        </template>
+        <template if:false={isbeta}>
+            <a onclick={goToLogin} class="text-white" >
+                <img src={animatedBanner}></img>
+            </a>
+        </template>
     </div>
 
     <div class="panel-filter-result-advance">
         <div class="componentStyleBase-full pb-3" if:true={initialLoadPerformed}>
-            <c-cw-facility-equipment-infraestructure-wrapper applied-filters-count={searchSummaryListLength} label={label} lst-fei-categories={lstFEICategories}
+            <c-cw-facility-equipment-infraestructure-wrapper environment-variables={environmentVariables} applied-filters-count={searchSummaryListLength} label={label} lst-fei-categories={lstFEICategories}
                 onsectionsloaded={updateSectionLoaded} onselectcategory={setSelectedCategory} siteclass="searchbar">
             </c-cw-facility-equipment-infraestructure-wrapper>
         </div>

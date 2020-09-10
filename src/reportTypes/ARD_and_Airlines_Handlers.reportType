@@ -270,7 +270,7 @@
             <field>Account_Pending_Approval__c</field>
             <table>ICG_Account_Role_Detail__c</table>
         </columns>
-        <masterLabel>ICG Account Role Details</masterLabel>
+        <masterLabel>ONE Source Account Role Details</masterLabel>
     </sections>
     <sections>
         <columns>
@@ -318,6 +318,6 @@
             <field>ICG_ARD__c</field>
             <table>ICG_Account_Role_Detail__c.ICG_Account_Role_Detail_Relationships__r</table>
         </columns>
-        <masterLabel>ICG Account Role Detail Relationships</masterLabel>
+        <masterLabel>ONE Source Account Role Detail Relationships</masterLabel>
     </sections>
 </ReportType>

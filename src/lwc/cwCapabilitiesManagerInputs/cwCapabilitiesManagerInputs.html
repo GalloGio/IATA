@@ -89,15 +89,15 @@
 			<template if:false={isAuxFieldDefined}>
 				
 				<template if:false={isTypeDefined}>
-					<lightning-input if:true={isText} type="text" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
-					<lightning-textarea if:true={isTextArea} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-textarea>
+					<lightning-input if:true={isText} type="text" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
+					<lightning-textarea if:true={isTextArea} variant="label-hidden" class={getCssClass} data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-textarea>
 					<lightning-combobox if:true={isPicklist} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} options={getOptions} readonly={editMode} onchange={setValue} ></lightning-combobox>
 					<lightning-dual-listbox if:true={isMultiPicklist} name={getPropertyName} source-label="Available" size="4" selected-label="Selected" options={getOptions} value={getValue} disabled={editMode} onchange={setValue}></lightning-dual-listbox>
 				</template>
 
 				<template if:true={isTypeDefined}>
 					<template if:true={isTypeNumber}>
-						<lightning-input type="number" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-input>
+						<lightning-input type="number" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-input>
 					</template>
 
 					<template if:true={isTypeTrueFalse}>

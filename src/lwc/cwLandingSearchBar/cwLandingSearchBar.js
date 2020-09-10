@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from "lwc";
+import { LightningElement, track, wire, api } from "lwc";
 import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.getLocationsList";
 import getCompanyNamesList from "@salesforce/apex/CW_LandingSearchBarController.getCompanyNamesList";
 import getCertificationsList from "@salesforce/apex/CW_LandingSearchBarController.getCertificationsList";
@@ -6,6 +6,7 @@ import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
 import { loadScript } from "lightning/platformResourceLoader";
+
 
 import { checkIconType, createKey, prepareSearchParams, translationTextJS, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
 
@@ -17,8 +18,6 @@ export default class CwLandingSearchBar extends LightningElement {
 	searchtypelocation = "location";
 	searchtypecertification = "certification";
 	searchtypecompanyname = "companyname";
-
-	logoSearch = resources + "/img/one-source-visual-white.svg";
 
 	icons = resources + "/icons/";
 
@@ -55,6 +54,8 @@ export default class CwLandingSearchBar extends LightningElement {
 	@track tooltipToDisplay = "";
 	@track showWizardLink = false;
 
+	@api isbeta;
+
 	@wire(getURL, { page: "URL_ICG_ResultPage" })
 	wiredURLResultPage({ data }) {
 		if (data) {
@@ -62,6 +63,7 @@ export default class CwLandingSearchBar extends LightningElement {
 			this.searchReady = true;
 		}
 	}
+
 
 	connectedCallback() {
 		if (window.LZString === undefined) {
@@ -329,6 +331,7 @@ export default class CwLandingSearchBar extends LightningElement {
 				searchObject.value = filteredValues[0].info.keyName;
 			}
 		}
+
 		searchList.push(searchObject);
 
 		const urlParams = prepareSearchParams(searchList);
@@ -357,4 +360,12 @@ export default class CwLandingSearchBar extends LightningElement {
 		this.tooltipToDisplay = "";
 		this.tooltipObject = null;
 	}
+
+	get logoLanding(){
+		let logoLandingUrl = resources + "/img/one-source-visual-white-nb.svg";
+		if(this.isbeta){
+			logoLandingUrl = resources + "/img/one-source-visual-white.svg"
+		}
+		return logoLandingUrl;
+    }
 }

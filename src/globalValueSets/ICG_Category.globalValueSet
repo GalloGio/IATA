@@ -271,6 +271,6 @@
         <isActive>false</isActive>
         <label>Temperature_Controlled_Ground_Service_Equipment_In_Facility</label>
     </customValue>
-    <masterLabel>ICG Category</masterLabel>
+    <masterLabel>ONE Source Category</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

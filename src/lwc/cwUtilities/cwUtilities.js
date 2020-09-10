@@ -175,8 +175,8 @@ export function getSearchFieldWrapper(field, lstFields) {
 			field: "Account_Role_Detail_Capability__r." + field.name,
 			labels: field.label,
 			isOutOfQuery: true
-        };
-        
+		};
+		
 		if (field.options) {
 			row.value = "";
 			for (const option of field.options) {
@@ -687,6 +687,12 @@ export function saveComparisonListToLocalStorage(array){
 	window.localStorage.setItem(LOCAL_STORAGE_COMPARE_FIELD, JSON.stringify(filteredArray));
 }
 
-/*export function MAX_FILTERS_ALLOWED() {
-	return 25;
-}*/
+export function reachedLimit(environmentVariables, filtersCount) {
+	let limit = environmentVariables && environmentVariables.data && environmentVariables.data.max_filters_allowed__c ? environmentVariables.data.max_filters_allowed__c : 25;
+	return filtersCount >= limit;
+}
+
+export function reachedLimitWithAll(environmentVariables, array, count){
+	let potentialSelect = array ? array.reduce((acc, field) => field.selected ? ++acc : acc, 0) : 0;
+	return reachedLimit(environmentVariables, (count + potentialSelect));
+}

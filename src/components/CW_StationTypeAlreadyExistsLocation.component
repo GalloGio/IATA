@@ -6,7 +6,10 @@
         </p>
         <ul>
             <apex:repeat value="{!duplicatedStations}" var="station">
-                <li><apex:outputText value="{!station.Name}"/></li>
+                <li>
+					<apex:outputText rendered="{!station.Status__c == 'Approved'}" value="{!station.Name}"/>
+					<apex:outputText rendered="{!station.Status__c != 'Approved'}" value="{!station.Name + ' (' + station.Status__c + ')' }"/>
+				</li>
             </apex:repeat>           
         </ul>
     </apex:outputText>

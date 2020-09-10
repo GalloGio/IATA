@@ -33,16 +33,11 @@ export default class CwBecomeFacilityManagerContainer extends LightningElement {
             }
             this.requesting= true;
             becomeFacilityAdmin({companyId: this.userInfo.AccountId, facilityIds : facIds, contactId : this.userInfo.ContactId}).then(resp => {
-                let parsedRes = JSON.parse(resp);
-                if(parsedRes.success){
-                    this.modalImage = this.CHECKED_IMAGE;
-                    this.modalMessage = 'Thank you for your request. IATA will contact you shortly.';
-                    this.selectedFacilities = null;
-                    this.dispatchEvent( new CustomEvent('refresh'));
-                }else{
-                    this.modalMessage = parsedRes.message;
-                    this.modalImage = this.ERROR_IMAGE;
-                }
+				let parsedRes = JSON.parse(resp);
+				this.modalImage = this.CHECKED_IMAGE;
+				this.modalMessage = parsedRes.message;
+				this.selectedFacilities = null;
+				this.dispatchEvent( new CustomEvent('refresh'));
                 this.requesting= false;
                 this.showModal = true;
             }).catch(err => {

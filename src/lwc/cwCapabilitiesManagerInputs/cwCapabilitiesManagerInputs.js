@@ -162,6 +162,10 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		return this.values;
 	}
 
+	get getCssClass(){
+		return (this.editMode && this.propertyName !== 'equipment__c') ? 'disable-content' : '';
+	}
+
 	setValue(event){
 		let value = event.target.value;
 		let type = event.target.type;

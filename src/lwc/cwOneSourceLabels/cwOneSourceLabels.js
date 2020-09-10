@@ -5,6 +5,7 @@ import what_is_the_IATA_One_Source_text2 from "@salesforce/label/c.icg_what_is_t
 import do_you_manage_a_Cargo_Station from "@salesforce/label/c.icg_do_you_manage_a_Cargo_Station";
 import do_you_manage_a_Cargo_Station_text1 from "@salesforce/label/c.icg_do_you_manage_a_Cargo_Station_text1";
 import btn_register_now from "@salesforce/label/c.icg_btn_register_now";
+import btn_pre_register_now from "@salesforce/label/c.icg_btn_pre_register_now";
 import btn_learn_more from "@salesforce/label/c.icg_btn_learn_more";
 import about_IATA from "@salesforce/label/c.icg_about_IATA";
 import about_IATA_text1 from "@salesforce/label/c.icg_about_IATA_text1";
@@ -65,6 +66,7 @@ import strategicAirlines from "@salesforce/label/c.icg_strategic_partners";
 import strategicAirlines2 from "@salesforce/label/c.icg_strategic_partners2";
 import memberAirlinesModal from "@salesforce/label/c.icg_members_airlines_modal";
 import memberAirlinesModal2 from "@salesforce/label/c.icg_members_airlines_modal2";
+import memberAirlinesModal3 from "@salesforce/label/c.icg_members_airlines_modal3";
 import strategicAirlinesModal from "@salesforce/label/c.icg_strategic_partners_modal";
 import strategicAirlinesModal2 from "@salesforce/label/c.icg_strategic_partners_modal2";
 import icg_certification_of_excellence_description from "@salesforce/label/c.icg_certification_of_excellence_description";
@@ -350,7 +352,6 @@ import icg_join_now_popup_message31 from "@salesforce/label/c.icg_join_now_popup
 import icg_join_now_popup_message32 from "@salesforce/label/c.icg_join_now_popup_message32";
 import icg_join_now_popup_have_account from "@salesforce/label/c.icg_join_now_popup_have_account";
 import capability_management from "@salesforce/label/c.icg_capability_management";
-import icg_validation_programs from "@salesforce/label/c.icg_validation_programs";
 import icg_export_to_excel from "@salesforce/label/c.icg_export_to_excel";
 import icg_gridEmptyMessage from "@salesforce/label/c.icg_gridEmptyMessage";
 import icg_pilotInformation from "@salesforce/label/c.icg_pilotInformation";
@@ -419,6 +420,16 @@ import icg_one_process_at_time_msg from "@salesforce/label/c.icg_one_process_at_
 import icg_no_account_role_found_msg from "@salesforce/label/c.icg_no_account_role_found_msg";
 import find_info_on_IATA_ONE_Source from "@salesforce/label/c.icg_find_info_on_IATA_ONE_Source";
 import xlsx_icon from "@salesforce/label/c.icg_xlsx_icon";
+import icg_reset_capabilities_button from "@salesforce/label/c.icg_reset_capabilities_button";
+import icg_something_went_wrong_contact_iata from  "@salesforce/label/c.icg_something_went_wrong_contact_iata";
+import icg_something_went_wrong_emails from  "@salesforce/label/c.icg_something_went_wrong_emails";
+import icg_thank_you_iata_contact from  "@salesforce/label/c.icg_thank_you_iata_contact";
+import icg_header_capab_management from "@salesforce/label/c.icg_header_capab_management";
+import icg_header_delete_photo from "@salesforce/label/c.icg_header_delete_photo";
+import icg_header_remove_certi from "@salesforce/label/c.icg_header_remove_certi";
+import icg_capab_message_to_show from "@salesforce/label/c.icg_capab_message_to_show";
+
+icg_header_capab_management
 
 export function labels() {
 	let labels = {
@@ -428,6 +439,7 @@ export function labels() {
 		do_you_manage_a_Cargo_Station,
 		do_you_manage_a_Cargo_Station_text1,
 		btn_register_now,
+		btn_pre_register_now,
 		btn_learn_more,
 		about_IATA,
 		about_IATA_text1,
@@ -488,6 +500,7 @@ export function labels() {
 		strategicAirlines2,
 		memberAirlinesModal,
 		memberAirlinesModal2,
+		memberAirlinesModal3,
 		strategicAirlinesModal,
 		strategicAirlinesModal2,
 		icg_certification_of_excellence_description,
@@ -774,7 +787,6 @@ export function labels() {
 		icg_join_now_popup_ok_button,
 		icg_join_now_popup_have_account,
 		capability_management,
-		icg_validation_programs,
 		icg_export_to_excel,
 		icg_join_now_popup_ok_button,
 		icg_gridEmptyMessage,
@@ -843,7 +855,15 @@ export function labels() {
 		icg_one_process_at_time_msg,
 		icg_no_account_role_found_msg,
 		find_info_on_IATA_ONE_Source,
-		xlsx_icon
+		xlsx_icon,
+		icg_reset_capabilities_button,
+		icg_something_went_wrong_contact_iata,
+		icg_something_went_wrong_emails,
+		icg_thank_you_iata_contact,
+		icg_header_capab_management,
+		icg_header_delete_photo,
+		icg_header_remove_certi,
+		icg_capab_message_to_show
 	};
 
 	return labels;

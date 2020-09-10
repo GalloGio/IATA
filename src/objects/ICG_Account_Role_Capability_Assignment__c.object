@@ -153,13 +153,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>ICG Account Role Capability Assignment</label>
+    <label>OS Account Role Capability Assignment</label>
     <nameField>
-        <label>ICG Account Role Capability Assignement</label>
+        <label>OS Account Role Capability Assignement</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>ICG Account Role Capability Assignments</pluralLabel>
+    <pluralLabel>OS Account Role Capability Assignments</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
@@ -170,7 +170,7 @@
         <externalId>false</externalId>
         <label>Account Role Detail Capability</label>
         <referenceTo>Account_Role_Detail_Capability__c</referenceTo>
-        <relationshipLabel>ICG Account Role Capability Assignments</relationshipLabel>
+        <relationshipLabel>ONE Source Account Role Capability Assignments</relationshipLabel>
         <relationshipName>ICG_Account_Role_Capability_Assignments</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -181,7 +181,7 @@
         <fullName>ICG_Account_Role_Detail__c</fullName>
         <description>Shows the facility related.</description>
         <externalId>false</externalId>
-        <label>ICG Account Role Detail</label>
+        <label>ONE Source Account Role Detail</label>
         <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
         <relationshipName>ICG_Account_Role_Capability_Assignments</relationshipName>
         <relationshipOrder>0</relationshipOrder>
@@ -195,9 +195,9 @@
         <fullName>ICG_Capability_Assignment_Group__c</fullName>
         <description>Describes the capability assignment group linked</description>
         <externalId>false</externalId>
-        <label>ICG Capability Assignment Group</label>
+        <label>ONE Source Capability Assignment Group</label>
         <referenceTo>ICG_Capability_Assignment_Group__c</referenceTo>
-        <relationshipLabel>ICG Account Role Capability Assignments</relationshipLabel>
+        <relationshipLabel>ONE Source Account Role Capability Assignments</relationshipLabel>
         <relationshipName>ICG_Account_Role_Capability_Assignments</relationshipName>
         <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>

@@ -6,7 +6,7 @@ import pubsub from 'c/cwPubSub';
 import swipe from 'c/cwSwipe';
 import labels from 'c/cwOneSourceLabels';
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
-
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwBody extends LightningElement {
 
@@ -21,7 +21,11 @@ export default class CwBody extends LightningElement {
 		if (data) {
 			this.urlResultPage = data;
 		}
-	}
+    }
+
+    @wire(getEnvironmentVariables, {})
+    environmentVariables;
+
     //images
     logo = this.images + 'iata-logo.svg';
     btnyllw = this.images + 'btn-yllw.png';
@@ -201,9 +205,15 @@ export default class CwBody extends LightningElement {
         this.template.querySelector('.servicehome4r').innerHTML = this.label.service_home4;
 
       }
+
+      get isBetaOrg(){
+        return this.environmentVariables && this.environmentVariables.data && this.environmentVariables.data.Is_Beta_Org__c === true;
+    }
     
       @api
       showJoinNowPopUp(){
+        this.showMemberAirlines = false;
+        this.showStrategicAirlines = false;
         pubsub.fire("showJoinNowPopUp");
       }
 }

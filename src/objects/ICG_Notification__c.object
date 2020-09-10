@@ -153,13 +153,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>ICG Notification</label>
+    <label>ONE Source Notification</label>
     <nameField>
         <displayFormat>ICGNOTIF{000000}</displayFormat>
-        <label>ICG Notification Name</label>
+        <label>ONE Source Notification Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>ICG Notifications</pluralLabel>
+    <pluralLabel>ONE Source Notifications</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
@@ -222,9 +222,9 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Describes the certification linked</description>
         <externalId>false</externalId>
-        <label>ICG Certification</label>
+        <label>ONE Source Certification</label>
         <referenceTo>ICG_Certification__c</referenceTo>
-        <relationshipLabel>ICG Notifications</relationshipLabel>
+        <relationshipLabel>ONE Source Notifications</relationshipLabel>
         <relationshipName>ICG_Notifications</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -288,7 +288,7 @@
         <externalId>false</externalId>
         <label>Station</label>
         <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>ICG Notifications</relationshipLabel>
+        <relationshipLabel>ONE Source Notifications</relationshipLabel>
         <relationshipName>ICG_Notifications</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -367,7 +367,7 @@
         <externalId>false</externalId>
         <label>Target Contact</label>
         <referenceTo>Contact</referenceTo>
-        <relationshipLabel>ICG Notifications</relationshipLabel>
+        <relationshipLabel>ONE Source Notifications</relationshipLabel>
         <relationshipName>ICG_Notifications</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>

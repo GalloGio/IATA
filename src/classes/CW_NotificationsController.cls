@@ -12,9 +12,17 @@ public without sharing class CW_NotificationsController {
 	public static List<ICG_Notification__c> setNotificationCustom(String subject, String body,String status, List<String> contactList, ICG_Account_Role_Detail__c station, String recordType, Boolean doDbOperation){
 		List<ICG_Notification__c> inputList = new List<ICG_Notification__c>();
 
+		Set<String> handledRecipients = new Set<String>(contactList);
+
+		handledRecipients.remove('');
+		handledRecipients.remove('null');
+		handledRecipients.remove(null);
+
+		List<String> handledContacts = new List<String>(handledRecipients);
+
 		try
 		{
-			for(String contactId : contactList){
+			for(String contactId : handledContacts){
 				ICG_Notification__c notification = new ICG_Notification__c(Subject__c = subject, Body__c = body,Status__c = status, Short_Description__c = subject,Target_Contact__c = contactId, Station__c = station != null ? station.Id : null);
 				notification.RecordTypeId = recordType;
 				inputList.add(notification);

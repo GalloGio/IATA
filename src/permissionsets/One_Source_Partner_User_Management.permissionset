@@ -1380,6 +1380,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ICG_Contact_Role_Detail__c.Contact_Role_Remove_Requestor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ICG_Contact_Role_Detail__c.ICG_Account_Role_Detail__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1469,7 +1474,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>One Source Partner User Management</label>
+    <label>ONE Source Partner User Management</label>
     <license>Partner Community</license>
     <objectPermissions>
         <allowCreate>true</allowCreate>

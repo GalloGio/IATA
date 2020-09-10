@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Gse_In_Facility_2;2_to_8_C;15_to_25_C;2_to_25_C;Temp_Controlled_Rooms;Cold_Rooms_Freezer;Temperature_Controlled_Transport_Trucks</value>
+        <value xsi:type="xsd:string">Gse_In_Facility;2_to_8_C;15_to_25_C;2_to_25_C;Temp_Controlled_Rooms;Cold_Rooms_Freezer;Temperature_Controlled_Transport_Trucks</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

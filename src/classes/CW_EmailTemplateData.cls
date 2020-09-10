@@ -21,7 +21,7 @@ public without sharing class CW_EmailTemplateData {
  
 	public ICG_Contact_Role_Detail__c getContactRoleDetails(){
         if(contactRoleDetail == null && contactRoleDetailId != null){
-			contactRoleDetail = [SELECT Id, CreatedById, ICG_Account_Role_Detail__c, ContactId__c, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Contact_Role_Detail__c WHERE Id = :contactRoleDetailId LIMIT 1];
+			contactRoleDetail = [SELECT Id, CreatedById, ICG_Account_Role_Detail__c, Contact_Role_Remove_Requestor__c, ContactId__c, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Contact_Role_Detail__c WHERE Id = :contactRoleDetailId LIMIT 1];
 		} 
         return listHasValues(contactRoleDetail) ? contactRoleDetail[0] : null;
     }
@@ -44,7 +44,7 @@ public without sharing class CW_EmailTemplateData {
 		if(userRequestor == null){
 			String requestorId;
 			if(getContactRoleDetails() != null){
-				requestorId = contactRoleDetail[0].CreatedById;
+				requestorId = contactRoleDetail[0].Contact_Role_Remove_Requestor__c != null ? contactRoleDetail[0].Contact_Role_Remove_Requestor__c : contactRoleDetail[0].CreatedById;
 			}
 			else if(getOrderItemDetails() != null){
 				requestorId = orderItem[0].CreatedById;
@@ -129,7 +129,7 @@ public without sharing class CW_EmailTemplateData {
 	public List<ICG_Account_Role_Detail__c> getDuplicatedStations(){
 		List<ICG_Account_Role_Detail__c> duplicatedStations;
 		if (getStationDetails() != null){
-			duplicatedStations = [SELECT Name FROM ICG_Account_Role_Detail__c WHERE RecordType.DeveloperName =:station[0].RecordType.DeveloperName and Account_Role__c =:station[0].Account_Role__c and Id !=:station[0].Id];
+			duplicatedStations = [SELECT Name, Status__c FROM ICG_Account_Role_Detail__c WHERE RecordType.DeveloperName =:station[0].RecordType.DeveloperName and Account_Role__c =:station[0].Account_Role__c and Id !=:station[0].Id];
 		}
 		return listHasValues(duplicatedStations) ? duplicatedStations : null;
 	}

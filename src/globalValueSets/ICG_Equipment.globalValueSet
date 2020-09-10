@@ -191,14 +191,9 @@
         <label>Truck Parking</label>
     </customValue>
     <customValue>
-        <fullName>Loose_Cargo</fullName>
+        <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
         <default>false</default>
-        <label>Loose Cargo</label>
-    </customValue>
-    <customValue>
-        <fullName>ULD</fullName>
-        <default>false</default>
-        <label>ULD</label>
+        <label>Trucking Gate for Loose Cargo</label>
     </customValue>
     <customValue>
         <fullName>Delivery_Counter</fullName>
@@ -620,6 +615,11 @@
         <default>false</default>
         <label>Trucking Gates ULD</label>
     </customValue>
-    <masterLabel>ICG Equipment</masterLabel>
+    <customValue>
+        <fullName>Other_Screening_Equipment</fullName>
+        <default>false</default>
+        <label>Other_Screening_Equipment</label>
+    </customValue>
+    <masterLabel>ONE Source Equipment</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

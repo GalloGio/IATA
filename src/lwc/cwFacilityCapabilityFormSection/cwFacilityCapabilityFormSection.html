@@ -27,7 +27,7 @@
                         <template if:true={currentCategory.moreDetails} >
                             <template if:true={showModalFields}>
                                 <c-cw-intermediate-modal onclosemodal={closeModalFields} no-back-drop-grey=true>
-                                    <c-cw-fields-section applied-filters-count={appliedFiltersCount} siteclass={siteclass} current-category={currentCategory} label={label} onfieldupdate={onUpdateFields}></c-cw-fields-section>
+                                    <c-cw-fields-section environment-variables={environmentVariables} applied-filters-count={appliedFiltersCount} siteclass={siteclass} current-category={currentCategory} label={label} onfieldupdate={onUpdateFields}></c-cw-fields-section>
                                 </c-cw-intermediate-modal>
                             </template>
                         </template>

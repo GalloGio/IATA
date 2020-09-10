@@ -186,7 +186,7 @@
 &amp;&amp; TODAY() &lt; {!myVariable_old.Issue_Date__c}</expression>
     </formulas>
     <interviewLabel>ICG_Set_Active_Future_Certification-2_InterviewLabel</interviewLabel>
-    <label>ICG Set Active Future Certification</label>
+    <label>ONE Source Set Active Future Certification</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>

@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from "lwc";
+import { LightningElement, track, wire, api } from "lwc";
 import getResults from "@salesforce/apex/CW_SearchEngine.getInfo";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
@@ -6,6 +6,9 @@ import { loadScript } from "lightning/platformResourceLoader";
 import getCertifications from "@salesforce/apex/CW_ResultsPageSearchBarController.getCertifications";
 import { checkIfEmptySearch, getQueryParameters, compressQueryParams } from "c/cwUtilities";
 import labels from 'c/cwOneSourceLabels';
+import pubsub from 'c/cwPubSub';
+import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
+
 
 export default class CwResultsPageContainer extends LightningElement {
 	recordsPerPage = 20;
@@ -13,7 +16,6 @@ export default class CwResultsPageContainer extends LightningElement {
 	@track selectedPage = 1;
 
 	@track mapOptions = '{"zoom" : 6,"mapTypeControl": false, "minZoom" : 2, "maxZoom" : 16}';
-	@track mapOptionsCenter = { lat: 40.4165, lng: -3.70256 };
 	@track mapData;
 	@track companyTypeFilter;
 
@@ -100,6 +102,9 @@ export default class CwResultsPageContainer extends LightningElement {
 			});
 		}
 	}
+
+	@wire(getEnvironmentVariables, {})
+    environmentVariables;
 
 	hanldeFilterCountChange(event) {
 		this.filtercount = event.detail;
@@ -200,16 +205,13 @@ export default class CwResultsPageContainer extends LightningElement {
 					this.results = result ? JSON.parse(result) : null;
 					this.selectedPage = 1;
 					if (this.results) {
-						this.isLoading = false;
 						if (!this.initialLoadPerformed) {
 							this.initialLoadPerformed = true;
 						}
 						this.certimage = null;
 						this.generateMapRecords(searchWrapper, orderByOnAirport);
 
-						if(this.results.length < 1) {
-							this.paginateLogic();
-						}
+						this.paginateLogic();
 					} else {
 						this.mapData = null;
 						this.updateMapOptions();
@@ -450,6 +452,11 @@ export default class CwResultsPageContainer extends LightningElement {
 			}
 		}
 	}
+
+	get isBetaOrg(){
+        return this.environmentVariables && this.environmentVariables.data && this.environmentVariables.data.Is_Beta_Org__c === true;
+	}
+	
 	get isHybrid() {
 		return this.viewType === this.hybridview;
 	}
@@ -618,6 +625,10 @@ export default class CwResultsPageContainer extends LightningElement {
             this.mapOptions = '{"zoom": 6, "mapTypeControl":true, "minZoom" : 2, "maxZoom" : 16, "disableDefaultUI": false}';
 
 		}
-		this.mapOptionsCenter = { lat: 40.4165, lng: -3.70256 };
+	}
+
+	@api
+	showJoinNowPopUp(){
+	  pubsub.fire("showJoinNowPopUp");
 	}
 }

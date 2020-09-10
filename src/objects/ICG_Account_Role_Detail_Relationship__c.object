@@ -153,13 +153,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>ICG Account Role Detail Relationship</label>
+    <label>OS Account Role Detail Relationship</label>
     <nameField>
         <displayFormat>ARDRelationship-{000000000}}</displayFormat>
-        <label>ICG Account Role Detail Relationship</label>
+        <label>OS Account Role Detail Relationship</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>ICG Account Role Detail Relationships</pluralLabel>
+    <pluralLabel>OS Account Role Detail Relationships</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
@@ -171,7 +171,7 @@
         <externalId>false</externalId>
         <label>Handled Airline</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>ICG Account Role Detail Relationships</relationshipLabel>
+        <relationshipLabel>ONE Source Account Role Detail Relationships</relationshipLabel>
         <relationshipName>ICG_Account_Role_Detail_Relationships</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -181,9 +181,9 @@
         <fullName>ICG_Account_Role_Detail__c</fullName>
         <description>Master to facility</description>
         <externalId>false</externalId>
-        <label>ICG Account Role Detail</label>
+        <label>ONE Source Account Role Detail</label>
         <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>ICG Account Role Detail Relationships</relationshipLabel>
+        <relationshipLabel>ONE Source Account Role Detail Relationships</relationshipLabel>
         <relationshipName>ICG_Account_Role_Detail_Relationships</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -196,9 +196,9 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Lookup to Account Role Detail</description>
         <externalId>false</externalId>
-        <label>ICG ARD Linked</label>
+        <label>ONE Source ARD Linked</label>
         <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>ICG Account Role Detail Relationships (ICG ARD Linked)</relationshipLabel>
+        <relationshipLabel>ONE Source Account Role Detail Relationships (ICG ARD Linked)</relationshipLabel>
         <relationshipName>ICG_Account_Role_Detail_Relationships1</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>

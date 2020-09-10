@@ -3,12 +3,9 @@ public without sharing class CW_CreateFacilityController {
     @AuraEnabled
 	public static string createFacility(String accountId, String station, String logoInfo, String geoLocationInfo, String ardRelIds, String nearestAirportCode, Boolean isCompanyAdmin, Boolean isInternalUser, Boolean isNewAccount, String stationsToAdd, String stationsToRemove) {
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
-		Savepoint sp = null;
+		Savepoint sp;
 		try {
-
-			if (!Test.isRunningTest()) {
-				sp = Database.setSavepoint();
-			}
+			sp = CW_DBTransactionHandler.setSavepoint();
 
 			ICG_Account_Role_Detail__c ard = (ICG_Account_Role_Detail__c) JSON.deserialize(station, ICG_Account_Role_Detail__c.class);
 			ard.Account_Role__c = CW_CreateFacilityController.getAccountRoleForAccount(accountId);
@@ -42,17 +39,15 @@ public without sharing class CW_CreateFacilityController {
 			if(isInternalUser != true){
 				res = CW_CreateFacilityController.handleEmailsAndNotifications(isInternalUser, ard, companyAdmins, isCompanyAdmin, isNewAccount);
 
-				if(res.success == false && sp != null && !Test.isRunningTest()){
-					Database.rollback(sp);
+				if(res.success == false){
+					CW_DBTransactionHandler.doRollback(sp);
 				}
 			}else if(ard.Id != null){
 				res.success = true;
 			}
 			
 		} catch (Exception ex) {
-			if (sp != null && !Test.isRunningTest()) {
-				Database.rollback(sp);
-			}
+			CW_DBTransactionHandler.doRollback(sp);
 			res.success = false;
 			res.message = ex.getMessage();
 		}
@@ -78,13 +73,8 @@ public without sharing class CW_CreateFacilityController {
 			contactIds.add(c.Id);
 		}
 		if(hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)){
-			whoEmails = new List<String>();
+			whoEmails = CW_Utilities.getIATAStakeholdersEmails();
 			templateName = isNewAccount == true ? 'Approve_Reject_to_IATA_Admin_account' : 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
-			for(User u : CW_Utilities.getIATAStakeHoldersUsersList()){
-				if(u.email != null) {
-					whoEmails.add(u.email);
-				}
-			}
 		}else{
 			templateName = 'Approve_Reject_to_company_admin';
 		}
@@ -95,13 +85,12 @@ public without sharing class CW_CreateFacilityController {
 		String subject = 'New Station is pending approval';
 		String body = subject;
 		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-		if (submitted) {
-			res.success = true;
-			res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;
 		
-		} else {
-			res.success = false;
-			res.message = 'Something went wrong. Please contact IATA. Comment: Approval Process not triggered';
+		res.success = true;
+		res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;
+
+		if (submitted == false) {
+			res.message += ' ' + Label.icg_something_went_wrong_emails;
 		}
 
 		//Send email to requestor
@@ -133,7 +122,9 @@ public without sharing class CW_CreateFacilityController {
 	private static Id getNearestAirportForFacility(String nearestAirportCode) {
 		if(nearestAirportCode != null && nearestAirportCode != ''){
 			List<Airport_Detail__c> airportDetail = [Select Id from Airport_Detail__c where Code__c =:nearestAirportCode];
-			if (!airportDetail.isEmpty()) return airportDetail[0].Id;
+			if (!airportDetail.isEmpty()){
+				return airportDetail[0].Id;
+			} 
 		}
 
 		return null;
@@ -188,9 +179,9 @@ public without sharing class CW_CreateFacilityController {
 	@AuraEnabled
 	public static string createDummyCompany(String account, String opsHierarchy) {
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
-		Savepoint sp = null;
+		Savepoint sp;
 		try {
-			if (!Test.isRunningTest()) sp = Database.setSavepoint();
+			sp = CW_DBTransactionHandler.setSavepoint();
 			
 			Account acc = (Account) JSON.deserialize(account, Account.class);
 			acc.Reason_for_creation__c = 'Created by customer';
@@ -227,8 +218,7 @@ public without sharing class CW_CreateFacilityController {
 			res.success = true;
 			res.message = acc.id;
 		} catch (Exception ex) {
-			if (sp != null && !Test.isRunningTest())
-				Database.rollback(sp);
+			CW_DBTransactionHandler.doRollback(sp);
 			res.success = false;
 			res.message = ex.getMessage();
 		}
@@ -237,7 +227,6 @@ public without sharing class CW_CreateFacilityController {
 
 	@AuraEnabled
 	public static Map<String, Object> updateFacility(String jsonInput, String logoInfo, String geoLocationInfo) {
-		
 		Map<String, Object> returnValue = new Map<String, Object>();
 
 		try {			

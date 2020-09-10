@@ -1,5 +1,7 @@
 import { LightningElement, api, track, wire } from "lwc";
-import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
+import {
+	reachedLimit
+} from 'c/cwUtilities';
 
 export default class CwFieldsSection extends LightningElement {
 	@track initialCount;
@@ -32,8 +34,7 @@ export default class CwFieldsSection extends LightningElement {
 		}
 	}
 
-	@wire(getEnvironmentVariables, {})
-	environmentVariables;
+	@api environmentVariables;
 	
 	calculateInitialCount(){
 		this.initialCount = this.getSelectedCount();
@@ -151,6 +152,6 @@ export default class CwFieldsSection extends LightningElement {
 
 	get reachedLimit(){
 		let counter = this.isSearchBar ? this.appliedFiltersCount + (this.getSelectedCount() - this.initialCount) : this.appliedFiltersCount;
-		return counter >= this.environmentVariables.data.max_filters_allowed__c;
+		return reachedLimit(this.environmentVariables, counter);
 	}
 }

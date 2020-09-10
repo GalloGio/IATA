@@ -23,25 +23,32 @@ public without sharing class CW_RemoteValidationsController {
 		Response res = new Response();
 		res.success = true;
 		try{
-			PriceBookEntry pre = [select Id, PriceBook2Id from pricebookentry where product2.Smart_Facility_Remote_Validation__c = true and IsActive = true limit 1];
-			Order oOrder = new Order();
-			oOrder.Status = 'New';
-			oOrder.AccountId = [Select Account_Role__r.Account__c from ICG_Account_Role_Detail__c where Id =:stationId].Account_Role__r.Account__c;
-			oOrder.Pricebook2Id = pre.PriceBook2Id;
-			oOrder.EffectiveDate= date.today();
-			insert oOrder;
-			
-			OrderItem oit = new OrderItem(
-				PriceBookEntryId=pre.Id,
-				OrderId=oOrder.Id,
-				Quantity=1,
-				UnitPrice=0,
-				ServiceDate=Date.Today(),
-				Station__c = stationId
-			);
-			insert oit;
-			oit.IEC_Is_Paid__c = true;
-			update oit;
+			List<PriceBookEntry> preList = [select Id, PriceBook2Id from pricebookentry where product2.Smart_Facility_Remote_Validation__c = true and IsActive = true limit 1];
+			if(!preList.isEmpty()){
+				PriceBookEntry pre = preList[0];
+				Order oOrder = new Order();
+				oOrder.Status = 'New';
+				oOrder.AccountId = [Select Account_Role__r.Account__c from ICG_Account_Role_Detail__c where Id =:stationId].Account_Role__r.Account__c;
+				oOrder.Pricebook2Id = pre.PriceBook2Id;
+				oOrder.EffectiveDate= date.today();
+				insert oOrder;
+				
+				OrderItem oit = new OrderItem(
+					PriceBookEntryId=pre.Id,
+					OrderId=oOrder.Id,
+					Quantity=1,
+					UnitPrice=0,
+					ServiceDate=Date.Today(),
+					Station__c = stationId
+				);
+				insert oit;
+				oit.IEC_Is_Paid__c = true;
+				update oit;
+			}
+			else{
+				res.success = false;
+				res.errorMessage = Label.icg_no_remote_validation_product_found;
+			}
 		}catch (Exception ex){
 			res.success = false;
 			res.errorMessage = ex.getMessage();

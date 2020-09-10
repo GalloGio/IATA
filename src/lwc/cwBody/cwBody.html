@@ -7,7 +7,7 @@
             <!--ANCHOR DIV search-->
             <div id="search"></div>
             <div class="row-home-search searchid mt-0 mb-0">
-                <c-cw-Landing-Search-Bar label={label}></c-cw-Landing-Search-Bar>
+                <c-cw-Landing-Search-Bar label={label} isbeta={isBetaOrg}></c-cw-Landing-Search-Bar>
             </div>
             <div class="container">
                 <div class="col-12 col-no-padding bg-white">
@@ -33,14 +33,24 @@
                                
                             </div>
                             <div class="col-md-3 col-3-5">
-                                <c-cw-Text-Container title={label.do_you_manage_a_Cargo_Station} titlecolor='text-white'
-                                    text={label.do_you_manage_a_Cargo_Station_text1}
-                                    textcolor="text-white" button-text={label.icg_join_now}
-                                    button-color="btn btn-primary btn-blue link-button"
-                                    pass-button-click="true"
-                                    button-click={showJoinNowPopUp}
-                                    button-position="text-center" backgroundcolor="bg-blue" firstext="true">
-                                </c-cw-Text-Container>
+                                <template if:true={isBetaOrg}>
+                                    <c-cw-Text-Container title={label.do_you_manage_a_Cargo_Station} titlecolor='text-white'
+                                        text={label.do_you_manage_a_Cargo_Station_text1}
+                                        textcolor="text-white" button-text={label.btn_pre_register_now}
+                                        button-color="btn btn-primary btn-blue link-button"
+                                        button-position="text-center" backgroundcolor="bg-blue" firstext="true" button-url={label.icg_registration_url}>
+                                    </c-cw-Text-Container>
+                                </template>
+                                <template if:false={isBetaOrg}>
+                                    <c-cw-Text-Container title={label.do_you_manage_a_Cargo_Station} titlecolor='text-white'
+                                        text={label.do_you_manage_a_Cargo_Station_text1}
+                                        textcolor="text-white" button-text={label.icg_join_now}
+                                        button-color="btn btn-primary btn-blue link-button"
+                                        pass-button-click="true"
+                                        button-click={showJoinNowPopUp}
+                                        button-position="text-center" backgroundcolor="bg-blue" firstext="true">
+                                    </c-cw-Text-Container>
+                                </template>
                             </div>
                             <!--HIDDEN RESPONSIVE VERSION-->
                             <div class="col-md-2 hidden-sm banner-col col-no-padding-right">
@@ -60,14 +70,14 @@
                     <div class="visible-sm">
                         <section>
                             <div class="col-12 row-no-margin">
-                                <div class="col-6">
+                                <div class="col-6 "  onclick={showMemberAirlinesModal}>
                                     <div class="memberAirlines text-center">
                           
-                                        <a onclick={showMemberAirlines}><h3>{label.memberAirlines}</h3></a>
+                                        <a><h3>{label.memberAirlines}</h3></a>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="strategicPartners text-center" onclick={showStrategicAirlines}>
+                                    <div class="strategicPartners text-center" onclick={showStrategicAirlinesModal}>
                         
                                         <h3>{label.strategicAirlines}</h3>
                                     </div>
@@ -373,9 +383,14 @@
                 <h3 class="modaldiv">{label.memberAirlines} {label.memberAirlines2}</h3><hr class="yellow-underline-percentModal">
                 <div class="slds-col modaldiv"><p>{label.memberAirlinesModal}</p></div>
                 <div class="slds-col modaldiv"><p>{label.memberAirlinesModal2}</p></div>
+                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal3}</p></div>          
                 <div class="text-center slds-col modaldiv padding-buttons">
-                    <a class='text-white mt-0 btn btn-primary btn-primary btn-blue link-button' href={label.icg_registration_url} target="_blank" >{label.btn_register_now}</a>
-                    
+                    <template if:true={isBetaOrg}>
+                        <a class='text-white mt-0 btn btn-primary btn-primary btn-blue link-button' href={label.icg_registration_url} target="_blank" >{label.btn_pre_register_now}</a>
+                    </template>
+                    <template if:false={isBetaOrg}>
+                        <a class='text-white mt-0 btn btn-primary btn-primary btn-blue link-button' onclick={showJoinNowPopUp}>{label.btn_register_now}</a>
+                    </template>
                 </div>
             </div>
         </c-cw-intermediate-modal>
@@ -386,9 +401,33 @@
                 <h3 class="modaldiv">{label.strategicAirlines} {label.strategicAirlines2}</h3><hr class="blue-underline-percentModal">
                 <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal}</p></div>
                 <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal2}</p></div>
-                <div class="text-center slds-col slds-grid modaldiv padding-buttons">
-                    <div class="slds-col slds-p-horizontal_medium buttonRegistration"><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' href={label.icg_registration_url} target="_blank" >{label.btn_register_now}</a></div>
-                    <div class="slds-col slds-p-horizontal_medium buttonListed"><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' onclick={seeAllResults} >{label.icg_see_listed_companies}</a></div>
+                <div class="hidden-sm">
+                    <div class="text-center slds-col slds-grid modaldiv padding-buttons">
+                        <template if:true={isBetaOrg}>
+                            <div class="slds-col slds-p-horizontal_medium buttonRegistration"><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' href={label.icg_registration_url} target="_blank" >{label.btn_pre_register_now}</a></div>
+                        </template>
+                        <template if:false={isBetaOrg}>
+                            <div class="slds-col slds-p-horizontal_medium buttonRegistration"><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' onclick={showJoinNowPopUp}>{label.btn_register_now}</a></div>
+                        </template>
+                        <div class="slds-col slds-p-horizontal_medium buttonListed "><a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' onclick={seeAllResults} >{label.icg_see_listed_companies}</a></div>
+                    </div>
+                </div>
+                <div class="visible-sm">
+                    <div class="text-center col-12">
+                        <template if:true={isBetaOrg}>
+                            <div class="col-12">
+                                <a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' href={label.icg_registration_url} target="_blank" >{label.btn_pre_register_now}</a>
+                            </div>
+                        </template>
+                        <template if:false={isBetaOrg}>
+                            <div class="col-12">
+                                <a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' onclick={showJoinNowPopUp}>{label.btn_register_now}</a>
+                            </div>
+                        </template>
+                        <div class="col-12 mt-3">
+                            <a class='text-white mt-0 btn btn-primary btn-primary btn-yellow link-button' onclick={seeAllResults} >{label.icg_see_listed_companies}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </c-cw-intermediate-modal>

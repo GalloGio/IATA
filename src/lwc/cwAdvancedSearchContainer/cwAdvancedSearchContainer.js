@@ -2,7 +2,7 @@ import { LightningElement, wire, api, track } from "lwc";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import { loadScript } from "lightning/platformResourceLoader";
-import { removeFromArray, removeGenericItemFromList, prepareSearchObjectFEICategories, prepareSearchParams } from "c/cwUtilities";
+import { removeFromArray, removeGenericItemFromList, prepareSearchObjectFEICategories, prepareSearchParams, reachedLimit } from "c/cwUtilities";
 import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 let lstLocationTypes = {};
@@ -15,7 +15,6 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 	@api label;
 	urlResultPage;
 	@api modalContainerWidth;
-	@track allowSearch = true;
 	@track filtersApplied = [];
 
 	@wire(getURL, { page: "URL_ICG_ResultPage" })
@@ -95,7 +94,6 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 
 	updateAndCheckFiltersLimitReached() {
 		this.filtersApplied = this.getFilters();
-		this.allowSearch = this.filtersApplied.length < this.environmentVariables.data.max_filters_allowed__c;
 	}
 
 	get filtersAppliedLength(){
@@ -287,6 +285,10 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 			boxClass = "row-no-margin mt-6r";
 		}
 		return boxClass;
+	}
+
+	get allowSearch(){
+		return !reachedLimit(this.environmentVariables, this.filtersApplied.length);
 	}
 	
 }

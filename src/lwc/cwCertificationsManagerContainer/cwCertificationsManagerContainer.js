@@ -50,6 +50,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	@track newCertificationId;
 	@track groupId;
 	@track isCapabCertiMode=false;
+	@track renewMode=false;
 	@track jsonCertification = '';
 	initialized=false;
 
@@ -420,6 +421,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.groupId = event.detail.groupId;
 		let certId = newCertification.ICG_Certification__c;
 		this.isCapabCertiMode = false;
+		this.renewMode = true;
 		let selectedCertification = this.certificationsUsed.filter(cert => cert.id === certId);
 		this.certificationName = selectedCertification[0].name;
 		this.refreshCertificationsRenewed();
@@ -471,6 +473,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.groupId = event.detail.certificationId;
 		let certId = event.detail.certId;
 		this.isCapabCertiMode = true;
+		this.renewMode = false;
 		let selectedCertification = this.certificationsUsed.filter(cert => cert.id === certId);
 		this.certificationName = selectedCertification[0].name;
 

@@ -69,15 +69,10 @@ export default class CwHtmlTagGenerator extends LightningElement {
 
 		return value;
 	}
-    
-    get getValueSubTitle(){
-        if (this.auxType === ''){
-            return '';
-        }
-        else{
-            return this.getValue;
-        }
-    }
+	
+	get getValueSubTitle(){
+		return this.auxType === '' ? '' : this.getValue;
+	}
 
 	get getValueNumber() {
 		let value = this.item[this.propertyName]
@@ -250,9 +245,13 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		}
 
 		return this.getValue;
-    }
-    
-    get generateLabelTemperature(){
+	}
+	
+	get generateLabelTemperature(){
+
+		if(this.item && this.item.conflictLabel && this.item.isInvolvedInConflictProcess){
+			return this.item.conflictLabel;
+		}
 
 		if(this.isAuxTypeStandardTemperatureRanges || this.isAuxTypeCustomTemperatureRanges){
 			return this.label.room + " " + this.getRowIndexAddOne;

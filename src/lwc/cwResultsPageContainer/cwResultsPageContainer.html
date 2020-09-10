@@ -18,12 +18,8 @@
         <!--VISIBLE RESPONSIVE VERSION-->
         <div class="visible-sm fixed-filter">
             <div class="row">
-                <div class="col-6 inline-flex">
-                    <div class="col-3 align-self-center">
-                        <a class="p-1-5"><img src={sortblue} class="filter-grey-100 width-30"/></a>
-                    </div>
-                </div>
-                <div class="col-6 text-right">
+
+                <div class="col-6 offset-6 text-right">
                     <span class="big-blue-span">{titlefilter}</span>
                     <img width="50px" onclick={responsivefilter} src={openarrow}
                         class="img-fluid icoresponsivepalfilter cursor-pt p-2-5">
@@ -35,7 +31,7 @@
             <div class="col-lg-3 col-xl-2 col-md-4 col-sm-12 filter-panel filter-panel-hide">
                 <c-cw-results-page-search-bar certifications={certifications} onsearch={getRecordsFromEngine} 
                 onfiltercountchange ={hanldeFilterCountChange} onclicksearch={responsivefilter} initial-search={initialSearch} 
-                initial-load-performed={initialLoadPerformed} custom-location-filter={customLocationFilter}>
+                initial-load-performed={initialLoadPerformed} custom-location-filter={customLocationFilter} ongotologin={showJoinNowPopUp} isbeta={isBetaOrg}>
                 </c-cw-results-page-search-bar>
             </div>
 
@@ -100,14 +96,14 @@
                                 </div></div></div>
                         <!--END OF VIEW SELECTOR-->
                         <template if:true={renderMap}>
-                                <c-cw-google-map-container label={label} map-options={mapOptions} map-options-center={mapOptionsCenter} map-data={mapData} width="100%" height="600px" collapsed-height="300px"
+                                <c-cw-google-map-container label={label} map-options={mapOptions} map-data={mapData} width="100%" height="600px" collapsed-height="300px"
                                 collapsed-width ="100%" collapsed="true" company-type-filter={companyTypeFilter} onfilterbylatlong={filterByLatLong}></c-cw-google-map-container>
                         </template>        
                     <br />
                 </div>               
-                    <c-cw-search-result-wrapper lst-results={results} is-detailed={isDetailed} map-data={mapData} onfilterctype={setCompanyTypeFilter} is-loading={isLoading}></c-cw-search-result-wrapper>
+                    <c-cw-search-result-wrapper lst-results={results} is-detailed={isDetailed} map-data={mapData} onfilterctype={setCompanyTypeFilter} is-loading={isLoading} ongotologin={showJoinNowPopUp} isbeta={isBetaOrg}></c-cw-search-result-wrapper>
                 <template if:true={notLoadingAndHasValues}>
-                    <div class="text-center"><c-cw-pagination page-numbers={numberOfPages} selected-page={selectedPage} onnext={nextpage} onprevious={previouspage} ongotopage={gotopage} is-loading={isLoading}></c-cw-pagination></div>
+                    <div class="text-center mb-3"><c-cw-pagination page-numbers={numberOfPages} selected-page={selectedPage} onnext={nextpage} onprevious={previouspage} ongotopage={gotopage} is-loading={isLoading}></c-cw-pagination></div>
                 </template>                
             </div>
             

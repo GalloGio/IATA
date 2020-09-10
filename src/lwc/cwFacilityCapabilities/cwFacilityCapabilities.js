@@ -576,7 +576,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 										if(row.isAssigned){
 											row.isNotEditable = isDisabled;
 										}
-										if(row.isPeviouslyCertified && !isDisabled){
+										if(row.isAssigned && !isDisabled){
 											
 											let newCapabilityRow = {
 												position: m.toString(),
@@ -617,6 +617,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 			else{
 				this.listAddedRows = tempAddedRows;
 			}
+			
 			// Show or not save and cancel bar.
 			const newEvent = new CustomEvent("saveaction", {
 				detail: {
@@ -791,25 +792,25 @@ export default class CwFacilityCapabilities extends LightningElement {
 			let result = JSON.parse(res);
 			if(result.success)
 			{				
-				this.getCapabilitiesFromAccountRoleDetailId(this.recordId);
+				// Set to false save action.
+				const newEvent = new CustomEvent("savesuccessful", {
+					detail: {
+						data: false
+					}
+				});
+				this.dispatchEvent(newEvent);
 			}
 			else
 			{
 				this.showToast("Error", result.message, "error");
 			}
 
-			this._actionSave=false;
-			// Set to false save action.
-			const newEvent = new CustomEvent("savesuccessful", {
-				detail: {
-					data: false
-				}
-			});
-			this.dispatchEvent(newEvent);
+			this._actionSave=false;		
 			
 		})
 		.finally(() => {
 			this.isLoading = false;
+			
 		});
 	}
 }

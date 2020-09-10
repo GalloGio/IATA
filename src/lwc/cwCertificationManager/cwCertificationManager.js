@@ -40,10 +40,10 @@ export default class CwCertificationManager extends LightningElement {
 	mapForCertifiID;
 
 	@track showConfirmationModal = false;
-	@track headerModal = this.label.edit_capabilities_certification;
+	@track headerModal = "";
 	@track messageModal="";
-	messageModalConfirm = this.label.are_you_sure + "?";
-	messageModalActivate = this.label.are_your_sure_you_want_replace_current_certification + "?";
+	messageModalConfirm = "";
+	messageModalActivate = "";
 
 	actionToExecute = {
 		action:'',
@@ -138,8 +138,11 @@ export default class CwCertificationManager extends LightningElement {
 	}
 
 	renderedCallback() {
-
 		if (!this.initialized) {
+			this.headerModal = this.label.edit_capabilities_certification;
+			this.messageModalConfirm = this.label.are_you_sure + "?";
+			this.messageModalActivate = this.label.are_your_sure_you_want_replace_current_certification + "?";
+			
 			this.listGroupToUpdate = [];
 			this.refreshData = false;
 			this.initialized = true;

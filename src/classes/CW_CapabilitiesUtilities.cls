@@ -413,12 +413,14 @@ public with sharing class CW_CapabilitiesUtilities {
             }
         }
 
-        if (categoryFound != null && (Boolean) categoryFound.get(CW_CapabilitiesUtilities.HAS_ROWS) == false) {
-            categoryFound.put(CW_CapabilitiesUtilities.HAS_ROWS, true);
-        }
+        if (categoryFound != null ) {
+            if((Boolean) categoryFound.get(CW_CapabilitiesUtilities.HAS_ROWS) == false){
+                categoryFound.put(CW_CapabilitiesUtilities.HAS_ROWS, true);
+            }
 
-        categoryFound.put('isMultirecord', isMultiRecordCapabilities);        
-        categoryFound.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
+            categoryFound.put('isMultirecord', isMultiRecordCapabilities);        
+            categoryFound.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
+        }        
 
 		return categoryFound;
     }
@@ -449,8 +451,10 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentObject.put('requiredFields', requiredFields);
 
 		// Set processed info.
-		currentObject.put('id', currentDetailId);
-		currentObject.put('equipment__c', mapEquipments.get(currentDetail.Equipment__c.toLowerCase()).getLabel());
+        currentObject.put('id', currentDetailId);
+        if(mapEquipments.get(currentDetail.Equipment__c.toLowerCase()) != null){
+            currentObject.put('equipment__c', mapEquipments.get(currentDetail.Equipment__c.toLowerCase()).getLabel());
+        }
 		currentObject.put('equipment_value', currentDetail.Equipment__c);
 		currentObject.put('certifications', certifications);
 		currentObject.put('isPeviouslyCertified', !certifications.isEmpty());

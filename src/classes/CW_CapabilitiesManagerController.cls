@@ -208,8 +208,9 @@ public without sharing class CW_CapabilitiesManagerController {
 						);
 						currentObject.put('isPermissionByDepartment',true);
 						capabilityGroupRowsFound.add(currentObject);
-					}
-					categoryFound.put('templateFields', currentObject);
+
+						categoryFound.put('templateFields', currentObject);
+					}					
 				}
 			}
 		}
@@ -511,6 +512,29 @@ public without sharing class CW_CapabilitiesManagerController {
 	}
 
 	/**
+	 * @description		edit capabilities for capabilities certifications
+	 * @param			List<Object> - List added rows
+	 * @return			String
+	 */
+	@AuraEnabled
+	public static String editAllCapabilitiesFromStation(List<Object> listAddedRows, List<Object> listDeleteRows){
+		ResponseBody res = new ResponseBody();
+		try{
+			if(listDeleteRows.size()>0){
+				res.success = removeCapabilities(listDeleteRows);
+			}
+			createCapabilities(listAddedRows, false);
+			res.success = true;
+
+		}
+		catch (Exception e) {
+			res.success = false;
+			res.message = e.getMessage();
+		}
+		return JSON.serialize(res);
+	}
+
+	/**
 	 * @description		create relationships for new capabilities certifications
 	 * @param			certiId - Account Role Detail Certi Id
 	 * @return			ICG_Capability_Assignment_Group__c Id
@@ -645,6 +669,40 @@ public without sharing class CW_CapabilitiesManagerController {
 
 		return result;
 	}
+
+	/**
+	 * @description		delete assigment previous of the group
+	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
+	 * @return			Boolean true or false
+	 */
+	private static Boolean removeCapabilities(List<Object> capabilitiesList) {
+		Boolean result = true;
+		
+		List<ICG_Account_Role_Capability_Assignment__c> listCapWrapper = new List<ICG_Account_Role_Capability_Assignment__c>();
+		Set<Id> groupListId = new Set<Id>();
+		Set<Id> capabRoleListId = new Set<Id>();
+
+		//Extract all capabilities from input
+		for (Object capability : capabilitiesList) {
+			ICG_Account_Role_Capability_Assignment__c c = (ICG_Account_Role_Capability_Assignment__c) JSON.deserialize(JSON.serializePretty(capability), ICG_Account_Role_Capability_Assignment__c.class);
+			groupListId.add(c.ICG_Capability_Assignment_Group__c);
+			capabRoleListId.add(c.Account_Role_Detail_Capability__c);
+		}
+
+		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Id FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Capability_Assignment_Group__c IN : groupListId AND Account_Role_Detail_Capability__c IN : capabRoleListId];
+
+		try {
+			if(assigmentList.size() > 0){
+				delete assigmentList;
+			}
+
+		} catch (Exception e) {
+			result = false;
+		}
+
+		return result;
+	}
+	
 
 	/**
 	 * @description		assign Capability with Group

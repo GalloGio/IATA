@@ -496,15 +496,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		})
 			.then(resp => {
 				let parsedRes = JSON.parse(resp);
-				if (parsedRes.success) {
-					this.modalMessage = parsedRes.message;
-					this.modalImage = this.CHECKED_IMAGE;
-					this.refreshInfo();
-				} else {
-					this.modalMessage = parsedRes.message;
-					this.modalImage = this.ERROR_IMAGE;
-					this.loaded = true;
-				}
+				this.modalMessage = parsedRes.message;
+				this.modalImage = this.CHECKED_IMAGE;
+				this.refreshInfo();
 				this.showModal = true;
 			})
 			.catch(err => {
@@ -524,7 +518,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			.then(resp => {
 				let parsedRes = JSON.parse(resp);
 				if (parsedRes.success) {
-					this.modalMessage = "Thank you for your request. IATA will contact you shortly.";
+					this.modalMessage = this.label.icg_thank_you_iata_contact;
 					this.modalImage = this.CHECKED_IMAGE;
 					this.refreshInfo();
 				} else {
@@ -751,6 +745,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	handleCapabilityDataLoaded(event) {
 		this.facilityToCompare = JSON.parse(JSON.stringify(this.facility));
 		this.facilityToCompare.capabilities = event.detail.data;
+		this.sendActionToSave=false;
 	}
 
 	shareButton = false;
@@ -875,7 +870,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	handleSaveSuccesfull(event){
-		this.sendActionToSave = event.detail.data;
+		this.sendActionToSave = false;
 	}
 
 	handleSaveAction(event){
@@ -888,7 +883,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	get isSendActionToSave(){
 		let actionSave = {
-			isSave: this.sendActionToSave === true,
+			isSave: this.sendActionToSave,
 			listRow : this.listCapabilitiesRow
 		}
 		return actionSave;

@@ -274,4 +274,18 @@ public class CW_CapabilitiesManagerControllerTest {
 		
 		Test.stopTest();
 	}
+
+	@isTest
+	public static void editAllCapabilitiesFromStationCatchTest() {
+
+		Test.startTest();
+		
+		String response = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(null,null);
+		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		system.assertEquals(false, resp.success, 'editAllCapabilitiesFromStationCatchTest error');
+		
+		
+		Test.stopTest();
+	}
+	
 }

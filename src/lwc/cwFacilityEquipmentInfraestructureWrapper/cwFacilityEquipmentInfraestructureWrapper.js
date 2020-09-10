@@ -15,6 +15,7 @@ export default class CwFacilityEquipmentInfraestructureWrapper extends Lightning
 	@api siteclass = "advance";
 	@api label;
 	@api appliedFiltersCount;
+	@api environmentVariables;
 
 	@track tooltipObject;
 	@track error;
