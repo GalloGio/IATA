@@ -443,6 +443,12 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <default>false</default>
                     <label>Travel Service Intermediaries-TSI (USA Only)</label>
                 </value>
+                <value>
+                    <fullName>Handling Agent</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Handling Agent</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>
@@ -1371,6 +1377,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airport Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CASS Associate</fullName>
                 <default>false</default>
             </values>
@@ -1380,10 +1390,6 @@ IF(OR(
             </values>
             <values>
                 <fullName>GSA General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Handling Agent</fullName>
                 <default>false</default>
             </values>
             <values>

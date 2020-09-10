@@ -233,16 +233,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Make_SIS_Super_User</fullName>
-        <description>Makes SIS Contact Type = SIS Super User when Invoicing Contact is flagged as TRUE</description>
-        <field>SIS_Contact_Type__c</field>
-        <literalValue>Super User</literalValue>
-        <name>Make SIS Super User</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Marketing_Opt_out</fullName>
         <field>Marketing_Communications_Opt_in__c</field>
         <literalValue>0</literalValue>
@@ -570,20 +560,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <value>True</value>
         </criteriaItems>
         <description>Automatically Opt out all Key contact</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Mark Invoicing contact as SIS Super User</fullName>
-        <actions>
-            <name>Make_SIS_Super_User</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.Invoicing_Contact__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
