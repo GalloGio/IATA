@@ -823,9 +823,64 @@
                     <label>New</label>
                 </value>
                 <value>
+                    <fullName>Airline Distribution</fullName>
+                    <default>false</default>
+                    <label>Airline Distribution</label>
+                </value>
+                <value>
+                    <fullName>Airport Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Airport Infrastructure</label>
+                </value>
+                <value>
                     <fullName>Cargo</fullName>
                     <default>false</default>
                     <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>DGR</fullName>
+                    <default>false</default>
+                    <label>DGR</label>
+                </value>
+                <value>
+                    <fullName>Economics &amp; Traffic Results</fullName>
+                    <default>false</default>
+                    <label>Economics &amp; Traffic Results</label>
+                </value>
+                <value>
+                    <fullName>Finance-and-Accounting</fullName>
+                    <default>false</default>
+                    <label>Finance-and-Accounting</label>
+                </value>
+                <value>
+                    <fullName>Legal &amp; Regulatory</fullName>
+                    <default>false</default>
+                    <label>Legal &amp; Regulatory</label>
+                </value>
+                <value>
+                    <fullName>Ground Operations</fullName>
+                    <default>false</default>
+                    <label>Ground Operations</label>
+                </value>
+                <value>
+                    <fullName>Operations</fullName>
+                    <default>false</default>
+                    <label>Operations</label>
+                </value>
+                <value>
+                    <fullName>Passenger</fullName>
+                    <default>false</default>
+                    <label>Passenger</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
                 </value>
                 <value>
                     <fullName>Coding</fullName>
@@ -858,11 +913,6 @@
                     <label>Finance</label>
                 </value>
                 <value>
-                    <fullName>Finance-and-Accounting</fullName>
-                    <default>false</default>
-                    <label>Finance-and-Accounting</label>
-                </value>
-                <value>
                     <fullName>Forecasts-and-Statistic</fullName>
                     <default>false</default>
                     <label>Forecasts-and-Statistic</label>
@@ -871,11 +921,6 @@
                     <fullName>Law-and-Regulations</fullName>
                     <default>false</default>
                     <label>Law-and-Regulations</label>
-                </value>
-                <value>
-                    <fullName>Passenger</fullName>
-                    <default>false</default>
-                    <label>Passenger</label>
                 </value>
                 <value>
                     <fullName>Regulations</fullName>
@@ -891,11 +936,6 @@
                     <fullName>Scheduling</fullName>
                     <default>false</default>
                     <label>Scheduling</label>
-                </value>
-                <value>
-                    <fullName>Security</fullName>
-                    <default>false</default>
-                    <label>Security</label>
                 </value>
                 <value>
                     <fullName>Standards-and-Recommended-Practices</fullName>
@@ -921,46 +961,6 @@
                     <fullName>Baggage</fullName>
                     <default>false</default>
                     <label>Baggage</label>
-                </value>
-                <value>
-                    <fullName>Airline Distribution</fullName>
-                    <default>false</default>
-                    <label>Airline Distribution</label>
-                </value>
-                <value>
-                    <fullName>Airport Infrastructure</fullName>
-                    <default>false</default>
-                    <label>Airport Infrastructure</label>
-                </value>
-                <value>
-                    <fullName>DGR</fullName>
-                    <default>false</default>
-                    <label>DGR</label>
-                </value>
-                <value>
-                    <fullName>Economics &amp; Traffic Results</fullName>
-                    <default>false</default>
-                    <label>Economics &amp; Traffic Results</label>
-                </value>
-                <value>
-                    <fullName>Legal &amp; Regulatory</fullName>
-                    <default>false</default>
-                    <label>Legal &amp; Regulatory</label>
-                </value>
-                <value>
-                    <fullName>Ground Operations</fullName>
-                    <default>false</default>
-                    <label>Ground Operations</label>
-                </value>
-                <value>
-                    <fullName>Operations</fullName>
-                    <default>false</default>
-                    <label>Operations</label>
-                </value>
-                <value>
-                    <fullName>Safety</fullName>
-                    <default>false</default>
-                    <label>Safety</label>
                 </value>
             </valueSetDefinition>
             <valueSettings>
