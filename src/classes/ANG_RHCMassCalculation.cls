@@ -228,7 +228,6 @@ public class ANG_RHCMassCalculation {
 		public decimal ANG_RHC_Amount_ProvisionalTMP	{get; set;}
 		public decimal ANG_RHC_Amount_Forecasted	{get; set;}
 		
-		public string Tier	{get; set;}
 		public string Forecaster_Tier	{get; set;}
 		
 		private Agent(ANG_RHC_Information__c r){
@@ -242,7 +241,6 @@ public class ANG_RHCMassCalculation {
 			this.ANG_RHC_Amount_Provisional = null;
 			this.ANG_RHC_Amount_ProvisionalTMP = null;
 			this.ANG_RHC_Amount_Forecasted = null;
-			this.Tier = null;
 			this.Forecaster_Tier = null;
 		}
 	}
@@ -317,7 +315,6 @@ public class ANG_RHCMassCalculation {
 			list<ResponseWrapper> lsWrapper = (list<ResponseWrapper>)JSON.deserialize(theSerializedResponse, list<ResponseWrapper>.class);
 
 			for(ResponseWrapper wr:lsWrapper){
-				system.debug('DTULLO ProvisionalRMEWrapper --> ' + wr);
 				if(wr.RHCId!='' && agents.containsKey(wr.RHCId)){
 					agent ag = agents.get(wr.RHCId);
 
