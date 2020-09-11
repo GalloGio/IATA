@@ -228,7 +228,7 @@ public class ANG_RHCMassCalculation {
 		public decimal ANG_RHC_Amount_ProvisionalTMP	{get; set;}
 		public decimal ANG_RHC_Amount_Forecasted	{get; set;}
 		
-		public string Forecaster_Tier	{get; set;}
+		public string Forecasted_Tier	{get; set;}
 		
 		private Agent(ANG_RHC_Information__c r){
 			this.selected = false;
@@ -241,7 +241,7 @@ public class ANG_RHCMassCalculation {
 			this.ANG_RHC_Amount_Provisional = null;
 			this.ANG_RHC_Amount_ProvisionalTMP = null;
 			this.ANG_RHC_Amount_Forecasted = null;
-			this.Forecaster_Tier = null;
+			this.Forecasted_Tier = null;
 		}
 	}
 
@@ -287,6 +287,8 @@ public class ANG_RHCMassCalculation {
 					update theRHC;
 				}
 				
+				oResponse.Forecasted_Tier = theRHC.Forecasted_Tier__c;
+
 				oResponse.bIsSuccess = true;
 				oResponse.ErrorDescription = '';
 			}catch(Exception e){
@@ -294,7 +296,6 @@ public class ANG_RHCMassCalculation {
 				oResponse.ErrorDescription = e.getMessage();
 			}
 		}
-
 		return oResponse;
 	}
 
@@ -307,6 +308,7 @@ public class ANG_RHCMassCalculation {
 		public string RHCId {get; set;}
 		public decimal ANG_RHC_Amount_Forecasted {get; set;}
 		public decimal ANG_RHC_Amount_Provisional		{get; set;}
+		public string Forecasted_Tier		{get; set;}
 	}
 
 	public void AfterProcess(){
@@ -321,6 +323,7 @@ public class ANG_RHCMassCalculation {
 					ag.bIsSuccess = wr.bIsSuccess;
 					ag.ANG_RHC_Amount_Forecasted = wr.ANG_RHC_Amount_Forecasted;
 					ag.ANG_RHC_Amount_Provisional = wr.ANG_RHC_Amount_Provisional;
+					ag.Forecasted_Tier = wr.Forecasted_Tier;
 					ag.ErrorDescription = wr.ErrorDescription;
 					
 					if(ag.rhcInfo.ANG_ConsumedRHC__c == null || ag.rhcInfo.ANG_ConsumedRHC__c ==0){
