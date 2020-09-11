@@ -52,6 +52,8 @@
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
+            isPassAirline="{!isPassAirline}"
+            managePASS="{!managePASS}"
             isSIS="{!isSISMember}" />
         
         <apex:form id="APChangesForm" styleClass="inline">
@@ -118,7 +120,7 @@
                         <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
                     </apex:pageBlockSectionItem>
 
-                    <tr><td colspan="4" class="aplabel">Contact person responsible for this {!strLoB} {!IF(strChangeType='Minor database changes','change request application','change of bank account details.')}</td></tr>
+                    <tr><td colspan="4" class="aplabel">Contact person responsible for this {!IF(strChangeType='Minor database changes','change request application','change of bank account details.')}</td></tr>
                      
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
@@ -148,7 +150,7 @@
                 </apex:pageBlockSection>
                 <br/>
 
-                <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{!strChangeType='Minor database changes'}">
+                <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{! !isPassAirline && strChangeType='Minor database changes'}">
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Type of change requested" styleclass="ap-required"/>
                         <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="refreshForm();" style="width:80%;" styleClass="makeRows">

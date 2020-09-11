@@ -191,7 +191,7 @@ public class ISSP_AP_FieldLists {
 	};
 
 	public static final Map<String,String> changeMandatoryFields = new Map<String,String>{
-			'Desired_commencment_date__c'				=> 'DKesired commencement date',
+			'Desired_commencment_date__c'				=> 'Desired commencement date',
 			'Type_of_Change_Requested__c'				=> 'Type of change requested',
 			'Contact_Resp_Job_Title__c'     			=> 'Contact Job Title',
 			'Contact_Resp_F_Name__c'                    => '',
@@ -284,4 +284,12 @@ public class ISSP_AP_FieldLists {
 		'Who_requested_to_join_TOU__c' => ''
 	};
 
+	public static final Map<String,String> changePASSMandatoryFields = new Map<String,String>{
+			'Contact_Resp_Salutation__c' => '',
+			'Contact_Resp_F_Name__c' => '',
+			'Contact_Resp_Job_Title__c' => '',
+			'Contact_Resp_L_Name__c' => '',
+			'Contact_Resp_Email__c' => '',
+			'Contact_Resp_Phone__c' => ''
+	};
 }

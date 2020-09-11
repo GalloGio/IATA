@@ -76,8 +76,7 @@
                                 <apex:pageBlock mode="edit" >
                                     <apex:pageBlockButtons location="bottom" style="padding-left:100px" >
                                         <apex:outputPanel id="cmdButtonsBlock">
-                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" onclick="if(!confirm('{!$Label.ISSP_AP_PASS_Withdraw}')){return false};" action="{!withdrawCountries}" rendered="{!changePass}" value="{!$Label.CSP_Continue}" status="WaitingStatus"  reRender="strmessages,countryListPassToWithdraw"/>
-                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" rendered="{!!changePass}" value="{!$Label.CSP_Continue}" />&nbsp;
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" value="{!$Label.CSP_Continue}" />&nbsp;
                                             <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
                                         </apex:outputPanel>
                                     </apex:pageBlockButtons>
@@ -99,7 +98,7 @@
                                             </apex:actionRegion>
                                         </div>
                                     </div>
-                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && isGSSAUser== true))}">
+                                    <apex:outputPanel id="optional-form-groups" rendered="{!(strOperationType=='BSP' || strOperationType=='CASS Export' || strOperationType=='CASS Import' || (strOperationType=='PASS' && (isGSSAUser== true || APprocess=='bnk' || APprocess=='chg')))}">
                                         <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
                                             <label for="countryconcerned" class="col-sm-2 control-label">* Country / Territory</label>
                                             <div class="col-sm-10">
@@ -121,7 +120,7 @@
                                     <script>$('.ich-type-select').select2({width : 'resolve'});</script>
 
                                     <apex:outputPanel >
-                                        <div class="form-group" style="display:{!IF(strOperationType == 'PASS' && APprocess!='chg' && isGSSAUser!= true, 'block','none')}">
+                                        <div class="form-group" style="display:{!IF(strOperationType == 'PASS' && APprocess!='chg' && APprocess!='bnk' && isGSSAUser!= true, 'block','none')}">
                                             <label for="countryconcernedPASS" class="col-sm-2 control-label">* Joining Countries</label>
                                             <!--<div id="loadingCountryListPASSMessage">
                                                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
@@ -137,25 +136,6 @@
                                             </div>
                                         </div>
                                     </apex:outputPanel>
-                                    <apex:outputPanel >
-                                        <div  class="form-group" style="display:{!IF(strOperationType == 'PASS' && APprocess=='chg' && isGSSAUser!= true, 'block','none')}">
-                                            <label for="countryconcernedPASSWithdraw" class="col-sm-2 control-label">* Active Countries</label> <!-- Withdraw -->
-                                            <!--<div id="loadingCountryListPASSMessageWithdraw">
-                                                <!--<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                                                Loading Countries...
-                                            </div> -->
-                                            <apex:outputPanel id="countryListPassToWithdraw"> <!-- ToWithdraw -->
-                                            <div  class="col-sm-10">
-                                                <c:MultiselectPicklist leftLabel="Active Countries"
-                                                leftOptions="{!activePassCountries}"
-                                                rightLabel="Countries to withdraw"
-                                                rightOptions="{!withdrawPassCountries}"
-                                                size="10"
-                                                width="150px"/>
-                                            </div>
-                                         </apex:outputPanel>
-                                        </div>
-                                    </apex:outputPanel>
 
                                     <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
                                         <div class="form-group">
@@ -168,9 +148,6 @@
                                             </div>
                                         </div>
                                     </apex:outputPanel>
-
-
-
 
                                     <div class="form-group">
                                         <label for="description" class="col-sm-2 control-label">Description</label>

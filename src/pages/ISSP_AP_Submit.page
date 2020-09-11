@@ -107,7 +107,7 @@
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=Please upload the completed Bank Mandates.&reqIdentifier=Bank_Mandate"/>
                     </apex:outputPanel>
 
-                    <apex:pageBlockSection title="{!$Label.ISSP_PASS_Participation_AgreementTerms}" columns="1" collapsible="false" rendered="{!isPassAirline || managePASS}">
+                    <apex:pageBlockSection title="{!$Label.ISSP_PASS_Participation_AgreementTerms}" columns="1" collapsible="false" rendered="{! (isPassAirline || managePASS) && strAreaType=='Airline Joining'}">
                         <div class="aplabel" style="font-weight:bold;"> {!$Label.ISSP_PASS_Download_Documents}</div>
                         <div id="bankmandatelink_p2">
                             <ul style="display:lock;list-style-type: disc;">
@@ -126,7 +126,7 @@
                                 height="190px" width="100%" scrolling="false" rendered="true"/>
                         </apex:outputPanel>
                     </apex:pageBlockSection>
-                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!isPassAirline && OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
+                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!isPassAirline && strAreaType=='Airline Joining'}" collapsible="false">
                         <!-- Upload Bank Mandate section (Without ICCS) -->
                         <apex:outputPanel layout="block">
                             <p>
@@ -174,7 +174,7 @@
 
                     </apex:pageBlockSection>
 
-                    <apex:pageBlockSection title="{!$Label.ISSP_Supporting_Documents}" columns="1" rendered="{!isPassAirline}" collapsible="false">
+                    <apex:pageBlockSection title="{!$Label.ISSP_Supporting_Documents}" columns="1" rendered="{!isPassAirline && strAreaType=='Airline Joining'}" collapsible="false">
                         <apex:outputPanel layout="block" rendered="{!showUploadASPForPASS}">
                             <apex:iframe scrolling="false" height="180px"
                                 src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
@@ -189,6 +189,13 @@
                             <apex:iframe scrolling="false" height="180px" rendered="{! passCountry.requiredFile}"
                                 src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt={!passCountry.counter}&reqRequired=Mandatory&reqName={!passCountry.reqName}&reqDescription=&reqIdentifier={!passCountry.identifier}"/>
                         </apex:repeat>
+                    </apex:pageBlockSection>
+
+                    <apex:pageBlockSection title="{!$Label.ISSP_Supporting_Documents}" columns="1" rendered="{!isPassAirline && strChangeType=='Bank Account Instructions'}" collapsible="false">
+                        <apex:outputPanel layout="block">
+                            <apex:iframe scrolling="false" height="180px"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription={!$Label.ISSP_PASS_BankMandate_Changes_Description}.&reqIdentifier=Bank_Mandate"/>
+                        </apex:outputPanel>
                     </apex:pageBlockSection>
 
                     <!-- With ICCS and is not a Member -->
