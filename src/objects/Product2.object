@@ -853,14 +853,14 @@
                     <label>Finance-and-Accounting</label>
                 </value>
                 <value>
-                    <fullName>Legal &amp; Regulatory</fullName>
-                    <default>false</default>
-                    <label>Legal &amp; Regulatory</label>
-                </value>
-                <value>
                     <fullName>Ground Operations</fullName>
                     <default>false</default>
                     <label>Ground Operations</label>
+                </value>
+                <value>
+                    <fullName>Legal &amp; Regulatory</fullName>
+                    <default>false</default>
+                    <label>Legal &amp; Regulatory</label>
                 </value>
                 <value>
                     <fullName>Operations</fullName>
