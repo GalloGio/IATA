@@ -534,7 +534,7 @@ public without sharing virtual class IEC_Cart {
 			clearCartInCookies();
 			cartItemMap.clear();		// clear all items from Cart (it will be reloaded later).
 		}
-		
+
 		System.debug('loginUserEvent end');
 	}
 
@@ -762,8 +762,8 @@ public without sharing virtual class IEC_Cart {
 
 		for(Swap_Configuration__c swapConf : swapConfigurationList){
 			//Target product for the swap product rate plan information and available for the logged customer type.
-			List<Product2> trgProduct = new List<Product2>([SELECT Id, SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c 
-				FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c and 
+			List<Product2> trgProduct = new List<Product2>([SELECT Id, SAP_Material_Number__c, IEC_Product_Rate_Plan_Information__c
+				FROM Product2 where IEC_Product_Rate_Plan_Information__c = :swapConf.Target_Product_Rate_Plan_Information__c and
 				Restricted_Customer_Type__c includes (:oCurrentCustomer.customerType) limit 1]);
 
 			//swaps only if there is target product
