@@ -1,0 +1,27 @@
+.iconWrapper{
+    top	:	0px;
+    left:	0px;
+    pointer-events: none;
+}
+
+.modalHeight{
+    max-height: calc(21rem);
+    overflow-y: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 1px;
+	width: 6px;
+}
