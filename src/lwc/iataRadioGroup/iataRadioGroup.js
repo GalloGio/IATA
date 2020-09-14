@@ -58,7 +58,7 @@ export default class IataRadioGroup extends LightningElement {
 	get formElementControlClass() {
 		return "slds-form-element__control" +
 				(this.displayHorizontal ?
-					" slds-grid " +
+					" slds-grid slds-wrap " +
 					(this.alignLeft ?
 						"slds-gutters " :
 						"slds-grid_align-spread "
