@@ -35,5 +35,5 @@ public with sharing class CW_AdvancedSearchTest {
 		CW_AdvancedSearch.Equipment equipment = new CW_AdvancedSearch.Equipment('name', 'label', fields, 'category', 'categoryDevName');
 		System.assertNotEquals(equipment, null, 'equipment covered');
 		Test.stopTest();
-	}
+    }
 }
