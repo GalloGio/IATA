@@ -82,7 +82,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactAccount{get;set;}
 		public String existingContactUsername{get;set;}
 		public String emailConfirmationTemplate{get;set;}
-		public String existingContactURL{get;set;}
 	}
 
 	public class UserInformation {

@@ -29,6 +29,7 @@ import AMS_DQ_City_Not_in_Database      from '@salesforce/label/c.AMS_DQ_City_No
 import AMS_DQ_Review_City               from '@salesforce/label/c.AMS_DQ_Review_City';
 import AMS_DQ_City_in_Another_State     from '@salesforce/label/c.AMS_DQ_City_in_Another_State';
 import AMS_DQ_Review_State_or_City      from '@salesforce/label/c.AMS_DQ_Review_State_or_City';
+import OPTIONAL_label                   from '@salesforce/label/c.ISSP_Optional';
 
 export default class PortalAddressForm extends LightningElement {
     @track portalPath = CSP_PortalPath;
