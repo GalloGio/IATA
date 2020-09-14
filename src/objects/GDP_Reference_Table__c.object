@@ -142,14 +142,6 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>Compact_layout</compactLayoutAssignment>
-    <compactLayouts>
-        <fullName>Compact_layout</fullName>
-        <fields>Name</fields>
-        <fields>Code__c</fields>
-        <fields>Definition__c</fields>
-        <fields>Table__c</fields>
-        <label>Compact layout</label>
-    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -161,6 +153,31 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
+    <label>GDP Reference Table</label>
+    <nameField>
+        <label>Description</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GDP References Table</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Definition__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Definition__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>System__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>System_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Table__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Definition__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Code__c</searchFilterFields>
+        <searchFilterFields>Definition__c</searchFilterFields>
+        <searchResultsAdditionalFields>Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Definition__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>Code__c</fullName>
         <externalId>false</externalId>
@@ -173,6 +190,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Corresponding_AMS_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Provides mapping between GDS Code in AMS with GDS Code in GDP Reference Table</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Provides mapping between GDS Code in AMS with GDS Code in GDP Reference Table</inlineHelpText>
+        <label>Corresponding AMS Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Definition__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Used for tooltip</inlineHelpText>
@@ -183,6 +214,17 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Displayed_Last__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Forces display of badge in last position on the TIDS Application Forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Forces display of badge in last position on the TIDS Application Forms</inlineHelpText>
+        <label>Is Displayed Last</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>System_ID__c</fullName>
@@ -227,12 +269,32 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <label>GDP Reference Table</label>
+    <fields>
+        <fullName>Valid_for_TIDS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Drives visibility of value on TIDS application forms.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Drives visibility of value on TIDS application forms.</inlineHelpText>
+        <label>Valid for TIDS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <compactLayouts>
+        <fullName>Compact_layout</fullName>
+        <fields>Name</fields>
+        <fields>Code__c</fields>
+        <fields>Definition__c</fields>
+        <fields>Table__c</fields>
+        <label>Compact layout</label>
+    </compactLayouts>
     <listViews>
         <fullName>AIRSYS_GDS</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
+        <columns>Corresponding_AMS_Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
@@ -269,6 +331,7 @@
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
@@ -403,7 +466,7 @@
             <operation>equals</operation>
             <value>PREFLANG</value>
         </filters>
-        <label>Preferred Language Table</label>
+        <label>17-Preferred Language (PREFLANG)</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -488,6 +551,7 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
@@ -507,6 +571,7 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
@@ -526,6 +591,7 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
@@ -596,28 +662,63 @@
         <label>15 - APEN - Sales Focus</label>
         <language>en_US</language>
     </listViews>
-    <nameField>
-        <label>Description</label>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>GDP References Table</pluralLabel>
-    <searchLayouts>
-        <customTabListAdditionalFields>Code__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Definition__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Definition__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>System__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>System_ID__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Table__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Code__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Definition__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>NAME</searchFilterFields>
-        <searchFilterFields>Code__c</searchFilterFields>
-        <searchFilterFields>Definition__c</searchFilterFields>
-        <searchResultsAdditionalFields>Code__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Definition__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
+    <listViews>
+        <fullName>X15_APEN_Sales_Focus_Percentages</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>startsWith</operation>
+            <value>APEN</value>
+        </filters>
+        <label>15 - APEN - Sales Focus Percentages</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X15_FOCUSVALUES_Sales_Focus_Values</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>startsWith</operation>
+            <value>FOCUSVALUES</value>
+        </filters>
+        <label>15 - FOCUSVALUES - Sales Focus Values</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X16_APEMP_Employee_Number</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>APEMP</value>
+        </filters>
+        <label>16 - APEMP - Number of Employes</label>
+        <language>en_US</language>
+    </listViews>
 </CustomObject>

@@ -1,0 +1,77 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0);"><span style="background-color: white; font-family: Arial, sans-serif; font-size: 12pt;">{!Today}&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">Code numérique IATA&nbsp;:&nbsp;{!Account.IATACode__c}</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">{!Account.Name}</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">{!Account.BillingCity},&nbsp;{!Account.BillingCountry}</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Cher/Chère <span style="background:white">{!Account.Name}</span>,</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; line-height: 13.8pt;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: 13.8pt;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Selon
+nos registres, votre agence a reçu un code TIDS associé á une succursale
+rattachée au siège social détenteur du code IATA {!Account.IATACode__c}.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Pour bénéficier de l’ensemble des avantages et des plus-values
+des nouveaux programmes et services introduits para l’IATA pour les Agences de
+Voyages, il est nécessaire de se conformer aux dispositions de la </span><span lang="FR"><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; text-decoration-line: none;">Résolution 898</span></a></span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">, et de séparer
+complètement les codes TIDS de leurs sièges sociaux.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">A compter du&nbsp;</span><span style="background-color: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: medium;">{!Case.Documentation_remarks__c}</span><span style="font-family: Arial, sans-serif; font-size: 12pt; background: white;">,&nbsp;</span><span style="font-family: Arial, sans-serif; font-size: 12pt;">le code de la succursale TIDS sera séparé de celui
+de votre Agence principal, et converti en un siège social autonome TIDS.</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><b><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Coordonnées de votre siège
+social autonome TIDS</span></b><b><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal;"><b><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><br></span></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 12pt; text-align: justify; line-height: 13.8pt;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Vu
+que nous aurons besoin de contacter directement le siège social autonome TIDS, nous
+vous prions de nous indiquer un contact usuel (avec une adresse électronique
+unique) à retenir pour ce siège social autonome TIDS, d’ici le&nbsp;</span><b style="font-size: 12pt;"><span lang="FR">{!Case.Rejection_Withdrawal_remarks__c}.</span></b></p><p class="MsoNormal" style=""><span lang="FR" style="">La
+facture pour votre cotisation annuelle IATA sera envoyée directement au siège
+de votre agence TIDS.</span><span style="font-size: 12pt;">Le
+mode de règlement ainsi que la devise de cette facture peuvent être différents
+de ceux de la facture du siège de votre agence de voyages.</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><span lang="FR" style="color:#1F497D;mso-ansi-language:FR"><br></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: 13.8pt;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Si
+vous choisissez de désigner des coordonnées d’une de vos agences figurant déjà
+dans notre base de données comme ceux du siège social TIDS, ce contact ne sera
+plus associé au compte de l’agence qui les détenait. <o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 12pt; text-align: justify; line-height: 13.8pt;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Par conséquent, le
+contact désigné perdra :</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 12pt; text-align: justify; line-height: 13.8pt;"></p><ul style="color: rgb(0, 0, 0);"><li>Tout
+service et droit d’accès au portail associé <span lang="FR" style="font-size: 12pt; text-indent: -42pt; font-family: Arial, sans-serif;">au compte de l’agence qui
+le détenait.</span></li><li>Si ce contact est détenteur d’une carte d’identité IATA, une
+nouvelle carte IATA devra être imprimée sous le code du <span lang="FR" style="font-size: 12pt; text-indent: -0.25in; font-family: Arial, sans-serif;">nouveau siège social
+autonome TIDS.</span></li></ul><p style="color: rgb(0, 0, 0);"></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 12pt; text-align: justify; line-height: 13.8pt;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">Sincères
+salutations,</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><span style="line-height: 107%;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); margin-bottom: 0.0001pt; text-align: justify; line-height: normal; background: white;"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">IATA Global Delivery Center</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><br></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div id="ftn1">
+
+</div>
+
+</div>]]></td>
+</tr>
+</table>

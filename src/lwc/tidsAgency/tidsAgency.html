@@ -1,0 +1,393 @@
+<template>
+	<div class="vetting-menu">
+		<c-tids-vetting-menu></c-tids-vetting-menu>
+	</div>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<h1 class="icon">Agency Legal Status</h1>
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			This is the first section of your application to the TIDS. <br />
+			<em>Remember, all question preceded by a (*) are mandatory.</em>
+		</p>
+		<!-- Trading Name Start -->
+		<template if:true={tradingNameRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							checked={tradingNameError.show}
+							data-name="error-tradingname"
+							class="comment-tradingname"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={tradingNameRules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						name="tradingName"
+						data-name="tradingName"
+						value={tradingName}
+						onchange={changeField}
+						pattern={tradingNameRules.regex}
+						data-regex={tradingNameRules.regex}
+						variant="label-hidden"
+						max-length="60"
+						label="Trading name"
+						disabled={tradingNameRules.disabled}
+						required={tradingNameRules.required}
+					>
+					</lightning-input>
+					<span>{tradingNameCounter} / 60</span>
+					<div if:true={tradingNameChanges.display}>
+						<p><mark>Previous Value: {tradingNameChanges.sfValue}</mark></p>
+					</div>
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							if:true={tradingNameError.show}
+							data-name="error-tradingname-desc"
+							data-fieldname="tradingName"
+							value={tradingNameError.description}
+							class="comment-area-tradingname"
+							name="tradingNameComments"
+							label="Error Description"
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Trading Name End -->
+
+		<!-- Company Type Start -->
+		<template if:true={companyTypeRules.visible}>
+		
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12 filled-in-boxes">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-companytype"
+							checked={companyTypeError.show}
+							data-name="error-companytype"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={companyTypeRules}></c-tids-tooltip>
+					<lightning-combobox 
+						name="companyType"
+						data-name="companyType"
+						label="Company Type"
+						required={companyTypeRules.required}
+						value={companyType}
+						placeholder="Select a company Type"
+						variant="label-hidden"
+						options={companyTypes}
+						onchange={handleChange}
+						disabled={companyTypeRules.disabled}
+					>
+					</lightning-combobox>
+
+					<div if:true={companyTypeChanges.display}>
+						<p><mark>Previous Value: {companyTypeChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-companytype"
+							label="Error Description"
+							if:true={companyTypeError.show}
+							data-name="error-companytype-desc"
+							value={companyTypeError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+
+		</template>
+		<!-- Company Type End -->
+
+		<!-- In Operations Since Start -->
+		<template if:true={inOperationsSinceRules.visible}>
+			<div class="row">
+				<div class="input-field col m12 l6">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-in-operations-since"
+							checked={inOperationsSinceError.show}
+							data-name="error-in-operations-since"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={inOperationsSinceRules}></c-tids-tooltip>
+					<lightning-input
+						type="date"
+						label="In Operations Since"
+						name="inOperationsSince"
+						data-name="inOperationsSince"
+						value={inOperationsSince}
+						onchange={handleChangeDate}
+						variant="label-hidden"
+						date-format="dd-MM-yyyy"
+						date-style="short"
+						disabled={inOperationsSinceRules.disabled}
+						required={inOperationsSinceRules.required}
+						pattern={inOperationsSinceRules.regex}
+					>
+					</lightning-input>
+					<div if:true={inOperationsSinceChanges.display}>
+						<p><mark>Previous Value: {inOperationsSinceChanges.sfValue}</mark></p>
+					</div>
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-in-operations-since"
+							label="Error Description"
+							if:true={inOperationsSinceError.show}
+							data-name="error-in-operations-since-desc"
+							value={inOperationsSinceError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- In Operations Since End -->
+
+		<!-- Tax ID VAT Number 1 Start -->
+		<template if:true={taxIdVATNumber1Rules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-vatnumber1"
+							checked={vatnumber1Error.show}
+							data-name="error-vatnumber1"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={taxIdVATNumber1Rules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						label="Tax ID / VAT Number 1"
+						required={taxIdVATNumber1Rules.required}
+						name="taxIdVATNumber1"
+						data-name="taxIdVATNumber1"
+						value={taxIdVATNumber1}
+						max-length="20"
+						onchange={changeField}
+						disabled={taxIdVATNumber1Rules.disabled}
+						pattern={taxIdVATNumber1Rules.regex}
+						data-regex={taxIdVATNumber1Rules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					<span>{taxIdVATNumber1Counter} / 20</span>
+
+					<div if:true={taxIdVATNumber1Changes.display}>
+						<p><mark>Previous Value: {taxIdVATNumber1Changes.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-vatnumber1"
+							label="Error Description"
+							if:true={vatnumber1Error.show}
+							data-name="error-vatnumber1-desc"
+							value={vatnumber1Error.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Tax ID VAT Number 1 End -->
+
+		<!-- Tax ID VAT Number 2 Start -->
+		<template if:true={taxIdVATNumber2Rules.visible}>  
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-vatnumber2"
+							checked={vatnumber2Error.show}
+							data-name="error-vatnumber2"
+							onclick={handleError}
+						></lightning-input>
+					</template>
+					<c-tids-tooltip rules={taxIdVATNumber2Rules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						label="Tax ID / VAT Number 2"
+						required={taxIdVATNumber2Rules.required}
+						name="taxIdVATNumber2"
+						data-name="taxIdVATNumber2"
+						value={taxIdVATNumber2}
+						onchange={changeField}
+						disabled={taxIdVATNumber2Rules.disabled}
+						pattern={taxIdVATNumber2Rules.regex}
+						data-regex={taxIdVATNumber2Rules.regex}
+						variant="label-hidden"
+						max-length="20"
+					></lightning-input>
+					<span>{taxIdVATNumber2Counter} / 20</span>
+
+					<div if:true={taxIdVATNumber2Changes.display}>
+						<p><mark>Previous Value: {taxIdVATNumber2Changes.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-vatnumber2"
+							label="Error Description"
+							if:true={vatnumber2Error.show}
+							data-name="error-vatnumber2-desc"
+							value={vatnumber2Error.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Tax ID VAT Number 2 End -->
+
+		<!-- Business License Registration Start -->
+		<template if:true={businessRegistrationRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-businessregistration"
+							checked={businessRegistrationError.show}
+							data-name="error-business-registration"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={businessRegistrationRules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						label="Business Registration / License Number"
+						required={businessRegistrationRules.required}
+						name="businessRegistration"
+						data-name="businessRegistration"
+						value={businessRegistration}
+						onchange={changeField}
+						disabled={businessRegistrationRules.disabled}
+						pattern={businessRegistrationRules.regex}
+						data-regex={businessRegistrationRules.regex}
+						variant="label-hidden"
+						max-length="20"
+					>
+					</lightning-input>
+					<span>{businessRegistrationCounter} / 20</span>
+
+					<div if:true={businessRegistrationChanges.display}>
+						<p><mark>Previous Value: {businessRegistrationChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-businessregistration"
+							label="Error Description"
+							if:true={businessRegistrationError.show}
+							data-name="error-business-registration-desc"
+							value={businessRegistrationError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Business License Registration End -->
+
+		<footer>
+			<template if:false={vettingMode}>
+				<template if:true={showSaveAndQuitButton}>
+					<button
+						class="transparent"
+						data-next="save-quit"
+						onclick={handleSaveAndQuit}>
+						Save &amp; quit
+					</button>
+				</template>
+				
+				<button
+					name="shareholder-details"
+					onclick={handleNextSection}
+					disabled={disableButton}>
+					Next section
+				</button>
+				
+			</template>
+			<template if:true={vettingMode}>
+				<button
+					if:false={vettingErrorOptions}
+					data-name="confirm-review-status"
+					onclick={handleProceed}
+				>
+					Confirm Review and Proceed
+				</button>
+				<button
+					if:true={vettingErrorOptions}
+					class="button-error"
+					name="report-errors-and-proceed"
+					data-name="report-errors-and-proceed"
+					onclick={handleProceed}
+					disabled={reportErrorButtonDisabled}>
+					Report Errors and Proceed
+				</button>
+			</template>
+		</footer>
+	</form>
+	<c-tids-modal
+		if:true={openModal}
+		open={openModal}
+		field-error-selected={fieldErrorSelected}
+		default-message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal>
+
+	<!-- Sole Ownership Modal Start -->
+
+	<template if:true={soleOwnershipMessage}>
+		<section 
+			role="dialog" 
+			tabindex="-1" 
+			aria-labelledby="Confirmation Information" 
+			aria-modal="true" 
+			aria-describedby="confirmation-data-vetting" 
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<h2 id="modal-heading-vetting" class="slds-modal__title slds-hyphenate">Attention</h2>
+					<p>Please confirm that the below information is correct.</p>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="confirmation-data-vetting">
+					<h3>Current information</h3>
+					<p>Sole Ownership</p>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_brand" onclick={handleSoleOwnership}>Ok</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+
+	<!-- Sole Ownership Modal End -->
+
+</template>

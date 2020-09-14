@@ -1,0 +1,89 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0);"><span style="background-color: white; font-family: Arial, sans-serif; font-size: 12pt;">{!Today}&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">Código numérico da
+IATA:&nbsp;{!Account.IATACode__c}</span><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">{!Account.Name}</span><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif; background: white;">{!Account.BillingCity},&nbsp;{!Account.BillingCountry}</span><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Prezado(a) <span style="background:white">{!Account.Name}</span>,</span><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Segundo nossos registros, sua agência recebeu um
+código TIDS como uma filial de sua matriz detentora do código IATA <span style="background:white">{!Account.IATACode__c}.</span></span><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+13.8pt"><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Para que seja possível oferecer todos os benefícios e
+o valor dos novos programas e serviços da IATA à comunidade de agências de
+viagens, identificou-se a necessidade de se estar alinhado com as determinações
+da </span><span lang="PT"><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; text-decoration-line: none;">Resolução 898</span></a></span><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">
+e de se separar totalmente o Designador do Setor de Viagens (TIDS) de suas
+agências-matrizes.</span><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Em vigor a partir de&nbsp;</span><span style="background-color: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 12pt;">{!Case.Documentation_remarks__c}</span><span style="font-family: Arial, sans-serif; font-size: 12pt; background: white;">, </span><span style="font-family: Arial, sans-serif; font-size: 12pt;">seu código TIDS será separado de seu Código
+de agência IATA e será convertido em uma matriz TIDS independente.</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><b><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Detalhes
+do contato para sua matriz TIDS independente</span></b><b><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></b></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><b><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></b></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Como
+será necessário contatarmos diretamente sua matriz TIDS independente, pedimos
+que forneça um contato com um endereço de e-mail exclusivo&nbsp;</span><b style="font-size: 12pt; background-color: rgb(255, 255, 255);"><span lang="FR">{!Case.Rejection_Withdrawal_remarks__c}</span></b><span style="font-family: Arial, sans-serif; font-size: 12pt;">&nbsp;para ser atribuído à matriz TIDS.</span></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Se
+você optar por designar um de seus contatos existentes como o contato principal
+para sua matriz TIDS independente, observe que ele não estará mais relacionado
+à conta de sua agência. Como resultado:</span></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><ul><li>O
+contato designado perderá quaisquer direitos de acesso ao portal e aos serviços
+que estavam atribuídos àquela conta anterior.</li><li><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;</span><span dir="LTR" style="font-size: 12pt; text-indent: -0.25in;"></span><span lang="PT-BR" style="font-size: 12pt; text-indent: -0.25in; font-family: Arial, sans-serif;">Se
+este contato for o titular de um cartão de ID IATA, será necessário emitir um
+novo cartão de ID IATA sob o código da matriz TIDS.</span></li></ul></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Se
+tiver dúvidas, registre sua pergunta por meio do Portal de atendimento ao
+cliente da IATA (</span><span lang="PT"><a href="http://www.iata.org/cs"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; text-decoration-line: none;">www.iata.org/cs</span></a></span><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">).&nbsp;
+Nossa equipe de Atendimento ao cliente ficará feliz em ajudar.</span><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Atenciosamente,</span><span lang="PT" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;background:white"><span lang="PT-BR" style="font-size: 12pt; font-family: Arial, sans-serif;">Centro de Distribuição Global
+IATA</span><span lang="PT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><font face="Arial, sans-serif"><br></font></p><p class="MsoNormal" style="color: rgb(0, 0, 0);"><br></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div id="ftn1">
+
+</div>
+
+</div>]]></td>
+</tr>
+</table>

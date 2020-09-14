@@ -1,0 +1,30 @@
+<template>
+	<div class="row">
+		<div class="col s12">
+				<c-tids-tooltip rules={rule}></c-tids-tooltip> 
+		</div>
+	</div>
+
+	<div class={cmpClass}>
+		<div class="col s12">
+			<template for:each={values} for:item="option">
+				<lightning-button-stateful
+					key={option.id}
+					label-when-off={option.label}
+					label-when-on={option.label}
+					icon-name-when-on="utility:close"
+					icon-name-when-hover="utility:close"
+					data-option={option.value}
+					selected={option.isSelected}
+					onclick={handleOnClick}>
+				</lightning-button-stateful>
+			</template>
+		</div>
+	</div>
+
+	<div class="row" if:true={optionsError}>
+		<div class="col s12">
+			<p class="error">Error message maximum number already selected</p>
+		</div>
+	</div>
+</template>

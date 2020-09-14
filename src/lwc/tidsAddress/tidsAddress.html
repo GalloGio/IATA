@@ -1,0 +1,314 @@
+<template>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<h1 class="icon">Address</h1>
+			</div>
+			<div class="col s3 vetting-menu">
+				<c-tids-vetting-menu></c-tids-vetting-menu>
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			This is the third section of your application to the TIDS.<br /><em
+				>Remember, all question preceded by a (*) are mandatory.</em
+			>
+		</p>
+		<h2 class="h3">
+			Physical Address of the Office for which this Application is made
+		</h2>
+
+		<!-- Country field begin -->
+		<template if:true={countryRules.visible}>
+			<div class="row">
+				<div class="input-field col s12 l6">
+					<c-tids-tooltip rules={countryRules}></c-tids-tooltip> 
+					<lightning-input
+						type="text"
+						placeholder={countryRules.name}
+						read-only
+						variant="label-hidden"
+						id="country"
+						name="country"
+						data-name="country"
+						value={country}
+						onchange={changeField}
+						required={countryRules.required}
+						disabled={countryRules.disabled}
+						data-regex={countryRules.regex}>
+					</lightning-input>
+				</div>
+			</div>
+		</template>
+		<!-- Country field end -->
+
+		<!-- State field begin -->
+		<template if:true={stateRules.visible}>
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-state"
+							checked={stateError.show}
+							data-name="error-state"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={stateRules}></c-tids-tooltip> 
+					<lightning-combobox
+						name="state"
+						data-name="state"
+						label="State / Province"
+						variant="label-hidden"
+						value={state}
+						placeholder="Select a state or province"
+						options={states}
+						onchange={changeField}
+						required={stateRules.required}
+						disabled={stateRules.disabled}
+						data-regex={stateRules.regex}
+					>
+					</lightning-combobox>
+
+					<div if:true={stateChanges.display}>
+						<p><mark>Previous Value: {stateChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-state"
+							label="Error Description"
+							if:true={stateError.show}
+							data-name="error-state-desc"
+							value={stateError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- State field end -->
+
+		<!-- City field begin -->
+		<template if:true={cityRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-city"
+							checked={cityError.show}
+							data-name="error-city"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={cityRules}></c-tids-tooltip> 
+					<lightning-input
+						type="text"
+						label="City"
+						name="city"
+						data-name="city"
+						value={city}
+						onchange={changeField}
+						max-length="30"
+						pattern={cityRules.regex}
+						data-regex={cityRules.regex}
+						variant="label-hidden"
+						autocomplete="false"
+						required={cityRules.required}
+						disabled={cityRules.disabled}
+						onfocus={setCitySearchOn}
+						onblur={setCitySearchOff}
+					>
+					</lightning-input>
+					<span>{cityCounter} / 30</span>
+					<template if:true={citysearch}>
+						<template if:true={isPostalCodesAvailable}>
+							<div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid col tids-city-choice" role="listbox">
+								<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+									<template for:each={postalcodes} for:item="item">
+										<li role="presentation" class="slds-listbox__item" key={item.geonameId}>
+											<div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" id={item.geonameId} onclick={selectCity}  onmousedown={setCitySearchPrevent}>
+												<span class="slds-media__body">
+													<span class="slds-listbox__option-text slds-listbox__option-text_entity">{item.toponymName}</span>
+													<span class="slds-listbox__option-meta slds-listbox__option-meta_entity">State: {item.adminName1}</span>
+												</span>
+											</div>
+										</li>
+								</template>
+								</ul>
+							</div>
+						</template>
+					</template>
+
+					<div if:true={cityChanges.display}>
+						<p><mark>Previous Value: {cityChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-city"
+							label="Error Description"
+							if:true={cityError.show}
+							data-name="error-city-desc"
+							value={cityError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- City field end -->
+
+		<!-- Address field begin -->
+		<template if:true={addressRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-address"
+							checked={addressError.show}
+							data-name="error-address"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={addressRules}></c-tids-tooltip> 
+					<lightning-input
+						type="text"
+						label="Address"
+						name="address"
+						data-name="address"
+						value={address}
+						onchange={changeField}
+						max-length="90"
+						pattern={addressRules.regex}
+						data-regex={addressRules.regex}
+						variant="label-hidden"
+						required={addressRules.required}
+						disabled={addressRules.disabled}
+					>
+					</lightning-input>
+					<span>{addressCounter} / 90</span>
+
+					<div if:true={addressChanges.display}>
+						<p><mark>Previous Value: {addressChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-address"
+							label="Error Description"
+							if:true={addressError.show}
+							data-name="error-address-desc"
+							value={addressError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Address field end -->
+
+
+		<!-- Postal Code field begin -->
+		<template if:true={postalCodeRules.visible}>
+			<div class="row">
+				<div class="input-field col s12 l6">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-postalcode"
+							checked={postalCodeError.show}
+							data-name="error-postal-code"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={postalCodeRules}></c-tids-tooltip> 
+					<lightning-input
+						type="text"
+						placeholder={postalCodePlaceHolder}
+						label="Postal Code"
+						name="postalCode"
+						data-name="postalCode"
+						value={postalCode}
+						onchange={changeField}
+						pattern={postalCodeRules.regex}
+						data-regex={postalCodeRules.regex}
+						variant="label-hidden"
+						required={postalCodeRules.required}
+						disabled={postalCodeRules.disabled}
+					>
+					</lightning-input>
+
+					<div if:true={postalCodeChanges.display}>
+						<p><mark>Previous Value: {postalCodeChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-postalcode"
+							label="Error Description"
+							if:true={postalCodeError.show}
+							data-name="error-postal-code-desc"
+							value={postalCodeError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Postal Code field end -->
+
+		<footer>
+			<template if:false={vettingMode}>
+				<template if:true={showSaveAndQuitButton}>
+					<button
+						class="transparent"
+						data-next="save-quit"
+						onclick={handleSaveAndQuit}>
+						Save &amp; quit
+					</button>
+				</template>
+				<button
+					name="mailing"
+					onclick={handleNextSection}
+					disabled={disableButton}>
+					Next section
+				</button>
+			</template>
+
+			<template if:true={vettingMode}>
+				<button
+					if:false={vettingErrorOptions}
+					data-name="confirm-review-status"
+					onclick={handleProceed}>
+					Confirm Review and Proceed
+				</button>
+				<button
+					if:true={vettingErrorOptions}
+					name="agency-legal-status"
+					onclick={handleProceed}
+					data-next="mailing"
+					data-name="report-errors-and-proceed"
+					class="button-error">
+					Report Errors and Proceed
+				</button>
+			</template>
+		</footer>
+	</form>
+	<c-tids-modal
+		if:true={openModal}
+		open={openModal}
+		private-message={modalprivateMessage}
+		field-error-selected={fieldErrorSelected}
+		default-message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal>
+</template>

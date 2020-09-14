@@ -1,0 +1,366 @@
+<template>
+  <div class="vetting-menu">
+    <c-tids-vetting-menu></c-tids-vetting-menu>
+  </div>
+  <header>
+    <div class="row">
+      <div class="col s9">
+        <h1 class="icon">Ownership Details</h1>
+      </div>
+    </div>
+  </header>
+  <form>
+    <p>
+      Please provide the details of all agency owners or shareholders, including the percentage ownership.<br/><br/>A maximum of 10 owner/shareholder names may be entered. If your business is owned by more than 10 persons/companies, please enter those with the highest percentage ownership in the agency.
+    </p>
+    <h2 class="h3">
+      <template if:true={vettingErrorOptions}>
+        <lightning-input
+          type="checkbox"
+          class="comment-shareholder"
+          checked={shareholderError.show}
+          data-name="error-shareholder"
+          onclick={handleError}
+        >
+        </lightning-input>
+      </template>
+    </h2>
+
+    <template if:true={showShareholdersTable}>
+      <table class="shareholder-list">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Email</th>
+            <th>Percentage</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <template for:each={shareholders} for:item="shareholder">
+            <tr class="shareholder-list-item" key={shareholder.id}>
+              <td>{shareholder.name}</td>
+              <td>{shareholder.type}</td>
+              <td>{shareholder.email}</td>
+              <td>{shareholder.percentage}%</td>
+              <td>
+                <lightning-button-icon
+                  data-id={shareholder.id}
+                  icon-name="utility:edit"
+                  alternative-text="Edit"
+                  class="slds-m-left_xx-small"
+                  onclick={editShareholder}
+                ></lightning-button-icon>
+                <lightning-button-icon
+                  data-id={shareholder.id}
+                  icon-name="utility:delete"
+                  alternative-text="Delete"
+                  class="slds-m-left_xx-small"
+                  onclick={removeShareholder}
+                ></lightning-button-icon>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="shareholder-total-label">Total</td>
+            <td colspan="2" class="shareholder-value">{total}%</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="row">
+        <div class="col s12">
+          <lightning-button
+            variant="base"
+            class="transparent"
+            disabled={addButtonDisabled}
+            label="Add owner / shareholder"
+            title="Add owner / shareholder"
+            icon-name="utility:new"
+            onclick={handleAddNewShareholder}
+          ></lightning-button>
+        </div>
+      </div>
+      <template if:true={vettingErrorOptions}>
+        <lightning-textarea
+          if:true={shareholderError.show}
+          class="comment-area-shareholder"
+          label="Error Description"
+          data-name="error-shareholder-desc"
+          value={shareholderError.description}
+          onchange={changeErrorFields}
+        ></lightning-textarea>
+      </template>
+    </template>
+
+    <template if:true={register}>
+      <h2 class="h3 no-margin-bottom">
+        Owner / shareholder information
+      </h2>
+      
+      <div class="row">
+        <div class="input-field col s12 shareholder-types">
+          <lightning-radio-group
+            data-id={actualShareholder.id}
+            data-name="type"
+            label="Please select the owner / shareholder type"
+            required
+            options={shareholderTypeValues}
+            value={actualShareholder.type}
+            type="radio"
+            onchange={handleShareholderChanges}
+          ></lightning-radio-group>
+          <br />
+          <div if:true={typeChanges.display}>
+            <p><mark>Previous Value: {typeChanges.sfValue}</mark></p>
+          </div>
+        </div>
+      </div>
+
+      <template if:true={registerFields}>
+      <!-- Name Start -->
+      <template if:true={nameRules.visible}>
+        <div class="row">
+          <div class="input-field col s12">
+            <div  class="slds-form-element__label slds-no-flex">
+              <c-tids-tooltip rules={nameRules}></c-tids-tooltip>
+            </div>
+            <lightning-input
+              type="text"
+              data-id={actualShareholder.id}
+              name="name"
+              readonly={readOnlyName}
+              data-name="name"
+              label="Name"
+              required={nameRules.required}
+              disabled={nameRules.disabled}
+              value={actualShareholder.name}
+              onchange={handleShareholderChanges}
+              max-length="40"
+              pattern={nameRules.regex}
+              data-regex={nameRules.regex}
+              variant="label-hidden"
+            >
+            </lightning-input>
+            <span>{nameCounter} / 40</span>
+            <div if:true={nameChanges.display}>
+              <p><mark>Previous Value: {nameChanges.sfValue}</mark></p>
+            </div>
+          </div>
+        </div>
+      </template>
+      <!-- Name Start -->
+
+      <!-- Percentage Start -->
+      <template if:true={percentageRules.visible}>
+        <div class="row">
+          <div class="input-field input-range col s12">
+            <div class="row">
+              <div class="input-field col">
+                <div  class="slds-form-element__label slds-no-flex">
+                  <c-tids-tooltip rules={percentageRules}></c-tids-tooltip>
+                </div>
+                <lightning-input
+                  type="range"
+                  data-id={actualShareholder.id}
+                  data-name="percentage"
+                  name="percentage"
+                  min="1"
+                  max="100"
+                  value={actualShareholder.percentage}
+                  required={percentageRules.required}
+                  disabled={percentageRules.disabled}
+                  label="Percentage"
+                  onchange={handleShareholderChanges}
+                  variant="label-hidden"
+                ></lightning-input>
+              </div>
+
+              <div class="input-field col">
+                <lightning-input
+                  type="number"
+                  data-id={actualShareholder.id}
+                  data-name="percentage-number"
+                  disabled={percentageRules.disabled}
+                  name="percentage"
+                  value={actualShareholder.percentage}
+                  onchange={handleShareholderChanges}
+                  min="0.01"
+                  step="0.01"
+                  message-when-pattern-mismatch="Too many characters!"
+                  formatter="percent-fixed"
+                ></lightning-input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div if:true={percentageChanges.display}>
+          <p><mark>Previous Value: {percentageChanges.sfValue} %</mark></p>
+        </div>
+      </template>
+      <!-- Percentage End -->
+        <div class="row error" if:true={totalError}>
+          <div class="col s12">
+            <p>Total ownership cannot exceed {MAX}%</p>
+          </div>
+        </div>
+      <!-- Email Start -->
+      <template if:true={emailRules.visible}>
+        <div class="row" if:false={hideEmail}>
+          <div class="input-field col s12">
+            <div  class="slds-form-element__label slds-no-flex">
+              <c-tids-tooltip rules={emailRules}></c-tids-tooltip>
+            </div>
+            <lightning-input
+              type="email"
+              name="email"
+              data-id={actualShareholder.id}
+              data-name="email"
+              required={emailRules.required}
+              disabled={emailRules.disabled}
+              label="Email"
+              max-length="256"
+              value={actualShareholder.email}
+              onchange={handleShareholderChanges}
+              pattern={emailRules.regex}
+              data-regex={emailRules.regex}
+              variant="label-hidden"
+            >
+            </lightning-input>
+            <span>{emailCounter} / 256</span>
+            <div if:true={emailChanges.display}>
+              <p><mark>Previous Value: {emailChanges.sfValue}</mark></p>
+            </div>
+          </div>
+        </div>
+      </template>
+    <!-- Email End -->
+
+        <div class="row">
+          <div class="col s12">
+            <lightning-button
+              class="transparent"
+              variant="base"
+              if:false={edit}
+              label="Cancel"
+              title="Cancel"
+              icon-name="utility:cancel_file_request"
+              onclick={cancelNewShareholder}
+            ></lightning-button>
+            <lightning-button
+              variant="base"
+              if:false={edit}
+              disabled={addShareholderDisabled}
+              label="Save details"
+              title="Save details"
+              icon-name="utility:new"
+              onclick={addShareholder}
+            ></lightning-button>
+            <lightning-button 
+              class="transparent"
+              variant="base"
+              data-id={actualShareholder.id}
+              if:true={edit}
+              label="Cancel"
+              title="Cancel"
+              icon-name="utility:cancel_file_request"
+              onclick={cancelShareholder}
+            ></lightning-button>
+            <lightning-button
+              variant="base"
+              data-id={actualShareholder.id}
+              if:true={edit}
+              disabled={addShareholderDisabled}
+              label="Update"
+              title="Update"
+              icon-name="utility:record_update"
+              onclick={updateShareholder}
+            ></lightning-button>
+          </div>
+        </div>
+      </template>
+    </template>
+
+    <footer>
+      <template if:false={vettingMode}>
+        <template if:true={showButtons}>
+          <template if:true={showSaveAndQuitButton}>
+            <button
+              class="transparent"
+              disabled={buttonEnabled}
+              data-next="save-quit"
+              onclick={handleSaveAndQuit}>
+              Save &amp; quit
+            </button>
+          </template>
+          <button
+            onclick={handleNextSection}
+            name="address"
+            disabled={disableNextSectionButton}
+          >Next section
+          </button>
+        </template>
+      </template>
+
+      <template if:true={vettingMode}>
+        <template if:true={showButtons}>
+          
+          <button
+            if:false={vettingErrorOptions}
+            data-name="confirm-review-status"
+            onclick={handleProceed}
+          >
+            Confirm Review and Proceed
+          </button>
+         
+          <button
+            if:true={vettingErrorOptions}
+            class="button-error"
+            data-next="address"
+            data-name="report-errors-and-proceed"
+            onclick={handleProceed}
+            disabled={reportErrorButtonDisabled}
+          >
+            Report Errors and Proceed
+          </button>
+        
+        </template>
+      </template>
+    </footer>
+  </form>
+
+  <c-tids-modal
+    if:true={openModal}
+    open={openModal}
+    field-error-selected={fieldErrorSelected}
+    default-message={modalDefaultMessage}
+    action={modalAction}
+  ></c-tids-modal>
+
+  <template if:true={openmodel}>
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-label="Meaningful description of the modal content"
+      aria-modal="true"
+      aria-describedby="confirmation-data"
+      class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <h2 class="slds-modal__title slds-hyphenate">Attention</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="confirmation-data">
+          <p>Are you sure you want to delete Shareholder Details?</p>
+        </div>
+        <footer class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral transparent" onclick={handleModalClose}>Cancel</button>
+          <button class="slds-button slds-button_brand" onclick={handleModalProceed}>Proceed</button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>

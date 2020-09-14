@@ -26,11 +26,11 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 
 		Map<String, String> recordTypes = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Account');
 
-		String fields = ' Id, GR_Item__c,GR_Code__c, AMS_Agency_Profile__c.Account__c';
+		String fields = ' Id, GR_Item__c,GR_Code__c, Account__r.Location_Class__c, AMS_Agency_Profile__c.Account__c';
 
 		List<String> conditions = new List<String> {'Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
 			, 'GR_Item__c !=null'};
-		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName)); 
 
 
 		if (extraIds != null && extraIds.size() > 0) {
@@ -60,7 +60,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 			if (batchInfo != null) {
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-																							 , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
+				                                       , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
 					// Reprocess failed records
 					List<String> failedRecordIds = new List<String>();
@@ -77,10 +77,10 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 		}
 
 		query = String.format('SELECT {0} '
-													+	'FROM AMS_Agency_Profile__c '
-													+ 	'WHERE {1} ',
-													new List<String> {fields, String.join(conditions, ' AND ')}
-												 );
+		                      +	'FROM AMS_Agency_Profile__c '
+		                      + 	'WHERE {1} Order By Account__c',
+		                      new List<String> {fields, String.join(conditions, ' AND ')}
+		                     );
 	}
 
 	global ams2gdp_Batch_AMS_Agency_Profile() {
@@ -108,13 +108,17 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 	global void execute(Database.BatchableContext BC, List<AMS_Agency_Profile__c> scope) {
 		//-- Total records to be processed
 		totalRecords += scope.size();
-
+        List<AMS_Agency_Profile__c> scopeclasst = new List<AMS_Agency_Profile__c>();
+		List<AMS_Agency_Profile__c> scopeother = new List<AMS_Agency_Profile__c>();
+		for(AMS_Agency_Profile__c o:scope){
+			if (o.Account__r.Location_Class__c=='T'){scopeclassT.add(o);}else{scopeother.add(o);}
+		}
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
 		List<GDP_Agency_Profile_Specialization__c> records2Save = new List<GDP_Agency_Profile_Specialization__c>();
 		try {
-			records2Save = ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfile(scope);
-
+			if (scopeclasst.size()>0){records2Save.addAll(ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfileClassT(scopeclasst));}
+			if (scopeother.size()>0){records2Save.addAll(ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfile(scopeother));}
 			//-- Raise exception for Unit Tests
 			if (Test.isRunningTest() &&   throwException) insert new Account();
 		} catch (Exception ex) {
@@ -153,7 +157,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 	}
 
 	global void finish(Database.BatchableContext BC) {
-
+		
 		if (processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Authorization(true, isManual));
 		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification

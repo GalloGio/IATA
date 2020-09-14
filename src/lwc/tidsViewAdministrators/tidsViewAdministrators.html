@@ -1,0 +1,15 @@
+<template>
+  <template if:true={branchSelected}>
+    <h2>Administrator</h2>
+    <ul class="no-list">
+      <li>{roles.Primary}</li>
+    </ul>
+  </template>
+  <template if:false={branchSelected}>
+    <h2>Administrators</h2>
+    <ul class="no-list">
+      <li><span>Primary</span>: {roles.Primary}</li>
+      <li><span>Secondary</span>: {roles.Secondary}</li>
+    </ul>
+  </template>
+</template>

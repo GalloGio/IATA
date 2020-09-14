@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>TIDS_level 1_General_PRT for Brasil only</name>
+    <style>freeForm</style>
+    <subject>Separação do Codigo TIDS (Designador do Setor de Viagens) do codigo IATA da Matriz de sua Agencia de Viagens _{!Account.IATACode__c}</subject>
+    <textOnly>{!Today}
+
+Código numérico da IATA: {!Account.IATACode__c}
+
+{!Account.Name}
+
+{!Account.BillingCity}, {!Account.BillingCountry}
+
+
+Prezado(a) {!Account.Name},
+
+
+Segundo nossos registros, sua agência recebeu um código TIDS como uma filial de sua matriz detentora do código IATA {!Account.IATACode__c}.
+
+
+Para que seja possível oferecer todos os benefícios e o valor dos novos programas e serviços da IATA à comunidade de agências de viagens, identificou-se a necessidade de se estar alinhado com as determinações da Resolução 898 e de se separar totalmente o Designador do Setor de Viagens (TIDS) de suas agências-matrizes.
+
+
+Em vigor a partir de {!Case.Documentation_remarks__c}, seu código TIDS será separado de seu Código de agência IATA e será convertido em uma matriz TIDS independente.
+
+
+Detalhes do contato para sua matriz TIDS independente
+
+
+Como será necessário contatarmos diretamente sua matriz TIDS independente, pedimos que forneça um contato com um endereço de e-mail exclusivo {!Case.Rejection_Withdrawal_remarks__c} para ser atribuído à matriz TIDS.
+
+Se você optar por designar um de seus contatos existentes como o contato principal para sua matriz TIDS independente, observe que ele não estará mais relacionado à conta de sua agência. Como resultado:
+
+
+O contato designado perderá quaisquer direitos de acesso ao portal e aos serviços que estavam atribuídos àquela conta anterior.
+Se este contato for o titular de um cartão de ID IATA, será necessário emitir um novo cartão de ID IATA sob o código da matriz TIDS.
+
+
+Se tiver dúvidas, registre sua pergunta por meio do Portal de atendimento ao cliente da IATA (www.iata.org/cs). Nossa equipe de Atendimento ao cliente ficará feliz em ajudar.
+
+Atenciosamente,
+
+
+Centro de Distribuição Global IATA</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

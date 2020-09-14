@@ -1,0 +1,87 @@
+<template>
+  <div class="block office-informations branch-information">
+	<header>
+	  <template if:true={showVirtualBranch}>
+		<h1>Add a Virtual Branch Office</h1>
+	  </template>
+	  <template if:false={showVirtualBranch}>
+		<h1>Add a Branch Office</h1>
+	  </template>
+	</header>
+	<main>
+	  <div class="row">
+		<div class="col s12 office-code-status">
+		  <div>
+			<div class="row">
+			  <div class="col s7">
+				<h2>IATA Code: <span>{accountInfo.IATACode__c}</span></h2>
+			  </div>
+			  <div class="col s5">
+				<h2>Status: <span>{accountInfo.Status__c}</span></h2>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<div class="col s7 office-address">
+		  <h2>Summary</h2>
+		  <ul class="no-list">
+			<li>{accountInfo.Name}<br />DBA: {accountInfo.TradeName__c}</li>
+			<li>
+			  {accountInfo.BillingStreet}<br />{accountInfo.BillingCity},
+			  {accountInfo.BillingState}<br />{accountInfo.BillingPostalCode},&nbsp;{accountInfo.BillingCountry}
+			</li>
+		  </ul>
+		</div>
+		<div class="col s5 office-contact">
+		  <c-tids-view-administrators account-id={accountInfo.Id} branch-selected={branchSelected}></c-tids-view-administrators>
+		  <h2>Contact</h2>
+		  <ul class="no-list">
+			<li>
+			  Email:&nbsp;<a href="mailto:{accountInfo.Email}">{accountInfo.Email__c}</a>
+			</li>
+			<li>
+			  Phone:&nbsp;<a href="tel:+{accountInfo.Phone}">{accountInfo.Phone}</a>
+			</li>
+		  </ul>
+		</div>
+		<div class="col s12 slds-m-top_x-large"><p>You are about to add a branch linked to the location above:</p></div>
+		<template if:true={showVirtualBranch}>
+		  <div class="col s6">
+			<lightning-combobox
+			  name="country"
+			  data-name="country"
+			  label="Country"
+			  message-when-value-missing="Your must be selected a country."
+			  value={country}
+			  placeholder="Select a country"
+			  options={countries}
+			  onchange={changeField}
+			  required={countryRules.required}
+			  disabled={countryRules.disabled}>
+			</lightning-combobox>
+		  </div>
+		</template>
+	  </div>
+	</main>
+	<footer>
+	  <button class="transparent" onclick={handleCancel}>Cancel</button>
+	  <template if:false={showVirtualBranch}>
+		<button onclick={handleProceed}>Proceed</button>
+	  </template>
+	  <template if:true={showVirtualBranch}>
+		<template if:true={proceedDisabled}>
+		  <button disabled>Proceed</button>
+		</template>
+		<template if:false={proceedDisabled}>
+		  <button onclick={handleProceed}>Proceed</button>
+		</template>
+	  </template>
+	</footer>
+  </div>
+  <c-tids-modal-msg
+	  if:true={showConfimationModal}
+	  open={showConfimationModal}
+	  message={modalDefaultMessage}
+	  action={modalAction}
+	></c-tids-modal-msg>
+</template>
