@@ -176,17 +176,6 @@ ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCSTASF</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>And(
-
-RecordType.Name = &quot;Cases - Global&quot;,
-
-ISPICKVAL(Topic__c, &quot;TASF&quot;)
-
-)</formula>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>GCSICCS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
