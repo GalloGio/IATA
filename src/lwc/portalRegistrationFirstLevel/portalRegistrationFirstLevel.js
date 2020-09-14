@@ -483,10 +483,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			this.registrationForm.sourceService = getQueryParameters().sourceService;
 		}
 
-        if(getQueryParameters().sourceService){
-            this.registrationForm.sourceService = getQueryParameters().sourceService;
-        }
-
 		if(this.registrationForm.registrationValidity == "" && this.canSubmit){ // Validate hidden field and Timer 
 			register({ registrationForm : JSON.stringify(this.registrationForm),
 				customerType : JSON.stringify(this.selectedMetadataCustomerType),

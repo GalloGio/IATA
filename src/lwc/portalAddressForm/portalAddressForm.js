@@ -142,7 +142,7 @@ export default class PortalAddressForm extends LightningElement {
     }
 
     /* labels */
-    _labels = {
+    @track _labels = {
         CSP_L2_Is_PO_Box_Address,
         CSP_L2_Country,
         CSP_L2_State,
@@ -155,7 +155,8 @@ export default class PortalAddressForm extends LightningElement {
         CSP_L2_Select_Address_Message,
         CSP_L2_Select,
         CSP_L2_No_Matching_Results,
-        CSP_L2_Address_Not_Found_Message
+        CSP_L2_Address_Not_Found_Message,
+        OPTIONAL_label
     }
 
     get labels() {

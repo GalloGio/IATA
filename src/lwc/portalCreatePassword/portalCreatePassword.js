@@ -193,7 +193,6 @@ export default class PortalCreatePassword extends LightningElement {
 	handleSavePassword(){
 		this.changeIsLoading();
 		if(this.buttonDisabled == false){
-            
 			this._startUrl = '';
 			if(this.pageParams.startURL){
 			this._startUrl = this.pageParams.startURL;
