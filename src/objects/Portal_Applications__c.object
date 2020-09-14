@@ -128,11 +128,14 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Portal_Service_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -154,26 +157,24 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <fieldSets>
-        <fullName>ISSP_Available_Services</fullName>
-        <description>ISSP_Available_Services</description>
-        <displayedFields>
-            <field>Application_icon__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Service_Description__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>ISSP Available Services</label>
-    </fieldSets>
+    <label>Portal Service</label>
+    <nameField>
+        <label>Service</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Portal Services</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <searchLayouts>
+        <customTabListAdditionalFields>Application_icon__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Application_icon__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Application_icon__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Application_icon__c</searchFilterFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>ANG_Accre_Tp__c</fullName>
         <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
@@ -228,18 +229,15 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <fullName>ANG_Flag_Country_Coverage__c</fullName>
         <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Country_Visibility_Control__c, &quot;SHOW_ALL&quot;), TRUE,
-OR (
-AND(
-IF(
-     ISPICKVAL(Country_Visibility_Control__c, &quot;HIDE&quot;),
-        NOT(CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)),
-     CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)
-     ),
-TRIM(ANG_Country_Coverage__c) != &quot;&quot;
-),
-TRIM(ANG_Country_Coverage__c) = &quot;&quot;
-)
+        <formula>OR (
+  AND(
+    CONTAINS(Name, &quot;IATA EasyPay&quot;),
+    CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c),
+    TRIM(ANG_Country_Coverage__c) != &quot;&quot;
+  ),
+  AND(
+    NOT(CONTAINS(Name, &quot;IATA EasyPay&quot;))
+  )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Country Coverage</label>
@@ -306,7 +304,7 @@ AND(NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c)),
    IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Airline Point of Sale&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Airline Point of Sale&apos;, true,
     IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Domestic Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Domestic Agent&apos;, true,
      IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;GSA General Sales Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;GSA General Sales Agent&apos;, true,
-      IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Airport Handling Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Airport Handling Agent&apos;, true,
+      IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Handling Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Handling Agent&apos;, true,
        IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;IATA Passenger Sales Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;IATA Passenger Sales Agent&apos;, true,
         IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;MSO Member Sales Office&apos;) &amp;&amp; $User.ANG_Category__c = &apos;MSO Member Sales Office&apos;, true,
          IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;TIDS Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;TIDS Agent&apos;, true,
@@ -399,9 +397,9 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <label>GSA General Sales Agent</label>
                 </value>
                 <value>
-                    <fullName>Airport Handling Agent</fullName>
+                    <fullName>Handling Agent</fullName>
                     <default>false</default>
-                    <label>Airport Handling Agent</label>
+                    <label>Handling Agent</label>
                 </value>
                 <value>
                     <fullName>IATA Passenger Sales Agent</fullName>
@@ -436,18 +434,14 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                 <value>
                     <fullName>IATAN Passenger Sales Agent (USA Only)</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>IATAN Passenger Sales Agent (USA Only)</label>
                 </value>
                 <value>
                     <fullName>Travel Service Intermediaries-TSI (USA Only)</fullName>
                     <default>false</default>
-                    <label>Travel Service Intermediaries-TSI (USA Only)</label>
-                </value>
-                <value>
-                    <fullName>Handling Agent</fullName>
-                    <default>false</default>
                     <isActive>false</isActive>
-                    <label>Handling Agent</label>
+                    <label>Travel Service Intermediaries-TSI (USA Only)</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -480,6 +474,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                 <value>
                     <fullName>Postal Service</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>Postal Service</label>
                 </value>
             </valueSetDefinition>
@@ -912,11 +907,9 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
+&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
 &quot;ICCS&quot;,&quot;ICCS&quot;,
-&quot;IATAN Online Services&quot;, $Label.ISSP_IdCard_US,
-&quot;ID Card Online Platform&quot;, $Label.ISSP_IdCard_NonUS,
-Name
+Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service</label>
@@ -954,8 +947,8 @@ Name
 &quot;Management Information Report&quot;, $Label.ISSP_MIR_Description, 
 &quot;Resource Center&quot;, $Label.ISSP_Resource_Center_Description, 
 &quot;Treasury Dashboard&quot;, $Label.ISSP_TD_Description, 
-&quot;Treasury Dashboard - Premium&quot;, $Label.ISSP_TD_Description,
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
+&quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
 &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
 &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
 &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
@@ -964,8 +957,10 @@ Name
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
-null)</formula>
+&quot;&quot;
+       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List A</label>
         <required>false</required>
@@ -983,13 +978,10 @@ null)</formula>
 &quot;MSO Management&quot;,$Label.ISSP_AMS_MSO_GSA_MSO_Service_Description,
 &quot;Join SIS e-Invoicing&quot;,$Label.ISSP_SIS_Membership_Description,
 &quot;ICCS&quot;,$Label.ICCS_Service_Description,
-&quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description,
-&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
 &quot;ID Card Online Platform&quot;,$Label.IDCard_NoUSServiceDescription ,
 &quot;IATAN WebStar Online Services&quot;,$Label.IDCard_USServiceDescription,
 &quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,
-&quot;IATA Postal Accounts Settlement System&quot;,$Label.ISSP_PASS_PS_Description,
-&quot;PASSlink Single Sign-On&quot;,$Label.ISSP_PASSLink_PS_Description,null)</formula>
+&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description List B</label>
         <required>false</required>
@@ -1001,9 +993,31 @@ null)</formula>
     <fields>
         <fullName>Service_Description__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( NOT(ISNULL(Service_Description_List_A__c))  , Service_Description_List_A__c,
-				IF(NOT(ISNULL(Service_Description_List_B__c)), Service_Description_List_B__c, 
-							&quot;&quot;))</formula>
+        <formula>IF(BEGINS(Name,&quot;Treasury Dashboard&quot;),$Label.ISSP_TD_Description, 
+CASE( Name , 
+&quot;BSPLink&quot;, $Label.BSPLink_Description, 
+&quot;CassLink&quot;, $Label.CASSLink_Description, 
+&quot;E-Bulletin&quot;, $Label.ISSP_EBulletin_Description, 
+&quot;IFAP&quot;, $Label.IFAP_Description, 
+&quot;Join BSP / CASS&quot;, $Label.ISSP_Join_BSP_CASS_Description, 
+&quot;BSP / CASS Change Request&quot;, $Label.ISSP_Change_Request_Description, 
+&quot;BSP / CASS Change of Bank details&quot;, $Label.ISSP_AP_Bank_Details_Change_Description, 
+&quot;Management Information Report&quot;, $Label.ISSP_MIR_Description, 
+&quot;Resource Center&quot;, $Label.ISSP_Resource_Center_Description, 
+&quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
+&quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
+&quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
+&quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
+&quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
+&quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace, 
+&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description, 
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description, 
+&quot;&quot; 
+) 
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service Description</label>
         <required>false</required>
@@ -1127,14 +1141,74 @@ null)</formula>
                     <default>false</default>
                     <label>ICCS Settlement</label>
                 </value>
-                <value>
-                    <fullName>TIP Reports</fullName>
-                    <default>false</default>
-                    <label>TIP Reports</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TIDS_Countries_with_Invalid_ISO_States__c</fullName>
+        <description>List of Countries (by ISO Country Codes) for which the State/Province pick-list will not be displayed in the TIDS Forms even though these State/Province values are marked as &quot;Valid for Address&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Valid for Address overwrite at Country Level - Applies to all TIDS Forms</inlineHelpText>
+        <label>TIDS - Countries with Invalid ISO States</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Non_Eligible_Location_Countries__c</fullName>
+        <externalId>false</externalId>
+        <label>TIDS Non Eligible Location Countries</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Non_Eligible_Mailing_Countries__c</fullName>
+        <externalId>false</externalId>
+        <label>TIDS Non Eligible Mailing Countries</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Total_Ownership_Maximum__c</fullName>
+        <defaultValue>100</defaultValue>
+        <description>Minimum accepted value for Total Ownership (sum of all owners)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum accepted value for Total Ownership (sum of all owners)</inlineHelpText>
+        <label>TIDS Total Ownership – Maximum</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Total_Ownership_Minimum__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Minimum accepted value for Total Ownership (sum of all owners)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum accepted value for Total Ownership (sum of all owners)</inlineHelpText>
+        <label>TIDS Total Ownership – Minimum</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>VisibleCNS__c</fullName>
@@ -1150,51 +1224,20 @@ null)</formula>
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(AND(Name = &quot;ID Card Online Platform&quot;, $User.ANG_Sector__c = &quot;Airline&quot;),
-			false,
-IF(OR(
-    Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
+        <formula>IF(OR(Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;), 
     $User.IFG_Account_Member__c,
-				IF(
-								AND(Name = &quot;ID Card Online Platform&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;AS&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;GU&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;MP&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;PW&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;UP&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;US&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;PR&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;VI&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;MH&quot;,
-                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;FM&quot;),
-                true,
-                IF( AND(Name = &quot;IATAN Online Services&quot;,
-                    OR($User.ANG_Customer_Country_ISO__c = &quot;AS&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;GU&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;MP&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;PW&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;UP&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;US&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;PR&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;VI&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;MH&quot;,
-                    $User.ANG_Customer_Country_ISO__c = &quot;FM&quot;)),
-                true,
     OR(
-        AND(Agency__c = true,
+      IF( Agency__c = true,
+			 OR(
+        AND(Agency__c = true, 
             $User.Customer_type__c=&quot;Agency&quot;,
-            NOT(Name = &quot;Access BOP&quot;),
-            NOT(Name = &quot;Payment Link&quot;),
-	    NOT(Name = &quot;ID Card Online Platform&quot;),
-            NOT(Name = &quot;IATAN Online Services&quot;)),
+            NOT(Name = &quot;Access BOP&quot;)), 
         AND(VisibleCNS__c= true, 
             $User.Customer_type__c=&quot;CNS Agency&quot;), 
-        AND(Not_ICH_Airline__c = true,
-            Name != &quot;Payment Link&quot;, 
+        AND(Not_ICH_Airline__c = true, 
             CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
             NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;))), 
         AND(ICH_Airline__c = true, 
-            Name != &quot;Payment Link&quot;, 
             CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
             CONTAINS($User.Customer_type__c,&quot;ICH&quot;)), 
         AND(GSSA__c = true, 
@@ -1203,158 +1246,31 @@ IF(OR(
             CONTAINS($UserRole.Name ,&quot;General Public&quot;)), 
         AND(Others__c = true, 
             CONTAINS($User.Contact_Account_Record_Type__c  ,&quot;Others&quot;)), 
-        AND(Name = &quot;Payment Link&quot;,
-            NOT($User.Customer_type__c=&quot;CNS Agency&quot;),
-            NOT($User.ANG_Category__c=&quot;IATAN Passenger Sales Agent (USA Only)&quot;),
-            NOT($User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)),
-            AND(Name = &quot;Webstar&quot;,
-            OR($User.ANG_Category__c=&quot;IATAN Passenger Sales Agent (USA Only)&quot;,
-            $User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)),
+        AND(Name = &quot;Payment Link&quot;, 
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
         AND(Name = &quot;Paypal&quot;,
             $User.CNS_Account_or_Agency__c),
         AND(Name = &quot;Resource Center&quot;, 
-            NOT($User.Customer_type__c=&quot;CNS Agency&quot;),
-            NOT(CONTAINS($User.Customer_type__c,&quot;Airline&quot;))),
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;)),
         AND(Name = &quot;Transparency in Payments (TIP)&quot;,
             ($User.Is_TIP_User__c)),
         AND(Name = &quot;Access BOP&quot;,
-            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;),
-            AND(Name = &quot;IATA Accreditation &amp; Changes&quot;,
-            NOT($User.CNS_Account_or_Agency__c),
-            NOT($User.ANG_Sector__c=&quot;Cargo Agent&quot;))
-))
-))
+            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;)
+			),
+			OR( 
+				AND( Agency__c = false, 
+					$User.Customer_type__c=&quot;Other&quot;, Name &lt;&gt; &quot;TIDS&quot;), 
+				AND(Name = &quot;IFTP&quot;)
+			)
+			)
+    )
 )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <label>Portal Service</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Application_icon__c</columns>
-        <columns>Service_Description_Label__c</columns>
-        <columns>Description__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Application_URL__c</columns>
-        <columns>Critical_Service__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All_NewGenAPP</fullName>
-        <booleanFilter>1 or 2</booleanFilter>
-        <columns>NAME</columns>
-        <columns>Application_icon__c</columns>
-        <columns>Description__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Application_URL__c</columns>
-        <columns>Critical_Service__c</columns>
-        <columns>NewGenAPP_ShortName__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>NewGenAPP_ShortName__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>equals</operation>
-            <value>NewGenAPP_Mobile</value>
-        </filters>
-        <label>All - NewGenAPP</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>EasyPay</fullName>
-        <columns>NAME</columns>
-        <columns>Application_icon__c</columns>
-        <columns>ServiceName__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>NAME</field>
-            <operation>startsWith</operation>
-            <value>IATA EasyPay</value>
-        </filters>
-        <label>EasyPay</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>My_Company_Applications</fullName>
-        <columns>Application_icon__c</columns>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Visible__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Requestable__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Restricted_App__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <label>My Company Services</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>YY_Services_Requiring_Level_2_Registr</fullName>
-        <columns>NAME</columns>
-        <columns>Requires_Level2_Registration__c</columns>
-        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Critical_Service__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Requires_Level2_Registration__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>YY- Services Requiring Level 2 Registr.</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>ZZ_Services_Where_Contact_Cant_Be_Moved</fullName>
-        <columns>NAME</columns>
-        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Application_URL__c</columns>
-        <columns>Critical_Service__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ANG_Cannot_move_contact_between_Agencies__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>ZZ- Services Where Contact Cant Be Moved</label>
-        <language>en_US</language>
-    </listViews>
-    <nameField>
-        <label>Service</label>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>Portal Services</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>ISS_Portal_Application</fullName>
         <active>true</active>
@@ -1377,10 +1293,6 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
-                <fullName>Airport Handling Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>CASS Associate</fullName>
                 <default>false</default>
             </values>
@@ -1393,15 +1305,15 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Cargo Agent</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATAN Passenger Sales Agent %28USA Only%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1416,19 +1328,11 @@ IF(OR(
                 <fullName>TIDS Agent</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Travel Service Intermediaries-TSI %28USA Only%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
             <values>
                 <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Postal Service</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1564,21 +1468,8 @@ IF(OR(
                 <fullName>Settlement Calendars</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>TIP Reports</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts>
-        <customTabListAdditionalFields>Application_icon__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>Application_icon__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Application_icon__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Application_icon__c</searchFilterFields>
-        <searchFilterFields>NAME</searchFilterFields>
-        <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Autoapproved_only_when_managed_by_admins</fullName>
         <active>true</active>
@@ -1628,5 +1519,140 @@ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
         <errorDisplayField>SCIM_App_Name__c</errorDisplayField>
         <errorMessage>SCIM APP Name field must be provided when Provisioning Type is SCIM</errorMessage>
     </validationRules>
-    <visibility>Public</visibility>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_NewGenAPP</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <columns>NewGenAPP_ShortName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NewGenAPP_ShortName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>NewGenAPP_Mobile</value>
+        </filters>
+        <label>All - NewGenAPP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>EasyPay</fullName>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>ServiceName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>IATA EasyPay</value>
+        </filters>
+        <label>EasyPay</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>My_Company_Applications</fullName>
+        <columns>Application_icon__c</columns>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Visible__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Requestable__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Restricted_App__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>My Company Services</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>YY_Services_Requiring_Level_2_Registr</fullName>
+        <columns>NAME</columns>
+        <columns>Requires_Level2_Registration__c</columns>
+        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Requires_Level2_Registration__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>YY- Services Requiring Level 2 Registr.</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Services_Where_Contact_Cant_Be_Moved</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Cannot_move_contact_between_Agencies__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>ZZ- Services Where Contact Cant Be Moved</label>
+        <language>en_US</language>
+    </listViews>
+    <fieldSets>
+        <fullName>ISSP_Available_Services</fullName>
+        <description>ISSP_Available_Services</description>
+        <displayedFields>
+            <field>Application_icon__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Service_Description__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Available Services</label>
+    </fieldSets>
 </CustomObject>
