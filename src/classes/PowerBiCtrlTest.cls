@@ -209,7 +209,7 @@ public class PowerBiCtrlTest {
 	@IsTest
 	private static void refreshTokenTest() {
 
-		Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
+		Boolean isProd = !([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox);
 		String configName = '';
 		if(isProd) {
 			configName = 'TreasuryDashboard_PowerBI_Production';

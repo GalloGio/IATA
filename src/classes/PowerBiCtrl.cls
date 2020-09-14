@@ -1,6 +1,7 @@
 
 public without sharing class PowerBiCtrl {
 
+	private static final Boolean IS_PROD = !([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox);
 
 	public class OAuthResult {
 		@AuraEnabled
@@ -38,7 +39,7 @@ public without sharing class PowerBiCtrl {
 		@AuraEnabled
 		public String datasetId {get; set;}
 		@AuraEnabled
-		public String error {get; set;}
+		public EmbedError error {get; set;}
 	}
 
 	public class DatasetDetailResult {
@@ -53,7 +54,7 @@ public without sharing class PowerBiCtrl {
 		@AuraEnabled
 		public String isEffectiveIdentityRolesRequired {get; set;}
 		@AuraEnabled
-		public String error {get; set;}
+		public EmbedError error {get; set;}
 	}
 
 	public class ReportDetails {
@@ -91,7 +92,7 @@ public without sharing class PowerBiCtrl {
 	public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
 		PowerBI_Cred__c powerBiCred = PowerBI_Cred__c.getInstance(configurationName);
 		if(powerBiCred != null) {
-			String credName = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? powerBiCred.Prod_Configuration__c : powerBiCred.Dev_Configuration__c;
+			String credName = IS_PROD ? powerBiCred.Prod_Configuration__c : powerBiCred.Dev_Configuration__c;
 			PowerBI_Config__c config = PowerBI_Config__c.getValues(credName);
 			if(config != null) {
 				return config;
@@ -124,8 +125,7 @@ public without sharing class PowerBiCtrl {
 				detailsToReturn.type = reportDetail.Type__c;
 			}
 
-			Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
-			if(isProd) {
+			if(IS_PROD) {
 				if(reportDetail.Group_Id_Prod__c != null) {
 					detailsToReturn.groupId = reportDetail.Group_Id_Prod__c;
 				}
