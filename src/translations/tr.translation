@@ -2941,6 +2941,10 @@
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label>Bizi Arayın</label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label>İptal et</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -3025,6 +3029,10 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>$0 Canlı Destek</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Erişim bilgilerinizi almak için lütfen e-postanızı kontrol edin</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3055,6 +3063,10 @@
     <customLabels>
         <label>Şirket Profili</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Şikayetlerin çözülmesi 5 iş gününe kadar sürebilmektedir. Bir sorunuz veya talebiniz varsa, size daha hızlı dönebilmemiz için lütfen &lt;b&gt; Sorgu oluştur &lt;/b&gt; seçeneğini kullanın.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Profilinizi Tamamlayın</label>
@@ -3159,6 +3171,10 @@
     <customLabels>
         <label>Erişimi Reddedin</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Geri bildirimin kısa bir özetini yazın</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Belge, Yer İşaretlerime eklendi</label>
@@ -3341,6 +3357,50 @@
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Bu bir &lt;b&gt;Acil Durum&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Acil durum desteği 7/24'tür ve yalnızca İngilizce olarak sunulur.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Acil durum kanalı aracılığıyla sağlanan desteğin &lt;b&gt;İngilizce&lt;/b&gt; ve aşağıdaki kritik durumlar için sunulduğunu lütfen unutmayın:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgunuz bu durumlardan biriyle ilgili değilse, lütfen sorgu oluşturmak için aşağıdaki "&lt;b&gt; Sorgu Olarak Gönder &lt;/b&gt;" i tıklayın.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Acil durum seçeneğini seçtiniz</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Acil Durum kanalı üzerinden sağlanan destek yalnızca aşağıdaki kritik durumlar içindir:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sistem erişim sorunu veya platform kesintisi</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Fatura sorunları (önemli sorunlar / tutarsızlıklar)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sistemin askıya alınması</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Dolandırıcılık faaliyeti şüphesi</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Dolandırıcılık, önemli bilet işlemleri veya finansal konularla ilgili olmadığı sürece lütfen acil durum desteği talep etmeyin</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3491,6 +3551,22 @@
     <customLabels>
         <label>Erişime İzin Verin</label>
         <name>CSP_Grant_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Geri Bildirim Gönder</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA olarak, size mükemmel bir deneyim sunabilmek için ürün ve hizmetlerimizde sürekli iyileştirmeler yapıyoruz. Sizin görüşleriniz ve düşünceleriniz bu iyileştirmeleri yönlendirmektedir. Geri bildiriminizi iletmek için aşağıdaki düğmeyi tıklayın.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Görüşleriniz bizim için önemli</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu bir</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label>Okudum ve aşağıdaki şartları kabul ediyorum:</label>
@@ -4797,6 +4873,10 @@
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Konuyu Buradan Seçin</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
         <name>CSP_Service_ADSR</name>
     </customLabels>
@@ -4937,12 +5017,24 @@
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Lütfen kısa bir başlık girin</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Gönder</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Acil Durum Olarak Gönder</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorgu Olarak Gönder</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4979,6 +5071,14 @@
     <customLabels>
         <label>Başlık</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tüm Konular</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Son Konularınız</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>Takip</label>
@@ -23674,6 +23774,14 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Seçtiğiniz dil için canlı destek şu anda meşgulse, lütfen &lt;b&gt; bir durumda &lt;/b&gt; veya bizimle &lt;b&gt; telefon &lt;/b&gt; aracılığıyla iletişime geçin.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefon Numarası:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23692,6 +23800,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label>Bizimle sohbet edin</label>
         <name>LVA_ChatWithUs</name>
+    </customLabels>
+    <customLabels>
+        <label>Canlı destek penceresi açıldı</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -26927,7 +27039,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Hizmete Erişin</label>
+        <label>Sorunuzun konusunu seçtikten sonra mevcut destek kanallarını görebilirsiniz</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26987,7 +27099,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Telefon veya sohbet yoluyla, IATA (Uluslararası Hava Taşımacılığı Birliği) portalı üzerinden doğrudan destek alın.</label>
+        <label>Sorunuzun konusunu seçerek başlayın</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27135,7 +27247,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>İletişim Desteği</label>
+        <label>Bize Ulaşın</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
