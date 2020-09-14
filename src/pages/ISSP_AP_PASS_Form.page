@@ -196,7 +196,7 @@
                         </apex:pageBlockSection>
 
                         <span id="nav_four"></span>
-                        <apex:pageBlockSection rendered="{!isGSSAUser}" title="4. Participant Information (GSSA)" columns="1" >
+                        <apex:pageBlockSection rendered="{!isGSSAUser && ShowInputGSSAFileds}" title="4. Participant Information (GSSA)" columns="1" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4. Participant Information (GSSA)"/>
@@ -310,106 +310,157 @@
                                 <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" />
                                 <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                             </apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection rendered="{!isGSSAUser && !ShowInputGSSAFileds}" title="4. Participant Information (GSSA)" columns="1" >
+                            <apex:facet name="header">
+                                <apex:outputpanel >
+                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4. Participant Information (GSSA)"/>
+                                </apex:outputpanel>
+                            </apex:facet>
 
-                            <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && isSISActive}">
-                                <div class="aplabel">
-                                    SIS Company Information
-                                </div>
-
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Name_of_company__c.label}"/>
-                                    <apex:inputField value="{!newForm.Legal_Name_of_company__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Trade_Name}" />
-                                    <apex:inputField value="{!newForm.Airline_trade_name__c}"/>
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSection columns="2" >
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Company_Registration_ID__c.label}"/>
-                                    <apex:inputField value="{!newForm.Company_Registration_ID__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.TAX_VAT_Registration_Number__c.label}"/>
-                                    <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+                                    <apex:outputLabel value="Legal Name of GSSA"/>
+                                    <apex:outputField value="{!newForm.GSSA_Legal_Name__c}" />
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_Address}" />
-                                    <apex:inputField value="{!newForm.Company_address__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_City_Name}" />
-                                    <apex:inputField value="{!newForm.Company_city__c}"/>
+                                    <apex:outputLabel value="Code of GSSA"/>
+                                    <apex:outputField value="{!newForm.GSSA_Code__c}" />
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.Postal_code}" />
-                                    <apex:inputField value="{!newForm.Postal_code__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_State_Name}" />
-                                    <apex:inputField value="{!newForm.Company_State__c}"/>
+                                    <apex:outputLabel value="HQ Address of GSSA"/>
+                                    <apex:outputField value="{!newForm.GSSA_HQ_Address__c}" />
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Head_Office_Country}" />
-                                    <apex:selectList value="{!newForm.Company_Country__c}" styleclass="form-country select2 required" style="border-radius: 0px; border-color: grey;">
-                                        <apex:selectOptions value="{!ListCountryOptions}"/>
-                                    </apex:selectList>
-                                </apex:pageBlockSectionItem>
-
-                                <script>
-                                    $(".select2").select2();
-                                </script>
-                            </apex:pageBlockSection>
-
-                            <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && isSISActive}">
-                                <div class="aplabel">
-                                    SIS Contact Person
-                                </div>
-
-                                <tr><td colspan="4"><div class="strong-label">
-                                    {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle1}<br/>
-                                    {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle2}<br/>
-                                </div></td></tr>
-                                <apex:outputText ></apex:outputText>
-
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.First_name}"/>
-                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_F_Name__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.Email}"/>
-                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
+                                    <apex:outputLabel value="HQ Office City"/>
+                                    <apex:outputField value="{!newForm.GSSA_HQ_City__c}" />
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.Last_name}"/>
-                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_L_Name__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="{!$Label.Phone}"/>
-                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
+                                    <apex:outputLabel value="HQ Office State"/>  
+                                    <apex:outputField value="{!newForm.GSSA_HQ_State__c}" />
                                 </apex:pageBlockSectionItem>
 
                                 <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="{!$Label.ISSP_Title}"/>
-                                    <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Job_Title__c}"/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Who_requested_to_join_TOU}"/>
-                                    <apex:inputField value="{!newForm.Who_requested_to_join_TOU__c}"/>
+                                    <apex:outputLabel value="HQ Office Post Code"/>
+                                    <apex:outputField value="{!newForm.GSSA_HQ_Post_Code__c}" />
                                 </apex:pageBlockSectionItem>
 
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="HQ Office Country"/>
+                                    <apex:outputField value="{!newForm.GSSA_HQ_Country__c}" />
+                                </apex:pageBlockSectionItem>
+
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="VAT Id"/>  
+                                    <apex:outputField value="{!newForm.GSSA_VAT_Id__c}" />
+                                </apex:pageBlockSectionItem>
                             </apex:pageBlockSection>
 
                         </apex:pageBlockSection>
 
+                        <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && !isSISActive}">
+                            <div class="aplabel">
+                                SIS Company Information
+                            </div>
+                            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Name_of_company__c.label}"/>
+                                <apex:inputField value="{!newForm.Legal_Name_of_company__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Trade_Name}" />
+                                <apex:inputField value="{!newForm.Airline_trade_name__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Company_Registration_ID__c.label}"/>
+                                <apex:inputField value="{!newForm.Company_Registration_ID__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.TAX_VAT_Registration_Number__c.label}"/>
+                                <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_Address}" />
+                                <apex:inputField value="{!newForm.Company_address__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_City_Name}" />
+                                <apex:inputField value="{!newForm.Company_city__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Postal_code}" />
+                                <apex:inputField value="{!newForm.Postal_code__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_State_Name}" />
+                                <apex:inputField value="{!newForm.Company_State__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Country}" />
+                                <apex:selectList value="{!newForm.Company_Country__c}" styleclass="form-country select2 required" style="border-radius: 0px; border-color: grey;">
+                                    <apex:selectOptions value="{!ListCountryOptions}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+
+                            <script>
+                                $(".select2").select2();
+                            </script>
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && !isSISActive}">
+                            <div class="aplabel">
+                                SIS Contact Person
+                            </div>
+
+                            <tr><td colspan="4"><div class="strong-label">
+                                {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle1}<br/>
+                                {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle2}<br/>
+                            </div></td></tr>
+                            <apex:outputText ></apex:outputText>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.First_name}"/>
+                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_F_Name__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Email}"/>
+                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Last_name}"/>
+                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_L_Name__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.Phone}"/>
+                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.ISSP_Title}"/>
+                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Job_Title__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Who_requested_to_join_TOU}"/>
+                                <apex:inputField value="{!newForm.Who_requested_to_join_TOU__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                        </apex:pageBlockSection>
+
                         <span id="nav_five"></span>
-                        <apex:pageBlockSection title="4. Sales Reporting / Billing Details" columns="1" >
+                        <apex:pageBlockSection title="4. Sales Reporting / Billing Details" rendered="{! !isGSSAUser || ShowInputGSSAFileds}" columns="1" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'5','4')}.  Sales Reporting / Billing Details"/>
@@ -439,6 +490,7 @@
                                 <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" label=""/>
                             </apex:pageBlockSectionItem>
                         </apex:pageBlockSection>
+
                         <span id="nav_six"></span>   
 
                         <span id="nav_seven"></span>

@@ -29092,6 +29092,14 @@ This service is free of charge.</value>
         <value>Full Address of the Associate Entity for which Application for Approval is made</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Authorization_Form_Description</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Authorization_Form_Description</shortDescription>
+        <value>Please download and sign the Authorization Form</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Bank_Details_Change</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>

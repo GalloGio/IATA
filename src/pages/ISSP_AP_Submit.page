@@ -133,13 +133,13 @@
                                 <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false"/>
                             </p>
                             <br/>
-                            <apex:outputPanel layout="block" rendered="{! !isGSSAUser || WrapperPassCountriesRequired.size=0}">
+                            <apex:outputPanel layout="block" rendered="{! !isGSSAUser || WrapperPassCountriesRequired.size>0}">
                                 <b>Please download the Bank Mandate form using the link below:</b>
                                 <div id="bankmandatelink_p">
                                     <u><a href="{!URLFOR($Resource.Airline_PASS_Local_Account_Beneficiary)}" target="_blank">BSP / CASS  / PASS Local Bank Account Beneficiary</a></u>
                                 </div>
                             </apex:outputPanel>
-                            <apex:repeat value="{!wrapperPassCountries}" var="passCountry" rendered="{! isGSSAUser && WrapperPassCountriesRequired.size>0}">
+                            <apex:repeat value="{!wrapperPassCountries}" var="passCountry" rendered="{! isGSSAUser && WrapperPassCountriesRequired.size=0}">
                                 <apex:outputPanel layout="block" styleclass="alert alert-warning" rendered="{! !passCountry.requiredFile}">
                                     <apex:outputText value="{!$Label.ISSP_PASS_BankMandate_Not_Required}" >
                                         <apex:param value="{!passCountry.countryName}"/>
@@ -182,7 +182,7 @@
 
                         <apex:outputPanel layout="block" rendered="{!showUploadPASSAuthorizationForm}">
                             <apex:iframe scrolling="false" height="180px"
-                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=16&reqRequired=Mandatory&reqName=PASS Authotization Form&reqDescription=Please sign and upload the completed form&reqIdentifier=PASSAuthorizationForm"/>
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=16&reqRequired=Mandatory&reqName=PASS Authotization Form&reqDescription={!$Label.ISSP_AP_Authorization_Form_Description}&reqIdentifier=PASSAuthorizationForm"/>
                         </apex:outputPanel>
 
                         <apex:repeat value="{!wrapperPassCountries}" var="passCountry" >

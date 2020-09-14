@@ -772,6 +772,12 @@ global without sharing class ISSP_APProcess {
 									ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passSISMandatoryFields);
 								}
 							}
+							// If we have to show soem fields as input then they are not mandatory anymore
+							if (!getShowInputGSSAFileds()) {
+								for (String fldLabel : ISSP_AP_fieldLists.setPASSNonMandatory) {
+									ISSP_AP_fieldLists.passMandatoryFields.remove(fldLabel);
+								}
+							}
 
 							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet())
 							{
@@ -3689,6 +3695,13 @@ global without sharing class ISSP_APProcess {
 			return listGSSAPASSAllServices;
 		}
 		set;
+	}
+
+	/**
+	 * Returns true if the input fields for GSSA in the step 3 must appear or only show them as output info
+	 */
+	public boolean getShowInputGSSAFileds() {
+		return listGSSAPASSAllServices.isEmpty();
 	}
 
 	/**
