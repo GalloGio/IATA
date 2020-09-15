@@ -59,6 +59,10 @@
                 <behavior>Edit</behavior>
                 <field>First_Step_Completed__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Oscar_Communication_Case_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

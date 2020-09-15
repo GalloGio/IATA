@@ -94,12 +94,12 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 this.title = this.label.CSP_RecentCases_Support;
                 this.helpText = this.label.CSP_RecentCases_HelpText;
                 this.helpText2 = this.label.CSP_RecentCases_HelpText2;
-                this.titleCss = "text-medium text-bold slds-align_absolute-center";
+                this.titleCss = "text-small text-bold slds-align_absolute-center";
                 this.cardBodyContent = "cardBodyContentSmall";
                 this.rowHeight = "rowHeight";
                 this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
-                    { label: results.Subject, fieldName: 'CaseURL', type: 'url',typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self',tooltip: {fieldName: 'CaseNumber'}}  },
+                    { label: results.Subject, fieldName: 'CaseURL', type: 'url',typeAttributes: {label: {fieldName: 'Subject'}, target:'_self',tooltip:{fieldName: 'Subject'}}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
                     { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', cellAttributes: { class: { fieldName: 'statusClass' } } }
                 ];
             }
