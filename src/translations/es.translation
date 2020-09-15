@@ -3382,7 +3382,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Tenga en cuenta que el apoyo proporcionadoa través del canal de Emergencia es sólo para las siguientes situaciones críticas:</label>
         <name>CSP_Emergency_Selected_Message</name>
-    </customLabels>   
+    </customLabels>
     <customLabels>
         <label>Problema de acceso al sistema o interrupción de la plataforma</label>
         <name>CSP_Emergency_Selected_Reason1</name>
@@ -4873,12 +4873,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label>Seleccione el asunto aquí</label>
-        <name>CSP_Select_Topic_Placeholder</name>
-    </customLabels>
-    <customLabels>
         <label>Seleccione el estado del portal</label>
         <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>Seleccione el asunto aquí</label>
+        <name>CSP_Select_Topic_Placeholder</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
@@ -28179,6 +28179,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>pkb2_lang_tl</name>
     </customLabels>
     <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Urdu --></label>
         <name>pkb2_lang_ur</name>
     </customLabels>
@@ -36680,7 +36684,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Informes</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

@@ -28149,6 +28149,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>pkb2_lang_tl</name>
     </customLabels>
     <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Urdu --></label>
         <name>pkb2_lang_ur</name>
     </customLabels>

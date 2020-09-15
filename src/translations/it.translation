@@ -3070,7 +3070,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label>Un reclamo richiede fino a 5 giorni lavorativi per essere risolto. Se avete una domanda o una richiesta, utilizzate l'opzione &lt;b&gt; Create un caso &lt;/b&gt; per permetterci di rispondervi più rapidamente.</label>
+        <label>Un reclamo richiede fino a 5 giorni lavorativi per essere risolto. Se avete una domanda o una richiesta, utilizzate l&apos;opzione &lt;b&gt; Create un caso &lt;/b&gt; per permetterci di rispondervi più rapidamente.</label>
         <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
@@ -3362,7 +3362,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
-        <label>Questa è &lt;b&gt;un'emergenza&lt;/b&gt;</label>
+        <label>Questa è &lt;b&gt;un&apos;emergenza&lt;/b&gt;</label>
         <name>CSP_Emergency_Box_Message</name>
     </customLabels>
     <customLabels>
@@ -3374,10 +3374,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Se la vostra richiesta non è correlata a una di queste situazioni, cliccate su "&lt;b&gt; Invia come richiesta &lt;/b&gt;" qui sotto per creare un caso.</label>
+        <label>Se la vostra richiesta non è correlata a una di queste situazioni, cliccate su &quot;&lt;b&gt; Invia come richiesta &lt;/b&gt;&quot; qui sotto per creare un caso.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
-    <customLabels>        
+    <customLabels>
+        <label>Avete selezionato l&apos;opzione Emergenza</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Si prega di notare che il supporto fornito attraverso il canale di emergenza è solo per le seguenti situazioni critiche:</label>
         <name>CSP_Emergency_Selected_Message</name>
     </customLabels>
@@ -3396,10 +3400,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Sospetto di attività fraudolente</label>
         <name>CSP_Emergency_Selected_Reason4</name>
-    </customLabels>
-    <customLabels>
-        <label>Avete selezionato l'opzione Emergenza</label>
-        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
     </customLabels>
     <customLabels>
         <label>Si prega di non richiedere supporto di emergenza, a meno che non si tratti di frode, biglietteria o problemi finanziari</label>
@@ -3554,7 +3554,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_ButtonLabel</name>
     </customLabels>
     <customLabels>
-        <label>Alla IATA apportiamo costantemente miglioramenti ai nostri prodotti e servizi, in modo da potervi offrire un'esperienza eccellente. I vostri punti di vista e pensieri guidano questi miglioramenti. Clicca il pulsante qui sotto per fornire il tuo feedback.</label>
+        <label>Alla IATA apportiamo costantemente miglioramenti ai nostri prodotti e servizi, in modo da potervi offrire un&apos;esperienza eccellente. I vostri punti di vista e pensieri guidano questi miglioramenti. Clicca il pulsante qui sotto per fornire il tuo feedback.</label>
         <name>CSP_Give_Feedback_Message</name>
     </customLabels>
     <customLabels>
@@ -4879,7 +4879,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-        <label>Seleziona qui l'argomento</label>
+        <label>Seleziona qui l&apos;argomento</label>
         <name>CSP_Select_Topic_Placeholder</name>
     </customLabels>
     <customLabels>
@@ -5035,16 +5035,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SubmitApproval</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_SubmittedApproval --></label>
-        <name>CSP_SubmittedApproval</name>
-    </customLabels>
-    <customLabels>
         <label>Inviare come Emergenza</label>
         <name>CSP_SubmitAsEmergency</name>
     </customLabels>
     <customLabels>
         <label>Invia come Richiesta</label>
         <name>CSP_SubmitAsQuery</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmittedApproval --></label>
+        <name>CSP_SubmittedApproval</name>
     </customLabels>
     <customLabels>
         <label>Successo</label>
@@ -23778,12 +23778,12 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
-        <label>Basta comporre:</label>
-        <name>LVA_CallUsDial</name>
-    </customLabels>
-    <customLabels>
         <label>Se al momento la chat non è disponibile nella vostra lingua, si prega di &lt;b&gt; creare un caso &lt;/b&gt; o contattarci tramite &lt;b&gt; telefono &lt;/b&gt;.</label>
         <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Basta comporre:</label>
+        <name>LVA_CallUsDial</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
@@ -27041,7 +27041,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>I canali di supporto disponibili appaiono una volta selezionato l'argomento della domanda</label>
+        <label>I canali di supporto disponibili appaiono una volta selezionato l&apos;argomento della domanda</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -27101,7 +27101,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Mettiamoci in contatto. Iniziate selezionando l'argomento della vostra domanda</label>
+        <label>Mettiamoci in contatto. Iniziate selezionando l&apos;argomento della vostra domanda</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -28151,6 +28151,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>

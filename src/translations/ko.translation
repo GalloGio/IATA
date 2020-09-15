@@ -3373,7 +3373,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>귀하의 질의가 긴급 상황에 해당하지 않는 경우, "&lt;b&gt; 사례 작성 &lt;/b&gt;을 통해 질의를 보내주시기 바랍니다. </label>
+        <label>귀하의 질의가 긴급 상황에 해당하지 않는 경우, &quot;&lt;b&gt; 사례 작성 &lt;/b&gt;을 통해 질의를 보내주시기 바랍니다. </label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -28144,6 +28144,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>

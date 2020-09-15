@@ -3029,7 +3029,7 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
-	<label>Чат в $0</label>
+        <label>Чат в $0</label>
         <name>CSP_Chat_base_Label</name>
     </customLabels>
     <customLabels>
@@ -3065,7 +3065,7 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-	<label>Рассмотрение жалобы занимает до 5 рабочих дней. Если у вас есть какой либо вопрос или запрос, воспользуйтесь, пожалуйста, опцией &lt;b&gt;Создать запрос &lt;/b&gt;, чтобы мы могли быстрее помочь вам.</label>
+        <label>Рассмотрение жалобы занимает до 5 рабочих дней. Если у вас есть какой либо вопрос или запрос, воспользуйтесь, пожалуйста, опцией &lt;b&gt;Создать запрос &lt;/b&gt;, чтобы мы могли быстрее помочь вам.</label>
         <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
@@ -3378,11 +3378,11 @@
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Если ваш запрос не связан с одной из этих ситуаций, пожалуйста, нажмите "&lt;b&gt; Отправить как запрос &lt;/b&gt;" ниже, чтобы создать новый запрос.</label>
+        <label>Если ваш запрос не связан с одной из этих ситуаций, пожалуйста, нажмите &quot;&lt;b&gt; Отправить как запрос &lt;/b&gt;&quot; ниже, чтобы создать новый запрос.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
-        <label>Вы выбрали опцию ""Чрезвычайная ситуация"".</label>
+        <label>Вы выбрали опцию &quot;&quot;Чрезвычайная ситуация&quot;&quot;.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Title</name>
     </customLabels>
     <customLabels>
@@ -3560,6 +3560,10 @@
     <customLabels>
         <label>В ИАТА мы постоянно совершенствуем наши продукты и услуги, чтобы предоставить наилучший сервис. Ваши отзывы и предложения являются движущей силой этих улучшений. Нажмите на кнопку ниже, чтобы оставить свой отзыв.</label>
         <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback title --></label>
+        <name>CSP_Give_Feedback_Title</name>
     </customLabels>
     <customLabels>
         <label>Это</label>
@@ -4880,7 +4884,7 @@
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
-	<label>Выберите тему </label>
+        <label>Выберите тему </label>
         <name>CSP_Select_Topic_Placeholder</name>
     </customLabels>
     <customLabels>
@@ -28170,6 +28174,10 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
