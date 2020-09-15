@@ -65,7 +65,8 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 	public String IDCard_BSP_Standard_Documents_Procedures{get; set;}
 	public String IDCard_Intro_to_the_BSP_System_Language{get; set;}
 
-
+	//RJ-ENHC0013702 add more 1 course
+	public String Distribution_Airlines_Retailing_with_NDC{get; set;}
 
 
 	private ID_Card__c[] idCardTemp;
@@ -151,7 +152,9 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 		IDCard_BSP_Standard_Documents_Procedures = Label.IDCard_BSP_Standard_Documents_Procedures;
 		IDCard_Intro_to_the_BSP_System_Language = Label.IDCard_Intro_to_the_BSP_System_Language;
 
-
+		//RJ-ENHC0013702
+		Distribution_Airlines_Retailing_with_NDC = Label.Distribution_Airlines_Retailing_with_NDC;
+		
 
 
 		initialize();
@@ -163,7 +166,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 			//get application ID from URL parm
 			String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
-
 			//get application info from DB
 			IDCardApplicationNR = [SELECT i.Payment_Amount__c, i.VER_Number__c, i.RecordTypeId, i.Revenue_Confirmation__c, i.UIR__c, i.Type_of_application__c, i.Title__c,
 														i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c,
@@ -186,7 +188,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 			isContractor = (IDCardApplicationNR.Position_in_Current_Agency__c == 'Independent Consultant/Broker');
 			isEmployee = !isContractor && IDCardApplicationNR.Position_in_Current_Agency__c != 'Sole Owner' && IDCardApplicationNR.Position_in_Current_Agency__c != 'Shareholder'
 									 && IDCardApplicationNR.Position_in_Current_Agency__c != 'Partner';
-
 			if (!IsNewApplication) {
 				associatedIDCard = GetAssociatedIDCard(IDCardApplicationNR.VER_Number__c);
 				lastNameHasChanged = (associatedIDCard.LastName__c != IDCardApplicationNR.Last_Name__c);
@@ -220,7 +221,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 					//get image name
 					if (!IsNewApplication) {
 						associatedContact = GetAssociatedContact(IDCardApplicationNR.VER_Number__c);
-						System.debug('** associatedContact' + associatedContact);
 
 						//idCardTemp = [Select i.Photo__c,i.ID_Card_Application__r.Displayed_Name__c From ID_Card__c i where i.Related_Contact__c = :associatedContact.Id AND (Card_Status__c =: IDCardUtil.CARDSTATUS_PRINTED_DELIVERED or Card_Status__c =: IDCardUtil.CARDSTATUS_CANCELED) order by i.CreatedDate desc];
 
@@ -604,11 +604,9 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 
 			//RA: 7/10/2013 USE Last IDCard Values instead of Contact
-
 			associatedIDCard = GetAssociatedIDCard(dVERNumber);
 
 			if (associatedIDCard != null ) {
-
 				// prefill some fields
 				IDCardApplicationNR.Gender__c = associatedIDCard.Gender__c;//contactFound.Gender__c;
 				IDCardApplicationNR.Last_Name__c = associatedIDCard.LastName__c;//contactFound.LastName;
@@ -655,14 +653,12 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 	 */
 	public Pagereference next() {
 
-		system.debug('Pagereference Next()');
-
 		try {
 
 			if (part == sectionOne) {
 				if (IsFormValid()) {
 					Savepoint sp = Database.setSavepoint();
-
+					System.debug('Language: '+Language);
 					IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
 					if (IDCardApplicationNR.Middle_Initial__c != null && IDCardApplicationNR.Middle_Initial__c != '')
 						IDCardApplicationNR.Middle_Initial__c = (IDCardApplicationNR.Middle_Initial__c).toUpperCase();
@@ -681,7 +677,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 						//Go to next part
 						Pagereference confPage = Page.IDCard_ApplicationForm_NR;
-						System.debug('$$ PARMS ' + IDCardApplicationNR.IATA_Code__c + ' ' + IDCardApplicationNR.Type_of_application__c + ' ' + IDCardApplicationNR.VER_Number__c + ' ' + IDCardApplicationNR.Id);
 						confPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.IATA_Code__c));
 						confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Type_of_application__c));
 						confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));
@@ -698,13 +693,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 						isContractor = (IDCardApplicationNR.Position_in_Current_Agency__c == 'Independent Consultant/Broker');
 						isEmployee = !isContractor && (IDCardApplicationNR.Position_in_Current_Agency__c != 'Sole Owner') && (IDCardApplicationNR.Position_in_Current_Agency__c != 'Shareholder')
 												 && (IDCardApplicationNR.Position_in_Current_Agency__c != 'Partner');
-
-						system.debug('----NEXT----');
-						system.debug('----lastNameHasChanged----' + lastNameHasChanged);
-						system.debug('----isContractor----' + isContractor);
-						system.debug('----isKeyAccount(IDCardApplicationNR.IATA_Code__c, vernumParameter)----' + isKeyAccount(IDCardApplicationNR.IATA_Code__c, vernumParameter) );
-						system.debug('----vernumParameter----' + vernumParameter);
-						system.debug('----IDCardApplicationNR.IATA_Code__c----' + IDCardApplicationNR.IATA_Code__c);
 
 						if ((lastNameHasChanged || isContractor || isEmployee )  && !isKeyAccount(IDCardApplicationNR.IATA_Code__c))
 							confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('attach'));
@@ -852,7 +840,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 
 				try {
-					System.debug('** IDCardApplicationNR.IATA_Code__c ' + IDCardApplicationNR.IATA_Code__c + ' IDCardApplicationNR.Type_of_application__c ' + IDCardApplicationNR.Type_of_application__c + ' IDCardApplicationNR.VER_Number__c' + IDCardApplicationNR.VER_Number__c + ' IDCardApplicationNR.Id ' + IDCardApplicationNR.Id );
 					Pagereference confPage = Page.IDCard_ApplicationForm_NR;
 
 					confPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.IATA_Code__c));
@@ -1253,7 +1240,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 
 	public List<Attachment> getDocs() {
-		System.debug('**** Getting New documents');
 		docs = [Select Name, Description, Id from Attachment where ParentId = :IDCardApplicationNR.Id];
 		return docs;
 
@@ -1261,7 +1247,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 	public PageReference deleteAttachment() {
 		try {
-			System.debug('**** Deleteing ATTACHMENT with ID ' + attachmentID);
 			delete new List<Attachment>( [Select Name from Attachment where Id = :attachmentID]);
 
 			List<Attachment> tempList = [Select Name, Description, Id from Attachment where ParentId = :IDCardApplicationNR.Id];
@@ -1274,7 +1259,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 	}
 
 	public PageReference upload() {
-		System.debug('**** Uploading Docs');
 		try {
 
 			if ((document1.Name != null && document1.Name != '' && (docDesc1 == '' || docDesc1 == null))
