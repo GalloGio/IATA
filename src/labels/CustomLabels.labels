@@ -4557,14 +4557,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Email Welcome Part 5</shortDescription>
         <value>We hope you enjoy our IATA Customer Portal!</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>CSP_Emergency_Box_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Emergency box message</shortDescription>
-        <value> This is an &lt;b&gt;emergency&lt;/b&gt;</value>
+        <value>This is an &lt;b&gt;emergency&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Footer_Message</fullName>
@@ -4573,14 +4573,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>Emergency box footer message</shortDescription>
         <value>Emergency support is 24/7 and is only offered in English.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Title when emergency option is selected on the Case Creation</shortDescription>
-        <value>You have selected the emergency option</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Case_Creation_Message</fullName>
@@ -4597,6 +4589,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>Second Message when emergency option is selected on the Case Creation</shortDescription>
         <value>If your query is not related to any of these situations, please click &lt;b&gt; Submit as Query &lt;/b&gt; below to create a case.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title when emergency option is selected on the Case Creation</shortDescription>
+        <value>You have selected the emergency option</value>
     </labels>
     <labels>
         <fullName>CSP_Emergency_Selected_Message</fullName>
@@ -4645,7 +4645,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Emergency Tooltip</shortDescription>
-        <value>Please do not demand emergency support unless it's about fraud, ticketing or financial issues</value>
+        <value>Please do not demand emergency support unless it&apos;s about fraud, ticketing or financial issues</value>
     </labels>
     <labels>
         <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
@@ -4950,20 +4950,20 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>At IATA, we are constantly making improvements to our products and services so we can provide you an excellent experience. Your views and thoughts drive these improvements. Click the button below to provide your feedback.</value>
     </labels>
     <labels>
-        <fullName>CSP_Give_Feedback_Type_Title</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Give Feedback Type title</shortDescription>
-        <value>This is a</value>
-    </labels>
-    <labels>
         <fullName>CSP_Give_Feedback_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Give Feedback title</shortDescription>
         <value>Your feedback is important to us</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Type_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Type title</shortDescription>
+        <value>This is a</value>
     </labels>
     <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
@@ -7849,6 +7849,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Status</value>
     </labels>
     <labels>
+        <fullName>CSP_SubjectSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subject subtitle for complaint/compliment</shortDescription>
+        <value>Please enter a short subject line</value>
+    </labels>
+    <labels>
         <fullName>CSP_Submit</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7887,14 +7895,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_SubmittedApproval</shortDescription>
         <value>The record was submitted for approval</value>
-    </labels>
-    <labels>
-        <fullName>CSP_SubjectSubtitleCC</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Subject subtitle for complaint/compliment</shortDescription>
-        <value>Please enter a short subject line</value>
     </labels>
     <labels>
         <fullName>CSP_Success</fullName>
@@ -46778,7 +46778,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Let's get in touch. Start by selecting the topic of your question</value>
+        <value>Let&apos;s get in touch. Start by selecting the topic of your question</value>
     </labels>
     <labels>
         <fullName>csp_CompanyContact_Section_label</fullName>
@@ -46810,7 +46810,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>At IATA we strive to provide an excellent customer service and it's rewarding to know that you care too. We consider any feedback you give us.</value>
+        <value>At IATA we strive to provide an excellent customer service and it&apos;s rewarding to know that you care too. We consider any feedback you give us.</value>
     </labels>
     <labels>
         <fullName>csp_Compliment_Label</fullName>

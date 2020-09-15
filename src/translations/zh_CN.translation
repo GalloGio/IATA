@@ -3364,13 +3364,13 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>紧急支持是24/7，但仅能提供英文服务。</label>
         <name>CSP_Emergency_Footer_Message</name>
-    </customLabels>    
+    </customLabels>
     <customLabels>
         <label>请注意，通过紧急通道所提供的语言支持为&lt;b&gt;英文&lt;/b&gt;，仅适用于以下几种情况。</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>如果您的查询与这些情况无关，请点击下面的""&lt;b&gt;以一般问询的方式提交&lt;/b&gt;""来创建一个案例。</label>
+        <label>如果您的查询与这些情况无关，请点击下面的&quot;&quot;&lt;b&gt;以一般问询的方式提交&lt;/b&gt;&quot;&quot;来创建一个案例。</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -23789,12 +23789,12 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
-        <label>与我们聊天</label>
-        <name>LVA_ChatWithUs</name>
-    </customLabels>
-    <customLabels>
         <label>聊天窗口已经打开</label>
         <name>LVA_ChatWindowAlreadyOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>与我们聊天</label>
+        <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -28138,6 +28138,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -36675,7 +36679,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contact Information</name>
         </sections>
         <sections>
-            <label><!-- Portal Service Access --></label>
+            <label>报告/报表</label>
             <name>Portal Service Access</name>
         </sections>
     </reportTypes>

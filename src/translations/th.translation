@@ -3370,7 +3370,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>หากคำถามของคุณไม่เกี่ยวข้องกับสถานการณ์ใดสถานการณ์หนึ่งโปรดคลิก "&lt;b&gt;ส่งเป็นแบบสอบถาม&lt;/b&gt;" ด้านล่างเพื่อสร้างเคส</label>
+        <label>หากคำถามของคุณไม่เกี่ยวข้องกับสถานการณ์ใดสถานการณ์หนึ่งโปรดคลิก &quot;&lt;b&gt;ส่งเป็นแบบสอบถาม&lt;/b&gt;&quot; ด้านล่างเพื่อสร้างเคส</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -23796,12 +23796,12 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
-        <label>พูดคุยกับเรา</label>
-        <name>LVA_ChatWithUs</name>
-    </customLabels>
-    <customLabels>
         <label>เปิดหน้าต่างแชทแล้ว</label>
         <name>LVA_ChatWindowAlreadyOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>พูดคุยกับเรา</label>
+        <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -28145,6 +28145,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -36648,7 +36652,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>รายงาน</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

@@ -3033,6 +3033,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Chat  dalam $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Silakan periksa email Anda untuk mendapatkan detail akses Anda.</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3369,7 +3373,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Jika kueri Anda tidak berkaitan dengan salah satu situasi ini, harap klik "&lt;b&gt;Kirim sebagai Kueri&lt;/b&gt;" di bawah untuk membuat kasus.</label>
+        <label>Jika kueri Anda tidak berkaitan dengan salah satu situasi ini, harap klik &quot;&lt;b&gt;Kirim sebagai Kueri&lt;/b&gt;&quot; di bawah untuk membuat kasus.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -27090,10 +27094,6 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_Case_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Chat  dalam $0</label>
-        <name>CSP_Chat_base_Label</name>
-    </customLabels>
-    <customLabels>
         <label>Mengobrol dengan Kami</label>
         <name>csp_Chat_Panel_label</name>
     </customLabels>
@@ -28152,6 +28152,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>

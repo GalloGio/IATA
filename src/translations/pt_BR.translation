@@ -23796,12 +23796,12 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
-        <label>Fale connosco por chat</label>
-        <name>LVA_ChatWithUs</name>
-    </customLabels>
-    <customLabels>
         <label>A janela de bate-papo foi aberta</label>
         <name>LVA_ChatWindowAlreadyOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Fale connosco por chat</label>
+        <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -28145,6 +28145,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -36648,7 +36652,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Relatorios / Reportes</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

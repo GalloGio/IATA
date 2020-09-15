@@ -3361,7 +3361,7 @@
         <name>CSP_Emergency_Box_Message</name>
     </customLabels>
     <customLabels>
-        <label>Acil durum desteği 7/24'tür ve yalnızca İngilizce olarak sunulur.</label>
+        <label>Acil durum desteği 7/24&apos;tür ve yalnızca İngilizce olarak sunulur.</label>
         <name>CSP_Emergency_Footer_Message</name>
     </customLabels>
     <customLabels>
@@ -3369,7 +3369,7 @@
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Sorgunuz bu durumlardan biriyle ilgili değilse, lütfen sorgu oluşturmak için aşağıdaki "&lt;b&gt; Sorgu Olarak Gönder &lt;/b&gt;" i tıklayın.</label>
+        <label>Sorgunuz bu durumlardan biriyle ilgili değilse, lütfen sorgu oluşturmak için aşağıdaki &quot;&lt;b&gt; Sorgu Olarak Gönder &lt;/b&gt;&quot; i tıklayın.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -3545,14 +3545,6 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Go to Webstar --></label>
-        <name>CSP_Go_to_Webstar</name>
-    </customLabels>
-    <customLabels>
-        <label>Erişime İzin Verin</label>
-        <name>CSP_Grant_User_Access_Title</name>
-    </customLabels>
-    <customLabels>
         <label>Geri Bildirim Gönder</label>
         <name>CSP_Give_Feedback_ButtonLabel</name>
     </customLabels>
@@ -3567,6 +3559,14 @@
     <customLabels>
         <label>Bu bir</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Go to Webstar --></label>
+        <name>CSP_Go_to_Webstar</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişime İzin Verin</label>
+        <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
         <label>Okudum ve aşağıdaki şartları kabul ediyorum:</label>
@@ -23798,12 +23798,12 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
-        <label>Bizimle sohbet edin</label>
-        <name>LVA_ChatWithUs</name>
-    </customLabels>
-    <customLabels>
         <label>Canlı destek penceresi açıldı</label>
         <name>LVA_ChatWindowAlreadyOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Bizimle sohbet edin</label>
+        <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -28149,6 +28149,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -36483,7 +36487,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <label><!-- Activity --></label>
                 <name>Activity</name>
             </columns>
-            <label><!-- Objectives --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -36652,7 +36656,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

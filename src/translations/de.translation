@@ -3374,7 +3374,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Wenn sich Ihre Anfrage nicht auf eine dieser Situationen bezieht, klicken Sie bitte unten auf "&lt;b&gt; Als Anfrage einreichen &lt;/b&gt;", um einen Fall zu erstellen.</label>
+        <label>Wenn sich Ihre Anfrage nicht auf eine dieser Situationen bezieht, klicken Sie bitte unten auf &quot;&lt;b&gt; Als Anfrage einreichen &lt;/b&gt;&quot;, um einen Fall zu erstellen.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -3404,7 +3404,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Bitte fordern Sie keine Soforthilfe an, es sei denn, es geht um Betrug, Ticketverkäufe oder finanzielle Anliegen.</label>
         <name>CSP_Emergency_Tooltip</name>
-    </customLabels>    
+    </customLabels>
     <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
@@ -4872,16 +4872,16 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_SeeAll</name>
     </customLabels>
     <customLabels>
-        <label>Thema hier auswählen</label>
-        <name>CSP_Select_Topic_Placeholder</name>
-    </customLabels>
-    <customLabels>
         <label>Wählen Sie die Community</label>
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
         <label>Wählen Sie den Portal Status</label>
         <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>Thema hier auswählen</label>
+        <name>CSP_Select_Topic_Placeholder</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
@@ -23800,12 +23800,12 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
-        <label>Chatten Sie mit uns</label>
-        <name>LVA_ChatWithUs</name>
-    </customLabels>
-    <customLabels>
         <label>Chat-Fenster wurde geöffnet</label>
         <name>LVA_ChatWindowAlreadyOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>Chatten Sie mit uns</label>
+        <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -28149,6 +28149,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -36686,7 +36690,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <name>Contact Information</name>
         </sections>
         <sections>
-            <label><!-- Portal Service Access --></label>
+            <label>Berichte</label>
             <name>Portal Service Access</name>
         </sections>
     </reportTypes>
