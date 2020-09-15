@@ -31,7 +31,7 @@ button[disabled] {
 	margin-bottom: 0;
 }
 
-.base, .contained, .light-contained {
+.base, .contained, .light-contained, .outlined {
 	min-width: 13.75rem;
 }
 
@@ -86,10 +86,23 @@ button[disabled] {
 }
 
 .base,
-.link {
+.link,
+.outlined {
 	color: #3333ff;
 	background-color: transparent;
 	border: 1px solid transparent;
+}
+
+.outlined {
+	/*color: #1e32fa;*/
+    box-shadow: none;
+    border: 1px solid #1e32fa;
+}
+
+.outlined:disabled,
+.outlined[disabled] {
+	border: 1px solid #f7f8fa;
+	color: #999999;
 }
 
 .link, 
@@ -127,7 +140,13 @@ button[disabled] {
 .slds-text-body_regular {
 	font-size: 0.875rem;
 }
+
 button:focus {
 	outline-color: currentColor;
 	outline-style: outset;
+}
+
+.contained[disabled].highlighted,
+.outlined[disabled].highlighted {
+	border: 1px solid #1e32fa;
 }

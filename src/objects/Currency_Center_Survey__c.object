@@ -264,6 +264,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Cloned_From__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the survey that was used as a model to clone all their child surveys</description>
+        <externalId>false</externalId>
+        <label>Cloned From</label>
+        <referenceTo>Currency_Center_Survey__c</referenceTo>
+        <relationshipLabel>Currency Center Survey (Cloned From)</relationshipLabel>
+        <relationshipName>Currency_Center_Survey1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <description>Comment on issues faced and causing blocked funds</description>
         <externalId>false</externalId>

@@ -1705,6 +1705,50 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Auto renew payment method error --></label>
         <name>Auto_renew_payment_method_error</name>
     </customLabels>
@@ -2881,7 +2925,7 @@
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>Связаться с нами</label>
+        <label>Свяжитесь с Нами</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2895,6 +2939,10 @@
     <customLabels>
         <label>Приобрести Онлайн</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>Позвоните нам</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>Отменить</label>
@@ -2981,6 +3029,10 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Чат в $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Пожалуйста, проверьте вашу почту для получения доступа.</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3011,6 +3063,10 @@
     <customLabels>
         <label>Профиль компании</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Рассмотрение жалобы занимает до 5 рабочих дней. Если у вас есть какой либо вопрос или запрос, воспользуйтесь, пожалуйста, опцией &lt;b&gt;Создать запрос &lt;/b&gt;, чтобы мы могли быстрее помочь вам.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Заполнить данные Профиля</label>
@@ -3115,6 +3171,10 @@
     <customLabels>
         <label>Отказать в доступе</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Напишите краткое описание</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Документ добавлен в мои закладки</label>
@@ -3306,6 +3366,50 @@
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>&lt;b&gt;Чрезвычайная ситуация&lt;/b&gt;.</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Экстренная поддержка предоставляется 24 часа, 7 дней в неделю и только на английском языке.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, обратите внимание, что поддержка, предоставляемая по каналу экстренной помощи, предлагается только на &lt;b&gt;английском языке &lt;/b&gt; и для следующих критических ситуаций:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Если ваш запрос не связан с одной из этих ситуаций, пожалуйста, нажмите &quot;&lt;b&gt; Отправить как запрос &lt;/b&gt;&quot; ниже, чтобы создать новый запрос.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы выбрали опцию &quot;&quot;Чрезвычайная ситуация&quot;&quot;.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, обратите внимание, что поддержка, предоставляемая по каналу экстренной помощи, предлагается только для следующих критических ситуаций.</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Проблемы доступа к системам или выходом из строя платформ</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Вопросы по выставленным счетам (крупные несоответствия)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Отключения систем</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Подозрительная активность и мошенничество</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, не запрашивайте экстренной помощи, если речь не идет о мошенничестве, продаже билетов или финансовых вопросах.</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3342,7 +3446,7 @@
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>Связаться с нами</label>
+        <label>Свяжитесь с Нами</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3450,6 +3554,22 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
+        <label>Отзыв</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>В ИАТА мы постоянно совершенствуем наши продукты и услуги, чтобы предоставить наилучший сервис. Ваши отзывы и предложения являются движущей силой этих улучшений. Нажмите на кнопку ниже, чтобы оставить свой отзыв.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback title --></label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Это</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Go to Webstar --></label>
         <name>CSP_Go_to_Webstar</name>
     </customLabels>
@@ -3470,8 +3590,16 @@
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP IATA Customer Portal --></label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -4438,6 +4566,10 @@
         <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -4752,6 +4884,10 @@
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Выберите тему </label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
         <name>CSP_Service_ADSR</name>
     </customLabels>
@@ -4892,12 +5028,24 @@
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Пожалуйста, введите тему</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Отправить</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Отправить как экстренной запрос</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Отправить как запрос</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4934,6 +5082,14 @@
     <customLabels>
         <label>Название</label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Все темы</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваши последние темы</label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label>Отслеживание</label>
@@ -5198,6 +5354,106 @@
     <customLabels>
         <label><!-- Case Classification --></label>
         <name>Case_Classification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Ignore Survey Button --></label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Success Message --></label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Success Message 48Hours --></label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Success_Title --></label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Closure_Survey_Message --></label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closure Take Survey Button --></label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Survey_Message --></label>
+        <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Defect/Issue --></label>
@@ -5466,6 +5722,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
@@ -21039,6 +21303,10 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Pending Documents --></label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
@@ -23521,6 +23789,14 @@ GSA - 3 буквы.
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Если чат на вашем языке в данный момент недоступен, пожалуйста &lt;b&gt;создайтезапрос&lt;/b&gt; или &lt;b&gt;позвоните нам&lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Просто наберите номер:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23535,6 +23811,10 @@ GSA - 3 буквы.
     <customLabels>
         <label>Вы можете позвонить представителю IATA по следующему номеру:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Открыто окно чата</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Написать нам в чате</label>
@@ -26774,7 +27054,7 @@ GSA - 3 буквы.
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Служба доступа</label>
+        <label>Доступные каналы поддержки появляются после выбора темы вопроса</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26834,7 +27114,7 @@ GSA - 3 буквы.
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Получите поддержку напрямую через портал Международной ассоциации воздушного транспорта (ИАТА), по телефону или в чате.</label>
+        <label>Давайте свяжемся с вами. Начните с выбора темы вопроса</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26982,7 +27262,7 @@ GSA - 3 буквы.
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Техническая поддержка</label>
+        <label>Связаться с нами</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
@@ -27894,6 +28174,10 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>

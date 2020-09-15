@@ -429,7 +429,9 @@
 &apos;&quot;Agent Numeric Code&quot;:&quot;&apos; + {!UserFields.Contact_Account_IATA_Code__c} + &apos;&quot;,&apos; +
 &apos;&quot;Requested Role&quot;:&quot;&apos; + {!PortalServiceAccess.ANG_Portal_Service_Role__c} + &apos;&quot;,&apos; +
 &apos;&quot;BSP Country&quot;:&quot;&apos; + {!UserFields.Contact.Account.Country_ISO_Code__c} + &apos;&quot;,&apos; +
-&apos;&quot;External Systems&quot;:&quot;&apos; + {!PortalServiceAccess.Application_Name__c} + &apos;&quot;&apos; +
+&apos;&quot;External Systems&quot;:&quot;&apos; + {!PortalServiceAccess.Application_Name__c} + &apos;&quot;,&apos; +
+&apos;&quot;bspCountry&quot;:&quot;&apos; + TEXT({!UserFields.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.BSP_Billing__c}) + &apos;&quot;,&apos; +
+&apos;&quot;isoCountry&quot;:&quot;&apos; + {!UserFields.Contact.Account.Country_ISO_Code__c} + &apos;&quot;&apos; +
 &apos;}&apos;</expression>
     </formulas>
     <formulas>
@@ -515,7 +517,7 @@
             <targetReference>Fetch_More_User_Info</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>Details</name>
         <dataType>String</dataType>
