@@ -526,7 +526,7 @@ global without sharing class ISSP_APProcess {
 						newForm.GSSA_VAT_Id__c = '';
 					}
 					if(String.isBlank(newForm.GSSA_Code__c)){
-						newForm.GSSA_Code__c = con.Account.IATACode__c;
+						newForm.GSSA_Code__c = con.Account.EF_SIS_Code__c;
 					}
 					if(String.isBlank(newForm.GSSA_HQ_Address__c)){
 						newForm.GSSA_HQ_Address__c = con.Account.BillingStreet + ', ' + con.Account.BillingCity + ', ' + con.Account.BillingState + ', ' + con.Account.BillingPostalCode + ', ' +  con.Account.BillingCountry;
@@ -982,7 +982,8 @@ global without sharing class ISSP_APProcess {
 				Account.BillingState,
 				Account.BillingPostalCode,
 				Account.BillingCountry,
-				Account.TradeName__c
+				Account.TradeName__c,
+				Account.EF_SIS_Code__c
 			FROM Contact where Id = :vContactID ];
 		if(contact.size()>0){
 			return contact[0];
