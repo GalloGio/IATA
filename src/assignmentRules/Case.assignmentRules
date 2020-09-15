@@ -3548,8 +3548,7 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
- Subtopic__c = &quot;BSP NDC API&quot;
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;)
 )
 )</formula>
         </ruleEntry>
@@ -5391,12 +5390,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR 2</booleanFilter>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Invoicing Billing request,Invoicing / Billing request,New Account request,New Connectivity request,Update configuration request</value>
-            </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
@@ -5406,12 +5399,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
         <ruleEntry>
             <assignedTo>iiNET_Support_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR 2</booleanFilter>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>iiNet General Information,iiNet New Account/Connectivity,iiNet WEB Interface,iiNet Integrated Connectivity,iiNet Files Processing,iiNet Files Retrieval,iiNet Invoicing/Billing,iiNet Configuration Service/Account</value>
-            </criteriaItems>
+            <booleanFilter>1</booleanFilter>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
@@ -7051,7 +7039,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+            <booleanFilter>(1 OR 4) AND (2 OR 3)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -7066,6 +7054,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
                 <field>Case.Compliment__c</field>
                 <operation>equals</operation>
                 <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>NO COUNTRY</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

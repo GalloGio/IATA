@@ -307,9 +307,7 @@ export default class PortalRegistrationTrainingValidationLMS extends LightningEl
 
 	navigateToSupport() {
 		let params = {};
-		params.category = 'Training';
 		params.topic = 'Self_study_courses';
-		params.subtopic = 'Sign_Up_Join_ssc';
 		navigateToNewPage(CSP_PortalPath + 'support-reach-us',params);
 	}
 	
