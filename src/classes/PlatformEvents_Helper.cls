@@ -1,4 +1,4 @@
-public class PlatformEvents_Helper implements Queueable {
+public without sharing class PlatformEvents_Helper implements Queueable {
 
 	private static Map<String, Schema.SObjectType> schemaInfoMap = new Map<String, Schema.SObjectType>();
 	private Map<Id,sObject> ObjectMap;

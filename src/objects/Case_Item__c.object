@@ -165,6 +165,15 @@
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
     <fields>
+        <fullName>Bypass_Salesforce_Support__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if this Case Item customer can communicate directly with IATA Support teams, bypassing Salesforce support processes. This supports use cases where certain external users require direct interaction with IATA Support teams.</description>
+        <externalId>false</externalId>
+        <label>Bypass Salesforce Support?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Case__c</fullName>
         <description>The Case record that this Case Item relates to and represents a more specific part of the Case that is not managed as part of Global Customer Service scope.</description>
         <externalId>false</externalId>
@@ -654,15 +663,6 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>Is_Published__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Indicates whether information on the Case Item can be aggregated to the Case. This acts as flag to prevent internal comments and attachments from external systems from being exposed to the Case where a Contact would have visibility.</description>
-        <externalId>false</externalId>
-        <label>Is Published</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Is_Super_User_Contacted__c</fullName>

@@ -8,9 +8,13 @@ public with sharing class CaseItems {
 	}
 
 	public void onBeforeUpdate(Map<Id, Case_Item__c> updatedCaseItemMap){
+		Case_Item__c oldCaseItem;
 		for(Case_Item__c caseItem : updatedCaseItemMap.values()){
-			if(!getIsIntegrationUser() && caseItem.Status__c != 'Closed'){
-				caseItem.addError('Cannot change Case Item Status to a value other than Closed.');
+			oldCaseItem = recordsMap.get(caseItem.Id);
+			if(!getIsIntegrationUser() && oldCaseItem.Status__c != caseItem.Status__c){
+				if(caseItem.Status__c != 'Closed'){
+					caseItem.addError('Cannot change Case Item Status to a value other than Closed.');
+				}
 			}
 		}
 	}
