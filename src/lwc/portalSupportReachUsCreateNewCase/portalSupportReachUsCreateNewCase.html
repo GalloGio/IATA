@@ -1,68 +1,48 @@
-<template>
-    <c-portal-page-container>
-        <span slot="componentContent">
-            <c-portal-breadcrumbs>
-                    </c-portal-breadcrumbs>
-        </span>
-    </c-portal-page-container>
+<template>    
     <div class="slds-grid slds-grid_align-center slds-is-relative">
 
         <!--LOADING SPINNER-->
         <template if:true={loading}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
+        <template if:true={fullPageLoading}>
+            <lightning-spinner class="modal" alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
         <!--LOADING SPINNER-->
 
-        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
+        <div class="slds-col slds-size_full">
             <!-- CASE CREATE MODAL -->
             <div class="topOfModal"></div>
             <!--Scroll Anchor-->
             <template if:true={bShowModal}>
-                <div class="slds-backdrop slds-backdrop_open createModalContainer">
-                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                        aria-describedby="modal-content-id-1"
-                        class="slds-modal slds-fade-in-open slds-text-align_center">
-                        <div class="dot-lightgreen overlap-top-center">
-                            <div class="dot-green dot-allign">
-                                <div class="dot-white-small dot-allign">
-                                    <lightning-icon icon-name="utility:check" variant="success"
-                                        alternative-text="Approved" size="medium"
-                                        class="dot-allign slds-current-color success-variant">
-                                    </lightning-icon>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slds-modal__container customCreateCaseModal">
-                            <div class="slds-p-top_xx-large ">
+                <c-portal-generic-popup-window variant="success">
+                    <span if:false={isCompliment} slot="bodycontent">
+                        <div class="MaxModalContainerDim text-xxsmall">
+                            
                                 <h2 id="modal-heading-01"
                                     class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large text-medium text-bold">
                                     {label.csp_CaseCreatedSuccess}
-                                </h2>
-                            </div>
-                            <div class="slds-align_absolute-center">
-                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center text-gray">
+                                </h2>                            
+                                <h2 class=" slds-p-top_small slds-align_absolute-center text-gray">
                                     {label.csp_CaseBeingWorked}
-                                </h2>
-                            </div>
-                            <div class="slds-align_absolute-center">
-                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center text-gray">
+                                </h2>                            
+                                <h2 class=" slds-p-top_small slds-align_absolute-center text-gray">
                                     {label.csp_CaseResponseGuarantee}
                                 </h2>
-                            </div>
+                            
                             <div class="slds-p-vertical_x-large">
-                                <p class="slds-align_absolute-center slds-p-bottom_xx-small text-xxsmall">
+                                <p class="slds-align_absolute-center slds-p-bottom_xx-small ">
                                     {label.CSP_CaseNumber}
                                 </p>
                                 <div
                                     class="slds-box slds-theme_shade slds-align_absolute-center greybox-noborder background-anotherGray">
-                                    <p class="slds-align_absolute-center text-xsmall text-gray">
+                                    <p class="slds-text-align_center text-xsmall text-gray">
                                         {caseNumber}
                                     </p>
                                 </div>
                             </div>
-                            <div class="slds-align_absolute-center slds-p-horizontal_xx-large slds-p-top_small">
-                                <span class="text-xxsmall slds-text-align_center 
-                            slds-p-horizontal_xx-large slds-align_absolute-center text-lightGray">
+                            <div class="slds-align_absolute-center  slds-p-top_small">
+                                <span class=" slds-text-align_center slds-p-horizontal_large text-lightGray ">
                                     <p>
                                         {label.csp_CaseTracking} <a class="slds-text-link text-bold text-blue"
                                             onclick={navigateToAllCases}>
@@ -71,16 +51,15 @@
                                 </span>
                             </div>
                             <div class="slds-align_absolute-center slds-m-around_xx-large">
-                                <div class="slds-grid slds-gutters">
-                                    <div class="slds-col">
-                                        <button class="containedButtonAlt uiButton contactSupport text-bold text-xsmall"
+                                <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
+                                        <button class="containedButtonAlt containedButton-size uiButton contactSupport text-bold text-xsmall"
                                             onclick={navigateToSupport}>
                                             {label.csp_GoToSupport}
                                         </button>
                                     </div>
-                                    <div class="slds-col">
-                                        <button
-                                            class="containedButton containedButton-size uiButton contactSupport text-bold text-xsmall"
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2  slds-m-top_xx-small">
+                                        <button class="slds-p-horizontal_large containedButton containedButton-size fullWidth fullHeight cursorPointer uiButton contactSupport slds-button_brand "
                                             onclick={navigateToCase}>
                                             {label.csp_ViewCaseSummary}
                                         </button>
@@ -88,108 +67,173 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
-            </template>
-            <!-- CASE CREATE MODAL -->
-            <div class="customCard">
-                <div class="slds-theme_shade customCard">
-                    <lightning-icon class="cursorPointer slds-current-color blue_arrow slds-p-around_x-large"
-                        icon-name="utility:back" size="medium" onclick={goBackToSupportReachUs}>
-                    </lightning-icon>
-                    <div class="slds-text-align_center slds-p-vertical_x-large">
-                        <h1 class="text-large text-bold slds-p-bottom_large">{label.csp_CreateNewCaseTopLabel}</h1>
-                        <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubLabel}: {categoryLabel}, {topicLabel},
-                            {subtopicLabel}</h2>
-                        <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubSubLabel}</h2>
-                    </div>
-                    <div class="customWhiteBackground">
-                        <div class="slds-text-align_center slds-p-top_xx-large">
-                            <h1 class="text-medium text-bold">{label.csp_CreateNewCaseMainTopLabel}</h1>
+                    </span>                
+                    <span if:true={isCompliment} slot="bodycontent">
+                        <div class="MaxModalContainerDim">  
+                            <div class="slds-align_absolute-center slds-p-horizontal_xx-large slds-p-top_xx-large">
+                                <h2 class="text-medium text-bold slds-p-top_small text-gray">
+                                    {label.CSP_SupportReachUs_ComplimentInfo}
+                                </h2>
+                            </div>
+                            <div class="slds-align_absolute-center slds-p-horizontal_xx-large">
+                                <h2 class="text-xsmall slds-p-top_small text-gray">
+                                    {label.CSP_SupportReachUs_Compliment}
+                                </h2>
+                            </div>
+                            <div class="slds-align_absolute-center slds-m-around_xx-large">
+                                <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
+                                        <button class="containedButtonAlt containedButton-size uiButton contactSupport"
+                                            onclick={navigateToSupport}>
+                                            {label.CSP_SupportReachUs_GoToSupport}
+                                        </button>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2  slds-m-top_xx-small">
+                                        <button class="slds-p-horizontal_large containedButton containedButton-size fullHeight cursorPointer uiButton contactSupport slds-button_brand "
+                                            onclick={navigateToHomePage}>
+                                            {label.CSP_SupportReachUs_GoToHomepage}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="slds-align_absolute-center" data-id="caseDetails">
-                            <div class="basicInfoBox">
+                    </span>
+                </c-portal-generic-popup-window>          
+            </template>
+            <template if:true={showConfirmBox}>               
+                <c-portal-support-emergency-popup show-close onabortaction={closeConfirmBox}>
+                    <span slot="ButtonSection" class="slds-grid slds-wrap slds-grid_vertical-stretch slds-m-around_medium slds-gutters_direct">
+                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">  
+                            <button class="containedButtonAlt containedButton-size fullWidth cursorPointer uiButton contactSupport" onclick={removeEmergency}>
+                                {label.CSP_SubmitAsQuery}
+                            </button>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2  slds-m-top_xx-small">
+                            <button class="slds-p-horizontal_large containedButton containedButton-size fullWidth fullHeight cursorPointer uiButton contactSupport slds-button_brand "
+                                onclick={prepareCaseRecord}>
+                                {label.CSP_SubmitAsEmergency}
+                            </button>
+                        </div>
+                    </span>
+                </c-portal-support-emergency-popup>
+            </template>          
+            <div >                
+                <div class="slds-align_absolute-center slds-p-top_large" data-id="caseDetails">
+                    <div class="slds-size_4-of-5 maxContentWidth">
 
-                                <!--LOOKUP-->
-                                <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large "
-                                    if:true={relatedAccountsShow}>
-                                    <p class="text-xsmall slds-m-bottom_large">
-                                        {label.csp_CreateNewCaseMainPicklistLabel}</p>
-                                    <c-portal-search-lookup-component onsearch={handleIataSearch} data-id="iatalookup"
-                                        item-name="iatalookup" oniatalookup={showIataResults}
-                                        required-class={requiredClass} single-lookup-result={singleresult}
-                                        placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
-                                        hide-icon=true
-                                        onclick={removeRequired}>
-                                    </c-portal-search-lookup-component>
+                        <!--LOOKUP-->
+                        <div class=" slds-p-bottom_large"
+                            if:true={relatedAccountsShow}>
+                            <p class="text-xsmall">{label.csp_CreateNewCaseMainPicklistLabel}</p>
+                            <p class="text-xxsmall text-gray slds-p-bottom_small">
+                                {label.csp_CreateNewCaseMainPicklistLabel}
+                            </p>
+                            <c-portal-search-lookup-component onsearch={handleIataSearch} data-id="iatalookup"
+                                item-name="iatalookup" oniatalookup={showIataResults}
+                                required-class={requiredClass} single-lookup-result={singleresult}
+                                placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
+                                hide-icon=true
+                                onclick={removeRequired}>
+                            </c-portal-search-lookup-component>
+                        </div>
+                        <!--LOOKUP-->
+
+                        <!--FEEDBACK TYPE-->
+                        <div if:true={specialCase} class="slds-grid slds-wrap slds-p-bottom_large slds-grid">
+                            <p class="slds-col slds-size_full text-xsmall">{label.CSP_Give_Feedback_Type_Title}</p>
+                            <div data-id="feedback-type" class=" slds-col slds-grid slds-size_full slds-grid_vertical-stretch slds-p-left_medium customTextInput feedbackTypeBox text-small">
+                                    <c-iata-radio-group 
+                                    class="slds-grid slds-grid_vertical-align-center slds-size_full"
+                                    options={feedbackOptions}                                                         
+                                    name='type'
+                                    value={feedbackType}
+                                    onchange={handleInputValueChange}
+                                    display-horizontal=true>
+                                </c-iata-radio-group>
+                            </div>
+                            <div class="slds-col slds-size_full slds-m-top_medium text-xxsmall" if:true={isConcernCase}>
+                               <lightning-formatted-rich-text value={label.CSP_Complaint_Select_Message}></lightning-formatted-rich-text>
+                               
+                            </div>
+                        </div>
+                        <!--FEEDBACK TYPE-->
+
+                        <!--SUBJECT-->
+                        <div class="slds-p-bottom_large ">
+                            <p class="text-xsmall">{label.csp_caseSubject.fieldApiName}</p>
+                            <p class="text-xxsmall text-gray slds-p-bottom_small">
+                                {sujectSubTitle}
+                            </p>
+                            <lightning-input data-id="subject"
+                                label="subject"
+                                class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
+                                required onchange={handleSubject}>
+                            </lightning-input>
+                        </div>
+                        <!--SUBJECT-->
+
+                        <!--DESCRIPTION-->
+                        <div class=" slds-p-bottom_large">
+                            <p class="text-xsmall">{label.csp_caseDescription.fieldApiName}</p>
+                            <p class="text-xxsmall text-gray slds-m-bottom_small">
+                                {descriptSubTitle}</p>
+                            <lightning-textarea class="hideInputLabel heightTextArea customTextArea" required
+                                label="description"
+                                onchange={handleDescription}>
+                            </lightning-textarea>
+                        </div>
+                        <!--DESCRIPTION-->
+
+                        <!--EMAIL RECIPIENTS-->
+                        <template if:false={Level1User}>
+                            <div class="">                                
+                                <p class="text-xsmall">{label.csp_CreateNewCaseMainInputEmailsTopLabel} (Optional)
+                                </p>
+                                <p class="text-xxsmall text-gray slds-p-bottom_small">
+                                    {label.csp_CreateNewCaseMainInputEmailsSubLabel}</p>
+                                <c-portal-search-lookup-component onsearch={handleContactSearch}
+                                    item-name="emaillookup" data-id="emaillookup" onemaillookup={showEmailResults}
+                                    required-class={requiredClass} placeholder="Search Portal Users"
+                                    hide-icon=true
+                                    onselectionchange={addNewRecipientButtonClick}>
+                                </c-portal-search-lookup-component>
+                                <div class="slds-m-bottom_large slds-scrollable_y recipients-box">
+                                    <template for:each={lstRecipients} for:item="recipient">
+                                        <span key={recipient.id}
+                                            class="slds-p-around_x-small slds-m-top_xx-small custom-recipients aroundLightGrayBorder">
+                                            {recipient.email}
+                                            <lightning-icon class="cursorPointer" key={recipient.id}
+                                                icon-name="utility:close" size="x-small" onclick={removeRecipient}
+                                                data-item={recipient.email}>
+                                            </lightning-icon>
+                                        </span>
+                                    </template>
                                 </div>
-                                <!--LOOKUP-->
-
-                                <!--SUBJECT-->
-                                <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
-                                    <p class="text-xsmall">{label.csp_caseSubject.fieldApiName}</p>
-                                    <p class="text-xxsmall text-gray slds-p-bottom_small">
-                                        {label.csp_CreateNewCaseMainInputSubLabel}</p>
-                                    <lightning-input data-id="subject"
-                                        class="hideInputLabel newRecipientTextInput slds-form-element customTextInput"
-                                        required onchange={handleSubject}>
-                                    </lightning-input>
+                            </div>
+                           <div if:true={_hasEmergencyOption} class="slds-grid slds-grid--vertical-align-center slds-p-bottom_large">                                
+                                <c-portal-support-emergency-box is-emergency-case={isEmergencyCase} oncheckchange={handleIsEmergency} show-tooltip></c-portal-support-emergency-box>
+                            </div>
+                           
+                        </template>
+                        <div class="slds-p-vertical_large">
+                            <div class="slds-grid slds-wrap slds-grid--vertical-stretch slds-gutters_direct">
+                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
+                                    <button disabled onclick={finishCreatingCase} data-submit-btn data-id="Show_Success"
+                                        class="containedButtonAlt containedButton-size fullWidth cursorPointer uiButton contactSupport">
+                                        {label.csp_CreateNewCaseTopLabel}
+                                    </button>
                                 </div>
-                                <!--SUBJECT-->
-
-                                <!--DESCRIPTION-->
-                                <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
-                                    <p class="text-xsmall">{label.csp_caseDescription.fieldApiName}</p>
-                                    <p class="text-xxsmall text-gray slds-m-bottom_small">
-                                        {label.csp_CreateNewCaseMainInputBoxSubLabel}</p>
-                                    <lightning-textarea class="hideInputLabel heightTextArea customTextArea" required
-                                        onchange={handleDescription}>
-                                    </lightning-textarea>
+                                <div if:false={specialCase} class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
+                                    <button disabled onclick={finishCreatingCase} data-submit-btn data-id="Add_Attachment"
+                                        class="slds-p-horizontal_large containedButton fullWidth containedButton-size cursorPointer uiButton contactSupport slds-button_brand">
+                                        {label.csp_CreateNewCaseAddAttachment}
+                                    </button>
                                 </div>
-                                <!--DESCRIPTION-->
-
-                                <!--EMAIL RECIPIENTS-->
-                                <template if:false={Level1User}>
-                                    <div class="slds-p-horizontal_xx-large">
-                                        <p class="text-xsmall">{label.csp_CreateNewCaseMainInputEmailsTopLabel} (Optional)
-                                        </p>
-                                        <p class="text-xxsmall text-gray slds-p-bottom_small">
-                                            {label.csp_CreateNewCaseMainInputEmailsSubLabel}</p>
-                                        <c-portal-search-lookup-component onsearch={handleContactSearch}
-                                            item-name="emaillookup" data-id="emaillookup" onemaillookup={showEmailResults}
-                                            required-class={requiredClass} placeholder="Search Email Recipient"
-                                            onselectionchange={addNewRecipientButtonClick}>
-                                        </c-portal-search-lookup-component>
-                                        <div class="slds-m-top_large slds-scrollable_y recipients-box">
-                                            <template for:each={lstRecipients} for:item="recipient">
-                                                <span key={recipient.id}
-                                                    class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
-                                                    {recipient.email}
-                                                    <lightning-icon class="cursorPointer" key={recipient.id}
-                                                        icon-name="utility:close" size="x-small" onclick={removeRecipient}
-                                                        data-item={recipient.email}>
-                                                    </lightning-icon>
-                                                </span>
-                                            </template>
-                                        </div>
-                                    </div>
-                                </template>
-                                <!--EMAIL RECIPIENTS-->
-                                <div class="slds-align_absolute-center slds-m-around_x-large slds-p-vertical_large">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            <button onclick={finishCreatingCase} data-id="Show_Success"
-                                                class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport">
-                                                {label.csp_CreateNewCaseTopLabel}
-                                            </button>
-                                        </div>
-                                        <div class="slds-col">
-                                            <button onclick={finishCreatingCase} data-id="Add_Attachment"
-                                                class="slds-p-horizontal_large containedButton containedButton-size cursorPointer uiButton contactSupport slds-button_brand">
-                                                {label.csp_CreateNewCaseAddAttachment}
-                                            </button>
-                                        </div>
-                                    </div>
+                                <div if:true={specialCase} class="slds-col slds-align_absolute-center slds-size_1-of-1 slds-small-size_1-of-2 slds-m-top_xx-small">
+                                    <button disabled onclick={finishCreatingCase} data-submit-btn data-id="Show_Success"
+                                        class="containedButton containedButton-size fullWidth cursorPointer uiButton contactSupport">
+                                       {label.CSP_Submit}
+                                    </button>
                                 </div>
                             </div>
                         </div>

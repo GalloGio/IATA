@@ -1,0 +1,6 @@
+<div style="font-family: Arial;">
+<p>{!$Label.ISSP_Email_Dear_Pre} {!Case.Contact},</p>
+<p>{!$Label.Auto_Case_Comment_48Hours_Notification_1} <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!Case.Id}">{!Case.CaseNumber}</a> {!$Label.Auto_Case_Comment_48Hours_Notification_2}. {!$Label.Auto_Case_Comment_48Hours_Notification_3} <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}">{!$Label.CSP_IATA_Customer_Portal}</a><br/>
+</p>
+<p>{!$Label.CSP_IATA_CSC_Email_Greetings}</p>
+</div>

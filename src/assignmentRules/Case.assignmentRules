@@ -176,17 +176,6 @@ ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCSTASF</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>And(
-
-RecordType.Name = &quot;Cases - Global&quot;,
-
-ISPICKVAL(Topic__c, &quot;TASF&quot;)
-
-)</formula>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>GCSICCS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
@@ -3559,8 +3548,7 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
- Subtopic__c = &quot;BSP NDC API&quot;
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;)
 )
 )</formula>
         </ruleEntry>
@@ -5402,12 +5390,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR 2</booleanFilter>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>Invoicing Billing request,Invoicing / Billing request,New Account request,New Connectivity request,Update configuration request</value>
-            </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
@@ -5417,12 +5399,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
         <ruleEntry>
             <assignedTo>iiNET_Support_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR 2</booleanFilter>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>iiNet General Information,iiNet New Account/Connectivity,iiNet WEB Interface,iiNet Integrated Connectivity,iiNet Files Processing,iiNet Files Retrieval,iiNet Invoicing/Billing,iiNet Configuration Service/Account</value>
-            </criteriaItems>
+            <booleanFilter>1</booleanFilter>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
@@ -6505,7 +6482,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Status</field>
                 <operation>equals</operation>
-                <value>Open</value>
+                <value>Draft</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
@@ -6575,7 +6552,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Status</field>
                 <operation>notEqual</operation>
-                <value>Open</value>
+                <value>Draft</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
@@ -7062,7 +7039,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+            <booleanFilter>(1 OR 4) AND (2 OR 3)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -7077,6 +7054,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
                 <field>Case.Compliment__c</field>
                 <operation>equals</operation>
                 <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>NO COUNTRY</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -10379,7 +10361,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>AgencyManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR (2 AND 3 AND 4)) OR (5 AND 6) OR (4 AND 7)</booleanFilter>
+            <booleanFilter>(1 OR (2 AND 3 AND 4)) OR (5 AND 6) OR (4 AND 7 AND 8)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -10414,6 +10396,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>SAAM,OSCAR Communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CNSCase__c</field>
+                <operation>equals</operation>
+                <value>False</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -10526,7 +10513,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>AgencyManagementAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(((1 AND 2 AND 3) OR 4 OR (5 and 6)) and 7 and 8) OR (1 AND 8 AND 9)</booleanFilter>
+            <booleanFilter>(((1 AND 2 AND 3) OR 4 OR (5 and 6)) and 7 and 8) OR (1 AND 8 AND 9) OR (9 and 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -10571,6 +10558,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>SAAM,OSCAR Communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CNSCase__c</field>
+                <operation>equals</operation>
+                <value>True</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>

@@ -16,6 +16,7 @@ export default class IataButton extends LightningElement {
 	/** flex | medium | large | full */
 	@api width = 'flex';
 	@api heightLarge = false;
+	@api highlighted = false;
     
     @api icon;
     @track _iconSize = "x-small";
@@ -87,7 +88,8 @@ export default class IataButton extends LightningElement {
 							' width-medium' :
 							' width-flex') +
 				(this.heightLarge ? ' height-large' : '') +
-				(this.smallText ? ' slds-text-body_regular ' : ' slds-text-heading_small');
+				(this.smallText ? ' slds-text-body_regular ' : ' slds-text-heading_small') +
+				(this.highlighted ? ' highlighted' : '');
 				
 	}
 
