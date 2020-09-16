@@ -965,27 +965,15 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Cargo</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Finance-and-Accounting</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Passenger</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Security</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
                 <valueName>Airline Distribution</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
                 <valueName>Airport Infrastructure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>publications</controllingFieldValue>
+                <valueName>Cargo</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -997,7 +985,7 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Legal &amp; Regulatory</valueName>
+                <valueName>Finance-and-Accounting</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -1005,11 +993,23 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
+                <valueName>Legal &amp; Regulatory</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>publications</controllingFieldValue>
                 <valueName>Operations</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
+                <valueName>Passenger</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>publications</controllingFieldValue>
                 <valueName>Safety</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>publications</controllingFieldValue>
+                <valueName>Security</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>data-and-statistics</controllingFieldValue>
