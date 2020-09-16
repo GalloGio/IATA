@@ -7696,6 +7696,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Discounted_Amount</name>
     </customLabels>
     <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Documents POP --></label>
         <name>Documents_POP</name>
     </customLabels>
