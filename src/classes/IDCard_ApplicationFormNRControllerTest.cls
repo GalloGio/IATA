@@ -100,9 +100,9 @@ private class IDCard_ApplicationFormNRControllerTest {
 		InitIDCard_ApplicationFormNRControllerTest();
 
 		Contact con = new Contact(FirstName = 'First',
-							 LastName = 'Contact',
-							 BirthDate = date.today(),
-							 Phone = '+41 7777777777',
+							LastName = 'Contact',
+							BirthDate = date.today(),
+							Phone = '+41 7777777777',
 					 		Email = 'TestSectionOne@contact.com',
 							Date_of_birth__c = date.today().addYears(-30),
 							ID_Card_Holder__c = true,

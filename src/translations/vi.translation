@@ -3372,7 +3372,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Nếu câu hỏi của bạn không liên quan đến một trong những tình huống này, vui lòng nhấp vào "&lt;b&gt; Gửi một Câu hỏi &lt;/b&gt;" bên dưới để tạo một trường hợp.</label>
+        <label>Nếu câu hỏi của bạn không liên quan đến một trong những tình huống này, vui lòng nhấp vào &quot;&lt;b&gt; Gửi một Câu hỏi &lt;/b&gt;&quot; bên dưới để tạo một trường hợp.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -5042,7 +5042,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
         <name>CSP_SubmittedApproval</name>
-    </customLabels>    
+    </customLabels>
     <customLabels>
         <label>Thành công</label>
         <name>CSP_Success</name>
@@ -5076,16 +5076,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label>Theo dõi</label>
-        <name>CSP_Track</name>
-    </customLabels>
-    <customLabels>
         <label>Tất cả các chủ đề</label>
         <name>CSP_Topic_All_Label</name>
     </customLabels>
     <customLabels>
         <label>Chủ đề gần đây của bạn</label>
         <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Theo dõi</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label><!-- Profile Training section --></label>
@@ -7690,6 +7690,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -28144,6 +28148,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>pkb2_lang_tl</name>
     </customLabels>
     <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Urdu --></label>
         <name>pkb2_lang_ur</name>
     </customLabels>
@@ -36645,7 +36653,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Các báo cáo</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

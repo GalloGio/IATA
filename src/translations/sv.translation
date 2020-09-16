@@ -2941,6 +2941,10 @@
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Call Tile Sub label --></label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Cancel --></label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -3025,6 +3029,10 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Chat base label --></label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Check Email --></label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3055,6 +3063,10 @@
     <customLabels>
         <label><!-- CSP_CompanyProfile --></label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- complaint select message --></label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Complete Profile --></label>
@@ -3159,6 +3171,10 @@
     <customLabels>
         <label><!-- CSP_Deny_User_Access_Title --></label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Description subtitle for complaint/compliment --></label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DocumentBookmarkAdded --></label>
@@ -3341,6 +3357,50 @@
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency box message --></label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Emergency box footer message --></label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message when emergency option is selected on the Case Creation --></label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Second Message when emergency option is selected on the Case Creation --></label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Title when emergency option is selected on the Case Creation --></label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Message when emergency option is selected on the support page --></label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Emergency Tooltip --></label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3483,6 +3543,22 @@
     <customLabels>
         <label><!-- CSP Frozen User Message --></label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback Button label --></label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback Message --></label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback title --></label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback Type title --></label>
+        <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4797,6 +4873,10 @@
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label><!-- Select Topic placeholder --></label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
         <name>CSP_Service_ADSR</name>
     </customLabels>
@@ -4937,12 +5017,24 @@
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label><!-- Subject subtitle for complaint/compliment --></label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Submit --></label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP submit Emergency query label --></label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP submit query label --></label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4979,6 +5071,14 @@
     <customLabels>
         <label><!-- CSP_Title --></label>
         <name>CSP_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- All topics label --></label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Recent Topics label --></label>
+        <name>CSP_Topic_Recent_Label</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Track --></label>
@@ -7587,6 +7687,10 @@
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -23629,6 +23733,14 @@
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label><!-- LVA_CallUsDefaultMessage --></label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_CallUsDial --></label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23643,6 +23755,10 @@
     <customLabels>
         <label><!-- LVA_CallUsThruPhoneNum --></label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LVA_ChatWindowAlreadyOpen --></label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ChatWithUs --></label>
@@ -27987,6 +28103,10 @@
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>

@@ -658,7 +658,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 			if (part == sectionOne) {
 				if (IsFormValid()) {
 					Savepoint sp = Database.setSavepoint();
-					System.debug('Language: '+Language);
 					IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
 					if (IDCardApplicationNR.Middle_Initial__c != null && IDCardApplicationNR.Middle_Initial__c != '')
 						IDCardApplicationNR.Middle_Initial__c = (IDCardApplicationNR.Middle_Initial__c).toUpperCase();
