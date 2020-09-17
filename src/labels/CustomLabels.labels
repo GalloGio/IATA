@@ -2940,7 +2940,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Auto_Case_Comment_24Hours_Notification_1</shortDescription>
-        <value>The comment below was posted on your case</value>
+        <value>The below comment was posted on your case</value>
     </labels>
     <labels>
         <fullName>Auto_Case_Comment_24Hours_Notification_2</fullName>
@@ -2972,7 +2972,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Auto_Case_Comment_24Hours_Notification_5</shortDescription>
-        <value>We will be closing the case automatically in case we do not receive any further feedback from you within 24 hours.</value>
+        <value>Should we not hear from you over the next 24 hours, we will take it that you no longer require assistance and we will close the case.</value>
     </labels>
     <labels>
         <fullName>Auto_Case_Comment_48Hours_Notification_1</fullName>
@@ -2988,7 +2988,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Auto_Case_Comment_48Hours_Notification_2</shortDescription>
-        <value>as we have not received further feedback from you in last 48 hours.</value>
+        <value>as we have not received further feedback from you in the last 48 hours.</value>
     </labels>
     <labels>
         <fullName>Auto_Case_Comment_48Hours_Notification_3</fullName>
@@ -3004,7 +3004,7 @@ SF Workflow Process</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Auto_Case_Comment_Notification_Email_1</shortDescription>
-        <value>We have just added a reply to your case, with number</value>
+        <value>We have just added a reply to your case with number</value>
     </labels>
     <labels>
         <fullName>Auto_Case_Comment_Notification_Email_2</fullName>
@@ -8477,7 +8477,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_Closure_Error_Cannot_Close</shortDescription>
-        <value>This case cannot be closed or it&apos;s already closed.</value>
+        <value>This case cannot be closed or it&amp;apos;s already closed.</value>
     </labels>
     <labels>
         <fullName>Case_Closure_Error_Expired_Link</fullName>
@@ -8500,7 +8500,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_Closure_Ignore_Survey</shortDescription>
-        <value>Thanks, your answer has been saved.</value>
+        <value>Your answer has been saved.</value>
     </labels>
     <labels>
         <fullName>Case_Closure_Ignore_Survey_Button</fullName>
@@ -8531,7 +8531,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case Closure Success Message 48Hours</shortDescription>
-        <value>As we did not hear from your within 48 hours, we had already closed the case below:</value>
+        <value>As we did not hear from you 48 hours after our initial reply, we had already closed the case below:</value>
     </labels>
     <labels>
         <fullName>Case_Closure_Success_Title</fullName>
@@ -8635,7 +8635,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case Comment New Query Confirmation Title</shortDescription>
-        <value>Thanks for your confirmation</value>
+        <value>Thank you for the confirmation!</value>
     </labels>
     <labels>
         <fullName>Case_Comment_Notification_Template_Name</fullName>
@@ -8667,7 +8667,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_Comment_Survey_Message</shortDescription>
-        <value>We value your opinion. Please let us know your feedback about IATA&apos;s Support in</value>
+        <value>We value your opinion. Please let us know your feedback about IATA &amp;apos;s Support in</value>
     </labels>
     <labels>
         <fullName>Case_Defect_Issue</fullName>
