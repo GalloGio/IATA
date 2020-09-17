@@ -37329,6 +37329,15 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Users with Password Reset Date --></description>
         <label><!-- Users with Password Reset Date --></label>
         <name>Users_with_Password_Reset_Date</name>
