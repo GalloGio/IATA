@@ -611,8 +611,8 @@ global class AMS_OSCAR_Webservice {
 		ANG_RHC_Information__c rhcInfo = [SELECT Id, ANG_RHC_Amount_Provisional__c 
 										  FROM ANG_RHC_Information__c
 										  WHERE ID = :rhcID];
-		rhcInfo.ANG_RME_Amount__c = rhcInfo.ANG_RHC_Amount_Provisional__c.round(System.RoundingMode.DOWN);
 		try{
+			rhcInfo.ANG_RME_Amount__c = rhcInfo.ANG_RHC_Amount_Provisional__c.round(System.RoundingMode.DOWN);
 			Database.update(rhcinfo);
 		}catch(Exception e){
 			return e.getMessage();
