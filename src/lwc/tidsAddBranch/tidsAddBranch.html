@@ -44,14 +44,26 @@
 			</li>
 		  </ul>
 		</div>
-		<div class="col s12 slds-m-top_x-large"><p>You are about to add a branch linked to the location above:</p></div>
+		<div class="col s12 slds-m-top_x-large">
+			<p>
+			<template if:true={showVirtualBranch}>
+				You are about to add a Virtual Branch linked to the above Head Office.
+				<br/>
+				Please select a country of virtual operations:
+			  </template>
+			  <template if:false={showVirtualBranch}>
+				You are about to add a Branch linked to the above Head Office.
+			  </template>			
+			</p>
+		</div>
 		<template if:true={showVirtualBranch}>
 		  <div class="col s6">
 			<lightning-combobox
 			  name="country"
 			  data-name="country"
 			  label="Country"
-			  message-when-value-missing="Your must be selected a country."
+			  variant="label-hidden"
+			  message-when-value-missing="Country must be selected."
 			  value={country}
 			  placeholder="Select a country"
 			  options={countries}

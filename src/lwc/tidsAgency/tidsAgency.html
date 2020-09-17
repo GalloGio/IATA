@@ -11,8 +11,8 @@
 	</header>
 	<form>
 		<p>
-			This is the first section of your application to the TIDS. <br />
-			<em>Remember, all question preceded by a (*) are mandatory.</em>
+			Please provide the information requested below.<br/>
+			<em>Remember, all fields preceded by a (*) are mandatory.</em>
 		</p>
 		<!-- Trading Name Start -->
 		<template if:true={tradingNameRules.visible}>
@@ -87,7 +87,7 @@
 						label="Company Type"
 						required={companyTypeRules.required}
 						value={companyType}
-						placeholder="Select a company Type"
+						placeholder="Select a Company Legal Type"
 						variant="label-hidden"
 						options={companyTypes}
 						onchange={handleChange}

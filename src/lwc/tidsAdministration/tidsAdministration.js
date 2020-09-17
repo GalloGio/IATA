@@ -55,7 +55,7 @@ export default class TidsAdministration extends LightningElement {
 			this.idx = idx.split('$')[1];
 			console.log('this.idx',this.idx);
 			this.showConfimationModal=false;
-			this.modalDefaultMessage='Please confirm the removal from the list of administrators regarding the following contact :';
+			this.modalDefaultMessage='Please confirm the removal of this user from the list of administrators.';
 			this.modalAction='REMOVEADMINISTRATOR';
 			this.showConfimationModal=true;
 			//when selecting a branch the top must become the branch 
@@ -67,7 +67,7 @@ export default class TidsAdministration extends LightningElement {
 				this.idx = idx.split('$')[1];
 				console.log('this.idx',this.idx);
 				this.showConfimationModal=false;
-				this.modalDefaultMessage='Please confirm the swap of administrators. Once confirm, an email will be sent to both parties.';
+				this.modalDefaultMessage='Please confirm the swap of administrators. Once confirmed, an email will be sent to both parties.';
 				this.modalAction='SWAPADMINISTRATOR';
 				this.showConfimationModal=true;
 				//when selecting a branch the top must become the branch 
@@ -221,7 +221,7 @@ export default class TidsAdministration extends LightningElement {
 		}
 		oops(error){
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-				console.log(' fetchRoles error',error);
+				console.log('fetchRoles error',JSON.stringify(error));
 				this.modalDefaultMessage='Oops! something happened, please retry.'
 				this.modalAction='OK';
 				this.showConfimationModal=true;

@@ -17,6 +17,9 @@ export default class TidsReportChanges extends LightningElement {
   @api branchSelected
   @api accountInfo;
   @track spinner = false;
+  @track change1=false;
+  @track change2=false;
+  @track change3=false;
 
   @track tidsAccount;
   @track caseInProgress = false;
@@ -34,6 +37,16 @@ export default class TidsReportChanges extends LightningElement {
     let change = this.changeTypeOptions.find(element => element.value === this.changeTypeSelected);
     this.changeTypeSelectedLabel = change.label;
     this.changeReportCasesOpen(this.changeTypeSelectedLabel);
+    this.change1=false;
+    this.change2=false;
+    this.change3=false;
+    if (this.changeTypeSelected==="chg-name-company"){
+       this.change1=true;
+    }else if (this.changeTypeSelected==="chg-address-contact"){
+      this.change2=true;
+    }else if (this.changeTypeSelected==="chg-business-profile-specialization"){
+      this.change3=true;
+    }
   }
 
   changeReportCasesOpen(change) {

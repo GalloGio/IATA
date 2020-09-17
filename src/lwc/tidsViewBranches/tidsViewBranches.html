@@ -1,154 +1,154 @@
 <template>
-  <div class="block branches">
-    <template if:true={allRecords}>
-      <header>
-        <h1>You are viewing all the Branches under your Head Office</h1>
-      </header>
-    </template>
-    <header>
-      <div class="row">
-        <div class="col s12 l6">
-          <h1>Branches</h1>
-          <template if:false={isHOAccountTerminated}>
-            <a href="#" class="add-branch" onclick={handleAddBranch}>+ Add a Branch</a>
-          </template>          
-        </div>
-        <div class="col s10 l5 tright">
-          <form action="" id="search-branch" class="search-branch">
-            <div class="input-field">
-              <lightning-input variant="label-hidden" name="search" onchange={handlesearchBranches} type="text" class="input-search" placeholder="Search by name, code or city" value={newsearch}></lightning-input>
-              <template if:false={isSearchOn}>
-                <button class="search-submit far fa-search no-style"  onclick={handlegetBranches}></button>
-              </template>
-              <template if:true={isSearchOn}>
-                <button class="search-submit far fa-times-circle no-style"  onclick={handlevoidBranches}></button>
-              </template>
-            </div>
-          </form>
-        </div>
-        <div class="col s2 l1 tcenter warning-toggler">
-          <form id="warning-toggle" class="warning-toggle">
-            <div class="input-field">
-              <button class="far fa-exclamation-triangle no-style" onclick={makeRecordVisible}></button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </header>
-    <main>
-      <div class="row">
-        <div class="col s12">
-          <table class="responsive-table" aria-describedby="branch list">
-            <thead>
-              <tr>
-                <th id="name">Name<span>
-                  <button class="no-style transparent order-desc" onclick={sortBranchList} id='nameDesc'>
-                    <i class="fas fa-sort-up"></i>
-                  </button>
-                  <button class="no-style transparent order-asc active" onclick={sortBranchList} id='nameAsc'>
-                    <i class="fas fa-sort-down"></i>
-                  </button>
-                </span></th>
-                <th id="code">Code<span>
-                  <button class="no-style transparent order-desc" onclick={sortBranchList} id="codeDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </button>
-                  <button class="no-style transparent order-asc" onclick={sortBranchList} id="codeAsc">
-                    <i class="fas fa-sort-down"></i>
-                  </button>
-                </span></th>
-                <th id="city">City<span>
-                  <button class="no-style transparent order-desc" onclick={sortBranchList} id="cityDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </button>
-                  <button class="no-style transparent order-asc" onclick={sortBranchList} id="cityAsc">
-                    <i class="fas fa-sort-down"></i>
-                  </button>
-                </span></th>
-                <th id="status">Status<span>
-                  <button class="no-style transparent order-desc" onclick={sortBranchList} id="statusDesc">
-                    <i class="fas fa-sort-up"></i>
-                  </button>
-                  <button class="no-style transparent order-asc" onclick={sortBranchList} id="statusAsc">
-                    <i class="fas fa-sort-down"></i>
-                  </button>
-                </span></th>
-                <th id="actions" class="hidden-label">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <template for:each={branches} for:item="branch">
-                <template if:true={branch.visible}>
-                  <tr key={branch.Id}>
-                    <td>
-                      <a href="#" onclick={handleSelectBranchClick} id={branch.newId}>{branch.Name}</a>
-                      <span title="dba: {branch.TradeName__c}">dba: {branch.TradeName__c}</span>
-                    </td>
-                    <td>{branch.IATACode__c}</td>
-                    <td>{branch.BillingCity}</td>
-                    <td>{branch.Status__c}</td>
-                    <td class="setting-toggler">
-                      <div>
-                        <template if:true={branch.showOptionMenu}>
-                          <a href="#" alternative-text="Settings" title="Settings">
-                            <button class="setting-toggle fal fa-cog no-style" onclick={handleClick} id={branch.newId}></button>
-                          </a>
-                        </template>
-                        <template if:false={branch.showOptionMenu}>
-                          <button class="setting-toggle fal fa-cog no-style" id={branch.newId} disabled></button>
-                        </template>
-                        <template if:true={branch.showContextMenu}>
-                          <ul class="setting-list no-list active">
-                            <template if:false={branch.showReinstatement}>
-                              <li><a href="#" onclick={handleReportChanges} id={branch.newId}>Report Changes</a></li>
-                              <li><a href="#" onclick={handleAdministration} id={branch.newId}>Manage Administrator</a></li>
-                              <template if:true={branch.showRelinquishment}>
-                                <li><a href="#" onclick={handleRelinquish} id={branch.newId}>Relinquish Branch</a></li>
-                              </template>
-                            </template>
-                            <template if:true={branch.showReinstatement}>
-                              <template if:true={branch.isVirtual}>
-                                 <li><a href="#" onclick={handleReinstate} id={branch.newId}>Reinstate Virtual Branch</a></li>
-                              </template>
-                              <template if:false={branch.isVirtual}>
-                                <li><a href="#" onclick={handleReinstate} id={branch.newId}>Reinstate Branch Office</a></li>
-                              </template>
-                            </template>
-                          </ul>
-                        </template>
-                      </div>
-                    </td>
-                  </tr>
-                </template>
-              </template>
-            </tbody>
-            <template if:false={allRecords}>
-              <template if:true={morethanzero}>
-                <tfoot>
-                  <tr>
-                    <td colspan="5" class="tcenter">
-                      <a href="#" onclick={handleAllBranches}>View all branches</a>
-                    </td>
-                  </tr>
-                </tfoot>
-              </template>
-            </template>
-            <template if:false={morethanzero}>
-              <tfoot>
-                <tr>
-                  <td colspan="5" class="tcenter"><p>No Branches to display</p></td>
-                </tr>
-              </tfoot>
-            </template>
-          </table>
-        </div>
-      </div>
-      <template if:true={allRecords}>
-        <div class="row">
-          <div class="office-back-home"><button onclick={handleBackToHOClick}>Back to Dashboard</button></div>
-        </div>
-      </template>
-    </main>
-  </div>
-  <c-tids-modal-msg if:true={showConfimationModal} open={showConfimationModal} message={modalDefaultMessage} action={modalAction}></c-tids-modal-msg>
+	<div class="block branches">
+		<template if:true={allRecords}>
+			<header>
+				<h1>You are viewing all the Branches under your Head Office</h1>
+			</header>
+		</template>
+		<header>
+			<div class="row">
+				<div class="col s12 l6">
+					<h1>Branches</h1>
+					<template if:false={isHOAccountTerminated}>
+						<a href="#" class="add-branch" onclick={handleAddBranch}>+ Add a branch</a>
+					</template>          
+				</div>
+				<div class="col s10 l5 tright">
+					<form action="" id="search-branch" class="search-branch">
+						<div class="input-field">
+							<lightning-input variant="label-hidden" name="search" onchange={handlesearchBranches} type="text" class="input-search" placeholder="Search by name, code or city" value={newsearch}></lightning-input>
+							<template if:false={isSearchOn}>
+								<button class="search-submit far fa-search no-style"  onclick={handlegetBranches}></button>
+							</template>
+							<template if:true={isSearchOn}>
+								<button class="search-submit far fa-times-circle no-style"  onclick={handlevoidBranches}></button>
+							</template>
+						</div>
+					</form>
+				</div>
+				<div class="col s2 l1 tcenter warning-toggler">
+					<form id="warning-toggle" class="warning-toggle">
+						<div class="input-field">
+							<button class="far fa-exclamation-triangle no-style" onclick={makeRecordVisible}></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col s12">
+					<table class="responsive-table" aria-describedby="branch list">
+						<thead>
+							<tr>
+								<th id="name">Name<span>
+									<button class="no-style transparent order-desc" onclick={sortBranchList} id='nameDesc'>
+										<i class="fas fa-sort-up"></i>
+									</button>
+									<button class="no-style transparent order-asc active" onclick={sortBranchList} id='nameAsc'>
+										<i class="fas fa-sort-down"></i>
+									</button>
+								</span></th>
+								<th id="code">Code<span>
+									<button class="no-style transparent order-desc" onclick={sortBranchList} id="codeDesc">
+										<i class="fas fa-sort-up"></i>
+									</button>
+									<button class="no-style transparent order-asc" onclick={sortBranchList} id="codeAsc">
+										<i class="fas fa-sort-down"></i>
+									</button>
+								</span></th>
+								<th id="city">City<span>
+									<button class="no-style transparent order-desc" onclick={sortBranchList} id="cityDesc">
+										<i class="fas fa-sort-up"></i>
+									</button>
+									<button class="no-style transparent order-asc" onclick={sortBranchList} id="cityAsc">
+										<i class="fas fa-sort-down"></i>
+									</button>
+								</span></th>
+								<th id="status">Status<span>
+									<button class="no-style transparent order-desc" onclick={sortBranchList} id="statusDesc">
+										<i class="fas fa-sort-up"></i>
+									</button>
+									<button class="no-style transparent order-asc" onclick={sortBranchList} id="statusAsc">
+										<i class="fas fa-sort-down"></i>
+									</button>
+								</span></th>
+								<th id="actions" class="hidden-label">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={branches} for:item="branch">
+								<template if:true={branch.visible}>
+									<tr key={branch.Id}>
+										<td>
+											<a href="#" onclick={handleSelectBranchClick} id={branch.newId}>{branch.Name}</a>
+											<span title="">dba: {branch.TradeName__c}</span>
+										</td>
+										<td>{branch.IATACode__c}</td>
+										<td>{branch.BillingCity}</td>
+										<td>{branch.Status__c}</td>
+										<td class="setting-toggler">
+											<div>
+												<template if:true={branch.showOptionMenu}>
+													<a href="#" alternative-text="Settings" title="Settings">
+														<button class="setting-toggle fal fa-cog no-style" onclick={handleClick} id={branch.newId}></button>
+													</a>
+												</template>
+												<template if:false={branch.showOptionMenu}>
+													<button class="setting-toggle fal fa-cog no-style" id={branch.newId} disabled></button>
+												</template>
+												<template if:true={branch.showContextMenu}>
+													<ul class="setting-list no-list active">
+														<template if:false={branch.showReinstatement}>
+															<li><a href="#" onclick={handleReportChanges} id={branch.newId}>Report Changes</a></li>
+															<li><a href="#" onclick={handleAdministration} id={branch.newId}>Manage Administrator</a></li>
+															<template if:true={branch.showRelinquishment}>
+																<li><a href="#" onclick={handleRelinquish} id={branch.newId}>Relinquish Branch</a></li>
+															</template>
+														</template>
+														<template if:true={branch.showReinstatement}>
+															<template if:true={branch.isVirtual}>
+																 <li><a href="#" onclick={handleReinstate} id={branch.newId}>Reinstate Virtual Branch</a></li>
+															</template>
+															<template if:false={branch.isVirtual}>
+																<li><a href="#" onclick={handleReinstate} id={branch.newId}>Reinstate Branch Office</a></li>
+															</template>
+														</template>
+													</ul>
+												</template>
+											</div>
+										</td>
+									</tr>
+								</template>
+							</template>
+						</tbody>
+						<template if:false={allRecords}>
+							<template if:true={morethanzero}>
+								<tfoot>
+									<tr>
+										<td colspan="5" class="tcenter">
+											<a href="#" onclick={handleAllBranches}>View all branches</a>
+										</td>
+									</tr>
+								</tfoot>
+							</template>
+						</template>
+						<template if:false={morethanzero}>
+							<tfoot>
+								<tr>
+									<td colspan="5" class="tcenter"><p>No Branches to display</p></td>
+								</tr>
+							</tfoot>
+						</template>
+					</table>
+				</div>
+			</div>
+			<template if:true={allRecords}>
+				<div class="row">
+					<div class="office-back-home"><button onclick={handleBackToHOClick}>Back to Dashboard</button></div>
+				</div>
+			</template>
+		</main>
+	</div>
+	<c-tids-modal-msg if:true={showConfimationModal} open={showConfimationModal} message={modalDefaultMessage} action={modalAction}></c-tids-modal-msg>
 </template>

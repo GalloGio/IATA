@@ -5,7 +5,7 @@ import { fireEvent, registerListener } from "c/tidsPubSub";
 import { getSectionInfo, getUserType, getCase, sectionDecision, sectionNavigation, getApplicationType, displaySaveAndQuitButton, SECTION_CONFIRMED } from "c/tidsUserInfo";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import saveFile from "@salesforce/apex/TIDSUtil.saveFile";
-import releatedFiles from "@salesforce/apex/TIDSUtil.releatedFiles";
+import relatedFiles from "@salesforce/apex/TIDSUtil.relatedFiles";
 import deleteFiles from "@salesforce/apex/TIDSUtil.deleteFiles";
 
 export default class TidsSupportingDocuments extends LightningElement {
@@ -88,8 +88,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 
 	notifySectionHasError() {
 		// eslint-disable-next-line @lwc/lwc/no-async-operation
-		setTimeout(
-			() => {
+		setTimeout(() => {
 				fireEvent(this.pageRef, "sectionErrorListener", this.sectionHasErrors);
 			},
 			1,
@@ -117,18 +116,11 @@ export default class TidsSupportingDocuments extends LightningElement {
 
 	handleUploadFiles(event) {
 		Array.from(event.target.files).forEach(file => {
-			// this.documentsView.push({document: file, name: file.name, contentType: file.type, size: file.size});
 			this.documentsView.push(this.mappingFile(file));
 		});
 		this.totalDocuments = this.documentsView.length;
 		this.disableButton = this.documentsView.length > 0 ? false : true;
 
-		// Array.from(event.target.files).forEach(file => {
-		//   // this.documents.push(this.mappingFile(file));
-		//   this.documents.push(file);
-		// });
-		// this.totalDocuments = this.documents.length;
-		// this.nextButtonDisabled();
 	}
 
 	handleSave() {
@@ -136,7 +128,6 @@ export default class TidsSupportingDocuments extends LightningElement {
 			this.documentindex = 0;
 			this.uploadHelper();
 		} else {
-			//this.fileName = "Please select file to upload!!";
 			this.upsertSupportingDocs();  
 		}
 	}
@@ -249,6 +240,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 				}        
 			})
 			.catch(error => {
+				console.log('error', JSON.stringify(error));
 				// Showing errors if any while inserting the files
 				this.dispatchEvent(
 					new ShowToastEvent({
@@ -271,7 +263,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	//Read all the attachments and update documents
 	// Getting releated files of the current record
 	getRelatedFiles() {
-		releatedFiles({ parentid: this.tidsCase.Id })
+		relatedFiles({ parentid: this.tidsCase.Id })
 			.then(data => {
 				let sfAttachments = JSON.parse(JSON.stringify(data));
 				if(sfAttachments !== undefined && sfAttachments.length > 0){

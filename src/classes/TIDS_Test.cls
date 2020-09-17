@@ -728,9 +728,7 @@ public with sharing class TIDS_Test {
                 TIDSHelper.discardApplication(String.ValueOf(caseId));
 		
 				TIDSHelper.getTidsCase(String.ValueOf(caseId), String.ValueOf(userId));
-				TIDSHelper.assignToCaseOwner(String.ValueOf(caseId));
-
-				
+				TIDSHelper.assignToCaseOwner(String.ValueOf(caseId));				
 				TIDSUtil.sendNotification(String.ValueOf(caseId), String.ValueOf(contactId));
 			            
             //}catch(Exception e) {

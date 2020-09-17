@@ -22,7 +22,7 @@ export default class TidsRequestVirtualBranch extends LightningElement {
   @track isRequestExist=false;
   @track showConfimationModal=false;
   @track msgpayload;
-  @track modalDefaultMessage='Be aware, you are about to relinquish the TIDS participation. Please Confirm?';
+  @track modalDefaultMessage='Beware, you are about to relinquish your TIDS participation. Please confirm.';
   @track modalAction = "RELINQUISH";
 
   connectedCallback() {
