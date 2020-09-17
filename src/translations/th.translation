@@ -1705,47 +1705,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>ความคิดเห็นด้านล่างถูกโพสต์ในกรณีของคุณ</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>เมื่อวาน</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>โปรดแจ้งให้เราทราบหากข้อสงสัยของคุณได้รับการแก้ไขแล้วหรือมีสิ่งอื่นใดที่เราสามารถช่วยคุณได้ในกรณีนี้โดยใช้ปุ่มด้านล่างหรือเข้าถึงเคสนี้จาก</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>คุณสามารถแจ้งให้เราทราบได้โดยเข้าไปที่สร้างคำถามในพอร์ทัลลูกค้าของ IATA</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>เราจะปิดเคสโดยอัตโนมัติในกรณีที่เราไม่ได้รับข้อมูลฟีดแบคเพิ่มเติมจากคุณภายใน 24 ชั่วโมง</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>เรากำลังปิดเคส</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>เนื่องจากเราไม่ได้รับข้อมูลฟีดแบคเพิ่มเติมจากคุณใน 48 ชั่วโมงที่ผ่านมา</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับเคสนี้คุณสามารถเพิ่มความคิดเห็นหรือติดต่อเราผ่านเคสใหม่ใน</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>เราเพิ่งตอบกลับเคสของคุณพร้อมหมายเลข</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>คุณสามารถไปที่รายละเอียดเคสเพื่อดูการตอบกลับ</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>คุณสามารถแจ้งให้เราทราบได้โดยเข้าไปที่แบบสอบถามในพอร์ทัลลูกค้าของ IATA</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3582,7 +3582,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>ขอแสดงความนับถือ, &amp;lt;br/&amp;gt; ศูนย์บริการลูกค้า IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3590,7 +3590,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>พอร์ทัลลูกค้า IATA</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5346,87 +5346,87 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>เคสนี้ไม่สามารถปิดหรือมัน &amp;apos;s ปิดแล้ว</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>ลิงก์หมดอายุแล้ว</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>ไปที่พอร์ทัลลูกค้า</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>ขอบคุณคำตอบของคุณได้รับการบันทึกแล้ว</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>ไม่ใช่ตอนนี้</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>คุณกำลังถูกเปลี่ยนเส้นทางไปยังแบบสำรวจ</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>เราได้ปิดเคสด้านล่าง:</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>เนื่องจากเราไม่ได้รับการตอบกลับใดๆจากคุณภายใน 48 ชั่วโมงเราจึงได้ปิดคดีดังต่อไปนี้:</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>ขอบคุณสำหรับการยืนยัน!</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>เกิดข้อผิดพลาดขณะเปลี่ยนเส้นทางคุณไปยังแบบสำรวจ</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>ที่ IATA เราปรับปรุงบริการของเราอย่างต่อเนื่องเพื่อให้เราสามารถมอบประสบการณ์ที่ยอดเยี่ยมให้กับลูกค้าได้ นี่คือเหตุผลที่เราต้องการถามความคิดเห็นของคุณในบางประเด็นที่เราเห็นว่าสำคัญ และใช้เวลาไม่เกินสองนาที</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>ทำแบบสำรวจ</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>คำตอบไม่ชัดเจน</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>คุณสามารถปิดเคสนี้ได้เลย</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>ไปที่ติดต่อเรา</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>ฉันมีคำถามใหม่</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>คำถามของคุณได้รับการแก้ไขแล้วหรือยัง?</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>หากเราไม่ได้รับการติดต่อจากคุณภายใน 48 ชั่วโมงเราจะดำเนินการต่อโดยที่เข้าใจว่า คุณไม่ต้องการความช่วยเหลืออีกอีกแล้วและเราจะปิดเคส</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>โปรดแจ้งให้เราทราบว่าเราจะช่วยเหลือคุณเพิ่มเติมเกี่ยวกับคำถามนี้ได้อย่างไร</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>เนื่องจากคุณมีข้อความค้นหาใหม่เราได้ปิดเคส {arg0} และคุณสามารถสร้างเคสใหม่ได้โดยคลิกที่ปุ่มด้านล่างเพื่อให้เราติดต่อกลับโดยเร็วที่สุด</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>ขอบคุณสำหรับการยืนยันของคุณ</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5434,15 +5434,15 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>โปรดแสดงความคิดเห็นเพิ่มเติมเพื่อให้เราดำเนินการในเคสนี้ต่อไป</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>แบบสำรวจนี้</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>เราให้ความสำคัญกับความคิดเห็นของคุณ โปรดแจ้งให้เราทราบความคิดเห็นของคุณเกี่ยวกับ IATA &amp;apos;s สนับสนุนใน</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -37369,6 +37369,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

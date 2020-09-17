@@ -1709,47 +1709,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>Der folgende Kommentar wurde zu Ihrem Fall veröffentlicht</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>gestern.</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>Bitte teilen Sie uns mit, ob Ihre Anfrage gelöst wurde oder ob wir Ihnen in diesem Fall mit etwas anderem helfen können, indem Sie die Schaltflächen unten verwenden oder den Fall aufrufen</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>Sie können es uns mitteilen, indem Sie Ihre Anfrage im IATA-Kundenportal aufrufen.</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>Wir schließen den Fall automatisch, wenn wir innerhalb von 24 Stunden kein weiteres Feedback von Ihnen erhalten.</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>Wir schließen den Fall</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>da wir in den letzten 48 Stunden keine weitere Rückmeldung von Ihnen erhalten haben.</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>Sollten Sie weitere Unterstützung mit diesem Fall benötigen, können Sie einen Kommentar hinterlassen oder uns über einen neuen Fall kontaktieren unter</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>Wir haben gerade Ihrem Fall eine Antwort hinterlassen, mit der Nummer</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>Sie können zu den Falldetails gehen, um die Antwort anzuzeigen.</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>Sie können es uns mitteilen, indem Sie Ihre Anfrage im IATA-Kundenportal aufrufen.</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3586,7 +3586,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>Mit freundlichen Grüßen,&amp;lt;br/&amp;gt;IATA Kundenservice Center</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3594,7 +3594,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>IATA-Kundenportal</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5352,87 +5352,87 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>Dieser Fall kann nicht geschlossen werden oder it&amp;apos ist bereits geschlossen.</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>Der Link ist abgelaufen.</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>Zum Kundenportal gehen</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>Danke, Ihre Antwort wurde gespeichert.</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>Jetzt nicht.</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>Sie werden zur Umfrage weitergeleitet.</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>Wir haben den nachstehenden Fall geschlossen:</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>Da wir innerhalb von 48 Stunden nicht von Ihnen gehört haben, wurde der nachstehende Fall bereits geschlossen:</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>Vielen Dank für die Bestätigung!</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>Bei der Weiterleitung zur Umfrage ist ein Fehler aufgetreten.</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>Bei der IATA arbeiten wir ständig an der Verbesserung unserer Dienstleistungen, damit wir Ihnen eine ausgezeichnete Kundenerfahrung bieten können. Aus diesem Grund möchten wir Sie um Ihre Meinung zu einigen Services bitten, die wir für essenziell halten. Es sollte nicht länger als zwei Minuten dauern.</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>Nehmen Sie an der Umfrage teil</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>Die Antwort war nicht klar</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>Sie können diesen Fall nun schließen</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>Weiter zu Kontakt</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>Ich habe eine neue Anfrage</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>Wurde Ihre Anfrage geklärt?</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>Sollten wir in den nächsten 48 Stunden nichts von Ihnen hören, gehen wir davon aus, dass Sie keine Unterstützung mehr benötigen und schließen den Fall.</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>Bitte teilen Sie uns mit, wie wir Sie bei dieser Anfrage weiter unterstützen können.</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>Da Sie eine neue Anfrage haben, haben wir den Fall {arg0} geschlossen und Sie können die neue Anfrage erstellen, indem Sie auf die Schaltfläche unten klicken, damit wir uns so schnell wie möglich mit Ihnen in Verbindung setzen können.</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>Vielen Dank für Ihre Bestätigung</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5440,15 +5440,15 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>Bitte fügen Sie zusätzliche Kommentare hinzu, damit wir die Arbeit an diesem Fall fortsetzen können.</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>diese Umfrage</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>Wir schätzen Ihre Meinung. Bitte teilen Sie uns Ihr Feedback zum IATA&amp;apos;s Support mit in</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -37373,6 +37373,15 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
