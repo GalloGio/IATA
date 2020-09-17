@@ -843,9 +843,9 @@
                     <label>DGR</label>
                 </value>
                 <value>
-                    <fullName>Economics &amp; Traffic Results</fullName>
+                    <fullName>Economics-and-Traffic-Results</fullName>
                     <default>false</default>
-                    <label>Economics &amp; Traffic Results</label>
+                    <label>Economics-and-Traffic-Results</label>
                 </value>
                 <value>
                     <fullName>Finance-and-Accounting</fullName>
@@ -858,9 +858,9 @@
                     <label>Ground Operations</label>
                 </value>
                 <value>
-                    <fullName>Legal &amp; Regulatory</fullName>
+                    <fullName>Legal-and-Regulatory</fullName>
                     <default>false</default>
-                    <label>Legal &amp; Regulatory</label>
+                    <label>Legal-and-Regulatory</label>
                 </value>
                 <value>
                     <fullName>Operations</fullName>
@@ -981,7 +981,7 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Economics &amp; Traffic Results</valueName>
+                <valueName>Economics-and-Traffic-Results</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -993,7 +993,7 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Legal &amp; Regulatory</valueName>
+                <valueName>Legal-and-Regulatory</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -13303,7 +13303,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Economics %26 Traffic Results</fullName>
+                <fullName>Economics-and-Traffic-Results</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13335,7 +13335,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Legal %26 Regulatory</fullName>
+                <fullName>Legal-and-Regulatory</fullName>
                 <default>false</default>
             </values>
             <values>
