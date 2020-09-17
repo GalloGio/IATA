@@ -16,13 +16,13 @@
 			for(var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = source.checked;
 		}
 
-		function ResponseWrapper(bIsSuccess, ErrorDescription, RHCId, ANG_RHC_Amount_Forecasted, ANG_RHC_Amount_Provisional){
+		function ResponseWrapper(bIsSuccess, ErrorDescription, RHCId, ANG_RHC_Amount_Forecasted, ANG_RHC_Amount_Provisional, Forecasted_Tier){
 			this.bIsSuccess = bIsSuccess;
 			this.ErrorDescription = ErrorDescription;
 			this.RHCId = RHCId;
 			this.ANG_RHC_Amount_Forecasted = ANG_RHC_Amount_Forecasted;
 			this.ANG_RHC_Amount_Provisional = ANG_RHC_Amount_Provisional;
-			this.Forecaster_Tier
+			this.Forecasted_Tier = Forecasted_Tier
 		}
 
 		var lsResponseWrapper = [];
@@ -60,7 +60,7 @@
 				RHCId,
 				bCommitRHC,
 				function(result, event){
-					var tmpWrap = new ResponseWrapper(false, '', RHCId, null, null);
+					var tmpWrap = new ResponseWrapper(false, '', RHCId, null, null,null);
 					if(event.type == 'exception'){ 
 						tmpWrap.bIsSuccess = false;
 						tmpWrap.ErrorDescription = event.message;
@@ -69,6 +69,7 @@
 						tmpWrap.ErrorDescription = result.ErrorDescription;
 						tmpWrap.ANG_RHC_Amount_Forecasted = result.ANG_RHC_Amount_Forecasted;
 						tmpWrap.ANG_RHC_Amount_Provisional = result.ANG_RHC_Amount_Provisional;
+						tmpWrap.Forecasted_Tier = result.Forecasted_Tier;
 					}
 					nProcessed++;
 					lsResponseWrapper.push(tmpWrap);
@@ -209,7 +210,7 @@
 					</apex:column>
 
 					<apex:column headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.Forecasted_Tier__c.Label}">
-						<apex:outputText value="{!agents[mapKey].rhcInfo.Forecasted_Tier__c}" rendered="{!bProvisionalRequested}"/>
+						<apex:outputText value="{!agents[mapKey].Forecasted_Tier}"/>
 					</apex:column>
 
 					<apex:column headerValue="Error">
