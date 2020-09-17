@@ -554,7 +554,7 @@ public without sharing class CW_Utilities {
 		return res;
 	}
 
-	private static List<User> getIATAStakeHoldersUsersList() {
+	public static List<User> getIATAStakeHoldersUsersList() {
 		return [Select id, name, email from User where Id IN (Select UserOrGroupId from GroupMember where Group.DeveloperName = 'ICG_Stakeholders')];
 	}
 
