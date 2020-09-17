@@ -46,6 +46,15 @@ public class ANG_RHCInformationTriggerHandler{
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
 		refreshRMEData();
 		handleRhcUpdate();
+
+		//NEWGEN-6810
+		//If the tier changes, create a SAAM case and assign to Regional Risk Queue
+		set<Id> setAccntId = new set<Id>();
+		for(ANG_RHC_Information__c rhc : triggerNew)
+			if(rhc.Tier__c != oldMap.get(rhc.id).Tier__c)
+				setAccntId.add(rhc.ANG_AccountId__c);
+		
+		CreateSAAMCase(setAccntId);
 	}
 
 	public void onBeforeDelete(){}
@@ -54,7 +63,37 @@ public class ANG_RHCInformationTriggerHandler{
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
+	private static void CreateSAAMCase(set<Id> setAccntId){
+		if(setAccntId.isEmpty())	return;
 
+		map<id, Account> mapAccnt = new map<id, account>([select id, Name, Short_Name__c, IATACode__c, Region_formula__c from Account where id in:setAccntId]);
+		list<case> CaseToCreate = new list<case>();
+
+		Database.DMLOptions dmo = new Database.DMLOptions();
+		dmo.assignmentRuleHeader.useDefaultRule= true;
+
+		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
+		Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(setAccntId, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
+
+		for(id AccntId:setAccntId){
+			Account acc = mapAccnt.get(AccntId);
+			Case c = new Case();
+				c.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
+				c.AccountId = AccntId;
+				c.ContactId = rhcContacts.containsKey(AccntId) ? new List<Id>(rhcContacts.get(AccntId))[0] : null;
+				c.Subject = 'RHC Tier change ' + (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20));
+				c.Region__c = acc.Region_formula__c;
+				c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
+				c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
+				c.Reason1__c = ANG_Risk_Helper.CASE_REASON_RHC_TIER_CHANGE;
+				c.Visible_on_ISS_Portal__c = false;
+			c.setOptions(dmo);
+			CaseToCreate.add(c);
+		}
+
+		if(!CaseToCreate.isEmpty())
+			insert CaseToCreate;
+	}
 
 	public static List<ANG_RHC_Information__c> filterByIATACode(List<ANG_RHC_Information__c> changeCodes){
 

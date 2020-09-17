@@ -89,6 +89,7 @@ public with sharing class ANG_Risk_Helper{
 	public static final String CASE_REASON_RHC_75 = 'RHC 75 Follow up';
 	public static final String CASE_REASON_ADOC_REVIEW = 'Adhoc review';
 	public static final String CASE_REASON_YEARLY_REVIEW = 'Yearly review';
+	public static final String CASE_REASON_RHC_TIER_CHANGE = 'RHC Tier Change';
 
 	//Case - BSP_CASS__c
 	public static final String CASE_BSP = 'BSP';
