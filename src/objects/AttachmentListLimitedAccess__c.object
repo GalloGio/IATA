@@ -4,5 +4,16 @@
     <description>This setting is used ti get profile /user with limited access to Attachment and Remote Attachments</description>
     <enableFeeds>false</enableFeeds>
     <label>Attachement List limited</label>
+    <listViews>
+        <fullName>All2</fullName>
+        <columns>SETUP_OWNER_NAME</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

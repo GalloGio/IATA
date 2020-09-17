@@ -149,11 +149,6 @@
             <field>OJT_file_validated__c</field>
             <table>Account_Role__c</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>useDepartmentContactsDetail__c</field>
-            <table>Account_Role__c</table>
-        </columns>
         <masterLabel>Account Roles</masterLabel>
     </sections>
     <sections>
