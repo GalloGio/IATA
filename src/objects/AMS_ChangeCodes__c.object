@@ -542,15 +542,43 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Reason_Code__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CCR</value>
+            <value>RPY</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>CASS_Import</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Published_in_bulletin__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field7__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Clear_Irregularities__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Class_Type__c</field>
+            <operation>contains</operation>
+            <value>I</value>
+        </filters>
+        <label>CASS Import</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>CNS</fullName>

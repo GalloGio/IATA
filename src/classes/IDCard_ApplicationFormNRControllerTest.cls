@@ -35,6 +35,8 @@ private class IDCard_ApplicationFormNRControllerTest {
 	private static Account a;
 	private static List<Contact> cs;
 	private static List<Promotion__c> promo;
+	public static Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	public static Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
 	public static void InitIDCard_ApplicationFormNRControllerTest() {
 
@@ -96,7 +98,47 @@ private class IDCard_ApplicationFormNRControllerTest {
 
    	private static void TestSectionOne(){
 		InitIDCard_ApplicationFormNRControllerTest();
+
+		Contact con = new Contact(FirstName = 'First',
+							LastName = 'Contact',
+							BirthDate = date.today(),
+							Phone = '+41 7777777777',
+					 		Email = 'TestSectionOne@contact.com',
+							Date_of_birth__c = date.today().addYears(-30),
+							ID_Card_Holder__c = true,
+							VER_number__c = Decimal.valueof('5990024202'),
+							VER_number_2__c = '5990024202',
+							RecordTypeId = rtcon
+		);
+		insert con;
+
+		ID_Card__c idcard = new ID_Card__c(Related_Contact__c = con.id,
+								Valid_To_Date__c = date.today().addDays(40),
+								Name_on_ID_Card__c = 'nameidcard',
+								Card_status__c = 'Sent ID Card',
+								VER_Number__c = '5990024202'
+
+		); insert idcard;
 		test.startTest();
+
+		Cookie languageCookies = new Cookie('idcard_portal_lang','en_US',null,-1,false);
+		controllerPage = Page.IDCard_ApplicationForm_NR;
+		controllerPageNew = Page.IDCard_ApplicationForm_NR;
+		controllerPageReplacement = Page.IDCard_ApplicationForm_NR;
+		controllerPage.setCookies(new Cookie[]{languageCookies});
+		controllerPageNew.setCookies(new Cookie[]{languageCookies});
+		controllerPageReplacement.setCookies(new Cookie[]{languageCookies});
+		controllerPageNew.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].Id));
+		controllerPageNew.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardUtil.APPLICATIONTYPE_REPLACEMENT));
+		controllerPageNew.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].IATA_Code__c));
+		controllerPageNew.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(testData.IDCards_IDCardApplications[3].VER_Number__c));
+		controllerPageNew.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
+		Test.setCurrentPage (controllerPageNew);
+
+		iDCard_ApplicationFormNRControllerNew = new IDCard_ApplicationFormNRController();
+		iDCard_ApplicationFormNRControllerNew.getLangItems();
+		iDCard_ApplicationFormNRControllerNew.setSelectedLanguage('en_US');
+		iDCard_ApplicationFormNRControllerNew.deleteAttachment();
 		Boolean testBoolean;
 		String testString;
 
@@ -108,6 +150,9 @@ private class IDCard_ApplicationFormNRControllerTest {
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Date_of_Birth__c = Date.parse('10/16/2000');
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Start_Date_Agency_Year__c = '2002';
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Start_Date_Industry__c = '2002';
+		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Hours_worked__c = 'Less than 20 h';
+		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Position_in_Current_Agency__c = 'Director';
+		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Revenue_Confirmation__c = false;
 		iDCard_ApplicationFormNRControllerNew.next();
 		 try{
 		iDCard_ApplicationFormNRControllerNew.forTestCoverage();
@@ -117,6 +162,9 @@ private class IDCard_ApplicationFormNRControllerTest {
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Date_of_Birth__c = Date.parse('10/16/1971');
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Start_Date_Agency_Year__c = '1969';
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Start_Date_Industry__c = '1970';
+		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Position_in_Current_Agency__c = 'Sole Owner';
+		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.AgencyShare_Confirmation__c = false;
+		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Revenue_Confirmation__c = false;
 		iDCard_ApplicationFormNRControllerNew.next();
 
 		idCard_ApplicationFormNRControllerNew.IDCardApplicationNR.Date_of_Birth__c = Date.parse('10/16/1971');
@@ -336,9 +384,6 @@ private class IDCard_ApplicationFormNRControllerTest {
 	public static TestMethod void ValidatePromotionTest() {
 
 		InitIDCard_ApplicationFormNRControllerTest();
-
-		Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-		Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',
 					ISO_Code__c = '12',
