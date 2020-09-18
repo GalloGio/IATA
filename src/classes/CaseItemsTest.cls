@@ -52,35 +52,35 @@ private class CaseItemsTest {
 	@IsTest static void testOnAfterUpdate(){
 		Test.startTest();
 		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Open' LIMIT 1];
-		caseItem.Status__c = 'Closed (Closed)';
+		caseItem.Status__c = 'Closed';
 		update caseItem;
 		Test.stopTest();
 
 		caseItem = [SELECT Id, Status__c FROM Case_Item__c WHERE Id = :caseItem.Id];
-		System.assertEquals('Closed (Closed)', caseItem.Status__c);
+		System.assertEquals('Closed', caseItem.Status__c);
 	}
 
 	@IsTest static void testOnAfterDelete(){
 		Test.startTest();
-		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)' LIMIT 1];
+		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed' LIMIT 1];
 		
 		delete caseItem;
 		Test.stopTest();
 
-		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)'];
-		System.assertEquals(0, caseItemList.size(), 'Expected no Case Items with Status Closed (Closed)');
+		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed'];
+		System.assertEquals(0, caseItemList.size(), 'Expected no Case Items with Status Closed');
 	}
 	
 	@IsTest static void  testOnAfterUndelete(){
-		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)' LIMIT 1];
+		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed' LIMIT 1];
 		delete caseItem;
 		
-		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)'];
-		System.assertEquals(0, caseItemList.size(), 'Expected no Case Items with Status Closed (Closed)');
+		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed'];
+		System.assertEquals(0, caseItemList.size(), 'Expected no Case Items with Status Closed');
 
 		undelete(caseItem);
-		caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed (Closed)'];
-		System.assertEquals(1, caseItemList.size(), 'Expected 1 Case Items with Status Closed (Closed)');
+		caseItemList = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed'];
+		System.assertEquals(1, caseItemList.size(), 'Expected 1 Case Items with Status Closed');
 	}
 
 	@IsTest static void testOnBeforeDelete(){
