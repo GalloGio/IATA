@@ -603,6 +603,22 @@ global class AMS_OSCAR_Webservice {
 			return AMS_Utils.errorMessageBeautifyer(ex);
 		}
 	}
+
+	/**
+	 * Method called by RHC Information custom buttom Confirm Forecasted RHC
+	 */
+	webservice static String updateRME_Amount(String rhcID){
+		ANG_RHC_Information__c rhcInfo = [SELECT Id, ANG_RHC_Amount_Provisional__c 
+										  FROM ANG_RHC_Information__c
+										  WHERE ID = :rhcID];
+		try{
+			rhcInfo.ANG_RME_Amount__c = rhcInfo.ANG_RHC_Amount_Provisional__c.round(System.RoundingMode.DOWN);
+			Database.update(rhcinfo);
+		}catch(Exception e){
+			return e.getMessage();
+		}
+		return '';
+	}
 	
 	private static Boolean isEligibleForRiskEventGeneration(AMS_OSCAR__c currentOscar) {
 		return (currentOscar.Is_NewGen__c &&
