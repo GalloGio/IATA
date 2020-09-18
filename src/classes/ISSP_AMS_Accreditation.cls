@@ -549,6 +549,10 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
 	}
 
+	public Boolean getIsPostalOperator() {
+		return con.Account.RecordType.DeveloperName == 'IATA_Agency' && this.con.Account.Location_Class__c == AMS_Utils.LC_POSTAL_OPERATOR;
+	}
+
 	public ISSP_AMS_Accreditation() {
 		isNewCase = true;
 		isStep1 = false;

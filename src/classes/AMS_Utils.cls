@@ -422,6 +422,7 @@ public without sharing class AMS_Utils {
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
+	public static final String LC_POSTAL_OPERATOR = 'L';
 
 	//CNS new PROCESS Location Type requested
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';

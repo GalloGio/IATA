@@ -341,7 +341,7 @@
                 return false;
             }
 
-            </script>
+        </script>
 
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             <div class="container">
@@ -450,26 +450,30 @@
                                 <header>
                                     <div class="section-header">
                                         <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
-                                        <strong>{!$Label.ISSP_AMS_eBulletin_AgencyChanges}</strong>
+                                        <strong>{!IF(IsPostalOperator, $Label.ISSP_AMS_eBulletin_CompanyChanges, $Label.ISSP_AMS_eBulletin_AgencyChanges)}</strong>
                                     </div>
                                 </header>
                                     
                                 <div class="row bankDetails" style="padding-top: 20px">
-                                    <div class="col-md-12" style="display:{!IF(AND(communityName!='CNS',isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};">
+                                    <div class="col-md-12" style="display:{!IF(AND(communityName!='CNS',isEligableForChange,isoCountry.Enable_Notice_of_Change__c,!IsPostalOperator),'','none')};">
                                         <input type="button" class="iatabtn btn btn_iata_primary" onClick="checkEligibility('true');return false;" value="{!$Label.ISSP_AMS_Step0_Change_Bank_Details}"/>
                                     </div>
                                 </div>
                                         
                                 <div class="row">
                                     <div class="col-md-12" style="padding-bottom: 10px;">
-                                        <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
+                                        <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" disabled="{! revCaseOpen}"
+                                            value="{!IF(IsPostalOperator, $Label.ISSP_AMS_Step0_Changes, $Label.ISSP_AMS_Step0_Other_Changes)}" />
+                                        <br/>
                                         <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
-                                        <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
-                                            
-                                        <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
+                                            <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
 
-                                        <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
-                                    </div>
+                                            <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
+
+                                            <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin,!IsPostalOperator)}"/>
+
+                                            <apex:outputText id="minorChangesCompany" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes_Company}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin,IsPostalOperator)}"/>
+                                        </div>
                                         <apex:outputText id="revalCaseOpen" rendered="{! revCaseOpen}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen}"/>
                                     </div>
                                 </div>

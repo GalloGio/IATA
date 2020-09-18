@@ -25453,6 +25453,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Minor_Changes_Company</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
+        <value>Minor changes to your Company details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -27422,6 +27430,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AvailableCountries</shortDescription>
         <value>Available Countries /Territories</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_CompanyChanges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_CompanyChanges</shortDescription>
+        <value>Company Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CASS</fullName>
