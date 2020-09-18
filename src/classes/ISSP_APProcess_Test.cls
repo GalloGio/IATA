@@ -2098,6 +2098,8 @@ private class ISSP_APProcess_Test
 			ctrl.getHOTandPDFFilesEmails();
 			ctrl.getExcelSelected();
 			ctrl.getExcelSelectedYes();
+			ctrl.getWrapperPassCountriesRequired();
+			ctrl.getListCountryOptions();
 
 			System.assertEquals('&airline=PASS',ctrl.passParam);
 		}
@@ -2565,6 +2567,7 @@ private class ISSP_APProcess_Test
 			
 			//CounterIndemnityAgreement
 			ctrl.isGSSAUser = false;
+			ctrl.retrieveAccountToShowSections();
 			ctrl.accountToShowSections.Sector__c='Airline';
 			ctrl.accountToShowSections.BSP_CI_Valid__c=false;
 			result = new set<String>(ctrl.getMandatoryFileList());
@@ -2594,6 +2597,84 @@ private class ISSP_APProcess_Test
 			ctrl.newCase.Classification_SIS__c=ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
 			result = new set<String>(ctrl.getMandatoryFileList());
 			System.assert( result.contains('SignedSISISPAForm'), 'wrong result ' + result );
+
+			Test.StopTest();
+		}
+	}
+
+	@isTest static void testGetPage3() {
+		IATA_ISO_Country__c countryUS = [SELECT Id, Name, Case_BSP_Country__c, ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='US'
+			LIMIT 1];
+
+		Account headquarter = new Account(
+			Name = 'Emirates hq',
+			Field_Head_Office__c = 'Headquarter',
+			Airline_Designator__c = 'LH',
+			IATACode__c = '220',
+			Airline_Prefix__c = '220',
+			Sector__c = 'Airline',
+			Category__c = 'Passenger and Cargo',
+			Key_Customer_Reason__c = 'Volume',
+			TradeName__c = 'Emirates',
+			Legal_name__c = 'Stuff',
+			Name_on_AOC__c = 'Stuff',
+			IATA_ISO_Country__c = countryUS.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'));
+		insert headquarter;
+
+		// Create a new Product
+		Product2 p = new Product2(Name = 'BSP', Family = 'ICCS');
+		insert p;
+
+		// Create a new ICCS Product Country for this product
+		ICCS_Product_Country__c pct = new ICCS_Product_Country__c(Product__c = p.Id, Country__c = countryUS.Id);
+		insert pct;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = headquarter.Id;
+		insert con;
+
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser) {
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			Test.StartTest();
+			ctrl.isICH =true;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Joining';
+			ctrl.isICH =false;
+			ctrl.isBSP =true;
+			ctrl.isCASS =false;
+			ctrl.isPassAirline = false;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Joining';
+			ctrl.isICH =false;
+			ctrl.isBSP =false;
+			ctrl.isCASS =true;
+			ctrl.isPassAirline = false;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Joining';
+			ctrl.isICH =false;
+			ctrl.isBSP =false;
+			ctrl.isCASS =false;
+			ctrl.isPassAirline = true;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Change';
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='';
+			ctrl.getStep3Page();
 
 			Test.StopTest();
 		}
