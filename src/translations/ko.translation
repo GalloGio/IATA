@@ -1708,47 +1708,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>아래 댓글이 귀하의 사례에 게시되었습니다.</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>어제.</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>귀하의 질문이 해결되었거나, 다른 도움이 필요한 경우, 아래 버튼을 통해 사례에 접속하시어 알려 주시기 바랍니다.</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>IATA 고객 포털에서 사례에 접속하시어 연락주실 수 있습니다.</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>24 시간 이내에 추가 답변을 받지 못할 경우, 자동으로 케이스를 종료합니다.</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>사례를 종결합니다</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>지난 48 시간 내 추가 답변을 받지 못했습니다.</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>이 사례에 대한 추가 지원이 필요한 경우 의견을 추가하거나 새로운 사례를 통해 문의하실 수 있습니다.</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>귀하의 사례에 번호에 답변이 추가되었습니다.</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>사례 세부 정보로 이동하여 답변을 확인하실 수 있습니다.</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>IATA 고객 포털에서 질의에 접속하시어 알려 주실 수 있습니다.</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3373,7 +3373,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>귀하의 질의가 긴급 상황에 해당하지 않는 경우, "&lt;b&gt; 사례 작성 &lt;/b&gt;을 통해 질의를 보내주시기 바랍니다. </label>
+        <label>귀하의 질의가 긴급 상황에 해당하지 않는 경우, &quot;&lt;b&gt; 사례 작성 &lt;/b&gt;을 통해 질의를 보내주시기 바랍니다. </label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -3585,7 +3585,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>감사합니다. &amp;lt;br/&amp;gt; IATA 고객 서비스 센터</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3593,7 +3593,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>IATA 고객 포털</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5349,87 +5349,87 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>이 사례는 종결될 수 없거나, &amp;apos;s 이미 종결되었습니다.</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>유효한 링크가 아닙니다.</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>고객 포털로 이동</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>감사합니다. 귀하의 답변이 저장되었습니다.</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>지금 말고</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>설문 조사로 연결됩니다.</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>아래 사례를 종결 하였습니다.</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>48 시간 이내에 답변이 없어서, 아래 사례를 종료했습니다.</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>확인 해 주셔서 감사합니다!</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>설문 조사로 연결하는 중에 오류가 발생했습니다.</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>IATA에서는 우수한 고객 서비스을 제공을 위해, 지속적으로 서비스를 개선하고 있습니다. 중요한 몇가지 사항에 대해 귀하의 의견을 여쭙고자 합니다. 2 분 정도면 충분합니다.</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>설문 조사에 참여해주시면 감사하겠습니다.</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>귀하의 답변이 충분하지 않습니다.</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>지금 이 케이스를 종결할 수 있습니다.</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>연락처로 이동</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>새 문의가 있습니다.</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>질문이 해결 되었습니까?</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>향후 48 시간 동안 답변이 없는 경우, 더 이상 지원이 필요하지 않다고 간주하고, 케이스를 종료합니다.</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>이 질문에 대한 추가 지원 방법을 알려주십시오.</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>새 질의가 접수되어, {arg0} 케이스를 종료하였으며, 아래 버튼을 클릭하여 새 질의를 접수하시면 빠른 답변 드리겠습니다.</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>확인 해주셔서 감사합니다</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5437,15 +5437,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>이 케이스를 계속 진행할 수 있도록 추가 의견을 제공해주세요.</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>이 설문 조사</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>&quot;IATA는 귀하의 의견을 소중하게 생각합니다. IATA에 대한 피드백을 보내주시기 바랍니다. &amp;apos;s 
+지원&quot;</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -7691,6 +7692,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -28146,6 +28151,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>pkb2_lang_tl</name>
     </customLabels>
     <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Urdu --></label>
         <name>pkb2_lang_ur</name>
     </customLabels>
@@ -35551,6 +35560,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- GDP Accounts --></description>
         <label><!-- GDP Accounts --></label>
         <name>GDP_Accounts</name>
@@ -37360,6 +37378,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
