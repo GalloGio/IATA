@@ -110,7 +110,7 @@ private class IEC_ShoppingCartControllerTest
 		System.assertEquals(true, ctrl.isCartEmpty);
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_not_logged_in()
 	{
 		testSetupNewShoppingCart();
@@ -141,7 +141,7 @@ private class IEC_ShoppingCartControllerTest
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in()
 	{
 		testSetupNewShoppingCart();
@@ -194,7 +194,7 @@ private class IEC_ShoppingCartControllerTest
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in2()
 	{
 		testSetupNewShoppingCart();
@@ -246,7 +246,7 @@ private class IEC_ShoppingCartControllerTest
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in3()
 	{
 		testSetupNewShoppingCart();
@@ -286,7 +286,7 @@ private class IEC_ShoppingCartControllerTest
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in4()
 	{
 		testSetupNewShoppingCart();
@@ -353,7 +353,7 @@ private class IEC_ShoppingCartControllerTest
 		System.assertEquals(true, ctrl.isCartEmpty);
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_not_logged_in_old()
 	{
 		testSetupOldShoppingCart();
@@ -384,7 +384,7 @@ private class IEC_ShoppingCartControllerTest
 		system.assert(ctrl.onLoadAction() != null, 'Should return login page');
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in_old()
 	{
 		testSetupOldShoppingCart();
@@ -434,7 +434,7 @@ private class IEC_ShoppingCartControllerTest
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in_old2()
 	{
 		testSetupOldShoppingCart();
@@ -488,7 +488,7 @@ private class IEC_ShoppingCartControllerTest
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in_old3()
 	{
 		testSetupOldShoppingCart();
@@ -528,7 +528,7 @@ private class IEC_ShoppingCartControllerTest
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_logged_in_old4()
 	{
 		testSetupOldShoppingCart();
