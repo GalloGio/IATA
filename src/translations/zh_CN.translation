@@ -1705,47 +1705,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>下面的评论已粘贴在你的案例上</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>昨日。</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>如果您的疑问已得到解决，或在此案件上有任何其他我们可以帮助您的地方，请使用下面的按钮或从以下网站访问案件，让我们知道您的疑问。</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>您可以通过访问国际航空运输协会客户入口的问询来告知我们。</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>如果我们在24小时内没有收到您的进一步反馈，我们将自动关闭该案例。</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>我们将关闭该案例</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>因为我们在过去48小时内没有收到您的进一步反馈。</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>如果你需要进一步的帮助，你可以添加评论或通过一个新的案例联系我们，在</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>我们刚刚对你的案件进行了回复，编号为</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>您可以到案例详情中查看回复。</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>您可以通过访问国际航空运输协会客户入口的问询来告知我们。</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3364,13 +3364,13 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>紧急支持是24/7，但仅能提供英文服务。</label>
         <name>CSP_Emergency_Footer_Message</name>
-    </customLabels>    
+    </customLabels>
     <customLabels>
         <label>请注意，通过紧急通道所提供的语言支持为&lt;b&gt;英文&lt;/b&gt;，仅适用于以下几种情况。</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>如果您的查询与这些情况无关，请点击下面的""&lt;b&gt;以一般问询的方式提交&lt;/b&gt;""来创建一个案例。</label>
+        <label>如果您的查询与这些情况无关，请点击下面的&quot;&quot;&lt;b&gt;以一般问询的方式提交&lt;/b&gt;&quot;&quot;来创建一个案例。</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -3582,7 +3582,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>致敬，&amp;lt;br/&amp;gt;国际航空运输协会客户服务中心。</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3590,7 +3590,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>IATA客户入口</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5346,87 +5346,87 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>此案无法关闭或已经关闭。</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>链接已过期。</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>前往客户入口</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>谢谢，你的答案已被保存。</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>现在不行</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>你正在被转入调查问卷。</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>我们已经结束了下面的案例。</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>由于我们在48小时内没有收到您的任何消息，我们已经关闭了下面的案例。</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>谢谢你的确认！</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>在将您重转入调查问卷时发生了错误。</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>在IATA，我们不断改进我们的服务，以便为您提供优质的客户体验。因此，我们希望就一些我们认为至关重要的问题征求您的意见，调查时间不超过两分钟。</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>参加调查</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>答案并不明确</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>你现在可以关闭了</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>联系我们</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>我有一个新的问询</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>您的疑问是否已经解决？</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>如果我们在48小时内没有收到您的回复，我们将认为您不再需要帮助，我们将结束此案。</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>请让我们知道如何进一步协助您解决这个疑问。</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>由于您有一个新的问询，我们已经关闭了该案件{arg0}，您可以点击下面的按钮创建新的查询，以便我们尽快给您回复。</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>谢谢您的确认</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5434,15 +5434,15 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>请提供补充意见，以便我们继续处理此案例。</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>本次调查</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>我们重视您的意见。请将您对IATA&amp;apos;支持的反馈意见告诉我们。</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -7688,6 +7688,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -23789,12 +23793,12 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsThruPhoneNum</name>
     </customLabels>
     <customLabels>
-        <label>与我们聊天</label>
-        <name>LVA_ChatWithUs</name>
-    </customLabels>
-    <customLabels>
         <label>聊天窗口已经打开</label>
         <name>LVA_ChatWindowAlreadyOpen</name>
+    </customLabels>
+    <customLabels>
+        <label>与我们聊天</label>
+        <name>LVA_ChatWithUs</name>
     </customLabels>
     <customLabels>
         <label><!-- LVA_ClientMessage --></label>
@@ -28138,6 +28142,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -35545,6 +35553,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- GDP Accounts --></description>
         <label><!-- GDP Accounts --></label>
         <name>GDP_Accounts</name>
@@ -36675,7 +36692,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contact Information</name>
         </sections>
         <sections>
-            <label><!-- Portal Service Access --></label>
+            <label>报告/报表</label>
             <name>Portal Service Access</name>
         </sections>
     </reportTypes>
@@ -37354,6 +37371,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

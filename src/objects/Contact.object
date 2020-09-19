@@ -14043,15 +14043,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
     <listViews>
         <fullName>AllContacts</fullName>
         <columns>FULL_NAME</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.TITLE</columns>
-        <columns>CONTACT.PHONE1</columns>
         <columns>CONTACT.EMAIL</columns>
-        <columns>CORE.USERS.ALIAS</columns>
         <columns>CONTACT.CREATED_DATE</columns>
-        <columns>PARENT.NAME</columns>
         <columns>Status__c</columns>
+        <columns>CONTACT.FIRST_NAME</columns>
+        <columns>CONTACT.LAST_NAME</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTACT.EMAIL</field>
+            <operation>contains</operation>
+            <value>mariolaszpynda</value>
+        </filters>
         <label>All Contacts</label>
         <language>en_US</language>
         <sharedTo>
@@ -20475,6 +20477,16 @@ or(
 $User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
 $UserRole.Name &lt;&gt; &quot;GDP&quot; 
 )	,	
+or(
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;,
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot; 
+) ,	
+
+or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;,
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot; 
+) ,	
+
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;
 
 )</errorConditionFormula>
@@ -20495,6 +20507,17 @@ $UserRole.Name &lt;&gt; &quot;GDP&quot;
 $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;,
 $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot; 
 ) ,	
+
+                or(
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;,
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot; 
+) ,	
+
+                or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;,
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot; 
+) ,	
+
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,
 				
 	Or(			
@@ -20616,6 +20639,16 @@ $UserRole.Name &lt;&gt; &quot;GDP&quot;
 or( 
 $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
 $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+), 
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;, 
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot;	
+), 
+
+or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;, 
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot;	
 ), 
 
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
