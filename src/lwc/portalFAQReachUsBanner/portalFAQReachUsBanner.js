@@ -44,25 +44,13 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
         let params = {};
 
         if (this.redirectObject !== undefined) {
-            if (this.redirectObject.category !== undefined && this.redirectObject.category !== null && this.redirectObject.category !== '') {
-                params.category = this.redirectObject.category;
-            }
             if (this.redirectObject.topic !== undefined && this.redirectObject.topic !== null && this.redirectObject.topic !== '') {
                 params.topic = this.redirectObject.topic;
-            }
-            if (this.redirectObject.subtopic !== undefined && this.redirectObject.subtopic !== null && this.redirectObject.subtopic !== '') {
-                params.subtopic = this.redirectObject.subtopic;
-            }
-        } else {
-            if (this.category !== undefined && this.category !== null && this.category !== '') {
-                params.category = this.category;
-            }
+            }           
+        } else {           
             if (this.topic !== undefined && this.topic !== null && this.topic !== '') {
                 params.topic = this.topic;
-            }
-            if (this.subTopic !== undefined && this.subTopic !== null && this.subTopic !== '') {
-                params.subtopic = this.subTopic;
-            }
+            }            
         }
 
         navigateToPage(this.supportReachUsURL, params);
