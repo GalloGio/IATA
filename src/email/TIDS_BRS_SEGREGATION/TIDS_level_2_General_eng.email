@@ -1,0 +1,181 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="0" style="width:375.0pt;mso-cellspacing:0in;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0in 0in 0in 0in">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+  height:225.0pt">
+  <td valign="top" style="background:white;padding:0in 0in 0in 0in;height:225.0pt">
+  <table class="MsoNormalTable" border="0" cellspacing="5" cellpadding="0" width="0" style="width:412.5pt;mso-cellspacing:3.7pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   3.75pt 3.75pt 3.75pt 3.75pt">
+   <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+    height:312.05pt">
+    <td valign="top" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 3.75pt; height: 312.05pt;">
+    <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">{!Today}&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">Codice numerico IATA:&nbsp;{!Account.IATACode__c}</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">{!Account.Name}</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">{!Account.BillingCity},&nbsp;{!Account.BillingCountry}</span><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333">&nbsp;</span></p><p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal"><span style="color: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 12pt;">Gentile {!Account.Name},</span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">in base ai nostri dati, alla sua agenzia sono stati
+assegnati dei codici TIDS relativamente alle filiali della sua sede centrale
+provvista di codice IATA {!Account.IATACode__c}.&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">Al fine di garantire alla comunità delle agenzie di
+viaggi tutti i vantaggi e il valore aggiunto offerti dal nuovo programma e dai
+servizi di IATA, è stata individuata la necessità di rispettare le disposizioni
+previste dalla </span><span lang="IT"><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span style="font-size:
+12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:windowtext;mso-bidi-language:IT">Risoluzione 898</span></a></span><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;e di separare
+totalmente il TIDS (Travel Industry Designator) dalla corrispondente sede
+centrale dell’agenzia di viaggi.</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">Con validità dal
+{!Case.Documentation_remarks__c}</span><span lang="IT" style="font-size:12.0pt;
+font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:#333333;mso-bidi-language:IT">&nbsp;i suoi codici TIDS verranno separati
+dal suo codice di agenzia IATA e saranno convertiti secondo una delle seguenti
+opzioni:</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal" style="line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+     mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-bidi-language:
+     IT">Opzione 1 - Sede centrale TIDS separata</span><span lang="IT" style="font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal" style="line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+     mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-bidi-language:
+     IT">Opzione 2 - Una gerarchia TIDS che prevede una sede centrale TIDS, con
+     le restanti TIDS ad essa collegate in qualità di filiali associate.</span><span lang="IT" style="font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"><o:p></o:p></span></li>
+</ul><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">Per facilitare questo processo di conformità, la
+preghiamo di fornirci le seguenti informazioni entro il </span><b><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">{!Case.Rejection_Withdrawal_remarks__c}:</span></b><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0.0001pt 0.5in; text-indent: -0.5in; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-bidi-language:IT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I.&nbsp;L’opzione
+da lei scelta tra quanto sopra indicato (opzione 1 o 2)</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0.0001pt 0.5in; text-indent: -0.5in; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-bidi-language:IT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;II.&nbsp;Il
+codice TIDS che desidera indicare come sede centrale TIDS (se è stata scelta
+l’opzione 2)</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0.0001pt 0.5in; text-indent: -0.5in; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-bidi-language:IT">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><u><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">In assenza di un suo riscontro entro il </span></u><b><u><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">{!Case.Rejection_Withdrawal_remarks__c}</span></u></b><u><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-bidi-language:IT">, procederemo alla
+conversione dei suoi codici TIDS in una gerarchia TIDS la cui sede centrale
+sarà scelta in modo casuale da IATA a partire dai suoi attuali codici TIDS
+attivi.</span></u><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0.0001pt 0.5in; text-indent: -0.5in; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin: 0in 0in 0.0001pt 0.5in; text-indent: -0.5in; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><b style="text-indent: -0.5in; font-size: 12pt;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">Recapiti di contatto per la sua sede centrale
+separata TIDS</span></b></p><p class="MsoNormal" style="margin: 0in 0in 0.0001pt 0.5in; text-indent: -0.5in; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><b style="text-indent: -0.5in; font-size: 12pt;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;"><br></span></b></p><p class="MsoNormal" style="margin-bottom: 12pt; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">Poiché
+avremo necessità di contattare direttamente la/e sua/e sede/i centrale/i
+separata/e TIDS, chiediamo gentilmente di voler fornire un cont<span style="background-color: rgb(255, 255, 255);">atto <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">(nome, cognome, contatto
+telefonico) </span></span>con un indirizzo e-mail non utilizzato in precedenza (<b>{!Case.Rejection_Withdrawal_remarks__c}</b>)&nbsp;da
+assegnare ad ogni sede centrale TIDS.</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 12pt; line-height: 13.8pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size: 12pt; font-family: Arial, sans-serif;">Se
+sceglie di designare uno dei suoi contatti esistenti come contatto principale
+per ogni sede centrale TIDS, tenga presente che esso non sarà più collegato
+all’account dell’agenzia. Di conseguenza:</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal" style="line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-family: Arial, sans-serif;">Il
+     contatto designato perderà l’assegnazione di ogni diritto di accesso al
+     portale e il godimento di tutti i servizi connessi al precedente account.</span><span lang="IT" style="font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal" style="line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:7.0pt;font-family:&quot;Times New Roman&quot;,serif;
+     mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-language:IT">&nbsp;</span><span lang="IT" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;;mso-bidi-language:IT">Se tale contatto è titolare di una
+     ID Card IATA, dovrà essere emessa una nuova ID Card IATA con il codice
+     della sede centrale TIDS.</span><span lang="IT" style="font-size:13.5pt;
+     font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+</ul><p class="MsoNormal" style="margin-bottom: 0.0001pt; text-align: justify; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:
+12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:#333333;mso-bidi-language:IT">&nbsp;</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; text-align: justify; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:
+12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:#333333;mso-bidi-language:IT">Cordiali saluti,</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span lang="IT" style="font-size:12.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;
+mso-bidi-language:IT">IATA Global Delivery Center</span><span lang="IT" style="font-size: 13.5pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </tbody></table>
+  </td>
+ </tr>
+</tbody></table><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="0" style="font-size: 12pt; width: 375pt;"><tbody>
+ <tr style="mso-yfti-irow:1;height:1.5pt">
+  <td valign="top" style="background:white;padding:0in 0in 0in 0in;height:1.5pt"></td>
+ </tr>
+ <tr style="mso-yfti-irow:2;mso-yfti-lastrow:yes;height:75.0pt">
+  <td valign="top" style="background:white;padding:0in 0in 0in 0in;height:75.0pt"></td>
+ </tr>
+</tbody></table>
+
+<p class="Default" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; line-height: 115%;"><br></p><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><div id="ftn2" style="font-size: 12pt;">
+
+</div>
+
+</div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><div id="ftn1">
+
+</div>
+
+</div>]]></td>
+</tr>
+</table>

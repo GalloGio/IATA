@@ -1,0 +1,118 @@
+public class TIDSVetting {
+
+	
+	public Case vcase;
+	public boolean isVirtualBranchRequest {get;set;}
+	public boolean isRelinquishRequest {get;set;}
+	public boolean isReinstateRequest {get;set;}
+	public boolean isStartVetting {get;set;}
+	public boolean isOpen {get;set;}
+	public string messageError {get;set;}
+	private List<Case> mcase {get;set;}
+	// The extension constructor initializes the private member
+	// variable acct by using the getRecord method from the standard
+	// controller.
+	public TIDSVetting(ApexPages.StandardController stdController) {
+		this.messageError='';
+		this.isOpen=true;
+		this.vcase = (Case)stdController.getRecord();
+		getRequestCase();
+	}
+	
+	
+	public void getRequestCase(){
+		isVirtualBranchRequest=false;
+		isRelinquishRequest=false;
+		isStartVetting=false;
+		mcase = new List<Case>();
+		mcase=[Select Id, contactId, AccountId, Reason1__c, Subject, Decision__c, Decision_Date__c, OwnerId From Case Where id=:vcase.Id and Status!='Closed' Limit 1];
+		if (mcase.size()==0) {this.isOpen=false;return;}
+		isVirtualBranchRequest=(mcase[0].Subject=='TIDS – Virtual Branch Access Request');
+		isRelinquishRequest=(mcase[0].Reason1__c=='TIDS – Relinquishment');
+		isReinstateRequest=(mcase[0].Reason1__c=='TIDS – Reinstatement');
+		if (isVirtualBranchRequest==false && isRelinquishRequest==false && isReinstateRequest==false)  {isStartVetting=true;}
+	}
+	
+	public void approveRequest() {
+		this.isOpen=false;
+		messageError=TIDS_Constant.MSG34;
+		if (!Schema.sObjectType.Case.isAccessible()){return;}
+		if (!Schema.sObjectType.Case.isUpdateable()){return;}
+		if (!Schema.sObjectType.Accreditation__c.isAccessible()){return;}
+		if (!Schema.sObjectType.Accreditation__c.isUpdateable()){return;}
+		if (!Schema.sObjectType.EmailTemplate.isAccessible()){return;}
+		if (!Schema.sObjectType.Contact.isAccessible()){return;}
+		if (!Test.isRunningTest()) {getRequestCase();}
+		if (mcase.size()==0){messageError=TIDS_Constant.MSG31;return;}
+		messageError=TIDS_Constant.MSG32;
+		if (isVirtualBranchRequest){
+			List<Accreditation__c> a= new List<Accreditation__c>();
+			a= [Select Id, Virtual_Branch_Enabled__c From Accreditation__c
+			Where Related_Account__c=:mcase[0].AccountId Limit 1];
+			if (a.size()>0){
+				a[0].Virtual_Branch_Enabled__c=true;
+				update a;
+			}else{messageError=TIDS_Constant.MSG33; return;}
+		}
+		mcase[0].Decision__c='APPROVED';
+		mcase[0].Decision_Date__c=System.now();
+		mcase[0].Status=TIDS_Constant.IS_CLOSED;
+		mcase[0].OwnerId=UserInfo.getUserId();
+		update mcase;
+		if (isVirtualBranchRequest){
+		   //Send Email to the account contact if any
+		   sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_VB);
+		}else if (isRelinquishRequest){
+		   sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RL);
+		   if (mcase[0].Subject==TIDS_Constant.CASE_SUBJECT_RELINQUISH){
+				TidsBatchRelinquishment nb = new TidsBatchRelinquishment();
+				nb.caseId=vcase.Id;
+				Database.executeBatch(nb,100);
+		   }else{
+			  TidsBatchHelper.finishBuilderRelinquishment(vcase.Id);
+		   }
+		}else if (isReinstateRequest){
+			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RE);
+			TidsBatchHelper.finishBuilderReinstatement(vcase.Id);
+		 }
+	}
+	public void rejectRequest() {
+		this.isOpen=false;
+		messageError=TIDS_Constant.MSG34;
+		if (!Schema.sObjectType.Case.isAccessible()){return;}
+		if (!Schema.sObjectType.EmailTemplate.isAccessible()){return;}
+		if (!Schema.sObjectType.Contact.isAccessible()){return;}
+		if (!Test.isRunningTest()) {getRequestCase();}
+		if (mcase.size()==0){messageError=TIDS_Constant.MSG31;return;}
+		messageError=TIDS_Constant.MSG35;
+		mcase[0].Decision__c='REJECTED';
+		mcase[0].Decision_Date__c=System.now();
+		mcase[0].Status=TIDS_Constant.IS_CLOSED;
+		mcase[0].OwnerId=UserInfo.getUserId();
+		update mcase;
+		//Send email
+		if (isVirtualBranchRequest){
+			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_VB);
+		}else if (isRelinquishRequest){
+			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RL);
+		}else if (isReinstateRequest){
+			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RE);
+		}
+	}
+	public static void sendNotification(String caseId, String contactId, String emailTemplate){
+		List<EmailTemplate> emailtemp = [SELECT Id
+		  FROM EmailTemplate
+		  WHERE DeveloperName =:emailTemplate LIMIT 1];
+		if (emailtemp.size()==0 && !Test.isRunningTest()) {return;}
+		List<Contact> contactList = [SELECT Id, email
+		  FROM Contact
+		  WHERE Id = :contactId LIMIT 1];
+		if (contactList.size()==0) {return;}
+		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+		email.toAddresses = new List<String>{ contactList[0].email };
+		if (!Test.isRunningTest()) {email.setTemplateId(emailtemp[0].Id);}
+		email.setTargetObjectId(contactList[0].Id);
+		email.setWhatId(caseId);    
+		if (!Test.isRunningTest()) {Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });}
+	  }
+}

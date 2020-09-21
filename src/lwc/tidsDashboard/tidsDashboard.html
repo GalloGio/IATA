@@ -1,0 +1,64 @@
+<template>
+  <div class="container tids-dashboard">
+    <template if:true={spinner}>
+      <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <div class="row office-header">
+      <section class="col s8 l9">
+        <template if:true={showAllInformation}>
+          <c-tids-all-information branch-selected={branchSelected} account-info={accountInfo}></c-tids-all-information>
+        </template>
+        <template if:true={showAllBranches}>
+          <c-tids-view-branches account-info={accountInfo} branch-selected={branchSelected} all-records={showAllBranches}></c-tids-view-branches> 
+        </template>
+        <template if:true={showAllCases}>
+          <c-tids-view-cases branch-selected={branchSelected} account-info={accountInfo} all-records={showAllCases}></c-tids-view-cases>
+        </template>
+        <template if:true={showCurrentAccount}>
+          <c-tids-current-account branch-selected={branchSelected} account-info={accountInfo} vb-selected={vbSelected} enable-backtoho={enableBacktoho}></c-tids-current-account>
+        </template>
+        <template if:true={showAdministration}>
+          <c-tids-administration branch-selected={branchSelected} account-info={accountInfo} enable-revoke={enableRevoke}></c-tids-administration>
+        </template>
+        <template if:true={showReportChanges}>
+          <c-tids-report-changes branch-selected={branchSelected} account-info={accountInfo}></c-tids-report-changes>
+        </template>
+        <template if:true={showAddBranch}>
+          <c-tids-add-branch branch-selected={branchSelected} account-info={accountInfo} show-virtual-branch={showVirtualBranch}></c-tids-add-branch>
+        </template>
+        <template if:true={showRequestVirtualBranchService}>
+          <c-tids-request-virtual-branch branch-selected={branchSelected} account-info={accountInfo}></c-tids-request-virtual-branch>
+        </template>
+        <template if:true={showRelinquish}>
+          <c-tids-relinquish branch-selected={branchSelected} vb-selected={vbSelected} account-info={accountInfo}></c-tids-relinquish>
+        </template>
+        <template if:true={showReinstate}>
+          <c-tids-reinstate branch-selected={branchSelected} vb-selected={vbSelected} account-info={accountInfo}></c-tids-reinstate>
+        </template>
+      </section>
+      <section class="col s4 l3">
+        <template  if:true={showManageMenu}>
+        <c-tids-manage-menu branch-selected={branchSelected} is-reinstatement={showReinstatement} account-info={accountInfo} vb-selected={vbSelected}  enable-administration={enableAdministration} show-no-option={showNoOption}></c-tids-manage-menu>
+        </template>
+    </section>
+    </div>
+    <div class="row">
+      <section class="col s8 l9">
+        <template if:true={showViewBranches}>
+          <c-tids-view-branches branch-selected={branchSelected} account-info={accountInfo} is-ho-reinstatement={showHOReinstatement} ></c-tids-view-branches>
+        </template>
+        <template if:true={showViewCases}>
+          <c-tids-view-cases branch-selected={branchSelected} account-info={accountInfo} ></c-tids-view-cases>
+        </template>
+      </section>
+      <aside class="col s4 l3">
+        <template if:true={showTidsCases}>
+          <c-tids-cases branch-selected={branchSelected} account-info={accountInfo}></c-tids-cases>
+        </template>
+        <template if:true={showHelpCenter}>
+          <c-tids-help></c-tids-help>
+        </template>
+      </aside>
+    </div>
+  </div>
+</template>

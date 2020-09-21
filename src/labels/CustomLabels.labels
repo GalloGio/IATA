@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>tids_accessibility_open_case_description_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids accessibility open a case description message</shortDescription>
+        <value>Cras ultricies ligula sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit.</value>
+    </labels>
+    <labels>
+        <fullName>tids_accessibility_open_case_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids accessibility open a case</shortDescription>
+        <value>Open a case</value>
+    </labels>
+    <labels>
+        <fullName>tids_apologize_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids apologize message for Accessibility</shortDescription>
+        <value>We are sorry to hear your are not eligible to the service. However, we can offer you two options. Please click on a box to access content:</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_before_start_description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Before we start description</shortDescription>
+        <value>Make sure you have all the required documents! Once you have assembled all the items listed, you can start the process and subscribe to the service.</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_before_start_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Before we start title</shortDescription>
+        <value>Before we start</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids form subtitle</shortDescription>
+        <value>Tids form description</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_documents_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids form All documents are available label</shortDescription>
+        <value>All documents are available</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_service_button</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids go to service button label</shortDescription>
+        <value>Go to Service</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_steps_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Form steps title</shortDescription>
+        <value>Steps</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_subtitle_description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids form subtitle</shortDescription>
+        <value>Tids form subtitle</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_tc_legend</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids form Terms and Conditions</shortDescription>
+        <value>Check here to indicate that you have read and agree to the terms of the TIDS Service</value>
+    </labels>
+    <labels>
+        <fullName>tids_form_tc_link_label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids form terms of the TIDS Service</shortDescription>
+        <value>terms of the TIDS Service</value>
+    </labels>
+    <labels>
+        <fullName>tids_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS Title</shortDescription>
+        <value>Travel Industry Designator Services (TIDS)</value>
+    </labels>
+    <labels>
+        <fullName>tids_visit_link_description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids visit a Link description</shortDescription>
+        <value>Cras ultricies ligula sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit.</value>
+    </labels>
+    <labels>
+        <fullName>tids_visit_link_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tids visit a Link title</shortDescription>
+        <value>Visit Link</value>
+    </labels>
+    <labels>
+        <fullName>tids_what_you_can_do</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS What you can do</shortDescription>
+        <value>What you can do?</value>
+    </labels>
+    <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
         <language>en_US</language>

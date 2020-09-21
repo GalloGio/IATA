@@ -1,0 +1,209 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;background:white;
+mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">{!Today}&nbsp;</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;background:white;
+mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Code numérique
+IATA&nbsp;:&nbsp;{!Account.IATACode__c}</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;background:white;
+mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">{!Account.Name}</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;background:white;
+mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">{!Account.BillingCity},&nbsp;{!Account.BillingCountry}</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;
+mso-bidi-language:FR-CA">Madame, Monsieur&nbsp;<span style="background:white">{!Account.Name}</span>,</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal" style="line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Le
+26<span style="background:white">&nbsp;mars 2018</span>,&nbsp;la résolution 812
+ayant trait à la nouvelle génération des systèmes de règlement de l’IATA
+(NewGen ISS) entrera en vigueur <span style="background:white">{!Account.BillingCountry}.&nbsp;</span>Cette
+nouvelle résolution concerne les règles des agences de vente en vertu des
+NewGen ISS et introduit un nouveau programme qui modernisera le BSP de manière
+à mieux répondre aux besoins de l’industrie du voyage en offrant plus de choix
+et de latitude à leurs agents<a name="_ftnref1"></a><a href="file:///C:/Users/hazbounc/Desktop/Final%20TIDS%20pacakage/14%20Feb%202018/Level2_Segregation%20of%20TIDS%20BR%20V2_20180208.docx#_ftn1" title=""><span style="color:blue">[1]</span></a>.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">&nbsp;</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;
+mso-bidi-language:FR-CA">De manière à ce que la communauté des agences de
+voyages profite et valorise pleinement les avantages des NewGen ISS, on a
+déterminé qu’il fallait harmoniser les dispositions de la </span><span lang="FR"><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; text-decoration-line: none;">Résolution 898</span></a></span><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">
+et séparer complètement le Service d'identification de l'industrie touristique
+(TIDS) des sièges sociaux des agences de voyages.</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;
+mso-bidi-language:FR-CA">Selon nos dossiers, votre agence s’est vue attribuer
+des codes TIDS en tant que divisions de votre siège social détenant un code
+IATA <span style="background:white">{!Account.IATACode__c}.</span>&nbsp;</span><span lang="FR"><a href="file:///C:/Users/hazbounc/Desktop/Final%20TIDS%20pacakage/14%20Feb%202018/Level2_Segregation%20of%20TIDS%20BR%20V2_20180208.docx#_ftn2"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; text-decoration-line: none;">[2]</span></a></span><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">.
+</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;">&nbsp;</span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;background:white;
+mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Ainsi donc, afin de
+s’harmoniser en vertu des dispositions de la </span><span lang="FR"><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; background: white; text-decoration-line: none;">Résolution
+898</span></a></span><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;background:white;
+mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">, en vigueur à compter du 21
+mars</span><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;
+mso-bidi-language:FR-CA">, vos codes TIDS seront graduellement séparés du code
+de l’agence IATA et convertis selon l’une des options suivantes&nbsp;: </span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:
+     FR-CA">Option 1 – Un siège social TIDS indépendant</span><span lang="FR" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:
+     FR-CA">Option 2 – Une hiérarchie TIDS comportant un siège social TIDS et
+     les autres TIDS restant en tant que divisions associées de ce siège
+     social.</span><span lang="FR" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+     mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+</ul><p class="MsoNormal" style="line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Afin
+de faciliter ce processus de conformité, veuillez nous fournir l’information
+suivante avant le <b>20 mars 2018</b>&nbsp;:</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="line-height:13.8pt"><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal" style="margin-left:.5in;text-indent:-.5in;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I.
+Votre option privilégiée comme indiqué ci-dessus (Option 1 ou 2)</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-left:.5in;text-indent:-.5in;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;II.&nbsp;Le
+code TIDS que vous désirez choisir en tant que siège social TIDS (dans le cas
+de l’option 2)</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-top:0in;margin-right:0in;margin-bottom:12.0pt;
+margin-left:.5in;text-indent:-.5in;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">&nbsp;&nbsp;&nbsp;&nbsp;III.&nbsp;La
+personne-ressource parmi votre liste de contacts existants à être affectée au
+siège social TIDS, car il est possible que nous ayons besoin de communiquer
+directement avec votre siège social TIDS indépendant.&nbsp; Par ailleurs, vous pouvez fournir une
+nouvelle personne-ressource ayant une adresse de courriel unique.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="line-height:13.8pt"><u><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Si
+l’information requise ci-dessus n’est pas reçue d’ici le 20 mars 2018, vos
+codes TIDS seront convertis en une hiérarchie TIDS où le siège social sera
+choisi au hasard par IATA à partir de vos codes TIDS actifs actuels. </span></u><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">&nbsp;</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Une
+fois les NewGen ISS opérationnels, l’IATA offrira aux agents le choix des types
+d’accréditation suivants&nbsp;: </span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:
+     FR-CA">Accréditation Golite (une accréditation standard sans facilité de
+     financement)</span><span lang="FR" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+     mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+     &quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:
+     FR-CA">Accréditation GoStandard (accréditation standard avec facilité de
+     financement)</span><span lang="FR" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+     mso-fareast-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></li>
+</ul><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Vos
+sites TIDS sont libres de demander une de ces accréditations une fois que les
+NewGen ISS seront opérationnels dans vos marchés BSP respectifs, ou de
+continuer d’être des sites TIDS indépendants.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">L’accréditation
+de vos sites TIDS, quels que soient les types d’accréditation, devra respecter
+les critères d’accréditation IATA applicables et à l’annulation des codes TIDS
+alors que des codes IATA leur seront assignés.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Si
+vous soumettez une demande en deçà de 90 jours de la date de transmission en
+direct des NewGen ISS, l’accréditation de n’importe lequel de vos sites TIDS
+n’entraînera pas de frais supplémentaires. Pour amorcer le processus, vous
+pouvez contacter l’IATA au moyen du portail de service à la clientèle en direct
+à </span><span lang="FR"><a href="file:///C:/Users/palaobasb/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/PPIHN801/www.iata.org/cs"><b><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif; color: windowtext; text-decoration-line: none;">www.iata.org/cs</span></b></a></span><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom:12.0pt;line-height:13.8pt"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Si
+vous avez d’autres questions, veuillez les formuler au moyen du Portail de
+service à la clientèle d’IATA (</span><span lang="FR"><a href="http://www.iata.org/cs"><span lang="FR-CA" style="font-size:12.0pt;
+font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:windowtext;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">www.iata.org/cs</span></a></span><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">).
+Notre équipe du Service client vous assistera avec plaisir.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal" style="text-align:justify"><span lang="FR-CA" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Sincères
+salutations,</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal" style="background:white"><span lang="FR-CA" style="font-size:
+12.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:#333333;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Centre global
+d’expédition IATA</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span lang="FR" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif;"><br>
+<!--[if !supportLineBreakNewLine]--><br>
+<!--[endif]--></span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><div class="MsoNormal"><span lang="FR-CA" style="font-size: 12pt; font-family: Arial, sans-serif;">
+
+<hr size="1" width="33%" align="left">
+
+</span></div><p class="MsoNormal"><span lang="FR-CA" style="font-size: 10pt; font-family: Georgia, serif;">[1]&nbsp;</span><span lang="FR-CA" style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#1F3864;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">Pour
+de plus amples informations sur les NewGen ISS, veuillez consulter le lien </span><span lang="FR"><a href="https://newgeniss.iata.org/travel-agents/"><span lang="FR-CA" style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:blue;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">ici</span></a></span><span lang="FR-CA" style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#1F3864;mso-ansi-language:FR-CA;mso-bidi-language:FR-CA">.</span><span lang="FR" style="font-size: 12pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span lang="FR-CA" style="font-size: 10pt; font-family: Georgia, serif;">[2]&nbsp;</span><span lang="FR-CA" style="font-size:10.0pt;font-family:
+&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#002060;
+mso-ansi-language:FR-CA;mso-fareast-language:EN-US;mso-bidi-language:FR-CA">Pour
+accéder à une liste de vos codes TIDS actuels assignés en tant que divisions de
+votre siège social, veuillez accéder à l’information de votre entreprise au
+moyen du Portail de service à la clientèle de IATA.</span></p><div style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial;"><div id="ftn1">
+
+</div>
+
+</div>]]></td>
+</tr>
+</table>

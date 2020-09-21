@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>TIDS_level 2_CA_FRE</name>
+    <style>freeForm</style>
+    <subject>Séparation des succursales TIDS du code d&apos;agence IATA _{! Account.IATACode__c}</subject>
+    <textOnly>{!Today}
+
+
+Code numérique IATA : {!Account.IATACode__c}
+
+{!Account.Name}
+
+{!Account.BillingCity}, {!Account.BillingCountry}
+
+
+Madame, Monsieur {!Account.Name},
+
+
+Le 26 mars 2018, la résolution 812 ayant trait à la nouvelle génération des systèmes de règlement de l’IATA (NewGen ISS) entrera en vigueur {!Account.BillingCountry}. Cette nouvelle résolution concerne les règles des agences de vente en vertu des NewGen ISS et introduit un nouveau programme qui modernisera le BSP de manière à mieux répondre aux besoins de l’industrie du voyage en offrant plus de choix et de latitude à leurs agents[1].
+
+
+De manière à ce que la communauté des agences de voyages profite et valorise pleinement les avantages des NewGen ISS, on a déterminé qu’il fallait harmoniser les dispositions de la Résolution 898 et séparer complètement le Service d&apos;identification de l&apos;industrie touristique (TIDS) des sièges sociaux des agences de voyages.
+
+Selon nos dossiers, votre agence s’est vue attribuer des codes TIDS en tant que divisions de votre siège social détenant un code IATA {!Account.IATACode__c}. [2].
+
+
+Ainsi donc, afin de s’harmoniser en vertu des dispositions de la Résolution 898, en vigueur à compter du 21 mars, vos codes TIDS seront graduellement séparés du code de l’agence IATA et convertis selon l’une des options suivantes :
+
+Option 1 – Un siège social TIDS indépendant
+Option 2 – Une hiérarchie TIDS comportant un siège social TIDS et les autres TIDS restant en tant que divisions associées de ce siège social.
+
+Afin de faciliter ce processus de conformité, veuillez nous fournir l’information suivante avant le 20 mars 2018 :
+
+
+I. Votre option privilégiée comme indiqué ci-dessus (Option 1 ou 2)
+
+II. Le code TIDS que vous désirez choisir en tant que siège social TIDS (dans le cas de l’option 2)
+
+III. La personne-ressource parmi votre liste de contacts existants à être affectée au siège social TIDS, car il est possible que nous ayons besoin de communiquer directement avec votre siège social TIDS indépendant.  Par ailleurs, vous pouvez fournir une nouvelle personne-ressource ayant une adresse de courriel unique.
+
+Si l’information requise ci-dessus n’est pas reçue d’ici le 20 mars 2018, vos codes TIDS seront convertis en une hiérarchie TIDS où le siège social sera choisi au hasard par IATA à partir de vos codes TIDS actifs actuels.
+
+
+Une fois les NewGen ISS opérationnels, l’IATA offrira aux agents le choix des types d’accréditation suivants :
+
+Accréditation Golite (une accréditation standard sans facilité de financement)
+Accréditation GoStandard (accréditation standard avec facilité de financement)
+
+Vos sites TIDS sont libres de demander une de ces accréditations une fois que les NewGen ISS seront opérationnels dans vos marchés BSP respectifs, ou de continuer d’être des sites TIDS indépendants.
+
+L’accréditation de vos sites TIDS, quels que soient les types d’accréditation, devra respecter les critères d’accréditation IATA applicables et à l’annulation des codes TIDS alors que des codes IATA leur seront assignés.
+
+Si vous soumettez une demande en deçà de 90 jours de la date de transmission en direct des NewGen ISS, l’accréditation de n’importe lequel de vos sites TIDS n’entraînera pas de frais supplémentaires. Pour amorcer le processus, vous pouvez contacter l’IATA au moyen du portail de service à la clientèle en direct à www.iata.org/cs.
+
+Si vous avez d’autres questions, veuillez les formuler au moyen du Portail de service à la clientèle d’IATA (www.iata.org/cs). Notre équipe du Service client vous assistera avec plaisir.
+
+Sincères salutations,
+
+Centre global d’expédition IATA
+
+
+
+
+
+
+[1] Pour de plus amples informations sur les NewGen ISS, veuillez consulter le lien ici.
+
+[2] Pour accéder à une liste de vos codes TIDS actuels assignés en tant que divisions de votre siège social, veuillez accéder à l’information de votre entreprise au moyen du Portail de service à la clientèle de IATA.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

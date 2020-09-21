@@ -1,0 +1,112 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="font-size: 12pt;"><span style="line-height: 107%;"><span style="background-color: rgb(255, 255, 255);"><font face="Arial, sans-serif" style="" color="#333333">{!Today}&nbsp;</font></span></span></p><p class="MsoNormal" style="font-size: 12pt;"><span style="line-height: 107%;"><span style="background-color: rgb(255, 255, 255);"><font face="Arial, sans-serif" style="" color="#333333"><br></font></span></span></p><p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif" color="#333333"><span style="background: white;">IATA Numeric code:&nbsp;{!Account.IATACode__c}</span><o:p></o:p></font></p><p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif" color="#333333"><span style="background: white;">{!Account.Name}</span><o:p></o:p></font></p><p class="MsoNormal" style="font-size: 12pt;"><span style="background-color: white; font-family: Arial, sans-serif; font-size: 12pt;"><font color="#333333">{!Account.BillingCity},&nbsp;{!Account.BillingCountry}</font></span></p><p class="MsoNormal" style="font-size: 12pt;"><font color="#333333"><br></font></p><p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif" color="#333333"><span style="line-height: 107%;">Dear&nbsp;</span><span style="background-color: rgb(255, 255, 255);">{!Account.Name}</span>,</font></p><p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif" color="#333333"><br></font></p>
+
+<p class="Default" style="font-size: 12pt; line-height: 115%;"><font face="Arial, sans-serif" color="#333333"><span style="line-height: 115%;">On 26<span style="background-color: rgb(255, 255, 255);"><span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">&nbsp;March, 2018</span></span>,&nbsp;</span>New Generation IATA Settlement Systems (NewGen
+ISS) Resolution 812 will become effective in&nbsp;<span style="background-color: rgb(255, 255, 255);">{!Account.BillingCountry}.&nbsp;</span>This new Resolution covers the
+Sales Agency Rules under NewGen ISS and introduces a new program that will
+modernize the BSP to better address the needs of the travel industry, providing
+travel agents with more choice and flexibility<a href="file:///C:/Users/hazbounc/Desktop/Final%20TIDS%20pacakage/14%20Feb%202018/Level2_Segregation%20of%20TIDS%20BR%20V2_20180208.docx#_ftn1" name="_ftnref1" title="" style=""><span class="MsoFootnoteReference"><span class="MsoFootnoteReference"><span style="line-height: 107%;">[1]</span></span></span></a>.</font></p>
+
+<p class="Default" style="font-size: 12pt; line-height: 115%;"><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">&nbsp;</font></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif" color="#333333"><span style="line-height: 107%;">In order to deliver the full
+benefit and value of NewGen ISS to the Travel Agency community, the need to
+align with the provisions of the </span><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span style="line-height: 107%;">Resolution 898</span></a><span style="line-height: 107%;"> and separate the Travel Industry Designator (TIDS) completely
+from their Travel Agency Head Offices has been identified.<o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="font-size: 12pt;"><font color="#333333"><span style="line-height: 107%;"><font face="Arial, sans-serif">According to our records, your
+Agency has been allocated TIDS codes as Branches to your Head Office holding
+the IATA code&nbsp;</font></span><span style="background-color: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 12pt;">{!Account.IATACode__c}.</span><span style="font-family: Arial, sans-serif; font-size: 12pt;">&nbsp;</span><span class="MsoFootnoteReference" style="font-family: Arial, sans-serif; font-size: 12pt;"><span class="MsoFootnoteReference"><span style="line-height: 107%;"><a href="file:///C:/Users/hazbounc/Desktop/Final%20TIDS%20pacakage/14%20Feb%202018/Level2_Segregation%20of%20TIDS%20BR%20V2_20180208.docx#_ftn2" title="">[2]</a></span></span></span></font></p><p class="MsoNormal" style="font-size: 12pt;"><span style="line-height: 107%;"><font face="Arial, sans-serif" color="#333333"><span class="MsoFootnoteReference"><span class="MsoFootnoteReference"><br></span></span></font></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt;"><font face="Arial, sans-serif" color="#333333"><span style="background-color: rgb(255, 255, 255);"><span style="line-height: 107%;">In order to align with the
+provisions of the </span><a href="http://www.iata.org/Sites/FMC/Files/reso_898.pdf"><span style="line-height: 107%;">Resolution 898</span></a></span><span style="line-height: 107%;"><span style="background-color: rgb(255, 255, 255);">, effective <span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">21 March, 2018</span></span> your TIDS codes will be separated from your IATA Agency code
+and converted into either of the following options:<o:p></o:p></span></font></p>
+
+<p class="MsoListParagraphCxSpFirst" style="font-size: 12pt; margin-bottom: 0.0001pt; text-indent: -0.25in; line-height: normal;"></p><ul style="font-size: 12pt;"><li><span style="font-family: Arial, sans-serif; text-indent: -0.25in;"><font color="#333333">Option 1 - A standalone TIDS Head
+Office</font></span></li><li><span style="font-family: Arial, sans-serif; text-indent: -0.25in; line-height: 115%;"><font color="#333333">Option 2 - A
+TIDS hierarchy consisting of one TIDS Head Office and the remaining TIDS as
+Associated Branches linked to that TIDS Head Office.</font></span></li></ul><!--[if !supportLists]--><p style="font-size: 12pt;"></p>
+
+
+
+<p class="Default" style="font-size: 12pt; line-height: 115%;"><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">In order to facilitate this compliance process,
+please provide us with the following information by <b>20&nbsp;March, 2018</b>:<o:p></o:p></font></span></p><p class="Default" style="font-size: 12pt; line-height: 115%;"><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333"><br></font></span></p>
+
+<p class="Default" style="font-size: 12pt; margin-left: 0.5in; text-indent: -0.5in; line-height: 115%;"><!--[if !supportLists]--><font face="Arial, sans-serif" color="#333333"><span style="line-height: 115%;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>I.<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;">&nbsp;</span></span><span style="line-height: 115%;">Your preferred option as indicated above (Option 1 or 2)<o:p></o:p></span></font></p>
+
+<p class="Default" style="font-size: 12pt; margin-left: 0.5in; text-indent: -0.5in; line-height: 115%;"><!--[if !supportLists]--><font face="Arial, sans-serif" color="#333333"><span style="line-height: 115%;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>II.<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;">&nbsp;</span></span><span style="line-height: 115%;">The TIDS code you wish to select as the TIDS Head Office (in the
+case of&nbsp; Option 2)<o:p></o:p></span></font></p>
+
+<p class="Default" style="font-size: 12pt; margin: 0in 0in 12pt 0.5in; text-indent: -0.5in; line-height: 115%;"><!--[if !supportLists]--><font face="Arial, sans-serif" color="#333333"><span style="line-height: 115%;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;">&nbsp;&nbsp;&nbsp;
+</span>III.<span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;">&nbsp;</span></span><span style="line-height: 115%;">The contact from your existing contacts details to be assigned
+to the TIDS Head Office as we may need to contact your TIDS standalone Head
+Office directly. Alternatively, you may provide a new contact with a unique
+email address.<o:p></o:p></span></font></p>
+
+<p class="Default" style="font-size: 12pt; line-height: 115%;"><u><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">If the above required information is not
+received by 20 March, 2018, this will result in the conversion of your TIDS
+codes into a TIDS hierarchy, where the Head Office will be randomly chosen by
+IATA from your current active TIDS codes.<o:p></o:p></font></span></u></p>
+
+<p class="Default" style="font-size: 12pt; line-height: 115%;"><b><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">&nbsp;</font></span></b></p>
+
+<p class="Default" style="font-size: 12pt; line-height: 115%;"><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">Once NewGen ISS is effective, IATA will provide
+Agents with a choice of the following new Accreditation types:</font></span></p><p class="Default" style="font-size: 12pt; line-height: 115%;"></p><ul style="font-size: 12pt;"><li><font color="#333333">GoLite Accreditation
+(Standard Accreditation with no Cash Facility)</font></li><li><span style="font-family: Arial, sans-serif; text-indent: -0.25in;"><font color="#333333">GoStandard
+Accreditation (Standard Accreditation with Cash Facility)</font></span></li></ul><p style="font-size: 12pt;"></p>
+
+<p class="Default" style="font-size: 12pt; margin-bottom: 12pt; line-height: 115%;"><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">Your TIDS locations are
+welcome to apply for one of these accreditation types once NewGen ISS is live
+in your respective BSP market, or else remain as separated TIDS locations.<o:p></o:p></font></span></p>
+
+<p class="Default" style="font-size: 12pt; margin-bottom: 12pt; line-height: 115%;"><span style="line-height: 115%;"><font face="Arial, sans-serif" color="#333333">The accreditation of
+your TIDS locations under any of the Accreditation types will be subject to
+compliance with the applicable IATA Accreditation criteria and termination of
+their TIDS codes as they will be assigned IATA codes.<o:p></o:p></font></span></p>
+
+<p class="Default" style="font-size: 12pt; margin-bottom: 12pt; line-height: 115%;"><font face="Arial, sans-serif" color="#333333"><span style="line-height: 115%;">If you apply within 90
+days from the Go-Live date of NewGen ISS, the accreditation of any of your TIDS
+locations will be at no additional cost. To start with the process, you can
+contact IATA through online customer portal </span><a href="file:///C:/Users/palaobasb/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/PPIHN801/www.iata.org/cs"><b><span style="line-height: 115%;">www.iata.org/cs</span></b></a><span style="line-height: 115%;">.<o:p></o:p></span></font></p>
+
+<p class="Default" style="font-size: 12pt; margin-bottom: 12pt; line-height: 115%;"><font face="Arial, sans-serif" color="#333333"><span style="line-height: 115%;">If you have any queries, please
+log your enquiry via our Customer Service Portal (</span><a href="http://www.iata.org/cs"><span style="line-height: 115%;">www.iata.org/cs</span></a><span class="MsoHyperlink"><span style="line-height: 115%;">) </span></span><span style="line-height: 115%;">and our Customer Services team
+will gladly assist you.</span><span style="line-height: 115%;"><o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="font-size: 12pt; text-align: justify;"><span style="line-height: 107%;"><font face="Arial, sans-serif" color="#333333">Yours
+sincerely,<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; background: white;"><span lang="EN-GB" style="line-height: 107%;"><font face="Arial, sans-serif" style=""><font color="#333333">IATA Global Delivery Center</font><font color="#002060"><o:p></o:p></font></font></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-size: 12pt;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-size: 12pt;"><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<div style="color: rgb(0, 0, 0);"><!--[if !supportFootnotes]--><font face="Arial, sans-serif" style="font-size: 12pt;"><br clear="all">
+
+</font><hr align="left" size="1" width="33%" style="font-size: 12pt;">
+
+<!--[endif]-->
+
+<div id="ftn1" style="">
+
+<p class="MsoFootnoteText" style=""><font style="" size="2"><span class="MsoFootnoteReference" style=""><!--[if !supportFootnotes]--><span class="MsoFootnoteReference" style=""><span style="line-height: 107%; font-family: Georgia, serif;">[1]</span></span><!--[endif]--></span> <span style="font-family: Arial, sans-serif; color: rgb(31, 56, 100);">For more information on
+NewGen ISS, please visit the link </span><a href="https://newgeniss.iata.org/travel-agents/" style=""><span style="font-family: Arial, sans-serif;">here</span></a><span style="font-family: Arial, sans-serif; color: rgb(31, 56, 100);">.</span><o:p></o:p></font></p><p class="MsoFootnoteText" style="">
+
+<font size="2"><font style=""><span class="MsoFootnoteReference"><span style="line-height: 107%; font-family: Georgia, serif;"><!--[if !supportFootnotes]--><span class="MsoFootnoteReference"><span style="line-height: 107%;">[2]</span></span><!--[endif]--></span></span><span style="line-height: 107%; font-family: Georgia, serif;"> </span><span style="line-height: 107%; font-family: Arial, sans-serif; color: rgb(0, 32, 96);">To access a list of your current TIDS codes assigned
+as Branches to your Head Office, please access your company information on the
+IATA Customer Portal</span></font><span style="line-height: 107%; font-family: Arial, sans-serif; color: rgb(0, 32, 96);">.</span></font></p></div><div id="ftn2" style="font-size: 12pt;">
+
+</div>
+
+</div><div style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial;"><div id="ftn1">
+
+</div>
+
+</div>]]></td>
+</tr>
+</table>

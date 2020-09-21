@@ -1,0 +1,129 @@
+<template>
+	<div class="container tids-form">
+		<div class="exampleHolder" if:true={spinner}>
+			<lightning-spinner alternative-text="Loading" size="larger"></lightning-spinner>
+		</div>
+		<div class="row">
+			<main class="col l8 s6">
+				<div class="content-wrapper" if:false={recallMessage}>
+					<header>
+						<h1>{label.tidsTitle}</h1>
+					</header>
+					<section>
+						<strong class="h3">{message.subtitle}</strong>
+						<p>{message.description1}</p>
+						<p>{message.description2}</p>
+						<p>{message.description3}</p>
+					</section>
+				</div>
+				<div class="content-wrapper" if:true={recallMessage}>
+					<header>
+						<h1>{label.tidsTitle}</h1>
+					</header>
+					<section>
+						<p>The system is processing your request, at the end of the process, you will be redirect to TIDS Application.</p>
+					</section>
+				</div>
+			</main>
+			<aside class="col l4 s6">
+				<div class="content-wrapper">
+					<header if:true={apologizeMessage}>
+						<h2>{message.yellowheader}</h2>
+						<p>
+							{message.yellowsection}
+						</p>
+					</header>
+					<article class="b-link iata-red" if:true={message.createCase}>
+						<a class="row" href="#" onclick={handleTidsCase}>
+							<div class="col s5">
+								<img src={homeEligibilityOpenCase} alt="">
+							</div>
+							<div class="col s7">
+								<header>
+									<h3>{label.tidsOpenCaseTitle}</h3>
+								</header>
+								<p>
+									{message.caseText}
+								</p>
+							</div>
+						</a>
+					</article>
+					<article class="b-link iata-blue" if:true={message.visitWebsiteUrl}>
+						<a class="row" href={message.visitWebsiteUrl}>
+							<div class="col s5">
+								<img src={homeEligibilityVisitLink} alt="">
+							</div>
+							<div class="col s7">
+								<header>
+									<h3>{label.tidsVisitLinkTitle}</h3>
+								</header>
+								<p>
+									{message.visitWebsiteText}
+								</p>
+							</div>
+						</a>
+					</article>
+					<article class="b-link" if:true={message.resumeApplication}>
+						<div class="row">
+							<div class="col push-s2 s8 pull-s2">
+								<button name="new-applicant" onclick={handleResume}>Resume</button>
+							</div>
+						</div>
+					</article>
+
+					<article class="b-link" if:true={message.recallApplication}>
+						<div class="row">
+							<div class="col push-s2 s8 pull-s2">
+								<button name="new-applicant" onclick={handleRecall}>Recall</button>
+							</div>
+						</div>
+					</article>
+					<article class="b-link" if:true={message.discardApplication}>
+						<div class="row">
+							<div class="col push-s2 s8 pull-s2">
+								<button name="new-applicant" onclick={handleDiscard}>Discard</button>
+							</div>
+						</div>
+					</article>
+					<article class="b-link" if:true={message.closeVetting}>
+						<div class="row">
+							<div class="col push-s2 s8 pull-s2">
+								<button name="close-window" onclick={handleCloseTab}>Close</button>
+							</div>
+						</div>
+					</article>
+				</div>
+			</aside>
+		</div>
+		<!-- Start Confirmation Modal Legal Name and Country -->
+		<template if:true={showConfimationModal}>
+			<section
+				role="dialog"
+				tabindex="-1"
+				aria-labelledby="Confirmation Information"
+				aria-modal="true"
+				aria-describedby="confirmation-data"
+				class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Attention</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="confirmation-data">
+						<p>Are you sure you want to discard your TIDS Application?</p>
+					</div>
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral transparent" onclick={handleModalCancel}>Cancel</button>
+						<button class="slds-button slds-button_brand" onclick={handleModalConfirm}>Confirm</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+		<!-- End Confirmation Modal Legal Name and Country -->
+	</div>
+	<c-tids-modal-msg
+			if:true={showConfimationMsgModal}
+			open={showConfimationMsgModal}
+			message={modalDefaultMessage}
+			action={modalAction}></c-tids-modal-msg>
+</template>

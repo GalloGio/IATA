@@ -1,0 +1,26 @@
+<template>
+  <div class="container shadow tids-form">
+    <lightning-spinner alternative-text="Loading"  size="large" if:true={spinner}></lightning-spinner>
+    <template if:true={isLoadingFinished}>
+    <div class="row">
+      <aside class="col l4 s3">
+        <c-tids-menu></c-tids-menu>
+      </aside>
+      <main class="col l8 s9">
+        <div class="content-wrapper">
+          <c-tids-new-applicant if:true={visibleNewApplicant}></c-tids-new-applicant>
+          <c-tids-agency if:true={visibleAgency}></c-tids-agency>
+          <c-tids-shareholder-details if:true={visibleShareholder}></c-tids-shareholder-details>
+          <c-tids-address if:true={visibleAddress}></c-tids-address>
+          <c-tids-mailing if:true={visibleMailing}></c-tids-mailing>
+          <c-tids-contact if:true={visibleContact}></c-tids-contact>
+          <c-tids-business-profile if:true={visibleBusinessProfile}></c-tids-business-profile>
+          <c-tids-business-specialization if:true={visibleBusinessSpecialization}></c-tids-business-specialization>
+          <c-tids-supporting-documents if:true={visibleSupportingDocuments}></c-tids-supporting-documents>
+          <c-tids-submit-application if:true={visibleSubmitApplication}></c-tids-submit-application>
+        </div>
+      </main>
+    </div>
+    </template>  
+  </div>
+</template>

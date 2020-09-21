@@ -1,0 +1,46 @@
+<template>
+  <lightning-spinner alternative-text="Loading" size="medium" if:true={spinner}></lightning-spinner>
+  <template if:false={isCaseClosed}>
+    <div class="slds-card slds-is-fixed">
+      <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+          <div class="slds-media__figure">
+            <!--
+            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#file'}" 
+            class="slds-icon slds-icon-standard-file slds-icon--medium" />
+            -->
+          </div>
+          <div class="slds-media__body slds-truncate">
+            <h2 class="slds-text-heading--small">TIDS Attachments</h2>
+          </div>
+        </div>
+      </div>
+      <div class="slds-card__body tidsAttachments">
+        <table class="slds-table slds-table--bordered slds-table--striped" aria-describedby="uploaded documents">
+          <thead>
+            <tr>
+              <th scope="col"><span class="slds-truncate" title="File Type">File Type</span></th>
+              <th scope="col"><span class="slds-truncate" title="Document Name">Document Name</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template if:true={documents} for:each={documents} for:item="document">
+              <tr key={document.id}>
+                <td><lightning-icon icon-name={document.iconName} alternative-text="Approved"></lightning-icon></td>
+                <td>
+                <a data-id={document.id}
+                  label={document.name}
+                  target="_blank"
+                  href={document.filepath}
+                  title={document.name}>
+                  {document.name}
+                </a>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</template>
+</template>

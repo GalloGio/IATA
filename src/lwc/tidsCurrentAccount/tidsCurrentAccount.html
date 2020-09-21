@@ -1,0 +1,56 @@
+<template>
+  <div class="block office-informations branch-information">
+    <header>
+      <template if:true={branchSelected}>
+        <template if:true={vbSelected}>
+          <h1>You Are Viewing Your Virtual Branch Dashboard</h1>
+        </template>
+        <template if:false={vbSelected}>
+          <h1>You Are Viewing Your Branch Dashboard</h1>
+        </template>
+      </template>
+      <template if:false={branchSelected}>
+        <h1>You Are Viewing Your Head Office Dashboard</h1>
+      </template>
+    </header>
+    <main>
+      <div class="row">
+        <div class="col s12 office-code-status">
+          <div>
+            <div class="row">
+              <div class="col s7">
+                <h2>IATA Code: <span>{accountInfo.IATACode__c}</span></h2>
+              </div>
+              <div class="col s5">
+                <h2>Status: <span>{accountInfo.Status__c}</span></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s7 office-address">
+          <h2>Summary</h2>
+          <ul class="no-list">
+            <li>{accountInfo.Name}<br>DBA: {accountInfo.TradeName__c}</li>
+            <li>{accountInfo.BillingStreet}<br>{accountInfo.BillingCity}, {accountInfo.BillingState}<br>{accountInfo.BillingPostalCode},&nbsp;{accountInfo.BillingCountry}</li>
+            <li><a href="#" onclick={handleAllInformation}>View all information</a></li>
+          </ul>
+        </div>
+        <div class="col s5 office-contact">
+          <c-tids-view-administrators account-id={accountInfo.Id} branch-selected={branchSelected}></c-tids-view-administrators>
+          <h2>Contact</h2>
+          <ul class="no-list">
+            <li>Email:&nbsp;<a href="mailto:{accountInfo.Email}">{accountInfo.Email__c}</a></li>
+            <li>Phone:&nbsp;<a href="tel:+{accountInfo.Phone}">{accountInfo.Phone}</a></li>
+          </ul>
+        </div>
+      </div>
+      <template if:true={enableBacktoho}>
+        <template if:true={branchSelected}>
+          <div class="row">
+            <div class="office-back-home"><button onclick={handleBackToHOClick}>Back to Head Office</button></div>
+          </div>
+        </template>
+    </template>
+  </main>
+  </div>
+</template>

@@ -1,0 +1,76 @@
+<template>
+  <div class="block office-tools">
+    <header>
+      <template if:true={branchSelected}>
+        <template if:false={vbSelected}>
+          <h1>Manage Your Branch Office</h1>
+        </template>
+        <template if:true={vbSelected}>
+          <h1>Manage Your Virtual Branch</h1>
+        </template>
+      </template>
+      <template if:false={branchSelected}>
+        <h1>Manage Your Head Office</h1>
+      </template>
+    </header>
+    <main>
+      <ul class="no-list">
+        <template if:false={branchSelected}>
+          <template if:false={isReinstatement}>
+            <li><a href="#" onclick={handleReportChanges}><span class="fas fa-exclamation-triangle"></span>Report Changes</a></li>
+            <li><a href="#" onclick={handleAddBranch}><span class="fas fa-plus-circle"></span>Add a Branch Office</a></li>
+            <template if:true={isVirtual}>
+              <li><a href="#" onclick={handleAddVirtualBranch}><span class="fas fa-wifi"></span>Add a Virtual Branch Office</a></li>
+            </template>
+            <template if:false={isVirtual}>
+              <template if:true={isRequestVirtualBranch}>
+                  <li><a href="#" onclick={handleRequestVirtualBranch}><span class="fas fa-wifi"></span>Request Virtual Branch Service</a></li>
+              </template>
+            </template>
+            <li><a href="#" onclick={handleAdminHO}><span class="fas fa-user"></span>Manage Your Administrators</a></li>
+            <li><a href="#" onclick={handleRelinquishHO}><span class="fas fa-minus-circle"></span>Relinquish Your TIDS Participation</a></li>
+          </template>
+          <template if:true={isReinstatement}>
+            <li><a href="#" onclick={handleReinstate}><span class="fas fa-minus-circle"></span>Reinstate Your Head Office</a></li>
+          </template>  
+        </template>
+        <template if:true={branchSelected}>
+          <template if:true={showNoOption}>
+             <p class="empty"><span class="fas fa-exclamation-triangle"></span>Oops no Options!</p>
+          </template>
+          <template if:false={showNoOption}>
+            <template if:false={isReinstatement}>
+              <li><a href="#" onclick={handleReportBranchChanges}><span class="fas fa-exclamation-triangle"></span>Report Changes</a></li>
+              <template if:false={vbSelected}>
+                <template if:true={enableAdministration}>
+                  <li><a href="#" onclick={handleAdminBR}><span class="fas fa-user"></span>Manage Your Administrators</a></li>
+                </template>
+                <li><a href="#" onclick={handleRelinquishBR}><span class="fas fa-minus-circle"></span>Relinquish Your Branch Office</a></li>  
+              </template>
+              <template if:true={vbSelected}>
+                <template if:true={enableAdministration}>
+                  <li><a href="#" onclick={handleAdminBR}><span class="fas fa-user"></span>Manage Your Administrators</a></li>
+                </template>
+                <li><a href="#" onclick={handleRelinquishVB}><span class="fas fa-minus-circle"></span>Relinquish Your Virtual Branch</a></li>  
+              </template>
+            </template>
+            <template if:true={isReinstatement}>
+              <template if:false={vbSelected}>
+                <li><a href="#" onclick={handleReinstate}><span class="fas fa-minus-circle"></span>Reinstate Your Branch Office</a></li>
+              </template>
+              <template if:true={vbSelected}>
+                <li><a href="#" onclick={handleReinstate}><span class="fas fa-minus-circle"></span>Reinstate Your Virtual Branch</a></li>
+              </template>
+            </template> 
+          </template>
+        </template>
+       </ul>
+    </main>
+  </div>
+  <c-tids-modal-msg
+    if:true={showConfimationModal}
+    open={showConfimationModal}
+    message={modalDefaultMessage}
+    action={modalAction}
+  ></c-tids-modal-msg>
+</template>

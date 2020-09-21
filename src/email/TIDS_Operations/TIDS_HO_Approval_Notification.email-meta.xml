@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS HO Approval - Email notification sent to TIDS Applicant upon approval</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>IATA_Logo_2019</letterhead>
+    <name>TIDS HO Approval Notification</name>
+    <style>formalLetter</style>
+    <subject>IATA - Your application for a TIDS Head Office has been approved</subject>
+    <textOnly>Congratulations!
+We are pleased to inform you that your application for TIDS has been approved.
+Dear {!Contact.FirstName} {!Contact.LastName},
+
+We are pleased to confirm that {!Account.Name} has met the professional standards set by the International Air Transport Association for enrollment under the TIDS Program.
+
+Your application is now approved and below is a summary of your information:
+
+TIDS Code: {!Account.IATACode__c}
+{!Account.Name}
+DBA: {!Account.TradeName__c}
+
+{!Account.BillingAddress}
+
+Did you know?
+Now that your business is enrolled under the TIDS Program, you and your staff can apply for the IATA/IATAN Travel Agent ID Card. Visit www.iata.org/idcard for more details</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
