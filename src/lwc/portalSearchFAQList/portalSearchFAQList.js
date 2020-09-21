@@ -270,21 +270,12 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
         let params = {};
 
         let pageName;
-        if(this.filteringObject.advancedSearch) {
-            pageName = 'support-view-article';
-            params.q = this.filteringObject.searchText; // SEARCH TERM
-            params.id1 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC SELECTED ARTICLE
-        } else {
-            pageName = 'faq-article';
-            params.language = this.filteringObject.language;
-            params.q = this.filteringObject.searchText; // SEARCH TERM
-            params.id1 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC SELECTED ARTICLE
-        }
+        let articleName=event.target.attributes.getNamedItem('data-item').value;       
 
         this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
+            type: 'standard__knowledgeArticlePage',
             attributes: {
-                pageName: pageName
+                urlName: articleName
             }})
         .then(url => navigateToPage(url, params));
     }
