@@ -1707,47 +1707,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>Câu trả lời bên dưới đã được đăng vào trường hợp của bạn</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>hôm qua.</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>Vui lòng cho chúng tôi biết nếu câu hỏi của bạn đã được giải quyết hoặc có bất kỳ điều gì khác mà chúng tôi có thể giúp bạn về trường hợp này bằng cách sử dụng các nút bên dưới hoặc truy cập trường hợp từ</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>Bạn có thể cho chúng tôi biết bằng cách truy cập vào trường hợp thông qua Cổng thông tin khách hàng IATA.</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>Chúng tôi sẽ tự động đóng hồ sơ trong trường hợp không nhận được thêm phản hồi nào từ bạn trong vòng 24 giờ.</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>Chúng tôi đang đóng trường hợp</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>vì chúng tôi đã không nhận được thêm phản hồi từ bạn trong 48 giờ qua.</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>Nếu bạn cần hỗ trợ thêm về trường hợp này, bạn có thể thêm nhận xét hoặc liên hệ với chúng tôi thông qua một trường hợp mới trong</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>Chúng tôi đã trả lời cho câu hỏi của ban, qua số trường hợp</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>Bạn có thể vào chi tiết trường hợp để xem câu trả lời.</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>Bạn có thể cho chúng tôi biết bằng cách truy cập vào trường hợp thông qua Cổng thông tin khách hàng IATA.</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3372,7 +3372,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message</name>
     </customLabels>
     <customLabels>
-        <label>Nếu câu hỏi của bạn không liên quan đến một trong những tình huống này, vui lòng nhấp vào "&lt;b&gt; Gửi một Câu hỏi &lt;/b&gt;" bên dưới để tạo một trường hợp.</label>
+        <label>Nếu câu hỏi của bạn không liên quan đến một trong những tình huống này, vui lòng nhấp vào &quot;&lt;b&gt; Gửi một Câu hỏi &lt;/b&gt;&quot; bên dưới để tạo một trường hợp.</label>
         <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
     </customLabels>
     <customLabels>
@@ -3584,7 +3584,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>Trân trọng, &amp;lt;br/&amp;gt; Trung tâm Dịch vụ Khách hàng IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3592,7 +3592,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>Cổng thông tin khách hàng IATA</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5042,7 +5042,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
         <name>CSP_SubmittedApproval</name>
-    </customLabels>    
+    </customLabels>
     <customLabels>
         <label>Thành công</label>
         <name>CSP_Success</name>
@@ -5076,16 +5076,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label>Theo dõi</label>
-        <name>CSP_Track</name>
-    </customLabels>
-    <customLabels>
         <label>Tất cả các chủ đề</label>
         <name>CSP_Topic_All_Label</name>
     </customLabels>
     <customLabels>
         <label>Chủ đề gần đây của bạn</label>
         <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Theo dõi</label>
+        <name>CSP_Track</name>
     </customLabels>
     <customLabels>
         <label><!-- Profile Training section --></label>
@@ -5348,87 +5348,87 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>Trường hợp này không thể đóng lại hoặc nó &amp;apos;s đã được đóng.</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>Liên kết đã hết hạn.</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>Đi tới Cổng thông tin khách hàng</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>Cảm ơn, câu trả lời của bạn đã được lưu.</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>Không phải lúc này</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>Bạn đang được chuyển hướng đến cuộc khảo sát.</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>Chúng tôi đã đóng trường hợp bên dưới:</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>Vì chúng tôi không nhận được thông tin gì từ bạn trong vòng 48 giờ nên chúng tôi đã đóng hồ sơ bên dưới:</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>Cảm ơn bạn đã xác nhận!</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>Đã xảy ra lỗi khi chuyển hướng bạn đến khảo sát.</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>Tại IATA, chúng tôi không ngừng cải tiến dịch vụ của mình để có thể cung cấp cho bạn Trải nghiệm khách hàng tuyệt vời. Đây là lý do tại sao chúng tôi muốn hỏi ý kiến ​​của bạn về một số điểm mà chúng tôi cho là quan trọng, sẽ không mất quá hai phút.</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>Làm khảo sát</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>Câu trả lời không rõ ràng</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>Bạn có thể đóng trường hợp này ngay bây giờ</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>Đi đến Liên hệ với chúng tôi</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>Tôi có một câu hỏi mới</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>Câu hỏi của bạn đã được giải quyết chưa?</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>Nếu chúng tôi không nhận được phản hồi từ bạn trong 48 giờ tới, chúng tôi sẽ cho rằng bạn không cần hỗ trợ nữa và chúng tôi sẽ đóng hồ sơ.</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>Vui lòng cho biết chúng tôi có thể giúp thêm gì bạn ở trường hợp này</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>Chúng tôi đã đóng trường hợp này {arg0}, để được hỗ trợ sớm nhất có thể, xin bạn vui lòng tạo một câu hỏi mới bằng cách nhấn vào nút dưới đây.</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>Cảm ơn sự xác nhận của bạn</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5436,15 +5436,15 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>Vui lòng cung cấp thêm ý kiến ​​để chúng tôi tiếp tục giải quyết trường hợp này.</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>Khảo sát này</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>Chúng tôi đánh giá cao ý kiến của bạn. Vui lòng cho chúng tôi biết phản hồi của bạn về IATA &amp;apos;s Hỗ trợ trong</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -7690,6 +7690,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -28144,6 +28148,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>pkb2_lang_tl</name>
     </customLabels>
     <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Urdu --></label>
         <name>pkb2_lang_ur</name>
     </customLabels>
@@ -35549,6 +35557,15 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- GDP Accounts --></description>
         <label><!-- GDP Accounts --></label>
         <name>GDP_Accounts</name>
@@ -36645,7 +36662,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Các báo cáo</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -37358,6 +37375,15 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
