@@ -1,16 +1,4 @@
 import { LightningElement, wire, api } from 'lwc';
-
-import tidsTitle from '@salesforce/label/c.tids_title';
-import tidsFormSubtitle from '@salesforce/label/c.tids_form_subtitle_description';
-import tidsFormDescription from '@salesforce/label/c.tids_form_description';
-import tidsFormBeforeStartTitle from '@salesforce/label/c.tids_form_before_start_title';
-import tidsFormBeforeStartDescription from '@salesforce/label/c.tids_form_before_start_description';
-import tidsFormStepsTitle from '@salesforce/label/c.tids_form_steps_title';
-import tidsFormDocumentsAvailable from '@salesforce/label/c.tids_form_documents_available';
-import tidsFormTCLegend from '@salesforce/label/c.tids_form_tc_legend';
-import tidsFormTCLinkLabel from '@salesforce/label/c.tids_form_tc_link_label';
-import tidsFormServiceButton from '@salesforce/label/c.tids_form_service_button';
-
 // Show alert message using ShowToastEvent
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 

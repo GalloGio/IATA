@@ -1,14 +1,5 @@
 import { LightningElement, api, track, wire } from "lwc";
 import tidsAssetsPath from "@salesforce/resourceUrl/tidsAssets";
-//Labels
-import tidsTitle from "@salesforce/label/c.tids_title";
-import tidsWhatYouCanDo from "@salesforce/label/c.tids_what_you_can_do";
-import tidsApologizeMessage from "@salesforce/label/c.tids_apologize_message";
-import tidsOpenCaseTitle from "@salesforce/label/c.tids_accessibility_open_case_title";
-import tidsOpenCaseDescription from "@salesforce/label/c.tids_accessibility_open_case_description_message";
-import tidsVisitLinkTitle from "@salesforce/label/c.tids_visit_link_title";
-import tidsVisitLinkDescription from "@salesforce/label/c.tids_visit_link_description";
-
 // Salesforce backend logic
 import actionApplication from "@salesforce/apex/TIDSHelper.actionApplication";
 import discardApplication from "@salesforce/apex/TIDSHelper.discardApplication";
