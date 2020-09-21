@@ -780,7 +780,24 @@ public without sharing class TIDSHelper {
 										FROM Portal_Application_Right__c
 										WHERE Right__c='Access Granted' and Contact__r.AccountId=:accountId) 
 			Limit 20];
-		if (contacts.size()>0){return contacts;}
+		if (contacts.size()>0){
+			List<Contact> newcontacts = new List<Contact>();
+			Map<Id, Contact> contactmap = new Map<Id, Contact>();
+			for(Contact con:contacts){contactmap.put(con.Id,con);}
+			List<User> users = new List<User>();
+			users = [Select Id,contactId 
+						From User 
+						Where isActive=true 
+						and contactId=:contactmap.KeySet()
+						Limit 20];
+			if (users.size()==0) {return null;}
+			for(User u:users){
+				if (contactmap.ContainsKey(u.contactId)){
+					newcontacts.add((Contact)contactmap.get(u.contactId));
+				}
+			}
+			return newcontacts;
+		}
 		return null;
 	}
 	//actiontype: add secondary, add administrator, remove, swap
@@ -812,7 +829,6 @@ public without sharing class TIDSHelper {
 	 	if (!isbranch){type=TIDS_Constant.ADM_HOP;}
 	 	if (actiontype=='add'){
 			if (apprights.size()>0 && isbranch==false){type=TIDS_Constant.ADM_HOS;}
-			setPartnerUser(contactId, actiontype);
 			List<Portal_Application_Right__c> appusers = new List<Portal_Application_Right__c>();
 			appusers = [SELECT Id,Right__c FROM Portal_Application_Right__c
 						WHERE Contact__r.AccountId=:accountId
@@ -830,7 +846,6 @@ public without sharing class TIDSHelper {
 				update appusers;
 			}       
 		}else if (actiontype=='remove'){
-			//setPartnerUser(contactId, 'remove');
 			if (!isbranch){type=TIDS_Constant.ADM_HOS;}
 			apprights = [SELECT Id,Right__c FROM Portal_Application_Right__c
 						WHERE Contact__r.AccountId=:accountId
@@ -851,12 +866,12 @@ public without sharing class TIDSHelper {
 				AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
 		
 			if (!Test.isRunningTest()){	  
-					appsec[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOP;
-					update appsec;
-					apprights[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOS;
-					update apprights;
-					TIDSUtil.sendNotification(accountId, appsec[0].Contact__c, 'Administrators_Role_Swap_Primary');
-					TIDSUtil.sendNotification(accountId, apprights[0].Contact__c, 'Administrators_Role_Swap_Secondary');
+				appsec[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOP;
+				update appsec;
+				apprights[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOS;
+				update apprights;
+				TIDSUtil.sendNotification(accountId, appsec[0].Contact__c, 'Administrators_Role_Swap_Primary');
+				TIDSUtil.sendNotification(accountId, apprights[0].Contact__c, 'Administrators_Role_Swap_Secondary');
 			}
 		}
 		//get the list
@@ -886,187 +901,7 @@ public without sharing class TIDSHelper {
 					Order by Access_Status_Reason__c LIMIT 2];
 		return apprights;
 	}
-	//actiontype: remove or add
-	//remove will inactived the partner user
-	//add will add a new partner user or reactivate the partner user 
-	private static void setPartnerUser(Id contactId, string actiontype){
-		if (!Schema.sObjectType.Contact.isAccessible()){return;}
-		List<Contact> contacts = new List<Contact>();
-		contacts = [Select id, email, Firstname, Lastname, account.Name, account.ParentId, AccountId, Account.RecordType.DeveloperName, Salutation, Community__c From Contact where Id=:contactId Limit 1];
-		if (contacts.size()==0){return;}
-		String pname='ISS Portal';
-		String domain='@partner.iata.org';
-		String rname = contacts[0].account.Name+' Partner User'; //Ascari Travel Inc. Partner User
-
-		String email = contacts[0].email;
-		String username =email.replace('@','.')+domain;
-		Id accountId = contacts[0].AccountId;
-		Id paccountId = contacts[0].AccountId;
-		if (contacts[0].account.ParentId!=null){paccountId =contacts[0].account.ParentId;}
-		//Create portal account owner
-		UserRole prole = [Select Id From UserRole Where PortalType='Partner' and name=:rname and PortalAccountId=:paccountId Limit 1];
 		
-		Profile profile = [SELECT Id FROM Profile WHERE Name LIKE '%Portal User%' Limit 1]; //[Select Id from Profile where name=:pname Limit 1];
-		List<User> users = new List<User>();
-		users = [Select Id, isActive From User Where username=:username Limit 1];
-		if (actiontype=='add'){
-			if (users.size()>0){
-				if (users[0].isActive==false){users[0].isActive=true;Database.update(users);}
-			}else{
-				string profileId;
-				if (Test.isRunningTest()){	
-					string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(contacts[0].Account.RecordType.DeveloperName);
-					string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
-					profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
-				}else{
-					profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
-				}
-				//createNewUser(profileId,contacts[0]);
-				//createNewUser(contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline)
-				String UID = Comm_User_Helper.NewGuid();
-				String password = Comm_User_Helper.generateRandomString(6)+'1a';            
-				Id userId = Comm_User_Helper.createNewUser(contacts[0], 'TIDS', 'TIDS', 'English', true, false);
-				if (!Test.isRunningTest()) {System.setPassword(userId, password);}
-				String cleanUsername = ISSP_Utilities.buildPortalUserName(contacts[0].email);
-				cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
-				string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
-		
-				String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
-				String template = 'TIDS_Admin_User_Creation_Notification';
-				//ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName, string serviceName);
-				Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( contacts[0] ,  password ,  link, contacts[0].Community__c, 'TIDS');
-				//sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, String commName){	
-				Comm_User_Helper.sendEmail( template ,emailWrap, contacts[0], contacts[0].Community__c);
-				Comm_User_Helper.permissionASS(new list<Id>{userId});
-			}
-		}else if(actiontype=='remove'){
-			if (users.size()>0){
-				if (users[0].isActive){users[0].isActive=false;Database.update(users);}
-			}
-		}		
-	}
-/*
-	public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName, string serviceName){
-		String portalName = 'IATA';
-		String imageURL = Label.OneId_Email_Header_Identity;   // OneId default header image URL
-		String communityName = commName;
-		communityName = portalName + ' Customer Portal';
-			 
-		Map<String, String> mapBodyParamsIssp = new map<String,String>{
-					'{{{Contact.Salutation}}}' => con.Salutation,
-							'{{{Contact.Password}}}' => password,
-							'{{{Receiving_User.FirstName}}}' =>con.Firstname,
-							'{{{Receiving_User.LastName}}}' => con.LastName,
-							'{{{Receiving_User.Email}}}' => con.Email,
-							'{{{Community_Name}}}' => TIDS_Constant.TIDSVALUE,
-							'{{{Community_Url}}}' => link, 
-							'{{{Community_Header}}}' => imageURL,
-							'{{{$Label.ISSP_Email_Here}}}' => 'here',
-							'{{{$Label.ISSP_Email_do_not_reply}}}' => '',
-							'{{{$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}}}' => ''
-							};
-		return mapBodyParamsIssp;
-	}  
-	//
-	
-	public static void createNewUser(Id userProfile,Contact con){
-		Database.DMLOptions dmo = new Database.DMLOptions();
-		dmo.EmailHeader.triggerUserEmail = false; 
-		dmo.EmailHeader.triggerOtherEmail = false; 
-		dmo.EmailHeader.triggerAutoResponseEmail = false; 
-		dmo.optAllOrNone = false; 
-		// create portal user
-		User newUser = createUser(con,userProfile);
-		String UID = Comm_User_Helper.NewGuid();
-		newUser.setOptions(dmo);
-		
-		// new email process
-		newUser.UID__c = UID;
-		newUser.Community__c = 'ISSP';
-		newUser.ProfileId=userProfile;
-		if (!Test.isRunningTest()) {insert newUser;}
-		// new email process
-		String password = Comm_User_Helper.generateRandomString(6)+'1a';
-		
-		if (!Test.isRunningTest()) {System.setPassword(newUser.ID, password);}
-		String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
-		cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
-		string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
-		
-		String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
-		String template = 'TIDS_Admin_User_Creation_Notification';            
-		Map<String,String> emailWrap = ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c, '');
-		sendEmail( template ,emailWrap, con, false, con.Community__c);
-		Comm_User_Helper.permissionASS(new list<Id>{newUser.ID});
-	}
-	
-	public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, Boolean bccCS, String commName){
-		EmailMessageWrapper ew;
-		String noreplyemail= 'noreply@iata.org';      
-		if (bccCS){
-				String bccEmail = UserInfo.getUserEmail();
-				ew = new EmailMessageWrapper(noreplyemail, con.Email, null, bccEmail, null,  new map<string,string>(), null, mapBodyParamsIssp );
-		}else{
-				ew = new EmailMessageWrapper(noreplyemail,
-											con.Email,
-											null,
-											null,
-											null,
-											new map<string,string>(),
-											null,
-											mapBodyParamsIssp
-											);
-		}
-		
-		List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
-		if (!userList.isEmpty()){TIDSUtil.sendMyEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id);}     
-	} 
-		
-
-	public static User createUser(Contact con,Id userProfile){
-		String nick = con.email!=null?con.email.substring(0, con.email.indexOf('@')):'';
-		nick += Datetime.now().getTime();
-		if (nick.length() > 40){
-			nick = nick.left(40);
-		}else{
-			nick = nick;
-		}
-		User user;
-		list<User> userList = [select Id,ProfileId,IsActive,IsPortalEnabled,languagelocalekey from User where contactId =: con.Id];
-		if(!userList.isEmpty()){
-			user = userList.get(0);
-			user.IsActive = true;
-			user.IsPortalEnabled = true;
-			user.ProfileId = userProfile;
-			user.Username = ISSP_Utilities.buildPortalUserName(user.email);//AEF:
-		}else{
-			user = new User(
-				alias = createAlias(con.firstName, con.lastName), 
-				email = con.email, 
-				emailencodingkey = 'UTF-8', 
-				firstname = con.firstName, 
-				lastname = con.lastname, 
-				languagelocalekey = 'en_US', 
-				localesidkey = 'en_US', 
-				contactId = con.Id,
-				timezonesidkey = 'Asia/Dubai', 
-				username = ISSP_Utilities.buildPortalUserName(con.email),//AEF
-				CommunityNickname = nick,
-				ProfileId = userProfile,
-				IsActive = true);
-		}
-		return user;
-	}
-	
-	public static String createAlias(String pFirstName, String pLastName) {
-		if(pFirstName==null){pFirstName='-';}
-		if(pLastName==null){pLastName='';}            
-		if (pLastName.length() > 7){return pLastName.substring(0, 7) + pFirstName.substring(0,1);}
-		
-		return pLastName + pFirstName.substring(0,1);
-	 }
-	 */
-	
 	@AuraEnabled(cacheable=false)
 	public static String createTidsRequestReinstate(String accountId,String reason, String applicationType){
 		return createBranch(accountId,reason,'request-reinstate-'+applicationType);
