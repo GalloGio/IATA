@@ -173,6 +173,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Corresponding_AMS_Code__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Provides mapping between GDS Code in AMS with GDS Code in GDP Reference Table</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Provides mapping between GDS Code in AMS with GDS Code in GDP Reference Table</inlineHelpText>
+        <label>Corresponding AMS Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Definition__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Used for tooltip</inlineHelpText>
@@ -183,6 +197,17 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Displayed_Last__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Forces display of badge in last position on the TIDS Application Forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Forces display of badge in last position on the TIDS Application Forms</inlineHelpText>
+        <label>Is Displayed Last</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>System_ID__c</fullName>
@@ -233,6 +258,8 @@
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
+        <columns>Corresponding_AMS_Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
@@ -269,6 +296,7 @@
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
@@ -403,7 +431,7 @@
             <operation>equals</operation>
             <value>PREFLANG</value>
         </filters>
-        <label>Preferred Language Table</label>
+        <label>17-Preferred Language (PREFLANG)</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -488,6 +516,7 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
@@ -507,6 +536,7 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
@@ -526,6 +556,7 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
