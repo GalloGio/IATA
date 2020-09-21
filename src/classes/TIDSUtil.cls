@@ -62,7 +62,7 @@ public without sharing class TIDSUtil{
       }
 
     public static void setError(String msg){
-        iataCodeError.reason = msg;
+        iataCodeError.reason = getTIDSMetadataError(msg);
         iataCodeError.hasAnError = true;
     }
 
@@ -108,7 +108,6 @@ public without sharing class TIDSUtil{
 		return true;
     }
     
-
     // TIDS Configuration
     @AuraEnabled(cacheable=false)
     public static void saveTidsConfiguration(String service, String payload){
@@ -148,7 +147,6 @@ public without sharing class TIDSUtil{
             WHERE ParentId=:parentId AND name=:fileName
             ORDER BY CreatedDate DESC
             LIMIT 1];
-
         if (attachments.size() > 0){result = EncodingUtil.base64Decode(EncodingUtil.base64Encode(attachments.get(0).Body)).toString();}
         return result;
     }
@@ -247,64 +245,46 @@ public without sharing class TIDSUtil{
     }
     @AuraEnabled(cacheable=true)
     public static List<ValueLabel> getGDSValues(){
-        final String criteria ='AIRSYS';
-		List<ValueLabel> gds = getPicklistValues(criteria, 'Is_Displayed_Last__c, Name');
-		return gds;
+     	return getPicklistValues('AIRSYS', 'Is_Displayed_Last__c, Name');
     }
     @AuraEnabled(cacheable=true)
     public static List<ValueLabel> getNumberOfEmployees(){
-        final String criteria = 'APEMP';
-        List<ValueLabel> numberOfEmployeesValues = getPicklistValues(criteria, 'Name');
-        return numberOfEmployeesValues;
+        return getPicklistValues('APEMP', 'Name');
     }
 
     @AuraEnabled(cacheable=true)
     public static List<ValueLabel> getPreferedLanguages(){
-        final String criteria = 'PREFLANG';
-        List<ValueLabel> numberOfEmployeesValues = getPicklistValues(criteria, 'Name');
-        return numberOfEmployeesValues;
+        return getPicklistValues('PREFLANG', 'Name');
     }
 
     @AuraEnabled(cacheable=true)
     public static List<ValueLabel> getFocusValues(){
-        final String criteria = 'FOCUSVALUES';
-        List<ValueLabel> focusValues = getPicklistValues(criteria, 'Name');
-        return focusValues;
+        return getPicklistValues('FOCUSVALUES', 'Name');
     }
    
     @AuraEnabled(cacheable=true)
 	public static List<ValueLabel> companyTypes(){
-		final String criteria = 'LGLTYP';
-		List<ValueLabel> companyTypes = getPicklistValues(criteria, 'Name');
-		return companyTypes;
+		return getPicklistValues('LGLTYP', 'Name');
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> mainMarketSpecialization(){
-		final String criteria = 'APSPEC';
-		List<ValueLabel> marketSpecialization = getPicklistValues(criteria, 'Name');
-		return marketSpecialization;
+		return getPicklistValues('APSPEC', 'Name');
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> principalDestination(){
-		final String criteria = 'APDEST';
-		List<ValueLabel> principalDestinations = getPicklistValues(criteria,'Name');
-		return principalDestinations;
+		return getPicklistValues('APDEST','Name');
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> salesVolume(){
-		final String criteria = 'APSALE';
-		List<ValueLabel> salesVolume = getPicklistValues(criteria, 'Code__c');
-		return salesVolume;
+		return getPicklistValues('APSALE', 'Code__c');
 	}
 
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> mainActivity(){
-		final String criteria = 'APPRAC';
-		List<ValueLabel> mainActivities = getPicklistValues(criteria, 'Name');
-		return mainActivities;
+		return getPicklistValues('APPRAC', 'Name');
     }
 
     
@@ -431,4 +411,58 @@ public without sharing class TIDSUtil{
         if(!Test.isRunningTest()){
             listEmailResult = Messaging.sendEmail(listSingleEmailMessages);}
     }
+	public static List<String> replaceby {get;set;}
+    //TIDS metat data retrieve function
+    //Replace elements in the data
+    private static TIDS_Error_Message__mdt metadata;
+    public static string getTIDSMetadataError(String errorCondition){
+        getTIDSMetadata(errorCondition);
+        if (metadata.Visit_URL__c!=null) {return metadata.Visit_URL__c;}
+        return metadata.Subtitle__c;
+    }
+    public static TIDS_Error_Message__mdt getTIDSMetadata(String errorCondition){
+        List<TIDS_Error_Message__mdt> metadatas = new List<TIDS_Error_Message__mdt>();
+        metadata = new TIDS_Error_Message__mdt();
+		metadatas = [SELECT
+				Id,
+				DeveloperName,
+				Subtitle__c,
+				Description__c,
+				Description_P2__c,
+				Description_P3__c,
+				Create_a_Case__c,
+				Close_Vetting__c,
+				Open_A_Case_Text__c,
+				Visit_URL__c,
+				Visit_A_Website_Text__c,
+				Discard_Application__c,
+				Resume_Application__c,
+				Recall_Application__c,
+				Yellow_Section_Header__c,
+				Yellow_Section_Text__c
+			FROM TIDS_Error_Message__mdt
+            WHERE DeveloperName=:errorCondition LIMIT 1];
+        
+        if (metadatas.size()==0) {return metadata;}
+        metadata=metadatas[0];
+        if (replaceby!=null){contentReplace();}
+		return metadata;
+    }
+    private static void contentReplace(){
+        metadata.Subtitle__c = contentInfo(metadata.Subtitle__c);
+        metadata.Description__c = contentInfo(metadata.Description__c);
+        metadata.Description_P2__c= contentInfo(metadata.Description_P2__c);
+        metadata.Description_P3__c= contentInfo(metadata.Description_P3__c);
+    }
+    private static String contentInfo(String content){
+		if (content==null || content=='') {return content;}
+		integer i=0;
+		List<String> toreplace = new List<String>{'{@email}','{@Case}','{@Case Status}','{@ApplicationDecision}','{@CreatedDate}'};
+		for(String o:toreplace){
+			if (replaceby[i]==null) {replaceby[i]='';}
+			content=content.replace(o,replaceby[i]);
+			i++;
+		}
+		return content;
+	}
 }

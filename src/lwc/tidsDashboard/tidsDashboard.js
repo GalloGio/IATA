@@ -307,7 +307,7 @@ export default class TidsDashboard extends LightningElement {
         //this.dispatchEvent(selectedEvent);
         break;
       case 'SELECT_HO':
-        setAccountSelected(action.payload.detail);
+        //setAccountSelected(action.payload.detail);
         this.showAllBranches = false;
         this.showAllCases = false;
         this.showRequestVirtualBranchService = false;
@@ -323,7 +323,9 @@ export default class TidsDashboard extends LightningElement {
         this.showRelinquish=false;
         this.showHelpCenter = true;
         this.accountInfo=this.accountHO;
-        setIsAccountHeadOffice(!this.branchSelected);
+        setAccountSelected(this.accountInfo);
+        setIsAccountHeadOffice(true);
+        //setIsAccountHeadOffice(!this.branchSelected);
         break;  
      case 'SELECT_CANCEL':
        console.log('this.branchSelected',this.branchSelected);

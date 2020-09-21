@@ -71,27 +71,28 @@ public without sharing class TIDS_Constant {
     public final static String CHG_PROFILE='chg-business-profile-specialization';
 
     //Message Errors
-    public final static String MSG1='Case Not Found.';
-    public final static String MSG2='Case already assigned to a different user agent.';
-    public final static String MSG3='Duplicate Account';
-    public final static String MSG4='Case Permissions are missing for your profile.';
-    public final static String MSG5='Your deadline for reinstatement will be available within 24 hours.';
+    public final static String MSG1='TIDS_MSG1';
+    public final static String MSG2='TIDS_MSG2';
+    public final static String MSG3='TIDS_MSG3';
+    public final static String MSG4='TIDS_MSG4';
+    public final static String MSG5='TIDS_MSG5';
+    public final static String MSG6='TIDS_MSG6';
+    public final static String MSG7='TIDS_MSG7';
+    
 
     //Error Messages
-    public final static String MSG11 ='This application appears to have already been approved by IATA. Please verify the status of this account in Salesforce. You may now close this tab in your browser.';
-    public final static String MSG12 ='Case Permissions are missing for your profile.';
-    public final static String MSG13 ='Email Template Permissions are missing for your profile.';
-    public final static String MSG14 ='Contact Permissions are missing for your profile.';
-    public final static String MSG15 ='ISO State Permissions are missing for your profile.';
-    public final static String MSG16 ='IATA Code Generator is locked by another IATA Agent, please try again...';
-    public final static String MSG17 ='Case Comment Permissions are missing for your profile';
+    public final static String MSG11 ='TIDS_MSG11';
+    public final static String MSG13 ='TIDS_MSG13';
+    public final static String MSG14 ='TIDS_MSG14';
+    public final static String MSG15 ='TIDS_MSG15';
+    public final static String MSG16 ='TIDS_MSG16';
+    public final static String MSG17 ='TIDS_MSG17';
 
-    public final static String MSG23 ='Email Template Permissions are missing for your profile.';
-	public final static String MSG24 ='Contact Permissions are missing for your profile.';
-	public final static String MSG31='Sorry, the request is now closed.';
-	public final static String MSG32='Thank you, the request is now closed and approved.';
-	public final static String MSG33='Please retry tomorrow.';
-	public final static String MSG34='Error missing permissions.';
-	public final static String MSG35='Thank you, the request is now closed and rejected.';
-	
+    public final static String MSG23='TIDS_MSG23';
+	public final static String MSG24='TIDS_MSG24';
+	public final static String MSG31='TIDS_MSG31';
+	public final static String MSG32='TIDS_MSG32';
+	public final static String MSG33='TIDS_MSG33';
+	public final static String MSG34='TIDS_MSG34';
+	public final static String MSG35='TIDS_MSG35';
 }

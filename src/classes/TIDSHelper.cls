@@ -1,7 +1,6 @@
 //TIDSHelper
 public without sharing class TIDSHelper {
 	private static TidsWrapper tidsWrapper {get;set;}
-	private static List<String> replaceby {get;set;}
 	private static List<IATA_ISO_State__c> states {get;set;}
 	private static List<IATAISOStateDTO> isoStateDto {get;set;}
 	private static Portal_Applications__c tidsConfiguration {get;set;}
@@ -13,27 +12,27 @@ public without sharing class TIDSHelper {
 		
 	@AuraEnabled
 	public static TIDS_Error_Message__mdt getVettingDoneCondition(String tidsCaseId){
-		replaceby = new List<String>{'', '','','',''};
+		TIDSUtil.replaceby = new List<String>{'', '','','',''};
 		if (tidsCaseId!=null){
 			cases = TIDSUtil.getTidsCases(tidsCaseId,false);
-				if (cases.size()>0){
-					string email = '';
-					String portalType=TIDS_Constant.ADM_HOP;
-					if (cases[0].Account.Location_Type__c!='HO'){portalType=TIDS_Constant.ADM_BRA;}
-					List<Portal_Application_Right__c> applicationRights =[SELECT Contact__r.Email
-						FROM Portal_Application_Right__c
-						WHERE Right__c='Access Granted' 
-							AND Contact__r.AccountId=:cases[0].AccountId
-							AND Access_Status_Reason__c=:portalType
-							AND Application_Name__c=:TIDS_Constant.TIDSVALUE
-							LIMIT 1];
-					if (applicationRights.size()>0) {email=applicationRights[0].Contact__r.Email;}
-					String formattedDate = cases[0].createdDate.format('yyyy-MM-mm');
-					replaceby = new List<String>{email, cases[0].CaseNumber,cases[0].Status,cases[0].Decision__c,formattedDate};
-					if (!(cases[0].Status==TIDS_Constant.IS_CLOSED || cases[0].Status=='Abandoned'  || cases[0].Status==TIDS_Constant.IS_CUSTOMER)){return null;}
+			if (cases.size()>0){
+				string email = '';
+				String portalType=TIDS_Constant.ADM_HOP;
+				if (cases[0].Account.Location_Type__c!='HO'){portalType=TIDS_Constant.ADM_BRA;}
+				List<Portal_Application_Right__c> applicationRights =[SELECT Contact__r.Email
+					FROM Portal_Application_Right__c
+					WHERE Right__c='Access Granted' 
+						AND Contact__r.AccountId=:cases[0].AccountId
+						AND Access_Status_Reason__c=:portalType
+						AND Application_Name__c=:TIDS_Constant.TIDSVALUE
+						LIMIT 1];
+				if (applicationRights.size()>0) {email=applicationRights[0].Contact__r.Email;}
+				String formattedDate = cases[0].createdDate.format('yyyy-MM-mm');
+				TIDSUtil.replaceby = new List<String>{email, cases[0].CaseNumber,cases[0].Status,cases[0].Decision__c,formattedDate};
+				if (!(cases[0].Status==TIDS_Constant.IS_CLOSED || cases[0].Status=='Abandoned'  || cases[0].Status==TIDS_Constant.IS_CUSTOMER)){return null;}
 			}
 		}    
-		return getTIDSMetadata(TIDS_Constant.VETTING_DONE);
+		return TIDSUtil.getTIDSMetadata(TIDS_Constant.VETTING_DONE);
 	}
 	
 
@@ -42,53 +41,53 @@ public without sharing class TIDSHelper {
 		List<Account> listvalues = new List<Account>();
 		List<Account> listreturned = new List<Account>();
 		if (accountIds==null){ return listvalues;}
-	//find out if a branch or head office
-	//Id accountIds = users[0].AccountId;
-	string queryWhere = ' Where RecordType.DeveloperName=\'IATA_Agency\' and Location_Class__c=\'T\' And ParentId=:accountIds';
-	string queryFields = 'Id, Name, Location_Type__c, IATACode__c, Email__c, TradeName__c, Phone, Fax, BillingAddress, BillingCity, BillingCountry, BillingStreet, BillingState, BillingPostalCode, ShippingAddress, ShippingCity, ShippingCountry, ShippingStreet, ShippingState, ShippingPostalCode, Status__c, ParentId, Parent.Status__c, ';
-	queryFields += 'VAT_Number__c,'
-	+ 'VAT_Number_2__c,'
-	+ 'License_Number__c,'
-	+ 'IATA_ISO_Country__r.Name,'
-	+ 'IATA_ISO_Country__r.ISO_Code__c,'
-	+ 'IATA_ISO_Billing_State__r.Name,'
-	+ 'IATA_ISO_Billing_State__r.ISO_Code__c,'
-	+ 'IATA_ISO_Shipping_Country__r.Name,'
-	+ 'IATA_ISO_Shipping_Country__r.ISO_Code__c,'
-	+ 'IATA_ISO_Shipping_State__r.Name,'
-	+ 'IATA_ISO_Shipping_State__r.ISO_Code__c,'
-	+ 'Iso_State__r.Name,'
-	+ 'Iso_State__r.ISO_Code__c,'
-	+ 'Preferred_Language__c,'
-	+ 'Website,'
-	+ 'Manager_First_Name__c,'
-	+ 'Manager_Last_Name__c,'
-	+ 'GDP_Opt_In__c,'
-	+ 'GDS__c,'
-	+ 'Company_Type__c,'      
-	+ 'Geoname_Shipping_City__c,'
-	+ 'Location_Class__c ';
-	if (search!=null && search!=''){
-		search = '%' +search +'%';
-		queryWhere += ' And (Name Like :search or TradeName__c like :search or IATACode__c Like :search or BillingCity Like :search)';
-	}
-	string accred = ',(Select Id, Virtual_Branch_Enabled__c,TIDS_Reinstatement_DeadLine__c From  Accreditation__r  Limit 1)';
-	string rights = ',(SELECT Contact__r.Firstname, Contact__r.Lastname FROM Portal_Application_Right__c WHERE Right__c=\'Access Granted\' and Contact__r.AccountId=:accountIds Limit 2) ';
-	string query ='SELECT  ' +queryFields +accred +' FROM Account' +
-	queryWhere +' Order By ' +name +' ' +order +' Limit 100';
+		//find out if a branch or head office
+		//Id accountIds = users[0].AccountId;
+		string queryWhere = ' Where RecordType.DeveloperName=\'IATA_Agency\' and Location_Class__c=\'T\' And ParentId=:accountIds';
+		string queryFields = 'Id, Name, Location_Type__c, IATACode__c, Email__c, TradeName__c, Phone, Fax, BillingAddress, BillingCity, BillingCountry, BillingStreet, BillingState, BillingPostalCode, ShippingAddress, ShippingCity, ShippingCountry, ShippingStreet, ShippingState, ShippingPostalCode, Status__c, ParentId, Parent.Status__c, ';
+		queryFields += 'VAT_Number__c,'
+		+ 'VAT_Number_2__c,'
+		+ 'License_Number__c,'
+		+ 'IATA_ISO_Country__r.Name,'
+		+ 'IATA_ISO_Country__r.ISO_Code__c,'
+		+ 'IATA_ISO_Billing_State__r.Name,'
+		+ 'IATA_ISO_Billing_State__r.ISO_Code__c,'
+		+ 'IATA_ISO_Shipping_Country__r.Name,'
+		+ 'IATA_ISO_Shipping_Country__r.ISO_Code__c,'
+		+ 'IATA_ISO_Shipping_State__r.Name,'
+		+ 'IATA_ISO_Shipping_State__r.ISO_Code__c,'
+		+ 'Iso_State__r.Name,'
+		+ 'Iso_State__r.ISO_Code__c,'
+		+ 'Preferred_Language__c,'
+		+ 'Website,'
+		+ 'Manager_First_Name__c,'
+		+ 'Manager_Last_Name__c,'
+		+ 'GDP_Opt_In__c,'
+		+ 'GDS__c,'
+		+ 'Company_Type__c,'      
+		+ 'Geoname_Shipping_City__c,'
+		+ 'Location_Class__c ';
+		if (search!=null && search!=''){
+			search = '%' +search +'%';
+			queryWhere += ' And (Name Like :search or TradeName__c like :search or IATACode__c Like :search or BillingCity Like :search)';
+		}
+		string accred = ',(Select Id, Virtual_Branch_Enabled__c,TIDS_Reinstatement_DeadLine__c From  Accreditation__r  Limit 1)';
+		string rights = ',(SELECT Contact__r.Firstname, Contact__r.Lastname FROM Portal_Application_Right__c WHERE Right__c=\'Access Granted\' and Contact__r.AccountId=:accountIds Limit 2) ';
+		string query ='SELECT  ' +queryFields +accred +' FROM Account' +
+		queryWhere +' Order By ' +name +' ' +order +' Limit 100';
 
-	listvalues = Database.query(query);
-	if (listvalues.size()>0){
-		for(Account a:listvalues){
-		boolean isadded=true;
-		if (a.Status__c=='Terminated'){
-			for(Accreditation__c c:a.Accreditation__r){
-				if (c.TIDS_Reinstatement_DeadLine__c<System.today()){isadded=false;}
+		listvalues = Database.query(query);
+		if (listvalues.size()>0){
+			for(Account a:listvalues){
+				boolean isadded=true;
+				if (a.Status__c=='Terminated'){
+					for(Accreditation__c c:a.Accreditation__r){
+						if (c.TIDS_Reinstatement_DeadLine__c<System.today()){isadded=false;}
+					}
+				}
+				if (isadded){listreturned.add(a);}
 			}
 		}
-		if (isadded){listreturned.add(a);}
-		}
-	}
 		return listreturned;
 	}
 
@@ -105,8 +104,8 @@ public without sharing class TIDSHelper {
 		//Id userId = UserInfo.getUserId();
 		List<Case> caseValues = new List<Case>();
 		final string recordtype=TIDSUtil.getTidsRecordTypeId();
-	//Id accountIds = users[0].AccountId;
-	final string caseorigin = TIDS_Constant.CASE_ORIGIN;
+		//Id accountIds = users[0].AccountId;
+		final string caseorigin = TIDS_Constant.CASE_ORIGIN;
 		string query='SELECT Id, CaseNumber, Status, Subject, createdDate FROM Case';
 		query +=' WHERE AccountId=:accountIds and recordTypeId=:recordtype and Origin=:caseorigin';
 		if (search!=null && search!=''){
@@ -129,15 +128,15 @@ public without sharing class TIDSHelper {
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		if (cases.size()==0) {return result;}
 		if (action=='vetting'){
-				if (cases[0].Status!=TIDS_Constant.IS_REVIEWED) {return result;}
-				result='';
+			if (cases[0].Status!=TIDS_Constant.IS_REVIEWED) {return result;}
+			result='';
 		}else if (action=='resume' || action=='discard'){
-				if (cases[0].Status!=TIDS_Constant.IS_DRAFT) {return result;}
-				result = 'updated';
+			if (cases[0].Status!=TIDS_Constant.IS_DRAFT) {return result;}
+			result = 'updated';
 		}else if (action=='recall'){
-				if (cases[0].Status!=TIDS_Constant.IS_REVIEWED) {return result;}
-				result = 'updated';
-				changeCaseStatus(caseId, TIDS_Constant.IS_DRAFT);
+			if (cases[0].Status!=TIDS_Constant.IS_REVIEWED) {return result;}
+			result = 'updated';
+			changeCaseStatus(caseId, TIDS_Constant.IS_DRAFT);
 		}
 		return result;
 	}
@@ -154,12 +153,11 @@ public without sharing class TIDSHelper {
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 
 		Portal_Applications__c service = [ SELECT Id
-																				,TIDS_Non_Eligible_Location_Countries__c
-																				,TIDS_Non_Eligible_Mailing_Countries__c
-																				FROM Portal_Applications__c
-																				WHERE Name=:TIDS_Constant.TIDSVALUE
-																				LIMIT 1
-																			];
+					,TIDS_Non_Eligible_Location_Countries__c
+					,TIDS_Non_Eligible_Mailing_Countries__c
+					FROM Portal_Applications__c
+					WHERE Name=:TIDS_Constant.TIDSVALUE
+					LIMIT 1];
 
 		string excludedcountriescode=service.TIDS_Non_Eligible_Location_Countries__c;
 		if (type=='mailing') {excludedcountriescode=service.TIDS_Non_Eligible_Mailing_Countries__c;}
@@ -205,24 +203,24 @@ public without sharing class TIDSHelper {
 	private static user getUserData(Id userId){
 		List<user> userdata = new List<user>();
 		userdata = [SELECT
-				Id,
-				Name,
-				ContactId,
-				AccountId,
-		Account.ParentId,
-		Account.RecordType.DeveloperName,
-				Account.RecordType.Name,
-				Account.Country_ISO_Code__c,
-				Account.Location_Class__c,
-				Account.Location_Type__c,
-				Account.Status__c,
-				Account.Email__c,
-				Account.Parent.Email__c,
-				Account.Expiry_Date__c
-			FROM User
-			WHERE Id=:userId
-			LIMIT 1];
-			return  userdata[0];
+			Id,
+			Name,
+			ContactId,
+			AccountId,
+			Account.ParentId,
+			Account.RecordType.DeveloperName,
+			Account.RecordType.Name,
+			Account.Country_ISO_Code__c,
+			Account.Location_Class__c,
+			Account.Location_Type__c,
+			Account.Status__c,
+			Account.Email__c,
+			Account.Parent.Email__c,
+			Account.Expiry_Date__c
+		FROM User
+		WHERE Id=:userId
+		LIMIT 1];
+		return  userdata[0];
 	}
 
 	//Condition 8
@@ -231,9 +229,9 @@ public without sharing class TIDSHelper {
 		String accountid,
 		String companyName,
 		String countryIsoCode){
-	TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
+		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		Boolean isUnique;
-	Id agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency');
+		Id agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 	 
 		String companyNameTrimmed = companyName.trim();
 		if (accountid=='') {accountid=null;}
@@ -252,26 +250,26 @@ public without sharing class TIDSHelper {
 				AND IATA_ISO_Country__r.ISO_Code__c = :countryIsoCode];
 
 		if (accounts.size() > 0){
-			 	replaceby = new List<String> {'','','','',''};
-			 	boolean isdeduplicate=false;
-			 	for(Account a:accounts){
-				 	if (a.Status__c=='Approved') {isdeduplicate=true; break;}
-				 	for(Accreditation__c c:a.Accreditation__r){
-							 //Check Date Reinstam
-							 Date rdate =c.TIDS_Reinstatement_DeadLine__c;
-							 if (rdate==null || rdate>=System.today()){isdeduplicate=true; break;}
-					}
-			 	}
+			TIDSUtil.replaceby = new List<String> {'','','','',''};
+			boolean isdeduplicate=false;
+			for(Account a:accounts){
+				if (a.Status__c=='Approved') {isdeduplicate=true; break;}
+				for(Accreditation__c c:a.Accreditation__r){
+					//Check Date Reinstam
+					Date rdate =c.TIDS_Reinstatement_DeadLine__c;
+					if (rdate==null || rdate>=System.today()){isdeduplicate=true; break;}
+				}
+			}
 			if (isdeduplicate){
-			TIDSUtil.setError(TIDS_Constant.MSG3);
-			TIDSUtil.iataCodeError.error = getTIDSMetadata(TIDS_Constant.ERROR_CON8); 
-			return TIDSUtil.iataCodeError;
-		}
+				TIDSUtil.setError(TIDS_Constant.MSG3);
+				TIDSUtil.iataCodeError.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON8); 
+				return TIDSUtil.iataCodeError;
+			}
 		}
 		Accreditation__c accountAccredited = accountHasReinstatement(companyNameTrimmed,countryIsoCode);
 		if (accountAccredited != null){
-		TIDSUtil.setError(TIDS_Constant.MSG3);
-		TIDSUtil.iataCodeError.error = getTIDSMetadata(TIDS_Constant.ERROR_CON8);
+			TIDSUtil.setError(TIDS_Constant.MSG3);
+			TIDSUtil.iataCodeError.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON8);
 		}
 		return TIDSUtil.iataCodeError;
 	}
@@ -350,20 +348,20 @@ public without sharing class TIDSHelper {
 					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
 					LIMIT 1];
 			if (applicationRights.size()>0) {email=applicationRights[0].Contact__r.Email;}
-			replaceby = new List<String>{email, caseNumber,'','',''};
+			TIDSUtil.replaceby = new List<String>{email, caseNumber,'','',''};
 			
 			if (applicationRights.size()==0){
-					applicationRights = [
-					SELECT Id,
-						Right__c,
-						Contact__r.Id,
-						Access_Status_Reason__c,
-						Application_Name__c
-					FROM Portal_Application_Right__c
-					WHERE Contact__r.Id=:tidsWrapper.currentUser.ContactId
-						AND Application_Name__c=:TIDS_Constant.TIDSVALUE
-					LIMIT 1];
-				}
+				applicationRights = [
+				SELECT Id,
+					Right__c,
+					Contact__r.Id,
+					Access_Status_Reason__c,
+					Application_Name__c
+				FROM Portal_Application_Right__c
+				WHERE Contact__r.Id=:tidsWrapper.currentUser.ContactId
+					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
+				LIMIT 1];
+			}
 		
 			if (applicationRights.size() > 0){tidsWrapper.profile = applicationRights.get(0);}
 
@@ -381,11 +379,11 @@ public without sharing class TIDSHelper {
 					 //Condition 2: Related Account “Country_ISO_Code__c” cannot be “AS, GU, MP, PR, US, VI”
 					List<IATA_ISO_Country__c> countries = [SELECT Sanctioned_Country__c FROM IATA_ISO_Country__c WHERE ISO_Code__c=:countryiso AND ISO_Code__c=:neligible Limit 1];
 					if (countries.size()>0) {
-							String econdition = TIDS_Constant.ERROR_CON2_1;
-								// Sanctioned country
-							if (countries[0].Sanctioned_Country__c==true){econdition=TIDS_Constant.ERROR_CON2_2;}
-							tidsWrapper.error = getTIDSMetadata(econdition);
-							return tidsWrapper;
+						String econdition = TIDS_Constant.ERROR_CON2_1;
+							// Sanctioned country
+						if (countries[0].Sanctioned_Country__c==true){econdition=TIDS_Constant.ERROR_CON2_2;}
+						tidsWrapper.error = TIDSUtil.getTIDSMetadata(econdition);
+						return tidsWrapper;
 					}
 				}
 				string c1=tidsWrapper.currentUser.Account.RecordType.Name.toUpperCase();
@@ -401,13 +399,13 @@ public without sharing class TIDSHelper {
 				};
 				//Condition 1: Related Account Record Type cannot be “Airline Branch, Airline Headquarters, General Sales Agent Headquarters”
 				if (cl1.Contains(c1)){
-					tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON1);
+					tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON1);
 					return tidsWrapper;
 				}
 				string c3=tidsWrapper.currentUser.Account.Location_Class__c;
 				//Condition 3: Related Account Record Type cannot be “Agency”  WHERE Account “Location_Class__c“ = “D, P“
 				if (c3<> null && c3<>''){
-			if (condition3(c3, c1)) {return tidsWrapper;}
+					if (condition3(c3, c1)) {return tidsWrapper;}
 				}
 				Date rdate=System.today();
 				if (status!=null && status!=''){
@@ -427,26 +425,25 @@ public without sharing class TIDSHelper {
 
 					//Condition 5: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c = “Terminated”
 					if (recordname==TIDS_Constant.RT_IATA_AGENCY && c3=='T' && status=='TERMINATED'){
-							rdate = isReinstated(tidsWrapper.currentUser.AccountId);
-							if (rdate!=null){
-								 if (rdate<System.today()){
-									tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON5);
-									return tidsWrapper;
-								 }
+						rdate = isReinstated(tidsWrapper.currentUser.AccountId);
+						if (rdate!=null){
+							if (rdate<System.today()){
+								tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON5);
+								return tidsWrapper;
+							}
 						}
 					}
 
 					//Condition 6: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c!=“Approved, Terminated”
-			//c3 is null to be taken in consideration check c3 null in above code
-			if (condition6(c3, recordname, status)) {return tidsWrapper;}          
+					//c3 is null to be taken in consideration check c3 null in above code
+					if (condition6(c3, recordname, status)) {return tidsWrapper;}          
 				}else{
-			if (condition6b(c3, recordname)) {return tidsWrapper;}
+					if (condition6b(c3, recordname)) {return tidsWrapper;}
 				}
 
 				// Condition 7: Related Account cannot have an ongoing New TIDS HO Application
-		// Case open for HO Application
-		if (condition7(email, status)) {return tidsWrapper;}
-		
+				// Case open for HO Application
+				if (condition7(email, status)) {return tidsWrapper;}
 			}
 		} catch (DmlException dmlex){
 			throw dmlex;
@@ -470,154 +467,106 @@ public without sharing class TIDSHelper {
 		boolean isdenied=true;
 		if (applicationRights.size()>0){if (tidsWrapper.profile.Right__c=='Access Granted'){isdenied=false;}}
 		if (isdenied){
-		//mettre un mask sur l'email
-		//Access denied but there is admin
-		String econdition=TIDS_Constant.ERROR_CON4_1;
-		//Access denied but there is no admin
-		if (!isparentadmin){econdition=TIDS_Constant.ERROR_CON4_2;}
-		tidsWrapper.error = getTIDSMetadata(econdition);
-		//Parent Case
-		tidsWrapper.tidsCase = searchCase(tidsWrapper.currentUser.AccountId,TIDS_Constant.IS_CLOSED);
-		tidsWrapper.tidsAttachment = TIDSUtil.getAttachment(tidsWrapper.tidsCase.Id,TIDS_Constant.DATAJSONFILENAME);
-		return true;
+			//mettre un mask sur l'email
+			//Access denied but there is admin
+			String econdition=TIDS_Constant.ERROR_CON4_1;
+			//Access denied but there is no admin
+			if (!isparentadmin){econdition=TIDS_Constant.ERROR_CON4_2;}
+			tidsWrapper.error = TIDSUtil.getTIDSMetadata(econdition);
+			//Parent Case
+			tidsWrapper.tidsCase = searchCase(tidsWrapper.currentUser.AccountId,TIDS_Constant.IS_CLOSED);
+			tidsWrapper.tidsAttachment = TIDSUtil.getAttachment(tidsWrapper.tidsCase.Id,TIDS_Constant.DATAJSONFILENAME);
+			return true;
 		}
 		return false;
 	}
 	private static boolean condition6(string c3, string recordname, string status){
-	string c6=tidsWrapper.currentUser.Account.Location_Type__c;
-	if (Test.isRunningTest()){	c6='XM';}
-	if (recordname==TIDS_Constant.RT_IATA_AGENCY && ((c3=='T' && !(c6=='BR' || c6=='HO' || c6=='VB')) || (c3=='T' && !(status=='TERMINATED' || status=='APPROVED')) || c3=='') ){
-		tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON6);
-		return true;
-	}
-	return false;
+		string c6=tidsWrapper.currentUser.Account.Location_Type__c;
+		if (Test.isRunningTest()){	c6='XM';}
+		if (recordname==TIDS_Constant.RT_IATA_AGENCY && ((c3=='T' && !(c6=='BR' || c6=='HO' || c6=='VB')) || (c3=='T' && !(status=='TERMINATED' || status=='APPROVED')) || c3=='') ){
+			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON6);
+			return true;
+		}
+		return false;
 	} 
 	private static boolean condition3(string c3, string c1){
 		Set<String> cl3 = new Set<String>{'C','D','G','I','K','M','P','Q','R','V','W','X'};
-	c3= c3.toUpperCase();
-	if (c1 == TIDS_Constant.RT_AGENCY && cl3.Contains(c3)){
-		tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON3);
-		return true;
-	}
-	return false;
+		c3= c3.toUpperCase();
+		if (c1 == TIDS_Constant.RT_AGENCY && cl3.Contains(c3)){
+			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON3);
+			return true;
+		}
+		return false;
 	}
 	private static boolean condition6b(string c3, string recordname){
-	if (c3==null) {c3='';}
-	c3=c3.toUpperCase();
-	if (recordname==TIDS_Constant.RT_IATA_AGENCY && c3=='T'){
-		tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON6);
-		return true;
-	}
-	return false;
+		if (c3==null) {c3='';}
+		c3=c3.toUpperCase();
+		if (recordname==TIDS_Constant.RT_IATA_AGENCY && c3=='T'){
+			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON6);
+			return true;
+		}
+		return false;
 	}
 	private static boolean condition7(String email, string status){
-	Set<string> statuses = new Set<String>{TIDS_Constant.IS_DRAFT, TIDS_Constant.IS_REVIEWED, TIDS_Constant.IS_INPROGRESS, TIDS_Constant.IS_CUSTOMER};
-	List<Case> cases = [SELECT Id, CaseNumber, AccountId, ContactId, RecordTypeId, Status, Decision__c, CreatedDate
-		FROM Case
-		WHERE Status in :statuses
-		AND AccountId=:tidsWrapper.currentUser.AccountId
-		AND Reason1__c=:'TIDS - new HO Application'
-		AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() Limit 1];
+		Set<string> statuses = new Set<String>{TIDS_Constant.IS_DRAFT, TIDS_Constant.IS_REVIEWED, TIDS_Constant.IS_INPROGRESS, TIDS_Constant.IS_CUSTOMER};
+		List<Case> cases = [SELECT Id, CaseNumber, AccountId, ContactId, RecordTypeId, Status, Decision__c, CreatedDate
+			FROM Case
+			WHERE Status in :statuses
+			AND AccountId=:tidsWrapper.currentUser.AccountId
+			AND Reason1__c=:'TIDS - new HO Application'
+			AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() Limit 1];
 
-	if (cases.size() > 0){
-		Case tidsCase = cases.get(0);
-		//caseNumber=tidsCase.CaseNumber;
-		String formattedDate = tidsCase.createdDate.format('yyyy-MM-dd');
-		replaceby = new List<String>{email,tidsCase.CaseNumber, tidsCase.Status,tidsCase.Decision__c, formattedDate};
-		String result = TIDSUtil.getAttachment(tidsCase.Id, TIDS_Constant.DATAJSONFILENAME);
-		tidsWrapper.tidsCase = tidsCase;
-		if (tidsCase.ContactId==tidsWrapper.currentUser.ContactId){
-		 //7.1
-		 //Draft ==> 7_1_Draft
-		 //Pending Review ==> 7_1_Pending_Review
-		 status  = tidsCase.Status;
-		 status = '_'+status.replaceAll(' ', '_');
-		 tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON7_1+status);
-		}else{
-		 //7.2 ==>it is yours create a new case with case# (@case @status)
-		 tidsWrapper.error = getTIDSMetadata(TIDS_Constant.ERROR_CON7_2);
-		}          
-		if (result!=''){tidsWrapper.tidsAttachment = result;}
-		return true;
-	}
-	return false;
+		if (cases.size() > 0){
+			Case tidsCase = cases.get(0);
+			//caseNumber=tidsCase.CaseNumber;
+			String formattedDate = tidsCase.createdDate.format('yyyy-MM-dd');
+			TIDSUtil.replaceby = new List<String>{email,tidsCase.CaseNumber, tidsCase.Status,tidsCase.Decision__c, formattedDate};
+			String result = TIDSUtil.getAttachment(tidsCase.Id, TIDS_Constant.DATAJSONFILENAME);
+			tidsWrapper.tidsCase = tidsCase;
+			if (tidsCase.ContactId==tidsWrapper.currentUser.ContactId){
+				//7.1
+				//Draft ==> 7_1_Draft
+				//Pending Review ==> 7_1_Pending_Review
+				status  = tidsCase.Status;
+				status = '_'+status.replaceAll(' ', '_');
+				tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON7_1+status);
+			}else{
+				//7.2 ==>it is yours create a new case with case# (@case @status)
+				tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON7_2);
+			}          
+			if (result!=''){tidsWrapper.tidsAttachment = result;}
+			return true;
+		}
+		return false;
 	}
 	public static void conditiontest(String userId){
-	tidsWrapper = new TidsWrapper();
-	tidsWrapper.currentUser =getUserData(userId); 
-	condition7('no@iata.org','Pending Review');
+		tidsWrapper = new TidsWrapper();
+		tidsWrapper.currentUser =getUserData(userId); 
+		condition7('no@iata.org','Pending Review');
 
-	List<Portal_Application_Right__c> applicationRights =[SELECT 
-					 Id, Right__c, Contact__r.Id, Access_Status_Reason__c,Application_Name__c,Contact__r.Email
-				FROM Portal_Application_Right__c
-				WHERE Application_Name__c=:TIDS_Constant.TIDSVALUE
-			LIMIT 1];
-			
-	condition4(applicationRights);
-	condition3(TIDS_Constant.RT_AGENCY, 'C');
-	condition6('T',TIDS_Constant.RT_IATA_AGENCY,'XTERMINATED');
-	condition6b('T',TIDS_Constant.RT_IATA_AGENCY);
+		List<Portal_Application_Right__c> applicationRights =[SELECT 
+						Id, Right__c, Contact__r.Id, Access_Status_Reason__c,Application_Name__c,Contact__r.Email
+					FROM Portal_Application_Right__c
+					WHERE Application_Name__c=:TIDS_Constant.TIDSVALUE
+				LIMIT 1];
+				
+		condition4(applicationRights);
+		condition3(TIDS_Constant.RT_AGENCY, 'C');
+		condition6('T',TIDS_Constant.RT_IATA_AGENCY,'XTERMINATED');
+		condition6b('T',TIDS_Constant.RT_IATA_AGENCY);
 
 	}
 	private static Case searchCase(String accountId, String caseStatus){
 		Case tidsCase = new Case();
-		
 		List<Case> cases = [SELECT Id, AccountId, RecordTypeId, Status
 			FROM Case
 			WHERE Status=:caseStatus
 				AND AccountId=:accountId
 				AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() LIMIT 1];
-
 		if (cases.size() > 0){tidsCase = cases.get(0);}
 		return tidsCase;
 	}
 
-	
-	private static TIDS_Error_Message__mdt getTIDSMetadata(String errorCondition){
-		TIDS_Error_Message__mdt metadata = new TIDS_Error_Message__mdt();
-		metadata = [SELECT
-				Id,
-				DeveloperName,
-				Subtitle__c,
-				Description__c,
-				Description_P2__c,
-				Description_P3__c,
-				Create_a_Case__c,
-				Close_Vetting__c,
-				Open_A_Case_Text__c,
-				Visit_URL__c,
-				Visit_A_Website_Text__c,
-				Discard_Application__c,
-				Resume_Application__c,
-				Recall_Application__c,
-				Yellow_Section_Header__c,
-				Yellow_Section_Text__c
-			FROM TIDS_Error_Message__mdt
-			WHERE DeveloperName=:errorCondition LIMIT 1];
-		return replaceInfo(metadata);
-	}
-
-	
-
-	private static String contentInfo(String content){
-		if (content==null || content=='') {return content;}
-		integer i=0;
-		List<String> toreplace = new List<String>{'{@email}','{@Case}','{@Case Status}','{@ApplicationDecision}','{@CreatedDate}'};
-		for(String o:toreplace){
-			if (replaceby[i]==null) {replaceby[i]='';}
-			content=content.replace(o,replaceby[i]);
-			i++;
-		}
-		return content;
-	}
-
-	private static TIDS_Error_Message__mdt replaceInfo(TIDS_Error_Message__mdt condition){
-		condition.Subtitle__c = contentInfo(condition.Subtitle__c);
-		condition.Description__c = contentInfo(condition.Description__c);
-		condition.Description_P2__c= contentInfo(condition.Description_P2__c);
-		condition.Description_P3__c= contentInfo(condition.Description_P3__c);
-		return condition;
-	}
 
 	public class TidsWrapper {
 		@AuraEnabled public User currentUser = new User();
@@ -646,16 +595,16 @@ public without sharing class TIDSHelper {
 			tidsCaseSubject = caseSubjectText(applicationtype);
 		}
 		if (caseId!=null){
-				cases = TIDSUtil.getTidsCases(caseId,false);
-		} else if (tidsCaseSubject!=null){
-				List<Case> todelete = new List<Case>();
-				todelete = [SELECT Id, Status  FROM Case WHERE AccountId=:accountId AND Subject=:tidsCaseSubject AND Status=:TIDS_Constant.IS_DRAFT];
-				if (todelete.size() > 0) {delete todelete;}
-				cases = [SELECT Id FROM Case WHERE AccountId=:accountId 
-					AND Subject=:tidsCaseSubject
-					AND Status!=:TIDS_Constant.IS_CLOSED
-					ORDER BY CreatedDate Desc LIMIT 1];
-				if (cases.size() > 0){cases = TIDSUtil.getTidsCases(cases[0].Id,false);}
+			cases = TIDSUtil.getTidsCases(caseId,false);
+		}else if (tidsCaseSubject!=null){
+			List<Case> todelete = new List<Case>();
+			todelete = [SELECT Id, Status  FROM Case WHERE AccountId=:accountId AND Subject=:tidsCaseSubject AND Status=:TIDS_Constant.IS_DRAFT];
+			if (todelete.size() > 0) {delete todelete;}
+			cases = [SELECT Id FROM Case WHERE AccountId=:accountId 
+				AND Subject=:tidsCaseSubject
+				AND Status!=:TIDS_Constant.IS_CLOSED
+				ORDER BY CreatedDate Desc LIMIT 1];
+			if (cases.size() > 0){cases = TIDSUtil.getTidsCases(cases[0].Id,false);}
 		}
 		if (cases!=null){
 			 if (cases.size() > 0){tidsCase = cases.get(0);}
@@ -676,7 +625,7 @@ public without sharing class TIDSHelper {
 		set<String> apptypes = new set<String> {'request-virtual-branch-service','request-relinquish-ho','request-relinquish-br','request-relinquish-vb','request-reinstate-ho','request-reinstate-br','request-reinstate-vb'};
 		Case tidsCase = new Case();
 		if (caseId!=null){
-			 tidsCase.Id=caseId;
+			tidsCase.Id=caseId;
 		}else{
 			tidsCase.Status = TIDS_Constant.IS_DRAFT;
 			if (apptypes.Contains(applicationType)){tidsCase.Status = TIDS_Constant.IS_REVIEWED;}
@@ -691,9 +640,7 @@ public without sharing class TIDSHelper {
 		try{
 			upsert tidsCase;
 			if (apptypes.Contains(applicationType)){
-					if (!String.isBlank(applicationsettings)){
-						createCaseComment(tidsCase.Id, applicationsettings);
-					}
+				if (!String.isBlank(applicationsettings)){createCaseComment(tidsCase.Id, applicationsettings);}
 				 //applicationsettings is the reason why the request is made
 			}else{
 				TIDSUtil.addAttachment(tidsCase.Id, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
@@ -822,19 +769,19 @@ public without sharing class TIDSHelper {
 	
 	@AuraEnabled(cacheable=false)
 	public static List<Contact> getAdministrators(String accountId, String name){
-	 if (!Schema.sObjectType.Contact.isAccessible()){return null;}
-	 
-	 name=name+'%';
-	 List<Contact> contacts = [SELECT Id, FirstName, LastName FROM Contact
+		if (!Schema.sObjectType.Contact.isAccessible()){return null;}
+		
+		name=name+'%';
+		List<Contact> contacts = [SELECT Id, FirstName, LastName FROM Contact
 		WHERE AccountId=:accountId and (FirstName like :name  Or LastName like :name) 
-		And Email!=null
-		And Status__c='Active'
-		And Id not in (SELECT Contact__c
-									FROM Portal_Application_Right__c
-									WHERE Right__c='Access Granted' and Contact__r.AccountId=:accountId) 
-		Limit 20];
-	 if (contacts.size()>0){return contacts;}
-	 return null;
+			And Email!=null
+			And Status__c='Active'
+			And Id not in (SELECT Contact__c
+										FROM Portal_Application_Right__c
+										WHERE Right__c='Access Granted' and Contact__r.AccountId=:accountId) 
+			Limit 20];
+		if (contacts.size()>0){return contacts;}
+		return null;
 	}
 	//actiontype: add secondary, add administrator, remove, swap
 	//isbranch: if it is a request from a branch and not the ho
@@ -844,43 +791,43 @@ public without sharing class TIDSHelper {
 		List<Portal_Application_Right__c> apprights = new List<Portal_Application_Right__c>();
 		if (tidsConfiguration==null){ return apprights;}
 		if (actiontype=='add' || actiontype=='swap'){
-				string originid=accountId;
-				if (isbranch){ 
-						List<Account> parents = [SELECT parentId FROM Account WHERE Id=:accountId LIMIT 1];
-						if (parents.size()>0){originid=parents[0].parentId;}
-				}
-				//Portal_Application_Right__c
-				apprights = [SELECT Id,Right__c,Contact__c,
-							Access_Status_Reason__c,
-							Application_uniqueness_for_contact__c,
-							Application_Name__c,
-							Portal_Application__c
-						FROM Portal_Application_Right__c
-						WHERE Contact__r.AccountId=:originid
-							AND Access_Status_Reason__c=:TIDS_Constant.ADM_HOP
-							AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
+			string originid=accountId;
+			if (isbranch){ 
+				List<Account> parents = [SELECT parentId FROM Account WHERE Id=:accountId LIMIT 1];
+				if (parents.size()>0){originid=parents[0].parentId;}
+			}
+			//Portal_Application_Right__c
+			apprights = [SELECT Id,Right__c,Contact__c,
+						Access_Status_Reason__c,
+						Application_uniqueness_for_contact__c,
+						Application_Name__c,
+						Portal_Application__c
+					FROM Portal_Application_Right__c
+					WHERE Contact__r.AccountId=:originid
+						AND Access_Status_Reason__c=:TIDS_Constant.ADM_HOP
+						AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
 		}
-	 //TIDS Admin HO Primary
-	 String type=TIDS_Constant.ADM_BRA;
-	 if (!isbranch){type=TIDS_Constant.ADM_HOP;}
-	 if (actiontype=='add'){
+	 	//TIDS Admin HO Primary
+	 	String type=TIDS_Constant.ADM_BRA;
+	 	if (!isbranch){type=TIDS_Constant.ADM_HOP;}
+	 	if (actiontype=='add'){
 			if (apprights.size()>0 && isbranch==false){type=TIDS_Constant.ADM_HOS;}
 			setPartnerUser(contactId, actiontype);
 			List<Portal_Application_Right__c> appusers = new List<Portal_Application_Right__c>();
 			appusers = [SELECT Id,Right__c FROM Portal_Application_Right__c
-					WHERE Contact__r.AccountId=:accountId
-						AND Contact__c=:contactId
-						AND Access_Status_Reason__c=:type
-						AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
+						WHERE Contact__r.AccountId=:accountId
+							AND Contact__c=:contactId
+							AND Access_Status_Reason__c=:type
+							AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
 			if (appusers.size()==0){       
-					Portal_Application_Right__c cu = apprights[0].clone(false);
-					cu.Application_uniqueness_for_contact__c=accountId+contactId;
-					cu.Contact__c=contactId;
-					cu.Access_Status_Reason__c= isbranch==true ? TIDS_Constant.ADM_BRA:TIDS_Constant.ADM_HOS;
-					insert cu;
+				Portal_Application_Right__c cu = apprights[0].clone(false);
+				cu.Application_uniqueness_for_contact__c=accountId+contactId;
+				cu.Contact__c=contactId;
+				cu.Access_Status_Reason__c= isbranch==true ? TIDS_Constant.ADM_BRA:TIDS_Constant.ADM_HOS;
+				insert cu;
 			}else{
-					appusers[0].Right__c='Access Granted';        
-					update appusers;
+				appusers[0].Right__c='Access Granted';        
+				update appusers;
 			}       
 		}else if (actiontype=='remove'){
 			//setPartnerUser(contactId, 'remove');
@@ -963,137 +910,154 @@ public without sharing class TIDSHelper {
 		List<User> users = new List<User>();
 		users = [Select Id, isActive From User Where username=:username Limit 1];
 		if (actiontype=='add'){
-				if (users.size()>0){
-					 if (users[0].isActive==false){users[0].isActive=true;Database.update(users);}
+			if (users.size()>0){
+				if (users[0].isActive==false){users[0].isActive=true;Database.update(users);}
+			}else{
+				string profileId;
+				if (Test.isRunningTest()){	
+					string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(contacts[0].Account.RecordType.DeveloperName);
+					string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
+					profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
 				}else{
-					string profileId;
-					if (Test.isRunningTest()){	
-						string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(contacts[0].Account.RecordType.DeveloperName);
-						string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
-						profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
-					}else{
-						profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
-					}
-					createNewUser(profileId,contacts[0]);
+					profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
 				}
+				//createNewUser(profileId,contacts[0]);
+				//createNewUser(contact con, string selectedCustomerType, string community, string lang, Boolean newAgency, Boolean newAirline)
+				String UID = Comm_User_Helper.NewGuid();
+				String password = Comm_User_Helper.generateRandomString(6)+'1a';            
+				Id userId = Comm_User_Helper.createNewUser(contacts[0], 'TIDS', 'TIDS', 'English', true, false);
+				if (!Test.isRunningTest()) {System.setPassword(userId, password);}
+				String cleanUsername = ISSP_Utilities.buildPortalUserName(contacts[0].email);
+				cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
+				string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
+		
+				String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
+				String template = 'TIDS_Admin_User_Creation_Notification';
+				//ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName, string serviceName);
+				Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( contacts[0] ,  password ,  link, contacts[0].Community__c, 'TIDS');
+				//sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, String commName){	
+				Comm_User_Helper.sendEmail( template ,emailWrap, contacts[0], contacts[0].Community__c);
+				Comm_User_Helper.permissionASS(new list<Id>{userId});
+			}
 		}else if(actiontype=='remove'){
 			if (users.size()>0){
 				if (users[0].isActive){users[0].isActive=false;Database.update(users);}
 			}
-		}
-		
+		}		
 	}
+/*
 	public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName, string serviceName){
-			String portalName = 'IATA';
-			 String imageURL = Label.OneId_Email_Header_Identity;   // OneId default header image URL
-			 String communityName = commName;
-			 communityName = portalName + ' Customer Portal';
+		String portalName = 'IATA';
+		String imageURL = Label.OneId_Email_Header_Identity;   // OneId default header image URL
+		String communityName = commName;
+		communityName = portalName + ' Customer Portal';
 			 
-			 Map<String, String> mapBodyParamsIssp = new map<String,String>{
-					 
-					 '{{{Contact.Salutation}}}' => con.Salutation,
-							 '{{{Contact.Password}}}' => password,
-							 '{{{Receiving_User.FirstName}}}' =>con.Firstname,
-							 '{{{Receiving_User.LastName}}}' => con.LastName,
-							 '{{{Receiving_User.Email}}}' => con.Email,
-							 '{{{Community_Name}}}' => TIDS_Constant.TIDSVALUE,
-							 '{{{Community_Url}}}' => link, 
-							 '{{{Community_Header}}}' => imageURL,
-							 '{{{$Label.ISSP_Email_Here}}}' => 'here',
-							 '{{{$Label.ISSP_Email_do_not_reply}}}' => '',
-							 '{{{$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}}}' => ''
-							 };
-									 
-		 return mapBodyParamsIssp;
+		Map<String, String> mapBodyParamsIssp = new map<String,String>{
+					'{{{Contact.Salutation}}}' => con.Salutation,
+							'{{{Contact.Password}}}' => password,
+							'{{{Receiving_User.FirstName}}}' =>con.Firstname,
+							'{{{Receiving_User.LastName}}}' => con.LastName,
+							'{{{Receiving_User.Email}}}' => con.Email,
+							'{{{Community_Name}}}' => TIDS_Constant.TIDSVALUE,
+							'{{{Community_Url}}}' => link, 
+							'{{{Community_Header}}}' => imageURL,
+							'{{{$Label.ISSP_Email_Here}}}' => 'here',
+							'{{{$Label.ISSP_Email_do_not_reply}}}' => '',
+							'{{{$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}}}' => ''
+							};
+		return mapBodyParamsIssp;
 	}  
+	//
+	
 	public static void createNewUser(Id userProfile,Contact con){
-			Database.DMLOptions dmo = new Database.DMLOptions();
-			dmo.EmailHeader.triggerUserEmail = false; 
-			dmo.EmailHeader.triggerOtherEmail = false; 
-			dmo.EmailHeader.triggerAutoResponseEmail = false; 
-			dmo.optAllOrNone = false; 
-			// create portal user
-			User newUser = createUser(con,userProfile);
-			String UID = Comm_User_Helper.NewGuid();
-			newUser.setOptions(dmo);
-			
-			// new email process
-			newUser.UID__c = UID;
-			newUser.Community__c = 'ISSP';
-			newUser.ProfileId=userProfile;
-			if (!Test.isRunningTest()) {insert newUser;}
-			// new email process
-			String password = Comm_User_Helper.generateRandomString(6)+'1a';
-			
-			if (!Test.isRunningTest()) {System.setPassword(newUser.ID, password);}
-			String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
-			cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
-			string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
-			
-			String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
-			String template = 'TIDS_Admin_User_Creation_Notification';            
-			Map<String,String> emailWrap = ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c, '');
-			sendEmail( template ,emailWrap, con, false, con.Community__c);
-			Comm_User_Helper.permissionASS(new list<Id>{newUser.ID});
-		}
+		Database.DMLOptions dmo = new Database.DMLOptions();
+		dmo.EmailHeader.triggerUserEmail = false; 
+		dmo.EmailHeader.triggerOtherEmail = false; 
+		dmo.EmailHeader.triggerAutoResponseEmail = false; 
+		dmo.optAllOrNone = false; 
+		// create portal user
+		User newUser = createUser(con,userProfile);
+		String UID = Comm_User_Helper.NewGuid();
+		newUser.setOptions(dmo);
+		
+		// new email process
+		newUser.UID__c = UID;
+		newUser.Community__c = 'ISSP';
+		newUser.ProfileId=userProfile;
+		if (!Test.isRunningTest()) {insert newUser;}
+		// new email process
+		String password = Comm_User_Helper.generateRandomString(6)+'1a';
+		
+		if (!Test.isRunningTest()) {System.setPassword(newUser.ID, password);}
+		String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
+		cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
+		string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
+		
+		String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
+		String template = 'TIDS_Admin_User_Creation_Notification';            
+		Map<String,String> emailWrap = ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c, '');
+		sendEmail( template ,emailWrap, con, false, con.Community__c);
+		Comm_User_Helper.permissionASS(new list<Id>{newUser.ID});
+	}
 	
 	public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, Boolean bccCS, String commName){
-				EmailMessageWrapper ew;
-				String noreplyemail= 'noreply@iata.org';      
-				if (bccCS){
-						String bccEmail = UserInfo.getUserEmail();
-						ew = new EmailMessageWrapper(noreplyemail, con.Email, null, bccEmail, null,  new map<string,string>(), null, mapBodyParamsIssp );
-				}else{
-						ew = new EmailMessageWrapper(noreplyemail,
-																						con.Email,
-																						null,
-																						null,
-																						null,
-																						new map<string,string>(),
-																						null,
-																						mapBodyParamsIssp
-																						);
-				}
-				
-				List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
-				if (!userList.isEmpty()){TIDSUtil.sendMyEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id);}     
-		} 
+		EmailMessageWrapper ew;
+		String noreplyemail= 'noreply@iata.org';      
+		if (bccCS){
+				String bccEmail = UserInfo.getUserEmail();
+				ew = new EmailMessageWrapper(noreplyemail, con.Email, null, bccEmail, null,  new map<string,string>(), null, mapBodyParamsIssp );
+		}else{
+				ew = new EmailMessageWrapper(noreplyemail,
+											con.Email,
+											null,
+											null,
+											null,
+											new map<string,string>(),
+											null,
+											mapBodyParamsIssp
+											);
+		}
+		
+		List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
+		if (!userList.isEmpty()){TIDSUtil.sendMyEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id);}     
+	} 
 		
 
-public static User createUser(Contact con,Id userProfile){
-	String nick = con.email!=null?con.email.substring(0, con.email.indexOf('@')):'';
-	nick += Datetime.now().getTime();
-	if (nick.length() > 40){
-		nick = nick.left(40);
-	}else{
-		nick = nick;
+	public static User createUser(Contact con,Id userProfile){
+		String nick = con.email!=null?con.email.substring(0, con.email.indexOf('@')):'';
+		nick += Datetime.now().getTime();
+		if (nick.length() > 40){
+			nick = nick.left(40);
+		}else{
+			nick = nick;
+		}
+		User user;
+		list<User> userList = [select Id,ProfileId,IsActive,IsPortalEnabled,languagelocalekey from User where contactId =: con.Id];
+		if(!userList.isEmpty()){
+			user = userList.get(0);
+			user.IsActive = true;
+			user.IsPortalEnabled = true;
+			user.ProfileId = userProfile;
+			user.Username = ISSP_Utilities.buildPortalUserName(user.email);//AEF:
+		}else{
+			user = new User(
+				alias = createAlias(con.firstName, con.lastName), 
+				email = con.email, 
+				emailencodingkey = 'UTF-8', 
+				firstname = con.firstName, 
+				lastname = con.lastname, 
+				languagelocalekey = 'en_US', 
+				localesidkey = 'en_US', 
+				contactId = con.Id,
+				timezonesidkey = 'Asia/Dubai', 
+				username = ISSP_Utilities.buildPortalUserName(con.email),//AEF
+				CommunityNickname = nick,
+				ProfileId = userProfile,
+				IsActive = true);
+		}
+		return user;
 	}
-	User user;
-	list<User> userList = [select Id,ProfileId,IsActive,IsPortalEnabled,languagelocalekey from User where contactId =: con.Id];
-	if(!userList.isEmpty()){
-		user = userList.get(0);
-		user.IsActive = true;
-		user.IsPortalEnabled = true;
-		user.ProfileId = userProfile;
-		user.Username = ISSP_Utilities.buildPortalUserName(user.email);//AEF:
-	}else{
-		user = new User(
-			alias = createAlias(con.firstName, con.lastName), 
-			email = con.email, 
-			emailencodingkey = 'UTF-8', 
-			firstname = con.firstName, 
-			lastname = con.lastname, 
-			languagelocalekey = 'en_US', 
-			localesidkey = 'en_US', 
-			contactId = con.Id,
-			timezonesidkey = 'Asia/Dubai', 
-			username = ISSP_Utilities.buildPortalUserName(con.email),//AEF
-			CommunityNickname = nick,
-			ProfileId = userProfile,
-			IsActive = true);
-	}
-	return user;
-	}
+	
 	public static String createAlias(String pFirstName, String pLastName) {
 		if(pFirstName==null){pFirstName='-';}
 		if(pLastName==null){pLastName='';}            
@@ -1101,6 +1065,7 @@ public static User createUser(Contact con,Id userProfile){
 		
 		return pLastName + pFirstName.substring(0,1);
 	 }
+	 */
 	
 	@AuraEnabled(cacheable=false)
 	public static String createTidsRequestReinstate(String accountId,String reason, String applicationType){
@@ -1122,38 +1087,41 @@ public static User createUser(Contact con,Id userProfile){
 		String tidsstatus=TIDS_Constant.IS_REVIEWED;
 		id parentId=accountId;
 		if (type=='TIDS – Relinquishment' || type=='TIDS – Reinstatement') { 
-			 List<Account> accounts = [Select ParentId From Account Where Id=:AccountId Limit 1];
-			 if (accounts.size()>0){parentId=accounts[0].ParentId;}
+			List<Account> accounts = [Select ParentId From Account Where Id=:AccountId Limit 1];
+			if (accounts.size()>0){parentId=accounts[0].ParentId;}
 		}else if (type=='Terminated') {
-				//A l'interieur de la periode de reinstement
-				List<Account> accounts = [Select Id From Account Where Id=:accountId and Status__c=:type Limit 1];
-				if (accounts.size()>0){
-					Date rdate = isReinstated(accountId);
-					if (rdate==null) {return TIDS_Constant.MSG5;}
-					if (rdate<System.today()){
-							return 'The reinstatement date '+String.ValueOf(rdate)+' is over due .';
-					}else{
-							return 'The reinstatement window will be over due on the '+String.ValueOf(rdate)+'.';
-					}
+			//A l'interieur de la periode de reinstement
+			List<Account> accounts = [Select Id From Account Where Id=:accountId and Status__c=:type Limit 1];
+			if (accounts.size()>0){
+				final Date rdate = isReinstated(accountId);
+				string msgtype = TIDS_Constant.MSG7;
+				if (rdate==null) {
+					msgtype= TIDS_Constant.MSG5;
+				}else if (rdate<System.today()){
+					msgtype = TIDS_Constant.MSG6;
 				}
-				return '';
-	 }
-	 List<Case> cases = [SELECT Id FROM Case
-			WHERE Status=:tidsstatus
-				AND (subject=:type or Reason1__c=:type)
-				AND (AccountId=:AccountId or AccountId=:parentId)
-				AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() Limit 1];
-	 if (cases.size()>0){return 'exists';}
-	 return '';
+				string message= TIDSUtil.getTIDSMetadataError(msgtype);
+				if (rdate==null) {message = String.format(message, new List<String> {String.ValueOf(rdate)});}
+				return message;
+			}
+			return '';
+		}
+		List<Case> cases = [SELECT Id FROM Case
+				WHERE Status=:tidsstatus
+					AND (subject=:type or Reason1__c=:type)
+					AND (AccountId=:AccountId or AccountId=:parentId)
+					AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() Limit 1];
+		if (cases.size()>0){return 'exists';}
+		return '';
 	}
 	private static Date isReinstated(Id accountId){
-	Date rdate;
+		Date rdate;
 		List<Accreditation__c> accreditations = new List<Accreditation__c>();
 		accreditations= [SELECT id,TIDS_Reinstatement_DeadLine__c
 						FROM Accreditation__c
 						WHERE Related_Account__c=:accountId Limit 1];
 		if (accreditations.size()>0){rdate = accreditations[0].TIDS_Reinstatement_DeadLine__c;}
-	return rdate;
+		return rdate;
 	}
 	
 	private static void getTidsServicesConfiguration(){
@@ -1194,15 +1162,15 @@ public static User createUser(Contact con,Id userProfile){
 		string queryWhere = ' Where RecordTypeId=:recordid AND Account.Name!=null ';
 		Set<String> caseStatus = new Set<String>{TIDS_Constant.IS_REVIEWED,TIDS_Constant.IS_INPROGRESS,TIDS_Constant.IS_CUSTOMER};
 		if (filter=='My Cases'){
-				queryWhere += 'AND ownerId=:userId';
+			queryWhere += 'AND ownerId=:userId';
 		}else if (filter=='All'){
-				queryWhere += ' AND status=:caseStatus';
+			queryWhere += ' AND status=:caseStatus';
 		}else if (filter==TIDS_Constant.IS_REVIEWED){
-				caseStatus = new Set<String>{TIDS_Constant.IS_REVIEWED};
-				queryWhere += ' AND status=:caseStatus';
+			caseStatus = new Set<String>{TIDS_Constant.IS_REVIEWED};
+			queryWhere += ' AND status=:caseStatus';
 		}else if (filter==TIDS_Constant.IS_CUSTOMER){
-				caseStatus = new Set<String>{TIDS_Constant.IS_CUSTOMER};
-				queryWhere += ' AND status=:caseStatus';
+			caseStatus = new Set<String>{TIDS_Constant.IS_CUSTOMER};
+			queryWhere += ' AND status=:caseStatus';
 		}
 		string queryFields = 'Id,CaseNumber,Subject,Reason1__c,Account.Name,Status,Owner.Name,OwnerId,Previous_case_owner__c,Last_Status_Change__c ';
 		string query ='SELECT ' +queryFields+' FROM Case '+queryWhere;
@@ -1218,22 +1186,23 @@ public static User createUser(Contact con,Id userProfile){
 		String countryIsoCode){
 		// Instantiate a new http object
 		//string url='http://api.geonames.org/postalCodeSearchJSON?placename_startsWith='+searchValue+'&country='+countryIsoCode+'&maxRows=100&username=akatia1';
-		string url;
+		//url ='http://api.geonames.org/searchJSON?name_startsWith=' +searchValue +'&featureClass=P&cities=cities1000&country=' +countryIsoCode +'&style=MEDIUM&maxRows=100&username=akatia1';
+		//url ='http://api.geonames.org/findNearbyPostalCodesJSON?lat=' + searchValue +'&lng=' + countryIsoCode +'&username=akatia1';
+		string urltype='TIDS_GEONAME_URL_CODEPOSTAL';
 		if (fieldtype == 'city'){
-			 	searchValue = EncodingUtil.urlEncode(searchValue, 'UTF-8');
-				url ='http://api.geonames.org/searchJSON?name_startsWith=' +searchValue +'&featureClass=P&cities=cities1000&country=' +countryIsoCode +'&style=MEDIUM&maxRows=100&username=akatia1';
-		}else{
-				url ='http://api.geonames.org/findNearbyPostalCodesJSON?lat=' + searchValue +'&lng=' + countryIsoCode +'&username=akatia1';
-		}
+			searchValue = EncodingUtil.urlEncode(searchValue, 'UTF-8');
+			urltype='TIDS_GEONAME_URL_CITY';
+		}		
+		string url=String.format(TIDSUtil.getTIDSMetadataError(urltype), new List<String>{searchValue,countryIsoCode});
 		HttpResponse res;
 		HttpRequest req;
 		Http h = new Http();
 		if (!Test.isRunningTest()){
-				req = new HttpRequest();
-				req.setEndpoint(url);
-				req.setMethod('GET');
-				res = h.send(req);
-				return res.getBody();
+			req = new HttpRequest();
+			req.setEndpoint(url);
+			req.setMethod('GET');
+			res = h.send(req);
+			return res.getBody();
 		}
 		return '';
 	}
@@ -1253,14 +1222,11 @@ public static User createUser(Contact con,Id userProfile){
 		return TIDSUtil.iataCodeError;
 	}
 	
-	
-	
-	
 
 	@AuraEnabled(cacheable=false)
 	public static void contactApplicant(String caseId,
-																			String caseStatus,
-																			String applicationsettings){
+										String caseStatus,
+										String applicationsettings){
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		Case tidscase  = new Case();
 		if (cases.size() > 0){
@@ -1274,8 +1240,8 @@ public static User createUser(Contact con,Id userProfile){
 
 		String errorsCompilation = '';
 		TIDS_Controller.vTIDS tids = (TIDS_Controller.vTIDS) JSON.deserialize(applicationsettings,TIDS_Controller.vTIDS.class);
-	// Welcome section
-	errorsCompilation += tidsCompileErrors(tids.sections.Welcome.errors,'Welcome',true);
+		// Welcome section
+		errorsCompilation += tidsCompileErrors(tids.sections.Welcome.errors,'Welcome',true);
 		// Agency Legal Status section
 		errorsCompilation += tidsCompileErrors(tids.sections.AgencyLegalStatus.errors,'Agency Legal Status',false);
 		// Shareholder Details section
@@ -1298,20 +1264,20 @@ public static User createUser(Contact con,Id userProfile){
 	}
 	// TIDS Configuration
 	private static String tidsCompileErrors(List<TIDS_Controller.verror> errors, String errorType, boolean isfirst){
-	String textErrors = '';
-	if (errors==null) {return textErrors;}
-	if (errors.size()==0){return textErrors;}
-	textErrors = (isfirst ? '':'\n') + 'Section Name :' + errorType+'\n';
-	for (TIDS_Controller.verror tidsError : errors){
-		textErrors +='Field: ' +tidsError.fieldLabel +'\n' +'Description: ' +tidsError.description +'\n';
-	}
-	return textErrors;
+		String textErrors = '';
+		if (errors==null) {return textErrors;}
+		if (errors.size()==0){return textErrors;}
+		textErrors = (isfirst ? '':'\n') + 'Section Name :' + errorType+'\n';
+		for (TIDS_Controller.verror tidsError : errors){
+			textErrors +='Field: ' +tidsError.fieldLabel +'\n' +'Description: ' +tidsError.description +'\n';
+		}
+		return textErrors;
 	}
 	private static void createCaseComment(String caseId, String comments){
-	CaseComment c = new CaseComment();
-	c.ParentId = caseId;
-	c.isPublished  = true;
-	c.CommentBody = comments;
+		CaseComment c = new CaseComment();
+		c.ParentId = caseId;
+		c.isPublished  = true;
+		c.CommentBody = comments;
 		try {insert c;} catch (Exception e){}
 	}
 	

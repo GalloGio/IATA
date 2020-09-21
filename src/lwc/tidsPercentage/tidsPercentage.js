@@ -52,8 +52,9 @@ export default class TidsPercentage extends LightningElement {
     let fieldSelected = event.target.name;
     console.log('handleOnfocus:select all',fieldSelected);
     let input =this.template.querySelector("lightning-input");
+    if (input===undefined) return;
     console.log('handleOnfocus:select all',input);
-    input.select();
+    //input.select();
   }
   handleOnchange(event) {
     this.total = 0;

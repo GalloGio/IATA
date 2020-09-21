@@ -22,7 +22,7 @@ public without sharing class TIDS_Controller {
 	@AuraEnabled(cacheable=false)
 	public static TIDSUtil.ErrorWrapper applicationSubmitted(String caseId, String applicationData, String applicationType){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		if (!Schema.sObjectType.Case.isUpdateable()){TIDSUtil.setError(TIDS_Constant.MSG12);return TIDSUtil.iataCodeError;}
+		if (!Schema.sObjectType.Case.isUpdateable()){TIDSUtil.setError(TIDS_Constant.MSG3);return TIDSUtil.iataCodeError;}
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		Case tidsCase = new Case();
 		Savepoint sp = Database.setSavepoint();
@@ -58,7 +58,7 @@ public without sharing class TIDS_Controller {
 		String reason){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		// Make sure we can update the database before even trying
-		if (!Schema.sObjectType.Case.isUpdateable()){TIDSUtil.setError(TIDS_Constant.MSG12); return TIDSUtil.iataCodeError;}
+		if (!Schema.sObjectType.Case.isUpdateable()){TIDSUtil.setError(TIDS_Constant.MSG3); return TIDSUtil.iataCodeError;}
 		// Make sure we can update the database before even trying
 		if (!Schema.sObjectType.CaseComment.isCreateable()){TIDSUtil.setError(TIDS_Constant.MSG17);return TIDSUtil.iataCodeError;}
 		//if (true) return 'return';
@@ -67,7 +67,10 @@ public without sharing class TIDS_Controller {
 		Case tidsCase = new Case();
 		if (cases.size() > 0){
 			if (applicationDecision==TIDS_Constant.IS_APPROVED){
-				if ((cases[0].Account.IATACode__c!=null && cases[0].Account.IATACode__c!='' && cases[0].Account.RecordType.DeveloperName=='IATA_Agency') || cases[0].Status==TIDS_Constant.IS_CLOSED){
+				if (cases[0].Status==TIDS_Constant.IS_CLOSED){
+					TIDSUtil.setError(TIDS_Constant.MSG11);
+					return TIDSUtil.iataCodeError;
+				}else if ((cases[0].Account.IATACode__c!=null && cases[0].Account.IATACode__c!='' && cases[0].Account.RecordType.DeveloperName=='IATA_Agency' && applicationType==TIDS_Constant.NEW_HO)){
 					TIDSUtil.setError(TIDS_Constant.MSG11);
 					return TIDSUtil.iataCodeError;
 				}
@@ -79,10 +82,7 @@ public without sharing class TIDS_Controller {
 			tidsCase.Status = TIDS_Constant.IS_REVIEWED;
 			TIDSUtil.addAttachment(caseId, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
 		}
-		if (!String.isBlank(reason)){
-			CaseComment c = new CaseComment(ParentId=caseId, isPublished=true,CommentBody = reason);
-			insert c;
-		}
+		
 		if (applicationDecision==TIDS_Constant.IS_APPROVED){
 			tidsCase.Decision__c = TIDS_Constant.IS_APPROVED.toUpperCase();
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
@@ -103,6 +103,10 @@ public without sharing class TIDS_Controller {
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
 		}
 		if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
+		if (!String.isBlank(reason)){
+			CaseComment c = new CaseComment(ParentId=caseId, isPublished=true,CommentBody = reason);
+			insert c;
+		}
 		tidsCase.Decision_Date__c = System.Now();
 		update tidsCase;
 		return TIDSUtil.iataCodeError;
@@ -140,7 +144,7 @@ public without sharing class TIDS_Controller {
 		try {
 			states = [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.CurrencyIsoCode
 				FROM IATA_ISO_State__c
-				WHERE ISO_Code__c = :TIDS_Constant.STATEISOCODE LIMIT 1 FOR UPDATE];
+				WHERE ISO_Code__c = :TIDS_Constant.STATEISOCODE LIMIT 1];
 		} catch (exception e){TIDSUtil.setError(TIDS_Constant.MSG16);}
 	}
 	//Will emulate the Staging values based on a minimum of information
@@ -150,8 +154,6 @@ public without sharing class TIDS_Controller {
 		Id tidsCaseId,
 		Id accountId,
 		Boolean isRollback){
-		final String SECTORTIDS = 'Travel Agency';
-		final String CATEGORYTIDS = 'IATA Passenger Sales Agency';
 		final String LOCCLASSTIDS = 'T';
 
 		Boolean isNewBranch = false;
@@ -169,81 +171,43 @@ public without sharing class TIDS_Controller {
 		String iataCode;
 		String iataCheckDigit;
 		String iataSite;
-		Account ho4= tids.setAccount();
+		Account theAccount= tids.setAccount();
 		cases = TIDSUtil.getTidsCases(tidsCaseId,false);
 		if (TIDSUtil.iataCodeError.hasAnError){return;}
 		Savepoint sp = Database.setSavepoint();
 		try {
-			Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-			Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-			Account ho2;
-			Account br1;
-			//Create the 2 head offices
-			ho2 = new Account(
-				RecordTypeId = accountRT,
-				Reason_for_creation__c = 'Headquarter is missing',
-				Name = 'Head Office',
-				Location_Type__c = 'HO',
-				Location_Class__c = LOCCLASSTIDS,
-				Sector__c = SECTORTIDS,
-				Category__c = CATEGORYTIDS,
-				IATA_ISO_Country__c = states[0].IATA_ISO_Country__c,
-				IATAcode__c = null,
-				AIMS_ID__c = null,
-				Source_System__c = 'AIMS2'
-			);
-
-			List<Account> accs = new List<Account>{ ho2 };
-			insert accs;
-			//Create the 4 branches
-			br1 = new Account(
-				RecordTypeId = agencyRT,
-				Name = 'My Travels',
-				IATAcode__c = null,
-				IATA_ISO_Country__c = states[0].IATA_ISO_Country__c,
-				Sector__c = SECTORTIDS,
-				Category__c = CATEGORYTIDS,
-				Status__c = AMS_Utils.ACC_S9_APPROVED,
-				Location_Class__c = LOCCLASSTIDS,
-				Location_Type__c = 'BR',
-				ParentId = ho2.Id,
-				Reason_for_creation__c = 'Created by customer',
-				Reason__c = '91-ACCREDITED–MEETS–STANDARDS'
-			);
-			accs = new List<Account>{ br1 };
-			insert accs;
+			upsert theAccount;
+			tids.userInfo.tidsAccount.Id = theAccount.Id;
+			//new code
+			Account theFormAccount = [SELECT Name, IATACode__c, Site, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+                BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+                ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+                Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
+                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
+                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c
+                FROM Account
+                WHERE Id =:tids.userInfo.tidsAccount.Id FOR UPDATE];
 			
-			AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(
+			AMS_Pax_Accreditation_Form__c theForm = new AMS_Pax_Accreditation_Form__c(
 				IsGSA__c = 'No',
 				CurrencyIsoCode = states[0].IATA_ISO_Country__r.CurrencyIsoCode,
 				Branch_Office_Country__c = states[0].IATA_ISO_Country__c,
 				IATA_ISO_State__c = states[0].Id,
 				SAAM_Case__c = tidsCaseId,
-				Location_Class__c = 'T',
-				Account_Name__c = ho2.Name
+				Location_Class__c = LOCCLASSTIDS,
+				Account_Name__c = theFormAccount.Name
 			);
-			insert onlineAccreditation;
-			AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(
-				AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id,
-				First_name__c = 'NameToUse',
-				Last_name__c = 'Last',
-				Job_title__c = 'ABC',
-				Mobile__c = '+4112345678',
-				Phone__c = '3424322343',
-				Email__c = 'unique@email.com',
-				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')
-			);
-			insert accContact;
+			//new code
 			if (!Test.isRunningTest()){
-				ANG_OscarProcessHelper.EntityUpdater ho3 = AmsIataCodeGenerator.generatedAgencyIATACode(
-					ho2.Id,
-					onlineAccreditation.Id
-				);
-				if (ho3.isFaulty){TIDSUtil.setError(ho3.errorMessage); return;}
-				ho2 = (account) ho3.acctMap.get(ho2.Id);
-				iataCode = ho2.IATAcode__c;
-				iataCheckDigit = ho2.Check_Digit__c;
-				iataSite = ho2.Site;
+				//new code
+				ANG_OscarProcessHelper.EntityUpdater upd = AmsIataCodeGenerator.generatedAgencyIATACode(theFormAccount,theForm, null);
+				//new code
+				if (upd.isFaulty){TIDSUtil.setError(upd.errorMessage); Database.rollback(sp); return;}
+				theFormAccount = (account) upd.acctMap.get(tids.userInfo.tidsAccount.Id);
+				iataCode = theFormAccount.IATAcode__c;
+				iataCheckDigit =theFormAccount.Check_Digit__c;
+				iataSite = theFormAccount.Site;
 			}else{
 				//Fake values for the Test coverage to avoid too many queries
 				//created by the Iata Code generator
@@ -251,29 +215,23 @@ public without sharing class TIDS_Controller {
 				iataCheckDigit = '2';
 				iataSite = 'x';
 			}
-		} catch (exception e){TIDSUtil.setError(e.getMessage());}
-		Database.rollback(sp);
-		if (TIDSUtil.iataCodeError.hasAnError) {}
-		if (iataCode != null){
-			Savepoint sp2 = Database.setSavepoint();
-			try {				
-				Id agencyId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency');
-				ho4.IATAcode__c = IATACode;
-				if (agencyId != ho4.RecordTypeId){ho4.RecordTypeId = agencyId;}
-				if (ho4.Location_Class__c == null){ho4.Location_Class__c = 'T';}
-				ho4.Site = iataSite;
-				ho4.Check_Digit__c = iataCheckDigit;
-				upsert ho4;
-				tids.userInfo.tidsAccount.Id = ho4.Id;
-				tids.saveBuinessProfiles(ho4.Id);
-				tids.saveAMSRole(ho4.Id);
-				if (!isNewBranch){grantTIDSPortalAccess(cases[0].ContactId);}
-				if (!Test.isRunningTest()) {TIDSUtil.sendNotification(tidsCaseId, cases[0].ContactId);}
-				if (isRollback){Database.rollback(sp2);}
-			} catch (exception e){TIDSUtil.setError(e.getMessage());}
-
-			if (TIDSUtil.iataCodeError.hasAnError || isRollback) {Database.rollback(sp2);}
+			Id agencyId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+			theAccount.IATAcode__c = IATACode;
+			if (agencyId != theAccount.RecordTypeId){theAccount.RecordTypeId = agencyId;}
+			if (theAccount.Location_Class__c == null){theAccount.Location_Class__c = LOCCLASSTIDS;}
+			theAccount.Site = iataSite;
+			theAccount.Check_Digit__c = iataCheckDigit;
+			update theAccount;
+			tids.saveBuinessProfiles(tids.userInfo.tidsAccount.Id);
+			tids.saveAMSRole(tids.userInfo.tidsAccount.Id);
+			if (!isNewBranch){grantTIDSPortalAccess(cases[0].ContactId);}
+			if (!Test.isRunningTest()) {TIDSUtil.sendNotification(tidsCaseId, cases[0].ContactId);}
+			
+		} catch (exception e){
+			Database.rollback(sp);
+			TIDSUtil.setError(e.getMessage());
 		}
+		
 		return;
 	}
 	public static void loadTIDSFromJson(string tidsjson){
@@ -730,7 +688,10 @@ public without sharing class TIDS_Controller {
 					ShippingCountry,
 					Geoname_Shipping_City__c,
 					Geoname_Billing_City__c,
-					Organization_Last_Change_Date__c
+					Organization_Last_Change_Date__c,
+					Site,
+					Check_Digit__c,
+					RecordTypeId			
 				FROM Account
 				WHERE  Id=:objectId LIMIT 1];
 			return mapaccounts;
@@ -880,8 +841,7 @@ public without sharing class TIDS_Controller {
 						mapaccount.IATA_ISO_Billing_State__c = copyfrom.IATA_ISO_Billing_State__c;
 						mapaccount.Iso_State__c = copyfrom.Iso_State__c;
 						mapaccount.Geoname_Billing_City__c = copyfrom.Geoname_Billing_City__c;
-					}
-					
+					}					
 				}
 			}
 		}
@@ -908,9 +868,9 @@ public without sharing class TIDS_Controller {
 		private boolean isSaveAMSRole=false;
 		private void retrieveAccount(boolean isFromContact, boolean isFromRelatedAccount ){
 			Id objectid =this.userInfo.tidsAccount.Id;
-				//mapaccount.Id = this.userInfo.tidsAccount.Id;
-				//Get the parent account From the related account Id
-				//parentid=mapaccount.Id;
+			//mapaccount.Id = this.userInfo.tidsAccount.Id;
+			//Get the parent account From the related account Id
+			//parentid=mapaccount.Id;
 			list<Account> parentaccounts = getAccountObject(objectid, isFromContact, isFromRelatedAccount);
 			if (parentaccounts.size()>0){parentaccount=parentaccounts[0];}
 		}

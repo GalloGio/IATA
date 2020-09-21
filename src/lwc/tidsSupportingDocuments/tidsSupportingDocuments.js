@@ -169,7 +169,11 @@ export default class TidsSupportingDocuments extends LightningElement {
 	}
 
 	mappingFileFromSF(props) {
-		let newFile = {id: props.Id, name: props.Name, contentType: props.ContentType, iconName: this.iconFile({type:props.ContentType})};
+		let newFile = {id: props.Id,
+			name: props.Name,
+			contentType: props.ContentType,
+			iconName: this.iconFile({type:props.ContentType})
+		};
 		return newFile;
 	}
 
@@ -265,11 +269,15 @@ export default class TidsSupportingDocuments extends LightningElement {
 	getRelatedFiles() {
 		relatedFiles({ parentid: this.tidsCase.Id })
 			.then(data => {
+				console.log('relatedfiles:',JSON.stringify(data));
 				let sfAttachments = JSON.parse(JSON.stringify(data));
-				if(sfAttachments !== undefined && sfAttachments.length > 0){
-					sfAttachments.forEach(item => {
-						this.filedocuments.push(this.mappingFileFromSF(item));
-					});
+				if(sfAttachments !== undefined){
+					if (sfAttachments.isError===0){
+						console.log('relatedfiles:',sfAttachments.isError);
+						sfAttachments.documents.forEach(item => {
+							this.filedocuments.push(this.mappingFileFromSF(item));
+						});
+					}
 					this.disableButton = false;
 				}
 			})
