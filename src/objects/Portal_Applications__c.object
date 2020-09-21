@@ -128,7 +128,11 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Portal_Service_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -1135,6 +1139,71 @@ null)</formula>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TIDS_Countries_with_Invalid_ISO_States__c</fullName>
+        <description>List of Countries (by ISO Country Codes) for which the State/Province pick-list will not be displayed in the TIDS Forms even though these State/Province values are marked as &quot;Valid for Address&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Valid for Address overwrite at Country Level - Applies to all TIDS Forms</inlineHelpText>
+        <label>TIDS - Countries with Invalid ISO States</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Non_Eligible_Location_Countries__c</fullName>
+        <externalId>false</externalId>
+        <label>TIDS Non Eligible Location Countries</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Non_Eligible_Mailing_Countries__c</fullName>
+        <externalId>false</externalId>
+        <label>TIDS Non Eligible Mailing Countries</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Total_Ownership_Maximum__c</fullName>
+        <defaultValue>100</defaultValue>
+        <description>Minimum accepted value for Total Ownership (sum of all owners)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum accepted value for Total Ownership (sum of all owners)</inlineHelpText>
+        <label>TIDS Total Ownership – Maximum</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIDS_Total_Ownership_Minimum__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Minimum accepted value for Total Ownership (sum of all owners)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum accepted value for Total Ownership (sum of all owners)</inlineHelpText>
+        <label>TIDS Total Ownership – Minimum</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>VisibleCNS__c</fullName>
