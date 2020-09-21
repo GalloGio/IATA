@@ -1,9 +1,7 @@
 
 public without sharing class PowerBiCtrl {
 
-	private static String POWERBI_ACCESS_TOKEN = 'PowerBIaccessToken';
-	private static String POWERBI_EXPIERS_ON = 'PowerBIexpiersOn';
-	private static String POWERBI_REFRESH_TOKEN = 'PowerBIrefreshToken';
+	private static final Boolean IS_PROD = !([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox);
 
 	public class OAuthResult {
 		@AuraEnabled
@@ -26,7 +24,7 @@ public without sharing class PowerBiCtrl {
 		@AuraEnabled
 		public String expiration {get; set;}
 		@AuraEnabled
-		public String error {get; set;}
+		public EmbedError error {get; set;}
 	}
 
 	public class ReportDetailResult {
@@ -41,7 +39,7 @@ public without sharing class PowerBiCtrl {
 		@AuraEnabled
 		public String datasetId {get; set;}
 		@AuraEnabled
-		public String error {get; set;}
+		public EmbedError error {get; set;}
 	}
 
 	public class DatasetDetailResult {
@@ -56,7 +54,7 @@ public without sharing class PowerBiCtrl {
 		@AuraEnabled
 		public String isEffectiveIdentityRolesRequired {get; set;}
 		@AuraEnabled
-		public String error {get; set;}
+		public EmbedError error {get; set;}
 	}
 
 	public class ReportDetails {
@@ -64,6 +62,10 @@ public without sharing class PowerBiCtrl {
 		public String reportId {get; set;}
 		@AuraEnabled
 		public String groupId {get; set;}
+		@AuraEnabled
+		public String reportLabel {get; set;}
+		@AuraEnabled
+		public String type {get; set;}
 	}
 
 	private class RequestData{
@@ -75,13 +77,22 @@ public without sharing class PowerBiCtrl {
 		String username;
 		List<String> roles;
 		List<String> datasets;
+		List<String> reports;
 	}
 
-	@AuraEnabled
+
+	public class EmbedError {
+		@AuraEnabled
+		public String code {get; set;}
+		@AuraEnabled
+		public String message {get; set;}
+	}
+
+
 	public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
 		PowerBI_Cred__c powerBiCred = PowerBI_Cred__c.getInstance(configurationName);
 		if(powerBiCred != null) {
-			String credName = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? powerBiCred.Prod_Configuration__c : powerBiCred.Dev_Configuration__c;
+			String credName = IS_PROD ? powerBiCred.Prod_Configuration__c : powerBiCred.Dev_Configuration__c;
 			PowerBI_Config__c config = PowerBI_Config__c.getValues(credName);
 			if(config != null) {
 				return config;
@@ -98,24 +109,30 @@ public without sharing class PowerBiCtrl {
 	}
 
 
-	@AuraEnabled
 	public static ReportDetails getReportConfigDetails(String reportName) {
 		ReportDetails detailsToReturn = new ReportDetails();
 
-		List<PowerBI_Report_Config__mdt> reportDetails = [SELECT Id, Group_Id_Dev__c, Group_Id_Prod__c, Report_Id_Dev__c, Report_Id_Prod__c FROM PowerBI_Report_Config__mdt WHERE DeveloperName = :reportName];
-			if(! reportDetails.isEmpty()) {
+		List<PowerBI_Report_Config__mdt> reportDetails = [SELECT Id, Label, Group_Id_Dev__c, Group_Id_Prod__c, Report_Id_Dev__c, Report_Id_Prod__c, Type__c FROM PowerBI_Report_Config__mdt WHERE DeveloperName = :reportName];
+		if(! reportDetails.isEmpty()) {
 
 			PowerBI_Report_Config__mdt reportDetail = reportDetails[0];
 
-			Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
-			if(isProd) {
+			if(reportDetail.Label != null) {
+				detailsToReturn.reportLabel = reportDetail.Label;
+			}
+
+			if(reportDetail.Type__c != null) {
+				detailsToReturn.type = reportDetail.Type__c;
+			}
+
+			if(IS_PROD) {
 				if(reportDetail.Group_Id_Prod__c != null) {
 					detailsToReturn.groupId = reportDetail.Group_Id_Prod__c;
 				}
 				if(reportDetail.Report_Id_Prod__c != null) {
 					detailsToReturn.reportId = reportDetail.Report_Id_Prod__c;
 				}
-			//use DEV config
+				//use DEV config
 			}else{
 				if(reportDetail.Group_Id_Dev__c != null) {
 					detailsToReturn.groupId = reportDetail.Group_Id_Dev__c;
@@ -133,85 +150,7 @@ public without sharing class PowerBiCtrl {
 	}
 
 
-	@AuraEnabled
-	public static OAuthResult getAccessToken(PowerBI_Config__c conf) {
-
-		Cache.OrgPartition orgPartition = null;
-		OAuthResult result = new OAuthResult();
-
-		if(conf == null) {
-			return null;
-		}
-
-		if(Test.isRunningTest()){
-
-			try{
-				orgPartition = Cache.Org.getPartition('local.PowerBI');
-			}catch(Cache.Org.OrgCacheException e) {
-				return getNewAccessToken(null, conf);
-			}
-
-		} else {
-			orgPartition = Cache.Org.getPartition('local.PowerBI');
-		}
-
-		if (orgPartition != null) {
-
-			String applicationSufix = conf.Application_Identifier__c;
-
-			if (orgPartition.contains(POWERBI_ACCESS_TOKEN+applicationSufix)) {
-
-				result.access_token = (String) orgPartition.get(POWERBI_ACCESS_TOKEN+applicationSufix);
-
-				if (orgPartition.contains(POWERBI_EXPIERS_ON+applicationSufix)) {
-
-					Long expiresOn = (Long) orgPartition.get(POWERBI_EXPIERS_ON+applicationSufix);
-
-
-					//PowerBI is using timestamp without milliseconds - we need to divide by 1000
-					Long currentTime = (System.now().getTime()) / 1000;
-
-					if ((expiresOn - 120) < currentTime) {//token will expire in 2 minutes
-
-
-						if (orgPartition.contains(POWERBI_REFRESH_TOKEN+applicationSufix)) {
-							//refresh token here
-							result = refreshToken(orgPartition, conf);
-						} else {
-							//get new token
-							result = getNewAccessToken(orgPartition, conf);
-						}
-
-					} else {//token OK
-						result.expires_on = (Long) orgPartition.get(POWERBI_EXPIERS_ON+applicationSufix);
-
-						if (orgPartition.contains(POWERBI_REFRESH_TOKEN+applicationSufix)) {
-
-							result.refresh_token = (String) orgPartition.get(POWERBI_REFRESH_TOKEN+applicationSufix);
-
-						} else {
-							//refresh token not found - get new token
-							result = getNewAccessToken(orgPartition, conf);
-						}
-
-					}
-
-				} else {
-					//expiresOn not found - get new token
-					result = getNewAccessToken(orgPartition, conf);
-				}
-
-			} else {
-				//access token not found - get new token
-
-				result = getNewAccessToken(orgPartition, conf);
-			}
-		}
-
-		return result;
-	}
-
-	private static OAuthResult getNewAccessToken(Cache.Orgpartition orgPartition, PowerBI_Config__c conf) {
+	public static OAuthResult getNewAccessToken(PowerBI_Config__c conf) {
 
 		if(conf == null) {
 			return null;
@@ -220,12 +159,7 @@ public without sharing class PowerBiCtrl {
 		HttpRequest req = new HttpRequest();
 		req.setEndpoint('callout:'+conf.Named_Credentials__c + '/' + conf.Tenant_Id__c+'/oauth2/token');
 
-		String sBody=
-				'grant_type=password'
-						+ '&client_id=' + EncodingUtil.urlEncode(conf.ClientId__c, 'UTF-8')
-						+ '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
-						+ '&username={!$Credential.Username}'
-						+ '&password={!$Credential.Password}';
+		String sBody = buildBodyForAccessToken(conf);
 
 		req.setMethod('POST');
 		req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -235,40 +169,29 @@ public without sharing class PowerBiCtrl {
 		HttpResponse res = h.send(req);
 		OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
 
-		if(result.error != null) {
-			TransformationHelper.sendEmailSupport('FATAL: PowerBI Access token: ' + conf.Name + ' ' + result.error, 'PowerBI Access token: ' + conf.Name + ' ' +result.error);
-			throw new transformationException('Error PowerBI access token: ' + result.error);
-		}
-
-		if(orgPartition != null) {
-			String applicationSufix = conf.Application_Identifier__c;
-			orgPartition.put(POWERBI_ACCESS_TOKEN + applicationSufix, result.access_token, 3600);
-			orgPartition.put(POWERBI_EXPIERS_ON + applicationSufix, result.expires_on, 3600);
-			orgPartition.put(POWERBI_REFRESH_TOKEN + applicationSufix, result.refresh_token, 3600);
-		}
 		return result;
 
 	}
 
 	@TestVisible
-	private static OAuthResult refreshToken(Cache.Orgpartition orgPartition, PowerBI_Config__c conf) {
+	public static OAuthResult refreshToken(String refreshToken, PowerBI_Config__c conf) {
 
 		if(conf == null) {
 			return null;
 		}
 
-		String refreshToken;
+		String refreshTokenString;
 		if(Test.isRunningTest()){
-			refreshToken = 'refreshTokenString';
+			refreshTokenString = 'refreshTokenString';
 		} else {
-			refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN + conf.Application_Identifier__c);
+			refreshTokenString = refreshToken;
 		}
 
 		HttpRequest req = new HttpRequest();
 		req.setEndpoint('callout:'+conf.Named_Credentials__c + '/' + conf.Tenant_Id__c+'/oauth2/token');
 		String sBody=
 				'grant_type=refresh_token'
-						+ '&refresh_token=' + EncodingUtil.urlEncode(refreshToken, 'UTF-8')
+						+ '&refresh_token=' + EncodingUtil.urlEncode(refreshTokenString, 'UTF-8')
 						+ '&client_id=' + EncodingUtil.urlEncode(conf.ClientId__c, 'UTF-8')
 						+ '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
 						+ '&username={!$Credential.Username}'
@@ -281,19 +204,12 @@ public without sharing class PowerBiCtrl {
 		Http h = new Http();
 		HttpResponse res = h.send(req);
 		OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
-		if(orgPartition != null) {
-			String applicationSufix = conf.Application_Identifier__c;
-			orgPartition.put(POWERBI_ACCESS_TOKEN + applicationSufix, result.access_token, 3600);
-			orgPartition.put(POWERBI_EXPIERS_ON + applicationSufix, result.expires_on, 3600);
-			orgPartition.put(POWERBI_REFRESH_TOKEN + applicationSufix, result.refresh_token, 3600);
-		}
 
 		return result;
 
 	}
 
 
-	@AuraEnabled
 	public static DatasetDetailResult getDataset(String accessToken, String datasetId, PowerBI_Config__c conf) {
 		Http h = new Http();
 		HttpRequest req = new HttpRequest();
@@ -310,7 +226,6 @@ public without sharing class PowerBiCtrl {
 
 
 
-	@AuraEnabled
 	public static ReportDetailResult getReportsDetails(String accessToken, String reportId, PowerBI_Config__c conf) {
 
 		Http h = new Http();
@@ -327,19 +242,10 @@ public without sharing class PowerBiCtrl {
 		return result;
 	}
 
-	@AuraEnabled
+
 	public static EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
 
-		IdentityData identityData = new IdentityData();
-		identityData.username = userId;
-		identityData.roles = new List<String>{'SFDC'};
-		identityData.datasets = new List<String>{datasetId};
-
-		RequestData requestData = new RequestData();
-		requestData.identities = new List<IdentityData> {identityData};
-		requestData.accessLevel = 'View';
-
-		String sBody = JSON.serialize(requestData);
+		String sBody = buildBodyForEmbedToken(userId, reportId, datasetId, conf);
 
 		Http h = new Http();
 		HttpRequest req = new HttpRequest();
@@ -352,11 +258,257 @@ public without sharing class PowerBiCtrl {
 		req.setBody(sBody);
 
 		HttpResponse res = h.send(req);
-
 		EmbedTokenResult result = (EmbedTokenResult)(JSON.deserialize(res.getBody(), EmbedTokenResult.class));
 
 		return result;
 
+	}
+
+
+	private static String buildBodyForAccessToken(PowerBI_Config__c conf) {
+		String sBody='';
+
+		if(String.isNotBlank(conf.Report_Resource__c)) {
+
+			if('https://app.powerbi.com/reportEmbed'.equals(conf.Report_Resource__c)) {
+
+				sBody=
+						'grant_type=password'
+								+ '&client_id=' + EncodingUtil.urlEncode(conf.ClientId__c, 'UTF-8')
+								+ '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
+								+ '&username={!$Credential.Username}'
+								+ '&password={!$Credential.Password}';
+
+			}else if('https://app.powerbi.com/rdlEmbed'.equals(conf.Report_Resource__c)) {
+
+				sBody=
+						'grant_type=client_credentials'
+								+ '&client_id={!$Credential.Username}'
+								+ '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
+								+ '&client_secret={!$Credential.Password}';
+
+			}
+
+		}
+
+		return sBody;
+	}
+
+
+	private static String buildBodyForEmbedToken(String userId, String reportId, String datasetId, PowerBI_Config__c conf) {
+		User user = [SELECT Id, FederationIdentifier FROM User WHERE Id = :userId];
+
+		IdentityData identityData = new IdentityData();
+		identityData.username = user.FederationIdentifier;
+
+		if('https://app.powerbi.com/reportEmbed'.equals(conf.Report_Resource__c)) {
+			identityData.roles = new List<String>{'SFDC'};
+			identityData.datasets = new List<String>{datasetId};
+		}else if('https://app.powerbi.com/rdlEmbed'.equals(conf.Report_Resource__c)) {
+			identityData.reports = new List<String>{reportId};
+		}
+
+		RequestData requestData = new RequestData();
+		requestData.identities = new List<IdentityData> {identityData};
+		requestData.accessLevel = 'View';
+
+		String sBody = JSON.serialize(requestData);
+
+		return sBody;
+	}
+
+
+	public static PowerBiCtrl.EmbedTokenResult retrieveEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf, Integer minutesToExpire) {
+
+		if(conf == null) {
+			return null;
+		}
+
+		PowerBiCtrl.EmbedTokenResult result = new PowerBiCtrl.EmbedTokenResult();
+		Cache.SessionPartition sessionPartition = null;
+
+		String reportIdReplaced = reportId.replaceAll('-', '');
+		String cacheKey = conf.Application_Identifier__c + reportIdReplaced;
+
+		//Tests run on sandbox without org cache(SIT) would fail
+		if(Test.isRunningTest()) {
+
+			try{
+
+				sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+
+			}catch(Cache.Session.SessionCacheException e) {
+
+				return PowerBiCtrl.getEmbedToken(accessToken, userId,  groupId, reportId, datasetId, conf);
+
+			}
+
+		} else {
+
+			sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+
+		}
+
+
+		if(sessionPartition != null) {
+
+			if(sessionPartition.contains(cacheKey)) {
+
+				result.token = (String)sessionPartition.get(cacheKey);
+
+				if(sessionPartition.contains(cacheKey+'expireson')) {
+
+					//expireson present in cache
+					String cacheExpireson = (String)sessionPartition.get(cacheKey + 'expireson');
+					if(String.isNotBlank(cacheExpireson)) {
+
+						Datetime expiresonDatetime = getExpiresOnDatetime(cacheExpireson);
+
+						if(expiresonDatetime.addMinutes(minutesToExpire*(-1)) < Datetime.now()) {
+							//token expires in less than minutesToExpire minutes - get new
+							result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+							saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
+
+						} else {
+							//token is OK
+							result.expiration = cacheExpireson;
+
+						}
+
+					}
+
+				} else {
+					//no expires on in cache
+					result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+					saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
+				}
+
+			} else {
+				// no embed token in cache
+				result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+				saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
+			}
+
+		}
+
+
+		return result;
+	}
+
+
+	public static PowerBiCtrl.OAuthResult retrieveAccessToken(PowerBI_Config__c conf, String accessTokenKey, String expiresOnKey, String refreshTokenKey, Integer secondsToExpire) {
+
+		if(conf == null) {
+			return null;
+		}
+
+		Cache.OrgPartition orgPartition = null;
+		PowerBiCtrl.OAuthResult result = new PowerBiCtrl.OAuthResult();
+
+		//Tests run on sandbox without org cache(SIT) would fail
+		if(Test.isRunningTest()){
+
+			try{
+				orgPartition = Cache.Org.getPartition('local.PowerBI');
+			}catch(Cache.Org.OrgCacheException e) {
+				return PowerBiCtrl.getNewAccessToken(conf);
+			}
+
+		} else {
+			orgPartition = Cache.Org.getPartition('local.PowerBI');
+		}
+
+		if (orgPartition != null) {
+
+			String applicationSufix = conf.Application_Identifier__c;
+
+			if (orgPartition.contains(accessTokenKey+applicationSufix)) {
+
+				result.access_token = (String) orgPartition.get(accessTokenKey+applicationSufix);
+
+				if (orgPartition.contains(expiresOnKey+applicationSufix)) {
+
+					Long expiresOn = (Long) orgPartition.get(expiresOnKey+applicationSufix);
+
+					//PowerBI is using timestamp without milliseconds - we need to divide by 1000
+					Long currentTime = (System.now().getTime()) / 1000;
+
+					if ((expiresOn - secondsToExpire) < currentTime) {//token will expire in secondsToExpire
+
+						if (String.isNotBlank(refreshTokenKey) && orgPartition.contains(refreshTokenKey+applicationSufix)) {
+							//refresh token here
+							String refreshToken = (String)orgPartition.get(refreshTokenKey+applicationSufix);
+							result = PowerBiCtrl.refreshToken(refreshToken, conf);
+							saveAccessTokenInOrgCache(orgPartition, result, conf, accessTokenKey, expiresOnKey, refreshTokenKey);
+						} else {
+							//get new token
+							result = PowerBiCtrl.getNewAccessToken(conf);
+							saveAccessTokenInOrgCache(orgPartition, result, conf, accessTokenKey, expiresOnKey, refreshTokenKey);
+						}
+
+					} else {//token OK
+						result.expires_on = expiresOn;
+
+						if (String.isNotBlank(refreshTokenKey) && orgPartition.contains(refreshTokenKey+applicationSufix)) {
+
+							result.refresh_token = (String) orgPartition.get(refreshTokenKey+applicationSufix);
+
+						} else if(String.isNotBlank(refreshTokenKey)){
+							//refresh token not found - get new token
+							result = PowerBiCtrl.getNewAccessToken(conf);
+							saveAccessTokenInOrgCache(orgPartition, result, conf, accessTokenKey, expiresOnKey, refreshTokenKey);
+						}
+
+					}
+
+				} else {
+					//expiresOn not found - get new token
+					result = PowerBiCtrl.getNewAccessToken(conf);
+					saveAccessTokenInOrgCache(orgPartition, result, conf, accessTokenKey, expiresOnKey, refreshTokenKey);
+				}
+
+			} else {
+				//access token not found - get new token
+				result = PowerBiCtrl.getNewAccessToken(conf);
+				saveAccessTokenInOrgCache(orgPartition, result, conf, accessTokenKey, expiresOnKey, refreshTokenKey);
+			}
+		}
+
+		return result;
+	}
+
+	private static Datetime getExpiresOnDatetime(String expiresOn) {
+		String expiresonString = '"' + expiresOn + '"';
+		Datetime expiresonDatetime = (DateTime)JSON.deserialize(expiresonString, DateTime.class);
+		return expiresonDatetime;
+	}
+
+	private static void saveAccessTokenInOrgCache(Cache.OrgPartition orgPartition, PowerBiCtrl.OAuthResult result, PowerBI_Config__c conf, String accessTokenKey, String expiresOnKey, String refreshTokenKey) {
+		if(result.error != null) {
+			TransformationHelper.sendEmailSupport('FATAL: PowerBI Access token: ' + conf.Name + ' ' + result.error, 'PowerBI Access token: ' + conf.Name + ' ' +result.error);
+			throw new transformationException('PowerBI Access token: ' + result.error);
+		}
+		else if(result.access_token != null && result.expires_on != null) {
+			String applicationSufix = conf.Application_Identifier__c;
+			orgPartition.put(accessTokenKey + applicationSufix, result.access_token, 3600);
+			orgPartition.put(expiresOnKey + applicationSufix, result.expires_on, 3600);
+			if(refreshTokenKey != null && result.refresh_token != null) {
+				orgPartition.put(refreshTokenKey + applicationSufix, result.refresh_token, 3600);
+			}
+		}
+
+	}
+
+	private static void saveEmbedTokenInSessionCache(Cache.SessionPartition sessionPartition, PowerBiCtrl.EmbedTokenResult result, PowerBI_Config__c conf, String cacheKey) {
+		if(result.error != null) {
+			TransformationHelper.sendEmailSupport('FATAL: PowerBI Embed token: ' + conf.Name + ' ' + result.error, 'PowerBI Embed token: ' + conf.Name + ' ' +result.error);
+			throw new transformationException('PowerBI Embed token: ' + result.error);
+		} else if(result.token != null && result.expiration != null){
+
+			sessionPartition.put(cacheKey, result.token, 3600);
+			sessionPartition.put(cacheKey+'expireson', result.expiration, 3600);
+
+		}
 	}
 
 

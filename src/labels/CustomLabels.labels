@@ -7960,6 +7960,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
     </labels>
+	<labels>
+        <fullName>CSP_Treasury_Dashboard_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Treasury Dashboard Report</shortDescription>
+        <value>Treasury Dashboard Report</value>
+    </labels>
     <labels>
         <fullName>CSP_Topic_All_Label</fullName>
         <categories>CS Portal</categories>
@@ -46302,6 +46309,20 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Treasury Dashboard Premium Dashboard</shortDescription>
         <value>Premium</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Report_Access_Denied</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Report Access Denied</shortDescription>
+        <value>&lt;/br&gt;You do not have access to &lt;b&gt; {name} &lt;/b&gt; report!&lt;/br&gt;&lt;/br&gt; If you would like to get access to this report, you need to subscribe to &lt;b&gt;Treasury Dashboard &lt;font color=&quot;red&quot;&gt;Premium&lt;/font&gt;&lt;/b&gt;:</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Report_Access_Denied_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Report Access Denied Link</shortDescription>
+        <value>Click here.</value>
     </labels>
     <labels>
         <fullName>Treasury_Dashboard_Service_Name</fullName>

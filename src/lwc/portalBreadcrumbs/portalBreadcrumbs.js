@@ -22,6 +22,7 @@ import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Treasury_Dashboard from '@salesforce/label/c.CSP_Treasury_Dashboard';
 import CSP_Breadcrumb_CaseDetails_Title from '@salesforce/label/c.CSP_Breadcrumb_CaseDetails_Title';
 import CSP_Deduction_Notice from '@salesforce/label/c.CSP_Deduction_Notice';
+import CSP_Treasury_Dashboard_Report from '@salesforce/label/c.CSP_Treasury_Dashboard_Report';
 import CSP_Breadcrumb_Service_TIPReports from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
@@ -42,7 +43,8 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Cases,
         CSP_Treasury_Dashboard,
         CSP_Breadcrumb_Service_TIPReports,
-		CSP_Deduction_Notice
+		CSP_Deduction_Notice,
+        CSP_Treasury_Dashboard_Report
     };
 
     //Used to replace last breadcrumb with given label
@@ -86,7 +88,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     @track guestUser = false;
 
     connectedCallback() {
-        isGuestUser().then(results => {            
+        isGuestUser().then(results => {
             if(results) this.guestUser = true;
         });
 
@@ -108,7 +110,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
                 this.results = results;
                 this.processLstBreadcrumbs();
             })
-            .catch(error => {                
+            .catch(error => {
                 this.loadingBreadcrumbs = false;
             });
         }
@@ -125,7 +127,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
                         resultsAux[i].RealLabel = this.labels[resultsAux[i].MasterLabel];
                         resultsAux[i].TextClass = this.classNameAllBreadCrumbs + ' cursorPointer';
                     }
-                    
+
                     resultsAux[i].separatorClass = this.classNameLastBreadCrumb;
 
                     resultsAux[i].showSeparator = true;
@@ -149,8 +151,8 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     }
 
     navigateToBreadcrumb(event){
-        let clickedBreadcrumbName = event.target.dataset.item;        
-        
+        let clickedBreadcrumbName = event.target.dataset.item;
+
         // if guest user, redirect to public page
         if(this.guestUser) {
             if(clickedBreadcrumbName === 'home') {
