@@ -653,6 +653,50 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Owner_Category__c</fullName>
+        <description>Owner categories used on the TIDS Application Form</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Owner categories used on the TIDS Application Form</inlineHelpText>
+        <label>Owner Category</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Person</fullName>
+                    <default>false</default>
+                    <label>Person</label>
+                </value>
+                <value>
+                    <fullName>Company</fullName>
+                    <default>false</default>
+                    <label>Company</label>
+                </value>
+                <value>
+                    <fullName>Publicly Traded</fullName>
+                    <default>false</default>
+                    <label>Publicly Traded</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Owner_Email__c</fullName>
+        <description>Email Address of the Owner - Blank if owner type is &quot;Publicly Traded&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Email Address of the Owner - Blank if owner type is &quot;Publicly Traded&quot;</inlineHelpText>
+        <label>Owner Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Owner_Name__c</fullName>
         <externalId>false</externalId>
         <label>Owner Name</label>
@@ -1183,6 +1227,21 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Owner_Category__c</picklist>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publicly Traded</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Position__c</picklist>
             <values>
                 <fullName>0</fullName>
@@ -1390,6 +1449,21 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
             </values>
             <values>
                 <fullName>WEBSTAR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Owner_Category__c</picklist>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publicly Traded</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
