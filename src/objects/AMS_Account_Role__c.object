@@ -154,25 +154,146 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>AMS Account Role</label>
-    <nameField>
-        <displayFormat>AAR-{00000000}</displayFormat>
-        <label>AMS Account Role Name</label>
-        <trackHistory>true</trackHistory>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>AMS Account Roles</pluralLabel>
-    <recordTypeTrackHistory>true</recordTypeTrackHistory>
-    <searchLayouts>
-        <listViewButtons>Assign_New_Financial_Assessment_Contact</listViewButtons>
-        <searchResultsAdditionalFields>Owner_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Owner_Account__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
+    <fieldSets>
+        <fullName>AMS_Oscar_Savepoint_fields</fullName>
+        <description>Determine which fields should be saved on serialized object</description>
+        <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Contact__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Duty__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Earning__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Employee_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Employee_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Hours__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Inconsistent_Contact_Info__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>isManager__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>isTicketingAgent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_synchronization__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legacy_External_ID__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Legacy_System__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Owner_Sequence__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Percentage__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Position__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Registration_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>SIMPLEX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Stage__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Start_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Termination_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Title__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Unique_Identifier__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Valid__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>AMS Oscar Savepoint fields</label>
+    </fieldSets>
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -530,50 +651,6 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Owner_Category__c</fullName>
-        <description>Owner categories used on the TIDS Application Form</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Owner categories used on the TIDS Application Form</inlineHelpText>
-        <label>Owner Category</label>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Person</fullName>
-                    <default>false</default>
-                    <label>Person</label>
-                </value>
-                <value>
-                    <fullName>Company</fullName>
-                    <default>false</default>
-                    <label>Company</label>
-                </value>
-                <value>
-                    <fullName>Publicly Traded</fullName>
-                    <default>false</default>
-                    <label>Publicly Traded</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Owner_Email__c</fullName>
-        <description>Email Address of the Owner - Blank if owner type is &quot;Publicly Traded&quot;</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Email Address of the Owner - Blank if owner type is &quot;Publicly Traded&quot;</inlineHelpText>
-        <label>Owner Email</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Email</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Owner_Name__c</fullName>
@@ -934,6 +1011,73 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <label>AMS Account Role</label>
+    <listViews>
+        <fullName>AMS_Account_Roles</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Owner_Account__c</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Person__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>AMS Account Roles</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>TD</fullName>
+        <columns>NAME</columns>
+        <columns>Termination_Date__c</columns>
+        <columns>Active__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Owner_Sequence__c</columns>
+        <columns>Percentage__c</columns>
+        <columns>Legacy_System__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>equals</operation>
+            <value>FIRST REISEBUERO GUETTLER GMBH &amp; CO. KG</value>
+        </filters>
+        <label>TD</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_Owner_Name</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Unified_Owner_Name__c</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Employee_Name__c</columns>
+        <columns>Owner_Account__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Unified_Owner_Name__c</field>
+            <operation>equals</operation>
+            <value>Agency Company</value>
+        </filters>
+        <label>ZZ-Search By Unified Owner Name - GDP</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>AAR-{00000000}</displayFormat>
+        <label>AMS Account Role Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>AMS Account Roles</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Employee</fullName>
         <active>true</active>
@@ -1035,21 +1179,6 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
             </values>
             <values>
                 <fullName>WEBSTAR</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Owner_Category__c</picklist>
-            <values>
-                <fullName>Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Person</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publicly Traded</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1265,21 +1394,6 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Owner_Category__c</picklist>
-            <values>
-                <fullName>Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Person</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publicly Traded</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Position__c</picklist>
             <values>
                 <fullName>0</fullName>
@@ -1386,19 +1500,15 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
             </values>
         </picklistValues>
     </recordTypes>
-    <webLinks>
-        <fullName>Assign_New_Financial_Assessment_Contact</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>Assign New Financial Assessment Contact</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <requireRowSelection>false</requireRowSelection>
-        <url>/apex/Assign_Financial_Contact?id={!Account.Id}</url>
-    </webLinks>
+    <searchLayouts>
+        <listViewButtons>Assign_New_Financial_Assessment_Contact</listViewButtons>
+        <searchResultsAdditionalFields>Owner_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Employee_Validation</fullName>
         <active>false</active>
@@ -1430,202 +1540,18 @@ AND (
 )</errorConditionFormula>
         <errorMessage>For Ownership Account Role please fill the Account, Person or Owner Account.</errorMessage>
     </validationRules>
-    <listViews>
-        <fullName>AMS_Account_Roles</fullName>
-        <columns>NAME</columns>
-        <columns>Account__c</columns>
-        <columns>Contact__c</columns>
-        <columns>Owner_Account__c</columns>
-        <columns>Owner_Name__c</columns>
-        <columns>Person__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>AMS Account Roles</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
-    <listViews>
-        <fullName>TD</fullName>
-        <columns>NAME</columns>
-        <columns>Termination_Date__c</columns>
-        <columns>Active__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Owner_Name__c</columns>
-        <columns>Owner_Sequence__c</columns>
-        <columns>Percentage__c</columns>
-        <columns>Legacy_System__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Account__c</field>
-            <operation>equals</operation>
-            <value>FIRST REISEBUERO GUETTLER GMBH &amp; CO. KG</value>
-        </filters>
-        <label>TD</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>ZZ_Search_By_Owner_Name</fullName>
-        <columns>NAME</columns>
-        <columns>Account__c</columns>
-        <columns>Contact__c</columns>
-        <columns>Unified_Owner_Name__c</columns>
-        <columns>Owner_Name__c</columns>
-        <columns>Employee_Name__c</columns>
-        <columns>Owner_Account__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Unified_Owner_Name__c</field>
-            <operation>equals</operation>
-            <value>Agency Company</value>
-        </filters>
-        <label>ZZ-Search By Unified Owner Name - GDP</label>
-        <language>en_US</language>
-    </listViews>
-    <fieldSets>
-        <fullName>AMS_Oscar_Savepoint_fields</fullName>
-        <description>Determine which fields should be saved on serialized object</description>
-        <displayedFields>
-            <field>Id</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Account__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Contact__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Duty__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Earning__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Employee_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Employee_type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Hours__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Inconsistent_Contact_Info__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>isManager__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>isTicketingAgent__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Last_synchronization__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Legacy_External_ID__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Legacy_System__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Owner_Account__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Owner_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Owner_Sequence__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Percentage__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Position__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Registration_Date__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>SIMPLEX__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Stage__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Start_date__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Termination_Date__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Title__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Unique_Identifier__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Valid__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>AMS Oscar Savepoint fields</label>
-    </fieldSets>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Assign_New_Financial_Assessment_Contact</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Assign New Financial Assessment Contact</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/Assign_Financial_Contact?id={!Account.Id}</url>
+    </webLinks>
 </CustomObject>
