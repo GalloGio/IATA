@@ -57,14 +57,13 @@
                         </div>
 
                         <!-- RELATED ARTICLES -->
-                        <div class="slds-p-vertical_x-large">
-                            <c-portal-f-a-q-related-article article={articleInfo} user-info={userInfo}></c-portal-f-a-q-related-article>
-                        </div>
+                        <c-portal-f-a-q-related-article class="slds-p-vertical_x-large" article={articleInfo} user-info={userInfo}></c-portal-f-a-q-related-article>
+                        
                         <!-- REACHS US BANNER -->
-                        <div class="slds-p-vertical_x-large">
-                            <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic} redirect-object={redirectObject}>
-                            </c-portal-f-a-q-reach-us-banner>
-                        </div>
+                       
+                        <c-portal-f-a-q-reach-us-banner class="slds-p-vertical_x-large" category={category} topic={topic} sub-topic={subTopic} redirect-object={redirectObject}>
+                        </c-portal-f-a-q-reach-us-banner>
+                      
                     </div>
                 </div>
             </template>

@@ -17,6 +17,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     @track _userInfo;
     @track language;
     @track guestUser;
+    @track isRendered=false;
 
     @api
     get userInfo() {
@@ -73,6 +74,10 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
                     this.relatedArticles = articles;
                 }
                 this.loading = false;
+            })
+            .finally(() =>{
+                this.loading = false;
+                this.isRendered=true;
             });
     }
 
