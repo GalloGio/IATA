@@ -7411,8 +7411,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 
-			if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation') {
-				if (!isCNSAgency && newForm.ISSP_AMS_Date_of_incorporation__c == null) {
+			if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && !isCNSAgency) {
+				if (newForm.ISSP_AMS_Date_of_incorporation__c == null) {
 					newForm.ISSP_AMS_Date_of_incorporation__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
 				}
