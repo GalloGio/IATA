@@ -51225,4 +51225,332 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>icg_watch_video</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg watch video</shortDescription>
+        <value>Watch Video</value>
+    </labels>
+    <labels>
+        <fullName>icg_all_rights_reserved</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg all rights reserved</shortDescription>
+        <value>All rights reserved</value>
+    </labels>
+    <labels>
+        <fullName>icg_submit</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>icg_new_notification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg new notification</shortDescription>
+        <value>new notification</value>
+    </labels>
+    <labels>
+        <fullName>icg_the_station</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg the station</shortDescription>
+        <value>The station</value>
+    </labels>
+    <labels>
+        <fullName>icg_has_been_approved</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg has been approved</shortDescription>
+        <value>has been approved</value>
+    </labels>
+    <labels>
+        <fullName>icg_header_capab_management</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_header_capab_management</shortDescription>
+        <value>Capabilities management</value>
+    </labels>
+    <labels>
+        <fullName>icg_header_delete_photo</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_header_delete_photo</shortDescription>
+        <value>Delete photo</value>
+    </labels>
+    <labels>
+        <fullName>icg_header_remove_certi</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_header_remove_certi</shortDescription>
+        <value>Select Certification to remove</value>
+    </labels>
+    <labels>
+        <fullName>icg_now_pending_for_IATA_Approval</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg now pending for IATA Approval</shortDescription>
+        <value>Now it is pending for IATA Approval</value>
+    </labels>
+    <labels>
+        <fullName>icg_could_not_be_approved</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg could not be approved</shortDescription>
+        <value>could not be approved</value>
+    </labels>
+    <labels>
+        <fullName>icg_need_to_be_company_admin_to_approve</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg need to be company admin to approve</shortDescription>
+        <value>You have to be Company Admin in order to approve this station</value>
+    </labels>
+    <labels>
+        <fullName>icg_registration_request_submitted1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg registration request submitted</shortDescription>
+        <value>Your request has been submitted and is pending approval from your Company Admin / IATA.</value>
+    </labels>
+    <labels>
+        <fullName>icg_registration_request_submitted2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg registration request submitted</shortDescription>
+        <value>You will receive a confirmation once your request has been processed.</value>
+    </labels>
+    <labels>
+        <fullName>icg_registration_auto_approved</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg registration automatically approved</shortDescription>
+        <value>The station has been automatically approved.</value>
+    </labels>
+    <labels>
+        <fullName>icg_are_you_sure_you_want</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg are you sure you want</shortDescription>
+        <value>Are you sure you want</value>
+    </labels>
+    <labels>
+        <fullName>icg_manager_user_permission</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manager user permission</shortDescription>
+        <value>Manager User Permission</value>
+    </labels>
+    <labels>
+        <fullName>icg_approved_by</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg approved by</shortDescription>
+        <value>Approved By</value>
+    </labels>
+        <labels>
+        <fullName>icg_error_reading_certification_id_to_assign</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg error reading certification id to assign</shortDescription>
+        <value>Error reading certification Id to assign</value>
+    </labels>
+    <labels>
+        <fullName>icg_error_reading_certification_without_capabilities</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg error reading certification without capabilities</shortDescription>
+        <value>Error reading certifications without capabilities</value>
+    </labels>
+    <labels>
+        <fullName>icg_error_updating_record</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg error updating record</shortDescription>
+        <value>Error updating record</value>
+    </labels>
+    <labels>
+        <fullName>icg_edit_capabilities_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg edit capabilities certification</shortDescription>
+        <value>Edit Capabilities Certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_record_activated</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg record activated</shortDescription>
+        <value>Record activated</value>
+    </labels>
+    <labels>
+        <fullName>icg_record_updated</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg record updated</shortDescription>
+        <value>Record updated</value>
+    </labels>
+    <labels>
+        <fullName>icg_success</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_deleted</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification deleted</shortDescription>
+        <value>Certification deleted</value>
+    </labels>
+    <labels>
+        <fullName>icg_something_went_wrong</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg something went wrong</shortDescription>
+        <value>Something went wrong</value>
+	</labels>
+	<labels>
+        <fullName>icg_something_went_wrong_contact_iata</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg something went wrong contact iata</shortDescription>
+        <value>Something went wrong. Please contact IATA.</value>
+	</labels>
+	<labels>
+        <fullName>icg_something_went_wrong_emails</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg something went wrong email</shortDescription>
+        <value>Notification to Approver has failed – Please contact your Company Admin or IATA directly.</value>
+    </labels>
+    <labels>
+        <fullName>icg_certification_renewed</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg certification renewed</shortDescription>
+        <value>Certification renewed</value>
+    </labels>
+    <labels>
+        <fullName>icg_are_your_sure_you_want_replace_current_certification</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg are your sure you want replace current certification</shortDescription>
+        <value>Are you sure you want to replace the current certification</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility url</shortDescription>
+        <value>https://www.iata.org/smart-facility</value>
+    </labels>
+    <labels>
+        <fullName>icg_wcs_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg wcs url</shortDescription>
+        <value>https://www.iata.org/wcs</value>
+    </labels>
+    <labels>
+        <fullName>icg_consulting_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg consulting url</shortDescription>
+        <value>https://www.iata.org/services/consulting/Pages/index.aspx</value>
+    </labels>
+    <labels>
+        <fullName>icg_training_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg training url</shortDescription>
+        <value>https://www.iata.org/training/Pages/index.aspx</value>
+    </labels>
+    <labels>
+        <fullName>icg_publications_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg publications url</shortDescription>
+        <value>https://www.iata.org/publications/tact/Pages/tact-online.aspx</value>
+    </labels>
+    <labels>
+        <fullName>icg_one_process_at_time_msg</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg one process at time msg</shortDescription>
+        <value>The process can process One station at a time. Please try by selecting only one station.</value>
+    </labels>
+    <labels>
+        <fullName>icg_no_account_role_found_msg</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg no account role found msg</shortDescription>
+        <value>No Account Contact Role found for this contact. Please contact IATA.</value>
+    </labels>
+    <labels>
+        <fullName>icg_find_info_on_IATA_ONE_Source</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg find info on IATA ONE Source</shortDescription>
+        <value>Find all information about this service provider’s infrastructure and capabilities on IATA ONE Source.</value>
+    </labels>
+    <labels>
+        <fullName>icg_xlsx_icon</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg xlsx icon</shortDescription>
+        <value>exportexcel.png</value>
+    </labels>
+    <labels>
+        <fullName>icg_btn_pre_register_now</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_btn_pre_register_now</shortDescription>
+        <value>PRE-REGISTER NOW</value>
+    </labels>
 </CustomLabels>
