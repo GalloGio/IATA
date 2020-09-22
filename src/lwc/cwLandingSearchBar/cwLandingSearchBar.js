@@ -7,7 +7,6 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
 import { loadScript } from "lightning/platformResourceLoader";
 
-
 import { checkIconType, createKey, prepareSearchParams, translationTextJS, checkKeyUpValue, getPredictiveData } from "c/cwUtilities";
 
 export default class CwLandingSearchBar extends LightningElement {
@@ -63,7 +62,6 @@ export default class CwLandingSearchBar extends LightningElement {
 			this.searchReady = true;
 		}
 	}
-
 
 	connectedCallback() {
 		if (window.LZString === undefined) {
@@ -367,5 +365,5 @@ export default class CwLandingSearchBar extends LightningElement {
 			logoLandingUrl = resources + "/img/one-source-visual-white.svg"
 		}
 		return logoLandingUrl;
-	}
+    }
 }
