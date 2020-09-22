@@ -7,6 +7,9 @@ import randomUUID from '@salesforce/apex/CSP_Utils.randomUUID';
 import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+
 import { NavigationMixin } from 'lightning/navigation';
 
 import CSP_ArticleHelpful from '@salesforce/label/c.CSP_ArticleHelpful';
@@ -18,6 +21,8 @@ import CSP_Submit from '@salesforce/label/c.CSP_Submit';
 import CSP_Cancel from '@salesforce/label/c.CSP_Cancel';
 import csp_GoToSupport from '@salesforce/label/c.CSP_Continue';
 import CSP_SearchFAQ from '@salesforce/label/c.CSP_SearchFAQ';
+import CSP_ShareLink from '@salesforce/label/c.CSP_ShareLink';
+import CSP_Share_CopiedToClipBoard from '@salesforce/label/c.CSP_Share_CopiedToClipBoard';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -31,6 +36,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         CSP_Submit,
         CSP_Cancel,
         csp_GoToSupport,
+        CSP_ShareLink,
+        CSP_Share_CopiedToClipBoard,
         CSP_SearchFAQ
     }
     @api category;
@@ -222,13 +229,13 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
         Object.keys(res).forEach(function (el) {
             if((relatedArticleId !== undefined && relatedArticleId === res[el].Id)||res.length==1 ) { // OPENS THE ARTICLE PREVIOUSLY CLICKED THAT CAME FROM RELATED ARTICLES LIST OR SEARCH LIST
-                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, open: true, feedback: false });
+                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, urlName:res[el].UrlName, open: true, feedback: false });
                 articleSelected = {
                     title : res[el].Title,
                     id : res[el].Id
                 };
             } else {
-                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, open: false, feedback: false });
+                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, urlName:res[el].UrlName, open: false, feedback: false });
             }
             tempArticleIds += (el === '0') ? '\'' + res[el].Id + '\'' : ', \'' + res[el].Id + '\'';
         });
@@ -271,7 +278,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                     tempArticleIds = '(';
     
                     Object.keys(res).forEach(function (el) {
-                        tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, open: false, feedback: false });
+                        tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, open: false, feedback: false, Link : res[el].CS_Portal_link__c });
                         tempArticleIds += (el === '0') ? '\'' + res[el].Id + '\'' : ', \'' + res[el].Id + '\'';
                     });
                     tempArticleIds += ')';
@@ -420,5 +427,29 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.showCross=false;
         this.searchText='';
         this.redirectionTo();
+    }
+
+
+    copyUrlToClipboard(e){
+        let copyText = this.template.querySelector("[data-article-url]");
+
+        //temporary show the input, and hide it just after the link has been copied
+        this.template.querySelector("[data-article-url]").classList.toggle('slds-hide');
+       
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+      
+        document.execCommand("copy");
+
+        this.template.querySelector("[data-article-url]").classList.toggle('slds-hide');
+        
+        const toast = new ShowToastEvent({
+            title: this.label.CSP_Success,
+            variant:'success',
+            mode:'pester',
+            message: this.label.CSP_Share_CopiedToClipBoard
+        });
+        this.dispatchEvent(toast);
+        
     }
 }

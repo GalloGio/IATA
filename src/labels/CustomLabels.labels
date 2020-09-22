@@ -7833,6 +7833,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Settings</value>
     </labels>
     <labels>
+        <fullName>CSP_ShareLink</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Share FAQ button label</shortDescription>
+        <value>Share</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Share_CopiedToClipBoard</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success message that link has been copied to the clipboard</shortDescription>
+        <value>FAQ link has been Copied!</value>
+    </labels>
+    <labels>
         <fullName>CSP_Skip</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

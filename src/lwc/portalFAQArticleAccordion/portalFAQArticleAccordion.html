@@ -19,43 +19,54 @@
                         <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright"
                             size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
                         <span class="slds-p-left_small text-bold" data-item={article.label}
-                            data-id={article.id}>{article.label}</span>
-                    </div>
-                    <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall"
+                            data-id={article.id}>{article.label}</span>                        
+                    </div>                   
+                    <div if:true={article.open} class="slds-p-vertical_x-small text-xsmall"
                         style="transition: height 0.3s ease;" data-item={article.label}>
                         <!-- ARTICLE -->
 						<c-portal-community360-util record-id={article.id}></c-portal-community360-util>
                         <div class="slds-m-bottom_medium">
                             <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
-                        </div>
+                        </div>                        
 
-                        <!-- FEEDBACK -->
-                        <div if:false={article.feedback}
-                            class="slds-m-vertical_x-large slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
-                            <lightning-layout horizontal-align="spread">
-                                <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
-                                    {label.CSP_ArticleHelpful}
-                                </lightning-layout-item>
-                                <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
-                                    <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:up" size="small"
-                                        onclick={feedbackStatus} data-item={article.id} data-title={article.label}
-                                        data-number={article.number} data-option="true"></lightning-icon>
-                                    <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:down" size="small"
-                                        onclick={renderModal} data-item={article.id} data-title={article.label}
-                                        data-number={article.number} data-option="false"></lightning-icon>
-                                </lightning-layout-item>
-                            </lightning-layout>
-                        </div>
+                        <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-m-vertical_x-large">                           
+                            <div class="slds-col slds-size_full slds-small-size_5-of-7 ">
+                                
+                                <!-- FEEDBACK -->
+                                <div if:false={article.feedback}
+                                    class="slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
+                                    <lightning-layout horizontal-align="spread">
+                                        <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
+                                            {label.CSP_ArticleHelpful}
+                                        </lightning-layout-item>
+                                        <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
+                                            <lightning-icon class="slds-p-around_xx-small cursorPointerColor " icon-name="utility:up" size="small"
+                                                onclick={feedbackStatus} data-item={article.id} data-title={article.label}
+                                                data-number={article.number} data-option="true"></lightning-icon>
+                                            <lightning-icon class="slds-p-around_xx-small cursorPointerColor " icon-name="utility:down" size="small"
+                                                onclick={renderModal} data-item={article.id} data-title={article.label}
+                                                data-number={article.number} data-option="false"></lightning-icon>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </div>
 
-                        <div if:true={article.feedback}
-                            class="slds-m-vertical_x-large slds-p-around_medium WarningRectangle">
-                            <lightning-layout horizontal-align="spread" class="slds-p-horizontal_medium">
-                                <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
-                                    {label.CSP_ThanksFeedback}
-                                </lightning-layout-item>
-                            </lightning-layout>
+                                <div if:true={article.feedback}
+                                    class="slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
+                                    <lightning-layout horizontal-align="spread" class="slds-p-horizontal_medium">
+                                        <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
+                                            {label.CSP_ThanksFeedback}
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </div>
+                                
+                            </div>
+                            <div if:true={article.open} class ="slds-col slds-size_full slds-small-size_2-of-7 slds-grid slds-align-content-center slds-m-vertical_x-small">
+                                <span class="slds-float--right slds-grid text-bold slds-size_1-of-1 ">
+                                    <input data-article-url type="text" class="slds-hide" value={article.Link}/>
+                                    <lightning-button label={label.CSP_ShareLink} class="containedButton reachusButton fullWidth" onclick={copyUrlToClipboard}></lightning-button>
+                                </span>
+                            </div>
                         </div>
-
                         <!-- RELATED ARTICLES -->
                         <c-portal-f-a-q-related-article class="slds-p-vertical_x-large" article={articleInfo} user-info={userInfo}></c-portal-f-a-q-related-article>
                         

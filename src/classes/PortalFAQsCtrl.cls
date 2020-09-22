@@ -81,7 +81,7 @@ public with sharing class PortalFAQsCtrl {
 	//language - FAQ Article language
 	//expectionsSet - set of articles that should be excluded from the search- used for when searching articles in english to remove the articles in the local language
 	public static List<FAQ__kav> getArticles(String selectedParams, Integer limitParam,String language,Set<String> expectionsSet) {
-		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c,ArticleTotalViewCount, UrlName FROM FAQ__kav WHERE PublishStatus=\'Online\'';
+		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c,ArticleTotalViewCount, UrlName, CS_Portal_link__c  FROM FAQ__kav WHERE PublishStatus=\'Online\'';
 		String queryTwo = String.isNotBlank(language) ? ' AND Language = \'' + language + '\'' : '';
 		string queryException = expectionsSet!=null?' AND ArticleNumber NOT IN :expectionsSet ':'';		
 		String queryThree =selectedParams==''?'':' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC ';
@@ -137,7 +137,7 @@ public with sharing class PortalFAQsCtrl {
 
 		//Get the articles being referenced
 		set<id> articleIdSet=new set<id>();
-		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language FROM faq__kav WHERE publishstatus =\'Online\' ';
+		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language, CS_Portal_link__c FROM faq__kav WHERE publishstatus =\'Online\' ';
 		String soqlTransl=' AND KnowledgeArticleid=:articleIdSet AND language=:lang';
 		String soqlEng=' AND language=\'en_US\' AND UrlName=:urlName';
 		String soqlDat=' WITH DATA CATEGORY FAQs__c BELOW '+datacategories;
@@ -225,7 +225,7 @@ public with sharing class PortalFAQsCtrl {
 			}
 			 
 			String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c, urlName WHERE PublishStatus = \'online\'';
+						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c, urlName, CS_Portal_link__c WHERE PublishStatus = \'online\'';
 			
 			
 			
