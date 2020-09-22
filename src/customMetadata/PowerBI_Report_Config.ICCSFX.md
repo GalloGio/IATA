@@ -11,6 +11,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>LastModifiedDate__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Report_Id_Dev__c</field>
         <value xsi:type="xsd:string">41dac399-40a6-4f2f-8fca-0ac13a664916</value>
     </values>
