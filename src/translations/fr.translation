@@ -35603,6 +35603,15 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- GDP Accounts --></description>
         <label><!-- GDP Accounts --></label>
         <name>GDP_Accounts</name>
