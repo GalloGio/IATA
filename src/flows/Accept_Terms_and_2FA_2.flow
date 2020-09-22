@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Check is current user has Bypass_TD_2FA permission set assigned.</description>
+        <name>Check_Bypass2Fa_Permission_Set_Assignment</name>
+        <label>Check Bypass2Fa Permission Set Assignment</label>
+        <locationX>595</locationX>
+        <locationY>102</locationY>
+        <actionName>TreasuryDashboardCtrl</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>User_has_permission_set</targetReference>
+        </connector>
+        <inputParameters>
+            <name>userId</name>
+            <value>
+                <elementReference>LoginFlow_UserId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>Bypass2FAapexActionResult</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <apexPluginCalls>
         <name>Get_QR_Code</name>
         <label>Get QR Code</label>
@@ -199,7 +221,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Registration</targetReference>
+                <targetReference>Check_Bypass2Fa_Permission_Set_Assignment</targetReference>
             </connector>
             <label>Go to Registration</label>
         </rules>
@@ -249,6 +271,32 @@
                 <targetReference>Registration_Screen</targetReference>
             </connector>
             <label>Register</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Evaluates if current user has Bypass_TD_2FA permission set assigned.</description>
+        <name>User_has_permission_set</name>
+        <label>User Has Bypass_TD_2FA Permission Set</label>
+        <locationX>750</locationX>
+        <locationY>49</locationY>
+        <defaultConnector>
+            <targetReference>Registration</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>User Has NO Permission Set Assigned</defaultConnectorLabel>
+        <rules>
+            <name>User_Has_Bypass2FA_Permission_Set_Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Bypass2FAapexActionResult</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FinishStep</targetReference>
+            </connector>
+            <label>User Has Bypass2FA Permission Set Assigned</label>
         </rules>
     </decisions>
     <interviewLabel>Accept Terms and 2FA 2 {!$Flow.CurrentDateTime}</interviewLabel>
@@ -528,6 +576,17 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores result of apex method getting Bypass-TD_2FA permission set assignment for current user.</description>
+        <name>Bypass2FAapexActionResult</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>false</stringValue>
+        </value>
     </variables>
     <variables>
         <name>Dummy01</name>

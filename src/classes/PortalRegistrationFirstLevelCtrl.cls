@@ -1080,6 +1080,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			EmailTemplate emailTemplate = [SELECT Id,Subject,HtmlValue,Body FROM EmailTemplate WHERE DeveloperName=:template];
 			Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
 
+			//Block disposal emails from receiving emails
+			if(GDPR_Helper.isDisposalEmail(receiver) && template.contains('CSP_New_Member_Confirmation'))
+				return true;
+			
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
 			if(orgWideEmail != null){
