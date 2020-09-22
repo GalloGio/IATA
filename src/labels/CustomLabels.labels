@@ -7960,13 +7960,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
     </labels>
-	<labels>
-        <fullName>CSP_Treasury_Dashboard_Report</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Treasury Dashboard Report</shortDescription>
-        <value>Treasury Dashboard Report</value>
-    </labels>
     <labels>
         <fullName>CSP_Topic_All_Label</fullName>
         <categories>CS Portal</categories>
@@ -8019,6 +8012,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Treasury Dashboard</shortDescription>
         <value>Treasury Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Treasury_Dashboard_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Treasury Dashboard Report</shortDescription>
+        <value>Treasury Dashboard Report</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting</fullName>
