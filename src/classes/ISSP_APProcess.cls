@@ -768,28 +768,22 @@ global without sharing class ISSP_APProcess {
 
 							if(isPASSGSSA) {
 								ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passgssaMandatoryFields);
-								if(getisSISActive()) {
+								if(!getisSISActive()) {
 									ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passSISMandatoryFields);
 								}
 							}
-							// If we have to show soem fields as input then they are not mandatory anymore
-							if (!getShowInputGSSAFileds()) {
+							// If we have to show some fields as input then they are not mandatory anymore
+							if ( isGSSAUser && getShowInputGSSAFileds()) {
 								for (String fldLabel : ISSP_AP_fieldLists.setPASSNonMandatory) {
 									ISSP_AP_fieldLists.passMandatoryFields.remove(fldLabel);
 								}
 							}
+							if(newForm.Hot_files_delivery_format__c=='E-mail and Download' || newForm.PDF_Report_Delivery_Format__c=='E-mail and Download'){
+								ISSP_AP_FieldLists.passMandatoryFields.put('HOT_File_Recipient_Email_1__c','');
+							}
 
-							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet())
-							{
+							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet()){
 								if (newForm.get(fldLabel)==null) {
-									allfieldsfilled = false;
-									break;
-								}
-								if(newForm.Hot_files_delivery_format__c=='E-mail and Download' && newForm.HOT_File_Recipient_Email_1__c==null){
-									allfieldsfilled = false;
-									break;
-								}
-								if(newForm.PDF_Report_Delivery_Format__c=='E-mail and Download' && newForm.PDF_File_Recipient_Email_1__c==null){
 									allfieldsfilled = false;
 									break;
 								}
@@ -897,7 +891,7 @@ global without sharing class ISSP_APProcess {
 			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Corrections_Email_1__c,CASS_Corrections_Email_2__c,GSSA_Legal_Name__c,'+
 			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
 			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
-			'Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,'+
+			'Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,Billing_File_Emrgcy_Contact_Number__c,'+
 			'Receive_PDF_Reports__c,PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,Receive_XLS_Reports__c,'+
 			'Accept_Online_Corrections__c,CASSLink_New_User_1_Salutation__c,CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,'+
 			'CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,'+
@@ -1528,7 +1522,6 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Pagereference goToFinalStep(){
-		List<Attachment> attch = getAttachList();
 		try{
 			if (isBSP || isCASS) {
 				if (newForm.Type_of_Settlement__c == 'ICCS bank account') {
@@ -1571,7 +1564,6 @@ global without sharing class ISSP_APProcess {
 			}
 
 			//*******************************
-			String countryWithoutBankMandate='';
 			Boolean caseWithAttachment;
  			if(isPassAirline && !string.isEmpty(newCase.Country_Concerned__c)){
 				
@@ -1603,33 +1595,12 @@ global without sharing class ISSP_APProcess {
 					}
 					newChildCase.ParentId = newCase.Id;
 					newChildCase.Visible_on_ISS_Portal__c = false;
-
-					caseWithAttachment=false;
-					for(Attachment attachmentRecord:attch){
-						if(attachmentRecord.Name.startsWith(newChildCase.IFAP_Country_ISO__c+' - ')){
-							caseWithAttachment=true;
-						}
-					}
-					newChildCase.ownerid = APQueue('Airline Participation - Head Office').Id;
-
-					if(!caseWithAttachment){
-						if(String.isEmpty(countryWithoutBankMandate)){
-							countryWithoutBankMandate= newChildCase.BSPCountry__c;
-						}else{
-							countryWithoutBankMandate+='; '+newChildCase.BSPCountry__c;
-						}
-					}else{
-						childCaseList.add(newChildCase);
-					}
+					newChildCase.ownerid = mapAPQueue.get('Airline Participation - Head Office').Queue.Id;
+					childCaseList.add(newChildCase);
 				}
 
-				if(!String.isEmpty(countryWithoutBankMandate)){
-					newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application for these countries: '+countryWithoutBankMandate+'.');
-					return null;
-				}
-				
+				 insert childCaseList;
 
- 				insert childCaseList;
 				Map<Id,String> childCaseIdIsoCodeMap=new Map<Id,String>();
 				for(Case childCaseRecord:childCaseList){
 					childCaseIdIsoCodeMap.put(childCaseRecord.id,childCaseRecord.IFAP_Country_ISO__c);
@@ -1638,28 +1609,6 @@ global without sharing class ISSP_APProcess {
 				copyAttachmentsToChildCases(vCaseId,childCaseIdIsoCodeMap);
 
 			}
-			if(isPassAirline && string.isEmpty(newCase.Country_Concerned__c)){
-				caseWithAttachment=false;
-					for(Attachment attachmentRecord:attch){
-						if(attachmentRecord.Name.startsWith(newCase.IFAP_Country_ISO__c+' - ')){
-							caseWithAttachment=true;
-						}
-					}
-
-					if(!caseWithAttachment){
-						if(String.isEmpty(countryWithoutBankMandate)){
-							countryWithoutBankMandate= newCase.BSPCountry__c;
-						}else{
-							countryWithoutBankMandate+='; '+newCase.BSPCountry__c;
-						}
-					}
-				
-				
-				if(!String.isEmpty(countryWithoutBankMandate)){
-						newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application for these countries: '+countryWithoutBankMandate+'.');
-						return null;
-				}
-			}
 			if(isPassAirline && !newForm.Accept_terms_and_conditions__c) {
 				newForm.addError('Please Accept our Terms and Conditions.');
 				return null;
@@ -1667,8 +1616,8 @@ global without sharing class ISSP_APProcess {
 
 			newCase.Status = 'For Review and Acceptance';
 			newCase.Dossier_Reception_Date__c = Date.today();
-			if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id){
-				newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
+			if(newCase.ownerid == mapAPQueue.get('Airline Participation - Drafts').Queue.Id){
+				newCase.ownerid = mapAPQueue.get('Airline Participation - Head Office').Queue.Id;
 			}
 			upsert newCase;
 
@@ -2107,18 +2056,25 @@ global without sharing class ISSP_APProcess {
 		return caseList;
 	}
 
-	public Group APQueue(String qName) {
-
-		//Available AP queue names
-		Set<String> queueNames = new Set<String>{'Airline Participation - Drafts','Airline Participation - Head Office'};
-			Map<String,QueueSobject> mapRegionalQueue = new Map<String,QueueSobject>();
-
-		//Build map queue.name -> queue
-		for(QueueSobject queue : [Select Queue.Id,Queue.Name From QueueSobject Where Queue.Name in: queueNames]){
-			mapRegionalQueue.put(queue.Queue.Name,queue);
+	/**
+	 * Creates a map for all AP Queues grouped by Name
+	 */
+	private Map<String,QueueSobject> mapAPQueue {
+		get {
+			if (mapAPQueue==null) {
+				Set<String> queueNames = new Set<String>{'Airline Participation - Drafts','Airline Participation - Head Office'};
+				mapAPQueue = new Map<String,QueueSobject>();
+				for(QueueSobject queue : [
+					SELECT Queue.Id,Queue.Name 
+					FROM QueueSobject
+					WHERE Queue.Name in: queueNames]
+				){
+					mapAPQueue.put(queue.Queue.Name,queue);
+				}
+			}
+			return mapAPQueue;
 		}
-
-		return mapRegionalQueue.get(qName).Queue;
+		set;
 	}
 
 	public PageReference redirect(String destinationURL) {
@@ -2311,25 +2267,6 @@ global without sharing class ISSP_APProcess {
 			insert myAttachment;
 		}
 		return null;
-	}
-
-	public List<Attachment> getAttachList(){
-		List<Attachment> attachmentList=new List<Attachment>();
-
-		if(isPassAirline){
-			amazonFileList=[SELECT Name,Full_Name_Unique__c,Source__c,File_Identifier_picklist__c,Size_MB__c,RecordTypeId FROM AmazonFile__c WHERE Case__c=:vCaseId];
-			Attachment attachmentRecord;
-
-			for(AmazonFile__c amazonFile:amazonFileList){
-				attachmentRecord=new Attachment();
-				List<String> origFilename = amazonFile.Full_Name_Unique__c.split('/');
-				attachmentRecord.Name=amazonFile.Name +' - '+ origFilename[origFilename.size()-1];
-				attachmentList.add(attachmentRecord);
-			}
-		}else{
-			attachmentList=[SELECT Id, Name,Body FROM Attachment WHERE ParentId = :vCaseId];
-		}
-		return attachmentList;
 	}
 
 	// Delete country unused files - PASS
@@ -2933,7 +2870,7 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show Upload ASP (Authorized Signatories Package)
 	**/
 	public Boolean getShowUploadASPForPASS() {
-		return this.isPassAirline && getAuthorizedSignatories().isEmpty();
+		return this.isPassAirline && getAuthorizedSignatories().isEmpty() && !isGSSAUser;
 	}
 
 	/**

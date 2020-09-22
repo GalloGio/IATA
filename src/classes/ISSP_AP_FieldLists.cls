@@ -274,6 +274,8 @@ public class ISSP_AP_FieldLists {
 		'Legal_Name_of_company__c' => '',
 		'Airline_trade_name__c' => '',
 		'Company_address__c' => '',
+		'Company_Registration_ID__c' => '',
+		'TAX_VAT_Registration_Number__c' => '',
 		'Company_city__c' => '',
 		'Postal_code__c' => '',
 		'Company_State__c' => '',
@@ -281,6 +283,8 @@ public class ISSP_AP_FieldLists {
 		'Billing_File_Emrgcy_Contact_F_Name__c' => '',
 		'Billing_File_Emrgcy_Contact_Email__c' => '',
 		'Billing_File_Emrgcy_Contact_L_Name__c' => '',
+		'Billing_File_Emrgcy_Contact_Number__c' => '',
+		'Billing_File_Emrgcy_Contact_Job_Title__c' => '',
 		'Who_requested_to_join_TOU__c' => ''
 	};
 
