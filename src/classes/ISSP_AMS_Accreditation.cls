@@ -7658,17 +7658,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		} else if (sector!= null && amsOfficeType != null && isNoticeOfChange != null && sector.StartsWith(AMS_Utils.SECTOR_CARGO) && amsOfficeType == 'Branch' && !isNoticeOfChange) { //All CGO Branches share the same form, exept that Only IATA / EACP CGO agents require DGR trained staff
 			if (!validateBROfficeDetails())
 				errorFound = true;
-
-			if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
-				if(isCNSAgency){
-					if(newCase.Reason1__c != 'New Commercial BR' && newCase.Reason1__c != 'New BR / IP'){
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Federal_EIN_Error_Message));
-					}
-				}else{
-					newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
-				}
-				errorFound = true;
-			}
 			
 			if(isCNSAgency && newForm.Branch_Office_Phone__c == null){
 				newForm.Branch_Office_Phone__c.addError(Label.ISSP_YouMustEnter);
