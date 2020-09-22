@@ -3,8 +3,8 @@
     <baseObject>Account</baseObject>
     <category>accounts</category>
     <deployed>true</deployed>
-    <description>Accounts custom</description>
-    <label>Accounts custom</label>
+    <description>Accounts with additional information (via lookup) of the user creating or updating the record.</description>
+    <label>Accounts custom, user info</label>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
