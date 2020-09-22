@@ -10,11 +10,6 @@
         <default>false</default>
         <label>Company Admin</label>
     </customValue>
-    <customValue>
-        <fullName>External User</fullName>
-        <default>false</default>
-        <label>External User</label>
-    </customValue>
     <description>Diferent roles in ICG Portal</description>
     <masterLabel>ONE Source Contact Role Details</masterLabel>
     <sorted>false</sorted>

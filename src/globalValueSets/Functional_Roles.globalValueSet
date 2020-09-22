@@ -11,11 +11,6 @@
         <label>Training</label>
     </customValue>
     <customValue>
-        <fullName>MedAire</fullName>
-        <default>false</default>
-        <label>MedAire</label>
-    </customValue>
-    <customValue>
         <fullName>One Source</fullName>
         <default>false</default>
         <label>One Source</label>

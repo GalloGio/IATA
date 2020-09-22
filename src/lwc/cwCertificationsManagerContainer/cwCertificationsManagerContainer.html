@@ -61,7 +61,7 @@
 		</template>
 
 		<template if:true={showCertifications}>
-			<div>
+			<div class="horz-scroll">
 				<div class="slds-grid">
 					<div class="slds-col slds-size_1-of-12">
 						<p>{label.id}:</p>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 				<template for:each={certifications} for:item="item">
-					<c-cw-certification-manager label={label} key={item.value} record-id={recordId} refresh-data={getActionToRefresh} available-certifications={allcertificationDropdowOptions}
+					<c-cw-certification-manager label={label} key={item.value} record-id={recordId} station-r-t={labelStationType} refresh-data={getActionToRefresh} available-certifications={allcertificationDropdowOptions} certifications-without-capab={certificationsWithoutCapab}
 					 certification-info={item} lst-certifications={allCertifications} sfoc-scope={sofcScope} ceiv-scope={ceivScope} ienva-scope={ienvaScope}
 					  oncertificationdelete={refreshCertificationsAfterDelete} oncertificationrenewed={renewCertification} oneditonlycapabilitiesbycerti={editOnlyCapabilitiesByCerti}
 					   onrenew={renewCertification} oncertificationactivated={refreshAllComponent} ></c-cw-certification-manager>

@@ -32,8 +32,8 @@ export default class CwRemoteValidationHistory extends LightningElement {
 	}
 
 	renderedCallback(){
-        this.exportExcel = this.icons + this.label.xlsx_icon;
-    }
+		this.exportExcel = this.icons + this.label.xlsx_icon;
+	}
 
 	goToFacilityPage(event) {
 		let idStation = event.target.getAttribute("id-station");

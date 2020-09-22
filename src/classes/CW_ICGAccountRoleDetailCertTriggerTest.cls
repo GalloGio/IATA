@@ -52,7 +52,7 @@ public class CW_ICGAccountRoleDetailCertTriggerTest {
 		joinrow3.Expiration_Date__c = Date.today().addYears(10);
 		joinrow3.Issue_Date__c = Date.valueOf('2020-09-09');
 		joinrow3.ICG_Account_Role_Detail__c = accRoleDetail.Id;
-		joinrow3.SFOC_Scope__c = 'General Cargo;Dangerous Goods;Perishables;Airmail;Live Animals';
+		joinrow3.SFOC_Scope__c = 'Pharmaceuticals;General Cargo;Dangerous Goods;Perishables;Airmail;Live Animals';
 		insert joinrow3;
 		joinrow3.Issue_Date__c = Date.today();
 		update joinrow3;
@@ -61,14 +61,14 @@ public class CW_ICGAccountRoleDetailCertTriggerTest {
 	@isTest
 	public static void assertAlignment() {
 		List<ICG_Account_Role_Detail__c> accr = [SELECT id, Pharmaceuticals__c, Live_Animals__c, Perishables__c, General_Cargo__c, Dangerous_Goods__c, Airmail__c FROM ICG_Account_Role_Detail__c LIMIT 1];
-		system.assert(!accr.isEmpty());
+		system.assertEquals(true, !accr.isEmpty(), 'No values on ICG_Account_Role_Detail__c');
 		if (!accr.isEmpty()) {
-			System.assertEquals(true, accr[0].Pharmaceuticals__c);
-			System.assertEquals(true, accr[0].Live_Animals__c);
-			System.assertEquals(true, accr[0].Perishables__c);
-			System.assertEquals(true, accr[0].General_Cargo__c);
-			System.assertEquals(true, accr[0].Dangerous_Goods__c);
-			System.assertEquals(true, accr[0].Airmail__c);
+			System.assertEquals(true, accr[0].Pharmaceuticals__c, 'There is no Pharmaceutical certification related ' + accr[0]);
+			System.assertEquals(true, accr[0].Live_Animals__c, 'There is no Live Animals certification related');
+			System.assertEquals(true, accr[0].Perishables__c, 'There is no Perishables certification related');
+			System.assertEquals(true, accr[0].General_Cargo__c, 'There is no General Cargo certification related');
+			System.assertEquals(true, accr[0].Dangerous_Goods__c, 'There is no Dangerous Goods certification related');
+			System.assertEquals(true, accr[0].Airmail__c, 'There is no Airmail certification related');
 		}
 	}
 }

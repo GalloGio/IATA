@@ -244,8 +244,8 @@ private class CW_FacilityContactInfoControllerTest {
 		Test.stopTest();
 		System.assertEquals(expectedResult, result);
 		System.assertNotEquals(0, result.Size());
-    }
-    
+	}
+	
 	@isTest
 	private static void setFacilityComodityInfoPilotInformation() {
 		ICG_Account_Role_Detail__c facility = [
@@ -292,7 +292,7 @@ private class CW_FacilityContactInfoControllerTest {
 		Test.stopTest();
 		System.assertEquals(expectedResult, result);
 		System.assertNotEquals(0, result.Size());
-    }
+	}
 
 	@isTest
 	private static void setFacilityComodityInfoElse() {
@@ -316,8 +316,8 @@ private class CW_FacilityContactInfoControllerTest {
 		Test.stopTest();
 		System.assertEquals(expectedResult, result);
 		System.assertNotEquals(0, result.Size());
-    }
-    
+	}
+	
 	/*
 	 * @author
 	 * Description: set data in facility Overview

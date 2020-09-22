@@ -367,5 +367,5 @@ export default class CwLandingSearchBar extends LightningElement {
 			logoLandingUrl = resources + "/img/one-source-visual-white.svg"
 		}
 		return logoLandingUrl;
-    }
+	}
 }

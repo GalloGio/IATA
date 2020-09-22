@@ -38,8 +38,8 @@ public class CW_StationManagersTest {
 		insert accountContactRole;
 
 		ICG_Contact_Role_Detail__c contactRoleDetail = CW_TestDataFactory.testICGContactRoleDetail(accountContactRole.Id, ard.Id);
-        contactRoleDetail.Account_Role__c = ar.Id;
-        contactRoleDetail.ICG_Role__c = 'Facility Manager';
+		contactRoleDetail.Account_Role__c = ar.Id;
+		contactRoleDetail.ICG_Role__c = 'Facility Manager';
 		insert contactRoleDetail;
 		
 		Contact cto2 = new Contact();

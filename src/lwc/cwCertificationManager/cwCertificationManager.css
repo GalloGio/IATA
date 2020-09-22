@@ -12,6 +12,7 @@
 .bt-marine{
     background-color: rgb(47, 67, 196) !important;
     color: white !important;
+    white-space: nowrap !important;
 }
 .bt-marine:hover{
     background-color: rgb(41, 57, 162) !important;
@@ -19,6 +20,7 @@
 .bt-green{
     background-color: rgb(40, 177, 49) !important;
     color: white !important;
+    white-space: nowrap !important;
 }
 .bt-green:hover{
     background-color: rgb(32, 144, 39) !important;
@@ -26,6 +28,7 @@
 .bt-yellow{
     background-color: rgb(250,200,50) !important;
     color: white !important;
+    white-space: nowrap !important;
 }
 .bt-yellow:hover{
     background-color: rgb(228, 183, 47) !important;
@@ -35,10 +38,8 @@
 }
 .bt-blue{
     background-color: rgb(30,50,250) !important;
-    padding-left: 5px !important;
+    white-space: nowrap !important;
     color: white !important;
-    width: max-content;
-    padding: inherit;
 }
 .bt-blue:hover{
     background-color: rgb(24, 40, 220) !important;

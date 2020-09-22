@@ -42,6 +42,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		insert accRole;
 
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
+		ard.Name = 'Generic Test';
 		insert ard;
 		ICG_Account_Role_Detail__c ard2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard2;
@@ -57,33 +58,90 @@ public with sharing class CW_CertificationsManagerControllerTest {
 
 		ICG_Certification__c sfocCert = CW_TestDataFactory.newCertification();
 		sfocCert.Name = 'SF Operational Capacity';
+		sfocCert.Applicable_to__c = 'Cargo Handling Facility;Airline';
 		sfocCert.Department__c = g1.Name;
 		insert sfocCert;
-		ICG_Certification__c ceivCert = CW_TestDataFactory.newCertification();
-		ceivCert.Certification_Type__c = 'Certifications of Excellency';
-		sfocCert.Department__c = g1.Name;
-		insert ceivCert;
+		
+		ICG_Certification__c ceivFresh = CW_TestDataFactory.newCertification();
+		ceivFresh.Name = 'CEIV Fresh';
+		ceivFresh.Certification_Type__c = 'Certifications of Excellency';
+		ceivFresh.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		ceivFresh.Department__c = g1.Name;
+		insert ceivFresh;
+		
+		ICG_Certification__c ceivPharma = CW_TestDataFactory.newCertification();
+		ceivPharma.Name = 'CEIV Pharma';
+		ceivPharma.Certification_Type__c = 'Certifications of Excellency';
+		ceivPharma.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		ceivPharma.Department__c = g1.Name;
+		insert ceivPharma;
+		
+		ICG_Certification__c ienva = CW_TestDataFactory.newCertification();
+		ienva.Name = 'IEnvA';
+		ienva.Certification_Type__c = 'Certifications of Excellency';
+		ienva.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		ienva.Department__c = g1.Name;
+		insert ienva;
+		
+		ICG_Certification__c animals = CW_TestDataFactory.newCertification();
+		animals.Name = 'CEIV Live Animals';
+		animals.Certification_Type__c = 'Certifications of Excellency';
+		animals.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		animals.Department__c = g1.Name;
+		insert animals;
+		
+		ICG_Certification__c remoteValidation = CW_TestDataFactory.newCertification();
+		remoteValidation.name = 'Smart Facility Remote Validation';
+		remoteValidation.certification_type__C = 'Certifications of Compliance';
+		insert remoteValidation;
 
-		ICG_Capability_Assignment_Group__c ardCert = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, sfocCert.id);
-		insert ardCert;
-		ICG_Capability_Assignment_Group__c ardCert2 = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard2.id, ceivCert.id);
-		insert ardCert2;
+		ICG_Capability_Assignment_Group__c icgGroupA = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, sfocCert.id);
+		icgGroupA.Certification_Id__c = 'TESTABCD1234';
+		insert icgGroupA;
+		
+		ICG_Capability_Assignment_Group__c icgGroupA2 = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, animals.id);
+		icgGroupA2.Issue_Date__c = Date.today().addDays(2);
+		icgGroupA2.Expiration_Date__c = Date.today().addDays(3);
+		icgGroupA2.Certification_Id__c = 'TESTABCD1234';
+		insert icgGroupA2;
+		
+		ICG_Capability_Assignment_Group__c icgGroupA3 = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(ard.id, ienva.id);
+		icgGroupA3.Issue_Date__c = Date.today().addDays(-1);
+		icgGroupA3.Expiration_Date__c = Date.today().addDays(-1);
+		icgGroupA3.Certification_Id__c = 'TESTABCD1234';
+		insert icgGroupA3;
+		
+		ICG_Capability_Assignment_Group__c icgGroupUp = new ICG_Capability_Assignment_Group__c();
+		icgGroupUp.ICG_Account_Role_Detail__c = ard.id;
+		icgGroupUp.Issue_Date__c = Date.today().addDays(2);
+		icgGroupUp.Expiration_Date__c = Date.today().addDays(3);
+		icgGroupUp.ICG_Certification__c = ceivFresh.id;
+		icgGroupUp.Certification_Id__c = 'TESTABCD1234';
+		insert icgGroupUp;
+		
+		ICG_Capability_Assignment_Group__c icgGroupEx = new ICG_Capability_Assignment_Group__c();
+		icgGroupEx.ICG_Account_Role_Detail__c = ard.id;
+		icgGroupEx.Issue_Date__c = Date.today().addDays(-1);
+		icgGroupEx.Expiration_Date__c = Date.today().addDays(-1);
+		icgGroupEx.ICG_Certification__c = ceivPharma.id;
+		icgGroupEx.Certification_Id__c = 'TESTABCD1234';
+		insert icgGroupEx;
 	}
 	@isTest
 	static void testGetFacilityCertifications() {
-		ICG_Account_Role_Detail__c ard = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1];
+		ICG_Account_Role_Detail__c ard = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Test' LIMIT 1];
 		test.startTest();
-		string jsonCertifications = CW_CertificationsManagerController.refreshFacilityCertifications(ard.id);
+		string jsonCertifications = CW_CertificationsManagerController.refreshFacilityCertifications(ard.id,'Airline');
 		List<ICG_Capability_Assignment_Group__c> lstCertifications = (List<ICG_Capability_Assignment_Group__c>) JSON.deserialize(jsonCertifications, List<ICG_Capability_Assignment_Group__c>.class);
-		System.assertNotEquals(null, lstCertifications[0].id, 'Information not retrieved properly');
+		System.assertNotEquals(null, lstCertificationS, 'Information not retrieved properly lstDepts');
 		test.stopTest();
 	}
 	@isTest
 	static void testGetAllCertifications() {
 		test.startTest();
-		string jsonCertifications = CW_CertificationsManagerController.getAllCertifications();
+		string jsonCertifications = CW_CertificationsManagerController.getAllCertifications('SF Operational Capacity');
 		List<ICG_Certification__c> lstCertifications = (List<ICG_Certification__c>) JSON.deserialize(jsonCertifications, List<ICG_Certification__c>.class);
-		System.assertNotEquals(null, lstCertifications[0].id, 'Information not retrieved properly');
+		System.assertNotEquals(null, lstCertifications, 'Information not retrieved properly');
 		test.stopTest();
 	}
 	@isTest
@@ -147,24 +205,14 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	
 	@isTest
 	static void getNextCertificationID() {
-		Account acc = [SELECT Id FROM Account WHERE Name = 'TEST Airline HQ/operator'];
-
-		ICG_Certification__c newcert = CW_TestDataFactory.newCertification();
-		newcert.name = 'CEIV Fresh';
-		newcert.certification_type__C = 'Certifications of Excellency';
-		insert newcert;
-		ICG_Certification__c newcert1 = CW_TestDataFactory.newCertification();
-		newcert1.Name = 'CEIV Pharma';
-		newcert1.Certification_Type__c = 'Assessments';
-		insert newcert1;
-		ICG_Certification__c newcert2 = CW_TestDataFactory.newCertification();
-		newcert2.name = 'Smart Facility Operational Capacity';
-		newcert2.certification_type__C = 'Certifications of Compliance';
-		insert newcert2;
-		ICG_Certification__c newcert3 = CW_TestDataFactory.newCertification();
-		newcert3.name = 'Smart Facility Remote Validation';
-		newcert3.certification_type__C = 'Certifications of Compliance';
-		insert newcert3;
+		ICG_Account_Role_Detail__c acc = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Test' LIMIT 1];
+		
+		ICG_Certification__c newcert = [SELECT Id FROM ICG_Certification__c WHERE Name = 'SF Operational Capacity'];
+		ICG_Certification__c newcert1 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'CEIV Fresh'];
+		ICG_Certification__c newcert2 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'CEIV Pharma'];
+		ICG_Certification__c newcert3 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'Smart Facility Remote Validation'];
+		ICG_Certification__c newcert4 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'IEnvA'];
+		ICG_Certification__c newcert5 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'CEIV Live Animals'];
 		
 		test.startTest();
 		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c LIMIT 1];
@@ -182,16 +230,22 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		
 		result = CW_CertificationsManagerController.getNextCertificationID(newcert3.Id,acc.Id);
 		System.assertNotEquals(result, '', 'Information not retrieved properly');
+		
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert4.Id,acc.Id);
+		System.assertNotEquals(result, '', 'Information not retrieved properly');
+		
+		result = CW_CertificationsManagerController.getNextCertificationID(newcert5.Id,acc.Id);
+		System.assertNotEquals(result, '', 'Information not retrieved properly');
 
 		test.stopTest();
 	}
 	
 	@isTest
 	static void getFacilityNotActiveCertifications() {
-		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c, Is_Active__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
 		
 		test.startTest();
-		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'');
+		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'', 'SF Operational Capacity');
 		System.assertNotEquals(result, '');
 
 		test.stopTest();
@@ -208,6 +262,17 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		
 		result = CW_CertificationsManagerController.updateFieldEdited(null);
 		System.assertEquals(result, false);
+
+		test.stopTest();
+	}
+	
+	@isTest
+	static void getCertificationWithoutCapabilities() {
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		
+		test.startTest();
+		List<ICG_Certification__c> result = CW_CertificationsManagerController.getCertificationWithoutCapabilities(ardCert.ICG_Account_Role_Detail__c);
+		System.assertNotEquals(result, null);
 
 		test.stopTest();
 	}

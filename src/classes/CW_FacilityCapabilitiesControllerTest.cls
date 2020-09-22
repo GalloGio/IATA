@@ -2,6 +2,10 @@
 public class CW_FacilityCapabilitiesControllerTest {
 	@TestSetup
 	private static void setup() {
+		String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
+		String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
+		String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
+
 		Account acc = new Account(Name = 'Qatar Airways (Test)', Account_Type__c = 'Airline', Sector__c = 'Airline', Category__c = 'General Aviation', Payment_Term__c = 'Z001', Reason_for_creation__c = 'New agent');
 		insert acc;
 
@@ -15,6 +19,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		insert airport;
 
 		ICG_Account_Role_Detail__c ard = new ICG_Account_Role_Detail__c();
+		ard.Name = 'Generic Cargo Handling';
 		ard.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Account_Role_Detail__c', 'Cargo_Handling_Facility');
 		ard.IATA_ISO_Country__c = country.Id;
 		ard.Nearest_Airport__c = airport.Id;
@@ -22,6 +27,16 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ard.Available_Languages__c = 'ESP;GER';
 		ard.Summary_Detail_Check_JSON__c = '{"capabilitiesMap":{"ground_service_equipment":{"summary":false,"detail":true},"screening_equipment":{"summary":true,"detail":true},"security_equipment_and_measures":{"summary":true,"detail":true},"weight_volume_and_dimension_equipment":{"summary":true,"detail":true},"safety_personal_and_protective_equipment":{"summary":true,"detail":true},"scanners":{"summary":true,"detail":true},"active_uld_equipment":{"summary":true,"detail":true},"delivery_pickup_infrastructure":{"summary":true,"detail":true},"cold_room_standard_temperature_ranges":{"summary":true,"detail":true},"cold_room_freezers_custom_temperature_ranges":{"summary":true,"detail":true},"temperature_controlled_handling_areas":{"summary":true,"detail":true},"pre_cooling":{"summary":true,"detail":true},"other_temperature_control_equipment_infrastructure":{"summary":true,"detail":true},"live_animals_capacities":{"summary":true,"detail":true},"build_up_break_down_areas":{"summary":true,"detail":true},"temporary_storage_and_working_areas":{"summary":true,"detail":true},"uld_storage":{"summary":true,"detail":true},"veterinary_phytosanitary_and_pest_control":{"summary":true,"detail":true}}}';
 		insert ard;
+		
+		ICG_Account_Role_Detail__c ardAirline = new ICG_Account_Role_Detail__c();
+		ardAirline.Name = 'Generic Airline';
+		ardAirline.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Account_Role_Detail__c', 'Airline');
+		ardAirline.IATA_ISO_Country__c = country.Id;
+		ardAirline.Nearest_Airport__c = airport.Id;
+		ardAirline.Account_Role__c = ar.Id;
+		ardAirline.Available_Languages__c = 'ESP;GER';
+		ardAirline.Summary_Detail_Check_JSON__c = '{"capabilitiesMap":{"ground_service_equipment":{"summary":false,"detail":true},"screening_equipment":{"summary":true,"detail":true},"security_equipment_and_measures":{"summary":true,"detail":true},"weight_volume_and_dimension_equipment":{"summary":true,"detail":true},"safety_personal_and_protective_equipment":{"summary":true,"detail":true},"scanners":{"summary":true,"detail":true},"active_uld_equipment":{"summary":true,"detail":true},"delivery_pickup_infrastructure":{"summary":true,"detail":true},"cold_room_standard_temperature_ranges":{"summary":true,"detail":true},"cold_room_freezers_custom_temperature_ranges":{"summary":true,"detail":true},"temperature_controlled_handling_areas":{"summary":true,"detail":true},"pre_cooling":{"summary":true,"detail":true},"other_temperature_control_equipment_infrastructure":{"summary":true,"detail":true},"live_animals_capacities":{"summary":true,"detail":true},"build_up_break_down_areas":{"summary":true,"detail":true},"temporary_storage_and_working_areas":{"summary":true,"detail":true},"uld_storage":{"summary":true,"detail":true},"veterinary_phytosanitary_and_pest_control":{"summary":true,"detail":true}}}';
+		insert ardAirline;
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
 		insert ardCap;
@@ -30,6 +45,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
 		capvalcert.ICG_Account_Role_Detail__c = ard.Id;
+		capvalcert.RecordTypeId = RT_CERTIFICATION;
 		insert capvalcert;
 
 		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCap.Id);
@@ -82,8 +98,18 @@ public class CW_FacilityCapabilitiesControllerTest {
 		system.assertEquals(true, response.containsKey('Aperture Size (in cm)'), 'No metadata found for Aperture Size (in cm) groupfield');
 	}
 	@isTest
+	public static void getMapFieldsByExtraDataType() {
+		Test.startTest();
+		Map<String, List<String>> response = cw_FacilityCapabilitiesController.getMapFieldsByExtraDataType();
+		Test.stopTest();
+		system.assertEquals(true, response.containsKey('active_uld_equipment#active_uld_equipment_1'), 'No metadata found for active_uld_equipment RecordType and active_uld_equipment_1 category');
+	}
+	@isTest
 	public static void getCapabilitiesFromAccountRoleDetailIdTest() {
-		Id ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
+		String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
+		String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
+
+		Id ardid = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Airline' LIMIT 1].id;
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
@@ -97,6 +123,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ardcert.ICG_Account_Role_Detail__c = ardid;
 		ardcert.Issue_Date__c = date.today().addDays(-1);
 		ardcert.Expiration_Date__c = date.today().addDays(1);
+		ardcert.RecordTypeId = RT_CERTIFICATION;
 		insert ardcert;
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
 		cap.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -111,6 +138,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
 		capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -131,6 +159,9 @@ public class CW_FacilityCapabilitiesControllerTest {
 
 	@isTest
 	public static void getCapabilitiesFromAccountRoleDetailIdTest2() {
+		String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
+		String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
+
 		String ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
@@ -145,6 +176,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ardcert.ICG_Account_Role_Detail__c = ardid;
 		ardcert.Issue_Date__c = date.today().addDays(-1);
 		ardcert.Expiration_Date__c = date.today().addDays(1);
+		ardcert.RecordTypeId = RT_CERTIFICATION;
 		insert ardcert;
 
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
@@ -161,6 +193,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
 		capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -187,7 +220,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Test.startTest();
 		Map<String, Object> response = CW_FacilityCapabilitiesController.getCapabilitiesFromAccountRoleDetailId(ardid);
 		Boolean res = response.ContainsKey('e_getMessage');
-		System.assertEquals(res, false);
+		System.assertEquals(false, res, JSON.serialize(response));
 
 		Test.stopTest();
 	}
@@ -230,6 +263,9 @@ public class CW_FacilityCapabilitiesControllerTest {
 
 	@isTest
 	public static void createRelationshipsForNewCapabilitiesTest() {
+		String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
+		String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
+
 		String ardid = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
@@ -246,6 +282,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		ardcert.ICG_Account_Role_Detail__c = ardid;
 		ardcert.Issue_Date__c = date.today().addDays(-1);
 		ardcert.Expiration_Date__c = date.today().addDays(1);
+		ardcert.RecordTypeId = RT_CERTIFICATION;
 		insert ardcert;
 
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
@@ -262,6 +299,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
 		capvalcert.ICG_Account_Role_Detail__c = ardid;
+		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
 		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
@@ -419,6 +457,16 @@ public class CW_FacilityCapabilitiesControllerTest {
 		asgmtGroupToAdd2.order = 3;
 		result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
 		system.assertEquals(result, -1);
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void generateCapabilitiesStructureCsvTest() {
+		Test.startTest();
+		
+		String result = CW_FacilityCapabilitiesController.generateCapabilitiesStructureCsv();
+		system.assertNotEquals(null, result);
 		
 		Test.stopTest();
 	}

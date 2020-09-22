@@ -26,7 +26,7 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 
 		ICG_Capability_Assignment_Group__c currentScope = (ICG_Capability_Assignment_Group__c) scope[0];
 
-		CW_GxA_Amazon_S3__c cfgAwsGxA = CW_GxA_Amazon_S3__c.getOrgDefaults();
+		ICG_GxA_Integration_Settings__c gxaSettings = ICG_GxA_Integration_Settings__c.getOrgDefaults();
 
 		List<String> errorMessage = new List<String>();
 		List<String> errorStackTrace = new List<String>();
@@ -45,10 +45,10 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 		for (CW_GxA_Wrappers.Files answerFile : indexWrapper.Files) {
 			Boolean needRetry = false;
 			if (answerFile.File.endsWithIgnoreCase('.json')) {
-				String objectKey = CW_AmazonS3Connector.convertUrlResourceToS3ObjectKey(answerFile.File, cfgAwsGxA.bucket__c);
+				String objectKey = CW_AmazonS3Connector.convertUrlResourceToS3ObjectKey(answerFile.File, gxaSettings.bucket__c);
 				HttpResponse response;
 				try {
-					response = CW_AmazonS3Connector.awsS3GetObject(objectKey, cfgAwsGxA.Named_Credential__c);
+					response = CW_AmazonS3Connector.awsS3GetObject(objectKey, gxaSettings.Named_Credential__c);
 					if (response.getStatusCode() == 200) {
 						answersJsonContent.add(JSON.serialize(CW_GxA_Wrappers.parseSurvey(response.getBody())));
 					} else {
@@ -122,7 +122,12 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 			currentScope.GxA_Error_Message__c = e.getMessage();
 			currentScope.GxA_Error_StackTrace__c = e.getStackTraceString();
 		} finally {
-			currentScope.GxA_Answers_Not_Mapped_Json__c = JSON.serialize((List<CW_GxA_Wrappers.SurveyAnswers>) dataFromQuestions.get('answersNotMapped'));
+			Integer answersNotMappedMaxLength = SObjectType.ICG_Capability_Assignment_Group__c.Fields.GxA_Answers_Not_Mapped_Json__c.Length;
+			String answersNotMapped = JSON.serialize((List<CW_GxA_Wrappers.SurveyAnswers>) dataFromQuestions.get('answersNotMapped'));
+			if (answersNotMapped.length() > answersNotMappedMaxLength){
+				answersNotMapped = answersNotMapped.substring(0, answersNotMappedMaxLength);
+			}
+			currentScope.GxA_Answers_Not_Mapped_Json__c = answersNotMapped;
 		}
 		Database.update(currentScope);
 	}

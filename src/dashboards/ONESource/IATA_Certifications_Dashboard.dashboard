@@ -78,7 +78,7 @@
     <dashboardType>SpecifiedUser</dashboardType>
     <description>IATA Certifications Dashboard</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>alberto.puerto@next-link.ch</runningUser>
+    <runningUser>voelklm@iata.org</runningUser>
     <textColor>#000000</textColor>
     <title>IATA Certifications Dashboard</title>
     <titleColor>#000000</titleColor>

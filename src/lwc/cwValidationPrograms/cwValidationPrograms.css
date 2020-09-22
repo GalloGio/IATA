@@ -91,8 +91,13 @@ a.blueText:hover {
     .certiTick{
         right: 45px;
     }
+   
 }
-
+@media (min-width: 992px) {
+    .row-validations{
+        display: flex;
+    }
+}
 label{
  margin-bottom: 0 !important;
 }
@@ -100,3 +105,4 @@ label{
 .height-92{
     height: 92%;
 }
+

@@ -201,10 +201,12 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Account_Name__c</fields>
+        <fields>ICG_Role__c</fields>
+        <fields>Account_Role__c</fields>
+        <fields>Contact_Name__c</fields>
+        <fields>Status__c</fields>
         <relatedList>ICG_Contact_Role_Detail__c.ICG_Account_Role_Detail__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -218,6 +220,18 @@
         <relatedList>ICG_Capability_Assignment_Group__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Handled_Airline__c</fields>
+        <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_Account_Role_Detail__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_ARD__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -229,14 +243,6 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_Account_Role_Detail__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_ARD__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -253,7 +259,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3O000000PNiw</masterLabel>
+        <masterLabel>00h1X000001SrdV</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

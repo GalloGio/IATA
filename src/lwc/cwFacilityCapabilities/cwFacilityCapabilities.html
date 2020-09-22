@@ -277,15 +277,7 @@
 
 																		<template
 																			iterator:currentfield={currentheader.value}>
-																			<template if:true={currentheader.first}>
-																				<template if:true={currentfield.first}>						
-																					<th key={currentfield.value.name}
-																						scope="col"
-																						colspan={currentfield.value.colspan}
-																						class="first-column-top box-shadow-none">
-																					</th>
-																				</template>
-																			</template>
+																			
 																			<template if:false={currentheader.last}>
 																				<template
 																					if:false={currentfield.value.label.length}>
@@ -753,7 +745,7 @@
 						<div class="slds-modal__container">
 							<header class="slds-modal__header slds-modal__header_empty">
 								<lightning-button-icon icon-name="utility:close" onclick={closeModalEditPhotos}
-									alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+									alternative-text="close" variant="bare" size="large" class="slds-modal__close-inside">
 								</lightning-button-icon>
 							</header>
 

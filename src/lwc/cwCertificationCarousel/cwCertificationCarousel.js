@@ -81,13 +81,15 @@ export default class CwCertificationCarousel extends LightningElement {
 
 	showCertifiedEntities() {
 		let searchList = [];
-		let searchObject = { operator: "LIKE", value: this.title };
+		let searchValue = this.selectedCertification.Name && this.selectedCertification.Name.toLowerCase() === "ienva" ? this.selectedCertification.Name + ";IEnvA Stage 2" : this.selectedCertification.Name;
+		let searchObject = { operator: "LIKE", value: searchValue };
 		searchObject.obj = "ICG_Capability_Assignment_Group__c";
 		searchObject.field = "ICG_Certification__r.Name";
 		searchObject.relationfield = "ICG_Account_Role_Detail__c";
 		searchList.push(searchObject);
 		const urlParams = prepareSearchParams(searchList);
 		window.location.href = this.urlResultPage + "?q=" + urlParams;
+		
 	}
 
 	get isCertificationResults() {

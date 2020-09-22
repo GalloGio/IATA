@@ -121,20 +121,20 @@ export default class CwTextContainer extends LightningElement {
 	}
 
 	navigateToUrl() {
-        if (!this.passButtonClick){
-            let url;
+		if (!this.passButtonClick){
+			let url;
 
-            if (this.buttonUrl && this.buttonUrl.indexOf("http://") < 0 && this.buttonUrl.indexOf("https://") < 0) {
-                url = "http://" + this.buttonUrl;
-            } else {
-                url = this.buttonUrl;
-            }
-            if (!this.buttonTarget || this.buttonTarget != "_self") window.open(url);
-            else window.location.href = url;
-        }
+			if (this.buttonUrl && this.buttonUrl.indexOf("http://") < 0 && this.buttonUrl.indexOf("https://") < 0) {
+				url = "http://" + this.buttonUrl;
+			} else {
+				url = this.buttonUrl;
+			}
+			if (!this.buttonTarget || this.buttonTarget != "_self") window.open(url);
+			else window.location.href = url;
+		}
 		else{
-            this.buttonClick();
-        }
+			this.buttonClick();
+		}
 	}
 
 	showCertifiedEntities() {

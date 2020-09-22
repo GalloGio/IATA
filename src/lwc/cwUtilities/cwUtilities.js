@@ -688,7 +688,7 @@ export function saveComparisonListToLocalStorage(array){
 }
 
 export function reachedLimit(environmentVariables, filtersCount) {
-	let limit = environmentVariables && environmentVariables.data && environmentVariables.data.max_filters_allowed__c ? environmentVariables.data.max_filters_allowed__c : 25;
+	let limit = environmentVariables && environmentVariables.data && environmentVariables.data.Max_Filters_Allowed__c ? environmentVariables.data.Max_Filters_Allowed__c : 25;
 	return filtersCount >= limit;
 }
 

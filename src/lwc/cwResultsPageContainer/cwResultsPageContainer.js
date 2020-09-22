@@ -104,7 +104,7 @@ export default class CwResultsPageContainer extends LightningElement {
 	}
 
 	@wire(getEnvironmentVariables, {})
-    environmentVariables;
+	environmentVariables;
 
 	hanldeFilterCountChange(event) {
 		this.filtercount = event.detail;
@@ -117,13 +117,11 @@ export default class CwResultsPageContainer extends LightningElement {
 			this.template.querySelector(".icoresponsivepalfilter").src = this.closearrow;
 			this.template.querySelector(".results-filter-panel").classList.add("results-filter-panel-hide");
 			this.titlefilter = "Back to results";
-			//this.template.querySelector('.big-blue-span').innerHTML = "Back to results";
 		} else {
 			this.template.querySelector(".filter-panel").classList.add("filter-panel-hide");
 			this.template.querySelector(".icoresponsivepalfilter").src = this.openarrow;
 			this.template.querySelector(".results-filter-panel").classList.remove("results-filter-panel-hide");
 			this.titlefilter = "Filters (" + this.filtercount + ")";
-			//this.template.querySelector('.big-blue-span').innerHTML = "Filters (6)";
 		}
 	}
 	connectedCallback() {
@@ -142,6 +140,15 @@ export default class CwResultsPageContainer extends LightningElement {
 					this.initialSearch = this.searchList;
 					this.initialized = true;
 				}
+				if(this.initialSearch){
+					this.initialSearch.forEach(elem => {			
+						let values = elem.value ? elem.value.split(";") : null;
+						if (values) {
+							this.filtercount = values.length;
+							this.titlefilter = "Filters (" + this.filtercount + ")";
+						}
+					});
+				}
 			}
 			else{
 				this.searchList = [];
@@ -152,6 +159,7 @@ export default class CwResultsPageContainer extends LightningElement {
 				this.initialized = true;
 			}
 		}
+
 	}
 
 	getRecordsFromEngine(event) {
@@ -328,12 +336,12 @@ export default class CwResultsPageContainer extends LightningElement {
 	manageDataSent() {
 		let lstLocat = [];
 		let lstCertis = [];
-        let lstCoName = [];
-        let lstCoType = [];
+		let lstCoName = [];
+		let lstCoType = [];
 		let searchWrapper = [];
 
 		for (let i = 0; i < this.searchList.length; i++) {
-            this.searchList[i].fields = [this.searchList[i].field];
+			this.searchList[i].fields = [this.searchList[i].field];
 			switch (this.searchList[i].field.toUpperCase()) {
 				case "CITY_FOR__C":
 					this.searchList[i].fields = ["Nearest_Airport__r.City__c",
@@ -343,8 +351,8 @@ export default class CwResultsPageContainer extends LightningElement {
 												"Nearest_Airport__r.Airport_Name__c",
 												"City_For__c"];
 					lstLocat.push(this.searchList[i]);
-                    break;
-                case "RECORDTYPE.DEVELOPERNAME":
+					break;
+				case "RECORDTYPE.DEVELOPERNAME":
 					lstCoType.push(this.searchList[i]);
 					break;
 				case "COMPANY_FOR__C":
@@ -361,8 +369,8 @@ export default class CwResultsPageContainer extends LightningElement {
 
 		if (lstLocat && lstLocat.length) {
 			searchWrapper.push(this.mergeListInRow(lstLocat));
-        }
-        if (lstCoType && lstCoType.length) {
+		}
+		if (lstCoType && lstCoType.length) {
 			searchWrapper.push(this.mergeListInRow(lstCoType));
 		}
 		if (lstCoName && lstCoName.length) {
@@ -454,7 +462,7 @@ export default class CwResultsPageContainer extends LightningElement {
 	}
 
 	get isBetaOrg(){
-        return this.environmentVariables && this.environmentVariables.data && this.environmentVariables.data.Is_Beta_Org__c === true;
+		return this.environmentVariables && this.environmentVariables.data && this.environmentVariables.data.Is_Beta_Org__c === true;
 	}
 	
 	get isHybrid() {
@@ -622,7 +630,7 @@ export default class CwResultsPageContainer extends LightningElement {
 		if (!this.mapData || this.mapData.length === 0) {
 			this.mapOptions = '{"zoom" : 2,"mapTypeControl": false, "minZoom" : 2, "maxZoom" : 2, "disableDefaultUI": true}';
 		} else {
-            this.mapOptions = '{"zoom": 6, "mapTypeControl":true, "minZoom" : 2, "maxZoom" : 16, "disableDefaultUI": false}';
+			this.mapOptions = '{"zoom": 6, "mapTypeControl":true, "minZoom" : 2, "maxZoom" : 16, "disableDefaultUI": false}';
 
 		}
 	}

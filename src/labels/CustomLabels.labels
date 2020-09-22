@@ -51553,4 +51553,12 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>icg_btn_pre_register_now</shortDescription>
         <value>PRE-REGISTER NOW</value>
     </labels>
+    <labels>
+        <fullName>icg_error_message</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_error_message</shortDescription>
+        <value>Unfortunately, something went wrong. To help you further, please contact our support team.</value>
+    </labels>
 </CustomLabels>

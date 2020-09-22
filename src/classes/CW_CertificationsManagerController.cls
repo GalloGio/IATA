@@ -69,54 +69,84 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all the related certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getFacilityCertifications(string facilityId) {
-		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
+	public static string getFacilityCertifications(String facilityId, String stationRT) {
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
 		List<ICG_Capability_Assignment_Group__c> returnList = new List<ICG_Capability_Assignment_Group__c>();
 
-		List<ICG_Capability_Assignment_Group__c> activeList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName
-		  FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
-		   Is_Active__c = true AND RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY CreatedDate DESC];
-		returnList.addAll(activeList);
+		List<ICG_Capability_Assignment_Group__c> groupList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName, Is_Active__c
+			FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
+			RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY Status__c ASC];
 
-		List<ICG_Capability_Assignment_Group__c> upcomingList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName
-		   FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
-			Status__c = 'Upcoming' AND RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY CreatedDate DESC];
-
-		Boolean exist=false;
-		for(ICG_Capability_Assignment_Group__c upcoming : upcomingList){
-			for(ICG_Capability_Assignment_Group__c active : activeList){
-				if(upcoming.ICG_Certification__c == active.ICG_Certification__c){
-					exist=true;
-				}
-			}
-			if(!exist){
-				returnList.add(upcoming);
+		List<ICG_Capability_Assignment_Group__c> orderedList = sortGroupListByStatus(groupList);
+		
+		for(ICG_Capability_Assignment_Group__c item : groupList){
+			if (item.Is_Active__c){
+				returnList.add(item);
 			}
 			else{
-				exist=false;
-			}
-		}
-
-		List<ICG_Capability_Assignment_Group__c> expiredInactiveList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName
-		   FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
-			Status__c NOT IN ('Active','Upcoming') AND RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY CreatedDate DESC];
-
-		exist=false;
-		for(ICG_Capability_Assignment_Group__c expiredInactive : expiredInactiveList){
-			for(ICG_Capability_Assignment_Group__c active : returnList){
-				if(expiredInactive.ICG_Certification__c == active.ICG_Certification__c){
-					exist=true;
+				if (item.Status__c == 'Upcoming'){
+					if(!containsCerti(item,returnList)){
+						returnList.add(item);
+					}
+				}
+				else {
+					if(!containsCerti(item,returnList)){
+						returnList.add(item);
+					}
 				}
 			}
-			if(!exist){
-				returnList.add(expiredInactive);
-			}
-			else{
-				exist=false;
-			}
+			
 		}
 
 		return (JSON.serialize(returnList));
+	}
+	
+	 /****************************************************************************
+	 * @Method			: sortGroupListByStatus
+	 * @Created			: 19/09/2020
+	 * @Description		: return sorted list
+	 * @param			: List<ICG_Capability_Assignment_Group__c> groupList
+	 * @Returns			: List<ICG_Capability_Assignment_Group__c> orderedList - sorted list
+	 ****************************************************************************/
+	private static List<ICG_Capability_Assignment_Group__c> sortGroupListByStatus(List<ICG_Capability_Assignment_Group__c> groupList){
+		List<ICG_Capability_Assignment_Group__c> orderedList= new List<ICG_Capability_Assignment_Group__c>();
+		
+		for(ICG_Capability_Assignment_Group__c g : groupList){
+			if(g.Status__c == 'Active'){
+				orderedList.add(g);
+			}
+		}
+		for(ICG_Capability_Assignment_Group__c g : groupList){
+			if(g.Status__c == 'Upcoming'){
+				orderedList.add(g);
+			}
+		}
+		for(ICG_Capability_Assignment_Group__c g : groupList){
+			if(g.Status__c != 'Active' && g.Status__c != 'Upcoming'){
+				orderedList.add(g);
+			}
+		}
+		
+		return orderedList;
+	}
+	
+	/****************************************************************************
+	 * @Method			: containsCerti
+	 * @Created			: 19/09/2020
+	 * @Description		: return if certification exist in list
+	 * @param			: ICG_Capability_Assignment_Group__c item - group to find, List<ICG_Capability_Assignment_Group__c> returnList
+	 * @Returns			: Boolean result - Indicates yes the list contains to the element.
+	 ****************************************************************************/
+	private static Boolean containsCerti(ICG_Capability_Assignment_Group__c item,List<ICG_Capability_Assignment_Group__c> returnList){
+		Boolean result=false;
+		
+		for(ICG_Capability_Assignment_Group__c elem : returnList){
+			if(elem.ICG_Certification__c == item.ICG_Certification__c){
+				result=true;
+			}
+		}
+
+		return result;
 	}
 
 	/****************************************************************************
@@ -127,8 +157,8 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all the related certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string refreshFacilityCertifications(string facilityId) {
-		return getFacilityCertifications(facilityId);
+	public static string refreshFacilityCertifications(string facilityId,String stationRT) {
+		return getFacilityCertifications(facilityId,stationRT);
 	}
 
 
@@ -141,13 +171,13 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all the upcoming certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput) {
-		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
-        
-        String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
-             'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND ICG_Certification__r.Name IN (\'' + String.join((lstDepts), '\', \'') + '\')' + ' AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
+	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput, String stationRT) {
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+		
+		String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
+			 'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND ICG_Certification__r.Name IN (\'' + String.join((lstDepts), '\', \'') + '\')' + ' AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
 		List<ICG_Capability_Assignment_Group__c> firtsList = (List<ICG_Capability_Assignment_Group__c>) Database.query(query);
-        
+		
 		return (JSON.serialize(firtsList));
 	}
 
@@ -158,8 +188,8 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getAllCertifications() {
-		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
+	public static string getAllCertifications(String stationRT) {
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
 		return (JSON.serialize([SELECT id,Name,Certification_Type__c, Applicable_to__c,Expiration_Period__c FROM ICG_Certification__c WHERE Name IN: lstDepts]));
 		
 	}
@@ -171,10 +201,40 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: List<tring>> certificationList - contains all certification without capabilities
 	 ****************************************************************************/
 	@AuraEnabled
-	public static List<ICG_Certification__c> getCertificationWithoutCapabilities() {
-		List<ICG_Certification__c> certificationList = [SELECT Name from ICG_Certification__c where Id not in (select ICG_Certification__c from ICG_Certification_Capability_Assignment__c)];
+	public static List<ICG_Certification__c> getCertificationWithoutCapabilities(String recordId) {
+		List<ICG_Certification__c> certiWithoutCapab;
+		Set<String> certiNameWithoutCapab = new Set<String>();
+		Map<String,Set<String>> certiNameListByCategory = new Map<String,Set<String>>();
 
-		return certificationList;
+		//Read categories from recordtype of station
+		Map<String, List<String>> categoriesByAccountRoleDetailRecordType = CW_FacilityCapabilitiesController.getMapCategoriesByAccountRoleDetailRecordType();
+		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: recordId].RecordType.DeveloperName;
+
+		//read all certifications
+		List<ICG_Certification__c> allCerti = [SELECT Name from ICG_Certification__c];
+		List<ICG_Certification_Capability_Assignment__c> certCapabAssgmtn = [SELECT ICG_Certification__r.name,Category__c, Equipment__c FROM ICG_Certification_Capability_Assignment__c order by ICG_Certification__r.name];
+
+		for(ICG_Certification__c c : allCerti){
+			certiNameWithoutCapab.add(c.Name);
+		}
+
+		for(ICG_Certification_Capability_Assignment__c certCA : certCapabAssgmtn){
+			if(!certiNameListByCategory.containsKey(certCA.Category__c.toLowerCase())){
+				certiNameListByCategory.put(certCA.Category__c.toLowerCase(), new Set<String>());
+			}
+			certiNameListByCategory.get(certCA.Category__c.toLowerCase()).add(certCA.ICG_Certification__r.name);
+		}
+
+		for(String category : categoriesByAccountRoleDetailRecordType.get(stationRT.toLowerCase())){
+			if(certiNameListByCategory.containsKey(category.toLowerCase())){
+				for(String certi : certiNameListByCategory.get(category.toLowerCase())){
+					certiNameWithoutCapab.remove(certi);
+				}
+			}
+		}
+		certiWithoutCapab = [SELECT Name from ICG_Certification__c WHERE Name in : certiNameWithoutCapab];
+
+		return certiWithoutCapab;
 	}
 
 	/****************************************************************************
@@ -234,10 +294,12 @@ public with sharing class CW_CertificationsManagerController {
 		try{
 			ICG_Account_Role_Detail__c accRolDet = [SELECT Account_Role__r.Account__r.ICAO_designator__c FROM ICG_Account_Role_Detail__c WHERE Id =:recordId];
 			ICG_Certification__c getCertiToRead = [SELECT Name FROM ICG_Certification__c WHERE Id =:certiSelected];
-			ICG_Capability_Assignment_Group__c[] getLastCertiID = [SELECT Certification_Id__c,Name FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Id =:certiSelected AND Certification_Id__c != null order by CreatedDate desc limit 1 ];
+			ICG_Capability_Assignment_Group__c[] getLastCertiID = [SELECT Certification_Id__c,Name FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Id =:certiSelected AND Certification_Id__c != null];
 
+			String certiIdSelected;
 			String parseCertiID1;
 			Integer positionToSub1;
+			Integer parseValue;
 			String nextNumber1;
 			Integer addCero=0;
 			String icaoDesignator='';
@@ -247,40 +309,44 @@ public with sharing class CW_CertificationsManagerController {
 				icaoDesignator = accRolDet.Account_Role__r.Account__r.ICAO_designator__c;
 			}
 
-			switch on getCertiToRead.Name {
-				when 'CEIV Live Animals' {
-					nextCertificationID = CEIV_AVI+parseYearSub+'-';
-				}
-				when 'CEIV Pharma' {
-					nextCertificationID = CEIV_PIL+parseYearSub+'-';
-				}
-				when 'CEIV Fresh' {
-					nextCertificationID = CEIV_PER+parseYearSub+'-';
-				}
-				when 'IEnvA' {
-					nextCertificationID = IENVA_QTR_AC+icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
-					isIenvaORUfW=true;
-				}
-				when 'IEnvA Stage 2' {
-					nextCertificationID = IENVA_QTR_AC+icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
-					isIenvaORUfW=true;
-				}
-				when 'United for Wildlife' {
-					nextCertificationID = UFW_QTR_AC+icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
-					isIenvaORUfW=true;
-				}
-				when 'Smart Facility Operational Capacity' {
-					nextCertificationID = SFOC+parseYearSub+'-';
-				}
-				when 'Smart Facility Remote Validation' {
-					nextCertificationID = RV_SF+parseYearSub+'-';
-				}
+			if (getCertiToRead.Name == CEIV_LIVE_ANIMALS) {
+				nextCertificationID = CEIV_AVI+parseYearSub+'-';
 			}
+			else if (getCertiToRead.Name == CEIV_PHARMA) {
+				nextCertificationID = CEIV_PIL+parseYearSub+'-';
+			}
+			else if (getCertiToRead.Name == CEIV_FRESH) {
+				nextCertificationID = CEIV_PER+parseYearSub+'-';
+			}
+			else if (getCertiToRead.Name == IENVA_STAGE_1 || getCertiToRead.Name == IENVA_STAGE_2 || getCertiToRead.Name == UNITED_FOR_WILDLIFE) {
+				nextCertificationID = (getCertiToRead.Name == UNITED_FOR_WILDLIFE ? UFW_QTR_AC : IENVA_QTR_AC) +icaoDesignator+'-'+AUDITING_COMPANY+String.valueOf(Date.today().year());
+				isIenvaORUfW=true;
+			}
+			else if (getCertiToRead.Name == SMART_FACILITY_OPERATIONAL_CAPACITY) {
+				nextCertificationID = SFOC+parseYearSub+'-';
+			}
+			else if (getCertiToRead.Name == SMART_FACILITY_REMOTE_VALIDATION) {
+				nextCertificationID = RV_SF+parseYearSub+'-';
+			}
+
 			if(!isIenvaORUfW){
-				if(getLastCertiID.size()>0){
-					parseCertiID1 = getLastCertiID[0].Certification_Id__c;
-					positionToSub1 = parseCertiID1.length()-4;
-					nextNumber1 = String.valueOf(Integer.valueOf(getLastCertiID[0].Certification_Id__c.substring(positionToSub1))+1);
+				if(!getLastCertiID.isEmpty()){
+					certiSelected = getLastCertiID[0].Certification_Id__c;
+					positionToSub1 = certiSelected.length()-4;
+					parseValue = Integer.valueOf(getLastCertiID[0].Certification_Id__c.substring(positionToSub1));
+					String certiToCompare;
+					Integer positionToCompare;
+					Integer pivoteValue;
+					for(ICG_Capability_Assignment_Group__c g : getLastCertiID){
+						certiToCompare = g.Certification_Id__c;
+						positionToCompare = certiToCompare.length()-4;
+						pivoteValue = Integer.valueOf(certiToCompare.substring(positionToCompare));
+						if(pivoteValue > parseValue){
+							parseValue = pivoteValue;
+						}
+					}
+
+					nextNumber1 = String.valueOf(parseValue+1);
 					addCero = 4 - nextNumber1.length();
 					if(addCero > 0){
 						nextNumber1 = nextNumber1.leftPad(4,'0');

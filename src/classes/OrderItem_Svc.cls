@@ -315,10 +315,6 @@ public without sharing class OrderItem_Svc {
 		}
 		CW_Utilities.sendEmailTemplate('Purchase_to_IATA',orderItemId, whoId, whoEmailIata, false);
 	}
-	
-	
-	
-	
 	// End of Smart Facilities Remote Validations methods
 
 }

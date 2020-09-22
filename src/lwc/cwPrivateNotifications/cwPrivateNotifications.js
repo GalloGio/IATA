@@ -85,7 +85,7 @@ export default class CwPrivateNotifications extends LightningElement {
 			})
 			.catch(err => {
 				console.error('Error during fetch of notifications', err);
-				this.modalMessage = err.body ? err.body.message : 'Error during fetch of notifications';
+				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 			});
@@ -255,7 +255,8 @@ export default class CwPrivateNotifications extends LightningElement {
 				
 			})
 			.catch(err => {
-				this.modalMessage = err.message;
+				console.error('Error', err);
+				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 			});

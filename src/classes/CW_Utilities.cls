@@ -7,50 +7,50 @@ public without sharing class CW_Utilities {
 	final static string FACILITY_MANAGER = 'Facility Manager';
 	final static string COMPANY_ADMIN = 'Company Admin';
 
+	//Retrieve metadata related to Portal
 	@AuraEnabled (cacheable=true)
 	public static ICG_Portal_URL__mdt getMetadataInfo(String mtdName) {
-
 		// Fetch the metadata required
 		ICG_Portal_URL__mdt metadata = [SELECT Id,MasterLabel, DeveloperName, Link__c, Description__c 
 											  FROM ICG_Portal_URL__mdt WHERE DeveloperName =: mtdName LIMIT 1];
-
 		return metadata;
 	}
 
+	//Retrieve page URL url community + page name
 	@AuraEnabled (cacheable=true)
 	public static String getURLPage(String page) {
-
 		String result;
-
 		ICG_Portal_URL__mdt metadata = [SELECT Id,MasterLabel, DeveloperName, Link__c, Description__c 
 										FROM ICG_Portal_URL__mdt WHERE DeveloperName =: page LIMIT 1];
-
 		String urlBase = getCommunityUrlBase();
-
-			result = urlBase +  metadata.Description__c;
-
+		result = urlBase +  metadata.Description__c;
 		return result;
 	}
+
+	//Retrieve Community URL
 	public static String getCommunityUrlBase() {
 		return ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
 	}
+
+	//Retrieve Environment Variables
 	@AuraEnabled (cacheable = true)
 	public static ICG_Environment_Variables__c getEnvironmentVariables() {
 		return ICG_Environment_Variables__c.getInstance();
 	}
 
+	//Retrieve Setting Values
 	@AuraEnabled (cacheable = true)
 	public static IEC_Settings__c getIECSettingVariables() {
 		return IEC_Settings__c.getInstance();
 	}
 
 	@AuraEnabled
-	public static String getUserRole(String facilityId) {
-		
+	public static String getUserRole(String facilityId) {	
 		String userRole = 'Not assigned';
 		if(UserInfo.getUserType() == 'Guest') {
 			userRole = 'Guest';
 		} else {
+			//If not a guest user
 			List<User> usr = [Select Id, Name, Email, ContactId, Account.Name from User where Id = :UserInfo.getUserId()];
 			if(!usr.isEmpty() && usr[0].ContactId != null && facilityId != null) {
 				List<ICG_Account_Role_Detail__c> station = [Select id, Account_Role__c, Account_Role__r.Account__r.Name from ICG_Account_Role_Detail__c where id =:facilityId];
@@ -58,7 +58,7 @@ public without sharing class CW_Utilities {
 				if(!station.isEmpty()) {
 					List<ICG_Contact_Role_Detail__c> userFacilityRelationList = [Select id, ICG_Role__c, Status__c, Account_Role__c, isPendingApproval__c, isApproved__c from ICG_Contact_Role_Detail__c where Account_Contact_Role__r.Contact__c = :usr[0].ContactId and
 					(ICG_Account_Role_Detail__c = :facilityId AND ICG_Role__c =: FACILITY_MANAGER)];
-					
+					//If user has contact roles related, determine if Facility manager or Pending facility manager
 					if (userFacilityRelationList.size()>0) {
 						Set<Id> accountRolesCompanyAdmin = new Set<Id>();
 						Set<Id> accountRolesPendingCompanyAdmin = new Set<Id>();
@@ -89,13 +89,15 @@ public without sharing class CW_Utilities {
 						}
 					}
 				}
-
 			}
-		}
-		
+		}		
 		return userRole;
 	}
 
+	/*
+	 * @description		Check if the user has edit permissions
+	 * @return			Bollean result if you have permission
+	 */
 	@AuraEnabled (cacheable = true)
 	public static Boolean getPermissionToEdit() {
 		Boolean result=false;
@@ -103,6 +105,7 @@ public without sharing class CW_Utilities {
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
 		return result;
 	}
+
 
 	@AuraEnabled
 	public static Boolean approveStationAutomaticProcess(String stationId) {
@@ -112,23 +115,25 @@ public without sharing class CW_Utilities {
 				//if it does not exists, then go thru exception process
 				ICG_Account_Role_Detail__c ard = [Select id, Status__c, Account_Role__r.Account__c, Account_Role__r.Account__r.RecordType.DeveloperName, CreatedBy.ContactId, CreatedBy.Id from ICG_Account_Role_Detail__c Where id =:stationId];
 				if (ard.Status__c == 'Pending for Approval') {
+					//If the user is company admin of station and status os "Pending for Approval", the status mut change and the approver/rejector will be the user
 					Boolean accountAlreadyApproved = ard.Account_Role__r.Account__r.RecordType.DeveloperName != 'Standard_Account';
 					ard.Status__c = 'Pending for IATA Approval';
 					ard.Company_Admin_Approver_Rejector__c = UserInfo.getUserId();
 					update ard;
 					String whoId = ard.CreatedBy.ContactId != null ? ard.CreatedBy.ContactId : ard.CreatedById;
+					//Check email template to send depend of status
 					String templateName = accountAlreadyApproved == true ? 'Approve_Reject_IATA_Adm_after_comp_appro' : 'Approve_Reject_to_IATA_Admin_account';
 					List<String> whoEmails = CW_Utilities.getIATAStakeholdersEmails();
 					approved = CW_Utilities.sendEmailTemplate(templateName, ard.Id, whoId, whoEmails, false);
 				}
 			}
 		}catch (Exception ex) {
-			throw new AuraHandledException('Aura handled exception: ' + ex);
+			throw new AuraHandledException('exception: ' + ex);
 		}
 		return approved;
 	}
 
-	/**
+	/*
 	 * @description		Handles whether a contact removal will be approved or rejected
 	 * @param			contactRoleDetailId <The id of the contact role in question>
 	 * @param			approvedRemoval <Whether it was approved in front end or not>
@@ -171,7 +176,7 @@ public without sharing class CW_Utilities {
 
 
 		}catch (Exception ex) {
-			throw new AuraHandledException('Aura handled exception: ' + ex);
+			throw new AuraHandledException('exception: ' + ex);
 		}
 	}
 
@@ -180,6 +185,11 @@ public without sharing class CW_Utilities {
 		public ICG_Contact_Role_Detail__c contactRole { get; set; }
 	}
 
+	/*
+	 * @description		Handles whether a contact must be approved automatically
+	 * @param			contactRoleDetailId <The id of the contact role in question>
+	 * @return			ICG_Contact_Role_Detail__c approved
+	 */
 	@AuraEnabled
 	public static ICG_Contact_Role_Detail__c approveContactRoleDetailAutomaticProcess(String contactRoleDetailId) {
 		try{
@@ -203,9 +213,15 @@ public without sharing class CW_Utilities {
 			} 
 			return null;
 		}catch (Exception ex) {
-			throw new AuraHandledException('Aura handled exception: ' + ex);
+			throw new AuraHandledException('exception: ' + ex);
 		}
 	}
+
+	/*
+	 * @description		Handles whether a contact must be rejected automatically
+	 * @param			contactRoleDetailId <The id of the contact role in question>
+	 * @return			ICG_Contact_Role_Detail__c rejected
+	 */
 	@AuraEnabled
 	public static ICG_Contact_Role_Detail__c rejectContactRoleDetailAutomaticProcess(String contactRoleDetailId, String rejectReason) {
 		try{
@@ -234,10 +250,16 @@ public without sharing class CW_Utilities {
 				return null;
 			}
 		}catch (Exception ex) {
-			throw new AuraHandledException('Aura handled exception: ' + ex);
+			throw new AuraHandledException('exception: ' + ex);
 		}
 	}
 
+	/*
+	 * @description		Handles whether a station must be rejected automatically and why
+	 * @param			stationId <The id of the station in question>
+	 * @param			rejectReason <String with the reason to reject the station>
+	 * @return			Rejected or not
+	 */
 	@AuraEnabled
 	public static Boolean rejectStationAutomaticProcess(String stationId, String rejectReason) {
 
@@ -258,11 +280,15 @@ public without sharing class CW_Utilities {
 				return false;
 			}
 		}catch (Exception ex) {
-			throw new AuraHandledException('Aura handled exception: ' + ex);
+			throw new AuraHandledException('exception: ' + ex);
 		}
 		
 	}
 
+	/*
+	 * @description		Retrieve Company types
+	 * @return			JSON Company types
+	 */
 	@AuraEnabled (cacheable = true)
 	public static String getCompanyTypes() {
 		Schema.DescribeSObjectResult d = Schema.SObjectType.ICG_Account_Role_Detail__c; 
@@ -434,25 +460,24 @@ public without sharing class CW_Utilities {
 		return crdsToInsert;
 	}
 
+	/*
+	 * @description		Create Role (if accountRoleId is null) and return Account Contacts list by account and contact id
+	 * @param			companyId <The id of the Account>
+	 * @param			contactId <The id of the Contact>
+	 * @param			accountRoleId <If is null, create a new Account Role>
+	 * @return			Account Contacts Role list
+	 */
 	private static List<Account_Contact_Role__c> getAccountContactRole(String companyId, String contactId, Id accountRoleId) {
-
 		String accRoleId = accountRoleId;
-
-
 		if(accountRoleId == null) {
 			Account_Role__c accRole = new Account_Role__c();
 			accRole.Account__c = companyId;
 			accRole.Functional_Role__c = 'One Source';
 			insert accRole;
-
 			accRoleId = accRole.Id;
-		}
-		
+		}		
 		List<Account_Contact_Role__c> acr = [Select id from Account_Contact_Role__c where Contact__c = :contactId and Account__c = :companyId and Functional_Role__c = 'One Source'];
-
 		if(acr.isEmpty()) {	
-
-
 			Account_Contact_Role__c acrObj = new Account_Contact_Role__c();
 			acrObj.Account__c = companyId;
 			acrObj.Contact__c = contactId;
@@ -462,7 +487,6 @@ public without sharing class CW_Utilities {
 			acr.add(acrObj);
 			insert acr;
 		}
-
 		return acr;
 	}
 
@@ -471,13 +495,18 @@ public without sharing class CW_Utilities {
 		return becomeCompanyAdmin(getOpsHierarchyNameFromStationId(stationId), companyId, contactId);
 	}
 
+
+	/*
+	 * @description		handles user request to be company admin
+	 * @param			groupName <Station group name>
+	 * @param			companyId <The id of the Company>
+	 * @param			contactId <If is null, create a new Account Role>
+	 * @return			Message to the user's request 
+	 */
 	@AuraEnabled
 	public static String becomeCompanyAdmin(String groupName, String companyId, String contactId) {
-
 		ResponseBody res = new ResponseBody();
 		Set<Id> accRolesIds = getAccountsRolesToSearch(groupName);
-
-
 		if(accRolesIds.isEmpty()) {
 			//Get Ops Hierarchy -- Encapsulate
 			List<Account> acc = [Select id,Global_Ultimate_Account_Global_ID__c,(Select id from Account_Roles__r where Functional_Role__c = 'One Source') from Account where Name = :groupName];
@@ -517,6 +546,14 @@ public without sharing class CW_Utilities {
 		
 		return JSON.serialize(res);
 	}
+
+	/*
+	 * @description		Create Contact Role Detail-Company Admin and handles user request to be company admin emails and message
+	 * @param			accContactRole <Account contact role Id>
+	 * @param			accRoleId <Account role Id>
+	 * @param			contactId <The id of the Contact>
+	 * @return			Message result
+	 */
 	private static ResponseBody createCompanyAdminContactRoleDetail(String accContactRole, String accRoleId, String groupName, Id contactId ) {
 		ResponseBody res = new ResponseBody();
 		ICG_Contact_Role_Detail__c crd = new ICG_Contact_Role_Detail__c();
@@ -580,6 +617,7 @@ public without sharing class CW_Utilities {
 		List<Contact> adminContacts = [Select Id, Firstname, Lastname, Email, Title, Phone from Contact where ID IN :contactsIds AND Email LIKE '%@%'];
 		return adminContacts;
 	}
+
 	public static List<ICG_Contact_Role_Detail__c> getCompanyAdminContactRolesFromGroupNameByStatus(String groupName, List<String> statusList) {
 		Set<Id> accountRolesToSearch = getAccountsRolesToSearch(groupName);
 		return [Select Id, CreatedDate, ContactId__c, Account_Contact_Role__r.Contact__r.FirstName, Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: COMPANY_ADMIN and Status__c IN:statusList and Account_Role__c IN:accountRolesToSearch];
@@ -601,6 +639,11 @@ public without sharing class CW_Utilities {
 		return accountsIds;
 	}
 
+	/*
+	 * @description		Retrieve list account roles to search by group name
+	 * @param			groupName <Account Role Relationship name>
+	 * @return			Message result
+	*/
 	private static Set<Id> getAccountsRolesToSearch(String groupName) {
 		Set<Id> accountRolesToSearch = new Set<Id>();
 		//Select Parent Groups AccountRoles
@@ -640,6 +683,7 @@ public without sharing class CW_Utilities {
 		Account_Contact_Role__r.Contact__r.OtherCountry,Account_Contact_Role__r.Contact__r.FirstName, ICG_Account_Role_Detail__c,Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: FACILITY_MANAGER and Status__c IN:statusList and ICG_Account_Role_Detail__c IN:stationIds];
 	}
 
+
 	@AuraEnabled
 	public static List<ICG_Contact_Role_Detail__c> getFacilityManagerContactRolesFromStationListByUser(String userId) {
 		return [Select Id, Status__c,Name, LastModifiedById, isPendingApproval__c, CreatedDate, LastModifiedDate, ContactId__c, 
@@ -674,6 +718,12 @@ public without sharing class CW_Utilities {
 		return accountId != null ? getCompanyAdminContactsFromGroupName(getOpsHierarchyNameFromAccountId(accountId)) : new List<Contact>();
 	}
 
+
+	/*
+	 * @description		Get the global company name
+	 * @param			accountId <Account Id>
+	 * @return			Company Name
+	*/
 	@AuraEnabled
 	public static String getOpsHierarchyNameFromAccountId (String accountId) {
 		String opsHierarchy;
@@ -736,6 +786,10 @@ public without sharing class CW_Utilities {
 		return opsHierarchy;
 	}
 
+	/*
+	 * @description		Retrieve picklist enabled languages 
+	 * @return			JSON languages
+	*/
 	@AuraEnabled(cacheable = true)
 	public static string getFacilityLanguages() {
 		List<PicklistValue> picklistValues = new List<PicklistValue>();
@@ -751,32 +805,22 @@ public without sharing class CW_Utilities {
 	}
 
 	public static Map<String, List<Map<String, Object>>> getPicklistFieldDependencies(String objectName, String controllingField, String dependentField, Boolean saveKeyAsLowerCase) {
-		Map<String, List<Map<String, Object>>> controllingInfo = new Map<String, List<Map<String, Object>>>();
-		
-		Schema.SObjectType objType = Schema.getGlobalDescribe().get(objectName);
-		
+		Map<String, List<Map<String, Object>>> controllingInfo = new Map<String, List<Map<String, Object>>>();		
+		Schema.SObjectType objType = Schema.getGlobalDescribe().get(objectName);		
 		Schema.DescribeSObjectResult describeResult = objType.getDescribe();
 		Schema.DescribeFieldResult controllingFieldInfo = describeResult.fields.getMap().get(controllingField).getDescribe();
-		Schema.DescribeFieldResult dependentFieldInfo = describeResult.fields.getMap().get(dependentField).getDescribe();
-		
+		Schema.DescribeFieldResult dependentFieldInfo = describeResult.fields.getMap().get(dependentField).getDescribe();		
 		List<Schema.PicklistEntry> controllingValues = controllingFieldInfo.getPicklistValues();
 		List<Schema.PicklistEntry> dependentValues = dependentFieldInfo.getPicklistValues();
-		
-
-
-
 		for(Schema.PicklistEntry currControllingValue : controllingValues) {
 			controllingInfo.put((saveKeyAsLowerCase ? currControllingValue.getValue().toLowerCase() : currControllingValue.getValue()) , new List<Map<String, Object>>());
-		}
-		
+		}		
 		for(Schema.PicklistEntry currDependentValue : dependentValues)
 		{
-			// {"active":true,"defaultValue":false,"label":"Other Security Equipment / Measures","validFor":"ABAA","value":"Other_Security_Equipment_Measures"}
 			String jsonString = JSON.serialize(currDependentValue);
 
 			Map<String, Object> info = (Map<String, Object>)JSON.deserializeUntyped(jsonString);
-			String hexString = EncodingUtil.convertToHex(EncodingUtil.base64Decode((String)info.get('validFor'))).toUpperCase();
-			
+			String hexString = EncodingUtil.convertToHex(EncodingUtil.base64Decode((String)info.get('validFor'))).toUpperCase();		
 			Integer baseCount = 0;
 			for(Integer curr : hexString.getChars())
 			{
@@ -786,8 +830,7 @@ public without sharing class CW_Utilities {
 					val = curr - 65 + 10;
 				} else {
 					val = curr - 48;
-				}
-				
+				}				
 				if((val & 8) == 8) {
 					currentKey = controllingValues[baseCount + 0].getValue();
 				}
@@ -800,50 +843,55 @@ public without sharing class CW_Utilities {
 				if((val & 1) == 1) {
 					currentKey = controllingValues[baseCount + 3].getValue();
 				}
-
 				if (String.isNotBlank(currentKey)) {
 					if (saveKeyAsLowerCase) {
 						currentKey = currentKey.toLowerCase();
 					}
 					controllingInfo.get(currentKey).add(new Map<String, Object>{ 'value' => currDependentValue.getValue(), 'label' => currDependentValue.getLabel()});
-				}
-				
+				}			
 				baseCount += 4;
 			}            
-		} 
-		
+		} 		
 		return controllingInfo;
 	}
 
+	/*
+	 * @description		Retrieve picklist enabled languages 
+	 * @param			emailTemplateName <Name of template>
+	 * @param			whatId <ID related object>
+	 * @param			whoId <Target Id>
+	 * @param			recipientsEmails <List recipients email>
+	 * @param			treatAsRecipient <Boolen set to falseto use WhoId>
+	 * @return			Results sent emails
+	*/
 	public static Boolean sendEmailTemplate(String emailTemplateName, Id whatId, Id whoId, List<String> recipientsEmails, Boolean treatAsRecipient) {
 		Set<String> handledRecipients = new Set<String>(recipientsEmails);
-
 		handledRecipients.remove('');
 		handledRecipients.remove('null');
 		handledRecipients.remove(null);
-
 		recipientsEmails = new List<String>(handledRecipients);
-
 		if (recipientsEmails.isEmpty() || whoId == null) {
 			return false;
 		}
-
 		Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
 		message.setTargetObjectId(whoId);
 		message.setOrgWideEmailAddressId([SELECT id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply' LIMIT 1].id);
-		EmailTemplate emailTemplate = [SELECT Id, Subject, Description, HtmlValue, DeveloperName, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateName LIMIT 1];
-		message.setTemplateID(emailTemplate.Id);
-		message.setWhatId(whatId); //This is important for the merge fields in template to work
-		message.toAddresses = recipientsEmails;
-		message.setTreatTargetObjectAsRecipient(treatAsRecipient);
-		
+		List<EmailTemplate> emailTemplates = [SELECT Id, Subject, Description, HtmlValue, DeveloperName, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateName LIMIT 1];		
+		if(!emailTemplates.isEmpty()){
+			EmailTemplate emailTemplate = emailTemplates[0];
+			message.setTemplateID(emailTemplate.Id);
+			message.setWhatId(whatId); //This is important for the merge fields in template to work
+			message.toAddresses = recipientsEmails;
+			message.setTreatTargetObjectAsRecipient(treatAsRecipient);
+		}
+		else{
+			return false;
+		}		
 		if (!Test.isRunningTest()) {
 			message.setSaveAsActivity(false);
-		}
-		
+		}		
 		Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage>{ message };
 		Messaging.SendEmailResult[] results;
-
 		try {
 			if (Test.isRunningTest()) {
 				return true;
@@ -853,12 +901,16 @@ public without sharing class CW_Utilities {
 		} catch (EmailException exc) {
 			return false;
 		}
-
 		return results != null && !results.isEmpty() ? results[0].success : false;
 	}
 
-	public static void sendApproveOrRejectMails(ICG_Account_Role_Detail__c newStation, ICG_Account_Role_Detail__c oldStation) {
 
+	/*
+	 * @description		Send different emails after aprove/reject ICG_Account_Role_Detail__c
+	 * @param			newStation <new version of the station>
+	 * @param			oldStation <old version of the station>
+	*/
+	public static void sendApproveOrRejectMails(ICG_Account_Role_Detail__c newStation, ICG_Account_Role_Detail__c oldStation) {
 		//only to get the accountid and the created by email
 		ICG_Account_Role_Detail__c ard = [Select id, Formatted_Address__c, Name, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.RecordType.DeveloperName, Account_Role__r.Account__r.RecordType.Name, CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :newStation.Id];
 		String whoEmail = ard.CreatedBy.ContactId != null ? ard.CreatedBy.Contact.Email : ard.CreatedBy.Email;
@@ -879,7 +931,7 @@ public without sharing class CW_Utilities {
 
 		String subject = 'Station Creation request for ' + ard.Name + ', ' + ard.Account_Role__r.Account__r.RecordType.Name;
 		String body = 'Station Creation request for ' + ard.Name + ', ' + ard.Account_Role__r.Account__r.RecordType.Name + ', ' + ard.Formatted_Address__c;
-
+		Boolean shouldCleanup = false;
 		if (newStation.Status__c == 'Approved' && oldStation.Status__c != 'Approved') {
 			CW_Utilities.sendEmailTemplate('Notification_Approved_to_Req_Comp_Adm', newStation.Id, whoId, whoEmails, false);
 			subject +=  ' approved';
@@ -898,14 +950,22 @@ public without sharing class CW_Utilities {
 			subject +=  ' rejected';
 			body +=  ' rejected';
 			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, newStation, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-			cleanupAccount(ard);
+			shouldCleanup = true;
 		}
 
 		if(notifications.size() > 0) {
 			insert notifications;
 		}
+
+		if(shouldCleanup == true){
+			cleanupAccount(ard);
+		}
 	}
 
+	/*
+	 * @description		Delete ICG_Account_Role_Detail__c and its Account related
+	 * @param			ard <Load account by ard.Account_Role__r.Account__c>
+	*/
 	private static void cleanupAccount(ICG_Account_Role_Detail__c ard) {
 		if( ard != null && ard.Account_Role__r != null && ard.Account_Role__r.Account__r != null && ard.Account_Role__r.Account__r.RecordType != null && ard.Account_Role__r.Account__r.RecordType.DeveloperName == 'Standard_Account') {
 			try{
@@ -915,11 +975,16 @@ public without sharing class CW_Utilities {
 				delete acc;
 			}
 			catch (Exception ex) {
-				throw new AuraHandledException('Aura handled exception: ' + ex);
+				throw new AuraHandledException('exception: ' + ex);
 			}
 		}
 	}
 
+	 /*
+	 * @description		Send different emails after aprove/reject ICG_Contact_Role_Detail__c
+	 * @param			newContactRole <new version of the station>
+	 * @param			oldContactRole <old version of the station>
+	*/
 	public static void sendApproveOrRejectMailsContactRole (ICG_Contact_Role_Detail__c newContactRole, ICG_Contact_Role_Detail__c oldContactRole) {
 		String whoId = newContactRole.ContactId__c;
 		ICG_Contact_Role_Detail__c crd = [Select id, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Account_Contact_Role__r.Contact__r.Email from ICG_Contact_Role_Detail__c where Id = :newContactRole.Id];
@@ -1003,7 +1068,12 @@ public without sharing class CW_Utilities {
 			CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>(notificationReceivers), newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 	}
-
+	/*
+	 * @description		Update status station 
+	 * @param			contactId <Ontact Id>
+	 * @param			stationId <Station ID>
+	 * @param			status <New status>
+	*/
 	public static void updateAllStationManagementRecords(Id contactId, Id stationId, String status) {
 		List<ICG_Contact_Role_Detail__c> crds = [Select id from ICG_Contact_Role_Detail__c where ContactId__c = :contactId AND ICG_Account_Role_Detail__c =:stationId];
 		for (ICG_Contact_Role_Detail__c crd : crds) {
@@ -1030,6 +1100,7 @@ public without sharing class CW_Utilities {
 	public class ResponseBody {
 		public String message {get;set;}
 		public Boolean success {get;set;}
+		public Object obj {get;set;}
 	}
 	public class PicklistValue {
 		@AuraEnabled

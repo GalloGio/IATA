@@ -5,7 +5,6 @@ public with sharing class CW_AdvancedSearch {
 	private static SObjectType sObjectTypeRow;
 	/*
 	* @Description: getStructureFacilities()
-
 	* @Params: 
 	* @Returns: String response (list of wrapper serialized)
 	*/
@@ -15,7 +14,6 @@ public with sharing class CW_AdvancedSearch {
 			List<Map<String, Object>> rtBySection = CW_FacilityCapabilitiesController.getMapRecordTypesBySection();
 			List<Map<String, Object>> sectionsBySupercategory = CW_FacilityCapabilitiesController.getMapSectionsBySupercategory();
 			sObjectTypeRow = ((SObject)(Type.forName('Schema.Account_Role_Detail_Capability__c').newInstance())).getSObjectType();
-			/** mapEquipByCategory List<Map<Category, OBJ(pkl values of the pkl field equipment -> (label, value) */
 			Map<String, List<Map<String, Object>>> mapEquipByCategory = CW_Utilities.getPicklistFieldDependencies(
 				'Account_Role_Detail_Capability__c',
 				'Category__c',
@@ -23,8 +21,8 @@ public with sharing class CW_AdvancedSearch {
 				true
 			);
 			Map<String, List<String>> mapFieldsByRTypeAndCategory = CW_FacilityCapabilitiesController.getMapFieldsByExtraDataType();
-			System.debug(LoggingLevel.FINE,'::::getStructureFacilities - mapFieldsByRTypeAndCategory ' +JSON.serialize(mapFieldsByRTypeAndCategory));
-			System.debug(LoggingLevel.FINE,'::::getStructureFacilities - mapEquipByCategory ' +JSON.serialize(mapEquipByCategory));
+			System.debug(LoggingLevel.FINE,'____[CW_AdvancedSearch - getStructureFacilities] mapFieldsByRTypeAndCategory - ' +JSON.serialize(mapFieldsByRTypeAndCategory));
+			System.debug(LoggingLevel.FINE,'____[CW_AdvancedSearch - getStructureFacilities] mapEquipByCategory - ' +JSON.serialize(mapEquipByCategory));
 
 			List<ComparisonSupercategoryWrapper> supercategories = new List<ComparisonSupercategoryWrapper>();
 			Map<String, RecordType> mapRecordTypes = new Map<String, RecordType>();
@@ -34,7 +32,7 @@ public with sharing class CW_AdvancedSearch {
 					mapRecordTypes.put(currentRt.DeveloperName.toLowerCase(), currentRt);
 				}
 			}
-			System.debug(LoggingLevel.FINE, ':::mapRecordTypes ' + JSON.serialize(mapRecordTypes));
+			System.debug(LoggingLevel.FINE, '____[CW_AdvancedSearch - getStructureFacilities] mapRecordTypes - ' + JSON.serialize(mapRecordTypes));
 
 			for (Map<String, Object> currentSectionsBySupercategory : sectionsBySupercategory) {
 				ComparisonSupercategoryWrapper currentSupercategory = new ComparisonSupercategoryWrapper();
@@ -46,7 +44,7 @@ public with sharing class CW_AdvancedSearch {
 
 				for (Map<String, Object> currentSection : rtBySection) {
 					if (currentSectionSC.contains((String) currentSection.get('label'))) {
-						System.debug(LoggingLevel.FINE,'::::getStructureFacilities - currentSection ' + JSON.serialize(currentSection));
+						System.debug(LoggingLevel.FINE,'____[CW_AdvancedSearch - getStructureFacilities] currentSection - ' + JSON.serialize(currentSection));
 						Integer order = Integer.valueOf(currentSection.get('order'));
 						String label = String.valueOf(currentSection.get('label'));
 						List<String> rtsString = (List<String>) currentSection.get('rts');
@@ -64,7 +62,7 @@ public with sharing class CW_AdvancedSearch {
 									mapEquipByCategory,
 									mapCategoriesByRecordTypeDevName.get(recType.toLowerCase())
 								);
-								System.debug(LoggingLevel.FINE,'::::getStructureFacilities - capab ' + JSON.serialize(capab));
+								System.debug(LoggingLevel.FINE,'____[CW_AdvancedSearch - getStructureFacilities] capab - ' + JSON.serialize(capab));
 								if (capab != null && capab.name != null) {
 									lstCapaByRT.add(capab);
 								}
@@ -78,10 +76,10 @@ public with sharing class CW_AdvancedSearch {
 				supercategories.add(currentSupercategory);
 			}
 
-			System.debug(LoggingLevel.FINE,':::Supercat ' + JSON.serialize(supercategories));
+			System.debug(LoggingLevel.FINE,'____[CW_AdvancedSearch - getStructureFacilities] supercategories - ' + JSON.serialize(supercategories));
 			return JSON.serialize(supercategories);
 		} catch (Exception exc) {
-			throw new AuraHandledException('Aura handled exception: ' + exc);
+			throw new AuraHandledException('exception: ' + exc);
 		}
 	}
 	/*
@@ -117,7 +115,7 @@ public with sharing class CW_AdvancedSearch {
 			}
 			capability = new CapabilityRT(recordTypeInput, rtLabel, lstEquipments);
 		}
-		System.debug(LoggingLevel.FINE,':::capability wrapper:: ' + JSON.serialize(capability));
+		System.debug(LoggingLevel.FINE,'____[CW_AdvancedSearch - getCategoriesSection] capability - ' + JSON.serialize(capability));
 		return capability;
 	}
 

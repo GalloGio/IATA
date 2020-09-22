@@ -33,7 +33,7 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	}
 
 	@wire(getIECSettingVariables, {})
-    IECSettingVariables;
+	IECSettingVariables;
 
 	@track _userManagedFacilities = [];
 	@api

@@ -133,12 +133,6 @@ select {
     margin-bottom: 1rem;
 }
 
-.slds-pill{
-    background-color: #1e32fa;
-    color: #fff;
-    font-size: .8rem;
-    align-items: inherit;
-}
 
 .advice-ms{
     font-size: smaller;

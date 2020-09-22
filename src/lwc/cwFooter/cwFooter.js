@@ -176,11 +176,11 @@ export default class cwFooter extends LightningElement {
 	get getContainerType() {
 		let container;
 		if (window.location.pathname.indexOf(this.urlResultPage >= 0)) {
-      container = "container container-search";
-    } else {
-      container = "container";
-    }
-    return container;
+	  container = "container container-search";
+	} else {
+	  container = "container";
+	}
+	return container;
 	}
 
 	@track comparisonItems = [];

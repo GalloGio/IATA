@@ -57,17 +57,17 @@ public with sharing class CW_ScheduleNotifyCertificationExpiryTest {
 
 		ICG_Environment_Variables__c env = new ICG_Environment_Variables__c();
 		env.EXPIRING_VALIDATION_DAYS__c = 60;
-        insert env;
-        
-        Contact cto = CW_TestDataFactory.testContact(acc.Id);
-        insert cto;
-        
-        Account_Contact_Role__c accountContactRole = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, cto.Id);
-        insert accountContactRole;
-        
-        ICG_Contact_Role_Detail__c contactRoleDetail = CW_TestDataFactory.testICGContactRoleDetail(accountContactRole.Id, ard.Id);
-        contactRoleDetail.Account_Role__c = accRole.Id;
-        insert contactRoleDetail;
+		insert env;
+		
+		Contact cto = CW_TestDataFactory.testContact(acc.Id);
+		insert cto;
+		
+		Account_Contact_Role__c accountContactRole = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, cto.Id);
+		insert accountContactRole;
+		
+		ICG_Contact_Role_Detail__c contactRoleDetail = CW_TestDataFactory.testICGContactRoleDetail(accountContactRole.Id, ard.Id);
+		contactRoleDetail.Account_Role__c = accRole.Id;
+		insert contactRoleDetail;
 	}
 
 	@IsTest

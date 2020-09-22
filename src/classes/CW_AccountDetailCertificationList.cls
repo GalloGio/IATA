@@ -1,4 +1,10 @@
 public with sharing class CW_AccountDetailCertificationList {
+	/**
+	 * @description		Get a list of certifications related to this Account
+	 * @param			accountId Account Role Detail Id to filter
+	 * @param			accountType Account Role Detail Record Type Ids to filter
+	 * @return			Map<Boolean, List<wrapperCert>>
+	 */
 	@AuraEnabled(cacheable=true)
 	public static Map<Boolean, List<wrapperCert>> getCertificationList(String accountId, String accountType) {
 		Set<String> certificationsNameList = new Set<String>();

@@ -104,6 +104,7 @@ export default class CwFacilityContactInfo extends LightningElement {
 		if (this.initialized) {
 			return;
 		}
+
 		this.initialized = true;
 		let inputs = this.template.querySelectorAll(".input");
 		let validated = checkInputValidation(inputs);
@@ -153,7 +154,7 @@ export default class CwFacilityContactInfo extends LightningElement {
 			this.setFacilityInfo(this.facility.Id, name, newValue);
 		}
 		event.currentTarget.blur();
-    }
+	}
 
 	handleDaysUpdated(event) {
 		let keys = event.detail.key.split("_");
@@ -377,10 +378,10 @@ export default class CwFacilityContactInfo extends LightningElement {
 			langvalue += lang.value+';';
 		})
 		this.setFacilityInfo(this.facility.Id, 'supportedLanguages', langvalue);
-    }
-    
-    get isPilotInformationBlank() {
-        return !this._facility || !this._facility.pilotInformation;
+	}
+	
+	get isPilotInformationBlank() {
+		return !this._facility || !this._facility.pilotInformation;
 	}
 	
 	showInput(){

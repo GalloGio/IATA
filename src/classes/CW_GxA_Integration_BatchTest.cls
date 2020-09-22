@@ -5,13 +5,13 @@ public with sharing class CW_GxA_Integration_BatchTest {
 	
 	@TestSetup
 	static void setup(){
-		CW_GxA_Amazon_S3__c cfgAwsGxA = new CW_GxA_Amazon_S3__c();
-		cfgAwsGxA.Base_Path__c = 'SmartFacilityRemoteValidations/';
-		cfgAwsGxA.Named_Credential__c = 'CW_AWS_S3_REMOTE_VALIDATIONS';
-		cfgAwsGxA.Index_File__c = 'Result.json';
-		cfgAwsGxA.Bucket__c = 'pwc-dev-0f0a94bcb834b69f';
+		ICG_GxA_Integration_Settings__c gxaSettings = new ICG_GxA_Integration_Settings__c();
+		gxaSettings.Base_Path__c = 'SmartFacilityRemoteValidations/';
+		gxaSettings.Named_Credential__c = 'CW_AWS_S3_REMOTE_VALIDATIONS';
+		gxaSettings.Index_File__c = 'Result.json';
+		gxaSettings.Bucket__c = 'pwc-dev-0f0a94bcb834b69f';
 
-		insert cfgAwsGxA;
+		insert gxaSettings;
 
 		IATA_ISO_Country__c isoCode = CW_TestDataFactory.newISOCountry();
 		insert isoCode;
@@ -287,6 +287,7 @@ public with sharing class CW_GxA_Integration_BatchTest {
 
 		System.abortJob(batchId);
 	}
+
 	private static List<RecordType> getRecTypes() {
 		return RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account');
 	}

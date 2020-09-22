@@ -79,13 +79,14 @@
 			<div class="slds-col slds-grid slds-size_4-of-4">
 			<br />
 			<template if:false={isEditMode}>
-				<button class="slds-col slds-button slds-button_outline-brand bt-marine" onclick={handleHistory} disabled={hideButton}>{label.icg_history}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-marine" data-origin="Active-Cert" onclick={handleHistory} disabled={hideButton}>{label.icg_history}</button>
 				<button class="slds-col slds-button slds-button_outline-brand bt-green" onclick={handleRenewCertification} disabled={hideButton}>{label.renew}</button>
 				<button class="slds-col slds-button slds-button_outline-brand bt-yellow" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCertification} disabled={disableButtonsEdit}>{label.icg_capab_magmnt_edit}</button>
 				<button class="slds-col slds-button slds-button_outline-brand bt-blue" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCapabilities} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
+				<button if:true={showActivateButton} class="slds-col slds-button slds-button-brand" title="Activate group" data-id={certificationInfo.id} onclick={handleActivateGroup} >{label.icg_activate}</button>
 			</template>
 			<template if:true={isEditMode}>
-				<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={certificationInfo.id} data-origin="Active-Cert" data-scopeused={certificationInfo.scopeToUse} onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
 				<button class="slds-col slds-button slds-button_outline-brand slds-size_6-of-12" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleCancelEditCertification} disabled={disableButtonsEdit}>{label.icg_cancel_edit}</button>
 			</template>
 			</div>
@@ -121,7 +122,7 @@
 							<button class="slds-col slds-button slds-button_outline-brand bt-blue" data-id={item.id} onclick={handleEditCapabilitiesCertificationRest} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
 						</div>
 						<div if:false={item.disabled} class="slds-col slds-grid slds-grid_vertical-align-start slds-size_1-of-5 edit-cancel-class">
-							<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={item.id} data-origin="Upcoming-Cert" onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
+							<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={item.id} data-origin="Upcoming-Cert" data-scopeused={item.scopeToUse} onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
 							<button class="slds-col slds-button slds-button_outline-brand slds-size_6-of-12" data-id={item.id} data-origin="Upcoming-Cert" onclick={handleCancelEditCertification} disabled={disableButtonsEdit}>{label.icg_cancel_edit}</button>
 						</div>
 				</template>
@@ -159,7 +160,7 @@
 					<div if:false={item.disabled} class="slds-col slds-grid slds-grid_vertical-align-start slds-size_1-of-5 edit-cancel-class">
 						<span class="slds-assistive-text"></span>
 						<label class="slds-form-element__label slds-no-flex"></label>
-						<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={item.id} data-origin="Rest-Cert" onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
+						<button class="slds-col slds-button slds-button_outline-brand bt-marine slds-size_6-of-12" data-id={item.id} data-origin="Rest-Cert" data-scopeused={item.scopeToUse} onclick={handleSaveEditMode} disabled={hideButton}>{label.save}</button>
 						<button class="slds-col slds-button slds-button_outline-brand slds-size_6-of-12" data-id={item.id} data-origin="Rest-Cert" onclick={handleCancelEditCertification} disabled={disableButtonsEdit}>{label.icg_cancel_edit}</button>
 					</div>
 				</template>

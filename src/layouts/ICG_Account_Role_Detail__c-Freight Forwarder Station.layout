@@ -105,11 +105,19 @@
                 <behavior>Edit</behavior>
                 <field>Number_of_Employees__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Overall_Facility_Size_m2__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_On_Airport__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Direct_Ramp_Access__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -201,6 +209,11 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Account_Name__c</fields>
+        <fields>ICG_Role__c</fields>
+        <fields>Account_Role__c</fields>
+        <fields>Contact_Name__c</fields>
+        <fields>Status__c</fields>
         <relatedList>ICG_Contact_Role_Detail__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -232,6 +245,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Handled_Airline__c</fields>
         <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -253,7 +267,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3O000000PNj1</masterLabel>
+        <masterLabel>00h1X000001SrfD</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

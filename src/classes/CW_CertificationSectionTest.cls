@@ -11,8 +11,6 @@ public class CW_CertificationSectionTest {
 		// Create the certification
 		List<ICG_Certification__c> certs = new List<ICG_Certification__c>();
 
-		//Description__c, link__c,Name,Certification_Type__c,Expiration_Period__c,is_visible__C,Image__c
-
 		ICG_Certification__c cert1 = CW_TestDataFactory.newCertification();
 		cert1.Name = 'Test Cert 1';
 		cert1.is_visible__C = true;
@@ -41,6 +39,9 @@ public class CW_CertificationSectionTest {
 
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard;
+		
+		ICG_Account_Role_Detail__c ard2 =  new ICG_Account_Role_Detail__c(Account_Role__c = accRole.Id, IATA_ISO_Country__c = airport.IATA_ISO_Country__c, Nearest_Airport__c = airport.Id, Status__c = 'Approved', Name = 'Test', Available_Languages__c = 'ESP;GER', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Account_Role_Detail__c', 'Cargo_Handling_Facility'));
+		insert ard2;
 
 		ICG_Capability_Assignment_Group__c joinrow = new ICG_Capability_Assignment_Group__c();
 		joinrow.ICG_Certification__c = certs[0].Id;
@@ -48,6 +49,14 @@ public class CW_CertificationSectionTest {
 		joinrow.Issue_Date__c = Date.valueOf('2020-09-09');
 		joinrow.ICG_Account_Role_Detail__c = ard.Id;
 		insert joinrow;
+
+		ICG_Capability_Assignment_Group__c joinrow2 = new ICG_Capability_Assignment_Group__c();
+		joinrow2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
+		joinrow2.ICG_Certification__c = cert1.Id;
+		joinrow2.Expiration_Date__c = Date.valueOf('2025-09-16');
+		joinrow2.Issue_Date__c = Date.valueOf('2020-09-09');
+		joinrow2.ICG_Account_Role_Detail__c = ard2.Id;
+		insert joinrow2;
 	}
 
 	@isTest

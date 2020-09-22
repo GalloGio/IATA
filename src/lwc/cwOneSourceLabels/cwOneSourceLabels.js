@@ -428,8 +428,7 @@ import icg_header_capab_management from "@salesforce/label/c.icg_header_capab_ma
 import icg_header_delete_photo from "@salesforce/label/c.icg_header_delete_photo";
 import icg_header_remove_certi from "@salesforce/label/c.icg_header_remove_certi";
 import icg_capab_message_to_show from "@salesforce/label/c.icg_capab_message_to_show";
-
-icg_header_capab_management
+import icg_error_message from "@salesforce/label/c.icg_error_message";
 
 export function labels() {
 	let labels = {
@@ -863,7 +862,8 @@ export function labels() {
 		icg_header_capab_management,
 		icg_header_delete_photo,
 		icg_header_remove_certi,
-		icg_capab_message_to_show
+		icg_capab_message_to_show,
+		icg_error_message
 	};
 
 	return labels;

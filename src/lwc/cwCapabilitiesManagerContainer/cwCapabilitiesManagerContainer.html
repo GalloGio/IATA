@@ -206,7 +206,10 @@
 																scope="col" class="photo-colum-head">{label.photos}</th>
 															<th key={currentheader.value.name} scope="col"
 																class="certifications-stamp cert-colum-head">{label.capability_validated_by}</th>
-															 
+															<template if:true={addAllRowsPrevious}>
+																<th key={currentheader.value.name}
+																scope="col" class="zui-sticky-col-right"></th>
+															</template>
 
 															<template if:true={getCertificationMode}>																
 																<template if:true={currentCategory.isMultirecord}>
@@ -417,7 +420,7 @@
 					<div class="slds-modal__container">
 						<header class="slds-modal__header slds-modal__header_empty">
 							<lightning-button-icon icon-name="utility:close" onclick={closeModalEditPhotos}
-								alternative-text="close" variant="bare" size="large" class="slds-modal__close">
+								alternative-text="close" variant="bare" size="large" class="slds-modal__close-inside">
 							</lightning-button-icon>
 						</header>
 

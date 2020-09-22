@@ -116,11 +116,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 	}
 
 	get acceptedDocumentsFormats() {
-        return ['.pdf'];
+		return ['.pdf'];
 	}
 
 	get acceptedPhotoFormats() {
-        return ['.png', '.ico', '.jpg'];
+		return ['.png', '.ico', '.jpg'];
 	}
 	
 	get showSpinner(){
@@ -172,7 +172,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 	handleUploadDocumentFinished(event) {
 		this.isLoading=true;
-        // Get the list of uploaded files
+		// Get the list of uploaded files
 		const uploadedFiles = event.detail.files;
 
 		if(uploadedFiles.length > 0){
@@ -195,7 +195,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 	handleUploadPhotoFinished(event) {
 		this.isLoading=true;
-        // Get the list of uploaded files
+		// Get the list of uploaded files
 		const uploadedFiles = event.detail.files;
 
 		if(uploadedFiles.length > 0){

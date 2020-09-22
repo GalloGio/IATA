@@ -38,6 +38,12 @@
             <operator>equals</operator>
             <value>Account.Standard_Account</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Account.ONE_Source_Related_Account__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
