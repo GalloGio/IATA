@@ -33353,6 +33353,19 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Account Roles (Owners) --></description>
         <label><!-- Accounts with AMS Account Roles (Owners) --></label>
         <name>Accounts_with_AMS_Account_Roles_Owners</name>
