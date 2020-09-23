@@ -156,7 +156,7 @@
     <enableBulkApi>true</enableBulkApi>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -169,6 +169,7 @@
         <label>Account Name</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -183,6 +184,7 @@ The Account Role record should be named after the functional capability for whic
         <label>Account Role Name</label>
         <length>40</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -196,6 +198,7 @@ The Account Role record should be named after the functional capability for whic
         <relationshipLabel>Account Roles</relationshipLabel>
         <relationshipName>Account_Roles</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -209,6 +212,7 @@ The Account Role record should be named after the functional capability for whic
         <relationshipName>Account_Roles</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -220,6 +224,7 @@ The Account Role record should be named after the functional capability for whic
         <inlineHelpText>Enter any additional information related to your company (e.g. to comply with AML requirements)</inlineHelpText>
         <label>Any Other Information</label>
         <length>32768</length>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -232,6 +237,7 @@ The Account Role record should be named after the functional capability for whic
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account and Functional Role</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -242,6 +248,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Effective From Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -251,6 +258,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Effective To Date</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -260,6 +268,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Flow status</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -285,6 +294,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Functional Role</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -299,6 +309,7 @@ The Account Role record should be named after the functional capability for whic
         <label>GADM Unique Key</label>
         <length>40</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -308,6 +319,7 @@ The Account Role record should be named after the functional capability for whic
         <displayFormat>aB5{0000000000}</displayFormat>
         <externalId>false</externalId>
         <label>Global ID</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>AutoNumber</type>
     </fields>
@@ -322,6 +334,7 @@ The Account Role record should be named after the functional capability for whic
         <relationshipLabel>Account Roles</relationshipLabel>
         <relationshipName>Account_Roles</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -331,6 +344,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Last Review Date</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -341,6 +355,7 @@ The Account Role record should be named after the functional capability for whic
         <label>OJT File Id</label>
         <length>150</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -350,6 +365,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>OJT file</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
@@ -358,6 +374,7 @@ The Account Role record should be named after the functional capability for whic
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>OJT file validated</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -373,6 +390,7 @@ The Account Role record should be named after the functional capability for whic
         </summaryFilterItems>
         <summaryForeignKey>Account_Contact_Role__c.Account_Role__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>
@@ -383,6 +401,7 @@ The Account Role record should be named after the functional capability for whic
         <label>Provider Code</label>
         <length>17</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -393,6 +412,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Provider Type</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -406,6 +426,7 @@ The Account Role record should be named after the functional capability for whic
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -443,6 +464,7 @@ The Account Role record should be named after the functional capability for whic
         <label>UniqueKey</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -460,9 +482,11 @@ The Account Role record should be named after the functional capability for whic
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Roles</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Amsterdam_Publications</fullName>
         <active>true</active>
