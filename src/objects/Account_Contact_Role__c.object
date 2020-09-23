@@ -187,7 +187,7 @@
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -202,7 +202,7 @@
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -275,7 +275,7 @@
         <label>Contact Role Name</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -347,7 +347,7 @@
         <relationshipName>Account_Contacts_Role</relationshipName>
         <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -391,7 +391,7 @@
         <externalId>false</externalId>
         <label>Functional Role</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -413,7 +413,7 @@
         <externalId>false</externalId>
         <label>Integration Status</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -520,7 +520,7 @@
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -603,7 +603,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Contacts Role</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Functional</fullName>
         <active>true</active>
