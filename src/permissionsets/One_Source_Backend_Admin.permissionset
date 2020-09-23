@@ -1418,11 +1418,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Account_Role__c.useDepartmentContactsDetail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Airport_Detail__c.Airport_Name__c</field>
         <readable>true</readable>
