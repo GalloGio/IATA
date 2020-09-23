@@ -12,7 +12,7 @@
                 border:none;
             }
 
-        </style>
+    </style>
 
 
     <script>
@@ -23,6 +23,10 @@
         let obj = "{!objectId}";
         let token = "{!accessToken}";
         let type = "{!tokenType}";
+        let embedUrl = "{!embedUrl}";
+        let groupId = "{!groupId}";
+        let datasetId = "{!datasetId}";
+        let expiration = "{!expiration}";
 
         let typeOfToken = 0;
         if(type === 'Aad') {
@@ -42,14 +46,82 @@
             accessToken: "{!accessToken}",
             settings : {
                 filterPaneEnabled: false,
-                navContentPaneEnabled: false,
-                //background: models.BackgroundType.Transparent
+                navContentPaneEnabled: false
             }
         };
 
         var report = powerbi.embed(element, embedConfiguration);
 
-        </script>
+        var expDate = new Date(expiration);
+
+        report.off("loaded");
+        report.on("loaded", function() {
+            // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId, datasetId)
+            setTokenExpirationListener(expDate, 3, obj, groupId, datasetId);
+        });
+
+        function setTokenExpirationListener(tokenExpiration, minutesToRefresh, reportId, groupId, datasetId){
+            // get current time
+            var currentTime = Date.now();
+            var expiration = Date.parse(tokenExpiration);
+            var safetyInterval = minutesToRefresh* 60 * 1000;
+
+            // time until token refresh in milliseconds
+            var timeout = expiration - currentTime - safetyInterval;
+
+            // if token already expired, generate new token and set the access token
+            if (timeout<=0) {
+                updateEmbedToken(reportId, groupId, datasetId);
+            }
+            // set timeout so minutesToRefresh minutes before token expires, token will be updated
+            else {
+                setTimeout(function() {
+                    updateEmbedToken(reportId, groupId, datasetId);
+                }, timeout);
+            }
+
+
+            function updateEmbedToken(reportId, groupId, datasetId) {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.TreasuryDashboardPowerBiPageCtrl.refreshEmbedToken}', reportId, groupId, datasetId,
+                    function(result, event){
+                        if (event.status) {
+                            //response OK
+                            setNewEmbedToken(result, groupId, reportId, datasetId);
+                        } else if (event.type === 'exception') {
+                            //exception
+                            console.error('Unable to update embed token - exception: ', event.message);
+                        } else {
+                            //exception
+                            console.error('Unable to update embed token - error: ', event.message);
+                        }
+                    },
+                    {escape: true}
+                );
+            }
+
+
+            function setNewEmbedToken(result, groupId, reportId, datasetId) {
+                // Get a reference to the embedded report HTML element
+                var embedContainer = document.getElementById('dashboard');
+
+                // Get a reference to the embedded report.
+                var report = powerbi.get(embedContainer);
+
+                var resultArray = result.split('expiration=');
+
+                var newToken = resultArray[0];
+                var newExpDate = new Date(resultArray[1]);
+
+                report.setAccessToken(newToken)
+                    .then(function() {
+                        // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId, datasetId)
+                        setTokenExpirationListener(newExpDate, 3, reportId, groupId, datasetId);
+                    });
+            }
+    }
+
+    </script>
 
 
 
