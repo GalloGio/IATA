@@ -283,7 +283,7 @@
     </fields>
     <fields>
         <fullName>Station__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
+        <deleteConstraint>SetNull</deleteConstraint>
         <description>Describes the station linked</description>
         <externalId>false</externalId>
         <label>Station</label>

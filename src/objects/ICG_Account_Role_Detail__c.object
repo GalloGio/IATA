@@ -4536,6 +4536,22 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
     </recordTypes>
+    <validationRules>
+        <fullName>Number_Of_Employees_Cannot_Be_Negative</fullName>
+        <active>true</active>
+        <description>The number of employees cannot be negative</description>
+        <errorConditionFormula>Number_of_Employees__c &lt; 0</errorConditionFormula>
+        <errorDisplayField>Number_of_Employees__c</errorDisplayField>
+        <errorMessage>Number of employees cannot be a negative number</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Number_Of_Facilities_Cannot_Be_Negative</fullName>
+        <active>true</active>
+        <description>The number of facilities cannot be negative.</description>
+        <errorConditionFormula>Number_of_Facilities__c &lt; 0</errorConditionFormula>
+        <errorDisplayField>Number_of_Facilities__c</errorDisplayField>
+        <errorMessage>The number of facilities cannot be negative</errorMessage>
+    </validationRules>
     <listViews>
         <fullName>Account_pending_for_IATA_approval</fullName>
         <columns>NAME</columns>

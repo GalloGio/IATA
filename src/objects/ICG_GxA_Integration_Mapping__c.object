@@ -231,39 +231,104 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>21</fullName>
+                    <fullName>1</fullName>
                     <default>false</default>
-                    <label>21</label>
+                    <label>checkbox</label>
                 </value>
                 <value>
-                    <fullName>Calendar</fullName>
+                    <fullName>2</fullName>
                     <default>false</default>
-                    <label>Calendar</label>
+                    <label>textbox</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>radio</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>header</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>grid</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>gridcolumn</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>GridRow</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>GridCell</label>
                 </value>
                 <value>
                     <fullName>10</fullName>
                     <default>false</default>
-                    <label>Dropdown</label>
+                    <label>dropdown</label>
                 </value>
                 <value>
-                    <fullName>14</fullName>
+                    <fullName>11</fullName>
                     <default>false</default>
-                    <label>File Upload</label>
+                    <label>calendar</label>
                 </value>
                 <value>
                     <fullName>12</fullName>
                     <default>false</default>
-                    <label>Memo</label>
+                    <label>memo</label>
                 </value>
                 <value>
                     <fullName>13</fullName>
                     <default>false</default>
-                    <label>Radiolist</label>
+                    <label>radiolist</label>
                 </value>
                 <value>
-                    <fullName>Simple</fullName>
+                    <fullName>14</fullName>
                     <default>false</default>
-                    <label>Simple</label>
+                    <label>fileupload</label>
+                </value>
+                <value>
+                    <fullName>15</fullName>
+                    <default>false</default>
+                    <label>ControlGroup</label>
+                </value>
+                <value>
+                    <fullName>16</fullName>
+                    <default>false</default>
+                    <label>slider</label>
+                </value>
+                <value>
+                    <fullName>17</fullName>
+                    <default>false</default>
+                    <label>ActionButton</label>
+                </value>
+                <value>
+                    <fullName>18</fullName>
+                    <default>false</default>
+                    <label>Graph</label>
+                </value>
+                <value>
+                    <fullName>19</fullName>
+                    <default>false</default>
+                    <label>SortableMultiList</label>
+                </value>
+                <value>
+                    <fullName>20</fullName>
+                    <default>false</default>
+                    <label>Hidden</label>
+                </value>
+                <value>
+                    <fullName>21</fullName>
+                    <default>false</default>
+                    <label>CheckboxList</label>
                 </value>
                 <value>
                     <fullName>22</fullName>
@@ -271,9 +336,9 @@
                     <label>Subsurvey</label>
                 </value>
                 <value>
-                    <fullName>2</fullName>
+                    <fullName>23</fullName>
                     <default>false</default>
-                    <label>Textbox</label>
+                    <label>SimpleGrid</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -759,6 +824,11 @@ It must be in the same order and the same number of items than the field &apos;G
                     <fullName>V3</fullName>
                     <default>false</default>
                     <label>V3</label>
+                </value>
+                <value>
+                    <fullName>V5_29.06</fullName>
+                    <default>false</default>
+                    <label>V5_29.06</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

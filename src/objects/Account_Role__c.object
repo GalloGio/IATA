@@ -485,6 +485,10 @@ The Account Role record should be named after the functional capability for whic
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>One Source</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
@@ -534,6 +538,10 @@ The Account Role record should be named after the functional capability for whic
         </picklistValues>
         <picklistValues>
             <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>One Source</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>E%26F</fullName>
                 <default>false</default>
@@ -592,6 +600,10 @@ The Account Role record should be named after the functional capability for whic
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>One Source</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
@@ -640,6 +652,10 @@ The Account Role record should be named after the functional capability for whic
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Source</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -697,6 +713,10 @@ The Account Role record should be named after the functional capability for whic
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Source</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -31,17 +31,8 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Integration_Mapping_Version__c</fullName>
-        <externalId>false</externalId>
-        <label>Integration Mapping Version</label>
-        <length>100</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>InternalRequestURL__c</fullName>
+        <description>Indicate the internal URL to request</description>
         <externalId>false</externalId>
         <label>InternalRequestURL</label>
         <length>255</length>
@@ -61,7 +52,8 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>max_filters_allowed__c</fullName>
+        <fullName>Max_Filters_Allowed__c</fullName>
+        <description>Indicate the max filters allowed in query</description>
         <defaultValue>25</defaultValue>
         <externalId>false</externalId>
         <label>max filters allowed</label>

@@ -156,9 +156,10 @@
     <externalSharingModel>Read</externalSharingModel>
     <label>ONE Source Contact Role Detail</label>
     <nameField>
+        <displayFormat>CID-{0000}</displayFormat>
         <label>ONE Source Contact Role Detail Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>ONE Source Contact Role Details</pluralLabel>
     <searchLayouts/>
@@ -385,6 +386,29 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <validationRules>
+        <fullName>Accounts_correspond</fullName>
+        <active>true</active>
+        <description>When the role is Facility Manager, the account of the Account Contact Role and the station must coincide.</description>
+        <errorConditionFormula>AND(  ISPICKVAL(ICG_Role__c,&quot;Facility Manager&quot;) ,   Account_Contact_Role__r.Account__c  &lt;&gt;  ICG_Account_Role_Detail__r.Account_Role__r.Account__c  )</errorConditionFormula>
+        <errorMessage>The Account of the Account Contact Role and the Station must be the same.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Station_role_company_admin</fullName>
+        <active>true</active>
+        <description>When the role is &quot;Company Admin&quot;, then the account role needs to be filled out.</description>
+        <errorConditionFormula>AND( ISPICKVAL(ICG_Role__c,&quot;Company Admin&quot;) , OR( ISNULL(   Account_Role__c   ) , ISBLANK(Account_Role__c)) )</errorConditionFormula>
+        <errorDisplayField>Account_Role__c</errorDisplayField>
+        <errorMessage>When the role is &quot;Company Admin&quot;, then the account role needs to be filled out.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Station_role_facility</fullName>
+        <active>true</active>
+        <description>Station has to be filled when role is &quot;Facility Manager&quot;</description>
+        <errorConditionFormula>AND(  ISPICKVAL(ICG_Role__c,&quot;Facility Manager&quot;) ,  OR( ISNULL( ICG_Account_Role_Detail__c ) , ISBLANK(ICG_Account_Role_Detail__c)) )</errorConditionFormula>
+        <errorDisplayField>ICG_Account_Role_Detail__c</errorDisplayField>
+        <errorMessage>With the role &quot;Facility Manager&quot;, the station has to be filled</errorMessage>
+    </validationRules>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
