@@ -229,13 +229,13 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
         Object.keys(res).forEach(function (el) {
             if((relatedArticleId !== undefined && relatedArticleId === res[el].Id)||res.length==1 ) { // OPENS THE ARTICLE PREVIOUSLY CLICKED THAT CAME FROM RELATED ARTICLES LIST OR SEARCH LIST
-                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, urlName:res[el].UrlName, open: true, feedback: false });
+                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, urlName:res[el].UrlName, open: true, feedback: false, Link : res[el].CS_Portal_link__c });
                 articleSelected = {
                     title : res[el].Title,
                     id : res[el].Id
                 };
             } else {
-                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, urlName:res[el].UrlName, open: false, feedback: false });
+                tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, urlName:res[el].UrlName, open: false, feedback: false, Link : res[el].CS_Portal_link__c });
             }
             tempArticleIds += (el === '0') ? '\'' + res[el].Id + '\'' : ', \'' + res[el].Id + '\'';
         });
