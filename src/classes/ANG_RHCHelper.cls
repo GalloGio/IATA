@@ -479,7 +479,7 @@ public class ANG_RHCHelper {
 					riuw.rhcAmount = '';
 
 					if(rhc.ANG_RHC_Amount__c != NULL){
-						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.format();
+						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.setscale(2).format();
 					}
 
 					riuw.rhcEffectiveDate = '';
