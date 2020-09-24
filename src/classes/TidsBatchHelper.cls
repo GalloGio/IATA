@@ -1,4 +1,3 @@
-@SuppressWarnings('PMD')
 public without sharing class TidsBatchHelper {
 	public static void testbatch(Id caseId){
 		String query = queryBuilderAccount(caseId);

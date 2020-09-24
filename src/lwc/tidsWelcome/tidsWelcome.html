@@ -1,114 +1,127 @@
 <template>
-	<div class="container tids-form">
-		<div class="row">
-			<main class="col l8 s7">
-				<div class="content-wrapper">
-					<header>
-						<h1>Apply for the IATA TIDS Program</h1>
-					</header>
-					<section>
-						<p>
-							<strong class="h3">
-								Welcome to the online application for the TIDS program, IATA’s free identification service for travel sales intermediaries.
-							</strong>
-						</p>
-						<br>
-						<p>
-							Participation in the IATA TIDS program ensures that your business and its sales activities can be accurately identified and recognized by industry suppliers worldwide.
-						</p>
-						<br>
-						<p>
-							Once your TIDS application is submitted and accepted by IATA, your business will receive a unique standard identifier: <strong>The IATA TIDS Code</strong>
-						</p>
-					</section>
+  <div class="container tids-form">
+    <div class="row">
+      <main class="col l8 s7">
+        <div class="content-wrapper">
+          <header>
+            <h1>Apply for the IATA TIDS Program</h1>
+          </header>
+          <section>
+            <p>
+              <strong class="h3">
+                Welcome to the online application for the TIDS program, IATA’s
+                free identification service for travel sales intermediaries.
+              </strong>
+            </p>
+            <br />
+            <p>
+              Participation in the IATA TIDS program ensures that your business
+              and its sales activities can be accurately identified and
+              recognized by industry suppliers worldwide.
+            </p>
+            <br />
+            <p>
+              Once your TIDS application is submitted and accepted by IATA, your
+              business will receive a unique standard identifier:
+              <strong>The IATA TIDS Code</strong>
+            </p>
+          </section>
 
-					<section>
-						<h2 class="steps">
-							<span class="iata-diamond-icon"></span>Before you start
-						</h2>
-						<p>Please take a moment to review the list of documents required to complete your application.</p>
-						<ul class="style-icon">
-								<li>
-									Documentation supporting the legal form of business and ownership of the business entity<lightning-helptext content="Documentation which provides proof of ownership and confirms the legal status of the business (for example: articles of incorporation)."></lightning-helptext>
-								</li>
-								<li>
-									Copy of the business registration, including tax registration or applicable business registration number
-								</li> 
-								<li>
-									Bank letter or statement of account in the name of the business
-								</li>
-								<li>
-									One letter of recommendation from an IATA Airline, GDS or other major industry supplier
-								</li>
-								<li>
-									Government-issued license for sale of travel-related services (where applicable)
-								</li>
-								<li>
-									Signed copy of the <a href="#">TIDS Terms and Conditions</a>
-								</li>
-						</ul>
-					</section>
-				</div>
-			</main>
-			<aside class="col l4 s5">
-				<div class="content-wrapper">
-					<header>
-						<h2>It is so easy!</h2>
-						<p>
-							Registering for TIDS is easier than ever with an application process entirely online.
-						</p>
-					</header>
-					<article>
-						<ul class="style-icon">
-								<li>
-									Complete the online application form 
-								</li>
-								<li>
-									Attach all supporting documents
-								</li>
-								<li>
-									Follow the status of your application online
-								</li>
-								<li>
-									Receive your unique IATA TIDS Code within 72 business hours
-								</li>
-						</ul>
-					</article>
-					<form action="#">          
-						<hr>
-						<span>
-							<lightning-input
-								class="filled-in"
-								type="checkbox"
-								data-name="allDocuments"
-								name="allDocuments"
-								label="I have all required documents"
-								checked={allDocuments}
-								onchange={handleOnClick}
-							>
-							</lightning-input>
-						</span>            
-						<span>
-							<br/>
-							<lightning-input
-								type="checkbox"
-								class="filled-in"
-								data-name="termsAndConditions"
-								name="termsAndConditions"
-								label= "I hereby confirm that I have read and accept the TIDS Terms and Conditions"
-								checked={termsandConditions}
-								onchange={handleOnClick}
-							>
-							</lightning-input>
-						</span>
-					</form>
-					<footer>
-						<button name="new-applicant" onclick={handleGoToServices} disabled={disableButton}>
-							Apply for TIDS
-						</button>
-					</footer>
-				</div>
-			</aside>
-		</div>
-	</div>
+          <section>
+            <h2 class="steps">
+              <span class="iata-diamond-icon"></span>Before you start
+            </h2>
+            <p>
+              Please take a moment to review the list of documents required to
+              complete your application.
+            </p>
+            <ul class="style-icon">
+              <li>
+                Documentation supporting the legal form of business and
+                ownership of the business entity<lightning-helptext
+                  content="Documentation which provides proof of ownership and confirms the legal status of the business (for example: articles of incorporation)."
+                ></lightning-helptext>
+              </li>
+              <li>
+                Copy of the business registration, including tax registration or
+                applicable business registration number
+              </li>
+              <li>
+                Bank letter or statement of account in the name of the business
+              </li>
+              <li>
+                One letter of recommendation from an IATA Airline, GDS or other
+                major industry supplier
+              </li>
+              <li>
+                Government-issued license for sale of travel-related services
+                (where applicable)
+              </li>
+              <li>
+                Signed copy of the <a href="#">TIDS Terms and Conditions</a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <aside class="col l4 s5">
+        <div class="content-wrapper">
+          <header>
+            <h2>It is so easy!</h2>
+            <p>
+              Registering for TIDS is easier than ever with an application
+              process entirely online.
+            </p>
+          </header>
+          <article>
+            <ul class="style-icon">
+              <li>Complete the online application form</li>
+              <li>Attach all supporting documents</li>
+              <li>Follow the status of your application online</li>
+              <li>
+                Receive your unique IATA TIDS Code within 72 business hours
+              </li>
+            </ul>
+          </article>
+          <form action="#">
+            <hr />
+            <span>
+              <lightning-input
+                class="filled-in"
+                type="checkbox"
+                data-name="allDocuments"
+                name="allDocuments"
+                label="I have all required documents"
+                checked={allDocuments}
+                onchange={handleOnClick}
+              >
+              </lightning-input>
+            </span>
+            <span>
+              <br />
+              <lightning-input
+                type="checkbox"
+                class="filled-in"
+                data-name="termsAndConditions"
+                name="termsAndConditions"
+                label="I hereby confirm that I have read and accept the TIDS Terms and Conditions"
+                checked={termsandConditions}
+                onchange={handleOnClick}
+              >
+              </lightning-input>
+            </span>
+          </form>
+          <footer>
+            <button
+              name="new-applicant"
+              onclick={handleGoToServices}
+              disabled={disableButton}
+            >
+              Apply for TIDS
+            </button>
+          </footer>
+        </div>
+      </aside>
+    </div>
+  </div>
 </template>

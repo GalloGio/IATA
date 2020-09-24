@@ -1,31 +1,31 @@
 <template>
-  <template for:each={items} for:item="menu">
-    <template if:true={menu.visible}>
-      <div class={menu.class} key={menu.name}>
-        <div class="col s10">
-          <lightning-button
-            name={menu.name}
-            variant="base"
-            label={menu.label}
-            disabled={menu.isDisabled}
-            onclick={handleMenuSelect}
-          ></lightning-button>
-        </div>
-        <div class="col s2">
-          <lightning-icon
-            if:true={menu.approved}
-            icon-name="utility:check"
-            alternative-text="Approved"
-            class="icon__large"
-          ></lightning-icon>
-          <lightning-icon
-            if:true={menu.errorIcon}
-            icon-name="utility:warning"
-            alternative-text="Warning"
-            class="icon__large"
-          ></lightning-icon>
-        </div>
-      </div>
-    </template>
-  </template>
+	<template for:each={items} for:item="menu">
+		<template if:true={menu.visible}>
+			<div class={menu.class} key={menu.name}>
+				<div class="col s10">
+					<lightning-button
+						name={menu.name}
+						variant="base"
+						label={menu.label}
+						disabled={menu.isDisabled}
+						onclick={handleMenuSelect}
+					></lightning-button>
+				</div>
+				<div class="col s2">
+					<lightning-icon
+						if:true={menu.approved}
+						icon-name="utility:check"
+						alternative-text="Approved"
+						class="icon__large"
+					></lightning-icon>
+					<lightning-icon
+						if:true={menu.errorIcon}
+						icon-name="utility:warning"
+						alternative-text="Warning"
+						class="icon__large"
+					></lightning-icon>
+				</div>
+			</div>
+		</template>
+	</template>
 </template>

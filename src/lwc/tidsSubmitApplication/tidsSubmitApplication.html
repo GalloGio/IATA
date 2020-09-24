@@ -1,31 +1,31 @@
 <template>
-  <template if:false={vettingMode}>
-    <header>
-      <h1 class="icon">Congratulations!</h1>
-    </header>
-  
-    <form>
-      <lightning-spinner alternative-text="Loading" size="large" if:true={spinner}></lightning-spinner>
-        <p>
-          You have successfully completed your TIDS application. Click on "Submit Application" to put forward your application for IATA's review.
-        </p>
-        <h3>Unsure about any of the information previously entered?</h3>
-        <p>
-          Click on the applicable section in the left-hand panel to review and/or edit the information in question. Once completed, click again on step 9, "Submit Application" to finalize your submission.
-        </p>
-      <footer>
-        <button type="submit" class="button-error" if:true={rejectButtonShow}>Reject application</button>
-        <button type="submit" onclick={handleSendApplication}>Submit application</button>
-      </footer>
-    </form>
-  </template>
-  <template if:true={vettingMode}>
-    <c-tids-application-decision></c-tids-application-decision>
-  </template>
-  <c-tids-modal-msg
-      if:true={showConfimationModal}
-      open={showConfimationModal}
-      message={modalDefaultMessage}
-      action={modalAction}
-    ></c-tids-modal-msg>
+	<template if:false={vettingMode}>
+		<header>
+			<h1 class="icon">Congratulations!</h1>
+		</header>
+	
+		<form>
+			<lightning-spinner alternative-text="Loading" size="large" if:true={spinner}></lightning-spinner>
+				<p>
+					You have successfully completed your TIDS application. Click on "Submit Application" to put forward your application for IATA's review.
+				</p>
+				<h3>Unsure about any of the information previously entered?</h3>
+				<p>
+					Click on the applicable section in the left-hand panel to review and/or edit the information in question. Once completed, click again on step 9, "Submit Application" to finalize your submission.
+				</p>
+			<footer>
+				<button type="submit" class="button-error" if:true={rejectButtonShow}>Reject application</button>
+				<button type="submit" onclick={handleSendApplication}>Submit application</button>
+			</footer>
+		</form>
+	</template>
+	<template if:true={vettingMode}>
+		<c-tids-application-decision></c-tids-application-decision>
+	</template>
+	<c-tids-modal-msg
+			if:true={showConfimationModal}
+			open={showConfimationModal}
+			message={modalDefaultMessage}
+			action={modalAction}
+		></c-tids-modal-msg>
 </template>

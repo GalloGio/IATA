@@ -1,6 +1,4 @@
 public class TIDSVetting {
-
-	
 	public Case vcase;
 	public boolean isVirtualBranchRequest {get;set;}
 	public boolean isRelinquishRequest {get;set;}

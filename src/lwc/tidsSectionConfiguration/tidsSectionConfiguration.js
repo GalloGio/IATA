@@ -24,11 +24,11 @@ export default class TidsSectionConfiguration extends LightningElement {
 		let id = event.target.id;
 		id= '$'+id.split('$')[1]+'$';
 		this.sections.forEach(section => {
-				section.fields.forEach( field => {
-					if(field.id === id) {
-						 field.isEdit=true;
-					}
-				});
+			section.fields.forEach( field => {
+				if(field.id === id) {
+						field.isEdit=true;
+				}
+			});
 		});
 	}
 	hideRowFields(event){
@@ -36,11 +36,11 @@ export default class TidsSectionConfiguration extends LightningElement {
 		let id = event.target.id;
 		id = '$'+id.split('$')[1]+'$';
 		this.sections.forEach(section => {
-				section.fields.forEach( field => {
-					if(field.id === id) {
-						 field.isEdit=false;
-					}
-				});
+			section.fields.forEach( field => {
+				if(field.id === id) {
+						field.isEdit=false;
+				}
+			});
 		});
 	}
 	
@@ -87,46 +87,46 @@ export default class TidsSectionConfiguration extends LightningElement {
 		let optionSelected = event.target.name;
 		let value=event.target.value;
 		this.sections.forEach(section => {
-				section.fields.forEach( field => {
-					if(field.id===id ) {
-						switch(optionSelected) {
-							case 'visible':
-								field.visible = !field.visible;
+			section.fields.forEach( field => {
+				if(field.id===id ) {
+					switch(optionSelected) {
+						case 'visible':
+							field.visible = !field.visible;
+							break;
+						case 'disabled':
+							field.disabled = !field.disabled;
+							break;
+						case 'required':
+							field.required = !field.required;
+							break;
+						case 'regex':
+								field.regex = value;
 								break;
-							case 'disabled':
-								field.disabled = !field.disabled;
+						case 'english':
+								field.translation_english = value;
 								break;
-							case 'required':
-								field.required = !field.required;
+						case 'japanese':
+							field.translation_japanese = value;
+							break;
+						case 'portuguese':
+							field.translation_portuguese = value;
+							break;
+						case 'french':
+							field.translation_french = value;
+							break;
+						case 'spanish':
+								field.translation_spanish = value;
 								break;
-							case 'regex':
-									field.regex = value;
-									break;
-							case 'english':
-									field.translation_english = value;
-									break;
-							case 'japanese':
-								field.translation_japanese = value;
+						case 'chinese':
+								field.translation_chinese = value;
 								break;
-							case 'portuguese':
-								field.translation_portuguese = value;
-								break;
-							case 'french':
-								field.translation_french = value;
-								break;
-							case 'spanish':
-									field.translation_spanish = value;
-									break;
-							case 'chinese':
-									field.translation_chinese = value;
-									break;
-							case 'name':
-									field.name = value;
-									break;  
-								default: break;
-						}
+						case 'name':
+								field.name = value;
+								break;  
+							default: break;
 					}
-				});
+				}
+			});
 		});
 	}
 
@@ -149,32 +149,32 @@ export default class TidsSectionConfiguration extends LightningElement {
 		if(this.formType === 'client') {
 			result = JSON.parse(JSON.stringify(this.formSelected.options.client));
 			result.forEach(function(section){
-				 section.fields.forEach(function(field){
-					field.isEdit=false;
-					if (field.regex===undefined){
-						 field.regex='';
-					}
-					if (field.translation_english===undefined){
-						field.translation_english='';
-					}
-					if (field.translation_japanese===undefined){
-						field.translation_japanese='';
-					}
-					if (field.translation_spanish===undefined){
-						field.translation_spanish='';
-					}
-					if (field.translation_portuguese===undefined){
-						field.translation_portuguese='';
-					}
-					if (field.translation_french===undefined){
-						field.translation_french='';
-					}
-					if (field.translation_chinese===undefined){
-						field.translation_chinese='';
-					}
-					field.id = '$'+id+'$';
-					id++;
-				 });
+				section.fields.forEach(function(field){
+				field.isEdit=false;
+				if (field.regex===undefined){
+						field.regex='';
+				}
+				if (field.translation_english===undefined){
+					field.translation_english='';
+				}
+				if (field.translation_japanese===undefined){
+					field.translation_japanese='';
+				}
+				if (field.translation_spanish===undefined){
+					field.translation_spanish='';
+				}
+				if (field.translation_portuguese===undefined){
+					field.translation_portuguese='';
+				}
+				if (field.translation_french===undefined){
+					field.translation_french='';
+				}
+				if (field.translation_chinese===undefined){
+					field.translation_chinese='';
+				}
+				field.id = '$'+id+'$';
+				id++;
+				});
 			});
 			this.sections =result;
 		} else if(this.formType === 'vetting') {

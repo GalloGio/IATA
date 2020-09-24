@@ -357,60 +357,7 @@ public without sharing class TIDSUtil{
         email.setWhatId(caseId);    
         if (!Test.isRunningTest()) {Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });}
     }
-    public static void sendMyEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String userId) {
-        List<Messaging.SendEmailResult> listEmailResult = new List<Messaging.SendEmailResult>();
-        List<EmailTemplate> emailTemplates = new List<EmailTemplate>();
-        EmailTemplate emailt;
-        emailTemplates = [SELECT Id, Subject, HtmlValue, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateNameDeveloperName ];
-        if (emailTemplates.size()>0) {emailt = emailTemplates[0];}
-        Map <Id, OrgWideEmailAddress> orgAddressMap = new Map <Id, OrgWideEmailAddress> ([SELECT Id, Address FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org']);
-        Map <String, Id> orgAddressByEmail = new Map <String, Id> ();
-        for(OrgWideEmailAddress oea: orgAddressMap.values()){orgAddressByEmail.put(oea.Address, oea.Id);}
-        //if(Test.isRunningTest()){return;}
-        
-        List<Messaging.Singleemailmessage> listSingleEmailMessages = new List<Messaging.Singleemailmessage>();
-        for (EmailMessageWrapper emailMessageWrapper : listEmailMessageWrapper) {
-             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();    
-             if (!orgAddressMap.isEmpty()){
-                mail.setOrgWideEmailAddressId(orgAddressByEmail.get('noreply@iata.org'));
-             }else{
-                mail.setSenderDisplayName('IATA no reply');
-                if(emailMessageWrapper.FromAddress != null && emailMessageWrapper.FromAddress.length() > 0){mail.setReplyTo(emailMessageWrapper.FromAddress);}
-             }
-             if (userId!=null){mail.setTargetObjectId(userId);}
-             if (userId==null){
-                if(emailMessageWrapper.ToAddress != null && emailMessageWrapper.ToAddress.length() > 0){
-                    mail.setToAddresses(new String[] { emailMessageWrapper.ToAddress });
-                }else{mail.setTargetObjectId(emailMessageWrapper.ToAddressId);}
-            }
-            if(emailMessageWrapper.BccAddress != null && emailMessageWrapper.BccAddress.length() > 0) {mail.setBccAddresses(new String[] {emailMessageWrapper.BccAddress });}
-            String subject ='';
-            if (emailTemplates.size()>0) {subject =emailt.Subject;}
-            if(emailMessageWrapper.Subject != null && emailMessageWrapper.Subject.length() > 0) {
-                mail.setSubject(emailMessageWrapper.Subject);
-                subject = emailMessageWrapper.Subject;
-            }
-            for(String key: emailMessageWrapper.ParameterSubjectMap.keySet()){subject = subject.replace(key, (emailMessageWrapper.ParameterSubjectMap.get(key) == null ? '' : emailMessageWrapper.ParameterSubjectMap.get(key)));}
-            mail.setSubject(subject);
-            String htmlBody = '';
-            if (emailTemplates.size()>0) {htmlBody = emailt.HtmlValue;}
-            String plainBody = '';
-            if (emailTemplates.size()>0) {plainBody = emailt.Body;}
-            for (String key : emailMessageWrapper.ParameterBodyMap.keySet()) {
-                if(htmlBody <> null && emailMessageWrapper.ParameterBodyMap <> null)
-                htmlBody = htmlBody.replace(key, (emailMessageWrapper.ParameterBodyMap.get(key) == null) ? '' : emailMessageWrapper.ParameterBodyMap.get(key));
-                if(plainBody <> null && emailMessageWrapper.ParameterBodyMap <> null)
-                plainBody = plainBody.replace(key, (emailMessageWrapper.ParameterBodyMap.get(key) == null) ? '' : emailMessageWrapper.ParameterBodyMap.get(key));
-            }
-            mail.setSaveAsActivity(false);
-            if (htmlBody <> null){mail.setHtmlBody(htmlBody);}
-            if (plainBody <> null){mail.setPlainTextBody(plainBody);}
-            listSingleEmailMessages.add(mail);
-  
-        }
-        if(!Test.isRunningTest()){
-            listEmailResult = Messaging.sendEmail(listSingleEmailMessages);}
-    }
+    
 	public static List<String> replaceby {get;set;}
     //TIDS metat data retrieve function
     //Replace elements in the data

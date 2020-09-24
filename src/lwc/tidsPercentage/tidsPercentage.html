@@ -1,58 +1,58 @@
 <template>
-  <div class="row">
-    <div class="col s12">
-      <c-tids-tooltip rules={rule}></c-tids-tooltip>
-    </div>
-  </div>
+	<div class="row">
+		<div class="col s12">
+			<c-tids-tooltip rules={rule}></c-tids-tooltip>
+		</div>
+	</div>
 
-  <div class="items-percent col s6">
-    <div>
-      <template for:each={values} for:item="option">
-        <div class="row" key={option}>
-          <div class="col s9" >
-            <p>{option.label}</p>
-          </div>
+	<div class="items-percent col s6">
+		<div>
+			<template for:each={values} for:item="option">
+				<div class="row" key={option}>
+					<div class="col s9" >
+						<p>{option.label}</p>
+					</div>
 
-          <div class="col s3">
-            <lightning-input
-              type="number"
-              placeholder="0%"
-              data-name={option.label}
-              name={option.label}
-              value={option.value}
-              formatter="percent-fixed"
-              min="0"
-              max="100"
-              pattern="[0-9]+"
-              onchange={handleOnchange}
-              onclick={handleOnfocus}
-              disabled={disabled}
-            ></lightning-input>
-          </div>
-        </div>
-      </template>
+					<div class="col s3">
+						<lightning-input
+							type="number"
+							placeholder="0%"
+							data-name={option.label}
+							name={option.label}
+							value={option.value}
+							formatter="percent-fixed"
+							min="0"
+							max="100"
+							pattern="[0-9]+"
+							onchange={handleOnchange}
+							onclick={handleOnfocus}
+							disabled={disabled}
+						></lightning-input>
+					</div>
+				</div>
+			</template>
 
-      <div class={cmpClass} data-name="items-total">
-        <div class="col s9">
-          <p class="total__label">Total</p>
-        </div>
-        <div class="col s3">
-          <p class="total__value">{total}%</p>
-        </div>
-      </div>
+			<div class={cmpClass} data-name="items-total">
+				<div class="col s9">
+					<p class="total__label">Total</p>
+				</div>
+				<div class="col s3">
+					<p class="total__value">{total}%</p>
+				</div>
+			</div>
 
-      <div class="row items-error" if:true={totalError}>
-        <div class="col s12">
-          <p>Total cannot be greater than 100%</p>
-        </div>
-      </div>
+			<div class="row items-error" if:true={totalError}>
+				<div class="col s12">
+					<p>Total cannot be greater than 100%</p>
+				</div>
+			</div>
 
-      <div class="row items-error" if:true={specialCharsError}>
-        <div class="col s12">
-          <p>Values cannot be blank</p>
-        </div>
-      </div>
-    </div>
-  </div>
+			<div class="row items-error" if:true={specialCharsError}>
+				<div class="col s12">
+					<p>Values cannot be blank</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </template>
