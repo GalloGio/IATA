@@ -114,7 +114,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     @track rerender = false;
 	@track gcsPortalServiceId;
 	@track timeStamp;
-	@track canSubmit = false;
+	@track canSubmit;
 
 
 	tcAcceptanceChanged(event){
@@ -469,8 +469,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSubmit(){
 
-		this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
-		this.timeStamp = Math.floor(Date.now() / 1000); // reset time stamp for Try Again case
+		if(typeof this.canSubmit === 'undefined')
+			this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
+		//this.timeStamp = Math.floor(Date.now() / 1000); // reset time stamp for Try Again case
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
             this.registrationForm.phone = "";
