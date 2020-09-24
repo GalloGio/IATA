@@ -69,7 +69,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
                 if(results.records.length) {
                     let articles = [];
                     for(let i=1; i < 6 && i < results.records.length; i++) {
-                        articles.push({ id: results.records[i].Id, title: results.records[i].Title });
+                        articles.push({ id: results.records[i].UrlName, title: results.records[i].Title });
                     }
                     this.relatedArticles = articles;
                 }
@@ -82,21 +82,12 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     }
 
     renderArticle(event) {        
-        let params = {};
-        params.id1 = this._articleId; // PARENT ARTICLE
-        params.id2 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC RELATED ARTICLE TO THE PARENT ARTICLE
-
-        let pageName;
-        if(!this.guestUser) {
-            pageName = 'support-view-article';
-        } else {
-            pageName = 'faq-article';
-        }
+        let params = {};    
 
         this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
+            type: 'standard__knowledgeArticlePage',
             attributes: {
-                pageName: pageName
+                urlName: event.target.attributes.getNamedItem('data-item').value
             }})
         .then(url => navigateToPage(url, params));
     }
