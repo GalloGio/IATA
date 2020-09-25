@@ -343,7 +343,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean namPaxAgent {get; set;}
 
 	public Boolean getnewlabels() {
-		return isocountry == null ? false : isocountry.AMS_Accreditation_New_Labels__c;
+		return isocountry == null ? false : isocountry.AMS_Accreditation_New_Labels__c || getIsPostalOperator();
 	}
 
 	public ANG_ProductComparisonHelper helper {get; set;}
@@ -706,7 +706,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					amsLocationType=AMS_Utils.TYPE_PAX_PASS_HO;
 				}
 			} else {
-				sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
+				sectorDisplay = getnewlabels()? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
 				sectorValue = 'Cargo_Agent';
 			}
 		}
@@ -742,7 +742,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			lblStep1Title=Label.ISSP_AMS_Step1_Title_PASS;
 			termsAndConditionsText='	'+Label.ISSP_AMS_TC_PASS;
 		}else{
-			lblStepA = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
+			lblStepA = getnewlabels()? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
 			lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
 			lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
 			lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
@@ -753,7 +753,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
 		lblNoCStepD = communityName == 'CNS' ? Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS : Label.ISSP_AMS_NOC_StepD_ProgressBar;
 
-		lblStep1Title = communityName == 'CNS' ? Label.ISSP_AMS_Step1_Title_CNS : isocountry.AMS_Accreditation_New_Labels__c ? Label.ISSP_AMS_Step1_Title_New : Label.ISSP_AMS_Step1_Title;
+		lblStep1Title = communityName == 'CNS' ? Label.ISSP_AMS_Step1_Title_CNS : getnewlabels() ? Label.ISSP_AMS_Step1_Title_New : Label.ISSP_AMS_Step1_Title;
 		if((isCNSAgency && con.Account.IATACode__c == null) || (isCNSAgency && con.Account.IATACode__c != null && hqAccount.Location_Class__c == 'R')){
 			lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS_HO;
 		}else if(isCNSAgency && con.Account.IATACode__c != null && hqAccount.Location_Class__c == 'C'){
@@ -762,7 +762,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
 		lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
 
-		lblCargoTitle = communityName == 'CNS' ? Label.ISSP_AMS_StepsAll_Cargo_Title_CNS : isocountry.AMS_Accreditation_New_Labels__c ? Label.ISSP_AMS_StepsAll_Cargo_Title_New : Label.ISSP_AMS_StepsAll_Cargo_Title;
+		lblCargoTitle = communityName == 'CNS' ? Label.ISSP_AMS_StepsAll_Cargo_Title_CNS : getnewlabels() ? Label.ISSP_AMS_StepsAll_Cargo_Title_New : Label.ISSP_AMS_StepsAll_Cargo_Title;
 
 		lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
 		if(isPassAccreditation){
@@ -966,7 +966,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}else if (sectorValue.StartsWith(AMS_Utils.sectorValuePass)) {
 						sectorDisplay = Label.ISSP_PASS_Agent;
 					} else {
-						sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
+						sectorDisplay = getnewlabels()? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
 						getCGORegionData();
 						getSpecialTrafficData();
 						setFacilityList();
@@ -1741,7 +1741,7 @@ public without sharing class ISSP_AMS_Accreditation {
 							options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, Label.ISSP_AMS_OPTION_CGO_HO_CNS));
 						}
 					} else {
-						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
+						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, getnewlabels()? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 					}
 				}
 
@@ -1820,7 +1820,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						if (isocountry.EACP_Country__c) {
 							options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
 						} else {
-							options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
+							options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, getnewlabels()? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 						}
 					}
 				} else if (con.Account.Category__c == AMS_Utils.CATEGORY_COURIER) {
@@ -1847,7 +1847,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					if (isocountry.EACP_Country__c) {
 						options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
 					} else {
-						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
+						options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, getnewlabels()? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 					}
 				}
 			} else  {  //CGO Options for PAX Agents (Accredited or Non-Accredited)
@@ -1856,7 +1856,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (isocountry.EACP_Country__c) {
 					options.add(new SelectOption(AMS_Utils.TYPE_EACP_HO, Label.ISSP_AMS_OPTION_EACP_HO));
 				} else {
-					options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
+					options.add(new SelectOption(AMS_Utils.TYPE_CGO_HO, getnewlabels()? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
 				}
 
 				if (!isocountry.Disable_non_IATA_Cargo_Agents__c) {
@@ -4655,7 +4655,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		} else if (amsLocationType == AMS_Utils.TYPE_EACP_BRANCH) {
 			return Label.ISSP_AMS_OPTION_EACP_BRANCH;
 		} else if (amsLocationType == AMS_Utils.TYPE_CGO_HO) {
-			return isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO;
+			return getnewlabels()? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO;
 		} else if (amsLocationType == AMS_Utils.TYPE_CGO_BRANCH) {
 			return Label.ISSP_AMS_OPTION_CGO_BRANCH;
 		} else if (amsLocationType == AMS_Utils.TYPE_CASS_ASSOC_HO) {
