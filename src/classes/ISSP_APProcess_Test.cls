@@ -282,7 +282,6 @@ private class ISSP_APProcess_Test
 
 
 			ctrl.getAPTypes();
-			ctrl.APQueue('Airline Participation - Head Office');
 
 			PageReference prSteps = ctrl.saveBSPFormAndGoForward();
 			System.assert(prSteps.getUrl().endsWith('step=4'));
@@ -402,7 +401,6 @@ private class ISSP_APProcess_Test
 
 
 			ctrl.getAPTypes();
-			ctrl.APQueue('Airline Participation - Head Office');
 
 			PageReference prSteps = ctrl.saveBSPFormAndGoForward();
 			System.assert(prSteps.getUrl().endsWith('step=4'));
@@ -1539,7 +1537,6 @@ private class ISSP_APProcess_Test
 			ctrl.countryNameList = null;
 			ctrl.getCassAirlines();
 			ctrl.getAPDraftCases();
-			ctrl.APQueue('Airline Participation - Drafts');
 			ctrl.goToFinalStep();
 			ctrl.getChangeItems();
 			ctrl.retrieveAccountToShowSections();
@@ -1913,7 +1910,6 @@ private class ISSP_APProcess_Test
 			ctrl.getIsICHType_AssociateAggregator();
 
 			ctrl.UploadFile();
-			ctrl.getAttachList();
 
 			ctrl.newCase.Classification_SIS__c = ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
 
