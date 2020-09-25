@@ -40,6 +40,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	private static final String MODE_IATA_CODE = 'IATA Code';
 
 	private static final String SELECT_COUNTRY = 'Select Country';
+	private static final String SELECT_STATE = 'Select State';
 	private static final String ENDED = 'Ended';
 	private static final String COMPLETED = 'Completed';
 
@@ -103,9 +104,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public string region { get; private set; }
 	public string mode { get; private set; }
 	public String country { get; private set; }
+	public String state { get; private set; }
 	public String month { get; private set; }
 	
 	public List<String> countriesLst { get; set; }
+	public List<String> stateLst { get; set; }
 	public String iataCode { get; set; }
 	public boolean shouldDisableButton;
 
@@ -225,6 +228,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		country = value;
 	}
 
+	public void setstate(String value){
+		if(state != value){
+			accountsToCreate = new List<AccountWrapper>();
+			con = null;
+		}
+		state = value;
+	}
+
 	public void setregion(String value){
 		if(region != value){
 			accountsToCreate = new List<AccountWrapper>();
@@ -282,15 +293,36 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		return options;
 	}
 
+	private Map<ID, Map<ID,String>> isoStateCountryMap;
+
 	public List<SelectOption> getcountryobj() {
 		List<SelectOption> options = new List<SelectOption>{
 			new SelectOption(SELECT_COUNTRY, SELECT_COUNTRY)
 		};
 
+		isoStateCountryMap = new Map<ID, Map<ID,String>>();
+		Map<ID, String> isoStateMap;
+
 		for (IATA_ISO_Country__c c: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name')){
 			options.add(new SelectOption(c.Id, c.name));
-		}
 
+			//Initialze isoStateMap per country
+			isoStateMap = new Map<ID, String>();
+
+			for(IATA_ISO_State__c state : c.IATA_ISO_States__r)	isoStateMap.put(state.Id, state.Name);
+			//Set Country Iso States Map 
+			isoStateCountryMap.put(c.Id, isoStateMap);
+		}
+		return options;
+	}
+
+	public List<SelectOption> getstateobj() {
+		List<SelectOption> options = new List<SelectOption>{
+			new SelectOption(SELECT_STATE, SELECT_STATE)
+		};
+
+		for (Id stateId : isoStateCountryMap.get(country).keySet())	
+			options.add(new SelectOption(stateId, isoStateCountryMap.get(country).get(stateId)));
 		return options;
 	}
 
@@ -395,7 +427,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Financial year end with value: '+ month);
 		} else if (mode == MODE_COUNTRY) {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country);
+			if(state != SELECT_STATE && !String.isEmpty(state)) queryAccount += 'AND Iso_State__c = :state ';
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country +(state != SELECT_STATE ? ' with the state: ' + state : '.'));
 		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for IATA Code with value: '+ account.IATACode__c);
