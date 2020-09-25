@@ -5014,6 +5014,14 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Bagikan</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Link untuk FAQ telah disalin</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Lewati Untuk Sekarang ini.</label>
         <name>CSP_Skip</name>
     </customLabels>
