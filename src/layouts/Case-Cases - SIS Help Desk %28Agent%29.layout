@@ -49,6 +49,10 @@
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_interaction__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>CaseArea__c</field>
             </layoutItems>
