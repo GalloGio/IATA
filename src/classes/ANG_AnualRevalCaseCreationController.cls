@@ -321,8 +321,9 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			new SelectOption(SELECT_STATE, SELECT_STATE)
 		};
 
-		for (Id stateId : isoStateCountryMap.get(country).keySet())	
-			options.add(new SelectOption(stateId, isoStateCountryMap.get(country).get(stateId)));
+		if(country != null)
+			for (Id stateId : isoStateCountryMap.get(country).keySet())	
+				options.add(new SelectOption(stateId, isoStateCountryMap.get(country).get(stateId)));
 		return options;
 	}
 
