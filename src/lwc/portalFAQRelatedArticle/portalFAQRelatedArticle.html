@@ -1,32 +1,31 @@
 <template>
     <div if:true={isRendered} class="slds-m-vertical_large">
 
-        <div if:true={loading} class="spinnerContainer">
+        <div if:true={loadingSpinner} class="spinnerContainer">
+            
             <lightning-spinner size="medium"></lightning-spinner>
         </div>
 
-        <div if:false={loading}>
-            <div if:true={hasArticles}>
-                <div class="slds-p-bottom_small text-bold">
-                    {label.CSP_RelatedArticles}
-                </div>
+        <div if:false={loadingSpinner}>           
+            <div class="slds-p-bottom_small text-bold">
+                {label.CSP_RelatedArticles}
+            </div>
 
-                <template for:each={relatedArticles} for:item="article">
-                    <div class="slds-grid slds-p-top_small borderStyle slds-grid--align-spread" key={article.id}
-                        data-item={article.id}>
-                        <div class="slds-col">
-                            <div class="text-bold cursorPointer" data-item={article.id} onclick={renderArticle}>
-                                {article.title}
-                            </div>
-                        </div>
-                        <div class="slds-col slds-align-content-center cursorPointer">
-                            <lightning-button variant="base" icon-name="utility:forward" size="x-small"
-                                class="blueCustomButtonLink" data-item={article.id} onclick={renderArticle}>
-                            </lightning-button>
+            <template for:each={relatedArticles} for:item="article">
+                <div class="slds-grid slds-p-top_small borderStyle slds-grid--align-spread" key={article.id}
+                    data-item={article.id}>
+                    <div class="slds-col">
+                        <div class="text-bold cursorPointer" data-item={article.id} onclick={renderArticle}>
+                            {article.title}
                         </div>
                     </div>
-                </template>
-            </div>
+                    <div class="slds-col slds-align-content-center cursorPointer">
+                        <lightning-button variant="base" icon-name="utility:forward" size="x-small"
+                            class="blueCustomButtonLink" data-item={article.id} onclick={renderArticle}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
 </template>

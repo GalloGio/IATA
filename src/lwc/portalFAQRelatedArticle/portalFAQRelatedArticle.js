@@ -13,7 +13,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     @track _articleId;
     @track relatedArticles;
     @track filteringObject = {};
-    @track loading = true;
+    @track loadingSpinner = true;
     @track _userInfo;
     @track language;
     @track guestUser;
@@ -30,6 +30,9 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
 
             this.language = __userInfo.language;
             this.guestUser = __userInfo.guestUser;
+            if(this.filteringObject.searchText){
+                this.renderSearchArticles(JSON.stringify(this.filteringObject));
+            }
         }        
     }
 
@@ -38,7 +41,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
         return this._article;
     }
 
-    set article(value) {                    
+    set article(value) {          
         if(value !== undefined) {
             let articleInfo = JSON.parse(JSON.stringify(value));
 
@@ -46,39 +49,38 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
             this._articleId = articleInfo.id;
 
             this.filteringObject.searchText = this._articleTitle;
+            if(this.filteringObject.language){
+                this.renderSearchArticles(JSON.stringify(this.filteringObject));
+            }
         }
     }
-    
-    get hasArticles() {
-        return this.relatedArticles !== undefined && this.relatedArticles.length > 0;
-    }
-
     connectedCallback() {
-        let _filteringObject = JSON.parse(JSON.stringify(this.filteringObject));
-        if(this.guestUser) {
-            _filteringObject.language = this.language;
-            _filteringObject.guestUser = this.guestUser;
-        }
-        
-        this.renderSearchArticles(JSON.stringify(_filteringObject));
+     
     }
 
     renderSearchArticles(searchParam) {
-        getFilteredFAQsResultsPage({ searchKey : searchParam, requestedPage : '0'})
-            .then(results => {                
-                if(results.records.length) {
-                    let articles = [];
-                    for(let i=1; i < 6 && i < results.records.length; i++) {
-                        articles.push({ id: results.records[i].UrlName, title: results.records[i].Title });
-                    }
-                    this.relatedArticles = articles;
-                }
-                this.loading = false;
-            })
-            .finally(() =>{
-                this.loading = false;
-                this.isRendered=true;
-            });
+        console.log(searchParam);
+        if(searchParam != undefined && searchParam != ''){
+            this.isRendered=false;
+            try {
+                getFilteredFAQsResultsPage({ searchKey : searchParam, requestedPage : '0'})
+                .then(results => {  
+                    if(results.records.length) {
+                        let articles = [];
+                        for(let i=1; i < 6 && i < results.records.length; i++) {
+                            articles.push({ id: results.records[i].UrlName, title: results.records[i].Title });
+                        }
+                        this.relatedArticles = articles;
+                        this.isRendered=this.relatedArticles.length>0;
+                    } 
+                }).finally(() =>{
+                    this.loadingSpinner = false;
+                    
+                });  
+            }catch(error){
+                this.loadingSpinner = false;
+            }
+        }
     }
 
     renderArticle(event) {        

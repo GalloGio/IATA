@@ -12,7 +12,7 @@
         <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">
             <template if:true={hasArticles} for:each={articles} for:item="article">
                 <div class="slds-p-vertical_medium slds-m-around_small borderStyle" key={article.id}>
-                    <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label}
+                    <div class="customCardTitleBox cursorPointer" onclick={expandArticle} data-item={article.label}
                         data-id={article.id}>
                         <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown"
                             size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
@@ -24,7 +24,9 @@
                     <div if:true={article.open} class="slds-p-vertical_x-small text-xsmall"
                         style="transition: height 0.3s ease;" data-item={article.label}>
                         <!-- ARTICLE -->
-						<c-portal-community360-util record-id={article.id}></c-portal-community360-util>
+                        <span if:false={isGuestUser}>
+                            <c-portal-community360-util record-id={article.id}></c-portal-community360-util>
+                        </span>
                         <div class="slds-m-bottom_medium">
                             <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
                         </div>                        
@@ -62,7 +64,7 @@
                             </div>
                             <div if:true={article.open} class ="slds-col slds-size_full slds-small-size_2-of-7 slds-grid slds-align-content-center slds-m-vertical_x-small">
                                 <span class="slds-float--right slds-grid text-bold slds-size_1-of-1 ">
-                                    <input data-article-url type="text" class="slds-hide" value={article.Link}/>
+                                    <input data-article-url type="text" class="slds-hide slds-is-absolute linkHolder" value={article.Link}/>
                                     <lightning-button label={label.CSP_ShareLink} class="containedButton reachusButton fullWidth" onclick={copyUrlToClipboard}></lightning-button>
                                 </span>
                             </div>
