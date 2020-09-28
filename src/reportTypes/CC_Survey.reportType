@@ -83,6 +83,11 @@
             <field>Sales_Period__c</field>
             <table>Currency_Center_Survey__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Currency_Center_Survey__c</table>
+        </columns>
         <masterLabel>Currency Center Survey</masterLabel>
     </sections>
     <sections>

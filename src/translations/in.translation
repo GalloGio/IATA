@@ -1708,47 +1708,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>Komentar di bawah ini telah diposting pada kasus Anda</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>kemarin.</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>Beri tahu kami jika pertanyaan Anda telah diselesaikan atau ada hal lain yang dapat kami bantu dalam kasus ini dengan menggunakan tombol di bawah atau mengakses kasus dari</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>Anda dapat memberi tahu kami dengan mengakses kueri di Portal Pelanggan IATA.</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>Kami akan menutup kasus ini secara otomatis jika kami tidak menerima respon selanjutnya dari Anda dalam waktu 24 jam.</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>Kasus ini akan ditutup</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>Karena tidak ada respon dari Anda dalam 48 jam terakhir.</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>Jika Anda memerlukan bantuan lebih lanjut tentang kasus ini, Anda dapat menambahkan komentar atau menghubungi kami melalui kasus baru di</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>Kami baru saja menambahkan balasan untuk kasus Anda, dengan nomor</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>Anda dapat membuka detail kasus untuk melihat balasannya.</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>Anda dapat memberi tahu kami dengan mengakses kueri di Portal Pelanggan IATA.</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3585,7 +3585,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>Salam, &amp;lt;br/&amp;gt; Pusat Layanan Pelanggan IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3593,7 +3593,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>Portal Pelanggan IATA</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5106,6 +5106,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
+    </customLabels>
+    <customLabels>
         <label>penyelesaian masalah</label>
         <name>CSP_Troubleshooting</name>
     </customLabels>
@@ -5350,87 +5354,87 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>Kasus ini tidak dapat ditutup atau ditutup &amp;apos;s sudah di tutup.</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>Tautan sudah kedaluwarsa.</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>Buka Portal Pelanggan</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>Terima kasih, jawaban Anda telah disimpan.</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>Tidak sekarang</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>Anda sedang diarahkan ke survei.</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>Kami telah menutup kasus di bawah ini:</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>Karena tidak ada balasan dari Anda dalam waktu 48 jam, kami telah menutup kasus di bawah ini:</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>Terima kasih atas konfirmasinya!</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>Terjadi kesalahan saat mengarahkan Anda ke survei.</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>Di IATA, kami selalu berkomitmen untuk terus memberikan pelayanan yang unggul untuk pengalaman terbaik Anda. Kami ingin mengetahio pendapat Anda pada topik yang kami anggap penting, hal ini hanya membutuhkan waktu kurang dari 2 menit</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>Ikuti Survei</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>Jawabannya kurang jelas</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>Anda dapat menutup kasus ini sekarang</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>Pergi ke Hubungi Kami</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>Saya memiliki Kueri baru</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>Apakah pertanyaan Anda telah diselesaikan?</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>Jika kami tidak mendaptkan respon dari Anda selama 48 jam ke depan, kami akan tutup kasus ini.</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>Beri tahu kami bagaimana kami dapat membantu Anda  dengan pertanyaan ini.</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>Karena Anda memiliki kueri baru, kami telah menutup kasus {arg0} dan Anda dapat membuat kueri baru dengan mengklik tombol di bawah ini agar kami dapat menghubungi Anda kembali secepatnya.</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>Terima kasih atas konfirmasi Anda</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5438,15 +5442,15 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>Berikan komentar tambahan agar kami dapat menangani kasus ini lebih lanjut.</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>survei ini</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>Kami menghargai pendapat Anda. Beri kami masukan Anda tentang IATA &amp;apos;s Dukungan dalam</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -26550,6 +26554,14 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>Treasury_Dashboard_Premium_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
         <name>Treasury_Dashboard_Service_Name</name>
     </customLabels>
@@ -33272,8 +33284,8 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -33343,6 +33355,19 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34080,6 +34105,22 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35564,6 +35605,15 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Financial Securities --></label>
             <name>Financial Securities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -37376,6 +37426,15 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

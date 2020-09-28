@@ -1707,47 +1707,47 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_1 --></label>
+        <label>El siguiente comentario fue publicado sobre su caso</label>
         <name>Auto_Case_Comment_24Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_2 --></label>
+        <label>ayer.</label>
         <name>Auto_Case_Comment_24Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_3 --></label>
+        <label>Por favor, háganos saber si su consulta ha sido resuelta o si hay algo más en lo que podamos ayudarle en este caso. Puede usar los botones de abajo o acceder al caso desde</label>
         <name>Auto_Case_Comment_24Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_4 --></label>
+        <label>Puede hacérnoslo saber accediendo a la consulta en el Portal de Clientes de la IATA.</label>
         <name>Auto_Case_Comment_24Hours_Notification_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_24Hours_Notification_5 --></label>
+        <label>Cerraremos el caso automáticamente en caso de que no recibir información adicional de usted en 24 horas.</label>
         <name>Auto_Case_Comment_24Hours_Notification_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_1 --></label>
+        <label>Estamos cerrando el caso</label>
         <name>Auto_Case_Comment_48Hours_Notification_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_2 --></label>
+        <label>ya que no hemos recibido información adicional de usted en las últimas 48 horas.</label>
         <name>Auto_Case_Comment_48Hours_Notification_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_48Hours_Notification_3 --></label>
+        <label>Si necesita más ayuda en este caso, puede añadir un comentario o contactarnos a través de un nuevo caso en</label>
         <name>Auto_Case_Comment_48Hours_Notification_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_1 --></label>
+        <label>Acabamos de añadir una respuesta a su caso, con el número</label>
         <name>Auto_Case_Comment_Notification_Email_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_2 --></label>
+        <label>Puede ir a los detalles del caso para ver la respuesta.</label>
         <name>Auto_Case_Comment_Notification_Email_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Auto_Case_Comment_Notification_Email_3 --></label>
+        <label>Puede hacérnoslo saber accediendo a la consulta en el Portal del Cliente de IATA.</label>
         <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
@@ -3584,7 +3584,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_IATA_CSC_Email_Greetings --></label>
+        <label>Atentamente, IATA Customer Service Center</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -3592,7 +3592,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATA_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP IATA Customer Portal --></label>
+        <label>Portal del Cliente de IATA</label>
         <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
@@ -5105,6 +5105,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
+    </customLabels>
+    <customLabels>
         <label>resolución de problemas</label>
         <name>CSP_Troubleshooting</name>
     </customLabels>
@@ -5349,87 +5353,87 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Cannot_Close --></label>
+        <label>Este caso no puede ser cerrado o ya está cerrado.</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Error_Expired_Link --></label>
+        <label>El enlace ha caducado.</label>
         <name>Case_Closure_Error_Expired_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Go_To_CS_Portal_Button --></label>
+        <label>Ir al Portal del Cliente</label>
         <name>Case_Closure_Go_To_CS_Portal_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Ignore_Survey --></label>
+        <label>Gracias, tu respuesta ha sido guardada.</label>
         <name>Case_Closure_Ignore_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Ignore Survey Button --></label>
+        <label>No en este momento</label>
         <name>Case_Closure_Ignore_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Redirect_Survey --></label>
+        <label>Está siendo redirigido a la encuesta.</label>
         <name>Case_Closure_Redirect_Survey</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message --></label>
+        <label>Hemos cerrado el siguente caso:</label>
         <name>Case_Closure_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Success Message 48Hours --></label>
+        <label>Como no hemos tenido noticias de usted en 48 horas, ya hemos cerrado el siguiente caso:</label>
         <name>Case_Closure_Success_Message_48Hours</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Success_Title --></label>
+        <label>¡Gracias por la confirmación!</label>
         <name>Case_Closure_Success_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Link_Error --></label>
+        <label>Ha ocurrido un error al redirigirle a la encuesta.</label>
         <name>Case_Closure_Survey_Link_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Closure_Survey_Message --></label>
+        <label>En la IATA, estamos constantemente mejorando nuestros servicios para poder ofrecerle una experiencia excepcional. Por eso nos gustaría pedirle su opinión sobre algunos puntos que consideramos cruciales. No debería tardar más de dos minutos.</label>
         <name>Case_Closure_Survey_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Closure Take Survey Button --></label>
+        <label>Haga la encuesta</label>
         <name>Case_Closure_Take_Survey_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Answer_Not_Clear --></label>
+        <label>La respuesta no fue clara</label>
         <name>Case_Comment_Button_Answer_Not_Clear</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Can_Close_Case --></label>
+        <label>Puede cerrar este caso ahora</label>
         <name>Case_Comment_Button_Can_Close_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment Button Go To Contact Us --></label>
+        <label>Ir a Contactar con nosotros</label>
         <name>Case_Comment_Button_Go_To_Contact_Us</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Button_Have_New_Query --></label>
+        <label>Tengo una nueva consulta</label>
         <name>Case_Comment_Button_Have_New_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_1 --></label>
+        <label>¿Se ha resuelto su consulta?</label>
         <name>Case_Comment_Have_Been_Resolved_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Have_Been_Resolved_2 --></label>
+        <label>En caso de que no tengamos noticias suyas en las próximas 48 horas, consideraremos que ya no necesita ayuda y cerraremos el caso.</label>
         <name>Case_Comment_Have_Been_Resolved_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_How_Can_Assist_You --></label>
+        <label>Por favor, háganos saber cómo podemos seguir ayudándole con esta consulta.</label>
         <name>Case_Comment_How_Can_Assist_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Message --></label>
+        <label>Como tiene una nueva consulta, hemos cerrado el caso {arg0} y puede crear la nueva consulta haciendo clic en el botón de abajo para que le respondamos lo antes posible.</label>
         <name>Case_Comment_New_Query_Confirmation_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Comment New Query Confirmation Title --></label>
+        <label>Gracias por su confirmación.</label>
         <name>Case_Comment_New_Query_Confirmation_Title</name>
     </customLabels>
     <customLabels>
@@ -5437,15 +5441,15 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Comment_Notification_Template_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Provide_Aditional_Feedback --></label>
+        <label>Por favor, facilite información adicional para que podamos seguir trabajando en este caso.</label>
         <name>Case_Comment_Provide_Aditional_Feedback</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Lik_Label --></label>
+        <label>esta encuesta</label>
         <name>Case_Comment_Survey_Lik_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case_Comment_Survey_Message --></label>
+        <label>Valoramos su opinión. Por favor, háganos saber su opinión sobre la asistencia de IATA&amp;apos en</label>
         <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
@@ -26575,6 +26579,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>Treasury_Dashboard_Premium_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
         <name>Treasury_Dashboard_Service_Name</name>
     </customLabels>
@@ -33297,8 +33309,8 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -33368,6 +33380,19 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34105,6 +34130,22 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35589,6 +35630,15 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Financial Securities --></label>
             <name>Financial Securities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -37401,6 +37451,15 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
