@@ -5010,6 +5010,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>分享</label>
+        <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>已复制常见问题的链接</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
         <label>现在跳过</label>
         <name>CSP_Skip</name>
     </customLabels>
