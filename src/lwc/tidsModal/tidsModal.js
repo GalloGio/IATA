@@ -13,6 +13,7 @@ export default class TidsModal extends LightningElement {
 	@track GLOBAL_MESSAGE = 'Delete all';
 	@track message;
 	@track isCanceable=false;
+	@track isReviewInformation=false;
 
 	@wire(CurrentPageReference) pageRef;
 
@@ -21,7 +22,10 @@ export default class TidsModal extends LightningElement {
 			this.FIELD_MESSAGE =this.fieldErrorSelected.description;
 			if (this.action === 'REQUEST'){
 				this.isCanceable=true;
+			} else if(this.action === 'GEONAME' || this.action === 'MGEONAME') {
+				this.isReviewInformation = true;
 			}
+			
 		}else if(this.fieldErrorSelected){
 			this.FIELD_MESSAGE = 'You are going to delete '+ this.fieldErrorSelected.fieldLabel +' error description?';
 		}

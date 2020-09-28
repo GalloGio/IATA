@@ -33,7 +33,7 @@ public class TIDSVetting {
 	
 	public void approveRequest() {
 		this.isOpen=false;
-		messageError=TIDS_Constant.MSG34;
+		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG34);
 		if (!Schema.sObjectType.Case.isAccessible()){return;}
 		if (!Schema.sObjectType.Case.isUpdateable()){return;}
 		if (!Schema.sObjectType.Accreditation__c.isAccessible()){return;}
@@ -41,8 +41,8 @@ public class TIDSVetting {
 		if (!Schema.sObjectType.EmailTemplate.isAccessible()){return;}
 		if (!Schema.sObjectType.Contact.isAccessible()){return;}
 		if (!Test.isRunningTest()) {getRequestCase();}
-		if (mcase.size()==0){messageError=TIDS_Constant.MSG31;return;}
-		messageError=TIDS_Constant.MSG32;
+		if (mcase.size()==0){messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG31);return;}
+		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG32);
 		if (isVirtualBranchRequest){
 			List<Accreditation__c> a= new List<Accreditation__c>();
 			a= [Select Id, Virtual_Branch_Enabled__c From Accreditation__c
@@ -50,7 +50,7 @@ public class TIDSVetting {
 			if (a.size()>0){
 				a[0].Virtual_Branch_Enabled__c=true;
 				update a;
-			}else{messageError=TIDS_Constant.MSG33; return;}
+			}else{messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG33); return;}
 		}
 		mcase[0].Decision__c='APPROVED';
 		mcase[0].Decision_Date__c=System.now();
@@ -59,9 +59,9 @@ public class TIDSVetting {
 		update mcase;
 		if (isVirtualBranchRequest){
 		   //Send Email to the account contact if any
-		   sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_VB);
+		   TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_VB,null);
 		}else if (isRelinquishRequest){
-		   sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RL);
+			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RL,null);
 		   if (mcase[0].Subject==TIDS_Constant.CASE_SUBJECT_RELINQUISH){
 				TidsBatchRelinquishment nb = new TidsBatchRelinquishment();
 				nb.caseId=vcase.Id;
@@ -70,19 +70,19 @@ public class TIDSVetting {
 			  TidsBatchHelper.finishBuilderRelinquishment(vcase.Id);
 		   }
 		}else if (isReinstateRequest){
-			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RE);
+			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RE,null);
 			TidsBatchHelper.finishBuilderReinstatement(vcase.Id);
 		 }
 	}
 	public void rejectRequest() {
 		this.isOpen=false;
-		messageError=TIDS_Constant.MSG34;
+		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG34);
 		if (!Schema.sObjectType.Case.isAccessible()){return;}
 		if (!Schema.sObjectType.EmailTemplate.isAccessible()){return;}
 		if (!Schema.sObjectType.Contact.isAccessible()){return;}
 		if (!Test.isRunningTest()) {getRequestCase();}
-		if (mcase.size()==0){messageError=TIDS_Constant.MSG31;return;}
-		messageError=TIDS_Constant.MSG35;
+		if (mcase.size()==0){messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG31);return;}
+		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG35);
 		mcase[0].Decision__c='REJECTED';
 		mcase[0].Decision_Date__c=System.now();
 		mcase[0].Status=TIDS_Constant.IS_CLOSED;
@@ -90,13 +90,14 @@ public class TIDSVetting {
 		update mcase;
 		//Send email
 		if (isVirtualBranchRequest){
-			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_VB);
+			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_VB,null);
 		}else if (isRelinquishRequest){
-			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RL);
+			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RL,null);
 		}else if (isReinstateRequest){
-			sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RE);
+			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RE,null);
 		}
 	}
+	/*
 	public static void sendNotification(String caseId, String contactId, String emailTemplate){
 		List<EmailTemplate> emailtemp = [SELECT Id
 		  FROM EmailTemplate
@@ -112,5 +113,5 @@ public class TIDSVetting {
 		email.setTargetObjectId(contactList[0].Id);
 		email.setWhatId(caseId);    
 		if (!Test.isRunningTest()) {Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });}
-	  }
+	  }*/
 }

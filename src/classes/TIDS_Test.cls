@@ -647,7 +647,7 @@ public with sharing class TIDS_Test {
 
 		TIDSHelper.getTidsCase(String.ValueOf(caseId), String.ValueOf(userId));
 		TIDSHelper.assignToCaseOwner(String.ValueOf(caseId));				
-		TIDSUtil.sendNotification(String.ValueOf(caseId), String.ValueOf(contactId));
+		TIDSUtil.sendNotification(String.ValueOf(caseId), String.ValueOf(contactId),'mytemplate',null);
 
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
@@ -1284,7 +1284,7 @@ public with sharing class TIDS_Test {
                                             null,
                                             new Map<String,String>()
 											);
-		TIDSUtil.sendNotification(String.ValueOf(caseId), String.ValueOf(contactId), 'mytemplate');
+		TIDSUtil.sendNotification(String.ValueOf(caseId), String.ValueOf(contactId), 'mytemplate',null);
 		TIDSUtil.getPicklistValues('LGLTYP','Code__c');
 		TIDSUtil.saveFile(String.ValueOf(caseId),'data.json','json','erer',true);
 		TIDSUtil.addAttachment(caseId, 'erer', 'data.json');

@@ -2,7 +2,20 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { CurrentPageReference } from "lightning/navigation";
 import { fireEvent, registerListener } from "c/tidsPubSub";
-import { getSectionInfo, getUserType, getCase, sectionDecision, sectionNavigation, getApplicationType, displaySaveAndQuitButton, SECTION_CONFIRMED } from "c/tidsUserInfo";
+import { 
+	getLocationType,
+	getSectionInfo, 
+	getUserType, 
+	getCase, 
+	sectionDecision, 
+	sectionNavigation, 
+	getApplicationType, 
+	displaySaveAndQuitButton, 
+	SECTION_CONFIRMED,
+	NEW_BRANCH,
+  	NEW_VIRTUAL_BRANCH,
+  	CHG_NAME_COMPANY 
+} from "c/tidsUserInfo";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import saveFile from "@salesforce/apex/TIDSUtil.saveFile";
 import relatedFiles from "@salesforce/apex/TIDSUtil.relatedFiles";
@@ -84,6 +97,40 @@ export default class TidsSupportingDocuments extends LightningElement {
 		}
 		this.nextButtonDisabled();
 		this.showSaveAndQuitButton = displaySaveAndQuitButton({payload:{applicationType: getApplicationType()}});
+		this.setFormText();
+	}
+
+	@track istext1=false
+	@track istext2=false;
+	@track istext3=false;
+	@track istext4=false;
+	setFormText() {
+		let type = getLocationType();
+		let apptype=getApplicationType();
+		this.istext1=true;
+		this.istext2=false;
+		this.istext3=false;
+	
+		if (apptype=== NEW_BRANCH) {
+			this.istext1=false;
+			this.istext2=true;
+			this.istext3=false;					
+		}
+		
+		if (apptype === NEW_VIRTUAL_BRANCH) {
+			this.istext1=false;
+			this.istext2=false;
+			this.istext3=true;
+		}		
+	
+		if (apptype=== CHG_NAME_COMPANY){
+		  	if (type==='HO') {
+				this.istext1=false;
+				this.istext2=false;
+				this.istext3=false;
+				this.istext4=true;
+			}
+		}
 	}
 
 	notifySectionHasError() {

@@ -2,6 +2,7 @@ import { LightningElement, track, api, wire } from "lwc";
 import { CurrentPageReference } from "lightning/navigation";
 import { fireEvent, registerListener } from "c/tidsPubSub";
 import {
+	getLocationType,
 	getSectionInfo,
 	getBusinessrules,
 	getUserType,
@@ -13,8 +14,13 @@ import {
 	getSectionRules,
 	validateEmail,
 	getSfTidsInfo,
-	CHG_NAME_COMPANY,
-	SECTION_CONFIRMED
+	SECTION_CONFIRMED,
+	NEW_BRANCH,
+  	NEW_VIRTUAL_BRANCH,
+  	NEW_HEAD_OFFICE,
+  	CHG_NAME_COMPANY,
+  	CHG_ADDRESS_CONTACT,
+  	CHG_BUSINESS_PROFILE_SPECIALIZATION
 } from "c/tidsUserInfo";
 export default class TidsShareholderDetails extends LightningElement {
 	@wire(CurrentPageReference) pageRef;
@@ -302,8 +308,7 @@ export default class TidsShareholderDetails extends LightningElement {
 	EMAIL = "email";
 	PERCENTAGE = "percentage";
 	PERCENTAGE_NUMBER = "percentage-number";
-	ERROR_MESSAGE_PERCENTAGE_VALUE =
-		"The percentage value needs to be greater than zero";
+	ERROR_MESSAGE_PERCENTAGE_VALUE ="The percentage value needs to be greater than zero";
 
 	get shareholderTypeValues(){
 		return [
@@ -347,6 +352,47 @@ export default class TidsShareholderDetails extends LightningElement {
 		this.showSaveAndQuitButton = displaySaveAndQuitButton({
 			payload: { applicationType: getApplicationType() }
 		});
+		this.setFormText();
+	}
+
+	@track istext1=false
+	@track istext2=false;
+
+	setFormText() {
+		let type = getLocationType();
+		let apptype=getApplicationType();
+		this.istext1=true;
+		this.istext2=false;
+		if (apptype === NEW_HEAD_OFFICE) {}
+
+		if (apptype=== NEW_BRANCH) {}
+		
+		if (apptype === NEW_VIRTUAL_BRANCH) {
+			
+		}		
+	
+		if (apptype=== CHG_NAME_COMPANY){
+		  if (type==='HO') {
+				this.istext1=false;
+				this.istext2=true;
+			}else if (type==='BR' || type==='VB'){
+		  }
+		} 
+	
+		if (apptype === CHG_ADDRESS_CONTACT){
+		   if (type==='HO') {
+			 
+		   }else if (type==='BR') {
+			  
+		   }else if (type==='VB') {
+		   }
+		}
+	
+		if (apptype=== CHG_BUSINESS_PROFILE_SPECIALIZATION){
+		   	if (type==='HO') {
+		   	}else if (type==='BR' || type==='VB') {
+			}
+		}
 	}
 
 	mappingSectionRules(){

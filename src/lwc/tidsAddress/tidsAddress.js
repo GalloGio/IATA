@@ -707,7 +707,7 @@ export default class TidsAddress extends LightningElement{
 geonameIdNotSelected(){
 	this.modalAction='GEONAME';
 	this.cityError.show=true; 
-	this.cityError.description='The city name is not valid.';
+	this.cityError.description='The city entered is not found in our records.\n Select "Review Information" to amend or "Proceed" to continue.';
 	this.fieldErrorSelected = this.cityError;
 	this.modalDefaultMessage = false;
 	this.modalprivateMessage=true;

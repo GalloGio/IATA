@@ -12,9 +12,20 @@
 	</header>
 	<form>
 		<p>
-			To complete your TIDS application, please provide the following documents:
+			<template if:true={istext1}>
+				To complete your TIDS application, please provide the following documents:
+			</template>
+			<template if:true={istext2}>
+				To complete your TIDS Branch application, please provide the following documents:
+			</template>
+			<template if:true={istext3}>
+				To complete your TIDS Virtual Branch application, please provide the following documents:
+			</template>	
+			<template if:true={istext4}>
+				Please provide supporting documentation as evidence of the changes reported
+				<br/>In the case of a change of Ownership or Company Legal Type, we ask that you attach all the following documents:		
+			</template>	
 		</p>
-
 		<template if:true={vettingErrorOptions}>
 			<lightning-textarea
 				class="comment-area-documents"
@@ -26,12 +37,34 @@
 			></lightning-textarea>
 		</template>
 		<ul class="style-icon">
-			<li>Documentation supporting the legal form of the business and ownership of the business entity</li>
-			<li>Copy of the business registration, including tax registration or applicable business registration number</li>
-			<li>Bank letter of statement of account in the name of the business</li>
-			<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
-			<li>Government-issued license for sale of travel-related services (where applicable)</li>
-			<li>Signed copy of the <a href="#">TIDS Terms and Conditions</a></li>
+			<template if:true={istext1}>
+				<li>Documentation supporting the legal form of the business and ownership of the business entity</li>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>Bank letter of statement of account in the name of the business</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the <a href="#">TIDS Terms and Conditions</a></li>
+			</template>
+			<template if:true={istext2}>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the <a href="#">TIDS Terms and Conditions</a></li>
+			</template>
+			<template if:true={istext3}>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the <a href="#">TIDS Terms and Conditions</a></li>	
+			</template>
+			<template if:true={istext4}>
+				<li>Documentation supporting the legal form of the business and ownership of the business entity</li>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>Bank letter of statement of account in the name of the business</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the <a href="#">TIDS Terms and Conditions</a></li>	
+			</template>
 		</ul>
 		<template if:true={vettingErrorOptions}>
 			<lightning-input

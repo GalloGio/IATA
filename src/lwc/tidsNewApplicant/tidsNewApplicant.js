@@ -7,6 +7,7 @@ import { CurrentPageReference,NavigationMixin } from "lightning/navigation";
 import { fireEvent, registerListener } from "c/tidsPubSub";
 // TIDS Configuration/Data Object
 import {
+	getLocationType,
 	getSectionInfo,
 	getUserType,
 	sectionNavigation,
@@ -16,8 +17,8 @@ import {
 	getSfTidsInfo,
 	specialCharsValidation,
 	getSectionRules,
-	CHG_NAME_COMPANY,
-	SECTION_CONFIRMED
+	SECTION_CONFIRMED,
+  	CHG_NAME_COMPANY
 } from "c/tidsUserInfo";
 
 export default class TidsNewApplicant extends NavigationMixin(LightningElement){
@@ -163,7 +164,24 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 		});
 
 		this.init();
+		this.setFormText();
+	}
 
+	@track istext1=false
+	@track istext2=false;
+
+	setFormText() {
+		let type = getLocationType();
+		let apptype=getApplicationType();
+		this.istext1=true;
+		this.istext2=false;
+		
+		if (apptype=== CHG_NAME_COMPANY){
+		  	if (type==='HO') {
+				this.istext1=false;
+				this.istext2=true;
+		  	}
+		}
 	}
 
 	init(){

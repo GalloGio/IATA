@@ -159,10 +159,7 @@ public without sharing class TIDS_Controller {
 		Boolean isNewBranch = false;
 		if (tids.applicationType == TIDS_Constant.NEW_BR){isNewBranch = true;}
 		if (!Schema.sObjectType.Account.isCreateable()){return;}
-		if (!Schema.sObjectType.Contact.isCreateable()){return;}
 		if (!Schema.sObjectType.Account.isUpdateable()){return;}
-		if (!Schema.sObjectType.AMS_Accreditation_Contact__c.isCreateable()){return;}
-		if (!Schema.sObjectType.AMS_Pax_Accreditation_Form__c.isCreateable()){return;}
 		
 		//Try to lock the state to gain exclusive access to the IATA Code generator
 		testUpdateLocking();
@@ -225,7 +222,7 @@ public without sharing class TIDS_Controller {
 			tids.saveBuinessProfiles(tids.userInfo.tidsAccount.Id);
 			tids.saveAMSRole(tids.userInfo.tidsAccount.Id);
 			if (!isNewBranch){grantTIDSPortalAccess(cases[0].ContactId);}
-			if (!Test.isRunningTest()) {TIDSUtil.sendNotification(tidsCaseId, cases[0].ContactId);}
+			if (!Test.isRunningTest()) {TIDSUtil.sendNotification(tidsCaseId, cases[0].ContactId,'TIDS_HO_Approval_Notification',null);}
 			
 		} catch (exception e){
 			Database.rollback(sp);

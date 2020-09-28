@@ -312,13 +312,14 @@ public without sharing class TIDSUtil{
     }
 
     //Notifications
-    
+    /*
     public static void sendNotification(String caseId, String contactId){
 		if (!Schema.sObjectType.EmailTemplate.isAccessible()){TIDSUtil.setError(TIDS_Constant.MSG23);return;}
 		if (!Schema.sObjectType.Contact.isAccessible()){TIDSUtil.setError(TIDS_Constant.MSG24); return;}
 		List<EmailTemplate> emailtemp = [SELECT Id
 			FROM EmailTemplate
-			WHERE DeveloperName = 'TIDS_HO_Approval_Notification' LIMIT 1];
+            WHERE DeveloperName = 'TIDS_HO_Approval_Notification' LIMIT 1];
+        if (!Test.isRunningTest() && emailtemp.size()==0) {return;}  
 		List<Contact> contactList = [SELECT Id, email
 			FROM Contact
 			WHERE Id = :contactId LIMIT 1];
@@ -334,9 +335,8 @@ public without sharing class TIDSUtil{
     
     public static void sendNotification(String caseId, String contactId, String emailTemplate){
         sendEmailNotification(caseId, contactId, emailTemplate, null);
-     
-    }  
-    public static void sendEmailNotification(String caseId, String contactId, String emailTemplate, String noreply){
+    }  */
+    public static void sendNotification(String caseId, String contactId, String emailTemplate, String noreply){
         List<EmailTemplate> emailtemp = [SELECT Id
           FROM EmailTemplate
           WHERE DeveloperName =:emailTemplate Or Name =:emailTemplate LIMIT 1];

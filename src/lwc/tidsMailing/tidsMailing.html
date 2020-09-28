@@ -16,10 +16,18 @@
 		</p>
 		<!-- First section -->
 		<section class="b-address-question">
-			<h2 class="h3">
-				Mailing address of the office for which this application is made
-			</h2>
-			<p>Is the mailing address the same as the physical address below?</p>
+			<template if:true={istext1}>
+				<h2 class="h3">
+					Mailing address of the office for which this application is made
+				</h2>
+				<p>Is the mailing address the same as the physical address below?</p>	
+			</template>
+			<template if:true={istext2}>
+				<h2 class="h3">
+					Mailing address of the Virtual Branch for which this application is made
+				</h2>
+				<p>Your Virtual Branch will have the same physical address as your Head Office. You may however designate a different mailing address.<br/>The below is the physical address of your Head Office on record.</p>	
+			</template>
 			<br/>
 			<template if:true={vettingErrorOptions}>
 				<lightning-input if:false={showMailingAddressFields}

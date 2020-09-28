@@ -3,6 +3,7 @@ import{ CurrentPageReference } from "lightning/navigation";
 import{ fireEvent, registerListener, unregisterListener  } from "c/tidsPubSub";
 import{
 	getSectionInfo,
+	getLocationType,
 	getUserType,
 	sectionNavigation,
 	sectionDecision,
@@ -12,8 +13,9 @@ import{
 	specialCharsValidation,
 	getSectionRules,
 	getSfTidsInfo,
-	CHG_ADDRESS_CONTACT,
-	SECTION_CONFIRMED
+	SECTION_CONFIRMED,
+  	NEW_VIRTUAL_BRANCH,
+  	CHG_ADDRESS_CONTACT
 } from "c/tidsUserInfo";
 import getStates from "@salesforce/apex/TIDSHelper.getState";
 import getLocalPlace from "@salesforce/apex/TIDSHelper.getLocalPlace";
@@ -316,6 +318,27 @@ export default class TidsMailing extends LightningElement {
 
 		// Disable next button
 		this.nextButtonDisabled();
+		this.setFormText();
+	}
+	@track istext1=false
+	@track istext2=false;
+
+	setFormText() {
+		let type = getLocationType();
+		let apptype=getApplicationType();
+		console.log('type:',type,' apptype:',apptype);
+		this.istext1=true;
+		this.istext2=false;
+		if (apptype === NEW_VIRTUAL_BRANCH) {
+			this.istext1=false;
+			this.istext2=true;
+		}	
+		if (apptype === CHG_ADDRESS_CONTACT){
+			if (type==='VB') {
+				this.istext1=false;
+				this.istext2=true;
+		   	}
+		}
 	}
 
 	reportChanges(){
@@ -828,7 +851,7 @@ export default class TidsMailing extends LightningElement {
 	geonameIdNotSelected(){
 		this.modalAction = "MGEONAME";
 		this.cityError.show = true;
-		this.cityError.description = "The city name is not valid.";
+		this.cityError.description = 'The city entered is not found in our records.\n Select "Review Information" to amend or "Proceed" to continue.';
 		this.fieldErrorSelected = this.cityError;
 		this.modalDefaultMessage = false;
 		this.modalprivateMessage = true;
@@ -839,9 +862,9 @@ export default class TidsMailing extends LightningElement {
 		this.openModal = false;
 		console.log("disableMCityGeonameId vettingMode:",this.vettingMode);
 		if (this.vettingMode){
-			 this.handleSave("confirm-review-status");
+			this.handleSave("confirm-review-status");
 		}else{
-			 this.handleSave("confirm-next-step");
+			this.handleSave("confirm-next-step");
 		}
 	}
 	setCitySearchOn(event){

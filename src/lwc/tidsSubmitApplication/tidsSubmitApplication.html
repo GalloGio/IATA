@@ -7,11 +7,22 @@
 		<form>
 			<lightning-spinner alternative-text="Loading" size="large" if:true={spinner}></lightning-spinner>
 				<p>
-					You have successfully completed your TIDS application. Click on "Submit Application" to put forward your application for IATA's review.
+					<template if:true={istext1}>
+						You have successfully completed your TIDS application. Click on "Submit Application" to put forward your application for IATA's review.
+					</template>
+					<template if:true={istext2}>
+						You have successfully completed your application for a TIDS Branch Office. Click on "Submit Application" to put forward your application for IATA's review.
+					</template>
+					<template if:true={istext3}>
+						You have successfully completed your application for a TIDS Virtual Branch. Click on "Submit Application" to put forward your application for IATA's review.
+					</template>
+					<template if:true={istext4}>
+						You have successfully reported your TIDS changes. Click on "Submit Application" to put these forward for IATA's review.
+					</template>
 				</p>
 				<h3>Unsure about any of the information previously entered?</h3>
 				<p>
-					Click on the applicable section in the left-hand panel to review and/or edit the information in question. Once completed, click again on step 9, "Submit Application" to finalize your submission.
+					Click on the applicable section in the left-hand panel to review and/or edit the information in question. Once completed, click again on step "Submit Application" to finalize your submission.
 				</p>
 			<footer>
 				<button type="submit" class="button-error" if:true={rejectButtonShow}>Reject application</button>

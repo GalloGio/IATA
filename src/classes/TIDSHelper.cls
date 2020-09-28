@@ -152,15 +152,10 @@ public without sharing class TIDSHelper {
 		List<IATAISOCountryDTO> options = new List<IATAISOCountryDTO>();
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 
-		Portal_Applications__c service = [ SELECT Id
-					,TIDS_Non_Eligible_Location_Countries__c
-					,TIDS_Non_Eligible_Mailing_Countries__c
-					FROM Portal_Applications__c
-					WHERE Name=:TIDS_Constant.TIDSVALUE
-					LIMIT 1];
-
-		string excludedcountriescode=service.TIDS_Non_Eligible_Location_Countries__c;
-		if (type=='mailing') {excludedcountriescode=service.TIDS_Non_Eligible_Mailing_Countries__c;}
+		getTidsServicesConfiguration();
+		
+		string excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Location_Countries__c;
+		if (type=='mailing') {excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Mailing_Countries__c;}
 		if (excludedcountriescode==null) {excludedcountriescode='';}
 		String nonEligiblesCountries ='\'' +excludedcountriescode.replace(',', '\',\'') +'\'';
 		String query ='SELECT Id ,Name,ISO_Code__c,State_Province_Mandatory__c FROM IATA_ISO_Country__c';
@@ -186,7 +181,15 @@ public without sharing class TIDSHelper {
 	public static List<IATAISOStateDTO> getState(String countryIsoCode){
 		states = new List<IATA_ISO_State__c>();
 		isoStateDto = new List<IATAISOStateDTO>();
-		if (countryIsoCode=='GB') {return isoStateDto;}
+		getTidsServicesConfiguration();
+		List<String> neligible = new List<String>();
+		string nelist = tidsConfiguration.TIDS_Countries_with_Invalid_ISO_States__c;
+		if (nelist!=null && nelist!=''){neligible = nelist.split(',');}
+		if (!String.isEmpty(countryIsoCode) && neligible.size()>0){
+			for(String c:neligible){
+				if (c==countryIsoCode){ return isoStateDto;}
+			}
+		}
 		//read the states
 		states = [SELECT Id, Name, ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c
 			FROM IATA_ISO_State__c
@@ -870,8 +873,8 @@ public without sharing class TIDSHelper {
 				update appsec;
 				apprights[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOS;
 				update apprights;
-				TIDSUtil.sendNotification(accountId, appsec[0].Contact__c, 'Administrators_Role_Swap_Primary');
-				TIDSUtil.sendNotification(accountId, apprights[0].Contact__c, 'Administrators_Role_Swap_Secondary');
+				TIDSUtil.sendNotification(accountId, appsec[0].Contact__c, 'Administrators_Role_Swap_Primary',null);
+				TIDSUtil.sendNotification(accountId, apprights[0].Contact__c, 'Administrators_Role_Swap_Secondary',null);
 			}
 		}
 		//get the list
@@ -963,12 +966,14 @@ public without sharing class TIDSHelper {
 		tidsConfiguration = new Portal_Applications__c();
 		//Get the current user based on the User Id
 		if (!Schema.sObjectType.Portal_Applications__c.isAccessible()){return;}
-		List<Portal_Applications__c> tidsServicesConfiguration = [SELECT Id,Name
+		List<Portal_Applications__c> p = [SELECT Id,Name
+				,TIDS_Non_Eligible_Mailing_Countries__c
 				,TIDS_Total_Ownership_Minimum__c
 				,TIDS_Total_Ownership_Maximum__c
+				,TIDS_Countries_with_Invalid_ISO_States__c
 				,TIDS_Non_Eligible_Location_Countries__c
 			FROM Portal_Applications__c WHERE Name=:TIDS_Constant.TIDSVALUE Limit 1];
-		if (tidsServicesConfiguration.size() > 0){tidsConfiguration  = tidsServicesConfiguration.get(0);}
+		if (p.size() > 0){tidsConfiguration  = p[0];}
 	}
 
 
@@ -1036,8 +1041,10 @@ public without sharing class TIDSHelper {
 			req = new HttpRequest();
 			req.setEndpoint(url);
 			req.setMethod('GET');
-			res = h.send(req);
-			return res.getBody();
+			try {
+				res = h.send(req);
+				return res.getBody();
+			}catch(Exception e){return '';}
 		}
 		return '';
 	}

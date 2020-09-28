@@ -11,7 +11,13 @@
 	</header>
 	<form>
 		<p>
-			Please provide the details of all agency owners or shareholders, including the percentage ownership.<br/><br/>A maximum of 10 owner/shareholder names may be entered. If your business is owned by more than 10 persons/companies, please enter those with the highest percentage ownership in the agency.
+			<template if:true={istext1}>
+				Please provide the details of all agency owners or shareholders, including the percentage ownership.
+			</template>
+			<template if:true={istext2}>
+				The below is the information currently on record. Please amend as applicable.
+			</template>
+			<br/><br/>A maximum of 10 owner/shareholder names may be entered. If your business is owned by more than 10 persons/companies, please enter those with the highest percentage ownership in the agency.
 		</p>
 		<h2 class="h3">
 			<template if:true={vettingErrorOptions}>

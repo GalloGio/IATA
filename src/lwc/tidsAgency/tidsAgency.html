@@ -11,7 +11,13 @@
 	</header>
 	<form>
 		<p>
-			Please provide the information requested below.<br/>
+			<template if:true={istext1}>
+				Please provide the information requested below.
+			</template>
+			<template if:true={istext2}>
+				The below is the information currently on record. Please amend all applicable fields.
+			</template>
+			<br/>
 			<em>Remember, all fields preceded by a (*) are mandatory.</em>
 		</p>
 		<!-- Trading Name Start -->

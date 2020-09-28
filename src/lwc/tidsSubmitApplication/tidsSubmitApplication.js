@@ -1,5 +1,13 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import { getUserType, getCase } from "c/tidsUserInfo";
+import { 
+	getLocationType,
+	getUserType, 
+	getCase,
+	getApplicationType,
+	CHG_NAME_COMPANY,
+	NEW_VIRTUAL_BRANCH,
+	NEW_BRANCH 
+} from "c/tidsUserInfo";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import applicationSubmitted from "@salesforce/apex/TIDS_Controller.applicationSubmitted";
 import { NavigationMixin,CurrentPageReference } from 'lightning/navigation';
@@ -26,6 +34,40 @@ export default class TidsSubmitApplication extends NavigationMixin(LightningElem
 		let userType = getUserType();
 		this.tidsCase = getCase();
 		this.vettingMode = userType === 'vetting' ? true : false;
+		this.setFormText();
+	}
+
+	@track istext1=false
+	@track istext2=false;
+	@track istext3=false;
+	@track istext4=false;
+	setFormText() {
+		let type = getLocationType();
+		let apptype=getApplicationType();
+		this.istext1=true;
+		this.istext2=false;
+		this.istext3=false;
+	
+		if (apptype=== NEW_BRANCH) {
+			this.istext1=false;
+			this.istext2=true;
+			this.istext3=false;					
+		}
+		
+		if (apptype === NEW_VIRTUAL_BRANCH) {
+			this.istext1=false;
+			this.istext2=false;
+			this.istext3=true;
+		}		
+	
+		if (apptype=== CHG_NAME_COMPANY){
+		  	if (type==='HO') {
+				this.istext1=false;
+				this.istext2=false;
+				this.istext3=false;
+				this.istext4=true;
+			}
+		}
 	}
 	handleSendApplication(event) {
 		event.preventDefault();
