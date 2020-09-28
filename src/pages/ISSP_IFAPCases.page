@@ -567,152 +567,158 @@
           <apex:pageMessages />
         </div>  
       </apex:outputPanel>
-                        
-    <apex:outputPanel rendered="{!canUploadAndDelete}" id="btnsSubmitPanel" >  
-     <label><b>{!$Label.IFAP_Overall_Max_size_20mb}</b></label> 
 
-                     <!--  <apex:outputText value="{0,number,0.##}\20" id="sizeLabel"  >
-                        <apex:param value="{!totalSize}" />
-                    </apex:outputText> -->
-  
-     <table border="0" width="100%" align="left"   >
-            <tr>
-    
-                <table id="mytable">
+    <!-- If the account doesn't have access to GxA -->
+    <apex:outputPanel rendered="{!NOT(ifapCaseRec.Account.IATA_ISO_Country__r.GxA_Enable__c)}">
+        <apex:outputPanel rendered="{!canUploadAndDelete}" id="btnsSubmitPanel" >
+            <label><b>{!$Label.IFAP_Overall_Max_size_20mb}</b></label> 
+
+                            <!--  <apex:outputText value="{0,number,0.##}\20" id="sizeLabel"  >
+                                <apex:param value="{!totalSize}" />
+                            </apex:outputText> -->
+        
+            <table border="0" width="100%" align="left"   >
                     <tr>
-                    <td>
-                        <b><apex:outputLabel for="inputfile" value="{!$Label.IFAP_1_Select_the_File} "  styleClass="phase1"/></b> <br/>
-                         <span class="btn btn-default btn-file">
-                            <input class="inputfile phase1" type="file"  name="file" id="inputfile" styleClass="phase1" />
-                        </span>
-                    </td>
-                    
-                    <td> 
-                        <b><apex:outputLabel value="{!$Label.IFAP_2_Click_the_Upload_Financial_Documents_button}" styleClass="phase2"/></b><br/> 
-                        <input id="submitBtn" type="button" class="submit phase2" value="{!$Label.Upload_Financial_Documents}" onclick="sendfileInfo()"/>
-                    </td>
- 
-                    <td>
-
-                        <b><apex:outputLabel value=" {!$Label.IFAP_3_When_you_finished_uploading_please_click_on_the_Confirm_submission_of_do}" styleClass="phase3"/></b><br/>
-                               <apex:commandButton action="{!mergeFilesAndSubmitParams}"   styleclass="btn phase3" 
-                                    onclick="if(!confirm('{!$Label.IFAPAllFilesCheck} \r{!message}')) return false; j$('#loading').show() "
-                               
-                                onComplete=" if({!hasmessage}){ j$('#loading').hide();return false;}alert('{!$Label.IfapSubmissionOfDocsOK}');location.reload();"   
-                                      rerender="messagePanel2"
-                                    styleClass="btn phase3"
-                                    value="{!$Label.IFAP_Confirm_submission_of_documents_to_IATA}"/> 
-                    </td> 
-                   </tr> <style>
-                    .phase2,.phase3{display:none;}
-                    #mytable{width:100%;}
-                    #mytable tr td{width:30%; font-weight:bold; font-size:110%;vertical-align:baseline;}
-                    #mytable tr td:last-child{width:40%;}
-                    #submitBtn{
-                              color: #333;
-                              margin: 1px;
-                              padding: 5px 6px;
-                              border: 1px solid #b5b5b5;
-                              background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;
-                              border-bottom-color: #7f7f7f;
-                              font-weight: bold;
-                              font-size: .9em;
-                              -moz-border-radius: 3px;
-                              -webkit-border-radius: 3px;
-                              border-radius: 3px;
-                              }
-                    #inputfile{
-                              color: #333;
-                              margin: 1px;
-                              padding: 2px 3px;
-                              border-bottom-color: #7f7f7f;
-                              font-weight: bold;
-                              font-size: .9em;
-                              -moz-border-radius: 3px;
-                              -webkit-border-radius: 3px;
-                              border-radius: 3px;
-                              }
-                tr{
-                        display:!{if(canUploadAndDelete,'block','none')}
-                    }       
-                    iframe{display:none;}       
-                </style>
-                </table>
-               
-
-             </tr>
-        </table>
-   </apex:outputPanel>   
-
-    <apex:outputPanel id="theConPan">
-        <apex:pageblock id="fileList"> 
-
-            <apex:pageBlockTable id="tablefileones"  value="{!listfile}" var="fileone" Title="{!$Label.Financial_Documents}">
-
-                <apex:column headerValue="Action" width="{!if(canUploadAndDelete,'120','60')}"   >
-                 
-                  <a class="actionLink" title="view" escape="false" target="_blank" 
-                  onclick="getLInk('{!fileone.fullName}');" style="color:#015ba7; cursor: pointer;"  >View</a> 
-                     <script>
-                     
-                          function getLInk(fileName) {
-                         // alert(''+fileName);
-                           j$("#loading").show();
-                            setTimeout(function(){
-                                try{
-                             
-                                    AmazonFinancialCtrl.getExpiringLinkIfap(fileName,function(result, event){
-                                            var result2= result.replace("&amp;","&"); 
-                                            var newWin = window.open(result2);
-                                            if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
-                                                alert('Please check the pop-up settings of your browser!');
-                                                        }
-                                            j$("#loading").hide();
-                                    },{escape:false});
-                                
-                                   
-                                }catch(err){alert( 'Please try again later if the error persists contact our support');}
-                                
-                              },500);
-                            }
-                     
-                     </script> 
-                     
-                   {!if(canUploadAndDelete,' | ','')} 
-    <apex:commandLink action="{!fileone.deletefile}" rendered="{!canUploadAndDelete}"  
-                        onclick=" if(!confirm('{!$Label.IfapDelete}'))return false; j$('#loading').show(); " reRender="messagePanel2"
-                                 value="Delete" style="color:#015ba7; cursor: pointer;" onComplete=" if(!{!listFile.empty})refreshListDoc(); return false;refreshAll();" />
-              <!--   <apex:commandLink rendered="{!canUploadAndDelete}"  
-                       reRender="fileList"
-                        onclick=" if(!confirm('{!$Label.IfapDelete}'))return false;deleteFile('{!fileone.name}');j$('#loading').show(); "
-                                 value="Delete" style="color:#015ba7; cursor: pointer;"  />    -->
-                </apex:column>
-
-                <apex:column headerValue="{!$Label.IFAP_name}">
-                    <apex:outputText value="{!fileone.name}"/>
-                </apex:column>
-
-
-                <apex:column headerValue="Size">
-                       <apex:outputText value="{0,number,0.##} MB">
-                        <apex:param value="{!fileone.size}" />
-                    </apex:outputText>
-                </apex:column>
-
-                <apex:column headerValue="Created Date" rendered="{!renderLast2Columns }">
-                    <apex:outputText value="{!fileone.lastModified}"/>
-                </apex:column>
+                        <table id="mytable">
+                            <tr>
+                                    <td>
+                                        <b><apex:outputLabel for="inputfile" value="{!$Label.IFAP_1_Select_the_File} "  styleClass="phase1"/></b> <br/>
+                                        <span class="btn btn-default btn-file">
+                                            <input class="inputfile phase1" type="file"  name="file" id="inputfile" styleClass="phase1" />
+                                        </span>
+                                    </td>
+                                    
+                                    <td> 
+                                        <b><apex:outputLabel value="{!$Label.IFAP_2_Click_the_Upload_Financial_Documents_button}" styleClass="phase2"/></b><br/> 
+                                        <input id="submitBtn" type="button" class="submit phase2" value="{!$Label.Upload_Financial_Documents}" onclick="sendfileInfo()"/>
+                                    </td>
                 
-                <apex:column headerValue="Created By">
-                    <apex:outputText value="{!fileone.createdBy}" rendered="{!renderLast2Columns }"/>
-                </apex:column>
+                                    <td>
 
-            </apex:pageBlockTable>
-            <script>
-                 j$("#loading").hide();
-            </script>
-        </apex:pageblock>
-</apex:outputPanel>
+                                        <b><apex:outputLabel value=" {!$Label.IFAP_3_When_you_finished_uploading_please_click_on_the_Confirm_submission_of_do}" styleClass="phase3"/></b><br/>
+                                            <apex:commandButton action="{!mergeFilesAndSubmitParams}"   styleclass="btn phase3" 
+                                                    onclick="if(!confirm('{!$Label.IFAPAllFilesCheck} \r{!message}')) return false; j$('#loading').show() "
+                                            
+                                                onComplete=" if({!hasmessage}){ j$('#loading').hide();return false;}alert('{!$Label.IfapSubmissionOfDocsOK}');location.reload();"   
+                                                    rerender="messagePanel2"
+                                                    styleClass="btn phase3"
+                                                    value="{!$Label.IFAP_Confirm_submission_of_documents_to_IATA}"/> 
+                                    </td> 
+                            </tr> <style>
+                                    .phase2,.phase3{display:none;}
+                                    #mytable{width:100%;}
+                                    #mytable tr td{width:30%; font-weight:bold; font-size:110%;vertical-align:baseline;}
+                                    #mytable tr td:last-child{width:40%;}
+                                    #submitBtn{
+                                            color: #333;
+                                            margin: 1px;
+                                            padding: 5px 6px;
+                                            border: 1px solid #b5b5b5;
+                                            background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;
+                                            border-bottom-color: #7f7f7f;
+                                            font-weight: bold;
+                                            font-size: .9em;
+                                            -moz-border-radius: 3px;
+                                            -webkit-border-radius: 3px;
+                                            border-radius: 3px;
+                                            }
+                                    #inputfile{
+                                            color: #333;
+                                            margin: 1px;
+                                            padding: 2px 3px;
+                                            border-bottom-color: #7f7f7f;
+                                            font-weight: bold;
+                                            font-size: .9em;
+                                            -moz-border-radius: 3px;
+                                            -webkit-border-radius: 3px;
+                                            border-radius: 3px;
+                                            }
+                                tr{
+                                        display:!{if(canUploadAndDelete,'block','none')}
+                                    }       
+                                    iframe{display:none;}       
+                                </style>
+                        </table>
+                    </tr>
+            </table>
+        </apex:outputPanel>   
+
+        <apex:outputPanel id="theConPan">
+            <apex:pageblock id="fileList"> 
+
+                <apex:pageBlockTable id="tablefileones"  value="{!listfile}" var="fileone" Title="{!$Label.Financial_Documents}">
+
+                    <apex:column headerValue="Action" width="{!if(canUploadAndDelete,'120','60')}"   >
+                    
+                    <a class="actionLink" title="view" escape="false" target="_blank" 
+                    onclick="getLInk('{!fileone.fullName}');" style="color:#015ba7; cursor: pointer;"  >View</a> 
+                        <script>
+                        
+                            function getLInk(fileName) {
+                            // alert(''+fileName);
+                            j$("#loading").show();
+                                setTimeout(function(){
+                                    try{
+                                
+                                        AmazonFinancialCtrl.getExpiringLinkIfap(fileName,function(result, event){
+                                                var result2= result.replace("&amp;","&"); 
+                                                var newWin = window.open(result2);
+                                                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                                                    alert('Please check the pop-up settings of your browser!');
+                                                            }
+                                                j$("#loading").hide();
+                                        },{escape:false});
+                                    
+                                    
+                                    }catch(err){alert( 'Please try again later if the error persists contact our support');}
+                                    
+                                },500);
+                                }
+                        
+                        </script> 
+                        
+                    {!if(canUploadAndDelete,' | ','')} 
+                        <apex:commandLink action="{!fileone.deletefile}" rendered="{!canUploadAndDelete}"  
+                            onclick=" if(!confirm('{!$Label.IfapDelete}'))return false; j$('#loading').show(); " reRender="messagePanel2"
+                                    value="Delete" style="color:#015ba7; cursor: pointer;" onComplete=" if(!{!listFile.empty})refreshListDoc(); return false;refreshAll();" />
+                        <!--   <apex:commandLink rendered="{!canUploadAndDelete}"  
+                                reRender="fileList"
+                                    onclick=" if(!confirm('{!$Label.IfapDelete}'))return false;deleteFile('{!fileone.name}');j$('#loading').show(); "
+                                            value="Delete" style="color:#015ba7; cursor: pointer;"  />    -->
+                    </apex:column>
+
+                    <apex:column headerValue="{!$Label.IFAP_name}">
+                        <apex:outputText value="{!fileone.name}"/>
+                    </apex:column>
+
+
+                    <apex:column headerValue="Size">
+                        <apex:outputText value="{0,number,0.##} MB">
+                            <apex:param value="{!fileone.size}" />
+                        </apex:outputText>
+                    </apex:column>
+
+                    <apex:column headerValue="Created Date" rendered="{!renderLast2Columns }">
+                        <apex:outputText value="{!fileone.lastModified}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Created By">
+                        <apex:outputText value="{!fileone.createdBy}" rendered="{!renderLast2Columns }"/>
+                    </apex:column>
+
+                </apex:pageBlockTable>
+                <script>
+                    j$("#loading").hide();
+                </script>
+            </apex:pageblock>
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    <!-- If the account does have access to GxA -->
+    <apex:outputPanel rendered="{!ifapCaseRec.Account.IATA_ISO_Country__r.GxA_Enable__c}">
+        <b><apex:outputLabel value="{!$Label.Upload_GxA}"  styleClass="phase1"/></b> <br/>
+        <apex:outputLink value="{!gxaLink}" onclick="" id="GxALink" target="_blank">{!$Label.GxA_Link_Label}</apex:outputLink>
+    </apex:outputPanel>
 
     </apex:form>  
   </apex:outputPanel>

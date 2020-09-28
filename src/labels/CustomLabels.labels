@@ -11044,6 +11044,13 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <value>Go to IATA corporate site</value>
     </labels>
     <labels>
+        <fullName>GxA_Link_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GxA Link Label</shortDescription>
+        <value>GxA Website</value>
+    </labels>
+    <labels>
         <fullName>Handling</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46402,6 +46409,13 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Upload_Financial_Documents</shortDescription>
         <value>Upload Financial Documents</value>
+    </labels>
+    <labels>
+        <fullName>Upload_GxA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Upload GxA</shortDescription>
+        <value>To upload the financial documents please use the link below.</value>
     </labels>
     <labels>
         <fullName>UserRequestPortalAccess</fullName>
