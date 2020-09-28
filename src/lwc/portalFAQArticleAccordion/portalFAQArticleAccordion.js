@@ -69,9 +69,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         return this._faqObject;
     }
     set faqObject(value) {
-        console.log('set faqObject');
         let _value = JSON.parse(JSON.stringify(value));
-        console.log(_value);
         this._faqObject = _value;
         this.language = this._faqObject.language !== undefined && this._faqObject.language !== '' ? this._faqObject.language : '';
 
@@ -305,8 +303,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     
     // GET ARTICLE'S FEEDBACKS ACCORDING TO SESSION COOKIE AND ARTICLES BEING DISPLAYED
     articlesFeedback() {
-        console.log('this.sessionCookie'+this.sessionCookie);
-        console.log('this.this.articleIds'+this.articleIds);
          getArticlesFeedback({ articleIds : this.articleIds, sessionCookie : this.sessionCookie })
             .then(result => {
                 let res = JSON.parse(JSON.stringify(result));
@@ -325,7 +321,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                 this.articles = articleVals;
                 this.loading = false;
             }).catch(error=>{
-                console.log(error);
+                this.loading = false;
             }); 
     }
 
