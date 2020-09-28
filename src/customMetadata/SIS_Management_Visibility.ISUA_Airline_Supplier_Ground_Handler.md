@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Category__c</field>
-        <value xsi:type="xsd:string">Ground Handler</value>
+        <value xsi:type="xsd:string">Ground Service Provider</value>
     </values>
     <values>
         <field>Is_Visible__c</field>
