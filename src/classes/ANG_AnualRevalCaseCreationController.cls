@@ -293,6 +293,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		return options;
 	}
 
+	public void resetCountryState(){
+		this.country = null;
+		this.state = null;
+	}
+
 	private Map<ID, Map<ID,String>> isoStateCountryMap;
 
 	public List<SelectOption> getcountryobj() {

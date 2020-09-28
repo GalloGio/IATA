@@ -142,7 +142,7 @@
 						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
 						<apex:selectList size="1" value="{!region}" styleClass="listWidth">
 							<apex:selectoptions value="{!regionobj}"/>
-							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons,parameterState"/>
+							<apex:actionSupport event="onchange" action="{!resetCountryState}" reRender="parameter1,parameter2,parameter3,parameter4,buttons,parameterState"/>
 						</apex:selectList>
 					</apex:outputPanel>
 				</apex:pageblockSectionItem>
@@ -155,7 +155,7 @@
 						<apex:outputPanel styleClass="requiredBlock" layout="block"/>
 						<apex:selectList size="1" value="{!mode}" styleClass="listWidth">
 							<apex:selectoptions value="{!modeObj}"/>
-							<apex:actionSupport event="onchange" reRender="parameter1,parameter2,parameter3,parameter4,parameter5,Overview,buttons,parameterState"/>
+							<apex:actionSupport event="onchange" action="{!resetCountryState}" reRender="parameter1,parameter2,parameter3,parameter4,buttons,parameterState"/>
 						</apex:selectList>
 					</apex:outputPanel>
 				</apex:pageblockSectionItem>
@@ -169,7 +169,7 @@
 					<apex:outputPanel styleClass="requiredInput" layout="block">
 						<apex:selectList size="1" value="{!month}" id="month" styleClass="listWidth">
 							<apex:selectoptions value="{!monthList}"/>
-							<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons,parameterState"/>
+							<apex:actionSupport event="onchange" reRender="parameter4,buttons,parameterState"/>
 						</apex:selectList>
 					</apex:outputPanel>
 				</apex:pageblockSectionItem>
@@ -183,7 +183,7 @@
 					<apex:outputPanel styleClass="requiredInput" layout="block">
 						<apex:selectList size="1" value="{!country}" id="country">
 							<apex:selectoptions value="{!countryObj}"/>
-							<apex:actionSupport event="onchange" reRender="parameter4,parameter5,Overview,buttons,parameterState"/>
+							<apex:actionSupport event="onchange" reRender="parameter4,buttons,parameterState"/>
 						</apex:selectList>
 					</apex:outputPanel>
 				</apex:pageblockSectionItem>
@@ -195,7 +195,7 @@
 				<apex:pageBlockSectionItem rendered="{!mode == 'IATA Code' && !(region == 'Select Region')}">
 					<apex:outputLabel >IATA Code</apex:outputLabel>
 					<apex:inputText id="iataCode" label="IATA Code" value="{!iataCode}" styleClass="inputWidth">
-						<apex:actionSupport event="onkeyup" reRender="parameter4,parameter5,Overview,buttons,parameterState"/>
+						<apex:actionSupport event="onkeyup" reRender="parameter4,buttons,parameterState"/>
 						<script>
 							setPasteListeners();
 						</script>
@@ -219,7 +219,7 @@
 			<apex:pageBlockSection id="parameter4">
 				<div align="center">
 					<apex:pageBlockSectionItem >
-						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableSearchButton}" status="blockEditing" reRender="Overview, parameter5, buttons, actionButton2, StatusPageBlock, noResultsPanel" oncomplete="checkSelectAllOnCurrentPage();"/>
+						<apex:commandButton value="Search Agencies" action="{!searchAgencies}" id="actionButton" disabled="{!shouldDisableSearchButton}" status="blockEditing" reRender="buttons, actionButton2, StatusPageBlock, noResultsPanel" oncomplete="checkSelectAllOnCurrentPage();"/>
 					</apex:pageBlockSectionItem>
 				</div>
 
