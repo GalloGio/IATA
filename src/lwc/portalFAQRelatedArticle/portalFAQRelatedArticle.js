@@ -59,7 +59,6 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     }
 
     renderSearchArticles(searchParam) {
-        console.log(searchParam);
         if(searchParam != undefined && searchParam != ''){
             this.isRendered=false;
             try {
