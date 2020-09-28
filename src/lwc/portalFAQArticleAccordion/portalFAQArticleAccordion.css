@@ -5,6 +5,12 @@
     width: 100%;
 }
 
+.linkHolder{
+    bottom: 0;
+    right: 0;
+    z-index:
+}
+
 .modalHeader {
     font-size: 20px;
     font-weight: 500;

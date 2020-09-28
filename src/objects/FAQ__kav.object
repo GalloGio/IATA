@@ -60,12 +60,12 @@
 IF( ISPICKVAL(Language,&apos;en_US&apos;),
  IF($Organization.Id ==&apos;00D2000000008TF&apos;,
    IF(IsVisibleInPkb==true,
-     &apos;https://portal.iata.org/s/faq-article?article=&apos;+UrlName,
-     IF(IsVisibleInPrm,&apos;https://portal.iata.org/s/support-view-article?article=&apos;+UrlName,&apos;Article not available in the Portal&apos;)
+     &apos;https://portal.iata.org/pkb/s/article/&apos;+UrlName,
+     IF(IsVisibleInPrm,&apos;https://portal.iata.org/s/article/&apos;+UrlName,&apos;Article not available in the Portal&apos;)
    ),
    IF(IsVisibleInPkb==true,
-    &apos;/s/faq-article?article=&apos;+UrlName,
-    IF(IsVisibleInPrm,&apos;/s/support-view-article?article=&apos;+UrlName,&apos;Article not available in the Portal&apos;)
+    &apos;pkb/s/article/&apos;+UrlName,
+    IF(IsVisibleInPrm,&apos;/s/article/&apos;+UrlName,&apos;Article not available in the Portal&apos;)
    )
  ),
  &apos;Check English version for URL&apos;
