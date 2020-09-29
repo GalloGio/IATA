@@ -9,6 +9,7 @@ public without sharing class TIDS_Constant {
     public final static String RT_AIRPORT='AIRPORT';
     public final static String RT_AGENCY = 'AGENCY';
     public final static String RT_IATA_AGENCY = 'AGENCY';
+    
 
     public final static String ERROR_CON1 = 'TIDS_ACCES_COND1';
     public final static String ERROR_CON2_1 = 'TIDS_ACCES_COND2_1';
@@ -65,6 +66,7 @@ public without sharing class TIDS_Constant {
     public final static String IS_CUSTOMER='Pending Customer';
     public final static String IS_APPROVED='Approved';
     public final static String IS_REJECTED='Rejected';
+    public final static String IS_APPREJECTED='Application Rejected';
 
     public final static String CHG_NAME='chg-name-company';
     public final static String CHG_ADDRESS='chg-address-contact';

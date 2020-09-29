@@ -16,13 +16,12 @@ public without sharing class TIDS_Controller {
 					tids.runInheritancebatch(caseId[0],false);  
 				}
 			}
-		} catch (Exception e){TIDSUtil.setError(e.getMessage());}
+		} catch (Exception e){TIDSUtil.setError(e.getMessage(),true);}
 	}
 
 	@AuraEnabled(cacheable=false)
 	public static TIDSUtil.ErrorWrapper applicationSubmitted(String caseId, String applicationData, String applicationType){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		if (!Schema.sObjectType.Case.isUpdateable()){TIDSUtil.setError(TIDS_Constant.MSG3);return TIDSUtil.iataCodeError;}
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		Case tidsCase = new Case();
 		Savepoint sp = Database.setSavepoint();
@@ -43,7 +42,7 @@ public without sharing class TIDS_Controller {
 			}
 			TIDSUtil.iataCodeError.reason ='Application Submitted';
 			update tidsCase;
-		} catch (Exception e){TIDSUtil.setError(e.getMessage());}    
+		} catch (Exception e){TIDSUtil.setError(e.getMessage(),true);}    
 		if (TIDSUtil.iataCodeError.hasAnError) {Database.rollback(sp);}
 		return TIDSUtil.iataCodeError;
 	}
@@ -57,10 +56,6 @@ public without sharing class TIDS_Controller {
 		String applicationsettings,
 		String reason){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		// Make sure we can update the database before even trying
-		if (!Schema.sObjectType.Case.isUpdateable()){TIDSUtil.setError(TIDS_Constant.MSG3); return TIDSUtil.iataCodeError;}
-		// Make sure we can update the database before even trying
-		if (!Schema.sObjectType.CaseComment.isCreateable()){TIDSUtil.setError(TIDS_Constant.MSG17);return TIDSUtil.iataCodeError;}
 		//if (true) return 'return';
 		String result = 'Updated';    
 		cases = TIDSUtil.getTidsCases(caseId,false);
@@ -68,10 +63,10 @@ public without sharing class TIDS_Controller {
 		if (cases.size() > 0){
 			if (applicationDecision==TIDS_Constant.IS_APPROVED){
 				if (cases[0].Status==TIDS_Constant.IS_CLOSED){
-					TIDSUtil.setError(TIDS_Constant.MSG11);
+					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
-				}else if ((cases[0].Account.IATACode__c!=null && cases[0].Account.IATACode__c!='' && cases[0].Account.RecordType.DeveloperName=='IATA_Agency' && applicationType==TIDS_Constant.NEW_HO)){
-					TIDSUtil.setError(TIDS_Constant.MSG11);
+				}else if ((!String.isEmpty(cases[0].Account.IATACode__c) && cases[0].Account.RecordType.DeveloperName=='IATA_Agency' && applicationType==TIDS_Constant.NEW_HO)){
+					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
 				}
 			}
@@ -98,7 +93,7 @@ public without sharing class TIDS_Controller {
 				//Account Creation  
 				tidsGenerateIATACode(caseId, null, false);
 			}
-		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision=='Application Rejected'  || applicationDecision==TIDS_Constant.IS_CLOSED ){
+		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
 		}
@@ -108,19 +103,19 @@ public without sharing class TIDS_Controller {
 			insert c;
 		}
 		tidsCase.Decision_Date__c = System.Now();
+		CaseTriggerHelper.isDone = true;
 		update tidsCase;
+		CaseTriggerHelper.isDone = false;
 		return TIDSUtil.iataCodeError;
 	}
 
 	private static void grantTIDSPortalAccess(Id contactId){
-		if (!Schema.sObjectType.Portal_Application_Right__c.isAccessible()){return;}
-		if (!Schema.sObjectType.Portal_Application_Right__c.isCreateable()){return;}
-		if (!Schema.sObjectType.Portal_Applications__c.isAccessible()){return;}
-
 		List<Portal_Application_Right__c> portalright = new List<Portal_Application_Right__c>();
-		portalright = [SELECT Id
-			FROM Portal_Application_Right__c
-			WHERE Contact__c = :contactId LIMIT 1];
+		portalright = [SELECT Id,Right__c,Access_Status_Reason__c 
+				FROM Portal_Application_Right__c
+				WHERE Contact__c = :contactId
+					AND Portal_Application__r.Name=:TIDS_Constant.TIDSVALUE
+			 	LIMIT 1];
 		if (portalright.size() == 0){
 			List<Portal_Applications__c> portals = new List<Portal_Applications__c>();
 			portals = [SELECT Id FROM Portal_Applications__c WHERE Name=:TIDS_Constant.TIDSVALUE LIMIT 1];
@@ -132,6 +127,10 @@ public without sharing class TIDS_Controller {
 			newportalright.Portal_Application__c = portals[0].Id;
 			newportalright.Enable_Notifications__c = true;
 			insert newportalright;
+		}else{
+			portalright[0].Right__c = 'Access Granted';
+			portalright[0].Access_Status_Reason__c = 'TIDS Admin HO Primary';
+			update portalright;
 		}
 	}
 	
@@ -139,13 +138,12 @@ public without sharing class TIDS_Controller {
 	private static vTIDS tids {get;set;}
 	private static List<IATA_ISO_State__c> states {get;set;}
 	private static void testUpdateLocking(){
-		if (!Schema.sObjectType.IATA_ISO_State__c.isAccessible()){TIDSUtil.setError(TIDS_Constant.MSG15); return;}
 		states  = new List<IATA_ISO_State__c>();
 		try {
 			states = [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.CurrencyIsoCode
 				FROM IATA_ISO_State__c
 				WHERE ISO_Code__c = :TIDS_Constant.STATEISOCODE LIMIT 1];
-		} catch (exception e){TIDSUtil.setError(TIDS_Constant.MSG16);}
+		} catch (exception e){TIDSUtil.setError(TIDS_Constant.MSG16,false);}
 	}
 	//Will emulate the Staging values based on a minimum of information
 	//provided to run the generatedAgencyIATACode(String accountId, String onlineAccreditationId)
@@ -158,8 +156,6 @@ public without sharing class TIDS_Controller {
 
 		Boolean isNewBranch = false;
 		if (tids.applicationType == TIDS_Constant.NEW_BR){isNewBranch = true;}
-		if (!Schema.sObjectType.Account.isCreateable()){return;}
-		if (!Schema.sObjectType.Account.isUpdateable()){return;}
 		
 		//Try to lock the state to gain exclusive access to the IATA Code generator
 		testUpdateLocking();
@@ -200,7 +196,7 @@ public without sharing class TIDS_Controller {
 				//new code
 				ANG_OscarProcessHelper.EntityUpdater upd = AmsIataCodeGenerator.generatedAgencyIATACode(theFormAccount,theForm, null);
 				//new code
-				if (upd.isFaulty){TIDSUtil.setError(upd.errorMessage); Database.rollback(sp); return;}
+				if (upd.isFaulty){TIDSUtil.setError(upd.errorMessage,true); Database.rollback(sp); return;}
 				theFormAccount = (account) upd.acctMap.get(tids.userInfo.tidsAccount.Id);
 				iataCode = theFormAccount.IATAcode__c;
 				iataCheckDigit =theFormAccount.Check_Digit__c;
@@ -226,13 +222,13 @@ public without sharing class TIDS_Controller {
 			
 		} catch (exception e){
 			Database.rollback(sp);
-			TIDSUtil.setError(e.getMessage());
+			TIDSUtil.setError(e.getMessage(),true);
 		}
 		
 		return;
 	}
 	public static void loadTIDSFromJson(string tidsjson){
-		try{tids = (vTIDS) JSON.deserialize(tidsjson, vTIDS.class);}catch(Exception e){TIDSUtil.setError(e.getMessage());}
+		try{tids = (vTIDS) JSON.deserialize(tidsjson, vTIDS.class);}catch(Exception e){TIDSUtil.setError(e.getMessage(),true);}
 	}
 	public class vuserInfo {
 		public String Id {get;set;}
@@ -609,7 +605,6 @@ public without sharing class TIDS_Controller {
 		}
 		
 		public void getRoles(Id accountId){
-			if (!Schema.sObjectType.AMS_Account_Role__c.isAccessible()){return;}
 			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId);
 			List<vShareholderDetails> values = new List<vShareholderDetails>();
 			//   this.sections.ShareholderDetails.values;
@@ -629,7 +624,6 @@ public without sharing class TIDS_Controller {
 										,boolean isFromContact
 										,boolean isFromRelatedAccount){
 			List<Account> mapaccounts = new List<Account>();
-			if (!Schema.sObjectType.Account.isAccessible()){return mapaccounts;}
 			if (isFromRelatedAccount){
 				List<Account> relatedobjects = new List<Account>();
 				relatedobjects = [SELECT ParentId, Location_Type__c FROM Account WHERE Id=:objectId Limit 1];
@@ -638,7 +632,6 @@ public without sharing class TIDS_Controller {
 				if (transactiontype!='HO'){objectId=relatedobjects[0].ParentId;}
 			}
 			if (isFromContact){
-				if (!Schema.sObjectType.Contact.isAccessible()){return mapaccounts;}
 				List<Contact> relatedobjects = new List<Contact>();
 				relatedobjects = [SELECT AccountId FROM Contact WHERE Id=:objectId Limit 1];
 				if (relatedobjects.size()==0){return mapaccounts;}
@@ -696,16 +689,13 @@ public without sharing class TIDS_Controller {
 		private Map<String, Id> geonameids {get;set;}
 		public void setGeonames(){
 		 	geonameids = new Map<String, Id>();
-		 	try{
-				if (this.sections.Address.values.citygeonameId != null){geonameids.put(this.sections.Address.values.citygeonameId, null);}
-			}catch(Exception e){}
-			if (this.sections.Mailing.values.citygeonameId != null){geonameids.put(this.sections.Mailing.values.citygeonameId, null);}
+		 	if (!String.isEmpty(this.sections.Address.values.citygeonameId)){geonameids.put(this.sections.Address.values.citygeonameId, null);}
+			if (!String.isEmpty(this.sections.Mailing.values.citygeonameId)){geonameids.put(this.sections.Mailing.values.citygeonameId, null);}
 			readGeonames();
 		}
 		
 		public void readGeonames(){
 			// Make sure we can update the database before even trying
-			if (!Schema.sObjectType.IATA_ISO_City__c.isAccessible()){return;}
 			List<IATA_ISO_City__c> geonames = new List<IATA_ISO_City__c>();
 			geonames = [SELECT Id,GeonameId__c
 										FROM IATA_ISO_City__c
@@ -846,8 +836,6 @@ public without sharing class TIDS_Controller {
 		//The batch will copy data from HO to BR or VB
 		//with sub data such as ownership
 		private void runInheritanceBatch(Id caseId, boolean isCreateAccount){
-			if (!Schema.sObjectType.Account.isCreateable() && isCreateAccount ){return;}
-			if (!Schema.sObjectType.Account.isUpdateable() && isCreateAccount ){return;}
 			upsert mapaccount;
 			saveBuinessProfiles(mapaccount.Id);
 			saveAMSRole(mapaccount.Id);
@@ -1042,10 +1030,6 @@ public without sharing class TIDS_Controller {
 			//expiration date on the owner
 			//check expiration date and disable existing one and create new owners
 			//Action and Id to add in the json
-			if (!Schema.sObjectType.AMS_Account_Role__c.isAccessible()){return;}
-			if (!Schema.sObjectType.AMS_Account_Role__c.isCreateable()){return;}
-			if (!Schema.sObjectType.AMS_Account_Role__c.isDeletable()){return;}
-			if (!Schema.sObjectType.AMS_Agency_Profile__c.isDeletable()){return;}
 			
 			Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 			
@@ -1068,11 +1052,11 @@ public without sharing class TIDS_Controller {
 				for (AMS_Account_Role__c o: amsroles){
 					 if (delset.Contains(o.Id)){continue;}
 					 if (o.Owner_Category__c==n.Owner_Category__c && 
-							 o.Owner_Email__c==n.Owner_Email__c &&
-							 o.Owner_Name__c==n.Owner_Name__c){
-						 n=o;
-						 n.Percentage__c = Decimal.ValueOf(item.percentage);
-						 delset.add(o.Id);
+						o.Owner_Email__c==n.Owner_Email__c &&
+						o.Owner_Name__c==n.Owner_Name__c){
+						n=o;
+						n.Percentage__c = Decimal.ValueOf(item.percentage);
+						delset.add(o.Id);
 					 }
 				}
 				newroles.add(n);

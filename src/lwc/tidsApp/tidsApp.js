@@ -324,6 +324,7 @@ export default class TidsApp extends LightningElement {
 			.then((result) => {
 				let sfInfo = JSON.parse(JSON.stringify(result));
 				console.log("currentUserInfo:result", JSON.stringify(result));
+				console.log("tids Conditions", JSON.stringify(result.error));
 				this.mappingUserInfo(sfInfo);
 
 				let tidsConfiguration = JSON.parse(sfInfo.tidsConfiguration);
@@ -335,7 +336,6 @@ export default class TidsApp extends LightningElement {
 				console.log("setConfiguration(tidsConfiguration)");
 				createMenu(tidsConfiguration);
 				console.log("createMenu(tidsConfiguration)");
-
 				if (Object.keys(result.error).length > 0) {
 					console.log("tids Conditions", JSON.stringify(result.error));
 					// TIDS Conditions

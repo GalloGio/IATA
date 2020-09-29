@@ -83,8 +83,8 @@ export default class TidsApplicationDecision extends LightningElement {
 	handleApproveApplication(event) {
 		event.preventDefault();
 		let applicationDecisionResult = this.setApplicationDecision({decision: APPLICATION_APPROVED});
-		let comment = 'Last TIDS Application has been Approved and this case is now Closed';
-		this.update('Approved', applicationDecisionResult,comment);
+		//let comment = 'Last TIDS Application has been Approved and this case is now Closed';
+		this.update('Approved', applicationDecisionResult,null);
 	}
 
 	handleContactApplication(event) {

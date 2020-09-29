@@ -16,7 +16,6 @@ public without sharing class TIDSUtil{
     }
     public static List<Case> getTidsCases(string objectId, boolean isDraft){
         List<Case> cases = new List<Case>();
-        if (!Schema.sObjectType.Case.isAccessible()){setError('Case is not accessible.'); return cases;}
         if (isDraft){
 			cases = [SELECT Id
 				FROM Case
@@ -59,10 +58,14 @@ public without sharing class TIDSUtil{
           WHERE Id=:objectId
           Limit 1];
           return cases;
-      }
-
-    public static void setError(String msg){
-        iataCodeError.reason = getTIDSMetadataError(msg);
+    }
+     
+    public static void setError(String msg, boolean isexecution){
+        if (isexecution) {
+            iataCodeError.reason = msg;
+        } else {
+            iataCodeError.reason = getTIDSMetadataError(msg);
+        }
         iataCodeError.hasAnError = true;
     }
 
@@ -76,6 +79,7 @@ public without sharing class TIDSUtil{
     }
 
     public static List<AMS_Account_Role__c> tidsShareholders(String accountId){
+        final Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         List<AMS_Account_Role__c> shareholders = [SELECT Id, 
                 Percentage__c, 
                 Owner_Category__c, 
@@ -85,7 +89,7 @@ public without sharing class TIDSUtil{
                 RecordTypeId, 
                 Owner_Account__c 
           FROM AMS_Account_Role__c
-          WHERE Account__r.Id=:accountId];
+          WHERE Account__r.Id=:accountId and Active__c=true and RecordType.DeveloperName=:ownershipId];
           
         return shareholders;
       }
@@ -98,7 +102,6 @@ public without sharing class TIDSUtil{
     
     @AuraEnabled(cacheable=false)
 	public static boolean deleteFiles(String attachmentid){
-		if (!Schema.sObjectType.Attachment.isDeletable()){return false;}
 		list<Attachment> lstConDocs = new List<Attachment>();
 		lstConDocs = [SELECT Id, Name
 			FROM Attachment
@@ -127,7 +130,7 @@ public without sharing class TIDSUtil{
     }
     //@AuraEnabled(cacheable=false)
 	public static String getSettings(String parentid, string type){
-		if (parentid == null){return null;}
+		if (String.isEmpty(parentid)){return null;}
 		parentid = String.escapeSingleQuotes(parentid.trim());
 		List<Attachment> newsettings = new List<Attachment>();
 		//read the settings file
@@ -141,7 +144,6 @@ public without sharing class TIDSUtil{
 	}
     public static String getAttachment(String parentId, String fileName){
         String result = '';
-        if (!Schema.sObjectType.Attachment.isAccessible()){return result;}
         List<Attachment> attachments = [SELECT Id, Body, ParentId, isPrivate, Name
             FROM Attachment
             WHERE ParentId=:parentId AND name=:fileName
@@ -176,10 +178,7 @@ public without sharing class TIDSUtil{
     }
 
     public static void addAttachment(Id parentId, String payload, String filename){
-        if (!Schema.sObjectType.Attachment.isAccessible()){return;}
-		if (!Schema.sObjectType.Attachment.isCreateable()){return;}
-		if (!Schema.sObjectType.Attachment.isUpdateable()){return;}
-	    Attachment newAttachment = new Attachment();
+        Attachment newAttachment = new Attachment();
         List<Attachment> attachments = [SELECT Id, Body, ParentId, isPrivate, Name
           FROM Attachment
           WHERE ParentId=:parentId AND name=:filename
@@ -198,9 +197,7 @@ public without sharing class TIDSUtil{
           newAttachment.Body = attachmentBody;
           upsert newAttachment;
         } catch (Exception e){}
-    }
-
-    
+    }    
 
     @AuraEnabled(cacheable=false)
     public static void saveFile(
@@ -286,8 +283,6 @@ public without sharing class TIDSUtil{
 	public static List<ValueLabel> mainActivity(){
 		return getPicklistValues('APPRAC', 'Name');
     }
-
-    
     
     public static List<ValueLabel> getPicklistValues(String criteria,String orderBy){
 		List<ValueLabel> values = new List<ValueLabel>();
@@ -311,31 +306,7 @@ public without sharing class TIDSUtil{
 		}
     }
 
-    //Notifications
-    /*
-    public static void sendNotification(String caseId, String contactId){
-		if (!Schema.sObjectType.EmailTemplate.isAccessible()){TIDSUtil.setError(TIDS_Constant.MSG23);return;}
-		if (!Schema.sObjectType.Contact.isAccessible()){TIDSUtil.setError(TIDS_Constant.MSG24); return;}
-		List<EmailTemplate> emailtemp = [SELECT Id
-			FROM EmailTemplate
-            WHERE DeveloperName = 'TIDS_HO_Approval_Notification' LIMIT 1];
-        if (!Test.isRunningTest() && emailtemp.size()==0) {return;}  
-		List<Contact> contactList = [SELECT Id, email
-			FROM Contact
-			WHERE Id = :contactId LIMIT 1];
-
-		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-		email.toAddresses = new List<String>{ contactList[0].email };
-		if (!Test.isRunningTest()) {email.setTemplateId(emailtemp[0].Id);}
-		email.setTargetObjectId(contactList[0].Id);
-		email.setWhatId(caseId);
-
-		if (!Test.isRunningTest()) {Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });}
-    }
     
-    public static void sendNotification(String caseId, String contactId, String emailTemplate){
-        sendEmailNotification(caseId, contactId, emailTemplate, null);
-    }  */
     public static void sendNotification(String caseId, String contactId, String emailTemplate, String noreply){
         List<EmailTemplate> emailtemp = [SELECT Id
           FROM EmailTemplate
@@ -347,15 +318,14 @@ public without sharing class TIDSUtil{
         if (contactList.size()==0) {return;}
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         List<OrgWideEmailAddress> owea = new List<OrgWideEmailAddress>();
-        if (noreply!=null){owea = [select Id from OrgWideEmailAddress where Address =:noreply Or DisplayName=:noreply Limit 1];}
-        if (owea.size() > 0){email.setOrgWideEmailAddressId(owea[0].Id);}
-        
+        if (!String.isEmpty(noreply)){owea = [select Id from OrgWideEmailAddress where Address =:noreply Or DisplayName=:noreply Limit 1];}
+        if (owea.size() > 0){email.setOrgWideEmailAddressId(owea[0].Id);}  
     
         email.toAddresses = new List<String>{ contactList[0].email };
         if (!Test.isRunningTest()) {email.setTemplateId(emailtemp[0].Id);}
         email.setTargetObjectId(contactList[0].Id);
         email.setWhatId(caseId);    
-        if (!Test.isRunningTest()) {Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });}
+        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
     }
     
 	public static List<String> replaceby {get;set;}
@@ -402,7 +372,7 @@ public without sharing class TIDSUtil{
         metadata.Description_P3__c= contentInfo(metadata.Description_P3__c);
     }
     private static String contentInfo(String content){
-		if (content==null || content=='') {return content;}
+		if (String.isEmpty(content)) {return content;}
 		integer i=0;
 		List<String> toreplace = new List<String>{'{@email}','{@Case}','{@Case Status}','{@ApplicationDecision}','{@CreatedDate}'};
 		for(String o:toreplace){

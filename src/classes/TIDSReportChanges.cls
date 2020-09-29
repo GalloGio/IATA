@@ -176,11 +176,8 @@ public without sharing class TIDSReportChanges {
 		public void setGeonames(){
 			geonameids = new Map<String, Id>();
 			// Make sure we can update the database before even trying
-			if (!Schema.sObjectType.IATA_ISO_City__c.isAccessible()){return;}
-			try{
-				if (this.mailingcitygeonameId != null){geonameids.put(this.mailingcitygeonameId, null);}
-			}catch(Exception e){}
-			if (this.citygeonameId != null){geonameids.put(this.citygeonameId, null);}
+			if (!String.isEmpty(this.mailingcitygeonameId)){geonameids.put(this.mailingcitygeonameId, null);}
+			if (!String.isEmpty(this.citygeonameId)){geonameids.put(this.citygeonameId, null);}
 			List<IATA_ISO_City__c> geonames = new List<IATA_ISO_City__c>();
 			geonames = [SELECT Id
 							,GeonameId__c

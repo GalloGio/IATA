@@ -34,12 +34,6 @@ public class TIDSVetting {
 	public void approveRequest() {
 		this.isOpen=false;
 		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG34);
-		if (!Schema.sObjectType.Case.isAccessible()){return;}
-		if (!Schema.sObjectType.Case.isUpdateable()){return;}
-		if (!Schema.sObjectType.Accreditation__c.isAccessible()){return;}
-		if (!Schema.sObjectType.Accreditation__c.isUpdateable()){return;}
-		if (!Schema.sObjectType.EmailTemplate.isAccessible()){return;}
-		if (!Schema.sObjectType.Contact.isAccessible()){return;}
 		if (!Test.isRunningTest()) {getRequestCase();}
 		if (mcase.size()==0){messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG31);return;}
 		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG32);
@@ -77,9 +71,6 @@ public class TIDSVetting {
 	public void rejectRequest() {
 		this.isOpen=false;
 		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG34);
-		if (!Schema.sObjectType.Case.isAccessible()){return;}
-		if (!Schema.sObjectType.EmailTemplate.isAccessible()){return;}
-		if (!Schema.sObjectType.Contact.isAccessible()){return;}
 		if (!Test.isRunningTest()) {getRequestCase();}
 		if (mcase.size()==0){messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG31);return;}
 		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG35);
@@ -97,21 +88,4 @@ public class TIDSVetting {
 			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RE,null);
 		}
 	}
-	/*
-	public static void sendNotification(String caseId, String contactId, String emailTemplate){
-		List<EmailTemplate> emailtemp = [SELECT Id
-		  FROM EmailTemplate
-		  WHERE DeveloperName =:emailTemplate LIMIT 1];
-		if (emailtemp.size()==0 && !Test.isRunningTest()) {return;}
-		List<Contact> contactList = [SELECT Id, email
-		  FROM Contact
-		  WHERE Id = :contactId LIMIT 1];
-		if (contactList.size()==0) {return;}
-		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-		email.toAddresses = new List<String>{ contactList[0].email };
-		if (!Test.isRunningTest()) {email.setTemplateId(emailtemp[0].Id);}
-		email.setTargetObjectId(contactList[0].Id);
-		email.setWhatId(caseId);    
-		if (!Test.isRunningTest()) {Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });}
-	  }*/
 }
