@@ -11,6 +11,11 @@
     z-index:
 }
 
+.shareIcon{
+    width:18px;
+    height:20px;
+}
+
 .modalHeader {
     font-size: 20px;
     font-weight: 500;
