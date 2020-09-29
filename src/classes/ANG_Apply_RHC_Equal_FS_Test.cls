@@ -33,17 +33,17 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 		for(AMS_Settlement_System__c bsp: settlements){
 
 			if(bsp.ANG_RHC_Amount_Equals_FS__c){
-				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='A', RHC_Amnt_Calc_Type__c='Fixed Percentage', RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT, Min_FA_Points__c =0, Max_FA_Points__c=999999,FS_Percentage__c=100 ));
-				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='B', RHC_Amnt_Calc_Type__c='Fixed Percentage', RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT, Min_FA_Points__c =0, Max_FA_Points__c=999999,FS_Percentage__c=100 ));
-				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='C', RHC_Amnt_Calc_Type__c='Fixed Percentage', RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT, Min_FA_Points__c =0, Max_FA_Points__c=999999,FS_Percentage__c=100 ));
+				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='A', RHC_Amnt_Calc_Type__c='Fixed Percentage', RecordTypeId = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, Min_FA_Points__c =0, Max_FA_Points__c=999999,FS_Percentage__c=100 ));
+				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='B', RHC_Amnt_Calc_Type__c='Fixed Percentage', RecordTypeId = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, Min_FA_Points__c =0, Max_FA_Points__c=999999,FS_Percentage__c=100 ));
+				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='C', RHC_Amnt_Calc_Type__c='Fixed Percentage', RecordTypeId = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, Min_FA_Points__c =0, Max_FA_Points__c=999999,FS_Percentage__c=100 ));
 			}
 			else{
-				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='A', RHC_Amnt_Calc_Type__c='Formula', RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT));
-				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='B', RHC_Amnt_Calc_Type__c='Formula', RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT));
-				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='C', RHC_Amnt_Calc_Type__c='Formula', RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT));
+				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='A', RHC_Amnt_Calc_Type__c='Formula', RecordTypeId = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG));
+				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='B', RHC_Amnt_Calc_Type__c='Formula', RecordTypeId = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG));
+				attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, Risk_Status__c='C', RHC_Amnt_Calc_Type__c='Formula', RecordTypeId = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG));
 			}
 
-			attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, FS_Percentage__c=100, Limit_Cash_Condition__c=true, RecordTypeId = ANG_Apply_RHC_Equal_FS_Controller.CCConfRT));
+			attributes.add(new ANG_BSP_Attributes__c(BSP__c = bsp.Id, FS_Percentage__c=100, Limit_Cash_Condition__c=true, RecordTypeId = ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG));
 
 		}
 
@@ -293,7 +293,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 
 		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-BB'];
 		for (ANG_BSP_Attributes__c bsp: bsps){
-			if(bsp.recordtypeid == ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT){
+			if(bsp.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG){
 				system.assertEquals(bsp.RHC_Amnt_Calc_Type__c, 'Formula');
 				system.assertEquals(bsp.FS_Percentage__c, null);
 				system.assertEquals(bsp.Min_FA_Points__c, null);
@@ -329,7 +329,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 
 		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-BB'];
 		for (ANG_BSP_Attributes__c bsp: bsps){
-			if(bsp.recordtypeid == ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT){
+			if(bsp.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG){
 				system.assertEquals(bsp.RHC_Amnt_Calc_Type__c, 'Fixed Percentage');
 				system.assertEquals(bsp.FS_Percentage__c, 50);
 				system.assertEquals(bsp.Min_FA_Points__c, 0);
@@ -377,7 +377,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-HK' order by Risk_status__c,Max_FA_Points__c ];
 		i = 0;
 				for (ANG_BSP_Attributes__c bsp: bsps){
-			if(bsp.recordtypeid == ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT){
+			if(bsp.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG){
 				system.assertEquals(bsp.RHC_Amnt_Calc_Type__c, 'Fixed Percentage');
 								system.assertEquals(bsp.FS_Percentage__c, 21 + i);
 				system.assertEquals(bsp.Min_FA_Points__c, 0 + i);
@@ -403,7 +403,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 
 		bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-HK'];
 		for (ANG_BSP_Attributes__c bsp: bsps){
-			if(bsp.recordtypeid == ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT){
+			if(bsp.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG){
 				system.assertEquals(bsp.RHC_Amnt_Calc_Type__c, 'Formula');
 				system.assertEquals(bsp.FS_Percentage__c, null);
 				system.assertEquals(bsp.Min_FA_Points__c, null);
