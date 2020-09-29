@@ -7938,11 +7938,6 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 		}
 
-		if (newForm.Est_Future_Sales__c == null && !isCNSAgency) {
-			newForm.Est_Future_Sales__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
-
 		if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
 			if(isCNSAgency){
 				if(newCase.Reason1__c != 'New Commercial BR' && newCase.Reason1__c != 'New BR / IP'){
@@ -7954,23 +7949,29 @@ public without sharing class ISSP_AMS_Accreditation {
 			errorFound = true;
 		}
 
-		if (newForm.Registered_to_hot_files__c == null && !isCNSAgency) {
-			newForm.Registered_to_hot_files__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
-
-		if (CountryCheckList.Registration_required__c) {
-			if (newForm.ISSP_AMS_Trade_Reg_No__c == null) {
-				newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
+		if(!isCNSAgency) {
+			if (newForm.Registered_to_hot_files__c == null) {
+				newForm.Registered_to_hot_files__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
 
-			if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
-				newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
+			if (newForm.Est_Future_Sales__c == null && ) {
+				newForm.Est_Future_Sales__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
-		}
 
+			if (CountryCheckList.Registration_required__c) {
+				if (newForm.ISSP_AMS_Trade_Reg_No__c == null) {
+					newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
+					newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+			}
+		}
+		
 		return errorFound;
 	}
 
