@@ -250,9 +250,7 @@ public class ANG_RHCHelper {
 				continue;
 			}
 
-
-			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + acct.ANG_RiskStatus__c);
-
+			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + (acct.ANG_RiskStatus__c==null || acct.ANG_RiskStatus__c =='Not Applicable'?'C':acct.ANG_RiskStatus__c));
 			ANG_BSP_Attributes__c bspAttrRhc = null;
 
 			//Find the correct BSP Attribute configuration based on
@@ -289,6 +287,10 @@ public class ANG_RHCHelper {
 			//jump into the formula calculation
 			if(isMulticountry){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
+				if(bspAttrRhc==null){
+					throw new ANG_RHCHelperException('RHCHelper: BSP Configuration ' + currentBspAttrKey + ' not found!');
+					continue;
+				}
 				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
 				continue;
 			}
@@ -316,6 +318,10 @@ public class ANG_RHCHelper {
 			}
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
+				if(bspAttrRhc==null){
+					throw new ANG_RHCHelperException('RHCHelper: BSP Configuration ' + currentBspAttrKey + ' not found!');
+					continue;
+				}
 				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
 			}
 
@@ -363,7 +369,9 @@ public class ANG_RHCHelper {
 
 		// MAX between FS, minimumRHCAmount and the new RHC ammount
 		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
-		decimal Tiered_Provisional_Amount = (bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c) + bspAttrRhc.Amount_At_Risk_Multiplier__c * (AmountAtRiskUSD - (bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c));
+		decimal Tiered_Provisional_Amount = (bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c)
+											 + (bspAttrRhc.Amount_At_Risk_Multiplier__c==null?1:bspAttrRhc.Amount_At_Risk_Multiplier__c)
+											 * (AmountAtRiskUSD - (bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c));
 		rhc.Tiered_Provisional_Amount__c = Tiered_Provisional_Amount;
 		rhc.Forecasted_Tier__c = Tier;
 
@@ -693,10 +701,12 @@ public class ANG_RHCHelper {
 	}
 
 	private static string determineTier(decimal AmntAtRiskUSD, list<ANG_BSP_Attributes__c> lsBspAttr){
-		string Tier = '';
+		string Tier = '1'; //this is the default tier if, for any reason, we are unable to determine it. Statistically, 95% of the agency will fall into Tier 1
 		for(ANG_BSP_Attributes__c attr:lsBspAttr)
 			if(attr.recordTypeId == RECTYPE_RHC_AMOUNT_CONFIG && attr.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_TIER && AmntAtRiskUSD>=attr.Amount_At_Risk_From_USD__c && AmntAtRiskUSD<attr.Amount_At_Risk_To_USD__c)
 				return attr.Tier__c;
 		return Tier;
 	}
+
+	public class ANG_RHCHelperException extends Exception {}
 }

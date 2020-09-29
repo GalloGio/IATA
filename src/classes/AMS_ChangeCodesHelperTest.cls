@@ -278,8 +278,7 @@ private class AMS_ChangeCodesHelperTest {
 			Identifier__c = 'notification'
 			);
 
-		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
-		insert iss;
+		AMS_Settlement_System__c iss =AMS_OSCAR_TestDataFactory.createOperationAndItsAttributes('BSP-FR');
 
 		// Create a new ISO Country
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id, ANG_Enable_NewGen__c = true);

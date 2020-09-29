@@ -29,6 +29,18 @@ private class ANG_AccountTriggerHandlerTest {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
 		Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
+		List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-03'));
+		insert settlementSystemList;
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 
 		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
@@ -39,7 +51,8 @@ private class ANG_AccountTriggerHandlerTest {
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
 				ANG_IEP_Model__c = 'Model A',
-				Multicountry_Enabled__c = true
+				Multicountry_Enabled__c = true,
+				AMS_Settlement_System__c = settlementSystemList[0].id
 			);
 		countries.add(isoTest);
 
@@ -50,7 +63,8 @@ private class ANG_AccountTriggerHandlerTest {
 				ISO_Code__c = 'ES',
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
-				ANG_IEP_Model__c = 'Model B'
+				ANG_IEP_Model__c = 'Model B',
+				AMS_Settlement_System__c = settlementSystemList[1].id
 			);
 		countries.add(isoTest2);
 
@@ -61,7 +75,8 @@ private class ANG_AccountTriggerHandlerTest {
 				ISO_Code__c = 'UK',
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
-				ANG_IEP_Model__c = 'Model B+'
+				ANG_IEP_Model__c = 'Model B+',
+				AMS_Settlement_System__c = settlementSystemList[2].id
 			);
 
 		countries.add(ukCountry);
