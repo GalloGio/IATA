@@ -5011,11 +5011,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     </customLabels>
     <customLabels>
         <label>分享</label>
-        <name>CSP_Settings</name>
+        <name>CSP_ShareLink</name>
     </customLabels>
     <customLabels>
         <label>已复制常见问题的链接</label>
-        <name>CSP_ShareLink</name>
+        <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
         <label>现在跳过</label>

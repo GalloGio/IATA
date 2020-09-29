@@ -32,7 +32,7 @@
                         </div>                        
 
                         <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-m-vertical_x-large">                           
-                            <div class="slds-col slds-size_full slds-small-size_5-of-7 ">
+                            <div class="slds-col slds-size_full">
                                 
                                 <!-- FEEDBACK -->
                                 <div if:false={article.feedback}
@@ -62,10 +62,13 @@
                                 </div>
                                 
                             </div>
-                            <div if:true={article.open} class ="slds-col slds-size_full slds-small-size_2-of-7 slds-grid slds-align-content-center slds-m-vertical_x-small">
-                                <span class="slds-float--right slds-grid text-bold slds-size_1-of-1 ">
+                            <div if:true={article.open} class ="slds-col slds-size_full  slds-grid slds-gutters slds-m-vertical_small">
+                                <span class="slds-col slds-grid text-bold">
                                     <input data-article-url type="text" class="slds-hide slds-is-absolute linkHolder" value={article.Link}/>
-                                    <lightning-button label={label.CSP_ShareLink} class="containedButton reachusButton fullWidth" onclick={copyUrlToClipboard}></lightning-button>
+                                    <span class="slds-align_absolute-center cursorPointer" data-id={article.id} onclick={copyUrlToClipboard}>
+                                        <img class="shareIcon noPointerEvents" src={shareIconUrl}/>
+                                        <lightning-button label={label.CSP_ShareLink}  class="fullWidth newLinkButton noPointerEvents"></lightning-button>
+                                    </span>
                                 </span>
                             </div>
                         </div>
