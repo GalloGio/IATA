@@ -6,6 +6,7 @@ import getArticlesFeedback from '@salesforce/apex/PortalFAQsCtrl.getArticlesFeed
 import randomUUID from '@salesforce/apex/CSP_Utils.randomUUID';
 import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
+import getShareableLink from '@salesforce/apex/PortalFAQsCtrl.getShareableLink';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -443,25 +444,32 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
 
     copyUrlToClipboard(e){
-        let copyText = this.template.querySelector("[data-article-url]");
+        let artid = e.target.dataset.id;
 
         //temporary show the input, and hide it just after the link has been copied
-        this.template.querySelector("[data-article-url]").classList.toggle('slds-hide');
-       
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-      
-        document.execCommand("copy");
 
-        this.template.querySelector("[data-article-url]").classList.toggle('slds-hide');
-        
-        const toast = new ShowToastEvent({
-            title: this.label.CSP_Success,
-            variant:'success',
-            mode:'pester',
-            message: this.label.CSP_Share_CopiedToClipBoard
-        });
-        this.dispatchEvent(toast);
+        getShareableLink({articleId : artid})
+            .then(data=>{
+                let urlPlaceholder=this.template.querySelector("[data-article-url]");
+                urlPlaceholder.value=data;
+                urlPlaceholder.classList.toggle('slds-hide');
+            
+                urlPlaceholder.select();
+                urlPlaceholder.setSelectionRange(0, 99999);
+            
+                document.execCommand("copy");
+
+                urlPlaceholder.classList.toggle('slds-hide');
+                
+                const toast = new ShowToastEvent({
+                    title: this.label.CSP_Success,
+                    variant:'success',
+                    mode:'pester',
+                    message: this.label.CSP_Share_CopiedToClipBoard
+                });
+                this.dispatchEvent(toast);
+            }
+        );
         
     }
 }

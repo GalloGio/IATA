@@ -382,4 +382,24 @@ public with sharing class PortalFAQsCtrl {
 		// Contains generic methods related to Approval Process, which can be used just passing params
 		AMS_OSCAR_ApprovalHelper.submit(approvalNameOrId, recordId, userId, comments);
 	}
+
+	/*
+	* @description Returns the shareable link for the article
+	* @params String articleId
+	* @return
+	*/
+	@AuraEnabled
+	public static string getShareableLink(String articleId) {
+
+		//Retrieve the article parent id, its not possible to have it all in one query
+		Id pkId=[select knowledgeArticleId from FAQ__KAV where id =:articleId].knowledgeArticleId;
+
+		//only the english publish version contains the shareable link
+		 return [
+			SELECT CS_Portal_link__c 
+			FROM faq__kav 
+			WHERE Language ='en_US' 
+			AND PublishStatus ='Online' 
+			AND KnowledgeArticleId =:pkId limit 1].CS_Portal_link__c;
+	}
 }
