@@ -942,6 +942,7 @@ public without sharing class TIDS_Controller {
 					inheritanceBatched=false;
 					retrieveAccount(false, false);
 					mapaccount.parentId=parentaccount.Id;
+					mapaccount.Reason_for_creation__c='New agent';
 					getRoles(parentaccount.Id);
 					setCompanyName();
 					setDefault();
@@ -961,6 +962,7 @@ public without sharing class TIDS_Controller {
 					inheritanceBatched=false;
 					retrieveAccount(false, false);
 					mapaccount.parentId=parentaccount.Id;
+					mapaccount.Reason_for_creation__c='New agent';
 					getRoles(parentaccount.Id);
 					setCompanyName();
 					setDefault();

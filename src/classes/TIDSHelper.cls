@@ -371,6 +371,7 @@ public without sharing class TIDSHelper {
 
 			// TIDS Case
 			Id recordname=tidsWrapper.currentUser.Account.RecordType.Id;
+			string rdevname =tidsWrapper.currentUser.Account.RecordType.DeveloperName;
 			string countryiso=tidsWrapper.currentUser.Account.Country_ISO_Code__c;
 			string status=tidsWrapper.currentUser.Account.Status__c;
 			if (!String.isEmpty(recordname)){
@@ -390,18 +391,19 @@ public without sharing class TIDSHelper {
 						return tidsWrapper;
 					}
 				}
-			    Set<Id> cl1 = new Set<Id>{
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_GENERAL_SALES_AGENT_HEADQUARTERS),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AIRLINE_HEADQUARTERS),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AIRLINE_BRANCH),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AIRLINE_LOCAL_OFFICES),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_OPERATOR),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_VERIFIER),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AIRPORT),
-					RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_ICAO_MEMBER_STATE)
+				
+			    Set<String> cl1 = new Set<String>{
+					TIDS_Constant.RT_GENERAL_SALES_AGENT_HEADQUARTERS,
+					TIDS_Constant.RT_AIRLINE_HEADQUARTERS,
+					TIDS_Constant.RT_AIRLINE_BRANCH,
+					TIDS_Constant.RT_AIRLINE_LOCAL_OFFICES,
+					TIDS_Constant.RT_OPERATOR,
+					TIDS_Constant.RT_VERIFIER,
+					TIDS_Constant.RT_AIRPORT,
+					TIDS_Constant.RT_ICAO_MEMBER_STATE
 				};
 				//Condition 1: Related Account Record Type cannot be “Airline Branch, Airline Headquarters, General Sales Agent Headquarters”
-				if (cl1.Contains(recordname)){
+				if (cl1.Contains(rdevname)){
 					tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON1);
 					return tidsWrapper;
 				}
@@ -780,7 +782,10 @@ public without sharing class TIDSHelper {
 			And Status__c='Active'
 			And Id not in (SELECT Contact__c
 										FROM Portal_Application_Right__c
-										WHERE Right__c='Access Granted' and Contact__r.AccountId=:accountId) 
+										WHERE Right__c='Access Granted'
+										AND Access_Status_Reason__c!=null
+										AND Application_Name__c=:TIDS_Constant.TIDSVALUE 
+										AND Contact__r.AccountId=:accountId) 
 			Limit 20];
 		if (contacts.size()>0){
 			List<Contact> newcontacts = new List<Contact>();
@@ -823,7 +828,7 @@ public without sharing class TIDSHelper {
 						Portal_Application__c
 					FROM Portal_Application_Right__c
 					WHERE Contact__r.AccountId=:originid
-						AND Access_Status_Reason__c=:TIDS_Constant.ADM_HOP
+						AND (Access_Status_Reason__c=:TIDS_Constant.ADM_HOP Or Access_Status_Reason__c=null)
 						AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
 		}
 	 	//TIDS Admin HO Primary
@@ -832,10 +837,10 @@ public without sharing class TIDSHelper {
 	 	if (actiontype=='add'){
 			if (apprights.size()>0 && isbranch==false){type=TIDS_Constant.ADM_HOS;}
 			List<Portal_Application_Right__c> appusers = new List<Portal_Application_Right__c>();
-			appusers = [SELECT Id,Right__c FROM Portal_Application_Right__c
+			appusers = [SELECT Id,Right__c,Access_Status_Reason__c FROM Portal_Application_Right__c
 						WHERE Contact__r.AccountId=:accountId
 							AND Contact__c=:contactId
-							AND Access_Status_Reason__c=:type
+							AND (Access_Status_Reason__c=:type Or Access_Status_Reason__c=null)
 							AND Application_Name__c=:TIDS_Constant.TIDSVALUE LIMIT 1];
 			if (appusers.size()==0){       
 				Portal_Application_Right__c cu = apprights[0].clone(false);
@@ -844,6 +849,7 @@ public without sharing class TIDSHelper {
 				cu.Access_Status_Reason__c= isbranch==true ? TIDS_Constant.ADM_BRA:TIDS_Constant.ADM_HOS;
 				insert cu;
 			}else{
+				appusers[0].Access_Status_Reason__c=type;
 				appusers[0].Right__c='Access Granted';        
 				update appusers;
 			}       

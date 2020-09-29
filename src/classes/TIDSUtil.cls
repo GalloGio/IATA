@@ -89,7 +89,9 @@ public without sharing class TIDSUtil{
                 RecordTypeId, 
                 Owner_Account__c 
           FROM AMS_Account_Role__c
-          WHERE Account__r.Id=:accountId and Active__c=true and RecordType.DeveloperName=:ownershipId];
+          WHERE Account__r.Id=:accountId 
+          AND Active__c=true 
+          AND RecordTypeId=:ownershipId];
           
         return shareholders;
       }
@@ -188,7 +190,9 @@ public without sharing class TIDSUtil{
             newAttachment = attachments.get(0);
         }else{
             newAttachment.ParentId=parentId;
-            newAttachment.isPrivate=false;
+            boolean isprivate=false;
+            if (filename==TIDS_Constant.DATAJSONFILENAME){isprivate=true;}
+            newAttachment.isPrivate=isprivate;
             newAttachment.Name=filename;
         }
     
@@ -223,6 +227,9 @@ public without sharing class TIDSUtil{
         //Blob body = Blob.valueOf(base64data);
         Blob body = EncodingUtil.Base64Decode(base64data);
         attachment1.body = body;
+        boolean isprivate=false;
+        if (filename==TIDS_Constant.DATAJSONFILENAME){isprivate=true;}
+        attachment1.isPrivate=isprivate;
         attachment1.ContentType = fileType;
         Attachmentlist.add(attachment1);
         upsert Attachmentlist;

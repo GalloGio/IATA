@@ -1,16 +1,13 @@
 public without sharing class TIDS_Constant {
-    public final static String RT_AIRLINE_BRANCH = 'AIRLINE BRANCH';
-    public final static String RT_AIRLINE_HEADQUARTERS = 'AIRLINE HEADQUARTERS';
-    public final static String RT_GENERAL_SALES_AGENT_HEADQUARTERS = 'GENERAL SALES AGENT HEADQUARTERS';
-    public final static String RT_ICAO_MEMBER_STATE = 'ICAO MEMBER STATE';
-    public final static String RT_AIRLINE_LOCAL_OFFICES='AIRLINE LOCAL OFFICES';
-    public final static String RT_OPERATOR='OPERATOR';
-    public final static String RT_VERIFIER='VERIFIER';
-    public final static String RT_AIRPORT='AIRPORT';
-    public final static String RT_AGENCY = 'AGENCY';
-    public final static String RT_IATA_AGENCY = 'AGENCY';
+    public final static String RT_AIRLINE_BRANCH = 'IATA_Airline_BR';
+    public final static String RT_AIRLINE_HEADQUARTERS = 'IATA_Airline';
+    public final static String RT_GENERAL_SALES_AGENT_HEADQUARTERS = 'IATA_GSA';
+    public final static String RT_ICAO_MEMBER_STATE = 'ICAO_Member_State';
+    public final static String RT_AIRLINE_LOCAL_OFFICES='Branch';
+    public final static String RT_OPERATOR='Operator';
+    public final static String RT_VERIFIER='Verifiers';
+    public final static String RT_AIRPORT='Airport';
     
-
     public final static String ERROR_CON1 = 'TIDS_ACCES_COND1';
     public final static String ERROR_CON2_1 = 'TIDS_ACCES_COND2_1';
     public final static String ERROR_CON2_2 = 'TIDS_ACCES_COND2_2';
