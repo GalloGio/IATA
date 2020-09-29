@@ -31,7 +31,16 @@
                             <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
                         </div>                        
 
-                        <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-m-vertical_x-large">                           
+                        <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-m-vertical_x-large"> 
+                            <div if:true={article.open} class ="slds-col slds-size_full  slds-grid slds-gutters slds-m-vertical_small">
+                                <span class="slds-col slds-grid text-bold">
+                                    <input data-article-url type="text" class="slds-hide slds-is-absolute linkHolder" value={article.Link}/>
+                                    <span class="slds-align_absolute-center cursorPointer" data-id={article.id} onclick={copyUrlToClipboard}>
+                                        <img class="shareIcon noPointerEvents" src={shareIconUrl}/>
+                                        <lightning-button label={label.CSP_ShareLink}  class="fullWidth newLinkButton noPointerEvents"></lightning-button>
+                                    </span>
+                                </span>
+                            </div>                          
                             <div class="slds-col slds-size_full">
                                 
                                 <!-- FEEDBACK -->
@@ -62,15 +71,7 @@
                                 </div>
                                 
                             </div>
-                            <div if:true={article.open} class ="slds-col slds-size_full  slds-grid slds-gutters slds-m-vertical_small">
-                                <span class="slds-col slds-grid text-bold">
-                                    <input data-article-url type="text" class="slds-hide slds-is-absolute linkHolder" value={article.Link}/>
-                                    <span class="slds-align_absolute-center cursorPointer" data-id={article.id} onclick={copyUrlToClipboard}>
-                                        <img class="shareIcon noPointerEvents" src={shareIconUrl}/>
-                                        <lightning-button label={label.CSP_ShareLink}  class="fullWidth newLinkButton noPointerEvents"></lightning-button>
-                                    </span>
-                                </span>
-                            </div>
+                            
                         </div>
                         <!-- RELATED ARTICLES -->
                         <c-portal-f-a-q-related-article class="slds-p-vertical_x-large" article={articleInfo} user-info={userInfo}></c-portal-f-a-q-related-article>
