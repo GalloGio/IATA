@@ -56,7 +56,9 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
 	}
 
 	public void execute(Database.BatchableContext context, List<ANG_Agency_Risk_Event__c> scope){
+		set<string> setInvolvedIds = new set<string>();
 		for(ANG_Agency_Risk_Event__c are : scope){
+			setInvolvedIds.add(are.id);
 			if(are.ANG_Issued_Date__c <= System.today() && are.ANG_Expiration_Date__c > System.today() && are.ANG_Event_Status__c.equalsIgnoreCase(ANG_Risk_Helper.STATUS_INACTIVE)){
 			   are.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 			}
@@ -77,8 +79,7 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
 			RecordUpdater updater = new RecordUpdater(scope, true);
 			updater.schedule(System.now().addSeconds(2));
 		}catch(Exception e){
-			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_ActivateDeactivateRiskEventsBatch', 'ANG_ActivateDeactivateRiskEventsBatch', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW13',e);
+			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD13',e, setInvolvedIds);
 		}
 	}
 
