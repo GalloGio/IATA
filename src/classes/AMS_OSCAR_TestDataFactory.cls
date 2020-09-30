@@ -556,7 +556,6 @@ public class AMS_OSCAR_TestDataFactory
 			)
 		);
 
-		system.debug('DTULLO --> ' + bspAttrLst);
 		return bspAttrLst;
 	}
 
