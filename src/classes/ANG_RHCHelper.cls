@@ -153,9 +153,11 @@ public class ANG_RHCHelper {
 							  WHERE Id IN :accountsIds]) {
 
 				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__r.Iso_Code__c);
-
-				accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
-				accountsMap.put(a.Id, a);
+				
+				if(string.isNotEmpty(a.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+					accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+					accountsMap.put(a.Id, a);
+				}
 			}
 
 			Set<String> isoCountriesSet = new Set<String>{DEFAULT_CODE};
