@@ -437,7 +437,7 @@ public class AMS_OSCAR_TestDataFactory
 	}
 
 	public static AMS_Settlement_System__c createOperationAndItsAttributes(string OperationName){
-		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = OperationName);
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = OperationName, RecordTypeId = AMS_Utils.RECTYPE_BSP);
 		insert iss;
 		insert createOperationAttributes(iss);
 		return iss;
