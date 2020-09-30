@@ -64,7 +64,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     @track isGuestUser=true;
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
-    shareIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/shareIcon.png';
+    shareIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/CopyLinkIcon.png';
 
     @api
     get faqObject() {

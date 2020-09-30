@@ -37,7 +37,7 @@
                                     <input data-article-url type="text" class="slds-hide slds-is-absolute linkHolder" value={article.Link}/>
                                     <span class="slds-align_absolute-center cursorPointer" data-id={article.id} onclick={copyUrlToClipboard}>
                                         <img class="shareIcon noPointerEvents" src={shareIconUrl}/>
-                                        <lightning-button label={label.CSP_ShareLink}  class="fullWidth newLinkButton noPointerEvents"></lightning-button>
+                                        <span class="newLinkButton noPointerEvents slds-p-horizontal--x-small" >{label.CSP_ShareLink}</span>
                                     </span>
                                 </span>
                             </div>                          
