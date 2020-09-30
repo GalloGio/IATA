@@ -16,15 +16,34 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	public static final String PORTAL_ACCESS_GRANTED = 'Access Granted';
 	public static final String SEPARATOR = '/';
 
+	public static final String SERVICE_TIP_REPORTS = 'service-tipreports';
+	public static final String SERVICE_AIRLINE_DAILY_SALES = 'airline-daily-sales';
+
+	public static final Map<String,String> MAP_SERVICENAMES_PER_PAGENAME = new Map<String,String>{
+		SERVICE_TIP_REPORTS => 'TIP Reports%',
+		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales'
+	};
+
+	public static final Map<String,String> MAP_REPORTYPE_PER_PAGENAME = new Map<String,String>{
+		SERVICE_TIP_REPORTS => 'TIP_report',
+		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales'
+	};
+
+	public static final Map<String,String> MAP_TRACKERTYPE_PER_PAGENAME = new Map<String,String>{
+		SERVICE_TIP_REPORTS => 'TIP Report',
+		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales'
+	};
+
 	@AuraEnabled(cacheable=false)
-	public static TIPReportPageWrapper getTIPReportPageWrapper(){
+	public static TIPReportPageWrapper getTIPReportPageWrapper(String pageName){
 		TIPReportPageWrapper tipReportPageWrapperToReturn = new TIPReportPageWrapper();
 
 		//Check if the current user have access to TIP Reports service
 		String userId = UserInfo.getUserId();
 		String currentUserContactId;
+		String serviceName = MAP_SERVICENAMES_PER_PAGENAME.get(pageName);
 
-		if(!String.isBlank(userId)) {
+		if(!String.isBlank(userId) || !String.isBlank(serviceName)) {
 			User currentUser = [SELECT Id, ContactId FROM User WHERE Id = :userId];
 
 			if(currentUser != null) {
@@ -32,7 +51,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 				if (!String.isBlank(currentUserContactId)) {
 					List <Portal_Application_Right__c> appList = [SELECT Id FROM Portal_Application_Right__c
-																  WHERE Portal_Application__r.Name LIKE 'TIP Reports%'
+																  WHERE Portal_Application__r.Name LIKE :serviceName
 																  AND Right__c = :PORTAL_ACCESS_GRANTED
 																  AND Contact__c = :currentUserContactId];
 					
@@ -47,7 +66,7 @@ public with sharing class PortalServiceTIPReportsCtrl {
 		if(tipReportPageWrapperToReturn.haveAccessToTIPReports){
 
 			//get the reports from the metadata list
-			tipReportPageWrapperToReturn.lstTIPReports.addAll(getMetadataReports());
+			tipReportPageWrapperToReturn.lstTIPReports.addAll(getMetadataReports(pageName));
 
 			//get the reports from the amazon
 			tipReportPageWrapperToReturn.lstTIPReports.addAll(getAmazonReports(currentUserContactId));
@@ -59,17 +78,20 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	/*
 	* Method for retrieve reports from Custom Metadata Type
 	*/
-	private static List<TIPReportWrapperObject> getMetadataReports(){
+	private static List<TIPReportWrapperObject> getMetadataReports(String pageName){
 
 		List<TIPReportWrapperObject> lstReportsToReturn = new List<TIPReportWrapperObject>();
+
+		String reportType = MAP_REPORTYPE_PER_PAGENAME.get(pageName);
+		if (String.isEmpty(reportType)) return lstReportsToReturn;
 
 		//check if the code is running in a sandbox
 		Boolean runningInASandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
 
-		//Queries the specific metadata object having the Type for "TIP" 
+		//Queries the specific metadata object having the Type for the type associated to the given page
 		List<PowerBI_Report_Config__mdt> lstMetadataReports = [SELECT Id,DeveloperName, MasterLabel, Group_Id_Dev__c, Group_Id_Prod__c, 
 															   Report_Id_Dev__c, Report_Id_Prod__c, LastModifiedDate__c
-															   FROM PowerBI_Report_Config__mdt WHERE Type__c = 'TIP_report'];
+															   FROM PowerBI_Report_Config__mdt WHERE Type__c = :reportType];
 
 		//If contains record, create a wrapper for each one to return to the page
 		if(lstMetadataReports != null && !lstMetadataReports.isEmpty()){
@@ -199,11 +221,11 @@ public with sharing class PortalServiceTIPReportsCtrl {
 	* Creates a tracker record so the business have knowledge the user clicked on the amazon file report
 	*/
 	@AuraEnabled(cacheable=false)
-	public static void createDocumentTrackerRecord(String fileId, String reportId){
+	public static void createDocumentTrackerRecord(String fileId, String reportId, String pageName){
 		ISSP_Document_Tracker__c tracker = new ISSP_Document_Tracker__c(Amazon_File__c = fileId,
 	 																	Report_Id__c = reportId,
 																		User__c = UserInfo.getUserId(),
-																		Type__c = 'TIP Report');
+																		Type__c = MAP_TRACKERTYPE_PER_PAGENAME.get(pageName));
 		insert tracker;
 	}
 

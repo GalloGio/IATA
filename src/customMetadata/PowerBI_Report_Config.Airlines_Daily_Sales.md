@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Group_Id_Dev__c</field>
-        <value xsi:type="xsd:string">2a3b8689-33dd-4767-9047-3522facafef3</value>
+        <value xsi:type="xsd:string">c2e01060-e914-4f2b-9484-d47b8581764b</value>
     </values>
     <values>
         <field>Group_Id_Prod__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Report_Id_Dev__c</field>
-        <value xsi:type="xsd:string">61ce8842-f164-4f38-85f8-a54a3c7d37d5</value>
+        <value xsi:type="xsd:string">f925821c-90d8-446c-babd-c09384665cd6</value>
     </values>
     <values>
         <field>Report_Id_Prod__c</field>
@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">TIP_report</value>
+        <value xsi:type="xsd:string">Airline Daily Sales</value>
     </values>
 </CustomMetadata>
