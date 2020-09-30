@@ -7955,7 +7955,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
-			if (newForm.Est_Future_Sales__c == null && ) {
+			if (newForm.Est_Future_Sales__c == null) {
 				newForm.Est_Future_Sales__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
