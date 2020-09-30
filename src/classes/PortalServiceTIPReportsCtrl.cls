@@ -69,7 +69,9 @@ public with sharing class PortalServiceTIPReportsCtrl {
 			tipReportPageWrapperToReturn.lstTIPReports.addAll(getMetadataReports(pageName));
 
 			//get the reports from the amazon
-			tipReportPageWrapperToReturn.lstTIPReports.addAll(getAmazonReports(currentUserContactId));
+			if (pageName == SERVICE_TIP_REPORTS) {
+				tipReportPageWrapperToReturn.lstTIPReports.addAll(getAmazonReports(currentUserContactId));
+			}
 		}
 		
 		return tipReportPageWrapperToReturn;
