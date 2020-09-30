@@ -91,7 +91,8 @@ public with sharing class CaseTriggerHelper {
 			for(Case c: newList) {
 
 					String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
-
+ 					//Exclude All TIDS Cases from KPI processing 
+					if (cRTDevName=='TIDS'){ continue;}
 					// case closure
 					if(newMap.get(c.Id).Status == CASE_STATUS_CLOSED &&
 						 configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
