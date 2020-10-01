@@ -190,17 +190,12 @@ public without sharing class TIDSUtil{
             newAttachment = attachments.get(0);
         }else{
             newAttachment.ParentId=parentId;
-            boolean isprivate=false;
-            if (filename==TIDS_Constant.DATAJSONFILENAME){isprivate=true;}
-            newAttachment.isPrivate=isprivate;
+            newAttachment.isPrivate=false;
             newAttachment.Name=filename;
         }
-    
-        try {
-          Blob attachmentBody = Blob.valueOf(payload);
-          newAttachment.Body = attachmentBody;
-          upsert newAttachment;
-        } catch (Exception e){}
+        Blob attachmentBody = Blob.valueOf(payload);
+        newAttachment.Body = attachmentBody;
+        upsert newAttachment;
     }    
 
     @AuraEnabled(cacheable=false)
@@ -227,14 +222,11 @@ public without sharing class TIDSUtil{
         //Blob body = Blob.valueOf(base64data);
         Blob body = EncodingUtil.Base64Decode(base64data);
         attachment1.body = body;
-        boolean isprivate=false;
-        if (filename==TIDS_Constant.DATAJSONFILENAME){isprivate=true;}
-        attachment1.isPrivate=isprivate;
+        attachment1.isPrivate=false;
         attachment1.ContentType = fileType;
         Attachmentlist.add(attachment1);
         upsert Attachmentlist;
         string errormessage = '';
-        try {
         //Collect issue
         Database.UpsertResult[] lsr = Database.upsert(Attachmentlist, false);
         for (Database.UpsertResult sr : lsr){
@@ -245,7 +237,6 @@ public without sharing class TIDSUtil{
             }
         }
         if (errormessage!=''){return;}
-        } catch (Exception e){}
     }
     @AuraEnabled(cacheable=true)
     public static List<ValueLabel> getGDSValues(){

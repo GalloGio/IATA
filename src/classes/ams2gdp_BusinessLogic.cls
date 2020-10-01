@@ -913,7 +913,6 @@ public class ams2gdp_BusinessLogic {
 	 * Add-on new function to process Class T Account and the old one will process Any other Class
 	 * @param  List<AMS_Agency_Profile__c>
 	 * @return List<GDP_Agency_Profile_Specialization__c>
-	 * @author Bhanu Chandra Bulusu <bhanuchandra.bulusu@cgi.com>
 	 */
 	public static List<GDP_Agency_Profile_Specialization__c> formatAgencyProfile2GDPAgencyProfileClassT(List<AMS_Agency_Profile__c> profiles) {
 		List<GDP_Agency_Profile_Specialization__c> result = new List<GDP_Agency_Profile_Specialization__c>();
@@ -964,8 +963,10 @@ public class ams2gdp_BusinessLogic {
 					if (agencies.GR_Item__c!=null){gdpAgencies.New_Number_Of_Offices__c = decimal.ValueOf(agencies.GR_Item__c);}
 				}
 				when 'NU_EMPL' {
-					//gdpAgencies.New_Number_Of_Employees__c= ref1.Id;
-				}
+					//APEMP
+					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APEMP' + agencies.GR_Item__c);
+					if (agencies.GR_Item__c!=null) {gdpAgencies.New_Number_Of_Employees__c = tempRef1.Id;}
+			 	}
 				when 'DIBS' {
 					if (agencies.GR_Item__c!=null || agencies.GR_Item__c!=''){
 						Date xdate = Date.ValueOf(agencies.GR_Item__c +' 00:00:00');

@@ -6,10 +6,6 @@ public without sharing class TIDSHelper {
 	private static Portal_Applications__c tidsConfiguration {get;set;}
 	private static List<Case> cases {get;set;}
 	
-	private class DynamicTableException extends Exception {
-	}
-
-		
 	@AuraEnabled
 	public static TIDS_Error_Message__mdt getVettingDoneCondition(String tidsCaseId){
 		TIDSUtil.replaceby = new List<String>{'', '','','',''};
@@ -42,7 +38,6 @@ public without sharing class TIDSHelper {
 		List<Account> listreturned = new List<Account>();
 		if (accountIds==null){ return listvalues;}
 		//find out if a branch or head office
-		//Id accountIds = users[0].AccountId;
 		string queryWhere = ' Where RecordType.DeveloperName=\'IATA_Agency\' and Location_Class__c=\'T\' And ParentId=:accountIds';
 		string queryFields = 'Id, Name, Location_Type__c, IATACode__c, Email__c, TradeName__c, Phone, Fax, BillingAddress, BillingCity, BillingCountry, BillingStreet, BillingState, BillingPostalCode, ShippingAddress, ShippingCity, ShippingCountry, ShippingStreet, ShippingState, ShippingPostalCode, Status__c, ParentId, Parent.Status__c, ';
 		queryFields += 'VAT_Number__c,'
@@ -101,10 +96,8 @@ public without sharing class TIDSHelper {
 	}
 	@AuraEnabled
 	public static List<Case> getSortedCases(String accountIds,String name, String order, String search){
-		//Id userId = UserInfo.getUserId();
 		List<Case> caseValues = new List<Case>();
 		final string recordtype=TIDSUtil.getTidsRecordTypeId();
-		//Id accountIds = users[0].AccountId;
 		final string caseorigin = TIDS_Constant.CASE_ORIGIN;
 		string query='SELECT Id, CaseNumber, Status, Subject, createdDate FROM Case';
 		query +=' WHERE AccountId=:accountIds and recordTypeId=:recordtype and Origin=:caseorigin';
@@ -118,8 +111,6 @@ public without sharing class TIDSHelper {
 		
 		return caseValues;
 	}
-	// **********************************************
-
 	
 	@AuraEnabled(cacheable=false)
 	public static String actionApplication(String caseId, String action){
@@ -160,7 +151,6 @@ public without sharing class TIDSHelper {
 		String nonEligiblesCountries ='\'' +excludedcountriescode.replace(',', '\',\'') +'\'';
 		String query ='SELECT Id ,Name,ISO_Code__c,State_Province_Mandatory__c FROM IATA_ISO_Country__c';
 		query +=' WHERE ISO_Code__c NOT IN (' +nonEligiblesCountries +')';
-		//if (type=='not sanctioned') query +=' AND (Sanctioned_Country__c=false)';
 		query +=' ORDER BY Name Limit 10000';
 		//read the countries
 		countries = Database.query(query);
@@ -328,7 +318,7 @@ public without sharing class TIDSHelper {
 		agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');  
 			
 		tidsWrapper = new TidsWrapper();
-		//try {
+		try {
 			getTidsServicesConfiguration();
 			if (tidsConfiguration.Id!=null){
 				tidsWrapper.businessRules = tidsConfiguration;
@@ -426,7 +416,6 @@ public without sharing class TIDSHelper {
 						//Access Grated or Access Denied
 						if (condition4(applicationRights)) {return tidsWrapper;}
 					}
-
 					//Condition 5: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c = “Terminated”
 					if (recordname==agencyRecordTypeId && c3=='T' && status=='TERMINATED'){
 						rdate = isReinstated(tidsWrapper.currentUser.AccountId);
@@ -437,21 +426,19 @@ public without sharing class TIDSHelper {
 							}
 						}
 					}
-
 					//Condition 6: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c!=“Approved, Terminated”
 					//c3 is null to be taken in consideration check c3 null in above code
 					if (condition6(c3, recordname, status)) {return tidsWrapper;}          
 				}else{
 					if (condition6b(c3, recordname)) {return tidsWrapper;}
 				}
-
 				// Condition 7: Related Account cannot have an ongoing New TIDS HO Application
 				// Case open for HO Application
 				if (condition7(email, status)) {return tidsWrapper;}
 			}
-		//} catch (DmlException dmlex){
-		//	throw dmlex;
-		//}
+		} catch (DmlException dmlex){
+			throw dmlex;
+		}
 		return tidsWrapper;
 	}
 	
@@ -523,7 +510,6 @@ public without sharing class TIDSHelper {
 
 		if (cases.size() > 0){
 			Case tidsCase = cases.get(0);
-			//caseNumber=tidsCase.CaseNumber;
 			String formattedDate = tidsCase.createdDate.format('yyyy-MM-dd');
 			TIDSUtil.replaceby = new List<String>{email,tidsCase.CaseNumber, tidsCase.Status,tidsCase.Decision__c, formattedDate};
 			String result = TIDSUtil.getAttachment(tidsCase.Id, TIDS_Constant.DATAJSONFILENAME);
@@ -643,15 +629,13 @@ public without sharing class TIDSHelper {
 		tidsCase.Subject = caseSubjectText(applicationType);
 		tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
 		tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
-		try{
-			upsert tidsCase;
-			if (apptypes.Contains(applicationType)){
-				if (!String.isBlank(applicationsettings)){createCaseComment(tidsCase.Id, applicationsettings);}
-				 //applicationsettings is the reason why the request is made
-			}else{
-				TIDSUtil.addAttachment(tidsCase.Id, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
-			}
-		}catch(Exception e){}
+		upsert tidsCase;
+		if (apptypes.Contains(applicationType)){
+			if (!String.isBlank(applicationsettings)){createCaseComment(tidsCase.Id, applicationsettings);}
+				//applicationsettings is the reason why the request is made
+		}else{
+			TIDSUtil.addAttachment(tidsCase.Id, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
+		}
 		return tidsCase;
 	}  
 
@@ -991,9 +975,7 @@ public without sharing class TIDSHelper {
 	}
 	private static string createBranch(String accountId,String payload, string type){
 		Case tidsCase = new Case();
-		try {
-			tidsCase = createTidsCase(null,accountId,type,payload);
-		} catch (Exception e){ }
+		tidsCase = createTidsCase(null,accountId,type,payload);
 		return tidsCase.Id;
 	}
 
@@ -1028,9 +1010,6 @@ public without sharing class TIDSHelper {
 		String searchValue,
 		String countryIsoCode){
 		// Instantiate a new http object
-		//string url='http://api.geonames.org/postalCodeSearchJSON?placename_startsWith='+searchValue+'&country='+countryIsoCode+'&maxRows=100&username=akatia1';
-		//url ='http://api.geonames.org/searchJSON?name_startsWith=' +searchValue +'&featureClass=P&cities=cities1000&country=' +countryIsoCode +'&style=MEDIUM&maxRows=100&username=akatia1';
-		//url ='http://api.geonames.org/findNearbyPostalCodesJSON?lat=' + searchValue +'&lng=' + countryIsoCode +'&username=akatia1';
 		string urltype='TIDS_GEONAME_URL_CODEPOSTAL';
 		if (fieldtype == 'city'){
 			searchValue = EncodingUtil.urlEncode(searchValue, 'UTF-8');
@@ -1075,12 +1054,12 @@ public without sharing class TIDSHelper {
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		Case tidscase  = new Case();
 		if (cases.size() > 0){
-			 tidscase = cases[0];
-			 tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
-			 tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
-			 tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
-		 tidsCase.Status = caseStatus;
-		 TIDSUtil.addAttachment(caseId, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
+			tidscase = cases[0];
+			tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
+			tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
+			tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
+		 	tidsCase.Status = caseStatus;
+		 	TIDSUtil.addAttachment(caseId, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
 		}
 
 		String errorsCompilation = '';
@@ -1105,7 +1084,7 @@ public without sharing class TIDSHelper {
 		errorsCompilation += tidsCompileErrors(tids.sections.SupportingDocuments.errors,'Supporting Documents',false);
 		
 		if (!String.isBlank(errorsCompilation)){createCaseComment(caseId, errorsCompilation);}
-		try {update tidscase;} catch (Exception e){}
+		try {update tidscase;} catch (Exception e){throw e;}
 	}
 	// TIDS Configuration
 	private static String tidsCompileErrors(List<TIDS_Controller.verror> errors, String errorType, boolean isfirst){
@@ -1123,7 +1102,7 @@ public without sharing class TIDSHelper {
 		c.ParentId = caseId;
 		c.isPublished  = true;
 		c.CommentBody = comments;
-		try {insert c;} catch (Exception e){}
+		insert c;
 	}
 	
 

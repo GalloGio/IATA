@@ -21,7 +21,9 @@ public without sharing class TIDS_Constant {
     public final static String ERROR_CON7_2 = 'TIDS_ACCES_COND7_2';
     public final static String ERROR_CON7_3 = 'TIDS_ACCES_COND7_3';
     public final static String VETTING_DONE = 'TIDS_VETTING_DONE';
-    // Case subjects
+    
+    public final static String NEW_AGENT='New agent';
+     // Case subjects
     public final static String CASE_SUBJECT_RELINQUISH='TIDS – Head Office Relinquishment';
     public final static String CASE_SUBJECT_HEAD_OFFICE = 'TIDS - Head Office Application';
     public final static String CASE_SUBJECT_BRANCH = 'TIDS - Branch Office Application';
@@ -29,7 +31,7 @@ public without sharing class TIDS_Constant {
     public final static String CASE_SUBJECT_NAME_COMPANY = 'TIDS - Change of Name or Company Details';
     public final static String CASE_SUBJECT_ADDRESS_CONTACT = 'TIDS - Change of Address or Contact Details';
     public final static String CASE_SUBJECT_BUSINESS_PROFILE_SPECIALIZATION = 'TIDS - Change of Business Profile or Specialization';
-    // Duplicate account
+  
     public final static String ERROR_CON8 = 'TIDS_ACCES_COND8';
     public final static String DATAJSONFILENAME = 'data.json';
     public final static String TIDSCONFIGURATIONFILE='tids-configuration.json';

@@ -56,7 +56,6 @@ public without sharing class TIDS_Controller {
 		String applicationsettings,
 		String reason){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		//if (true) return 'return';
 		String result = 'Updated';    
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		Case tidsCase = new Case();
@@ -103,9 +102,12 @@ public without sharing class TIDS_Controller {
 			insert c;
 		}
 		tidsCase.Decision_Date__c = System.Now();
-		CaseTriggerHelper.isDone = true;
-		update tidsCase;
-		CaseTriggerHelper.isDone = false;
+		try {    
+			update tidsCase;
+        }catch(Exception e){
+            TIDSUtil.setError(e.getMessage(),true);
+			return TIDSUtil.iataCodeError;
+        }
 		return TIDSUtil.iataCodeError;
 	}
 
@@ -147,7 +149,6 @@ public without sharing class TIDS_Controller {
 	}
 	//Will emulate the Staging values based on a minimum of information
 	//provided to run the generatedAgencyIATACode(String accountId, String onlineAccreditationId)
-	
 	public static void tidsGenerateIATACode(
 		Id tidsCaseId,
 		Id accountId,
@@ -171,7 +172,6 @@ public without sharing class TIDS_Controller {
 		try {
 			upsert theAccount;
 			tids.userInfo.tidsAccount.Id = theAccount.Id;
-			//new code
 			Account theFormAccount = [SELECT Name, IATACode__c, Site, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
@@ -191,11 +191,8 @@ public without sharing class TIDS_Controller {
 				Location_Class__c = LOCCLASSTIDS,
 				Account_Name__c = theFormAccount.Name
 			);
-			//new code
 			if (!Test.isRunningTest()){
-				//new code
 				ANG_OscarProcessHelper.EntityUpdater upd = AmsIataCodeGenerator.generatedAgencyIATACode(theFormAccount,theForm, null);
-				//new code
 				if (upd.isFaulty){TIDSUtil.setError(upd.errorMessage,true); Database.rollback(sp); return;}
 				theFormAccount = (account) upd.acctMap.get(tids.userInfo.tidsAccount.Id);
 				iataCode = theFormAccount.IATAcode__c;
@@ -284,7 +281,7 @@ public without sharing class TIDS_Controller {
 		public String companyLegalName {get;set;}
 		public String countryIsoCode {get;set;}
 		public String countryName {get;set;}
-		public String countryId {get;set;} //IATA_ISO_Country__c
+		public String countryId {get;set;} 
 	}
 
 	public class sAgencyLegalStatus {
@@ -513,14 +510,12 @@ public without sharing class TIDS_Controller {
 		}
 	}
 	public class vslabel {
-		//public String id {get;set;}
 		public String label {get;set;}
 		public String value {get;set;}
 		public vslabel(String xlabel, String xvalue){
 			this.label=xlabel;
 			this.value=xvalue;
 		}
-		//public boolean isSelected {get;set;}
 	}
 	public class sSupportingDocuments {
 		public String sectionName {get;set;}
@@ -591,7 +586,6 @@ public without sharing class TIDS_Controller {
 		public vcase tidscase {get;set;}
 		public vsections sections {get;set;}
 		public List<vsectionsDone> sectionsDone {get;set;}
-		//public List<Account> branches {get;set;}
 		public vTIDS(){
 			this.userInfo = new vuserInfo();
 			this.sections = new vsections();
@@ -600,14 +594,11 @@ public without sharing class TIDS_Controller {
 			this.tidscase = new vcase();
 			this.applicationType='';
 			this.userType='';
-			//branches
-			//this.branches = new List<Account>();
 		}
 		
 		public void getRoles(Id accountId){
 			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId);
 			List<vShareholderDetails> values = new List<vShareholderDetails>();
-			//   this.sections.ShareholderDetails.values;
 			for (AMS_Account_Role__c item : amsroles){
 				vShareholderDetails vitem = new vShareholderDetails();
 				vitem.percentage = String.ValueOf(item.Percentage__c);
@@ -711,7 +702,6 @@ public without sharing class TIDS_Controller {
 			mapaccount.TradeName__c = this.sections.AgencyLegalStatus.values.tradingName;
 		}
 		public void setDefault(){
-			//mapaccount.Company_Type__c=this.sections.Welcome.values.companyType;
 			mapaccount.Category__c = 'TIDS Agent';
 			mapaccount.Sector__c = 'Travel Agent';
 			mapaccount.Status__c = TIDS_Constant.IS_APPROVED; // Date Organization Status attained must be provided
@@ -744,7 +734,6 @@ public without sharing class TIDS_Controller {
 			mapaccount.BillingState =null;
 			mapaccount.IATA_ISO_Billing_State__c=null;
 			mapaccount.Iso_State__c=null;
-			//mapaccount.BillingState = this.sections.Address.values.state.label;
 			mapaccount.BillingPostalCode = this.sections.Address.values.postalCode;
 			mapaccount.BillingCountry = this.sections.Address.values.countryName; // JH Change mapping
 			mapaccount.IATA_ISO_Country__c = this.sections.Address.values.countryId;
@@ -853,9 +842,7 @@ public without sharing class TIDS_Controller {
 		private boolean isSaveAMSRole=false;
 		private void retrieveAccount(boolean isFromContact, boolean isFromRelatedAccount ){
 			Id objectid =this.userInfo.tidsAccount.Id;
-			//mapaccount.Id = this.userInfo.tidsAccount.Id;
 			//Get the parent account From the related account Id
-			//parentid=mapaccount.Id;
 			list<Account> parentaccounts = getAccountObject(objectid, isFromContact, isFromRelatedAccount);
 			if (parentaccounts.size()>0){parentaccount=parentaccounts[0];}
 		}
@@ -942,7 +929,7 @@ public without sharing class TIDS_Controller {
 					inheritanceBatched=false;
 					retrieveAccount(false, false);
 					mapaccount.parentId=parentaccount.Id;
-					mapaccount.Reason_for_creation__c='New agent';
+					mapaccount.Reason_for_creation__c=TIDS_Constant.NEW_AGENT;
 					getRoles(parentaccount.Id);
 					setCompanyName();
 					setDefault();
@@ -962,7 +949,7 @@ public without sharing class TIDS_Controller {
 					inheritanceBatched=false;
 					retrieveAccount(false, false);
 					mapaccount.parentId=parentaccount.Id;
-					mapaccount.Reason_for_creation__c='New agent';
+					mapaccount.Reason_for_creation__c=TIDS_Constant.NEW_AGENT;
 					getRoles(parentaccount.Id);
 					setCompanyName();
 					setDefault();
@@ -1164,7 +1151,6 @@ public without sharing class TIDS_Controller {
 			setbusinesscodes(values, true, true, 'AT');
 		}
 		private void getMarketFocus(){
-		//FC or FL
 			List<vslabel> values = this.sections.BusinessProfile.values.marketFocus.values;
 			setbusinesscodes(values, false, true, '');
 		}
