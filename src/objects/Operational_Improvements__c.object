@@ -4962,6 +4962,10 @@
                 <controllingFieldValue>Other</controllingFieldValue>
                 <valueName>Unidentified over 3 months &lt; $1k</valueName>
             </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Other</controllingFieldValue>
+                <valueName>User profile (employee)</valueName>
+            </valueSettings>
         </valueSet>
     </fields>
     <fields>

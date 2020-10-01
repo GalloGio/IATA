@@ -1575,7 +1575,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public List<SelectOption> getTrainingTypes() {
 		List<SelectOption> traingingTypes = new List<SelectOption>{new SelectOption('', '--None--')};
 		for(Schema.PicklistEntry trainingTypeValue : AMS_Accreditation_Contact__c.Type_Of_Certificate__c.getDescribe().getPicklistValues()){
-			if(isocountry != null && !isocountry.EACP_Country__c && trainingTypeValue.getValue() != 'DGA')
+			if(isocountry != null && ((!isocountry.EACP_Country__c && trainingTypeValue.getValue() != 'DGA') || isocountry.EACP_Country__c))
 				traingingTypes.add(new SelectOption(trainingTypeValue.getValue(), trainingTypeValue.getValue()));
 		}
 
@@ -7411,7 +7411,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 
-			if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation') {
+			if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && !isCNSAgency) {
 				if (newForm.ISSP_AMS_Date_of_incorporation__c == null) {
 					newForm.ISSP_AMS_Date_of_incorporation__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;

@@ -20,7 +20,6 @@
             var date = new Date();
             var userContact = component.get("v.contact");
             var topicLabel = component.get("v.topic");
-            var subTopicLabel = component.get("v.subTopic");
             var caseRecordTypeId = component.get("v.caseRecordType");
             var country = component.get("v.country");
             var isEmergency = component.get("v.isEmergency");
@@ -33,7 +32,6 @@
             liveagent.addCustomDetail('#Category', userContact.Account.Category__c == undefined ? '' : userContact.Account.Category__c);
             liveagent.addCustomDetail('Case Subject', 'Chat with IATA Customer Service ' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
             liveagent.addCustomDetail('#Topic', topicLabel);
-            liveagent.addCustomDetail('#Subtopic', subTopicLabel);
             liveagent.addCustomDetail('Case Status', 'Open');
             liveagent.addCustomDetail('Case Origin', 'Chat');
             liveagent.addCustomDetail('Case Priority', isEmergency ? 'Emergency':'Normal');
@@ -43,7 +41,6 @@
             liveagent.addCustomDetail('caseCountryConcerned', country).saveToTranscript('Country_Concerned__c');
             //liveagent.addCustomDetail('buttonlanguage', '{!buttonLanguage}');
             liveagent.addCustomDetail('#TopicEN', topicLabel).saveToTranscript('Topic__c');
-            liveagent.addCustomDetail('#SubtopicEN', subTopicLabel).saveToTranscript('Subtopic__c');
 
             liveagent.findOrCreate('Case')
                 .map('RecordTypeId', 'caseRTId', false, true, true)
@@ -53,7 +50,6 @@
                 .map('Country_concerned_by_the_query__c', 'caseCountryConcerned', false, true, true)
                 .map('Priority', 'Case Priority', false, true, true)
                 .map('Topic__c', '#TopicEN', false, true, true)
-                .map('Subtopic__c', '#SubtopicEN', false, true, true)
                 .showOnCreate()
                 .saveToTranscript('Case');
             liveagent.findOrCreate('Contact').map('Id', 'userContactId', true, true, false).linkToEntity('Case', 'ContactId').saveToTranscript('Contact');

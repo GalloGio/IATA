@@ -57,6 +57,9 @@
 							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_CurrencyCenterHeatMapPdf?search={!searchText}','_blank');" >
 								<span class="glyphicon download-icon" aria-hidden="true"></span>{!$Label.CurrencyCenter_Download_Pdf}
 							</button>
+							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_CurrencyCenterCountriesMap','_blank');" >
+								<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;{!$Label.CurrencyCenter_See_World_Map}
+							</button>
 						</apex:outputPanel>
 					</div>
 				</div>

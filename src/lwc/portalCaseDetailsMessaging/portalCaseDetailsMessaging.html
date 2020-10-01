@@ -16,39 +16,19 @@
                 <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
 
                     <template for:each={lstMessages} for:item="message" for:index="index">
-                        <div key={message.id} if:true={message.isSelf} class="caseMessagesSelfBubbleContainer">
-                            <div class="slds-p-around_medium caseMessagesSelfBubble">
-                                <lightning-formatted-text value={message.messageText} class="breakWord">
-                                </lightning-formatted-text>
-                            </div>
-                            <div
-                                class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
-                                {message.senderName},&nbsp;
-                                <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short"
-                                    day="numeric">
-                                </lightning-formatted-date-time>,&nbsp;
-                                <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit"
-                                    hour12="true">
-                                </lightning-formatted-date-time>
-                            </div>
-                        </div>
-                        <div key={message.id} if:false={message.isSelf} class="caseMessagesOtherBubbleContainer">
-                            <div class="slds-p-around_medium caseMessagesOtherBubble">
-                                <lightning-formatted-text value={message.messageText} class="breakWord">
-                                </lightning-formatted-text>
-                            </div>
-                            <div
-                                class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
-                                {message.senderName},&nbsp;
-                                <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short"
-                                    day="numeric">
-                                </lightning-formatted-date-time>,&nbsp;
-                                <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit"
-                                    hour12="true">
-                                </lightning-formatted-date-time>
-                            </div>
-                        </div>
-                    </template>
+						<c-portal-case-comment
+							key={message.id}
+							comment={message}
+							case={caseDetails}
+							onwaitingmessages={handleWaitingNewMessages}
+							onnewmessages={handleNewMessages}
+							onupdatedcase={handleUpdatedCase}
+							onerror={handleNewMessagesError}
+							></c-portal-case-comment>
+					</template>
+					<div class="slds-is-relative slds-container_fluid slds-text-align_right new-messages-spinner">
+						<lightning-spinner alternative-text="Loading" size="small" if:true={loadingNewMessages}></lightning-spinner>
+					</div>
                 </div>
             </div>
         </div>

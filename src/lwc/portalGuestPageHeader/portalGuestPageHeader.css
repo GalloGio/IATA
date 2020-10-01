@@ -1,0 +1,93 @@
+.borderTransition {
+	transition: border-top 0.5s;
+	-webkit-transition: border-top 0.5s;
+}
+
+.headerContainer {
+	border-top: 29px solid #fff;
+	background-color: #1e32fa;
+	border-bottom: 29px solid #fff;
+}
+
+@media only screen and (max-width: 767px) {
+	.headerContainer {
+		border-top: 0px solid #fff;
+	}
+}
+
+.maxWidthHeader {
+	max-width: 1440px;
+	margin: 0 auto;
+	height: 40px;
+}
+
+.customBlueBackground {
+	background-color: #1e32fa;
+}
+
+.headerBar {
+	height: 40px;
+}
+
+.headerBarLeft {
+	display: inline-block;
+	position: relative;
+}
+
+.headerBarLeft::after {
+	content: "";
+	width: 0;
+	height: 0;
+	border-top: 20px solid transparent;
+	border-right: 20px solid #ffffff;
+	border-bottom: 20px solid transparent;
+	position: absolute;
+	right: 0;
+}
+
+.headerBarLogo {
+	margin-top: -18px;
+	background-color: #ffffff;
+}
+
+.headerBarLogo:hover {
+	cursor: pointer;
+}
+
+.headerBarRight {
+	position: relative;
+	display: grid;
+}
+
+.headerBarRight::after {
+	content: "";
+	width: 0;
+	height: 0;
+	border-top: 20px solid transparent;
+	border-left: 20px solid #ffffff;
+	border-bottom: 20px solid transparent;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.headerBarLeftRightWidth {
+	width: 8%;
+}
+
+.headerBarButton {
+	position: relative;
+	max-height: 37px;
+	display: flex;
+	align-items: center;
+	padding-bottom: 10px;
+	padding-top: 5px;
+}
+
+.headerBarButton:hover {
+	cursor: pointer;
+}
+
+.headerBarButton:hover span.tabText {
+	font-weight: 500;
+}

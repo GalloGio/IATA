@@ -1676,6 +1676,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>모든 알림</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -1706,6 +1710,50 @@
     <customLabels>
         <label><!-- Attention --></label>
         <name>Attention</name>
+    </customLabels>
+    <customLabels>
+        <label>아래 댓글이 귀하의 사례에 게시되었습니다.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>어제.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 질문이 해결되었거나, 다른 도움이 필요한 경우, 아래 버튼을 통해 사례에 접속하시어 알려 주시기 바랍니다.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 고객 포털에서 사례에 접속하시어 연락주실 수 있습니다.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label>24 시간 이내에 추가 답변을 받지 못할 경우, 자동으로 케이스를 종료합니다.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label>사례를 종결합니다</label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>지난 48 시간 내 추가 답변을 받지 못했습니다.</label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>이 사례에 대한 추가 지원이 필요한 경우 의견을 추가하거나 새로운 사례를 통해 문의하실 수 있습니다.</label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 사례에 번호에 답변이 추가되었습니다.</label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label>사례 세부 정보로 이동하여 답변을 확인하실 수 있습니다.</label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 고객 포털에서 질의에 접속하시어 알려 주실 수 있습니다.</label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
         <label><!-- Auto renew payment method error --></label>
@@ -2885,7 +2933,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>문의하기</label>
+        <label>문의 하기</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2899,6 +2947,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>온라인 구매</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>유선 문의</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>취소</label>
@@ -2985,6 +3037,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>$0 무료 채팅</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>접근 세부 정보를 얻으려면 고객님의 이메일을 확인하십시오</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3015,6 +3071,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>회사 프로필</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>불만 접수의 경우, 답변에 5일 정도 소요됩니다. 질의나 요청 사항은 &lt;b&gt; 사례 작성 &lt;/b&gt;으로 보내주시면, 빠른 답변 드리겠습니다. </label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>프로필 완성</label>
@@ -3119,6 +3179,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>간단한 의견 보내기 </label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>나의 즐겨찾기에 문서가 추가 되었습니다.</label>
@@ -3301,6 +3365,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>&lt;b&gt;긴급 사례&lt;/b&gt; 입니다.</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급 사례는 영어로 하루 24시간 1년 내내 지원됩니다. </label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급사례는 아래 상황에 한해  &lt;b&gt; 영어 &lt;/b&gt;로 지원됩니다. </label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 질의가 긴급 상황에 해당하지 않는 경우, &quot;&lt;b&gt; 사례 작성 &lt;/b&gt;을 통해 질의를 보내주시기 바랍니다. </label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급 지원을 선택하셨습니다. </label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>아래 상황에 한해서만 긴급 채널을 통한 서비스가 지원됩니다. </label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>시스템 접속 혹은 웹사이트 에러 </label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>빌링 문제 (영업에 큰 차질을 야기하는 민감한 문제/차액)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>시스템 중단</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>사기 의심 사례</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>사기 , 발권, 재정 관련 사례가 아닌 경우, 긴급 채널을 통한 지원을 요청하지 마십시오. </label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3337,7 +3445,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>문의하기</label>
+        <label>문의 하기</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3445,6 +3553,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
+        <label>의견 보내기</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA에서 제공하는 제품/서비스 품질 향상을 위해 노력하고 있습니다. 귀하의 의견은 서비스 향상을 위한 소중한 자료가 됩니다. 아래 버튼을 클릭하시어 의견을 보내주실 수 있습니다. </label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA는 고객의 의견을 소중히 여깁니다.</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>이것은 </label>
+        <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Go to Webstar --></label>
         <name>CSP_Go_to_Webstar</name>
     </customLabels>
@@ -3465,8 +3589,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label>감사합니다. &amp;lt;br/&amp;gt; IATA 고객 서비스 센터</label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 고객 포털</label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -4433,6 +4565,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -4745,12 +4881,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>여기서 주제를 선택하세요. </label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
         <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>서비스 액세스</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -4885,12 +5033,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>간단한 제목을 작성하세요</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>제출</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>긴급 요청 보내기</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>질의 보내기</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4929,6 +5089,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>모든 주제</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 최근 주제</label>
+        <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
         <label>과정</label>
         <name>CSP_Track</name>
     </customLabels>
@@ -4947,6 +5115,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Treasury Dashboard --></label>
         <name>CSP_Treasury_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
     </customLabels>
     <customLabels>
         <label>문제 해결</label>
@@ -5193,6 +5365,107 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
+        <label>이 사례는 종결될 수 없거나, &amp;apos;s 이미 종결되었습니다.</label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>유효한 링크가 아닙니다.</label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>고객 포털로 이동</label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>감사합니다. 귀하의 답변이 저장되었습니다.</label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>지금 말고</label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>설문 조사로 연결됩니다.</label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>아래 사례를 종결 하였습니다.</label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>48 시간 이내에 답변이 없어서, 아래 사례를 종료했습니다.</label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label>확인 해 주셔서 감사합니다!</label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>설문 조사로 연결하는 중에 오류가 발생했습니다.</label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA에서는 우수한 고객 서비스을 제공을 위해, 지속적으로 서비스를 개선하고 있습니다. 중요한 몇가지 사항에 대해 귀하의 의견을 여쭙고자 합니다. 2 분 정도면 충분합니다.</label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>설문 조사에 참여해주시면 감사하겠습니다.</label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 답변이 충분하지 않습니다.</label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label>지금 이 케이스를 종결할 수 있습니다.</label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label>연락처로 이동</label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label>새 문의가 있습니다.</label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>질문이 해결 되었습니까?</label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label>향후 48 시간 동안 답변이 없는 경우, 더 이상 지원이 필요하지 않다고 간주하고, 케이스를 종료합니다.</label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label>이 질문에 대한 추가 지원 방법을 알려주십시오.</label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label>새 질의가 접수되어, {arg0} 케이스를 종료하였으며, 아래 버튼을 클릭하여 새 질의를 접수하시면 빠른 답변 드리겠습니다.</label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>확인 해주셔서 감사합니다</label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>이 케이스를 계속 진행할 수 있도록 추가 의견을 제공해주세요.</label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label>이 설문 조사</label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;IATA는 귀하의 의견을 소중하게 생각합니다. IATA에 대한 피드백을 보내주시기 바랍니다. &amp;apos;s 
+지원&quot;</label>
+        <name>Case_Comment_Survey_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
     </customLabels>
@@ -5361,10 +5634,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_All_Other_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- CurrencyCenter_All_Others --></label>
-        <name>CurrencyCenter_All_Others</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
     </customLabels>
@@ -5405,6 +5674,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_BSP_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_Launch_Date --></label>
+        <name>CurrencyCenter_BSP_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -5441,6 +5714,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_CASS_Launch_Date --></label>
+        <name>CurrencyCenter_CASS_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
@@ -5457,6 +5734,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -5465,12 +5750,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Countries_Map</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Country_Heat_Map --></label>
+        <name>CurrencyCenter_Country_Heat_Map</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Country_Profiles --></label>
         <name>CurrencyCenter_Country_Profiles</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Currency_Exchange_Rate --></label>
+        <name>CurrencyCenter_Currency_Exchange_Rate</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
@@ -5643,6 +5936,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CurrencyCenter_Search_Additional_Information --></label>
         <name>CurrencyCenter_Search_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_See_World_Map --></label>
+        <name>CurrencyCenter_See_World_Map</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Select_Country --></label>
@@ -7411,6 +7708,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -21009,6 +21310,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Pending Documents --></label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
@@ -23487,6 +23792,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>원하시는 언어로 채팅 서비스가 불가한 경우, &lt;b&gt; 사례 작성 &lt;/b&gt; 이나 &lt;b&gt; 유선 안내 &lt;/b&gt;를 선택하시기 바랍니다.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>전화주시기 바랍니다. </label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23501,6 +23814,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>IATA 담당자에게 연락하시려면 다음 전화번호를 이용해 주십시오:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>채팅창이 연결되었습니다. </label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>채팅</label>
@@ -26242,6 +26559,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Treasury_Dashboard_Premium_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
         <name>Treasury_Dashboard_Service_Name</name>
     </customLabels>
@@ -26738,7 +27063,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>액세스 서비스</label>
+        <label>질문 주제를 선택하면 사용 가능한 지원 채널이 나타납니다.</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26798,7 +27123,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>전화나 채팅으로 국제항공운송협회 (IATA) 포털을 통해 직접 문의하십시오.</label>
+        <label>연락합시다. 질문의 주제를 선택하여 시작하십시오.</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26946,7 +27271,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>지원 문의</label>
+        <label>문의하기</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
@@ -27848,6 +28173,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -32675,6 +33004,31 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account relationship with airport information --></description>
+        <label><!-- Account relationship with airport information --></label>
+        <name>Account_relationship_with_airport_information</name>
+        <sections>
+            <columns>
+                <label><!-- Parent Account ID --></label>
+                <name>Parent Account ID</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <label><!-- Airport account info --></label>
+            <name>Airport account info</name>
+        </sections>
+        <sections>
+            <label><!-- Manages / Operates --></label>
+            <name>Manages / Operates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account w cases and results --></description>
         <label><!-- Account w cases and results --></label>
         <name>Account_w_cases_and_results</name>
@@ -32935,8 +33289,8 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -33006,6 +33360,19 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -33743,6 +34110,22 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34551,8 +34934,16 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <label><!-- Cases with created by user --></label>
         <name>Cases_with_created_by_user</name>
         <sections>
+            <label><!-- Account information --></label>
+            <name>Account information</name>
+        </sections>
+        <sections>
             <label><!-- Cases --></label>
             <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- Contact information --></label>
+            <name>Contact information</name>
         </sections>
         <sections>
             <label><!-- Created by user --></label>
@@ -34868,8 +35259,8 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Contacts without Cases --></description>
-        <label><!-- Contacts without Cases --></label>
+        <description><!-- Contacts with or without Cases --></description>
+        <label><!-- Contacts with or without Cases --></label>
         <name>Contacts_without_Cases</name>
         <sections>
             <label><!-- Cases --></label>
@@ -35003,6 +35394,23 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35219,6 +35627,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Financial Securities --></label>
             <name>Financial Securities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -37031,6 +37448,15 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
