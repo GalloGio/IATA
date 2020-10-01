@@ -5009,11 +5009,11 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label>Paylaş</label>
+        <label>Linki kopyala</label>
         <name>CSP_ShareLink</name>
     </customLabels>
     <customLabels>
-        <label>Link kopyalandı!</label>
+        <label>Makale linki kopyalandı!</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
