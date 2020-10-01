@@ -7838,7 +7838,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Share FAQ button label</shortDescription>
-        <value>Share</value>
+        <value>Copy Link</value>
     </labels>
     <labels>
         <fullName>CSP_Share_CopiedToClipBoard</fullName>
@@ -7846,7 +7846,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Success message that link has been copied to the clipboard</shortDescription>
-        <value>FAQ link has been Copied!</value>
+        <value>Direct link to FAQ copied</value>
     </labels>
     <labels>
         <fullName>CSP_Skip</fullName>
