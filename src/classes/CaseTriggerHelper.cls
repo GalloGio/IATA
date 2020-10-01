@@ -98,12 +98,18 @@ public with sharing class CaseTriggerHelper {
 			for(Case c: newList) {
 				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
 
-				closure_fromStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
-				closure_toStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_To__c.split(',');
-				escalation_fromStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
-				escalation_toStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_To__c.split(',');
-				reopening_fromStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_From__c.split(',');
-				reopening_toStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_To__c.split(',');
+				if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
+					closure_fromStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
+					closure_toStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_To__c.split(',');
+				}
+				if(configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
+					escalation_fromStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
+					escalation_toStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_To__c.split(',');
+				}
+				if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
+					reopening_fromStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_From__c.split(',');
+					reopening_toStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_To__c.split(',');
+				}
 				
 				// case closure
 				if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName) && closure_fromStatus.contains(oldMap.get(c.Id).Status) && closure_toStatus.contains(newMap.get(c.Id).Status)) {
