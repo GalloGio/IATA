@@ -124,8 +124,10 @@ public with sharing class CaseTriggerHelper {
 				}
 
 				// NOI sent
-				if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName))
+				if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)){
+					consideredForNOI.add(c.Id);
 					allConsidered.add(c.Id);
+				}
 			}
 
 			if(allConsidered.size() == 0) {
