@@ -2875,6 +2875,16 @@ SF Workflow Process</value>
         <value>asmad@iata.org</value>
     </labels>
     <labels>
+        <fullName>Airline_Daily_Sales_portal_service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Airline Daily Sales portal service</shortDescription>
+        <value>The Airline Daily Sales Dashboard provides you a global display of your daily cashflow, payment methods and sales performance.  Data from BSP Markets where you participate is loaded to provide:
+                                                                   1- Your overall Daily Net Position, with net amounts by BSP country, and visualization of trends and counts
+2- Your Credit Card Sales by country and brand, with visualization of transactions by type and credit card brand
+3- Your world-wide outstanding BSPLink refund authority request transactions, by country</value>
+    </labels>
+    <labels>
         <fullName>All_Notifications_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
