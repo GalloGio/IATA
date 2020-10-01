@@ -5019,7 +5019,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_ShareLink</name>
     </customLabels>
     <customLabels>
-        <label>Il link dell’articolo è stato copiato!</label>
+        <label>Il link diretto dell’articolo è stato copiato!</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>

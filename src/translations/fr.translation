@@ -5020,7 +5020,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_ShareLink</name>
     </customLabels>
     <customLabels>
-        <label>Le lien FAQ a été copié!</label>
+        <label>Le lien direct FAQ a été copié!</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
