@@ -138,7 +138,7 @@ public with sharing class PortalFAQsCtrl {
 		//Get the articles being referenced
 		set<id> articleIdSet=new set<id>();
 		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language, CS_Portal_link__c FROM faq__kav WHERE publishstatus =\'Online\' ';
-		String soqlTransl=' AND KnowledgeArticleid=:articleIdSet AND language=:lang';
+		String soqlTransl='AND language=:lang AND ( KnowledgeArticleid=:articleIdSet OR UrlName=:urlName ) ';
 		String soqlEng=' AND language=\'en_US\' AND UrlName=:urlName';
 		String soqlDat=' WITH DATA CATEGORY FAQs__c BELOW '+datacategories;
 		
@@ -154,10 +154,9 @@ public with sharing class PortalFAQsCtrl {
 		//Iterate over the translations based on the users language
 		list<faq__kav> translatedArticles=Database.query(soqlGen+soqlTransl);
 		for(faq__kav faq:translatedArticles){
-			if(articleMap.containsKey(faq.KnowledgeArticleid)){ // if version available in the user language, replace for that one
+			// if version available in the user language, replace for that one, or adds it if the url providade was for the translated one
 				articleMap.put(faq.KnowledgeArticleid,faq);
 			}
-		}
 
 		CSP_Utils.PagedResult result= new CSP_Utils.PagedResult();
 		result.records=articleMap.values();
