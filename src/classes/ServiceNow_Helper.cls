@@ -57,16 +57,14 @@ public without sharing class ServiceNow_Helper {
 
 		Http http = new Http();
 		HTTPResponse res;
-
+		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+		log.Web_Service__c = req.getEndpoint();
+		log.Input_Description__c = 'body:' + theBody;
+		log.Method__c = 'POST';
+		
 		try{
 			res = http.send(req);
 		}catch(CalloutException e){
-			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
-			log.Web_Service__c = req.getEndpoint();
-			try{
-			  log.Input_Description__c = 'body:' + res.getBody();
-			}catch(exception e1){}
-			log.Method__c = 'POST';
 			log.Web_Service__c = String.valueOf(req);
 			log.Error_Code__c = 'Exception sending request';
 			log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());
@@ -75,11 +73,6 @@ public without sharing class ServiceNow_Helper {
 
 			return;
 		}
-
-		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
-		log.Web_Service__c = req.getEndpoint();
-		log.Input_Description__c= 'body:'+res.getBody();
-		log.Method__c = 'POST';
 
 		try{
 		  log.Response__c = res.getBody();
