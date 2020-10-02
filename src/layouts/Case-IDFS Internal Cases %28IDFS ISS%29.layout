@@ -88,10 +88,6 @@
                 <behavior>Edit</behavior>
                 <field>Subtopic__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Case_Items__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -367,6 +363,21 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>EasyUpload</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Escalate_within_IATA</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -390,21 +401,6 @@
             <actionName>Case.Send_to_Recycle_Bin</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>EasyUpload</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Escalate_within_IATA</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>
