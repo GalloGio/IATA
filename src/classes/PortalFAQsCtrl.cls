@@ -134,11 +134,13 @@ public with sharing class PortalFAQsCtrl {
 		@param datacategories - Categories that the user has access to
 	*/
 	public static CSP_Utils.PagedResult getFAQbyURLName(String urlName,string lang,string datacategories){
+		 //decodes in case urlname contains special chars
+		 urlname = EncodingUtil.urlDecode(urlName, 'UTF-8');
 
 		//Get the articles being referenced
 		set<id> articleIdSet=new set<id>();
 		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language, CS_Portal_link__c FROM faq__kav WHERE publishstatus =\'Online\' ';
-		String soqlTransl='AND language=:lang AND ( KnowledgeArticleid=:articleIdSet OR UrlName=:urlName ) ';
+		String soqlTransl=' AND language=:lang AND (UrlName=:urlName OR KnowledgeArticleid=:articleIdSet) ';
 		String soqlEng=' AND language=\'en_US\' AND UrlName=:urlName';
 		String soqlDat=' WITH DATA CATEGORY FAQs__c BELOW '+datacategories;
 		
