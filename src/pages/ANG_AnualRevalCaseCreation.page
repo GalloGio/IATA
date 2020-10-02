@@ -251,13 +251,10 @@
 					</apex:column>
 					<apex:column value="{!a.account.IATACode__c}"/>
 					<apex:column value="{!a.account.Name}"/>
-					<apex:column value="{!a.account.Location_Class__c}"/>
 					<apex:column value="{!a.account.Location_Type__c}"/>
-					<apex:column value="{!a.account.Status__c}"/>
 					<apex:column value="{!a.account.IATA_ISO_Country__r.Name}"/>
-					<apex:column value="{!a.account.IATA_ISO_Country__r.Region__c}"/>
 					<apex:column value="{!a.account.Financial_Year_End__c}"/>
-					<apex:column headerValue="Last ARV created" value="{!a.oscarCase.CreatedDate}"/>
+					<apex:column headerValue="Last ARV created" value="{!a.lastARVCreated}"/>
 				</apex:pageblocktable>
 
 				<apex:outputLabel value="Total Records Found: {!IF(Con == null , 0 ,Con.resultSize)}"/>

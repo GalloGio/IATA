@@ -133,12 +133,12 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public class AccountWrapper {
 		public Account account {get; set;}
-		public Case oscarCase {get; set;}
+		public String lastARVCreated{get; set;}
 		public Boolean selected {get; set;}
 
-		public AccountWrapper(Account acct, Case oscarCase, Boolean selected) {
+		public AccountWrapper(Account acct, Datetime arvCreated, Boolean selected) {
 			this.account = acct;
-			this.oscarCase = oscarCase;
+			this.lastARVCreated = arvCreated == null ? '' : arvCreated.format();
 			this.selected = selected;
 		}
 	}
@@ -147,7 +147,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		get; set;
 	}
 
-	private Map<Id, Case> annualRevalidationCaseOscar{get;set;}
+	private Map<Id, Datetime> annualRevalidationCaseOscar{get;set;}
 
 	public Boolean batchStatusBool { get; set; }
 	public Id batchId { get; set; }
@@ -212,7 +212,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public ANG_AnualRevalCaseCreationController() {
 		countriesLst = new List<String>();
 		accountsToCreate = new List<AccountWrapper>();
-		annualRevalidationCaseOscar = new Map<Id, Case>();
+		annualRevalidationCaseOscar = new Map<Id, Datetime>();
 		batchStatusBool = false;
 		getBatchStatus = 0;
 		size = 5;
@@ -298,26 +298,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		this.state = null;
 	}
 
-	private Map<ID, Map<ID,String>> isoStateCountryMap;
-
 	public List<SelectOption> getcountryobj() {
 		List<SelectOption> options = new List<SelectOption>{
 			new SelectOption(SELECT_COUNTRY, SELECT_COUNTRY)
 		};
 
-		isoStateCountryMap = new Map<ID, Map<ID,String>>();
-		Map<ID, String> isoStateMap;
-
-		for (IATA_ISO_Country__c c: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name')){
+		for (IATA_ISO_Country__c c: [SELECT id, name FROM IATA_ISO_Country__c WHERE Region__c =:region ORDER BY Name])
 			options.add(new SelectOption(c.Id, c.name));
 
-			//Initialze isoStateMap per country
-			isoStateMap = new Map<ID, String>();
-
-			for(IATA_ISO_State__c state : c.IATA_ISO_States__r)	isoStateMap.put(state.Id, state.Name);
-			//Set Country Iso States Map 
-			isoStateCountryMap.put(c.Id, isoStateMap);
-		}
 		return options;
 	}
 
@@ -327,8 +315,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		};
 
 		if(country != null)
-			for (Id stateId : isoStateCountryMap.get(country).keySet())	
-				options.add(new SelectOption(stateId, isoStateCountryMap.get(country).get(stateId)));
+			for(IATA_ISO_State__c state : [SELECT Id, Name FROM IATA_ISO_State__c WHERE IATA_ISO_Country__c =: country ORDER BY Name])
+				options.add(new SelectOption(state.Id, state.Name));
 		return options;
 	}
 
@@ -355,7 +343,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	private String getOscarCasesSubquery() {
-		return '(SELECT Id, OSCAR__r.Name, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
+		return '(SELECT Id, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
 		'FROM Cases ' +
 		'WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
 		'	OR (OSCAR__r.Process__c = :MAJOR_CHANGES_PROCESS ' +
@@ -378,12 +366,9 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)){ 
 							if(!foundAnnualRevalidation) {
 								foundAnnualRevalidation = true;
-								annualRevalidationCaseOscar.put(acct.Id, cse);
+								annualRevalidationCaseOscar.put(acct.Id, cse.CreatedDate);
 							}
 						} else {
-							if (annualRevalidationCaseOscar.get(acct.Id) != null) {
-								annualRevalidationCaseOscar.get(acct.Id).clear();
-							}
 							return true;
 						}
 					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
@@ -412,7 +397,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		}
 
 		String queryAccount =
-			'SELECT Id, IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, ' + 
+			'SELECT Id, IATACode__c, Name, RecordType.Name, ' + 
 			'   Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c, ' +
 			getOscarCasesSubquery() +
 			'FROM Account ' +
