@@ -35712,6 +35712,19 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- IATA Geoname Cities --></description>
         <label><!-- IATA Geoname Cities --></label>
         <name>IATA_Geoname_Cities</name>
