@@ -154,10 +154,10 @@ public class ANG_RHCHelper {
 
 				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__r.Iso_Code__c);
 				
-				if(string.isNotEmpty(a.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+				if(string.isNotEmpty(a.IATA_ISO_Country__r.AMS_Settlement_System__c))
 					accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
-					accountsMap.put(a.Id, a);
-				}
+				
+				accountsMap.put(a.Id, a);
 			}
 
 			Set<String> isoCountriesSet = new Set<String>{DEFAULT_CODE};
@@ -251,10 +251,8 @@ public class ANG_RHCHelper {
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 				continue;
 			}
-
 			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + (acct.ANG_RiskStatus__c==null || acct.ANG_RiskStatus__c =='Not Applicable'?'C':acct.ANG_RiskStatus__c));
 			ANG_BSP_Attributes__c bspAttrRhc = null;
-
 			//Find the correct BSP Attribute configuration based on
 			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
 			//If the agent contains Financial Assessment Points finds the BSP attribute
@@ -266,9 +264,8 @@ public class ANG_RHCHelper {
 
 				String bspAttrKey = (String.valueOf(bspAttr.BSP__c) +
 									 String.valueOf(bspAttr.RecordTypeId) +
-									 bspAttr.Tier__c + 
+									 (string.isEmpty(bspAttr.Tier__c)?'1':bspAttr.Tier__c) + 
 									 bspAttr.Risk_Status__c);
-
 				//If the agent has financial assessment points
 				//considers the point interval from the configuration on BSP Attribute record.
 				//Otherwise assessment points interval are not considered
@@ -289,12 +286,10 @@ public class ANG_RHCHelper {
 			//jump into the formula calculation
 			if(isMulticountry){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
-				if(bspAttrRhc==null){
-					throw new ANG_RHCHelperException('RHCHelper: BSP Configuration ' + currentBspAttrKey + ' not found!');
+				if(bspAttrRhc!=null){
+					applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
 					continue;
 				}
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
-				continue;
 			}
 
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
@@ -312,6 +307,12 @@ public class ANG_RHCHelper {
 				fixedPercentageCalc &&
 				(acct.Financial_Assessment_Points__c == null) &&
 				skipPercentageCalcBspSet.contains(bspAttrRhc.BSP__r.Name);
+				
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] fixedPercentageCalc ' + fixedPercentageCalc);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Financial_Assessment_Points__c ' + acct.Financial_Assessment_Points__c);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipPercentageCalcBspSet ' + skipPercentageCalcBspSet);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] bspAttrRhc. ' + bspAttrRhc);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipFixedPercentageCalc? ' + skipFixedPercentageCalc);
 
 			if(fixedPercentageCalc && !skipFixedPercentageCalc){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
@@ -320,11 +321,8 @@ public class ANG_RHCHelper {
 			}
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				if(bspAttrRhc==null){
-					throw new ANG_RHCHelperException('RHCHelper: BSP Configuration ' + currentBspAttrKey + ' not found!');
-					continue;
-				}
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
+				if(bspAttrRhc!=null)
+					applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
 			}
 
 		}
@@ -709,6 +707,4 @@ public class ANG_RHCHelper {
 				return attr.Tier__c;
 		return Tier;
 	}
-
-	public class ANG_RHCHelperException extends Exception {}
 }
