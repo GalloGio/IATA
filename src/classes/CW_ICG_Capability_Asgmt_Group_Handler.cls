@@ -54,25 +54,25 @@ public without sharing class CW_ICG_Capability_Asgmt_Group_Handler {
 				Id currentArdId = newMap.get(asgmGroupId).ICG_Account_Role_Detail__c;
 
 				switch on certificationsAffectedMap.get(newMap.get(asgmGroupId).ICG_Certification__c).Name {
-					when 'CEIV Pharma' {
+					when 'ceiv_pharma' {
 						if (accRoleDetailAffectedMap.get(currentArdId).Pharmaceuticals__c != true) {
 							accRoleDetailAffectedMap.get(currentArdId).Pharmaceuticals__c = true;
 							accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
 						}
 					}
-					when 'CEIV Live Animals' {
+					when 'ceiv_live_animals' {
 						if (accRoleDetailAffectedMap.get(currentArdId).Live_Animals__c != true) {
 							accRoleDetailAffectedMap.get(currentArdId).Live_Animals__c = true;
 							accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
 						}
 					}
-					when 'CEIV Fresh' {
+					when 'ceiv_fresh' {
 						if (accRoleDetailAffectedMap.get(currentArdId).Perishables__c != true) {
 							accRoleDetailAffectedMap.get(currentArdId).Perishables__c = true;
 							accsRoleDetailToUpdate.put(accRoleDetailAffectedMap.get(currentArdId).Id, accRoleDetailAffectedMap.get(currentArdId));
 						}
 					}
-					when 'Smart Facility Operational Capacity' {
+					when 'smart_facility_operational_capacity' {
 						if (String.isNotBlank(currentAsgmtGroup.SFOC_Scope__c)) {
 							for (String currentScope : currentAsgmtGroup.SFOC_Scope__c.split(';')) {
 								switch on currentScope {

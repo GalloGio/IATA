@@ -35,18 +35,20 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 	 * @param			scope <List of objects retrieved by query>
 	 */
 	public void execute(Database.BatchableContext context, List<ICG_Capability_Assignment_Group__c> scope) {
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+
 		ICG_Environment_Variables__c environmentVariables = CW_Utilities.getEnvironmentVariables();
 		Decimal expiringValidationDays = environmentVariables.EXPIRING_VALIDATION_DAYS__c;
-		List<String> iataAdminEmails = CW_Utilities.getIATAStakeholdersEmails();
+		Set<Id> iataAdminIds = CW_EmailManager.getIataAdminsIds();
 		List<ICG_Capability_Assignment_Group__c> asgmtGroupToUpdate = new List<ICG_Capability_Assignment_Group__c>();
-		Map<String, List<String>> mapQueueDevNameListEmails = new Map<String,List<String>>();
+		Map<String, Set<Id>> mapQueueDevNameListIds = new Map<String,Set<Id>>();
 		for (ICG_Capability_Assignment_Group__c asgmtGroup : scope) {
 			if(asgmtGroup.ICG_Certification__c != null && asgmtGroup.ICG_Certification__r.Department__c != null){
-				mapQueueDevNameListEmails.put(asgmtGroup.ICG_Certification__r.Department__c, new List<String>());
+				mapQueueDevNameListIds.put(asgmtGroup.ICG_Certification__r.Department__c, new Set<Id>());
 			}
 		}
-		if(!mapQueueDevNameListEmails.keySet().isEmpty()){
-			List<Group> queues = [SELECT id, DeveloperName, (Select Id, UserOrGroupId from GroupMembers) FROM Group WHERE DeveloperName IN :mapQueueDevNameListEmails.keySet()];
+		if(!mapQueueDevNameListIds.keySet().isEmpty()){
+			List<Group> queues = [SELECT id, DeveloperName, (Select Id, UserOrGroupId from GroupMembers) FROM Group WHERE DeveloperName IN :mapQueueDevNameListIds.keySet()];
 			Set<Id> usersToQuery = new Set<Id>();
 			for(Group gr : queues){
 				for (GroupMember grm : gr.GroupMembers){
@@ -56,15 +58,17 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 			Map<Id,User> users = new Map<Id,User>([Select id, Email From User where id IN : usersToQuery and Email != null]);
 			for(Group gr : queues){
 				for (GroupMember grm : gr.GroupMembers){
-					if(mapQueueDevNameListEmails.get(gr.DeveloperName) == null){
-						mapQueueDevNameListEmails.put(gr.DeveloperName,new List<String>());
+					if(mapQueueDevNameListIds.get(gr.DeveloperName) == null){
+						mapQueueDevNameListIds.put(gr.DeveloperName,new Set<Id>());
 					}
-					mapQueueDevNameListEmails.get(gr.DeveloperName).add(users.get(grm.UserOrGroupId).Email);
+					mapQueueDevNameListIds.get(gr.DeveloperName).add(users.get(grm.UserOrGroupId).id);
 				}
 			}
-			if (!iataAdminEmails.isEmpty()){
-				for(String queueName : mapQueueDevNameListEmails.keySet()) {
-					if(mapQueueDevNameListEmails.get(queueName).isEmpty()) mapQueueDevNameListEmails.put(queueName,iataAdminEmails);
+			if (!iataAdminIds.isEmpty()){
+				for(String queueName : mapQueueDevNameListIds.keySet()) {
+					if(mapQueueDevNameListIds.get(queueName).isEmpty()){
+						mapQueueDevNameListIds.put(queueName,iataAdminIds);
+					} 
 				}
 			}
 		}
@@ -73,18 +77,25 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 		for (ICG_Capability_Assignment_Group__c asgmtGroup : scope) {
 			List<SObject> contacts = generateStationManagerCompanyAdmins(asgmtGroup);
 			List<String> contactIds = generateContactIds(contacts);
-			Set<String> stationManagerCompanyAdminEmails = generateStationManagerCompanyAdminEmails(contacts);
+			Set<Id> stationManagerCompanyAdminIds = generateStationManagerCompanyAdminIds(contacts);
 			Boolean isUpcomingExpiration = (asgmtGroup.Days_Until_Expiration__c > 0);
 			Boolean isExpiration = (asgmtGroup.Days_Until_Expiration__c <= 0 && asgmtGroup.Expired_Notification_Sent__c == false);
 			Boolean isCertification = rtDevNameById.get(rtCertificationDevName) == asgmtGroup.RecordTypeId;
 			String emailTemplateOne = getEmailTemplate('emailTemplateOne', isCertification, isUpcomingExpiration);
-			String emailTemplateTwo = getEmailTemplate('emailTemplateTwo', isCertification, isUpcomingExpiration);			
-			Boolean submitted = CW_Utilities.sendEmailTemplate(emailTemplateOne, asgmtGroup.Id, asgmtGroup.createdById, new List<String>(stationManagerCompanyAdminEmails), true);
-			List<String> iataManagers = asgmtGroup.ICG_Certification__c != null && asgmtGroup.ICG_Certification__r.Department__c != null && !mapQueueDevNameListEmails.get(asgmtGroup.ICG_Certification__r.Department__c).isEmpty() ? mapQueueDevNameListEmails.get(asgmtGroup.ICG_Certification__r.Department__c) : iataAdminEmails;
-			submitted = submitted || CW_Utilities.sendEmailTemplate(emailTemplateTwo, asgmtGroup.Id, asgmtGroup.createdById, iataManagers, false);		
+			String emailTemplateTwo = getEmailTemplate('emailTemplateTwo', isCertification, isUpcomingExpiration);	
+			
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(emailTemplateOne, asgmtGroup.Id,  stationManagerCompanyAdminIds));
+						
+			Set<Id> iataManagers = asgmtGroup.ICG_Certification__c != null && asgmtGroup.ICG_Certification__r.Department__c != null && !mapQueueDevNameListIds.get(asgmtGroup.ICG_Certification__r.Department__c).isEmpty() ? mapQueueDevNameListIds.get(asgmtGroup.ICG_Certification__r.Department__c) : iataAdminIds;
+			
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(emailTemplateTwo, asgmtGroup.Id,  iataManagers));
+
 			String subject = getEmailText('subject', isCertification, isUpcomingExpiration, asgmtGroup);
 			String body = getEmailText('body', isCertification, isUpcomingExpiration, asgmtGroup);			
 			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, asgmtGroup.ICG_Account_Role_Detail__r, rtPrivateAreaNotification, false));
+			
+			
+			Boolean submitted = CW_EmailManager.sendInternalEmails(emailsToBeSent);
 			if (submitted) {
 				if (isUpcomingExpiration) {
 					asgmtGroup.Upcoming_Expiration_Notification_Sent__c = true;
@@ -123,29 +134,29 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 	private String getEmailText(String type, Boolean isCertification, Boolean isUpcomingExpiration, ICG_Capability_Assignment_Group__c asgmtGroup){
 		String emailText;
 		if(type == 'subject'){
-			emailText = isCertification ? (asgmtGroup.ICG_Certification__r.Name + ' certification/accreditation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Account_Role__r.Account__r.RecordType.Name + ', ' + (isUpcomingExpiration ? ' about to expire' : ' expired')) 
-			: ('Remote validation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Account_Role__r.Account__r.RecordType.Name + ', ' + (isUpcomingExpiration ? ' about to expire' : ' expired'));
+			emailText = isCertification ? (asgmtGroup.ICG_Certification__r.Label__c + ' certification/accreditation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', '  + (isUpcomingExpiration ? ' about to expire' : ' expired')) 
+			: ('Remote validation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + (isUpcomingExpiration ? ' about to expire' : ' expired'));
 		}else{
-			emailText = isCertification ? (asgmtGroup.ICG_Certification__r.Name + ' certification/accreditation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Account_Role__r.Account__r.RecordType.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Formatted_Address__c + (isUpcomingExpiration ? ' about to expire' : ' expired')) 
-			: ('Remote validation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Account_Role__r.Account__r.RecordType.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Formatted_Address__c + (isUpcomingExpiration ? ' about to expire' : ' expired'));
+			emailText = isCertification ? (asgmtGroup.ICG_Certification__r.Label__c + ' certification/accreditation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', ' + asgmtGroup.ICG_Account_Role_Detail__r.Formatted_Address__c + (isUpcomingExpiration ? ' about to expire' : ' expired')) 
+			: ('Remote validation of ' + asgmtGroup.ICG_Account_Role_Detail__r.Name + ', '  + asgmtGroup.ICG_Account_Role_Detail__r.Formatted_Address__c + (isUpcomingExpiration ? ' about to expire' : ' expired'));
 		}
 		return emailText;
 	}
 
-	private static Set<String> generateStationManagerCompanyAdminEmails(List<SObject> contacts) {
-		Set<String> stationManagerCompanyAdminEmails = new Set<String>();
+	private static Set<Id> generateStationManagerCompanyAdminIds(List<SObject> contacts) {
+		Set<Id> stationManagerCompanyAdminIds = new Set<Id>();
 
 		for (SObject contact : contacts) {
 			if (contact instanceof ICG_Contact_Role_Detail__c) {
 				ICG_Contact_Role_Detail__c convertedContact = (ICG_Contact_Role_Detail__c) contact;
-				stationManagerCompanyAdminEmails.add(convertedContact.Account_Contact_Role__r.Contact__r.Email);
+				stationManagerCompanyAdminIds.add(convertedContact.Account_Contact_Role__r.Contact__c);
 			} else if (contact instanceof Contact) {
 				Contact convertedContact = (Contact) contact;
-				stationManagerCompanyAdminEmails.add(convertedContact.Email);
+				stationManagerCompanyAdminIds.add(convertedContact.Id);
 			}
 		}
 
-		return stationManagerCompanyAdminEmails;
+		return stationManagerCompanyAdminIds;
 	}
 
 	private static List<String> generateContactIds(List<SObject> listOfUsers) {

@@ -571,11 +571,11 @@ export default class CwCertificationManager extends LightningElement {
 							detail: { certification: certification }
 						})
 					);
-					this.showToast(this.certificationInfo.name, this.label.certification_deleted, "success");
+					this.showToast(this.certificationInfo.label, this.label.certification_deleted, "success");
 				}
 			})
 			.catch(error => {
-				this.showToast(this.certificationInfo.name, this.label.something_went_wrong, "error");
+				this.showToast(this.certificationInfo.label, this.label.something_went_wrong, "error");
 			});
 	}
 	renewCertification() {
@@ -625,7 +625,7 @@ export default class CwCertificationManager extends LightningElement {
 				detail: { newCertification: jsonCertification, scopeToUse: this.certificationInfo.scopeToUse, groupId: this.certificationInfo.id }
 			})
 		);
-		this.showToast(this.certificationInfo.name, this.label.certification_renewed, "success");
+		this.showToast(this.certificationInfo.label, this.label.certification_renewed, "success");
 	}
 	handleHistory(event) {
 		let origin = event.target.dataset.origin;
@@ -648,7 +648,7 @@ export default class CwCertificationManager extends LightningElement {
 					let scopeLabel = "";
 					let scopeInput = [];
 					let scopeToUse = "";
-					if (certification.ICG_Certification__r.Name.includes("CEIV")) {
+					if (certification.ICG_Certification__r.Name.toLowerCase().includes("ceiv_")) {
 						let scopeList = [];
 						scopeToUse = "CEIV_Scope_List__c";
 						if (certification.CEIV_Scope_List__c) {
@@ -665,7 +665,7 @@ export default class CwCertificationManager extends LightningElement {
 						});
 						scope = scopeInput;
 						scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
-					} else if (certification.ICG_Certification__r.Name === "Smart Facility Operational Capacity") {
+					} else if (certification.ICG_Certification__r.Name.toLowerCase() === "smart_facility_operational_capacity") {
 						let scopeList = [];
 						scopeToUse = "SFOC_Scope__c";
 						if (certification.SFOC_Scope__c) {
@@ -682,7 +682,7 @@ export default class CwCertificationManager extends LightningElement {
 						});
 						scope = scopeInput;
 						scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
-					} else if (certification.ICG_Certification__r.Name.includes("IEnvA") || certification.ICG_Certification__r.Name.includes("United")) {
+					} else if (certification.ICG_Certification__r.Name.toLowerCase().includes("ienva_stage_") || certification.ICG_Certification__r.Name.toLowerCase() === "united_for_wildlife") {
 						let scopeList = [];
 						scopeToUse = "IENVA_Scope__c";
 						if (certification.IENVA_Scope__c) {
@@ -707,6 +707,7 @@ export default class CwCertificationManager extends LightningElement {
 						value: certification.ICG_Certification__c,
 						certificationId: certification.Certification_Id__c,
 						name: certification.ICG_Certification__r.Name,
+						label: certification.ICG_Certification__r.Label__c,
 						creationDate: this.dateFormat(certification.ICG_Certification__r.CreatedDate),
 						issuingDate: this.dateFormat(certification.Issue_Date__c),
 						expirationDate: this.dateFormat(certification.Expiration_Date__c),

@@ -4299,6 +4299,7 @@ public without sharing class Order_Svc
 	*/
 	public static void remoteValidationStatusHandler(Map<Id, Order> newMap, Map<Id, Order> oldMap) {
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 
 		ICG_GxA_Integration_Settings__c gxaSettings = ICG_GxA_Integration_Settings__c.getOrgDefaults();
 		String startProcessStatus = gxaSettings.Order_Status_To_Start_Process__c != null ? gxaSettings.Order_Status_To_Start_Process__c : 'RV_Complete';
@@ -4327,9 +4328,9 @@ public without sharing class Order_Svc
 				}
             }
             
-            notifications.addAll(AddNotifications(gxaOrderIds));
+			notifications.addAll(AddNotifications(gxaOrderIds, emailsToBeSent));
+			
 
-			List<String> whoEmailIata = CW_Utilities.getIATAStakeholdersEmails();
 			if (pendingToFulfillOrderIds.size() > 0) {
 				List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN : pendingToFulfillOrderIds];
 				for(OrderItem orditem : orderItems){
@@ -4341,30 +4342,32 @@ public without sharing class Order_Svc
 					}
 
 					//Send email to who purchased
-					CW_Utilities.sendEmailTemplate('Completion_to_User_link_ready',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email}, true);
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_User_link_ready', orditem.Id, new Set<Id>{orditem.createdById}));
 					//Send email to IATA
-					CW_Utilities.sendEmailTemplate('Completion_to_IATA_link_ready',orditem.Id, orditem.CreatedById, whoEmailIata, false);
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_IATA_link_ready', orditem.Id, CW_EmailManager.getIataAdminsIds()));
 				}
 			}
 			if (submittedOrderIds.size() > 0) {
 				List<OrderItem> orderItems = [Select Id, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :submittedOrderIds];
 				for(OrderItem orditem : orderItems){
 					//Send email to who purchased
-					CW_Utilities.sendEmailTemplate('Completion_to_User_questionnaire_sub',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email}, true);
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_User_link_ready', orditem.Id, new Set<Id>{orditem.createdById}));
 					//Send email to IATA
-					CW_Utilities.sendEmailTemplate('Completion_to_IATA_when_is_subm',orditem.Id, orditem.CreatedById, whoEmailIata, false);
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_IATA_link_ready', orditem.Id, CW_EmailManager.getIataAdminsIds()));
 				}
             }
             
-			notifications.addAll(AddCorrectionNotifications(gxaOrderIds));
+			notifications.addAll(AddCorrectionNotifications(gxaOrderIds, emailsToBeSent));
 		}
 
 		if(notifications.size() > 0){
 			Database.insert(notifications);
 		}
+
+		CW_EmailManager.sendInternalEmails(emailsToBeSent);
     }
 
-    private static List<ICG_Notification__c> AddNotifications(List<Id> gxaOrderIds){
+    private static List<ICG_Notification__c> AddNotifications(List<Id> gxaOrderIds, List<Messaging.SingleEmailMessage> emailsToBeSent){
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
         if (gxaOrderIds.size() > 0) {
             System.enqueueJob(new CW_GxA_Integration_Queueable(gxaOrderIds));
@@ -4377,16 +4380,14 @@ public without sharing class Order_Svc
                     notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
                 }
                 
-                //Send email to who purchased
-                CW_Utilities.sendEmailTemplate('Results_to_User_appro_by_IATA',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email}, true);
+				//Send email to who purchased
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Results_to_User_appro_by_IATA', orditem.Id, new Set<Id>{orditem.createdById}));
             }
         }
-        return 
-        
-        notifications;
+        return notifications;
     }
 
-    private static List<ICG_Notification__c> AddCorrectionNotifications(List<Id> needsCorrectionOrderIds){
+    private static List<ICG_Notification__c> AddCorrectionNotifications(List<Id> needsCorrectionOrderIds, List<Messaging.SingleEmailMessage> emailsToBeSent){
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
         if (needsCorrectionOrderIds.size() > 0) {
             List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.ContactId, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :needsCorrectionOrderIds];
@@ -4397,8 +4398,8 @@ public without sharing class Order_Svc
                     String body = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ', ' + ordItem.Station__r.Formatted_Address__c + ' ready';
                     notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
                 }
-                //Send email to who purchased
-                CW_Utilities.sendEmailTemplate('Results_to_User_rejec_by_IATA',orditem.Id, orditem.CreatedById, new List<String>{orditem.createdBy.Email}, true);
+				//Send email to who purchased
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Results_to_User_rejec_by_IATA', orditem.Id, new Set<Id>{orditem.createdById}));
             }
         }
         return notifications;

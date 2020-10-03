@@ -123,8 +123,10 @@ public without sharing class CW_Utilities {
 					String whoId = ard.CreatedBy.ContactId != null ? ard.CreatedBy.ContactId : ard.CreatedById;
 					//Check email template to send depend of status
 					String templateName = accountAlreadyApproved == true ? 'Approve_Reject_IATA_Adm_after_comp_appro' : 'Approve_Reject_to_IATA_Admin_account';
-					List<String> whoEmails = CW_Utilities.getIATAStakeholdersEmails();
-					approved = CW_Utilities.sendEmailTemplate(templateName, ard.Id, whoId, whoEmails, false);
+
+					List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, ard.Id, CW_EmailManager.getIataAdminsIds()));
+					approved = CW_EmailManager.sendInternalEmails(emailsToBeSent);
 				}
 			}
 		}catch (Exception ex) {
@@ -381,33 +383,41 @@ public without sharing class CW_Utilities {
 					if(skipApprovalProcess != true) {
 						//ONLY PREPARED TO BE SENT TO ONE! It's controled above.
 						for(ICG_Contact_Role_Detail__c crdti : crdsToInsert) {
+							List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+
 							//Send Email to Requestor
-							CW_Utilities.sendEmailTemplate('Station_Manager_Request_sent_to_req', crdti.Id, contactId, new List<String> {con.email}, true);
+							emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Station_Manager_Request_sent_to_req', crdti.Id, new Set<Id> {con.id}));
+
 							String subject = 'Station Manager request sent';
 							String body = subject;
 							notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String> {con.Id}, crdti.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-							Set<String> stationManagerCompanyAdminEmails = new Set<String>();
-							List<String> iataAdminEmails = CW_Utilities.getIATAStakeholdersEmails();
+							
+							Set<Id> stationManagerCompanyAdminIds = new Set<Id>();
+							Set<Id> iataAdminIds = CW_EmailManager.getIataAdminsIds();
 							List<String> contactIds = new List<String>();
 							for (ICG_Contact_Role_Detail__c crd : getStationManagersContactRoleDetails(crdti.ICG_Account_Role_Detail__c)) {
-								stationManagerCompanyAdminEmails.add(crd.Account_Contact_Role__r.Contact__r.Email);
+								stationManagerCompanyAdminIds.add(crd.Account_Contact_Role__r.Contact__c);
 								contactIds.add(crd.Account_Contact_Role__r.Contact__c);
 							}
 							for (Contact cadmn : getCompanyAdminContactsFromAccountId(companyId)) {
-								stationManagerCompanyAdminEmails.add(cadmn.Email);
+								stationManagerCompanyAdminIds.add(cadmn.Id);
 								contactIds.add(cadmn.Id);
 							}
-							if(!stationManagerCompanyAdminEmails.isEmpty()) {
-								submitted = CW_Utilities.sendEmailTemplate('Approve_Reject_Com_Adm_exis_Stat_Man', crdti.Id, contactId, new List<String> (stationManagerCompanyAdminEmails), false);
+							if(!stationManagerCompanyAdminIds.isEmpty()) {
+								emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_Com_Adm_exis_Stat_Man', crdti.Id, stationManagerCompanyAdminIds));
+
 								String subjectCompAdmin = 'New Station Manager request pending approval';
 								String bodyCompAdmin = subjectCompAdmin;
 								notifications.addAll(CW_NotificationsController.setNotificationCustom(subjectCompAdmin, bodyCompAdmin, 'Requested', contactIds, crdti.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-								if(!iataAdminEmails.isEmpty()) {
-									submitted = submitted && CW_Utilities.sendEmailTemplate('Approve_Reject_to_IATA_Admin', crdti.Id, contactId, iataAdminEmails, false);
+								
+								if(!iataAdminIds.isEmpty()) {
+									emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_IATA_Admin', crdti.Id, iataAdminIds));
 								}
 							} else {
-								submitted = CW_Utilities.sendEmailTemplate('Approve_Reject_to_IATA_Adm_no_Comp_adm', crdti.Id, contactId, new List<String> (iataAdminEmails), false);						
+								emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_IATA_Adm_no_Comp_adm', crdti.Id, iataAdminIds));					
 							}
+
+							submitted = CW_EmailManager.sendInternalEmails(emailsToBeSent, true);
 						}
 					}
 
@@ -422,8 +432,7 @@ public without sharing class CW_Utilities {
 					}
 				}
 			} catch(Exception ex) {
-				res.success = false;
-				res.message = ex.getMessage();
+				throw new AuraHandledException('exception: ' + ex);
 			}
 		} else {
 			res.success = false;
@@ -564,18 +573,20 @@ public without sharing class CW_Utilities {
 		try {
 			insert crd;
 			Contact con = [Select id, email from contact where id = :contactId];
-			Boolean submitted = true;
-			//Send Email to Requestor
-			CW_Utilities.sendEmailTemplate('Comp_Adm_req_conf_to_requestor_sent', crd.Id, contactId, new List<String> {con.email}, true);
-			Set<String> companyAdminEmails = new Set<String>();
-			List<String> iataAdminEmails = CW_Utilities.getIATAStakeholdersEmails();
+
+			List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Comp_Adm_req_conf_to_requestor_sent', crd.Id, new Set<Id> {con.id}));
+			
+			Set<Id> companyAdminIds = new Set<Id>();
 			for (Contact cadmn : getCompanyadminContactsFromGroupName(groupName)) {
-				companyAdminEmails.add(cadmn.Email);
+				companyAdminIds.add(cadmn.Id);
 			}
-			if(!companyAdminEmails.isEmpty()) {
-				submitted = submitted && CW_Utilities.sendEmailTemplate('Approve_Reject_to_existing_Comp_Adm', crd.Id, contactId, new List<String> (companyAdminEmails), false);
+			if(!companyAdminIds.isEmpty()) {
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_existing_Comp_Adm', crd.Id, companyAdminIds));
 			}
-			submitted = submitted && CW_Utilities.sendEmailTemplate('Approve_Reject_to_IATA_admin_CA', crd.Id, contactId, iataAdminEmails, false);
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_IATA_admin_CA', crd.Id, CW_EmailManager.getIataAdminsIds()));
+
+			Boolean submitted = CW_EmailManager.sendInternalEmails(emailsToBeSent, true);
 
 			res.success = true;
 			res.message = Label.icg_thank_you_iata_contact;
@@ -595,16 +606,6 @@ public without sharing class CW_Utilities {
 		return [Select id, name, email from User where Id IN (Select UserOrGroupId from GroupMember where Group.DeveloperName = 'ICG_Stakeholders')];
 	}
 
-	public static List<String> getIATAStakeholdersEmails() {
-		List<String> iataAdminEmails = new List<String>();
-		for (User u : CW_Utilities.getIATAStakeHoldersUsersList()) {
-			if(u.Email != null){
-				iataAdminEmails.add(u.Email);
-			}
-		}
-			
-		return iataAdminEmails;
-	}
 
 	public static List<Contact> getCompanyAdminContactsFromGroupNameByStatus (String groupName, List<String> statusList) {
 		
@@ -680,7 +681,7 @@ public without sharing class CW_Utilities {
 	@AuraEnabled
 	public static List<ICG_Contact_Role_Detail__c> getFacilityManagerContactRolesFromStationListByStatus(List<String> stationIds, List<String> statusList) {
 		return [Select Id, CreatedDate, Status__c, Account_Contact_Role__r.Account__c, ContactId__c,Account_Contact_Role__c,Account_Contact_Role__r.Contact__r.OtherState, Account_Contact_Role__r.Contact__r.Name,
-		Account_Contact_Role__r.Contact__r.OtherCountry,Account_Contact_Role__r.Contact__r.FirstName, ICG_Account_Role_Detail__c,Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: FACILITY_MANAGER and Status__c IN:statusList and ICG_Account_Role_Detail__c IN:stationIds];
+		Account_Contact_Role__r.Contact__r.OtherCountry,Account_Contact_Role__r.Contact__r.FirstName, ICG_Account_Role_Detail__c,Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: FACILITY_MANAGER and Status__c IN:statusList and ICG_Account_Role_Detail__c IN:stationIds];
 	}
 
 
@@ -693,7 +694,9 @@ public without sharing class CW_Utilities {
 		Account_Contact_Role__r.Contact__r.Name,
 		Account_Contact_Role__r.Contact__r.OtherCountry,Account_Contact_Role__r.Contact__r.FirstName, 
 		ICG_Account_Role_Detail__c,
+		ICG_Account_Role_Detail__r.Id,
 		ICG_Account_Role_Detail__r.Name,
+		ICG_Account_Role_Detail__r.RecordType.Name,
 		Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, 
 		Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title 
 		from ICG_Contact_Role_Detail__c 
@@ -855,55 +858,6 @@ public without sharing class CW_Utilities {
 		return controllingInfo;
 	}
 
-	/*
-	 * @description		Retrieve picklist enabled languages 
-	 * @param			emailTemplateName <Name of template>
-	 * @param			whatId <ID related object>
-	 * @param			whoId <Target Id>
-	 * @param			recipientsEmails <List recipients email>
-	 * @param			treatAsRecipient <Boolen set to falseto use WhoId>
-	 * @return			Results sent emails
-	*/
-	public static Boolean sendEmailTemplate(String emailTemplateName, Id whatId, Id whoId, List<String> recipientsEmails, Boolean treatAsRecipient) {
-		Set<String> handledRecipients = new Set<String>(recipientsEmails);
-		handledRecipients.remove('');
-		handledRecipients.remove('null');
-		handledRecipients.remove(null);
-		recipientsEmails = new List<String>(handledRecipients);
-		if (recipientsEmails.isEmpty() || whoId == null) {
-			return false;
-		}
-		Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-		message.setTargetObjectId(whoId);
-		message.setOrgWideEmailAddressId([SELECT id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply' LIMIT 1].id);
-		List<EmailTemplate> emailTemplates = [SELECT Id, Subject, Description, HtmlValue, DeveloperName, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateName LIMIT 1];		
-		if(!emailTemplates.isEmpty()){
-			EmailTemplate emailTemplate = emailTemplates[0];
-			message.setTemplateID(emailTemplate.Id);
-			message.setWhatId(whatId); //This is important for the merge fields in template to work
-			message.toAddresses = recipientsEmails;
-			message.setTreatTargetObjectAsRecipient(treatAsRecipient);
-		}
-		else{
-			return false;
-		}		
-		if (!Test.isRunningTest()) {
-			message.setSaveAsActivity(false);
-		}		
-		Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage>{ message };
-		Messaging.SendEmailResult[] results;
-		try {
-			if (Test.isRunningTest()) {
-				return true;
-			}
-		
-			results = Messaging.sendEmail(messages);
-		} catch (EmailException exc) {
-			return false;
-		}
-		return results != null && !results.isEmpty() ? results[0].success : false;
-	}
-
 
 	/*
 	 * @description		Send different emails after aprove/reject ICG_Account_Role_Detail__c
@@ -913,27 +867,25 @@ public without sharing class CW_Utilities {
 	public static void sendApproveOrRejectMails(ICG_Account_Role_Detail__c newStation, ICG_Account_Role_Detail__c oldStation) {
 		//only to get the accountid and the created by email
 		ICG_Account_Role_Detail__c ard = [Select id, Formatted_Address__c, Name, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.RecordType.DeveloperName, Account_Role__r.Account__r.RecordType.Name, CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :newStation.Id];
-		String whoEmail = ard.CreatedBy.ContactId != null ? ard.CreatedBy.Contact.Email : ard.CreatedBy.Email;
-		String whoId = ard.CreatedBy.ContactId != null ? ard.CreatedBy.ContactId : null;
+		Id whoId = ard.CreatedBy.ContactId != null ? ard.CreatedBy.ContactId : null;
 		//Send email to approvers
-		List<String> whoEmails = new List<String>();
-		whoEmails.add(whoEmail);
+		Set<Id> whoIds = new Set<Id>();
+		whoIds.add(whoId);
 		List<String> contactIds = new List<String>();
 		contactIds.add(whoId);
 		for(Contact c : getCompanyAdminContactsFromAccountId(ard.Account_Role__r.Account__c)) {
-			if(c.email != null) {
-				whoEmails.add(c.email);
-			}
+			whoIds.add(c.Id);
 			contactIds.add(c.Id);
 		}
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 
-
-		String subject = 'Station Creation request for ' + ard.Name + ', ' + ard.Account_Role__r.Account__r.RecordType.Name;
+		String subject = 'Station Creation request for ' + ard.Name;
 		String body = 'Station Creation request for ' + ard.Name + ', ' + ard.Account_Role__r.Account__r.RecordType.Name + ', ' + ard.Formatted_Address__c;
 		Boolean shouldCleanup = false;
 		if (newStation.Status__c == 'Approved' && oldStation.Status__c != 'Approved') {
-			CW_Utilities.sendEmailTemplate('Notification_Approved_to_Req_Comp_Adm', newStation.Id, whoId, whoEmails, false);
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Notification_Approved_to_Req_Comp_Adm', newStation.Id, whoIds));
+
 			subject +=  ' approved';
 			body +=  ' approved';
 			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, newStation, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
@@ -946,12 +898,16 @@ public without sharing class CW_Utilities {
 			if(ard.CreatedBy.ContactId != null) {
 				updateAllStationManagementRecords(ard.CreatedBy.ContactId, newStation.Id, 'Rejected');
 			}
-			CW_Utilities.sendEmailTemplate('Notification_Rejected_to_Req_Comp_Adm', newStation.Id, whoId, whoEmails, true);
+
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Notification_Rejected_to_Req_Comp_Adm', newStation.Id, whoIds));
+
 			subject +=  ' rejected';
 			body +=  ' rejected';
 			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, newStation, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
 			shouldCleanup = true;
 		}
+
+		CW_EmailManager.sendInternalEmails(emailsToBeSent);
 
 		if(notifications.size() > 0) {
 			insert notifications;
@@ -987,23 +943,21 @@ public without sharing class CW_Utilities {
 	*/
 	public static void sendApproveOrRejectMailsContactRole (ICG_Contact_Role_Detail__c newContactRole, ICG_Contact_Role_Detail__c oldContactRole) {
 		String whoId = newContactRole.ContactId__c;
-		ICG_Contact_Role_Detail__c crd = [Select id, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Account_Contact_Role__r.Contact__r.Email from ICG_Contact_Role_Detail__c where Id = :newContactRole.Id];
+		ICG_Contact_Role_Detail__c crd = [Select id, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Email from ICG_Contact_Role_Detail__c where Id = :newContactRole.Id];
 		String templateNameContact;
 		String templateNameCompAdmStationManagers;
 		String templateNameIata;
 		String subject;
 
-		List<String> whoEmailsContact = new List<String>{crd.Account_Contact_Role__r.Contact__r.Email};
-		List<String> whoEmailsCompAdmStationManagersContacts = new List<String>();
-		List<String> whoEmailsCompAdmStationManagersCRDs = new List<String>();
+		Set<Id> whoIds = new Set<Id>{crd.Account_Contact_Role__r.Contact__c};
+		Set<Id> whoIdsCompAdminStationManagersContacts = new Set<Id>();
+		Set<Id> whoIdsCompAdmStationManagersCRDs = new Set<Id>();
 		Set<String> notificationReceivers = new Set<String>();
 		notificationReceivers.add(crd.Account_Contact_Role__r.Contact__c);
 		for (Contact cadmn : getCompanyAdminContactsFromAccountId(crd.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)) {
-			whoEmailsCompAdmStationManagersContacts.add(cadmn.Email);
+			whoIdsCompAdminStationManagersContacts.add(cadmn.Id);
 			notificationReceivers.add(cadmn.Id);
 		}
-
-		List<String> whoEmailIata = CW_Utilities.getIATAStakeholdersEmails();
 
 		if (newContactRole.Status__c == 'Approved' && oldContactRole.Status__c != 'Approved') {
 			if(newContactRole.ICG_Role__c == FACILITY_MANAGER) {
@@ -1012,7 +966,7 @@ public without sharing class CW_Utilities {
 				templateNameCompAdmStationManagers = 'Notification_appr_to_Sta_Man_Comp_Adm';
 				subject = 'Facility manager approved';
 				for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
-					whoEmailsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__r.Email);
+					whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
 					notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
 				}
 
@@ -1028,7 +982,7 @@ public without sharing class CW_Utilities {
 				templateNameContact = 'Notification_rejected_to_User';
 				subject = 'Station manager rejected';
 				for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
-					whoEmailsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__r.Email);
+					whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
 					notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
 				}
 			} else if(newContactRole.ICG_Role__c == COMPANY_ADMIN) {
@@ -1044,22 +998,27 @@ public without sharing class CW_Utilities {
 			subject = 'Contact role removed';
 		}
 
-		List<String> whoEmailsCompAdmStationManagersCombined = new List<String>();
-		whoEmailsCompAdmStationManagersCombined.addAll(whoEmailsCompAdmStationManagersContacts);
-		whoEmailsCompAdmStationManagersCombined.addAll(whoEmailsCompAdmStationManagersCRDs);
+		Set<Id> whoEmailsCompAdmStationManagersCombined = new Set<Id>();
+		whoEmailsCompAdmStationManagersCombined.addAll(whoIdsCompAdminStationManagersContacts);
+		whoEmailsCompAdmStationManagersCombined.addAll(whoIdsCompAdmStationManagersCRDs);
 
 		//Send emails 
+
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+
 		if(templateNameIata != null) {
-			CW_Utilities.sendEmailTemplate(templateNameIata, newContactRole.Id, whoId, whoEmailIata, false);
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateNameIata, newContactRole.Id, CW_EmailManager.getIataAdminsIds()));
 		}
 		
 		if(templateNameCompAdmStationManagers != null) {
-			CW_Utilities.sendEmailTemplate(templateNameCompAdmStationManagers, newContactRole.Id, whoId, whoEmailsCompAdmStationManagersCombined, false);
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateNameCompAdmStationManagers, newContactRole.Id, whoEmailsCompAdmStationManagersCombined));
 		}
 
 		if (newContactRole.contactId__c != null && templateNameContact != null) {
-			CW_Utilities.sendEmailTemplate(templateNameContact, newContactRole.Id, whoId, whoEmailsContact, true);
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateNameContact, newContactRole.Id, whoIds));
 		}
+
+		CW_EmailManager.sendInternalEmails(emailsToBeSent);
 
 
 		//Create notifications
@@ -1097,6 +1056,41 @@ public without sharing class CW_Utilities {
 		return JSON.serialize(allOpts);
 	}
 
+	/*
+	 * @description		Retrieve the ICG_Account_Role_Detail__c record types availables by Account.Sector__c and Account.Category__c
+	 * @return			JSON [ { "sectorName": "dummy sector", "categories": [ { "categoryName": "dummy category", "allowedTypes": ["type_1", "type_2"] } ] } ]
+	 */
+	@AuraEnabled (cacheable = true)
+	public static String getArdTypesBySectorAndCategory() {
+		Map<String, String> sectorMap = new Map<String, String>();
+		for (PicklistVal currentValue : (List<CW_Utilities.PicklistVal>) JSON.deserialize(CW_Utilities.getPicklistValues('Account', 'Sector__c'), List<CW_Utilities.picklistVal>.class) ) {
+			sectorMap.put(currentValue.api.toLowerCase(), currentValue.label);
+		}
+		Map<String, String> categoryMap = new Map<String, String>();
+		for (PicklistVal currentValue : (List<CW_Utilities.PicklistVal>) JSON.deserialize(CW_Utilities.getPicklistValues('Account', 'Category__c'), List<CW_Utilities.picklistVal>.class) ) {
+			categoryMap.put(currentValue.api.toLowerCase(), currentValue.label);
+		}
+		Map<String, SectorCategoryArdTypesSelector> sectors = new Map<String, SectorCategoryArdTypesSelector>();
+		for (ICG_Sector_Category_Selector__mdt currentMd : [SELECT Sector__c, Category__c, ONE_Source_Account_Role_Detail_Type__c FROM ICG_Sector_Category_Selector__mdt ORDER BY Sector__c]) {
+			if (String.isNotBlank(currentMd.Sector__c) && String.isNotBlank(currentMd.Category__c) && String.isNotBlank(currentMd.ONE_Source_Account_Role_Detail_Type__c)) {
+
+				if (!sectors.containsKey(currentMd.Sector__c.toLowerCase())) {
+					String sectorLabel = sectorMap.containsKey(currentMd.Sector__c.toLowerCase()) ? sectorMap.get(currentMd.Sector__c.toLowerCase()) : '';
+					sectors.put(currentMd.Sector__c.toLowerCase(), new SectorCategoryArdTypesSelector(currentMd.Sector__c.toLowerCase(), sectorLabel));
+				}
+
+				for (String currentCategory : currentMd.Category__c.split(',')) {
+					if ( !sectors.get(currentMd.Sector__c.toLowerCase()).containsCategory(currentCategory.toLowerCase()) ){
+						String categoryLabel = categoryMap.containsKey(currentCategory.toLowerCase()) ? categoryMap.get(currentCategory.toLowerCase()) : (currentCategory == '*') ? '*' : '';
+						sectors.get(currentMd.Sector__c.toLowerCase()).categories.add(new CategorySelector(currentCategory.toLowerCase(), categoryLabel, currentMd.ONE_Source_Account_Role_Detail_Type__c.toLowerCase().split(',')));
+					}
+				}
+			}
+		}
+
+		return JSON.serialize(new Map<String, Object>{ 'sectors' => sectors.values()});
+	}
+
 	public class ResponseBody {
 		public String message {get;set;}
 		public Boolean success {get;set;}
@@ -1123,6 +1117,37 @@ public without sharing class CW_Utilities {
 		public PicklistVal(string api, string label) {
 			this.api = api;
 			this.label = label;
+		}
+	}
+
+	public class SectorCategoryArdTypesSelector {
+		public String sectorName;
+		public String sectorLabel;
+		public List<CategorySelector> categories;
+		public SectorCategoryArdTypesSelector(String sectorName, String sectorLabel) {
+			this.sectorName = sectorName;
+			this.sectorLabel = sectorLabel;
+			this.categories = new List<CategorySelector>();
+		}
+		public Boolean containsCategory(String category) {
+			if (this.categories != null && this.categories.size() > 0) {
+				for (CategorySelector currentCategory : categories) {
+					if (currentCategory.categoryName.equals(category)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+	}
+	public class CategorySelector {
+		public String categoryName;
+		public String categoryLabel;
+		public List<String> allowedTypes;
+		public CategorySelector(String categoryName, String categoryLabel, List<String> allowedTypes) {
+			this.categoryName = categoryName;
+			this.categoryLabel = categoryLabel;
+			this.allowedTypes = allowedTypes;
 		}
 	}
 }

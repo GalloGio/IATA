@@ -57,36 +57,36 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		}
 
 		ICG_Certification__c sfocCert = CW_TestDataFactory.newCertification();
-		sfocCert.Name = 'SF Operational Capacity';
-		sfocCert.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		sfocCert.Name = 'smart_facility_operational_capacity';
+		sfocCert.Applicable_to__c = 'Cargo_Handling_Facility;Airline';
 		sfocCert.Department__c = g1.Name;
 		insert sfocCert;
 		
 		ICG_Certification__c ceivFresh = CW_TestDataFactory.newCertification();
-		ceivFresh.Name = 'CEIV Fresh';
+		ceivFresh.Name = 'ceiv_fresh';
 		ceivFresh.Certification_Type__c = 'Certifications of Excellency';
-		ceivFresh.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		ceivFresh.Applicable_to__c = 'Cargo_Handling_Facility;Airline';
 		ceivFresh.Department__c = g1.Name;
 		insert ceivFresh;
 		
 		ICG_Certification__c ceivPharma = CW_TestDataFactory.newCertification();
-		ceivPharma.Name = 'CEIV Pharma';
+		ceivPharma.Name = 'ceiv_pharma';
 		ceivPharma.Certification_Type__c = 'Certifications of Excellency';
-		ceivPharma.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		ceivPharma.Applicable_to__c = 'Cargo_Handling_Facility;Airline';
 		ceivPharma.Department__c = g1.Name;
 		insert ceivPharma;
 		
 		ICG_Certification__c ienva = CW_TestDataFactory.newCertification();
-		ienva.Name = 'IEnvA';
+		ienva.Name = 'ienva_stage_1';
 		ienva.Certification_Type__c = 'Certifications of Excellency';
-		ienva.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		ienva.Applicable_to__c = 'Cargo_Handling_Facility;Airline';
 		ienva.Department__c = g1.Name;
 		insert ienva;
 		
 		ICG_Certification__c animals = CW_TestDataFactory.newCertification();
-		animals.Name = 'CEIV Live Animals';
+		animals.Name = 'ceiv_live_animals';
 		animals.Certification_Type__c = 'Certifications of Excellency';
-		animals.Applicable_to__c = 'Cargo Handling Facility;Airline';
+		animals.Applicable_to__c = 'Cargo_Handling_Facility;Airline';
 		animals.Department__c = g1.Name;
 		insert animals;
 		
@@ -208,11 +208,11 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		ICG_Account_Role_Detail__c acc = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Test' LIMIT 1];
 		
 		ICG_Certification__c newcert = [SELECT Id FROM ICG_Certification__c WHERE Name = 'SF Operational Capacity'];
-		ICG_Certification__c newcert1 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'CEIV Fresh'];
-		ICG_Certification__c newcert2 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'CEIV Pharma'];
+		ICG_Certification__c newcert1 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_fresh'];
+		ICG_Certification__c newcert2 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_pharma'];
 		ICG_Certification__c newcert3 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'Smart Facility Remote Validation'];
-		ICG_Certification__c newcert4 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'IEnvA'];
-		ICG_Certification__c newcert5 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'CEIV Live Animals'];
+		ICG_Certification__c newcert4 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ienva_stage_1'];
+		ICG_Certification__c newcert5 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_live_animals'];
 		
 		test.startTest();
 		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c LIMIT 1];

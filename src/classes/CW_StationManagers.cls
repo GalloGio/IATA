@@ -15,27 +15,27 @@ public without sharing class CW_StationManagers {
 			upsert cRd;
 
 			if(status.equals('Pending for Removal')){
-				String whoId = cRd.ContactId__c;
+				List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+
 				String templateName;
 				//Send remove confirmation to removed station manager
 				templateName = 'Station_Manager_to_requestor_req_sent';
-				List<String> whoEmails = new List<String>{cRd.Account_Contact_Role__r.Contact__r.Email};
-				CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmails, true);
+				Set<Id> whoEmails = new Set<Id>{cRd.Account_Contact_Role__r.Contact__c};
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, cRd.Id, whoEmails));
 			
 				//Send remove confirmation to CompanyAdmins
 				templateName = 'Approve_Reject_Remov_to_comp_adm';
-				List<String> whoEmailsCompanyAdmins = new List<String>();
-				for (Contact cadmn : CW_Utilities.getCompanyAdminContactsFromAccountId(cRd.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)){
-					whoEmailsCompanyAdmins.add(cadmn.Email);
-				}
-				CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsCompanyAdmins, false);
+				Set<Id> whoIdsCompanyAdmins = CW_EmailManager.getCompanyAdminsIds(cRd.ICG_Account_Role_Detail__r.Account_Role__r.Account__c);
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, cRd.Id, whoIdsCompanyAdmins));
 
-				if(whoEmailsCompanyAdmins.isEmpty()){
+
+				if(whoIdsCompanyAdmins.isEmpty()){
 					//Send remove confirmation to IATA
 					templateName = 'Approve_Reject_Remov_to_IATA_no_comp_adm';
-					List<String> whoEmailsIATA = CW_Utilities.getIATAStakeholdersEmails();
-					CW_Utilities.sendEmailTemplate(templateName, cRd.Id, whoId, whoEmailsIATA, false);
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, cRd.Id, CW_EmailManager.getIataAdminsIds()));
 				}
+
+				CW_EmailManager.sendInternalEmails(emailsToBeSent);
 			}
 
 			return status;

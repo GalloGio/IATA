@@ -73,7 +73,7 @@ public without sharing class CW_SearchEngine {
 				}
 			}
 			List<OutputRow> lstARD = new List<OutputRow>();
-			List<ICG_Certification__c> allCertifications = [SELECT Id, Name, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c ASC LIMIT 1000];
+			List<ICG_Certification__c> allCertifications = [SELECT Id, Name, Label__c, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c ASC LIMIT 1000];
 			if (!lstResults.isEmpty()) {
 				/* lstARD - list account role detail == Facility rows */
 				for (ICG_Account_Role_Detail__c result : lstResults) {
@@ -110,9 +110,9 @@ public without sharing class CW_SearchEngine {
 		Id rtAsgmtGroup = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
 
 		if (isMapQuery != true) {
-			querySelect = 'SELECT ' + 'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' + 'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' + 'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 'Account_Role__r.Account__r.RecordType.Name, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' + 'Is_Direct_Ramp_Access__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,' + 'Website__c,Online_Booking_System_Link__c,Available_Languages__c, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY Expiration_Date__c desc NULLS FIRST) ';
+			querySelect = 'SELECT ' + 'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' + 'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' + 'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 'Account_Role__r.Account__r.RecordType.Name, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' + 'Is_Direct_Ramp_Access__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,' + 'Website__c,Online_Booking_System_Link__c,Available_Languages__c, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY Expiration_Date__c desc NULLS FIRST) ';
 		} else {
-			querySelect = 'Select ' + 'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,Secondary_Address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 'Postal_Code_FOR__c,State_Province_FOR__c,Street_Nr_FOR__c,Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.IATACode__c,Account_Role__r.Account__r.ICAO_designator__c,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY ICG_Certification__r.Order__c asc,Expiration_Date__c desc NULLS FIRST)';
+			querySelect = 'Select ' + 'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,Secondary_Address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 'Postal_Code_FOR__c,State_Province_FOR__c,Street_Nr_FOR__c,Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.IATACode__c,Account_Role__r.Account__r.ICAO_designator__c,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY ICG_Certification__r.Order__c asc,Expiration_Date__c desc NULLS FIRST)';
 		}
 
 		if (getOpeningHours == true) {
@@ -486,7 +486,7 @@ public without sharing class CW_SearchEngine {
 				}
 			}
 			for (ICG_Certification__c crt : allCertifications) {
-				if (crt.Applicable_to__c != null && crt.Applicable_to__c.containsIgnoreCase(obj.RecordType.Name)) {
+				if (crt.Applicable_to__c != null && crt.Applicable_to__c.containsIgnoreCase(obj.RecordType.DeveloperName)) {
 					Certification newcert = new Certification(crt, containsCert.get(crt.Name));
 					if (containsCert.get(crt.Name) != null) {
 						newcert.included = true;
@@ -582,8 +582,8 @@ public without sharing class CW_SearchEngine {
 				this.companyId = acr.Account_Role__r.Account__c;
 				this.locationClass = acr.Account_Role__r.Account__r.Location_Class__c;
 				this.IATA_icon = ((acr.RecordType.DeveloperName == 'Freight_Forwarder' && acr.Account_Role__r.Account__r.Location_Class__c == 'C') || (((acr.Account_Role__r.Account__r.RecordType.Name == 'Airline Headquarters') || (acr.Account_Role__r.Account__r.RecordType.Name == 'Operator')) && (acr.RecordType.Name == 'Airline')));
-				this.CargoCom_icon = acr.RecordType.Name == 'Airline';
-				this.ListAir_icon = acr.RecordType.Name == 'Cargo Handling Facility';
+				this.CargoCom_icon = acr.RecordType.DeveloperName == 'Airline';
+				this.ListAir_icon = acr.RecordType.DeveloperName == 'Cargo_Handling_Facility';
 				this.listAccCert = acr.ICG_Capability_Assignment_Groups__r.isEmpty() ? null : acr.ICG_Capability_Assignment_Groups__r;
 				this.website = acr.Website__c;
 				this.onlineBooking = acr.Online_Booking_System_Link__c;
@@ -640,7 +640,7 @@ public without sharing class CW_SearchEngine {
 					//If the onairport station is in the same airport as facility, then add.
 					if (ard.Nearest_Airport__c == acr.Nearest_Airport__c) {
 						Boolean selected = false;
-						if (acr.RecordType.Name == 'Airline') {
+						if (acr.RecordType.DeveloperName == 'Airline') {
 							for (ICG_Account_Role_Detail_Relationship__c ardr : operatingStations) {
 								//If the handled airline is the facility company airline and it's in the same airport, then add.
 								if (ard.Id == ardr.ICG_Account_Role_Detail__c && belongToSameAirport(ardr, acr)) {
@@ -673,6 +673,7 @@ public without sharing class CW_SearchEngine {
 
 	public class Certification {
 		public String name { get; set; }
+		public String label { get; set; }
 		public String image { get; set; }
 		public Boolean included { get; set; }
 		public Decimal order { get; set; }
@@ -680,12 +681,14 @@ public without sharing class CW_SearchEngine {
 
 		public Certification(ICG_Capability_Assignment_Group__c cert) {
 			this.name = cert.ICG_Certification__r.Name;
+			this.label = cert.ICG_Certification__r.Label__c;
 			this.accountRoleCertification = cert;
 			this.included = true;
 			this.order = cert.ICG_Certification__r.Order__c;
 		}
 		public Certification(ICG_Certification__c cert, ICG_Capability_Assignment_Group__c ardcert) {
 			this.name = cert.Name;
+			this.label = cert.Label__c;
 			this.image = cert.Image__c;
 			this.accountRoleCertification = ardcert;
 			this.order = cert.Order__c;

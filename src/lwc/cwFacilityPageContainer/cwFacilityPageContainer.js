@@ -259,11 +259,11 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	get showListAirlines() {
-		return this.facility.recordTypeName === "Ramp Handler" || this.facility.recordTypeName === "Cargo Handling Facility";
+		return this.facility.recordTypeDevName === "Ramp_Handler" || this.facility.recordTypeDevName === "Cargo_Handling_Facility";
 	}
 
 	get showOperatingAirlines() {
-		return this.facility.recordTypeName === "Airport Operator";
+		return this.facility.recordTypeDevName === "Airport_Operator";
 	}
 
 	get showAirlines(){
@@ -271,7 +271,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	get showOperatingCHFandRampH() {
-		return this.facility.recordTypeName === "Airport Operator" || this.facility.recordTypeName === "Airline";
+		return this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline";
 	}
 
 	mapresize() {
@@ -320,7 +320,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					this.detailCertFacility = this.results[0].lstAvailableCertifications;
 
 					this.selectedAirlines = this.facility.handledAirlines;
-					if(this.facility.recordTypeName === "Airport Operator" || this.facility.recordTypeName === "Airline"){
+					if(this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
 							this.populateOperatingStations(facility);
 						});
@@ -599,10 +599,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	saveCargoStations(){
 		if(this.toAddSelectedAirlines.length > 0 || this.toDeleteSelectedAirlines> 0){
-			if(this.facility.recordTypeName === 'Airport Operator') {
+			if(this.facility.recordTypeDevName === 'Airport_Operator') {
 				this.updateHiddenOperatingStations();
 			}
-			else if (this.facility.recordTypeName === 'Airline') {
+			else if (this.facility.recordTypeDevName === 'Airline') {
 				saveAirlinesHandled({
 					addList: JSON.stringify(this.toAddCargoStation),
 					deleteList: JSON.stringify(this.toDeleteCargoStation),
@@ -639,10 +639,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 	saveRampHandlers(){
 		if(this.toAddRampHandlers.length > 0 || this.toDeleteRampHandlers> 0){
-			if(this.facility.recordTypeName === 'Airport Operator') {
+			if(this.facility.recordTypeDevName === 'Airport_Operator') {
 				this.updateHiddenOperatingStations();
 			}
-			else if (this.facility.recordTypeName === 'Airline') {
+			else if (this.facility.recordTypeDevName === 'Airline') {
 				saveAirlinesHandled({
 					addList: JSON.stringify(this.toAddRampHandlers),
 					deleteList: JSON.stringify(this.toDeleteRampHandlers),

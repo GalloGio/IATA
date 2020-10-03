@@ -195,22 +195,22 @@
                     <label>Airline</label>
                 </value>
                 <value>
-                    <fullName>Airport Operator</fullName>
+                    <fullName>Airport_Operator</fullName>
                     <default>false</default>
                     <label>Airport Operator</label>
                 </value>
                 <value>
-                    <fullName>Cargo Handling Facility</fullName>
+                    <fullName>Cargo_Handling_Facility</fullName>
                     <default>false</default>
                     <label>Cargo Handling Facility</label>
                 </value>
                 <value>
-                    <fullName>Freight Forwarder</fullName>
+                    <fullName>Freight_Forwarder</fullName>
                     <default>false</default>
                     <label>Freight Forwarder</label>
                 </value>
                 <value>
-                    <fullName>Ramp Handler</fullName>
+                    <fullName>Ramp_Handler</fullName>
                     <default>false</default>
                     <label>Ramp Handler</label>
                 </value>
@@ -380,6 +380,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <description>Field used to show in the UI</description>
+        <externalId>false</externalId>
+        <label>Label</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>link__c</fullName>

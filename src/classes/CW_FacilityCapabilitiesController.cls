@@ -211,7 +211,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 			}
 
 			// Fields related to Certifications
-			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
+			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
 
 			String optionalFilterConflicts = capabilitiesIdForConflicts == null || capabilitiesIdForConflicts.isEmpty() ? ' AND Is_In_Conflict__c = false' : 'AND ' + ardCapabilityR + '.Id IN (\'' + String.join((capabilitiesIdForConflicts), '\', \'') + '\')';
 
@@ -237,12 +237,14 @@ public without sharing class CW_FacilityCapabilitiesController {
 				asgmtGroupToAdd.id = currentGroup.Id;
 				asgmtGroupToAdd.type = currentGroup.RecordType.DeveloperName;
 				asgmtGroupToAdd.name = Label.icg_smart_facility_remote_validation;
+				asgmtGroupToAdd.label = Label.icg_smart_facility_remote_validation;
 				asgmtGroupToAdd.expirationDate = currentGroup.Expiration_Date__c;
 				asgmtGroupToAdd.issueDate = currentGroup.Issue_Date__c;
 				asgmtGroupToAdd.src = '/resource/ICG_Resources/icons/remote_validation_icon.svg';
 				if (currentGroup.ICG_Certification__c != null) {
 					asgmtGroupToAdd.order = currentGroup.ICG_Certification__r.Order__c;
 					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
+					asgmtGroupToAdd.label = currentGroup.ICG_Certification__r.Label__c;
 					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
 				}
 				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
@@ -964,6 +966,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 		public String type;
 		@AuraEnabled
 		public String name;
+		@AuraEnabled
+		public String label;
 		@AuraEnabled
 		public Date expirationDate;
 		@AuraEnabled

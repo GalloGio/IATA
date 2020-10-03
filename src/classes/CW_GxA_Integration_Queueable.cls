@@ -56,7 +56,16 @@ public without sharing class CW_GxA_Integration_Queueable implements Queueable, 
 			}
 
 			try {
-				HttpResponse response = CW_AmazonS3Connector.awsS3GetObject(objectKey, gxaSettings.Named_Credential__C);
+							
+				HttpResponse response;
+				
+				if(Test.isRunningTest()){
+					CW_AmazonMockHttpResponseGenerator mockHttp = new CW_AmazonMockHttpResponseGenerator('IntegrationQueuable', 'OK');
+					response = mockHttp.respond(new HttpRequest());
+				}else{
+					response = CW_AmazonS3Connector.awsS3GetObject(objectKey, gxaSettings.Named_Credential__C);
+				}
+
 				if (response.getStatusCode() == 200) {
 					CW_GxA_Wrappers.Index currentResultObject = CW_GxA_Wrappers.parseIndex(response.getBody());
 					assignmentToAdd.GxA_Result_Json__c = Json.serialize(currentResultObject);

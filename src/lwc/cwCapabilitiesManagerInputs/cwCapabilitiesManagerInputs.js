@@ -79,13 +79,19 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		}
 		else
 		{
-			value = this.item[this.propertyName]
-			? this.item[this.propertyName].toString()
-			: "";
-			if(this.isMultiPicklist){
-				var valueParse = value.toString().split(",");
-				value = valueParse;	
+			if(this.isTypeNumber){
+				value = this.item.id ? this.item[this.propertyName] : "";
 			}
+			else{
+				value = this.item[this.propertyName]
+				? this.item[this.propertyName].toString()
+				: "";
+				if(this.isMultiPicklist){
+					var valueParse = value.toString().split(",");
+					value = valueParse;	
+				}
+			}
+			
 			return value;			
 		}
 		

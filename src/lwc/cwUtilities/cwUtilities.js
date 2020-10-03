@@ -84,10 +84,10 @@ export function checkIconType(typeString) {
 				iconType = "icon-search-by-certification-ico";
 				break;
 			case "company":
-				iconType = "icon-search-by-company-ico";
+				iconType = "icon-search-by-company-latest";
 				break;
 			case "station":
-				iconType = "icon-search-by-company-ico";
+				iconType = "icon-search-by-station-latest";
 				break;
 			case "person":
 				iconType = "icon-search-by-person-ico";
@@ -380,6 +380,7 @@ export function generateCertificationImages(array) {
 
 		let image = cert.image;
 		let name = cert.name;
+		let label = cert.label;
 		let order = cert.order;
 		let cssClass = cert.included !== "false" && cert.included !== null && accountRoleCertification.isExpired__c !== true ? "cert-account-img width-100 max-w-75" : "disabled-filter cert-account-img width-100 max-w-75";
 		let hasCerts = cert.included !== "false" && cert.included !== null ? true : false;
@@ -387,6 +388,7 @@ export function generateCertificationImages(array) {
 			Id: id,
 			image: image,
 			name: name,
+			label: label,
 			order: order,
 			issueDate: issueDate,
 			expirationDate: expirationDate,
@@ -405,13 +407,13 @@ export function generateCertificationImages(array) {
 export function getImageString(recordTypeDevName) {
 	if (recordTypeDevName === "Airline") {
 		return "airline.svg";
-	} else if (recordTypeDevName === "Airport_Operator" || recordTypeDevName === "Airport Operator" || recordTypeDevName === "Airport") {
+	} else if (recordTypeDevName === "Airport_Operator" || recordTypeDevName === "Airport Operator" ||recordTypeDevName === "Airport") {
 		return "airport-operator.svg";
-	} else if (recordTypeDevName === "Cargo_Handling_Facility" || recordTypeDevName === "Cargo Handling Facility") {
+	} else if (recordTypeDevName === "Cargo_Handling_Facility") {
 		return "cargo-handling-facility.svg";
-	} else if (recordTypeDevName === "Freight_Forwarder" || recordTypeDevName === "Freight Forwarder") {
+	} else if (recordTypeDevName === "Freight_Forwarder") {
 		return "freight-forwarder.svg";
-	} else if (recordTypeDevName === "Ramp_Handler" || recordTypeDevName === "Ramp Handler") {
+	} else if (recordTypeDevName === "Ramp_Handler") {
 		return "ramp-handler.svg";
 	} else if (recordTypeDevName === "Shipper") {
 		return "shipper.svg";

@@ -14,7 +14,7 @@
                 <th scope="col">{label.city}</th>
                 <th scope="col">{label.country}</th>
                 <template if:true={displayCertifications} for:each={activeCertifications} for:item="cert">
-                    <th key={cert.Id} scope="col"><img title={cert.Name} src={cert.Image__c} width="50px" /></th>
+                    <th key={cert.Id} scope="col"><img title={cert.Label__c} src={cert.Image__c} width="50px" /></th>
                 </template>
                 <template if:true={displayRemoteValidations}>
                     <th scope="col"><img title="remotevalidations" src={remoteValidationIcon} width="50px" /></th>

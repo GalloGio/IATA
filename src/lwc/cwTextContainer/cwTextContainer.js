@@ -16,6 +16,9 @@ export default class CwTextContainer extends LightningElement {
 	title = "Default title";
 
 	@api
+	certName = "";
+
+	@api
 	titlecolor = "";
 	get getTitleColor() {
 		let titleCol = this.titlecolor;
@@ -139,7 +142,7 @@ export default class CwTextContainer extends LightningElement {
 
 	showCertifiedEntities() {
 		let searchList = [];
-		let searchValue = this.title && this.title.toLowerCase() === "ienva" ? this.title + ";IEnvA Stage 2" : this.title;
+		let searchValue = this.certName && this.certName.toLowerCase() === "ienva_stage_1" ? this.certName + ";ienva_stage_2" : this.certName;
 		let searchObject = { operator: "LIKE", value: searchValue };
 		searchObject.obj = "ICG_Capability_Assignment_Group__c";
 		searchObject.field = "ICG_Certification__r.Name";

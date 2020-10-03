@@ -103,9 +103,14 @@
                 <div class="sectionText">
                     <p class="pItem" onclick={selectItem} data-action="Validation History">{label.validation_history}</p>
                 </div>
-                <div class="sectionText">
-                    <p class="pItem" onclick={selectItem} data-action={label.capability_management}>{label.capability_management}</p>
-                </div>
+				<template if:true={userInfo}>
+                    <template if:true={userInfo.isCompanyAdmin}>
+                        <div class="sectionText">
+							<p class="pItem" onclick={selectItem} data-action={label.capability_management}>{label.capability_management}</p>
+						</div>
+                    </template>
+                </template>
+                
             </div>
 
             <div class="separator"></div>
@@ -130,25 +135,31 @@
 
             <div class="separator"></div>
 
-            <div class="sectionIcon" onclick={openNav}>
-                <img class="width-25" src={manageruserpermisions} />
-            </div>
-            <div class="sectionTitle">
-                <p><b>{label.manage_user_permission}</b></p>
-            </div>
-            <div class="pl-special">
-                <div class="sectionText">
-                    <p class="pItem" onclick={selectItem} data-action="Pending User Approvals">{label.pending_user_approvals}</p>
-                </div>
-                <div class="sectionText">
-                    <p class="pItem" onclick={selectItem} data-action="Station Managers">{label.station_manager}</p>
-                </div>
-                <div class="sectionText">
-                    <p class="pItem" onclick={selectItem} data-action="Company Admins">{label.company_admins}</p>
-                </div>
-            </div>
+            
+			<template if:true={userInfo}>
+				<template if:true={userInfo.isCompanyAdmin}>
+					<div class="sectionIcon" onclick={openNav}>
+						<img class="width-25" src={manageruserpermisions} />
+					</div>
+					<div class="sectionTitle">
+						<p><b>{label.manage_user_permission}</b></p>
+					</div>
+					<div class="pl-special">
+						<div class="sectionText">
+							<p class="pItem" onclick={selectItem} data-action="Pending User Approvals">{label.pending_user_approvals}</p>
+						</div>
+						<div class="sectionText">
+							<p class="pItem" onclick={selectItem} data-action="Station Managers">{label.station_manager}</p>
+						</div>
+						<div class="sectionText">
+							<p class="pItem" onclick={selectItem} data-action="Company Admins">{label.company_admins}</p>
+						</div>
+					</div>
+					<div class="separator"></div>
+				</template>
+			</template>
+            
 
-            <div class="separator"></div>
 
             <div class="sectionIcon" onclick={openNav}>
                 <img class="width-25" src={settings} />

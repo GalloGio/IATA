@@ -458,7 +458,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 		expirationDateFormatted = expirationDateFormatted.split("-")[2] + "-" + expirationDateFormatted.split("-")[1] + "-" + expirationDateFormatted.split("-")[0];
 		if (event.type === "mouseover" || event.type === "mousemove") {
 			this.dataHoverInfoStamp = {
-				name: event.target.dataset.name,
+				name: event.target.dataset.label,
 				issueDate: issueDateFormatted,
 				expirationDate: expirationDateFormatted
 			};

@@ -33,7 +33,7 @@ public without sharing class CW_CapabilitiesManagerController {
 				asgmtGroupToAdd.src = '/resource/ICG_Resources/icons/remote_validation_icon.svg';
 				if (currentGroup.ICG_Certification__c != null) {
 					asgmtGroupToAdd.order = currentGroup.ICG_Certification__r.Order__c;
-					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
+					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Label__c;
 					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
 				}
 				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
@@ -414,7 +414,7 @@ public without sharing class CW_CapabilitiesManagerController {
 			}
 			
 			// Fields related to Certifications
-			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
+			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
 			String query;
 			if(certificationId != null){
 				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Active__c = true AND '  + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by CreatedDate';
@@ -444,7 +444,7 @@ public without sharing class CW_CapabilitiesManagerController {
 			}
 		}
 
-		List<ICG_Certification_Capability_Assignment__c> returnList = [SELECT id, Category__c, Equipment__c, ICG_Certification__r.Name, ICG_Certification__r.Image__c FROM ICG_Certification_Capability_Assignment__c WHERE ICG_Certification__c = :certificationId AND Equipment__c NOT IN :equipment];
+		List<ICG_Certification_Capability_Assignment__c> returnList = [SELECT id, Category__c, Equipment__c, ICG_Certification__r.Name,ICG_Certification__r.Label__c, ICG_Certification__r.Image__c FROM ICG_Certification_Capability_Assignment__c WHERE ICG_Certification__c = :certificationId AND Equipment__c NOT IN :equipment];
 		return returnList;
 	}
 

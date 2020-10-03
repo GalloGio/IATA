@@ -112,16 +112,16 @@
                         class="col-6 text-center itemBase-cert itemUnselected certiCard" onclick={onClickItem}
                         data-obj="ICG_Capability_Assignment_Group__c" data-field="ICG_Certification__r.Name"
                         data-relationfield="ICG_Account_Role_Detail__c" data-operator="LIKE" key={cert.Id}
-                        data-name={cert.Name}>
+                        data-name={cert.Label__c}>
                         <img src={tickSelection} class="certiTick " key={cert.Id} data-tosca={cert.Id}
-                            data-name={cert.Name} data-type="certification">
+                            data-name={cert.Label__c} data-type="certification">
                         <img src={cert.Image__c} class="certiImage " key={cert.Id} data-tosca={cert.Id}
-                            data-name={cert.Name} data-type="certification" />
+                            data-name={cert.Label__c} data-type="certification" />
                         <div class="text-truncate icgBlueName certiLabel item-filter" data-tosca={cert.Id}
-                            data-name={cert.Name} data-type="certification">{cert.LabelName}</div>
+                            data-name={cert.Label__c} data-type="certification">{cert.Label__c}</div>
                         <input type="checkbox" data-obj="ICG_Capability_Assignment_Group__c"
                             data-field="ICG_Certification__r.Name" data-relationfield="ICG_Account_Role_Detail__c"
-                            data-operator="LIKE" key={cert.Id} value={cert.Name} data-name={cert.Name} class="hidden">
+                            data-operator="LIKE" key={cert.Id} value={cert.Name} data-name={cert.Label__c} class="hidden">
                     </label>
                 </template>
             </template>

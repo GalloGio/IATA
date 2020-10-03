@@ -57,7 +57,7 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 	@isTest
 	static void testGetAirlinesByRT(){
 		test.startTest();
-		string result = CW_HandledAirlinesController.getAirlinesByRT('Cargo Handling Facility');
+		string result = CW_HandledAirlinesController.getAirlinesByRT('Cargo_Handling_Facility');
 		test.stopTest();
 
 		System.assertEquals(false, String.isBlank(result), 'getAirlinesByRT validation');

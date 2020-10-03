@@ -56,13 +56,14 @@ export default class CwCertificationSection extends LightningElement {
 
 			for (let i = 0; i < this.result.length; i++) {
 				//TODO INIT - TEMPORAL FIX until us related to new fields will be done
-				if (this.result[i].Name === "IEnvA Stage 2") {
+				if (this.result[i].Name === "ienva_stage_2") {
 					continue;
 				}
 				// TODO END
 				certificationList.push({
 					Id: this.result[i].Id,
 					Name: this.result[i].Name,
+					label: this.result[i].Label__c,
 					imagen: this.result[i].Image__c,
 					link: this.result[i].link__c,
 					description: this.result[i].Description__c,

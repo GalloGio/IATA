@@ -7,7 +7,7 @@ import {refreshApex} from '@salesforce/apex';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 export default class CwAccountDetailCarousel extends LightningElement {
-	_recordId = "";
+	localRecordId = "";
 	@api title = "";
 	@api underline = "";
 	@api titlesize = "h4";
@@ -29,15 +29,19 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	@track currentImagePosition = 0;
 	@api editMode = false;
 	@track showFileUploadCarousel = false;
-	@track showFileHideCarousel=false;
+    @track showFileHideCarousel=false;
+    
+    get showAsCreateStation() {
+		return this.localRecordId == "";
+	}
 
 	@api
 	get recordId(){
-		return this._recordId;
+		return this.localRecordId;
 	}
 	set recordId(value){
-	if(this._recordId != value)
-		this._recordId = value;
+	if(this.localRecordId != value)
+		this.localRecordId = value;
 		refreshApex(this.getFacilityFiles(value));
 	}
 

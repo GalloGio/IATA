@@ -19,6 +19,7 @@ public with sharing class CW_GxA_Handler_Test {
 		gxaSettings.Named_Credential__c = 'CW_AWS_S3_REMOTE_VALIDATIONS';
 		gxaSettings.Index_File__c = 'Result.json';
 		gxaSettings.Bucket__c = 'pwc-dev-0f0a94bcb834b69f';
+		gxaSettings.Mapping_Version__c = 'V4_19.05';
 
 		insert gxaSettings;
 
@@ -131,7 +132,7 @@ public with sharing class CW_GxA_Handler_Test {
 		imap.SF_Process_Question__c = 'yes';
 		imap.SF_Specific_Processing__c = '';
 		imap.SF_Target_Field__c = 'Is_Planned_To_Implement__c';
-		imap.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
+		imap.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';		
 		listImap.add(imap);
 
 		ICG_GxA_Integration_Mapping__c imap1 = new ICG_GxA_Integration_Mapping__c(Version__c= RT_NEW_VERSION,GxA_Group__c='Question',GxA_Is_Mandatory__c = true);
@@ -167,23 +168,6 @@ public with sharing class CW_GxA_Handler_Test {
 		imap2.SF_Target_Field__c = 'Airport_Authorization_Copy_1__c';
 		imap2.SF_Target_Object__c = 'ICG_Account_Role_Detail__c';
 		listImap.add(imap2);
-
-		ICG_GxA_Integration_Mapping__c imap3 = new ICG_GxA_Integration_Mapping__c(Version__c= RT_NEW_VERSION,GxA_Group__c='Question',GxA_Is_Mandatory__c = true);
-		imap3.GxA_Options__c = 'Yes,No';
-		imap3.GxA_Question_Id__c = '3';
-		imap3.GxA_Question_Parent_Id__c = '1';
-		imap3.GxA_Question_Text__c = 'Availability';
-		imap3.GxA_Question_Type_Id__c = '13';
-		imap3.GxA_Sub_Survey_Id__c = '';
-		imap3.GxA_Validation__c = '';
-		imap3.SF_Data_Extra__c = '';
-		imap3.SF_Equipment__c = 'Track_And_Trace_Module';
-		imap3.SF_Options_Mapping__c = '';
-		imap3.SF_Process_Question__c = 'yes';
-		imap3.SF_Specific_Processing__c = 'Fileupload';
-		imap3.SF_Target_Field__c = '';
-		imap3.SF_Target_Object__c = 'ICG_Account_Role_Detail__c';
-		listImap.add(imap3);
 
 		ICG_GxA_Integration_Mapping__c imap4 = new ICG_GxA_Integration_Mapping__c(Version__c= RT_NEW_VERSION,GxA_Group__c='Question',GxA_Is_Mandatory__c = true);
 		imap4.GxA_Options__c = 'Yes (Entire room),Yes (Segregated area within room),No';
@@ -283,7 +267,7 @@ public with sharing class CW_GxA_Handler_Test {
 		imap9.SF_Options_Mapping__c = '';
 		imap9.SF_Process_Question__c = 'yes';
 		imap9.SF_Specific_Processing__c = 'Fileupload.Json.Url';
-		imap9.SF_Target_Field__c = 'Photos__c';
+		imap9.SF_Target_Field__c = 'LAC_Animal_Attendant_Area_Size__c';
 		imap9.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
 		listImap.add(imap9);
 
@@ -338,6 +322,23 @@ public with sharing class CW_GxA_Handler_Test {
 		imap12.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
 		listImap.add(imap12);
 
+		ICG_GxA_Integration_Mapping__c imap13 = new ICG_GxA_Integration_Mapping__c(Version__c= RT_NEW_VERSION,GxA_Group__c='Question',GxA_Is_Mandatory__c = true);
+		imap13.GxA_Options__c = '';
+		imap13.GxA_Question_Id__c = '13';
+		imap13.GxA_Question_Parent_Id__c = '112';
+		imap13.GxA_Question_Text__c = 'to C';
+		imap13.GxA_Question_Type_Id__c = '2';
+		imap13.GxA_Sub_Survey_Id__c = '';
+		imap13.GxA_Validation__c = 'number';
+		imap13.SF_Data_Extra__c = '';
+		imap13.SF_Equipment__c = '2_To_8_C';
+		imap13.SF_Options_Mapping__c = '';
+		imap13.SF_Process_Question__c = 'yes';
+		imap13.SF_Specific_Processing__c = 'Fileupload.Json.Visible';
+		imap13.SF_Target_Field__c = 'TCHA_Alarm_Range__c';
+		imap13.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
+		listImap.add(imap13);
+
 		insert listImap;
 
 		List<String> anwsersJsonContent = new List<String>();
@@ -351,7 +352,7 @@ public with sharing class CW_GxA_Handler_Test {
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "7","Question": "Availability","Response": "No","SubSurvey": []},';
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "8","Question": "Availability","Response": "No","SubSurvey": []},';
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "9","Question": "Availability","Response": "180,181","SubSurvey": [{"QuestionTypeId": "2","QuestionID": "6321","Question": "Name","SubSurveySessionId": "180","Response": "34"},{"QuestionTypeId": "13","QuestionID": "6323","Question": "System self- or carrier owned?","SubSurveySessionId": "181","Response": "Carrier owned"}]},';
-		bodyMock += '{"QuestionTypeId": "13","QuestionID": "10","Question": "Availability","Response": "No","SubSurvey": []},';
+		bodyMock += '{"QuestionTypeId": "14","QuestionID": "10","Question": "Availability","Response": "No","SubSurvey": []},';
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "11","Question": "Availability","Response": "No","SubSurvey": []},';
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "12","Question": "Availability","Response": "No","SubSurvey": []},';
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "100","Question": "Availability","Response": "No","SubSurvey": []}';
@@ -386,7 +387,7 @@ public with sharing class CW_GxA_Handler_Test {
 		anwsersJsonContent.add(bodyMock);
 
 		List<Id> res = CW_GxA_Handler.getOrdersIdWithLastIntegrationFailed(null, null);
-		System.assertNotEquals(0, res.size());
+		System.assertEquals(1, res.size()); 
 		
 		Test.stopTest();
 	}

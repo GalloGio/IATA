@@ -177,7 +177,6 @@
 															
 															<!-- Second header-->
 															<template if:true={currentheader.last}>
-
 																<th if:true={currentfield.first}
 																	key={currentfield.value.name} scope="col"
 																	colspan={currentfield.value.colspan}
@@ -196,9 +195,7 @@
 																	colspan={currentfield.value.colspan} title={currentfield.value.label}>
 																	{currentfield.value.label}
 																</th>
-
 															</template>
-
 														</template>
 
 														<template if:true={currentheader.last}>
@@ -208,12 +205,9 @@
 																class="certifications-stamp cert-colum-head">{label.capability_validated_by}</th>
 															<template if:true={addAllRowsPrevious}>
 																<th key={currentheader.value.name}
-																scope="col" class="zui-sticky-col-right"></th>
-															</template>
-
-															<template if:true={getCertificationMode}>																
-																<template if:true={currentCategory.isMultirecord}>
-																		<th if:false={isNotEditable} key={currentheader.value.name} class="zui-sticky-col-right" scope="col">
+																scope="col" class="zui-sticky-col-right aa">
+																	<template if:true={getCertificationMode}>																
+																		<template if:true={currentCategory.isMultirecord}>
 																			<lightning-button-icon icon-name="utility:add"
 																			variant="brand" alternative-text="Add capability" title="Add item"
 																			data-action="Add"
@@ -223,31 +217,23 @@
 																				data-category-index={categoryIndex}
 																			onclick={assigntCapability}>
 																			</lightning-button-icon>
-																		</th>
-																</template>	
-																<template if:false={currentCategory.isMultirecord}>
-																	<th if:false={isNotEditable}  key={currentheader.value.name} class="zui-sticky-col-right" scope="col"></th>
-																</template>														
-															</template>
-
-																															
+																		</template>
+																	</template>
+																</th>
+															</template>										
 														</template>
 													</tr>
-
 												</template>
-
 											</thead>
 
 											<tbody if:true={currentCategory.columns}>
 												<template for:each={currentCategory.rows} for:item="row"
 													for:index="rowIndex">
 													<tr key={row.Id} data-index={rowIndex} class={row.customClass}>
-
 														<template if:true={currentCategory.columns.length}
 															iterator:currentheader={currentCategory.columns}>
 															<template if:true={currentheader.last}>
 																<template iterator:currentfield={currentheader.value}>
-
 																	<td if:true={currentfield.first}
 																		key={currentfield.value.name}
 																		class="zui-sticky-col">
@@ -261,7 +247,6 @@
 																			</c-cw-capabilities-manager-inputs>
 																		</b>
 																	</td>
-
 																	<td if:false={currentfield.first}
 																		key={currentfield.value.name}>
 																		<c-cw-capabilities-manager-inputs
@@ -272,18 +257,17 @@
 																			edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
 																		</c-cw-capabilities-manager-inputs>
 																	</td>
-
 																</template>
 															</template>
 														</template>
 
 														<td class="row-separator photo-colum" 
-														data-super-categories-index={superCategoryIndex}
-																		data-section-index={sectionIndex}
-																		data-capability-index={capabilityIndex}
-																		data-category-index={categoryIndex}
-																		data-row-index={rowIndex}
-																		onclick={setRowClicked}>
+															data-super-categories-index={superCategoryIndex}
+															data-section-index={sectionIndex}
+															data-capability-index={capabilityIndex}
+															data-category-index={categoryIndex}
+															data-row-index={rowIndex}
+															onclick={setRowClicked}>
 
 															<lightning-file-upload if:true={editMode}
 																variant="label-hidden"
@@ -295,7 +279,6 @@
 																multiple>
 															</lightning-file-upload>
 															
-
 															   <button if:true={row.photosAvailable}
 																	class="p-0 bg-transp border-0 cursor-pt"
 																	data-tosca="edit_photos" title="Edit photos" disabled={row.isNotEditable}>
@@ -340,7 +323,7 @@
 														
 														<template if:true={getCertificationMode}>
 															<template if:false={isNotEditable}>
-																<td class="row-separator zui-sticky-col-right width-150">
+																<td class="row-separator zui-sticky-col-right dd width-150">
 																	<template if:true={row.isAssigned}>																	
 																		<lightning-button label={label.cancel} title={label.cancel} variant="destructive" data-action="Remove"
 																		data-super-categories-index={superCategoryIndex}
@@ -367,7 +350,7 @@
 														
 														<template if:false={getCertificationMode}>
 															<template if:false={isNotEditable}>
-																<td class="row-separator zui-sticky-col-right width-150">
+																<td class="row-separator zui-sticky-col-right ee width-150">
 																	<template if:true={row.isAssigned}>																	
 																		<lightning-button label={label.remove} title={label.cancel} variant="destructive" data-action="Remove"
 																		data-super-categories-index={superCategoryIndex}
@@ -427,7 +410,7 @@
 						<div class="slds-modal__content text-center overflow-hidden" id="modal-edit-photos">
 
 							<div class="row">
-								<lightning-carousel disable-auto-scroll>
+								<lightning-carousel disable-auto-scroll class="m-auto">
 									<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
 										<lightning-button-icon if:true={isSaveOption} key={photo.id} data-id={photo.id} data-position="photoIndex" icon-name="utility:delete" onclick={deletePhotoCarousel}
 											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">

@@ -51,6 +51,7 @@ export default class CwAccountDetailCertificationList extends LightningElement {
 						let image = cert.image;
 						let id = cert.id;
 						let name = cert.name;
+						let label = cert.label;
 						let order = cert.order;
 						let cssClass = accountHasCertification !== "false" ? "cert-account-img width-100" : "disabled-filter cert-account-img width-100";
 						let hasCerts = accountHasCertification !== "false" ? true : false;
@@ -58,6 +59,7 @@ export default class CwAccountDetailCertificationList extends LightningElement {
 							Id: id,
 							image: image,
 							name: name,
+							label: label,
 							order: order,
 							issueDate: issueDate,
 							expirationDate: expirationDate,
@@ -108,8 +110,8 @@ export default class CwAccountDetailCertificationList extends LightningElement {
 	switchIenvaCertification(orderedImages) {
 		let ienvaFiltered = orderedImages;
 		for (let i = 0; i < ienvaFiltered.length; i++) {
-			if (ienvaFiltered[i].name === "IEnvA") {
-				if (ienvaFiltered[i + 1].name === "IEnvA Stage 2" && ienvaFiltered[i + 1].Id !== "NotIncluded") {
+			if (ienvaFiltered[i].name === "ienva_stage_1") {
+				if (ienvaFiltered[i + 1].name === "ienva_stage_2" && ienvaFiltered[i + 1].Id !== "NotIncluded") {
 					ienvaFiltered.splice(i, 1);
 				} else {
 					ienvaFiltered.splice(i + 1, 1);

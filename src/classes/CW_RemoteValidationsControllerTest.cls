@@ -85,6 +85,19 @@ public class CW_RemoteValidationsControllerTest {
 			system.assertEquals(true, CW_RemoteValidationsController.createRemoteValidation([select id from ICG_Account_Role_Detail__c limit 1].Id).success);
 		test.stopTest();
 	}
+
+	@isTest
+	static void createRemoteValidationInternalUserWrongCase(){
+		List<PricebookEntry> pricebookEntryLstToUpdate = [select Id, PriceBook2Id from pricebookentry where product2.Smart_Facility_Remote_Validation__c = true and IsActive = true];
+		for(PricebookEntry currentPriceBookEntry : pricebookEntryLstToUpdate){
+			currentPriceBookEntry.IsActive = false;
+		}
+		Update pricebookEntryLstToUpdate;
+
+		test.startTest();
+			system.assertEquals(false, CW_RemoteValidationsController.createRemoteValidation([select id from ICG_Account_Role_Detail__c limit 1].Id).success);
+		test.stopTest();
+	}
 	
 	public static PricebookEntry createPricebookEntry (Pricebook2 newPricebook, Product2 prod) {
 		PricebookEntry ret = new PricebookEntry();

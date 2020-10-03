@@ -54,6 +54,10 @@ export default class CwFieldsSection extends LightningElement {
 		this.dispatchEvent(new CustomEvent("fieldupdate", { detail: { updatedCategory: this.currentCategory } }));
 	}
 
+	closeModal() {
+		this.dispatchEvent( new CustomEvent('applyfilters'));
+	}
+
 	removeInternalFilters(event) {
 		event.preventDefault();
 		let fieldsUpdated = [];

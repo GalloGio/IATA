@@ -303,17 +303,14 @@ public without sharing class OrderItem_Svc {
 
 	@future
 	public static void sendRemoteValidationConfirmationEmails(String orderItemId, String whoId){
-		User u = [Select id, email from user where id = :whoId];
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 		//Send email to who purchased
-		CW_Utilities.sendEmailTemplate('Purchase_to_User_purchase_comp',orderItemId, whoId, new List<String>{u.email}, true);
+		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Purchase_to_User_purchase_comp', orderItemId, new Set<Id>{whoId}));
+		
 		//Send email to IATA
-		List<String> whoEmailIata = new List<String>();
-		for(User us : CW_Utilities.getIATAStakeHoldersUsersList()) {
-			if(us.email != null){
-				whoEmailIata.add(us.email);
-			}
-		}
-		CW_Utilities.sendEmailTemplate('Purchase_to_IATA',orderItemId, whoId, whoEmailIata, false);
+		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Purchase_to_IATA', orderItemId, CW_EmailManager.getIataAdminsIds()));
+
+		CW_EmailManager.sendInternalEmails(emailsToBeSent);
 	}
 	// End of Smart Facilities Remote Validations methods
 

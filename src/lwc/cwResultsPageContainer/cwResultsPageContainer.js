@@ -92,14 +92,6 @@ export default class CwResultsPageContainer extends LightningElement {
 				
 			});
 			this.certifications = JSON.parse(JSON.stringify(data));
-			this.certifications.forEach(cert => { 
-				if (cert.Name === "IEnvA") {
-					cert.LabelName = cert.Name + " Stage 1";
-				}
-				else { 
-					cert.LabelName = cert.Name;
-				}
-			});
 		}
 	}
 
@@ -272,12 +264,13 @@ export default class CwResultsPageContainer extends LightningElement {
 						let allResults = JSON.parse(result);
 						this.mapData = [];
 						allResults.forEach(record => {
-							let iconurl = this.getIcon(record.facility.recordTypeName, searchWrapper);
-							let ctypeimg = this.getCTypeImage(record.facility.recordTypeName);
+							let iconurl = this.getIcon(record.facility.recordTypeDevName, searchWrapper);
+							let ctypeimg = this.getCTypeImage(record.facility.recordTypeDevName);
 							this.mapData.push({
 								location: record.facility.location.location,
 								name: record.facility.name,
-								dataType: record.facility.recordTypeName,
+								dataType: record.facility.recordTypeDevName,
+								dataTypeLabel: record.facility.recordTypeName,
 								icon: iconurl,
 								thumbnail: record.facility.logoUrl ? record.facility.logoUrl : resources + "/img/no-image.svg",
 								accountName: record.facility.accountName,
@@ -314,23 +307,23 @@ export default class CwResultsPageContainer extends LightningElement {
 		/////////////
 		if (facilityType) {
 			if (facilityType === "Airline") return this.airline;
-			else if (facilityType === "Airport Operator") return this.airportoperator;
-			else if (facilityType === "Freight Forwarder") return this.freight;
+			else if (facilityType === "Airport_Operator") return this.airportoperator;
+			else if (facilityType === "Freight_Forwarder") return this.freight;
 			else if (facilityType === "Trucker") return this.trucker;
 			else if (facilityType === "Shipper") return this.shipper;
-			else if (facilityType === "Cargo Handling Facility") return this.cargohandling;
-			else if (facilityType === "Ramp Handler") return this.ramphandler;
+			else if (facilityType === "Cargo_Handling_Facility") return this.cargohandling;
+			else if (facilityType === "Ramp_Handler") return this.ramphandler;
 		} else return null;
 	}
 	getCTypeImage(facilityType) {
 		if (facilityType) {
 			if (facilityType === "Airline") return this.airlineCt;
-			else if (facilityType === "Airport Operator") return this.airportoperatorCt;
-			else if (facilityType === "Freight Forwarder") return this.freightCt;
+			else if (facilityType === "Airport_Operator") return this.airportoperatorCt;
+			else if (facilityType === "Freight_Forwarder") return this.freightCt;
 			else if (facilityType === "Trucker") return this.truckerCt;
 			else if (facilityType === "Shipper") return this.shipperCt;
-			else if (facilityType === "Cargo Handling Facility") return this.cargohandlingCt;
-			else if (facilityType === "Ramp Handler") return this.ramphandlerCt;
+			else if (facilityType === "Cargo_Handling_Facility") return this.cargohandlingCt;
+			else if (facilityType === "Ramp_Handler") return this.ramphandlerCt;
 		} else return null;
 	}
 	manageDataSent() {
