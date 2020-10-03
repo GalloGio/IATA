@@ -20,6 +20,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	searchbycompanywhite = resources + "/icons/search-by-company-white.svg";
 	CertifiedAirline = resources + "/img/certifications/UfW_CertifiedAirline.png";
 	animatedBanner = resources + "/img/animated-banner.gif";
+	animatedBannerRegister = resources + "/img/animated-banner-register.gif";
 
 	companyNameInput = "companynameinput";
 	locationInput = "locationinput";
@@ -499,6 +500,9 @@ export default class CwResultsPageSearchBar extends LightningElement {
 				});
 			}
 		});
+
+		
+
 	}
 
 	deleteFilter(event) {
@@ -525,7 +529,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	searchQueryReceived = false;
 	renderedCallback() {
 		if (this.searchQueryReceived !== true && this._initialSearch && this.certifications && this.companyTypes) {
-			this.alignInitialSearch();
+			this.alignInitialSearch();			
 			this.searchQueryReceived = true;
 		}
 
@@ -743,6 +747,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 				}
 			});
 			this.setSearchSummaryList();
+
 		}
 	}
 

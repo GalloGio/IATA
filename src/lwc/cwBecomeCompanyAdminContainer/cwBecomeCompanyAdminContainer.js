@@ -30,7 +30,7 @@ export default class CwBecomeCompanyAdminContainer extends LightningElement {
             this.requesting = false;
             this.showModal = true;
         }).catch(err => {
-            this.modalMessage = err.body.pageErrors[0].message;
+			this.modalMessage = this.label.icg_error_message;
             this.modalImage = this.ERROR_IMAGE;
             this.requesting = false;
             this.showModal = true;

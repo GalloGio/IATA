@@ -19,7 +19,7 @@ export default class CwCreateRemoteValidationInternalUsers extends LightningElem
 	label = labels.labels();
 
 	getRemoteValidations(){
-       getStationRemoteValidations({ managedFacilitiesIds: [this.recordId] }).then(result =>{
+	   getStationRemoteValidations({ managedFacilitiesIds: [this.recordId] }).then(result =>{
 			JSON.parse(result).forEach(remval => {
 				if (remval.Order.Remote_Validation_Status__c !== "RV_Complete" && remval.Order.Remote_Validation_Status__c !== "Cancelled") {
 					this.existingRemoteValidations.push(remval);

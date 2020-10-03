@@ -38,7 +38,7 @@ export default class CwBody extends LightningElement {
     adv1 = this.images + 'adv1.PNG';
     adv2 = this.images + 'adv2.PNG';
     adv3 = this.images + 'adv3.png';
-    iatacargo = this.images + 'iata-cargo.jpg';
+    iatacargo = this.images + 'iata-cargo-min.jpg';
 
 
     @track initialized = false;

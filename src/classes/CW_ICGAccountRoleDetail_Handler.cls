@@ -57,8 +57,8 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		List<ICG_Account_Role_Detail__c> ardToUpdate = [SELECT Id, Company_FOR__c, City_FOR__c, Country_FOR__c,
 														Search_By_City__c, Search_By_Company__c, Search_By_Country__c
 														FROM ICG_Account_Role_Detail__c
-                                                        WHERE Id IN :lstFacilities];
-                                                        
+														WHERE Id IN :lstFacilities];
+														
 		for(ICG_Account_Role_Detail__c facility : ardToUpdate) {
 			Boolean toUpdate = false;
 			
@@ -163,8 +163,8 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 			if(mapNews.get(country.Id).Name != mapOlds.get(country.Id).Name) {
 				lstCountryIds.add(country.Id);
 			}
-        }
-        
+		}
+		
 		if(!lstCountryIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__r.Business_City__c IN :lstCountryIds]);
 			Set<Id> resultIds = results.keySet();

@@ -642,6 +642,7 @@ public class CW_UtilitiesTest {
 			ard[0].Status__c = 'Rejected';
 			ard[1].Status__c = 'Approved';
 			CW_Utilities.sendApproveOrRejectMails(ard[0], ard[1]);
+			CW_Utilities.sendApproveOrRejectMails(ard[1], ard[0]);
 		} catch (Exception ex) {
 		}
 

@@ -1,6 +1,6 @@
 public without sharing class CW_CreateFacilityController {
 	final static String ONESOURCE = 'One Source';
-    @AuraEnabled
+	@AuraEnabled
 	public static string createFacility(String accountId, String station, String logoInfo, String geoLocationInfo, String ardRelIds, String nearestAirportCode, Boolean isCompanyAdmin, Boolean isInternalUser, Boolean isNewAccount, String stationsToAdd, String stationsToRemove) {
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		Savepoint sp;
@@ -36,16 +36,20 @@ public without sharing class CW_CreateFacilityController {
 
 			CW_HandledAirlinesController.saveAirlinesHandled(stationsToAdd, stationsToRemove, ard.Id);
 
-			if(isInternalUser != true){
-				res = CW_CreateFacilityController.handleEmailsAndNotifications(isInternalUser, ard, companyAdmins, isCompanyAdmin, isNewAccount);
+			res.success = true;
 
-				if(res.success == false){
-					CW_DBTransactionHandler.doRollback(sp);
-				}
-			}else if(ard.Id != null){
-				res.success = true;
+			if(isInternalUser == true){
+				res.message = Label.icg_registration_auto_approved;
 			}
-			
+			else {
+				Boolean addEmailFailureMessage = !CW_CreateFacilityController.handleEmailsAndNotifications(isInternalUser, ard, companyAdmins, isCompanyAdmin, isNewAccount);
+				res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;	
+
+				if (addEmailFailureMessage == true) {
+					res.message += ' ' + Label.icg_something_went_wrong_emails;
+				}
+			}
+			res.obj = ard;
 		} catch (Exception ex) {
 			CW_DBTransactionHandler.doRollback(sp);
 			res.success = false;
@@ -58,8 +62,7 @@ public without sharing class CW_CreateFacilityController {
 		return companyAdmins.isEmpty() || isCompanyAdmin == true;
 	}
 
-	private static CW_Utilities.ResponseBody handleEmailsAndNotifications(Boolean isInternalUser, ICG_Account_Role_Detail__c facility, List<Contact> companyAdmins, Boolean isCompanyAdmin, Boolean isNewAccount) {
-		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
+	private static Boolean handleEmailsAndNotifications(Boolean isInternalUser, ICG_Account_Role_Detail__c facility, List<Contact> companyAdmins, Boolean isCompanyAdmin, Boolean isNewAccount) {
 
 		ICG_Account_Role_Detail__c createdArd = [Select id, Status__c,CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :facility.Id];
 		String whoId = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.ContactId : createdArd.CreatedById;
@@ -85,13 +88,6 @@ public without sharing class CW_CreateFacilityController {
 		String subject = 'New Station is pending approval';
 		String body = subject;
 		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-		
-		res.success = true;
-		res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;
-
-		if (submitted == false) {
-			res.message += ' ' + Label.icg_something_went_wrong_emails;
-		}
 
 		//Send email to requestor
 		String whoEmail = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.Contact.Email : createdArd.CreatedBy.Email;
@@ -103,7 +99,7 @@ public without sharing class CW_CreateFacilityController {
 			insert notifications;
 		}
 
-		return res;
+		return submitted;
 	}
 
 	private static void createFacilityRelations(String ardRelIds, String facilityId) {
@@ -264,7 +260,7 @@ public without sharing class CW_CreateFacilityController {
 
 	private static ICG_Account_Role_Detail__c handleGeoLocations(ICG_Account_Role_Detail__c facilityToUpdate, String geoLocationInfo) {
 		GeoLocationInfo geoLocation;
-		if (geoLocationInfo != null && geoLocationInfo.length() > 4){
+		if (!String.isBlank(geoLocationInfo) && geoLocationInfo.length() > 4){
 			geoLocation = (GeoLocationInfo) JSON.deserialize(geoLocationInfo, GeoLocationInfo.class);
 		}
 

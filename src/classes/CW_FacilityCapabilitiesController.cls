@@ -215,7 +215,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 			String optionalFilterConflicts = capabilitiesIdForConflicts == null || capabilitiesIdForConflicts.isEmpty() ? ' AND Is_In_Conflict__c = false' : 'AND ' + ardCapabilityR + '.Id IN (\'' + String.join((capabilitiesIdForConflicts), '\', \'') + '\')';
 
-			String query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR + '.Is_Active__c = true ' + optionalFilterConflicts + ' AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') ';
+			String query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR + '.Is_Active__c = true ' + optionalFilterConflicts + ' AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by CreatedDate ';
 			returnValue = (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(query);
 		}
 
@@ -303,7 +303,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 				}
 
 				Map<String, Object> currentObject;
-				if (categoryFound != null && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
+				if (!categoryFound.isEmpty() && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
 					List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(CW_CapabilitiesUtilities.ROWS);
 
 					if (!CW_CapabilitiesUtilities.isCapabilityAdded(capabilityGroupRowsFound, currentDetail.Id)) {

@@ -1,10 +1,4 @@
-.slds-pill {
-    background-color: #1e32fa;
-    color: #fff;
-    font-size: .8rem;
-    margin: 2px 4px;
-    align-items: inherit;
-}
+
 
 .slds-button_success:hover {
     background-color: rgb(4, 132, 75) !important;

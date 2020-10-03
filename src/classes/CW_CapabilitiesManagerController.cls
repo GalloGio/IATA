@@ -1,7 +1,7 @@
 public without sharing class CW_CapabilitiesManagerController {
 	final static String RT_CERTIFICATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
+	final static String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 	final static Map<String, List<String>> ESPECIAL_CATEGORIES = CW_FacilityCapabilitiesController.getMapConfig();
-	final static List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments();
 
 	/**
 	 * @description	Get JSON with ICG_Certification_Capability_Assignment__c filtered by certification Id
@@ -13,54 +13,36 @@ public without sharing class CW_CapabilitiesManagerController {
 		return [SELECT id, Category__c, Equipment__c FROM ICG_Certification_Capability_Assignment__c WHERE ICG_Certification__c = :certificationId];
 	}
 
-	private static Map<Id, List<Map<String, Object>>> generateCertificationsByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments){
-		Map<Id, List<Map<String, Object>>> certificationsByCapabilityId = new Map<Id, List<Map<String, Object>>>();
+	private static Map<Id, List<AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments) {
+		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<AsgmtGroupWrapper>>();
 
 		// Loop assignments to get certifications
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
 			if (currentAssignment.ICG_Capability_Assignment_Group__r != null) {
 				ICG_Capability_Assignment_Group__c currentGroup = currentAssignment.ICG_Capability_Assignment_Group__r;
 
-				if (!certificationsByCapabilityId.containsKey(currentAssignment.Account_Role_Detail_Capability__c)) {
-					certificationsByCapabilityId.put(currentAssignment.Account_Role_Detail_Capability__c, new List<Map<String, Object>>());
+				if (!asgmtGroupByCapabilityId.containsKey(currentAssignment.Account_Role_Detail_Capability__c)) {
+					asgmtGroupByCapabilityId.put(currentAssignment.Account_Role_Detail_Capability__c, new List<AsgmtGroupWrapper>());
 				}
-
-				Map<String, Object> certToAdd = new Map<String, Object>{ 'id' => currentGroup.Id, 'name' => 'Remote Validation', 'expirationDate' => currentGroup.Expiration_Date__c, 'issueDate' => currentGroup.Issue_Date__c, 'src' => '/resource/ICG_Resources/icons/remote_validation_icon.svg', 'order' => 99 };
+				AsgmtGroupWrapper asgmtGroupToAdd = new AsgmtGroupWrapper();
+				asgmtGroupToAdd.id = currentGroup.Id;
+				asgmtGroupToAdd.type = currentGroup.RecordType.DeveloperName;
+				asgmtGroupToAdd.name = Label.icg_smart_facility_remote_validation;
+				asgmtGroupToAdd.expirationDate = currentGroup.Expiration_Date__c;
+				asgmtGroupToAdd.issueDate = currentGroup.Issue_Date__c;
+				asgmtGroupToAdd.src = '/resource/ICG_Resources/icons/remote_validation_icon.svg';
 				if (currentGroup.ICG_Certification__c != null) {
-					certToAdd.put('order', currentGroup.ICG_Certification__r.Order__c);
-					certToAdd.put('name', currentGroup.ICG_Certification__r.Name);
-					certToAdd.put('src', currentGroup.ICG_Certification__r.Image__c);
+					asgmtGroupToAdd.order = currentGroup.ICG_Certification__r.Order__c;
+					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
+					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
 				}
-
-				if (certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).size() > 0) {
-					integer size = certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).size();
-					integer i = 0;
-					integer position = 0;
-
-					for (Map<String, Object> elem : certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c)) {
-						if ((Decimal) certToAdd.get('order') < (Decimal) elem.get('order')) {
-							position = i;
-							break;
-						}
-						i++;
-					}
-
-					List<Map<String, Object>> auxList = new List<Map<String, Object>>();
-					for (integer j = position; j < size; j++) {
-						auxList.add(certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).remove(j));
-					}
-					certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(certToAdd);
-
-					for (Map<String, Object> aux : auxList) {
-						certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(aux);
-					}
-				} else {
-					certificationsByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(certToAdd);
+				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
+					asgmtGroupByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(asgmtGroupToAdd);
 				}
 			}
 		}
 
-		return certificationsByCapabilityId;
+		return asgmtGroupByCapabilityId;
 	}
 
 	private static Map<String, String> generateColumnsToHandle(Boolean isMultiRecordCapabilities){
@@ -84,6 +66,12 @@ public without sharing class CW_CapabilitiesManagerController {
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
 
+
+		//Get certifications allowed for user
+		String stationRT = [SELECT RecordType.Name FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.Name;
+		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+		CERTIFICATIONS_ALLOWED_USER.add('Smart Facility Remote Validation');
+
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
 
@@ -104,7 +92,8 @@ public without sharing class CW_CapabilitiesManagerController {
 		Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.Account_Role_Detail_Capability__c.fields.getMap();
 
 		List<ICG_Account_Role_Capability_Assignment__c> assignments = getAssignmentsByAccountRoleDetailAndRts(id, new List<Id>(mapAccountRoleDetailAssignmentRtsById.keySet()), categoriesToRetrieve, CW_FacilityCapabilitiesController.validateFieldsOfObject('Account_Role_Detail_Capability__c', fieldsToRetrieve, fieldsMap), certificationId);
-		Map<Id, List<Map<String, Object>>> certificationsByCapabilityId = generateCertificationsByCapabilityId(assignments);
+		// Map<Id, List<Map<String, Object>>> certificationsByCapabilityId = generateCertificationsByCapabilityId(assignments);
+		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
 
 		// Loop assignments and fill the output data model
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
@@ -131,7 +120,9 @@ public without sharing class CW_CapabilitiesManagerController {
 
 					if (!CW_CapabilitiesUtilities.isCapabilityAdded(capabilityGroupRowsFound, currentDetail.Id)) {
 						Map<String, Object> currentObject = convertCapabilityAssignmentToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-						List<Map<String,Object>> certifications = certificationsByCapabilityId.containsKey(currentDetail.Id) ? certificationsByCapabilityId.get(currentDetail.Id) : new List<Map<String,Object>>();
+						// List<Map<String,Object>> certifications = certificationsByCapabilityId.containsKey(currentDetail.Id) ? certificationsByCapabilityId.get(currentDetail.Id) : new List<Map<String,Object>>();
+						List<AsgmtGroupWrapper> certifications = asgmtGroupByCapabilityId.containsKey(currentDetail.Id) ? asgmtGroupByCapabilityId.get(currentDetail.Id) : new List<AsgmtGroupWrapper>();
+						certifications.sort();
 						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
 							currentObject, 
 							currentDetail.Id, 
@@ -149,8 +140,8 @@ public without sharing class CW_CapabilitiesManagerController {
 							true
 						);
 						Boolean isPermission=false;
-						for(Map<String,Object> cert : certifications){
-							if(CERTIFICATIONS_ALLOWED_USER.contains((String)cert.get('name'))){
+						for(AsgmtGroupWrapper cert : certifications){
+							if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
 								isPermission=true;
 							}
 						}
@@ -194,7 +185,7 @@ public without sharing class CW_CapabilitiesManagerController {
 							currentObject, 
 							'', 
 							currentDetail, 
-							new List<Map<String, Object>>(), 
+							new List<AsgmtGroupWrapper>(), 
 							'', 
 							capabilityFound, 
 							mapFieldsByRecordTypeAndCategory, 
@@ -207,7 +198,9 @@ public without sharing class CW_CapabilitiesManagerController {
 							false
 						);
 						currentObject.put('isPermissionByDepartment',true);
-						capabilityGroupRowsFound.add(currentObject);
+						if(!capabilityGroupRowsFound.contains(currentObject)){
+							capabilityGroupRowsFound.add(currentObject);
+						}
 
 						categoryFound.put('templateFields', currentObject);
 					}					
@@ -274,28 +267,28 @@ public without sharing class CW_CapabilitiesManagerController {
 					DescribeFieldResult fieldDescribe = fieldsMap.get(currentField).getDescribe();
 					switch on fieldDescribe.getType().name() {
 						when 'MULTIPICKLIST' {
-                            List<String> values = new List<String>();
-                            List<String> valuesParsed = new List<String>();
-                            if (String.isNotBlank(((String) itemToConvert.get(currentField)))) {
-                                values = ((String) itemToConvert.get(currentField)).split(';');
-                                
-                                for(String val : values){
-                                    for( Schema.PicklistEntry pickListVal : fieldDescribe.getPicklistValues()){
-                                        if(pickListVal.getLabel().equals(val)){
-                                            valuesParsed.add(pickListVal.getValue());
-                                        }
-                                    }
-                                    
-                                }
-                                
-                            }
+							List<String> values = new List<String>();
+							List<String> valuesParsed = new List<String>();
+							if (String.isNotBlank(((String) itemToConvert.get(currentField)))) {
+								values = ((String) itemToConvert.get(currentField)).split(';');
+								
+								for(String val : values){
+									for( Schema.PicklistEntry pickListVal : fieldDescribe.getPicklistValues()){
+										if(pickListVal.getLabel().equals(val)){
+											valuesParsed.add(pickListVal.getValue());
+										}
+									}
+									
+								}
+								
+							}
 							convertedItem.put(currentField, valuesParsed);
 						}
-                        when 'PICKLIST' {
-                            for( Schema.PicklistEntry pickListVal : fieldDescribe.getPicklistValues()){
-                                if(pickListVal.getLabel().equals(itemToConvert.get(currentField))){
-                                    convertedItem.put(currentField, pickListVal.getValue());
-                                }
+						when 'PICKLIST' {
+							for( Schema.PicklistEntry pickListVal : fieldDescribe.getPicklistValues()){
+								if(pickListVal.getLabel().equals(itemToConvert.get(currentField))){
+									convertedItem.put(currentField, pickListVal.getValue());
+								}
 							}
 						}
 						when else {
@@ -378,7 +371,7 @@ public without sharing class CW_CapabilitiesManagerController {
 			final String certificationR = 'ICG_Certification__r';
 
 			// Fields related to Account Role Detail
-			fieldsToRetrieve.addAll(new List<String>{ arDetailR + '.Id', ardCapabilityR + '.RecordTypeId', caGroupR + '.RecordTypeId', arDetailR + '.Name', ardCapabilityR + '.Category__c', ardCapabilityR + '.Photos__c', arDetailR + '.Summary_Detail_Check_JSON__c' });
+			fieldsToRetrieve.addAll(new List<String>{ arDetailR + '.Id', ardCapabilityR + '.RecordTypeId', caGroupR + '.RecordTypeId', caGroupR + '.RecordType.DeveloperName', arDetailR + '.Name', ardCapabilityR + '.Category__c', ardCapabilityR + '.Photos__c', arDetailR + '.Summary_Detail_Check_JSON__c' });
 			for (String currentField : accountRoleDetailCapabilityFields) {
 				Boolean includesToLabel = currentField.toLowerCase().startsWith('tolabel(');
 				if (includesToLabel) {
@@ -424,10 +417,10 @@ public without sharing class CW_CapabilitiesManagerController {
 			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
 			String query;
 			if(certificationId != null){
-                query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Active__c = true AND '  + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by ICG_Capability_Assignment_Group__r.ICG_Certification__r.Order__c';
+				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Active__c = true AND '  + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by CreatedDate';
 			}
 			else{//if read all capabilities from station
-				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR +  '.Is_Active__c = true AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by ICG_Capability_Assignment_Group__r.ICG_Certification__r.Order__c';
+				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR +  '.Is_Active__c = true AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by CreatedDate';
 			}
 			returnValue = (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(query);
 		}
@@ -560,7 +553,7 @@ public without sharing class CW_CapabilitiesManagerController {
 			} catch (Exception e) {
 				res.success = false;
 				res.message = e.getMessage()+'-'+e.getStackTraceString();
-                if(groupId != null){
+				if(groupId != null){
 					delete groupId;
 				}
 			}
@@ -671,8 +664,8 @@ public without sharing class CW_CapabilitiesManagerController {
 	}
 
 	/**
-	 * @description		delete assigment previous of the group
-	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
+	 * @description		delete assigment of the group related to the capabilitiesList parameter
+	 * @param			capabilitiesList - Json list of ICG_Account_Role_Capability_Assignment__c
 	 * @return			Boolean true or false
 	 */
 	private static Boolean removeCapabilities(List<Object> capabilitiesList) {
@@ -830,6 +823,45 @@ public without sharing class CW_CapabilitiesManagerController {
 		public Boolean required;
 
 		public CapabilityFieldsWrapper() {
+		}
+	}
+
+	public class AsgmtGroupWrapper implements Comparable {
+		final Double defaultOrder = 9999;
+		@AuraEnabled
+		public Id id;
+		@AuraEnabled
+		public String type;
+		@AuraEnabled
+		public String name;
+		@AuraEnabled
+		public Date expirationDate;
+		@AuraEnabled
+		public Date issueDate;
+		@AuraEnabled
+		public String src;
+		@AuraEnabled
+		public Double order;
+
+		public AsgmtGroupWrapper() {
+		}
+
+		public Integer compareTo(Object compareTo) {
+			AsgmtGroupWrapper asgmtGroupToCompare = (AsgmtGroupWrapper) compareTo;
+			if (order == null) {
+				this.order = this.defaultOrder;
+			}
+			if (asgmtGroupToCompare.order == null) {
+				asgmtGroupToCompare.order = this.defaultOrder;
+			}
+
+			Integer returnValue = 0;
+			if (this.order > asgmtGroupToCompare.order) {
+				returnValue = 1;
+			} else if (this.order < asgmtGroupToCompare.order) {
+				returnValue = -1;
+			}
+			return returnValue;
 		}
 	}
 

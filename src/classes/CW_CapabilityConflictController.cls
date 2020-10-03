@@ -118,7 +118,7 @@ public without sharing class CW_CapabilityConflictController {
 			return JSON.serialize(res);
 		} catch (Exception exc) {
 			CW_DBTransactionHandler.doRollback(sp);
-			throw new AuraHandledException('Aura handled exception: ' + exc.getMessage() + ' Stacktrace: ' + exc.getStackTraceString());
+			throw new AuraHandledException('exception: ' + exc);
 		}
 	}
 

@@ -42,9 +42,9 @@ public with sharing class CW_BatchNotifyCertificationExpiryTest {
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert ard;
 		ICG_Account_Role_Detail__c ard2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
-        insert ard2;
-        
-        Group g1 = new Group(Name = 'TheTestQueue', type = 'Queue');
+		insert ard2;
+		
+		Group g1 = new Group(Name = 'TheTestQueue', type = 'Queue');
 		insert g1;
 		System.runAs(new User(Id = UserInfo.getUserId())) {
 			GroupMember member = new GroupMember();

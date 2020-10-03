@@ -12,8 +12,8 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		checkCustom: ICG_RESOURCES + "/icons/" + this.checkedIconFilename
 	};
 
-    @api isHeader = false;
-    @api editMode;
+	@api isHeader = false;
+	@api editMode;
 	@api item = "";
 	@api propertyName = "";
 	@api rowIndex = "0";
@@ -24,6 +24,9 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	@api type = "";
 	@api values =[];
 	@api viewType = "";
+
+	rangeFrom;
+	rangeTo;
 
 	consData = {
 		equipment:"",
@@ -38,6 +41,24 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 			this.initialized = true;
 			if(this.propertyName === 'equipment__c'){
 				this.type = 'STRING';
+			}
+			if(this.propertyName === 'tcha_temperature_range__c'){
+				let value = this.item[this.propertyName]
+				? this.item[this.propertyName].toString()
+				: "";
+
+				if(value != ""){
+					var valueParse = value.toString().split("to");
+					if(valueParse[0].toString().includes('ºC')){
+						valueParse[0] = valueParse[0].toString().replace('ºC','');
+					}
+					if(valueParse[1].toString().includes('ºC')){
+						valueParse[1] = valueParse[1].toString().replace('ºC','');
+					}
+					this.rangeFrom = valueParse[0];	
+					this.rangeTo = valueParse[1];
+				}
+				
 			}
 		}
 	}
@@ -70,6 +91,14 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		
 
 		return value;
+	}
+
+	get getFrom(){
+		return this.rangeFrom;
+	}
+
+	get getTo(){
+		return this.rangeTo;
 	}
 
 	get getTooltip() {
@@ -169,10 +198,9 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	setValue(event){
 		let value = event.target.value;
 		let type = event.target.type;
-
+		let name = event.target.name;
 		if(!this.editMode)
 		{
-			
 			this.consData.rowIndex = this.getRowIndex.toString();
 			this.consData.equipment = this.item["equipment_value"];
 			this.consData.field = this.propertyName;
@@ -183,7 +211,23 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 			}
 			else
 			{
-				if(this.isTypeDefined)
+				if(this.isTchaTemperatureRangeField){
+					value = value.toString().trim();
+					if(value.includes('ºC')){
+						value = value.replace('ºC','');
+					}
+					
+					if(name === "From"){
+						this.rangeFrom = value;
+					}
+					if(name === "To"){
+						this.rangeTo = value;
+					}
+
+					let finalRange = this.rangeFrom + "ºC to " + this.rangeTo + "ºC";
+					this.consData.value = finalRange;
+				}
+				else if(this.isTypeDefined)
 				{
 					this.consData.value = value != '' ? Number(value) : '';
 				}

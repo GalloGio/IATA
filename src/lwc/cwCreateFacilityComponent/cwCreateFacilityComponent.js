@@ -2,7 +2,6 @@ import { LightningElement, track, wire, api } from "lwc";
 import getCompanyTypes from "@salesforce/apex/CW_Utilities.getCompanyTypes";
 import getCountries from "@salesforce/apex/CW_Utilities.getIATACountries";
 import becomeFacilityAdmin from "@salesforce/apex/CW_Utilities.becomeFacilityAdmin";
-import becomeCompanyAdmin from "@salesforce/apex/CW_Utilities.becomeCompanyAdmin";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import createFacility from "@salesforce/apex/CW_CreateFacilityController.createFacility";
 import createDummyCompany from "@salesforce/apex/CW_CreateFacilityController.createDummyCompany";
@@ -17,8 +16,12 @@ import labels from 'c/cwOneSourceLabels';
 import getUserFacilities from "@salesforce/apex/CW_PrivateAreaController.getUserFacilities";
 import getUserCompanyInfo from "@salesforce/apex/CW_PrivateAreaController.getUserCompanyInfo";
 import { loadStyle } from "lightning/platformResourceLoader";
+import { NavigationMixin } from "lightning/navigation";
 
-export default class CwCreateFacilityComponent extends LightningElement {
+
+export default class CwCreateFacilityComponent extends NavigationMixin(
+	LightningElement
+  ) {
 	ctypeimages = resources + "/icons/company_type/";
 	icons = resources + "/icons/";
 	//company types
@@ -32,6 +35,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	backimg = this.icons + "back.svg";
 	deletecustom = this.icons + "delete-custom.svg";
 
+	createdStation;
 	@track companyTypesRaw;
 	@track countries;
 	@track predictiveValues;
@@ -51,8 +55,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	geoLocationInfoObject;
 	@track logoImage;
 	@track showModal = false;
-	@track modalMessage =
-		"When you perform an action, this modal appears with extra info.";
+	@track modalMessage = "";
 	CHECKED_IMAGE = resources + "/icons/ic-tic-green.svg";
 	ERROR_IMAGE = resources + "/icons/error-icon.svg";
 	@track modalImage = this.CHECKED_IMAGE + "/icons/ic-tic-green.svg";
@@ -284,14 +287,9 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		this.closeStationInNewAddressPrompt();
 		if (this.checkFormFields()) {
 			this.collectFormData();
-			if (event.currentTarget.dataset.substep)
-				this.step = Number((this.step + 0.1).toFixed(1));
-			else this.step = (~~this.step)+1;
-
+			this.step = event.currentTarget.dataset.substep ? Number((this.step + 0.1).toFixed(1)) : (~~this.step)+1;
 			if (event.currentTarget.dataset.sameadress) {
-				if (event.currentTarget.dataset.sameadress === "yes")
-					this.formData.sameaddress = true;
-				else this.formData.sameaddress = false;
+				this.formData.sameaddress = event.currentTarget.dataset.sameadress === "yes";
 			}
 		}
 		this.airportSelectorEventListenersAdded = false;
@@ -498,7 +496,6 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		if (hqbox && !this.hqPredictiveInputEventsListenersAdded) {
 			hqbox.addEventListener("focus", event => {
 				this.hqPredictiveSearch();
-				this.ishqboxfocus = true;
 			});
 			hqbox.addEventListener("blur", event => {
 				this.ishqboxfocus = false;
@@ -511,7 +508,6 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			langbox.addEventListener("focus", event => {
 				this.getAdditionalFormData();
 				this.langPredictiveSearch();
-				this.islangboxfocus = true;
 			});
 			langbox.addEventListener("blur", event => {
 				this.islangboxfocus = false;
@@ -525,7 +521,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			airportbox.addEventListener("focus", event => {
 				this.getAdditionalFormData();
 				this.airportPredictiveSearch();
-				this.isairportboxfocus = true;
+				
 			});
 			airportbox.addEventListener("blur", event => {
 				this.isairportboxfocus = false;
@@ -758,6 +754,10 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		return isAdmin;
 	}
 
+	get onlinePlatform(){
+		return this.additionalData && this.additionalData.onlineplatform ? this.additionalData.onlineplatform : '';
+	}
+
 	registerStation(){
 		this.objectBeingCreated = 'Station';
 		let station = {
@@ -812,12 +812,17 @@ export default class CwCreateFacilityComponent extends LightningElement {
 				this.creatingAccount = this.stationCreated ? false : this.creatingAccount;
 
 				this.errorCreatingStation = !parsedRes.success;
+				this.modalMessage = parsedRes.message;
 				if (parsedRes.success) {
 					this.goToHome = true;
 					this.dispatchEvent(new CustomEvent("refresh"));
-					if(this.isInternalUser) this.step = 1;
-				}else{
-					this.modalMessage = parsedRes.message;
+					if(this.isInternalUser){
+						this.step = 1;
+
+						if(parsedRes.obj){
+							this.createdStation = parsedRes.obj
+						}
+					} 
 				}
 			})
 			.catch(err => {
@@ -826,6 +831,18 @@ export default class CwCreateFacilityComponent extends LightningElement {
 				this.errorCreatingStation = true;
 				this.modalMessage = err.body.message;
 			});
+	}
+
+	navigateToRecordViewPage(recordId) {
+		this[NavigationMixin.GenerateUrl]({
+			type: 'standard__recordPage',
+			attributes: {
+				recordId: recordId,
+				actionName: 'view'
+			}
+		}).then(url => {
+			window.open(url);
+	   	});
 	}
 
 	setLogoPreview(event) {
@@ -1009,60 +1026,71 @@ export default class CwCreateFacilityComponent extends LightningElement {
 		}
 	}
 
+	invalidFilterValue(value){
+		return !value || value.length < 3;
+	}
+
+	generateValueFromEvent(event, value){
+		return event && event.target ? event.target.value : value ? value : "";
+	}
+
 	hqPredictiveSearch(event) {
+		this.ishqboxfocus = true;
 		this.predictiveValues = [];
-		this.hqSearchValue = event && event.target ? event.target.value : this.hqSearchValue ? this.hqSearchValue : "";
-		if (!this.hqSearchValue || this.hqSearchValue.length < 3) {
+		this.hqSearchValue = this.generateValueFromEvent(event, this.hqSearchValue);
+		if (this.invalidFilterValue(this.hqSearchValue)) {
 			return;
 		}
-		let filteredValues = [];
-		filteredValues = this.countries.filter(entry => {
-			return entry.Name.toLowerCase().indexOf(this.hqSearchValue.toLowerCase()) > -1;
-		});
-		filteredValues.forEach(element => {
-			this.predictiveValues.push({
+		this.predictiveValues = this.countries.filter(entry => {
+			let isNumber = /^\d+$/.test(entry.ISO_Code__c);
+			return entry.Name.toLowerCase().indexOf(this.hqSearchValue.toLowerCase()) > -1  && !isNumber;
+		}) 
+		.map(element => {
+			return {
 				value: element.Id,
 				key: element.Id,
-				label: element.Name,
-			});
+				label: element.Name
+			}
 		});
 	}
 
 	langPredictiveSearch(event) {
+		this.islangboxfocus = true;
 		this.predictiveValues = [];
-		this.langSearchValue = event && event.target ? event.target.value : this.langSearchValue ? this.langSearchValue : "";
-		if (!this.langSearchValue || this.langSearchValue.length < 3) {
+		this.langSearchValue = this.generateValueFromEvent(event, this.langSearchValue);
+		if (this.invalidFilterValue(this.langSearchValue)) {
 			return;
 		}
-		let filteredValues = [];
-		filteredValues = this.availableLanguages.filter(entry => {
+		this.predictiveValues = this.availableLanguages.filter(entry => {
 			return entry.value.toLowerCase().indexOf(this.langSearchValue.toLowerCase()) > -1;
-		});
-		filteredValues.forEach(element => {
-			this.predictiveValues.push({
+		})
+		.map(element => {
+			return {
 				value: element.value,
 				key: element.value,
-				label: element.label,
-			});
+				label: element.label
+			}
 		});
 	}
 
 	airportPredictiveSearch(event) {
+		this.isairportboxfocus = true;
 		this.predictiveValues = [];
-		this.airportSearchValue = event && event.target ? event.target.value : this.airportSearchValue ? this.airportSearchValue : "";
-		if (!this.airportSearchValue || this.airportSearchValue.length < 3) {
+		this.airportSearchValue = this.generateValueFromEvent(event, this.airportSearchValue);
+
+		if (this.invalidFilterValue(this.airportSearchValue)) {
 			return;
 		}
-		let filteredValues = [];
-		filteredValues = Object.values(this.availableAirports).filter(entry => {
+
+		this.predictiveValues = Object.values(this.availableAirports).filter(entry => {
 			return entry.description.toLowerCase().indexOf(this.airportSearchValue.toLowerCase()) > -1 || entry.keyName.toLowerCase().indexOf(this.airportSearchValue.toLowerCase()) > -1;
-		});
-		filteredValues.forEach(element => {
-			this.predictiveValues.push({
+		})
+		.map(element => {
+			return {
 				value: element.code,
 				key: element.code,
 				label: element.description,
-			});
+			}
 		});
 	}
 
@@ -1079,17 +1107,26 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	closeStationCreationPrompt(){
 		if(!this.stationCreationCompleted) return;
 		this.stationCreationPrompt = false;
-		if (!this.errorCreatingStation) {
+		this.accountCreated = false;
+		this.modalMessage = null;
+		this.stationCreated = false;
+
+		if (!this.errorCreatingStation) {		
 			this.dispatchEvent(new CustomEvent("gotohome"));
 			this.goToHome = false;
+
+			if(this.createdStation && this.isInternalUser){
+				this.navigateToRecordViewPage(this.createdStation.Id);
+			}
 		}else{
 			this.creatingStation = false;
-			this.stationCreated = false;
 			this.errorCreatingStation = false;
-			this.modalMessage = null;
 			this.creatingAccount = false;
 			this.accountCreated = false;
 			this.errorCreatingAccount = false;
+		}
+		if(this.isInternalUser){
+			window.location.reload();
 		}
 	}
 	get showListAirlines() {
@@ -1397,34 +1434,17 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	}
 
 	get selectedAddress(){
-		let street;
-		let city;
-		let postalcode;
-		let state;
-		let country;
-		if (this.selectedCompany){
-			street = this.selectedCompany.accountInfo.Business_Street__c;
-			city = this.selectedCompany.accountInfo.Business_City__r ? this.selectedCompany.accountInfo.Business_City__r.Name : this.selectedCompany.accountInfo.Business_City_Name__c;
-			state = this.selectedCompany.accountInfo.Iso_State__r ? this.selectedCompany.accountInfo.Iso_State__r.Name : this.selectedCompany.accountInfo.Business_State_Name__c;
-			postalcode = this.selectedCompany.accountInfo.Business_Postal_Code__c;
-			country = this.selectedCompany.accountInfo.IATA_ISO_Country__r.Name;
-		}else{
-			let selectedAddress;
-			this.address.addressSuggestions.forEach(sugg =>{
-				if(sugg.isSelected){
-					selectedAddress = sugg;
+		let location = {
+			addressPostalCode : this.selectedAddressObject.postalcode, 
+			addressStateProvince : this.selectedAddressObject.state,  
+			addressCity: this.selectedAddressObject.city, 
+			location : {
+				location:{
+					Country : this.selectedAddressObject.country
 				}
-			})
-			street = selectedAddress ? selectedAddress.street : this.address.street;
-			city = selectedAddress ? selectedAddress.locality :this.address.cityName;
-			state = selectedAddress ? selectedAddress.province :this.address.stateName;
-			postalcode = selectedAddress ? selectedAddress.postalCode :this.address.zip;
-			country = this.address.countryName;
-		}
-		let location = {addressPostalCode : postalcode, addressStateProvince : state,  addressCity: city, location : {location:{Country : country}}};
-
-		let address = concatinateAddressString(street) + concatinateFacilityAddress(location);
-
+			}
+		};
+		let address = concatinateAddressString(this.selectedAddressObject.street) + concatinateFacilityAddress(location);
 		return address.slice(0,-2);
 	}
 	get selectedAddressObject(){
@@ -1460,8 +1480,8 @@ export default class CwCreateFacilityComponent extends LightningElement {
 	}
 
 	get selectedAddressForMap (){
-		if(this.selectedAddressObject.latitude && this.selectedAddressObject.longitude) return this.selectedAddressObject.latitude+','+this.selectedAddressObject.longitude
-		else return this.selectedAddress;
+		let mapAddress = this.addressGeo ? this.addressGeo.Latitude+','+this.addressGeo.Longitude : this.selectedAddress;
+		return mapAddress;
 	}
 
 	get configOpeningHours() {
@@ -1699,15 +1719,6 @@ export default class CwCreateFacilityComponent extends LightningElement {
 			return account;
 			
 	}
-	
-	get successMessage (){
-		let message = this.isInternalUser ? this.icg_registration_auto_approved : this.label.icg_registration_request_submitted1;
-		return message;
-	}
-	get additionalMessage(){
-		let additionalMessage = this.selectedCompany ? null : this.label.icg_registration_request_submitted2;
-		return additionalMessage;
-	}
 	get errorCreatingStation(){
 		return this.errorCreatingAccount || this.errorCreatingStation;
 	}
@@ -1822,7 +1833,7 @@ export default class CwCreateFacilityComponent extends LightningElement {
 
 	get addressGeo(){
 		let addressGeoObj;
-		if(this.selectedCompany && this.selectedCompany.accountInfo){
+		if(this.selectedCompany && this.selectedCompany.accountInfo && this.selectedCompany.accountInfo.Business_Geo_Coordinates__Latitude__s && this.selectedCompany.accountInfo.Business_Geo_Coordinates__Longitude__s){
 			addressGeoObj = {
 				Latitude: this.selectedCompany.accountInfo.Business_Geo_Coordinates__Latitude__s,
 				Longitude: this.selectedCompany.accountInfo.Business_Geo_Coordinates__Longitude__s

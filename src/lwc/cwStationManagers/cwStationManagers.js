@@ -214,7 +214,7 @@ export default class CwStationManagers extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error removing station manager',
-                    message: err.body ? err.body.message : 'The station manager could not be removed successfully',
+                    message: this.label.icg_error_message,
                     variant: 'error'
                 })
             );

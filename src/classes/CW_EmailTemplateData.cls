@@ -12,27 +12,27 @@ public without sharing class CW_EmailTemplateData {
 	public Boolean isPurchaseRemoteValidation {get;set;}
 
 	public ICG_Account_Role_Detail__c getStationDetails(){
-        if(station == null && stationId != null){
+		if(station == null && stationId != null){
 			station = [SELECT Id, Name, Company_FOR__c, Country_FOR__c, City_FOR__c, CreatedById, Account_Role__c, Account_Role__r.Account__c, RecordType.DeveloperName, RecordType.Name, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Account_Role_Detail__c WHERE Id = :stationId LIMIT 1];
 		} 
-        return listHasValues(station) ? station[0] : null;
-    }
+		return listHasValues(station) ? station[0] : null;
+	}
 
  
 	public ICG_Contact_Role_Detail__c getContactRoleDetails(){
-        if(contactRoleDetail == null && contactRoleDetailId != null){
+		if(contactRoleDetail == null && contactRoleDetailId != null){
 			contactRoleDetail = [SELECT Id, CreatedById, ICG_Account_Role_Detail__c, Contact_Role_Remove_Requestor__c, ContactId__c, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Contact_Role_Detail__c WHERE Id = :contactRoleDetailId LIMIT 1];
 		} 
-        return listHasValues(contactRoleDetail) ? contactRoleDetail[0] : null;
-    }
+		return listHasValues(contactRoleDetail) ? contactRoleDetail[0] : null;
+	}
 
 
 	public OrderItem getOrderItemDetails(){
-        if(orderItem == null && orderItemId != null){
+		if(orderItem == null && orderItemId != null){
 			orderItem = [SELECT Id, OrderId, (Select Id FROM ICG_Capability_Assignment_Groups__r), CreatedById FROM OrderItem where Id =:orderItemId];
 		} 
-        return listHasValues(orderItem) ? orderItem[0] : null;
-    }
+		return listHasValues(orderItem) ? orderItem[0] : null;
+	}
 
 
 	public List<ICG_Contact_Role_Detail__c> getStationManagersContactRoleDetails(){
@@ -347,14 +347,14 @@ public without sharing class CW_EmailTemplateData {
 	}
 
 	public String getAccountToApproveUrl(){
-        ICG_Environment_Variables__c environmentVariables = CW_Utilities.getEnvironmentVariables();
-        String accountToApproveUrl = environmentVariables.InternalRequestURL__c;
+		ICG_Environment_Variables__c environmentVariables = CW_Utilities.getEnvironmentVariables();
+		String accountToApproveUrl = environmentVariables.InternalRequestURL__c;
 
-        if (getStationDetails() != null){
-            accountToApproveUrl += getAccountDetail() != null ? getAccountDetail().Id : ''; 
-        }
+		if (getStationDetails() != null){
+			accountToApproveUrl += getAccountDetail() != null ? getAccountDetail().Id : ''; 
+		}
 
-        return accountToApproveUrl;
+		return accountToApproveUrl;
 	}
 	
 	public List<User> queryUserById(String id){

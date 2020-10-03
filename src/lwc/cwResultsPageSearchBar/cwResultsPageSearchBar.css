@@ -91,19 +91,6 @@
 	/* transition: opacity .5s linear;
     opacity: 1; */
 }
-@media (max-width: 768px) {
-	.slds-pill {
-		margin: 2px 2px !important;
-	}
-}
-
-.slds-pill {
-	background-color: #1e32fa;
-	color: white;
-	font-size: 0.8rem;
-	margin: 2px 4px;
-	align-items: inherit;
-}
 
 .itemUnselected .certiImage {
 	-webkit-filter: opacity(0.2);

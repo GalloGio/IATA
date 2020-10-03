@@ -158,9 +158,8 @@
                     </div>
                     
 
-                    <!--HIDDEN RESPONSIVE VERSION-->
-               
-                    <div class="row-home hidden-sm">
+                    <!--BANNER HIDDEN-->
+                    <div class="row-home hidden">
                         <div class="col-md-8 offset-md-2">
                             <a href={label.icg_wcs_url} target="_blank"><img src={adv3} alt="adv3" class="width-100"/></a>
                         </div>
@@ -380,10 +379,9 @@
     <template if:true={showMemberAirlines}>
         <c-cw-intermediate-modal onclosemodal={closeMemberAirlines} extra-classes={extraClasses}>
             <div class="slds-grid slds-grid_vertical">
-                <h3 class="modaldiv">{label.memberAirlines} {label.memberAirlines2}</h3><hr class="yellow-underline-percentModal">
-                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal}</p></div>
-                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal2}</p></div>
-                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal3}</p></div>          
+                <h3 class="modaldiv">{label.memberAirlines} {label.memberAirlines2}</h3><hr class="yellow-underline-percentModal">               
+                <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal}</p></div>
+                <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal2}</p></div>       
                 <div class="text-center slds-col modaldiv padding-buttons">
                     <template if:true={isBetaOrg}>
                         <a class='text-white mt-0 btn btn-primary btn-primary btn-blue link-button' href={label.icg_registration_url} target="_blank" >{label.btn_pre_register_now}</a>
@@ -399,8 +397,9 @@
         <c-cw-intermediate-modal onclosemodal={closeStrategicAirlines} extra-classes={extraClasses}>
             <div class="slds-grid slds-grid_vertical">
                 <h3 class="modaldiv">{label.strategicAirlines} {label.strategicAirlines2}</h3><hr class="blue-underline-percentModal">
-                <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal}</p></div>
-                <div class="slds-col modaldiv"><p>{label.strategicAirlinesModal2}</p></div>
+                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal}</p></div>
+                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal2}</p></div>
+                <div class="slds-col modaldiv"><p>{label.memberAirlinesModal3}</p></div> 
                 <div class="hidden-sm">
                     <div class="text-center slds-col slds-grid modaldiv padding-buttons">
                         <template if:true={isBetaOrg}>

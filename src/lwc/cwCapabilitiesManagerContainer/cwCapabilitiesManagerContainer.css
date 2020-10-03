@@ -411,3 +411,7 @@
   width: 150px;
   min-width: 150px;
 }
+
+.border-right-table{
+  border-right: 1px solid rgb(221, 219, 218);
+}

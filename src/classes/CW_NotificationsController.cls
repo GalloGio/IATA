@@ -53,7 +53,7 @@ public without sharing class CW_NotificationsController {
 			query += ' ORDER BY CreatedDate desc ';
 			return JSON.serialize(Database.query(query));
 		} catch (Exception exc) {
-			throw new AuraHandledException('Aura handled exception: ' + exc);
+			throw new AuraHandledException('exception: ' + exc);
 		}
 	}
 	

@@ -3,7 +3,6 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import getNotActiveCertifications from "@salesforce/apex/CW_CertificationsManagerController.getFacilityNotActiveCertifications";
 import updateFieldEdited_ from "@salesforce/apex/CW_CertificationsManagerController.updateFieldEdited";
 import getNextCertificationID from "@salesforce/apex/CW_CertificationsManagerController.getNextCertificationID";
-import getCertificationWithoutCapabilities from "@salesforce/apex/CW_CertificationsManagerController.getCertificationWithoutCapabilities";
 export default class CwCertificationManager extends LightningElement {
 	@api recordId;
 	@api certificationInfo;
@@ -13,6 +12,8 @@ export default class CwCertificationManager extends LightningElement {
 	@api ceivScope = [];
 	@api ienvaScope = [];
 	@api label;
+	@api certificationsWithoutCapab;
+	@api stationRT;
 
 	@track isRenewMode = false;
 	@track isEditMode = false;
@@ -41,29 +42,28 @@ export default class CwCertificationManager extends LightningElement {
 
 	@track showConfirmationModal = false;
 	@track headerModal = "";
-	@track messageModal="";
+	@track messageModal = "";
 	messageModalConfirm = "";
 	messageModalActivate = "";
 
 	actionToExecute = {
-		action:'',
+		action: "",
 		result: false
-	}
+	};
 
 	initialized = false;
 
-	certificationsWithoutCapab;
 	groupSelectedToEdit;
-	isUpcomingGroup=false;
+	isUpcomingGroup = false;
 	fieldToUpdate = {};
 	listGroupToUpdate = [];
 
 	_refreshData;
-	@api 
+	@api
 	get refreshData() {
 		return this._refreshData;
 	}
-	set refreshData(value){
+	set refreshData(value) {
 		this._refreshData = value;
 	}
 
@@ -95,11 +95,19 @@ export default class CwCertificationManager extends LightningElement {
 	get disableButtonEditCapab() {
 		if (this.certificationsWithoutCapab != undefined && this.certificationsWithoutCapab != null) {
 			let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.certificationInfo.value);
-			if (includeCapabilities.length !== 0) {
+			if (includeCapabilities.length !== 0 || this.disableButtonsEdit) {
 				return true;
 			} else {
 				return false;
 			}
+		}
+	}
+
+	get showActivateButton() {
+		if (this.certificationInfo.status !== "Expired" && this.certificationInfo.status !== "Active") {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -122,19 +130,19 @@ export default class CwCertificationManager extends LightningElement {
 	get issuingDate() {
 		return this._issuingDate;
 	}
-	set issuingDate(value){
+	set issuingDate(value) {
 		this._issuingDate = value;
 	}
 
 	get expirationDate() {
 		return this._expirationDate;
 	}
-	set expirationDate(value){
+	set expirationDate(value) {
 		this._expirationDate = value;
 	}
 
-	get isCanSave(){
-		return this.selectedScope === '' ? true : false;
+	get isCanSave() {
+		return this.selectedScope === "" ? true : false;
 	}
 
 	renderedCallback() {
@@ -142,7 +150,7 @@ export default class CwCertificationManager extends LightningElement {
 			this.headerModal = this.label.edit_capabilities_certification;
 			this.messageModalConfirm = this.label.are_you_sure + "?";
 			this.messageModalActivate = this.label.are_your_sure_you_want_replace_current_certification + "?";
-			
+
 			this.listGroupToUpdate = [];
 			this.refreshData = false;
 			this.initialized = true;
@@ -152,26 +160,9 @@ export default class CwCertificationManager extends LightningElement {
 			this.issuingDate = this.certificationInfo.issuingDate;
 			this.expirationDate = this.certificationInfo.expirationDate;
 
-			getCertificationWithoutCapabilities({})
-				.then(result => {
-					if (result) {
-						this.certificationsWithoutCapab = result;
-					}
-				})
-				.catch(error => {
-					this.dispatchEvent(
-						new ShowToastEvent({
-							title: this.label.error_reading_certification_without_capabilities,
-							message: error,
-							variant: "error"
-						})
-					);
-				});
-
 			this.refreshDatePicker();
-			this.getNotActiveCertifications("'Upcoming'");
+			this.getNotActiveCertifications("'Upcoming'",this.stationRT,null);
 		}
-		
 	}
 
 	getNextCertificationID(certiSelected, recordId) {
@@ -195,61 +186,57 @@ export default class CwCertificationManager extends LightningElement {
 	handleRenewCertification() {
 		this.getNextCertificationID(this.certificationInfo.value, this.recordId);
 	}
-	
+
 	handleEditCertification(event) {
 		let originCerti = event.target.dataset.origin;
 		let groupId = event.target.dataset.id;
 		this.actionToExecute.result = true;
-		if(groupId != null && groupId != undefined){
+		if (groupId != null && groupId != undefined) {
 			this.groupSelectedToEdit = groupId;
 		}
-		if(originCerti === 'Active-Cert'){
+		if (originCerti === "Active-Cert") {
 			this.isRenewMode = false;
 			this.isEditMode = !this.isEditMode;
 		}
-		if(originCerti === 'Upcoming-Cert'){
-			this.actionToExecute.action = 'edit-cert-upcoming';
-			this.upcomingCerts.forEach(elem=>{
-				if(elem.id === groupId){
+		if (originCerti === "Upcoming-Cert") {
+			this.actionToExecute.action = "edit-cert-upcoming";
+			this.upcomingCerts.forEach(elem => {
+				if (elem.id === groupId) {
 					elem.disabled = !elem.disabled;
 				}
 			});
 		}
-		if(originCerti === 'Rest-Cert'){
-			this.actionToExecute.action = 'edit-cert-rest';
-			this.deprecatedCerts.forEach(elem=>{
-				if(elem.id === groupId){
+		if (originCerti === "Rest-Cert") {
+			this.actionToExecute.action = "edit-cert-rest";
+			this.deprecatedCerts.forEach(elem => {
+				if (elem.id === groupId) {
 					elem.disabled = !elem.disabled;
 				}
 			});
 		}
-		
 	}
 
 	handleCancelEditCertification(event) {
 		let groupId = event.target.dataset.id;
 		let originCerti = event.target.dataset.origin;
 		this.removeGroupToList(groupId);
-		if(originCerti === 'Active-Cert'){
+		if (originCerti === "Active-Cert") {
 			this._labelScope = this.certificationInfo.scopeLabel;
 			this._valuesScope = this.certificationInfo.scope;
 			this.issuingDate = this.dateFormatToDatePicker(this.certificationInfo.issuingDate);
 			this.expirationDate = this.dateFormatToDatePicker(this.certificationInfo.expirationDate);
-			this.refreshDatePicker('Active-Cert',groupId);
+			this.refreshDatePicker("Active-Cert", groupId);
 			this.jsonGroup = [];
 			this.groupSelectedToEdit = null;
 			this.isEditMode = false;
-		}
-		else if(originCerti === 'Upcoming-Cert'){
+		} else if (originCerti === "Upcoming-Cert") {
 			let issuing;
 			let expiration;
 
-			let selectGroup = this.upcomingCertsClone.filter(
-				group => group.id === groupId
-			);
-			
-			this.upcomingCerts.forEach(elem=>{
-				if(elem.id === groupId){
+			let selectGroup = this.upcomingCertsClone.filter(group => group.id === groupId);
+
+			this.upcomingCerts.forEach(elem => {
+				if (elem.id === groupId) {
 					elem.disabled = selectGroup[0].disabled;
 					elem.scopeLabel = selectGroup[0].scopeLabel;
 					elem.scope = selectGroup[0].scope;
@@ -259,18 +246,15 @@ export default class CwCertificationManager extends LightningElement {
 					expiration = selectGroup[0].expirationDate;
 				}
 			});
-			this.refreshDatePicker(originCerti,groupId,issuing,expiration);			
-		}
-		else if(originCerti === 'Rest-Cert'){
+			this.refreshDatePicker(originCerti, groupId, issuing, expiration);
+		} else if (originCerti === "Rest-Cert") {
 			let issuing;
 			let expiration;
 
-			let selectGroup = this.deprecatedCertsClone.filter(
-				group => group.id === groupId
-			);
-			
-			this.deprecatedCerts.forEach(elem=>{
-				if(elem.id === groupId){
+			let selectGroup = this.deprecatedCertsClone.filter(group => group.id === groupId);
+
+			this.deprecatedCerts.forEach(elem => {
+				if (elem.id === groupId) {
 					elem.disabled = selectGroup[0].disabled;
 					elem.scopeLabel = selectGroup[0].scopeLabel;
 					elem.scope = selectGroup[0].scope;
@@ -280,45 +264,70 @@ export default class CwCertificationManager extends LightningElement {
 					expiration = selectGroup[0].expirationDate;
 				}
 			});
-			this.refreshDatePicker(originCerti,groupId,issuing,expiration);	
+			this.refreshDatePicker(originCerti, groupId, issuing, expiration);
 		}
 		this.jsonGroup = [];
-		this.groupSelectedToEdit = null;		
+		this.groupSelectedToEdit = null;
 	}
 
-	refreshDatePicker(originCerti,groupId, issuingDate, expirationDate){
-		if(originCerti === 'Active-Cert'){
-			let datePickerIssuing = this.template.querySelector('.issuing-class');
-			if(datePickerIssuing != undefined && datePickerIssuing){
+	refreshDatePicker(originCerti, groupId, issuingDate, expirationDate) {
+		if (originCerti === "Active-Cert") {
+			let datePickerIssuing = this.template.querySelector(".issuing-class");
+			if (datePickerIssuing != undefined && datePickerIssuing) {
 				datePickerIssuing.value = this.issuingDate;
 			}
-			let datePickerExpiration = this.template.querySelector('.expiration-class');
-			if(datePickerExpiration != undefined && datePickerExpiration){
+			let datePickerExpiration = this.template.querySelector(".expiration-class");
+			if (datePickerExpiration != undefined && datePickerExpiration) {
 				datePickerExpiration.value = this.expirationDate;
 			}
-		}
-		else{
-			let datePickerIssuing = this.template.querySelector('.issuing-'+groupId);
-			if(datePickerIssuing != undefined && datePickerIssuing){
+		} else {
+			let datePickerIssuing = this.template.querySelector(".issuing-" + groupId);
+			if (datePickerIssuing != undefined && datePickerIssuing) {
 				datePickerIssuing.value = issuingDate;
 			}
-			let datePickerExpiration = this.template.querySelector('.expiration-'+groupId);
-			if(datePickerExpiration != undefined && datePickerExpiration){
+			let datePickerExpiration = this.template.querySelector(".expiration-" + groupId);
+			if (datePickerExpiration != undefined && datePickerExpiration) {
 				datePickerExpiration.value = expirationDate;
 			}
-		}	
-		
+		}
 	}
 
 	handleSaveEditMode(event) {
+		let requiredScope=false;
 		let groupId = event.target.dataset.id;
-		let findGroup = this.listGroupToUpdate.filter(
-			group => group.Id === groupId
-		);
+		let scopeToUse = event.target.dataset.scopeused;
+		let findGroup = this.listGroupToUpdate.filter(group => group.Id === groupId);
+
 		if (findGroup.length > 0) {
-			let jsonGroup = JSON.stringify(findGroup[0]);
-			this.jsonGroup.push(jsonGroup);
-			this.updateFieldEdited(this.jsonGroup, false);
+			if(scopeToUse === 'SFOC_Scope__c'){
+				if(findGroup[0].SFOC_Scope__c === ""){
+					requiredScope = true;
+				}
+			}
+			if(scopeToUse === 'CEIV_Scope_List__c'){
+				if(findGroup[0].CEIV_Scope_List__c === ""){
+					requiredScope = true;
+				}
+			}
+			if(scopeToUse === 'IENVA_Scope__c'){
+				if(findGroup[0].IENVA_Scope__c === ""){
+					requiredScope = true;
+				}
+			}
+
+			if (requiredScope) {
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: "Error",
+						message: "Required scope field",
+						variant: "error"
+					})
+				);
+			} else {
+				let jsonGroup = JSON.stringify(findGroup[0]);
+				this.jsonGroup.push(jsonGroup);
+				this.updateFieldEdited(this.jsonGroup, false);
+			}
 		}
 	}
 
@@ -326,18 +335,17 @@ export default class CwCertificationManager extends LightningElement {
 		this.messageModal = this.messageModalActivate;
 		this.showConfirmationModal = true;
 		this.groupSelectedToEdit = event.target.dataset.id;
-		this.actionToExecute.action = 'activate-group';
+		this.actionToExecute.action = "activate-group";
 		this.actionToExecute.result = true;
 	}
 
-	handleActivateGroupSelected(){
-		this.jsonGroup = [];		
+	handleActivateGroupSelected() {
+		this.jsonGroup = [];
 		this.fieldToUpdate.Id = this.groupSelectedToEdit;
 		this.fieldToUpdate.Is_Active__c = true;
 		let jsonGroup = JSON.stringify(this.fieldToUpdate);
 		this.jsonGroup.push(jsonGroup);
-		this.updateFieldEdited(this.jsonGroup, true);	
-
+		this.updateFieldEdited(this.jsonGroup, true);
 	}
 
 	handleRenew(nextCertiId) {
@@ -359,9 +367,9 @@ export default class CwCertificationManager extends LightningElement {
 		this.isRenewMode = false;
 		this.isEditMode = false;
 		this.showModal = false;
-		this.actionToExecute.action = '';
+		this.actionToExecute.action = "";
 		this.actionToExecute.result = false;
-		this.selectedScope='';
+		this.selectedScope = "";
 	}
 	closeConfirmationModal() {
 		this.showConfirmationModal = false;
@@ -369,19 +377,17 @@ export default class CwCertificationManager extends LightningElement {
 	acceptConfirmationModal() {
 		this.closeConfirmationModal();
 
-		if(this.actionToExecute.action === 'activate-group' && this.actionToExecute.result === true){
-			this.actionToExecute.action = '';
+		if (this.actionToExecute.action === "activate-group" && this.actionToExecute.result === true) {
+			this.actionToExecute.action = "";
 			this.handleActivateGroupSelected();
-		}
-		else if(this.actionToExecute.action ==='edit-capab-active' || this.actionToExecute.action ==='edit-capab-rest'){
+		} else if (this.actionToExecute.action === "edit-capab-active" || this.actionToExecute.action === "edit-capab-rest") {
 			let groupToEdit = this.certificationInfo.id;
 
-			if(this.actionToExecute.action ==='edit-capab-rest'){
+			if (this.actionToExecute.action === "edit-capab-rest") {
 				groupToEdit = this.groupSelectedToEdit;
-				this.actionToExecute.action = '';
-			}
-			else{
-				this.actionToExecute.action = '';
+				this.actionToExecute.action = "";
+			} else {
+				this.actionToExecute.action = "";
 			}
 			this.dispatchEvent(
 				new CustomEvent("editonlycapabilitiesbycerti", {
@@ -392,7 +398,6 @@ export default class CwCertificationManager extends LightningElement {
 				})
 			);
 		}
-		
 	}
 	getExpirationDateByCertification(issueDate, expirationPeriod) {
 		var parseIssue = new Date(issueDate);
@@ -407,19 +412,16 @@ export default class CwCertificationManager extends LightningElement {
 		let name = event.target.dataset.name;
 		let origin = event.target.dataset.origin;
 		let scopeToUse;
-		
+
 		let value;
 		let label;
 		this.jsonGroup = [];
 
 		let selectGroup = {};
-		let findGroup = this.listGroupToUpdate.filter(
-			group => group.Id === groupId
-		);
+		let findGroup = this.listGroupToUpdate.filter(group => group.Id === groupId);
 		if (findGroup.length === 0) {
 			selectGroup.Id = groupId;
-		}
-		else{
+		} else {
 			selectGroup = findGroup[0];
 		}
 
@@ -427,47 +429,42 @@ export default class CwCertificationManager extends LightningElement {
 			scopeToUse = event.target.dataset.scopeused;
 			label = event.target.value.join(";");
 			value = event.target.value;
+
 			if (scopeToUse === "CEIV_Scope_List__c") {
 				selectGroup.CEIV_Scope_List__c = label;
 			}
 			if (scopeToUse === "SFOC_Scope__c") {
-				selectGroup.SFOC_Scope__c = label;			
+				selectGroup.SFOC_Scope__c = label;
 			}
 			if (scopeToUse === "IENVA_Scope__c") {
 				selectGroup.IENVA_Scope__c = label;
 			}
 
-			if(origin === 'Active-Cert'){
+			if (origin === "Active-Cert") {
 				this._labelScope = label;
 				this._valuesScope = value;
-			}
-			else if(origin === 'Upcoming-Cert'){
-				this.upcomingCerts.forEach(elem=>{
-					if(elem.id === groupId){
+			} else if (origin === "Upcoming-Cert") {
+				this.upcomingCerts.forEach(elem => {
+					if (elem.id === groupId) {
+						elem.scopeLabel = label;
+						elem.scope = value;
+					}
+				});
+			} else if (origin === "Rest-Cert") {
+				this.deprecatedCerts.forEach(elem => {
+					if (elem.id === groupId) {
 						elem.scopeLabel = label;
 						elem.scope = value;
 					}
 				});
 			}
-			else if(origin === 'Rest-Cert'){
-				this.deprecatedCerts.forEach(elem=>{
-					if(elem.id === groupId){
-						elem.scopeLabel = label;
-						elem.scope = value;
-					}
-				});
-			}
-
-		}
-		if (name === "Issue_Date__c") {
+		} else if (name === "Issue_Date__c") {
 			value = event.detail.value;
-			selectGroup.Issue_Date__c = value;			
-		}
-		if (name === "Expiration_Date__c") {
+			selectGroup.Issue_Date__c = value;
+		} else if (name === "Expiration_Date__c") {
 			value = event.detail.value;
-			selectGroup.Expiration_Date__c = value;	
-		}
-		if (name === "booked") {
+			selectGroup.Expiration_Date__c = value;
+		} else if (name === "booked") {
 			value = event.target.checked;
 			selectGroup.Is_Booked__c = value;
 		}
@@ -475,19 +472,18 @@ export default class CwCertificationManager extends LightningElement {
 		this.removeGroupToList(groupId);
 		this.listGroupToUpdate.push(selectGroup);
 	}
-	removeGroupToList(groupId){
-		let index=0;
+	removeGroupToList(groupId) {
+		let index = 0;
 		let exist = false;
-		this.listGroupToUpdate.forEach(function(elem,n){
-			if(elem.Id === groupId){
+		this.listGroupToUpdate.forEach(function(elem, n) {
+			if (elem.Id === groupId) {
 				index = n;
-				exist=true;
+				exist = true;
 			}
 		});
-		if(exist){
-			this.listGroupToUpdate.splice(index,1);
-		}	
-
+		if (exist) {
+			this.listGroupToUpdate.splice(index, 1);
+		}
 	}
 	updateFieldEdited(jsonGroup, activateGorup) {
 		updateFieldEdited_({ jsonGroup })
@@ -499,7 +495,7 @@ export default class CwCertificationManager extends LightningElement {
 					messageToShow = this.label.record_activated;
 				} else {
 					messageToShow = this.label.record_updated;
-				}				
+				}
 				this.dispatchEvent(
 					new ShowToastEvent({
 						title: this.label.success,
@@ -537,33 +533,32 @@ export default class CwCertificationManager extends LightningElement {
 		let value = event.detail.value;
 		this.selectedScope = value.join(";");
 	}
-	handleModalAccept() {		
-		if(this.isEditMode){
+	handleModalAccept() {
+		if (this.isEditMode) {
 			this.showModal = false;
 			this.isEditMode = false;
-		}
-		else if (this.isRenewMode) {
+		} else if (this.isRenewMode) {
 			this.renewCertification();
 			this.showModal = false;
 			this.isRenewMode = false;
-		}		
+		}
 	}
-	
+
 	handleEditCapabilities() {
-		this.actionToExecute.action ='edit-capab-active';
+		this.actionToExecute.action = "edit-capab-active";
 		this.actionToExecute.result = true;
 		this.messageModal = this.messageModalConfirm;
-		this.showConfirmationModal = true;		
+		this.showConfirmationModal = true;
 	}
 	handleEditCapabilitiesCertificationRest(event) {
-		this.actionToExecute.action ='edit-capab-rest';
+		this.actionToExecute.action = "edit-capab-rest";
 		this.actionToExecute.result = true;
 		let groupId = event.target.dataset.id;
-		if(groupId != null && groupId != undefined){
+		if (groupId != null && groupId != undefined) {
 			this.groupSelectedToEdit = groupId;
 		}
 		this.messageModal = this.messageModalConfirm;
-		this.showConfirmationModal = true;		
+		this.showConfirmationModal = true;
 	}
 
 	deleteCertification(certification) {
@@ -632,91 +627,78 @@ export default class CwCertificationManager extends LightningElement {
 		);
 		this.showToast(this.certificationInfo.name, this.label.certification_renewed, "success");
 	}
-	handleHistory() {
+	handleHistory(event) {
+		let origin = event.target.dataset.origin;
 		this.showHistory = !this.showHistory;
-		if (this.showHistory) {
-			this.getNotActiveCertifications("'Expired','Inactive'");
-
-		}
+		this.getNotActiveCertifications("'Expired','Inactive'",this.stationRT,origin);
 	}
 
-	getNotActiveCertifications(statusInput) {
+	getNotActiveCertifications(statusInput,stationRT,origin) {
 		const facilityId = this.recordId;
 		const certificationId = this.certificationInfo.value;
 		const groupId = this.certificationInfo.id;
 
-		getNotActiveCertifications({ facilityId, certificationId, groupId, statusInput}).then(response => {
+		getNotActiveCertifications({ facilityId, certificationId, groupId, statusInput,stationRT }).then(response => {
 			if (response) {
 				this.deprecatedCerts = [];
 				let dataParsed = JSON.parse(response);
+				if(dataParsed.length > 0){
 				dataParsed.forEach(certification => {
 					let scope;
-					let scopeLabel='';
-					let scopeInput=[];		
-					let scopeToUse = '';			
+					let scopeLabel = "";
+					let scopeInput = [];
+					let scopeToUse = "";
 					if (certification.ICG_Certification__r.Name.includes("CEIV")) {
 						let scopeList = [];
 						scopeToUse = "CEIV_Scope_List__c";
-						if(certification.CEIV_Scope_List__c){
-							scopeList = certification.CEIV_Scope_List__c.split(';');
+						if (certification.CEIV_Scope_List__c) {
+							scopeList = certification.CEIV_Scope_List__c.split(";");
 						}
-						scopeList.forEach(elem=>{
-							if(this.ceivScope != undefined){
-								let scopeValue = this.ceivScope.filter(
-									currentScope => currentScope.label === elem
-								);
+						scopeList.forEach(elem => {
+							if (this.ceivScope != undefined) {
+								let scopeValue = this.ceivScope.filter(currentScope => currentScope.label === elem);
 								if (scopeValue && scopeValue.length > 0) {
-									scopeInput.push(scopeValue[0].value);	
-									scopeLabel += scopeValue[0].label +';';					
+									scopeInput.push(scopeValue[0].value);
+									scopeLabel += scopeValue[0].label + ";";
 								}
-							}							
-						})
+							}
+						});
 						scope = scopeInput;
 						scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
-
 					} else if (certification.ICG_Certification__r.Name === "Smart Facility Operational Capacity") {
 						let scopeList = [];
 						scopeToUse = "SFOC_Scope__c";
-						if(certification.SFOC_Scope__c){
-							scopeList = certification.SFOC_Scope__c.split(';');
+						if (certification.SFOC_Scope__c) {
+							scopeList = certification.SFOC_Scope__c.split(";");
 						}
-						scopeList.forEach(elem=>{
-							if(this.sfocScope != undefined)
-							{
-								let scopeValue = this.sfocScope.filter(
-									currentScope => currentScope.label === elem
-								);
+						scopeList.forEach(elem => {
+							if (this.sfocScope != undefined) {
+								let scopeValue = this.sfocScope.filter(currentScope => currentScope.label === elem);
 								if (scopeValue && scopeValue.length > 0) {
 									scopeInput.push(scopeValue[0].value);
-									scopeLabel += scopeValue[0].label +';';
+									scopeLabel += scopeValue[0].label + ";";
 								}
 							}
-							
-						})
+						});
 						scope = scopeInput;
 						scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
-
-					} else if (certification.ICG_Certification__r.Name.includes("IEnvA") || (certification.ICG_Certification__r.Name.includes("United")))  {
+					} else if (certification.ICG_Certification__r.Name.includes("IEnvA") || certification.ICG_Certification__r.Name.includes("United")) {
 						let scopeList = [];
 						scopeToUse = "IENVA_Scope__c";
-						if(certification.IENVA_Scope__c){
-							scopeList = certification.IENVA_Scope__c.split(';');
+						if (certification.IENVA_Scope__c) {
+							scopeList = certification.IENVA_Scope__c.split(";");
 						}
-						scopeList.forEach(elem=>{
-							if(this.ienvaScope != undefined){
-								let scopeValue = this.ienvaScope.filter(
-									currentScope => currentScope.label === elem
-								);
+						scopeList.forEach(elem => {
+							if (this.ienvaScope != undefined) {
+								let scopeValue = this.ienvaScope.filter(currentScope => currentScope.label === elem);
 								if (scopeValue && scopeValue.length > 0) {
 									scopeInput.push(scopeValue[0].value);
-									scopeLabel += scopeValue[0].label +';';							
+									scopeLabel += scopeValue[0].label + ";";
 								}
 							}
-							
-						})
+						});
 						scope = scopeInput;
 						scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
-
 					} else {
 						scopeLabel = null;
 					}
@@ -728,24 +710,29 @@ export default class CwCertificationManager extends LightningElement {
 						creationDate: this.dateFormat(certification.ICG_Certification__r.CreatedDate),
 						issuingDate: this.dateFormat(certification.Issue_Date__c),
 						expirationDate: this.dateFormat(certification.Expiration_Date__c),
-						issuingClass: 'issuing-'+certification.Id,
-						expirationClass: 'expiration-'+certification.Id,
+						issuingClass: "issuing-" + certification.Id,
+						expirationClass: "expiration-" + certification.Id,
 						scope: scope,
 						status: certification.Status__c,
 						isStatusToActivate: certification.Status__c !== "Expired",
-						scopeLabel : scopeLabel,
-						scopeToUse : scopeToUse,
-						disabled:true
+						scopeLabel: scopeLabel,
+						scopeToUse: scopeToUse,
+						disabled: true
 					};
-					if(statusInput === "'Upcoming'"){
+					if (statusInput === "'Upcoming'") {
 						this.upcomingCerts.push(certInfo);
-					}
-					else{
+					} else {
 						this.deprecatedCerts.push(certInfo);
 					}
-				});
-				this.deprecatedCertsClone = this.deprecatedCerts.map(a => Object.assign({}, a));
-				this.upcomingCertsClone = this.upcomingCerts.map(a => Object.assign({}, a));
+					});
+					this.deprecatedCertsClone = this.deprecatedCerts.map(a => Object.assign({}, a));
+					this.upcomingCertsClone = this.upcomingCerts.map(a => Object.assign({}, a));
+				}
+				else{
+					if(origin === 'Active-Cert'){
+						this.showToast('Info:',this.label.icg_gridEmptyMessage, "info");
+					}
+				}
 			}
 		});
 	}
@@ -757,7 +744,7 @@ export default class CwCertificationManager extends LightningElement {
 		let dateFormated = date[0] + "-" + date[1] + "-" + date[2];
 		return dateFormated;
 	}
-	dateFormatToDatePicker(date){
+	dateFormatToDatePicker(date) {
 		let inputDate = date.split("/");
 		let dateFormated = inputDate[0] + "-" + inputDate[1] + "-" + inputDate[2];
 		return dateFormated;

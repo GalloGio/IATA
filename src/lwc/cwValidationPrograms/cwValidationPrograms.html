@@ -2,7 +2,7 @@
     <h3>{label.IATA_Validation_Programs}</h3>
     <hr class="yellow-underline-100">
     <div class="bg-white pr-3 pb-3 pl-3 pt-1 ">
-        <div class="display-flex">
+        <div class="row-validations">
             <template if:true={certifications} class="row">
                 <template for:each={certifications} for:item="cert">
                     <label key={cert.Id} onclick={onClickItem} data-tosca={cert.Name} data-name={cert.Name}

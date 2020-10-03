@@ -199,7 +199,7 @@
     <dashboardType>SpecifiedUser</dashboardType>
     <description>IATA Stations Dashboard</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>alberto.puerto@next-link.ch</runningUser>
+    <runningUser>voelklm@iata.org</runningUser>
     <textColor>#000000</textColor>
     <title>IATA Stations Dashboard</title>
     <titleColor>#000000</titleColor>

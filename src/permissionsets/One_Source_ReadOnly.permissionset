@@ -13,6 +13,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CSP_Utils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_AccountDetailCarousel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -73,6 +77,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CW_CapabilitiesUtilities</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_CapabilityConflictController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -105,7 +113,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CW_DBTransactionHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_EmailTemplateData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CW_EmailTemplateDataTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -142,6 +158,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_GxA_Integration_Queueable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CW_GxA_MockHttpResponseGenerator</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -190,6 +210,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_ICG_Capability_Asgmt_Group_Handler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CW_ICG_Capability_Asgmt_Group_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -341,11 +365,27 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PortalBreadcrumbCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalCreatePasswordController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PortalHeaderCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalRegistrationFirstLevelCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalRegistrationSecondLevelCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalRegistrationUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1601,11 +1641,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ICG_Capability_Assignment_Group__c.Validation_Payment_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ICG_Certification_Capability_Assignment__c.Modificable_by_Station_Manager__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

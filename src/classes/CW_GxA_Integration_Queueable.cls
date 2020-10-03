@@ -18,34 +18,45 @@ public without sharing class CW_GxA_Integration_Queueable implements Queueable, 
 			return;
 		}
 
-		CW_GxA_Amazon_S3__c cfgGxaS3 = CW_GxA_Amazon_S3__c.getOrgDefaults();
+		ICG_GxA_Integration_Settings__c gxaSettings = ICG_GxA_Integration_Settings__c.getOrgDefaults();
 		Id remoteValidationRtId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 
 		// Get the order product data linked to remote validation
+		Map<Id, String> orderNumberByOrderId = new Map<Id, String>();
 		Map<Id, Id> orderProductByOrderId = new Map<Id, Id>();
-		Map<Id, Id> stationByOrderId = new Map<Id, Id>();
-		for (Order currentOrder : [SELECT Id, (SELECT Id, Station__c FROM Orderitems WHERE Station__c != null AND Product2.Smart_Facility_Remote_Validation__c = true) FROM Order WHERE Id IN :orderIdsToProcess]) {
+		Map<Id, ICG_Account_Role_Detail__c> stationByOrderId = new Map<Id, ICG_Account_Role_Detail__c>();
+		for (Order currentOrder : [SELECT Id, OrderNumber, (SELECT Id, Station__c, Station__r.Global_ID__c FROM OrderItems WHERE Station__c != null AND Product2.Smart_Facility_Remote_Validation__c = true) FROM Order WHERE Id IN :orderIdsToProcess]) {
+			orderNumberByOrderId.put(currentOrder.Id, currentOrder.OrderNumber);
+
 			if (!currentOrder.OrderItems.isEmpty()) {
 				orderProductByOrderId.put(currentOrder.Id, currentOrder.OrderItems[0].Id);
-				stationByOrderId.put(currentOrder.Id, currentOrder.OrderItems[0].Station__c);
+				stationByOrderId.put(currentOrder.Id, currentOrder.OrderItems[0].Station__r);
 			}
 		}
 
 		// Create ICG_Capability_Assignment_Group__c
 		List<ICG_Capability_Assignment_Group__c> assignmentGroups = new List<ICG_Capability_Assignment_Group__c>();
 		for (Id currentOrderId : orderIdsToProcess) {
-			String objectKey = cfgGxaS3.Base_Path__c + String.valueOf(currentOrderId) + '/' + cfgGxaS3.Index_File__c;
+			// If Folder_Test__c is defined, we use this value as folder
+			String folder = gxaSettings.Folder_Test__c;
+			if (String.isBlank(folder)) {
+				if (stationByOrderId.containsKey(currentOrderId)) {
+					// Amazon S3 folder pattern ## ICG_Account_Role_Detail__c.Global_ID__c - Order.OrderNumber ## 0010000520501-08888899
+					folder = String.format('{0}-{1}', new List<String>{ stationByOrderId.get(currentOrderId).Global_ID__c, orderNumberByOrderId.get(currentOrderId) });
+				}
+			}
+			String objectKey = gxaSettings.Base_Path__c + folder + '/' + gxaSettings.Index_File__c;
 
 			ICG_Capability_Assignment_Group__c assignmentToAdd = new ICG_Capability_Assignment_Group__c(RecordTypeId = remoteValidationRtId, GxA_Integration_Status__c = CW_GxA_Handler.GXA_STATUS_IN_PROGRESS, GxA_Object_Key__c = objectKey, GxA_Form_Submited_Date__c = Date.today(), Expiration_Date__c = Date.today(), Issue_Date__c = Date.today());
 			if (orderProductByOrderId.containsKey(currentOrderId)) {
 				assignmentToAdd.Order_Product__c = orderProductByOrderId.get(currentOrderId);
 			}
 			if (stationByOrderId.containsKey(currentOrderId)) {
-				assignmentToAdd.ICG_Account_Role_Detail__c = stationByOrderId.get(currentOrderId);
+				assignmentToAdd.ICG_Account_Role_Detail__c = stationByOrderId.get(currentOrderId).Id;
 			}
 
 			try {
-				HttpResponse response = CW_AmazonS3Connector.awsS3GetObject(objectKey, cfgGxaS3.Named_Credential__C);
+				HttpResponse response = CW_AmazonS3Connector.awsS3GetObject(objectKey, gxaSettings.Named_Credential__C);
 				if (response.getStatusCode() == 200) {
 					CW_GxA_Wrappers.Index currentResultObject = CW_GxA_Wrappers.parseIndex(response.getBody());
 					assignmentToAdd.GxA_Result_Json__c = Json.serialize(currentResultObject);

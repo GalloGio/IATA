@@ -26,12 +26,12 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	@track showCertifications = true;
 
 	@api
-    register(){
-        pubsub.register('certificationupdate', this.certificationUpdateCallback); 
-    } 
+	register(){
+		pubsub.register('certificationupdate', this.certificationUpdateCallback); 
+	} 
 
 	@wire(getRecord, { recordId: "$recordId", fields: [RECORDTYPE_NAME_FIELD , RECORDTYPE_DEVELOPER_NAME_FIELD]})
-    facility;
+	facility;
 
 	@track certificationsUsed = [];
 	@track certificationsRemaining = [];
@@ -54,7 +54,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	@track jsonCertification = '';
 	initialized=false;
 
-	certificationsWithoutCapab;
+	@track certificationsWithoutCapab;
 	certificationName;
 
 	connectedCallback(){
@@ -64,7 +64,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 
 	certificationUpdateCallback;
 	certificationUpdate(payload) {
-		this.refreshCertificationsRenewed();
+		this.refreshAllComponent();
 	}
 	
 	renderedCallback(){
@@ -79,7 +79,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 					getScopeByCertificationAndStation({}).then(data =>{
 						if(data){
 							this.mapScopeByCertStation = JSON.parse(JSON.parse(JSON.stringify(data)));
-							getCertificationWithoutCapabilities({})
+							let recordId = this.recordId;
+							getCertificationWithoutCapabilities({recordId})
 							.then(result => {
 								if (result) {
 									this.certificationsWithoutCapab = result;
@@ -160,14 +161,14 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				});
 				this.sofcScope = tempDataScope;
 
-				this.getFacilityCertifications(this.recordId);
+				this.getFacilityCertifications(this.recordId,this.labelStationType);
 			}
 		
 		});
 	}
 
-	getFacilityCertifications(recordId){
-		getFacilityCertifications_({ facilityId: recordId }).then(data =>{
+	getFacilityCertifications(recordId,stationRT){
+		getFacilityCertifications_({ facilityId: recordId, stationRT: stationRT }).then(data =>{
 			if(data){
 				let dataParsed = JSON.parse(data);
 				this.filteredScopesByStation(dataParsed);
@@ -184,11 +185,11 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	get labelStationType() {
-        return getFieldValue(this.facility.data, RECORDTYPE_NAME_FIELD);
+		return getFieldValue(this.facility.data, RECORDTYPE_NAME_FIELD);
 	}
 
 	get valueStationType() {
-        return getFieldValue(this.facility.data, RECORDTYPE_DEVELOPER_NAME_FIELD);
+		return getFieldValue(this.facility.data, RECORDTYPE_DEVELOPER_NAME_FIELD);
 	}
 	
 	get isSFOCScope(){
@@ -236,7 +237,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	checkRemainingCertifications(){
-		getAllCertifications({}).then(response =>{
+		let stationRT = this.labelStationType;
+		getAllCertifications({stationRT}).then(response =>{
 			if(response){
 				this.certificationsRemaining = [];
 				this.certificationDropdowOptions = [];
@@ -491,7 +493,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 	refreshCertificationsRenewed(){
 		const facilityId = this.recordId;
-		refreshFacilityCertifications({facilityId}).then(response =>{
+		const stationRT = this.labelStationType;
+		refreshFacilityCertifications({facilityId,stationRT}).then(response =>{
 			if(response){
 				let dataParsed = JSON.parse(response);
 				this.refreshCertifications(dataParsed);
@@ -635,13 +638,13 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.showModal = false;
 		this.scopeToUse = '';
 		this.showScope = false;
-    }
-    showToast(title,message, variant) {
-        const event = new ShowToastEvent({
-            title: title,
+	}
+	showToast(title,message, variant) {
+		const event = new ShowToastEvent({
+			title: title,
 			message: message,
 			variant: variant
-        });
-        this.dispatchEvent(event);
-    }
+		});
+		this.dispatchEvent(event);
+	}
 }

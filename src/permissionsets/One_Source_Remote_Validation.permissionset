@@ -73,6 +73,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CW_CapabilitiesUtilities</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_CapabilityConflictController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -105,7 +109,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CW_DBTransactionHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CW_EmailTemplateData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CW_EmailTemplateDataTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -142,6 +154,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_GxA_Integration_Queueable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CW_GxA_MockHttpResponseGenerator</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -190,6 +206,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_ICG_Capability_Asgmt_Group_Handler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CW_ICG_Capability_Asgmt_Group_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

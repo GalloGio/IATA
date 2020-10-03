@@ -650,9 +650,9 @@
                     <label>Truck Parking</label>
                 </value>
                 <value>
-                    <fullName>Loose_Cargo</fullName>
+                    <fullName>Trucking_Gate_for_Loose_Cargo</fullName>
                     <default>false</default>
-                    <label>Loose Cargo</label>
+                    <label>Trucking Gate for Loose Cargo</label>
                 </value>
                 <value>
                     <fullName>ULD</fullName>
@@ -1320,7 +1320,7 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
-                <valueName>Loose_Cargo</valueName>
+                <valueName>Trucking_Gate_for_Loose_Cargo</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
@@ -1593,16 +1593,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Modificable_by_Station_Manager__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Indicate if the station manager can modify that capabilitie</description>
-        <externalId>false</externalId>
-        <label>Modificable by Station Manager</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <listViews>
         <fullName>All</fullName>

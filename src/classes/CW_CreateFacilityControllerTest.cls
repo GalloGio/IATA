@@ -244,14 +244,14 @@ public class CW_CreateFacilityControllerTest {
 	
 	@isTest private static void getOnAirportStationsTest(){
 		List<ICG_Account_Role_Detail__c> ards = [Select id, Nearest_Airport__r.Code__c from ICG_Account_Role_Detail__c];
-		
-		Account acc = new Account(Name = 'Qatar Airways (Test)', Account_Type__c = 'Airline', Sector__c = 'Airline', Category__c = 'General Aviation', Payment_Term__c = 'Z001', Reason_for_creation__c = 'New agent');
+		String countryId = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1].Id;
+
+		Account acc = CW_TestDataFactory.TestAccount(countryId);
 		insert acc;
 
 		Account_Role__c ar = CW_TestDataFactory.testAccountRole(acc.Id, 'Test Account Role');
 		insert ar;
 		
-		String countryId = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1].Id;
 
 		Airport_Detail__c airport = new Airport_Detail__c(Code__c = 'BAR', City__c = 'Barcelna', IATA_ISO_Country__c = countryId, Account__c = acc.Id);
 		insert airport;

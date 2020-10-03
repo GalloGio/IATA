@@ -479,7 +479,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			this.loaded = true;
 		})
 		.catch(err => {
-			this.modalMessage = err.message;
+			console.error('Error', err);
+			this.modalMessage = this.label.icg_error_message;
 			this.modalImage = this.ERROR_IMAGE;
 			this.showModal = true;
 			this.loaded = true;
@@ -502,7 +503,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.showModal = true;
 			})
 			.catch(err => {
-				this.modalMessage = err.message;
+				console.error('Error', err);
+				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 				this.loaded = true;
@@ -529,7 +531,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.showModal = true;
 			})
 			.catch(err => {
-				this.modalMessage = err.message;
+				console.error('Error', err);
+				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 				this.loaded = true;
@@ -690,8 +693,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 	get isNotAssigned() {
 		return this.userRole === "Not assigned";
-    }
-    
+	}
+	
 	get showCompanyAdminsButton() {		
 		if(this.companyAdminsChecked === true){
 			let showCompanyBtn = false;

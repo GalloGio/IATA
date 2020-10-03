@@ -89,6 +89,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	equipmentSelected;
 	isKeepPhotos = false;
 	listDeleteRows = [];
+	listDataRow = [];
 
 	//for notification toast
 	_title = "";
@@ -237,7 +238,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	handleUploadFinished(event) {
 		// Get the list of uploaded files
 		const uploadedFiles = event.detail.files;
-		let fileName = this.equipmentPhotoSelected + "-";
+		let fileName = this.equipmentSelected + "-";
 		let indexFileName = this.rowSelected.photos.length;
 
 		if (uploadedFiles.length > 0) {
@@ -355,8 +356,10 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			certheaders.forEach(certheader => {
 				if (editingBtn.length > 0) {
 					certheader.style.right = "150px";
+					certheader.classList.add('border-right-table');
 				} else {
 					certheader.style.right = "0px";
+					certheader.classList.remove('border-right-table');
 				}
 			});
 		}
@@ -523,6 +526,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				}
 			}
 		});
+
 	}
 
 	addPreviuosCapabilities() {
@@ -664,11 +668,11 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let capabilityIndex = event.target.dataset.capabilityIndex;
 		let categoryIndex = event.target.dataset.categoryIndex;
 
-		let listDataRow = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows;
+		this.listDataRow = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows;
 
 		if (action === "Add") {
 			let existsAddRow = false;
-			listDataRow.forEach(element => {
+			this.listDataRow.forEach(element => {
 				if (element.isAditional === true && element.isAssigned === false) {
 					existsAddRow = true;
 				}
@@ -687,7 +691,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			}
 		} else {
 			let rowIndex = event.target.dataset.rowIndex;
-			this.rowSelected = listDataRow[rowIndex];
+			this.rowSelected = this.listDataRow[rowIndex];
 
 			let newCapabilityRow = {
 				position: rowIndex.toString(),
@@ -827,7 +831,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.rowSelected.customClass = "";
 
 		if (this.rowSelected.isAditional === true) {
-			listDataRow.splice(rowIndex, 1);
+			this.listDataRow.splice(rowIndex, 1);
 		}
 		let index = 0;
 		this.listAddedRows.forEach(element => {
@@ -895,11 +899,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	closeCapabilitiesTab() {
-		this.getCapabilitiesFromCertification(this.recordId,null,null);
-
-		if (this.getStatusEditMode) {
-			this.addPreviuosCapabilities();
-		}
 		let p1 = new Promise(function(resolve, reject) {
 			resolve(pubsub.fire("certificationupdate"));
 		});
@@ -975,7 +974,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				this._message = "Successful operation";
 				this._variant = 'success';
 
-				this.closeCapabilitiesTab();
+				this.rollbackCapabilitiesComponent();
 			}
 			else
 			{
@@ -992,7 +991,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 	makeAction() {
 		this.closeModal();
-
 		if (this.actionToExecute.action === "save" && this.actionToExecute.result) {
 			this.loading = true;
 			//Option Edit Capabilities in Capabilities Tab
@@ -1014,7 +1012,13 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			this.restPhotosValue();
 		}
 		if (this.actionToExecute.action === "cancel" && this.actionToExecute.result) {
-			this.rollbackCapabilitiesComponent();
+			
+			if(this.getCertificationMode){
+				this.closeCapabilitiesTab();
+			}
+			else{
+				this.rollbackCapabilitiesComponent();
+			}
 		}
 		if (this.actionToExecute.action === "remove" && this.actionToExecute.result) {
 			this.addRowToRemove();
@@ -1022,14 +1026,21 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	rollbackCapabilitiesComponent(){
-		this.closeCapabilitiesTab();
-
-		this.resetCapabilitiesMultiValidated();		
+		this.resetCapabilitiesMultiValidated();
+		this.refreshCapabilitiesTab();
 	}
 
 	resetCapabilitiesMultiValidated(){
 		this.certiAvailablesRow.forEach(elem => {
 			elem.isDeleted = false;
 		});
+	}
+
+	refreshCapabilitiesTab(){
+		this.getCapabilitiesFromCertification(this.recordId,null,null);
+
+		if (this.getStatusEditMode) {
+			this.addPreviuosCapabilities();
+		}
 	}
 }

@@ -81,12 +81,5 @@ export default class cwIntermediateModal extends LightningElement {
         return this.titleheader;
     }
 
-    get closeInside(){
-        let cssCloseIcn = 'slds-modal__close';
-        if(this.noBackDropGrey){
-            cssCloseIcn = 'slds-modal__close-inside';
-        }
-        return cssCloseIcn;
-    }
 
 }

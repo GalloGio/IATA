@@ -54,7 +54,7 @@ export default class CwCapabilityConflictHandler extends LightningElement {
 		});
 		this.template.querySelectorAll('[data-cell="conflict_selector"]').forEach(elem => {
 			elem.classList.add('second-column-cell');
-        });
+		});
 		
 		let firstColumnTop =  this.template.querySelector('.first-column-top');
 		let secondColumnTop = firstColumnTop ? firstColumnTop.nextElementSibling : undefined;
@@ -350,7 +350,7 @@ export default class CwCapabilityConflictHandler extends LightningElement {
 			console.error(err);
 			this.isLoading = false;
 			this.openConfirmSuccess = true;
-			this.modalMessage = err.body.message;
+			this.modalMessage = this.label.icg_error_message;
 			this.modalImage = this.ERROR_IMAGE;
 		});
 	}

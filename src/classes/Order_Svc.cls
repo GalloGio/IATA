@@ -4300,12 +4300,12 @@ public without sharing class Order_Svc
 	public static void remoteValidationStatusHandler(Map<Id, Order> newMap, Map<Id, Order> oldMap) {
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 
-		CW_GxA_Amazon_S3__c cfgGxaS3 = CW_GxA_Amazon_S3__c.getOrgDefaults();
-		String startProcessStatus = cfgGxaS3.Order_Status_To_Start_Process__c != null ? cfgGxaS3.Order_Status_To_Start_Process__c : 'RV_Complete';
-		String readyForUserFulfillmentStatus = cfgGxaS3.Order_Status_Pending_Fulfillment__c != null ? cfgGxaS3.Order_Status_Pending_Fulfillment__c : 'RV_Created';
-		String rvSubmittedStatus = cfgGxaS3.Order_Status_Submitted__c != null ? cfgGxaS3.Order_Status_Submitted__c : 'RV_WIP';
-		String needsCorrectionStatus = cfgGxaS3.Order_Status_Needs_Correction__c != null ? cfgGxaS3.Order_Status_Needs_Correction__c : 'RV_NeedsCorrection';
-		if (String.isNotBlank(cfgGxaS3.Order_Status_To_Start_Process__c)) {
+		ICG_GxA_Integration_Settings__c gxaSettings = ICG_GxA_Integration_Settings__c.getOrgDefaults();
+		String startProcessStatus = gxaSettings.Order_Status_To_Start_Process__c != null ? gxaSettings.Order_Status_To_Start_Process__c : 'RV_Complete';
+		String readyForUserFulfillmentStatus = gxaSettings.Order_Status_Pending_Fulfillment__c != null ? gxaSettings.Order_Status_Pending_Fulfillment__c : 'RV_Created';
+		String rvSubmittedStatus = gxaSettings.Order_Status_Submitted__c != null ? gxaSettings.Order_Status_Submitted__c : 'RV_WIP';
+		String needsCorrectionStatus = gxaSettings.Order_Status_Needs_Correction__c != null ? gxaSettings.Order_Status_Needs_Correction__c : 'RV_NeedsCorrection';
+		if (String.isNotBlank(gxaSettings.Order_Status_To_Start_Process__c)) {
 			List<Id> gxaOrderIds = new List<Id>();
 			List<Id> pendingToFulfillOrderIds = new List<Id>();
 			List<Id> submittedOrderIds = new List<Id>();

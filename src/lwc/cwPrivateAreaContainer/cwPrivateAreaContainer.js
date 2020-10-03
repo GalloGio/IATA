@@ -344,6 +344,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 			})
 			.catch(ex => {
 				console.error(ex);
+				this.approvalModalMessage = this.label.icg_error_message;
 				this.approvalSuccess = false;
 				this.showApprovalModal = true;
 				this.isLoading = false;
@@ -353,7 +354,6 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.approvalAction = "Reject";
 		rejectStationAutomaticProcess({ stationId: this.approvalStationId, rejectReason: this.rejectReasonStation })
 			.then(resp => {
-
 				this.approvalSuccess = resp;
 				let approvalStation = this.getStation();
 				let modalMessage = this.label.the_station;
@@ -365,7 +365,6 @@ export default class CwPrivateAreaContainer extends LightningElement {
 					modalMessage += " could not be rejected. You have to be Company Admin in order to reject this station.";
 				}
 				this.approvalModalMessage = modalMessage;
-				
 				this.showApprovalModal = true;
 
 
@@ -374,6 +373,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 			})
 			.catch(ex => {
 				console.error(ex);
+				this.approvalModalMessage = this.label.icg_error_message;
 				this.approvalSuccess = false;
 				this.showApprovalModal = true;
 				this.isLoading = false;
@@ -417,6 +417,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 			})
 			.catch(ex => {
 				console.error(ex);
+				this.approvalModalMessage = this.label.icg_error_message;
 				this.approvalSuccess = false;
 				this.showApprovalModal = true;
 				this.isLoading = false;
@@ -445,6 +446,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 			})
 			.catch(ex => {
 				console.error(ex);
+				this.approvalModalMessage = this.label.icg_error_message;
 				this.approvalSuccess = false;
 				this.showApprovalModal = true;
 				this.isLoading = false;
@@ -505,7 +507,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				console.error(ex);
 				this.approvalSuccess = false;
 				this.isError = true;
-				this.approvalModalMessage = ex && ex.body ? 'Something went wrong: ' + ex.body.message : 'Something went wrong. Please contact IATA. Comment: Pending user request not handled properly.';
+				this.approvalModalMessage = this.label.icg_error_message;
 				this.showApprovalModal = true;
 				this.isLoading = false;
 			});

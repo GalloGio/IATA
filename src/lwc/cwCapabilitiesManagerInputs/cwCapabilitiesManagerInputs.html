@@ -79,7 +79,10 @@
 			<template if:false={editMode}>
 				<template if:true={isAuxFieldDefined}>
 					<template if:true={isTchaTemperatureRangeField}>
-						<lightning-input if:true={isText} type="text" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
+						<!-- <lightning-input if:true={isText} type="text" variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input> -->
+						<lightning-input if:true={isText} type="text" variant="label-hidden" data-name="From" name="From" label="" title={getValue} value={getFrom} readonly={editMode}  onblur={setValue}></lightning-input>
+						<span>to</span>
+						<lightning-input if:true={isText} type="text" variant="label-hidden" data-name="To" name="To" label="" title={getValue} value={getTo} readonly={editMode}  onblur={setValue}></lightning-input>
 					</template>
 				</template>
 			</template>

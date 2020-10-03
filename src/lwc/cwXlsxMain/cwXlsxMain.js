@@ -3,7 +3,7 @@ import { loadScript } from "lightning/platformResourceLoader";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 
 export default class CwXlsxMain extends LightningElement {
-    @api headerList;
+	@api headerList;
 	@api filename;
 	@api worksheetNameList;
 	@api sheetData;

@@ -236,10 +236,14 @@ global without sharing class CW_GxA_Handler {
 		}
 	}
 	private static Map<String, ICG_GxA_Integration_Mapping__c> getIntegrationMapping() {
-		ICG_Environment_Variables__c environmentVariables = CW_Utilities.getEnvironmentVariables();
-		String integrationMappingVersion = environmentVariables.Integration_Mapping_Version__c;
+		ICG_GxA_Integration_Settings__c gxaSettings = ICG_GxA_Integration_Settings__c.getOrgDefaults();
 		Map<String, ICG_GxA_Integration_Mapping__c> integrationMap = new Map<String, ICG_GxA_Integration_Mapping__c>();
-		for (ICG_GxA_Integration_Mapping__c currentMapping : [SELECT GxA_Is_Mandatory__c, GxA_Question_Id__c, GxA_Question_Parent_Id__c, GxA_Question_Type_Id__c, GxA_Sub_Survey_Id__c, GxA_Question_Text__c, GxA_Validation__c, SF_Equipment__c, SF_Data_Extra__c, SF_Target_Field__c, SF_Specific_Processing__c, SF_Options_Mapping__c, GxA_Options__c, SF_Target_Object__c, SF_Is_Mapping_Ok__c, SF_Process_Question__c FROM ICG_GxA_Integration_Mapping__c WHERE Version__c = :integrationMappingVersion ORDER BY GxA_Question_Id__c]) {
+
+		if (String.isBlank(gxaSettings.Mapping_Version__c)) {
+			return integrationMap;
+		}
+
+		for (ICG_GxA_Integration_Mapping__c currentMapping : [SELECT GxA_Is_Mandatory__c, GxA_Question_Id__c, GxA_Question_Parent_Id__c, GxA_Question_Type_Id__c, GxA_Sub_Survey_Id__c, GxA_Question_Text__c, GxA_Validation__c, SF_Equipment__c, SF_Data_Extra__c, SF_Target_Field__c, SF_Specific_Processing__c, SF_Options_Mapping__c, GxA_Options__c, SF_Target_Object__c, SF_Is_Mapping_Ok__c, SF_Process_Question__c FROM ICG_GxA_Integration_Mapping__c WHERE Version__c = :gxaSettings.Mapping_Version__c ORDER BY GxA_Question_Id__c]) {
 			integrationMap.put(currentMapping.GxA_Question_Id__c, currentMapping);
 		}
 		return integrationMap;
@@ -262,7 +266,11 @@ global without sharing class CW_GxA_Handler {
 		}
 		switch on objectsFieldsDescribe.get(objectName).get(fieldName).getDescribe().getType().name().toLowerCase() {
 			when 'double' {
-				return Integer.valueOf(response);
+				if (response.contains('.')) {
+					return ((Decimal) JSON.deserialize(response, Decimal.class));
+				} else {
+					return ((Integer) JSON.deserialize(response, Integer.class));
+				}
 			}
 			when 'boolean' {
 				response = response.toLowerCase().trim();

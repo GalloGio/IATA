@@ -70,13 +70,17 @@
                 }
                 else{
                     geocoder.geocode({'address': address}, function(results, status) {
-                        if (status === 'OK') {
-                            resultsMap.setCenter(results[0].geometry.location);
-                            sendToLC({latitude : results[0].geometry.location.lat(), longitude: results[0].geometry.location.lng(), initialization: initialization})
-                            initializeMarker(resultsMap, results[0].geometry.location, draggable, initialization);
-                        } else {
-                            initializeMarker(resultsMap, '46.2363,6.1057', draggable, initialization); //By Default initialize in geneve airport
-                        }
+						let geoLat = status === 'OK' ? results[0].geometry.location.lat() : 46.2363;
+						let geoLong = status === 'OK' ? results[0].geometry.location.lng() : 6.1057;
+
+						let location = {
+								lat: geoLat,
+								lng: geoLong
+							}
+						
+						resultsMap.setCenter(location);
+						sendToLC({latitude : geoLat, longitude: geoLong, initialization: initialization})
+						initializeMarker(resultsMap, location, draggable, initialization);
                     });
                 }
 

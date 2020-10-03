@@ -19,21 +19,9 @@ public with sharing class CW_AdvancedSearchTest {
 	@isTest
 	public static void equipmentOK() {
 		Test.startTest();
-		//String name, String label, List<Field> lstFields, String category
-		// CW_AdvancedSearch.Equipment equipment = new CW_AdvancedSearch.Equipment('name', 'label', 'category');
-		// equipment.fields = new List<CW_AdvancedSearch.Field>();
-		// CW_AdvancedSearch.Field field = new CW_AdvancedSearch.Field();
-		// field.name = '';
-		// field.label = '';
-		// field.type = '';
-		// // field.isPicklist = true;
-		// field.selected = true;
-		// // field.options = new List<String>();
-		// System.assertNotEquals(equipment, null, 'equipment covered');
-
 		List<CW_AdvancedSearch.Field> fields = new List<CW_AdvancedSearch.Field>();
 		CW_AdvancedSearch.Equipment equipment = new CW_AdvancedSearch.Equipment('name', 'label', fields, 'category', 'categoryDevName');
 		System.assertNotEquals(equipment, null, 'equipment covered');
 		Test.stopTest();
-    }
+	}
 }

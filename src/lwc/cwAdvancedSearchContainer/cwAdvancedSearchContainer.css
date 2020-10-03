@@ -10,7 +10,12 @@
     margin: 10px 20px 0px 0px;
     height: -webkit-fill-available;
 }
-
+.header-search-advance{
+    z-index: 20;
+    position: fixed;
+    width: 95%;
+    top: 45px;
+}
 
 @media (max-width: 768px) {
     .big-section
@@ -20,12 +25,19 @@
     }
 }
 
-.header-search-advance{
-    z-index: 20;
-    position: fixed;
-    width: 95%;
-    top: 45px;
+@media(max-width: 1680px) and (min-width: 1200px) {
+    .header-search-advance{
+        width: 94%;
+        top: 56px;
+    }
 }
+
+@media (max-width: 1200px) {
+    .header-search-advance{
+        width: 90%;
+    }
+}
+
 .fullheight{
     min-height:100vh;
 }
