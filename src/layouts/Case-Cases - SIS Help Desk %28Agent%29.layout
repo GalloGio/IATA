@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin_SIS_HD</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -47,6 +48,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ParentId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_interaction__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
