@@ -916,7 +916,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 			Name = 'Portugal', 
 			ISO_Code__c = 'PT',
 			AMS_Settlement_System__c = iss.id,
-			ANG_Enable_NewGen__c = true
+			ANG_Enable_NewGen__c = true,
+			Region__c = 'Europe'
 		);
 
 		insert country2 ;
