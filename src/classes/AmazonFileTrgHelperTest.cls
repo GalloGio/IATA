@@ -291,10 +291,15 @@ private class AmazonFileTrgHelperTest {
 		loadCredentials();
 
 		Case case1 =  initializeCase();
+System.debug('!!! case1 = ' + case1);
 
 		Test.startTest();
 		AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', sObject_Id__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+System.debug('!!! AmzFile= ' + AmzFile);
 		insert AmzFile;
+System.debug('!!! [select case__c from AmazonFile__c where id=:AmzFile.Id] = ' + [select case__c from AmazonFile__c where id=:AmzFile.Id]);
+System.debug('!!! AmzFile.Case__c = ' + [select case__c from AmazonFile__c where id=:AmzFile.Id].case__c);
+System.debug('!!! case1.Id = ' + case1.Id);
 		system.assert(([select case__c from AmazonFile__c where id=:AmzFile.Id].case__c) == case1.Id);
 		Test.stopTest();
 	}
