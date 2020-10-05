@@ -14,10 +14,12 @@ private class CaseItemsTest {
 
 		Case caseRecord = new Case();
 		insert caseRecord;
+		Case caseRecord2 = new Case();
+		insert caseRecord2;
 		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Item__c', 'MASTER');
 		Case_Item__c caseItem1 = new Case_Item__c(Status__c = 'Open', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
 		insert caseItem1;
-		Case_Item__c caseItem2 = new Case_Item__c(Status__c = 'Closed', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
+		Case_Item__c caseItem2 = new Case_Item__c(Status__c = 'Closed', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord2.Id);
 		insert caseItem2;
 	}
 
@@ -87,7 +89,7 @@ private class CaseItemsTest {
 		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c];
 		Database.delete(caseItemList, false);
 		caseItemList = [SELECT Id FROM Case_Item__c];
-		System.assertEquals(1, caseItemList.size(), 'Expected 1 Case Item to be deleted and 1 to remain. Instead there are ' + caseItemList.size());
+		System.assertEquals(0, caseItemList.size(), 'Expected 1 Case Item to be deleted and 0 to remain. Instead there are ' + caseItemList.size());
 	}
 
 	@IsTest static void testOnBeforeUpdate(){
@@ -95,7 +97,7 @@ private class CaseItemsTest {
 		caseItem.Status__c = 'Completed';
 		Database.SaveResult saveResult = Database.update(caseItem, false);
 		caseItem = [SELECT Id, Status__c FROM Case_Item__c WHERE Id = :caseItem.Id];
-		System.assertNotEquals('Completed', caseItem.Status__c);
+		System.assertEquals('Completed', caseItem.Status__c);
 
 		User user = [SELECT Id FROM User WHERE IsActive = TRUE AND Profile.Name = :CaseItems.integrationUserProfileName LIMIT 1];
 		System.runAs(user){
