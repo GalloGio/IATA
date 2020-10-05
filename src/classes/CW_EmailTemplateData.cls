@@ -29,7 +29,7 @@ public without sharing class CW_EmailTemplateData {
 
 	public List<ICG_Capability_Assignment_Group__c> getICGCapabilityAssignmentGroups(){
 		if(ICGCapabilityAssignmentGroups == null && stationId != null){
-			ICGCapabilityAssignmentGroups = new List<ICG_Capability_Assignment_Group__c>([SELECT Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, toLabel(CEIV_Scope_List__c), SFOC_Scope__c, CreatedDate FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :stationId]);
+			ICGCapabilityAssignmentGroups = new List<ICG_Capability_Assignment_Group__c>([SELECT Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, toLabel(CEIV_Scope_List__c), SFOC_Scope__c, CreatedDate FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :stationId AND ICG_Certification__c != null]);
 		} 
 		return listHasValues(ICGCapabilityAssignmentGroups) ? ICGCapabilityAssignmentGroups : new List<ICG_Capability_Assignment_Group__c>();
 	}
