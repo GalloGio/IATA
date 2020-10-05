@@ -549,7 +549,12 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
 	}
 
+	/**
+	 * The account is considered Postal operator whe it's an agency wtih Location class L
+	 * for security we only apply this for accType PASS
+	 */
 	public Boolean getIsPostalOperator() {
+		//return ApexPages.currentPage().getParameters().get('accType')==AMS_Utils.passParticipation &&
 		return con.Account.RecordType.DeveloperName == 'IATA_Agency' && this.con.Account.Location_Class__c == AMS_Utils.LC_POSTAL_OPERATOR;
 	}
 
@@ -752,6 +757,11 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
 		lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
 		lblNoCStepD = communityName == 'CNS' ? Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS : Label.ISSP_AMS_NOC_StepD_ProgressBar;
+		if (getIsPostalOperator()) {
+			lblNoCStepC = lblNoCStepC.replace('>C<','>B<');
+			lblNoCStepD = lblNoCStepD.replace('>D<','>C<');
+
+		}
 
 		lblStep1Title = communityName == 'CNS' ? Label.ISSP_AMS_Step1_Title_CNS : getnewlabels() ? Label.ISSP_AMS_Step1_Title_New : Label.ISSP_AMS_Step1_Title;
 		if((isCNSAgency && con.Account.IATACode__c == null) || (isCNSAgency && con.Account.IATACode__c != null && hqAccount.Location_Class__c == 'R')){
@@ -831,7 +841,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		//Verify to which step the user should go and retrieve information linked to the step
 		if (stepNumber == '1' || stepNumber == '') {
-			if(isPassAccreditation){
+			if(isPassAccreditation && !getIsPostalOperator()){
 				isStep2=true;
 			}
 			isStep1 = true;
@@ -990,7 +1000,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 				if (stepNumber == '1' || stepNumber == '') {
 					isStep1 = true;
-					if(isPassAccreditation){
+					if(isPassAccreditation && !getIsPostalOperator()){
 						isStep2=true;
 					}
 					amsIsGSA = 'NO';
@@ -5770,8 +5780,19 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public void checkEligibilityForAChange() {
-		if ((sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (isocountry.ISO_Code__c == 'CN' && con.Account.Category__c == 'Domestic Agent' && isocountry.ANG_Enable_NewGen__c)) ||
-				(sector == AMS_Utils.SECTOR_CARGO && (con.Account.Category__c == 'Non-IATA Cargo Agent' || con.Account.Category__c == 'IATA Cargo Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates' || con.Account.Category__c == AMS_Utils.CATEGORY_COURIER || con.Account.Category__c == AMS_Utils.CATEGORY_IMPORT_AGENT))) {
+		if (
+			(sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) ||
+			(isocountry.ISO_Code__c == 'CN' && con.Account.Category__c == 'Domestic Agent' && isocountry.ANG_Enable_NewGen__c)) ||
+			(sector == AMS_Utils.SECTOR_CARGO && 
+				(con.Account.Category__c == AMS_Utils.CATEGORY_NON_IATA_FREIGHT_FORWARDER ||
+				con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT ||
+				con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE ||
+				con.Account.Category__c == 'CASS Associates' ||
+				con.Account.Category__c == AMS_Utils.CATEGORY_COURIER ||
+				con.Account.Category__c == AMS_Utils.CATEGORY_IMPORT_AGENT)
+			) ||
+			(sector == AMS_Utils.SECTOR_POSTAL_SERVICE && con.Account.Category__c == AMS_Utils.CATEGORY_POSTAL_OPERATOR)
+			) {
 			isEligableForChange = true;
 		}
 	}
@@ -6886,7 +6907,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 			if (!newform.Confirm_Legal_Details_are_correct__c && !newForm.Notify_Change_Legal_Details__c) {
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message1));
+				String message = getnewlabels()? Label.ISSP_AMS_NoC_error_message1_company: Label.ISSP_AMS_NoC_error_message1;
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, message));
 				errorFound = true;
 			}
 
@@ -6894,7 +6916,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				if(isCNSAgency){
 					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2_CNS));
 				}else{
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2));
+					String message = getnewlabels()? Label.ISSP_AMS_NoC_error_message2_company: Label.ISSP_AMS_NoC_error_message2;
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, message));
 				}
 				errorFound = true;
 			}
@@ -6903,7 +6926,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				if(isCNSAgency){
 					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3_CNS));
 				}else{
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3));
+					String message = getnewlabels()? Label.ISSP_AMS_NoC_error_message3_company: Label.ISSP_AMS_NoC_error_message3;
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, message));
 				}
 				errorFound = true;
 			}

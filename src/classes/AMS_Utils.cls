@@ -274,6 +274,7 @@ public without sharing class AMS_Utils {
 	public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
 	public static final String SECTOR_CARGO = 'Cargo Agent';
 	public static final String SECTOR_PASSENGER = 'Travel Agent';
+	public static final String SECTOR_POSTAL_SERVICE = 'Postal Service';
 	public static final String SECTOR_AIRLINE = 'Airline';
 	public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
 	public static final String SECTOR_IATA = 'IATA';
@@ -376,6 +377,7 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
 	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 	public static final String CATEGORY_CNS_ENDORSEMENT = 'CNS Endorsement';
+	public static final String CATEGORY_POSTAL_OPERATOR = 'Postal Operator';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
