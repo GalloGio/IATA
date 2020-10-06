@@ -5022,6 +5022,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>مشاركة</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>تم نسخ رابط الأسئلة الشائعة!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>تخطى هذا في الوقت الراهن</label>
         <name>CSP_Skip</name>
     </customLabels>
