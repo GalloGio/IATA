@@ -23,6 +23,7 @@ public with sharing class CaseCommentHandler {
 	}
 
 	public void doAfterInsert(List<CaseComment> listOfComments) {
+		//only fire integration if user making the insert is not integration user
 		//1. if case comment is for a case with a case item then fire platform event
 		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(listOfComments);
 		//get case item records with a case that has an inserted comment
