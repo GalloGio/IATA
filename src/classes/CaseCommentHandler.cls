@@ -26,8 +26,10 @@ public with sharing class CaseCommentHandler {
 		//1. if case comment is for a case with a case item then fire platform event
 		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(listOfComments);
 		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		CaseItems.publishCaseItemsPlatformEvent(caseItemsWithCaseComments, true, false, false, false);
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 
 		List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
 		Map<String, ISSP_KPI_Reporting__mdt> rtToConfigMap = new Map<String, ISSP_KPI_Reporting__mdt>();
@@ -76,8 +78,10 @@ public with sharing class CaseCommentHandler {
 		//1.1 create map with CaseId and CommentId
 		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(updatedCaseCommentMap.values());
 		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		CaseItems.publishCaseItemsPlatformEvent(caseItemsWithCaseComments, false, true, false, false);
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 	}
 
 	public void doAfterDelete(Map<Id, CaseComment> deletedCaseCommentMap){
@@ -85,8 +89,10 @@ public with sharing class CaseCommentHandler {
 		//1.1 create map with CaseId and CommentId
 		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(deletedCaseCommentMap.values());
 		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		CaseItems.publishCaseItemsPlatformEvent(caseItemsWithCaseComments, false, false, true, false);
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 	}
 
 	public void doAfterUndelete(Map<Id, CaseComment> unDeletedCaseCommentMap){
@@ -94,10 +100,12 @@ public with sharing class CaseCommentHandler {
 		//1.1 create map with CaseId and CommentId
 		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(unDeletedCaseCommentMap.values());
 		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		CaseItems.publishCaseItemsPlatformEvent(caseItemsWithCaseComments, false, false, false, true);
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 	}
-	
+
 	/**
 	* @description used to retreive KPI Configuration from custom metadata: ISSP_KPI_Reporting__mdt
 	*
