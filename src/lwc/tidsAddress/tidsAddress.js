@@ -215,22 +215,19 @@ export default class TidsAddress extends LightningElement{
 		this.applicantInfo = getSectionInfo("new-applicant");
 		this.stateRules.visible=false;
 		this.stateRules.required=false;
-		console.log('getStates:this.applicantInfo',JSON.stringify(this.applicantInfo));
 		if (this.applicantInfo){
-				this.country = this.applicantInfo.values.countryName;
-				getStates({ countryIsoCode: this.applicantInfo.values.countryIsoCode }).then(
-					result =>{
-						console.log('getStates:result',JSON.stringify(result));
-						console.log('getStates:result.length',result.length);
-						if (result.length>0){
-							this.states = result;
-							this.stateRules.visible=true;
-							this.stateRules.required=true;
-						}
+			this.country = this.applicantInfo.values.countryName;
+			getStates({ countryIsoCode: this.applicantInfo.values.countryIsoCode }).then(
+				result =>{
+					if (result.length>0){
+						this.states = result;
+						this.stateRules.visible=true;
+						this.stateRules.required=true;
 					}
-				).catch(error => {
-					console.log(error);
-				});
+				}
+			).catch(error => {
+				console.log('error',JSON.stringify(error));
+			});
 		}
 		this.disableButton = true;
 		let userType = getUserType();
@@ -245,7 +242,6 @@ export default class TidsAddress extends LightningElement{
 			}
 		}
 		if (savedInfo){
-			console.log('savedInfo', JSON.stringify(savedInfo));
 			this.address = savedInfo.values.address;
 			this.city = savedInfo.values.city;
 			this.citygeonameId = savedInfo.values.citygeonameId;
@@ -322,7 +318,6 @@ export default class TidsAddress extends LightningElement{
 		if (event.target.name === "address"){
 		} else if (event.target.name === "city"){
 			let xcity = event.target.value;
-			//console.log('xcity',xcity);
 			if (xcity===undefined || xcity===''){
 				this.isPostalCodesAvailable=false;
 			}
@@ -370,7 +365,6 @@ export default class TidsAddress extends LightningElement{
 
 	handleNextSection(event){
 		event.preventDefault();
-		//console.log('allValid',allValid);
 		const allValid = [
 			...this.template.querySelectorAll(
 				"[data-name='address'],[data-name='city'],[data-name='state'],[data-name='postalCode'],[data-name='country']"
@@ -379,22 +373,18 @@ export default class TidsAddress extends LightningElement{
 			inputCmp.reportValidity();
 			return validSoFar && inputCmp.checkValidity();
 		}, true);
-		console.log('allValid',allValid);
 		if (allValid){
 			if (this.citygeonameId===undefined || this.citygeonameId===null){
-					console.log('this.citygeonameId=',this.citygeonameId);
-					this.geonameIdNotSelected();
+				this.geonameIdNotSelected();
 			}else{
 				let addressValues = this.infoToBeSave();
-				console.log('this.citygeonameId=',this.citygeonameId);
 				fireEvent(this.pageRef, "tidsUserInfoUpdate", addressValues);
 				window.scrollTo(0,0);
 			}
 		}else{
-				console.log('this.citygeonameId=',this.citygeonameId);
-				if (this.citygeonameId==undefined || this.citygeonameId===null){
-					 this.geonameIdNotSelected();
-				}
+			if (this.citygeonameId==undefined || this.citygeonameId===null){
+				this.geonameIdNotSelected();
+			}
 		}
 	}
 
@@ -714,7 +704,6 @@ geonameIdNotSelected(){
 	this.openModal = true;
 }
 disableCityGeonameId(props){
-	console.log('disableCityGeonameId', true);
 	if (this.vettingMode){
 		 this.handleSave('confirm-review-status');
 	}else{
@@ -739,17 +728,12 @@ setCitySearchPrevent(event){
 selectCity(event){
 	let geonameId = event.currentTarget.id;
 	geonameId = '$'+geonameId.split('$')[1]+'$';
-	console.log('event.currentTarget.id');
-	console.log(geonameId);
 	let cityselected;
 	this.postalcodes.forEach(function(item){
-		 console.log(item.geonameId);
 		 if (item.geonameId===geonameId){
-				console.log('item selected');
-				cityselected=item;
+			cityselected=item;
 		 }
 	});
-	console.log('item selected');
 	if (cityselected!=undefined) this.setcity(cityselected);
 	this.isPostalCodesAvailable=false;
 	this.citysearch=false;
@@ -758,13 +742,8 @@ setcity(cityselected){
 	this.cityselected = cityselected;
 	this.city=cityselected.toponymName;
 	this.citygeonameId=cityselected.citygeonameId;
-	console.log('by selection',cityselected.citygeonameId);
-	//this.postalCode=cityselected.
-	console.log('cityselected.lat',cityselected.lat);
-	console.log('cityselected.lng',cityselected.lng);
 	getLocalPlace({ fieldType:'postalcode', searchValue:cityselected.lat, countryIsoCode:cityselected.lng}).then(
 		result =>{
-			console.log('result>>>',result);
 			if (result!=null){
 				let pcs = JSON.parse(result);
 				let postalcodeselected;
@@ -772,9 +751,7 @@ setcity(cityselected){
 					 postalcodeselected=item;
 				});
 				if (postalcodeselected!=undefined){
-					 console.log('postalcodeselected');
-					 console.log(postalcodeselected.postalCode);
-					 this.postalCodePlaceHolder=postalcodeselected.postalCode;
+					this.postalCodePlaceHolder=postalcodeselected.postalCode;
 				}
 		}
 	});
@@ -791,8 +768,8 @@ getLocationPlace(fieldtype,searchvalue){
 		this.city =searchvalue;
 	}  
 	if (searchvalue==undefined || searchvalue==''){
-		 this.postalcodes=[];
-		 return;
+		this.postalcodes=[];
+		return;
 	}
 	/*
 	"geonames": [
@@ -818,8 +795,6 @@ getLocationPlace(fieldtype,searchvalue){
 			},*/
 	getLocalPlace({ fieldType:'city', searchValue:searchvalue, countryIsoCode: this.applicantInfo.values.countryIsoCode }).then(
 		result =>{
-			console.log('this.applicantInfo.values.countryIsoCode',this.applicantInfo.values.countryIsoCode);
-			console.log('result>>>',result);
 			if (result!=null){
 				this.citygeonameId=null;
 				this.postalcodes=[];
@@ -829,21 +804,19 @@ getLocationPlace(fieldtype,searchvalue){
 				let isstateselecteable=false;
 				let selectedstate=this.state;
 				if (selectedstate!=undefined){
-					console.log('this.stateSelected(selectedstate)',this.stateSelected(selectedstate));
 					if (this.stateSelected(selectedstate)!=undefined){
-						 selectedstate=this.stateSelected(selectedstate).label;
-						 isstateselected=true;
+						selectedstate=this.stateSelected(selectedstate).label;
+						isstateselected=true;
 				 }
 				}
-				//console.log('this.states>>>',JSON.stringify(this.states));
+				if (selectedstate!=undefined){selectedstate=selectedstate.toUpperCase();}
 				if (!isstateselected){
 					if (this.states!=undefined && this.states.length>0){
-						 isstateselecteable=true;
+						isstateselecteable=true;
 					}
 				}
 				let letterNumber = /^[0-9]+$/;
 				pcs.geonames.forEach(function(item){
-					//console.log('item');
 					if (item.fcode==='PPLC'
 						 || item.fcode==='PPL'
 						 || item.fcode==='PPLA'
@@ -852,8 +825,6 @@ getLocationPlace(fieldtype,searchvalue){
 						 || item.fcode==='PPLA4'
 						 || item.fcode==='PPLA5'
 						 ){
-							 //console.log('this.postalcodes.push');
-							 //console.log(item);
 							 let isitemtopush=true;
 							 let s1=searchvalue.toUpperCase();
 							 let s2=item.toponymName.toUpperCase();
@@ -864,7 +835,6 @@ getLocationPlace(fieldtype,searchvalue){
 									b += s2.charCodeAt(i);
 							 }
 							 let isclose=false;
-							 console.log('result a and b',a,b);
 							 if (a==b){
 									isclose=true;
 							 }else{
@@ -874,7 +844,6 @@ getLocationPlace(fieldtype,searchvalue){
 									}else{
 										r=100*(b-a)/b;
 									}
-									console.log(r);
 									if (r<50){
 										isclose=true;
 									}
@@ -885,7 +854,6 @@ getLocationPlace(fieldtype,searchvalue){
 									b += s2.charCodeAt(i);
 							 }
 							 let isclose2=false;
-							 console.log('result a and b',a,b);
 							 if (a==b){
 									isclose2=true;
 							 }else{
@@ -895,7 +863,6 @@ getLocationPlace(fieldtype,searchvalue){
 									}else{
 										r=100*(b-a)/b;
 									}
-									console.log(r);
 									if (r<50){
 										isclose2=true;
 									}
@@ -903,39 +870,35 @@ getLocationPlace(fieldtype,searchvalue){
 							 if (isclose==false && isclose2==false){
 									isitemtopush=false;
 							 }
-							 //if (!item.toponymName.startsWith(searchvalue)){
-							 // isitemtopush=false;
-							 //}
 							 if (isitemtopush && (item.name.match(letterNumber) || item.toponymName.match(letterNumber))){
-									isitemtopush=false;
+								isitemtopush=false;
 							 }  
 							 if (isitemtopush && isstateselected){
-									if (item.adminName1!=selectedstate){
-										 isitemtopush=false;
-									}
+								let statef = item.adminName1;
+								if (statef!=undefined){statef=statef.toUpperCase();}
+								if (statef!= selectedstate){
+									isitemtopush=false;
+								}
 							 }else{
 								 if (isstateselecteable){
 			 
 								 }
 							 }
 							 if (isitemtopush){
-									 item.citygeonameId=item.geonameId;
-									 item.geonameId='$'+item.geonameId+'$';
-									 newpcs.push(item);
+								item.citygeonameId=item.geonameId;
+								item.geonameId='$'+item.geonameId+'$';
+								newpcs.push(item);
 							 }
 						 }
 				});
 				this.postalcodes=newpcs;
 				if (newpcs.length>0){
 					if (newpcs.length==1){
-							let byitem=newpcs[0];
-							if (byitem.name==this.city || byitem.toponymName==this.city){
-									console.log('by default',byitem.citygeonameId);
-									this.citygeonameId=byitem.citygeonameId;
-							}
+						let byitem=newpcs[0];
+						if (byitem.name==this.city || byitem.toponymName==this.city){
+							this.citygeonameId=byitem.citygeonameId;
+						}
 					}
-					console.log('this.postalcodes.length');
-					console.log(newpcs.length);
 					this.isPostalCodesAvailable=true;
 					this.citysearch=true;
 				}
@@ -960,7 +923,6 @@ getLocationPlace(fieldtype,searchvalue){
 			if(this.hasRequiredFields === undefined && element.required){
 				this.hasRequiredFields = true;
 			}
-			console.log('element.apiName',element.apiName);
 			switch(element.apiName){
 				case this.COUNTRY:
 					this.countryRules = element;

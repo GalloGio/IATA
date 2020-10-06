@@ -56,18 +56,14 @@ export default class TidsAddBranch extends LightningElement {
 		event.preventDefault();
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		let userInfo = getUserInfo();
-		console.log('handleProceed',JSON.stringify(userInfo));
-		 
 		if(this.showVirtualBranch) {
 			let countrySelectedVirtualBranch = this.countries.find(item => item.value === this.country);
-			console.log('countrySelectedVirtualBranch',JSON.stringify(countrySelectedVirtualBranch));
 			let payload = {
 				userType: "client",
 				applicationType: NEW_VIRTUAL_BRANCH,
 				virtualCountryOfOperations: countrySelectedVirtualBranch
 			}
 			let accountId = userInfo.tidsAccount.Id;
-			console.log('handleProceed',JSON.stringify(payload));
 			createTidsCaseVirtualBranch({
 				accountId: accountId,
 				payload: JSON.stringify(payload)
@@ -80,7 +76,6 @@ export default class TidsAddBranch extends LightningElement {
 				// Set Application Type
 				setApplicationType(NEW_VIRTUAL_BRANCH);
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-				console.log('payload',JSON.stringify(payload));
 				fireEvent(this.pageRef,'newBranchListener', payload);
 			})
 			.catch(error => {
@@ -92,22 +87,17 @@ export default class TidsAddBranch extends LightningElement {
 				applicationType: NEW_BRANCH
 			}
 			let accountId = userInfo.tidsAccount.Id;
-			console.log('handleProceed',JSON.stringify(payload));
 			createTidsCaseNewBranch({
 				accountId: accountId,
 				payload: JSON.stringify(payload)
 			})
 			.then(result => {
 				// Set Case Id
-				console.log('handleProceed','setCase');
 				setCase({Id: result});
 				// Set User Type
-				console.log('handleProceed','setUserType');
 				setUserType(false);
 				// Set Application Type
-				console.log('handleProceed','setApplicationType');
 				setApplicationType(NEW_BRANCH);
-				console.log('handleProceed','newBranchListener');
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				fireEvent(this.pageRef,'newBranchListener', payload);
 			})

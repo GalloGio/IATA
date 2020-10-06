@@ -51,7 +51,7 @@ export default class TidsAllInformation extends LightningElement {
 	@track phone='n/a';
 	@track fax='n/a';
 	@track website='n/a';
-	@track preferredlanguage ='n/a';
+	@track preferredLanguage ='n/a';
 	
 	connectedCallback() {
 		// this.changeTypeOptions = this.getChangeTypeOptions();
@@ -149,7 +149,7 @@ export default class TidsAllInformation extends LightningElement {
 			this.phone=this.setNone(this.agency.phone);
 			this.fax=this.setNone(this.agency.fax);
 			this.website=this.setNone(this.agency.website);
-			this.preferredlanguage = this.setlanguage(this.agency.preferredLanguage);
+			this.preferredLanguage = this.setlanguage(this.agency.preferredLanguage);
 			this.isagency=true;
 			console.log('getAddressContactInfo:result',JSON.stringify(result));
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});

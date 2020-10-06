@@ -989,6 +989,7 @@ export default class TidsMailing extends LightningElement {
 						isstateselected = true;
 					}
 				}
+				if (selectedstate!=undefined){selectedstate=selectedstate.toUpperCase();}
 				//console.log('this.states>>>',JSON.stringify(this.states));
 				if (!isstateselected){
 					if (this.states != undefined && this.states.length > 0){
@@ -1056,23 +1057,25 @@ export default class TidsMailing extends LightningElement {
 							}
 						}
 						if (isclose == false && isclose2 == false){
-								isitemtopush = false;
-								console.log("condition1");
+							isitemtopush = false;
+							console.log("condition1");
 						}
 						//if (!item.toponymName.startsWith(searchvalue)){
 						// isitemtopush=false;
 						//}
 						if (isitemtopush &&
 							(item.name.match(letterNumber) ||
-								item.toponymName.match(letterNumber))
+							item.toponymName.match(letterNumber))
 						){
 							isitemtopush = false;
 							console.log("condition2");
 						}
 						if (isitemtopush && isstateselected){
-							if (item.adminName1 != selectedstate){
+							let statef = item.adminName1;
+							if (statef!=undefined){statef=statef.toUpperCase();}
+							if (statef!= selectedstate){
 								isitemtopush = false;
-								console.log("condition3");
+								console.log("condition3",statef,selectedstate);
 							}
 						} else {
 							if (isstateselecteable){

@@ -146,7 +146,7 @@ export default class TidsApplicationDecision extends LightningElement {
 				 //enable modal window to retry
 				 console.log(JSON.stringify(result));
 			}else{
-				let action = {type: status}
+				let action = {type: status,caseId: this.tidsCase.Id};
 				fireEvent(this.pageRef, "applicationDecisionListener", action);
 			}
 		}).catch(error => {

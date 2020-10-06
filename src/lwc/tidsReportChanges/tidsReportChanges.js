@@ -70,7 +70,6 @@ export default class TidsReportChanges extends LightningElement {
 		});
 	}
 	handleProceed(event) {
-		console.log('handleProceed',JSON.stringify(this.accountInfo));
 		event.preventDefault();
 		let action = {
 			type: 'REPORT_CHANGES',
@@ -81,7 +80,6 @@ export default class TidsReportChanges extends LightningElement {
 				caseId: ''
 			}
 		}
-		console.log('action', JSON.stringify(action));
 		setCase(null);
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		fireEvent(this.pageRef,'reportChangesListener', action);

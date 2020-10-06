@@ -48,11 +48,7 @@ const registerListener = (eventName, callback, thisArg) => {
     events[eventName].forEach(function(listener){
         duplicate=listener.callback === callback;
     });
-    console.log('eventName',eventName);
-    console.log('duplicate',duplicate);
-    console.log('events[eventName]',events[eventName]);
     events[eventName] = [];
-
     events[eventName].push({ callback, thisArg });
     
 };

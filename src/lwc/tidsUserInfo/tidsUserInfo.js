@@ -95,7 +95,6 @@ const initializeTidsInfo = () =>{
 
 const getSectionRules = (sectionName) => {
 	let menuName = null;
-	console.log('getSectionRules:tidsInfo', JSON.stringify(tidsInfo));
 	let functioname="";
 	switch (tidsInfo.applicationType) {
 		case NEW_HEAD_OFFICE:
@@ -136,7 +135,6 @@ const getSectionRules = (sectionName) => {
 		default:
 			break;
 	}
-	console.log('getSectionRules:menuName', menuName);
 	let c = tidsConfiguration.find((e) => e.apiName === menuName);
 	let ops = null;
 	if (tidsInfo.userType === "client") {
@@ -241,7 +239,6 @@ const getUserInfo = () => {
 };
 
 const setUserInfo = (props) => {
-	console.log('role',JSON.stringify(props.profile));
 	let userData = JSON.parse(JSON.stringify(props.currentUser));
 	let accountData = JSON.parse(JSON.stringify(userData.Account));
 	let recordTypeData = JSON.parse(JSON.stringify(accountData.RecordType));
@@ -310,9 +307,7 @@ const setBusinessrules = (props) => {
 
 const sectionNavigation = (props) => {
 	let sections = [];
-	console.log('tidsInfo',JSON.stringify(tidsInfo));
 	let locationtype=getLocationType();
-	console.log('locationtype',locationtype);
 	let apptype=tidsInfo.applicationType;
 	let option='';
 	let isvetting = tidsInfo.userType === "vetting" ? true:false;
@@ -337,7 +332,6 @@ const sectionNavigation = (props) => {
 	} else if (apptype === CHG_BUSINESS_PROFILE_SPECIALIZATION && !isAccountHeadOffice()) {
 		option = "chg-business-profile-specialization-br";
 	}
-	console.log('option',option);
 	sections = getMenuOptions({ name: option, type: "navigation" });
 	return sections.find((item) => item.sectionName === props);
 };
@@ -766,15 +760,12 @@ const vettingMenu = (menu) => {
 };
 
 const createMenu = (menus) => {
-	//console.log('createMenu:menus',JSON.stringify(menus));
-	//console.log('createMenu:optionsMenu',JSON.stringify(optionsMenu));
 	menus.forEach((menu) => {
 		let client = clientMenu(menu);
 		let vetting = vettingMenu(menu);
 		optionsMenu.push(client);
 		optionsMenu.push(vetting);
 	});
-	//console.log('createMenu:optionsMenu',JSON.stringify(optionsMenu));
 };
 
 const resetUserInfo = () => {
@@ -881,6 +872,7 @@ export {
 	mappingSelectedValues,
 	setAgencyLegalStatus,
 	setAddress,
+	setSupportingDocuments,
 	setBusinessProfile,
 	setBusinessSpecialization,
 	setShareholderDetails,

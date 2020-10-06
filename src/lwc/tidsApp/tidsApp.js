@@ -40,7 +40,6 @@ import {
 	setUserType,
 	setSectionsDone,
 	setCase,
-	getHeadOfficeInfo,
 	setMainActivities,
 	setPrincipalDestinations,
 	setSalesVolume,
@@ -57,15 +56,18 @@ import {
 	setShareholderDetails,
 	setPreferedLanguages,
 	setApplicationType,
-	getApplicationType,
 	setWelcome,
 	setConfiguration,
 	setContact,
 	createMenu,
 	setBusinessSpecialization,
-	getAccountSelected,
 	setIsAccountHeadOffice,
+	setSupportingDocuments,
 	setCompanyTypes,
+	getApplicationType,
+	getAccountSelected,
+	getHeadOfficeInfo,
+	getTidsInfo,
 	NEW_BRANCH
 } from "c/tidsUserInfo";
 
@@ -217,7 +219,6 @@ export default class TidsApp extends LightningElement {
 	}
 
 	init() {
-		console.log("tidsApp:init");
 		this.applicationType = getApplicationType();
 		this.isMode1 = false;
 		this.isMode2 = false;
@@ -226,30 +227,22 @@ export default class TidsApp extends LightningElement {
 			getVettingDoneCondition({
 				tidsCaseId: this.tidsCaseId
 			})
-				.then((result) => {
-					if (result == null) {
-						this.loadCase();
-					} else {
-						this.showForm = false;
-						this.isMode1 = true;
-						this.isMode2 = false;
-						this.showSpinner = false;
-						this.showDashboard = false;
-						console.log(
-							"getVettingDoneCondition:result",
-							JSON.stringify(result)
-						);
-						this.errorData = this.mappingError(result);
-						console.log(
-							"getVettingDoneCondition:this.errorData",
-							JSON.stringify(this.errorData)
-						);
-						this.hasError = true;
-					}
-				})
-				.catch((error) => {
-					console.log("getVettingDoneCondition:error", JSON.stringify(error));
-				});
+			.then((result) => {
+				if (result == null) {
+					this.loadCase();
+				} else {
+					this.showForm = false;
+					this.isMode1 = true;
+					this.isMode2 = false;
+					this.showSpinner = false;
+					this.showDashboard = false;
+					this.errorData = this.mappingError(result);
+					this.hasError = true;
+				}
+			})
+			.catch((error) => {
+				console.log('error',JSON.stringify(error));
+			});
 		} else {
 			this.isMode1 = true;
 			this.isMode2 = false;
@@ -263,14 +256,8 @@ export default class TidsApp extends LightningElement {
 			userId: Id
 		})
 			.then((response) => {
-				console.log("response", JSON.stringify(response));
 				let isHeadOffice =
 					response.tidsCase.Account.Location_Type__c === "HO" ? true : false;
-				console.log("isHeadOffice", isHeadOffice);
-				console.log(
-					"response.tidsCase.Account.Location_Type__c",
-					response.tidsCase.Account.Location_Type__c
-				);
 				setIsAccountHeadOffice(isHeadOffice);
 				setUserInfoIata({
 					locationtype: response.tidsCase.Account.Location_Type__c,
@@ -294,11 +281,6 @@ export default class TidsApp extends LightningElement {
 
 				updateSections(jsonCaseAttachment.sections);
 				setSectionsDone(jsonCaseAttachment.sectionsDone);
-				console.log(
-					"setSectionsDone2",
-					JSON.stringify(jsonCaseAttachment.sectionsDone)
-				);
-
 				this.isMode1 = false;
 				this.isMode2 = true;
 				this.showSpinner = false;
@@ -313,49 +295,33 @@ export default class TidsApp extends LightningElement {
 				);
 			})
 			.catch((error) => {
-				console.log(error);
+				console.log('error',JSON.stringify(error));
 			});
 	}
 	currentUserInfo(userId) {
-		console.log("tidsApp:currentUserInfo");
 		getUserInfo1({
 			userId: userId
 		})
-			.then((result) => {
-				let sfInfo = JSON.parse(JSON.stringify(result));
-				console.log("currentUserInfo:result", JSON.stringify(result));
-				console.log("tids Conditions", JSON.stringify(result.error));
-				this.mappingUserInfo(sfInfo);
-
-				let tidsConfiguration = JSON.parse(sfInfo.tidsConfiguration);
-				console.log(
-					"currentUserInfo:sfInfo.tidsConfiguration",
-					sfInfo.tidsConfiguration
-				);
-				setConfiguration(tidsConfiguration);
-				console.log("setConfiguration(tidsConfiguration)");
-				createMenu(tidsConfiguration);
-				console.log("createMenu(tidsConfiguration)");
-				if (Object.keys(result.error).length > 0) {
-					console.log("tids Conditions", JSON.stringify(result.error));
-					// TIDS Conditions
-					this.tidsConditionsBusinessLogic(sfInfo);
-				} else if (Object.keys(sfInfo.profile).length > 0) {
-					console.log("tids Dashboard", JSON.stringify(sfInfo));
-					// TIDS Dashboard
-					this.tidsDashboardBusinessLogic(sfInfo);
-				} else if (Object.keys(result.currentUser).length > 0) {
-					console.log(
-						"tids HO New Application",
-						JSON.stringify(result.currentUser)
-					);
-					// TIDS HO Form Application
-					this.tidsFormBusinessLogic(sfInfo);
-				}
-			})
-			.catch((error) => {
-				console.log(JSON.stringify(error));
-			});
+		.then((result) => {
+			let sfInfo = JSON.parse(JSON.stringify(result));
+			this.mappingUserInfo(sfInfo);
+			let tidsConfiguration = JSON.parse(sfInfo.tidsConfiguration);
+			setConfiguration(tidsConfiguration);
+			createMenu(tidsConfiguration);
+			if (Object.keys(result.error).length > 0) {
+				// TIDS Conditions
+				this.tidsConditionsBusinessLogic(sfInfo);
+			} else if (Object.keys(sfInfo.profile).length > 0) {
+				// TIDS Dashboard
+				this.tidsDashboardBusinessLogic(sfInfo);
+			} else if (Object.keys(result.currentUser).length > 0) {
+				// TIDS HO Form Application
+				this.tidsFormBusinessLogic(sfInfo);
+			}
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
 	}
 
 	tidsDashboardBusinessLogic(sfInfo) {
@@ -380,10 +346,6 @@ export default class TidsApp extends LightningElement {
 		let jsonCaseAttachment = JSON.parse(sfinfo.tidsAttachment);
 		updateSections(jsonCaseAttachment.sections);
 		setSectionsDone(jsonCaseAttachment.sectionsDone);
-		console.log(
-			"setSectionsDone1",
-			JSON.stringify(jsonCaseAttachment.sectionsDone)
-		);
 	}
 
 	tidsFormBusinessLogic(sfInfo) {
@@ -448,13 +410,45 @@ export default class TidsApp extends LightningElement {
 	}
 
 	newBranchListener(payload) {
+
+		console.log('newBranchListener:payload',JSON.stringify(payload));
 		this.resetDisplayValues();
 		this.showForm = true;
 		this.isMode1 = true;
 		this.ismode2 = false;
 		this.showSpinner = false;
 		let headOffice = getHeadOfficeInfo();
-		console.log("handleProceed", JSON.stringify(headOffice));
+
+		let p=getTidsInfo();
+		console.log('newBranchListener:p',JSON.stringify(p));
+		let newContact = {
+			cmpName: "contact",
+			target: "NA",
+			sectionDecision: "Not_Started",
+			values: {}
+		};
+		let newbusinessProfile={
+			sectionName: 'Business Profile',
+			cmpName: 'business-profile',
+			values: {},
+			sectionDecision: 'Not_Started',
+			errors: []
+		};
+		let newBusinessSpecialization={
+			sectionName: 'Business Specialization',
+			cmpName: 'business-specialization',
+			values: {},
+			sectionDecision: 'Not_Started',
+			errors: []
+		};
+		let newSupportingDocuments={
+			sectionName: 'Supporting Documents',
+			cmpName: 'supporting-documents',
+			values: [],
+			sectionDecision: 'Not_Started',
+			errors: []
+		};
+
 		// Head Office Information
 		let applicantValues = {
 			cmpName: "new-applicant",
@@ -468,6 +462,36 @@ export default class TidsApp extends LightningElement {
 			sectionDecision: "NA",
 			vettingErrors: []
 		};
+		if (payload.applicationType === "NEW_BR") {
+			let address = {
+				values: {
+					address:'',
+					city:'',
+					state: {
+						label:''
+					},
+					postalCode:'',
+					countryIsoCode:'',
+					virtualCountryOfOperations:''
+				}
+			};
+
+			setAddress(address);
+			let mailing = {
+				sectionName: "Mailing",
+				cmpName: "mailing",
+				values: {
+					isMailingSameAsPhysicalAddress: "true"
+				},
+				sectionDecision: "Not_Started",
+				errors: []
+			};
+			setMailing(mailing);
+			setContact(newContact);
+			setBusinessProfile(newbusinessProfile);
+			setBusinessSpecialization(newBusinessSpecialization);
+			setSupportingDocuments(newSupportingDocuments);
+		}
 		if (payload.applicationType === "NEW_VB") {
 			let address = {
 				values: {
@@ -493,8 +517,11 @@ export default class TidsApp extends LightningElement {
 				errors: []
 			};
 			setMailing(mailing);
+			setContact(newContact);
+			setBusinessProfile(newbusinessProfile);
+			setBusinessSpecialization(newBusinessSpecialization);
+			setSupportingDocuments(newSupportingDocuments);
 		}
-		console.log("handleProceed", "setWelcome");
 		setWelcome(applicantValues);
 		let shareholdersValues = [];
 		headOffice.shareholders.forEach((item) => {
@@ -515,7 +542,6 @@ export default class TidsApp extends LightningElement {
 			sectionDecision: "NA",
 			vettingErrors: this.vettingErrors
 		};
-		console.log("handleProceed", "setShareholderDetails");
 		setShareholderDetails(shareholderDetailValues);
 		// Principal Activities values from GDP References table
 		// Agency Legal Status
@@ -533,17 +559,14 @@ export default class TidsApp extends LightningElement {
 			sectionDecision: "NA",
 			vettingErrors: []
 		};
-		console.log("handleProceed", "setAgencyLegalStatus");
 		setAgencyLegalStatus(agencyValues);
-		console.log("handleProceed", "formListener");
-		// eslint-disable-next-line @lwc/lwc/no-async-operation
+		console.log('newBranchListener:all loaded and now display form',);	
 		setTimeout(() => {
 			fireEvent(this.pageRef, "formListener", { section: "form" });
-		}, 1000);
+		}, 2000);
 	}
 
 	mappingError(payload) {
-		console.log("mappingError:payload", JSON.stringify(payload));
 		let errorText = {
 			id: payload.Id,
 			developerName: payload.DeveloperName,
@@ -566,10 +589,9 @@ export default class TidsApp extends LightningElement {
 	}
 
 	applicationDecisionListener(action) {
-		console.log("applicationDecisionListener:action", action);
 		switch (action.type) {
 			case "Approved":
-				this.applicationDecisionApproved();
+				this.applicationDecisionApproved(action.caseId);
 				break;
 			case "Closed":
 				this.applicationDecisionClosed();
@@ -595,22 +617,17 @@ export default class TidsApp extends LightningElement {
 		getVettingDoneCondition({
 			tidsCaseId: null
 		})
-			.then((result) => {
-				this.isMode1 = true;
-				this.isMode2 = false;
-				this.showSpinner = false;
-				this.showDashboard = false;
-				console.log("getVettingDoneCondition:result", JSON.stringify(result));
-				this.errorData = this.mappingError(result);
-				console.log(
-					"getVettingDoneCondition:this.errorData",
-					JSON.stringify(this.errorData)
-				);
-				this.hasError = true;
-			})
-			.catch((error) => {
-				console.log("getVettingDoneCondition:error", JSON.stringify(error));
-			});
+		.then((result) => {
+			this.isMode1 = true;
+			this.isMode2 = false;
+			this.showSpinner = false;
+			this.showDashboard = false;
+			this.errorData = this.mappingError(result);
+			this.hasError = true;
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
 	}
 	accountReinstatementDeadline() {
 		let errorData = {
@@ -627,27 +644,22 @@ export default class TidsApp extends LightningElement {
 		};
 		return errorData;
 	}
-	applicationDecisionApproved() {
+	applicationDecisionApproved(caseId) {
 		this.resetDisplayValues();
 		getVettingDoneCondition({
-			tidsCaseId: null
+			tidsCaseId: caseId
 		})
-			.then((result) => {
-				this.isMode1 = true;
-				this.isMode2 = false;
-				this.showSpinner = false;
-				this.showDashboard = false;
-				console.log("getVettingDoneCondition:result", JSON.stringify(result));
-				this.errorData = this.mappingError(result);
-				console.log(
-					"getVettingDoneCondition:this.errorData",
-					JSON.stringify(this.errorData)
-				);
-				this.hasError = true;
-			})
-			.catch((error) => {
-				console.log("getVettingDoneCondition:error", JSON.stringify(error));
-			});
+		.then((result) => {
+			this.isMode1 = true;
+			this.isMode2 = false;
+			this.showSpinner = false;
+			this.showDashboard = false;
+			this.errorData = this.mappingError(result);
+			this.hasError = true;
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
 	}
 	applicationDecisionClosed() {
 		this.resetDisplayValues();
@@ -655,22 +667,17 @@ export default class TidsApp extends LightningElement {
 		getVettingDoneCondition({
 			tidsCaseId: null
 		})
-			.then((result) => {
-				this.isMode1 = true;
-				this.isMode2 = false;
-				this.showSpinner = false;
-				this.showDashboard = false;
-				console.log("getVettingDoneCondition:result", JSON.stringify(result));
-				this.errorData = this.mappingError(result);
-				console.log(
-					"getVettingDoneCondition:this.errorData",
-					JSON.stringify(this.errorData)
-				);
-				this.hasError = true;
-			})
-			.catch((error) => {
-				console.log("getVettingDoneCondition:error", JSON.stringify(error));
-			});
+		.then((result) => {
+			this.isMode1 = true;
+			this.isMode2 = false;
+			this.showSpinner = false;
+			this.showDashboard = false;
+			this.errorData = this.mappingError(result);
+			this.hasError = true;
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
 	}
 	saveAndQuitBusinessLogic() {
 		this.resetDisplayValues();
@@ -694,14 +701,11 @@ export default class TidsApp extends LightningElement {
 		this.isMode1 = true;
 		this.isMode2 = false;
 		this.showSpinner = false;
-		console.log("reportChangesListener1", JSON.stringify(action));
 		setLocationType(action.payload.locationtype);
 		setApplicationType(action.payload.changeType);
-		console.log("reportChangesListener3", action.payload.changeType);
 		initializeTidsInfo();
 		switch (action.payload.changeType) {
 			case "chg-name-company":
-				console.log("reportChangesListener4");
 				this.changeNameCompanyDetails();
 				break;
 			case "chg-address-contact":
@@ -713,7 +717,6 @@ export default class TidsApp extends LightningElement {
 			default:
 				break;
 		}
-		console.log("action", JSON.stringify(action));
 	}
 
 	changeNameCompanyDetails() {
@@ -723,7 +726,7 @@ export default class TidsApp extends LightningElement {
 				this.changeNameCompanyDetailsCallback(result);
 			})
 			.catch((error) => {
-				console.log(error);
+				console.log('error',JSON.stringify(error));
 			});
 	}
 
@@ -737,19 +740,15 @@ export default class TidsApp extends LightningElement {
 	changeAddressContactDetails() {
 		let accountSelected = getAccountSelected();
 		getAddressContactDetails({ accountId: accountSelected.Id })
-			.then((result) => {
-				this.changeAddressContactDetailsCallback(result);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		.then((result) => {
+			this.changeAddressContactDetailsCallback(result);
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
 	}
 	changeAddressContactDetailsCallback(account) {
 		let act = JSON.parse(JSON.stringify(account));
-		console.log(
-			"changeAddressContactDetailsCallback:account",
-			JSON.stringify(account)
-		);
 		this.mappingWelcome(act);
 		this.mappingAddress(act);
 		this.mappingMailingAddress(account);
@@ -763,12 +762,12 @@ export default class TidsApp extends LightningElement {
 			accountId: accountSelected.Id,
 			isLabel: false
 		})
-			.then((response) => {
-				this.changeBusinessProfileSpecializationCallback(response);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		.then((response) => {
+			this.changeBusinessProfileSpecializationCallback(response);
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
 	}
 
 	changeBusinessProfileSpecializationCallback(account) {
@@ -922,7 +921,6 @@ export default class TidsApp extends LightningElement {
 
 	reloadForm() {
 		setSectionsDone([]);
-		console.log("setSectionsDone3");
 		this.showForm = true;
 		// eslint-disable-next-line @lwc/lwc/no-async-operation
 		setTimeout(() => {
@@ -931,7 +929,6 @@ export default class TidsApp extends LightningElement {
 	}
 
 	handleOpenCloseDocument(props) {
-		console.log("documentsListener:props", props);
 		this.template
 			.querySelector('[data-id="divblock2"]')
 			.classList.toggle("attachmentsClosed");
