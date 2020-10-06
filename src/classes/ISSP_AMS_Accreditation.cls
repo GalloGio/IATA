@@ -554,7 +554,6 @@ public without sharing class ISSP_AMS_Accreditation {
 	 * for security we only apply this for accType PASS
 	 */
 	public Boolean getIsPostalOperator() {
-		//return ApexPages.currentPage().getParameters().get('accType')==AMS_Utils.passParticipation &&
 		return con.Account.RecordType.DeveloperName == 'IATA_Agency' && this.con.Account.Location_Class__c == AMS_Utils.LC_POSTAL_OPERATOR;
 	}
 
@@ -3968,9 +3967,12 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 			if(isPassAccreditation){
-				typeOfProcess = AMS_Utils.new_PASS_HO;
-				if (amsOfficeType == 'Branch'){
+				if(isNoticeOfChange) {
+					typeOfProcess = 'MAJOR.CHANGES';
+				} else if (amsOfficeType == 'Branch'){
 					typeOfProcess = AMS_Utils.new_PASS_BR;
+				} else {
+					typeOfProcess = AMS_Utils.new_PASS_HO;
 				}
 			}
 

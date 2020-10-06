@@ -446,7 +446,7 @@
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
                     
-                <apex:outputPanel >
+                <apex:outputPanel rendered="{!!IsPostalOperator}">
                     <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Owners_Managers}</apex:outputPanel>
                         <apex:dataTable value="{!List_PreviousOwners}" var="agencycon" width="100%" cellpadding="3px" columnsWidth="25%,45%,30%">                    
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
@@ -503,7 +503,7 @@
                   </apex:outputPanel>
                 <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
                 
-                <apex:outputPanel id="previous-owners" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}" rendered="{!NOT(hqAccount.Company_Type__c=='S')}">
+                <apex:outputPanel id="previous-owners" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}" rendered="{!NOT(hqAccount.Company_Type__c=='S') && !isPostalOperator}">
                           <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Companies}</apex:outputPanel>
                           <apex:dataTable styleClass="table-hover table table-condensed table-responsive" width="100%" columnsWidth="25%,25%,25%,25%" value="{!List_PreviousCompanies}" var="agencycon" >
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
@@ -617,8 +617,8 @@
                               </apex:outputpanel>
                             </apex:facet>
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
-                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}" />
-                            <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}" rendered="{! !isPostalOperator}"/>
+                            <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" rendered="{! !isPostalOperator}"/>
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_New_HO_Code}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />
                             <apex:outputText value="{!newForm.New_Head_Office_IATA_Code__c}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />  

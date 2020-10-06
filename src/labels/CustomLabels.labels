@@ -23378,14 +23378,6 @@ For each section below either:&lt;br/&gt;
         <value>The Transferor has informed the Transferee of the need to comply with the provision of the Passenger Sales Agency Rules if the Transferee wishes to be entered on the IATA Agency List as an Accredited Agent. Approval may be granted only if the Transferee complies in all respects with the requirements of the Passenger Sales Agency Rules.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_Bank_Change1_Company</fullName>
-        <categories>ISSP AMS NoC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_Bank_Change1_Company</shortDescription>
-        <value>The Transferor has informed the Transferee of the need to comply with the provision of the Passenger Sales Company Rules if the Transferee wishes to be entered on the IATA Company List as an Accredited Company. Approval may be granted only if the Transferee complies in all respects with the requirements of the Passenger Sales Company Rules.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NoC_Bank_Change2</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -23394,28 +23386,12 @@ For each section below either:&lt;br/&gt;
         <value>In accordance with one of the requirements of the Passenger Sales Agency Rules, the Transferee hereby undertakes that it accepts joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Sales Agency Agreement as at the date the transfer of ownership takes place.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_Bank_Change2_Company</fullName>
-        <categories>ISSP AMS NoC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_Bank_Change2_Company</shortDescription>
-        <value>In accordance with one of the requirements of the Passenger Sales Company Rules, the Transferee hereby undertakes that it accepts joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Sales Company Agreement as at the date the transfer of ownership takes place.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NoC_Bank_Change3</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change3</shortDescription>
         <value>It is hereby agreed that this Notice of Change shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in the preamble to this Notice of Change). Notwithstanding the foregoing, the applicant authorizes IATA, and represents that it has obtained meaningful consent of each individual listed in this application to use and process the information to be used by travel industry participants.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NoC_Bank_Change3_Company</fullName>
-        <categories>ISSP AMS NoC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_Bank_Change3_Company</shortDescription>
-        <value>It is hereby agreed that this Notice of Change shall become a part of every Sales Company Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in the preamble to this Notice of Change). Notwithstanding the foregoing, the applicant authorizes IATA, and represents that it has obtained meaningful consent of each individual listed in this application to use and process the information to be used by travel industry participants.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_acount_details</fullName>
