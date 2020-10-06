@@ -161,6 +161,9 @@ public without sharing class AMS_Utils {
 	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
 	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
+	public static final Set<String> setAMS = new Set<String> {HO, BR, SA, AO};
+	public static final Set<String> setNewGen = new Set<String> {HE, AE, GE};
+
 	public static final Set<String> IEP_VENDORS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
 	//AMSU-125
 	public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
@@ -568,7 +571,7 @@ public without sharing class AMS_Utils {
 		'Import Agent' =>   'IATA Cargo Agent',
 		'CASS Associate' => 'CASS Associates',
 		'Courier' =>    'IATA Cargo Agent',
-		'Handling Agent' => 'IATA Travel Agent',
+		'Airport Handling Agent' => 'IATA Travel Agent',
 		'MSO Member Sales Office' => 'IATA Travel Agent',
 		'TIDS Agent' => 'TIDS',
 		'GSA General Sales Agent' =>    'General Sales Agent (GSA)',

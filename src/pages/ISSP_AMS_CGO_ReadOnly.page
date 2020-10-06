@@ -51,11 +51,11 @@
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_For_whom_Nominee__c.Label}" rendered="{!AND(AND(AND(newForm.ISSP_AMS_Nominee_Trustee__c != '', newForm.ISSP_AMS_Nominee_Trustee__c == 'Yes'),newForm.ISSP_AMS_Legal_Status__c == 'Corporation'), NOT(isCNSAgency))}"/>           
 	                <apex:outputText value="{!newForm.ISSP_AMS_For_whom_Nominee__c}" rendered="{!AND(AND(AND(newForm.ISSP_AMS_Nominee_Trustee__c != '', newForm.ISSP_AMS_Nominee_Trustee__c == 'Yes'),newForm.ISSP_AMS_Legal_Status__c == 'Corporation'), NOT(isCNSAgency))}"/>
 	                
-	                <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q1}" rendered="NOT(isCNSAgency)"/>
-	                <apex:outputText value="{!newForm.ISSP_AMS_Business_Activities__c}" rendered="NOT(isCNSAgency)"/>
+	                <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q1}" rendered="{!NOT(isCNSAgency)}"/>
+	                <apex:outputText value="{!newForm.ISSP_AMS_Business_Activities__c}" rendered="{!NOT(isCNSAgency)}"/>
 	                
-	                <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q2}" rendered="NOT(isCNSAgency)"/>
-	                <apex:outputText value="{!CASE(newForm.ISSP_AMS_Is_Applicant_Parent__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
+	                <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q2}" rendered="{!NOT(isCNSAgency)}"/>
+	                <apex:outputText value="{!CASE(newForm.ISSP_AMS_Is_Applicant_Parent__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
 	                
 	                 <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q3}" rendered="{!AND(newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes', NOT(isCNSAgency))}"/>
 	                 <apex:outputText value="{!newForm.ISSP_AMS_State_Names_Addresses__c}" rendered="{!AND(newForm.ISSP_AMS_Is_Applicant_Parent__c == 'Yes', NOT(isCNSAgency))}"/>
@@ -63,8 +63,8 @@
 	                 <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q4}" />
 	                 <apex:outputText value="{!newForm.ISSP_AMS_Number_of_Years_Traded__c}" />
 	                    
-	                 <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q5}" rendered="NOT(isCNSAgency)"/>
-	                 <apex:outputText value="{!CASE(newForm.ISSP_AMS_Is_Make_Declarations__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
+	                 <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q5}" rendered="{!NOT(isCNSAgency)}"/>
+	                 <apex:outputText value="{!CASE(newForm.ISSP_AMS_Is_Make_Declarations__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
 	                    
 	                </apex:panelGrid>
 	              </apex:pageBlockSection>
@@ -372,9 +372,9 @@
 	            </apex:panelGrid>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q3}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Does_your_firm_intend_to_request__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	         <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q3}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Does_your_firm_intend_to_request__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	         <apex:outputText rendered="{!NOT(isCNSAgency)}">
 				<apex:outputText rendered="{!newForm.Does_your_firm_intend_to_request__c=='Yes'}">
 					<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q3_F1} " /><br/>
 					<apex:outputField value="{!newForm.List_the_airport_s_to_be_authorized__c}"/>
@@ -390,18 +390,18 @@
 	        </apex:outputText>
 	        </apex:outputText>
 	       
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q5}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Does_the_air_transportation_which_your__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	         <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q5}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Does_the_air_transportation_which_your__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	         <apex:outputText rendered="{!NOT(isCNSAgency)}">
 				<apex:outputText rendered="{!newForm.Does_the_air_transportation_which_your__c=='Yes'}">
 					<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q5_F1}" style="padding-right:10px"/>
 					<apex:outputfield value="{!newForm.State_the_percentage_of_your_gross__c}" />
 				</apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q6}" style="padding-right:10px" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Does_your_firm_sell_air_cargo__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q6}" style="padding-right:10px" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Does_your_firm_sell_air_cargo__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 				<apex:outputText rendered="{!newForm.Does_your_firm_sell_air_cargo__c=='Yes'}">
 					<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q6_F1}" style="padding-right:10px"/>
 					<apex:outputfield value="{!newForm.What_percentage_of_your_sales__c}"/>	
@@ -417,36 +417,36 @@
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_operate_a_cargo_cartage__c.Label}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Does_your_firm_operate_a_cargo_cartage__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_operate_a_cargo_cartage__c.Label}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Does_your_firm_operate_a_cargo_cartage__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 	        <apex:outputText rendered="{!newForm.Does_your_firm_operate_a_cargo_cartage__c=='Yes'}">
 	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_use_its_own_vehicles__c.Label}" style="padding-right:10px"/>
 	            <apex:outputText value="{!newForm.Does_your_firm_use_its_own_vehicles__c}" />
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q9}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Is_your_firm_a_member_of_a_national__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q9}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Is_your_firm_a_member_of_a_national__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 	        <apex:outputText rendered="{!newForm.Is_your_firm_a_member_of_a_national__c=='Yes'}">
                 <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_the_name_of_the_association_s__c.Label}"/><br/>
 	            <apex:outputfield value="{!newForm.Give_the_name_of_the_association_s__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q6}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Is_there_any_relationship__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_CGO_ReadOnly_Q6}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Is_there_any_relationship__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 	        <apex:outputText rendered="{!newForm.Is_there_any_relationship__c=='Yes'}">
                 <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_full_details__c.Label}"/><br/>
 	            <apex:outputfield value="{!newForm.Give_full_details__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q11}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Is_your_firm_acting_as_agent_for_surface__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q11}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Is_your_firm_acting_as_agent_for_surface__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 	        <apex:outputText rendered="{!newForm.Is_your_firm_acting_as_agent_for_surface__c=='Yes'}">
 	            <apex:panelGrid columns="1">
 	            	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Rail__c.Label}" />
@@ -459,18 +459,18 @@
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q12}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Is_your_firm_affiliated_directly__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q12}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Is_your_firm_affiliated_directly__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 	        <apex:outputText rendered="{!newForm.Is_your_firm_affiliated_directly__c=='Yes'}">
                 <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.provide_details__c.Label}" /><br/>
 	            <apex:outputField value="{!newForm.provide_details__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q13}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText value="{!CASE(newForm.Does_your_firm_now_share_or_intend__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="NOT(isCNSAgency)"/>
-	        <apex:outputText rendered="NOT(isCNSAgency)">
+	        <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Q13}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText value="{!CASE(newForm.Does_your_firm_now_share_or_intend__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!NOT(isCNSAgency)}"/>
+	        <apex:outputText rendered="{!NOT(isCNSAgency)}">
 	      	<apex:outputText rendered="{!newForm.Does_your_firm_now_share_or_intend__c=='Yes'}">
 	        	<apex:outputText value="* Explain fully, stating name and business of other person or firm"/><br/>
 	           	<apex:outputField value="{!newForm.Explain_fully_stating_name__c}"/>
@@ -725,7 +725,7 @@
 	                <apex:outputText value="{!$Label.ISSP_PAX_Federal_EIN}"/>
 	                <apex:outputfield value="{!newForm.ISSP_AMS_VAT_number__c}"/>
 				</apex:panelGrid>
-	        	<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rendered="NOT(isCNSAgency)">
+	        	<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rendered="{!NOT(isCNSAgency)}">
 	            	<apex:outputText value="{!$Label.ISSP_Currency}" />
 	                <apex:outputText value="{!newForm.CurrencyIsoCode}" />
 	                        

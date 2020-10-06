@@ -1676,6 +1676,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>Toutes les notifications</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -1706,6 +1710,50 @@
     <customLabels>
         <label><!-- Attention --></label>
         <name>Attention</name>
+    </customLabels>
+    <customLabels>
+        <label>Le commentaire ci-dessous a été publié sur votre cas</label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>hier.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez nous faire savoir si votre question a été résolue ou s&apos;il y a autre chose que nous pouvons faire pour vous aider concernant ce cas en utilisant les boutons ci-dessous ou en accédant au cas à partir de</label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez nous le faire savoir en accédant à la requête dans le portail client de l&apos;IATA.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous fermerons automatiquement le dossier si nous ne recevons pas d&apos;autres commentaires de votre part dans les prochaines 24 heures.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous clôturons le cas</label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>car nous n&apos;avons pas reçu d&apos;autres commentaires de votre part au cours des dernières 48 heures.</label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Si vous avez besoin d&apos;une aide supplémentaire sur ce cas, vous pouvez ajouter un commentaire ou nous contacter par le biais d&apos;un nouveau cas dans</label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous venons d&apos;ajouter une réponse à votre dossier, avec le numéro</label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez consulter les détails de le cas pour voir la réponse.</label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez nous le faire savoir en accédant à la requête dans le portail client de l&apos;IATA.</label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
         <label><!-- Auto renew payment method error --></label>
@@ -2885,7 +2933,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>Nous contacter</label>
+        <label>Contactez-nous</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2899,6 +2947,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Acheter en ligne</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>Appelez-nous</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>Annuler</label>
@@ -2985,6 +3037,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Chat en $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Veuillez vérifier votre email pour obtenir vos détails d&apos;accès</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3015,6 +3071,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Profil de la société</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>Une plainte prend jusqu&apos;à 5 jours ouvrables pour être résolue. Si vous avez une question ou une demande, veuillez utiliser l&apos;option &lt;b&gt; Créer un cas &lt;/b&gt; afin que nous puissions vous répondre plus rapidement.</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>Compléter votre profil</label>
@@ -3119,6 +3179,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Refuser l&apos;accès</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Rédigez un bref résumé du retour d&apos;information</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Document ajouté à mes favoris</label>
@@ -3301,6 +3365,52 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Il s&apos;agit d&apos;une &lt;b&gt;urgence &lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>L&apos;aide d&apos;urgence est disponible 24 heures sur 24 et 7 jours sur 7 et n&apos;est offerte qu&apos;en anglais.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez noter que l&apos;aide fournie par le canal d&apos;urgence est offerte en &lt;b&gt; anglais &lt;/b&gt; et pour les situations critiques suivantes :</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Si votre requête n&apos;est pas liée à l&apos;une de ces situations, veuillez cliquer sur &quot;&lt;b&gt; Soumettre comme Requête &lt;/b&gt;&quot; ci-dessous pour créer un cas.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous avez sélectionné l&apos;option Urgence</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez noter que l&apos;aide fournie
+            par le biais du canal d&apos;urgence n&apos;est que pour les situations critiques suivantes :
+        </label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Problème d&apos;accès au système ou panne de la plate-forme</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Problèmes de facturation (problèmes majeurs/divergences )</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Suspension du système</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Soupçon d&apos;activité frauduleuse</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>N&apos;exigez pas d&apos;aide d&apos;urgence, sauf en cas de fraude, de billetterie ou de problèmes financiers</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3337,7 +3447,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>Nous contacter</label>
+        <label>Contactez-nous</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
@@ -3445,6 +3555,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
+        <label>Donnez votre avis</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>À l&apos;IATA, nous améliorons constamment nos produits et services afin de vous offrir une excellente expérience. Vos opinions et vos réflexions sont à l&apos;origine de ces améliorations. Cliquez sur le bouton ci-dessous pour nous faire part de vos commentaires.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Vos commentaires sont importants pour nous</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Il s&apos;agit de</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Go to Webstar --></label>
         <name>CSP_Go_to_Webstar</name>
     </customLabels>
@@ -3465,8 +3591,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label>Bien à vous,&amp;lt;br/&amp;gt;IATA Customer Service Center</label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Portail client de l&apos;IATA</label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -4433,6 +4567,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -4746,12 +4884,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Sélectionnez le sujet ici</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
         <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>Accès au service</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -4886,12 +5036,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Veuillez indiquer un sujet court</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Soumettre</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Soumettre comme Urgence</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Soumettre comme Requête</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4930,6 +5092,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>Tous vos sujets</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Vos sujets récents</label>
+        <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Suivre</label>
         <name>CSP_Track</name>
     </customLabels>
@@ -4948,6 +5118,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Treasury Dashboard --></label>
         <name>CSP_Treasury_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
     </customLabels>
     <customLabels>
         <label>le dépannage</label>
@@ -5192,6 +5366,106 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Case Classification --></label>
         <name>Case_Classification</name>
+    </customLabels>
+    <customLabels>
+        <label>Cette affaire ne peut pas être classée ou elle est déjà classée.</label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>Le lien a expiré.</label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller au portail client</label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Merci, votre réponse a été enregistrée.</label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>Pas maintenant</label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous êtes redirigé vers l&apos;enquête.</label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>Nous avons clôturé le dossier ci-dessous :</label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Comme nous n&apos;avons eu aucune nouvelle de vous dans les 48 heures, nous avons déjà clôturé le dossier ci-dessous :</label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label>Merci pour la confirmation !</label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Une erreur s&apos;est produite lors de la redirection vers l&apos;enquête.</label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>À l&apos;IATA, nous améliorons constamment nos services afin de vous offrir une excellente expérience client. C&apos;est pourquoi nous aimerions vous demander votre avis sur certains points que nous jugeons cruciaux, cela ne devrait pas prendre plus de deux minutes.</label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Répondre à l&apos;enquête</label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>La réponse n&apos;était pas claire</label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez clore cette affaire maintenant</label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller à la page &quot;Contactez-nous</label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label>J&apos;ai une nouvelle requête</label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Votre question a-t-elle été résolue ?</label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Si nous n&apos;avons pas de nouvelles de vous dans les prochaines 48 heures, nous considérerons que vous n&apos;avez plus besoin d&apos;aide et nous fermerons automatiquement le dossier.</label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez nous faire savoir comment nous pouvons vous aider à répondre à cette question.</label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label>Comme vous avez une nouvelle demande, nous avons clôturé le dossier {arg0} et vous pouvez créer la nouvelle demande en cliquant sur le bouton ci-dessous afin que nous puissions vous répondre dans les plus brefs délais.</label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Merci pour votre confirmation</label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez fournir des commentaires supplémentaires afin que nous puissions continuer à travailler sur ce cas.</label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label>cette enquête</label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Votre avis nous intéresse. Veuillez nous faire part de vos commentaires sur le soutien de l&apos;IATA&amp;apos en</label>
+        <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Defect/Issue --></label>
@@ -5460,6 +5734,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
@@ -7428,6 +7710,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -21066,6 +21352,10 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
+    </customLabels>
+    <customLabels>
         <label>Documents en attente</label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
@@ -23544,6 +23834,15 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Si le chat dans votre langue n&apos;est pas disponible pour le moment, veuillez &lt;b&gt; créer un cas &lt;/b&gt; ou nous contacter par &lt;b&gt; téléphone &lt;/b&gt;.
+        </label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Il suffit de composer :</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23558,6 +23857,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
     <customLabels>
         <label>Vous pouvez utiliser le numéro suivant pour parler à un représentant de l’IATA :</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>La fenêtre de chat a été ouverte</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Chatter avec nous</label>
@@ -26299,6 +26602,14 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Treasury_Dashboard_Premium_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
         <name>Treasury_Dashboard_Service_Name</name>
     </customLabels>
@@ -26795,7 +27106,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Service d&apos;accès</label>
+        <label>Les canaux de soutien disponibles apparaissent une fois que vous avez sélectionné le sujet de votre question</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26855,7 +27166,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Obtenez de l&apos;aide directement via le portail IATA, par téléphone ou par chat.</label>
+        <label>Prenez contact avec nous. Commencez par sélectionner le sujet de votre question</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -27003,7 +27314,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Service client</label>
+        <label>Contactez-nous</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
@@ -27905,6 +28216,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -33017,8 +33332,8 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -33088,6 +33403,19 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -33825,6 +34153,22 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35096,6 +35440,23 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Currency Center Survey Hierarchy --></description>
         <label><!-- Currency Center Survey Hierarchy --></label>
         <name>Currency_Center_Survey_Hierarchy</name>
@@ -35309,6 +35670,15 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Financial Securities --></label>
             <name>Financial Securities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -36408,7 +36778,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Fichiers</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -37121,6 +37491,15 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

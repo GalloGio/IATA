@@ -1,51 +1,34 @@
 import { LightningElement, track, api } from 'lwc';
+import PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class IataModal extends LightningElement {
 
 	@track isOpen = false;
     @api showclosebutton = false;
     @api showhomebutton = false;
-    @api roundCorners = false;
+	@api roundCorners = false;
 
     _hideHeader = false;
-    _hideFooter = false;
-
-    @api get hideHeader(){
+    @api get hideHeader() {
         return this.displayIcon || this._hideHeader;
     }
-
-    set hideHeader(v){
+    set hideHeader(v) {
         this._hideHeader = v;
     }
+	@api hideFooter = false;
 
-    @api get hideFooter(){
-        return this.displayIcon || this._hideFooter;
-    }
-
-    set hideFooter(v){
-        this._hideFooter = v;
-    }
-
+    
     @api widthSmall = false;
     @api iconPosition = false;
 
     //options: x-small | small | medium | large
     @api size = "medium";
 
-    @track modalContainerBox = "slds-modal__container";
-    @track bodyClass = "slds-modal__content slds-p-around_medium slds-text-align_left ";
+    modalContainerBox = "slds-modal__container";
+    _bodyClass = "slds-modal__content slds-p-around_medium slds-text-align_left ";
 
     //options: neutral | info | success | warning | error
     @api variant = "neutral";
-
-    //options: success | warning | error
-    @track _variantIcon = '';
-    @api get variantIcon(){
-        return this._variantIcon;
-    }
-    set variantIcon(v){
-        this._variantIcon = v;
-    }
 
     @api backgroundGray = false
 
@@ -76,24 +59,20 @@ export default class IataModal extends LightningElement {
 	}
 
     get icon(){
-        return this.variantIcon === "success" ? "utility:check" : this.variantIcon === "warning" ? "utility:warning" : "utility:close";
-    }
-
-    get iconColor(){
-        return this.variantIcon === "success" ? "darkGreenIcon" : this.variantIcon === "warning" ? "yellowIcon" : "redIcon";
-    }
-
-    get innerCircle(){
-        return this.variantIcon === "success" ? "innerCircle innerCircleSuccess" : this.variantIcon === "warning" ? "innerCircle innerCircleWarning" : "innerCircle innerCircleError";
-    }
-
-    get outerCircle(){
-        return this.variantIcon === "success" ? "outerCircle outerCircleSuccess" : this.variantIcon === "warning" ? "outerCircle outerCircleWarning" : "outerCircle outerCircleError";
+		return PortalPath + 
+			(this.variant === "success" ?
+				"CSPortal/Images/Icons/successIcon.svg" :
+				this.variant === "warning" ?
+					"CSPortal/Images/Icons/exclamation_point.svg" : "");
     }
 
     get displayIcon(){
-        return this.variantIcon !== undefined && this.variantIcon !== null && this.variantIcon !== '';
-    }
+        return this.variant === 'success' || this.variant === 'warning';
+	}
+	
+	get bodyClass() {
+		return this._bodyClass + (this.displayIcon ? ' larger-top-padding' : '');
+	}
 
     connectedCallback() {
         if (this.displayBorderRadius) {

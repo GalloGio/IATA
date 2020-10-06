@@ -2875,6 +2875,16 @@ SF Workflow Process</value>
         <value>asmad@iata.org</value>
     </labels>
     <labels>
+        <fullName>Airline_Daily_Sales_portal_service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Airline Daily Sales portal service</shortDescription>
+        <value>The Airline Daily Sales Dashboard provides you a global display of your daily cashflow, payment methods and sales performance.  Data from BSP Markets where you participate is loaded to provide:
+                                                                   1- Your overall Daily Net Position, with net amounts by BSP country, and visualization of trends and counts
+2- Your Credit Card Sales by country and brand, with visualization of transactions by type and credit card brand
+3- Your world-wide outstanding BSPLink refund authority request transactions, by country</value>
+    </labels>
+    <labels>
         <fullName>All_Notifications_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2933,6 +2943,94 @@ SF Workflow Process</value>
         <protected>false</protected>
         <shortDescription>Attention</shortDescription>
         <value>Attention</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_1</shortDescription>
+        <value>The below comment was posted on your case</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_2</shortDescription>
+        <value>yesterday.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_3</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_3</shortDescription>
+        <value>Please let us know if your query has been resolved or there is anything else we can help you with on this case by using the buttons below or accessing the case from</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_4</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_4</shortDescription>
+        <value>You can let us know by accessing the query in the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_24Hours_Notification_5</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_24Hours_Notification_5</shortDescription>
+        <value>Should we not hear from you over the next 24 hours, we will take it that you no longer require assistance and we will close the case.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_48Hours_Notification_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_48Hours_Notification_1</shortDescription>
+        <value>We are closing the case</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_48Hours_Notification_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_48Hours_Notification_2</shortDescription>
+        <value>as we have not received further feedback from you in the last 48 hours.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_48Hours_Notification_3</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_48Hours_Notification_3</shortDescription>
+        <value>Should you require further assistance on this case, you can add a comment or contact us through a new case in</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_1</shortDescription>
+        <value>We have just added a reply to your case with number</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_2</shortDescription>
+        <value>You can go to case details to view the reply.</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Case_Comment_Notification_Email_3</fullName>
+        <categories>CS Portal, Case Closure, Case Comment, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto_Case_Comment_Notification_Email_3</shortDescription>
+        <value>You can let us know by accessing the query in the IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>Auto_renew_payment_method_error</fullName>
@@ -3645,7 +3743,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Breadcrumb_Support_ReachUs</shortDescription>
-        <value>Reach Us</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>CSP_Breadcrumb_Support_Title</fullName>
@@ -3668,6 +3766,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Buy Online</shortDescription>
         <value>Buy Online</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Call_Tile_SubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Call Tile Sub label</shortDescription>
+        <value>Give Us a Call</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3830,6 +3936,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
     </labels>
     <labels>
+        <fullName>CSP_Chat_base_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chat base label</shortDescription>
+        <value>Chat in $0</value>
+    </labels>
+    <labels>
         <fullName>CSP_Check_Email</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3889,6 +4003,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_CompanyProfile</shortDescription>
         <value>Company Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Complaint_Select_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>complaint select message</shortDescription>
+        <value>A complaint can take up to 5 business days for resolution. If you have a question or request, please select &lt;b&gt;create a case&lt;/b&gt; for us to resolve your question quicker.</value>
     </labels>
     <labels>
         <fullName>CSP_Complete_Profile</fullName>
@@ -4090,6 +4212,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
         <value>Deny Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DescSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Description subtitle for complaint/compliment</shortDescription>
+        <value>Write a brief summary of feedback</value>
     </labels>
     <labels>
         <fullName>CSP_DocumentBookmarkAdded</fullName>
@@ -4439,6 +4569,95 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>We hope you enjoy our IATA Customer Portal!</value>
     </labels>
     <labels>
+        <fullName>CSP_Emergency_Box_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency box message</shortDescription>
+        <value>This is an &lt;b&gt;emergency&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Footer_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency box footer message</shortDescription>
+        <value>Emergency support is 24/7 and is only offered in English.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message when emergency option is selected on the Case Creation</shortDescription>
+        <value>Please note that the support provided through the Emergency channel is offered in &lt;b&gt;English&lt;/b&gt; and limited to the following critical situations:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Message2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Second Message when emergency option is selected on the Case Creation</shortDescription>
+        <value>If your query is not related to any of these situations, please click &lt;b&gt; Submit as Query &lt;/b&gt; below to create a case.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Case_Creation_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title when emergency option is selected on the Case Creation</shortDescription>
+        <value>You have selected the emergency option</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message when emergency option is selected on the support page</shortDescription>
+        <value>Please note that the support provided
+            through the Emergency channel is only for the following critical situations:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>System access issue or platform outage</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Billing issues (major issues/discrepancies)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>System suspension</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Selected_Reason4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Suspicion of fraudulent activity</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Emergency_Tooltip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency Tooltip</shortDescription>
+        <value>Please do not demand emergency support unless it&apos;s about fraud, ticketing or financial issues</value>
+    </labels>
+    <labels>
         <fullName>CSP_ErrorMsg_Flow4_Logout_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4514,7 +4733,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQReachUsBanner_ButtonText</shortDescription>
-        <value>Reach Us</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_Text</fullName>
@@ -4725,6 +4944,38 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
     </labels>
     <labels>
+        <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Button label</shortDescription>
+        <value>Give Feedback</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Message</shortDescription>
+        <value>At IATA, we are constantly making improvements to our products and services so we can provide you an excellent experience. Your views and thoughts drive these improvements. Click the button below to provide your feedback.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback title</shortDescription>
+        <value>Your feedback is important to us</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Give_Feedback_Type_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Give Feedback Type title</shortDescription>
+        <value>This is a</value>
+    </labels>
+    <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4765,11 +5016,27 @@ If you are already CNS Endorsed, you can use this service to update information 
 	&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
     </labels>
     <labels>
+        <fullName>CSP_IATA_CSC_Email_Greetings</fullName>
+        <categories>CS Portal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IATA_CSC_Email_Greetings</shortDescription>
+        <value>Kind Regards,&lt;br/&gt;IATA Customer Service Center</value>
+    </labels>
+    <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_IATA_Country</shortDescription>
         <value>IATA Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IATA_Customer_Portal</fullName>
+        <categories>CS Potal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATA Customer Portal</shortDescription>
+        <value>IATA Customer Portal</value>
     </labels>
     <labels>
         <fullName>CSP_IATA_Invoices</fullName>
@@ -6685,6 +6952,14 @@ You can easily create a company account in two steps</value>
         <value>Personal Information</value>
     </labels>
     <labels>
+        <fullName>CSP_PortalBaseURL</fullName>
+        <categories>CS Portal, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PortalBaseURL</shortDescription>
+        <value>https://portal.iata.org</value>
+    </labels>
+    <labels>
         <fullName>CSP_PortalPath</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7299,6 +7574,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Select Portal Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Select_Topic_Placeholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Topic placeholder</shortDescription>
+        <value>Select Topic Here</value>
+    </labels>
+    <labels>
         <fullName>CSP_Service_ADSR</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7311,6 +7593,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_Access</shortDescription>
         <value>Service Access</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_AirlineDailySales_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_AirlineDailySales_NoAccess</shortDescription>
+        <value>You do not have access to Airline Daily Sales service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_AirlineDailySales_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_AirlineDailySales_Title</shortDescription>
+        <value>Airline Daily Sales Dashboard</value>
     </labels>
     <labels>
         <fullName>CSP_Service_TIPReports_AmazonType</fullName>
@@ -7577,6 +7875,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Status</value>
     </labels>
     <labels>
+        <fullName>CSP_SubjectSubtitleCC</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subject subtitle for complaint/compliment</shortDescription>
+        <value>Please enter a short subject line</value>
+    </labels>
+    <labels>
         <fullName>CSP_Submit</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7591,6 +7897,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_SubmitApproval</shortDescription>
         <value>Submit for Approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmitAsEmergency</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP submit Emergency query label</shortDescription>
+        <value>Submit as Emergency</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmitAsQuery</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP submit query label</shortDescription>
+        <value>Submit as Query</value>
     </labels>
     <labels>
         <fullName>CSP_SubmittedApproval</fullName>
@@ -7665,6 +7987,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Title</value>
     </labels>
     <labels>
+        <fullName>CSP_Topic_All_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All topics label</shortDescription>
+        <value>All Topics</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Topic_Recent_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recent Topics label</shortDescription>
+        <value>Your Recent Topics</value>
+    </labels>
+    <labels>
         <fullName>CSP_Track</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7700,6 +8038,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Treasury Dashboard</shortDescription>
         <value>Treasury Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Treasury_Dashboard_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Treasury Dashboard Report</shortDescription>
+        <value>Treasury Dashboard Report</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting</fullName>
@@ -8115,7 +8460,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP)</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -8158,6 +8503,204 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Case Classification</shortDescription>
         <value>Case Classification</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Error_Cannot_Close</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Error_Cannot_Close</shortDescription>
+        <value>This case cannot be closed or it&amp;apos;s already closed.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Error_Expired_Link</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Error_Expired_Link</shortDescription>
+        <value>The link has expired.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Go_To_CS_Portal_Button</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Go_To_CS_Portal_Button</shortDescription>
+        <value>Go to Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Ignore_Survey</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Ignore_Survey</shortDescription>
+        <value>Your answer has been saved.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Ignore_Survey_Button</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Ignore Survey Button</shortDescription>
+        <value>Not Right Now</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Redirect_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Redirect_Survey</shortDescription>
+        <value>You are being redirected to the survey.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Success_Message</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Success Message</shortDescription>
+        <value>We have closed the case below:</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Success_Message_48Hours</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Success Message 48Hours</shortDescription>
+        <value>As we did not hear from you 48 hours after our initial reply, we had already closed the case below:</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Success_Title</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Success_Title</shortDescription>
+        <value>Thank you for the confirmation!</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Survey_Link_Error</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Survey_Link_Error</shortDescription>
+        <value>An error occured while redirecting you to the survey.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Survey_Message</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Closure_Survey_Message</shortDescription>
+        <value>At IATA, we are constantly making improvements to our services so we can provide you with an excellent Customer Experience. This is why we would like to ask your opinion on some points we consider crucial, it shouldn’t take more than two minutes.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closure_Take_Survey_Button</fullName>
+        <categories>CS Portal, Case Closure</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closure Take Survey Button</shortDescription>
+        <value>Take the Survey</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Answer_Not_Clear</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Answer_Not_Clear</shortDescription>
+        <value>The answer was not clear</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Can_Close_Case</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Can_Close_Case</shortDescription>
+        <value>You can close this case now</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Go_To_Contact_Us</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Comment Button Go To Contact Us</shortDescription>
+        <value>Go to Contact Us</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Button_Have_New_Query</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Button_Have_New_Query</shortDescription>
+        <value>I have a new Query</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Have_Been_Resolved_1</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Have_Been_Resolved_1</shortDescription>
+        <value>Has your query been addressed?</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Have_Been_Resolved_2</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Have_Been_Resolved_2</shortDescription>
+        <value>Should we not hear from you over the next 48 hours, we will take it that you no longer require assistance and we will close the case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_How_Can_Assist_You</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_How_Can_Assist_You</shortDescription>
+        <value>Please let us know how we can further assist you with this query.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_New_Query_Confirmation_Message</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Comment New Query Confirmation Message</shortDescription>
+        <value>As you have a new query, we have closed the case {arg0} and you can create the new query by clicking the button below in order for us to get back to you as soon as possible.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_New_Query_Confirmation_Title</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Comment New Query Confirmation Title</shortDescription>
+        <value>Thank you for the confirmation!</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Notification_Template_Name</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Notification_Template_Name</shortDescription>
+        <value>NT-2006</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Provide_Aditional_Feedback</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Provide_Aditional_Feedback</shortDescription>
+        <value>Please provide additional comments in order for us to continue working on this case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Survey_Lik_Label</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Survey_Lik_Label</shortDescription>
+        <value>this survey</value>
+    </labels>
+    <labels>
+        <fullName>Case_Comment_Survey_Message</fullName>
+        <categories>CS Portal, Case Closure, Case Comment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_Comment_Survey_Message</shortDescription>
+        <value>We value your opinion. Please let us know your feedback about IATA &amp;apos;s Support in</value>
     </labels>
     <labels>
         <fullName>Case_Defect_Issue</fullName>
@@ -8650,6 +9193,20 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Cancel_Monthly_Survey</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Clone_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Clone_Confirmation_Question</shortDescription>
+        <value>Are you sure you want to proceed? Cloning data from the last submitted survey will delete any data you have created for this survey.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Clone_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Clone_Confirmation_Title</shortDescription>
+        <value>Clone last submitted Survey</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Countries</fullName>
@@ -9557,6 +10114,14 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>Discounted Amount</shortDescription>
         <value>Discounted Amount</value>
+    </labels>
+    <labels>
+        <fullName>Distribution_Airlines_Retailing_with_NDC</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Distribution &amp; Airlines Retailing with NDC</shortDescription>
+        <value>The Distribution and Airline Retailing with NDC Course illustrates how airlines optimally distribute their products and services through their own website channels and how the industry is working to replicate the same functionality in indirect channels used by travel agents. Through media-rich and interactive animation, this course will satisfy your curiosity, dispel potential myths, simulate NDC distribution and describe enhancements – all to create an improved user and customer experience, thanks to New Distribution Capability. More Details &lt;a &lt;a href=\&quot;https://www.iata.org/en/training/courses/distribution-retailing-ndc/1031/en\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>Documents_POP</fullName>
@@ -35626,6 +36191,13 @@ Please note that many IATA invoices for accredited agents are collected through 
         <value>Pending Approval</value>
     </labels>
     <labels>
+        <fullName>ISSP_Pending_Closure</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Pending Closure</shortDescription>
+        <value>Pending Closure</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Pending_Documents</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -40412,6 +40984,23 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Available Period:</value>
     </labels>
     <labels>
+        <fullName>LVA_CallUsDefaultMessage</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsDefaultMessage</shortDescription>
+        <value>If chat for your language is not available, you can &lt;b&gt;create a
+            case&lt;/b&gt; or contact us through &lt;b&gt;phone&lt;/b&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>LVA_CallUsDial</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_CallUsDial</shortDescription>
+        <value>Just Dial:</value>
+    </labels>
+    <labels>
         <fullName>LVA_CallUsEmergencyAvailableHours</fullName>
         <categories>LVA</categories>
         <language>en_US</language>
@@ -40442,6 +41031,14 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <protected>false</protected>
         <shortDescription>LVA_CallUsThruPhoneNum</shortDescription>
         <value>Contact Us through Phone Number:</value>
+    </labels>
+    <labels>
+        <fullName>LVA_ChatWindowAlreadyOpen</fullName>
+        <categories>LVA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LVA_ChatWindowAlreadyOpen</shortDescription>
+        <value>A chat window has been opened</value>
     </labels>
     <labels>
         <fullName>LVA_ChatWithUs</fullName>
@@ -40750,7 +41347,7 @@ errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
 errInvalidCoupon:Coupon &quot;{0}&quot; is already used
 errQuantity:Quantity &quot;{0}&quot; is invalid
 errTax:Error found in Freight &amp; Taxes calculation:
-msgWarnProductNotCompliant:- We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
+msgWarnProductNotCompliant:We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.
 msgPayTypeThreshold: (threshold exceeded)
 msgPayTypeNotAllowed: (not allowed)
 msgPayTypeBlock: (blocked by product)
@@ -40767,7 +41364,7 @@ errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
 errMissState:State/Province cannot be empty
 msgAddrExist:Shipping address is already in system.
-msgErrorCartNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
+msgErrorCartNotCompliant:We are unable to process your online order at this time. Please contact the Central Direct Sales team at ymq-cds@iata.org for assistance in completing your order.</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
@@ -40842,7 +41439,7 @@ lblStockDate:Expected Availability Date:
 lblQtyInvalid:Invalid quantity to add
 lblDiscount:Discount
 lblFreeShipping:FREE SHIPPING
-msgErrorProductNotCompliant:We&apos;re unable to process your online order at this time. Please contact Online Store Support at onlinestoresupport@iata.org or custserv@iata.org for assistance in completing your order.</value>
+msgErrorProductNotCompliant:This order is going to an embargoed country, clearance from Corporate Compliance is required before processing it.</value>
     </labels>
     <labels>
         <fullName>Labels_IECProductRelated</fullName>
@@ -45795,6 +46392,20 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Premium</value>
     </labels>
     <labels>
+        <fullName>Treasury_Dashboard_Report_Access_Denied</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Report Access Denied</shortDescription>
+        <value>&lt;/br&gt;You do not have access to &lt;b&gt; {name} &lt;/b&gt; report!&lt;/br&gt;&lt;/br&gt; If you would like to get access to this report, you need to subscribe to &lt;b&gt;Treasury Dashboard &lt;font color=&quot;red&quot;&gt;Premium&lt;/font&gt;&lt;/b&gt;:</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Report_Access_Denied_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Report Access Denied Link</shortDescription>
+        <value>Click here.</value>
+    </labels>
+    <labels>
         <fullName>Treasury_Dashboard_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46158,7 +46769,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the topic covering the problem.</value>
+        <value>Available support channels appear once you have selected the topic of your question</value>
     </labels>
     <labels>
         <fullName>csp_ActionIndicator</fullName>
@@ -46277,7 +46888,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Get support directly through the IATA portal, by phone or chat.</value>
+        <value>Let&apos;s get in touch. Start by selecting the topic of your question</value>
     </labels>
     <labels>
         <fullName>csp_CompanyContact_Section_label</fullName>
@@ -46309,7 +46920,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>At IATA we strive to provide an excellent customer service and itâ€™s rewarding to know that you care too. We consider any feedback you give us.</value>
+        <value>At IATA we strive to provide an excellent customer service and it&apos;s rewarding to know that you care too. We consider any feedback you give us.</value>
     </labels>
     <labels>
         <fullName>csp_Compliment_Label</fullName>
@@ -46571,7 +47182,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Contact Support</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>csp_InvalidPhoneValue</fullName>
@@ -47508,6 +48119,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>true</protected>
         <shortDescription>Tagalog</shortDescription>
         <value>Tagalog</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_tr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Turkish</shortDescription>
+        <value>Türk</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ur</fullName>
