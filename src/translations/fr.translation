@@ -5028,6 +5028,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Partager</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Le lien direct FAQ a été copié!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Ignorer pour l&apos;instant</label>
         <name>CSP_Skip</name>
     </customLabels>

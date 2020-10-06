@@ -66,7 +66,7 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
         if (result.data) {
             let articles = [];
             result.data.forEach( article => {
-                articles.push({ id: article.Id, title: article.Title });
+                articles.push({ UrlName: article.UrlName, title: article.Title });
             });
             
             this.relatedArticles = articles;
@@ -104,14 +104,13 @@ export default class PortalSupportTopArticles extends NavigationMixin(LightningE
 
     navigateToArticle(event) {
         let params = {};
-        params.id1 = event.target.attributes.getNamedItem('data-item').value; // PARENT ARTICLE
-        params.id2 = params.id1; // SPECIFIC RELATED ARTICLE TO THE PARENT ARTICLE
-
+    
         this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
+            type: 'standard__knowledgeArticlePage',
             attributes: {
-                pageName: "support-view-article"
+                urlName: event.target.attributes.getNamedItem('data-item').value
             }})
         .then(url => navigateToPage(url, params));
+
     }
 }
