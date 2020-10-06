@@ -106,7 +106,7 @@ public with sharing class CaseCommentHandler {
 		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
 		caseItems.onAfterUpdate();
 	}
-	
+
 	/**
 	* @description used to retreive KPI Configuration from custom metadata: ISSP_KPI_Reporting__mdt
 	*
