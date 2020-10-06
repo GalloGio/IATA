@@ -48,9 +48,9 @@
     </fields>
     <fields>
         <fullName>Caused_By__c</fullName>
-        <description>System triggering the error</description>
+        <description>Business process which failed</description>
         <externalId>false</externalId>
-        <label>Caused By</label>
+        <label>Business Process</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -89,10 +89,10 @@
     </fields>
     <fields>
         <fullName>Impact__c</fullName>
-        <description>Impact value on SNOW</description>
+        <description>Impact value on JSD. It&apos;s a number, 1 or 2 or 3</description>
         <externalId>false</externalId>
         <label>Impact</label>
-        <length>255</length>
+        <length>1</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -122,9 +122,9 @@
     </fields>
     <fields>
         <fullName>Short_Description__c</fullName>
-        <description>Short description of the error. If enclosed in &quot;[[&quot; &quot;]]&quot;  it will be used to dynamically get a value from field (i.e. [[iataCode + &apos; &apos; + log.Error_Code__c]]). Otherwise it will display a literal.</description>
+        <description>Summary of the incident as show in JSD</description>
         <externalId>false</externalId>
-        <label>Short Description</label>
+        <label>Summary</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -201,16 +201,10 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Caller_ID__c</columns>
         <columns>Error_Message__c</columns>
-        <columns>Description__c</columns>
-        <columns>Urgency__c</columns>
-        <columns>Subcategory__c</columns>
         <columns>Short_Description__c</columns>
-        <columns>Severity__c</columns>
         <columns>Impact__c</columns>
-        <columns>Business_Service__c</columns>
-        <columns>Assignment_Group__c</columns>
+        <columns>Caused_By__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
