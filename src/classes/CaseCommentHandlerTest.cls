@@ -1,5 +1,28 @@
 @isTest
 private class CaseCommentHandlerTest {
+	@TestSetup
+	static void makeData(){
+		//setup data for testing cases with case items
+		Case caseRecord = new Case();
+		insert caseRecord;
+		CaseComment caseComment = new CaseComment(ParentId = caseRecord.Id, CommentBody = 'Test Case Comment');
+		insert caseComment;
+
+		//test case with case item
+		// get a sample picklist value for business service field
+		Schema.DescribeFieldResult businessServiceFieldResult = Case_Item__c.IATA_Business_Service__c.getDescribe();
+		List<Schema.PicklistEntry> picklistEntry = businessServiceFieldResult.getPicklistValues();
+		String businessService = picklistEntry[0].getValue();
+
+		// get a sample picklist value for business process field
+		Schema.DescribeFieldResult businessProcessFieldResult = Case_Item__c.IATA_Business_Process__c.getDescribe();
+		picklistEntry = businessProcessFieldResult.getPicklistValues();
+		String businessProcess = picklistEntry[0].getValue();
+		
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Item__c', 'MASTER');
+		Case_Item__c caseItem = new Case_Item__c(Status__c = 'Open', RecordTypeId = recordTypeId, IATA_Business_Service__c = businessService, IATA_Business_Process__c = businessProcess, Case__c = caseRecord.Id);
+		insert caseItem;
+	}
 
 	private static Case createClosedCase() {
 		String caseJSON = '{"attributes":{'
@@ -81,5 +104,55 @@ private class CaseCommentHandlerTest {
 			}
 		}
 		Test.stopTest();
+	}
+
+	@IsTest
+	static void testDoAfterInsert(){
+		Test.startTest();
+		CaseCommentHandler caseCommentHandler = new CaseCommentHandler();
+		Case caseRecord = new Case();
+		insert caseRecord;
+		CaseComment caseComment = new CaseComment(ParentId = caseRecord.Id, CommentBody = 'Test Case Comment 1');
+		insert caseComment;
+		Test.stopTest();
+
+		List<CaseComment> caseCommentList = [SELECT Id FROM CaseComment WHERE CommentBody = 'Test Case Comment 1'];
+		System.assertEquals(1, caseCommentList.size(),'Expected to find Case Comment with Comment Body = Test Comment 1');
+	}
+
+	@IsTest
+	static void testDoAfterUpdate(){
+		Test.startTest();
+		CaseComment caseComment = [SELECT Id, CommentBody FROM CaseComment LIMIT 1];
+		caseComment.CommentBody = 'Updated comment body';
+		update caseComment;
+		Test.stopTest();
+
+		List<CaseComment> caseCommentList = [SELECT Id FROM CaseComment WHERE CommentBody = 'Updated comment body' LIMIT 1];
+		System.assertEquals(1, caseCommentList.size(), 'Expected to find a CaseComment with Comment Body = Updated comment body');
+	}
+
+	@IsTest
+	static void testDoAfterDelete(){
+		Test.startTest();
+		CaseComment caseComment = [SELECT Id FROM CaseComment];
+		delete caseComment;
+		Test.stopTest();
+
+		List<CaseComment> caseCommentList = [SELECT Id FROM CaseComment];
+		System.assertEquals(0, caseCommentList.size(), 'Expected 0 CaseComments but instead found ' + caseCommentList.size());
+	}
+
+	@IsTest
+	static void testDoAfterUndelete(){
+		Test.startTest();
+		CaseComment caseComment = [SELECT Id FROM CaseComment];
+		delete caseComment;
+		caseComment = [SELECT Id FROM CaseComment ALL ROWS];
+		undelete caseComment;
+		Test.stopTest();
+
+		List<CaseComment> caseCommentList = [SELECT Id FROM CaseComment];
+		System.assertEquals(1, caseCommentList.size(), 'Expected 1 CaseComments but instead found ' + caseCommentList.size());
 	}
 }
