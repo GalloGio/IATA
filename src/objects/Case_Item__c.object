@@ -154,16 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Case Item</label>
-    <nameField>
-        <displayFormat>CI-{0000000000}</displayFormat>
-        <label>Case Item Name</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Case Items</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Bypass_Salesforce_Support__c</fullName>
         <defaultValue>false</defaultValue>
@@ -765,6 +755,25 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
+    <label>Case Item</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Summary__c</columns>
+        <columns>Case__c</columns>
+        <columns>IATA_Business_Process__c</columns>
+        <columns>IATA_Business_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>CI-{0000000000}</displayFormat>
+        <label>Case Item Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Case Items</pluralLabel>
     <recordTypes>
         <fullName>MASTER</fullName>
         <active>true</active>
@@ -1154,11 +1163,7 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
             </values>
         </picklistValues>
     </recordTypes>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Case__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
