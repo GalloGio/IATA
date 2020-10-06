@@ -231,7 +231,7 @@ public without sharing class TIDSReportChanges {
 		Account account = getAccount(accountId);
 		List<AMS_Agency_Profile__c> businessprofilelist = TIDSUtil.tidsBusinessProfile(accountId);
 		sBusinessProfile businessProfile = getBusinessProfiles(businessprofilelist,gdpReferenceValues,isLabel);
-		businessProfile.values.gds.values = getSpecialties(account.GDS__c,loadGdpReferences(gdpref2,false));
+		businessProfile.values.gds.values = getSpecialties(account.GDS__c,loadGdpReferences(gdpref2,false), 'AIRSYS');
 		businessProfileSpecialization.setBusinessProfileDetails(businessProfile);
 		sBusinessSpecialization businessSpecialization = getBusinessSpecialization(businessprofilelist,gdpReferenceValues);
 		businessProfileSpecialization.setBusinessSpecializationDetails(businessSpecialization);
@@ -241,7 +241,7 @@ public without sharing class TIDSReportChanges {
 	public static Map<String, List<String>> loadGdpReferences(set<String> gdpref, boolean iscode) {
 		Map<String, List<String>> gdpMap = new Map<String, List<String>>();
 		for(GDP_Reference_Table__c item: [
-			SELECT Name, Code__c, Corresponding_AMS_Code__c
+			SELECT Name, Code__c, Corresponding_AMS_Code__c,Table__c
 			FROM GDP_Reference_Table__c
 			WHERE Table__c =:gdpref
 			AND Valid_For_TIDS__c = true
@@ -249,6 +249,7 @@ public without sharing class TIDSReportChanges {
 			String key=item.Code__c;
 			if (!iscode) {key=item.Corresponding_AMS_Code__c;}
 			List<String> values= new List<String>{item.Name,key};
+			key = item.Table__c+key;
 			System.debug('key>>>'+key+'  item.Name>>>'+item.Name);
 			gdpMap.put(key,values);
 		}
@@ -325,7 +326,7 @@ public without sharing class TIDSReportChanges {
 					if (isLabel){businessProfile.values.numberEmployees.values = getLabelBasedOnCode('APEMP', agencyProfile.GR_Item__c);}
 				}
 				when 'AT' {
-					List<String> answer = (List<String>) gdpReferenceValues.get(agencyProfile.GR_Item__c);
+					List<String> answer = (List<String>) gdpReferenceValues.get('APPRAC'+agencyProfile.GR_Item__c);
 					System.debug('agencyProfile.GR_Item__c>>>'+agencyProfile.GR_Item__c);
 					vslabel item = new vslabel(answer[0],String.valueOf(agencyProfile.GR_Item__c));
 					businessProfile.values.principalActivities.values.add(item);
@@ -381,10 +382,10 @@ public without sharing class TIDSReportChanges {
 					plist.put(agencyProfile.GR_Code__c, item);
 				}
 				when 'MK' {
-					businessSpecialization.values.marketSpecialties.values = getSpecialties(agencyProfile.GR_Item__c,gdpReferenceValues);
+					businessSpecialization.values.marketSpecialties.values = getSpecialties(agencyProfile.GR_Item__c,gdpReferenceValues, 'APSPEC');
 				}
 				when 'DS' {
-					businessSpecialization.values.destinationSpecialties.values = getSpecialties(agencyProfile.GR_Item__c,gdpReferenceValues);
+					businessSpecialization.values.destinationSpecialties.values = getSpecialties(agencyProfile.GR_Item__c,gdpReferenceValues, 'APDEST');
 				}
 			}
 		}
@@ -392,14 +393,14 @@ public without sharing class TIDSReportChanges {
 		return businessSpecialization;
 	}
 
-	public static List<vslabel> getSpecialties(String values,Map<String, List<String>> gdpReferenceValues) {
+	public static List<vslabel> getSpecialties(String values,Map<String, List<String>> gdpReferenceValues, String table) {
 		List<vslabel> result = new List<vslabel>();
 		if (values==null){return result;}
 		List<String> parts = values.split(';');
 		for(String item : parts) {
 			System.debug(item);
 			if(item == 'null') {item=null;}
-			List<String> gvalues= (List<String>) gdpReferenceValues.get(item);
+			List<String> gvalues= (List<String>) gdpReferenceValues.get(table+item);
 			if (gvalues==null || gvalues.size()<1){continue;}
 			vslabel itm = new vslabel(gvalues[0],gvalues[1]);
 			result.add(itm);
