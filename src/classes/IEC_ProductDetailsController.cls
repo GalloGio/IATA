@@ -89,6 +89,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	 **************************************************************************************************************/
 	public IEC_ProductDetailsController()
 	{
+		isCountryCompliant = true;
+
 		//Fetch Page params
 		pageParams = ApexPages.currentPage().getParameters();
 
@@ -267,6 +269,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 	public void validateCountryCompliance()
 	{
-		isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c,loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c});
+		if(loggedCustomer != null){
+			isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c,loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c});
+		}
 	}
 }
