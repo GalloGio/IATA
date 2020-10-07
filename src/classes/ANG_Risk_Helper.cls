@@ -279,9 +279,7 @@ public with sharing class ANG_Risk_Helper{
 		}
 	}
 
-
-	public static Decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso){
-
+	public static decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso, system.RoundingMode rMode){
 		if(currentCurIso == targetCurIso) return amount;
 
 		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
@@ -292,7 +290,14 @@ public with sharing class ANG_Risk_Helper{
 		Decimal toRate = targetCur==null?fromRate:targetCur.ConversionRate;
 
 		Decimal result = amount==null?0:amount * toRate/fromRate;
-		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
+		if(rMode==null)
+			return result;
+		else
+			return result.setScale(targetCur.DecimalPlaces, rMode);
+	}
+
+	public static Decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso){
+		return currencyConverter(currentCurIso,amount,targetCurIso, System.RoundingMode.HALF_UP);
 	}
 
 	public class FutureHandler implements Queueable{

@@ -340,7 +340,7 @@ public class ANG_RHCHelper {
 	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC, string Tier, ANG_BSP_Attributes__c bspAttrRhc)
 	{
 		Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
-		Decimal AmountAtRiskUSD = rhc.Amount_At_Risk_USD__c == null ? 0 : rhc.Amount_At_Risk_USD__c;
+		Decimal AmountAtRiskUSD = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 :ANG_Risk_Helper.currencyConverter(rhc.CurrencyIsoCode, rhc.ANG_RHC_Amount_Provisional__c, 'USD', null);// (rhc.ANG_RHC_Amount_Provisional__c);
 		Decimal minFs = rhc.ANG_Minimum_Financial_Security__c == null ? 0 : rhc.ANG_Minimum_Financial_Security__c;
 		Decimal fs = fsAmount;
 
@@ -372,7 +372,13 @@ public class ANG_RHCHelper {
 		decimal Tiered_Provisional_Amount = (bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c)
 											 + (bspAttrRhc.Amount_At_Risk_Multiplier__c==null?1:bspAttrRhc.Amount_At_Risk_Multiplier__c)
 											 * (AmountAtRiskUSD - (bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c));
-		rhc.Tiered_Provisional_Amount__c = Tiered_Provisional_Amount;
+
+		//Convert back the Tiered Provisional Amount from USD to RHC Currency
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Tiered_Provisional_Amount before conversion: ' + Tiered_Provisional_Amount);
+		Tiered_Provisional_Amount = (ANG_Risk_Helper.currencyConverter('USD', (Tiered_Provisional_Amount==null?0:Tiered_Provisional_Amount), rhc.CurrencyIsoCode, null));
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Tiered_Provisional_Amount after conversion: ' + Tiered_Provisional_Amount);
+		
+		rhc.Tiered_Provisional_Amount__c = Tiered_Provisional_Amount.setScale(2);
 		rhc.Forecasted_Tier__c = Tier;
 
 		Decimal newRhcAmountForecasted = Tiered_Provisional_Amount + (percentageOfExceedingFs * Tiered_Provisional_Amount).setScale(0);
