@@ -183,7 +183,7 @@
 					<apex:outputPanel styleClass="requiredInput" layout="block">
 						<apex:selectList size="1" value="{!country}" id="country">
 							<apex:selectoptions value="{!countryObj}"/>
-							<apex:actionSupport event="onchange" reRender="parameter4,buttons,parameterState"/>
+							<apex:actionSupport event="onchange" action="{!resetSelectState}" reRender="parameter4,buttons,parameterState"/>
 						</apex:selectList>
 					</apex:outputPanel>
 				</apex:pageblockSectionItem>
@@ -208,10 +208,14 @@
 				<apex:pageBlockSectionItem rendered="{!mode == 'Country' && country != null && country != 'Select Country'}">
 					<apex:outputLabel value="State" />
 					<apex:outputPanel layout="block">
-						<apex:selectList size="1" value="{!state}" id="state">
-							<apex:selectoptions value="{!stateobj}"/>
-							<apex:actionSupport event="onchange" reRender="parameter4,buttons"/>
-						</apex:selectList>
+						<c:MultiselectPicklist id="stateMultipicklist"
+							leftLabel="Available" 
+							leftOptions="{!stateobj}"
+							rightLabel="Selected"
+							rightOptions="{!selectedStates}"
+							size="8"
+							width="200px"
+							btn_up_down="false"/>
 					</apex:outputPanel>
 				</apex:pageBlockSectionItem>
 			</apex:pageBlockSection>

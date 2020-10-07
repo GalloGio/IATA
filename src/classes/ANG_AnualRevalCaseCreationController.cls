@@ -191,6 +191,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		get; set;
 	}
 
+	public List<SelectOption> selectedStates{get; set;}
+
 	public Boolean multicountryAccreditationModelSelected {
 		get {
 			return multicountryAccreditationModelSelected == null ? false : multicountryAccreditationModelSelected;
@@ -217,6 +219,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		getBatchStatus = 0;
 		size = 5;
 		selectedAccreditations = new List<SelectOption>();
+		selectedStates = new List<SelectOption>();
 		disableLaunchButton = true;
 	}
 
@@ -295,7 +298,10 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public void resetCountryState(){
 		this.country = null;
-		this.state = null;
+	}
+
+	public void resetSelectState(){
+		this.selectedStates = new List<SelectOption>();
 	}
 
 	public List<SelectOption> getcountryobj() {
@@ -310,10 +316,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	public List<SelectOption> getstateobj() {
-		List<SelectOption> options = new List<SelectOption>{
-			new SelectOption(SELECT_STATE, SELECT_STATE)
-		};
-
+		List<SelectOption> options = new List<SelectOption>();
 		if(country != null)
 			for(IATA_ISO_State__c state : [SELECT Id, Name FROM IATA_ISO_State__c WHERE IATA_ISO_Country__c =: country ORDER BY Name])
 				options.add(new SelectOption(state.Id, state.Name));
@@ -391,9 +394,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		noResultsFound = false;
 
 		Set<String> selectedAccreditationsSet = new Set<String>();
+		Set<String> selectedStateSet = new Set<String>();
 
 		for (SelectOption accred: selectedAccreditations) {
 			selectedAccreditationsSet.add(accred.getValue());
+		}
+
+		for (SelectOption state: selectedStates) {
+			selectedStateSet.add(state.getValue());
 		}
 
 		String queryAccount =
@@ -418,7 +426,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Financial year end with value: '+ month);
 		} else if (mode == MODE_COUNTRY) {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
-			if(state != SELECT_STATE && !String.isEmpty(state)) queryAccount += 'AND Iso_State__c = :state ';
+			if(!selectedStateSet.isEmpty()) queryAccount += 'AND Iso_State__c IN :selectedStateSet ';
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country +(state != SELECT_STATE ? ' with the state: ' + state : '.'));
 		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
