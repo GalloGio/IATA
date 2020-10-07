@@ -3952,7 +3952,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				} else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {
 					typeOfProcess = AMS_Utils.COR;
 				} else {
-					typeOfProcess = 'MAJOR.CHANGES';
+					typeOfProcess = AMS_Utils.AGENCYCHANGES;
 				}
 			} else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD) {
 				typeOfProcess = 'ANG.NEW.HE.STANDARD.1.0';
@@ -3968,7 +3968,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if(isPassAccreditation){
 				if(isNoticeOfChange) {
-					typeOfProcess = 'MAJOR.CHANGES';
+					typeOfProcess = AMS_Utils.AGENCYCHANGES;
 				} else if (amsOfficeType == 'Branch'){
 					typeOfProcess = AMS_Utils.new_PASS_BR;
 				} else {
