@@ -5026,6 +5026,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>共有</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>FAQリンクがコピーされました</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>飛ばして進む</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35103,6 +35111,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <description><!-- Contacts with Portal Service access --></description>
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
+        <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
         <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>

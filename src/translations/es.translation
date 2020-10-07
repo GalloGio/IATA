@@ -5025,6 +5025,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Compartir</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Se ha copiado el enlace directo de preguntas frecuentes!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Omitir por ahora</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35134,6 +35142,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36736,7 +36748,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Informes</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
