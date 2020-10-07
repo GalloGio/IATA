@@ -5022,6 +5022,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>分享</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>已复制常见问题的链接</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>现在跳过</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35095,6 +35103,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36741,7 +36753,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>报告/报表</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

@@ -5021,6 +5021,14 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Linki kopyala</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Makale linki kopyalandı!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Şimdilik Atla</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35106,6 +35114,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36516,7 +36528,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Notification templates --></label>
         <name>Notification_templates</name>
         <sections>
-            <label><!-- Notification templates --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Notification templates</name>
         </sections>
     </reportTypes>
@@ -36708,7 +36720,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

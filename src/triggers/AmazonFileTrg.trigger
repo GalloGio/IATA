@@ -45,5 +45,4 @@ trigger AmazonFileTrg on AmazonFile__c (before insert, before update, before del
 			AmazonFileTrgHelper.setCaseFromsObjectId(Trigger.new);
 		}
 	}
-	
 }

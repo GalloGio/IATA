@@ -5024,6 +5024,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Chia sẻ</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Đường link FAQ đã được sao chép!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Tạm thời bỏ qua</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35099,6 +35107,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36701,7 +36713,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Các báo cáo</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

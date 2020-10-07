@@ -5025,6 +5025,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>공유하기</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>FAQ 링크가 복사되었습니다.</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>일단 보류</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35101,6 +35109,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <description><!-- Contacts with Portal Service access --></description>
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
+        <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
         <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
