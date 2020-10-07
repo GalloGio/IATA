@@ -35095,6 +35095,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35745,7 +35749,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>EBC Email Exclusion Relations</name>
         </sections>
         <sections>
-            <label><!-- ID Cards --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>ID Cards</name>
         </sections>
     </reportTypes>
@@ -36548,7 +36552,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Sub Region --></label>
                 <name>Sub Region</name>
             </columns>
-            <label><!-- Account --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Account</name>
         </sections>
         <sections>
@@ -36728,7 +36732,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with AMS online accreditation --></label>
         <name>Oscars_with_AMS_online_accreditation</name>
         <sections>
-            <label><!-- AMS Online Accreditations --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>AMS Online Accreditations</name>
         </sections>
         <sections>
@@ -36741,7 +36745,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>التقارير</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -36836,7 +36840,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Portal services and contacts and accounts --></label>
         <name>Portal_services_and_contacts_and_accounts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>

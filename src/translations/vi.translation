@@ -35107,6 +35107,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36709,7 +36713,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Các báo cáo</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
