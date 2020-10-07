@@ -3,9 +3,6 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Platform event definition to be used for ALL Case Item record changes that require an integration with middleware.</description>
     <eventType>HighVolume</eventType>
-    <label>Case Item PE</label>
-    <pluralLabel>Case Items PE</pluralLabel>
-    <publishBehavior>PublishAfterCommit</publishBehavior>
     <fields>
         <fullName>EventType__c</fullName>
         <description>The type of operation that resulted in the platform event being fired (Create, Update, Delete, Undelete).</description>
@@ -45,4 +42,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>Case Item PE</label>
+    <pluralLabel>Case Items PE</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>
