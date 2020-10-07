@@ -95,6 +95,7 @@ public without sharing class TIDSUtil{
           
         return shareholders;
       }
+    //composes the returned error message  
     public static String ComposeMessage(Database.Error error){
 		String errormessage = '';
 		if (error != null){errormessage = error.getStatusCode() + ': ' + error.getMessage();}
@@ -102,6 +103,7 @@ public without sharing class TIDSUtil{
 		return errormessage;
     }
     
+    //deletes the documents uploaded and not the data.json
     @AuraEnabled(cacheable=false)
 	public static boolean deleteFiles(String attachmentid){
 		list<Attachment> lstConDocs = new List<Attachment>();
@@ -113,7 +115,7 @@ public without sharing class TIDSUtil{
 		return true;
     }
     
-    // TIDS Configuration
+    //saves the TIDS Configuration file
     @AuraEnabled(cacheable=false)
     public static void saveTidsConfiguration(String service, String payload){
         final String filename = 'tids-configuration.json';
@@ -122,47 +124,47 @@ public without sharing class TIDSUtil{
                                             WHERE Name=:service LIMIT 1];
         addAttachment(services.Id, payload, filename);
     }
+    //reads the tids terms and condition
     @AuraEnabled(cacheable=false)
     public static String getTidsConfiguration(String service){
-      String bodyAsString = null;
-      final String filename = 'tids-configuration.json';
       Portal_Applications__c services = [SELECT Id FROM Portal_Applications__c
                                             WHERE Name=:service  LIMIT 1];
-      return getAttachment(services.Id, filename);
+      return getAttachment(services.Id, TIDS_Constant.TIDSCONFIGURATIONFILE);
     }
-    //@AuraEnabled(cacheable=false)
-	public static String getSettings(String parentid, string type){
+   //reads the tids configuration
+   @AuraEnabled(cacheable=false)
+   public static Attachment  getTermsAndConditions(){
+     Portal_Applications__c services = [SELECT Id FROM Portal_Applications__c
+                                           WHERE Name=:TIDS_Constant.TIDSVALUE  LIMIT 1];
+     List<Attachment> attachments = getAttachments(' WHERE parentId=\''+services.id+'\' AND name=\''+TIDS_Constant.TIDSTERMSANDCONDITIONS+'\'',' LIMIT 1');
+     if (attachments.size()>0) {return attachments[0];}
+     return null;
+    }
+    //Returns the configuration .json to drive the menu
+    //and the forms (Address, Mailing...)
+    public static String getSettings(String parentid, string type){
 		if (String.isEmpty(parentid)){return null;}
 		parentid = String.escapeSingleQuotes(parentid.trim());
-		List<Attachment> newsettings = new List<Attachment>();
-		//read the settings file
-		newsettings = [SELECT id, Body
-			FROM Attachment
-			WHERE parentId = :parentid AND name = :type LIMIT 1];
-
-		if (newsettings.size() > 0){Blob body = newsettings[0].Body;return body.toString();}
+	   //read the settings file
+        List<Attachment> newsettings = getAttachments(' WHERE parentId=\''+parentid+'\' AND name=\''+type+'\'',' LIMIT 1');
+    	if (newsettings.size() > 0){Blob body = newsettings[0].Body;return body.toString();}
 		// return the Body Content
 		return null;
-	}
+    }
+    //Returns the lastest attachment body content
     public static String getAttachment(String parentId, String fileName){
         String result = '';
-        List<Attachment> attachments = [SELECT Id, Body, ParentId, isPrivate, Name
-            FROM Attachment
-            WHERE ParentId=:parentId AND name=:fileName
-            ORDER BY CreatedDate DESC
-            LIMIT 1];
+        List<Attachment> attachments = getAttachments(' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
         if (attachments.size() > 0){result = EncodingUtil.base64Decode(EncodingUtil.base64Encode(attachments.get(0).Body)).toString();}
         return result;
     }
     
+    //function returns the data.json body content that drives the 
+    //data temporary content
     @AuraEnabled(cacheable=false)
     public static documentWrapper relatedFiles(String parentid){
         list<Attachment> lstConDocs = new List<Attachment>();
-        lstConDocs = [SELECT Id, Name, CreatedDate, ContentType
-                        FROM Attachment
-                        WHERE parentId=:parentid AND (NOT Name LIKE '%.json')
-                        ORDER BY CreatedDate DESC];
-    
+        lstConDocs = getAttachments(' WHERE parentId=\''+parentid+'\' AND (NOT Name LIKE \'%.json\')',' ORDER BY CreatedDate DESC');
         documentWrapper newdoc = new documentWrapper();
         List<Case> cases = new List<Case>(); 
         cases = [Select Id, Status From Case Where Id=:parentid Limit 1];
@@ -172,20 +174,23 @@ public without sharing class TIDSUtil{
         if (newdoc.isError==0) {newdoc.documents=lstConDocs;}
         return newdoc;
     }
+    private static list<Attachment> getAttachments(String selectWhere, String selectOrder){
+        list<Attachment> lstConDocs = new List<Attachment>();
+        final String selectClause = 'SELECT Id, Body, ParentId, isPrivate, Name, CreatedDate, ContentType FROM Attachment '+selectWhere+selectOrder; 
+        lstConDocs = Database.query(selectClause);
+        return lstConDocs;
+    }
   
   
     public class documentWrapper {
       @AuraEnabled public integer isError;
       @AuraEnabled public list<Attachment> documents;
     }
-
+    //function that adds the body content as attachments for the
+    //documents uploaded
     public static void addAttachment(Id parentId, String payload, String filename){
         Attachment newAttachment = new Attachment();
-        List<Attachment> attachments = [SELECT Id, Body, ParentId, isPrivate, Name
-          FROM Attachment
-          WHERE ParentId=:parentId AND name=:filename
-          ORDER BY CreatedDate DESC LIMIT 1];
-    
+        List<Attachment> attachments = getAttachments(' WHERE parentId=\''+parentid+'\' AND AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
         if (attachments.size() > 0){
             newAttachment = attachments.get(0);
         }else{
@@ -211,11 +216,7 @@ public without sharing class TIDSUtil{
         if (isUnique){
             List<Attachment> newsettings = new List<Attachment>();
             //read the settings file
-            newsettings = [SELECT id, Body, ParentId, ContentType
-                FROM Attachment
-                WHERE ParentId=:parentid AND name=:filename
-                LIMIT 1];
-
+            newsettings = getAttachments(' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' LIMIT 1');
             if (newsettings.size() > 0){attachment1.Id = newsettings[0].Id;}
         }
         if (attachment1.Id == null){attachment1.Name = filename;attachment1.ParentId = parentid;}

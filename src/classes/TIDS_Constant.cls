@@ -35,6 +35,7 @@ public without sharing class TIDS_Constant {
     public final static String ERROR_CON8 = 'TIDS_ACCES_COND8';
     public final static String DATAJSONFILENAME = 'data.json';
     public final static String TIDSCONFIGURATIONFILE='tids-configuration.json';
+    public final static String TIDSTERMSANDCONDITIONS='TIDS_Terms_and_Conditions.pdf';
     public final static String TIDSVALUE = 'TIDS';
     public final static String STATEISOCODE = 'CA-PE';
     public final static String GROUPS = 'TIDS Team';

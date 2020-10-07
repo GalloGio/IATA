@@ -538,7 +538,9 @@ public class ams2gdp_BusinessLogic {
 
 			String name = arole.Unified_Owner_Name__c;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c = key + 'GDP'
-			                               , Name =  name
+										   , Name =  name
+										   , Owner_Category__c =arole.Owner_Category__c
+										   , Owner_Email__c =arole.Owner_Email__c
 	                                       , Percent__c = arole.Percentage__c
                                            , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(arole.Account__c)
                                            , Related_Account__c = arole.Account__c
@@ -603,7 +605,9 @@ public class ams2gdp_BusinessLogic {
 		         ,Percentage__c
 		         ,Account__c
 		         ,Contact__r.Name
-		         ,Unified_Owner_Name__c
+				 ,Unified_Owner_Name__c
+				 ,Owner_Category__c
+				 ,Owner_Email__c
 		         From AMS_Account_Role__c
 		         Where Account__c IN :accountIds
 		           And Active__c=true
@@ -621,7 +625,9 @@ public class ams2gdp_BusinessLogic {
 		                               ,Owner_ID__c
 		                               ,Related_GDP_Products_Account_View__c
 		                               ,Related_Account__c
-		                               ,AMS_GDP_Key__c
+									   ,AMS_GDP_Key__c
+									   ,Owner_Category__c
+									   ,Owner_Email__c
 		                               FROM Agency_Owner__c 
 		                               WHERE Related_Account__c IN :accountIds];
 
@@ -660,12 +666,14 @@ public class ams2gdp_BusinessLogic {
 		    String key = a.Id;
 		    String name = a.Unified_Owner_Name__c;
             Agency_Owner__c newowner = new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
-                                             , Name =  name
-                                             , Percent__c=a.Percentage__c
-                                             , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
-                                             , Related_Account__c=a.Account__c
-                                             , Owner_ID__c = rank
-                                             , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
+											, Name =  name
+											, Owner_Category__c=a.Owner_Category__c
+											, Owner_Email__c=a.Owner_Email__c
+											, Percent__c=a.Percentage__c
+											, Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
+											, Related_Account__c=a.Account__c
+											, Owner_ID__c = rank
+											, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
                                             );
             if (recordexists[i]!=null) newowner.Id=recordexists[i];
             toUpdate.add(newowner);
@@ -936,7 +944,16 @@ public class ams2gdp_BusinessLogic {
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByProductsView = new Map<String, GDP_Agency_Profile_Specialization__c>();
 		Map<String, String> recordTypes = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('GDP_Agency_Profile_Specialization__c');
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
-
+		List<GDP_Products_Account_View__c> gdpvbs = new List<GDP_Products_Account_View__c>();
+		Set<String> isoCodes = new Set<String>();
+		for (AMS_Agency_Profile__c agencies : profiles) {
+			if (agencies.GR_Code__c=='TIDS_VB_ISO'){isoCodes.add(agencies.GR_Item__c);}
+		}
+		Map<String, String> mapISOCountries = new Map<String, String>();
+		List<IATA_ISO_Country__c> listisocountries= IATAIsoCountryDAO.getIsoCountryByIsoCodes(isoCodes);
+		for(IATA_ISO_Country__c c:listisocountries){
+			mapISOCountries.put(c.ISO_Code__c,c.Id);
+		}
 		for (AMS_Agency_Profile__c agencies : profiles) {
 			GDP_Agency_Profile_Specialization__c gdpAgencies = (gdpRecordByAccount.containsKey(agencies.Account__c)) ? 	gdpRecordByAccount.get(agencies.Account__c) : 	new GDP_Agency_Profile_Specialization__c();
 
@@ -1013,7 +1030,11 @@ public class ams2gdp_BusinessLogic {
 					gdpAgencies.New_Sales_Tour__c = null;
 					if (agencies.GR_Item__c!=null){gdpAgencies.New_Sales_Tour__c = decimal.ValueOf(agencies.GR_Item__c);}
 				}
-				when 'AT' {gdpAgencies.Main_Activity__c = ref1.Id;}
+				when 'AT' {
+					//gdpAgencies.Main_Activity__c = ref1.Id;
+					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APPRAC' + agencies.GR_Item__c);
+					gdpAgencies.Main_Activity__c  = tempRef1.Id;
+				}
 				when 'SV' {
 					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APSALE' + grItemSplit[0]);
 					gdpAgencies.Sales_Volume__c = tempRef1.Id;
@@ -1046,9 +1067,18 @@ public class ams2gdp_BusinessLogic {
 						}
 					}
 				}
+				when 'TIDS_VB_ISO' {
+					String gdpid = gdpProductIdByAccountId.get(agencies.Account__c);
+					if (!String.isEmpty(gdpid)){
+						GDP_Products_Account_View__c gdpvb = new GDP_Products_Account_View__c(Id=gdpid, VB_ISO_Country_Code__c=mapISOCountries.get(agencies.GR_Item__c));
+						gdpvbs.add(gdpvb);
+					}
+					//VB ISO Country
+				}
 			}			
 			gdpRecordByAccount.put(agencies.Account__c, gdpAgencies);
 		}
+		if (gdpvbs.size()>0){update gdpvbs;}
 		List<GDP_Agency_Profile_Specialization__c> liveRecords =  gdpRecordByAccount.values();
 		List<GDP_Agency_Profile_Specialization__c> gdpRecords = new List<GDP_Agency_Profile_Specialization__c>();
 
