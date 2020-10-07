@@ -294,6 +294,7 @@
         <type>Text</type>
         <unique>true</unique>
     </fields>
+    <label>Agency Owner</label>
     <recordTypes>
         <fullName>GDP</fullName>
         <active>true</active>
