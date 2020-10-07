@@ -20,6 +20,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import saveFile from "@salesforce/apex/TIDSUtil.saveFile";
 import relatedFiles from "@salesforce/apex/TIDSUtil.relatedFiles";
 import deleteFiles from "@salesforce/apex/TIDSUtil.deleteFiles";
+import getTermsAndConditions from "@salesforce/apex/TIDSUtil.getTermsAndConditions";
 
 export default class TidsSupportingDocuments extends LightningElement {
 	@api tidsUserInfo;
@@ -64,6 +65,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 	@track showSaveAndQuitButton = false;
 	// Disable report errors and proceed
 	@track reportErrorButtonDisabled;
+	@track documentid;
+	@track documentfilepath;
+  
 
 	connectedCallback() {
 		// Vetting menu
@@ -72,6 +76,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		registerListener("modalProceedListener", this.modalProceedListener, this);
 		registerListener("modalCloseListener", this.modalCloseListener, this);
 		registerListener("modalDeleteAllErrorsListener",this.modalDeleteAllErrorsListener,this);
+		this.getTidsTermsAndConditions();
 		this.reportErrorButtonDisabled = true;
 		this.tidsCase = getCase();
 		let userType = getUserType();
@@ -510,5 +515,14 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let documentsValid =this.documentsError.show && this.documentsError.description !== "" ? true : false;
 		this.reportErrorButtonDisabled = documentsValid ? false : true;
 		return documentsValid;
+	}
+	getTidsTermsAndConditions() {
+		getTermsAndConditions()
+		.then(response => {
+			if (response!=null){
+				this.documentid=response.Id;
+				this.documentfilepath='/servlet/servlet.FileDownload?file='+response.Id;
+			}
+		});
 	}
 }

@@ -1,14 +1,17 @@
-import { LightningElement, wire, api } from "lwc";
+import { LightningElement, wire, api, track } from "lwc";
 // Show alert message using ShowToastEvent
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import getTermsAndConditions from "@salesforce/apex/TIDSUtil.getTermsAndConditions";
 
 // Publish pattern
 import { CurrentPageReference } from "lightning/navigation";
 import { fireEvent } from "c/tidsPubSub";
-import { getUserInfo } from "c/tidsUserInfo";
+//import { getUserInfo } from "c/tidsUserInfo";
 
 export default class TidsWelcome extends LightningElement {
   @wire(CurrentPageReference) pageRef;
+  @track documentid;
+  @track documentfilepath;
 
   steps = [
     "Documentation supporting legal form of business and ownership of the business entity",
@@ -31,8 +34,9 @@ export default class TidsWelcome extends LightningElement {
   @api disableButton;
 
   connectedCallback() {
+    this.getTidsTermsAndConditions();
     this.disableButton = true;
-    let myUserInfo = getUserInfo();
+    //  let myUserInfo = getUserInfo();
   }
 
   handleOnClick(event) {
@@ -57,4 +61,13 @@ export default class TidsWelcome extends LightningElement {
       this.dispatchEvent(eventToast);
     }
   }
+  getTidsTermsAndConditions() {
+		getTermsAndConditions()
+		.then(response => {
+    	if (response!=null){
+          this.documentid=response.Id;
+          this.documentfilepath='/servlet/servlet.FileDownload?file='+response.Id;
+  		}
+		});
+	}
 }

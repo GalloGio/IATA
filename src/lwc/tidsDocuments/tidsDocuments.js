@@ -2,8 +2,8 @@ import { LightningElement, track, api } from 'lwc';
 import relatedFiles from "@salesforce/apex/TIDSUtil.relatedFiles";
 import { iconFile } from 'c/tidsUserInfo';
 
-import { fireEvent, registerListener } from 'c/tidsPubSub';
-import { CurrentPageReference } from 'lightning/navigation';
+//import { fireEvent, registerListener } from 'c/tidsPubSub';
+//import { CurrentPageReference } from 'lightning/navigation';
 
 export default class TidsDocuments extends LightningElement {
 
