@@ -765,24 +765,26 @@ global without sharing class ISSP_APProcess {
 						}
 					} else if(isPassAirline && strAreaType=='Airline Joining'){
 						if(!managePASS){
-
+							map<String,String> mapRequiredFields = new map<String,String>();
 							if(isPASSGSSA) {
-								ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passgssaMandatoryFields);
+								mapRequiredFields.putAll(ISSP_AP_FieldLists.passgssaMandatoryFields);
 								if(!getisSISActive()) {
-									ISSP_AP_FieldLists.passMandatoryFields.putAll(ISSP_AP_FieldLists.passSISMandatoryFields);
+									mapRequiredFields.putAll(ISSP_AP_FieldLists.passSISMandatoryFields);
 								}
+							} else {
+								mapRequiredFields.putAll(ISSP_AP_FieldLists.passMandatoryFields);
 							}
 							// If we have to show some fields as input then they are not mandatory anymore
 							if ( isGSSAUser && getShowInputGSSAFileds()) {
 								for (String fldLabel : ISSP_AP_fieldLists.setPASSNonMandatory) {
-									ISSP_AP_fieldLists.passMandatoryFields.remove(fldLabel);
+									mapRequiredFields.remove(fldLabel);
 								}
 							}
 							if(newForm.Hot_files_delivery_format__c=='E-mail and Download' || newForm.PDF_Report_Delivery_Format__c=='E-mail and Download'){
-								ISSP_AP_FieldLists.passMandatoryFields.put('HOT_File_Recipient_Email_1__c','');
+								mapRequiredFields.put('HOT_File_Recipient_Email_1__c','');
 							}
 
-							for (String fldLabel : ISSP_AP_fieldLists.passMandatoryFields.keySet()){
+							for (String fldLabel : mapRequiredFields.keySet()){
 								if (newForm.get(fldLabel)==null) {
 									allfieldsfilled = false;
 									break;
@@ -2863,7 +2865,7 @@ global without sharing class ISSP_APProcess {
 		Returns true if the for for PASS Authorization si visible, only for GSSA users
 	**/
 	public Boolean getShowUploadPASSAuthorizationForm() {
-		return this.isPassAirline && isGSSAUser && listGSSAPASSServicesForThisAirline.isEmpty();
+		return this.isPassAirline && isGSSAUser;
 	}
 
 	/**
@@ -3640,26 +3642,6 @@ global without sharing class ISSP_APProcess {
 	 */
 	public boolean getShowInputGSSAFileds() {
 		return listGSSAPASSAllServices.isEmpty();
-	}
-
-	/**
-	 * Return the list of active services for GSSA PASS participation if the selected airline in step 1 (the consumer)
-	 * has already a active service to any other country
-	**/
-	public List<Services_Rendered__c> listGSSAPASSServicesForThisAirline {
-		get {
-			if (listGSSAPASSServicesForThisAirline==null) {
-				listGSSAPASSServicesForThisAirline = new List<Services_Rendered__c>();
-				for (Services_Rendered__c service: listGSSAPASSAllServices) {
-					if (service.Services_Rendered_to_Airline__c == cassairlineid ||
-						service.Services_Rendered_to_Airline__r.Top_Parent__c == cassairlineid) {
-							listGSSAPASSServicesForThisAirline.add(service);
-					}
-				}
-			}
-			return listGSSAPASSServicesForThisAirline;
-		}
-		set;
 	}
 
 	public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
