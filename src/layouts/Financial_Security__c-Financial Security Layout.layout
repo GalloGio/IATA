@@ -53,6 +53,10 @@
                 <behavior>Edit</behavior>
                 <field>Financial_Security_Validation_Case__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Archiving_company_s_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
