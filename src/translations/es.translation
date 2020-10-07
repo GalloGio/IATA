@@ -35142,6 +35142,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36744,7 +36748,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Informes</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

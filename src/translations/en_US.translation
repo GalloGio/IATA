@@ -5021,6 +5021,14 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- Share FAQ button label --></label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success message that link has been copied to the clipboard --></label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Skip --></label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35055,6 +35063,10 @@
         <description><!-- Contacts with Portal Service access --></description>
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
+        <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
         <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
