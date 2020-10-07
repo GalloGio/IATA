@@ -5028,6 +5028,14 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Teilen</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>FAQ-Link wurde kopiert!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Erstmal überspringen</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35106,6 +35114,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -36752,7 +36764,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Berichte</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>

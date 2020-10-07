@@ -5032,6 +5032,14 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Поделиться</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Ссылка на FAQ скопирована!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Пропустить на данном этапе</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -35130,6 +35138,10 @@ GSA - 3 буквы.
         <description><!-- Contacts with Portal Service access --></description>
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
+        <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
         <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
