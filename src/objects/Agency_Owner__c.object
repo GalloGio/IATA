@@ -377,16 +377,6 @@
     </nameField>
     <pluralLabel>Agency Owners</pluralLabel>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
-    <recordTypes>
-        <fullName>GDP</fullName>
-        <active>true</active>
-        <label>GDP</label>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Live</fullName>
-        <active>true</active>
-        <label>Live</label>
-    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
