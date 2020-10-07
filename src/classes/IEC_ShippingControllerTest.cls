@@ -1,7 +1,8 @@
 @isTest
 private class IEC_ShippingControllerTest {
 
-	@isTest static void test_not_logged_in()
+	@isTest
+	static void test_not_logged_in()
 	{
 		Test.setCurrentPage(Page.IEC_Shipping);
 		IEC_ShippingController ctrl = new IEC_ShippingController();
@@ -32,7 +33,7 @@ private class IEC_ShippingControllerTest {
 		}
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_quote()
 	{
 		Test.setCurrentPage(Page.IEC_Shipping);
@@ -87,9 +88,9 @@ private class IEC_ShippingControllerTest {
 
 			//-- Generate Quote
 			//try{
-				ctrl.bAreProductsCompliant = false;
+				ctrl.isCountryCompliant = false;
 				ctrl.generateQuote();
-				ctrl.bAreProductsCompliant = true;
+				ctrl.isCountryCompliant = true;
 				ctrl.generateQuote();
 			//}
 			//catch(Exception ex){}
@@ -99,7 +100,7 @@ private class IEC_ShippingControllerTest {
 		Test.stopTest();
 	}
 
-	@isTest (SeeAllData=false)
+	@isTest
 	static void test_invalid_location()
 	{
 		TestDataGenerator.generateApexSetting();
@@ -191,7 +192,7 @@ private class IEC_ShippingControllerTest {
 		}
 	}
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_saveNewAddress()
 	{
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -652,7 +653,7 @@ private class IEC_ShippingControllerTest {
 		}
 	} //*** end of "test_changeShipToAddressOption"
 
-	@isTest (SeeAllData=true)
+	@isTest
 	static void test_coupon_code()
 	{
 		Test.setCurrentPage(Page.IEC_Shipping);
@@ -797,11 +798,7 @@ private class IEC_ShippingControllerTest {
 					ctrl.updateItemId = ctrl.vfOrder.orderitems[0].orderItemId;
 					ctrl.removeCoupon();
 				}catch(Exception ex){}
-
-
 			}
 			Test.stopTest();
 	}
-
-
 }
