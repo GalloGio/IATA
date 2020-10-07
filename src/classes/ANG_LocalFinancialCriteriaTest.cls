@@ -689,7 +689,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Id = :rhcInfo.Id
 			];
 
-		System.assertEquals(18399398.70, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(16004000.00, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 	}
 
 	@isTest static void triggerRhcCalculationOnPointsChangeTest() {
@@ -812,6 +812,6 @@ private class ANG_LocalFinancialCriteriaTest {
 				Id = :rhcInfo.Id
 			];
 
-		System.assertEquals(9199699.35, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(8002000.00, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 	}
 }
