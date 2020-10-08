@@ -24,6 +24,7 @@ import CSP_Breadcrumb_CaseDetails_Title from '@salesforce/label/c.CSP_Breadcrumb
 import CSP_Deduction_Notice from '@salesforce/label/c.CSP_Deduction_Notice';
 import CSP_Treasury_Dashboard_Report from '@salesforce/label/c.CSP_Treasury_Dashboard_Report';
 import CSP_Breadcrumb_Service_TIPReports from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports';
+import CSP_Breadcrumb_AirlineDailySales from '@salesforce/label/c.CSP_Service_AirlineDailySales_Title';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -43,6 +44,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Cases,
         CSP_Treasury_Dashboard,
         CSP_Breadcrumb_Service_TIPReports,
+        CSP_Breadcrumb_AirlineDailySales,
 		CSP_Deduction_Notice,
         CSP_Treasury_Dashboard_Report
     };
@@ -151,36 +153,16 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     }
 
     navigateToBreadcrumb(event){
-        let clickedBreadcrumbName = event.target.dataset.item;
+        let clickedBreadcrumbName = event.target.dataset.item;        
+        
+        clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
 
-        // if guest user, redirect to public page
-        if(this.guestUser) {
-            if(clickedBreadcrumbName === 'home') {
-                window.location = 'https://www.iata.org';
-            }
-
-            if(clickedBreadcrumbName === 'support') {
-                clickedBreadcrumbName = 'faq';
-
-                clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
-
-                this[NavigationMixin.GenerateUrl]({
-                    type: "standard__namedPage",
-                    attributes: {
-                        pageName: clickedBreadcrumbName
-                    }})
-                .then(url => navigateToPage(url, {}));
-            }
-        } else {
-            clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
-
-            this[NavigationMixin.GenerateUrl]({
-                type: "standard__namedPage",
-                attributes: {
-                    pageName: clickedBreadcrumbName
-                }})
-            .then(url => navigateToPage(url, {}));
-        }
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: clickedBreadcrumbName
+            }})
+        .then(url => navigateToPage(url, {}));
     }
 
 }

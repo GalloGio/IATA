@@ -1675,6 +1675,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>Todas las notificaciones</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -4889,6 +4893,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -5011,6 +5023,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Ajustes</label>
         <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>Compartir</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Se ha copiado el enlace directo de preguntas frecuentes!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
         <label>Omitir por ahora</label>
@@ -35122,6 +35142,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35417,6 +35441,23 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Currency Center Survey Hierarchy --></description>
         <label><!-- Currency Center Survey Hierarchy --></label>
         <name>Currency_Center_Survey_Hierarchy</name>
@@ -35683,6 +35724,19 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- GDP Products - Accounts View --></label>
             <name>GDP Products - Accounts View</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -36694,7 +36748,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Informes</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

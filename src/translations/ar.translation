@@ -1673,6 +1673,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>جميع الإشعارات</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -4886,6 +4890,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -5008,6 +5020,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>الإعدادات</label>
         <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>مشاركة</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>تم نسخ رابط الأسئلة الشائعة!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
         <label>تخطى هذا في الوقت الراهن</label>
@@ -35075,6 +35095,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35370,6 +35394,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Currency Center Survey Hierarchy --></description>
         <label><!-- Currency Center Survey Hierarchy --></label>
         <name>Currency_Center_Survey_Hierarchy</name>
@@ -35639,6 +35680,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- IATA Geoname Cities --></description>
         <label><!-- IATA Geoname Cities --></label>
         <name>IATA_Geoname_Cities</name>
@@ -35695,7 +35749,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>EBC Email Exclusion Relations</name>
         </sections>
         <sections>
-            <label><!-- ID Cards --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>ID Cards</name>
         </sections>
     </reportTypes>
@@ -36498,7 +36552,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Sub Region --></label>
                 <name>Sub Region</name>
             </columns>
-            <label><!-- Account --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Account</name>
         </sections>
         <sections>
@@ -36678,7 +36732,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with AMS online accreditation --></label>
         <name>Oscars_with_AMS_online_accreditation</name>
         <sections>
-            <label><!-- AMS Online Accreditations --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>AMS Online Accreditations</name>
         </sections>
         <sections>
@@ -36691,7 +36745,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>التقارير</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -36786,7 +36840,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Portal services and contacts and accounts --></label>
         <name>Portal_services_and_contacts_and_accounts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>
