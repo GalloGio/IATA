@@ -21538,6 +21538,10 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>Số lượng</label>
         <name>ISSP_Quantity</name>
     </customLabels>
@@ -33387,6 +33391,19 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label><!-- AMS Account Roles --></label>
             <name>AMS Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
