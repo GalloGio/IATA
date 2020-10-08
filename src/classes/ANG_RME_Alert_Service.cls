@@ -13,6 +13,8 @@ global class ANG_RME_Alert_Service {
 	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
 	@TestVisible
 	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+	@TestVisible
+	private static final String GDS_CASHLESSFOPALERT_EVENT_TYPE = 'CashlessGDSAlert';
 
 	public class RHCMessage{
 		//Basic info
@@ -47,6 +49,11 @@ global class ANG_RME_Alert_Service {
 		//INT_032: reception of EDS Alerts
 		public List<String> triggeredRules;
 		public List<AgentStates> agentStates;
+
+		//INT_XXX: GDS FailSafe alert
+		public string GDS;
+		public string ticketNumber;
+		public list<string> FOP;
 
 	}
 
