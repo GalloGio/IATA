@@ -9,7 +9,7 @@ public without sharing class CW_ScheduleAuditsController {
 		List<Group> queues = [SELECT id, DeveloperName, (Select Id, UserOrGroupId from GroupMembers) FROM Group WHERE DeveloperName IN :queuesToGet.keySet() and Type='Queue'];
 		Map<Id,User> users = queryUsers(queues);
 
-		Map<Id,List<String>> managersPerQueueId = generateManagersPerQueueId(queues, users);
+		Map<Id,Set<Id>> managersPerQueueId = generateManagersPerQueueId(queues, users);
 
 		Map<Id, Id> mapCertIdQueueId = generateMapCertIdQueueId(queues, queuesToGet);
 		
@@ -22,53 +22,54 @@ public without sharing class CW_ScheduleAuditsController {
 		return 'ok';
 	}
 
-	private static Map<Id,List<String>> includeStakeholders(Id stakeHoldersId, Map<Id,List<String>> managersPerQueueId){
+	private static Map<Id,Set<Id>> includeStakeholders(Id stakeHoldersId, Map<Id,Set<Id>> managersPerQueueId){
 		if(stakeHoldersId != null){
-			for(String email : CW_Utilities.getIATAStakeholdersEmails()) {
-				if(managersPerQueueId.get(stakeHoldersId) == null) {
-					managersPerQueueId.put(stakeHoldersId,new List<String>());
-				}
-				managersPerQueueId.get(stakeHoldersId).add(email);
+			if(managersPerQueueId.get(stakeHoldersId) == null) {
+				managersPerQueueId.put(stakeHoldersId,new Set<Id>());
 			}
+			managersPerQueueId.get(stakeHoldersId).addAll(CW_EmailManager.getIataAdminsIds());
 		}
 
 		return managersPerQueueId;
 	}
 
-	private static Map<Id,List<String>> generateManagersPerQueueId(List<Group> queues, Map<Id,User> users) {
-		Map<Id,List<String>> managersPerQueueId = new Map<Id,List<String>>();
+	private static Map<Id,Set<Id>> generateManagersPerQueueId(List<Group> queues, Map<Id,User> users) {
+		Map<Id,Set<Id>> managersPerQueueId = new Map<Id,Set<Id>>();
 		
 		for(Group gr : queues){
 			for (GroupMember grm : gr.GroupMembers){
 				if(managersPerQueueId.get(gr.id) == null){
-					managersPerQueueId.put(gr.id,new List<String>());
+					managersPerQueueId.put(gr.id,new Set<Id>());
 				} 
-				managersPerQueueId.get(gr.id).add(users.get(grm.UserOrGroupId).Email);
+				managersPerQueueId.get(gr.id).add(users.get(grm.UserOrGroupId).id);
 			}
 		}
 		return managersPerQueueId;
 	}
 
-	private static void handleEmailsAndNotifications(Id stakeHoldersId, List<ICG_Notification__c> auditsToInsert, Map<Id,List<String>> managersPerQueueId, Map<Id, Id> mapCertIdQueueId) {
+	private static void handleEmailsAndNotifications(Id stakeHoldersId, List<ICG_Notification__c> auditsToInsert, Map<Id,Set<Id>> managersPerQueueId, Map<Id, Id> mapCertIdQueueId) {
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+		
 		for (ICG_Notification__c notif : auditsToInsert) {
 			notif.OwnerId = mapCertIdQueueId.get(notif.ICG_Certification__c) != null ? mapCertIdQueueId.get(notif.ICG_Certification__c) : stakeHoldersId;
 		}
 
 		if (!auditsToInsert.isEmpty()){
 			insert auditsToInsert;
-			User u = [Select id, Email from User where id =:UserInfo.getUserId()];
 
-			CW_Utilities.sendEmailTemplate('Request_for_Audit_Conf_to_User', auditsToInsert[0].Id, u.Id, new List<String> {u.Email}, true);
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_Conf_to_User', auditsToInsert[0].Station__c, new Set<Id> {UserInfo.getUserId()}));
 
 			for(ICG_Notification__c nt : auditsToInsert){
 				if(Limits.getLimitEmailInvocations()>0){
 					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {
-						CW_Utilities.sendEmailTemplate('Request_for_Audit_to_IATA_SME', nt.Id, u.Id, managersPerQueueId.get(nt.OwnerId), false);
+						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Station__c, managersPerQueueId.get(nt.OwnerId)));
 					}
 				}
 			}
 
 		}
+
+		CW_EmailManager.sendInternalEmails(emailsToBeSent);
 	}
 
 	private static Id generateStakeholdersId(){
@@ -143,7 +144,7 @@ public without sharing class CW_ScheduleAuditsController {
 	@AuraEnabled
 	public static string getUserRequestedAudits(List<String> managedFacilitiesIds) {
 		Set<String> managedFacilitiesSet = managedFacilitiesIds != null ? new Set<String>(managedFacilitiesIds) : new Set<String>();
-		return JSON.serialize([SELECT id, name, Station__r.Name, Station__c, CreatedDate, ICG_certification__c, ICG_certification__r.Name, Station__r.Formatted_Address__c, Preferable_Audit_Date__c, Contact_Email__c, Contact_Name__c, Contact_Phone__c, Target_Contact__c, Short_Description__c, Status__c FROM ICG_Notification__c WHERE Station__c IN :managedFacilitiesSet AND Station__c != null ORDER BY CreatedDate]);
+		return JSON.serialize([SELECT id, name, Station__r.Name, Station__c, CreatedDate, ICG_certification__c, ICG_certification__r.Name, ICG_certification__r.Label__c, Station__r.Formatted_Address__c, Preferable_Audit_Date__c, Contact_Email__c, Contact_Name__c, Contact_Phone__c, Target_Contact__c, Short_Description__c, Status__c FROM ICG_Notification__c WHERE Station__c IN :managedFacilitiesSet AND Station__c != null ORDER BY CreatedDate DESC]);
 	}
 
 	public class CertData {

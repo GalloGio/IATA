@@ -317,6 +317,11 @@
 																				<template if:true={editMode}>
 																					<template if:true={isPrivateArea}>
 																						<template if:true={currentCategory.isEditableRecordType}>
+																							<th if:true={currentfield.first}
+																								key={currentfield.value.name}
+																								class="first-column">
+														
+																							</th>
 																							<template if:true={isStationManager}>
 																								<template if:false={currentfield.value.isformula}>
 																									<th if:false={currentfield.first}
@@ -346,6 +351,12 @@
 																						</template>	
 																					</template>
 																					<template if:false={isPrivateArea}>
+																						<th if:true={currentfield.first}
+																							key={currentfield.value.name}
+																							class="first-column"
+																							>
+								
+																						</th>
 																						<th if:false={currentfield.first}
 																							key={currentfield.value.name}
 																							scope="col"
@@ -356,6 +367,26 @@
 																																								
 																				</template>
 																				<template if:false={editMode}>
+																					
+																					<template if:true={currentCategory.isEditableRecordType}>
+																						<th if:true={currentfield.first}
+																							key={currentfield.value.name}
+																							scope="col"
+																							colspan={currentfield.value.colspan}
+																							class="first-column">
+																							<p>
+																								<c-cw-html-tag-generator
+																									label={label} is-header="true"
+																									item={currentCategory}
+																									property-name="label"
+																									aux-type={currentCategory.auxType}>
+																								</c-cw-html-tag-generator>
+																								
+																							</p>
+																						</th>
+																					</template>
+
+
 																					<th if:false={currentfield.first}
 																					key={currentfield.value.name}
 																					scope="col"
@@ -679,6 +710,7 @@
 																						onmousemove={showHideStampHover}
 																						onmouseout={showHideStampHover}
 																						data-name={cert.name}
+																						data-label={cert.label}
 																						data-issue-date={cert.issueDate}
 																						data-expiration-date={cert.expirationDate}>
 																				</template>
@@ -800,10 +832,10 @@
 									</template>
 
 									<template if:false={adminMode}>
-										<lightning-carousel disable-auto-scroll>
+										<lightning-carousel disable-auto-scroll class="m-auto">
 											<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
 												<lightning-carousel-image if:true={photo.visible} key={photo.id}
-													src={photo.url} header={photoIndex} description={photo.label}>
+													src={photo.url} description={photo.label}>
 												</lightning-carousel-image>
 											</template>
 										</lightning-carousel>

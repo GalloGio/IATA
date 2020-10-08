@@ -37,7 +37,7 @@ export default class CwAuditRequested extends LightningElement {
                 let station = elem.Station__c ?elem.Station__r.Name:'';
                 let address = elem.Station__c ?elem.Station__r.Formatted_Address__c:'';
                 let dateRequested = elem.CreatedDate?(elem.CreatedDate.split("-")[2]).split('T')[0] + "-" + elem.CreatedDate.split("-")[1] + "-" + elem.CreatedDate.split("-")[0]:'';
-                let certification = elem.ICG_Certification__c ? elem.ICG_Certification__r.Name:'';
+                let certification = elem.ICG_Certification__c ? elem.ICG_Certification__r.Label__c:'';
                 let preferableAuditDate = elem.Preferable_Audit_Date__c?(elem.Preferable_Audit_Date__c.split("-")[2]).split('T')[0] + "-" + elem.Preferable_Audit_Date__c.split("-")[1] + "-" + elem.Preferable_Audit_Date__c.split("-")[0]:'';
 				let status = elem.Status__c ? elem.Status__c:'';
 				let contactName = elem.Contact_Name__c ? elem.Contact_Name__c:'';

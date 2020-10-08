@@ -386,6 +386,17 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ICG_Certification_Label__c</fullName>
+        <externalId>false</externalId>
+        <formula>ICG_Certification__r.Label__c</formula>
+        <label>One Source Certification</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ICG_Certification__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Lookup to the Certification</description>

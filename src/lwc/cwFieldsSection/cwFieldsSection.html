@@ -46,10 +46,9 @@
             </div><br key={currentField.name} />
         </template>
 
-        <div class="row-no-margin col-12 ">
-            <div class="col-12 text-center">
-                <button class="btn btn-primary-blue" onclick={removeInternalFilters}>{label.remove}</button>
-            </div>
+        <div class="col-12 text-center">
+            <button class="btn btn-primary-blue mr-3" onclick={removeInternalFilters}>{label.remove}</button>      
+            <button class="btn btn-primary ml-3" onclick={closeModal}>{label.ok}</button>        
         </div>
     </div>
 </template>

@@ -115,7 +115,7 @@ public without sharing class CW_PrivateAreaController {
 
 	private static List<ICG_Account_Role_Detail__c> queryStations(User u, Map<Id, Account> allHierarchy){
 		return [SELECT id, name, Formatted_Address__c, Global_ID__c, isApproved__c, nearest_Airport__r.Code__c, isPendingApproval__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, City_FOR__c, RecordType.Name, CreatedDate, CreatedById, RecordType.DeveloperName, RecordTypeId, Street_Nr_FOR__c, Postal_Code_FOR__c, Status__c, logoUrl__c, Account_Role__c, Account_Role__r.Account__c, (SELECT id, ICG_Role__c, Status__c, isPendingApproval__c, isApproved__c FROM ICG_Contact_Role_Details__r WHERE Account_Contact_Role__r.contact__c = :u.ContactId), 
-		(SELECT id, name, RecordType.DeveloperName, ICG_Certification__r.Name, Certification_Id__c, Status__c, Sticker_Id__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c), CreatedDate, ICG_Certification__r.Certification_Type__c, ICG_Account_Role_Detail__r.Name FROM ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordType.DeveloperName != 'No_Certification_Required	' ORDER BY Issue_Date__c DESC NULLS LAST) 
+		(SELECT id, name, RecordType.DeveloperName, ICG_Certification__r.Name, ICG_Certification__r.Label__c, Certification_Id__c, Status__c, Sticker_Id__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c), CreatedDate, ICG_Certification__r.Certification_Type__c, ICG_Account_Role_Detail__r.Name FROM ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordType.DeveloperName != 'No_Certification_Required	' ORDER BY Issue_Date__c DESC NULLS LAST) 
 		FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__c IN :allHierarchy.keySet() ORDER BY Account_Role__r.Account__r.Name ASC, Name ASC];
 	}
 
@@ -134,7 +134,7 @@ public without sharing class CW_PrivateAreaController {
 			accountsToSearch.add(arr.From__r.Account__c);
 		}
 
-		return new Map<Id, Account>([SELECT id, name, Global_Ultimate_Account_Global_ID__c, Global_ID__c, Business_Postal_Code__c, Business_City__c, Business_City__r.Name, Business_Street__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Business_City_Name__c, Iso_State__c, Iso_State__R.Name, Business_State_Name__c, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s, (SELECT id FROM Account_Roles__r WHERE Functional_Role__c = 'One Source') FROM Account WHERE Id IN :accountsToSearch OR (Global_Ultimate_Account_Global_ID__c != null AND (Global_Ultimate_Account_Global_ID__c = :globalUltimateId OR Global_Ultimate_Account_Global_ID__c = :globalId))]); 
+		return new Map<Id, Account>([SELECT id, name, Global_Ultimate_Account_Global_ID__c, Global_ID__c, Business_Postal_Code__c, Business_City__c, Business_City__r.Name, Business_Street__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Business_City_Name__c, Iso_State__c, Iso_State__R.Name, Business_State_Name__c, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s, Sector__c,Category__c, (SELECT id FROM Account_Roles__r WHERE Functional_Role__c = 'One Source') FROM Account WHERE Id IN :accountsToSearch OR (Global_Ultimate_Account_Global_ID__c != null AND (Global_Ultimate_Account_Global_ID__c = :globalUltimateId OR Global_Ultimate_Account_Global_ID__c = :globalId))]); 
 	}
 
 	@AuraEnabled(cacheable=true)
@@ -159,7 +159,7 @@ public without sharing class CW_PrivateAreaController {
 
 	@AuraEnabled(cacheable=true)
 	public static String getActiveCertifications() {
-		return JSON.serialize([SELECT Id, Description__c, link__c, Name, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c]);
+		return JSON.serialize([SELECT Id, Description__c, link__c, Name, Label__c, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c]);
 	}
 
 	@AuraEnabled(cacheable=true)

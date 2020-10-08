@@ -1,6 +1,8 @@
 <template>
     <div class="title">
-        <p class={gtitlesize}><b>{title}</b>
+        <template if:false={showAsCreateStation}>
+            <p class={gtitlesize}><b>{title}</b></p>
+        </template>
         <template if:true={editMode}>
             <img src={icon.plus} class="icon btn-icon pl-2 width-25 cursor-pt" onclick={evaluateDisplayFileUpload}>
             
@@ -8,9 +10,10 @@
                 <img src={icon.minus} class="icon btn-icon pl-2 width-25 cursor-pt"  onclick={evaluateHideImage}>
             </template>
         </template>
-        </p>
-        <template if:true={showUnderline}>
-            <hr class="yellow-underline mt-2">
+        <template if:false={showAsCreateStation}>
+            <template if:true={showUnderline}>
+                <hr class="yellow-underline mt-2">
+            </template>
         </template>
         
         <template if:true={editMode}>

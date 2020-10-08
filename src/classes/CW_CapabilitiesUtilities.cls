@@ -429,7 +429,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
 
 		if(result){
-			lstCerti = [SELECT Name FROM ICG_Certification__c WHERE Applicable_to__c includes (:stationRT)];
+			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c includes (:stationRT)];
 		}
 		else{
 			List<Group> lstGroup = [SELECT Name FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];

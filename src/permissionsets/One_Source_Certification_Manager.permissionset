@@ -376,6 +376,22 @@
         <apexClass>Product_Sel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ICG_Capability_Configuration__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ICG_Portal_URL__mdt</name>
+    </customMetadataTypeAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>ICG_Environment_Variables__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>ICG_GxA_Integration_Settings__c</name>
+    </customSettingAccesses>
     <description>Permission Set to allow users to manage One Source Certification Manager</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -1338,6 +1354,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_Capability_Assignment_Group__c.ICG_Certification_Label__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ICG_Capability_Assignment_Group__c.ICG_Certification__c</field>
         <readable>true</readable>
@@ -1448,6 +1469,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_Certification__c.Label__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ICG_Certification__c.Order__c</field>
         <readable>true</readable>
@@ -1538,7 +1564,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>ONE Source Certification Manager</label>
+    <label>ONE Source Certification Manager (Internal)</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -1769,5 +1795,17 @@
     <tabSettings>
         <tab>ICG_Account_Role_Detail__c</tab>
         <visibility>Visible</visibility>
-	</tabSettings>
+    </tabSettings>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditTask</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EmailSingle</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>TransactionalEmailSend</name>
+    </userPermissions>
 </PermissionSet>

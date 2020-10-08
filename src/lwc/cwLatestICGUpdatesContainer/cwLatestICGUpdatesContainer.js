@@ -59,6 +59,7 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
                     Id: resObject.Id,
                     image: resObject.ICG_Certification__r.Image__c,
                     certName: resObject.ICG_Certification__r.Name,
+                    certLabel: resObject.ICG_Certification__r.Label__c,
                     accName: resObject.ICG_Account_Role_Detail__r.Name,
                     city: resObject.ICG_Account_Role_Detail__r.City_FOR__c,
                     detailId: resObject.ICG_Account_Role_Detail__r.Id,
@@ -74,8 +75,7 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
                 certificationList.push(accCert);
             }
             this.resultsList = certificationList;
-            this.selectedAccCertification = this.resultsList[0];
-            //this.updateCss();
+            if(this.resultsList.size > 0) this.selectedAccCertification = this.resultsList[0];
         }
     }
 
@@ -124,7 +124,7 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
             }
 
             this.selectedAccCertification = this.resultsList[index];
-            this.updateCss(this.selectedAccCertification.Id);
+            if(this.selectedAccCertification) this.updateCss(this.selectedAccCertification.Id);
         }
     }
 
@@ -171,35 +171,29 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
     nextHandler() {
         clearInterval(this.interval);
         this.resetInterval();
-
         let index = this.findIndex();
-
         if (index > -1) {
             if (index === this.resultsList.length - 1) {
                 index = 0;
             } else {
                 index++;
             }
-
             this.selectedAccCertification = this.resultsList[index];
-            this.updateCss(this.selectedAccCertification.Id);
+            if(this.selectedAccCertification) this.updateCss(this.selectedAccCertification.Id);
         }
     }
 
     findIndex() {
-        if (!this.selectedAccCertification.Id) return -1;
-
+        if (!this.selectedAccCertification.Id){
+            return 0;
+        }
         return this.resultsList.findIndex(
             result => result.Id === this.selectedAccCertification.Id
         );
     }
 
     handleMoreClicked() {
-
-        let url =
-            this.urlFacilityage + '?eid=' +
-            encodeURI(this.selectedAccCertification.detailId);
-
+        let url = this.urlFacilityage + '?eid=' + encodeURI(this.selectedAccCertification.detailId);
         window.open(url, "_blank");
     }
 
@@ -210,9 +204,7 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
     }
 
     updateList(indicatorClicked) {
-
         this.resultsList.forEach(element => {
-
             if (element.Id === indicatorClicked) {
                 element.indicatorClass = 'slds-carousel__indicator-action slds-is-active';
                 element.tabindex = '0';
@@ -227,8 +219,5 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
                 element.panelClass = 'slds-carousel__panel';
             }
         });
-
     }
-
-
 }

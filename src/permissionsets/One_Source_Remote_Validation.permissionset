@@ -1090,6 +1090,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_Capability_Assignment_Group__c.ICG_Certification_Label__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Capability_Assignment_Group__c.ICG_Certification__c</field>
         <readable>true</readable>
     </fieldPermissions>

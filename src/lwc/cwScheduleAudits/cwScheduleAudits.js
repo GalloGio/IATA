@@ -59,7 +59,7 @@ export default class CwScheduleAudits extends LightningElement {
         if (this.allCertifications) {
             this.allCertifications.forEach(
                 cert => {
-                    if (cert.Applicable_to__c && this.selectedFacilityRecord && cert.Applicable_to__c.indexOf(this.selectedFacilityRecord.RecordType.Name) > -1) availableCerts.push(cert);
+                    if (cert.Applicable_to__c && this.selectedFacilityRecord && cert.Applicable_to__c.indexOf(this.selectedFacilityRecord.RecordType.DeveloperName) > -1) availableCerts.push(cert);
                 }
             );
         }

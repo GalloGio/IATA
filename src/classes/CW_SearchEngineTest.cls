@@ -109,7 +109,7 @@ public with sharing class CW_SearchEngineTest {
 	*/
 	@isTest
 	public static void queryCertificationsOK() {
-		String queryWithInner = '[{"obj":"ICG_Account_Role_Detail__c","field":"City_FOR__c","operator":"LIKE","value":"MAD","fields":["Nearest_Airport__r.name","Country_FOR__c","City_FOR__c"]},{"obj":"ICG_Capability_Assignment_Group__c","field":"ICG_Certification__r.Name","operator":"LIKE","relationfield":"ICG_Account_Role_Detail__c","value":"CEIV Security;CEIV Fresh;CEIV Live Animals","fields":["ICG_Certification__r.Name"]}]';
+		String queryWithInner = '[{"obj":"ICG_Account_Role_Detail__c","field":"City_FOR__c","operator":"LIKE","value":"MAD","fields":["Nearest_Airport__r.name","Country_FOR__c","City_FOR__c"]},{"obj":"ICG_Capability_Assignment_Group__c","field":"ICG_Certification__r.Name","operator":"LIKE","relationfield":"ICG_Account_Role_Detail__c","value":"ceiv_security;ceiv_fresh;ceiv_live_animals","fields":["ICG_Certification__r.Name"]}]';
 		
 		Test.startTest();
 		String response = CW_SearchEngine.getInfo(queryWithInner, false, true, true, false, false, null, null, false);

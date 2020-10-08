@@ -211,7 +211,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
-        <fields>ICG_Certification__c</fields>
+        <fields>ICG_Certification_Label__c</fields>
         <fields>Certification_Id__c</fields>
         <fields>Issue_Date__c</fields>
         <fields>Expiration_Date__c</fields>

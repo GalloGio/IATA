@@ -51610,4 +51610,52 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>icg_error_message</shortDescription>
         <value>Unfortunately, something went wrong. To help you further, please contact our support team.</value>
     </labels>
+    <labels>
+        <fullName>icg_generalCargo</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_generalCargo</shortDescription>
+        <value>General Cargo</value>
+    </labels>
+    <labels>
+        <fullName>icg_liveAnimals</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_liveAnimals</shortDescription>
+        <value>Live Animals</value>
+    </labels>
+    <labels>
+        <fullName>icg_dangerousGoods</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_dangerousGoods</shortDescription>
+        <value>Dangerous Goods</value>
+    </labels>
+    <labels>
+        <fullName>icg_airmail</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_airmail</shortDescription>
+        <value>Airmail</value>
+    </labels>
+    <labels>
+        <fullName>icg_perishables</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_perishables</shortDescription>
+        <value>Perishables</value>
+    </labels>
+    <labels>
+        <fullName>icg_pharmaceuticals</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_pharmaceuticals</shortDescription>
+        <value>Pharmaceuticals</value>
+    </labels>
 </CustomLabels>

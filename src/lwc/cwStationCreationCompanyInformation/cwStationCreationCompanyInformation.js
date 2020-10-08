@@ -1,8 +1,9 @@
-import { LightningElement,track,api } from 'lwc';
+import { LightningElement,track,api,wire } from 'lwc';
 
 import RegistrationUtils            from 'c/registrationUtils';
 import getMetadataCustomerType      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getMetadataCustomerTypeForL2';
 import getCustomerTypePicklists     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getCustomerTypePicklistsForL2';
+import getArdTypesBySectorAndCategory from '@salesforce/apex/CW_Utilities.getArdTypesBySectorAndCategory';
 
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 
@@ -40,9 +41,14 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 
 	@track isEmailValid = true;
 	@track displayInvalidEmailMessage = false;
-	
-	availableSectors = ['Airline','Airline Supplier','Freight Forwarder','Non-Airline Transportation', 'Infrastructure Partner','Other'];
-	availableCategories = ['Cargo only', 'Passenger and Cargo', 'Passenger only', 'IATA Cargo Agent','Non-IATA Freight Forwader','Ground Service Provider','System Solutions Provider','Truck Line','Airport Operator'];
+
+	@track ctypesMapBySectorAndCategory;
+	@wire(getArdTypesBySectorAndCategory, {})
+	wiredArdTypesBySectorAndCategory({ data }) {
+		if (data) {
+			this.ctypesMapBySectorAndCategory = JSON.parse(data);
+		}
+	}
 
 	checkEmailValidity(){
 		if(this.localAccount.email !== ''){
@@ -111,6 +117,28 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
 	}
 
+	isSectorCategoryAllowed(NameOrLabelProperty, sector, category){
+		for (let sectorX = 0; sectorX < this.ctypesMapBySectorAndCategory.sectors.length; sectorX++){
+			if (this.ctypesMapBySectorAndCategory.sectors[sectorX]['sector' + NameOrLabelProperty].toLowerCase() === sector) {
+				if (!category) {
+					return true;
+				}
+				else if (this.ctypesMapBySectorAndCategory.sectors[sectorX].categories) {
+					for (let categoryX = 0; categoryX < this.ctypesMapBySectorAndCategory.sectors[sectorX].categories.length; categoryX++){
+						let categoryAllowed = this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX]['category' + NameOrLabelProperty].toLowerCase();
+						if (categoryAllowed === '*') {
+							categoryAllowed = category;
+						}
+						if ( categoryAllowed === category) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	setCustomerType(customerType){
 		this.localAccount.customerType = customerType;
 		this.localAccount.customerTypeSector = '';
@@ -147,13 +175,14 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 
 				// retrieve the labels to store the sector and the category to be displayed in the address information step
 				let labels = [];
+				let selectedSector;
 				for (let i = 0; i < arrayLength; i++) {
 					let selectedOption;
 					let customerTypesOptions = [];
 					
 					for(let j = 0; j < result[i].picklistOptions.length; j++){
 						let label = result[i].picklistOptions[j].label;
-						
+
 						if(j === 0){
 							customerTypesOptions.push({
 								label: '',
@@ -161,13 +190,28 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 							});
 						}
 						else{
-							if(this.availableSectors.includes(label) || this.availableCategories.includes(label)){
-								customerTypesOptions.push({
-									label: label,
-									value: result[i].picklistOptions[j].key
-								});
+
+							if (result[i].picklistLabel.toLowerCase() === 'sector') {
+
+								if (result[i].picklistOptions[j].isSelected === true) {
+									selectedSector = result[i].picklistOptions[j];
+								}
+
+								if (this.isSectorCategoryAllowed('Label', label.toLowerCase(), null)) {
+									customerTypesOptions.push({
+										label: label,
+										value: result[i].picklistOptions[j].key
+									});
+								}
 							}
-							
+							else if (result[i].picklistLabel.toLowerCase() === 'category') {
+								if (this.isSectorCategoryAllowed('Label', selectedSector.label.toLowerCase(), label.toLowerCase())) {	
+									customerTypesOptions.push({
+										label: label,
+										value: result[i].picklistOptions[j].key
+									});
+								}
+							}
 						}
 
 						if(result[i].picklistOptions[j].isSelected){

@@ -9,11 +9,17 @@ public with sharing class CW_CapabilityConflictControllerTest {
 
 	@testSetup
 	public static void setup() {
-		Account acc = new Account(Name = 'Qatar Airways (Test)', Account_Type__c = 'Airline', Sector__c = 'Airline', Category__c = 'General Aviation', Payment_Term__c = 'Z001', Reason_for_creation__c = 'New agent');
-		insert acc;
-
+		
 		IATA_ISO_Country__c country = CW_TestDataFactory.newISOCountry();
 		insert country;
+		
+		IATA_ISO_Country_Set__c cSetting = new IATA_ISO_Country_Set__c (Name = 'ES', Country_Name__c = country.Name, Portal_URL__c = 'http://test.com');
+		insert cSetting;
+		
+		String countryId = [SELECT Id FROM IATA_ISO_COUNTRY__c LIMIT 1].Id;
+		
+		Account acc = CW_TestDataFactory.TestAccount(countryId);
+		insert acc;
 
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(country.Id, acc.Id);
 		insert airport;

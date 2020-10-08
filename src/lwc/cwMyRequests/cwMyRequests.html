@@ -22,8 +22,9 @@
         <thead>
           <tr>
             <th scope="col">{label.type}</th>
-            <th scope="col">{label.operational_hierarchy}</th>
             <th scope="col">{label.station_name}</th>
+            <th scope="col">{label.station_type}</th>
+            <th scope="col">{label.operational_hierarchy}</th>
             <th scope="col">{label.status}</th>
             <th scope="col">{label.request_date}</th>
         </tr>
@@ -32,8 +33,15 @@
             <template for:each={getFilteredList} for:item="item">
                 <tr key={item.Id}>
                     <td class="align-middle">{item.Type}</td>
+                    <template if:true={item.HasStation}>
+                        <td class="align-middle"><p class="text-blue cursor-pt" onclick={handleMoreInfo} data-id={item.Id} data-type={item.Type}>{item.Station}</p></td>
+                        <td class="align-middle"><img title={item.StationType} width="25" src={item.ctypeimage}/></td>
+                    </template>
+                    <template if:false={item.HasStation}>
+                        <td class="align-middle">{item.Station}</td>
+                        <td class="align-middle">{item.StationType}</td>
+                    </template>
                     <td class="align-middle">{item.Company}</td>
-                    <td class="align-middle">{item.Station}</td>
                     <td class="align-middle">{item.Status}</td>
                     <td class="align-middle">{item.CreatedDateDateFormat}</td>
                 </tr>

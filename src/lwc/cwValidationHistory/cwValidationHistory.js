@@ -53,7 +53,7 @@ export default class CwValidationHistory extends LightningElement {
                     } else if (cert.Applicable_to__c && this.companyTypes) {
                         let added = false;
                         this.companyTypes.forEach(ctype => {
-                            if (!added && ctype.selected && cert.Applicable_to__c.toLowerCase().indexOf(ctype.name.toLowerCase()) > -1) {
+                            if (!added && ctype.selected && cert.Applicable_to__c.toLowerCase().indexOf(ctype.value.toLowerCase()) > -1) {
                                 availableCerts.push(cert);
                                 added = true;
                             }
@@ -91,12 +91,12 @@ export default class CwValidationHistory extends LightningElement {
             this.userManagedFacilities.forEach(facility => {
                 if (facility.ICG_Capability_Assignment_Groups__r && facility.Id === this.selectedFacility) {
                     facility.ICG_Capability_Assignment_Groups__r.records.forEach(certificationRelationship => {
-                        this.availableCertifications.add(certificationRelationship.ICG_Certification__r.Name);
-                        if (this.selectedCertification === "" || this.selectedCertification === certificationRelationship.ICG_Certification__r.Name) {
+                        this.availableCertifications.add(certificationRelationship.ICG_Certification__r.Label__c);
+                        if (this.selectedCertification === "" || this.selectedCertification === certificationRelationship.ICG_Certification__r.Label__c) {
                             let dateToUse = certificationRelationship.CreatedDate.split("T")[0];
-                            const certName = certificationRelationship.ICG_Certification__r.Name;
+                            const certName = certificationRelationship.ICG_Certification__r.Label__c;
                             this.facilityName = certificationRelationship.ICG_Account_Role_Detail__r.Name;
-                            if (certName.indexOf("CEIV") > -1) {
+                            if (certName.toLowerCase().indexOf("ceiv") > -1) {
                                 this.isCEIV = true;
                             }
                             this.nearestAirport = facility.Nearest_Airport__r.Code__c;
@@ -151,7 +151,7 @@ export default class CwValidationHistory extends LightningElement {
                 this.certificationHistory.forEach(function(elem) {
                     let certId = elem.Certification_Id__c;
                     let statyionName = elem.ICG_Account_Role_Detail__r.Name;
-                    let certificationName = elem.ICG_Certification__r.Name;
+                    let certificationLabel = elem.ICG_Certification__r.Label__c;
                     let sticker = elem.StickerID__c;
                     let issuingDate = elem.Issue_Date__c;
                     let expirationDate = elem.Expiration_Date__c;
@@ -165,7 +165,7 @@ export default class CwValidationHistory extends LightningElement {
                     prepareToExcel.push({
                         CertificationId: certId,
                         StationName: statyionName,
-                        Certification: certificationName,
+                        Certification: certificationLabel,
                         StickerId: sticker,
                         IssuingDate: issuingDate,
                         ExpirationDate: expirationDate,

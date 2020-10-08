@@ -15,7 +15,7 @@
                                     role="dialog">
                                     <div class="slds-popover__body">
                                         <span class="text-left">
-                                            <b>{cert.name}</b><br />
+                                            <b>{cert.label}</b><br />
                                             <template if:true={cert.certificationId}>
                                                 {label.certification_id}: <b>{cert.certificationId}</b><br />
                                             </template>
@@ -33,7 +33,7 @@
                                     role="dialog">
                                     <div class="slds-popover__body">
                                         <span class="text-left">
-                                            <b>{cert.name}</b><br />
+                                            <b>{cert.label}</b><br />
                                             <span class="text-red">{label.expired}: <b>{cert.expirationDate}</b></span>
                                         </span>
                                     </div>
@@ -56,7 +56,7 @@
                         <section data-name="stamp-popover" data-item={cert.Id} class="slds-popover_hide slds-nubbin_top-left popover-custom" role="dialog">
                             <div class="slds-popover__body">
                                 <span class="text-left">
-                                    <b>{cert.name}</b><br />
+                                    <b>{cert.label}</b><br />
                                 </span>
                             </div>
                         </section>

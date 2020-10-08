@@ -299,30 +299,111 @@
             </div>
             
             <div class="slds-form-element">
-                <label class="slds-form-element__label" for="email">{label.customer_email}</label>
+                <template if:true={showCargoCommoditiesSection}>
+                    <p><b>{label.cargo_commodities}</b></p>
+                    <hr class="yellow-underline mb-2-5">
+                    <div class="form-row">
+                        <template for:each={cargoCommodities} for:item="cargoItem">
+                            <!-- <tr key={cmpany.accountInfo.Id} data-key={cmpany.accountInfo.Id} class="row-no-margin"> -->
+                            <div key={cargoItem.key} class="form-row">           
+                                <div class="col">
+                                    <div class="slds-form-element">
+                                        <div class="selectedAirport div-tags collapse-tags">
+                                            <div class="slds-checkbox">
+                                                <input type="checkbox" name={cargoItem.key} data-tosca={cargoItem.key} id={cargoItem.key} value={cargoItem.checked}/>
+                                                <label class="slds-checkbox__label" for={cargoItem.key}>
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label">{cargoItem.name}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <div class="slds-form-element">
+                <p><b>{label.station_overview}</b></p>
+                <hr class="yellow-underline mb-2-5">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="noemployees">{label.number_of_employees}*</label>
+                            <div class="slds-form-element__control">
+                                <input type="number" min="0" name="noemployees" data-tosca="noemployees" class="slds-input" required
+                                    id="noemployees" value={additionalData.noemployees} />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col m-auto">
+                        <div class="slds-form-element m-auto">                       
+                            <div class="slds-form-element__control">
+                                <div class="slds-checkbox">
+                                    <input type="checkbox" name="onairport" data-tosca="onairport" id="onairport" value={additionalData.onairport}/>
+                                    <label class="slds-checkbox__label" for="onairport">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label">{label.on_airport}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="overallFacilitySizeM2">{label.total_facility_space}*</label>
+                            <div class="slds-form-element__control">
+                                <input type="number" min="0" name="overallFacilitySizeM2" data-tosca="overallFacilitySizeM2" class="slds-input" required
+                                    id="overallFacilitySizeM2" value={additionalData.overallFacilitySizeM2} />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col m-auto">
+                        <div class="slds-form-element m-auto" if:true={showDirectRampAccess}>                       
+                            <div class="slds-form-element__control">
+                                <div class="slds-checkbox">
+                                    <input type="checkbox" name="directrampaccess" data-tosca="directrampaccess" id="directrampaccess" value={additionalData.directrampaccess}/>
+                                    <label class="slds-checkbox__label" for="directrampaccess">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label">{label.direct_ramp_access}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="email">{label.customer_email}*</label>
                 <div class="slds-form-element__control">
-                    <input type="email" name="email" data-tosca="email" class="slds-input" id="email"
+                    <input type="email" name="email" data-tosca="email" class="slds-input" id="email"  required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
                         value={additionalData.email}>
                 </div>
             </div>
             <div class="slds-form-element">
-                <label class="slds-form-element__label" for="website">{label.customer_website}</label>
+                <label class="slds-form-element__label" for="website">{label.customer_website}*</label>
                 <div class="slds-form-element__control">
-                    <input type="url" name="website" data-tosca="website" class="slds-input" id="website"
-                        value={additionalData.website}>
+                    <input type="url" name="website" data-tosca="website" class="slds-input" id="website"  required
+                        value={websiteValue}>
                 </div>
             </div>
             <div class="slds-form-element" if:true={showPilotInformation}>
-                <label class="slds-form-element__label" for="website">{label.icg_pilotInformation}</label>
+                <label class="slds-form-element__label" for="website">{label.icg_pilotInformation}*</label>
                 <div class="slds-form-element__control">
-                    <input type="url" name="pilotinfo" data-tosca="pilotinfo" class="slds-input" id="pilotinfo"
+                    <input type="url" name="pilotinfo" data-tosca="pilotinfo" class="slds-input" id="pilotinfo"  required
                         value={additionalData.pilotinfo}>
                 </div>
             </div>
             <div class="slds-form-element" if:true={showOnlineBooking}>
-                <label class="slds-form-element__label" for="onlineplatform">{label.do_you_have_booking_platform}</label>
+                <label class="slds-form-element__label" for="onlineplatform">{label.do_you_have_booking_platform}*</label>
                 <div class="slds-form-element__control">
-                    <input type="url" name="onlineplatform" data-tosca="onlineplatform" class="slds-input"
+                    <input type="url" name="onlineplatform" data-tosca="onlineplatform" class="slds-input"  required
                         id="onlineplatform" value={onlinePlatform}>
                 </div>
             </div>
@@ -330,19 +411,10 @@
             <div class="form-row">
                 <div class="col">
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="phone">{label.customer_service_phone}</label>
+                        <label class="slds-form-element__label" for="phone">{label.customer_service_phone}*</label>
                         <div class="slds-form-element__control">
-                            <input type="text" name="phone" data-tosca="phone" class="slds-input" id="phone"
+                            <input type="text" name="phone" data-tosca="phone" class="slds-input" id="phone"  required
                                 value={additionalData.phone} />
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="noemployees">{label.number_of_employees}</label>
-                        <div class="slds-form-element__control">
-                            <input type="number" min="0" name="noemployees" data-tosca="noemployees" class="slds-input"
-                                id="noemployees" value={additionalData.noemployees} />
                         </div>
                     </div>
                 </div>
@@ -375,9 +447,9 @@
                 </div>
                 <div class="col">
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="nofacilities">{label.number_of_facilities_at_station}</label>
+                        <label class="slds-form-element__label" for="nofacilities">{label.number_of_facilities_at_station}*</label>
                         <div class="slds-form-element__control">
-                            <input type="number" min="0" name="nofacilities" data-tosca="nofacilities" class="slds-input"
+                            <input type="number" min="0" name="nofacilities" data-tosca="nofacilities" class="slds-input" required
                                 id="nofacilities" value={additionalData.nofacilities} />
                         </div>
                     </div>
@@ -403,34 +475,6 @@
                             </div>
                             <div class="selectedAirport div-tags collapse-tags" if:true={selectedAirport}>
                                 <lightning-pill key={selectedAirport.value} label={selectedAirport.label} data-value={selectedAirport.value} onremove={removeSelectedAirport}></lightning-pill>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col m-auto">
-                    <div class="slds-form-element m-auto">                       
-                        <div class="slds-form-element__control">
-                            <div class="slds-checkbox">
-                                <input type="checkbox" name="onairport" data-tosca="onairport" id="onairport" value={additionalData.onairport}/>
-                                <label class="slds-checkbox__label" for="onairport">
-                                    <span class="slds-checkbox_faux"></span>
-                                    <span class="slds-form-element__label">{label.on_airport}</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" if:true={showDirectRampAccess}>           
-                <div class="col m-auto">
-                    <div class="slds-form-element m-auto">                       
-                        <div class="slds-form-element__control">
-                            <div class="slds-checkbox">
-                                <input type="checkbox" name="directrampaccess" data-tosca="directrampaccess" id="directrampaccess" value={additionalData.directrampaccess}/>
-                                <label class="slds-checkbox__label" for="directrampaccess">
-                                    <span class="slds-checkbox_faux"></span>
-                                    <span class="slds-form-element__label">{label.direct_ramp_access}</span>
-                                </label>
                             </div>
                         </div>
                     </div>
@@ -601,18 +645,33 @@
                     </div>
                 </div>
             </div>
+            <div class="col-8 summarydatadiv separatorbelow">
+                <p><b>{label.cargo_commodities}</b></p>
+                <hr class="yellow-underline mb-2-5">
+                <p>{label.icg_generalCargo}: <b>{additionalData.generalCargo}</b></p>
+                <p>{label.icg_liveAnimals}: <b>{additionalData.liveAnimals}</b></p>
+                <p>{label.icg_dangerousGoods}: <b>{additionalData.dangerousGoods}</b></p>
+                <p>{label.icg_airmail}: <b>{additionalData.airmail}</b></p>
+                <p>{label.icg_perishables}: <b>{additionalData.perishables}</b></p>
+                <p>{label.icg_pharmaceuticals}: <b>{additionalData.pharmaceuticals}</b></p>
+            </div>
+            <div class="col-8 summarydatadiv separatorbelow">
+                <p><b>{label.station_overview}</b></p>
+                <hr class="yellow-underline mb-2-5">
+                <p>{label.number_of_employees}: <b>{additionalData.noemployees}</b></p>
+                <p>{label.total_facility_space}: <b>{additionalData.overallFacilitySizeM2}</b></p>
+                <p>{label.on_airport}: <b>{additionalData.onairport}</b></p>
+                <p if:true={showDirectRampAccess}>{label.direct_ramp_access}: <b>{additionalData.directrampaccess}</b></p>
+            </div>
             <div class="col-8 summarydatadiv">
                 <p>{label.customer_email}: <b>{additionalData.email}</b></p>
                 <p>{label.customer_website}: <b>{additionalData.website}</b></p>
                 <p if:true={showPilotInformation}>{label.icg_pilotInformation}: <b>{additionalData.pilotinfo}</b></p>
                 <p if:true={showOnlineBooking}>{label.online_platform}: <b>{additionalData.onlineplatform}</b></p>
                 <p>{label.customer_service_phone}: <b>{additionalData.phone}</b></p>
-                <p>{label.number_of_employees}: <b>{additionalData.noemployees}</b></p>
                 <p if:true={showSupportedLanguages}>{label.languages_spoken}: <b>{selectedLanguages}</b></p>
                 <p>{label.number_of_facilities_at_station}: <b>{additionalData.nofacilities}</b></p>
-                <p>{label.on_airport}: <b>{additionalData.onairport}</b></p>
                 <p if:true={selectedAirport}>{label.nearest_airport}: <b>{selectedAirport.label}</b></p>
-                <p if:true={showDirectRampAccess}>{label.direct_ramp_access}: <b>{additionalData.directrampaccess}</b></p>
             </div>
             <br />
             <!--<p><b>Opening Hours</b></p>
@@ -708,7 +767,7 @@
                 </div>
             </template>
             <br /><br />
-
+            
             <div class="row">
                 <div class="col-6 text-left m-auto">
                     <span class="backbutton" onclick={back}><b>{label.back}</b></span>

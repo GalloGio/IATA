@@ -16,11 +16,11 @@ export default class CwDisplayList extends LightningElement {
 	@track
 	cargoComodities = [
 		{ key: "generalCargo", name: "General Cargo", matchesCerts: [] },
-		{ key: "liveAnimals", name: "Live Animals", matchesCerts: ["CEIV Live Animals"] },
+		{ key: "liveAnimals", name: "Live Animals", matchesCerts: ["ceiv_live_animals"] },
 		{ key: "dangerousGoods", name: "Dangerous Goods", matchesCerts: [] },
 		{ key: "airmail", name: "Airmail", matchesCerts: [] },
-		{ key: "perishables", name: "Perishables", matchesCerts: ["CEIV Fresh"] },
-		{ key: "pharmaceuticals", name: "Pharmaceuticals", matchesCerts: ["CEIV Pharma"] }
+		{ key: "perishables", name: "Perishables", matchesCerts: ["ceiv_fresh"] },
+		{ key: "pharmaceuticals", name: "Pharmaceuticals", matchesCerts: ["ceiv_pharma"] }
 	];
 
 	renderCallbackExecuted = false;
@@ -82,9 +82,10 @@ export default class CwDisplayList extends LightningElement {
 		let verifications = [];
 		this.facility.listAccCert.forEach(accCert => {
 			let name = accCert.ICG_Certification__c ? accCert.ICG_Certification__r.Name : "Unable to extract name";
+			let label = accCert.ICG_Certification__c ? accCert.ICG_Certification__r.Label__c : "Unable to extract label";
 			let validatedByCert = this.checkIfValidatedByCert(item, processedCertsList, name);
 			if ((accCert.SFOC_Scope__c && accCert.SFOC_Scope__c.includes(item.name)) || validatedByCert) {
-				verifications.push(name);
+				verifications.push(label);
 			}
 		});
 

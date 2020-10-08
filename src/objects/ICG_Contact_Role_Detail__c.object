@@ -208,8 +208,8 @@
     </fields>
     <fields>
         <fullName>Company_Admin_Approver_Rejector__c</fullName>
-        <description>Who has Approved or Rejected the station </description>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Who has Approved or Rejected the station</description>
         <externalId>false</externalId>
         <label>Company Admin Approver/Rejector</label>
         <referenceTo>User</referenceTo>
@@ -387,14 +387,14 @@
         </valueSet>
     </fields>
     <validationRules>
-        <fullName>Accounts_correspond</fullName>
+        <fullName>Accounts_Correspond</fullName>
         <active>true</active>
         <description>When the role is Facility Manager, the account of the Account Contact Role and the station must coincide.</description>
         <errorConditionFormula>AND(  ISPICKVAL(ICG_Role__c,&quot;Facility Manager&quot;) ,   Account_Contact_Role__r.Account__c  &lt;&gt;  ICG_Account_Role_Detail__r.Account_Role__r.Account__c  )</errorConditionFormula>
         <errorMessage>The Account of the Account Contact Role and the Station must be the same.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Station_role_company_admin</fullName>
+        <fullName>Station_Role_Company_Admin</fullName>
         <active>true</active>
         <description>When the role is &quot;Company Admin&quot;, then the account role needs to be filled out.</description>
         <errorConditionFormula>AND( ISPICKVAL(ICG_Role__c,&quot;Company Admin&quot;) , OR( ISNULL(   Account_Role__c   ) , ISBLANK(Account_Role__c)) )</errorConditionFormula>
@@ -402,7 +402,7 @@
         <errorMessage>When the role is &quot;Company Admin&quot;, then the account role needs to be filled out.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Station_role_facility</fullName>
+        <fullName>Station_Role_Facility</fullName>
         <active>true</active>
         <description>Station has to be filled when role is &quot;Facility Manager&quot;</description>
         <errorConditionFormula>AND(  ISPICKVAL(ICG_Role__c,&quot;Facility Manager&quot;) ,  OR( ISNULL( ICG_Account_Role_Detail__c ) , ISBLANK(ICG_Account_Role_Detail__c)) )</errorConditionFormula>

@@ -25,7 +25,8 @@
                     <template if:true={shouldBeOpen} >
                         <div class={textStyle}>
                             <c-cw-text-container key={selectedCertification.Id}
-                                                title={selectedCertification.Name}
+                                                title={selectedCertification.Label__c}
+                                                cert-name={selectedCertification.Name}
                                                 button-url={selectedCertification.link__c}
                                                 title-color="text-white"
                                                 backgroundcolor="bg-blue"

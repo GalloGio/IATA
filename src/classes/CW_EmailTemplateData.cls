@@ -10,6 +10,7 @@ public without sharing class CW_EmailTemplateData {
 	List<User> userRequestor;
 	List<Account> accountDetail;
 	public Boolean isPurchaseRemoteValidation {get;set;}
+	List<ICG_Capability_Assignment_Group__c> ICGCapabilityAssignmentGroups{get; set;}
 
 	public ICG_Account_Role_Detail__c getStationDetails(){
 		if(station == null && stationId != null){
@@ -24,6 +25,13 @@ public without sharing class CW_EmailTemplateData {
 			contactRoleDetail = [SELECT Id, CreatedById, ICG_Account_Role_Detail__c, Contact_Role_Remove_Requestor__c, ContactId__c, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Contact_Role_Detail__c WHERE Id = :contactRoleDetailId LIMIT 1];
 		} 
 		return listHasValues(contactRoleDetail) ? contactRoleDetail[0] : null;
+	}
+
+	public List<ICG_Capability_Assignment_Group__c> getICGCapabilityAssignmentGroups(){
+		if(ICGCapabilityAssignmentGroups == null && stationId != null){
+			ICGCapabilityAssignmentGroups = new List<ICG_Capability_Assignment_Group__c>([SELECT Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, toLabel(CEIV_Scope_List__c), SFOC_Scope__c, CreatedDate FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :stationId AND ICG_Certification__c != null]);
+		} 
+		return listHasValues(ICGCapabilityAssignmentGroups) ? ICGCapabilityAssignmentGroups : new List<ICG_Capability_Assignment_Group__c>();
 	}
 
 

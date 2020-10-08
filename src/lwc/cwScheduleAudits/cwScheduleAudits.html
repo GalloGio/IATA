@@ -22,7 +22,7 @@
                                     <img src={cert.Image__c} class="certiImage " key={cert.Id} data-tosca={cert.Id}
                                         data-name={cert.Name} data-type="certification" />
                                     <div class="icgBlueName certiLabel item-filter" data-tosca={cert.Id}
-                                        data-name={cert.Name} data-type="certification">{cert.Name}</div>
+                                        data-name={cert.Name} data-type="certification">{cert.Label__c}</div>
                                     <input type="checkbox" key={cert.Id} value={cert.Name} data-id={cert.Id} data-name={cert.Name}
                                         class="hidden">
                                 </label>

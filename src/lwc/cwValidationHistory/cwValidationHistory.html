@@ -48,7 +48,7 @@
 							<p>{item.ICG_Account_Role_Detail__r.Name}</p>
 						</td>
 						<td class="tableCell">
-							<p>{item.ICG_Certification__r.Name}</p>
+							<p>{item.ICG_Certification__r.Label__c}</p>
 						</td>
 						<td if:true={isCEIV} class="tableCell">
 							<p>{item.StickerID__c}</p>
@@ -59,11 +59,9 @@
 						<td class="tableCell">
 							<p>{item.Expiration_Date__c}</p>
 						</td>
-						<td if:true={item.CEIV_Scope_List__c}>
-							<pre class="formatedText">{item.CEIV_Scope_List__c}</pre>
-						</td>
-						<td if:true={item.SFOC_Scope__c}>
-							<pre class="formatedText">{item.SFOC_Scope__c}</pre>
+						<td>
+							<pre if:true={item.CEIV_Scope_List__c} class="formatedText">{item.CEIV_Scope_List__c}</pre>
+							<pre if:true={item.SFOC_Scope__c} class="formatedText">{item.SFOC_Scope__c}</pre>
 						</td>
 						<td class="tableCell">
 							<p>{item.Status__c}</p>

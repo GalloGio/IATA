@@ -149,11 +149,8 @@ export default class CwPrivateAreaContainer extends LightningElement {
 			this.userInfo = JSON.parse(result.data);
 			getCompanyAdminContactsFromAccountId({ accountId: this.userInfo.AccountId })
 				.then(cadmins => {
-					if (cadmins) {
-						this.companyAdmins = cadmins;
-					} else {
-						this.companyAdmins = [];
-					}
+					this.companyAdmins = cadmins;
+					this.userInfo.isCompanyAdmin = this.companyAdmins.some(contact => this.userInfo && contact.Id === this.userInfo.ContactId);
 				})
 				.catch(err => {
 					this.companyAdmins = [];
@@ -594,7 +591,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 				added = false;
 				let certInfo = {available:false};
 				certInfo.certName = activeCert.Name;
-				if(activeCert.Applicable_to__c && activeCert.Applicable_to__c.indexOf(facility.RecordType.Name)>-1){
+				if(activeCert.Applicable_to__c && activeCert.Applicable_to__c.indexOf(facility.RecordType.DeveloperName)>-1){
 					certInfo.available = true;
 					let hasAssignments = facility.ICG_Capability_Assignment_Groups__r && facility.ICG_Capability_Assignment_Groups__r.totalSize > 0;
 					if (hasAssignments) {

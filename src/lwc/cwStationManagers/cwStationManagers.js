@@ -303,11 +303,11 @@ export default class CwStationManagers extends LightningElement {
             }
             this.isLoading = false;
         }).catch(err => {
-            console.error(err);
+            console.error('Error ', err);
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error Become Station Manager',
-                    message: err.message,
+                    message: this.label.icg_error_message,
                     variant: 'error'
                 })
             );

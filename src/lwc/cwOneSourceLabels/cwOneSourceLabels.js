@@ -429,6 +429,12 @@ import icg_header_delete_photo from "@salesforce/label/c.icg_header_delete_photo
 import icg_header_remove_certi from "@salesforce/label/c.icg_header_remove_certi";
 import icg_capab_message_to_show from "@salesforce/label/c.icg_capab_message_to_show";
 import icg_error_message from "@salesforce/label/c.icg_error_message";
+import icg_generalCargo from "@salesforce/label/c.icg_generalCargo";
+import icg_liveAnimals from "@salesforce/label/c.icg_liveAnimals";
+import icg_dangerousGoods from "@salesforce/label/c.icg_dangerousGoods";
+import icg_airmail from "@salesforce/label/c.icg_airmail";
+import icg_perishables from "@salesforce/label/c.icg_perishables";
+import icg_pharmaceuticals from "@salesforce/label/c.icg_pharmaceuticals";
 
 export function labels() {
 	let labels = {
@@ -863,7 +869,13 @@ export function labels() {
 		icg_header_delete_photo,
 		icg_header_remove_certi,
 		icg_capab_message_to_show,
-		icg_error_message
+		icg_error_message,  
+		icg_generalCargo,
+		icg_liveAnimals,
+		icg_dangerousGoods,
+		icg_airmail,
+		icg_perishables,
+		icg_pharmaceuticals
 	};
 
 	return labels;

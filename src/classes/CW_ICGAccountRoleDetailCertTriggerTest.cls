@@ -23,15 +23,15 @@ public class CW_ICGAccountRoleDetailCertTriggerTest {
 		insert ardr;
 
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-		cert.Name = 'CEIV Pharma';
+		cert.Name = 'ceiv_pharma';
 		cert.Certification_Type__c = 'Assessments';
 		insert cert;
 		ICG_Certification__c newcert = CW_TestDataFactory.newCertification();
-		newcert.name = 'CEIV Fresh';
+		newcert.name = 'ceiv_fresh';
 		newcert.certification_type__C = 'Certifications of Excellency';
 		insert newcert;
 		ICG_Certification__c newcert2 = CW_TestDataFactory.newCertification();
-		newcert2.name = 'Smart Facility Operational Capacity';
+		newcert2.name = 'smart_facility_operational_capacity';
 		newcert2.certification_type__C = 'Certifications of Compliance';
 		insert newcert2;
 

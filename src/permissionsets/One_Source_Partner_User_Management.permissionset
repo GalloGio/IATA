@@ -336,6 +336,22 @@
         <apexClass>PortalRegistrationUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ICG_Capability_Configuration__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ICG_Portal_URL__mdt</name>
+    </customMetadataTypeAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>ICG_Environment_Variables__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>ICG_GxA_Integration_Settings__c</name>
+    </customSettingAccesses>
     <description>Permission Set to allow users to manage One Source App</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -1473,6 +1489,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_Capability_Assignment_Group__c.ICG_Certification_Label__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ICG_Capability_Assignment_Group__c.ICG_Certification__c</field>
         <readable>true</readable>
@@ -1555,6 +1576,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ICG_Certification__c.Is_Visible__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_Certification__c.Label__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1698,7 +1724,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>ONE Source Partner User Management</label>
+    <label>ONE Source Private Area (External)</label>
     <license>Partner Community</license>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -1951,4 +1977,16 @@
         <recordType>ICG_Notification__c.PrivateArea</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditTask</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EmailSingle</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>TransactionalEmailSend</name>
+    </userPermissions>
 </PermissionSet>

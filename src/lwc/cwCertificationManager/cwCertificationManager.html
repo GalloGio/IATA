@@ -10,10 +10,10 @@
 			  <span class="slds-assistive-text capitalize">{label.close}</span>
 			</button>
 			<template if:true={isRenewMode}>
-				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{label.renew_certification}: {certificationInfo.name}</h2>
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{label.renew_certification}: {certificationInfo.label}</h2>
 			</template>
 			<template if:true={isEditMode}>
-				<h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{label.remove_certification}: {certificationInfo.name}</h2>
+				<h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{label.remove_certification}: {certificationInfo.label}</h2>
 			</template>	 
 		</header>
 		  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
@@ -51,7 +51,7 @@
 			<lightning-input class="certificationItem" type="text" value={certificationInfo.certificationId} disabled></lightning-input>
 		</div>
 		<div class="slds-col slds-size_1-of-8">
-			<lightning-input class="certificationItem" type="text" value={certificationInfo.name} disabled></lightning-input>
+			<lightning-input class="certificationItem" type="text" value={certificationInfo.label} disabled></lightning-input>
 		</div>
 		<div class="slds-col slds-size_1-of-4">
 			<lightning-dual-listbox class="p-65" if:false={disableField} value={getValuesScope} size="4" label="" source-label="" selected-label="" data-id={certificationInfo.id} data-name="Scope" data-origin="Active-Cert" data-scopeused={certificationInfo.scopeToUse} options={certificationInfo.listScope} disabled={disableField} onblur={handleChangeEditMode}></lightning-dual-listbox>
@@ -100,7 +100,7 @@
 					<lightning-input type="text" disabled value={item.certificationId}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-8">
-					<lightning-input type="text" disabled value={item.name}></lightning-input>
+					<lightning-input type="text" disabled value={item.label}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-4">
 					<lightning-dual-listbox class="p-65" if:false={item.disabled} value={item.scope} size="4" label="" source-label="" selected-label="" data-id={item.id} data-name="Scope" data-scopeused={item.scopeToUse} data-origin="Upcoming-Cert" options={certificationInfo.listScope} onblur={handleChangeEditMode}></lightning-dual-listbox>
@@ -137,7 +137,7 @@
 					<lightning-input type="text" disabled value={item.certificationId}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-8">
-					<lightning-input type="text" disabled value={item.name}></lightning-input>
+					<lightning-input type="text" disabled value={item.label}></lightning-input>
 				</div>
 				<div class="slds-col slds-size_1-of-4">
 					<lightning-dual-listbox class="p-65" if:false={item.disabled} value={item.scope} size="4" label="" source-label="" selected-label="" data-id={item.id} data-name="Scope" data-origin="Rest-Cert" data-scopeused={item.scopeToUse} options={certificationInfo.listScope} onblur={handleChangeEditMode}></lightning-dual-listbox>

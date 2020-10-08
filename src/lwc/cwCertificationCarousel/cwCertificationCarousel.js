@@ -13,6 +13,7 @@ export default class CwCertificationCarousel extends LightningElement {
 	@track selectedCertification = {
 		Id: "",
 		Name: "",
+		Label: "",
 		imagen: "",
 		type: "",
 		description: "",
@@ -49,6 +50,7 @@ export default class CwCertificationCarousel extends LightningElement {
 				let cert = {
 					Id: resObject.Id,
 					Name: resObject.Name,
+					label: resObject.Label__c,
 					imagen: resObject.Image__c,
 					type: resObject.Certification_Type__c,
 					description: resObject.Description__c,
@@ -81,7 +83,7 @@ export default class CwCertificationCarousel extends LightningElement {
 
 	showCertifiedEntities() {
 		let searchList = [];
-		let searchValue = this.selectedCertification.Name && this.selectedCertification.Name.toLowerCase() === "ienva" ? this.selectedCertification.Name + ";IEnvA Stage 2" : this.selectedCertification.Name;
+		let searchValue = this.selectedCertification.Name && this.selectedCertification.Name.toLowerCase() === "ienva_stage_1" ? this.selectedCertification.Name + ";ienva_stage_2" : this.selectedCertification.Name;
 		let searchObject = { operator: "LIKE", value: searchValue };
 		searchObject.obj = "ICG_Capability_Assignment_Group__c";
 		searchObject.field = "ICG_Certification__r.Name";

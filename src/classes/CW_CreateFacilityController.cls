@@ -65,41 +65,42 @@ public without sharing class CW_CreateFacilityController {
 	private static Boolean handleEmailsAndNotifications(Boolean isInternalUser, ICG_Account_Role_Detail__c facility, List<Contact> companyAdmins, Boolean isCompanyAdmin, Boolean isNewAccount) {
 
 		ICG_Account_Role_Detail__c createdArd = [Select id, Status__c,CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :facility.Id];
+		Set<Id> whoIdsRequestor = new Set<Id>();
 		String whoId = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.ContactId : createdArd.CreatedById;
+		whoIdsRequestor.add(whoId);
 		String templateName;
 
 		//Send email to approvers
-		List<String> whoEmails = new List<String>();
+		Set<Id> whoIdsAdmins = new Set<Id>();
 		List<String> contactIds = new List<String>();
 		for(Contact c : companyAdmins){
-			whoEmails.add(c.email);
+			whoIdsAdmins.add(c.Id);
 			contactIds.add(c.Id);
 		}
 		if(hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)){
-			whoEmails = CW_Utilities.getIATAStakeholdersEmails();
+			whoIdsAdmins = CW_EmailManager.getIataAdminsIds();
 			templateName = isNewAccount == true ? 'Approve_Reject_to_IATA_Admin_account' : 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
 		}else{
 			templateName = 'Approve_Reject_to_company_admin';
 		}
-		Boolean submitted = !whoEmails.isEmpty() ? CW_Utilities.sendEmailTemplate(templateName, facility.Id, whoId, whoEmails, false) : false;
 
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 
+		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsAdmins));
+		templateName = isNewAccount == true ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
+		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsRequestor));
+		
 		String subject = 'New Station is pending approval';
 		String body = subject;
+		contactIds.add(createdArd.CreatedBy.ContactId);
 		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-
-		//Send email to requestor
-		String whoEmail = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.Contact.Email : createdArd.CreatedBy.Email;
-		templateName = isNewAccount == true ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
-		CW_Utilities.sendEmailTemplate(templateName, facility.Id, whoId, new List<String> {whoEmail}, true);
-		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String> {createdArd.CreatedBy.ContactId}, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA,false));
 
 		if(notifications.size() > 0){
 			insert notifications;
 		}
 
-		return submitted;
+		return CW_EmailManager.sendInternalEmails(emailsToBeSent, true);
 	}
 
 	private static void createFacilityRelations(String ardRelIds, String facilityId) {

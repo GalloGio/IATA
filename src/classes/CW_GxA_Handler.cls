@@ -111,7 +111,7 @@ global without sharing class CW_GxA_Handler {
 			startAt = Date.today().toStartOfMonth();
 		}
 		if (endAt == null) {
-			endAt = startAt.addMonths(1).addDays(-1);
+			endAt = startAt.addMonths(1);
 		}
 
 		// Get the orders between dates that last retry was failed

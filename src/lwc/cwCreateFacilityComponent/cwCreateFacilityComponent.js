@@ -1,6 +1,7 @@
 import { LightningElement, track, wire, api } from "lwc";
 import getCompanyTypes from "@salesforce/apex/CW_Utilities.getCompanyTypes";
 import getCountries from "@salesforce/apex/CW_Utilities.getIATACountries";
+import getArdTypesBySectorAndCategory from '@salesforce/apex/CW_Utilities.getArdTypesBySectorAndCategory';
 import becomeFacilityAdmin from "@salesforce/apex/CW_Utilities.becomeFacilityAdmin";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import createFacility from "@salesforce/apex/CW_CreateFacilityController.createFacility";
@@ -38,6 +39,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	createdStation;
 	@track companyTypesRaw;
 	@track countries;
+	@track ctypesMapBySectorAndCategory;
 	@track predictiveValues;
 	@track formData = {};
 	@track additionalData = {};
@@ -58,7 +60,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	@track modalMessage = "";
 	CHECKED_IMAGE = resources + "/icons/ic-tic-green.svg";
 	ERROR_IMAGE = resources + "/icons/error-icon.svg";
-	@track modalImage = this.CHECKED_IMAGE + "/icons/ic-tic-green.svg";
+	@track modalImage = this.CHECKED_IMAGE;
 	@api companyAdmins;
 	_label;
 	@api 
@@ -86,6 +88,19 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	@track accountCreationPrompt;
 	@track stationCreationPrompt;
 
+	@track
+	cargoCommodities = [
+		{ key: "generalCargo", name: "General Cargo", matchesCerts: [], checked: false },
+		{ key: "liveAnimals", name: "Live Animals", matchesCerts: ["ceiv_live_animals"], checked: false },
+		{ key: "dangerousGoods", name: "Dangerous Goods", matchesCerts: [], checked: false },
+		{ key: "airmail", name: "Airmail", matchesCerts: [], checked: false },
+		{ key: "perishables", name: "Perishables", matchesCerts: ["ceiv_fresh"], checked: false },
+		{ key: "pharmaceuticals", name: "Pharmaceuticals", matchesCerts: ["ceiv_pharma"], checked: false }
+	];
+	
+	get showCargoCommoditiesSection(){
+		return this.cargoCommodities.length >0;
+	}
 
 	@track selectRt;
 	@track selectStationName;
@@ -118,7 +133,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 	
 	get stationAccountCreated(){
-		return this.accountCreated || this.stationCreated;
+		return (this.accountCreated && this.stationCreated) || this.stationCreated;
 	}
 	
 	get errorCreatingStationAccount(){
@@ -183,16 +198,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	};
 
 	createdCityId;
-	
-	ctypesMapBySector = {
-		Airline : ["Airline", "Cargo Handling Facility", "Ramp Handler"],
-		FreightForwarder : ["Freight Forwarder", "Cargo Handling Facility"],
-		AirlineSupplier : ["Cargo Handling Facility", "Ramp Handler"],
-		NonAirlineTransportation : ["Trucker"],
-		InfrastructurePartner : ["Airport Operator","Cargo Handling Facility","Ramp Handler"],
-		Other : ["Shipper"]
-	}
-
 	@track duplicatedStationsByType;
 	@track duplicatedStationsByName;
 
@@ -243,6 +248,12 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			this.countries = JSON.parse(data);
 		}
 	}
+	@wire(getArdTypesBySectorAndCategory, {})
+	wiredArdTypesBySectorAndCategory({ data }) {
+		if (data) {
+			this.ctypesMapBySectorAndCategory = JSON.parse(data);
+		}
+	}
 	selectHQCountry(event){
 		this.selectedHQCountry = event.detail.item;
 		this.hqSearchValue = event.detail.value;
@@ -285,7 +296,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		event.preventDefault();
 		this.closeFacilityNameAndTypeModal();
 		this.closeStationInNewAddressPrompt();
-		if (this.checkFormFields()) {
+		let validFields = this.checkFormFields();
+		if (validFields) {
 			this.collectFormData();
 			this.step = event.currentTarget.dataset.substep ? Number((this.step + 0.1).toFixed(1)) : (~~this.step)+1;
 			if (event.currentTarget.dataset.sameadress) {
@@ -294,7 +306,9 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		}
 		this.airportSelectorEventListenersAdded = false;
 		this.languageSelectorEventListenersAdded = false;
-		this.scrollToTop();
+		if (validFields) {
+			this.scrollToTop();
+		}
 	}
 	checkFormFields() {
 		const inputValid = [...this.template.querySelectorAll("input")].reduce(
@@ -355,23 +369,38 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		if(formu && formu.elements){
 			this.additionalData = this.formToJSON(formu.elements);
 			this.additionalData.openingHours = JSON.stringify(this.openingHours);
+			this.additionalData.generalCargo = this.cargoCommodities[0].checked;
+			this.additionalData.liveAnimals = this.cargoCommodities[1].checked;
+			this.additionalData.dangerousGoods = this.cargoCommodities[2].checked;
+			this.additionalData.airmail = this.cargoCommodities[3].checked;
+			this.additionalData.perishables = this.cargoCommodities[4].checked;
+			this.additionalData.pharmaceuticals = this.cargoCommodities[5].checked;
 		}
-		
 	}
 	initializeBasicFormData() {
 		let formu = this.template.querySelector(".basicdataform");
 		if (formu) {
 			this.formData = this.emptyFormJSON(formu.elements);
-			if (this.companyInfo && this.companyInfo.IATA_ISO_Country__c)
+			if (this.companyInfo && this.companyInfo.IATA_ISO_Country__c){
 				this.formData.disabledcountry = this.companyInfo.IATA_ISO_Country__r.Name;
-			if (this.companyInfo && this.companyInfo.Business_City__c)
+			}
+				
+			if (this.companyInfo && this.companyInfo.Business_City__c){
 				this.formData.disabledcity = this.companyInfo.Business_City__r.Name;
-			if (this.companyInfo && this.companyInfo.Business_Street__c)
+			}
+				
+			if (this.companyInfo && this.companyInfo.Business_Street__c){
 				this.formData.disabledstreet = this.companyInfo.Business_Street__c;
-			if (this.companyInfo && this.companyInfo.Business_Postal_Code__c)
+			}
+				
+			if (this.companyInfo && this.companyInfo.Business_Postal_Code__c){
 				this.formData.disabledzip = this.companyInfo.Business_Postal_Code__c;
-			if (this.companyInfo && this.companyInfo.Business_State_Name__c)
+			}
+				
+			if (this.companyInfo && this.companyInfo.Business_State_Name__c){
 				this.formData.disabledstate = this.companyInfo.Business_State_Name__c;
+			}
+				
 		}
 	}
 	initializeadditionalFormData() {
@@ -543,6 +572,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			);
 		}
 	}
+
 	viewHoverDiv(groupnm,key, type, isbranch, event) {
 		if (!isbranch) {
 			this._potentialDupFacilities.forEach(gr => {
@@ -582,9 +612,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				);
 			}
 		}
-
-
 	}
+
 	becomeFacilityAdminJS(event) {
 		let facilityId = event.target.dataset.facility;
 		this.requesting = true;
@@ -603,7 +632,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				this.removeHoverDiv();
 			})
 			.catch(err => {
-				this.modalMessage = err.message;
+				console.error('Error ', err);
+				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
 				this.requesting = false;
@@ -705,7 +735,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 					this.creatingAccount = false;
 					this.accountCreated = false;
 					this.errorCreatingStation = true;
-					this.modalMessage = ex.body.message;
+					this.modalMessage = this.label.icg_error_message;
 				});
 			}
 			else{
@@ -742,7 +772,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			this.creatingAccount = false;
 			this.accountCreated = false;
 			this.errorCreatingStation = true;
-			this.modalMessage = ex.body.message;
+			this.modalMessage = this.label.icg_error_message;
 		});
 	}
 
@@ -755,7 +785,11 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get onlinePlatform(){
-		return this.additionalData && this.additionalData.onlineplatform ? this.additionalData.onlineplatform : '';
+		return this.additionalData && this.additionalData.onlineplatform ? this.additionalData.onlineplatform : 'https://';
+	}
+
+	get websiteValue(){
+		return this.additionalData && this.additionalData.website ? this.additionalData.website : 'https://';
 	}
 
 	registerStation(){
@@ -766,6 +800,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			RecordTypeId : this.formData.recordtype,
 			Number_of_Employees__c : parseInt(this.additionalData.noemployees || 0,10),
 			Number_of_Facilities__c : parseInt(this.additionalData.nofacilities || 0,10),
+			Overall_Facility_Size_m2__c : parseInt(this.additionalData.overallFacilitySizeM2 || 0,10),
 			Customer_Service_Email__c : this.additionalData.email,
 			Customer_Service_Phone_Number__c : this.additionalData.phone,
 			Website__c : this.additionalData.website,
@@ -778,7 +813,13 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			Hidden_Operating_Stations__c : this.hiddenOperatingStations,
 			Pilot_Information__c : this.additionalData.pilotinfo,
 			Secondary_Address__c : this.additionalData.stationsecondaddress,
-			Is_Direct_Ramp_Access__c : this.additionalData.directrampaccess
+			Is_Direct_Ramp_Access__c : this.additionalData.directrampaccess,
+			General_Cargo__c : this.additionalData.generalCargo,
+			Live_Animals__c : this.additionalData.liveAnimals,
+			Dangerous_Goods__c : this.additionalData.dangerousGoods,
+			Airmail__c : this.additionalData.airmail,
+			Perishables__c : this.additionalData.perishables,
+			Pharmaceuticals__c : this.additionalData.pharmaceuticals
 		}
 
 		let accountId = this.parentCompany
@@ -829,7 +870,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				this.creatingStation = false;
 				this.stationCreated = false;
 				this.errorCreatingStation = true;
-				this.modalMessage = err.body.message;
+				this.modalMessage = this.label.icg_error_message;
 			});
 	}
 
@@ -842,7 +883,11 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			}
 		}).then(url => {
 			window.open(url);
-	   	});
+
+			if(this.isInternalUser){
+				window.location.reload();
+			}
+		   });
 	}
 
 	setLogoPreview(event) {
@@ -1077,7 +1122,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		this.isairportboxfocus = true;
 		this.predictiveValues = [];
 		this.airportSearchValue = this.generateValueFromEvent(event, this.airportSearchValue);
-
 		if (this.invalidFilterValue(this.airportSearchValue)) {
 			return;
 		}
@@ -1125,21 +1169,19 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			this.accountCreated = false;
 			this.errorCreatingAccount = false;
 		}
-		if(this.isInternalUser){
-			window.location.reload();
-		}
+
 	}
 	get showListAirlines() {
-		return (this.companyType === 'Ramp Handler' ||
-			this.companyType === 'Cargo Handling Facility' || this.companyType === 'Airport Operator');
+		return (this.companyType === 'Ramp_Handler' ||
+			this.companyType === 'Cargo_Handling_Facility' || this.companyType === 'Airport_Operator');
 	}
 
 	get showOperatingAirlines() {
-		return this.companyType === 'Airport Operator';
+		return this.companyType === 'Airport_Operator';
 	}
 
 	get showOperatingCHFandRampH() {
-		return ((this.companyType === 'Airport Operator' ||
+		return ((this.companyType === 'Airport_Operator' ||
 			this.companyType === 'Airline') && this.selectedAirport && (this.onAirportOperatingCHF.length > 0 || this.onAirportRampH.length > 0));
 	}
 
@@ -1159,7 +1201,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		event.preventDefault();
 		this.getAdditionalFormData();
 		this.selectedAirport = {value: event.detail.item, label: event.detail.value}
-		if(this.companyType === 'Airline' || this.companyType === 'Airport Operator') this.getOnAirportStationsJS();
+		if(this.companyType === 'Airline' || this.companyType === 'Airport_Operator') this.getOnAirportStationsJS();
+		this.airportSearchValue = '';
 	}
 
 	getOnAirportStationsJS(){
@@ -1221,7 +1264,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 
 	get hiddenOperatingStations(){
 		let hiddenOperatingStations = '';
-		if(this.companyType === 'Airport Operator'){
+		if(this.companyType === 'Airport_Operator'){
 			hiddenOperatingStations = this.hiddenCargoStations && this.hiddenCargoStations.length > 0 ? 'OperatingCargo:'+this.hiddenCargoStations.join(',')+'|': '';
 			hiddenOperatingStations += this.hiddenRampHandlers && this.hiddenRampHandlers.length > 0 ? 'OperatingRamp:'+this.hiddenRampHandlers.join(',')+'|':'';
 		}
@@ -1249,6 +1292,10 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		this.onAirportOperatingCHF = [];
 		this.onAirportRampH = [];
 	}
+	removeCargoCommodities(event){
+		event.preventDefault();
+	}
+	
 	get selectedLanguages() {
 		let selectedLanguages = "";
 		if (this.selectedLanguagesList) {
@@ -1290,23 +1337,38 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		let ctype = "";
 		if (this.formData.recordtype && this.formData.recordtype != "") {
 			this.companyTypesRaw.forEach(elem => {
-				if (elem.rtid === this.formData.recordtype) ctype = elem.name;
+				if (elem.rtid === this.formData.recordtype) ctype = elem.value;
 			});
 		}
 		return ctype;
 	}
 	get companyTypes() {
+		let sector = !this.selectedCompany ? this.account.sector : this.selectedCompany.accountInfo.Sector__c;
+		let category = !this.selectedCompany ? this.account.category : this.selectedCompany.accountInfo.Category__c;
+
 		this.companyTypesRaw.forEach(ctype => {
-			if(!this.selectedCompany && this.account.sector && this.account.category){
-				let trimmedSector = this.account.sector.replace(/\s+/g, '').replace(/-/gi,'');
-				if(ctype.name && this.ctypesMapBySector[trimmedSector].includes(ctype.name)) ctype.available = true;
-				else ctype.available = false;
-			}else{
-				ctype.available = true;
+			if (sector && category && ctype.value) {
+				ctype.available = this.isCompanyTypeAvailable(sector.toLowerCase(), category.toLowerCase(), ctype.value.toLowerCase());
+			} else {
+				ctype.available = false;
 			}
 		});
 		return this.companyTypesRaw;
-		
+	}
+
+	isCompanyTypeAvailable(sector, category, ctypeName) {
+		for (let sectorX = 0; sectorX < this.ctypesMapBySectorAndCategory.sectors.length; sectorX++){
+			if (this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorName === sector && this.ctypesMapBySectorAndCategory.sectors[sectorX].categories) {
+				for (let categoryX = 0; categoryX < this.ctypesMapBySectorAndCategory.sectors[sectorX].categories.length; categoryX++){
+					if (this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryName === '*' || this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryName === category) {
+						if (this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].allowedTypes.indexOf(ctypeName) > -1) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	get companyHasAdmins() {
@@ -1334,13 +1396,13 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 						comp.stations.forEach(fac => {
 							if (fac.RecordType.Name === "Airline")
 								comp.airlinecount++;
-							else if (fac.RecordType.Name === "Airport Operator")
+							else if (fac.RecordType.Name === "Airport_Operator")
 								comp.airportcount++;
-							else if (fac.RecordType.Name === "Cargo Handling Facility")
+							else if (fac.RecordType.Name === "Cargo_Handling_Facility")
 								comp.cargocount++;
-							else if (fac.RecordType.Name === "Freight Forwarder")
+							else if (fac.RecordType.Name === "Freight_Forwarder")
 								comp.ffcount++;
-							else if (fac.RecordType.Name === "Ramp Handler")
+							else if (fac.RecordType.Name === "Ramp_Handler")
 								comp.ramphandlercount++;
 							else if (fac.RecordType.Name === "Shipper")
 								comp.shippercount++;
@@ -1456,7 +1518,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			addressObj.state = this.selectedCompany.accountInfo.Iso_State__r ? this.selectedCompany.accountInfo.Iso_State__r.Name : this.selectedCompany.accountInfo.Business_State_Name__c;
 			addressObj.stateId = this.selectedCompany.accountInfo.Iso_State__c;
 			addressObj.postalcode = this.selectedCompany.accountInfo.Business_Postal_Code__c;
-			addressObj.country = this.selectedCompany.accountInfo.IATA_ISO_Country__r.Name;
+			addressObj.country = this.selectedCompany.accountInfo.IATA_ISO_Country__r ? this.selectedCompany.accountInfo.IATA_ISO_Country__r.Name : '';
 			addressObj.countryId = this.selectedCompany.accountInfo.IATA_ISO_Country__c;
 			addressObj.latitude = this.selectedCompany.accountInfo.Business_Geo_Coordinates__Latitude__s;
 			addressObj.longitude = this.selectedCompany.accountInfo.Business_Geo_Coordinates__Longitude__s;
@@ -1609,15 +1671,15 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return this.openingHours && this.openingHours.dataCustoms ? this.openingHours.dataCustoms.days : [];
 	}
 	showImportHours() {
-		return this.companyType === "Cargo Handling Facility";
+		return this.companyType === "Cargo_Handling_Facility";
 	}
 
 	showExportHours() {
-		return this.companyType === "Cargo Handling Facility";
+		return this.companyType === "Cargo_Handling_Facility";
 	}
 
 	showCustomsHours() {
-		return this.companyType === "Cargo Handling Facility" || this.companyType === "Airport Operator";
+		return this.companyType === "Cargo_Handling_Facility" || this.companyType === "Airport_Operator";
 	}
 
 	showOfficeHours() {
@@ -1625,29 +1687,29 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	showOperatingHours() {
-		return this.companyType === "Airline" || this.companyType === "Freight Forwarder" || this.companyType === "Trucker";
+		return this.companyType === "Airline" || this.companyType === "Freight_Forwarder" || this.companyType === "Trucker";
 	}
 
 	showAirportHours() {
-		return this.companyType === "Airport Operator";
+		return this.companyType === "Airport_Operator";
 	}
 
 	showFlightHours() {
-		return this.companyType === "Airport Operator";
+		return this.companyType === "Airport_Operator";
 	}
 
 	showRampHours() {
-		return this.companyType === "Ramp Handler";
+		return this.companyType === "Ramp_Handler";
 	}
 
 	get showOnlineBooking() {
-		return this.companyType !== "Airport Operator";
+		return this.companyType !== "Airport_Operator";
 	}
 	get showPilotInformation() {
-		return this.companyType === "Airport Operator";
+		return this.companyType === "Airport_Operator";
 	}
 	get showSupportedLanguages() {
-		return !(this.companyType === "Airline" || this.companyType === "Airport Operator");
+		return !(this.companyType === "Airline" || this.companyType === "Airport_Operator");
 	}
 
 	registerNewAccount(){
@@ -1747,7 +1809,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 								station.recordUrl = this.urlBaseFacilityPage + "?eid=" + station.Id;
 								station.groupName = groupName;
 								station.city = company.accountInfo.Business_City__r ? company.accountInfo.Business_City__r.Name : company.accountInfo.Business_City_Name__c;
-								station.country = company.accountInfo.IATA_ISO_Country__r.Name;
+								station.country =  company.accountInfo.IATA_ISO_Country__r ? company.accountInfo.IATA_ISO_Country__r.Name : '';
 								station.street = company.accountInfo.Business_Street__c;
 								station.state = company.accountInfo.Business_State_Name__c;
 								station.postalCode = company.accountInfo.Business_Postal_Code__c;
@@ -1828,7 +1890,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get showDirectRampAccess(){
-		return this.isInternalUser && this.companyType === 'Cargo Handling Facility';
+		return this.isInternalUser && this.companyType === 'Cargo_Handling_Facility';
 	}
 
 	get addressGeo(){

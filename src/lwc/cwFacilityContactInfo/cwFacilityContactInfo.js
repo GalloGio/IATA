@@ -61,19 +61,19 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 
 	get showOnlineBooking() {
-		return this.facility.recordTypeName !== "Airport Operator" && (this.facility.onlineBooking || this.editOn);
+		return this.facility.recordTypeDevName !== "Airport_Operator" && (this.facility.onlineBooking || this.editOn);
 	}
 
 	showImportHours() {
-		return this.facility.recordTypeName === "Cargo Handling Facility";
+		return this.facility.recordTypeDevName === "Cargo_Handling_Facility";
 	}
 
 	showExportHours() {
-		return this.facility.recordTypeName === "Cargo Handling Facility";
+		return this.facility.recordTypeDevName === "Cargo_Handling_Facility";
 	}
 
 	showCustomsHours() {
-		return this.facility.recordTypeName === "Cargo Handling Facility" || this.facility.recordTypeName === "Airport Operator";
+		return this.facility.recordTypeDevName === "Cargo_Handling_Facility" || this.facility.recordTypeDevName === "Airport_Operator";
 	}
 
 	showOfficeHours() {
@@ -81,23 +81,23 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 
 	showOperatingHours() {
-		return this.facility.recordTypeName === "Airline" || this.facility.recordTypeName === "Freight Forwarder" || this.facility.recordTypeName === "Trucker";
+		return this.facility.recordTypeDevName === "Airline" || this.facility.recordTypeDevName === "Freight_Forwarder" || this.facility.recordTypeDevName === "Trucker";
 	}
 
 	showAirportHours() {
-		return this.facility.recordTypeName === "Airport Operator";
+		return this.facility.recordTypeDevName === "Airport_Operator";
 	}
 
 	showFlightHours() {
-		return this.facility.recordTypeName === "Airport Operator";
+		return this.facility.recordTypeDevName === "Airport_Operator";
 	}
 
 	showRampHours() {
-		return this.facility.recordTypeName === "Ramp Handler";
+		return this.facility.recordTypeDevName === "Ramp_Handler";
 	}
 
 	get showSupportedLanguages() {
-		return !(this.facility.recordTypeName === "Airline" || this.facility.recordTypeName === "Airport Operator");
+		return !(this.facility.recordTypeDevName === "Airline" || this.facility.recordTypeDevName === "Airport_Operator");
 	}
 
 	renderedCallback() {
@@ -400,6 +400,6 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 
 	get showPilotInformation() {
-		return this.facility.recordTypeName === "Airport Operator";
+		return this.facility.recordTypeDevName === "Airport_Operator";
 	}
 }

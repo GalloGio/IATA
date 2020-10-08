@@ -155,7 +155,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>OS Account Role Detail Relationship</label>
     <nameField>
-        <displayFormat>ARDRelationship-{000000000}}</displayFormat>
+        <displayFormat>ARDRelationship-{000000000}</displayFormat>
         <label>OS Account Role Detail Relationship</label>
         <type>AutoNumber</type>
     </nameField>

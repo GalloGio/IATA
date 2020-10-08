@@ -12,7 +12,7 @@ public class CW_TestDataFactory {
 
 	public static ICG_Certification__c newCertification() {
 		ICG_Certification__c cert = new ICG_Certification__c();
-		cert.Name = 'CEIV Live Animals';
+		cert.Name = 'ceiv_live_animals';
 		cert.Certification_Type__c = 'Assessments';
 		cert.Image_Filename__c = 'sfoc_stamp.svg';
 		cert.Is_Visible__c = true;

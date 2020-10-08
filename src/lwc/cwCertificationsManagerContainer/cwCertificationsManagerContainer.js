@@ -161,7 +161,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				});
 				this.sofcScope = tempDataScope;
 
-				this.getFacilityCertifications(this.recordId,this.labelStationType);
+				this.getFacilityCertifications(this.recordId,this.valueStationType);
 			}
 		
 		});
@@ -237,7 +237,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	checkRemainingCertifications(){
-		let stationRT = this.labelStationType;
+		let stationRT = this.valueStationType;
 		getAllCertifications({stationRT}).then(response =>{
 			if(response){
 				this.certificationsRemaining = [];
@@ -247,7 +247,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				dataParsed.forEach(cert =>{
 					let usedCert = [];
 					let valueItems = {
-						label : cert.Name,
+						label : cert.Label__c,
 						value : cert.Id
 					}
 					this.allcertificationDropdowOptions.push(valueItems);
@@ -259,13 +259,13 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 					let isAvailable=false;
 					if(cert.Applicable_to__c != undefined && cert.Applicable_to__c != null){
 						availableList = cert.Applicable_to__c.split(';');
-						isAvailable = availableList.includes(this.labelStationType);
+						isAvailable = availableList.includes(this.valueStationType);
 					}					
 					
 					if(usedCert.length === 0 && isAvailable){
 						this.certificationsRemaining.push(cert);
 						let option = {
-							label : cert.Name,
+							label : cert.Label__c,
 							value : cert.Id
 						}
 						this.certificationDropdowOptions.push(option);
@@ -273,7 +273,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				})
 			}
 			this.initialized = true;
-		})
+		});
 	}
 	handleIssuedDateChange(event){
 		this.formatedIssuedDate = event.target.value;
@@ -293,25 +293,25 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	changeCertification(nextCertiID){
 		let selectedCertification = this.certificationsRemaining.filter(cert => cert.Id === this.selectedCert);
 		if(selectedCertification){
-			if(selectedCertification[0].Name === "Smart Facility Operational Capacity"){
+			if(selectedCertification[0].Name.toLowerCase() === "smart_facility_operational_capacity"){
 				this.scope = this.sofcScope;
 				this.showScope = true;
 				this.scopeToUse = "SFOC_Scope__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
 			}
-			else if(selectedCertification[0].Name.includes("CEIV")){
+			else if(selectedCertification[0].Name.toLowerCase().includes("ceiv_")){
 				this.scope = this.ceivScope;
 				this.showScope = true;
 				this.scopeToUse = "CEIV_Scope_List__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
 			}
-			else if(selectedCertification[0].Name.includes("IEnvA")){
+			else if(selectedCertification[0].Name.toLowerCase().includes("ienva_stage_")){
 				this.scope = this.ienvaScope;
 				this.showScope = true;
 				this.scopeToUse = "IENVA_Scope__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
 			}
-			else if(selectedCertification[0].Name.includes("United")){
+			else if(selectedCertification[0].Name.toLowerCase() === "united_for_wildlife"){
 				this.scope = this.ienvaScope;
 				this.showScope = true;
 				this.scopeToUse = "IENVA_Scope__c";
@@ -322,7 +322,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				this.showScope = false;
 			}
 			this.newCertificationId = nextCertiID;
-			this.certificationName = selectedCertification[0].Name;
+			this.certificationName = selectedCertification[0].Label__c;
 		}
 	}
 	getExpirationDateByCertification(issueDate, expirationPeriod){
@@ -385,7 +385,6 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.scopeToUse = '';
 		this.showScope = false;
 		this.isCapabCertiMode = false;
-		this.showToast('Create Certification:',"Certification created", "success");
 		let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.selectedCert);
 		if(includeCapabilities.length === 0){
 			this.changeViewCapabilitiesCertifications();
@@ -425,7 +424,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.isCapabCertiMode = false;
 		this.renewMode = true;
 		let selectedCertification = this.certificationsUsed.filter(cert => cert.id === certId);
-		this.certificationName = selectedCertification[0].name;
+		this.certificationName = selectedCertification[0].label;
 		this.refreshCertificationsRenewed();
 
 		this.jsonCertification = JSON.stringify(newCertification);
@@ -477,7 +476,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.isCapabCertiMode = true;
 		this.renewMode = false;
 		let selectedCertification = this.certificationsUsed.filter(cert => cert.id === certId);
-		this.certificationName = selectedCertification[0].name;
+		this.certificationName = selectedCertification[0].label;
 
 		let newCertification = {
 			ICG_Account_Role_Detail__c : this.recordId,
@@ -493,7 +492,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 	refreshCertificationsRenewed(){
 		const facilityId = this.recordId;
-		const stationRT = this.labelStationType;
+		const stationRT = this.valueStationType;
 		refreshFacilityCertifications({facilityId,stationRT}).then(response =>{
 			if(response){
 				let dataParsed = JSON.parse(response);
@@ -519,7 +518,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 			let listScope = [];
 			let scopeInput=[];
 			let scopeToUse;
-			if(certification.ICG_Certification__r.Name.includes("CEIV")){
+			if(certification.ICG_Certification__r.Name.toLowerCase().includes("ceiv_")){
 				scopeToUse = "CEIV_Scope_List__c";
 				listScope = this.ceivScope;
 				
@@ -539,7 +538,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				scope = scopeInput;
 				scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
 			}
-			else if(certification.ICG_Certification__r.Name === "Smart Facility Operational Capacity"){
+			else if(certification.ICG_Certification__r.Name.toLowerCase() === "smart_facility_operational_capacity"){
 				scopeToUse = "SFOC_Scope__c";
 				listScope = this.sofcScope;
 				
@@ -559,7 +558,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				scope = scopeInput;
 				scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
 			}
-			else if(certification.ICG_Certification__r.Name.includes("IEnvA") || (certification.ICG_Certification__r.Name.includes("United"))){
+			else if(certification.ICG_Certification__r.Name.toLowerCase().includes("ienva_stage_") || (certification.ICG_Certification__r.Name.toLowerCase() === "united_for_wildlife")){
 				scopeToUse = "IENVA_Scope__c";
 				listScope = this.ienvaScope;
 				
@@ -587,6 +586,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				value : certification.ICG_Certification__c,
 				certificationId : certification.Certification_Id__c,
 				name : certification.ICG_Certification__r.Name,
+				label : certification.ICG_Certification__r.Label__c,
 				creationDate : this.dateFormat(certification.ICG_Certification__r.CreatedDate),
 				issuingDate: this.dateFormat(certification.Issue_Date__c),
 				expirationDate: this.dateFormat(certification.Expiration_Date__c),
@@ -602,6 +602,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 			let usedCert = {
 				id : certification.ICG_Certification__c,
 				name : certification.ICG_Certification__r.Name,
+				label : certification.ICG_Certification__r.Label__c,
 				type : certification.ICG_Certification__r.Certification_Type__c
 			}
 			this.certifications.push(certInfo);
@@ -622,17 +623,22 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.showCertifications=!this.showCertifications;
 	}
 	openModal(){
-		this.showModal = true;
-		let today = new Date();
-		let dd = String(today.getDate()).padStart(2, '0');
-		let mm = String(today.getMonth()+1).padStart(2, '0'); //January is 0!
-		let yyyy = today.getFullYear();
-		let todayDate = yyyy+'-'+mm+'-'+dd;
-		this.formatedIssuedDate = todayDate;
-		this.formatedExpireDate = todayDate;
-		this.selectedCert = '';
-		this.selectedScope = '';
-		this.newCertificationId = '';
+		if(this.certificationDropdowOptions.length > 0){
+			this.showModal = true;
+			let today = new Date();
+			let dd = String(today.getDate()).padStart(2, '0');
+			let mm = String(today.getMonth()+1).padStart(2, '0'); //January is 0!
+			let yyyy = today.getFullYear();
+			let todayDate = yyyy+'-'+mm+'-'+dd;
+			this.formatedIssuedDate = todayDate;
+			this.formatedExpireDate = todayDate;
+			this.selectedCert = '';
+			this.selectedScope = '';
+			this.newCertificationId = '';
+		}
+		else{
+			this.showToast('Info:',this.label.icg_gridEmptyMessage, "info");
+		}
 	}
 	closeModal(){
 		this.showModal = false;

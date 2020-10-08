@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Specific Sector/Categories elegible for accessing to the ONE Source Private Portal</description>
+    <label>ONE Source Sector Category Selector</label>
+    <pluralLabel>ONE Source Sector Category Selector</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Category__c</fullName>
+        <description>Indicates the Account.Category__c picklist API Name separated by comma (,) in which applies this record.
+If the values is &apos;*&apos;, it applies to all categories.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Category</label>
+        <length>131072</length>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ONE_Source_Account_Role_Detail_Type__c</fullName>
+        <description>Indicates the ICG_Account_Role_Detail__c record type DeveloperName separated by comma (,) in which applies this record.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>ONE Source Account Role Detail Type</label>
+        <length>1000</length>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Sector__c</fullName>
+        <description>Indicates the Account.Sector__c picklist API Name in which applies this record.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Sector</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

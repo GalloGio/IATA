@@ -162,7 +162,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 		let count = 0;
 		if (this.mapData) {
 			this.mapData.forEach(data => {
-				if (data.dataType === "Airport Operator") {
+				if (data.dataType === "Airport_Operator") {
 					count++;
 				}
 			});
@@ -182,7 +182,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 		let count = 0;
 		if (this.mapData) {
 			this.mapData.forEach(data => {
-				if (data.dataType === "Freight Forwarder") {
+				if (data.dataType === "Freight_Forwarder") {
 					count++;
 				}
 			});
@@ -222,7 +222,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 		let count = 0;
 		if (this.mapData) {
 			this.mapData.forEach(data => {
-				if (data.dataType === "Cargo Handling Facility") {
+				if (data.dataType === "Cargo_Handling_Facility") {
 					count++;
 				}
 			});
@@ -262,7 +262,7 @@ export default class CwSearchResultWrapper extends LightningElement {
 		let count = 0;
 		if (this.mapData) {
 			this.mapData.forEach(data => {
-				if (data.dataType === "Ramp Handler") {
+				if (data.dataType === "Ramp_Handler") {
 					count++;
 				}
 			});

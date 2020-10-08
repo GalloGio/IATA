@@ -333,18 +333,6 @@ public class CW_UtilitiesTest {
 		System.assertEquals(null, aux, 'Hierarchy Fails');
 	}
 
-	@isTest
-	static void testSendEmailTemplate() {
-		List<Account> acc = [SELECT Id FROM Account];
-		List<Contact> cnt = [SELECT Id FROM Contact];
-		List<EmailTemplate> eTemplate = [SELECT Id, DeveloperName FROM EmailTemplate WHERE isActive = true LIMIT 1];
-		Boolean aux = false;
-		test.startTest();
-		aux = CW_Utilities.sendEmailTemplate(eTemplate[0].DeveloperName, acc[0].Id, cnt[0].Id, new List<String>{ 'intent@gmail.com', 'intent2@gmail.com' }, true);
-		test.stopTest();
-		System.assertEquals(true, aux, 'Email sender Fails');
-	}
-
 	@IsTest
 	public static void handleContactRoleDetailRemovalProcessStationManager() {
 		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];

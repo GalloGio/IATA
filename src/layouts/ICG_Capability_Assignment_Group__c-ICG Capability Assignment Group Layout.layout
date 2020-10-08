@@ -23,6 +23,10 @@
                 <behavior>Required</behavior>
                 <field>ICG_Account_Role_Detail__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ICG_Certification_Label__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

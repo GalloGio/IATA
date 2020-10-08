@@ -127,17 +127,11 @@ export default class CsWizardGuidedSearch extends LightningElement {
 				} else if (cert.Applicable_to__c && this.companyTypes) {
 					let added = false;
 					this.companyTypes.forEach(ctype => {
-						if (!added && ctype.selected && cert.Applicable_to__c.toLowerCase().indexOf(ctype.name.toLowerCase()) > -1) {
+						if (!added && ctype.selected && cert.Applicable_to__c.toLowerCase().indexOf(ctype.value.toLowerCase()) > -1) {
 							availableCerts.push(cert);
 							added = true;
 						}
 					});
-				}
-				if (cert.Name === "IEnvA") {
-					cert.LabelName = cert.Name + " Stage 1";
-				}
-				else { 
-					cert.LabelName = cert.Name;
 				}
 			});
 			if (this._certifications && this._certifications.length > 0) {
