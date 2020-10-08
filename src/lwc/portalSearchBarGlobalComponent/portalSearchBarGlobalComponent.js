@@ -40,6 +40,7 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
                 show : this.showFAQs,
                 loading : true,
                 highlight : false,
+                urlName : '',
                 nrResults : 0,
                 faqCategoryFilter : "",
                 faqTopicFilter : "",

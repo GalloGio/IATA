@@ -28,6 +28,13 @@ public with sharing class CaseTriggerHelper {
 	};
 	private static Map<Id, RecordType> portalPendingClosureRecordTypes;
 
+	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
+		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+			System.enqueueJob(new PlatformEvents_Helper(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete));
+		} else {
+			PlatformEvents_Helper.publishEvents(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete);
+		}
+	}
 	public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
 			if(isDone) return;
 			Map<String, Map<String, ISSP_KPI_Reporting__mdt>> configsMap = new Map<String, Map<String, ISSP_KPI_Reporting__mdt>>();

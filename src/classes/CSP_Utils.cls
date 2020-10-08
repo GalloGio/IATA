@@ -26,8 +26,8 @@ public with sharing class CSP_Utils {
 	public class portalException extends Exception{}
 	@AuraEnabled
 	public static LoginConfig getAuthConfig(){
-		Id networkId = Network.getNetworkId();
-		Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
+		Id netId=[Select id from network where name ='CS Portal'].id;
+		Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(netId,'');
 
 		LoginConfig config = new LoginConfig();
 		config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();

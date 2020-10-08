@@ -17,7 +17,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	public Boolean bIsOutOfStock{get;set;}
 	public Boolean bIsPreOrder{get;set;}
 	public Boolean bIsDirectSales{get;set;}
-	public Boolean bIsProductCompliant{get;set;}
+	public Boolean isCountryCompliant{get;set;}
 
 	public List<EComProduct_DTO> lstRelatedProducts {get;set;}
 
@@ -91,10 +91,12 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
      **************************************************************************************************************/
 	public IEC_ProductDetailsController() 
 	{
-		//Fetch Page params 
+		isCountryCompliant = true;
+
+		//Fetch Page params
 		pageParams = ApexPages.currentPage().getParameters();
 
-		labels = Utility.buildMapFromString(Label.Labels_IECProductDetail, '\n', ':');
+		labels = Utility.buildMapFromString(Label.Labels_IECProductDetail +'\n' + label.LabelsVF_Order2, '\n', ':');
 
 	}
 
@@ -176,28 +178,28 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 			if (product.PriceInfo != null) 
 			{
 				//Standard discount
-	            discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.standardPrice, null, false));
-	            
-	            //Pre sale discount
-	            discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.preSalePrice, null, false));
+				discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.standardPrice, null, false));
 
-	            if(loggedCustomer != null)
-	            {
-	            	//Customer Type discount
-	            	discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.customerPrice, loggedCustomer.sfAccount.Customer_Type__c, true));
+				//Pre sale discount
+				discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.preSalePrice, null, false));
 
-	            	//region Discounts 
-	            	discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.regionPrice, loggedCustomer.sfAccount.Region_formula__c, true));
+				if(loggedCustomer != null)
+				{
+					//Customer Type discount
+					discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.customerPrice, loggedCustomer.sfAccount.Customer_Type__c, true));
 
-	            	//Country Discounts
-	            	discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.countryPrice, loggedCustomer.sfAccount.BillingCountry, true));
-	            }
-	        }
+					//region Discounts
+					discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.regionPrice, loggedCustomer.sfAccount.Region_formula__c, true));
 
-	        //Validate Product compliance 
-	        validateCountryCompliance();
-            if (!bIsProductCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
-            	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
+					//Country Discounts
+					discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.countryPrice, loggedCustomer.sfAccount.BillingCountry, true));
+				}
+			}
+
+			//Validate Product compliance
+			validateCountryCompliance();
+			if (!isCountryCompliant) //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
+				addErrorMessage(labels.get('msgWarnProductNotCompliant'));
 			//*** get category
 			selectedCategory = new SelectOption('', '');
 			for(SelectOption so : categories)
@@ -245,8 +247,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 		try
 		{
-			if (!bIsProductCompliant)
-	        {
+			if (!isCountryCompliant)
+			{
 				System.debug('Product Is Not Compliant');
 
 	        	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
@@ -275,20 +277,10 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		}
 	}
 
-	/**************************************************************************************************************
-     *  validateCountryCompliance: method call to validate that the current product is country compliant 		  *
-     *  Author: Samy - David Daboué                                                                               *  
-     **************************************************************************************************************/
 	public void validateCountryCompliance()
 	{
-		Set<String> countryCodes = new Set<String>();
-	    	
-		if(loggedCustomer != null)
-		{
-			if (!String.isBlank(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c);
-			if (!String.isBlank(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c);
+		if(loggedCustomer != null){
+			isCountryCompliant = IECUtil.validateCountriesCompliance(new List<String>{loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c,loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c});
 		}
-        
-        bIsProductCompliant = Product_Svc.IsProductAndCountryCompliant(Product.ProductId, countryCodes);
 	}
 }

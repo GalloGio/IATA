@@ -250,4 +250,14 @@ public class PortalFAQsCtrlTest {
 		}
 		Test.stopTest();
 	}
+
+	@isTest static void testGetArticleShareableLink() {
+		
+		faq__kav article= [SELECT id,CS_Portal_link__c FROM faq__kav LIMIT 1];
+
+		String link=PortalFAQsCtrl.getShareableLink(article.id);
+		system.assertEquals(link,article.CS_Portal_link__c);
+
+
+	}
 }

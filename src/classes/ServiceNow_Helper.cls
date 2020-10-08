@@ -1,141 +1,70 @@
 public without sharing class ServiceNow_Helper {
-	public static void sendRequestToSNOWSFDC(String setting_name, Exception e){
-		SNOWBody theBody = new SNOWBody();
-
-		theBody.description = e.getMessage();
-
-		sendRequestToSNOW(theBody, setting_name);
+	public static void sendRequestToSNOWSFDC(String setting_name, Exception e, set<string> setIdInvolved){
+		sendRequestToSNOW(new SNOWBody(e.getMessage()), setting_name, setIdInvolved);
 	}
 
 	public static void sendRequestToSNOWMulesoft(String setting_name, String iatacode, ISSP_Web_Service_Log__c log){
-		SNOWBody theBody = new SNOWBody();
-
-		theBody.short_description = iatacode+' - '+log.Error_Code__c;
-		theBody.description = log.Error_Message__c;
-
-		sendRequestToSNOW(theBody, setting_name);
+		sendRequestToSNOW(new SNOWBody(log.Error_Message__c), setting_name, iatacode==null?null:(new set<string>{iatacode}));
 	}
 
 	public static void sendRequestToSNOWRME(String setting_name, String iatacode, ISSP_Web_Service_Log__c log, ANG_RME_Alert_Service.WebserviceResult result){
-		SNOWBody theBody = new SNOWBody();
-
-		theBody.short_description = iatacode+' - '+log.Error_Code__c;
-		theBody.description = String.valueOf(result);
-
-		sendRequestToSNOW(theBody, setting_name);
+		sendRequestToSNOW(new SNOWBody(String.valueOf(result)), setting_name, iatacode==null?null:(new set<string>{iatacode}));
 	}
 
 	public static void sendRequestToSNOWSAP(String setting_name, SAP_Digital_Invoice.DT_SFDC_DigitalSignedInvoice_Response response, Exception e){
-		SNOWBody theBody = new SNOWBody();
-
-		if(response != null) theBody.description = String.valueOf(response.Error.Message);
-		else if(e != null) theBody.description = e.getMessage();
-
-		sendRequestToSNOW(theBody, setting_name);
+		sendRequestToSNOW(new SNOWBody((response != null)?String.valueOf(response.Error.Message):((e != null)?e.getMessage():'')), setting_name, null);
 	}
 
-	public static void sendRequestToSNOW(SNOWBody theBody, string setting_name){
+	public static void sendRequestToSNOW(SNOWBody theBody, string setting_name, set<string> setInvolvedItem){
 
 			Map<String,ISSP_Int_Error__c> settings =  ISSP_Int_Error__c.getall();
 
 			if(!settings.containsKey(setting_name)){
-				System.debug(LoggingLevel.Error, '[ServiceNow_Helper - sendRequestToSNOW] - SNOW incident not created: missing '+setting_name+' ISSP_Int_Error__c configuration');
-				return;
+				theBody.description = 'WARNING: Setting ' + setting_name + ' does not exists! Error is: ' + theBody.description;
+			}else{
+				ISSP_Int_Error__c s = settings.get(setting_name);
+				
+				theBody.summary = s.Short_Description__c;
+				theBody.description = s.Error_Message__c 
+									  + ((setInvolvedItem==null || setInvolvedItem.isEmpty())?'<Nil>':string.join(new list<string>(setInvolvedItem), '; ')) 
+									  + '. Error description: ' + theBody.description;
+				theBody.impact = integer.valueOf(s.Impact__c);
+				theBody.businessService = s.Business_Service__c;
+				theBody.businessProcess = s.Caused_By__c;
 			}
+			
+			theBody.errorKey = setting_name;
 
-			ISSP_Int_Error__c s = settings.get(setting_name);
-
-			theBody.caused_by = s.caused_by__c;
-			theBody.u_issue_identified_by = s.u_issue_identified_by__c;
-			theBody.u_operation_name = s.Name;
-			theBody.u_application = s.u_application__c;
-			theBody.business_service = s.business_service__c;
-			theBody.impact = s.impact__c;
-			theBody.urgency = s.urgency__c;
-			theBody.severity = s.severity__c;
-			theBody.category = s.category__c;
-			theBody.subcategory = s.subcategory__c;
-			theBody.caller_id = s.caller_id__c;
-			theBody.opened_by = s.opened_by__c;
-			theBody.u_business_service = s.u_business_service__c;
-			theBody.assignment_group = s.assignment_group__c;
-			theBody.contact_type = s.contact_type__c;
-			if(String.isBlank(theBody.short_description)) theBody.short_description = s.short_description__c;
-
-		if(trigger.isExecuting && !(system.isFuture() || system.isBatch())) sendRequestToSNOW_Future(s.Name, JSON.serialize(theBody));
-		else if(system.isFuture() || system.isBatch()) sendRequestToSNOW_Immediate(s.Name, JSON.serialize(theBody));
-		else sendRequestToSNOW_Future(s.Name, JSON.serialize(theBody));
+		if(trigger.isExecuting && !(system.isFuture() || system.isBatch())) sendRequestToSNOW_Future(setting_name, JSON.serialize(theBody));
+		else if(system.isFuture() || system.isBatch()) sendRequestToSNOW_Immediate(setting_name, JSON.serialize(theBody));
+		else sendRequestToSNOW_Future(setting_name, JSON.serialize(theBody));
 	}
-
 
 	@future(callout=true)
 	private static void sendRequestToSNOW_Future(string sName, string theBody){   sendRequest(sName, theBody); }
 
-
 	private static void sendRequestToSNOW_Immediate(string sName, string theBody){    sendRequest(sName, theBody); }
 
-
 	private static void sendRequest(string sName, string theBody){
-		string incidentId = '';
-		if(!string.isEmpty(sName)){
-			HttpRequest req = new HttpRequest();
-			req.setHeader('Content-Type', 'application/json');
-			req.setHeader('Accept', 'application/json');
-			req.setMethod('GET');
-			req.setTimeout(120000);
-			req.setEndpoint('callout:ServiceNow_Login/api/now/table/incident?active=true&u_operation_name=' + sName +  '&sysparm_limit=1&sysparm_query=' + EncodingUtil.urlEncode('state=1^ORstate=2^ORstate=8', 'UTF-8'));
-
-			Http http = new Http();
-			HTTPResponse res;
-
-			try{
-				res = http.send(req);
-				
-				if(!string.isEmpty(res.getBody())){
-					map<string, list<oResult>> snowRes = (map<string, List<oResult>>)System.JSON.deserialize(res.getBody(), map<string, List<oResult>>.class);
-
-					for(string s:snowres.keySet()){
-						list<oResult> ls = snowRes.get(s);
-						if(!ls.isEmpty())
-							incidentId = ls[0].sys_id;
-						break; //get only first element
-					}
-				}
-			}catch(Exception e){
-				//nothing to do. Incident will be created
-			}
-		}
-
-
 		HttpRequest req = new HttpRequest();
 		req.setHeader('Content-Type', 'application/json');
 		req.setHeader('Accept', 'application/json');
 		
 		req.setTimeout(120000);
-		if(string.isEmpty(incidentId)){
-			req.setBody(theBody);
-			req.setMethod('POST');
-			req.setEndpoint('callout:ServiceNow_Login/api/now/table/incident');
-		}else{
-			SNOWBodyWorkNotes wn = new SNOWBodyWorkNotes();
-			wn.work_notes = theBody;
-			req.setBody(json.serialize(wn));
-			req.setMethod('PUT');
-			req.setEndpoint('callout:ServiceNow_Login/api/now/table/incident/' + incidentId);
-		}
+		req.setBody(theBody);
+		req.setMethod('POST');
+		req.setEndpoint('callout:Mulesoft_Experience_API_V1/incidents');
 
 		Http http = new Http();
 		HTTPResponse res;
-
+		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+		log.Web_Service__c = req.getEndpoint();
+		log.Input_Description__c = 'body:' + theBody;
+		log.Method__c = 'POST';
+		
 		try{
 			res = http.send(req);
 		}catch(CalloutException e){
-			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
-			log.Web_Service__c = req.getEndpoint(); //'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
-			try{
-			  log.Input_Description__c = 'body:' + res.getBody();
-			}catch(exception e1){}
-			log.Method__c = 'POST';
 			log.Web_Service__c = String.valueOf(req);
 			log.Error_Code__c = 'Exception sending request';
 			log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());
@@ -145,17 +74,9 @@ public without sharing class ServiceNow_Helper {
 			return;
 		}
 
-		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
-
-		//log.Agency_Applied_Change_code__c = changeCodeId;
-		log.Web_Service__c = req.getEndpoint(); //'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
-		log.Input_Description__c= 'body:'+res.getBody();
-		log.Method__c = 'POST';
-		//log.Web_Service__c = String.valueOf(req);
-
 		try{
 		  log.Response__c = res.getBody();
-		}catch(exception e){}
+		}catch(exception e){log.Response__c = 'Error while getting response body: ' + e.getMessage();}
 
 		log.Error_Code__c = String.valueOf(res.getStatusCode());
 		log.Error_Message__c = res.getStatus();
@@ -166,34 +87,18 @@ public without sharing class ServiceNow_Helper {
 		insert log;
 	}
 
-
-	public class SNOWBodyWorkNotes{
-		public string work_notes {get; set;}
-	}
-
 	public class SNOWBody{
-		public string caused_by {get; set;}     //SFDC
-		public string u_issue_identified_by {get; set;} //INT_008
-		public string u_operation_name {get; set;}  //Agency MasterData
-		public string u_application {get; set;} //featurespace-system-service
-		public string business_service {get; set;}  //RME
-		public string short_description {get; set;} //excception or description
-		public string description {get; set;}   //full description
-		public string impact  {get; set;} //2
-		public string urgency  {get; set;} //2
-		public string severity  {get; set;} //2
-		public string category  {get; set;} //failure
-		public string subcategory {get; set;}   //connectivity  or Software
-		public string caller_id {get; set;} //Max Mule
-		public string opened_by {get; set;} //Max Mule
-		public string u_business_service {get; set;}    //Infrastructure Services
-		public string assignment_group {get; set;}  //Mulesoft Support
-		public string contact_type {get; set;}  //
+		public string summary			{get; set;}	//E.g.: "Failed to get calculated RHC",
+		public string description		{get; set;}	//E.g."500 - Failed to get calculated RHC for agent 12345678"
+		public integer impact			{get; set;}	//Enum {1,2,3}
+		public string businessService	{get; set;}	//E.g.: RME
+		public string businessProcess	{get; set;}	//E.g.: "RME - Other"
+		public string errorKey			{get; set;}	//This is the key used by Mulesoft to identify an open incident in JSD. E.g.: "INT_032-SFDC-RME-400".
 
-	}
+		public SNOWBody(string description){
+			this.description = description;
+		}
 
-	public map<string, List<oResult>> SnowResponse {get;set;} 
-	public class oResult {
-		public String sys_id {get;set;} 
+		public SNOWBody(){}
 	}
 }

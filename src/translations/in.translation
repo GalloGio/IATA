@@ -5026,6 +5026,14 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Bagikan</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Link untuk FAQ telah disalin</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Lewati Untuk Sekarang ini.</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -21542,6 +21550,10 @@ Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dik
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>Kuantitas/ Jumlah</label>
         <name>ISSP_Quantity</name>
     </customLabels>
@@ -33396,6 +33408,19 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Address --></description>
         <label><!-- Accounts with AMS Address --></label>
         <name>Accounts_with_AMS_Address</name>
@@ -35108,6 +35133,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <description><!-- Contacts with Portal Service access --></description>
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
+        <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
         <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
