@@ -845,64 +845,275 @@ global without sharing class ISSP_APProcess {
 		con = retrieveContact(user.ContactId);
 	}
 
+	private static final Set<String> QUERY_FIELDS = new Set<String>{
+		'Id',
+		'BSP_Russia_Double_Tax_avoiding_Treaty__c',
+		'Colombia_City_percentage__c',
+		'Company_Registration_ID__c',
+		'Hot_files_delivery_format__c',
+		'Accept_Disclaimer__c',
+		'Company_Email__c',
+		'Type_of_Change_Requested__c',
+		'Type_of_Report_Options__c',
+		'Accept_terms_and_conditions__c',
+		'Airline_wish_to_join_ICCS__c',
+		'ANG_Enable_NewGen__c',
+		'Case__c',
+		'Colombia_City_selection__c',
+		'Contact_Resp_Email__c',
+		'Contact_Resp_F_Name__c',
+		'Contact_Resp_Job_Title__c',
+		'Contact_Resp_L_Name__c',
+		'Contact_Resp_Phone__c',
+		'Contact_Resp_Salutation__c',
+		'Default_Commission_Rate__c',
+		'Desired_commencment_date__c',
+		'ICH_Currency_of_Clearance__c',
+		'ICH_Currency_of_Settlement__c',
+		'Online_carrier_in_the_BSP_country__c',
+		'Receive_HOT_files__c',
+		'RecordTypeId',
+		'Submitted_to_IATA__c',
+		'Type__c',
+		'Type_of_participation_desired__c',
+		'Type_of_Settlement__c',
+		'VAT_Tax_number_in_your_home_country__c'
+	};
+
+	private static final Set<String> QUERY_FIELDS_BSP = new Set<String>{
+		'Accept_payment_Cards_for_BSP_ticket__c',
+		'American_Express_Merchant_Number__c',
+		'American_Express_Name_of_Acquirer__c',
+		'ANG_Airline_accepts_EasyPay_tr_in_BSP__c',
+		'BSPLink_access_level_requested__c',
+		'BSPLink_ASD_China_Contact__c',
+		'BSPLink_ASD_China_Contact_Email__c',
+		'BSPLink_ASD_China_Contact_L_Name__c',
+		'BSPLink_ASD_China_Contact_Phone__c',
+		'Canada_Has_Principal_Office__c',
+		'Canada_LocalVAT_Info__c',
+		'Canada_Provincial_Offices__c',
+		'Card_brand_accepted_for_BSP_ticket__c',
+		'Diners_Merchant_Number__c',
+		'Diners_Name_of_Acquirer__c',
+		'ETSP_Contact_Address__c',
+		'ETSP_Contact_Email__c',
+		'ETSP_Contact_F_Name__c',
+		'ETSP_Contact_Fax__c',
+		'ETSP_Contact_Job_Title__c',
+		'ETSP_Contact_L_Name__c',
+		'ETSP_Contact_Phone__c',
+		'ETSP_Contact_Salutation__c',
+		'IINET_account_number__c',
+		'Join_BSP_ECCB__c',
+		'Local_CC_Settlement_Scheme__c',
+		'Master_Card_Merchant_Number__c',
+		'Master_Card_Name_of_Acquirer__c',
+		'Maximum_Commission_Rate__c',
+		'Minimum_Commission_Rate__c',
+		'Other_Card_brand_accepted_for_BSP_ticket__c',
+		'Participate_in_any_Commission_Control__c',
+		'Participate_in_any_Remit_scheme__c',
+		'Visa_merchant_number__c',
+		'Visa_Name_of_Acquirer_or_Processor__c'
+	};
+
+	private static final Set<String> QUERY_FIELDS_CASS = new Set<String>{
+		'Airline_Billing_Data_File_Type__c',
+		'Billing_File_Emrgcy_Contact_Job_Title__c',
+		'CASS_PH_Bilateral_Agreement__c',
+		'CASSLink_Contact_Email__c',
+		'CASSLink_Contact_Salutation__c',
+		'CASSLink_New_User_1_F_Name__c',
+		'CASSLink_New_User_2_F_Name__c',
+		'CASSLink_New_User_3_F_Name__c',
+		'CASSLink_User_2_System_Functions__c',
+		'GSSA_Contact_Salutation__c',
+		'PDF_Report_Delivery_Format__c',
+		'Airline_Intra_Europe_Flights__c',
+		'Airline_Invoice_Address__c',
+		'Billing_File_Emrgcy_Contact_Email__c',
+		'Billing_File_Emrgcy_Contact_F_Name__c',
+		'Billing_File_Emrgcy_Contact_L_Name__c',
+		'Billing_File_Emrgcy_Contact_Salutation__c',
+		'Capital_amount_of_the_business__c',
+		'CASS_Defaults_Email_1__c',
+		'CASS_Defaults_Email_2__c',
+		'CASS_PH_Bilat_Agreement_Tax_Rate__c',
+		'CASS_PH_Preferred_Billing_Currency__c',
+		'CASSLink_Contact_F_Name__c',
+		'CASSLink_Contact_Fax__c',
+		'CASSLink_Contact_Job_Title__c',
+		'CASSLink_Contact_L_Name__c',
+		'CASSLink_Contact_Phone__c',
+		'CASSLink_Extra_Existing_Users__c',
+		'CASSLink_Extra_New_Users__c',
+		'CASSLink_New_User_1_Email__c',
+		'CASSLink_New_User_1_L_Name__c',
+		'CASSLink_New_User_1_Salutation__c',
+		'CASSLink_New_User_1_System_Functions__c',
+		'CASSLink_New_User_2_Email__c',
+		'CASSLink_New_User_2_L_Name__c',
+		'CASSLink_New_User_2_Salutation__c',
+		'CASSLink_New_User_2_System_Functions__c',
+		'CASSLink_New_User_3_Email__c',
+		'CASSLink_New_User_3_L_Name__c',
+		'CASSLink_New_User_3_Salutation__c',
+		'CASSLink_New_User_3_System_Functions__c',
+		'CASSLink_User_1_System_Functions__c',
+		'CASSLink_User_3_System_Functions__c',
+		'CASSLink_Username_1__c',
+		'CASSLink_Username_2__c',
+		'CASSLink_Username_3__c',
+		'Company_Registration_number__c',
+		'GSSA_Address__c',
+		'GSSA_Code__c',
+		'GSSA_Contact_Email__c',
+		'GSSA_Contact_F_Name__c',
+		'GSSA_Contact_FAX__c',
+		'GSSA_Contact_JobTitle__c',
+		'GSSA_Contact_L_Name__c',
+		'GSSA_Contact_Phone__c',
+		'GSSA_Legal_Name__c',
+		'Name_of_business_comm_assoc__c',
+		'PDF_File_Recipient_Email_1__c',
+		'PDF_File_Recipient_Email_2__c',
+		'PDF_File_Recipient_Email_3__c',
+		'PDF_File_Recipient_Email_4__c',
+		'Receive_XLS_Reports__c',
+		'Territory_Percentage__c'
+	};
+
+	private static final Set<String> QUERY_FIELDS_BSP_CASS = new Set<String>{
+		'Airline_Local_address_in_the_BSP_Country__c',
+		'Airline_Registered_under_other_name__c',
+		'Airline_s_Fiscal_Status__c',
+		'AP_BR_Address_CNP__c',
+		'AP_BR_Address_To_Insert__c',
+		'AP_BR_BankBeneficiary_Account_Holder__c',
+		'BSP_Country_VAT_Tax_number__c',
+		'BSP_Local_address__c',
+		'BSP_Local_City__c',
+		'BSP_Local_Zip_Code__c',
+		'Clave_Bancaria_Unificada_CBU__c',
+		'Colombia_Type_of_Contributor__c',
+		'Commission_Rate__c',
+		'Cyprus_Turkey_based_Airline__c',
+		'Fin_Adm_Contact__c',
+		'Fin_Adm_Contact_Address__c',
+		'Fin_Adm_Contact_City__c',
+		'Fin_Adm_Contact_Country__c',
+		'Fin_Adm_Contact_Email__c',
+		'Fin_Adm_Contact_F_Name__c',
+		'Fin_Adm_Contact_Job_Title__c',
+		'Fin_Adm_Contact_L_Name__c',
+		'Fin_Adm_Contact_Phone__c',
+		'Fin_Adm_Contact_Zip_Code__c',
+		'Flights_operated_in_the_BSP_country__c',
+		'HOT_File_Recipient_Email_1__c',
+		'HOT_File_Recipient_Email_2__c',
+		'HOT_File_Recipient_Email_3__c',
+		'HOT_File_Recipient_Email_4__c',
+		'HOT_File_Recipient_Remove_Email_1__c',
+		'HOT_File_Recipient_Remove_Email_2__c',
+		'HOT_File_Recipient_Remove_Email_3__c',
+		'HOT_File_Recipient_Remove_Email_4__c',
+		'Name_Appearing_in_VAT__c',
+		'Other_TAX_Identification__c',
+		'Participate_in_AWB_Stock_Management__c',
+		'Pay_Commission_to_agents__c',
+		'Pay_Standard_Commission__c',
+		'Stock_Management_Email_1__c',
+		'Stock_Management_Email_2__c',
+		'Stock_Management_Email_3__c',
+		'Stock_Management_Remove_Email_1__c',
+		'Stock_Management_Remove_Email_2__c',
+		'Stock_Management_Remove_Email_3__c'
+	};
+
+	private static final Set<String> QUERY_FIELDS_PASS = new Set<String>{
+		'Accept_Online_Corrections__c',
+		'Airline_trade_name__c',
+		'Billing_File_Emrgcy_Contact_Email__c',
+		'Billing_File_Emrgcy_Contact_F_Name__c',
+		'Billing_File_Emrgcy_Contact_Job_Title__c',
+		'Billing_File_Emrgcy_Contact_L_Name__c',
+		'Billing_File_Emrgcy_Contact_Number__c',
+		'Billing_File_Emrgcy_Contact_Salutation__c',
+		'CASS_Corrections_Email_1__c',
+		'CASS_Corrections_Email_2__c',
+		'CASSLink_Contact_Email__c',
+		'CASSLink_Contact_F_Name__c',
+		'CASSLink_Contact_Fax__c',
+		'CASSLink_Contact_Job_Title__c',
+		'CASSLink_Contact_L_Name__c',
+		'CASSLink_Contact_Phone__c',
+		'CASSLink_Contact_Salutation__c',
+		'CASSLink_Extra_New_Users__c',
+		'CASSLink_New_User_1_Email__c',
+		'CASSLink_New_User_1_F_Name__c',
+		'CASSLink_New_User_1_L_Name__c',
+		'CASSLink_New_User_1_Salutation__c',
+		'CASSLink_New_User_1_System_Functions__c',
+		'CASSLink_New_User_2_Email__c',
+		'CASSLink_New_User_2_F_Name__c',
+		'CASSLink_New_User_2_L_Name__c',
+		'CASSLink_New_User_2_Salutation__c',
+		'CASSLink_New_User_2_System_Functions__c',
+		'Company_address__c',
+		'Company_city__c',
+		'Company_Country__c',
+		'Company_State__c',
+		'Contact_Email__c',
+		'Contact_First_Name__c',
+		'Contact_Last_Name__c',
+		'Contact_number__c',
+		'Contact_Title__c',
+		'GSSA_Code__c',
+		'GSSA_Contact_Email__c',
+		'GSSA_Contact_F_Name__c',
+		'GSSA_Contact_FAX__c',
+		'GSSA_Contact_JobTitle__c',
+		'GSSA_Contact_L_Name__c',
+		'GSSA_Contact_Phone__c',
+		'GSSA_Contact_Salutation__c',
+		'GSSA_HQ_Address__c',
+		'GSSA_HQ_City__c',
+		'GSSA_HQ_Country__c',
+		'GSSA_HQ_Post_Code__c',
+		'GSSA_HQ_State__c',
+		'GSSA_Legal_Name__c',
+		'GSSA_VAT_Id__c',
+		'Legal_Name_of_company__c',
+		'PASSLink_Extra_New_Users__c',
+		'PDF_File_Recipient_Email_1__c',
+		'PDF_File_Recipient_Email_2__c',
+		'PDF_File_Recipient_Email_3__c',
+		'PDF_Report_Delivery_Format__c',
+		'Postal_code__c',
+		'Receive_PDF_Reports__c',
+		'Receive_XLS_Reports__c',
+		'TAX_VAT_Registration_Number__c',
+		'Who_requested_to_join_TOU__c'
+	};
+
 	public void retrieveAPProcessForm(){
 
-
-		String queryString = 'SELECT ICH_Currency_of_Clearance__c,ICH_Currency_of_Settlement__c,Airline_wish_to_join_ICCS__c,Contact_Resp_Job_Title__c,Contact_Resp_F_Name__c,'+
-						'Contact_Resp_L_Name__c,Contact_Resp_Email__c,ANG_Enable_NewGen__c,Id,Receive_HOT_files__c,Default_Commission_Rate__c,'+
-						'Hot_files_delivery_format__c,Submitted_to_IATA__c,VAT_Tax_number_in_your_home_country__c,Online_carrier_in_the_BSP_country__c,Colombia_City_selection__c,'+
-						'Company_Registration_ID__c, Company_Email__c, Accept_Disclaimer__c, Type_of_Report_Options__c, Type_of_Change_Requested__c,'+
-						'Colombia_City_percentage__c,Case__c,Type__c,RecordTypeId,Accept_terms_and_conditions__c,Desired_commencment_date__c,Contact_Resp_Salutation__c,Contact_Resp_Phone__c,Type_of_Settlement__c,'+
-						'BSP_Russia_Double_Tax_avoiding_Treaty__c,Type_of_participation_desired__c';
+		Set<String> setFields = QUERY_FIELDS;
 		if(isBSP){
-			queryString += ',ETSP_Contact_Salutation__c,ETSP_Contact_F_Name__c,ETSP_Contact_L_Name__c,ETSP_Contact_Job_Title__c,ETSP_Contact_Address__c,ETSP_Contact_Email__c,'+
-			'ETSP_Contact_Phone__c,	ETSP_Contact_Fax__c,BSPLink_ASD_China_Contact__c,BSPLink_ASD_China_Contact_L_Name__c,'+
-			'BSPLink_ASD_China_Contact_Phone__c,BSPLink_ASD_China_Contact_Email__c,IINET_account_number__c,BSPLink_access_level_requested__c,'+
-			'Participate_in_any_Commission_Control__c,Participate_in_any_Remit_scheme__c,Accept_payment_Cards_for_BSP_ticket__c,Card_brand_accepted_for_BSP_ticket__c,Other_Card_brand_accepted_for_BSP_ticket__c,'+
-			'Join_BSP_ECCB__c,Local_CC_Settlement_Scheme__c,Visa_merchant_number__c,Visa_Name_of_Acquirer_or_Processor__c,American_Express_Merchant_Number__c,'+
-			'American_Express_Name_of_Acquirer__c,Diners_Merchant_Number__c,Diners_Name_of_Acquirer__c,Master_Card_Merchant_Number__c,Master_Card_Name_of_Acquirer__c,'+
-			'Canada_Has_Principal_Office__c,Canada_Provincial_Offices__c,Canada_LocalVAT_Info__c,Maximum_Commission_Rate__c,Minimum_Commission_Rate__c,ANG_Airline_accepts_EasyPay_tr_in_BSP__c';
+			setFields.addAll(QUERY_FIELDS_BSP);
 		}
 		if(isCASS){
-			queryString += ',Airline_Intra_Europe_Flights__c,Company_Registration_number__c,Name_of_business_comm_assoc__c,Capital_amount_of_the_business__c,Airline_Invoice_Address__c,Territory_Percentage__c,'+
-			'CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
-			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Defaults_Email_1__c,CASS_Defaults_Email_2__c,GSSA_Legal_Name__c,GSSA_Address__c,GSSA_Code__c,'+
-			'GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,'+
-			'Airline_Billing_Data_File_Type__c,Billing_File_Emrgcy_Contact_Salutation__c,Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,'+
-			'Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,'+
-			'PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,PDF_File_Recipient_Email_4__c,Receive_XLS_Reports__c,CASSLink_Username_1__c,CASSLink_User_1_System_Functions__c,CASSLink_Username_2__c,'+
-			'CASSLink_User_2_System_Functions__c,CASSLink_Username_3__c,CASSLink_User_3_System_Functions__c,CASSLink_Extra_Existing_Users__c,CASSLink_New_User_1_Salutation__c,'+
-			'CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,'+
-			'CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,CASSLink_New_User_2_System_Functions__c,CASSLink_New_User_3_Salutation__c,'+
-			'CASSLink_New_User_3_F_Name__c,CASSLink_New_User_3_L_Name__c,CASSLink_New_User_3_Email__c,CASSLink_New_User_3_System_Functions__c,CASSLink_Extra_New_Users__c,'+
-			'CASS_PH_Bilateral_Agreement__c,CASS_PH_Bilat_Agreement_Tax_Rate__c,CASS_PH_Preferred_Billing_Currency__c';
+			setFields.addAll(QUERY_FIELDS_CASS);
 		}
 		if(isBSP || isCASS){
-			queryString += ',Airline_Registered_under_other_name__c,Colombia_Type_of_Contributor__c,Cyprus_Turkey_based_Airline__c,Flights_operated_in_the_BSP_country__c,Clave_Bancaria_Unificada_CBU__c,'+
-			'BSP_Local_address__c,BSP_Local_Zip_Code__c,BSP_Local_City__c,Airline_Local_address_in_the_BSP_Country__c,'+
-			'BSP_Country_VAT_Tax_number__c,Other_TAX_Identification__c,Airline_s_Fiscal_Status__c,Name_Appearing_in_VAT__c,AP_BR_BankBeneficiary_Account_Holder__c,AP_BR_Address_To_Insert__c,'+
-			'Pay_Commission_to_agents__c,AP_BR_Address_CNP__c,Fin_Adm_Contact__c,Fin_Adm_Contact_F_Name__c,Fin_Adm_Contact_L_Name__c,'+
-			'HOT_File_Recipient_Email_1__c,HOT_File_Recipient_Email_2__c,HOT_File_Recipient_Email_3__c,HOT_File_Recipient_Email_4__c,'+
-			'HOT_File_Recipient_Remove_Email_1__c, HOT_File_Recipient_Remove_Email_2__c, HOT_File_Recipient_Remove_Email_3__c, HOT_File_Recipient_Remove_Email_4__c,'+
-			'Stock_Management_Email_1__c,Stock_Management_Email_2__c,Stock_Management_Email_3__c,Stock_Management_Remove_Email_1__c,Stock_Management_Remove_Email_2__c,Stock_Management_Remove_Email_3__c,'+
-			'Pay_Standard_Commission__c,Commission_Rate__c,Participate_in_AWB_Stock_Management__c,'+
-			'Fin_Adm_Contact_Job_Title__c,Fin_Adm_Contact_Phone__c,Fin_Adm_Contact_Email__c,Fin_Adm_Contact_Address__c,Fin_Adm_Contact_Zip_Code__c,Fin_Adm_Contact_City__c,Fin_Adm_Contact_Country__c';
+			setFields.addAll(QUERY_FIELDS_BSP_CASS);
 		}
 		if(isPassAirline){
-			queryString += ',CASSLink_Contact_Salutation__c,CASSLink_Contact_F_Name__c,CASSLink_Contact_L_Name__c,CASSLink_Contact_Job_Title__c,'+
-			'CASSLink_Contact_Email__c,CASSLink_Contact_Phone__c,CASSLink_Contact_Fax__c,CASS_Corrections_Email_1__c,CASS_Corrections_Email_2__c,GSSA_Legal_Name__c,'+
-			'GSSA_Code__c,GSSA_HQ_Address__c,GSSA_HQ_City__c,GSSA_HQ_State__c,GSSA_HQ_Post_Code__c,GSSA_HQ_Country__c,GSSA_VAT_Id__c,GSSA_Contact_Salutation__c,GSSA_Contact_F_Name__c,'+
-			'GSSA_Contact_L_Name__c,GSSA_Contact_JobTitle__c,GSSA_Contact_Email__c,GSSA_Contact_Phone__c,GSSA_Contact_FAX__c,Billing_File_Emrgcy_Contact_Salutation__c,'+
-			'Billing_File_Emrgcy_Contact_F_Name__c,Billing_File_Emrgcy_Contact_L_Name__c,Billing_File_Emrgcy_Contact_Job_Title__c,Billing_File_Emrgcy_Contact_Email__c,Billing_File_Emrgcy_Contact_Number__c,'+
-			'Receive_PDF_Reports__c,PDF_Report_Delivery_Format__c,PDF_File_Recipient_Email_1__c,PDF_File_Recipient_Email_2__c,PDF_File_Recipient_Email_3__c,Receive_XLS_Reports__c,'+
-			'Accept_Online_Corrections__c,CASSLink_New_User_1_Salutation__c,CASSLink_New_User_1_F_Name__c,CASSLink_New_User_1_L_Name__c,CASSLink_New_User_1_Email__c,'+
-			'CASSLink_New_User_1_System_Functions__c,CASSLink_New_User_2_Salutation__c,CASSLink_New_User_2_F_Name__c,CASSLink_New_User_2_L_Name__c,CASSLink_New_User_2_Email__c,'+
-			'CASSLink_New_User_2_System_Functions__c,CASSLink_Extra_New_Users__c,PASSLink_Extra_New_Users__c,Legal_Name_of_company__c,Airline_trade_name__c,Company_address__c,'+
-			'Company_city__c,Company_State__c,Postal_code__c,Company_Country__c,TAX_VAT_Registration_Number__c,Contact_First_Name__c,Contact_Last_Name__c,Contact_Title__c,'+
-			'Contact_Email__c,Contact_number__c,Who_requested_to_join_TOU__c';
+			setFields.addAll(QUERY_FIELDS_PASS);
 		}
 
-		queryString += ' FROM AP_Process_Form__c WHERE Case__c=\'' + newCase.Id + '\' LIMIT 1';
+		String queryString = 'SELECT ' + String.join(new list<String>(setFields),',') + ' FROM AP_Process_Form__c WHERE Case__c=\'' + newCase.Id + '\' LIMIT 1';
 
 		List<AP_Process_Form__c> newForms = Database.query(queryString);
 
@@ -1478,9 +1689,9 @@ global without sharing class ISSP_APProcess {
 	public Pagereference goToStep2(){
 		if(isPassAirline){
 			// Delete country unused files - PASS
-			if(!Test.isRunningTest() || test.isRunningTest() && !isGSSAUser){
-				deleteUnusedCountryFiles();
-			}
+			//if(!Test.isRunningTest() || test.isRunningTest() && !isGSSAUser){
+			//	deleteUnusedCountryFiles();
+			//}
 			passParam='&airline=PASS';
 			if (strChangeType=='Bank Account Instructions') {
 				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
@@ -1574,34 +1785,54 @@ global without sharing class ISSP_APProcess {
 				Map<String,IATA_ISO_Country__c> isoCountryMap=fetchISOCountryMap(isocodeList);
 				List<Attachment> attachmentToCloneList= new List<Attachment>();
 
+				Map<String,Case> mapCreatedCountries = new Map<String,Case>();
+				for (Case cse: [
+					SELECT Id, IFAP_Country_ISO__c, Region__c, OwnerId
+					FROM Case
+					WHERE ParentId = :newCase.Id])
+				{
+					mapCreatedCountries.put(cse.IFAP_Country_ISO__c, cse);
+				}
+
 				//This method is used to get the Account Concerned that will be used by the child cases
 				Map<String,Id> countryAccountConcernedIdMap=retrieveAirlineConcernedPASS(hqAccount, con.Account.Airline_designator__c,
 																	con.Account.IATACode__c,
 																	isocodeList, con.Account.Name, vHqAccountId);
 
 				for(String country : isocodeList){
-					Case newChildCase = newCase.clone(false, true, false, false);
-					newChildCase.BSPCountry__c = isoCountryMap.get(country).Name;
-					newChildCase.Subject = 'Airline Participation - PASS Country - ' + newChildCase.BSPCountry__c;
-					newChildCase.Country_concerned_by_the_query__c=isoCountryMap.get(country).Name;
-					newChildCase.CurrencyIsoCode=isoCountryMap.get(country).CurrencyIsoCode;
-					newChildCase.IFAP_Country_ISO__c=country;
-					newChildCase.Country_Concerned__c=null;
-					newChildCase.Reason1__c = AMS_Utils.passCountryCaseReason;
-					newChildCase.Account_Concerned__c=countryAccountConcernedIdMap.get(country);
-					newChildCase.AccountId = newChildCase.Account_Concerned__c;
-					newChildCase.Status = 'For Review and Acceptance';
-					if(countryAccountConcernedIdMap.get(country)==null){//If there was an error creating the account, the process must be stopped
-						if(!Test.isRunningTest())
-							return null;
+					if (!mapCreatedCountries.containsKey(country)) {
+						Case newChildCase = newCase.clone(false, true, false, false);
+						newChildCase.BSPCountry__c = isoCountryMap.get(country).Name;
+						newChildCase.Subject = 'Airline Participation - PASS Country - ' + newChildCase.BSPCountry__c;
+						newChildCase.Country_concerned_by_the_query__c=isoCountryMap.get(country).Name;
+						newChildCase.CurrencyIsoCode=isoCountryMap.get(country).CurrencyIsoCode;
+						newChildCase.IFAP_Country_ISO__c=country;
+						newChildCase.Country_Concerned__c=null;
+						newChildCase.Reason1__c = AMS_Utils.passCountryCaseReason;
+						newChildCase.Account_Concerned__c=countryAccountConcernedIdMap.get(country);
+						newChildCase.AccountId = newChildCase.Account_Concerned__c;
+						newChildCase.Status = 'For Review and Acceptance';
+						if(countryAccountConcernedIdMap.get(country)==null){//If there was an error creating the account, the process must be stopped
+							if(!Test.isRunningTest())
+								return null;
+						}
+						newChildCase.ParentId = newCase.Id;
+						newChildCase.Visible_on_ISS_Portal__c = false;
+						newChildCase.ownerid = mapAPQueue.get('Airline Participation - Head Office').Queue.Id;
+						childCaseList.add(newChildCase);
+						mapCreatedCountries.remove(country);
 					}
-					newChildCase.ParentId = newCase.Id;
-					newChildCase.Visible_on_ISS_Portal__c = false;
-					newChildCase.ownerid = mapAPQueue.get('Airline Participation - Head Office').Queue.Id;
-					childCaseList.add(newChildCase);
 				}
 
-				 insert childCaseList;
+				//if there is any remaining countries in the map we must get rid of them assigning to the Recycle Queue
+				List<Case> updateChildCaseList = new List<Case>();
+				for (Case cse: mapCreatedCountries.values()) {
+					cse.OwnerId = getRecycleGroup(cse.Region__c).Id;
+					updateChildCaseList.add(cse);
+				}
+
+				if (!childCaseList.isEmpty()) insert childCaseList;
+				if (!updateChildCaseList.isEmpty()) update updateChildCaseList;
 
 				Map<Id,String> childCaseIdIsoCodeMap=new Map<Id,String>();
 				for(Case childCaseRecord:childCaseList){
@@ -1632,6 +1863,28 @@ global without sharing class ISSP_APProcess {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns the right Recycle Bin group for the case region
+	 */
+	private static Map<String,Group> MAP_RECYCLE_GROUPS;
+	public static Group getRecycleGroup(String region) {
+		if (MAP_RECYCLE_GROUPS==null) {
+			MAP_RECYCLE_GROUPS = new Map<String,Group>();
+			for (Group grp: [SELECT Id, Name FROM Group WHERE Name LIKE 'Recycle Bin%']) {
+				if (grp.Name.equalsIgnoreCase('Recycle Bin Africa & Middle East')) MAP_RECYCLE_GROUPS.put('Africa & Middle East', grp);
+				else if (grp.Name.equalsIgnoreCase('Recycle Bin Americas')) MAP_RECYCLE_GROUPS.put('Americas', grp);
+				else if (grp.Name.equalsIgnoreCase('Recycle Bin Asia & Pacific')) MAP_RECYCLE_GROUPS.put('Asia & Pacific', grp);
+				else if (grp.Name.equalsIgnoreCase('Recycle Bin Europe')) MAP_RECYCLE_GROUPS.put('Europe', grp);
+				else if (grp.Name.equalsIgnoreCase('Recycle Bin North Asia')) MAP_RECYCLE_GROUPS.put('China & North Asia', grp);
+				else MAP_RECYCLE_GROUPS.put(null, grp);
+			}
+		}
+		if (MAP_RECYCLE_GROUPS.containsKey(region)) {
+			return MAP_RECYCLE_GROUPS.get(region);
+		}
+		return MAP_RECYCLE_GROUPS.get(null);
 	}
 
 	@future(callout=true)
