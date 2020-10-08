@@ -5022,6 +5022,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>مشاركة</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>تم نسخ رابط الأسئلة الشائعة!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>تخطى هذا في الوقت الراهن</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -21525,6 +21533,10 @@ and
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>الكميّة</label>
         <name>ISSP_Quantity</name>
     </customLabels>
@@ -33374,6 +33386,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Address --></description>
         <label><!-- Accounts with AMS Address --></label>
         <name>Accounts_with_AMS_Address</name>
@@ -35087,6 +35112,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35737,7 +35766,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>EBC Email Exclusion Relations</name>
         </sections>
         <sections>
-            <label><!-- ID Cards --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>ID Cards</name>
         </sections>
     </reportTypes>
@@ -36540,7 +36569,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Sub Region --></label>
                 <name>Sub Region</name>
             </columns>
-            <label><!-- Account --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Account</name>
         </sections>
         <sections>
@@ -36720,7 +36749,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with AMS online accreditation --></label>
         <name>Oscars_with_AMS_online_accreditation</name>
         <sections>
-            <label><!-- AMS Online Accreditations --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>AMS Online Accreditations</name>
         </sections>
         <sections>
@@ -36733,7 +36762,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>التقارير</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -36828,7 +36857,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Portal services and contacts and accounts --></label>
         <name>Portal_services_and_contacts_and_accounts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>

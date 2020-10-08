@@ -7859,6 +7859,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Settings</value>
     </labels>
     <labels>
+        <fullName>CSP_ShareLink</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Share FAQ button label</shortDescription>
+        <value>Copy Link</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Share_CopiedToClipBoard</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success message that link has been copied to the clipboard</shortDescription>
+        <value>Direct link to FAQ copied</value>
+    </labels>
+    <labels>
         <fullName>CSP_Skip</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -36560,6 +36576,13 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP Public</shortDescription>
         <value>Public</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PwC_Managerial_Accounts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PwC_Managerial_Accounts</shortDescription>
+        <value>PwC Managerial Accounts</value>
     </labels>
     <labels>
         <fullName>ISSP_Quantity</fullName>

@@ -359,8 +359,9 @@ public class ANG_RHCAlertTriggerHandler{
 				if(!notifications.isEmpty()) insert notifications;
 			}
 		}catch(Exception e){
-			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_RHCAlertTriggerHandler', 'sendAlertNotification', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW14',e);
+			set<string> setIdInvolved = new set<string>();
+			for(id i:trigger.newMap.keyset()) setIdInvolved.add(i);
+			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD14',e, setIdInvolved);
 		}
 	}
 
@@ -720,7 +721,7 @@ public class ANG_RHCAlertTriggerHandler{
 							raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__r.Name+' and Remittance frequency: '+
 							raAccMap.get(ra.id).Remittance_frequency__c;
 
-						ServiceNow_Helper.sendRequestToSNOW(theBody, 'SNOW18');
+						ServiceNow_Helper.sendRequestToSNOW(theBody, 'JSD18', new set<string>{raAccMap.get(ra.id).IATACode__c});
 						System.debug('## Creating Red Alert Only - No case is created');
 						// We are not creating any case - just the alert
 						continue;

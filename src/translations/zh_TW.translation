@@ -5021,6 +5021,14 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label><!-- Share FAQ button label --></label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success message that link has been copied to the clipboard --></label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Skip --></label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -21501,6 +21509,10 @@
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Quantity --></label>
         <name>ISSP_Quantity</name>
     </customLabels>
@@ -33343,6 +33355,19 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Address --></description>
         <label><!-- Accounts with AMS Address --></label>
         <name>Accounts_with_AMS_Address</name>
@@ -35055,6 +35080,10 @@
         <description><!-- Contacts with Portal Service access --></description>
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
+        <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
         <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>

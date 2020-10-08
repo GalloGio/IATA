@@ -194,8 +194,9 @@ public class ANG_AccountTriggerHandler {
 		try{
 			if(!newCases.isEmpty()) insert newCases;
 		}catch(Exception e){
-			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW10',e);
+			set<string> setString = new set<string>();
+			for(Id i:trigger.newMap.keyset()) setString.add(i);
+			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD10',e, setString);
 		}
 
 		//Get all account data that we need to make the validations requested.
@@ -499,6 +500,7 @@ public class ANG_AccountTriggerHandler {
 
 	public void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts)
 	{
+		set<string> setIdInvolved = new set<string>();
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 		try{
 			//to prevent errors on test classes
@@ -518,6 +520,7 @@ public class ANG_AccountTriggerHandler {
 			//create oscars
 			List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 			for(Account acc : accounts){
+				setIdInvolved.add(acc.Id);
 				objects.put(acc.Id, new OscarObjects());
 				AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open');
 				oscars.add(oscar);
@@ -624,8 +627,7 @@ public class ANG_AccountTriggerHandler {
 
 			update oscars;
 		}catch(Exception e){
-			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW11',e);
+			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD11',e, setIdInvolved);
 		}
 	}
 
@@ -671,6 +673,7 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
+		set<string> setIdInvolved = new set<string>();
 		try{
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - createFOPOscar] Creating FOP Oscar for '+new Map<Id, Account>(accounts).keyset());
 
@@ -698,6 +701,7 @@ public class ANG_AccountTriggerHandler {
 			List<Case> cases = new List<Case>();
 
 			for(Account a : accounts){
+				setIdInvolved.add(a.Id);
 				Case c = new Case();
 
 				c.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
@@ -721,8 +725,7 @@ public class ANG_AccountTriggerHandler {
 			//insert cases
 			insert cases;
 		}catch(Exception e){
-			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW12',e);
+			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD12',e, setIdInvolved);
 		}
 	}
 
