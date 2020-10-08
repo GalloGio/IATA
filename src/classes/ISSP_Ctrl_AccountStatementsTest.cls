@@ -117,7 +117,7 @@ private class ISSP_Ctrl_AccountStatementsTest {
 	static void test_controller_AccountNotApproved() {
 		loadVariables();
 
-		account.Status__c = 'Inactive';
+		account.Status__c = 'Terminated';
 		update account;
 
 		Test.startTest();
@@ -195,19 +195,22 @@ private class ISSP_Ctrl_AccountStatementsTest {
 	static void test_WrapperStatements() {
 		loadVariables();
 
-		ISSP_Ctrl_AccountStatements controller = new ISSP_Ctrl_AccountStatements();
+		ISSP_Ctrl_AccountStatements controller;
 		list<Account_Statement__c> listStatements = [
 			Select Id, Period__c, Operation__c, Name, Key__c, CurrencyIsoCode, Account__c, Amount_to_be_Paid__c, Balance__c, Billing_Amount__c, Paid__c, Remittance_Date__c, Status__c, Billing_Adjustment__c, Group__c, Account__r.Name, Account__r.Site, LastModifiedDate
 			From Account_Statement__c];
 
 		Test.startTest();
-		ISSP_Ctrl_AccountStatements.WrapperStatement wrapper;
-		wrapper = new ISSP_Ctrl_AccountStatements.WrapperStatement(listStatements.remove(0));
-		for (Account_Statement__c statement: listStatements) {
-			wrapper.addStatement(statement);
-			wrapper.getShowPaymentProof();
-			wrapper.getShowSettlementInfo();
-			wrapper.getAmazonFileName();
+		System.runAs(testUser) {
+			controller = new ISSP_Ctrl_AccountStatements();
+			ISSP_Ctrl_AccountStatements.WrapperStatement wrapper;
+			wrapper = new ISSP_Ctrl_AccountStatements.WrapperStatement(listStatements.remove(0));
+			for (Account_Statement__c statement: listStatements) {
+				wrapper.addStatement(statement);
+				wrapper.getShowPaymentProof();
+				wrapper.getShowSettlementInfo();
+				wrapper.getAmazonFileName();
+			}
 		}
 
 		wrapper.getParentStatus();
