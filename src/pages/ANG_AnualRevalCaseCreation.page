@@ -256,6 +256,7 @@
 					<apex:column value="{!a.account.IATACode__c}"/>
 					<apex:column value="{!a.account.Name}"/>
 					<apex:column value="{!a.account.Location_Type__c}"/>
+					<apex:column value="{!a.account.Status__c}"/>
 					<apex:column value="{!a.account.IATA_ISO_Country__r.Name}"/>
 					<apex:column value="{!a.account.Iso_State__r.Name}"/>
 					<apex:column value="{!a.account.Financial_Year_End__c}"/>

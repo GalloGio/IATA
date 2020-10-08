@@ -406,7 +406,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		String queryAccount =
 			'SELECT Id, IATACode__c, Name, RecordType.Name, ' + 
-			'   Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Iso_State__r.name, Financial_Year_End__c, ' +
+			'   Location_Type__c, Status__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Iso_State__r.name, Financial_Year_End__c, ' +
 			getOscarCasesSubquery() +
 			'FROM Account ' +
 			'WHERE RecordType.DeveloperName = \'IATA_Agency\' ' + 
