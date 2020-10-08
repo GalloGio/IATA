@@ -103,7 +103,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public string region { get; private set; }
 	public string mode { get; private set; }
 	public String country { get; private set; }
-	public String state { get; private set; }
 	public String month { get; private set; }
 	
 	public List<String> countriesLst { get; set; }
@@ -227,14 +226,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			con = null;
 		}
 		country = value;
-	}
-
-	public void setstate(String value){
-		if(state != value){
-			accountsToCreate = new List<AccountWrapper>();
-			con = null;
-		}
-		state = value;
 	}
 
 	public void setregion(String value){
