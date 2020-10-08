@@ -264,7 +264,6 @@ global without sharing class ISSP_APProcess {
 	public List<String> existingPassCountries {get;set;}
 	public List<passCountriesWrapper> wrapperPassCountries{get;set;}
 	public String countryCode {get;set;}
-	public Boolean managePASS {get;set;}
 	public String OTHERS {get;set;}
 	public List<AmazonFile__c> amazonFileList {get;set;}
 	public static String credentialName{get;set;}
@@ -300,7 +299,6 @@ global without sharing class ISSP_APProcess {
 		showTermsConditionsPopup = false;
 		//PASS
 		hasPASSCase = false;
-		managePASS=false;
 		isPASSGSSA=false;
 		showHotFilesPreference=true;
 		showHotFilesEmail=false;
@@ -319,6 +317,21 @@ global without sharing class ISSP_APProcess {
 		countries = new List<SelectOption>();
 		amazonFileList = new List<AmazonFile__c>();
 
+		//If controller called internally then get Account from URL param, else from account of portal user / contact
+		vAccountConcernedId = ApexPages.currentPage().getParameters().get('vAccountId');
+		contactId = Apexpages.currentPage().getParameters().get('vContactID');
+		con = retrieveContact(contactId);
+
+		if(vAccountConcernedId==null) {
+			//Case has not been created at this stage, so need to get AL Account (can be HQ or BR) for logged in user
+			popContact();
+
+			newForm.Contact_Resp_Job_Title__c = con.Title;
+			newForm.Contact_Resp_F_Name__c = con.FirstName;
+			newForm.Contact_Resp_L_Name__c = con.LastName;
+			newForm.Contact_Resp_Email__c = con.Email;
+		}
+
 		//PASS
 		selectedPassCountries= new List<SelectOption>();
 		if(ApexPages.currentPage().getParameters().get('airline')==AMS_Utils.passParticipation){
@@ -329,9 +342,8 @@ global without sharing class ISSP_APProcess {
 			isPassAirline=false;
 			passParam='';
 		}
-		if(ApexPages.currentPage().getParameters().get('managePASS')=='true'){
+		if(managePASS){
 			newForm.Airline_wish_to_join_ICCS__c = 'No';
-			managePASS=true;
 			isPassAirline=true;
 			strOperationType=AMS_Utils.passParticipation;
 		}
@@ -346,21 +358,6 @@ global without sharing class ISSP_APProcess {
 			if(isPassAirline){
 				isPASSGSSA=true;
 			}
-		}
-
-		//If controller called internally then get Account from URL param, else from account of portal user / contact
-		vAccountConcernedId = ApexPages.currentPage().getParameters().get('vAccountId');
-		contactId = Apexpages.currentPage().getParameters().get('vContactID');
-		con = retrieveContact(contactId);
-
-		if(vAccountConcernedId==null) {
-			//Case has not been created at this stage, so need to get AL Account (can be HQ or BR) for logged in user
-			popContact();
-
-			newForm.Contact_Resp_Job_Title__c = con.Title;
-			newForm.Contact_Resp_F_Name__c = con.FirstName;
-			newForm.Contact_Resp_L_Name__c = con.LastName;
-			newForm.Contact_Resp_Email__c = con.Email;
 		}
 
 		if(isGSSAUser) {
@@ -877,7 +874,8 @@ global without sharing class ISSP_APProcess {
 		'Type__c',
 		'Type_of_participation_desired__c',
 		'Type_of_Settlement__c',
-		'VAT_Tax_number_in_your_home_country__c'
+		'VAT_Tax_number_in_your_home_country__c',
+		'Receive_PDF_Reports__c'
 	};
 
 	private static final Set<String> QUERY_FIELDS_BSP = new Set<String>{
@@ -1491,7 +1489,6 @@ global without sharing class ISSP_APProcess {
 			newCase.Country_concerned_by_the_query__c = countryRequirement.Country__r.Case_BSP_Country__c;
 		}
 		newCase.CaseArea__c = strAreaType;
-		managePASS=checkExistingPassServiceRenderedInAccount(con.AccountId);
 
 		if(strAreaType=='Airline Joining') {
 			newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
@@ -1695,14 +1692,10 @@ global without sharing class ISSP_APProcess {
 			passParam='&airline=PASS';
 			if (strChangeType=='Bank Account Instructions') {
 				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
-			} else if(isStep3 && !managePASS){
+			} else if(isStep3){
 				return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 			}else if(managePASS && isStep1){
-				passParam=passParam+'&managePASS=true';
 				return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4'+passParam);
-			}else if(managePASS && isStep3){
-				passParam=passParam+'&managePASS=true';
-				return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 			}else{
 				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 			}
@@ -1716,7 +1709,6 @@ global without sharing class ISSP_APProcess {
 
 	public Pagereference goToStep3(){
 		if(managePASS){
-			passParam=passParam+'&managePASS=true';
 			return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 		}else{
 			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
@@ -1726,9 +1718,6 @@ global without sharing class ISSP_APProcess {
 	public Pagereference goToStep4(){
 		if(isPassAirline){
 			passParam='&airline=PASS';
-			if(managePASS){
-				passParam=passParam+'&managePASS=true';
-			}
 			return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4'+passParam);
 		}
 		return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4');
@@ -3873,17 +3862,35 @@ global without sharing class ISSP_APProcess {
 	}
 
 	/**
+	 * Return the list of active services for All kinf if PASS participation where contacts Airline is the Provider
+	 */
+	public List<Services_Rendered__c> listPASSAllServices {
+		get {
+			if (listPASSAllServices==null) {
+				listPASSAllServices =[
+					SELECT Id,ISO_Country_Code__c, Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Top_Parent__c
+					FROM Services_Rendered__c
+					WHERE Services_Rendered_Status__c = :AMS_Utils.ACTIVE
+					AND Services_Rendered_Type__c IN (:AMS_Utils.passAirlineCaseReason,:AMS_Utils.passGSSACaseReason)
+					AND (Services_Rendered_By__c = :con.accountId OR Services_Rendered_By__r.Top_Parent__c =:con.accountId)];
+			}
+			return listPASSAllServices;
+		}
+		set;
+	}
+
+	/**
 	 * Return the list of active services for GSSA PASS participation where contacts Airline is the Provider
 	 */
 	public List<Services_Rendered__c> listGSSAPASSAllServices {
 		get {
 			if (listGSSAPASSAllServices==null) {
-				listGSSAPASSAllServices =[
-					SELECT Id,ISO_Country_Code__c, Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Top_Parent__c
-					FROM Services_Rendered__c
-					WHERE Services_Rendered_Status__c = :AMS_Utils.ACTIVE
-					AND Services_Rendered_Type__c = :AMS_Utils.passGSSACaseReason
-					AND Services_Rendered_By__c = :con.accountId];
+				listGSSAPASSAllServices = new List<Services_Rendered__c>();
+				for (Services_Rendered__c service: listPASSAllServices) {
+					if (service.Services_Rendered_Type__c == AMS_Utils.passGSSACaseReason) {
+						listGSSAPASSAllServices.add(service);
+					}
+				}
 			}
 			return listGSSAPASSAllServices;
 		}
@@ -3897,19 +3904,11 @@ global without sharing class ISSP_APProcess {
 		return listGSSAPASSAllServices.isEmpty();
 	}
 
-	public Boolean checkExistingPassServiceRenderedInAccount(Id accountId){
-		List<Services_Rendered__c> serviceRenderedList=[SELECT Id
-														FROM Services_Rendered__c
-														WHERE (Services_Rendered_Type__c=:AMS_Utils.passAirlineCaseReason
-														OR Services_Rendered_Type__c=:AMS_Utils.passGSSACaseReason)
-														AND (Services_Rendered_By__r.Id=:accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:accountId)];
-		if(isGSSAUser){
-			return false;
-		} else	if(serviceRenderedList.size()>0){
-			return true;
+	public Boolean managePASS {
+		get {
+			return listPASSAllServices.size()>0 && !isGSSAUser;
 		}
-
-		return false;
+		set;
 	}
 
 	public void UploadAmazonFile(){
