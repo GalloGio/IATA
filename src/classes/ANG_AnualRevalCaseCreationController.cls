@@ -40,7 +40,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	private static final String MODE_IATA_CODE = 'IATA Code';
 
 	private static final String SELECT_COUNTRY = 'Select Country';
-	private static final String SELECT_STATE = 'Select State';
 	private static final String ENDED = 'Ended';
 	private static final String COMPLETED = 'Completed';
 
@@ -108,7 +107,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public String month { get; private set; }
 	
 	public List<String> countriesLst { get; set; }
-	public List<String> stateLst { get; set; }
 	public String iataCode { get; set; }
 	public boolean shouldDisableButton;
 
@@ -427,7 +425,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		} else if (mode == MODE_COUNTRY) {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
 			if(!selectedStateSet.isEmpty()) queryAccount += 'AND Iso_State__c IN :selectedStateSet ';
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country +(state != SELECT_STATE ? ' with the state: ' + state : '.'));
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country +(!selectedStateSet.isEmpty()? ' with the states: ' + selectedStateSet : '.'));
 		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for IATA Code with value: '+ account.IATACode__c);
