@@ -258,7 +258,8 @@ public class ANG_RHCMassCalculation {
 											ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c, ANG_RME_Amount__c, ANG_Account_Country_ISO_Code__c, ANG_ConsumedRHC_Percent__c, ANG_Consumed_RHC_Date__c,
 											ANG_ConsumedRHC_Last_Update__c, ANG_Enable_Calculation__c, ANG_Exceeding_Financial_Security__c, ANG_IATA_Code__c, ANG_Minimum_Financial_Security__c, 
 											ANG_Provisional_RHC_Last_Update__c, ANG_RME_Amount_Provisional__c, ANG_RME_Amount_Last_Update__c,
-											Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
+											Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c,
+											ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c
 										FROM ANG_RHC_Information__c where Id = :RHCId];
 		
 		boolean bProvSuccess = false;
