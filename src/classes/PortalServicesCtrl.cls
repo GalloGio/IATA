@@ -245,6 +245,13 @@ public with sharing class PortalServicesCtrl {
 		User userAux = [SELECT Id, contact.account.Sector__c, contact.account.Category__c FROM User WHERE Id = :UserInfo.getUserId()];
 		List<String> requestableAppNameList = PortalApplicationSettingHelper.getVisibleApplicationNames(userAux.Contact.Account);
 
+		List<Invitation__c> invitations = new List<Invitation__c>();
+		invitations = [SELECT Id, ServiceId__r.Name FROM Invitation__c WHERE Email__c =: UserInfo.getUserEmail() AND is_Accepted__c = false AND ServiceId__c != null];
+		if(!invitations.isEmpty()){
+			for(Invitation__c inv : invitations)
+				requestableAppNameList.add(inv.ServiceId__r.Name);
+		}
+
 		finalQuery = 'SELECT ' + extraQueryFields + fieldsStr +
 					 +' FROM Portal_Applications__c'
 					 + ' WHERE Id NOT IN :portalAppList'

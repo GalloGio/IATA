@@ -32,6 +32,18 @@
     margin-top: 30px;
 }
 
+.linksFlex {
+    display:flex;
+}
+
+.linksContent {
+    display:contents;
+}
+
+.linksMargin {
+    margin-top:15px;
+}
+
 .linksContainer .links>div {
      display: flex;
      justify-content: center;

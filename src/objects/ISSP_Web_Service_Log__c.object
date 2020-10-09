@@ -596,6 +596,12 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Sidra_Case_Creation_External</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>Sidra Case Creation-External</label>
+    </listViews>
+    <listViews>
         <fullName>Today_errors_logs</fullName>
         <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <columns>NAME</columns>

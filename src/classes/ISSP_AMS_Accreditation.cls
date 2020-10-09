@@ -7411,7 +7411,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 
-			if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation') {
+			if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && !isCNSAgency) {
 				if (newForm.ISSP_AMS_Date_of_incorporation__c == null) {
 					newForm.ISSP_AMS_Date_of_incorporation__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -7659,11 +7659,9 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (!validateBROfficeDetails())
 				errorFound = true;
 
-			if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c) {
+			if (newForm.ISSP_AMS_VAT_Number_Input__c == null && !isocountry.Hide_Tax_Number_VAT__c && newCase.Reason1__c != 'New Commercial BR' && newCase.Reason1__c != 'New BR / IP') {
 				if(isCNSAgency){
-					if(newCase.Reason1__c != 'New Commercial BR' && newCase.Reason1__c != 'New BR / IP'){
 					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Federal_EIN_Error_Message));
-					}
 				}else{
 					newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 				}
