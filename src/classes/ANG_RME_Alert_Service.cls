@@ -13,6 +13,8 @@ global class ANG_RME_Alert_Service {
 	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
 	@TestVisible
 	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+	
+	public static final string PROVISIONAL_NOT_ALLOWED_BY_BSP = 'Agency\'s BSP does not allow to request new provisional';
 
 	public class RHCMessage{
 		//Basic info
@@ -444,11 +446,16 @@ global class ANG_RME_Alert_Service {
 
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		list<ANG_RHC_Information__c> rhcInfo = [SELECT id, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c,
+												ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c,
 										  ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_Provisional_RHC_Last_Update__c
 										  FROM ANG_RHC_Information__c WHERE ANG_AccountId__c=:accountId];
-
-		return requestProvisionalRHC(rhcInfo[0], true);
-		//Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		if(ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c)
+			return requestProvisionalRHC(rhcInfo[0], true);
+		else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+		}
 	}
 
 	public static WebserviceResult requestProvisionalRHC(ANG_RHC_Information__c rhcInfo, boolean ProvisionalIsAppliedImmediately){
