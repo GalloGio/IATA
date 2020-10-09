@@ -201,7 +201,7 @@ global class ANG_Migration_MassRMECallout {
 
 
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
-		Account acc = [SELECT Id, IATACode__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c
+		Account acc = [SELECT Id, IATACode__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c, 
 						(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) 
 						FROM Account where Id = :accountId];
 		
