@@ -48,18 +48,14 @@ export default class PortalPublicKBInfo extends NavigationMixin(LightningElement
         getAuthConfig()
             .then(results => {
                 var config = JSON.parse(JSON.stringify(results));
-                config.selfRegistrationUrl = results.selfRegistrationUrl.substring(results.selfRegistrationUrl.indexOf(CSP_PortalPath));
+                config.selfRegistrationUrl = results.selfRegistrationUrl;
                 this.config = config;
         });
     }
 
     handleNavigateToLogin() {
-        this[NavigationMixin.GenerateUrl]({
-            type: "comm__loginPage",
-            attributes: {
-                actionName: 'login'
-            }})
-        .then(url => navigateToPage(url, {}));
+        //navigate to login (if no active session)
+        navigateToPage(this.config.selfRegistrationUrl.substring(0, this.config.selfRegistrationUrl.indexOf(CSP_PortalPath)+CSP_PortalPath.length));
     }
 
     handleNavigateToSignUp() {

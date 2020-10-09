@@ -838,9 +838,9 @@
                     <label>Cargo</label>
                 </value>
                 <value>
-                    <fullName>DGR</fullName>
+                    <fullName>Dangerous-Goods</fullName>
                     <default>false</default>
-                    <label>DGR</label>
+                    <label>Dangerous-Goods</label>
                 </value>
                 <value>
                     <fullName>Economics-and-Traffic-Results</fullName>
@@ -977,7 +977,7 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>DGR</valueName>
+                <valueName>Dangerous-Goods</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -2750,6 +2750,11 @@ SIS Charge Code Type.</description>
                     <fullName>Passenger Data Exchange</fullName>
                     <default>false</default>
                     <label>Passenger Data Exchange</label>
+                </value>
+                <value>
+                    <fullName>Passenger Data Exchange Database</fullName>
+                    <default>false</default>
+                    <label>Passenger Data Exchange Database</label>
                 </value>
                 <value>
                     <fullName>Passenger Fare Construction Toolkit</fullName>
@@ -13291,7 +13296,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>DGR</fullName>
+                <fullName>Dangerous-Goods</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14784,7 +14789,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Data Exchange Database</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Data Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange Database</fullName>
                 <default>false</default>
             </values>
             <values>

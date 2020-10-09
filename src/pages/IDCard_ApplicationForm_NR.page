@@ -213,7 +213,7 @@
         }
         var popupStatus = 0;
         
-        $("#DistributionAirlinesRetailingwithNDC-EN,#SellingIntlRailTransportation-EN,#IntrotoBSPLink-EN,#DestinationGeography-EN,#FundamentalsJourneyPricing-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#Acc\\.Fin\\.Mgmtforagencies-EN,#BSPAgentBillingReportsProcedures-EN,#BSPAgentRemittanceProcedures-EN,#BSPEssentialsforTravelAgents-EN,#BSPStandardDocumentsProcedures-EN,#IntrototheBSPSystemLanguage-EN").live("click", function() {
+        $("#DistributionAirlinesRetailingwithNDC-EN,#SellingIntlRailTransportation-EN,#IntrotoBSPLink-EN,#DestinationGeography-EN,#FundamentalsJourneyPricing-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#Acc\\.Fin\\.Mgmtforagencies-EN,#BSPAgentBillingReportsProcedures-EN,#BSPAgentRemittanceProcedures-EN,#BSPEssentialsforTravelAgents-EN,#BSPStandardDocumentsProcedures-EN,#IntrototheBSPSystemLanguage-EN").click(function() {
             
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;

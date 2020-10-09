@@ -1673,6 +1673,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- All_Notifications_Notification --></label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -4885,6 +4889,14 @@
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -5007,6 +5019,14 @@
     <customLabels>
         <label><!-- CSP_Settings --></label>
         <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Share FAQ button label --></label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success message that link has been copied to the clipboard --></label>
+        <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Skip --></label>
@@ -21489,6 +21509,10 @@
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Quantity --></label>
         <name>ISSP_Quantity</name>
     </customLabels>
@@ -33305,12 +33329,38 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Account Roles (Owners) --></description>
         <label><!-- Accounts with AMS Account Roles (Owners) --></label>
         <name>Accounts_with_AMS_Account_Roles_Owners</name>
         <sections>
             <label><!-- AMS Account Roles --></label>
             <name>AMS Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -35031,6 +35081,10 @@
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35326,6 +35380,23 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Currency Center Survey Hierarchy --></description>
         <label><!-- Currency Center Survey Hierarchy --></label>
         <name>Currency_Center_Survey_Hierarchy</name>
@@ -35592,6 +35663,19 @@
         <sections>
             <label><!-- GDP Products - Accounts View --></label>
             <name>GDP Products - Accounts View</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -1676,6 +1676,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>Toutes les notifications</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -4892,6 +4896,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_Access</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -5014,6 +5026,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Paramètres</label>
         <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>Partager</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Le lien direct FAQ a été copié!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
         <label>Ignorer pour l&apos;instant</label>
@@ -21564,6 +21584,10 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
         <name>ISSP_Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>quantité</label>
         <name>ISSP_Quantity</name>
     </customLabels>
@@ -33394,12 +33418,38 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Account Roles (Owners) --></description>
         <label><!-- Accounts with AMS Account Roles (Owners) --></label>
         <name>Accounts_with_AMS_Account_Roles_Owners</name>
         <sections>
             <label><!-- AMS Account Roles --></label>
             <name>AMS Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -35120,6 +35170,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35415,6 +35469,23 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Currency Center Survey Hierarchy --></description>
         <label><!-- Currency Center Survey Hierarchy --></label>
         <name>Currency_Center_Survey_Hierarchy</name>
@@ -35681,6 +35752,19 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- GDP Products - Accounts View --></label>
             <name>GDP Products - Accounts View</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -36692,7 +36776,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Fichiers</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

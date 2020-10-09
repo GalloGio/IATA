@@ -289,8 +289,6 @@ private class IEC_CustomerInformationTest
 		lstLocation.add(new Location__c(OwnerId=usrPortal.Id, Active__c = true, SAP_Id__c = 'Bill', Type__c = 'Bill To', Address__c = lstAddress[0].Id, Account__c = accPortal.Id, Contact__c = conPortal.Id, Email__c = conPortal.Email, Phone__c = '123-555-8888'));
 		lstLocation.add(new Location__c(OwnerId=usrPortal.Id, Active__c = true, SAP_Id__c = 'Ship', Type__c = 'Ship To', Address__c = lstAddress[1].Id, Account__c = accPortal.Id, Contact__c = conPortal.Id, Email__c = conPortal.Email, Phone__c = '123-555-8888'));
 		insert lstLocation;
-		accPortal.SoldTo_Location__c = lstLocation[0].Id;
-		update accPortal;
 		update new Contact(Id = conPortal.Id, BillTo_Location__c = lstLocation[1].Id, ShipTo_Location__c = lstLocation[2].Id);
 
 		//*** add sharing to prevent missing access rights
@@ -379,8 +377,6 @@ private class IEC_CustomerInformationTest
 		lstLocation.add(new Location__c(OwnerId=usrPortal.Id, Active__c = true, SAP_Id__c = 'Bill', Type__c = 'Bill To', Address__c = lstAddress[0].Id, Account__c = accPortal.Id, Contact__c = conPortal.Id, Email__c = conPortal.Email, Phone__c = '123-555-8888'));
 		lstLocation.add(new Location__c(OwnerId=usrPortal.Id, Active__c = true, SAP_Id__c = 'Ship', Type__c = 'Ship To', Address__c = lstAddress[1].Id, Account__c = accPortal.Id, Contact__c = conPortal.Id, Email__c = conPortal.Email, Phone__c = '123-555-8888'));
 		insert lstLocation;
-		accPortal.SoldTo_Location__c = lstLocation[0].Id;
-		update accPortal;
 		update new Contact(Id = conPortal.Id, BillTo_Location__c = lstLocation[1].Id, ShipTo_Location__c = lstLocation[2].Id);
 
 		//*** add sharing to prevent missing access rights
@@ -461,8 +457,6 @@ private class IEC_CustomerInformationTest
 		lstLocation.add(new Location__c(OwnerId=usrPortal.Id, Active__c = true, SAP_Id__c = 'Bill', Type__c = 'Bill To', Address__c = lstAddress[0].Id, Account__c = accPortal.Id, Contact__c = conPortal.Id, Email__c = conPortal.Email, Phone__c = '123-555-8888'));
 		lstLocation.add(new Location__c(OwnerId=usrPortal.Id, Active__c = true, SAP_Id__c = 'Ship', Type__c = 'Ship To', Address__c = lstAddress[1].Id, Account__c = accPortal.Id, Contact__c = conPortal.Id, Email__c = conPortal.Email, Phone__c = '123-555-8888'));
 		insert lstLocation;
-		accPortal.SoldTo_Location__c = lstLocation[0].Id;
-		update accPortal;
 		update new Contact(Id = conPortal.Id, BillTo_Location__c = lstLocation[1].Id, ShipTo_Location__c = lstLocation[2].Id);
 
 		//*** add sharing to prevent missing access rights

@@ -916,6 +916,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;ICCS&quot;,&quot;ICCS&quot;,
 &quot;IATAN Online Services&quot;, $Label.ISSP_IdCard_US,
 &quot;ID Card Online Platform&quot;, $Label.ISSP_IdCard_NonUS,
+&quot;Airline Daily Sales&quot;, $Label.CSP_Service_AirlineDailySales_Title,
 Name
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
