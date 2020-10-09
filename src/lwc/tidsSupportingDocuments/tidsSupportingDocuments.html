@@ -151,13 +151,15 @@
 			<template if:false={vettingMode}>
 				<template if:true={showSaveAndQuitButton}>
 					<button 
-						class="transparent" 
+						class="transparent"
+						data-name="save-quit" 
 						data-next="save-quit" 
 						onclick={handleSaveAndQuit}>
 						Save &amp; quit
 					</button>
 				</template>
 				<button 
+					data-name="next-section"
 					name="submit-application" 
 					onclick={handleNextSection} 
 					disabled={disableButton}>

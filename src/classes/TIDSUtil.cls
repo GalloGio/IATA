@@ -4,6 +4,7 @@ public without sharing class TIDSUtil{
     private static Id tidsrecordtypeId {get;set;} 
     public static ErrorWrapper iataCodeError {get;set;}
     public class ErrorWrapper {
+        @AuraEnabled public String caseId = '';
 		@AuraEnabled public String reason = '';
 		@AuraEnabled public Boolean hasAnError = false;
 		@AuraEnabled public TIDS_Error_Message__mdt error = new TIDS_Error_Message__mdt();
@@ -106,39 +107,41 @@ public without sharing class TIDSUtil{
     //deletes the documents uploaded and not the data.json
     @AuraEnabled(cacheable=false)
 	public static boolean deleteFiles(String attachmentid){
-		list<Attachment> lstConDocs = new List<Attachment>();
-		lstConDocs = [SELECT Id, Name
-			FROM Attachment
-			WHERE Id = :attachmentid AND (NOT Name LIKE '%.json')
-			LIMIT 1];
-		if (lstConDocs.size() > 0){delete lstConDocs;}
+        List<Attachment> attachments = getAttachments(false,' WHERE Id=\''+attachmentid+'\' AND (NOT Name LIKE \'%.json\')',' LIMIT 1');
+    	if (attachments.size() > 0){delete attachments;}
 		return true;
     }
     
     //saves the TIDS Configuration file
     @AuraEnabled(cacheable=false)
     public static void saveTidsConfiguration(String service, String payload){
-        final String filename = 'tids-configuration.json';
-        Portal_Applications__c services = [SELECT Id
-                                            FROM Portal_Applications__c
-                                            WHERE Name=:service LIMIT 1];
-        addAttachment(services.Id, payload, filename);
+        Portal_Applications__c services = getTIDSService();
+        addAttachment(services.Id, payload, TIDS_Constant.TIDSCONFIGURATIONFILE);
     }
     //reads the tids terms and condition
     @AuraEnabled(cacheable=false)
     public static String getTidsConfiguration(String service){
-      Portal_Applications__c services = [SELECT Id FROM Portal_Applications__c
-                                            WHERE Name=:service  LIMIT 1];
-      return getAttachment(services.Id, TIDS_Constant.TIDSCONFIGURATIONFILE);
+        Portal_Applications__c services = getTIDSService();
+        return getAttachment(services.Id, TIDS_Constant.TIDSCONFIGURATIONFILE);
     }
    //reads the tids configuration
    @AuraEnabled(cacheable=false)
    public static Attachment  getTermsAndConditions(){
-     Portal_Applications__c services = [SELECT Id FROM Portal_Applications__c
-                                           WHERE Name=:TIDS_Constant.TIDSVALUE  LIMIT 1];
-     List<Attachment> attachments = getAttachments(' WHERE parentId=\''+services.id+'\' AND name=\''+TIDS_Constant.TIDSTERMSANDCONDITIONS+'\'',' LIMIT 1');
-     if (attachments.size()>0) {return attachments[0];}
-     return null;
+        Portal_Applications__c services = getTIDSService();
+        List<Attachment> attachments = getAttachments(false,' WHERE parentId=\''+services.id+'\' AND name=\''+TIDS_Constant.TIDSTERMSANDCONDITIONS+'\'',' LIMIT 1');
+        if (attachments.size()>0) {return attachments[0];}
+        return null;
+    }
+    //returns the portal Tids Service Information
+    public static Portal_Applications__c getTIDSService(){
+        Portal_Applications__c tidsservice = [SELECT Id,Name
+				,TIDS_Non_Eligible_Mailing_Countries__c
+				,TIDS_Total_Ownership_Minimum__c
+				,TIDS_Total_Ownership_Maximum__c
+				,TIDS_Countries_with_Invalid_ISO_States__c
+				,TIDS_Non_Eligible_Location_Countries__c
+			FROM Portal_Applications__c WHERE Name=:TIDS_Constant.TIDSVALUE Limit 1];
+	    return tidsservice;
     }
     //Returns the configuration .json to drive the menu
     //and the forms (Address, Mailing...)
@@ -146,7 +149,7 @@ public without sharing class TIDSUtil{
 		if (String.isEmpty(parentid)){return null;}
 		parentid = String.escapeSingleQuotes(parentid.trim());
 	   //read the settings file
-        List<Attachment> newsettings = getAttachments(' WHERE parentId=\''+parentid+'\' AND name=\''+type+'\'',' LIMIT 1');
+        List<Attachment> newsettings = getAttachments(true,' WHERE parentId=\''+parentid+'\' AND name=\''+type+'\'',' LIMIT 1');
     	if (newsettings.size() > 0){Blob body = newsettings[0].Body;return body.toString();}
 		// return the Body Content
 		return null;
@@ -154,7 +157,7 @@ public without sharing class TIDSUtil{
     //Returns the lastest attachment body content
     public static String getAttachment(String parentId, String fileName){
         String result = '';
-        List<Attachment> attachments = getAttachments(' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
+        List<Attachment> attachments = getAttachments(true, ' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
         if (attachments.size() > 0){result = EncodingUtil.base64Decode(EncodingUtil.base64Encode(attachments.get(0).Body)).toString();}
         return result;
     }
@@ -163,8 +166,7 @@ public without sharing class TIDSUtil{
     //data temporary content
     @AuraEnabled(cacheable=false)
     public static documentWrapper relatedFiles(String parentid){
-        list<Attachment> lstConDocs = new List<Attachment>();
-        lstConDocs = getAttachments(' WHERE parentId=\''+parentid+'\' AND (NOT Name LIKE \'%.json\')',' ORDER BY CreatedDate DESC');
+        list<Attachment> lstConDocs = getAttachments(false,' WHERE parentId=\''+parentid+'\' AND (NOT Name LIKE \'%.json\')',' ORDER BY CreatedDate DESC');
         documentWrapper newdoc = new documentWrapper();
         List<Case> cases = new List<Case>(); 
         cases = [Select Id, Status From Case Where Id=:parentid Limit 1];
@@ -174,9 +176,9 @@ public without sharing class TIDSUtil{
         if (newdoc.isError==0) {newdoc.documents=lstConDocs;}
         return newdoc;
     }
-    private static list<Attachment> getAttachments(String selectWhere, String selectOrder){
+    private static list<Attachment> getAttachments(boolean isBodyIncluded, String selectWhere, String selectOrder){
         list<Attachment> lstConDocs = new List<Attachment>();
-        final String selectClause = 'SELECT Id, Body, ParentId, isPrivate, Name, CreatedDate, ContentType FROM Attachment '+selectWhere+selectOrder; 
+        final String selectClause = 'SELECT Id,'+(isBodyIncluded ? 'Body,':'')+'ParentId,isPrivate,Name,CreatedDate, ContentType FROM Attachment '+selectWhere+selectOrder; 
         lstConDocs = Database.query(selectClause);
         return lstConDocs;
     }
@@ -190,7 +192,7 @@ public without sharing class TIDSUtil{
     //documents uploaded
     public static void addAttachment(Id parentId, String payload, String filename){
         Attachment newAttachment = new Attachment();
-        List<Attachment> attachments = getAttachments(' WHERE parentId=\''+parentid+'\' AND AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
+        List<Attachment> attachments = getAttachments(true,' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
         if (attachments.size() > 0){
             newAttachment = attachments.get(0);
         }else{
@@ -212,11 +214,8 @@ public without sharing class TIDSUtil{
         boolean isUnique){
         List<Attachment> attachmentlist = new List<Attachment>();
         Attachment attachment1 = new Attachment();
-
         if (isUnique){
-            List<Attachment> newsettings = new List<Attachment>();
-            //read the settings file
-            newsettings = getAttachments(' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' LIMIT 1');
+            List<Attachment> newsettings = getAttachments(false,' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' LIMIT 1');
             if (newsettings.size() > 0){attachment1.Id = newsettings[0].Id;}
         }
         if (attachment1.Id == null){attachment1.Name = filename;attachment1.ParentId = parentid;}
@@ -380,5 +379,12 @@ public without sharing class TIDSUtil{
 			i++;
 		}
 		return content;
+    }
+    public static void createCaseComment(boolean ispublished, String caseId, String comments){
+		CaseComment c = new CaseComment();
+		c.ParentId = caseId;
+		c.isPublished  = ispublished;
+		c.CommentBody = comments;
+		insert c;
 	}
 }

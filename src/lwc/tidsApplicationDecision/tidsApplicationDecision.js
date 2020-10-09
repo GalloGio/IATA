@@ -106,7 +106,6 @@ export default class TidsApplicationDecision extends LightningElement {
 				this.showErrorModal=true;
 				this.showErrorMsg=result.reason;
 				//enable modal window to retry
-				console.log(JSON.stringify(result));
 			}else{
 				let action = {type: 'Pending customer',caseId: this.tidsCase.Id};
 				fireEvent(this.pageRef, "applicationDecisionListener", action);
@@ -116,7 +115,7 @@ export default class TidsApplicationDecision extends LightningElement {
 			this.loading = false;
 			this.showErrorModal=true;
 			//enable modal window to retry
-			console.log(JSON.stringify(error));
+			console.log('error',JSON.stringify(error));
 		});
 	}
 

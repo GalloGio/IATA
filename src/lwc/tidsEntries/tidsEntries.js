@@ -44,6 +44,10 @@ export default class TidsEntries extends NavigationMixin(LightningElement) {
 	@track portalUrl = '/csportal/s/';
 	@track isHeadOffice = false;
 	@track userType = getUserType();
+	//Modal Window
+	@track modalAction;
+	@track showConfimationModal=false;
+	@track modalDefaultMessage='';
 
 	connectedCallback() {
 		this.isLoadingFinished=false;
@@ -107,6 +111,7 @@ export default class TidsEntries extends NavigationMixin(LightningElement) {
 				this.isLoadingFinished=true;
 			})
 			.catch(error => {
+				this.oops(error);
 				console.log('error',JSON.stringify(error));
 				this.isLoadingFinished=true;
 			});
@@ -130,6 +135,7 @@ export default class TidsEntries extends NavigationMixin(LightningElement) {
 			this.isLoadingFinished=true;
 		})
 		.catch(error => {
+			this.oops(error);
 			console.log('error',JSON.stringify(error));
 			this.isLoadingFinished=true;
 		});
@@ -257,14 +263,23 @@ export default class TidsEntries extends NavigationMixin(LightningElement) {
 			caseId: caseId
 		})
 		.then(result => {
-			setCase({Id: result});
 			this.spinner = false;
-			this.displayMenu(props);
+			if (result.hasAnError){
+				this.oops(result.reason);
+			}else{
+				setCase({Id: result.caseId});
+				this.displayMenu(props);
+			}
 		})
 		.catch(error => {
 			this.spinner = false;
-			console.log('error',JSON.stringify(error));
+			this.oops(error);
 		});
 	}
-
+	oops(error){
+		console.log('error',JSON.stringify(error));
+		this.modalDefaultMessage='Oops! something happened, please retry.'
+		this.modalAction='OK';
+		this.showConfimationModal=true;
+	}
 }

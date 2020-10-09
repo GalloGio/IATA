@@ -74,6 +74,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		assignToCaseOwner({ caseId: caseid })
 			.then((results) => {
 				if (results.hasAnError === false) {
+					this.oops(results.reason);
 					this.runVetting(caseid);
 				} else {
 					this.modalDefaultMessage =
@@ -121,8 +122,10 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		let caseid = event.target.dataset.targetId;
 		actionApplication({ caseId: caseid, action: "vetting" })
 			.then((result) => {
-				if (result === "error") {
-					this.spinner = false;
+				console.log("result", JSON.stringify(result));
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.oops(result.reason);
 					this.modalDefaultMessage =
 						"This Application/Request was either recalled by the applicant or is currently being processed by an IATA Staff. Please refresh your screen to see the current status of this Application/Request.";
 					this.modalAction = "OK";
@@ -138,7 +141,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	runVetting(caseid) {
 		this.spinner = true;
 		this.showConfimationModal = false;
-		console.log("caseid", caseid);
 		let payload = this.cases;
 		let pageurl = "";
 		payload.forEach((item) => {

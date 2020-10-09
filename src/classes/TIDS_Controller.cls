@@ -91,16 +91,14 @@ public without sharing class TIDS_Controller {
 			}else if(type2.Contains(tids.applicationType)){
 				//Account Creation  
 				tidsGenerateIATACode(caseId, null, false);
+				if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
 			}
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
 		}
 		if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
-		if (!String.isBlank(reason)){
-			CaseComment c = new CaseComment(ParentId=caseId, isPublished=true,CommentBody = reason);
-			insert c;
-		}
+		if (!String.isBlank(reason)){TIDSUtil.createCaseComment(true, caseId,reason);}
 		tidsCase.Decision_Date__c = System.Now();
 		try {    
 			update tidsCase;
@@ -119,14 +117,13 @@ public without sharing class TIDS_Controller {
 					AND Portal_Application__r.Name=:TIDS_Constant.TIDSVALUE
 			 	LIMIT 1];
 		if (portalright.size() == 0){
-			List<Portal_Applications__c> portals = new List<Portal_Applications__c>();
-			portals = [SELECT Id FROM Portal_Applications__c WHERE Name=:TIDS_Constant.TIDSVALUE LIMIT 1];
+			Portal_Applications__c services =TIDSUtil.getTidsService();
 			//grant contact user TIDS portal access
 			Portal_Application_Right__c newportalright = new Portal_Application_Right__c();
 			newportalright.Contact__c = contactId;
 			newportalright.Right__c = 'Access Granted';
 			newportalright.Access_Status_Reason__c = 'TIDS Admin HO Primary';
-			newportalright.Portal_Application__c = portals[0].Id;
+			newportalright.Portal_Application__c = services.Id;
 			newportalright.Enable_Notifications__c = true;
 			insert newportalright;
 		}else{

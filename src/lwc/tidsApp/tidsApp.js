@@ -21,6 +21,7 @@ import getPickListValuesCompanyTypes from "@salesforce/apex/TIDSUtil.companyType
 import getUserInfo1 from "@salesforce/apex/TIDSHelper.getUserInfo";
 import getCountries from "@salesforce/apex/TIDSHelper.getCountry";
 import getMailingCountries from "@salesforce/apex/TIDSHelper.getMailingCountries";
+import setCaseInProgress from "@salesforce/apex/TIDSHelper.setCaseInProgress";
 import getTidsCase from "@salesforce/apex/TIDSHelper.getTidsCase";
 import getVettingDoneCondition from "@salesforce/apex/TIDSHelper.getVettingDoneCondition";
 // Dashboard Report Changes
@@ -251,53 +252,71 @@ export default class TidsApp extends LightningElement {
 		}
 	}
 	loadCase() {
-		getTidsCase({
+		//lastone
+		//pending in review
+		setCaseInProgress({
 			caseId: this.tidsCaseId,
 			userId: Id
 		})
-			.then((response) => {
-				let isHeadOffice =
+		.then((result) => {
+			if (result.hasAnError){
+				console.log('error',JSON.stringify(result));
+			}else{	
+				getTidsCase({
+					caseId: this.tidsCaseId,
+					userId: Id
+				})
+				.then((response) => {
+					let isHeadOffice =
 					response.tidsCase.Account.Location_Type__c === "HO" ? true : false;
-				setIsAccountHeadOffice(isHeadOffice);
-				setUserInfoIata({
-					locationtype: response.tidsCase.Account.Location_Type__c,
-					Name: response.currentUser.Name,
-					Id: response.currentUser.Id,
-					ContactId: response.tidsCase.ContactId,
-					AccountId: response.tidsCase.AccountId,
-					Country_ISO_Code: response.tidsCase.Account.Country_ISO_Code__c,
-					role: response.profile.Access_Status_Reason__c
+					setIsAccountHeadOffice(isHeadOffice);
+					setUserInfoIata({
+						locationtype: response.tidsCase.Account.Location_Type__c,
+						Name: response.currentUser.Name,
+						Id: response.currentUser.Id,
+						ContactId: response.tidsCase.ContactId,
+						AccountId: response.tidsCase.AccountId,
+						Country_ISO_Code: response.tidsCase.Account.Country_ISO_Code__c,
+						role: response.profile.Access_Status_Reason__c
+					});
+		
+					setUserType(true);
+					setBusinessrules(response.businessRules);
+					setCase({ Id: this.tidsCaseId });
+					let jsonCaseAttachment = JSON.parse(response.tidsAttachment);
+					setApplicationType(jsonCaseAttachment.applicationType);
+		
+					let tidsConfiguration = JSON.parse(response.tidsConfiguration);
+					setConfiguration(tidsConfiguration);
+					createMenu(tidsConfiguration);
+		
+					updateSections(jsonCaseAttachment.sections);
+					setSectionsDone(jsonCaseAttachment.sectionsDone);
+					this.isMode1 = false;
+					this.isMode2 = true;
+					this.showSpinner = false;
+					this.showForm = true;
+					// eslint-disable-next-line @lwc/lwc/no-async-operation
+					setTimeout(
+						() => {
+							fireEvent(this.pageRef, "formListener", { section: "form" });
+						},
+						1,
+						this
+					);
+				})
+				.catch((error) => {
+					console.log('error',JSON.stringify(error));
 				});
-
-				setUserType(true);
-				setBusinessrules(response.businessRules);
-				setCase({ Id: this.tidsCaseId });
-				let jsonCaseAttachment = JSON.parse(response.tidsAttachment);
-				setApplicationType(jsonCaseAttachment.applicationType);
-
-				let tidsConfiguration = JSON.parse(response.tidsConfiguration);
-				setConfiguration(tidsConfiguration);
-				createMenu(tidsConfiguration);
-
-				updateSections(jsonCaseAttachment.sections);
-				setSectionsDone(jsonCaseAttachment.sectionsDone);
-				this.isMode1 = false;
-				this.isMode2 = true;
-				this.showSpinner = false;
-				this.showForm = true;
-				// eslint-disable-next-line @lwc/lwc/no-async-operation
-				setTimeout(
-					() => {
-						fireEvent(this.pageRef, "formListener", { section: "form" });
-					},
-					1,
-					this
-				);
-			})
-			.catch((error) => {
-				console.log('error',JSON.stringify(error));
-			});
+			}
+		})
+		.catch((error) => {
+			console.log('error',JSON.stringify(error));
+		});
+		
 	}
+
+
 	currentUserInfo(userId) {
 		getUserInfo1({
 			userId: userId
@@ -696,6 +715,7 @@ export default class TidsApp extends LightningElement {
 		this.showSpinner = false;
 		this.hasError = true;
 	}
+
 	reportChangesListener(action) {
 		this.resetDisplayValues();
 		this.isMode1 = true;
@@ -704,6 +724,7 @@ export default class TidsApp extends LightningElement {
 		setLocationType(action.payload.locationtype);
 		setApplicationType(action.payload.changeType);
 		initializeTidsInfo();
+		//automatisation based on the configuration.json
 		switch (action.payload.changeType) {
 			case "chg-name-company":
 				this.changeNameCompanyDetails();
@@ -723,58 +744,63 @@ export default class TidsApp extends LightningElement {
 		let accountSelected = getAccountSelected();
 		getNameCompanyDetails({ accountId: accountSelected.Id, isLabel: false })
 			.then((result) => {
-				this.changeNameCompanyDetailsCallback(result);
+				this.mappingWelcome(result);
+				this.mappingAgencyLegalStatus(result);
+				this.mappingShareholderDetails(result);
+				setMailing({});
+				setAddress({});
+				setContact({});
+				setBusinessProfile({});
+				setBusinessSpecialization({});
+				this.reloadForm();
 			})
 			.catch((error) => {
 				console.log('error',JSON.stringify(error));
 			});
 	}
 
-	changeNameCompanyDetailsCallback(result) {
-		this.mappingWelcome(result);
-		this.mappingAgencyLegalStatus(result);
-		this.mappingShareholderDetails(result);
-		this.reloadForm();
-	}
-
 	changeAddressContactDetails() {
 		let accountSelected = getAccountSelected();
 		getAddressContactDetails({ accountId: accountSelected.Id })
 		.then((result) => {
-			this.changeAddressContactDetailsCallback(result);
+			let act = JSON.parse(JSON.stringify(result));
+			this.mappingWelcome(act);
+			this.mappingAddress(act);
+			this.mappingMailingAddress(result);
+			this.mappingContact(result);
+			setSupportingDocuments({});			
+			setAgencyLegalStatus({});
+			setShareholderDetails({});
+			setBusinessProfile({});
+			setBusinessSpecialization({});
+			this.reloadForm();
 		})
 		.catch((error) => {
 			console.log('error',JSON.stringify(error));
 		});
 	}
-	changeAddressContactDetailsCallback(account) {
-		let act = JSON.parse(JSON.stringify(account));
-		this.mappingWelcome(act);
-		this.mappingAddress(act);
-		this.mappingMailingAddress(account);
-		this.mappingContact(account);
-		this.reloadForm();
-	}
-
+	
 	changeBusinessProfileSpecialization() {
 		let accountSelected = getAccountSelected();
 		getBusinessProfileSpecialization({
 			accountId: accountSelected.Id,
 			isLabel: false
 		})
-		.then((response) => {
-			this.changeBusinessProfileSpecializationCallback(response);
+		.then((result) => {
+			setMailing({});
+			setAddress({});
+			setContact({});
+			setSupportingDocuments({});	
+			setAgencyLegalStatus({});
+			setShareholderDetails({});
+			setBusinessProfile(result.businessProfile);
+			setBusinessSpecialization(result.businessSpecialization);
+			this.reloadForm();
 		})
 		.catch((error) => {
 			console.log('error',JSON.stringify(error));
 		});
-	}
-
-	changeBusinessProfileSpecializationCallback(account) {
-		setBusinessProfile(account.businessProfile);
-		setBusinessSpecialization(account.businessSpecialization);
-		this.reloadForm();
-	}
+	}	
 
 	mappingWelcome(account) {
 		let applicantValues = {

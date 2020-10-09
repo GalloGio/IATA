@@ -48,6 +48,7 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
   @track modalAction;
   @track showConfimationMsgModal = false;
   @track modalDefaultMessage = "";
+
   connectedCallback() {
     registerListener("showErrorMessage", this.showErrorMessageCallback, this);
     if (this.message) {
@@ -70,23 +71,22 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     event.preventDefault();
     this.spinner = true;
     this.showConfimationMsgModal = false;
-    console.log("this.tidsCase.Id", this.tidsCase.Id);
     actionApplication({ caseId: this.tidsCase.Id, action: "resume" })
       .then((result) => {
-        console.log("this.tidsCase.Id:result_resume", result);
-        if (result === "error") {
-          this.spinner = false;
-          this.modalDefaultMessage =
-            "Your application is being reviewed by IATA and can no longer be edited.";
-          this.modalAction = "OKTIDS";
-          this.showConfimationMsgModal = true;
+        this.spinner = false;
+        console.log("result", JSON.stringify(result));
+        if (result.hasAnError){
+            this.oops(result.reason);
+            this.modalDefaultMessage =
+              "Your application is being reviewed by IATA and can no longer be edited.";
+            this.modalAction = "OKTIDS";
+            this.showConfimationMsgModal = true;
         } else {
-          this.tidsCase = undefined;
-          fireEvent(this.pageRef, "resumeApplication");
+            this.tidsCase = undefined;
+            fireEvent(this.pageRef, "resumeApplication");
         }
       })
       .catch((error) => {
-        console.log("error", error);
         this.oops(error);
       });
   }
@@ -95,65 +95,66 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     event.preventDefault();
     this.spinner = true;
     this.showConfimationMsgModal = false;
-    console.log("this.tidsCase.Id", this.tidsCase.Id);
     actionApplication({ caseId: this.tidsCase.Id, action: "recall" })
       .then((result) => {
-        console.log("this.tidsCase.Id:result_recall", result);
-        if (result === "error") {
-          this.spinner = false;
-          this.modalDefaultMessage =
-            "Your application is being reviewed by IATA and can no longer be edited.";
-          this.modalAction = "OKTIDS";
-          this.showConfimationMsgModal = true;
+        this.spinner = false;
+        console.log("result", JSON.stringify(result));
+        if (result.hasAnError){
+            this.oops(result.reason);
+            this.modalDefaultMessage =
+              "Your application is being reviewed by IATA and can no longer be edited.";
+            this.modalAction = "OKTIDS";
+            this.showConfimationMsgModal = true;
         } else {
-          this.redirectTidsApplication();
+            this.redirectTidsApplication();
         }
       })
       .catch((error) => {
-        console.log("error", error);
         this.oops(error);
       });
   }
-  oops(error) {
-    this.spinner = false;
-    console.log(" fetchRoles error", error);
-    this.modalDefaultMessage = "Oops! something happened, please retry.";
-    this.modalAction = "OK";
-    this.showConfimationMsgModal = true;
-  }
-
+ 
   handleDiscard(event) {
     event.preventDefault();
     this.spinner = true;
     this.showConfimationModal = false;
     this.showConfimationMsgModal = false;
-    console.log("this.tidsCase.Id", this.tidsCase.Id);
     actionApplication({ caseId: this.tidsCase.Id, action: "discard" })
       .then((result) => {
-        console.log("this.tidsCase.Id:result_discard", result);
         this.spinner = false;
-        if (result === "error") {
-          this.modalDefaultMessage =
-            "Your application is being reviewed by IATA and can no longer be edited.";
-          this.modalAction = "OKTIDS";
-          this.showConfimationMsgModal = true;
+        console.log("result", JSON.stringify(result));
+        if (result.hasAnError){
+            this.oops(result.reason);
+            this.modalDefaultMessage =
+              "Your application is being reviewed by IATA and can no longer be edited.";
+            this.modalAction = "OKTIDS";
+            this.showConfimationMsgModal = true;
         } else {
-          this.showConfimationModal = true;
+            this.showConfimationModal = true;
         }
       })
       .catch((error) => {
-        console.log("error", error);
         this.oops(error);
       });
   }
 
   discardBusinessLogic() {
     this.spinner = true;
-    discardApplication({ caseId: this.tidsCase.Id }).then((result) => {
+    discardApplication({ caseId: this.tidsCase.Id })
+    .then((result) => {
       this.spinner = false;
-      resetUserInfo();
-      this.redirectTids();
-    });
+      if (result.hasAnError){
+          this.oops(result.reason);
+      }else{
+          resetUserInfo();
+          this.redirectTids();
+      }
+      
+    })
+    .catch(error => {
+			this.spinner = false;
+			this.oops(error);
+		});
   }
 
   handleTidsCase(event) {
@@ -227,4 +228,10 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     window.open("", "_parent", "");
     window.close();
   }
+  oops(error){
+		console.log('error',JSON.stringify(error));
+		this.modalDefaultMessage='Oops! something happened, please retry.'
+		this.modalAction='OK';
+		this.showConfimationModal=true;
+	}
 }

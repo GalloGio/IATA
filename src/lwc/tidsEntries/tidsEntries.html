@@ -27,4 +27,10 @@
 			</div>
 		</template>  
 	</div>
+	<c-tids-modal-msg
+	  if:true={showConfimationModal}
+	  open={showConfimationModal}
+	  message={modalDefaultMessage}
+	  action={modalAction}
+	></c-tids-modal-msg>
 </template>

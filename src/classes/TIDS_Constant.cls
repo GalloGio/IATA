@@ -65,6 +65,7 @@ public without sharing class TIDS_Constant {
     public final static String IS_INPROGRESS='Review in Progress';
     public final static String IS_CUSTOMER='Pending Customer';
     public final static String IS_APPROVED='Approved';
+    public final static String IS_ABANDONED='Abandoned';
     public final static String IS_REJECTED='Rejected';
     public final static String IS_APPREJECTED='Application Rejected';
 

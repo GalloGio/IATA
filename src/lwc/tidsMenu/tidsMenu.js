@@ -83,6 +83,7 @@ export default class TidsMenu extends LightningElement {
 					selected='submit-application';
 				}
 			}
+			console.log('final selected',selected);
 			this.displayMenuOptionSelected(selected);
 		}else if (this.tidsInfo.applicationType==='NEW_HO' && this.tidsInfo.tidsCase!=null){
 			this.mappingMenuOptions();
@@ -108,17 +109,6 @@ export default class TidsMenu extends LightningElement {
 				item.approved=false;				
 			});
 			this.displayMenuOptionSelected(selected);
-			/*
-			let selected=undefined;
-			this.sectionsDone.forEach(item => {
-				if (selected==undefined){selected=item.name;}
-				this.allowMenuOptions(item.sectionName);
-			});
-			//let nextSection = this.sectionsDone[this.sectionsDone.length - 1].next;
-			console.log('selected',selected);
-			this.displayMenuOptionSelected(selected);
-			//this.displayMenuOptionSelected(1);
-			*/
 		}
 		console.log('items',JSON.stringify(this.items));
 	}

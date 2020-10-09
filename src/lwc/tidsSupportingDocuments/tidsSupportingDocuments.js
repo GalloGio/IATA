@@ -67,6 +67,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	@track reportErrorButtonDisabled;
 	@track documentid;
 	@track documentfilepath;
+	@track transactiontype;
   
 
 	connectedCallback() {
@@ -147,10 +148,11 @@ export default class TidsSupportingDocuments extends LightningElement {
 			this
 		);
 	}
-
+ 
 	handleNextSection(event) {
 		event.preventDefault();
-		//event.stopPropagation();
+		let option = event.target.dataset.name;
+		this.transactiontype=option;
 		this.showSpinner = true;
 		this.handleSave();
 	}
@@ -276,6 +278,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 			isUnique: false
 		})
 			.then(result => {
+				console.log('result',JSON.stringify(result));
 				this.documentindex++;
 				// Showing Success message after file insert
 				this.dispatchEvent(
@@ -289,7 +292,6 @@ export default class TidsSupportingDocuments extends LightningElement {
 					this.uploadHelper();
 				} else {
 					this.showSpinner = false;
-					// eslint-disable-next-line @lwc/lwc/no-async-operation
 					setTimeout(()=>{
 						this.upsertSupportingDocs();
 					},1000, this);
@@ -308,13 +310,24 @@ export default class TidsSupportingDocuments extends LightningElement {
 			});
 	}
 	upsertSupportingDocs() {
-		let saveDocuments = this.infoToBeSave();
-		if(this.isSaveAndQuit){
-			this.isSaveAndQuit = false;
-			saveDocuments.target = 'save-quit';
-			saveDocuments.action = 'SaveAndQuit';
-		} 
-		fireEvent(this.pageRef, "tidsUserInfoUpdate", saveDocuments);
+		let documentsValues;
+		let option= this.transactiontype;
+		console.log('option', this.transactiontype);
+		if (option === "next-section" || option === "save-quit") {
+			documentsValues = this.infoToBeSave();
+			if(this.isSaveAndQuit){
+				this.isSaveAndQuit = false;
+				documentsValues.target = 'save-quit';
+				documentsValues.action = 'SaveAndQuit';
+			} 
+		}else if (option === "report-errors-and-proceed") {
+			this.updateErrors();
+			documentsValues = this.infoToBeSave();
+		} else if(option === 'confirm-review-status'){
+			documentsValues = this.infoToBeSave();
+			documentsValues.sectionDecision = SECTION_CONFIRMED;
+		}
+		fireEvent(this.pageRef, "tidsUserInfoUpdate", documentsValues);
 	}
 	//Read all the attachments and update documents
 	// Getting releated files of the current record
@@ -334,10 +347,11 @@ export default class TidsSupportingDocuments extends LightningElement {
 				}
 			})
 			.catch(error => {
+				console.log('error',JSON.stringify(error));
 				this.dispatchEvent(
 					new ShowToastEvent({
 						title: "Error!!",
-						message: error.message,
+						message: error.body.message,
 						variant: "error"
 					})
 				);
@@ -428,16 +442,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 	handleProceed(event) {
 		event.preventDefault();
 		let option = event.target.dataset.name;
-		let documentsValues;
-
-		if (option === "report-errors-and-proceed") {
-			this.updateErrors();
-			documentsValues = this.infoToBeSave();
-		} else if(option === 'confirm-review-status'){
-			documentsValues = this.infoToBeSave();
-			documentsValues.sectionDecision = SECTION_CONFIRMED;
-		}
-		fireEvent(this.pageRef, "tidsUserInfoUpdate", documentsValues);
+		this.transactiontype=option;
+		this.showSpinner = true;
+		this.handleSave();
 	}
 
 	updateErrors() {
@@ -460,6 +467,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 
 	handleSaveAndQuit(event) {
 		event.preventDefault();
+		let option = event.target.dataset.name;
+		this.transactiontype=option;
 		this.showSpinner = true;
 		this.isSaveAndQuit = true;  
 		this.handleSave();
