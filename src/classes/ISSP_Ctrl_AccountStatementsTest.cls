@@ -211,11 +211,9 @@ private class ISSP_Ctrl_AccountStatementsTest {
 				wrapper.getShowSettlementInfo();
 				wrapper.getAmazonFileName();
 			}
+			wrapper.getParentStatus();
+			new list<ISSP_Ctrl_AccountStatements.WrapperStatement>().sort();
 		}
-
-		wrapper.getParentStatus();
-		new list<ISSP_Ctrl_AccountStatements.WrapperStatement>().sort();
-
 		Test.stopTest();
 	}
 
