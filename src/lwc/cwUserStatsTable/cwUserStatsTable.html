@@ -30,7 +30,11 @@
                     </td>
                     <td><img title={facility.RecordType.Name} width="25" src={facility.ctypeimage} /></td>
                     <td>{facility.City_FOR__c}</td>
-                    <td>{facility.IATA_ISO_Country__r.Name}</td>
+                    <td>
+                        <template if:true={facility.IATA_ISO_Country__r}>
+                            {facility.IATA_ISO_Country__r.Name}
+                        </template>
+                    </td>
                     <template if:true={displayCertifications} for:each={facility.certifications} for:item="cert" for:index="certIndex">
                         <td key={cert.certName}>
                             {cert.expDate}

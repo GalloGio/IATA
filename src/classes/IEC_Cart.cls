@@ -567,6 +567,16 @@ public without sharing virtual class IEC_Cart {
 
 	*/
 	public void addItem(String productNumber, Decimal quantity, String coupon) {
+		addItem(productNumber, quantity, coupon, null);
+	}
+
+	/**
+		Add a new Item to the Cart, indexed by productNumber. If product already exists
+		then update the product with existing quantity + new quantity. If new product,
+		just add it. Include the station id for remote validation product
+
+	*/
+	public void addItem(String productNumber, Decimal quantity, String coupon, String facilityId) {
 		CartItem cartItem;
 
 		System.debug('addItem start');
@@ -575,7 +585,7 @@ public without sharing virtual class IEC_Cart {
 			cartItemMap.remove(productNumber);
 		}
 
-		cartItem = new CartItem(null, productNumber, quantity, coupon);
+		cartItem = new CartItem(null, productNumber, quantity, coupon, facilityId);
 
 		cartItemMap.put(productNumber, cartItem);
 

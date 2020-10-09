@@ -673,4 +673,21 @@ public class CW_UtilitiesTest {
 		
 		test.stopTest();
 	}
+
+	/*********************************************************************************************************
+	 * @name			The name of your class or method
+	 * @author			Bea <beatriz.menendez@adesso.es>
+	 * @created			07 / 10 / 2020
+	 * @description		Description of your code
+	 * @param			String param : Explanation
+	 * @return			Explanation of the return value
+	**********************************************************************************************************/
+	@isTest
+	static void getArdTypesBySectorAndCategoryTest(){
+		Test.startTest();
+			String ardTypes = CW_Utilities.getArdTypesBySectorAndCategory();
+		Test.stopTest();
+
+		System.assert(String.isNotEmpty(ardTypes), 'ERROR: getArdTypesBySectorAndCategory should not be null');
+	}
 }

@@ -177,6 +177,7 @@
 															
 															<!-- Second header-->
 															<template if:true={currentheader.last}>
+
 																<th if:true={currentfield.first}
 																	key={currentfield.value.name} scope="col"
 																	colspan={currentfield.value.colspan}
@@ -195,7 +196,9 @@
 																	colspan={currentfield.value.colspan} title={currentfield.value.label}>
 																	{currentfield.value.label}
 																</th>
+
 															</template>
+
 														</template>
 
 														<template if:true={currentheader.last}>
@@ -220,20 +223,26 @@
 																		</template>
 																	</template>
 																</th>
-															</template>										
+															</template>
+
+																															
 														</template>
 													</tr>
+
 												</template>
+
 											</thead>
 
 											<tbody if:true={currentCategory.columns}>
 												<template for:each={currentCategory.rows} for:item="row"
 													for:index="rowIndex">
 													<tr key={row.Id} data-index={rowIndex} class={row.customClass}>
+
 														<template if:true={currentCategory.columns.length}
 															iterator:currentheader={currentCategory.columns}>
 															<template if:true={currentheader.last}>
 																<template iterator:currentfield={currentheader.value}>
+
 																	<td if:true={currentfield.first}
 																		key={currentfield.value.name}
 																		class="zui-sticky-col">
@@ -247,6 +256,7 @@
 																			</c-cw-capabilities-manager-inputs>
 																		</b>
 																	</td>
+
 																	<td if:false={currentfield.first}
 																		key={currentfield.value.name}>
 																		<c-cw-capabilities-manager-inputs
@@ -257,6 +267,7 @@
 																			edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
 																		</c-cw-capabilities-manager-inputs>
 																	</td>
+
 																</template>
 															</template>
 														</template>
@@ -279,6 +290,7 @@
 																multiple>
 															</lightning-file-upload>
 															
+
 															   <button if:true={row.photosAvailable}
 																	class="p-0 bg-transp border-0 cursor-pt"
 																	data-tosca="edit_photos" title="Edit photos" disabled={row.isNotEditable}>

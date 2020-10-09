@@ -60,11 +60,15 @@ export default class cwOpeningHours extends LightningElement {
 			if (!this.showContent && (this.editMode || this.hideExpandibleButton)) {
 				this.showContent = true;
 			}
-
-		}
-		if(this.timeValues.length < 1 ){
 			this.timeValues = this.generateTimeValues();
+		
+			let selectorOpens = this.template.querySelector(".open-icon");
+			if(selectorOpens != null){
+				this.timeValues = this.generateTimeValues();
+			}
 		}
+		
+		
 	}
 
 	generateTimeValues() {

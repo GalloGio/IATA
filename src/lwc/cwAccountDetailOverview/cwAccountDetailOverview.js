@@ -146,12 +146,12 @@ export default class CwAccountDetailOverview extends LightningElement {
 
 		if (event.target.name === "NumberEmployees" || event.target.name === "FacilitySize" || event.target.name === "IsOnAirport" || event.target.name === "DirectRampAccess" || event.target.name === "roadFeederServices" || event.target.name === "overallAirportSize" || event.target.name === "fleet") {
 			let newValue = event.target.value;
-			if (event.target.name === "NumberEmployees" || event.target.name === "FacilitySize" || event.target.name === "overallAirportSize") {
+			if (event.target.name === "NumberEmployees" || event.target.name === "FacilitySize" || event.target.name === "overallAirportSize"  || event.target.name === "fleet") {
 				newValue = parseInt(newValue, 10);
 				if (isNaN(newValue)) {
 					newValue = null;
 				}
-			} else if (event.target.name === "IsOnAirport" || event.target.name === "DirectRampAccess" || event.target.name === "roadFeederServices" || event.target.name === "fleet") {
+			} else if (event.target.name === "IsOnAirport" || event.target.name === "DirectRampAccess" || event.target.name === "roadFeederServices") {
 				newValue = event.target.checked;
 			}
 			if (newValue !== this.facility[event.target.name]) {

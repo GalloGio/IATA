@@ -118,10 +118,8 @@
                     </div>
                 </div>
                 
-                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">
-                    <div if:true={editOn}>
-                        <lightning-input type="checkbox" label={label.on_airport} name="IsOnAirport" checked={facility.IsOnAirport} onchange={handleInputChangeValue}></lightning-input>
-                    </div>
+                <div if:true={editOn} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">       
+                    <lightning-input type="checkbox" label={label.on_airport} name="IsOnAirport" checked={facility.IsOnAirport} onchange={handleInputChangeValue}></lightning-input>                  
                 </div>
             </template>
 
@@ -238,15 +236,13 @@
                         </div>
                         <div class="facility-overview-item-content text-blue">
                             <p class="text-truncate">
-                                <span if:false={editOn}>{numberTrucksFormatted} {label.trucks}</span>
-                                <template if:true={editMode}>
-                                    <lightning-input class="input mr-4" if:true={editOn} name="fleet" type="number" value={facility.fleet} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
-                                </template>
+                                <span if:false={editOn}>{numberTrucksFormatted} {label.trucks}</span>                   
+                                <lightning-input class="input mr-4" if:true={editOn} name="fleet" type="number" value={facility.fleet} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                             </p>
                         </div>
                     </div>
                     <c-cw-simple-tooltip item-id="trucks-hover" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
-                </div>
+                </div>               
             </template>
 
             <template if:true={isLoading}>

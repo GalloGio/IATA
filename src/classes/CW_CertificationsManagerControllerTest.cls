@@ -139,14 +139,14 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	@isTest
 	static void testGetAllCertifications() {
 		test.startTest();
-		string jsonCertifications = CW_CertificationsManagerController.getAllCertifications('SF Operational Capacity');
+		string jsonCertifications = CW_CertificationsManagerController.getAllCertifications('smart_facility_operational_capacity');
 		List<ICG_Certification__c> lstCertifications = (List<ICG_Certification__c>) JSON.deserialize(jsonCertifications, List<ICG_Certification__c>.class);
 		System.assertNotEquals(null, lstCertifications, 'Information not retrieved properly');
 		test.stopTest();
 	}
 	@isTest
 	static void testRenewSFOCCertification() {
-		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'smart_facility_operational_capacity' LIMIT 1];
 		test.startTest();
 		String newId = CW_CertificationsManagerController.renewCertification(ardCert.id, '2019-12-12', '2020-12-12', 'testCertId', 'Pharmaceuticals');
 		System.assertNotEquals(true, String.isBlank(newId), 'Certification not inserted');
@@ -207,7 +207,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void getNextCertificationID() {
 		ICG_Account_Role_Detail__c acc = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Test' LIMIT 1];
 		
-		ICG_Certification__c newcert = [SELECT Id FROM ICG_Certification__c WHERE Name = 'SF Operational Capacity'];
+		ICG_Certification__c newcert = [SELECT Id FROM ICG_Certification__c WHERE Name = 'smart_facility_operational_capacity'];
 		ICG_Certification__c newcert1 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_fresh'];
 		ICG_Certification__c newcert2 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_pharma'];
 		ICG_Certification__c newcert3 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'Smart Facility Remote Validation'];
@@ -242,10 +242,10 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	
 	@isTest
 	static void getFacilityNotActiveCertifications() {
-		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c, Is_Active__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c, Is_Active__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'smart_facility_operational_capacity' LIMIT 1];
 		
 		test.startTest();
-		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'', 'SF Operational Capacity');
+		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'', 'smart_facility_operational_capacity');
 		System.assertNotEquals(result, '');
 
 		test.stopTest();
@@ -253,7 +253,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	
 	@isTest
 	static void updateFieldEdited() {
-		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'smart_facility_operational_capacity' LIMIT 1];
 		String jsonValue = JSON.serialize(ardCert);
 		List<String> jsonGroup = new List<String>{jsonValue};
 		test.startTest();
@@ -268,7 +268,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	
 	@isTest
 	static void getCertificationWithoutCapabilities() {
-		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'SF Operational Capacity' LIMIT 1];
+		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'smart_facility_operational_capacity' LIMIT 1];
 		
 		test.startTest();
 		List<ICG_Certification__c> result = CW_CertificationsManagerController.getCertificationWithoutCapabilities(ardCert.ICG_Account_Role_Detail__c);

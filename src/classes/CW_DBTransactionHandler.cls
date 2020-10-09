@@ -11,7 +11,7 @@ public with sharing class CW_DBTransactionHandler {
 	 * @param			sp <Savepoint to rollback to>
 	 */
 	public static void doRollback(Savepoint sp){
-		if (sp != null && !Test.isRunningTest()) {
+		if(sp != null){
 			Database.rollback(sp);
 		}
 	}
@@ -21,11 +21,7 @@ public with sharing class CW_DBTransactionHandler {
 	 * @return			Savepoint object that represents the state of the database at the time of execution
 	 */
 	public static Savepoint setSavePoint(){
-		if (!Test.isRunningTest()) {
-			return Database.setSavepoint();
-		}
-
-		return null;
+		return Database.setSavepoint();		
 	}
 
 }

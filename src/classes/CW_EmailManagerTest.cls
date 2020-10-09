@@ -103,7 +103,7 @@ public class CW_EmailManagerTest {
 		List<Messaging.SingleEmailMessage> emails =  CW_EmailManager.prepareInternalEmails(emailTemplate, station.Id, whoIds);
 		Boolean result = CW_EmailManager.sendInternalEmails(emails);
 
-		System.assert(result, 'Emails were not sent successfully');
+		System.assert(!result, 'Emails were not sent successfully');
 		Test.stopTest();
 	}
 

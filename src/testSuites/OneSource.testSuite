@@ -11,12 +11,14 @@
     <testClassName>CW_CertificationSectionTest</testClassName>
     <testClassName>CW_CertificationsManagerControllerTest</testClassName>
     <testClassName>CW_CreateFacilityControllerTest</testClassName>
+    <testClassName>CW_DBTransactionHandler_Test</testClassName>
     <testClassName>CW_EmailManagerTest</testClassName>
     <testClassName>CW_EmailTemplateDataTest</testClassName>
     <testClassName>CW_FacilityCapabilitiesControllerTest</testClassName>
     <testClassName>CW_FacilityContactInfoControllerTest</testClassName>
     <testClassName>CW_GxA_Handler_Test</testClassName>
     <testClassName>CW_GxA_Integration_BatchTest</testClassName>
+    <testClassName>CW_GxA_Integration_Queueable_Test</testClassName>
     <testClassName>CW_GxA_WrappersTest</testClassName>
     <testClassName>CW_HandledAirlinesControllerTEST</testClassName>
     <testClassName>CW_IATA_ISO_City_Handler</testClassName>

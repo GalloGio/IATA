@@ -26,7 +26,7 @@ public without sharing class CW_CreateFacilityController {
 
 			List<Contact> companyAdmins = CW_Utilities.getCompanyAdminContactsFromAccountId(accountId);
 
-			if(isInternalUser != true && hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)) {
+			if(isInternalUser != true && hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin) && !isCompanyAdmin) {
 				ard.Status__c = 'Pending for IATA Approval';
 			}
 
@@ -38,7 +38,7 @@ public without sharing class CW_CreateFacilityController {
 
 			res.success = true;
 
-			if(isInternalUser == true){
+			if(isInternalUser == true || isCompanyAdmin){
 				res.message = Label.icg_registration_auto_approved;
 			}
 			else {

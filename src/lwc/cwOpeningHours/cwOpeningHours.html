@@ -73,11 +73,11 @@
                         <div class="col-2 font-size-sm display-inline-flex">
 
                             <template if:true={editMode}>
-                                <img if:true={currentDay.open} src={checkedIcon} class="icon btn-icon"
+                                <img if:true={currentDay.open} src={checkedIcon} class="icon btn-icon open-icon"
                                     onclick={handleChangeOpenCloseDay} data-key={currentDay.openKey} data-value="false"
                                     title="Open">
 
-                                <img if:false={currentDay.open} src={uncheckedIcon} class="icon btn-icon"
+                                <img if:false={currentDay.open} src={uncheckedIcon} class="icon btn-icon close-icon"
                                     onclick={handleChangeOpenCloseDay} data-key={currentDay.openKey} data-value="true"
                                     title={label.close}>
                             </template>

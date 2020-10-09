@@ -24,6 +24,19 @@ export default class cwHtmlSelectWithSelectedValue extends LightningElement {
         this.itemsProcessed.push(newItem);
       }, this);
     }
+
+
+    if(this.itemsProcessed.length < 1){
+      this.itemsProcessed = new Array();
+      this.items.forEach(function(item) {
+        let newItem = JSON.parse(JSON.stringify(item));
+        newItem.selected = newItem.value === this.selectedValue;
+
+        this.itemsProcessed.push(newItem);
+      }, this);
+    }
+
+
   }
 
   onchange(event) {

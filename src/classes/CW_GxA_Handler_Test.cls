@@ -329,13 +329,13 @@ public with sharing class CW_GxA_Handler_Test {
 		imap13.GxA_Question_Text__c = 'to C';
 		imap13.GxA_Question_Type_Id__c = '2';
 		imap13.GxA_Sub_Survey_Id__c = '';
-		imap13.GxA_Validation__c = 'number';
+		imap13.GxA_Validation__c = 'Date';
 		imap13.SF_Data_Extra__c = '';
 		imap13.SF_Equipment__c = '2_To_8_C';
 		imap13.SF_Options_Mapping__c = '';
 		imap13.SF_Process_Question__c = 'yes';
 		imap13.SF_Specific_Processing__c = 'Fileupload.Json.Visible';
-		imap13.SF_Target_Field__c = 'TCHA_Alarm_Range__c';
+		imap13.SF_Target_Field__c = 'Expiry_Date__c';
 		imap13.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
 		listImap.add(imap13);
 

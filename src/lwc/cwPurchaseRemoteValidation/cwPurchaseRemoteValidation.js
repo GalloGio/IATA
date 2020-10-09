@@ -106,7 +106,7 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 					let potPur = JSON.parse(JSON.stringify(potPurchase));
 					potPur.linkToPurchase = this.lstProductsRemoteVal[0].SAP_Material_Number__c
 											? domain 
-												+ '?IEC_ProductDetails=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c
+												+ 'IEC_ProductDetails?id=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c
 												+ '&fid=' + potPurchase.Id
 											: 'Product not available';
 					this.facilitiesToPurchase.push(potPur);

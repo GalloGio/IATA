@@ -54,10 +54,6 @@ public without sharing class CW_EmailManager {
 		}
 		
 		try {
-			if (Test.isRunningTest()) {
-				return true;
-			}
-		
 			Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
 
 			Boolean success = true;

@@ -263,7 +263,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 				if (newShoppingCart == false) {
 	        		PageReference resultPageRef = IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');
 				} else {
-					storeCart.addItem(product.ProductNumber, product.OrderQuantity, null);
+					storeCart.addItem(product.ProductNumber, product.OrderQuantity, null, facilityId);
 				}
 
 				return null;
