@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="Welcome to IATA Customer Portal" recipientType="User" language="{!recipient.languagelocalekey}">
+<messaging:emailTemplate subject="Welcome to IATA Customer Portal" recipientType="User" language="{!recipient.languagelocalekey}" renderUsingSystemContextWithoutSharing="true">
 <messaging:plainTextEmailBody >
     <c:CSP_Welcome_Email />
 </messaging:plainTextEmailBody>

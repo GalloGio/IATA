@@ -162,6 +162,7 @@ private class ANG_AnnualRevCaseCreationTest {
 		ctrl.setmode('Country');
 		ctrl.getcountryobj();
 		ctrl.setcountry(country.Id);
+		ctrl.getstateobj();
 		ctrl.searchAgencies();
 
 		System.assertEquals(1, ctrl.accountsToCreate.size(), 'Should find Parent Account');
