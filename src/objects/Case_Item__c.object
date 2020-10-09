@@ -766,6 +766,11 @@ High = All users impacted (e.g. Email server down) Medium = A group of users imp
         <columns>IATA_Business_Process__c</columns>
         <columns>IATA_Business_Service__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
         <label>All</label>
     </listViews>
     <nameField>
