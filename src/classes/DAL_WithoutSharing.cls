@@ -320,4 +320,24 @@ public static Map<String, String> getUserOptions(String portalUser){
 
 		return result;
 	}
+
+	//method needs to be in a without sharing class in order to access the field LastPasswordChangeDate
+	public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
+		return
+		[SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
+				IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
+				Profile.Name, CNS_Account_or_Agency__c,
+				ANG_Sector__c, ANG_Category__c, Customer_Type__c, ANG_Is_Accredited_Agent__c,
+				ANG_Customer_Country_ISO__c, Contact.User_Portal_Status__c,UID__c,LastPasswordChangeDate
+		FROM User
+		WHERE (Username=: nameOrEmail
+		OR email =: nameOrEmail)
+		AND (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
+		AND ContactId != ''
+		limit 1];
+	}
+
+
+
+
 }
