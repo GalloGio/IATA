@@ -147,7 +147,7 @@ global class AMS_2_MDM_Schedule implements Schedulable {
 						'and Account__r.Sent_to_External_System__c = true ' +
 						'and Change_Code__c in (' + changeCodeString + ') ' +
 						'and Account__r.IATA_ISO_Country__c in (' + countryString + ') ' +
-						'and CreatedDate>=LAST_N_DAYS:90 ' +
+						'and CreatedDate>=' + AMS_SAP_Settings__c.getOrgDefaults().Change_Code_Created_Date__c + ' ' +
 						'ORDER BY CreatedDate DESC ' + 
 						'limit 8000' ;
 
