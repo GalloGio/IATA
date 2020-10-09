@@ -167,9 +167,7 @@ global class ISSP_Ctrl_AccountStatements {
 			Where id = :UserInfo.getUserId()];
 
 		// check account status before doing anything to allow or reject access to info
-		if (this.currentUser.Contact.Account.Status__c != 'Approved' &&
-			this.currentUser.Contact.Account.Status__c != 'Changes Processed' &&
-			this.currentUser.Contact.Account.Status__c != 'Listed') {
+		if (this.currentUser.Contact.Account.Status__c == 'Terminated') {
 			this.listMessages.add(Label.ISSP_Account_not_approved);
 			return;
 		}
