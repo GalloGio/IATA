@@ -36578,6 +36578,13 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Public</value>
     </labels>
     <labels>
+        <fullName>ISSP_PwC_Managerial_Accounts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PwC_Managerial_Accounts</shortDescription>
+        <value>PwC Managerial Accounts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Quantity</fullName>
         <categories>Portal, S11</categories>
         <language>en_US</language>
