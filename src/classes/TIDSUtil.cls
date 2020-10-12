@@ -12,7 +12,7 @@ public without sharing class TIDSUtil{
 		@AuraEnabled public Boolean hasReinstatementDeadline = false;
     }
     public static Id getTidsRecordTypeId(){
-        if (tidsrecordtypeId==null){tidsrecordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'TIDS');}
+        if (tidsrecordtypeId==null){tidsrecordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Case', TIDS_Constant.TIDSVALUE);}
         return tidsrecordtypeId;
     }
     public static List<Case> getTidsCases(string objectId, boolean isDraft){
@@ -22,7 +22,7 @@ public without sharing class TIDSUtil{
 				FROM Case
 				WHERE AccountId=:objectId
 					AND RecordTypeId=:getTidsRecordTypeId()
-					AND Status = 'Draft' LIMIT 1];
+					AND Status =:TIDS_Constant.IS_DRAFT LIMIT 1];
 			if (cases.size()==0){return cases;}
 			objectId=cases[0].id;
 		}   
@@ -45,7 +45,8 @@ public without sharing class TIDSUtil{
               ,Account.IATACode__c
               ,Account.RecordType.DeveloperName
 			  ,Account.RecordType.Name
-			  ,ContactId
+              ,ContactId
+              ,ContactEmail
               ,RecordTypeId
               ,Account.Location_Class__c
               ,Account.Location_Type__c
@@ -303,26 +304,111 @@ public without sharing class TIDSUtil{
 			this.label = xlabel;
 		}
     }
-
+    @InvocableMethod
+    public static void tidsNotifications(List<String> caseId){
+        System.debug('caseId'+caseId[0]);
+        List<Case> cases = getTidsCases(caseId[0],false);
+        Case tidscase = cases[0];
+        System.debug('caseId_1'+caseId[0]);
+        Id whatId = tidscase.AccountId;
+        Id refId = tidscase.ContactId;
+        string template = 'TIDS_HO_Approved_Notification';
+        //HO Approval
+        if (tidscase.Status==TIDS_Constant.IS_CLOSED
+            && tidscase.Decision__c =='APPROVED'
+            && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE){
+            template='TIDS_HO_Approved_Notification';
+        }
+        //HO Incomplete
+        if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+            && String.isEmpty(tidscase.Decision__c)
+            && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE){
+            whatId= tidscase.Id;
+            template='TIDS_HO_Incomplete_Notification';  
+        }
+        System.debug('caseId_2'+caseId[0]);
+        //HO Rejected
+        if (tidscase.Status==TIDS_Constant.IS_CLOSED
+            && tidscase.Decision__c =='REJECTED'
+            && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE){
+            whatId= tidscase.Id;
+            template='TIDS_HO_Rejected_Notification';
+        }
+        System.debug('caseId_3'+caseId[0]);
+        //BR Approved
+        if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c =='APPROVED'
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
+            Account lastbranch = [Select Id FROM Account Where ParentId=:tidscase.AccountId Order by CreatedDate Desc Limit 1]; 
+            whatId= lastbranch.Id;
+            template='TIDS_BR_Approved_Notification';
+        }
+        System.debug('caseId_4'+caseId[0]);
+        //BR Incomplete
+        if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+        && String.isEmpty(tidscase.Decision__c)
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
+            whatId= tidscase.Id;
+            template='TIDS_BR_Incomplete_Notification';
+        }
+        //BR Rejected
+        if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c =='REJECTED'
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
+            whatId= tidscase.Id;
+            template='TIDS_BR_Rejected_Notification';
+        }
+        System.debug('caseId_4'+caseId[0]);
+        //VB Approved
+        if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c =='APPROVED'
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
+            Account lastbranch = [Select Id FROM Account Where ParentId=:tidscase.AccountId Order by CreatedDate Desc Limit 1]; 
+            whatId= lastbranch.Id;
+            template='TIDS_VB_Approved_Notification';
+        }
+        //VB Incomplete
+        if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+        && String.isEmpty(tidscase.Decision__c)
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
+            whatId= tidscase.Id;
+            template='TIDS_VB_Incomplete_Notification';
+        }
+        System.debug('caseId_5'+caseId[0]);
+        //VB Rejected
+        if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c =='REJECTED'
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
+            whatId= tidscase.Id;
+            template='TIDS_VB_Rejected_Notification';
+        }
+        System.debug('caseId_6'+caseId[0]);
+        sendNotification(whatId,
+                        refId, 
+                        template,
+                        new List<String>{tidscase.ContactEmail},  
+                        new List<String> {TIDS_Constant.TIDS_ADM_EMAIL} );
+    }	
     
-    public static void sendNotification(String caseId, String contactId, String emailTemplate, String noreply){
+    public static void sendNotification(Id whatId, Id refId, String emailTemplate, List<String> toemails,  List<String> bccemails ){
+        System.debug('whatId'+whatId);
         List<EmailTemplate> emailtemp = [SELECT Id
           FROM EmailTemplate
           WHERE DeveloperName =:emailTemplate Or Name =:emailTemplate LIMIT 1];
-        if (emailtemp.size()==0 && !Test.isRunningTest()) {return;}
-        List<Contact> contactList = [SELECT Id, email
-          FROM Contact
-          WHERE Id = :contactId LIMIT 1];
-        if (contactList.size()==0) {return;}
+        if (emailtemp.size()==0) {return;}
+
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         List<OrgWideEmailAddress> owea = new List<OrgWideEmailAddress>();
-        if (!String.isEmpty(noreply)){owea = [select Id from OrgWideEmailAddress where Address =:noreply Or DisplayName=:noreply Limit 1];}
+        owea = [select Id from OrgWideEmailAddress where Address =:TIDS_Constant.TIDS_ADM_EMAIL Or DisplayName=:TIDS_Constant.TIDS_ADM_EMAIL Limit 1];
         if (owea.size() > 0){email.setOrgWideEmailAddressId(owea[0].Id);}  
     
-        email.toAddresses = new List<String>{ contactList[0].email };
-        if (!Test.isRunningTest()) {email.setTemplateId(emailtemp[0].Id);}
-        email.setTargetObjectId(contactList[0].Id);
-        email.setWhatId(caseId);    
+        if (toemails.size()>0)  {email.setToAddresses(toemails);}
+        if (bccemails.size()>0) {email.setBccAddresses(bccemails);}
+
+        email.setTemplateId(emailtemp[0].Id);
+        email.setTargetObjectId(refId);
+        email.setWhatId(whatId);    
+        System.debug('whatId'+whatId);
         Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
     }
     
@@ -386,5 +472,29 @@ public without sharing class TIDSUtil{
 		c.isPublished  = ispublished;
 		c.CommentBody = comments;
 		insert c;
+    }
+    //Grants access to the portal user once the application is officialy approved
+	public static void grantTIDSPortalAccess(Id contactId){
+		List<Portal_Application_Right__c> portalright = new List<Portal_Application_Right__c>();
+		portalright = [SELECT Id,Right__c,Access_Status_Reason__c 
+				FROM Portal_Application_Right__c
+				WHERE Contact__c = :contactId
+					AND Portal_Application__r.Name=:TIDS_Constant.TIDSVALUE
+			 	LIMIT 1];
+		if (portalright.size() == 0){
+			Portal_Applications__c services =TIDSUtil.getTidsService();
+			//grant contact user TIDS portal access
+			Portal_Application_Right__c newportalright = new Portal_Application_Right__c();
+			newportalright.Contact__c = contactId;
+			newportalright.Right__c = 'Access Granted';
+			newportalright.Access_Status_Reason__c = TIDS_Constant.ADM_HOP;
+			newportalright.Portal_Application__c = services.Id;
+			newportalright.Enable_Notifications__c = true;
+			insert newportalright;
+		}else{
+			portalright[0].Right__c = 'Access Granted';
+			portalright[0].Access_Status_Reason__c = TIDS_Constant.ADM_HOP;
+			update portalright;
+		}
 	}
 }

@@ -312,36 +312,39 @@ public without sharing class TIDSReportChanges {
 			 * FL (Focus Leisure), FC (Focus Corporate) - Market Focus: Indicate the approximate % of your Leisure and Corporate business.
 			 * SMOF (Sales Mix Offline), SMON (Sales Mix Online) - Online / Offline Sales Mix
 			*/
-
+			string gritem=agencyProfile.GR_Item__c;
+			if (String.isEmpty(agencyProfile.GR_Item__c)) {gritem='';}
 			switch on (agencyProfile.GR_Code__c) {
 				when 'NU_OFFI' {
-					businessProfile.values.numberOffices.values = agencyProfile.GR_Item__c;
+					businessProfile.values.numberOffices.values = gritem;
 				}
 				when 'SV' {
-					businessProfile.values.travelSales.values = agencyProfile.GR_Item__c;
-					if (isLabel){businessProfile.values.travelSales.values = getLabelBasedOnCode('APSALE', agencyProfile.GR_Item__c);}
+					businessProfile.values.travelSales.values = gritem;
+					if (isLabel){businessProfile.values.travelSales.values = getLabelBasedOnCode('APSALE', gritem);}
 				}
 				when 'NU_EMPL' {
-					businessProfile.values.numberEmployees.values = agencyProfile.GR_Item__c;
-					if (isLabel){businessProfile.values.numberEmployees.values = getLabelBasedOnCode('APEMP', agencyProfile.GR_Item__c);}
+					businessProfile.values.numberEmployees.values = gritem;
+					if (isLabel){businessProfile.values.numberEmployees.values = getLabelBasedOnCode('APEMP', gritem);}
 				}
 				when 'AT' {
-					List<String> answer = (List<String>) gdpReferenceValues.get('APPRAC'+agencyProfile.GR_Item__c);
-					System.debug('agencyProfile.GR_Item__c>>>'+agencyProfile.GR_Item__c);
-					vslabel item = new vslabel(answer[0],String.valueOf(agencyProfile.GR_Item__c));
-					businessProfile.values.principalActivities.values.add(item);
+					vslabel item; 
+					List<String> answer = (List<String>) gdpReferenceValues.get('APPRAC'+gritem);
+					if (answer!=null) {
+						item = new vslabel( answer[0],String.valueOf(gritem));
+						businessProfile.values.principalActivities.values.add(item);
+					}
 				}
 				when 'FC' {
-					item1 = new vslabel('Corporate',String.valueOf(agencyProfile.GR_Item__c));
+					item1 = new vslabel('Corporate',String.valueOf(gritem));
 				}
 				when 'FL' {
-					item2 = new vslabel('Leisure', String.valueOf(agencyProfile.GR_Item__c));
+					item2 = new vslabel('Leisure', String.valueOf(gritem));
 				}
 				when 'SMOL' {
-					item3 = new vslabel( 'Online',String.valueOf(agencyProfile.GR_Item__c));
+					item3 = new vslabel( 'Online',String.valueOf(gritem));
 				}
 				when 'SMOF' {
-					item4 = new vslabel( 'Offline',String.valueOf(agencyProfile.GR_Item__c));
+					item4 = new vslabel( 'Offline',String.valueOf(gritem));
 				}
 			}
 		}

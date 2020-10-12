@@ -49,6 +49,13 @@ public without sharing class TIDS_Constant {
     public final static String ADM_HOS='TIDS Admin HO Secondary';
     public final static String ADM_HOP='TIDS Admin HO Primary';
     public final static String ADM_BRA='TIDS Branch Administrator';
+    public final static String NEW_APP='TIDS - new HO Application';
+
+    public final static String TIDS_ADM_EMAIL='tids@iata.org';
+
+    //GEONAME
+    public final static String  GEONAME_URL_CODEPOSTAL = 'TIDS_GEONAME_URL_CODEPOSTAL';
+    public final static String  GEONAME_URL_CITY = 'TIDS_GEONAME_URL_CITY';
 
     //NOTIFICATION
     public final static String NTF_APPROVED_VB='TIDS_VB_Service_Request_Approved_Notification';
@@ -66,12 +73,14 @@ public without sharing class TIDS_Constant {
     public final static String IS_CUSTOMER='Pending Customer';
     public final static String IS_APPROVED='Approved';
     public final static String IS_ABANDONED='Abandoned';
+    public final static String IS_TERMINATED='Terminated';
     public final static String IS_REJECTED='Rejected';
     public final static String IS_APPREJECTED='Application Rejected';
 
     public final static String CHG_NAME='chg-name-company';
     public final static String CHG_ADDRESS='chg-address-contact';
     public final static String CHG_PROFILE='chg-business-profile-specialization';
+    public final static String RQT_VIRTUALB='request-virtual-branch-service';
 
     //Message Errors
     public final static String MSG1='TIDS_MSG1';

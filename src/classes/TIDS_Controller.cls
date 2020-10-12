@@ -1,13 +1,14 @@
 public without sharing class TIDS_Controller {
 	private static List<Case> cases {get;set;}
+	private static vTIDS tids {get;set;}
+	private static List<IATA_ISO_State__c> states {get;set;}
 
 	@InvocableMethod
 	public static void autoApproved(List<String> caseId) {
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		String applicationData;
-		String applicationType;
+		Savepoint sp = Database.setSavepoint();
 		try {
-			String result = TIDSUtil.getAttachment(caseId[0], TIDS_Constant.DATAJSONFILENAME);
+			final String result = TIDSUtil.getAttachment(caseId[0], TIDS_Constant.DATAJSONFILENAME);
 			if (result!=''){
 				loadTIDSFromJson(result);
 				if (!TIDSUtil.iataCodeError.hasAnError){
@@ -16,7 +17,10 @@ public without sharing class TIDS_Controller {
 					tids.runInheritancebatch(caseId[0],false);  
 				}
 			}
-		} catch (Exception e){TIDSUtil.setError(e.getMessage(),true);}
+		} catch (Exception e){
+			Database.rollback(sp);
+			TIDSUtil.setError(e.getMessage(),true);
+		}
 	}
 
 	@AuraEnabled(cacheable=false)
@@ -42,8 +46,10 @@ public without sharing class TIDS_Controller {
 			}
 			TIDSUtil.iataCodeError.reason ='Application Submitted';
 			update tidsCase;
-		} catch (Exception e){TIDSUtil.setError(e.getMessage(),true);}    
-		if (TIDSUtil.iataCodeError.hasAnError) {Database.rollback(sp);}
+		} catch (Exception e){
+			Database.rollback(sp);
+			TIDSUtil.setError(e.getMessage(),true);
+		}    
 		return TIDSUtil.iataCodeError;
 	}
 	
@@ -56,7 +62,6 @@ public without sharing class TIDS_Controller {
 		String applicationsettings,
 		String reason){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		String result = 'Updated';    
 		cases = TIDSUtil.getTidsCases(caseId,false);
 		Case tidsCase = new Case();
 		if (cases.size() > 0){
@@ -90,7 +95,7 @@ public without sharing class TIDS_Controller {
 				tids.runInheritancebatch(caseId,true);
 			}else if(type2.Contains(tids.applicationType)){
 				//Account Creation  
-				tidsGenerateIATACode(caseId, null, false);
+				tidsGenerateIATACode(tidsCase.contactId, caseId, null, false);
 				if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
 			}
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
@@ -109,33 +114,9 @@ public without sharing class TIDS_Controller {
 		return TIDSUtil.iataCodeError;
 	}
 
-	private static void grantTIDSPortalAccess(Id contactId){
-		List<Portal_Application_Right__c> portalright = new List<Portal_Application_Right__c>();
-		portalright = [SELECT Id,Right__c,Access_Status_Reason__c 
-				FROM Portal_Application_Right__c
-				WHERE Contact__c = :contactId
-					AND Portal_Application__r.Name=:TIDS_Constant.TIDSVALUE
-			 	LIMIT 1];
-		if (portalright.size() == 0){
-			Portal_Applications__c services =TIDSUtil.getTidsService();
-			//grant contact user TIDS portal access
-			Portal_Application_Right__c newportalright = new Portal_Application_Right__c();
-			newportalright.Contact__c = contactId;
-			newportalright.Right__c = 'Access Granted';
-			newportalright.Access_Status_Reason__c = 'TIDS Admin HO Primary';
-			newportalright.Portal_Application__c = services.Id;
-			newportalright.Enable_Notifications__c = true;
-			insert newportalright;
-		}else{
-			portalright[0].Right__c = 'Access Granted';
-			portalright[0].Access_Status_Reason__c = 'TIDS Admin HO Primary';
-			update portalright;
-		}
-	}
 	
-
-	private static vTIDS tids {get;set;}
-	private static List<IATA_ISO_State__c> states {get;set;}
+	//Lock the Canada Prince Edward Iso State in order to avoid duplicate
+	//IATA Code assignement
 	private static void testUpdateLocking(){
 		states  = new List<IATA_ISO_State__c>();
 		try {
@@ -144,9 +125,11 @@ public without sharing class TIDS_Controller {
 				WHERE ISO_Code__c = :TIDS_Constant.STATEISOCODE LIMIT 1];
 		} catch (exception e){TIDSUtil.setError(TIDS_Constant.MSG16,false);}
 	}
+
 	//Will emulate the Staging values based on a minimum of information
 	//provided to run the generatedAgencyIATACode(String accountId, String onlineAccreditationId)
 	public static void tidsGenerateIATACode(
+		Id contactId,
 		Id tidsCaseId,
 		Id accountId,
 		Boolean isRollback){
@@ -163,8 +146,8 @@ public without sharing class TIDS_Controller {
 		String iataCheckDigit;
 		String iataSite;
 		Account theAccount= tids.setAccount();
-		cases = TIDSUtil.getTidsCases(tidsCaseId,false);
-		if (TIDSUtil.iataCodeError.hasAnError){return;}
+		//cases = TIDSUtil.getTidsCases(tidsCaseId,false);
+		//if (TIDSUtil.iataCodeError.hasAnError){return;}
 		Savepoint sp = Database.setSavepoint();
 		try {
 			upsert theAccount;
@@ -211,16 +194,14 @@ public without sharing class TIDS_Controller {
 			update theAccount;
 			tids.saveBuinessProfiles(tids.userInfo.tidsAccount.Id);
 			tids.saveAMSRole(tids.userInfo.tidsAccount.Id);
-			if (!isNewBranch){grantTIDSPortalAccess(cases[0].ContactId);}
-			if (!Test.isRunningTest()) {TIDSUtil.sendNotification(tidsCaseId, cases[0].ContactId,'TIDS_HO_Approval_Notification',null);}
-			
+			if (!isNewBranch){TIDSUtil.grantTIDSPortalAccess(contactId);}
 		} catch (exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
-		}
-		
+		}		
 		return;
 	}
+	//Deserialize the data.json file in the tids class
 	public static void loadTIDSFromJson(string tidsjson){
 		try{tids = (vTIDS) JSON.deserialize(tidsjson, vTIDS.class);}catch(Exception e){TIDSUtil.setError(e.getMessage(),true);}
 	}

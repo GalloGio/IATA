@@ -53,9 +53,9 @@ public class TIDSVetting {
 		update mcase;
 		if (isVirtualBranchRequest){
 		   //Send Email to the account contact if any
-		   TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_VB,null);
+		   //TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_VB,null);
 		}else if (isRelinquishRequest){
-			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RL,null);
+			//TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RL,null);
 		   if (mcase[0].Subject==TIDS_Constant.CASE_SUBJECT_RELINQUISH){
 				TidsBatchRelinquishment nb = new TidsBatchRelinquishment();
 				nb.caseId=vcase.Id;
@@ -64,7 +64,7 @@ public class TIDSVetting {
 			  TidsBatchHelper.finishBuilderRelinquishment(vcase.Id);
 		   }
 		}else if (isReinstateRequest){
-			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RE,null);
+			//TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_APPROVED_RE,null);
 			TidsBatchHelper.finishBuilderReinstatement(vcase.Id);
 		 }
 	}
@@ -81,11 +81,11 @@ public class TIDSVetting {
 		update mcase;
 		//Send email
 		if (isVirtualBranchRequest){
-			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_VB,null);
+			//TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_VB,null);
 		}else if (isRelinquishRequest){
-			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RL,null);
+			//TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RL,null);
 		}else if (isReinstateRequest){
-			TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RE,null);
+			//TIDSUTIL.sendNotification(vcase.Id, mcase[0].contactId, TIDS_Constant.NTF_REJECTED_RE,null);
 		}
 	}
 }
