@@ -2752,6 +2752,11 @@ SIS Charge Code Type.</description>
                     <label>Passenger Data Exchange</label>
                 </value>
                 <value>
+                    <fullName>Passenger Data Exchange Database</fullName>
+                    <default>false</default>
+                    <label>Passenger Data Exchange Database</label>
+                </value>
+                <value>
                     <fullName>Passenger Fare Construction Toolkit</fullName>
                     <default>false</default>
                     <label>Passenger Fare Construction Toolkit</label>
@@ -14781,6 +14786,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange Database</fullName>
                 <default>false</default>
             </values>
             <values>
