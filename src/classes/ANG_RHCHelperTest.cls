@@ -12,6 +12,12 @@ private class ANG_RHCHelperTest {
 		bspList.add(settlement2);
 		insert bspList;
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		list<String> listAirlineId = new list<String>();
 		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
 			listAirlineId.add(profile.Id);

@@ -5,7 +5,18 @@ public class ANG_AgencyChangesHelperTest {
 	static void testSetup(){
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
+		List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02'));
+		insert settlementSystemList;
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id)  ;
 		insert ctry ;
 
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);

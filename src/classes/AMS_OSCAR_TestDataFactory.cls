@@ -435,4 +435,151 @@ public class AMS_OSCAR_TestDataFactory
 		update oscar;
 
 	}
+
+	public static AMS_Settlement_System__c createOperationAndItsAttributes(string OperationName){
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = OperationName, RecordTypeId = AMS_Utils.RECTYPE_BSP);
+		insert iss;
+		insert createOperationAttributes(iss);
+		return iss;
+	}
+	
+	public static list<ANG_BSP_Attributes__c> createOperationAttributes(AMS_Settlement_System__c iss){
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
+				NULL,
+				NULL,
+				TRUE,
+				NULL, NULL, NULL, NULL, NULL, NULL			
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'A',
+				false,
+				'1', double.valueof(2.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00)
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'B',
+				false,
+				'1', double.valueof(1.5), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00)
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'C',
+				false,
+				'1', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00)
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'A',
+				false,
+				'2', double.valueof(1.5), double.valueof(9500000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00)
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'B',
+				false,
+				'2', double.valueof(1.12), double.valueof(7000000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00)
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'C',
+				false,
+				'2', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(5000000.00), double.valueof(10000000.00)
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'A',
+				false,
+				'3', double.valueof(1.25), double.valueof(17000000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000')
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'B',
+				false,
+				'3', double.valueof(1.05), double.valueof(12600000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000')
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'C',
+				false,
+				'3', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(10000000.00), double.valueof('1000000000000000')
+			)
+		);
+
+		return bspAttrLst;
+	}
+
+	private static ANG_BSP_Attributes__c createBSPAttribute(String bspId, String recTypeId, String calcType, String riskStatus, Boolean limitCash
+															, string Tier, Double AmntAtRiskMult, Double TopUp, Double Deduct, Double AmntAtRiskFrom, Double AmntAtRiskTo){
+
+		ANG_BSP_Attributes__c attr = new ANG_BSP_Attributes__c();
+
+		attr.BSP__c = bspId;
+		attr.RecordTypeId = recTypeId;
+		attr.RHC_Amnt_Calc_Type__c = calcType;
+		attr.FS_Percentage__c = 80;
+		attr.Limit_Cash_Condition__c = limitCash;
+
+		if(riskStatus != NULL){attr.Risk_Status__c =riskStatus;}
+
+		if(Tier != NULL){attr.Tier__c =Tier;}
+		if(AmntAtRiskMult != NULL){attr.Amount_At_Risk_Multiplier__c =AmntAtRiskMult;}
+		if(TopUp != NULL){attr.Tier_RHC_Formula_TopUp_USD__c =TopUp;}
+		if(Deduct != NULL){attr.Tier_RHC_Formula_Deduct_USD__c =Deduct;}
+		if(AmntAtRiskFrom != NULL){attr.Amount_At_Risk_From_USD__c =AmntAtRiskFrom;}
+		if(AmntAtRiskTo != NULL){attr.Amount_At_Risk_To_USD__c =AmntAtRiskTo;}
+
+		return attr;
+
+	}
 }

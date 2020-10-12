@@ -157,33 +157,43 @@ global class ANG_Migration_MassRMECallout {
 
 
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_ConsumedRHC__c, ANG_RHC_Amount__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
-		if(result.isSuccess){
-			if(result.res.iataCode != acc.IATACode__c){
-				result.isSuccess = false;
-				result.description = 'Iata Code Mismatch. Sent: ' + acc.IATACode__c + '; Received ' + result.res.iataCode;
-			}
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
-				result.isSuccess = false;
-				result.description = 'RHC Currency mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
-			}
-			else if(result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
-				result.isSuccess = false;
-				result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
-			}
-			else{
-				try{
-					ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
-					rhcInfo.ANG_ConsumedRHC__c = result.res.consumedRHCAmount;
-					rhcInfo.ANG_ConsumedRHC_Percent__c = result.res.consumedRHCPercentage*100;
-					rhcInfo.ANG_ConsumedRHC_Last_Update__c = result.res.eventTime.date();
-					update rhcInfo;
-				}catch(Exception e) {
+		Account acc = [SELECT Id, IATACode__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c, 
+						(SELECT Id, CurrencyIsoCode, ANG_ConsumedRHC__c, ANG_RHC_Amount__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) 
+						FROM Account where Id = :accountId];
+		
+		WebserviceResult result;
+		if(acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c){
+			result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+			if(result.isSuccess){
+				if(result.res.iataCode != acc.IATACode__c){
 					result.isSuccess = false;
-					result.description = 'Error while updating RHC Information: ' + e.getMessage();
+					result.description = 'Iata Code Mismatch. Sent: ' + acc.IATACode__c + '; Received ' + result.res.iataCode;
+				}
+				else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
+					result.isSuccess = false;
+					result.description = 'RHC Currency mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
+				}
+				else if(result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+					result.isSuccess = false;
+					result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
+				}
+				else{
+					try{
+						ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+						rhcInfo.ANG_ConsumedRHC__c = result.res.consumedRHCAmount;
+						rhcInfo.ANG_ConsumedRHC_Percent__c = result.res.consumedRHCPercentage*100;
+						rhcInfo.ANG_ConsumedRHC_Last_Update__c = result.res.eventTime.date();
+						update rhcInfo;
+					}catch(Exception e) {
+						result.isSuccess = false;
+						result.description = 'Error while updating RHC Information: ' + e.getMessage();
+					}
 				}
 			}
+		}else{
+			result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = ANG_RME_Alert_Service.PROVISIONAL_NOT_ALLOWED_BY_BSP;
 		}
 
 		return result;
@@ -191,48 +201,58 @@ global class ANG_Migration_MassRMECallout {
 
 
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
-		if(result.isSuccess){
-			if(result.res.iataCode != acc.IATACode__c){
-				result.isSuccess = false;
-				result.description = 'Iata Code Mismatch. Sent: ' + acc.IATACode__c + '; Received ' + result.res.iataCode;
-			}
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
-				result.isSuccess = false;
-				result.description = 'RHC Currency Mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
-			}
-			else if(result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
-				result.isSuccess = false;
-				result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
-			}
-			else{
-				try{
-					//First step: update RHC with results from webservice
-					ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
-					rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
-					rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
-					update rhcInfo;
-
-					//Second step: confirm RHC
-					ANG_RHC_Information__c rhcInfo2 = [select id, ANG_CashCondition__c, ANG_FINANCIAL_SECURITY__C, ANG_RHC_AMOUNT_FORECASTED__C, ANG_RME_Amount__c from ANG_RHC_Information__c where id=:acc.RHC_Informations__r[0].Id];
-					if(rhcInfo2.ANG_CashCondition__c){
-						rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_FINANCIAL_SECURITY__C;
-					}else{
-						if(rhcInfo2.ANG_RHC_AMOUNT_FORECASTED__C > rhcInfo2.ANG_FINANCIAL_SECURITY__C)
-							rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_RHC_AMOUNT_FORECASTED__C;
-						else
-							rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_FINANCIAL_SECURITY__C;
-					}
-
-					update rhcInfo2;
-				}catch(Exception e) {
+		Account acc = [SELECT Id, IATACode__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c, 
+						(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) 
+						FROM Account where Id = :accountId];
+		
+		if(acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c){
+			WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
+			if(result.isSuccess){
+				if(result.res.iataCode != acc.IATACode__c){
 					result.isSuccess = false;
-					result.description = 'Error while updating RHC Information: ' + e.getMessage();
+					result.description = 'Iata Code Mismatch. Sent: ' + acc.IATACode__c + '; Received ' + result.res.iataCode;
+				}
+				else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
+					result.isSuccess = false;
+					result.description = 'RHC Currency Mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
+				}
+				else if(result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+					result.isSuccess = false;
+					result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
+				}
+				else{
+					try{
+						//First step: update RHC with results from webservice
+						ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
+						rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
+						rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
+						update rhcInfo;
+
+						//Second step: confirm RHC
+						ANG_RHC_Information__c rhcInfo2 = [select id, ANG_CashCondition__c, ANG_FINANCIAL_SECURITY__C, ANG_RHC_AMOUNT_FORECASTED__C, ANG_RME_Amount__c from ANG_RHC_Information__c where id=:acc.RHC_Informations__r[0].Id];
+						if(rhcInfo2.ANG_CashCondition__c){
+							rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_FINANCIAL_SECURITY__C;
+						}else{
+							if(rhcInfo2.ANG_RHC_AMOUNT_FORECASTED__C > rhcInfo2.ANG_FINANCIAL_SECURITY__C)
+								rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_RHC_AMOUNT_FORECASTED__C;
+							else
+								rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_FINANCIAL_SECURITY__C;
+						}
+
+						update rhcInfo2;
+					}catch(Exception e) {
+						result.isSuccess = false;
+						result.description = 'Error while updating RHC Information: ' + e.getMessage();
+					}
 				}
 			}
+			return result;
+		}else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = '';
+			return result;
 		}
-		return result;
 	}
 
 	private static WebserviceResult doRequest(String iataCode, String mappingName){
