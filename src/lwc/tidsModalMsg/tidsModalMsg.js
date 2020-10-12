@@ -55,7 +55,6 @@ export default class TidsModal extends NavigationMixin(LightningElement) {
 
 	handleModalProceed(event){
 		event.preventDefault();
-		console.log('tids modal msg this.action',this.action);
 		if(this.action === 'OK'){
 			this.open = false;
 		}else if(this.action === 'OKTIDS'){

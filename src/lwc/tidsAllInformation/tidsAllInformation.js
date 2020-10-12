@@ -93,18 +93,13 @@ export default class TidsAllInformation extends LightningElement {
 	@track activeSections = ['name-company'];
 
 	handleContactInfoToggle(event){
-		console.log('event.detail.openSections',event.detail.openSections);
 		this.activeSections = event.detail.openSections;
-		console.log('this.activeSections',JSON.stringify(this.activeSections));
 		if (this.activeSections.length === 0) {
 				//nothing to show
-				console.log('this.activeSections is empty');
 		} else {
 			const opensection=this.activeSections;
-			console.log('opensection',JSON.stringify(opensection));
 			for(var i=0; i<this.activeSections.length; i++){
 				var item=this.activeSections[i];
-				console.log('item',item);
 				if (!this.isagency && item==='address-contact') {this.getAddressContactInfo();}
 				if (!this.isprofile && item==='business-profile-specialization' ) {this.getProfileContactInfo();}
 			};        
@@ -112,7 +107,6 @@ export default class TidsAllInformation extends LightningElement {
 	}
 
 	getCompanyContactInfo(){
-		console.log('this.accountInfo',JSON.stringify(this.accountInfo));
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		getNameCompanyDetails({
 				 accountId: this.accountInfo.Id,
@@ -124,12 +118,10 @@ export default class TidsAllInformation extends LightningElement {
 			this.companytype=this.setNone(this.company.companyType);
 			this.inoperation=this.setNone(this.company.inOperationsSince);
 			this.iscompany=true;
-			console.log('getCompanyContactInfo:result',JSON.stringify(result));
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		})
 		.catch(error => {
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-			console.log('getCompanyContactInfo:error',error);
 			this.modalDefaultMessage='Oops! something happened, please retry.'
 			this.modalAction='OK';
 			this.showConfimationModal=true;
@@ -138,7 +130,6 @@ export default class TidsAllInformation extends LightningElement {
 
 	//result {"address":"15 Rue Papineau West","city":"Montréal","citygeonameId":"aCX4E00000001rEWAQ","country":{"Id":"a0n4E000001Ql2zQAC","label":"Canada","value":"CA"},"email":"lorem@ipsum.com","mailingAddress":"33 Expedia Avenue","mailingCity":"Seattle","mailingcitygeonameId":"aCX4E00000001rJWAQ","mailingCountry":{"Id":"a0n4E0000018PutQAE","label":"United States","value":"US"},"mailingPostalCode":"98888","mailingStateProvince":{"Id":"a444E000000DQzpQAG","label":"Washington","value":"US-WA"},"managerFirstName":"Lorem","managerLastName":"Ipsum","name":"Bottas Racing Inc.","phone":"15148740202","postalCode":"H2V4T8","preferredLanguage":"ENG","stateProvince":{"Id":"a444E000000IsvnQAC","label":"Quebec","value":"CA-QC"},"website":"www.loremipsum.com"}
 	getAddressContactInfo(){
-		console.log('this.accountInfo',JSON.stringify(this.accountInfo));
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		getAddressContactDetails({
 				 accountId: this.accountInfo.Id
@@ -151,12 +142,10 @@ export default class TidsAllInformation extends LightningElement {
 			this.website=this.setNone(this.agency.website);
 			this.preferredLanguage = this.setlanguage(this.agency.preferredLanguage);
 			this.isagency=true;
-			console.log('getAddressContactInfo:result',JSON.stringify(result));
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		})
 		.catch(error => {
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-			console.log('getAddressContactInfo:error',error);
 			this.modalDefaultMessage='Oops! something happened, please retry.'
 			this.modalAction='OK';
 			this.showConfimationModal=true;
@@ -182,7 +171,6 @@ export default class TidsAllInformation extends LightningElement {
 			return rlist;
 	}
 	getProfileContactInfo(){
-		console.log('this.accountInfo',JSON.stringify(this.accountInfo));
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		getBusinessProfileSpecialization({
 				 accountId: this.accountInfo.Id,
@@ -199,6 +187,9 @@ export default class TidsAllInformation extends LightningElement {
 			this.sales=result.businessProfile.values.salesMix.values;
 			this.travels=result.businessProfile.values.travelSales.values;
 			this.pactivities =result.businessProfile.values.principalActivities.values;
+			if (this.pactivities.length==0){
+				this.pactivities.push({value:'n/a',label:'n/a'});
+			}
 			this.destinations = this.joinList(result.businessSpecialization.values.destinationSpecialties.values);
 			this.smarkets = this.joinList(result.businessSpecialization.values.marketSpecialties.values);
 			this.percentages=result.businessSpecialization.values.percentageBreakdown.values;
@@ -212,12 +203,10 @@ export default class TidsAllInformation extends LightningElement {
 			this.destinations=this.setNone(this.destinations);
 			
 			this.isprofile=true;
-			console.log('getProfileContactInfo:result',JSON.stringify(result));
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		})
 		.catch(error => {
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-			console.log('getAddressContactInfo:error',error);
 			this.modalDefaultMessage='Oops! something happened, please retry.'
 			this.modalAction='OK';
 			this.showConfimationModal=true;

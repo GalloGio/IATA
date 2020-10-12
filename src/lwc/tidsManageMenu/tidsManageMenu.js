@@ -30,7 +30,6 @@ export default class TidsManageMenu extends LightningElement {
   isRequestVirtualBranchAllowed() {
     if (this.isVirtualAllowed()===true){
       this.isRequestVirtualBranch=false;
-      console.log('this.isRequestVirtualBranch',this.isRequestVirtualBranch);
     }else{
       if (this.accountInfo==undefined) return;
       if (this.accountInfo.Agency_Profiles__r==undefined) return;
@@ -88,21 +87,18 @@ export default class TidsManageMenu extends LightningElement {
   }
   oops(error){
     fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-    console.log(' fetchRoles error',error);
     this.modalDefaultMessage='Oops! something happened, please retry.'
     this.modalAction='OK';
     this.showConfimationModal=true;
   }
   handleRequestVirtualBranch(event) {
     event.preventDefault();
-    console.log('isRequestVirtualBranchExist');
     let accountId = this.accountInfo.Id;
     this.showConfimationModal=false;
     isTidsRequestPending({
       accountId: accountId,
       type:'TIDS – Virtual Branch Access Request'
     }).then(result => {
-      console.log(result);
       if (result===''){
         this.triggerEvent({type:'REQUEST_VIRTUAL_BRANCH_SERVICE',payload:{detail:this.accountInfo}});
         return;
@@ -115,15 +111,12 @@ export default class TidsManageMenu extends LightningElement {
     })
   }
   handleRequestReinstate(triggertype) {
-    console.log('Reinstate type:',triggertype);
-    console.log('this.accountInfo',JSON.stringify(this.accountInfo));
     let accountId = this.accountInfo.Id;
     this.showConfimationModal=false;
     isTidsRequestPending({
       accountId: accountId,
       type:'TIDS – Reinstatement'
     }).then(result => {
-      console.log(result);
       if (result===''){
           this.triggerEvent({type:triggertype,payload:{detail:this.accountInfo}});
       }else{
@@ -137,15 +130,12 @@ export default class TidsManageMenu extends LightningElement {
   }
 
   handleRequestRelinquishment(triggertype) {
-    console.log('Relinquish type:',triggertype);
-    console.log('this.accountInfo',JSON.stringify(this.accountInfo));
     let accountId = this.accountInfo.Id;
     this.showConfimationModal=false;
     isTidsRequestPending({
       accountId: accountId,
       type:'TIDS – Relinquishment'
     }).then(result => {
-      console.log(result);
       if (result===''){
         this.triggerEvent({type:triggertype,payload:{detail:this.accountInfo}});
         return;

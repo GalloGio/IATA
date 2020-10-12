@@ -59,6 +59,7 @@ export default class TidsMailing extends LightningElement {
 	@track state;
 	@track postalCode;
 	@track postalCodePlaceHolder = "";
+	@track postalCodeCounter = 0;
 	@track country;
 	@track isMailingSameAsPhysicalAddress;
 	@track showMailingAddressFields = false;
@@ -281,7 +282,6 @@ export default class TidsMailing extends LightningElement {
 		if (mailingAddressSectionValues){
 			this.isMailingSameAsPhysicalAddress =
 				mailingAddressSectionValues.values.isMailingSameAsPhysicalAddress;
-			
 			this.showMailingAddressFields = !this.stringToBoolean(
 				this.isMailingSameAsPhysicalAddress
 			);
@@ -295,7 +295,7 @@ export default class TidsMailing extends LightningElement {
 				this.postalCode = mailingAddressSectionValues.values.postalCode;
 				this.state = undefined;
 				if (this.state = mailingAddressSectionValues.values.state!=undefined){
-					 this.state = mailingAddressSectionValues.values.state.value;
+					this.state = mailingAddressSectionValues.values.state.value;
 				}
 				this.reportChanges();
 			}
@@ -326,7 +326,6 @@ export default class TidsMailing extends LightningElement {
 	setFormText() {
 		let type = getLocationType();
 		let apptype=getApplicationType();
-		console.log('type:',type,' apptype:',apptype);
 		this.istext1=true;
 		this.istext2=false;
 		if (apptype === NEW_VIRTUAL_BRANCH) {
@@ -389,15 +388,12 @@ export default class TidsMailing extends LightningElement {
 		} else {
 			this.disableButton = this.fieldsValidation() ? false : true;
 		}
-		console.log("This Disable Button", this.disableButton);
 	}
 
 	changeField(event){
 		if (event.target.name === "address"){
 		} else if (event.target.name === "city"){
 			let xcity = event.target.value;
-			console.log("xcity");
-			console.log(xcity);
 			if (xcity === undefined || xcity === ""){
 				this.isPostalCodesAvailable = false;
 			}
@@ -420,6 +416,7 @@ export default class TidsMailing extends LightningElement {
 			this.getLocationPlace(event.target.name, this.city);
 		} else if (event.target.name === "postalCode"){
 			this.postalCode = event.target.value;
+			this.postalCodeCounter = this.postalCode.length;
 		} else if (event.target.name === "country"){
 			this.country = event.target.value;
 			this.statesValues(this.country, true);
@@ -460,7 +457,6 @@ export default class TidsMailing extends LightningElement {
 		this.stateRules.required=false;
 		if (isrefreshed) {this.state=undefined;}
 		getStates({ countryIsoCode: props }).then((result) => {
-			console.log('getStates:result',JSON.stringify(result));
 			if (result.length>0){
 				this.states = result;
 				this.stateRules.visible=true;
@@ -476,7 +472,6 @@ export default class TidsMailing extends LightningElement {
 
 	handleNextSection(event){
 		event.preventDefault();
-		console.log("const allValid");
 		const allValid = [
 			...this.template.querySelectorAll(
 				"[data-name='mailingAddress'],[data-name='city'],[data-name='state'],[data-name='postalCode'],[data-name='country']"
@@ -485,27 +480,21 @@ export default class TidsMailing extends LightningElement {
 			inputCmp.reportValidity();
 			return validSoFar && inputCmp.checkValidity();
 		}, true);
-		console.log("let sameasphysicaladdress=false;");
 		let sameasphysicaladdress = false;
 		if (this.stringToBoolean(this.isMailingSameAsPhysicalAddress)){
 			sameasphysicaladdress = true;
-			console.log("sameasphysicaladdress=true;");
 		}
-		console.log("if (sameasphysicaladdress)");
 		if (sameasphysicaladdress){
 			if (allValid){
-				console.log("let mailingAddressValues =");
 				let mailingAddressValues = this.infoToBeSave();
 				window.scrollTo(0,0);
 				fireEvent(this.pageRef, "tidsUserInfoUpdate", mailingAddressValues);
 			}
 		} else {
 			if (this.citygeonameId === undefined || this.citygeonameId===null){
-				console.log("this.citygeonameId==undefined");
 				this.geonameIdNotSelected();
 			} else {
 				if (allValid){
-					console.log("fireEvent(this.pageRef");
 					let mailingAddressValues = this.infoToBeSave();
 					window.scrollTo(0,0);
 					fireEvent(this.pageRef, "tidsUserInfoUpdate", mailingAddressValues);
@@ -632,7 +621,6 @@ export default class TidsMailing extends LightningElement {
 
 	handleSave(option){
 		let mailingAddressValues;
-		console.log('handleSave.option:',option);
 		if (option === "report-errors-and-proceed"){
 			this.updateErrors();
 			mailingAddressValues = this.infoToBeSave();
@@ -642,7 +630,6 @@ export default class TidsMailing extends LightningElement {
 		} else if (option === "confirm-next-step"){
 			mailingAddressValues = this.infoToBeSave();
 		}
-		console.log('fireEvent tidsUserInfoUpdate with ',JSON.stringify(mailingAddressValues));
 		fireEvent(this.pageRef, "tidsUserInfoUpdate", mailingAddressValues);
 	}
 
@@ -860,7 +847,6 @@ export default class TidsMailing extends LightningElement {
 	//Call by the modal to proceed even the geonameId is null
 	disableMCityGeonameId(props){
 		this.openModal = false;
-		console.log("disableMCityGeonameId vettingMode:",this.vettingMode);
 		if (this.vettingMode){
 			this.handleSave("confirm-review-status");
 		}else{
@@ -886,17 +872,12 @@ export default class TidsMailing extends LightningElement {
 		event.preventDefault();
 		let geonameId = event.currentTarget.id;
 		geonameId = "$" + geonameId.split("$")[1] + "$";
-		console.log("event.currentTarget.id");
-		console.log(geonameId);
 		let cityselected;
 		this.postalcodes.forEach(function (item){
-			console.log(item.geonameId);
 			if (item.geonameId === geonameId){
-				console.log("item selected");
 				cityselected = item;
 			}
 		});
-		console.log("item selected");
 		if (cityselected != undefined) this.setcity(cityselected);
 		this.isPostalCodesAvailable = false;
 		this.citysearch = false;
@@ -905,17 +886,12 @@ export default class TidsMailing extends LightningElement {
 		this.cityselected = cityselected;
 		this.city = cityselected.toponymName;
 		this.citygeonameId = cityselected.citygeonameId;
-		console.log("by selection", cityselected.citygeonameId);
 		//this.postalCode=cityselected.
-		console.log("cityselected.lat", cityselected.lat);
-		console.log("cityselected.lng", cityselected.lng);
-
 		getLocalPlace({
 			fieldType: "postalcode",
 			searchValue: cityselected.lat,
 			countryIsoCode: cityselected.lng
 		}).then((result) => {
-			console.log("result>>>", result);
 			if (result != null){
 				let pcs = JSON.parse(result);
 				let postalcodeselected;
@@ -923,8 +899,6 @@ export default class TidsMailing extends LightningElement {
 					postalcodeselected = item;
 				});
 				if (postalcodeselected != undefined){
-					console.log("postalcodeselected");
-					console.log(postalcodeselected.postalCode);
 					this.postalCodePlaceHolder = postalcodeselected.postalCode;
 				}
 			}
@@ -972,8 +946,6 @@ export default class TidsMailing extends LightningElement {
 			searchValue: searchvalue,
 			countryIsoCode: this.country
 		}).then((result) => {
-			console.log("this.country", this.country);
-			console.log("result>>>", result);
 			if (result != null){
 				this.citygeonameId = null;
 				this.postalcodes = [];
@@ -983,14 +955,12 @@ export default class TidsMailing extends LightningElement {
 				let isstateselecteable = false;
 				let selectedstate = this.state;
 				if (selectedstate != undefined){
-					console.log("this.stateSelected(selectedstate)",this.stateSelected(selectedstate));
 					if (this.stateSelected(selectedstate) != undefined){
 						selectedstate = this.stateSelected(selectedstate).label;
 						isstateselected = true;
 					}
 				}
 				if (selectedstate!=undefined){selectedstate=selectedstate.toUpperCase();}
-				//console.log('this.states>>>',JSON.stringify(this.states));
 				if (!isstateselected){
 					if (this.states != undefined && this.states.length > 0){
 						isstateselecteable = true;
@@ -998,7 +968,6 @@ export default class TidsMailing extends LightningElement {
 				}
 				let letterNumber = /^[0-9]+$/;
 				pcs.geonames.forEach(function (item){
-					//console.log('item');
 					if (
 						item.fcode === "PPLC" ||
 						item.fcode === "PPL" ||
@@ -1008,8 +977,6 @@ export default class TidsMailing extends LightningElement {
 						item.fcode === "PPLA4" ||
 						item.fcode === "PPLA5"
 					){
-						//console.log('this.postalcodes.push');
-						//console.log(item);
 						let isitemtopush = true;
 						let s1 = searchvalue.toUpperCase();
 						let s2 = item.toponymName.toUpperCase();
@@ -1020,7 +987,6 @@ export default class TidsMailing extends LightningElement {
 							b += s2.charCodeAt(i);
 						}
 						let isclose = false;
-						//console.log("result a and b", a, b);
 						if (a == b){
 							isclose = true;
 						} else {
@@ -1030,7 +996,6 @@ export default class TidsMailing extends LightningElement {
 							} else {
 								r = (100 * (b - a)) / b;
 							}
-							console.log(r);
 							if (r < 50){
 								isclose = true;
 							}
@@ -1041,7 +1006,6 @@ export default class TidsMailing extends LightningElement {
 							b += s2.charCodeAt(i);
 						}
 						let isclose2 = false;
-						//console.log("result a and b", a, b);
 						if (a == b){
 							isclose2 = true;
 						} else {
@@ -1051,31 +1015,24 @@ export default class TidsMailing extends LightningElement {
 							} else {
 								r = (100 * (b - a)) / b;
 							}
-							console.log(r);
 							if (r < 50){
 								isclose2 = true;
 							}
 						}
 						if (isclose == false && isclose2 == false){
 							isitemtopush = false;
-							console.log("condition1");
 						}
-						//if (!item.toponymName.startsWith(searchvalue)){
-						// isitemtopush=false;
-						//}
 						if (isitemtopush &&
 							(item.name.match(letterNumber) ||
 							item.toponymName.match(letterNumber))
 						){
 							isitemtopush = false;
-							console.log("condition2");
 						}
 						if (isitemtopush && isstateselected){
 							let statef = item.adminName1;
 							if (statef!=undefined){statef=statef.toUpperCase();}
 							if (statef!= selectedstate){
 								isitemtopush = false;
-								console.log("condition3",statef,selectedstate);
 							}
 						} else {
 							if (isstateselecteable){
@@ -1093,12 +1050,9 @@ export default class TidsMailing extends LightningElement {
 					if (newpcs.length == 1){
 						let byitem = newpcs[0];
 						if (byitem.name == this.city || byitem.toponymName == this.city){
-							console.log("by default", byitem.citygeonameId);
 							this.citygeonameId = byitem.citygeonameId;
 						}
 					}
-					console.log("this.postalcodes.length");
-					console.log(newpcs.length);
 					this.isPostalCodesAvailable = true;
 					this.citysearch = true;
 				}
@@ -1124,7 +1078,6 @@ export default class TidsMailing extends LightningElement {
 			if (this.hasRequiredFields === undefined && element.required){
 				this.hasRequiredFields = true;
 			}
-			console.log("element.apiName", element.apiName);
 			switch (element.apiName){
 				case this.COUNTRY:
 					this.countryRules = element;

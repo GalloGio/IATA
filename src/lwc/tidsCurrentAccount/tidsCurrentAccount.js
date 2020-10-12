@@ -10,8 +10,8 @@ export default class TidsCurrentAccount extends LightningElement {
 		@api enableBacktoho=false;
 		@track branchId;
 		branchSelected(event){
-				this.branchSelected=true;
-				this.branchId = event.detail;
+			this.branchSelected=true;
+			this.branchId = event.detail;
 		}
 
 		handleBackToHOClick(event){

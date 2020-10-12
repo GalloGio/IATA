@@ -13,7 +13,6 @@ export default class TidsDocuments extends LightningElement {
 	@track isCaseClosed=false;
 	@track isDocumentOpen=false;
 	connectedCallback() {
-		console.log('connectedCallback:parentid', this.tidsCaseId);
 		if(this.tidsCaseId) {
 			this.getDocuments(this.tidsCaseId);
 		}
@@ -21,10 +20,8 @@ export default class TidsDocuments extends LightningElement {
 	getDocuments(caseid) {
 		this.spinner = true;
 		this.isCaseClosed=false;
-		console.log('getDocuments:parentid', caseid);
 		relatedFiles({parentid: caseid})
 		.then(response => {
-			console.log('getDocuments:response', JSON.stringify(response));
 			if (response!=null){
 				if (response.isError===0){this.documentsCallback(response.documents);}
 				if (response.isError===2){
@@ -41,7 +38,6 @@ export default class TidsDocuments extends LightningElement {
 	}
 
 	mappingFileFromSF(attachments) {
-		console.log('mappingFileFromSF:attachments', JSON.stringify(attachments));
 		let result = attachments.map(attachment => {
 			return {
 				id: attachment.Id, 
@@ -51,7 +47,6 @@ export default class TidsDocuments extends LightningElement {
 				iconName:iconFile({type:attachment.ContentType})
 			}
 		});
-		console.log('mappingFileFromSF:result', JSON.stringify(result));
 		return result;
 	}
 	

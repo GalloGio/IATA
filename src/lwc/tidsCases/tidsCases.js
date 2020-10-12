@@ -40,7 +40,6 @@ export default class TidsCases extends LightningElement {
 		handlesearchCases(event){
 			this.isSearchOn=false;
 			let newsearch = event.target.value;
-			console.log('newsearch',newsearch);
 			this.newsearch=newsearch;
 		}
 		handlegetCases(event){
@@ -78,7 +77,6 @@ export default class TidsCases extends LightningElement {
 			this.cases.forEach(item => {
 				if (item.Id==idx){selectedcase = item;}
 			});
-			console.log('selectedcase.Id',selectedcase.Id);
 			let params = {};
 			params.caseId = selectedcase.Id; // PARENT ARTICLE
 			this[NavigationMixin.GenerateUrl]({
@@ -88,6 +86,5 @@ export default class TidsCases extends LightningElement {
 					}})
 			.then(url => navigateToPage(url, params));
 			window.location.href = CSP_PortalPath + "/csportal/s/case-details?caseId="+selectedcase.Id + '&Att=true';;
-			console.log('myurl',myurl);
 		}
 }

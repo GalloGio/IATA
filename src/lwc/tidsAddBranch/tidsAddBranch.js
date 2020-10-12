@@ -40,7 +40,7 @@ export default class TidsAddBranch extends LightningElement {
 			this.countries = result;
 		})
 		.catch(error => {
-			console.log(error);
+			console.log('error',JSON.stringify(error));
 		});
 		//this.showVirtualBranch = true;
 	}
@@ -108,7 +108,6 @@ export default class TidsAddBranch extends LightningElement {
 	}
 	oops(error){
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-		console.log(' fetchRoles error',error);
 		this.modalDefaultMessage='Oops! something happened, please retry.'
 		this.modalAction='OK';
 		this.showConfimationModal=true;

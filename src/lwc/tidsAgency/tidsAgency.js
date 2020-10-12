@@ -302,7 +302,6 @@ export default class TidsAgency extends LightningElement {
 	}
 
 	connectedCallback() {
-		console.log('tidsAgency');
 		this.companyTypes = getCompanyTypes();
 		// Vetting menu
 		registerListener("vettingMenuListener", this.vettingMenuListener, this);
@@ -503,7 +502,6 @@ export default class TidsAgency extends LightningElement {
 		} else if (this.tradingNameRules.required && this.tradingName) {
 			isValid = true;
 		}
-		console.log(this.TRADING_NAME,isValid);
 		return isValid;
 	}
 
@@ -517,7 +515,6 @@ export default class TidsAgency extends LightningElement {
 		} else if (this.companyTypeRules.required && this.companyType) {
 			isValid = true;
 		}
-		console.log(this.COMPANY_TYPE,isValid);
 		return isValid;
 	}
 
@@ -531,7 +528,6 @@ export default class TidsAgency extends LightningElement {
 		} else if (this.inOperationsSinceRules.required && this.inOperationsSince) {
 			isValid = true;
 		}
-		console.log(this.IN_OPERATIONS_SINCE,isValid);
 		return isValid;
 	}
 
@@ -545,7 +541,6 @@ export default class TidsAgency extends LightningElement {
 		} else if (this.taxIdVATNumber1Rules.required && this.taxIdVATNumber1) {
 			isValid = true;
 		}
-		console.log(this.TAX_ID_VAT_NUMBER1,isValid);
 		return isValid;
 	}
 
@@ -559,7 +554,6 @@ export default class TidsAgency extends LightningElement {
 		} else if (this.taxIdVATNumber2Rules.required && this.taxIdVATNumber2) {
 			isValid = true;
 		}
-		console.log(this.TAX_ID_VAT_NUMBER2,isValid);
 		return isValid;
 	}
 
@@ -576,7 +570,6 @@ export default class TidsAgency extends LightningElement {
 		) {
 			isValid = true;
 		}
-		console.log(this.BUSINESS_REGISTRATION ,isValid);
 		return isValid;
 	}
 

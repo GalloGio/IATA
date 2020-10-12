@@ -53,7 +53,6 @@ export default class TidsAdministration extends LightningElement {
 			event.preventDefault();
 			let idx = event.currentTarget.dataset.id;
 			this.idx = idx.split('$')[1];
-			console.log('this.idx',this.idx);
 			this.showConfimationModal=false;
 			this.modalDefaultMessage='Please confirm the removal of this user from the list of administrators.';
 			this.modalAction='REMOVEADMINISTRATOR';
@@ -65,7 +64,6 @@ export default class TidsAdministration extends LightningElement {
 				event.preventDefault();
 				let idx = event.currentTarget.dataset.id;
 				this.idx = idx.split('$')[1];
-				console.log('this.idx',this.idx);
 				this.showConfimationModal=false;
 				this.modalDefaultMessage='Please confirm the swap of administrators. Once confirmed, an email will be sent to both parties.';
 				this.modalAction='SWAPADMINISTRATOR';
@@ -95,7 +93,6 @@ export default class TidsAdministration extends LightningElement {
 				this.showConfimationModal=false;
 		}
 		changeAdministratorField(event){
-				console.log('event.target.name',event.target.name);
 				if (event.target.name === "administrator"){
 						let name = event.target.value;
 						this.fetchAdministrators(name);
@@ -103,19 +100,16 @@ export default class TidsAdministration extends LightningElement {
 		}
 		fetchAdministrators(name){
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			console.log('fetchAdministrators',name);
 			let accountId = this.accountInfo.Id;
 			this.showConfimationModal=false;
 			this.isAdministratorAvailable=false;
 			this.isAdministratorSelected=false;
-			console.log('fetchAdministrators accountId',accountId);
 			getAdministrators({
 				accountId: accountId,
 				name:name
 			}).then(result => {
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				//Alert Relinquishment in process
-				console.log('getAdministrators result',result);
 				let administrators=[];
 				if (result!=null){
 						this.isAdministratorAvailable=true;
@@ -127,7 +121,6 @@ export default class TidsAdministration extends LightningElement {
 				this.administrators=administrators;
 			 }).catch(error => {
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-				console.log('handleRelinquish error',error);
 				this.modalDefaultMessage='Oops! something happened, please retry.'
 				this.modalAction='OK';
 				this.showConfimationModal=true;
@@ -151,18 +144,14 @@ export default class TidsAdministration extends LightningElement {
 		selectAdministrator(event){
 				let idx = event.currentTarget.id;
 				idx = '$'+idx.split('$')[1]+'$';
-				console.log('event.currentTarget.id',idx);
 				let newitem;
 				this.isAdministratorSelected=false;
 				this.administrators.forEach(function(item){
 					 if (item.newId===idx){
-							console.log('administratorselected',JSON.stringify(item));
 							newitem=item;
 					 }
 				});
-				console.log('administratorselected',newitem!=undefined);
 				if (newitem!=undefined) {
-						console.log('administratorselected',JSON.stringify(newitem));
 						this.isAdministratorSelected=true;
 						this.administratorselected = newitem;
 						this.administratorselectedname =newitem.name;
@@ -216,22 +205,18 @@ export default class TidsAdministration extends LightningElement {
 				this.administratorsearch=false;
 				this.administrators=[];
 				this.addNow=false;
-				console.log('roles',JSON.stringify(myroles));
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		}
 		oops(error){
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-				console.log('fetchRoles error',JSON.stringify(error));
 				this.modalDefaultMessage='Oops! something happened, please retry.'
 				this.modalAction='OK';
 				this.showConfimationModal=true;
 		}
 		addRoles(){
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});  
-			console.log('fetchRoles: add');
 			let accountId = this.accountInfo.Id;
 			this.showConfimationModal=false;
-			console.log('fetchRoles accountId',accountId,this.administratorselectedid,this.branchSelected);
 			actionAdministrators({
 				accountId: accountId,
 				contactId: this.administratorselectedid,
@@ -239,7 +224,6 @@ export default class TidsAdministration extends LightningElement {
 				isbranch:this.branchSelected
 			}).then(result => {
 				//Alert Relinquishment in process
-				console.log('actionAdministrators result',JSON.stringify(result));
 				this.displayRoles(result,false);
 			 }).catch(error => {
 				this.oops(error);
@@ -247,10 +231,8 @@ export default class TidsAdministration extends LightningElement {
 		}
 		removeRoles(props){
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			console.log('fetchRoles: remove');
 			let accountId = this.accountInfo.Id;
 			this.showConfimationModal=false;
-			console.log('fetchRoles accountId',accountId);
 			actionAdministrators({
 				accountId: accountId,
 				contactId: this.idx,
@@ -258,7 +240,6 @@ export default class TidsAdministration extends LightningElement {
 				isbranch:this.branchSelected
 			}).then(result => {
 				//Alert Relinquishment in process
-				console.log('actionAdministrators result',JSON.stringify(result));
 				this.displayRoles(result,false);
 			 }).catch(error => {
 				this.oops(error);
@@ -266,10 +247,8 @@ export default class TidsAdministration extends LightningElement {
 		}
 		swapRoles(props){
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			console.log('fetchRoles: get');
 			let accountId = this.accountInfo.Id;
 			this.showConfimationModal=false;
-			console.log('fetchRoles accountId',accountId);
 			actionAdministrators({
 				accountId: accountId,
 				contactId: this.idx,
@@ -277,7 +256,6 @@ export default class TidsAdministration extends LightningElement {
 				isbranch:this.branchSelected
 			}).then(result => {
 				//Alert Relinquishment in process
-				console.log('actionAdministrators result',JSON.stringify(result));
 				this.displayRoles(result, true);
 			 }).catch(error => {
 				this.oops(error);
@@ -285,10 +263,8 @@ export default class TidsAdministration extends LightningElement {
 		}
 		fetchRoles(){
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			console.log('fetchRoles: get');
 			let accountId = this.accountInfo.Id;
 			this.showConfimationModal=false;
-			console.log('fetchRoles accountId',accountId);
 			actionAdministrators({
 				accountId: accountId,
 				contactId: null,
@@ -296,7 +272,6 @@ export default class TidsAdministration extends LightningElement {
 				isbranch:this.branchSelected
 			}).then(result => {
 				//Alert Relinquishment in process
-				console.log('actionAdministrators result',JSON.stringify(result));
 				this.displayRoles(result,false);
 			 }).catch(error => {
 				this.oops(error);
@@ -308,12 +283,10 @@ export default class TidsAdministration extends LightningElement {
 		// Make sure it happens on the same branch.
 		// Make sure we disable any menu that is enabled elsewhere.
 		connectedCallback() {
-				//this.branchSelected=true;
-				console.log('connectedCallback');
-				registerListener('removeAdministrator',this.removeRoles,this);
-				registerListener('cancelAdministrator',this.cancelAdministrator,this);
-				registerListener('swapAdministrator',this.swapRoles,this);
-				console.log('fetchRoles');
-				this.fetchRoles();
+			//this.branchSelected=true;
+			registerListener('removeAdministrator',this.removeRoles,this);
+			registerListener('cancelAdministrator',this.cancelAdministrator,this);
+			registerListener('swapAdministrator',this.swapRoles,this);
+			this.fetchRoles();
 		}
 }

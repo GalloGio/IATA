@@ -64,7 +64,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
 
   // Callbacks
   showErrorMessageCallback(props) {
-    console.log(JSON.stringify(props));
   }
 
   handleResume(event) {
@@ -74,7 +73,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     actionApplication({ caseId: this.tidsCase.Id, action: "resume" })
       .then((result) => {
         this.spinner = false;
-        console.log("result", JSON.stringify(result));
         if (result.hasAnError){
             this.oops(result.reason);
             this.modalDefaultMessage =
@@ -98,7 +96,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     actionApplication({ caseId: this.tidsCase.Id, action: "recall" })
       .then((result) => {
         this.spinner = false;
-        console.log("result", JSON.stringify(result));
         if (result.hasAnError){
             this.oops(result.reason);
             this.modalDefaultMessage =
@@ -122,7 +119,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     actionApplication({ caseId: this.tidsCase.Id, action: "discard" })
       .then((result) => {
         this.spinner = false;
-        console.log("result", JSON.stringify(result));
         if (result.hasAnError){
             this.oops(result.reason);
             this.modalDefaultMessage =
@@ -164,7 +160,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     this.showConfimationMsgModal = false;
     getcountryISOCode()
       .then((result) => {
-        console.log("handleTidsCase", result);
         if (result != null) {
           this[NavigationMixin.Navigate](
             {
@@ -183,7 +178,7 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
         this.spinner = false;
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error", JSON.stringify(error));
         this.oops(error);
       });
   }

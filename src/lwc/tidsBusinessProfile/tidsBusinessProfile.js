@@ -286,7 +286,6 @@ export default class TidsBusinessProfile extends LightningElement {
 	
 
 	mappingRules(sectionRules) {
-		console.log('mappingRules:sectionRules',JSON.stringify(sectionRules));
 		sectionRules.forEach(element => {
 			if(this.hasFieldsToValidate === undefined && element.required){
 				this.hasFieldsToValidate = true;

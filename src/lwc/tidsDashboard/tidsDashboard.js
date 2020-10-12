@@ -62,9 +62,7 @@ export default class TidsDashboard extends LightningElement {
   }
   apppermissions(step){
     let userInfo = getUserInfo();
-    console.log('role;',JSON.stringify(userInfo));
     let role=userInfo.role;
-    console.log('role;',role);
     if (role==='TIDS Branch Administrator'){
       this.enableBacktoho=false;
       this.enableRevoke=false;
@@ -96,16 +94,13 @@ export default class TidsDashboard extends LightningElement {
       this.enableAdministration=true;
       this.enableRevoke=false;
     }
-    console.log('role;',role);
-    console.log('role enableBacktoho',this.enableBacktoho);
- }
+  }
 
   relinquishmentpending(accountid){
     isTidsRequestPending({
       accountId: accountid,
       type:'Terminated'
     }).then(result => {
-      console.log('handleRelinquish result',result,accountid);
       this.showHOReinstatement=false;
       //Alert Relinquishment in process
       if (result===''){
@@ -117,7 +112,7 @@ export default class TidsDashboard extends LightningElement {
       }
       this.showReinstatement =this.showHOReinstatement;
     }).catch(error => {
-     console.log('handleRelinquish error',error);
+      console.log("error", JSON.stringify(error));
      this.modalDefaultMessage='Oops! something happened, please retry.'
      this.modalAction='OK';
      this.showConfimationModal=true;
@@ -163,7 +158,7 @@ export default class TidsDashboard extends LightningElement {
       this.apppermissions(0);
     })
     .catch(error => {
-      console.log(error);
+      console.log("error", JSON.stringify(error));
 		});
   }
 
@@ -193,7 +188,6 @@ export default class TidsDashboard extends LightningElement {
           this.vbSelected=false;
           this.branchSelected=true;
         }
-        console.log('admin',JSON.stringify(this.accountInfo));
         setIsAccountHeadOffice(!this.branchSelected);
         break;
       case 'ALL_INFORMATION':
@@ -220,10 +214,7 @@ export default class TidsDashboard extends LightningElement {
         this.accountInfo=action.payload.detail;
         setIsAccountHeadOffice(!this.branchSelected);
         // Creates the event with the contact ID data.
-        //console.log('action.payload.detail',JSON.stringify(action.payload.detail));
-        //const selectedEvent = new CustomEvent('selectbranch', { detail: action.payload.detail});
         // Dispatches the event.
-        //this.dispatchEvent(selectedEvent);
         break;
       case 'ALL_BRANCHES':
           this.showAllInformation = false;
@@ -241,10 +232,7 @@ export default class TidsDashboard extends LightningElement {
           this.branchSelected=false;
           this.showHelpCenter = false;
           // Creates the event with the contact ID data.
-          //console.log('action.payload.detail',JSON.stringify(action.payload.detail));
-          //const selectedEvent = new CustomEvent('selectbranch', { detail: action.payload.detail});
           // Dispatches the event.
-          //this.dispatchEvent(selectedEvent);
           break;
       case 'ALL_CASES':
           this.showAllInformation = false;
@@ -268,10 +256,7 @@ export default class TidsDashboard extends LightningElement {
           this.showTidsCases = false;
           this.showHelpCenter = false;
           // Creates the event with the contact ID data.
-          //console.log('action.payload.detail',JSON.stringify(action.payload.detail));
-          //const selectedEvent = new CustomEvent('selectbranch', { detail: action.payload.detail});
           // Dispatches the event.
-          //this.dispatchEvent(selectedEvent);
           break;  
       case 'SELECT_BRANCH':
         setAccountSelected(action.payload.detail);
@@ -301,13 +286,9 @@ export default class TidsDashboard extends LightningElement {
         }
         setIsAccountHeadOffice(!this.branchSelected);
         // Creates the event with the contact ID data.
-        //console.log('action.payload.detail',JSON.stringify(action.payload.detail));
-        //const selectedEvent = new CustomEvent('selectbranch', { detail: action.payload.detail});
         // Dispatches the event.
-        //this.dispatchEvent(selectedEvent);
         break;
       case 'SELECT_HO':
-        //setAccountSelected(action.payload.detail);
         this.showAllBranches = false;
         this.showAllCases = false;
         this.showRequestVirtualBranchService = false;
@@ -328,13 +309,11 @@ export default class TidsDashboard extends LightningElement {
         //setIsAccountHeadOffice(!this.branchSelected);
         break;  
      case 'SELECT_CANCEL':
-       console.log('this.branchSelected',this.branchSelected);
         this.showAllBranches = false;
         this.showAllCases = false;
         if (this.accountInfo.Location_Type__c==='HO'){
           this.showReinstatement=this.showHOReinstatement;
         }
-        //
         this.showAllInformation = false;
         this.showRequestVirtualBranchService = false;
         this.showAddBranch = false;
@@ -526,7 +505,6 @@ export default class TidsDashboard extends LightningElement {
       default: break;
     }
     this.apppermissions(1);
-    console.log('this.vbSelected',this.vbSelected);
   }
 
   spinnerListener(action) {

@@ -423,7 +423,7 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 				this.duplicateAccountValidationCallback(payload);
 			})
 			.catch(error => {
-				console.log(error);
+				console.log('error',JSON.stringify(error));
 			});
 		} else if(this.vettingOption === "confirm-review-status"){
 				this.handleConfirmReviewAndProceed();
@@ -608,8 +608,7 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 			return validSoFar && inputCmp.checkValidity();
 		}, true);
 		if (allValid){
-				console.log('this.companyLegalName',this.companyLegalName,this.previousCompanyLegalName);
-				if(this.companyLegalName!==this.previousCompanyLegalName){
+			if(this.companyLegalName!==this.previousCompanyLegalName){
 				companyNameUnique({
 					accountid: this.extractAccountId(),
 					companyName: this.companyLegalName,
@@ -617,24 +616,23 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 				})
 				.then(result => {
 					if (result.hasAnError){
-							let clientPayload={
-							action: "CLIENT_DUPLICATE",
-							type: this.applicationType,
-							values:result
-							};
-							this.showDeduplication=true;
-							this.template.querySelector('[id|="confirmation-data"]:not([id|="confirmation-data-vetting"]) + footer').className +=' error';
-							console.log('this.applicationType', this.applicationType);
-							if (this.applicationType != CHG_NAME_COMPANY){
-								this.duplicateAccountValidationCallback(clientPayload);
-							}
+						let clientPayload={
+						action: "CLIENT_DUPLICATE",
+						type: this.applicationType,
+						values:result
+						};
+						this.showDeduplication=true;
+						this.template.querySelector('[id|="confirmation-data"]:not([id|="confirmation-data-vetting"]) + footer').className +=' error';
+						if (this.applicationType != CHG_NAME_COMPANY){
+							this.duplicateAccountValidationCallback(clientPayload);
+						}
 					}else{
 						this.proceedSave();
 					}          
 				})
 				.catch(error => {
 					this.showConfimationModal = false;
-					console.log(error);
+					console.log('error',JSON.stringify(error));
 				});
 			}else{
 				this.proceedSave();

@@ -234,7 +234,6 @@ export default class TidsEntries extends NavigationMixin(LightningElement) {
 		this.visibleSubmitApplication = false;
 	}
 
-	// Callbacks
 	tidsUserInfoUpdate(props) {
 		this.spinner = true;
 		this.save(props);

@@ -36,12 +36,8 @@
 		  <c-tids-view-administrators account-id={accountInfo.Id} branch-selected={branchSelected}></c-tids-view-administrators>
 		  <h2>Contact</h2>
 		  <ul class="no-list">
-			<li>
-			  Email:&nbsp;<a href="mailto:{accountInfo.Email}">{accountInfo.Email__c}</a>
-			</li>
-			<li>
-			  Phone:&nbsp;<a href="tel:+{accountInfo.Phone}">{accountInfo.Phone}</a>
-			</li>
+			<li>Email:&nbsp;<lightning-formatted-email value={accountInfo.Email__c}  target="_blank" hide-icon></lightning-formatted-email></li>
+			<li>Phone:&nbsp;<lightning-formatted-phone value={accountInfo.Phone}  target="_blank"></lightning-formatted-phone></li>
 		  </ul>
 		</div>
 		<div class="col s12 slds-m-top_x-large">

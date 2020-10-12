@@ -27,10 +27,6 @@ export default class TidsMenu extends LightningElement {
 	@track sectionsDone = [];
 	@track items = [];
 
-	//@api get items() {
-	//  return this.items;
-	//}
-
 	@track isAccountAHeadOffice = false;
 
 	connectedCallback() {
@@ -38,7 +34,7 @@ export default class TidsMenu extends LightningElement {
 		this.buildMenuItem();
 	}
 	buildMenuItem(){ 
-		let tidsinformation = JSON.stringify(getTidsInfo());		
+		let tidsinformation = JSON.stringify(getTidsInfo());
 		this.tidsInfo = JSON.parse(tidsinformation);
 		this.vettingMode = this.vetting();
 		this.isAccountAHeadOffice = isAccountHeadOffice();
@@ -65,10 +61,11 @@ export default class TidsMenu extends LightningElement {
 					} else if (section === SECTION_CONFIRMED) {
 						this.items[index].approved = true;
 					} else{
-						if (!isselected) {
+						if (!isselected &&  this.tidsInfo.sections[ind].target!='NA') {
+							//exception for the VB change of address-contact
+							//the address section cshould not be counted as not processed
 							isselected=true;
 							selected= this.tidsInfo.sections[ind].cmpName;
-							console.log('selected',selected);
 						}
 					}
 				}
@@ -83,7 +80,6 @@ export default class TidsMenu extends LightningElement {
 					selected='submit-application';
 				}
 			}
-			console.log('final selected',selected);
 			this.displayMenuOptionSelected(selected);
 		}else if (this.tidsInfo.applicationType==='NEW_HO' && this.tidsInfo.tidsCase!=null){
 			this.mappingMenuOptions();
@@ -158,8 +154,6 @@ export default class TidsMenu extends LightningElement {
 					option='chg-business-profile-specialization-br';
 				}
 		}
-		console.log('option',option);
-	 
 		this.items = getMenuOptions({name: option,type: "menu"});
 	}
 

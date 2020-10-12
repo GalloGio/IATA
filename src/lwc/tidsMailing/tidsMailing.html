@@ -291,12 +291,14 @@
 							data-name="postalCode"
 							value={postalCode}
 							onchange={changeField}
+							max-length="10"
 							pattern={postalCodeRules.regex}
 							data-regex={postalCodeRules.regex}
 							variant="label-hidden"
 							required={postalCodeRules.required}
 							disabled={postalCodeRules.disabled}>
 						</lightning-input>
+						<span>{postalCodeCounter} / 10</span>
 						<div if:true={postalCodeChanges.display}>
 							<p><mark>Previous Value: {postalCodeChanges.sfValue}</mark></p>
 						</div>

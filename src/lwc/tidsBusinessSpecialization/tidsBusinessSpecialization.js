@@ -274,27 +274,19 @@ export default class TidsBusinessSpecialization extends LightningElement {
 	}
 
 	marketSpecialtiesValid(){
-		let isValid = false;
-		let {marketSpecialties} = this.answers;
-		let mktSpecialties = JSON.parse(JSON.stringify(marketSpecialties));
-		if(Object.keys(mktSpecialties).length > 0) {
-			if(mktSpecialties.values.length === 3) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		let m=this.answers.marketSpecialties;
+		if (m==undefined) return false;
+		if (m.values==undefined) return false;
+		let l=m.values.length;
+		return (l>0);
 	}
 
 	destinationSpecialtiesValid() {
-		let isValid = false;
-		let {marketSpecialties} = this.answers;
-		let destSpecialties = JSON.parse(JSON.stringify(marketSpecialties));
-		if(Object.keys(destSpecialties).length > 0) {
-			if(destSpecialties.values.length === 3) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		let d=this.answers.destinationSpecialties;
+		if (d==undefined) return false;
+		if (d.values==undefined) return false;
+		let l=d.values.length;
+		return (l>0);
 	}
 	
 	fieldsValidation() {

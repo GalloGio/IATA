@@ -403,9 +403,8 @@ export default class TidsContact extends LightningElement {
     this.disableButton = !isFormValid;
     return isFormValid;
   }
-
+  
   changeField(event) {
-
     this.isSpecialCharacters = specialCharsValidation(event.target.value);
 
     if (event.target.name === "preferedLanguage") {
@@ -419,7 +418,7 @@ export default class TidsContact extends LightningElement {
       if(emailValidation(event.target.value)) {
         this.businessEmail = event.target.value;
       }
-    } else if (event.target.name === "webSite") {
+    } else if (event.target.name === "website") {
       this.webSite = event.target.value;
       if(websiteValidation(event.target.value)) {
         this.webSite = event.target.value;
@@ -462,7 +461,7 @@ export default class TidsContact extends LightningElement {
       case "businessEmail":
         this.businessEmail = "";
         break;
-      case "webSite":
+      case "website":
         this.webSite = "";
         break;
       case "omFirstName":

@@ -252,7 +252,6 @@ export default class TidsApp extends LightningElement {
 		}
 	}
 	loadCase() {
-		//lastone
 		//pending in review
 		setCaseInProgress({
 			caseId: this.tidsCaseId,
@@ -349,9 +348,9 @@ export default class TidsApp extends LightningElement {
 		let r = sfInfo.profile.Access_Status_Reason__c;
 		if (
 			sfInfo.profile.Right__c === "Access Granted" &&
-			(r === "TIDS Admin HO Primary" ||
-				r === "TIDS Admin HO Secondary" ||
-				r === "TIDS Branch Administrator")
+			(r === "TIDS Admin HO Primary" 
+			|| r === "TIDS Admin HO Secondary"
+			|| r === "TIDS Branch Administrator")
 		) {
 			this.showDashboard = true;
 		}
@@ -430,7 +429,6 @@ export default class TidsApp extends LightningElement {
 
 	newBranchListener(payload) {
 
-		console.log('newBranchListener:payload',JSON.stringify(payload));
 		this.resetDisplayValues();
 		this.showForm = true;
 		this.isMode1 = true;
@@ -439,7 +437,6 @@ export default class TidsApp extends LightningElement {
 		let headOffice = getHeadOfficeInfo();
 
 		let p=getTidsInfo();
-		console.log('newBranchListener:p',JSON.stringify(p));
 		let newContact = {
 			cmpName: "contact",
 			target: "NA",
@@ -579,7 +576,6 @@ export default class TidsApp extends LightningElement {
 			vettingErrors: []
 		};
 		setAgencyLegalStatus(agencyValues);
-		console.log('newBranchListener:all loaded and now display form',);	
 		setTimeout(() => {
 			fireEvent(this.pageRef, "formListener", { section: "form" });
 		}, 2000);
@@ -606,14 +602,14 @@ export default class TidsApp extends LightningElement {
 		};
 		return errorText;
 	}
-
+	//lastone
 	applicationDecisionListener(action) {
 		switch (action.type) {
 			case "Approved":
 				this.applicationDecisionApproved(action.caseId);
 				break;
 			case "Closed":
-				this.applicationDecisionClosed();
+				this.applicationDecisionClosed(action.caseId);
 				break;
 			case "SaveAndQuit":
 				this.saveAndQuitBusinessLogic();
@@ -634,7 +630,7 @@ export default class TidsApp extends LightningElement {
 	applicationPendingcustomer(caseId) {
 		this.resetDisplayValues();
 		getVettingDoneCondition({
-			tidsCaseId: null
+			tidsCaseId: caseId
 		})
 		.then((result) => {
 			this.isMode1 = true;
@@ -680,11 +676,11 @@ export default class TidsApp extends LightningElement {
 			console.log('error',JSON.stringify(error));
 		});
 	}
-	applicationDecisionClosed() {
+	applicationDecisionClosed(caseId) {
 		this.resetDisplayValues();
 		this.resetDisplayValues();
 		getVettingDoneCondition({
-			tidsCaseId: null
+			tidsCaseId: caseId
 		})
 		.then((result) => {
 			this.isMode1 = true;
@@ -765,7 +761,7 @@ export default class TidsApp extends LightningElement {
 		.then((result) => {
 			let act = JSON.parse(JSON.stringify(result));
 			this.mappingWelcome(act);
-			this.mappingAddress(act);
+			this.mappingAddress(accountSelected.Location_Type__c,act);
 			this.mappingMailingAddress(result);
 			this.mappingContact(result);
 			setSupportingDocuments({});			
@@ -862,11 +858,15 @@ export default class TidsApp extends LightningElement {
 		setShareholderDetails(shareholderDetailValues);
 	}
 
-	mappingAddress(account) {
+	mappingAddress(accounttype, account) {
+		let statussectionDecision = "Not_Started";
+		if (accounttype==='VB'){
+			statussectionDecision ="Section_Confirmed";
+		}
 		let addressValues = {
 			cmpName: this.cmpName,
 			target: "NA",
-			sectionDecision: "Not_Started",
+			sectionDecision: statussectionDecision,
 			values: {
 				address: account.address,
 				city: account.city,

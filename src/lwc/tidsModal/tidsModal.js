@@ -33,7 +33,6 @@ export default class TidsModal extends LightningElement {
 
 	handleModalProceed(event) {
 		event.preventDefault();
-		console.log('this.action',this.action);
 		let updateObject = JSON.parse(JSON.stringify(this.fieldErrorSelected))
 		if(this.action === 'FIELD') {
 			updateObject.show = false;

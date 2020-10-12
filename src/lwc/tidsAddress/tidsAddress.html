@@ -234,6 +234,7 @@
 						placeholder={postalCodePlaceHolder}
 						label="Postal Code"
 						name="postalCode"
+						max-length="10"
 						data-name="postalCode"
 						value={postalCode}
 						onchange={changeField}
@@ -244,7 +245,7 @@
 						disabled={postalCodeRules.disabled}
 					>
 					</lightning-input>
-
+					<span>{postalCodeCounter} / 10</span>
 					<div if:true={postalCodeChanges.display}>
 						<p><mark>Previous Value: {postalCodeChanges.sfValue}</mark></p>
 					</div>
