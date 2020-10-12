@@ -1778,7 +1778,8 @@ global without sharing class ISSP_APProcess {
 				for (Case cse: [
 					SELECT Id, IFAP_Country_ISO__c, Region__c, OwnerId
 					FROM Case
-					WHERE ParentId = :newCase.Id])
+					WHERE ParentId = :newCase.Id
+					AND (NOT Owner.Name LIKE 'Recycle Bin%')])
 				{
 					mapCreatedCountries.put(cse.IFAP_Country_ISO__c, cse);
 				}
@@ -1809,8 +1810,8 @@ global without sharing class ISSP_APProcess {
 						newChildCase.Visible_on_ISS_Portal__c = false;
 						newChildCase.ownerid = mapAPQueue.get('Airline Participation - Head Office').Queue.Id;
 						childCaseList.add(newChildCase);
-						mapCreatedCountries.remove(country);
 					}
+					mapCreatedCountries.remove(country);
 				}
 
 				//if there is any remaining countries in the map we must get rid of them assigning to the Recycle Queue
@@ -3868,7 +3869,7 @@ global without sharing class ISSP_APProcess {
 		get {
 			if (listPASSAllServices==null) {
 				listPASSAllServices =[
-					SELECT Id,ISO_Country_Code__c, Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Top_Parent__c
+					SELECT Id,ISO_Country_Code__c, Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Top_Parent__c, Services_Rendered_Type__c
 					FROM Services_Rendered__c
 					WHERE Services_Rendered_Status__c = :AMS_Utils.ACTIVE
 					AND Services_Rendered_Type__c IN (:AMS_Utils.passAirlineCaseReason,:AMS_Utils.passGSSACaseReason)

@@ -41,7 +41,6 @@
             strAreaType="{!strAreaType}"
             strChangeType="{!strChangeType}" />
 
-            managePASS {!managePASS}
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
         <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
@@ -407,8 +406,8 @@
                 <!-- Accept terms and conditions -->
                 <apex:pageBlockSection title="Terms and conditions" columns="1" collapsible="false">
                     <div class="aplabel">
-                            <apex:outputText value="{!$Label.ISSP_PASS_Terms_And_Conditions}" escape="false" styleclass="aplabel" rendered="{!(isPassAirline || managePASS)}"/>
-                            <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
+                        <apex:outputText value="{!$Label.ISSP_PASS_Terms_And_Conditions}" escape="false" styleclass="aplabel" rendered="{!(isPassAirline || managePASS)}"/>
+                        <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
                             <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
                                 and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
                             <p>
@@ -418,18 +417,26 @@
                                 I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
                             </p>
                         </apex:outputPanel>
-                    <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
-                        <div style="line-height: 20px;font-weight:bold">
-                        In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
-                        <div style="margin-left:20px">
-                        a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
-                        b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
-                        c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
-                        d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
-                        e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
-                        </div>
-                        </div>
-                     </apex:outputText>
+
+                        <apex:outputPanel layout="block" rendered="{! isPassAirline && isGSSAUser && !isSISActive}">
+                            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                            <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_new" class="link-highlighted">
+                                {!$Label.ISSP_SIS_Membership_Download_PDF}
+                            </a>
+                        </apex:outputPanel>
+
+                        <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
+                            <div style="line-height: 20px;font-weight:bold">
+                            In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
+                            <div style="margin-left:20px">
+                            a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
+                            b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
+                            c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
+                            d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
+                            e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
+                            </div>
+                            </div>
+                        </apex:outputText>
                     </div>
                     <div class="aplabel">
                         <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
