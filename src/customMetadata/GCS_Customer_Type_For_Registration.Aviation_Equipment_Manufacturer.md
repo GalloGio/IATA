@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Large Component OEM</label>
+    <label>Aviation Equipment Manufacturer</label>
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:type="xsd:string">Large Component OEM</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Aviation Equipment Manufacturer</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Display_Country__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Display_Submit_for_Account_Creation__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Fields_Displayed__c</field>
-        <value xsi:type="xsd:string">Name,Sector__c,Category__c,BillingStreet</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Fields_Targeted_Exact_Match__c</field>
@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:type="xsd:string">Others, Standard_Account</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>
@@ -52,19 +52,19 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Aviation_Equipment_Manufacturer</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">2</value>
     </values>
     <values>
         <field>Placeholder_Custom_Label__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Select</value>
     </values>
     <values>
         <field>Search_Option__c</field>
-        <value xsi:type="xsd:string">User Search</value>
+        <value xsi:type="xsd:string">No Search</value>
     </values>
     <values>
         <field>Send_Email_Notification__c</field>
@@ -72,10 +72,10 @@
     </values>
     <values>
         <field>Sub_Categorization_Custom_Label__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Category</value>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Category</value>
+        <value xsi:type="xsd:string">Sector</value>
     </values>
 </CustomMetadata>
