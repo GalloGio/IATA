@@ -331,8 +331,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			};
 			for (Case newCase : Trigger.New) {
 				if(newCase.Type != null && newCase.RecordTypeId == sisHelpDeskCaseRecordTypeID && newCase.Origin != 'Internal Case'
-				&& ((newCase.CaseArea__c == 'ICH' && caseTypeICHAndSIS.contains(newCase.Type))
-				|| (newCase.CaseArea__c == 'SIS' && !caseTypeICHAndSIS.contains(newCase.Type)))) {
+				&& ((newCase.CaseArea__c == 'ICH' && caseTypeICHAndSIS.contains(newCase.Type)))) {
 
 					newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
 				}
