@@ -4,28 +4,31 @@ public without sharing class TIDSHelper {
 	private static List<IATA_ISO_State__c> states {get;set;}
 	private static List<IATAISOStateDTO> isoStateDto {get;set;}
 	private static Portal_Applications__c tidsConfiguration {get;set;}
-	private static List<Case> cases {get;set;}
-	
+	private static Id agencyRecordTypeId {get;set;}
+		
+	//Checks if the vetting has been completed if true then redirects to the condition page
+	//with merged fields
 	@AuraEnabled
 	public static TIDS_Error_Message__mdt getVettingDoneCondition(String tidsCaseId){
 		TIDSUtil.replaceby = new List<String>{'', '','','',''};
 		if (tidsCaseId!=null){
-			cases = TIDSUtil.getTidsCases(tidsCaseId,false);
-			if (cases.size()>0){
+			TIDSUtil.getTidsCases(tidsCaseId,false);
+			if (TIDSUtil.cases.size()>0){
+				Case tidscase =  TIDSUtil.cases[0];
 				string email = '';
 				String portalType=TIDS_Constant.ADM_HOP;
-				if (cases[0].Account.Location_Type__c!='HO'){portalType=TIDS_Constant.ADM_BRA;}
+				if (tidscase.Account.Location_Type__c!='HO'){portalType=TIDS_Constant.ADM_BRA;}
 				List<Portal_Application_Right__c> applicationRights =[SELECT Contact__r.Email
 					FROM Portal_Application_Right__c
-					WHERE Right__c='Access Granted' 
-						AND Contact__r.AccountId=:cases[0].AccountId
+					WHERE Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED 
+						AND Contact__r.AccountId=:tidscase.AccountId
 						AND Access_Status_Reason__c=:portalType
 						AND Application_Name__c=:TIDS_Constant.TIDSVALUE
 						LIMIT 1];
 				if (applicationRights.size()>0) {email=applicationRights[0].Contact__r.Email;}
-				String formattedDate = cases[0].createdDate.format('yyyy-MM-mm');
-				TIDSUtil.replaceby = new List<String>{email, cases[0].CaseNumber,cases[0].Status,cases[0].Decision__c,formattedDate};
-				if (!(cases[0].Status==TIDS_Constant.IS_CLOSED || cases[0].Status==TIDS_Constant.IS_ABANDONED  || cases[0].Status==TIDS_Constant.IS_CUSTOMER)){return null;}
+				String formattedDate = tidscase.createdDate.format('yyyy-MM-mm');
+				TIDSUtil.replaceby = new List<String>{email, tidscase.CaseNumber,tidscase.Status,tidscase.Decision__c,formattedDate};
+				if (!(tidscase.Status==TIDS_Constant.IS_CLOSED || tidscase.Status==TIDS_Constant.IS_ABANDONED  || tidscase.Status==TIDS_Constant.IS_CUSTOMER)){return null;}
 			}
 		}    
 		return TIDSUtil.getTIDSMetadata(TIDS_Constant.VETTING_DONE);
@@ -67,7 +70,7 @@ public without sharing class TIDSHelper {
 			queryWhere += ' And (Name Like :search or TradeName__c like :search or IATACode__c Like :search or BillingCity Like :search)';
 		}
 		string accred = ',(Select Id, Virtual_Branch_Enabled__c,TIDS_Reinstatement_DeadLine__c From  Accreditation__r  Limit 1)';
-		string rights = ',(SELECT Contact__r.Firstname, Contact__r.Lastname FROM Portal_Application_Right__c WHERE Right__c=\'Access Granted\' and Contact__r.AccountId=:accountIds Limit 2) ';
+		string rights = ',(SELECT Contact__r.Firstname, Contact__r.Lastname FROM Portal_Application_Right__c WHERE Right__c=\''+AMS_Utils.PORTAL_APP_ACCESS_GRANTED+'\' and Contact__r.AccountId=:accountIds Limit 2) ';
 		string query ='SELECT  ' +queryFields +accred +' FROM Account' +
 		queryWhere +' Order By ' +name +' ' +order +' Limit 100';
 
@@ -112,7 +115,7 @@ public without sharing class TIDSHelper {
 		return caseValues;
 	}
 	
-	
+	//Gets the countries code depending if it is mailing or address
 	public static List<IATAISOCountryDTO> getCountries(string type){
 		List<IATAISOCountryDTO> options = new List<IATAISOCountryDTO>();
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
@@ -120,7 +123,7 @@ public without sharing class TIDSHelper {
 		tidsConfiguration = TIDSUtil.getTIDSService();
 		
 		string excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Location_Countries__c;
-		if (type=='mailing') {excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Mailing_Countries__c;}
+		if (type==TIDS_Constant.ACTION_MAILING) {excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Mailing_Countries__c;}
 		if (excludedcountriescode==null) {excludedcountriescode='';}
 		String nonEligiblesCountries ='\'' +excludedcountriescode.replace(',', '\',\'') +'\'';
 		String query ='SELECT Id ,Name,ISO_Code__c,State_Province_Mandatory__c FROM IATA_ISO_Country__c';
@@ -140,7 +143,7 @@ public without sharing class TIDSHelper {
 		 return getCountries('eligible');
 	}
 
- 
+	//get all the states for a given country
 	@AuraEnabled(cacheable=false)
 	public static List<IATAISOStateDTO> getState(String countryIsoCode){
 		states = new List<IATA_ISO_State__c>();
@@ -166,7 +169,7 @@ public without sharing class TIDSHelper {
 		return isoStateDto;
 	}
 	
-
+	//User information
 	private static user getUserData(Id userId){
 		List<user> userdata = new List<user>();
 		userdata = [SELECT
@@ -261,6 +264,8 @@ public without sharing class TIDSHelper {
 		return account;
 	}
 
+	//Returns tidswrapper structure with the tids case record info and service info 
+	//and the account info
 	@AuraEnabled(cacheable=false)
 	public static TidsWrapper getTidsCase(String caseId, String userId){
 		tidsWrapper = new TidsWrapper();
@@ -271,29 +276,31 @@ public without sharing class TIDSHelper {
 		}
 
 		tidsWrapper.currentUser = getUserData(userId);
-		cases = TIDSUtil.getTidsCases(caseId,false);
-		if (cases.size() > 0){
-			tidsWrapper.tidsCase = cases.get(0);
+		TIDSUtil.getTidsCases(caseId,false);
+		if (TIDSUtil.cases.size() > 0){
+			tidsWrapper.tidsCase = TIDSUtil.cases[0];
 			tidsWrapper.tidsAttachment = TIDSUtil.getAttachment(caseId,TIDS_Constant.DATAJSONFILENAME);
 		}
 		return tidsWrapper;
 	}
 	//discard the HO application 
 	@AuraEnabled(cacheable=false)
-	public static TIDSUtil.ErrorWrapper  setCaseInProgress(String caseId, String userId){
+	public static TIDSUtil.ErrorWrapper setCaseInProgress(String caseId, String userId){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
+		TIDSUtil.getTidsCases(caseId,false);
+	
 		Savepoint sp = Database.setSavepoint();
 		try {
-			changeCaseStatus(caseId, TIDS_Constant.IS_INPROGRESS, userId);
+			TIDSUtil.changeCaseStatus(TIDS_Constant.IS_INPROGRESS, userId);
 		}catch(Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper - setCaseInProgress] e.getMessage() - ' + e.getMessage());
 			//manage the error
 		}
 		return TIDSUtil.iataCodeError;
 	}
  
-	private static Id agencyRecordTypeId {get;set;}
 	@AuraEnabled(cacheable=false)
 	public static TidsWrapper getUserInfo(Id userId){
 		agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');  
@@ -305,7 +312,7 @@ public without sharing class TIDSHelper {
 				tidsWrapper.businessRules = tidsConfiguration;
 				// Fields Configuration
 				tidsWrapper.tidsConfiguration = '';
-				if (!Test.isRunningTest()){tidsWrapper.tidsConfiguration = TIDSUtil.getAttachment(tidsConfiguration.Id,TIDS_Constant.TIDSCONFIGURATIONFILE);}
+				tidsWrapper.tidsConfiguration = TIDSUtil.getAttachment(tidsConfiguration.Id,TIDS_Constant.TIDSCONFIGURATIONFILE);
 			}
 
 			tidsWrapper.currentUser =getUserData(userId);      
@@ -316,7 +323,7 @@ public without sharing class TIDSHelper {
 			List<Portal_Application_Right__c> applicationRights =[SELECT 
 					 Id, Right__c, Contact__r.Id, Access_Status_Reason__c,Application_Name__c,Contact__r.Email
 				FROM Portal_Application_Right__c
-				WHERE Right__c='Access Granted' 
+				WHERE Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
 					AND Contact__r.Id=:tidsWrapper.currentUser.ContactId
 					AND Access_Status_Reason__c=:portalType
 					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
@@ -415,8 +422,9 @@ public without sharing class TIDSHelper {
 				// Case open for HO Application
 				if (condition7(email, status)) {return tidsWrapper;}
 			}
-		} catch (DmlException dmlex){
-			throw dmlex;
+		} catch (DmlException e){
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  getUserInfo] e.getMessage() - ' + e.getMessage());
+			throw e;
 		}
 		return tidsWrapper;
 	}
@@ -424,19 +432,20 @@ public without sharing class TIDSHelper {
 	private static boolean condition4(List<Portal_Application_Right__c>  applicationRights){
 		//Access Grated or Access Denied
 		boolean isparentadmin = false;
+	
 		List<Portal_Application_Right__c> adminrights = new List<Portal_Application_Right__c>();
 		adminrights = [
 		SELECT Id, Right__c, Contact__r.email
 		FROM Portal_Application_Right__c
 		WHERE (Contact__r.AccountId=:tidsWrapper.currentUser.Account.ParentId
 			Or Contact__r.AccountId=:tidsWrapper.currentUser.AccountId)
-			AND Right__c='Access Granted'
+			AND Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
 			AND Access_Status_Reason__c!=null
 			AND Application_Name__c=:TIDS_Constant.TIDSVALUE 
 			Order by Access_Status_Reason__c Desc LIMIT 1];
 		if (adminrights.size()>0) {isparentadmin=true;}    
 		boolean isdenied=true;
-		if (applicationRights.size()>0){if (tidsWrapper.profile.Right__c=='Access Granted'){isdenied=false;}}
+		if (applicationRights.size()>0){if (tidsWrapper.profile.Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED){isdenied=false;}}
 		if (isdenied){
 			//mettre un mask sur l'email
 			//Access denied but there is admin
@@ -453,7 +462,6 @@ public without sharing class TIDSHelper {
 	}
 	private static boolean condition6(string c3, Id recordname, string status){
 		string c6=tidsWrapper.currentUser.Account.Location_Type__c;
-		if (Test.isRunningTest()){c6='XM';}
 		if (recordname==agencyRecordTypeId && ((c3=='T' && !(c6=='BR' || c6=='HO' || c6=='VB')) || (c3=='T' && !(status==TIDS_Constant.IS_TERMINATED || status==TIDS_Constant.IS_APPROVED)) || c3=='') ){
 			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON6);
 			return true;
@@ -527,6 +535,8 @@ public without sharing class TIDSHelper {
 		condition6b('T',agencyRecordTypeId);
 
 	}
+
+	//lookup case based on the status
 	private static Case searchCase(String accountId, String caseStatus){
 		Case tidsCase = new Case();
 		List<Case> cases = [SELECT Id, AccountId, RecordTypeId, Status
@@ -557,22 +567,24 @@ public without sharing class TIDSHelper {
 	public static TIDSUtil.ErrorWrapper  actionApplication(String caseId, String action){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		TIDSUtil.iataCodeError.hasAnError=true;
-		cases = TIDSUtil.getTidsCases(caseId,false);
-		if (cases.size()==0) {return TIDSUtil.iataCodeError;}
+		TIDSUtil.getTidsCases(caseId,false);
+		if (TIDSUtil.cases.size()==0) {return TIDSUtil.iataCodeError;}
+		Case tidscase = TIDSUtil.cases[0];
 		Savepoint sp = Database.setSavepoint();
 		try {
-			if (action=='vetting'){
-				if (cases[0].Status!=TIDS_Constant.IS_REVIEWED) {return TIDSUtil.iataCodeError;}
-			}else if (action=='resume' || action=='discard'){
-				if (cases[0].Status!=TIDS_Constant.IS_DRAFT) {return TIDSUtil.iataCodeError;}
-			}else if (action=='recall'){
-				if (cases[0].Status!=TIDS_Constant.IS_REVIEWED) {return TIDSUtil.iataCodeError;}
-				changeCaseStatus(caseId, TIDS_Constant.IS_DRAFT,null);
+			if (action==TIDS_Constant.ACTION_VETTING){
+				if (tidscase.Status!=TIDS_Constant.IS_REVIEWED) {return TIDSUtil.iataCodeError;}
+			}else if (action==TIDS_Constant.ACTION_RESUME || action==TIDS_Constant.ACTION_DISCARD){
+				if (tidscase.Status!=TIDS_Constant.IS_DRAFT) {return TIDSUtil.iataCodeError;}
+			}else if (action==TIDS_Constant.ACTION_RECALL){
+				if (tidscase.Status!=TIDS_Constant.IS_REVIEWED) {return TIDSUtil.iataCodeError;}
+				TIDSUtil.changeCaseStatus(TIDS_Constant.IS_DRAFT,null);
 			}
 			TIDSUtil.iataCodeError.hasAnError=false;
 		}catch(Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  actionApplication] e.getMessage() - ' + e.getMessage());
 			//manage the error
 		}
 		return TIDSUtil.iataCodeError;
@@ -582,12 +594,15 @@ public without sharing class TIDSHelper {
 	@AuraEnabled(cacheable=false)
 	public static TIDSUtil.ErrorWrapper  discardApplication(String caseId){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
+		TIDSUtil.getTidsCases(caseId,false);
+	
 		Savepoint sp = Database.setSavepoint();
 		try {
-			changeCaseStatus(caseId, TIDS_Constant.IS_ABANDONED,null);
+			TIDSUtil.changeCaseStatus(TIDS_Constant.IS_ABANDONED,null);
 		}catch(Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  discardApplication] e.getMessage() - ' + e.getMessage());
 			//manage the error
 		}
 		return TIDSUtil.iataCodeError;
@@ -611,19 +626,19 @@ public without sharing class TIDSHelper {
 		Savepoint sp = Database.setSavepoint();
 		try {
 			if (caseId!=null){
-				cases = TIDSUtil.getTidsCases(caseId,false);
+				TIDSUtil.getTidsCases(caseId,false);
 			}else if (tidsCaseSubject!=null){
 				List<Case> todelete = new List<Case>();
 				todelete = [SELECT Id, Status  FROM Case WHERE AccountId=:accountId AND Subject=:tidsCaseSubject AND Status=:TIDS_Constant.IS_DRAFT];
 				if (todelete.size() > 0) {delete todelete;}
-				cases = [SELECT Id FROM Case WHERE AccountId=:accountId 
+				TIDSUtil.cases = [SELECT Id FROM Case WHERE AccountId=:accountId 
 					AND Subject=:tidsCaseSubject
 					AND Status!=:TIDS_Constant.IS_CLOSED
 					ORDER BY CreatedDate Desc LIMIT 1];
-				if (cases.size() > 0){cases = TIDSUtil.getTidsCases(cases[0].Id,false);}
+				if (TIDSUtil.cases.size() > 0){TIDSUtil.getTidsCases(TIDSUtil.cases[0].Id,false);}
 			}
-			if (cases!=null){
-				if (cases.size() > 0){tidsCase = cases.get(0);}
+			if (TIDSUtil.cases!=null){
+				if (TIDSUtil.cases.size() > 0){tidsCase = TIDSUtil.cases[0];}
 			}
 			tidsCase = createTidsCase(tidsCase.Id,
 				accountId,
@@ -634,6 +649,7 @@ public without sharing class TIDSHelper {
 		}catch (Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  saveSettings] e.getMessage() - ' + e.getMessage());
 			//manage the error
 		}
 		return TIDSUtil.iataCodeError;
@@ -643,18 +659,19 @@ public without sharing class TIDSHelper {
 	public static TIDSUtil.ErrorWrapper assignToCaseOwner(Id caseId){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		Id userId = UserInfo.getUserId();
-		cases = TIDSUtil.getTidsCases(caseId,false);
-		if (cases.size() == 0){TIDSUtil.setError('Case Not Found.',true); return TIDSUtil.iataCodeError;}
-		if (cases[0].status == TIDS_Constant.IS_REVIEWED && userId!=cases[0].OwnerId){TIDSUtil.setError('Case already assigned to a different user agent.',true); return TIDSUtil.iataCodeError;}
-		if (cases[0].status == TIDS_Constant.IS_REVIEWED){return TIDSUtil.iataCodeError;}
-		cases[0].status = TIDS_Constant.IS_REVIEWED;
-		cases[0].OwnerId = userId;
+		TIDSUtil.getTidsCases(caseId,false);
+		if (TIDSUtil.cases.size() == 0){TIDSUtil.setError('Case Not Found.',true); return TIDSUtil.iataCodeError;}
+		if (TIDSUtil.cases[0].status == TIDS_Constant.IS_REVIEWED && userId!=TIDSUtil.cases[0].OwnerId){TIDSUtil.setError('Case already assigned to a different user agent.',true); return TIDSUtil.iataCodeError;}
+		if (TIDSUtil.cases[0].status == TIDS_Constant.IS_REVIEWED){return TIDSUtil.iataCodeError;}
+		TIDSUtil.cases[0].status = TIDS_Constant.IS_REVIEWED;
+		TIDSUtil.cases[0].OwnerId = userId;
 		Savepoint sp = Database.setSavepoint();
 		try {
-			update cases;
+			update TIDSUtil.cases;
 		}catch (Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  assignToCaseOwner] e.getMessage() - ' + e.getMessage());
 			//manage the error
 		}
 		return TIDSUtil.iataCodeError;
@@ -668,17 +685,15 @@ public without sharing class TIDSHelper {
 		Savepoint sp = Database.setSavepoint();
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		try {
-			cases = TIDSUtil.getTidsCases(caseId,false);
+			TIDSUtil.getTidsCases(caseId,false);
 			Case tidscase  = new Case();
-			if (cases.size() > 0){
-				tidscase = cases[0];
-				tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
-				tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
-				tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
-				tidsCase.Status = caseStatus;
-				TIDSUtil.addAttachment(caseId, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
-			}
-
+			tidscase = TIDSUtil.cases[0];
+			tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
+			tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
+			tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
+			tidsCase.Status = caseStatus;
+			TIDSUtil.addAttachment(caseId, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
+		
 			String errorsCompilation = '';
 			TIDS_Controller.vTIDS tids = (TIDS_Controller.vTIDS) JSON.deserialize(applicationsettings,TIDS_Controller.vTIDS.class);
 			// Welcome section
@@ -706,11 +721,13 @@ public without sharing class TIDSHelper {
 		}catch (Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  contactApplicant] e.getMessage() - ' + e.getMessage());
 			//manage the error
 		}
 		return TIDSUtil.iataCodeError;
 	}
 
+	//creates the TIDS case
 	public static Case createTidsCase(
 		Id caseId,
 		String accountId,
@@ -782,6 +799,7 @@ public without sharing class TIDSHelper {
 		return subject;
 	}
 
+    //Reads all the branch information 
 	@AuraEnabled(cacheable=false)
 	public static TIDSSFInfo newBranch(String contactId){
 		TIDSSFInfo tids = new TIDSSFInfo();
@@ -869,7 +887,7 @@ public without sharing class TIDSHelper {
 			And Status__c='Active'
 			And Id not in (SELECT Contact__c
 										FROM Portal_Application_Right__c
-										WHERE Right__c='Access Granted'
+										WHERE Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
 										AND Access_Status_Reason__c!=null
 										AND Application_Name__c=:TIDS_Constant.TIDSVALUE 
 										AND Contact__r.AccountId=:accountId) 
@@ -935,7 +953,7 @@ public without sharing class TIDSHelper {
 				insert cu;
 			}else{
 				appusers[0].Access_Status_Reason__c=type;
-				appusers[0].Right__c='Access Granted';        
+				appusers[0].Right__c=AMS_Utils.PORTAL_APP_ACCESS_GRANTED;        
 				update appusers;
 			}       
 		}else if (actiontype=='remove'){
@@ -949,14 +967,10 @@ public without sharing class TIDSHelper {
 			List<Portal_Application_Right__c> appsec=getPortalRight(accountId,
 			' Access_Status_Reason__c=\''+TIDS_Constant.ADM_HOS+'\'',
 		 	'LIMIT 1');
-			if (!Test.isRunningTest()){	  
-				appsec[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOP;
-				update appsec;
-				apprights[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOS;
-				update apprights;
-				//TIDSUtil.sendNotification(accountId, appsec[0].Contact__c, 'Administrators_Role_Swap_Primary',null);
-				//TIDSUtil.sendNotification(accountId, apprights[0].Contact__c, 'Administrators_Role_Swap_Secondary',null);
-			}
+			appsec[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOP;
+			update appsec;
+			apprights[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOS;
+			update apprights;
 		}
 		//get the list
 		List<String> rlist = new List<String>{TIDS_Constant.ADM_HOS,TIDS_Constant.ADM_HOP};
@@ -968,7 +982,7 @@ public without sharing class TIDSHelper {
 				WHERE Contact__r.AccountId=:accountId
 					AND Access_Status_Reason__c=:rlist
 					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
-					AND Right__c='Access Granted'
+					AND Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
 					Order by Access_Status_Reason__c LIMIT 2];
 		return apprights;
 	}
@@ -976,7 +990,7 @@ public without sharing class TIDSHelper {
 	//Returns all the administrators with a max of 2
 	@AuraEnabled(cacheable=false)
 	public static List<Portal_Application_Right__c> getAdmin(String accountId){
-		List<Portal_Application_Right__c> apprights = getPortalRight(accountId,' Right__c=\'Access Granted\'',
+		List<Portal_Application_Right__c> apprights = getPortalRight(accountId,' Right__c=\''+AMS_Utils.PORTAL_APP_ACCESS_GRANTED+'\'',
 		 'Order by Access_Status_Reason__c LIMIT 2');
 		return apprights;
 	}
@@ -989,21 +1003,25 @@ public without sharing class TIDSHelper {
 		apprights = Database.query(selectClause);
 		return apprights;
 	}  
-		
+	
+	//Create the change request TIDS case
 	@AuraEnabled(cacheable=false)
 	public static String createTidsRequestReinstate(String accountId,String reason, String applicationType){
 		return createBranch(accountId,reason,'request-reinstate-'+applicationType);
 	}
-
+	//Create the change request TIDS case
 	@AuraEnabled(cacheable=false)
 	public static String createTidsRequestRelinquish(String accountId,String reason, String applicationType){
 		return createBranch(accountId,reason,'request-relinquish-'+applicationType);
 	}
+	//Create the change request TIDS case
 	@AuraEnabled(cacheable=false)
 	public static String createTidsRequestVirtualBranch(String accountId,String payload){
 		return createBranch(accountId,payload,TIDS_Constant.RQT_VIRTUALB);
 	}
 
+	//Checks if the Case is Pending or has any relinquisment returns blank or
+	//the message to display on the toast message
 	@AuraEnabled(cacheable=false)
 	public static String isTidsRequestPending(String accountId, String type){
 		String tidsstatus=TIDS_Constant.IS_REVIEWED;
@@ -1012,7 +1030,7 @@ public without sharing class TIDSHelper {
 			List<Account> accounts = [Select ParentId From Account Where Id=:AccountId Limit 1];
 			if (accounts.size()>0){parentId=accounts[0].ParentId;}
 		}else if (type==TIDS_Constant.IS_TERMINATED) {
-			//A l'interieur de la periode de reinstement
+			//Is it inside the periode of reinstatement
 			List<Account> accounts = [Select Id From Account Where Id=:accountId and Status__c=:type Limit 1];
 			if (accounts.size()>0){
 				final Date rdate = isReinstated(accountId);
@@ -1036,6 +1054,7 @@ public without sharing class TIDSHelper {
 		if (cases.size()>0){return 'exists';}
 		return '';
 	}
+	//Returns the account reinstatement date if any
 	private static Date isReinstated(Id accountId){
 		Date rdate;
 		List<Accreditation__c> accreditations = new List<Accreditation__c>();
@@ -1045,16 +1064,18 @@ public without sharing class TIDSHelper {
 		if (accreditations.size()>0){rdate = accreditations[0].TIDS_Reinstatement_DeadLine__c;}
 		return rdate;
 	}
-	
+
+	//create the Branch TIDS Case
 	@AuraEnabled(cacheable=false)
 	public static String createTidsCaseNewBranch(String accountId,String payload){
 		return createBranch(accountId,payload,TIDS_Constant.NEW_BR);
 	}
-
+	//create the Virtual Branch TIDS Case
 	@AuraEnabled(cacheable=false)
 	public static String createTidsCaseVirtualBranch(String accountId,String payload){    
 		return createBranch(accountId,payload,TIDS_Constant.NEW_VB);
 	}
+	//create the Branch TIDS Case
 	private static string createBranch(String accountId,String payload, string type){
 		Case tidsCase = new Case();
 		tidsCase = createTidsCase(null,accountId,type,payload);
@@ -1126,24 +1147,6 @@ public without sharing class TIDSHelper {
 		return textErrors;
 	}
 
-	//Updates the case status 
-	//if the update fails it is catch by calling function 
-	private static void changeCaseStatus(String caseId, String caseStatus, String userId){
-		cases = TIDSUtil.getTidsCases(caseId,false);
-		Case tidsCase = new Case();
-		if (cases.size() > 0){
-			tidsCase = cases[0];
-			tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
-			tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
-			tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
-			if (caseStatus==TIDS_Constant.IS_INPROGRESS){
-				if (tidsCase.Status == TIDS_Constant.IS_REVIEWED){tidsCase.OwnerId=userId;}
-			}
-			tidscase.Status = caseStatus;
-			update tidsCase;
-		}		
-	}
-
 	public class ValueLabel {
 		@AuraEnabled public String value;
 		@AuraEnabled public String label;
@@ -1152,21 +1155,21 @@ public without sharing class TIDSHelper {
 			this.label = xlabel;
 		}
 	}
-
+	//Reads the ISO Country Code 
 	public static List<IATAISOCountryDTO> IATAISOCountryToDto(
 		List<IATA_ISO_Country__c> iataIsoCountries){
 		List<IATAISOCountryDTO> result = new List<IATAISOCountryDTO>();
-		for (IATA_ISO_Country__c state : iataIsoCountries){
+		for (IATA_ISO_Country__c c : iataIsoCountries){
 			IATAISOCountryDTO countryDto = new IATAISOCountryDTO(
-				state.Name,
-				state.ISO_Code__c,
-				state.Id
+				c.Name,
+				c.ISO_Code__c,
+				c.Id
 			);
 			result.add(countryDto);
 		}
 		return result;
 	}
-
+	//Reads the ISO State Code 
 	public static void IATAISOStateToDto(){    
 		for (IATA_ISO_State__c s : states){
 			IATAISOStateDTO sDto = new IATAISOStateDTO(

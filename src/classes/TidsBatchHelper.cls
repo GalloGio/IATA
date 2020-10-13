@@ -1,20 +1,24 @@
 public without sharing class TidsBatchHelper {
+	private static Set<Id> branchset;
+	private static Account hoaccount;
+	private static Account branchaccount;
+	private static Id headoffice;
+	private static Case mycase; 
+	private static Map<Id, Date> accrediationmap;
+
+	
 	public static void testbatch(Id caseId){
 		String query = queryBuilderAccount(caseId);
 		List<Account> accounts = Database.query(query);
 		executeBuilderAccount(caseId,accounts);
-		finishBuilderAccount(caseId);
-		//
 		query = queryBuilderCleanse();
 		List<Case> cases = Database.query(query);
 		executeBuilderCleanse(cases);
-		finishBuilderCleanse();
-
+		
 		query = queryBuilderRelinquishment(caseId);
 		accounts = Database.query(query);
 		executeBuilderRelinquishment(caseId,accounts);
 		
-		//scheduleCleanse();
 		//Accreditation
 		getCase(caseId);
 		GDP_Reference_Table__c gdpc = new GDP_Reference_Table__c();
@@ -46,6 +50,7 @@ public without sharing class TidsBatchHelper {
 		createAMSRoles();
 		
 	}
+	//Get the Account Fields
 	public static List<String> getAccountFields(){
 		List<String> fields = new List<String>{
 		  'Id',
@@ -96,7 +101,7 @@ public without sharing class TidsBatchHelper {
 		};
 		return fields;
 	}
-	
+	//Builds the query string
 	public static String queryBuilderAccount(Id caseId){
 		getCase(caseId);
 		if (mycase.Id!=null){
@@ -108,27 +113,21 @@ public without sharing class TidsBatchHelper {
 			*/
 		}else{
 			getParentAccount(caseId);
-			if (!Test.isRunningTest()) {headoffice=hoaccount.Id;}
+			headoffice=hoaccount.Id;
 		}
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		String recordtoprocess = 'SELECT '+String.join(getAccountFields(),',')+ ' FROM Account ';
-		if (!Test.isRunningTest()) {recordtoprocess +=' WHERE RecordTypeId=\''+agencyRT+'\' and Location_Class__c=\'T\' and Location_Type__c in (\'VB\',\'BR\') and ParentId=\''+headoffice+'\'';}
+		recordtoprocess +=' WHERE RecordTypeId=\''+agencyRT+'\' and Location_Class__c=\'T\' and Location_Type__c in (\'VB\',\'BR\') and ParentId=\''+headoffice+'\'';
 		return recordtoprocess;
 	}
-	
-	private static Set<Id> branchset;
-	private static Account hoaccount;
-	private static Account branchaccount;
-	private static Id headoffice;
-	private static Case mycase; 
+	//Gets the Case
 	private static void getCase(Id caseId){
+		TIDSUtil.getTidsCases(caseId, false);
 		mycase= new Case();
-		List<Case> cases = [SELECT Id, AccountId, RecordTypeId, Status,Origin,CaseArea__c,Reason1__c,Priority
-			FROM Case
-			WHERE Id=:caseId LIMIT 1];
-		if (cases.size()==0) {return;}    
-		mycase = cases[0];
+		if (TIDSUtil.cases.size()==0) {return;}    
+		mycase = TIDSUtil.cases[0];
 	}
+	//Selects the Account Parent record
 	private static void getParentAccount(Id accountId){
 		String parentaccount = 'SELECT '+String.join(getAccountFields(),',')
 		+ ' FROM Account '
@@ -137,7 +136,7 @@ public without sharing class TidsBatchHelper {
 		parents=Database.query(parentaccount);
 		if (parents.size()>0){hoaccount=parents[0];}
 	}
-	private static Map<Id, Date> accrediationmap;
+	//Reads the accrediations
 	private static void getAccreditation(){
 		accrediationmap=new Map<Id, Date>();
 		List<Accreditation__c> branchaccr = [SELECT Id,Related_Account__c, TIDS_Reinstatement_DeadLine__c
@@ -149,6 +148,7 @@ public without sharing class TidsBatchHelper {
 			}
 		}
 	}
+	//Executes the account list
 	public static void executeBuilderAccount(Id caseId,List<Account> scope){
 		boolean isProcessAll=false;
 		boolean isname=false;
@@ -210,11 +210,8 @@ public without sharing class TidsBatchHelper {
 		
 		//AMS Role Cascading
 		if (branchset.size()>0){createAMSRoles();}
-		/*
-		//Business Profiles Cascading
-		createBusinessProfiles();
-		*/
 	}
+	//Inserts the business profiles
 	private static void createBusinessProfiles(){
 		Set<String>grcodes  = new Set<String>{'FL','FC','DS','MK','AT','SMOL','SMOF','ME','SA','SS','SH','TR','SL','DIBS','TIDS_SH', 'TIDS_SA', 'TIDS_SS', 'TIDS_SL','TIDS_ME','TIDS_TR','NU_EMPL','NU_OFFI'};
 
@@ -226,7 +223,7 @@ public without sharing class TidsBatchHelper {
 						FROM AMS_Agency_Profile__c
 						WHERE Account__c = :branchset
 						and GR_Code__c=:grcodes];
-		if (bplist.size() > 0 && !Test.isRunningTest()){delete bplist;}
+		if (bplist.size() > 0){delete bplist;}
 		List<AMS_Agency_Profile__c> bps = new List<AMS_Agency_Profile__c>();
 		for (AMS_Agency_Profile__c item : hobps){
 			for(Id branchId:branchset){
@@ -237,9 +234,11 @@ public without sharing class TidsBatchHelper {
 				bps.add(bp);
 			}
 		}
-		if (bps.size()>0 && !Test.isRunningTest()){insert bps;}
+		if (bps.size()>0){insert bps;}
 	}
-	
+
+	//set the Inheritance values between Account parent and Branches
+	//on different sections
 	private static void setInheritance(List<string> types){
 		for(string type:types){
 		  switch on (type){
@@ -272,7 +271,7 @@ public without sharing class TidsBatchHelper {
 		  }
 		}
 	}
-	
+	//create the AMS Roles
 	private static void createAMSRoles(){
 		List<AMS_Account_Role__c> hoAMSRoles = new List<AMS_Account_Role__c>();
 		hoAMSRoles = [SELECT Id,Percentage__c,Owner_Category__c,Owner_Name__c,Owner_Email__c
@@ -283,7 +282,7 @@ public without sharing class TidsBatchHelper {
 		List<AMS_Account_Role__c> amsroles = [SELECT Id
 			FROM AMS_Account_Role__c
 			WHERE Account__c=:branchset];
-		if (amsroles.size() > 0 && !Test.isRunningTest()){delete amsroles;}      
+		if (amsroles.size() > 0){delete amsroles;}      
 		amsroles = new List<AMS_Account_Role__c>();
 		for (AMS_Account_Role__c item : hoAMSRoles){
 			for(Id branchId:branchset){
@@ -298,41 +297,41 @@ public without sharing class TidsBatchHelper {
 			amsroles.add(amsrole);
 			}
 		}
-		if (amsroles.size() > 0 && !Test.isRunningTest()){insert amsroles;}
+		if (amsroles.size() > 0){insert amsroles;}
 	}
-	
-	public static void finishBuilderAccount(Id caseId){
-	   if (!Test.isRunningTest()) {}
-	}
-	
+	//Schedules the Case Cleanse
 	public static void scheduleCleanse(){
 		TidsBatchCleanseCases nb = new TidsBatchCleanseCases();
 		String jobID = system.schedule('Tids Cleanse Cases Batch', '0 0 12 1/1 * ? *', nb);
 	}
 
-	//Cleanse Cases    
+	//Cleanse Cases query builder    
 	public static String queryBuilderCleanse(){
 		String recordtoprocess = 'SELECT Id FROM Case ';
-		if (!Test.isRunningTest()) {recordtoprocess += ' WHERE Reason1__c in (\'TIDS - Change of Name or Company Details\',\'TIDS - Change of Business Profile Specialization\',\'TIDS - Change of Address or Contact Details\') and Status=\'Draft\' and Origin=\'TIDS Online Portal\' and CaseArea__c=\'TIDS\' and LastModifiedDate<LAST_N_DAYS:17';}
+		recordtoprocess += ' WHERE Reason1__c in (\''+TIDS_Constant.CASE_SUBJECT_NAME_COMPANY+'\','+
+		' \''+TIDS_Constant.CASE_SUBJECT_CHANGE_BUS_PROFILE +'\','+
+		' \''+TIDS_Constant.CASE_SUBJECT_ADDRESS_CONTACT +'\') '+
+		' and Status=\''+TIDS_Constant.IS_DRAFT +'\' and Origin=\''+TIDS_Constant.CASE_ORIGIN+'\''+ 
+		' and CaseArea__c=\''+TIDS_Constant.TIDSVALUE+'\' and LastModifiedDate<LAST_N_DAYS:17';
 		return recordtoprocess;
 	}
+	//Executes the cleanse
 	public static void executeBuilderCleanse(List<Case> scope){
-		if (!Test.isRunningTest()) {delete scope;}
+		delete scope;
 	}
-	public static void finishBuilderCleanse(){
-		if (!Test.isRunningTest()) {}
-	}
-
+	
 	/***************** Relinquishment */
+	//Query builder
 	public static string queryBuilderRelinquishment(Id caseId){
 		return queryBuilderAccount(caseId);
 	}
+	//Execute the Relinquishment on the branches
 	public static void executeBuilderRelinquishment(Id caseId,List<Account> scope){
 		List<Account> toupdate = new List<Account>();
 		Set<Id> aset = new Set<Id>();
 		for (Account o: scope) {
-			if (o.Status__c!='Approved'){continue;}
-			o.Status__c= 'Terminated';
+			if (o.Status__c!=TIDS_Constant.IS_APPROVED){continue;}
+			o.Status__c=TIDS_Constant.IS_TERMINATED;
 			o.Organization_Last_Change_Date__c=System.today();
 			toupdate.add(o);
 			aset.add(o.Id);
@@ -340,38 +339,38 @@ public without sharing class TidsBatchHelper {
 		if (aset.size()>0) {updateAccreditation(aset);}       
 		if (toupdate.size()>0){update toupdate;} 
 	}
+	//updates the accreditations to validate the relinquishment
 	private static void updateAccreditation(Set<Id> aset){
 		List<Accreditation__c> accrediations = new List<Accreditation__c>();
 		accrediations=[Select Id,Termination_Reason__c From Accreditation__c Where Related_Account__c=:aset];
 		for(Accreditation__c o:accrediations){o.Termination_Reason__c='Voluntary Relinquishment';}
 		if (accrediations.size()>0) {update accrediations;}
 	}
+	//finishes the relinquishment batch
 	public static void finishBuilderRelinquishment(Id caseId){
 	   	getCase(caseId);
 	   	if (mycase.Id==null){return;}
 		getParentAccount(mycase.AccountId);   
-		hoaccount.Status__c= 'Terminated';
+		hoaccount.Status__c= AMS_Utils.ACC_S0_TERMINATED;
 		hoaccount.Organization_Last_Change_Date__c=System.today();
 		update hoaccount;
 		updateAccreditation(new Set<Id>{hoaccount.Id});
 	}
-
+	//resets the the accrediations
 	private static void resetAccreditation(Set<Id> aset){
 		List<Accreditation__c> accrediations = new List<Accreditation__c>();
 		accrediations=[Select Id,Termination_Reason__c From Accreditation__c Where Related_Account__c=:aset];
 		for(Accreditation__c o:accrediations){o.Termination_Reason__c=null;}
 		if (accrediations.size()>0) {update accrediations;}
 	}
+	//finishes the Reinstatement batch
 	public static void finishBuilderReinstatement(Id caseId){
 		getCase(caseId);
 		if (mycase.Id==null){return;}
 		getParentAccount(mycase.AccountId);   
-		hoaccount.Status__c= 'Approved';
+		hoaccount.Status__c= AMS_Utils.ACC_S9_APPROVED;
 		hoaccount.Organization_Last_Change_Date__c=System.today();
 		update hoaccount;
 		resetAccreditation(new Set<Id>{hoaccount.Id});
-	}
-
-	
-	
+	}	
 }

@@ -2,7 +2,8 @@ public without sharing class TIDS_Controller {
 	private static List<Case> cases {get;set;}
 	private static vTIDS tids {get;set;}
 	private static List<IATA_ISO_State__c> states {get;set;}
-
+	
+	//Auto approved business profiles
 	@InvocableMethod
 	public static void autoApproved(List<String> caseId) {
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
@@ -20,24 +21,26 @@ public without sharing class TIDS_Controller {
 		} catch (Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDS_Controller -  autoApproved] e.getMessage() - ' + e.getMessage());
 		}
 	}
 
+	//Submit the application
 	@AuraEnabled(cacheable=false)
 	public static TIDSUtil.ErrorWrapper applicationSubmitted(String caseId, String applicationData, String applicationType){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		cases = TIDSUtil.getTidsCases(caseId,false);
+		TIDSUtil.getTidsCases(caseId,false);
 		Case tidsCase = new Case();
 		Savepoint sp = Database.setSavepoint();
 		try {
-			if (cases.size() > 0){
-				tidsCase = cases[0];
+			if (TIDSUtil.cases.size() > 0){
+				tidsCase = TIDSUtil.cases[0];
 				tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
 				tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
 				tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;		
 				if (applicationType == 'chg-business-profile-specialization'){
 					TIDSUtil.addAttachment(caseId, applicationData,TIDS_Constant.DATAJSONFILENAME);
-					tidsCase.Decision__c='AUTO-APPROVED';
+					tidsCase.Decision__c=TIDS_Constant.DECISION_AUTOAPPROVED;
 					tidsCase.Decision_Date__c=System.now();
 					tidsCase.Status=TIDS_Constant.IS_CLOSED;
 				}else{
@@ -49,6 +52,7 @@ public without sharing class TIDS_Controller {
 		} catch (Exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDS_Controller -  applicationSubmitted] e.getMessage() - ' + e.getMessage());
 		}    
 		return TIDSUtil.iataCodeError;
 	}
@@ -62,19 +66,19 @@ public without sharing class TIDS_Controller {
 		String applicationsettings,
 		String reason){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
-		cases = TIDSUtil.getTidsCases(caseId,false);
+		TIDSUtil.getTidsCases(caseId,false);
 		Case tidsCase = new Case();
-		if (cases.size() > 0){
+		if (TIDSUtil.cases.size() > 0){
+			tidsCase = TIDSUtil.cases[0];
 			if (applicationDecision==TIDS_Constant.IS_APPROVED){
-				if (cases[0].Status==TIDS_Constant.IS_CLOSED){
+				if (tidsCase.Status==TIDS_Constant.IS_CLOSED){
 					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
-				}else if ((!String.isEmpty(cases[0].Account.IATACode__c) && cases[0].Account.RecordType.DeveloperName=='IATA_Agency' && applicationType==TIDS_Constant.NEW_HO)){
+				}else if ((!String.isEmpty(tidsCase.Account.IATACode__c) && tidsCase.Account.RecordType.DeveloperName=='IATA_Agency' && applicationType==TIDS_Constant.NEW_HO)){
 					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
 				}
 			}
-			tidsCase = cases[0];
 			tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
 			tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
 			tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
@@ -108,13 +112,13 @@ public without sharing class TIDS_Controller {
 		try {    
 			update tidsCase;
         }catch(Exception e){
-            TIDSUtil.setError(e.getMessage(),true);
-			return TIDSUtil.iataCodeError;
-        }
+			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDS_Controller -  updateCaseStatus] e.getMessage() - ' + e.getMessage());
+	    }
 		return TIDSUtil.iataCodeError;
 	}
 
-	
+
 	//Lock the Canada Prince Edward Iso State in order to avoid duplicate
 	//IATA Code assignement
 	private static void testUpdateLocking(){
@@ -146,8 +150,6 @@ public without sharing class TIDS_Controller {
 		String iataCheckDigit;
 		String iataSite;
 		Account theAccount= tids.setAccount();
-		//cases = TIDSUtil.getTidsCases(tidsCaseId,false);
-		//if (TIDSUtil.iataCodeError.hasAnError){return;}
 		Savepoint sp = Database.setSavepoint();
 		try {
 			upsert theAccount;
@@ -198,6 +200,7 @@ public without sharing class TIDS_Controller {
 		} catch (exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
+			System.debug(loggingLevel.FINE, '____ [TIDS_Controller -  tidsGenerateIATACode] e.getMessage() - ' + e.getMessage());
 		}		
 		return;
 	}
@@ -655,11 +658,11 @@ public without sharing class TIDS_Controller {
 				WHERE  Id=:objectId LIMIT 1];
 			return mapaccounts;
 		}
-		private Map<String, Id> geonameids {get;set;}
+		private Map<String, Id> geonameIds {get;set;}
 		public void setGeonames(){
-		 	geonameids = new Map<String, Id>();
-		 	if (!String.isEmpty(this.sections.Address.values.citygeonameId)){geonameids.put(this.sections.Address.values.citygeonameId, null);}
-			if (!String.isEmpty(this.sections.Mailing.values.citygeonameId)){geonameids.put(this.sections.Mailing.values.citygeonameId, null);}
+		 	geonameIds = new Map<String, Id>();
+		 	if (!String.isEmpty(this.sections.Address.values.citygeonameId)){geonameIds.put(this.sections.Address.values.citygeonameId, null);}
+			if (!String.isEmpty(this.sections.Mailing.values.citygeonameId)){geonameIds.put(this.sections.Mailing.values.citygeonameId, null);}
 			readGeonames();
 		}
 		
@@ -668,11 +671,11 @@ public without sharing class TIDS_Controller {
 			List<IATA_ISO_City__c> geonames = new List<IATA_ISO_City__c>();
 			geonames = [SELECT Id,GeonameId__c
 										FROM IATA_ISO_City__c
-										WHERE GeonameId__c=:geonameids.KeySet() or Id=:geonameids.KeySet()
+										WHERE GeonameId__c=:geonameIds.KeySet() or Id=:geonameIds.KeySet()
 										ORDER BY GeonameId__c NULLS LAST LIMIT 2];
 			for (IATA_ISO_City__c key : geonames){
-				geonameids.put(key.Id, key.Id);
-				geonameids.put(key.GeonameId__c, key.Id);
+				geonameIds.put(key.Id, key.Id);
+				geonameIds.put(key.GeonameId__c, key.Id);
 			}
 		}
 		public void setCompanyName(){
@@ -722,7 +725,7 @@ public without sharing class TIDS_Controller {
 			}
 			mapaccount.Geoname_Billing_City__c = null;
 			string key = this.sections.Address.values.citygeonameId;
-			if (geonameids.containsKey(key)){mapaccount.Geoname_Billing_City__c = (Id) geonameids.get(key);}
+			if (geonameIds.containsKey(key)){mapaccount.Geoname_Billing_City__c = (Id) geonameIds.get(key);}
 		}
 		public void setMailing(){
 			//Mailing
@@ -749,7 +752,7 @@ public without sharing class TIDS_Controller {
 			 mapaccount.ShippingCountry = this.sections.Mailing.values.countryName;
 			 mapaccount.Geoname_Shipping_City__c = null;
 			 string key = this.sections.Mailing.values.citygeonameId;
-			 if (geonameids.containsKey(key)){mapaccount.Geoname_Shipping_City__c = (Id) geonameids.get(key);}
+			 if (geonameIds.containsKey(key)){mapaccount.Geoname_Shipping_City__c = (Id) geonameIds.get(key);}
 		 }
 		}
 		public void setLastDateOrgChange(){
@@ -764,6 +767,7 @@ public without sharing class TIDS_Controller {
 			mapaccount.Manager_First_Name__c = this.sections.Contact.values.omFirstName;
 			mapaccount.Manager_Last_Name__c = this.sections.Contact.values.omLastName;
 		}
+		//ses the virtual Address of Operation
 		public void setVirtualAddressOfOperation(){
 			List<vslabel> values = new List<vslabel>();
 				vslabel avalue = new vslabel(
@@ -771,7 +775,7 @@ public without sharing class TIDS_Controller {
 				this.sections.Address.values.virtualCountryOfOperations.value
 			);
 			values.add(avalue);
-			setbusinesscodes(values, false, false, 'TIDS_VB_ISO');
+			setBusinessCodes(values, false, false, 'TIDS_VB_ISO');
 		}
 		private Account mapaccount = new Account();
 		private Account parentaccount = new Account();
@@ -807,9 +811,9 @@ public without sharing class TIDS_Controller {
 			saveBuinessProfiles(mapaccount.Id);
 			saveAMSRole(mapaccount.Id);
 			if (inheritanceBatched){
-				 TidsBatchCascading nb = new TidsBatchCascading();
-				 nb.caseId=caseId;
-				 Database.executeBatch(nb,100);
+				TidsBatchCascading nb = new TidsBatchCascading();
+				nb.caseId=caseId;
+				Database.executeBatch(nb,100);
 			}
 		}
 		private string transactiontype='HO';
@@ -933,7 +937,7 @@ public without sharing class TIDS_Controller {
 					setDefault();
 					setCompanyType();
 					setTax();
-					this.businessprofiles = new Map<String, AMS_Agency_Profile__c>();
+					this.businessProfiles = new Map<String, AMS_Agency_Profile__c>();
 					isVirtualBranchDateOfOp=true;
 					//Physical address must same as the HO account
 					setGeonames();
@@ -948,7 +952,7 @@ public without sharing class TIDS_Controller {
 		//main function to save All the Business Profiles
 		public void saveBuinessProfiles(Id accountId){
 			currentAccountId=accountId;
-			this.businessprofiles = new Map<String, AMS_Agency_Profile__c>();
+			this.businessProfiles = new Map<String, AMS_Agency_Profile__c>();
 			if (isSaveInOperationSince){getinOperationsSince();}
 			if (isSaveAllBP){
 				getdestinationSpecialties();
@@ -962,7 +966,7 @@ public without sharing class TIDS_Controller {
 				getNumberOffices();
 			}
 			if (isVirtualBranchDateOfOp) {setVirtualAddressOfOperation();}
-			if (businessprofiles.size() > 0){loadBusinessProfiles(businessprofiles.Values());}
+			if (businessProfiles.size() > 0){loadbusinessProfiles(businessProfiles.Values());}
 		}
 
 		private void getTravelSales(){
@@ -972,7 +976,7 @@ public without sharing class TIDS_Controller {
 				this.sections.BusinessProfile.values.travelSales.values
 			);
 			values.add(avalue);
-			setbusinesscodes(values, false, true, 'SV');
+			setBusinessCodes(values, false, true, 'SV');
 		}
 		private void getNumberOfEmployees(){
 			List<vslabel> values = new List<vslabel>();
@@ -981,7 +985,7 @@ public without sharing class TIDS_Controller {
 				this.sections.BusinessProfile.values.numberEmployees.values
 			);
 			values.add(avalue);
-			setbusinesscodes(values, false, true, 'NU_EMPL');
+			setBusinessCodes(values, false, true, 'NU_EMPL');
 		}
 		private void getNumberOffices(){
 			List<vslabel> values = new List<vslabel>();
@@ -989,7 +993,7 @@ public without sharing class TIDS_Controller {
 				this.sections.BusinessProfile.values.numberOffices.fieldName,
 				this.sections.BusinessProfile.values.numberOffices.values);
 			values.add(avalue);
-			setbusinesscodes(values, false, true, 'NU_OFFI');
+			setBusinessCodes(values, false, true, 'NU_OFFI');
 		}
 		//create and replace
 		public void saveAMSRole(Id accountId){
@@ -1036,11 +1040,11 @@ public without sharing class TIDS_Controller {
 
 		}
 		private Id currentAccountId;
-		private Map<String, AMS_Agency_Profile__c> businessprofiles {get;set;}
+		private Map<String, AMS_Agency_Profile__c> businessProfiles {get;set;}
 		private Set<String> grcodes  = new Set<String>{'FL','FC','DS','MK','AT','SMOL','SMOF','ME','SA','SS','SH','TR','SL','DIBS','TIDS_SH', 'TIDS_SA', 'TIDS_SS', 'TIDS_SL','TIDS_ME','TIDS_TR','NU_EMPL','NU_OFFI'};
 			
 		//Delete and create the code in the profile
-		private void loadBusinessProfiles(List<AMS_Agency_Profile__c> insertbr){
+		private void loadbusinessProfiles(List<AMS_Agency_Profile__c> insertbr){
 			grcodes= new Set<String>();
 			for(AMS_Agency_Profile__c br:insertbr){grcodes.add(br.GR_Code__c);}
 				List<AMS_Agency_Profile__c> businessprofilelist = [SELECT Id
@@ -1050,7 +1054,7 @@ public without sharing class TIDS_Controller {
 				if (businessprofilelist.size() > 0){delete businessprofilelist;}
 				if (insertbr.size()>0){insert insertbr;}
 		}
-		private void setbusinesscodes(
+		private void setBusinessCodes(
 				List<vslabel> svalues,
 				boolean isMultipleSelection,
 				boolean isLabelBased,
@@ -1078,10 +1082,10 @@ public without sharing class TIDS_Controller {
 					}
 				}
 				if (grcode == ''){continue;}
-				AMS_Agency_Profile__c businessprofile = (AMS_Agency_Profile__c) businessprofiles.get(grcode);
+				AMS_Agency_Profile__c businessprofile = (AMS_Agency_Profile__c) businessProfiles.get(grcode);
 				if (businessprofile == null){
 					businessprofile = new AMS_Agency_Profile__c(GR_Code__c = grcode,GR_Item__c = null);
-					businessprofiles.put(grcode, businessprofile);
+					businessProfiles.put(grcode, businessprofile);
 				}
 				if (isMultipleSelection){
 					if (businessprofile.GR_Item__c == null){
@@ -1093,23 +1097,23 @@ public without sharing class TIDS_Controller {
 					businessprofile.GR_Item__c = item.value;
 				}
 				businessprofile.Account__c = currentAccountId;
-				this.businessprofiles.put(grcode, businessprofile);
+				this.businessProfiles.put(grcode, businessprofile);
 			}
 		}
 		private void getinOperationsSince(){
 			vslabel slabel = new vslabel( 'DIBS',this.sections.AgencyLegalStatus.values.inOperationsSince);
 			List<vslabel> values = new List<vslabel>();
 			values.add(slabel);
-			setbusinesscodes(values, false, true, 'DIBS');
+			setBusinessCodes(values, false, true, 'DIBS');
 		}
 
 		private void getdestinationSpecialties(){
 			List<vslabel> values = this.sections.BusinessSpecialization.values.destinationSpecialties.values;
-			setbusinesscodes(values, true, true, 'DS');
+			setBusinessCodes(values, true, true, 'DS');
 		}
 		private void getmarketSpecialties(){
 			List<vslabel> values = this.sections.BusinessSpecialization.values.marketSpecialties.values;
-			setbusinesscodes(values, true, false, 'MK');
+			setBusinessCodes(values, true, false, 'MK');
 		}
 		private String getGDS(){
 			List<vslabel> values = this.sections.BusinessProfile.values.GDS.values;
@@ -1126,19 +1130,19 @@ public without sharing class TIDS_Controller {
 		}
 		private void getPrincipalActivities(){
 			List<vslabel> values = this.sections.BusinessProfile.values.principalActivities.values;
-			setbusinesscodes(values, true, true, 'AT');
+			setBusinessCodes(values, true, true, 'AT');
 		}
 		private void getMarketFocus(){
 			List<vslabel> values = this.sections.BusinessProfile.values.marketFocus.values;
-			setbusinesscodes(values, false, true, '');
+			setBusinessCodes(values, false, true, '');
 		}
 		private void getSalesMix(){
 			List<vslabel> values = this.sections.BusinessProfile.values.salesMix.values;
-			setbusinesscodes(values, false, true, '');
+			setBusinessCodes(values, false, true, '');
 		}
 		private void getBusinessProfile(){
 			List<vslabel> values = this.sections.BusinessSpecialization.values.percentageBreakdown.values;
-			setbusinesscodes(values, false, true, '');
+			setBusinessCodes(values, false, true, '');
 		}
 	}
 }

@@ -108,17 +108,17 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 	global void execute(Database.BatchableContext BC, List<AMS_Agency_Profile__c> scope) {
 		//-- Total records to be processed
 		totalRecords += scope.size();
-        List<AMS_Agency_Profile__c> scopeclasst = new List<AMS_Agency_Profile__c>();
-		List<AMS_Agency_Profile__c> scopeother = new List<AMS_Agency_Profile__c>();
+        List<AMS_Agency_Profile__c> scopeClassT = new List<AMS_Agency_Profile__c>();
+		List<AMS_Agency_Profile__c> scopeOther = new List<AMS_Agency_Profile__c>();
 		for(AMS_Agency_Profile__c o:scope){
-			if (o.Account__r.Location_Class__c=='T'){scopeclassT.add(o);}else{scopeother.add(o);}
+			if (o.Account__r.Location_Class__c=='T'){scopeClassT.add(o);}else{scopeOther.add(o);}
 		}
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
 		List<GDP_Agency_Profile_Specialization__c> records2Save = new List<GDP_Agency_Profile_Specialization__c>();
 		try {
-			if (scopeclasst.size()>0){records2Save.addAll(ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfileClassT(scopeclasst));}
-			if (scopeother.size()>0){records2Save.addAll(ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfile(scopeother));}
+			if (scopeClassT.size()>0){records2Save.addAll(ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfileClassT(scopeClassT));}
+			if (scopeOther.size()>0){records2Save.addAll(ams2gdp_BusinessLogic.formatAgencyProfile2GDPAgencyProfile(scopeOther));}
 			//-- Raise exception for Unit Tests
 			if (Test.isRunningTest() &&   throwException) insert new Account();
 		} catch (Exception ex) {

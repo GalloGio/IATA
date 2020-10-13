@@ -656,7 +656,6 @@ public class ams2gdp_BusinessLogic {
         }
 		//those are the records to update and to delete
 		if (toDelete.size()>0) CRUD_map.put('D',toDelete);
-		System.debug('toDelete>>'+toDelete);
 		i=-1;
 		for(AMS_Account_Role__c a:roles){
 		    i++;
@@ -680,7 +679,6 @@ public class ams2gdp_BusinessLogic {
             	    
 		}
 		//those are the records to upsert
-		System.debug('toUpdate>>'+toUpdate);
 		if (toUpdate.size()>0) CRUD_map.put('S',toUpdate);
 		
     	return CRUD_map;
@@ -937,8 +935,7 @@ public class ams2gdp_BusinessLogic {
 
 		Map<String, GDP_Reference_Table__c> descriptionsMapwithTable1 = ams2gdp_Selector.getGDPReferenceTableByCodeandTable1(grItems);
 		Map<String, GDP_Reference_Table__c> descriptionsMap = ams2gdp_Selector.getGDPReferenceTableByCode(grItems);
-        System.Debug('grItems>>>'+grItems);
-		Map<String, Set<String>> listOfCodes = new Map<String, Set<String>>();
+       Map<String, Set<String>> listOfCodes = new Map<String, Set<String>>();
 
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByAccount = ams2gdp_Selector.getGDPbyAccount(accountsAMS);
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByProductsView = new Map<String, GDP_Agency_Profile_Specialization__c>();
@@ -971,8 +968,7 @@ public class ams2gdp_BusinessLogic {
 
 			//for those GR items that dont have a duplicate in GDP ref table,
 			GDP_Reference_Table__c ref1 = descriptionsMap.get(grItemSplit[0]);
-            System.Debug('grItemSplit[0]>>>'+grItemSplit[0]);
-
+          
 			//-- Market Focus
 			switch on agencies.GR_Code__c {
 				when 'NU_OFFI' {
@@ -1120,8 +1116,7 @@ public class ams2gdp_BusinessLogic {
 
 		Map<String, GDP_Reference_Table__c> descriptionsMapwithTable1 = ams2gdp_Selector.getGDPReferenceTableByCodeandTable1(grItems);
 		Map<String, GDP_Reference_Table__c> descriptionsMap = ams2gdp_Selector.getGDPReferenceTableByCode(grItems);
-        System.Debug('grItems>>>'+grItems);
-		Map<String, Set<String>> listOfCodes = new Map<String, Set<String>>();
+      	Map<String, Set<String>> listOfCodes = new Map<String, Set<String>>();
 
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByAccount = ams2gdp_Selector.getGDPbyAccount(accountsAMS);
 		Map<String, GDP_Agency_Profile_Specialization__c> gdpRecordByProductsView = new Map<String, GDP_Agency_Profile_Specialization__c>();
@@ -1145,8 +1140,7 @@ public class ams2gdp_BusinessLogic {
 
 			//for those GR items that dont have a duplicate in GDP ref table,
 			GDP_Reference_Table__c ref1 = descriptionsMap.get(grItemSplit[0]);
-            System.Debug('grItemSplit[0]>>>'+grItemSplit[0]);
-
+           
 			//-- Market Focus
 			if (agencies.GR_Code__c == 'FL') {
 				//Map<String,GDP_Reference_Table__c> codeValues=descriptionsMapwithTable.get('APENL2');

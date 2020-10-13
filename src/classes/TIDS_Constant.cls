@@ -7,7 +7,7 @@ public without sharing class TIDS_Constant {
     public final static String RT_OPERATOR='Operator';
     public final static String RT_VERIFIER='Verifiers';
     public final static String RT_AIRPORT='Airport';
-    
+
     public final static String ERROR_CON1 = 'TIDS_ACCES_COND1';
     public final static String ERROR_CON2_1 = 'TIDS_ACCES_COND2_1';
     public final static String ERROR_CON2_2 = 'TIDS_ACCES_COND2_2';
@@ -21,17 +21,25 @@ public without sharing class TIDS_Constant {
     public final static String ERROR_CON7_2 = 'TIDS_ACCES_COND7_2';
     public final static String ERROR_CON7_3 = 'TIDS_ACCES_COND7_3';
     public final static String VETTING_DONE = 'TIDS_VETTING_DONE';
-    
+    public final static String TIDS_ADM_EMAIL='TIDS_ADM_EMAIL';
+
     public final static String NEW_AGENT='New agent';
-     // Case subjects
+    // Case subjects
     public final static String CASE_SUBJECT_RELINQUISH='TIDS – Head Office Relinquishment';
+    public final static String CASE_SUBJECT_BRANCH_RELINQUISH='TIDS – Branch Office Relinquishment';
+    public final static String CASE_SUBJECT_VIRTUAL_RELINQUISH='TIDS – Virtual Branch Relinquishment';
+    public final static String CASE_SUBJECT_REINSTATE='TIDS – Head Office Reinstatement';
+    public final static String CASE_SUBJECT_BRANCH_REINSTATE='TIDS – Branch Office Reinstatement';
+    public final static String CASE_SUBJECT_VIRTUAL_REINSTATE='TIDS – Virtual Branch Reinstatement';
     public final static String CASE_SUBJECT_HEAD_OFFICE = 'TIDS - Head Office Application';
     public final static String CASE_SUBJECT_BRANCH = 'TIDS - Branch Office Application';
     public final static String CASE_SUBJECT_VIRTUAL_BRANCH = 'TIDS - Virtual Branch Office Application';
+    public final static String CASE_SUBJECT_VIRTUAL_ACCREQ= 'TIDS – Virtual Branch Access Request';
     public final static String CASE_SUBJECT_NAME_COMPANY = 'TIDS - Change of Name or Company Details';
     public final static String CASE_SUBJECT_ADDRESS_CONTACT = 'TIDS - Change of Address or Contact Details';
+    public final static String CASE_SUBJECT_CHANGE_BUS_PROFILE = 'TIDS - Change of Business Profile Specialization';
     public final static String CASE_SUBJECT_BUSINESS_PROFILE_SPECIALIZATION = 'TIDS - Change of Business Profile or Specialization';
-  
+    
     public final static String ERROR_CON8 = 'TIDS_ACCES_COND8';
     public final static String DATAJSONFILENAME = 'data.json';
     public final static String TIDSCONFIGURATIONFILE='tids-configuration.json';
@@ -51,7 +59,17 @@ public without sharing class TIDS_Constant {
     public final static String ADM_BRA='TIDS Branch Administrator';
     public final static String NEW_APP='TIDS - new HO Application';
 
-    public final static String TIDS_ADM_EMAIL='tids@iata.org';
+    //Actions
+    public final static String ACTION_VETTING='vetting';
+    public final static String ACTION_DISCARD='discard';
+    public final static String ACTION_RECALL='recall';
+    public final static String ACTION_RESUME='resume';
+    public final static String ACTION_MAILING='mailing';
+
+    //Decision
+    public final static String DECISION_AUTOAPPROVED='AUTO-APPROVED';
+    public final static String DECISION_APPROVED='APPROVED';
+    public final static String DECISION_REJECTED='REJECTED';
 
     //GEONAME
     public final static String  GEONAME_URL_CODEPOSTAL = 'TIDS_GEONAME_URL_CODEPOSTAL';
@@ -90,7 +108,7 @@ public without sharing class TIDS_Constant {
     public final static String MSG5='TIDS_MSG5';
     public final static String MSG6='TIDS_MSG6';
     public final static String MSG7='TIDS_MSG7';
-    
+
 
     //Error Messages
     public final static String MSG11 ='TIDS_MSG11';
@@ -101,10 +119,10 @@ public without sharing class TIDS_Constant {
     public final static String MSG17 ='TIDS_MSG17';
 
     public final static String MSG23='TIDS_MSG23';
-	public final static String MSG24='TIDS_MSG24';
-	public final static String MSG31='TIDS_MSG31';
-	public final static String MSG32='TIDS_MSG32';
-	public final static String MSG33='TIDS_MSG33';
-	public final static String MSG34='TIDS_MSG34';
-	public final static String MSG35='TIDS_MSG35';
+    public final static String MSG24='TIDS_MSG24';
+    public final static String MSG31='TIDS_MSG31';
+    public final static String MSG32='TIDS_MSG32';
+    public final static String MSG33='TIDS_MSG33';
+    public final static String MSG34='TIDS_MSG34';
+    public final static String MSG35='TIDS_MSG35';
 }

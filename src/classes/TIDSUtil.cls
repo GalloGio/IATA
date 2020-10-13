@@ -3,6 +3,10 @@ public without sharing class TIDSUtil{
    
     private static Id tidsrecordtypeId {get;set;} 
     public static ErrorWrapper iataCodeError {get;set;}
+    public static List<String> replaceby {get;set;}
+    private static TIDS_Error_Message__mdt metadata;
+    public static List<Case> cases {get;set;}
+	 
     public class ErrorWrapper {
         @AuraEnabled public String caseId = '';
 		@AuraEnabled public String reason = '';
@@ -11,19 +15,38 @@ public without sharing class TIDSUtil{
 		@AuraEnabled public Date reinstamentDeadline = null;
 		@AuraEnabled public Boolean hasReinstatementDeadline = false;
     }
+    //Gets the RecordtypeId for TIDS case
     public static Id getTidsRecordTypeId(){
         if (tidsrecordtypeId==null){tidsrecordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Case', TIDS_Constant.TIDSVALUE);}
         return tidsrecordtypeId;
     }
-    public static List<Case> getTidsCases(string objectId, boolean isDraft){
-        List<Case> cases = new List<Case>();
+    //Updates the case status 
+    //if the update fails it is catch by calling function 
+   public static void changeCaseStatus(String caseStatus, String userId){
+		if (cases.size()==0){return;}
+        Case tidsCase = new Case();
+        tidsCase = cases[0];
+        tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
+        tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
+        tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
+        if (caseStatus==TIDS_Constant.IS_INPROGRESS){
+            if (tidsCase.Status == TIDS_Constant.IS_REVIEWED){tidsCase.OwnerId=userId;}
+        }
+        tidscase.Status = caseStatus;
+        update tidsCase;
+		
+	}
+    //Reads the case record if isDraft is true the will search for any TIDS case with the same
+    //Account to reuse the Draft cases
+    public static void getTidsCases(string objectId, boolean isDraft){
+        cases = new List<Case>();
         if (isDraft){
 			cases = [SELECT Id
 				FROM Case
 				WHERE AccountId=:objectId
 					AND RecordTypeId=:getTidsRecordTypeId()
 					AND Status =:TIDS_Constant.IS_DRAFT LIMIT 1];
-			if (cases.size()==0){return cases;}
+			if (cases.size()==0){return;}
 			objectId=cases[0].id;
 		}   
         cases = [SELECT Id
@@ -56,12 +79,14 @@ public without sharing class TIDSUtil{
               ,Ownerid
               ,Previous_case_owner__c
               ,Last_Status_Change__c
+              ,Origin
+              ,CaseArea__c
+              ,Priority
           FROM Case
           WHERE Id=:objectId
           Limit 1];
-          return cases;
     }
-     
+    //Sets the error based on the metadata description or provided error message
     public static void setError(String msg, boolean isexecution){
         if (isexecution) {
             iataCodeError.reason = msg;
@@ -70,7 +95,7 @@ public without sharing class TIDSUtil{
         }
         iataCodeError.hasAnError = true;
     }
-
+    //Gets the business profile
     public static List<AMS_Agency_Profile__c> tidsBusinessProfile(String accountId){
         List<AMS_Agency_Profile__c> businessProfile = [SELECT Id, 
                             GR_Code__c, 
@@ -79,7 +104,7 @@ public without sharing class TIDSUtil{
                             WHERE Account__c=:accountId];
         return businessProfile;
     }
-
+    //Gets all the sholderholders with the percentage and Owners
     public static List<AMS_Account_Role__c> tidsShareholders(String accountId){
         final Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         List<AMS_Account_Role__c> shareholders = [SELECT Id, 
@@ -184,7 +209,7 @@ public without sharing class TIDSUtil{
         return lstConDocs;
     }
   
-  
+    //Attachment wrapper
     public class documentWrapper {
       @AuraEnabled public integer isError;
       @AuraEnabled public list<Attachment> documents;
@@ -206,6 +231,7 @@ public without sharing class TIDSUtil{
         upsert newAttachment;
     }    
 
+    //Save the upload file from the supporting document lwc interface
     @AuraEnabled(cacheable=false)
     public static void saveFile(
         string parentid,
@@ -282,7 +308,7 @@ public without sharing class TIDSUtil{
 	public static List<ValueLabel> mainActivity(){
 		return getPicklistValues('APPRAC', 'Name');
     }
-    
+    //Gets all the picklistvalues for code table AIRSYS or Non AIRSYS
     public static List<ValueLabel> getPicklistValues(String criteria,String orderBy){
 		List<ValueLabel> values = new List<ValueLabel>();
 		final String query ='SELECT Name, Code__c, Valid_For_TIDS__c,Corresponding_AMS_Code__c FROM GDP_Reference_Table__c WHERE Table__c = \'' +
@@ -304,123 +330,163 @@ public without sharing class TIDSUtil{
 			this.label = xlabel;
 		}
     }
+    //Trigger by the process builder conditional to the case conditions and the type
+    //of application
     @InvocableMethod
     public static void tidsNotifications(List<String> caseId){
-        System.debug('caseId'+caseId[0]);
-        List<Case> cases = getTidsCases(caseId[0],false);
+        getTidsCases(caseId[0],false);
+        if (cases.size()==0) {return;}
         Case tidscase = cases[0];
-        System.debug('caseId_1'+caseId[0]);
         Id whatId = tidscase.AccountId;
         Id refId = tidscase.ContactId;
-        string template = 'TIDS_HO_Approved_Notification';
-        //HO Approval
+        string template;
+        
         if (tidscase.Status==TIDS_Constant.IS_CLOSED
-            && tidscase.Decision__c =='APPROVED'
+            && tidscase.Decision__c ==TIDS_Constant.DECISION_APPROVED
             && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE){
+            //HO Approval
             template='TIDS_HO_Approved_Notification';
-        }
-        //HO Incomplete
-        if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+        }else if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
             && String.isEmpty(tidscase.Decision__c)
             && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE){
+            //HO Incomplete
             whatId= tidscase.Id;
             template='TIDS_HO_Incomplete_Notification';  
-        }
-        System.debug('caseId_2'+caseId[0]);
-        //HO Rejected
-        if (tidscase.Status==TIDS_Constant.IS_CLOSED
-            && tidscase.Decision__c =='REJECTED'
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+            && tidscase.Decision__c ==TIDS_Constant.DECISION_REJECTED
             && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE){
+            //HO Rejected
             whatId= tidscase.Id;
             template='TIDS_HO_Rejected_Notification';
-        }
-        System.debug('caseId_3'+caseId[0]);
-        //BR Approved
-        if (tidscase.Status==TIDS_Constant.IS_CLOSED
-        && tidscase.Decision__c =='APPROVED'
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c ==TIDS_Constant.DECISION_APPROVED
         && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
+            //BR Approved
             Account lastbranch = [Select Id FROM Account Where ParentId=:tidscase.AccountId Order by CreatedDate Desc Limit 1]; 
             whatId= lastbranch.Id;
             template='TIDS_BR_Approved_Notification';
-        }
-        System.debug('caseId_4'+caseId[0]);
-        //BR Incomplete
-        if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+        }else if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
         && String.isEmpty(tidscase.Decision__c)
         && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
+            //BR Incomplete
             whatId= tidscase.Id;
             template='TIDS_BR_Incomplete_Notification';
-        }
-        //BR Rejected
-        if (tidscase.Status==TIDS_Constant.IS_CLOSED
-        && tidscase.Decision__c =='REJECTED'
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c ==TIDS_Constant.DECISION_REJECTED
         && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
+            //BR Rejected
             whatId= tidscase.Id;
             template='TIDS_BR_Rejected_Notification';
-        }
-        System.debug('caseId_4'+caseId[0]);
-        //VB Approved
-        if (tidscase.Status==TIDS_Constant.IS_CLOSED
-        && tidscase.Decision__c =='APPROVED'
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c ==TIDS_Constant.DECISION_APPROVED
         && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
+            //VB Approved
             Account lastbranch = [Select Id FROM Account Where ParentId=:tidscase.AccountId Order by CreatedDate Desc Limit 1]; 
             whatId= lastbranch.Id;
             template='TIDS_VB_Approved_Notification';
-        }
-        //VB Incomplete
-        if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+        }else if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
         && String.isEmpty(tidscase.Decision__c)
         && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
+            //VB Incomplete
             whatId= tidscase.Id;
             template='TIDS_VB_Incomplete_Notification';
-        }
-        System.debug('caseId_5'+caseId[0]);
-        //VB Rejected
-        if (tidscase.Status==TIDS_Constant.IS_CLOSED
-        && tidscase.Decision__c =='REJECTED'
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c ==TIDS_Constant.DECISION_REJECTED
         && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
+            //VB Rejected
             whatId= tidscase.Id;
             template='TIDS_VB_Rejected_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c ==TIDS_Constant.DECISION_APPROVED
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_ACCREQ){
+            // START VB Access Request
+            whatId= tidscase.Id;
+            template='TIDS_VB_Service_Request_Approved_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c ==TIDS_Constant.DECISION_APPROVED
+        && tidscase.Subject.startsWith('TIDS - Change of') ){
+            // START CR Approved
+            whatId= tidscase.Id;
+            template='TIDS_CR_Approved_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
+        && String.isEmpty(tidscase.Decision__c)
+        && tidscase.Subject.startsWith('TIDS - Change of') ){
+            // START CR Incomplete
+            whatId= tidscase.Id;
+            template='TIDS_CR_Incomplete_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c==TIDS_Constant.DECISION_REJECTED
+        && tidscase.Subject.startsWith('TIDS - Change of') ){
+            // START CR Rejected
+            whatId= tidscase.Id;
+            template='TIDS_CR_Rejected_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c==TIDS_Constant.DECISION_APPROVED
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_RELINQUISH ){
+            // START HO Relinquish
+            whatId= tidscase.AccountId;
+            template='TIDS_Parent_Relinquishment_Request_Approved_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c==TIDS_Constant.DECISION_APPROVED
+        && (tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH_RELINQUISH 
+            || tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_RELINQUISH)){
+            // START BR/VB Relinquish
+            whatId= tidscase.AccountId;
+            template='TIDS_Child_Relinquishment_Request_Approved_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c==TIDS_Constant.DECISION_APPROVED
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_REINSTATE ){
+            // START HO Reinstate
+            whatId= tidscase.AccountId;
+            template='TIDS_HO_Reinstatement_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c==TIDS_Constant.DECISION_APPROVED
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH_REINSTATE ){
+            // START BR Reinstate
+            whatId= tidscase.AccountId;
+            template='TIDS_BR_Reinstatement_Notification';
+        }else if (tidscase.Status==TIDS_Constant.IS_CLOSED
+        && tidscase.Decision__c==TIDS_Constant.DECISION_APPROVED
+        && tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_REINSTATE ){
+            // START VB Reinstate
+            whatId= tidscase.AccountId;
+            template='TIDS_VB_Reinstatement_Notification';
         }
-        System.debug('caseId_6'+caseId[0]);
+        //no template found for this conditions
+        if (string.isEmpty(template)) {return;}
+
+        final string tidsadminemail = getTIDSMetadataError(TIDS_Constant.TIDS_ADM_EMAIL);
         sendNotification(whatId,
                         refId, 
-                        template,
-                        new List<String>{tidscase.ContactEmail},  
-                        new List<String> {TIDS_Constant.TIDS_ADM_EMAIL} );
+                        template,  
+                        tidsadminemail );
     }	
-    
-    public static void sendNotification(Id whatId, Id refId, String emailTemplate, List<String> toemails,  List<String> bccemails ){
-        System.debug('whatId'+whatId);
+    //Sends notifications to the client
+    public static void sendNotification(Id whatId, Id refId, String emailTemplate, String tidsadminemail ){
         List<EmailTemplate> emailtemp = [SELECT Id
           FROM EmailTemplate
-          WHERE DeveloperName =:emailTemplate Or Name =:emailTemplate LIMIT 1];
+          WHERE DeveloperName =:emailTemplate LIMIT 1];
         if (emailtemp.size()==0) {return;}
 
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         List<OrgWideEmailAddress> owea = new List<OrgWideEmailAddress>();
-        owea = [select Id from OrgWideEmailAddress where Address =:TIDS_Constant.TIDS_ADM_EMAIL Or DisplayName=:TIDS_Constant.TIDS_ADM_EMAIL Limit 1];
+        owea = [select Id from OrgWideEmailAddress where Address =:tidsadminemail Or DisplayName=:tidsadminemail Limit 1];
         if (owea.size() > 0){email.setOrgWideEmailAddressId(owea[0].Id);}  
     
-        if (toemails.size()>0)  {email.setToAddresses(toemails);}
-        if (bccemails.size()>0) {email.setBccAddresses(bccemails);}
-
         email.setTemplateId(emailtemp[0].Id);
         email.setTargetObjectId(refId);
         email.setWhatId(whatId);    
-        System.debug('whatId'+whatId);
         Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
     }
     
-	public static List<String> replaceby {get;set;}
-    //TIDS metat data retrieve function
+	//TIDS metat data retrieve function
     //Replace elements in the data
-    private static TIDS_Error_Message__mdt metadata;
     public static string getTIDSMetadataError(String errorCondition){
         getTIDSMetadata(errorCondition);
         if (metadata.Visit_URL__c!=null) {return metadata.Visit_URL__c;}
         return metadata.Subtitle__c;
     }
+    //Gets the TIDSMetadata record based on the error Condition (developername)
     public static TIDS_Error_Message__mdt getTIDSMetadata(String errorCondition){
         List<TIDS_Error_Message__mdt> metadatas = new List<TIDS_Error_Message__mdt>();
         metadata = new TIDS_Error_Message__mdt();
@@ -449,12 +515,14 @@ public without sharing class TIDSUtil{
         if (replaceby!=null){contentReplace();}
 		return metadata;
     }
+    //replaces the content information for the conditions
     private static void contentReplace(){
         metadata.Subtitle__c = contentInfo(metadata.Subtitle__c);
         metadata.Description__c = contentInfo(metadata.Description__c);
         metadata.Description_P2__c= contentInfo(metadata.Description_P2__c);
         metadata.Description_P3__c= contentInfo(metadata.Description_P3__c);
     }
+    //Changes the content based on the email, case, Status...values of the case
     private static String contentInfo(String content){
 		if (String.isEmpty(content)) {return content;}
 		integer i=0;
@@ -466,6 +534,7 @@ public without sharing class TIDSUtil{
 		}
 		return content;
     }
+    //Creates a case comment
     public static void createCaseComment(boolean ispublished, String caseId, String comments){
 		CaseComment c = new CaseComment();
 		c.ParentId = caseId;

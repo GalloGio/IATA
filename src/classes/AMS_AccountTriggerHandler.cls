@@ -234,8 +234,8 @@ public class AMS_AccountTriggerHandler {
 		for(Account acct: accts){
 
 			//only accredited agencies can generate minor change codes
-			//Exclude all TIDS accounts with location type = T
-			if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null && acct.Location_Type__c!='T')
+			//Exclude all TIDS accounts with location class = T
+			if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null && acct.Location_Class__c!='T')
 				toReturn.add(acct);
 
 		}

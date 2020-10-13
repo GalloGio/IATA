@@ -13,7 +13,6 @@ global without sharing class TidsBatchCleanseCases implements database.batchable
 
 	public void finish(Database.BatchableContext bc) {
 		//When completed update End Date
-		TidsBatchHelper.finishBuilderCleanse();
 	}
 
 	global void execute(SchedulableContext sc) {
