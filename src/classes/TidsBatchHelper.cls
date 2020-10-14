@@ -307,12 +307,16 @@ public without sharing class TidsBatchHelper {
 
 	//Cleanse Cases query builder    
 	public static String queryBuilderCleanse(){
+		List<Portal_Applications__c> services = new List<Portal_Applications__c>();
+		services = [Select Id FROM Portal_Applications__c WHERE Name=:TIDS_Constant.TIDSVALUE Limit 1];
 		String recordtoprocess = 'SELECT Id FROM Case ';
-		recordtoprocess += ' WHERE (Reason1__c=\'TIDS - Case To Delete\') Or (Reason1__c in (\''+TIDS_Constant.CASE_SUBJECT_NAME_COMPANY+'\','+
+		recordtoprocess += ' WHERE Reason1__c in (\''+TIDS_Constant.CASE_SUBJECT_NAME_COMPANY+'\','+
 		' \''+TIDS_Constant.CASE_SUBJECT_CHANGE_BUS_PROFILE +'\','+
 		' \''+TIDS_Constant.CASE_SUBJECT_ADDRESS_CONTACT +'\') '+
+		' and recordtypeid =\''+TIDSUtil.getTidsRecordTypeId()+'\''+
 		' and Status=\''+TIDS_Constant.IS_DRAFT +'\' and Origin=\''+TIDS_Constant.CASE_ORIGIN+'\''+ 
-		' and CaseArea__c=\''+TIDS_Constant.TIDSVALUE+'\' and LastModifiedDate<LAST_N_DAYS:17) ';
+		' and CaseArea__c=\''+TIDS_Constant.TIDSVALUE+'\'';
+		if (services.size()>0) {recordtoprocess += ' and LastModifiedDate<=LAST_N_DAYS:17 ';}
 		return recordtoprocess;
 	}
 	//Executes the cleanse
