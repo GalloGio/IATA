@@ -25,6 +25,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Certificate_Issuer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Type_Of_Certificate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Air_cargo_transport_business_exp__c</field>
             </layoutItems>
             <layoutItems>
@@ -34,6 +42,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Training_dangerous_goods_completed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Certificate_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Certificate_Issued_on__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Certificate_Validity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

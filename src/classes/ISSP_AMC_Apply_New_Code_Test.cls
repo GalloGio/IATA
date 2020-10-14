@@ -153,7 +153,6 @@ public class ISSP_AMC_Apply_New_Code_Test {
 
 
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -163,14 +162,14 @@ public class ISSP_AMC_Apply_New_Code_Test {
 					controller.step = 'Submit';
 					controller.saveParticipation();
 
-
+					Test.StartTest();
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_Apply_New_Code ctrl = new ISSP_AMC_Apply_New_Code();
 					ctrl.navigateLocationIdentifier();
+					Test.StopTest();
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*

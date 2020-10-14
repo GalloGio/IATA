@@ -552,6 +552,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Oscar_Communication_Case_Id__c</field>
+            <table>AMS_OSCAR__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Id</field>
             <table>AMS_OSCAR__c</table>
         </columns>

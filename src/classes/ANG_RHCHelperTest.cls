@@ -120,4 +120,44 @@ private class ANG_RHCHelperTest {
 
 		ANG_RHCHelper.calculateRHCAmount(rhcinformationList);
 	}
+
+	@isTest static void confirmConsumedRHCTest() {
+		
+		Set<ID> accountIdSet = new Set<ID>();
+		for(Account a : [Select id FROM Account])
+			accountIdSet.add(a.ID);
+
+		Test.startTest();
+
+		ANG_RHCHelper.createRHCInfo(accountIdSet, false);
+
+		ANG_RHC_Information__c rhc = [SELECT id, ANG_CashCondition__c, ANG_AccountId__c,ANG_RHC_Amount_Equals_FS__c, ANG_Financial_Security__c,
+										ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c,ANG_RHC_Amount_Forecasted__c,
+										CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c
+									FROM ANG_RHC_Information__c LIMIT 1];
+
+		rhc.ANG_RHC_Amount_Provisional__c = 50000.50;
+		update rhc;
+		AMS_OSCAR_Webservice.updateRME_Amount(rhc.Id);
+		rhc = [SELECT id, ANG_RHC_Amount_Provisional__c, ANG_RME_Amount__c	FROM ANG_RHC_Information__c LIMIT 1];
+
+		Test.stopTest();
+
+		System.assertEquals(rhc.ANG_RHC_Amount_Provisional__c.round(System.RoundingMode.DOWN), rhc.ANG_RME_Amount__c);
+	}
+
+	
+	@isTest static void confirmConsumedRHC_ErrorTest() {
+		Set<ID> accountIdSet = new Set<ID>();
+		for(Account a : [Select id FROM Account])
+			accountIdSet.add(a.ID);
+		
+		ANG_RHCHelper.createRHCInfo(accountIdSet, false);
+		ANG_RHC_Information__c rhc = [SELECT id, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		Test.startTest();		
+		String result = AMS_OSCAR_Webservice.updateRME_Amount(rhc.Id);
+		Test.stopTest();
+		System.assert(result != '');
+	}
 }

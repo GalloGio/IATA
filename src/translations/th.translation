@@ -1673,6 +1673,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>การแจ้งเตือนทั้งหมด</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -1703,6 +1707,50 @@
     <customLabels>
         <label><!-- Attention --></label>
         <name>Attention</name>
+    </customLabels>
+    <customLabels>
+        <label>ความคิดเห็นด้านล่างถูกโพสต์ในกรณีของคุณ</label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เมื่อวาน</label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดแจ้งให้เราทราบหากข้อสงสัยของคุณได้รับการแก้ไขแล้วหรือมีสิ่งอื่นใดที่เราสามารถช่วยคุณได้ในกรณีนี้โดยใช้ปุ่มด้านล่างหรือเข้าถึงเคสนี้จาก</label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถแจ้งให้เราทราบได้โดยเข้าไปที่สร้างคำถามในพอร์ทัลลูกค้าของ IATA</label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label>เราจะปิดเคสโดยอัตโนมัติในกรณีที่เราไม่ได้รับข้อมูลฟีดแบคเพิ่มเติมจากคุณภายใน 24 ชั่วโมง</label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label>เรากำลังปิดเคส</label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากเราไม่ได้รับข้อมูลฟีดแบคเพิ่มเติมจากคุณใน 48 ชั่วโมงที่ผ่านมา</label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับเคสนี้คุณสามารถเพิ่มความคิดเห็นหรือติดต่อเราผ่านเคสใหม่ใน</label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>เราเพิ่งตอบกลับเคสของคุณพร้อมหมายเลข</label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถไปที่รายละเอียดเคสเพื่อดูการตอบกลับ</label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถแจ้งให้เราทราบได้โดยเข้าไปที่แบบสอบถามในพอร์ทัลลูกค้าของ IATA</label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
         <label><!-- Auto renew payment method error --></label>
@@ -2898,6 +2946,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label>โทรหาเรา</label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label>ยกเลิก</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -2982,6 +3034,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>แชทใน $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>โปรดตรวจสอบอีเมลของคุณเพื่อรับทราบรายละเอียดสำหรับการเข้าถึงของคุณ</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3012,6 +3068,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ข้อมูลบริษัท</label>
         <name>CSP_CompanyProfile</name>
+    </customLabels>
+    <customLabels>
+        <label>การร้องเรียนใช้เวลาถึง 5 วันทำการในการแก้ไข หากคุณมีคำถามหรือคำขอโปรดใช้ตัวเลือก &lt;b&gt;สร้างเคส&lt;/b&gt; เพื่อให้เราติดต่อกลับได้เร็วขึ้น</label>
+        <name>CSP_Complaint_Select_Message</name>
     </customLabels>
     <customLabels>
         <label>กรอกข้อมูลส่วนบุคคลของคุณ</label>
@@ -3116,6 +3176,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เขียนสรุปความคิดเห็นสั้น ๆ</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>เพิ่มเอกสารในบุ๊คมาร์คของฉันแล้ว</label>
@@ -3298,6 +3362,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>นี่คือ&lt;b&gt;เหตุฉุกเฉิน&lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการช่วยเหลือฉุกเฉิน 24/7 และให้บริการเป็นภาษาอังกฤษเท่านั้น</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดทราบว่าการสนับสนุนที่มีให้ผ่านช่องทางฉุกเฉินมีให้บริการเป็นภาษา &lt;b&gt;อังกฤษ&lt;/b&gt; และสำหรับสถานการณ์ที่สำคัญต่อไปนี้:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>หากคำถามของคุณไม่เกี่ยวข้องกับสถานการณ์ใดสถานการณ์หนึ่งโปรดคลิก &quot;&lt;b&gt;ส่งเป็นแบบสอบถาม&lt;/b&gt;&quot; ด้านล่างเพื่อสร้างเคส</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณได้เลือกตัวเลือกฉุกเฉิน</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดทราบว่าการติดต่อผ่านช่องทางฉุกเฉินมีไว้สำหรับสถานการณ์วิกฤตต่อไปนี้เท่านั้น:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ปัญหาการเข้าถึงระบบหรือการหยุดทำงานของแพลตฟอร์ม</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>ปัญหาการเรียกเก็บเงิน (ปัญหาหลัก / ความคลาดเคลื่อน)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>ระบบระงับชั่วคราว</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อสงสัยเกี่ยวกับกิจกรรมฉ้อโกง</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดอย่าส่งคำร้องผ่านช่องทางฉุกเฉิน ยกเว้นแต่จะเกี่ยวกับการฉ้อโกงการออกตั๋วหรือปัญหาทางการเงิน</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3442,6 +3550,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
+        <label>ให้ข้อเสนอแนะ</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่ IATA เราทำการปรับปรุงผลิตภัณฑ์และบริการของเราอย่างต่อเนื่องเพื่อให้เราสามารถมอบประสบการณ์ที่ยอดเยี่ยมแก่คุณได้ มุมมองและความคิดของคุณผลักดันการปรับปรุงเหล่านี้ คลิกปุ่มด้านล่างเพื่อแสดงความคิดเห็นของคุณ</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ความคิดเห็นของคุณเป็นสิ่งสำคัญสำหรับเรา</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>มันคือ</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Go to Webstar --></label>
         <name>CSP_Go_to_Webstar</name>
     </customLabels>
@@ -3462,8 +3586,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label>ขอแสดงความนับถือ, &amp;lt;br/&amp;gt; ศูนย์บริการลูกค้า IATA</label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>พอร์ทัลลูกค้า IATA</label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -4430,6 +4562,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -4742,12 +4878,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>เลือกหัวข้อที่นี่</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_ADSR --></label>
         <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>การเข้าถึงบริการ</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -4874,6 +5022,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>แชร์ </label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>ลิงค์ FAQ ได้ถูกคัดลอกแล้ว</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>ข้ามการดำเนินการในตอนนี้</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -4882,12 +5038,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>กรุณาใส่หัวเรื่องสั้น ๆ</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>ส่ง</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่งเป็นกรณีฉุกเฉิน</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่งเป็นคำถาม</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4926,6 +5094,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>หัวข้อทั้งหมด</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อล่าสุดของคุณ</label>
+        <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
         <label>ลู่</label>
         <name>CSP_Track</name>
     </customLabels>
@@ -4944,6 +5120,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Treasury Dashboard --></label>
         <name>CSP_Treasury_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
     </customLabels>
     <customLabels>
         <label>การแก้ไขปัญหา</label>
@@ -5188,6 +5368,106 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Case Classification --></label>
         <name>Case_Classification</name>
+    </customLabels>
+    <customLabels>
+        <label>เคสนี้ไม่สามารถปิดหรือมัน &amp;apos;s ปิดแล้ว</label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>ลิงก์หมดอายุแล้ว</label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่พอร์ทัลลูกค้า</label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอบคุณคำตอบของคุณได้รับการบันทึกแล้ว</label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่ใช่ตอนนี้</label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณกำลังถูกเปลี่ยนเส้นทางไปยังแบบสำรวจ</label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้ปิดเคสด้านล่าง:</label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากเราไม่ได้รับการตอบกลับใดๆจากคุณภายใน 48 ชั่วโมงเราจึงได้ปิดคดีดังต่อไปนี้:</label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอบคุณสำหรับการยืนยัน!</label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เกิดข้อผิดพลาดขณะเปลี่ยนเส้นทางคุณไปยังแบบสำรวจ</label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่ IATA เราปรับปรุงบริการของเราอย่างต่อเนื่องเพื่อให้เราสามารถมอบประสบการณ์ที่ยอดเยี่ยมให้กับลูกค้าได้ นี่คือเหตุผลที่เราต้องการถามความคิดเห็นของคุณในบางประเด็นที่เราเห็นว่าสำคัญ และใช้เวลาไม่เกินสองนาที</label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ทำแบบสำรวจ</label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>คำตอบไม่ชัดเจน</label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถปิดเคสนี้ได้เลย</label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่ติดต่อเรา</label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label>ฉันมีคำถามใหม่</label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>คำถามของคุณได้รับการแก้ไขแล้วหรือยัง?</label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label>หากเราไม่ได้รับการติดต่อจากคุณภายใน 48 ชั่วโมงเราจะดำเนินการต่อโดยที่เข้าใจว่า คุณไม่ต้องการความช่วยเหลืออีกอีกแล้วและเราจะปิดเคส</label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดแจ้งให้เราทราบว่าเราจะช่วยเหลือคุณเพิ่มเติมเกี่ยวกับคำถามนี้ได้อย่างไร</label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากคุณมีข้อความค้นหาใหม่เราได้ปิดเคส {arg0} และคุณสามารถสร้างเคสใหม่ได้โดยคลิกที่ปุ่มด้านล่างเพื่อให้เราติดต่อกลับโดยเร็วที่สุด</label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอบคุณสำหรับการยืนยันของคุณ</label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดแสดงความคิดเห็นเพิ่มเติมเพื่อให้เราดำเนินการในเคสนี้ต่อไป</label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label>แบบสำรวจนี้</label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>เราให้ความสำคัญกับความคิดเห็นของคุณ โปรดแจ้งให้เราทราบความคิดเห็นของคุณเกี่ยวกับ IATA &amp;apos;s สนับสนุนใน</label>
+        <name>Case_Comment_Survey_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Defect/Issue --></label>
@@ -5456,6 +5736,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
@@ -7424,6 +7712,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
     </customLabels>
     <customLabels>
         <label><!-- Documents POP --></label>
@@ -21025,6 +21317,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Pending Documents --></label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
@@ -21243,6 +21539,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
     <customLabels>
         <label><!-- ISSP Public --></label>
         <name>ISSP_Public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
     </customLabels>
     <customLabels>
         <label>ปริมาณ</label>
@@ -23504,6 +23804,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>การแชทที่เป็นภาษาของคุณไม่สามารถใช้งานได้ในขณะนี้โปรด &lt;b&gt;สร้างเคส&lt;/b&gt; หรือติดต่อเราทาง &lt;b&gt;โทรศัพท์&lt;/b&gt;</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>เพียงโทร:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23518,6 +23826,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>ท่านสามารถใช้หมายเลขต่อไปนี้เพื่อพูดคุยกับตัวแทน IATA:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>เปิดหน้าต่างแชทแล้ว</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>พูดคุยกับเรา</label>
@@ -26259,6 +26571,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Treasury_Dashboard_Premium_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
         <name>Treasury_Dashboard_Service_Name</name>
     </customLabels>
@@ -26755,7 +27075,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>บริการการเข้าถึง</label>
+        <label>ช่องทางการสนับสนุนที่ใช้ได้จะปรากฏขึ้นเมื่อคุณเลือกหัวข้อคำถามของคุณแล้ว</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26815,7 +27135,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>รับบริการช่วนเหลือโดยตรงผ่านพอร์ทัล IATA ทางโทรศัพท์หรือทางแชท</label>
+        <label>ติดต่อเรา เริ่มต้นด้วยการเลือกหัวข้อคำถามของคุณ</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26963,7 +27283,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>ติดต่อฝ่ายบริการช่วยเหลือ</label>
+        <label>ติดต่อเรา</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
@@ -27865,6 +28185,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -32977,8 +33301,8 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -33051,12 +33375,38 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Account Roles (Owners) --></description>
         <label><!-- Accounts with AMS Account Roles (Owners) --></label>
         <name>Accounts_with_AMS_Account_Roles_Owners</name>
         <sections>
             <label><!-- AMS Account Roles --></label>
             <name>AMS Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -33785,6 +34135,22 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34761,6 +35127,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -35056,6 +35426,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Currency Center Survey Hierarchy --></description>
         <label><!-- Currency Center Survey Hierarchy --></label>
         <name>Currency_Center_Survey_Hierarchy</name>
@@ -35272,6 +35659,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- GDP Accounts --></description>
         <label><!-- GDP Accounts --></label>
         <name>GDP_Accounts</name>
@@ -35313,6 +35709,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- GDP Products - Accounts View --></label>
             <name>GDP Products - Accounts View</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -36324,7 +36733,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>รายงาน</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
@@ -36368,7 +36777,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>รายงาน</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -37081,6 +37490,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

@@ -3,11 +3,22 @@ public class PowerBiCtrlTest {
 
 	@TestSetup
 	private static void setup() {
+
+		List<PowerBI_Cred__c> credsToInsert = new List<PowerBI_Cred__c>();
+
 		PowerBI_Cred__c cred = new PowerBI_Cred__c();
 		cred.Name = 'TreasuryDashboard';
 		cred.Dev_Configuration__c = 'TreasuryDashboard_PowerBI_Dev';
 		cred.Prod_Configuration__c = 'TreasuryDashboard_PowerBI_Production';
-		insert cred;
+		credsToInsert.add(cred);
+
+		PowerBI_Cred__c cred2 = new PowerBI_Cred__c();
+		cred2.Name = 'TreasuryDashboardReport';
+		cred2.Dev_Configuration__c = 'TreasuryDashboardReport_PowerBI_Dev';
+		cred2.Prod_Configuration__c = 'TreasuryDashboardReport_PowerBI_Prod';
+		credsToInsert.add(cred2);
+
+		insert credsToInsert;
 
 		List<PowerBI_Config__c> configsToInsert = new List<PowerBI_Config__c>();
 
@@ -20,7 +31,7 @@ public class PowerBiCtrlTest {
 		configDev.Password__c = 'some-password';
 		configDev.Application_Identifier__c = 'TDdev';
 		configDev.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
-		configDev.Report_Resource__c = 'https://app.powerbi.com';
+		configDev.Report_Resource__c = 'https://app.powerbi.com/reportEmbed';
 		configsToInsert.add(configDev);
 
 		PowerBI_Config__c configProd = new PowerBI_Config__c();
@@ -32,8 +43,34 @@ public class PowerBiCtrlTest {
 		configProd.Password__c = 'some-password-prod';
 		configProd.Application_Identifier__c = 'TDprod';
 		configProd.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
-		configProd.Report_Resource__c = 'https://app.powerbi.com';
+		configProd.Report_Resource__c = 'https://app.powerbi.com/reportEmbed';
 		configsToInsert.add(configProd);
+
+		PowerBI_Config__c configDev2 = new PowerBI_Config__c();
+		configDev2.Name = 'TreasuryDashboardReport_PowerBI_Dev';
+		configDev2.ClientId__c = 'some-client-id';
+		configDev2.Client_secret__c = 'some-client-secret';
+		configDev2.Tenant_Id__c = 'some-tennt-id';
+		configDev2.Username__c = 'some.username@iata.org';
+		configDev2.Resource__c = 'https://analysis.windows.net/powerbi/api';
+		configDev2.Password__c = 'some-password';
+		configDev2.Application_Identifier__c = 'TDRepDev';
+		configDev2.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
+		configDev2.Report_Resource__c = 'https://app.powerbi.com/rdlEmbed';
+		configsToInsert.add(configDev2);
+
+		PowerBI_Config__c configProd2 = new PowerBI_Config__c();
+		configProd2.Name = 'TreasuryDashboardReport_PowerBI_Prod';
+		configProd2.ClientId__c = 'some-client-id-prod';
+		configProd2.Client_secret__c = 'some-client-secret';
+		configProd2.Tenant_Id__c = 'some-tenant-id-prod';
+		configProd2.Username__c = 'some.username.prod@iata.org';
+		configProd2.Resource__c = 'https://analysis.windows.net/powerbi/api';
+		configProd2.Password__c = 'some-password-prod';
+		configProd2.Application_Identifier__c = 'TDRepProd';
+		configProd2.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
+		configProd2.Report_Resource__c = 'https://app.powerbi.com/rdlEmbed';
+		configsToInsert.add(configProd2);
 
 		insert configsToInsert;
 
@@ -132,9 +169,9 @@ public class PowerBiCtrlTest {
 		PowerBI_Config__c config = null;
 
 		Test.startTest();
-			System.runAs(testUser) {
-				config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			}
+		System.runAs(testUser) {
+			config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+		}
 		Test.stopTest();
 
 		System.assertEquals(false, config == null, 'PowerBI config should not be null!');
@@ -156,7 +193,7 @@ public class PowerBiCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl.getAccessToken(config);
+			result = PowerBiCtrl.getNewAccessToken(config);
 
 		}
 
@@ -166,132 +203,13 @@ public class PowerBiCtrlTest {
 		System.assertEquals('refreshTokenString', result.refresh_token, 'Wrong refresh token retrieved!');
 		System.assertEquals(1561019267, result.expires_on, 'Wrong expires on retrieved!');
 		System.assertEquals(null, result.error, 'There should be no error!');
-	}
-
-	@IsTest
-	private static void getAccessTokenTest2() {
-
-		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-		Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
-		String configName = '';
-		if(isProd) {
-			configName = 'TreasuryDashboard_PowerBI_Production';
-		}else{
-			configName = 'TreasuryDashboard_PowerBI_Dev';
-		}
-
-		PowerBI_Config__c conf = PowerBI_Config__c.getValues(configName);
-		String  appIdentifier = conf.Application_Identifier__c;
-
-		Cache.OrgPartition  orgPartition = Cache.Org.getPartition('local.PowerBI');
-		if(orgPartition != null) {
-			orgPartition.put('PowerBIaccessToken'+appIdentifier, 'someKey');
-			orgPartition.put('PowerBIexpiersOn'+appIdentifier, 1573465202);
-			orgPartition.put('PowerBIrefreshToken'+appIdentifier, 'someRefreshToken');
-		}
-
-
-		PowerBiCtrl.OAuthResult result = null;
-
-		Test.startTest();
-
-		System.runAs(testUser) {
-
-			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl.getAccessToken(config);
-
-		}
-
-		Test.stopTest();
-
-		System.assertEquals('testTokenString', result.access_token, 'Wrong access token retrieved!');
-		System.assertEquals('refreshTokenString', result.refresh_token, 'Wrong refresh token retrieved!');
-		System.assertEquals(1561019267, result.expires_on, 'Wrong expires on retrieved!');
-		System.assertEquals(null, result.error, 'There should be no error!');
-	}
-
-	@IsTest
-	private static void getAccessTokenTest3() {
-
-		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-		Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
-		String configName = '';
-		if(isProd) {
-			configName = 'TreasuryDashboard_PowerBI_Production';
-		}else{
-			configName = 'TreasuryDashboard_PowerBI_Dev';
-		}
-
-		PowerBI_Config__c conf = PowerBI_Config__c.getValues(configName);
-		String  appIdentifier = conf.Application_Identifier__c;
-
-		Long expiresOn = ((System.now().getTime())/1000) + 1000;
-
-		Cache.OrgPartition  orgPartition = Cache.Org.getPartition('local.PowerBI');
-		if(orgPartition != null) {
-			orgPartition.put('PowerBIaccessToken'+appIdentifier, 'someKey');
-			orgPartition.put('PowerBIexpiersOn'+appIdentifier, expiresOn);
-			orgPartition.put('PowerBIrefreshToken'+appIdentifier, 'someRefreshToken');
-		}
-
-
-		PowerBiCtrl.OAuthResult result = null;
-
-		Test.startTest();
-
-		System.runAs(testUser) {
-
-			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl.getAccessToken(config);
-
-		}
-
-		Test.stopTest();
-
-		System.assertEquals('someKey', result.access_token, 'Wrong access token retrieved!');
-		System.assertEquals('someRefreshToken', result.refresh_token, 'Wrong refresh token retrieved!');
-		System.assertEquals(expiresOn, result.expires_on, 'Wrong expires on retrieved!');
-		System.assertEquals(null, result.error, 'There should be no error!');
-	}
-
-
-
-	@IsTest
-	private static void getAccessToken_responseErrorTest() {
-
-		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
-
-		String errorMessage = '';
-
-		Test.startTest();
-
-		System.runAs(testUser) {
-
-			try{
-				Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBItokenErrorMock());
-				PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-				PowerBiCtrl.getAccessToken(config);
-
-			}catch(Exception e) {
-				errorMessage = e.getMessage();
-			}
-
-		}
-
-		Test.stopTest();
-
-		System.assertEquals(true, errorMessage.contains('user_password_expired'), 'Error should be retrieved retrieved!');
 	}
 
 
 	@IsTest
 	private static void refreshTokenTest() {
 
-		Boolean isProd = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF';
+		Boolean isProd = !([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox);
 		String configName = '';
 		if(isProd) {
 			configName = 'TreasuryDashboard_PowerBI_Production';
@@ -381,7 +299,7 @@ public class PowerBiCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 			PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
-			result = PowerBiCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
+			result = PowerBiCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportId', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -410,6 +328,84 @@ public class PowerBiCtrlTest {
 
 		System.assertEquals(true, result.reportId != null, 'ReportId should not be null!');
 		System.assertEquals(true, result.groupId != null, 'GroupId should not be null!');
+
+	}
+
+	@IsTest
+	private static void getServicePrincipalAccessTokenTest() {
+
+		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+
+		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
+		PowerBiCtrl.OAuthResult result = null;
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+
+			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+			result= PowerBiCtrl.getNewAccessToken(conf);
+
+		}
+
+		Test.stopTest();
+
+		System.assertEquals('testTokenString', result.access_token, 'Wrong access token retrieved!');
+		System.assertEquals(1561019267, result.expires_on, 'Wrong expires on retrieved!');
+		System.assertEquals(null, result.error, 'There should be no error!');
+
+	}
+
+	@IsTest
+	private static void getServicePrincipalEmbedTokenTest() {
+
+		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+
+		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
+
+		PowerBiCtrl.EmbedTokenResult result = null;
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+
+			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+
+			result = PowerBiCtrl.getEmbedToken('accessToken', testUser.Id, 'groupId', 'reportId', null, conf);
+		}
+
+		Test.stopTest();
+
+		System.assertEquals('someToken', result.token, 'Wrong reportid retrieved!');
+		System.assertEquals('1561019567', result.expiration, 'Wrong datasetId name retrieved!');
+
+	}
+
+	@IsTest
+	private static void getServicePrincipalEmbedTokenErrorTest() {
+
+		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+
+		PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
+
+		PowerBiCtrl.EmbedTokenResult result = null;
+
+		Test.startTest();
+
+		System.runAs(testUser) {
+
+			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBIServicePrincipalEmbedTokenErrorMock());
+
+			result = PowerBiCtrl.getEmbedToken('accessToken', testUser.Id, 'groupId', 'reportId', null, conf);
+		}
+
+		Test.stopTest();
+
+		System.assertEquals(null, result.token, 'Wrong token retrieved!');
+		System.assertEquals(null, result.expiration, 'Wrong expired on retrieved!');
+		System.assertEquals('404', result.error.code, 'Wrong error code retrieved!');
+		System.assertEquals('No HTTP resource was found that matches the request URI.', result.error.message, 'Wrong error message retrieved!');
+
 
 	}
 
