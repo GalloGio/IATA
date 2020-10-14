@@ -32,10 +32,13 @@
     </values>
     <values>
         <field>RecordTypeId__c</field>
-        <value xsi:type="xsd:string">0124E000000DEWyQAO</value>
+        <value xsi:type="xsd:string">0125J000000kEvvQAE</value>
     </values>
     <values>
         <field>Status__c</field>
-        <value xsi:type="xsd:string">Closed,Pending Review,Pending Customer,Review In Progress</value>
+        <value xsi:type="xsd:string">Closed
+Pending Review
+Pending Customer
+Review In Progress</value>
     </values>
 </CustomMetadata>
