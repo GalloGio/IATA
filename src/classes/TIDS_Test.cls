@@ -1503,10 +1503,11 @@ public with sharing class TIDS_Test {
 		
 		Case tidscase = new Case();
 		tidscase.AccountId=accountId;
-		tidscase.Reason1__c='TIDS - Case To Delete';
+		tidscase.Reason1__c=TIDS_Constant.CASE_SUBJECT_NAME_COMPANY;
 		tidscase.Status=TIDS_Constant.IS_DRAFT;
 		tidscase.Origin=TIDS_Constant.CASE_ORIGIN;
 		tidscase.CaseArea__c=TIDS_Constant.TIDSVALUE;
+		tidsCase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
 
 		insert tidscase;
 	
@@ -1517,6 +1518,8 @@ public with sharing class TIDS_Test {
 								applicationtype,
 								null);
 		caseId= errmgt.caseId;
+		Portal_Applications__c services = TIDSUtil.getTIDSService();
+		delete services;
 		TidsBatchCleanseCases obj = new  TidsBatchCleanseCases();
 		DataBase.executeBatch(obj);
 		System.assertEquals(true,caseId!=null,false); 
@@ -1536,13 +1539,14 @@ public with sharing class TIDS_Test {
 
 		Case tidscase = new Case();
 		tidscase.AccountId=accountId;
-		tidscase.Reason1__c='TIDS - Case To Delete';
+		tidscase.Reason1__c=TIDS_Constant.CASE_SUBJECT_NAME_COMPANY;
 		tidscase.Status=TIDS_Constant.IS_DRAFT;
 		tidscase.Origin=TIDS_Constant.CASE_ORIGIN;
 		tidscase.CaseArea__c=TIDS_Constant.TIDSVALUE;
+		tidsCase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
 
 		insert tidscase;
-		
+
 		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 								accountId,
@@ -1550,6 +1554,9 @@ public with sharing class TIDS_Test {
 								applicationtype,
 								null);
 		caseId= errmgt.caseId;
+		Portal_Applications__c services = TIDSUtil.getTIDSService();
+		delete services;
+
 		TidsBatchCleanseCases obj = new  TidsBatchCleanseCases();
 		String chron = '0 0 23 * * ?';        
 		String jobid = System.schedule('testScheduledApex', chron, obj);
