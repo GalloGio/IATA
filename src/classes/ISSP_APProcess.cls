@@ -771,11 +771,8 @@ global without sharing class ISSP_APProcess {
 							} else {
 								mapRequiredFields.putAll(ISSP_AP_FieldLists.passMandatoryFields);
 							}
-							// If we have to show some fields as input then they are not mandatory anymore
-							if ( isGSSAUser && getShowInputGSSAFileds()) {
-								for (String fldLabel : ISSP_AP_fieldLists.setPASSNonMandatory) {
-									mapRequiredFields.remove(fldLabel);
-								}
+							if ( isGSSAUser && getShowInputGSSAFields()) {
+								mapRequiredFields.putAll(ISSP_AP_FieldLists.extraPassGssaMandatoryFields);
 							}
 							if(newForm.Hot_files_delivery_format__c=='E-mail and Download' || newForm.PDF_Report_Delivery_Format__c=='E-mail and Download'){
 								mapRequiredFields.put('HOT_File_Recipient_Email_1__c','');
@@ -1092,7 +1089,12 @@ global without sharing class ISSP_APProcess {
 		'Receive_PDF_Reports__c',
 		'Receive_XLS_Reports__c',
 		'TAX_VAT_Registration_Number__c',
-		'Who_requested_to_join_TOU__c'
+		'Who_requested_to_join_TOU__c',
+		'SIS_Contact_F_Name__c',
+		'SIS_Contact_Email__c',
+		'SIS_Contact_L_Name__c',
+		'SIS_Contact_Number__c',
+		'SIS_Contact_Job_Title__c'
 	};
 
 	public void retrieveAPProcessForm(){
@@ -3901,7 +3903,7 @@ global without sharing class ISSP_APProcess {
 	/**
 	 * Returns true if the input fields for GSSA in the step 3 must appear or only show them as output info
 	 */
-	public boolean getShowInputGSSAFileds() {
+	public boolean getShowInputGSSAFields() {
 		return listGSSAPASSAllServices.isEmpty();
 	}
 

@@ -196,7 +196,7 @@
                         </apex:pageBlockSection>
 
                         <span id="nav_four"></span>
-                        <apex:pageBlockSection rendered="{!isGSSAUser && ShowInputGSSAFileds}" columns="2" >
+                        <apex:pageBlockSection rendered="{!isGSSAUser && ShowInputGSSAFields}" columns="2" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4. Participant Information (GSSA)"/>
@@ -209,7 +209,7 @@
                             </apex:pageBlockSectionItem>
 
                             <apex:pageBlockSectionItem >
-                                <apex:outputLabel value="Code of GSSA" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:outputLabel value="Code of GSSA"/>
                                 <apex:outputField value="{!newForm.GSSA_Code__c}" />
                             </apex:pageBlockSectionItem>
 
@@ -237,7 +237,9 @@
                                 <apex:outputLabel value="HQ Office Country" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm.GSSA_HQ_Country__c}" />
                             </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
 
+                        <apex:pageBlockSection rendered="{!isGSSAUser && ShowInputGSSAFields}" columns="2" >
                             <div class="aplabel">
                                 GSSA Contact details
                             </div>
@@ -304,7 +306,7 @@
                             <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                         </apex:pageBlockSection>
 
-                        <apex:pageBlockSection rendered="{!isGSSAUser && !ShowInputGSSAFileds}" columns="2" >
+                        <apex:pageBlockSection rendered="{!isGSSAUser && !ShowInputGSSAFields}" columns="2" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4. Participant Information (GSSA)"/>
@@ -417,25 +419,25 @@
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel styleclass="ap-required" value="{!$Label.First_name}"/>
-                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_F_Name__c}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_F_Name__c}"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel styleclass="ap-required" value="{!$Label.Email}"/>
-                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
                             </apex:pageBlockSectionItem>
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel styleclass="ap-required" value="{!$Label.Last_name}"/>
-                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_L_Name__c}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_L_Name__c}"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel styleclass="ap-required" value="{!$Label.Phone}"/>
-                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Number__c}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_Number__c}"/>
                             </apex:pageBlockSectionItem>
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_Title}"/>
-                                <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Job_Title__c}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_Job_Title__c}"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Who_requested_to_join_TOU}"/>
@@ -445,7 +447,7 @@
                         </apex:pageBlockSection>
 
                         <span id="nav_five"></span>
-                        <apex:pageBlockSection title="4. Sales Reporting / Billing Details" rendered="{! !isGSSAUser || ShowInputGSSAFileds}" columns="1" >
+                        <apex:pageBlockSection title="4. Sales Reporting / Billing Details" rendered="{! !isGSSAUser || ShowInputGSSAFields}" columns="1" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'5','4')}.  Sales Reporting / Billing Details"/>

@@ -225,28 +225,28 @@ public class ISSP_AP_FieldLists {
 	};
 
 	public static final Map<String,String> passMandatoryFields = new Map<String,String>{
-	'Desired_commencment_date__c' 					=> '',
-	'Contact_Resp_Salutation__c' 					=> '',
-	'Contact_Resp_F_Name__c' 						=> '',
-	'Contact_Resp_L_Name__c' 						=> '',
-	'Contact_Resp_Email__c' 						=> '',
-	'Contact_Resp_Job_Title__c'		 				=> '',
-	'Contact_Resp_Phone__c' 						=> '',
-	'CASSLink_Contact_Salutation__c' 				=> '',
-	'CASSLink_Contact_F_Name__c' 					=> '',
-	'CASSLink_Contact_L_Name__c' 					=> '',
-	'CASSLink_Contact_Job_Title__c' 				=> '',
-	'CASSLink_Contact_Email__c'						=> '',
-	'CASSLink_Contact_Phone__c' 					=> '',
-	'Billing_File_Emrgcy_Contact_Salutation__c' 	=> '',
-	'Billing_File_Emrgcy_Contact_F_Name__c' 		=> '',
-	'Billing_File_Emrgcy_Contact_L_Name__c' 		=> '',
-	'Billing_File_Emrgcy_Contact_Job_Title__c' 		=> '',
-	'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
-	'CASSLink_New_User_1_Salutation__c'				=> '',
-	'CASSLink_New_User_1_F_Name__c'					=> '',
-	'CASSLink_New_User_1_L_Name__c'					=> '',
-	'CASSLink_New_User_1_Email__c'					=> ''
+		'Desired_commencment_date__c' 					=> '',
+		'Contact_Resp_Salutation__c' 					=> '',
+		'Contact_Resp_F_Name__c' 						=> '',
+		'Contact_Resp_L_Name__c' 						=> '',
+		'Contact_Resp_Email__c' 						=> '',
+		'Contact_Resp_Job_Title__c'		 				=> '',
+		'Contact_Resp_Phone__c' 						=> '',
+		'CASSLink_Contact_Salutation__c' 				=> '',
+		'CASSLink_Contact_F_Name__c' 					=> '',
+		'CASSLink_Contact_L_Name__c' 					=> '',
+		'CASSLink_Contact_Job_Title__c' 				=> '',
+		'CASSLink_Contact_Email__c'						=> '',
+		'CASSLink_Contact_Phone__c' 					=> '',
+		'Billing_File_Emrgcy_Contact_Salutation__c' 	=> '',
+		'Billing_File_Emrgcy_Contact_F_Name__c' 		=> '',
+		'Billing_File_Emrgcy_Contact_L_Name__c' 		=> '',
+		'Billing_File_Emrgcy_Contact_Job_Title__c' 		=> '',
+		'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
+		'CASSLink_New_User_1_Salutation__c'				=> '',
+		'CASSLink_New_User_1_F_Name__c'					=> '',
+		'CASSLink_New_User_1_L_Name__c'					=> '',
+		'CASSLink_New_User_1_Email__c'					=> ''
 	};
 
 	public static final Map<String, String> passgssaMandatoryFields = new Map<String, String>{
@@ -263,21 +263,47 @@ public class ISSP_AP_FieldLists {
 		'CASSLink_New_User_1_Email__c'					=> ''
 	};
 
+	public static final Map<String,String> extraPassGssaMandatoryFields = new Map<String,String>{
+		'GSSA_Legal_Name__c' => '',
+		'GSSA_HQ_Address__c' => '',
+		'GSSA_HQ_City__c' => '',
+		'GSSA_HQ_Post_Code__c' => '',
+		'GSSA_HQ_Country__c' => '',
+		'GSSA_Contact_Salutation__c' => '',
+		'GSSA_Contact_F_Name__c' => '',
+		'GSSA_Contact_L_Name__c' => '',
+		'GSSA_Contact_JobTitle__c' => '',
+		'GSSA_Contact_Email__c' => '',
+		'GSSA_Contact_Phone__c' => '',
+		'CASSLink_Contact_Salutation__c' => '',
+		'CASSLink_Contact_F_Name__c' => '',
+		'CASSLink_Contact_L_Name__c' => '',
+		'CASSLink_Contact_Job_Title__c' => '',
+		'CASSLink_Contact_Email__c' => '',
+		'CASSLink_Contact_Phone__c' => '',
+		'Billing_File_Emrgcy_Contact_Salutation__c' => '',
+		'Billing_File_Emrgcy_Contact_F_Name__c' => '',
+		'Billing_File_Emrgcy_Contact_L_Name__c' => '',
+		'Billing_File_Emrgcy_Contact_Job_Title__c' => '',
+		'Billing_File_Emrgcy_Contact_Email__c' => ''
+	};
+
+
 	public static final Map<String, String> passSISMandatoryFields = new Map<String, String>{
 		'Legal_Name_of_company__c' => '',
 		'Airline_trade_name__c' => '',
-		'Company_address__c' => '',
 		'Company_Registration_ID__c' => '',
 		'TAX_VAT_Registration_Number__c' => '',
+		'Company_address__c' => '',
 		'Company_city__c' => '',
 		'Postal_code__c' => '',
 		'Company_State__c' => '',
 		'Company_Country__c' => '',
-		'Billing_File_Emrgcy_Contact_F_Name__c' => '',
-		'Billing_File_Emrgcy_Contact_Email__c' => '',
-		'Billing_File_Emrgcy_Contact_L_Name__c' => '',
-		'Billing_File_Emrgcy_Contact_Number__c' => '',
-		'Billing_File_Emrgcy_Contact_Job_Title__c' => '',
+		'SIS_Contact_F_Name__c' => '',
+		'SIS_Contact_L_Name__c' => '',
+		'SIS_Contact_Email__c' => '',
+		'SIS_Contact_Number__c' => '',
+		'SIS_Contact_Job_Title__c' => '',
 		'Who_requested_to_join_TOU__c' => ''
 	};
 
@@ -288,38 +314,5 @@ public class ISSP_AP_FieldLists {
 			'Contact_Resp_L_Name__c' => '',
 			'Contact_Resp_Email__c' => '',
 			'Contact_Resp_Phone__c' => ''
-	};
-
-	public static final Set<String> setPASSNonMandatory = new SET<String>{
-		'GSSA_Legal_Name__c',
-		'GSSA_Code__c',
-		'GSSA_HQ_Address__c',
-		'GSSA_HQ_City__c',
-		'GSSA_HQ_State__c',
-		'GSSA_HQ_Post_Code__c',
-		'GSSA_HQ_Country__c',
-		'GSSA_VAT_Id__c',
-		'GSSA_Contact_Salutation__c',
-		'GSSA_Contact_F_Name__c',
-		'GSSA_Contact_L_Name__c',
-		'GSSA_Contact_JobTitle__c',
-		'GSSA_Contact_Email__c',
-		'GSSA_Contact_Phone__c',
-		'GSSA_Contact_FAX__c',
-		'CASSLink_Contact_Salutation__c',
-		'CASSLink_Contact_F_Name__c',
-		'CASSLink_Contact_L_Name__c',
-		'CASSLink_Contact_Job_Title__c',
-		'CASSLink_Contact_Email__c',
-		'CASSLink_Contact_Phone__c',
-		'Company_Registration_ID__c',
-		'TAX_VAT_Registration_Number__c',
-		'Billing_File_Emrgcy_Contact_Number__c',
-		'Billing_File_Emrgcy_Contact_Job_Title__c',
-		'Billing_File_Emrgcy_Contact_Salutation__c',
-		'Billing_File_Emrgcy_Contact_F_Name__c',
-		'Billing_File_Emrgcy_Contact_L_Name__c',
-		'Billing_File_Emrgcy_Contact_Job_Title__c',
-		'Billing_File_Emrgcy_Contact_Email__c'
 	};
 }

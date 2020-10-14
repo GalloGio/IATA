@@ -288,8 +288,8 @@
             {!newForm.Postal_code__c}
         </p>
         <p>
-            <span class="bold">Attn:</span> {!newForm.Billing_File_Emrgcy_Contact_F_Name__c} {!newForm.Billing_File_Emrgcy_Contact_L_Name__c}<br/>
-            <span class="bold">E-mail:</span> {!newForm.Billing_File_Emrgcy_Contact_Email__c}
+            <span class="bold">Attn:</span> {!IF(isTOU,newForm.Billing_File_Emrgcy_Contact_F_Name__c,newForm.SIS_Contact_F_Name__c)} {!IF(isTOU,newForm.Billing_File_Emrgcy_Contact_L_Name__c,newForm.SIS_Contact_L_Name__c)}<br/>
+            <span class="bold">E-mail:</span> {!IF(isTOU,newForm.Billing_File_Emrgcy_Contact_Email__c,newForm.SIS_Contact_Email__c)}
         </p>
     </div>
     <div class="align-left margin-6 no-page-break">
