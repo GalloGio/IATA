@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - BR/VB Relinquishment Request Approval</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_Child_Relinquishment_Request_Approved_Notification</name>
+    <style>none</style>
+    <subject>TIDS Voluntary Relinquishment Processed</subject>
+    <textOnly>TIDS - Relinquishment Processed
+
+Dear {!Contact.Name},
+
+The voluntary relinquishment requested for your TIDS Branch {!Account.IATACode__c} has now been processed.
+
+This office&apos;s participation to the IATA TIDS Program is terminated effective immediately. As a result, it will no longer be reflected in the IATA Agency List which industry suppliers reply upon.
+
+If the voluntary relinquishment of this office was submitted in error, note that you may request its reinstatement, maintaining the same IATA TIDS Code, for 90 days following the termination date. To do so, please use the &quot;Reinstatement&quot; option available on the Dashboard of the TIDS Service accessible via the IATA Customer Portal.
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

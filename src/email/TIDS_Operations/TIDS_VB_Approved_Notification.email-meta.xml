@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - Virtual Branch Approval Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_VB_Approved_Notification</name>
+    <style>none</style>
+    <subject>Your TIDS Virtual Branch Application is Approved</subject>
+    <textOnly>Your TIDS Application is Approved
+
+Congratulations!
+
+Dear {!Contact.Name},
+
+Your application for a Virtual Branch under the IATA TIDS Program has been approved.
+
+The following IATA TIDS Numeric Code has been assigned to you: {!Account.IATACode__c}
+
+This unique industry identifier can now be shared with your travel industry suppliers and partners.
+
+Kindly take a moment to review your office details to ensure they are correct:
+
+Legal Name:
+{!Account.Name}
+
+Trading Name:
+{!Account.TradeName__c}
+
+Business Email:
+{!Account.Email__c}
+
+Website:
+{!Account.Website}
+
+Phone Number:
+{!Account.Phone}
+
+Your agency details will be included in the IATA Agency List which industry suppliers reply upon. If any of these details are incorrect, please let us know at the earliest.
+
+Going forward, please also remember to report any changes to your agency’s information or contact details directly through the TIDS Service via the IATA Customer Portal
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+You Might Also Need
+
+IATA Travel &amp; Tourism Training
+
+IATA Travel Agent ID Card
+
+IATA Timatic Solutions
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
