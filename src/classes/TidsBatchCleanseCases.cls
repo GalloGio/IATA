@@ -19,5 +19,4 @@ global without sharing class TidsBatchCleanseCases implements database.batchable
 		TidsBatchCleanseCases b = new TidsBatchCleanseCases();
 		database.executebatch(b);
 	}
-		
 }

@@ -111,10 +111,10 @@ public without sharing class TIDS_Controller {
 		tidsCase.Decision_Date__c = System.Now();
 		try {    
 			update tidsCase;
-        }catch(Exception e){
+		}catch(Exception e){
 			TIDSUtil.setError(e.getMessage(),true);
 			System.debug(loggingLevel.FINE, '____ [TIDS_Controller -  updateCaseStatus] e.getMessage() - ' + e.getMessage());
-	    }
+		}
 		return TIDSUtil.iataCodeError;
 	}
 
@@ -155,14 +155,14 @@ public without sharing class TIDS_Controller {
 			upsert theAccount;
 			tids.userInfo.tidsAccount.Id = theAccount.Id;
 			Account theFormAccount = [SELECT Name, IATACode__c, Site, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
-                BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
-                ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
-                Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
-                (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c
-                FROM Account
-                WHERE Id =:tids.userInfo.tidsAccount.Id FOR UPDATE];
+				BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+				ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+				Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
+				,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
+				Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
+				(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c
+				FROM Account
+				WHERE Id =:tids.userInfo.tidsAccount.Id FOR UPDATE];
 			
 			AMS_Pax_Accreditation_Form__c theForm = new AMS_Pax_Accreditation_Form__c(
 				IsGSA__c = 'No',

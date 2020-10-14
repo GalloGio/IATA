@@ -113,7 +113,7 @@ public without sharing class TidsBatchHelper {
 			*/
 		}else{
 			getParentAccount(caseId);
-			headoffice=hoaccount.Id;
+			if (hoaccount!=null) {headoffice=hoaccount.Id;}
 		}
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		String recordtoprocess = 'SELECT '+String.join(getAccountFields(),',')+ ' FROM Account ';
@@ -308,11 +308,11 @@ public without sharing class TidsBatchHelper {
 	//Cleanse Cases query builder    
 	public static String queryBuilderCleanse(){
 		String recordtoprocess = 'SELECT Id FROM Case ';
-		recordtoprocess += ' WHERE Reason1__c in (\''+TIDS_Constant.CASE_SUBJECT_NAME_COMPANY+'\','+
+		recordtoprocess += ' WHERE (Reason1__c=\'TIDS - Case To Delete\') Or (Reason1__c in (\''+TIDS_Constant.CASE_SUBJECT_NAME_COMPANY+'\','+
 		' \''+TIDS_Constant.CASE_SUBJECT_CHANGE_BUS_PROFILE +'\','+
 		' \''+TIDS_Constant.CASE_SUBJECT_ADDRESS_CONTACT +'\') '+
 		' and Status=\''+TIDS_Constant.IS_DRAFT +'\' and Origin=\''+TIDS_Constant.CASE_ORIGIN+'\''+ 
-		' and CaseArea__c=\''+TIDS_Constant.TIDSVALUE+'\' and LastModifiedDate<LAST_N_DAYS:17';
+		' and CaseArea__c=\''+TIDS_Constant.TIDSVALUE+'\' and LastModifiedDate<LAST_N_DAYS:17) ';
 		return recordtoprocess;
 	}
 	//Executes the cleanse
@@ -372,5 +372,5 @@ public without sharing class TidsBatchHelper {
 		hoaccount.Organization_Last_Change_Date__c=System.today();
 		update hoaccount;
 		resetAccreditation(new Set<Id>{hoaccount.Id});
-	}	
+	}
 }

@@ -60,7 +60,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 			if (batchInfo != null) {
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-				                                       , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
+													   , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
 					// Reprocess failed records
 					List<String> failedRecordIds = new List<String>();
@@ -77,10 +77,10 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 		}
 
 		query = String.format('SELECT {0} '
-		                      +	'FROM AMS_Agency_Profile__c '
-		                      + 	'WHERE {1} Order By Account__c',
-		                      new List<String> {fields, String.join(conditions, ' AND ')}
-		                     );
+							  +	'FROM AMS_Agency_Profile__c '
+							  + 	'WHERE {1} Order By Account__c',
+							  new List<String> {fields, String.join(conditions, ' AND ')}
+							 );
 	}
 
 	global ams2gdp_Batch_AMS_Agency_Profile() {
@@ -108,7 +108,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 	global void execute(Database.BatchableContext BC, List<AMS_Agency_Profile__c> scope) {
 		//-- Total records to be processed
 		totalRecords += scope.size();
-        List<AMS_Agency_Profile__c> scopeClassT = new List<AMS_Agency_Profile__c>();
+		List<AMS_Agency_Profile__c> scopeClassT = new List<AMS_Agency_Profile__c>();
 		List<AMS_Agency_Profile__c> scopeOther = new List<AMS_Agency_Profile__c>();
 		for(AMS_Agency_Profile__c o:scope){
 			if (o.Account__r.Location_Class__c=='T'){scopeClassT.add(o);}else{scopeOther.add(o);}

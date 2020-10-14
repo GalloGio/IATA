@@ -1,77 +1,92 @@
+/*This test class covers the following classes:
+TIDSHelper
+TIDS_Controller
+TIDSVetting
+TIDSUtil
+TIDS_Constant
+TidsBatchHelper
+TidsBatchRelinquishment
+TIDSSFInfo
+TIDSReportChanges
+*/
 @IsTest
 public with sharing class TIDS_Test {
+	private static Portal_Applications__c portalApplications {get;set;}
+	private static Account acc {get;set;}
+	private static IATA_ISO_Country__c country {get;set;}
+	private static IATA_ISO_State__c state {get;set;}
+	private static User testUser {get;set;}
+	private static Contact testContact {get;set;}
 
-    @TestSetup
-    private static void setup() {
-        
-        Id headquarters = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-
-        country = new IATA_ISO_Country__c();
-        country.Name = 'Canada';
-        country.ISO_Code__c = 'CA';
-        country.AIMS_Area_Name__c = 'Canada';
-        country.AIMS_Area_ID__c = '1';
-        insert country;
-    
-        IATA_ISO_State__c dstate = new IATA_ISO_State__c();
-        dstate.Name = 'Prince Edwards';
-        dstate.ISO_Code__c = 'CA-PE';
+	@TestSetup
+	private static void setup() {
+		Id headquarters = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
+		country = new IATA_ISO_Country__c();
+		country.Name = 'Canada';
+		country.ISO_Code__c = 'CA';
+		country.AIMS_Area_Name__c = 'Canada';
+		country.AIMS_Area_ID__c = '1';
+		insert country;
+	
+		IATA_ISO_State__c dstate = new IATA_ISO_State__c();
+		dstate.Name = 'Prince Edwards';
+		dstate.ISO_Code__c = 'CA-PE';
 		dstate.IATA_ISO_Country__c=country.Id;
 		dstate.Valid_for_Address__c=true;
-        insert dstate;
-        
-        state = new IATA_ISO_State__c();
-        state.Name = 'Quebec';
-        state.ISO_Code__c = 'QC';
+		insert dstate;
+		
+		state = new IATA_ISO_State__c();
+		state.Name = 'Quebec';
+		state.ISO_Code__c = 'QC';
 		state.IATA_ISO_Country__c=country.Id;
 		state.Valid_for_Address__c=true;
-        insert state;
+		insert state;
 
-        List<Account> accountsToInsert = new List<Account>();
+		List<Account> accountsToInsert = new List<Account>();
 
-        acc = new Account();
-        acc.Name = 'TIDS account';
-        acc.BillingCity = 'Montreal';
-        acc.BillingCountry = 'Canada';
-        acc.BillingStreet = 'some street';
-        acc.IATA_ISO_Country__c = country.Id;
-        acc.Location_Type__c = 'HO';
-        acc.IATACode__c = null;
-        acc.Location_Class__c='T';
-        acc.Type = 'Agency';
+		acc = new Account();
+		acc.Name = 'TIDS account';
+		acc.BillingCity = 'Montreal';
+		acc.BillingCountry = 'Canada';
+		acc.BillingStreet = 'some street';
+		acc.IATA_ISO_Country__c = country.Id;
+		acc.Location_Type__c = 'HO';
+		acc.IATACode__c = null;
+		acc.Location_Class__c='T';
+		acc.Type = 'Agency';
 		acc.Status__c = 'Approved';
 		acc.RecordTypeId = headquarters;
 		accountsToInsert.add(acc);
 
 		Account accd = new Account();
-        accd.Name = 'TIDS inc.';
-        accd.BillingCity = 'Montreal';
-        accd.BillingCountry = 'Canada';
-        accd.BillingStreet = 'some street';
-        accd.IATA_ISO_Country__c = country.Id;
-        accd.Location_Type__c = 'HO';
-        accd.IATACode__c = null;
-        accd.Location_Class__c='T';
-        accd.Type = 'Agency';
+		accd.Name = 'TIDS inc.';
+		accd.BillingCity = 'Montreal';
+		accd.BillingCountry = 'Canada';
+		accd.BillingStreet = 'some street';
+		accd.IATA_ISO_Country__c = country.Id;
+		accd.Location_Type__c = 'HO';
+		accd.IATACode__c = null;
+		accd.Location_Class__c='T';
+		accd.Type = 'Agency';
 		accd.Status__c = 'Approved';
 		accd.IATA_ISO_Country__c=country.Id;
-        accd.RecordTypeId = headquarters;
-        accountsToInsert.add(accd);
+		accd.RecordTypeId = headquarters;
+		accountsToInsert.add(accd);
 
 		insert accountsToInsert;
 		
 		createContact();
-        Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+		Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
 
-        createUser(profileId);
-        
-        //TIDS service
-        portalApplications = new Portal_Applications__c();
-        portalApplications.Name = 'TIDS';
-        portalApplications.TIDS_Total_Ownership_Minimum__c=1;
-        portalApplications.TIDS_Total_Ownership_Maximum__c=100;
-        portalApplications.TIDS_Non_Eligible_Location_Countries__c='CA';
-        insert portalApplications;
+		createUser(profileId);
+		
+		//TIDS service
+		portalApplications = new Portal_Applications__c();
+		portalApplications.Name = TIDS_Constant.TIDSVALUE;
+		portalApplications.TIDS_Total_Ownership_Minimum__c=1;
+		portalApplications.TIDS_Total_Ownership_Maximum__c=100;
+		portalApplications.TIDS_Non_Eligible_Location_Countries__c='CA';
+		insert portalApplications;
 
 		List<Code_Range__c>  lrange  = new List<Code_Range__c>();
 		for(integer i=0; i<10;i++){
@@ -97,47 +112,42 @@ public with sharing class TIDS_Test {
 			item.Owner_Category__c='Company';
 			item.Owner_Name__c='Tids owner';
 			item.Owner_Email__c='tids@iata.org';
+			item.Owner_Account__c=acc.Id;
 			item.Account__c=acc.Id;
 			amsroles.add(item);
 		}
 		insert amsroles;
-    }
-    private static Portal_Applications__c portalApplications {get;set;}
-    private static Account acc {get;set;}
-    private static IATA_ISO_Country__c country {get;set;}
-    private static IATA_ISO_State__c state {get;set;}
-    private static User testUser {get;set;}
-    private static Contact testContact {get;set;}
-    private static void createContact() {
+	}
+	
+	private static void createContact() {
 
-        testContact = new Contact();
-        testContact.AccountId = acc.id;
-        testContact.Firstname = 'Primary';
-        testContact.Lastname= 'Smith';
-        testContact.Phone = '911111113';
-        testContact.MobilePhone = '911111113';
-        testContact.Email = 'Primary.Smith.test@somedomain.com';
-        testContact.BSP_CASS_Payment_contact__c = false;
+		testContact = new Contact();
+		testContact.AccountId = acc.id;
+		testContact.Firstname = 'Primary';
+		testContact.Lastname= 'Smith';
+		testContact.Phone = '911111113';
+		testContact.MobilePhone = '911111113';
+		testContact.Email = 'Primary.Smith.test@somedomain.com';
+		testContact.BSP_CASS_Payment_contact__c = false;
 		testContact.User_Portal_Status__c = 'Approved';
 
 		Contact testContact1 = new Contact();
-        testContact1.AccountId = acc.id;
-        testContact1.Firstname = 'Secondary';
-        testContact1.Lastname= 'Smith';
-        testContact1.Phone = '911111113';
-        testContact1.MobilePhone = '911111113';
-        testContact1.Email = 'Secondary.Smith.test@somedomain.com';
-        testContact1.BSP_CASS_Payment_contact__c = false;
+		testContact1.AccountId = acc.id;
+		testContact1.Firstname = 'Secondary';
+		testContact1.Lastname= 'Smith';
+		testContact1.Phone = '911111113';
+		testContact1.MobilePhone = '911111113';
+		testContact1.Email = 'Secondary.Smith.test@somedomain.com';
+		testContact1.BSP_CASS_Payment_contact__c = false;
 		testContact1.User_Portal_Status__c = 'Approved';
 		
 		List<Contact> lcontact = new List<Contact>();
 		lcontact.add(testContact1);
 		lcontact.add(testContact);
 		
-        insert lcontact;
-    }
-    private static void createProfileSetup(){
-		
+		insert lcontact;
+	}
+	private static void createProfileSetup(){
 		ISSP_CS__c prof1 = new ISSP_CS__c();
 		prof1.Name='Host';
 		prof1.value__c='iata.org';
@@ -146,36 +156,36 @@ public with sharing class TIDS_Test {
 		lprof.add(prof1);
 		insert lprof;
 	}
-    private static void createUser(Id profileId) {
-        testUser = new User();
-        testUser.alias = 'dsfsdfds';
-        testUser.email = testContact.email;
-        testUser.emailencodingkey = 'UTF-8';
-        testUser.firstname = testContact.firstName;
-        testUser.lastname = testContact.lastname;
-        testUser.languagelocalekey = 'en_US';
-        testUser.localesidkey = 'en_US';
-        testUser.contactId = testContact.Id;
-        testUser.FederationIdentifier = testContact.Id;
-        testUser.timezonesidkey = 'Asia/Dubai';
-        testUser.Username = testContact.Email;
-        testUser.PortalRole = 'Manager';
-        testUser.CommunityNickname = (testContact.FirstName + testContact.LastName).substring(0,8);
-        testUser.ProfileId = profileId;
-        testUser.IsActive = true;
-        insert testUser;
-    }
-    private static String applicationReplace(String applicationstring){
-        Map<String, String> appmap = new Map<String, String>();
-        appmap.put('@userId', userId == null ? '':String.ValueOf(userId));
-        appmap.put('@accountId', accountId == null ? '': String.ValueOf(accountId));
-        appmap.put('@contactId', contactId == null ? '':String.ValueOf(contactId));
-        appmap.put('@countryId', countryId == null ? '':String.ValueOf(countryId));
-        appmap.put('@stateId', stateId == null ? '':String.ValueOf(stateId));
-        appmap.put('@caseId', caseId == null ? '':String.ValueOf(caseId));
-        for(String key:appmap.KeySet()){
-            applicationstring = applicationstring.replaceAll(key, (String) appmap.get(key));
-        }
+	private static void createUser(Id profileId) {
+		testUser = new User();
+		testUser.alias = 'dsfsdfds';
+		testUser.email = testContact.email;
+		testUser.emailencodingkey = 'UTF-8';
+		testUser.firstname = testContact.firstName;
+		testUser.lastname = testContact.lastname;
+		testUser.languagelocalekey = 'en_US';
+		testUser.localesidkey = 'en_US';
+		testUser.contactId = testContact.Id;
+		testUser.FederationIdentifier = testContact.Id;
+		testUser.timezonesidkey = 'Asia/Dubai';
+		testUser.Username = testContact.Email;
+		testUser.PortalRole = 'Manager';
+		testUser.CommunityNickname = (testContact.FirstName + testContact.LastName).substring(0,8);
+		testUser.ProfileId = profileId;
+		testUser.IsActive = true;
+		insert testUser;
+	}
+	private static String applicationReplace(String applicationstring){
+		Map<String, String> appmap = new Map<String, String>();
+		appmap.put('@userId', userId == null ? '':String.ValueOf(userId));
+		appmap.put('@accountId', accountId == null ? '': String.ValueOf(accountId));
+		appmap.put('@contactId', contactId == null ? '':String.ValueOf(contactId));
+		appmap.put('@countryId', countryId == null ? '':String.ValueOf(countryId));
+		appmap.put('@stateId', stateId == null ? '':String.ValueOf(stateId));
+		appmap.put('@caseId', caseId == null ? '':String.ValueOf(caseId));
+		for(String key:appmap.KeySet()){
+			applicationstring = applicationstring.replaceAll(key, (String) appmap.get(key));
+		}
 		return applicationstring;        
 	}
 	private static void createProfiles(){
@@ -282,69 +292,57 @@ public with sharing class TIDS_Test {
 		lcode.add(new GDP_Reference_Table__c(Valid_For_TIDS__c=true,Code__c='A', Corresponding_AMS_Code__c=null,Table__c='LGLTYP'));
 		insert lcode;
 	}
-    private static Id userId {get;set;}
-    private static Id accountId {get;set;}
+	private static Id userId {get;set;}
+	private static Id accountId {get;set;}
 	private static Id contactId {get;set;}
 	private static Id secondaryId {get;set;}
-    private static Id countryId {get;set;}
-    private static Id stateId {get;set;}
-    private static Id caseId {get;set;}
-    private static void readObjectsId(){
+	private static Id countryId {get;set;}
+	private static Id stateId {get;set;}
+	private static Id caseId {get;set;}
+	private static void readObjectsId(){
 		String emailp = 'Primary.Smith.test@somedomain.com';
 		String emails = 'Secondary.Smith.test@somedomain.com';
-        userId = [select Id From User where alias = 'dsfsdfds' limit 1].Id;
-        accountId = [select Id From Account where name = 'TIDS account' limit 1].Id;
+		userId = [select Id From User where alias = 'dsfsdfds' limit 1].Id;
+		accountId = [select Id From Account where name = 'TIDS account' limit 1].Id;
 		contactId = [select Id From contact where Email =:emailp limit 1].Id;
 		secondaryId = [select Id From contact where Email =:emails limit 1].Id;
-        countryId = [select Id From IATA_ISO_Country__c where ISO_Code__c='CA' limit 1].Id;
-        stateId = [select Id From IATA_ISO_State__c where ISO_Code__c='CA-PE' limit 1].Id;
+		countryId = [select Id From IATA_ISO_Country__c where ISO_Code__c='CA' limit 1].Id;
+		stateId = [select Id From IATA_ISO_State__c where ISO_Code__c='CA-PE' limit 1].Id;
   	}
 	private static void readObjectsId2(){
 		String emailp = 'Primary.Smith.test@somedomain.com';
 		String emails = 'Secondary.Smith.test@somedomain.com';
-        userId = [select Id From User where alias = 'dsfsdfds' limit 1].Id;
-        accountId = [select Id From Account where name = 'TIDS account' limit 1].Id;
+		userId = [select Id From User where alias = 'dsfsdfds' limit 1].Id;
+		accountId = [select Id From Account where name = 'TIDS account' limit 1].Id;
 		contactId = [select Id From contact where Email =:emailp limit 1].Id;
 		secondaryId = [select Id From contact where Email =:emails limit 1].Id;
 	}   
-    private static void createHORight(){
+	
+	private static void createHOSRight(Id scontactid, string reason){
 		Portal_Applications__c service = [ SELECT Id
 				FROM Portal_Applications__c
-				WHERE Name='TIDS'
+				WHERE Name=:TIDS_Constant.TIDSVALUE 
 				LIMIT 1];
 
-        Portal_Application_Right__c right = new Portal_Application_Right__c();
-		right.Contact__c=contactId;
+		Portal_Application_Right__c right = new Portal_Application_Right__c();
+		right.Contact__c=scontactId;
 		right.Portal_Application__c=service.Id;
-		right.Access_Status_Reason__c='TIDS Admin HO Primary';
-        right.Right__c='Access Granted';
-        insert right;
-    }
-    private static void createHOSRight(){
-		Portal_Applications__c service = [ SELECT Id
-				FROM Portal_Applications__c
-				WHERE Name='TIDS'
-				LIMIT 1];
-
-        Portal_Application_Right__c right = new Portal_Application_Right__c();
-		right.Contact__c=contactId;
-		right.Portal_Application__c=service.Id;
-		right.Access_Status_Reason__c='TIDS Admin HO Secondary';
-        right.Right__c='Access Granted';
-        insert right;
-    }
+		right.Access_Status_Reason__c=reason;
+		right.Right__c='Access Granted';
+		insert right;
+	}
 	
 	@IsTest
-    private static void runUtilities() {
+	private static void runUtilities() {
 
-        Test.startTest();
-        String errorMessage = '';
+		Test.startTest();
+		String errorMessage = '';
 		set<String> l= new Set<String>{'APPRAC','APSALE','APDEST','APSPEC','LGLTYP','AIRSYS','FOCUSVALUES','PREFLANG','APEMP'};
 		List<GDP_Reference_Table__c> ltable = new List<GDP_Reference_Table__c>();
 		for(String key:l){
 			GDP_Reference_Table__c t1 = new GDP_Reference_Table__c();
 			t1.Name=key+'-TIDS';
-			t1.Code__c='TIDS';
+			t1.Code__c=TIDS_Constant.TIDSVALUE;
 			t1.Valid_For_TIDS__c=true;
 			t1.Table__c = key;
 			ltable.add(t1);
@@ -359,17 +357,17 @@ public with sharing class TIDS_Test {
 		TIDSUtil.getPreferedLanguages();
 		TIDSUtil.getFocusValues();
 		TIDSUtil.getGDSValues();
-               
-        System.assertEquals(true, ltable.size()==l.size(), true);
+			   
+		System.assertEquals(true, ltable.size()==l.size(), true);
 		Test.stopTest();
 	}
 	
 	
-    @IsTest
-    private static void chgProfile() {
+	@IsTest
+	private static void chgProfile() {
 
-        Test.startTest();
-        String errorMessage = '';
+		Test.startTest();
+		String errorMessage = '';
 		String applicationDecision;
 		String userType='client';
 		String applicationType='chg-business-profile-specialization';
@@ -390,15 +388,15 @@ public with sharing class TIDS_Test {
 		TIDS_Controller.autoApproved(new List<String>{String.ValueOf(caseId)});
 		TIDSReportChanges.getBusinessProfileSpecialization(String.ValueOf(accountId), true);
 		TIDSReportChanges.getBusinessProfileSpecialization(String.ValueOf(accountId), false);
-        
+		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
 	}
 	@IsTest
-    private static void chgName() {
+	private static void chgName() {
 
-        Test.startTest();
-        String errorMessage = '';
+		Test.startTest();
+		String errorMessage = '';
 		String applicationDecision;
 		String userType='client';
 		String applicationType='chg-name-company';
@@ -440,11 +438,11 @@ public with sharing class TIDS_Test {
 		Test.stopTest();
 	}
 	@IsTest
-    private static void chgContact() {
+	private static void chgContact() {
 
-        Test.startTest();
-        String errorMessage = '';
-        
+		Test.startTest();
+		String errorMessage = '';
+		
 		String applicationDecision;
 		String userType='client';
 		String applicationType='chg-address-contact';
@@ -479,16 +477,16 @@ public with sharing class TIDS_Test {
 			reason);
 
 		TIDSReportChanges.getAddressContactDetails(String.ValueOf(accountId));
-	    
+		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
-    }
-    @IsTest
-    private static void saveandVettingHOApproved() {
+	}
+	@IsTest
+	private static void saveandVettingHOApproved() {
 
-        Test.startTest();
-        String errorMessage = '';
-        
+		Test.startTest();
+		String errorMessage = '';
+		
 		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
@@ -509,16 +507,16 @@ public with sharing class TIDS_Test {
 			caseId,
 			applicationsettings, 
 			applicationType);
-                
-        System.assertEquals(true,caseId!=null,false);
+				
+		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
 	}
 	@IsTest
-    private static void saveandVettingHOSubmited() {
+	private static void saveandVettingHOSubmited() {
 
-        Test.startTest();
-        String errorMessage = '';
-        
+		Test.startTest();
+		String errorMessage = '';
+		
 		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
@@ -548,17 +546,17 @@ public with sharing class TIDS_Test {
 			String.ValueOf(caseId),
 			applicationsettings,
 			reason);
-                
-        
+				
+		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
-    }
-    @IsTest
-    private static void saveandVettingHO2Rejected() {
+	}
+	@IsTest
+	private static void saveandVettingHO2Rejected() {
 
-        Test.startTest();
-        String errorMessage = '';
-        String applicationDecision;
+		Test.startTest();
+		String errorMessage = '';
+		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
 		String applicationsettings;
@@ -603,16 +601,16 @@ public with sharing class TIDS_Test {
 		TIDSHelper.getVettingDoneCondition(String.ValueOf(caseId));
 		TIDSHelper.getSortedBranches(String.ValueOf(accountId), 'Id', 'Desc', 'T');
 		TIDSHelper.getSortedCases(String.ValueOf(accountId),'Id', 'Desc', '0');
-        
+		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
-    }
-    @IsTest
-    private static void saveandVettingHOCase() {
+	}
+	@IsTest
+	private static void saveandVettingHOCase() {
 
-        Test.startTest();
-        String errorMessage = '';
-      	String applicationDecision;
+		Test.startTest();
+		String errorMessage = '';
+	  	String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
 		String applicationsettings;
@@ -640,71 +638,74 @@ public with sharing class TIDS_Test {
 		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
-    }
-    @IsTest
-    private static void saveandVettingHOAdministratorAdd() {
+	}
+	@IsTest
+	private static void saveandVettingHOAdministratorAdd() {
 
-        Test.startTest();
-        String errorMessage = '';
-      	String applicationDecision;
+		Test.startTest();
+		String errorMessage = '';
+	  	String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
 		String applicationsettings;
 		String reason='';
 		createProfileSetup();
 		readObjectsId2();
-		createHORight();
+		createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		
 		final List<Portal_Application_Right__c> rights =TIDSHelper.actionAdministrators(String.ValueOf(accountId), String.ValueOf(secondaryId), 'add', false);
+
+		Contact c1 = new Contact(Firstname='c', Lastname='b', Email='test@iata.org', Status__c='Active', AccountId=accountId);
+		insert c1;
 		TIDSHelper.getAdministrators(String.ValueOf(accountId), 'c');
-		
 		System.assertEquals(true, rights[0].Contact__c!=secondaryId );
 		Test.stopTest();
 	}
 	@IsTest
-    private static void saveandVettingHOAdministratorRemove() {
+	private static void saveandVettingHOAdministratorRemove() {
 
-        Test.startTest();
-        String errorMessage = '';
-       String applicationDecision;
+		Test.startTest();
+		String errorMessage = '';
+		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
 		String applicationsettings;
 		String reason='';
 		createProfileSetup();
 		readObjectsId2();
-		createHOSRight();
+		createHOSRight(contactId,TIDS_Constant.ADM_HOP);
+		createHOSRight(secondaryId,TIDS_Constant.ADM_HOS);
 		
-		final List<Portal_Application_Right__c>  rights =TIDSHelper.actionAdministrators(String.ValueOf(accountId), String.ValueOf(contactId), 'remove', false);
+		final List<Portal_Application_Right__c>  rights =TIDSHelper.actionAdministrators(String.ValueOf(accountId), String.ValueOf(secondaryId), 'remove', false);
 	
-		System.assertEquals(true, rights.size()==0, true);
+		System.assertEquals(true, rights.size()==1, true);
 		Test.stopTest();
 	}
 	@IsTest
-    private static void saveandVettingHOAdministratorSwap() {
+	private static void saveandVettingHOAdministratorSwap() {
 
-        Test.startTest();
-        String errorMessage = '';
-    	String applicationDecision;
+		Test.startTest();
+		String errorMessage = '';
+		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
 		String applicationsettings;
 		String reason='';
 		createProfileSetup();
 		readObjectsId2();
-		createHORight();
+		createHOSRight(contactId,TIDS_Constant.ADM_HOP);
+		createHOSRight(secondaryId,TIDS_Constant.ADM_HOS);
 		
 		final List<Portal_Application_Right__c>  rights =TIDSHelper.actionAdministrators(String.ValueOf(accountId), String.ValueOf(secondaryId), 'swap', false);
-        
-		System.assertEquals(true, rights[0].Contact__c==contactId,true);
+		
+		System.assertEquals(true, rights.size()==2,true);
 		Test.stopTest();
-    }
-    @IsTest
-    private static void saveandVettingHOSubFunctions() {
-
-        Test.startTest();
-        String errorMessage = '';
-        String applicationDecision;
+	}
+	@IsTest
+	private static void saveandVettingHOSubFunctions() {
+		Test.startTest();
+		String errorMessage = '';
+		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_HO';
 		String applicationsettings;
@@ -735,18 +736,18 @@ public with sharing class TIDS_Test {
 		TIDSHelper.getLocalPlace('city','Montreal','CA');
 		TIDSHelper.getLocalPlace('postal','H1M','CA');
 		
-		createHORight();
+		createHOSRight(contactId,TIDS_Constant.ADM_HOP);
 		TIDSHelper.newBranch(String.ValueOf(contactId));
 		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
-    }
-    @IsTest
-    private static void saveandVettingBRTest() {
+	}
+	@IsTest
+	private static void saveandVettingBRTest() {
 
-        Test.startTest();
-        String errorMessage = '';
-        String applicationDecision;
+		Test.startTest();
+		String errorMessage = '';
+		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_BR';
 		String applicationsettings;
@@ -775,16 +776,16 @@ public with sharing class TIDS_Test {
 			String.ValueOf(caseId),
 			applicationsettings,
 			reason);
-        
+		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
-    }
-    
-    @IsTest
-    private static void saveandVettingVBTest() {
-        Test.startTest();
-        String errorMessage = '';
-        String applicationDecision;
+	}
+	
+	@IsTest
+	private static void saveandVettingVBTest() {
+		Test.startTest();
+		String errorMessage = '';
+		String applicationDecision;
 		String userType='client';
 		String applicationType='NEW_VB';
 		String applicationsettings;
@@ -813,16 +814,16 @@ public with sharing class TIDS_Test {
 			String.ValueOf(caseId),
 			applicationsettings,
 			reason);
-        
+		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
 	}
 	
 	@IsTest
-    private static void saveandContactApplicant() {
-        Test.startTest();
-        String errorMessage = '';
-        
+	private static void saveandContactApplicant() {
+		Test.startTest();
+		String errorMessage = '';
+		
 		String applicationDecision;
 		String userType='client';
 		String applicationType='TIDS - Change of Address or Contact Details';
@@ -856,87 +857,140 @@ public with sharing class TIDS_Test {
 		Test.stopTest();
 	}
 	@IsTest
-    private static void saveandVetting() {
-        Test.startTest();
-        String errorMessage = '';
-        
+	private static void saveandVettingPart1() {
+		Test.startTest();
+		String errorMessage = '';
+		
 		String applicationDecision;
 		String userType='client';
 		String applicationType='TIDS - Change of Address or Contact Details';
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
-		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
-		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
-							accountId,
-							applicationsettings,
-							applicationtype,
-							null);
-		caseId=errmgt.caseId;
-		Case mycase = [Select Id, ContactId,Status,Subject,Reason1__c From Case Where Id=:caseId limit 1];
-		mycase.ContactId= contactId;
-		mycase.Status='Draft';
-		mycase.Subject='TIDS – Virtual Branch Access Request';
-		update mycase;
+		Case tidscase = new Case();
+		tidscase.Status = TIDS_Constant.IS_DRAFT;
+		tidscase.AccountId = accountId;
+		tidscase.ContactId = contactId;
+		tidscase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
+		tidscase.CaseArea__c = TIDS_Constant.CASE_AREA;
+		tidscase.Subject=TIDS_Constant.CASE_SUBJECT_VIRTUAL_ACCREQ;
+		tidscase.Priority = TIDS_Constant.CASE_PRIORITY;
+		insert tidscase;
 		
-		ApexPages.StandardController sc1 = new ApexPages.standardController(mycase);
+		ApexPages.StandardController sc1 = new ApexPages.standardController(tidscase);
 		TIDSVetting newvetting1 = new TIDSVetting(sc1);
 		newvetting1.getRequestCase();
 		newvetting1.isVirtualBranchRequest=false;
 		newvetting1.approveRequest();
-		newvetting1.rejectRequest();
-
-		mycase.ContactId= contactId;
-		mycase.Status='Draft';
-		mycase.Reason1__c='TIDS – Relinquishment';
-		update mycase;
-
-		ApexPages.StandardController sc2 = new ApexPages.standardController(mycase);
-		TIDSVetting newvetting2 = new TIDSVetting(sc2);
-		newvetting2.getRequestCase();
+		newvetting1.rejectRequest();		
 		
-		newvetting2.isVirtualBranchRequest=true;
-		newvetting2.isRelinquishRequest=false;
-		newvetting2.isReinstateRequest=false;
-		newvetting2.approveRequest();
-		newvetting2.isRelinquishRequest=true;
-		newvetting2.isVirtualBranchRequest=false;
-		newvetting2.isReinstateRequest=false;		
-		newvetting2.approveRequest();
-		newvetting2.isReinstateRequest=true;
-		newvetting2.isVirtualBranchRequest=false;
-		newvetting2.isRelinquishRequest=false;
-		newvetting2.approveRequest();
-
-		mycase.Status='Draft';
-		mycase.Reason1__c='TIDS – Reinstatement';
-		update mycase;
-
-		ApexPages.StandardController sc3 = new ApexPages.standardController(mycase);
-		TIDSVetting newvetting3 = new TIDSVetting(sc3);
-		newvetting3.getRequestCase();
-		
-		newvetting3.isVirtualBranchRequest=true;
-		newvetting3.isRelinquishRequest=false;
-		newvetting3.isReinstateRequest=false;
-		newvetting3.rejectRequest();
-		newvetting3.isRelinquishRequest=true;
-		newvetting3.isVirtualBranchRequest=false;
-		newvetting3.isReinstateRequest=false;		
-		newvetting3.rejectRequest();
-		newvetting3.isReinstateRequest=true;
-		newvetting3.isVirtualBranchRequest=false;
-		newvetting3.isRelinquishRequest=false;
-		newvetting3.rejectRequest();
-        
-		System.assertEquals(true,caseId!=null,false);
+		System.assertEquals(true,tidscase.Id!=null,false);
 		Test.stopTest();
 	}
 	@IsTest
-    private static void TIDSobject() {
+	private static void saveandVettingPart2() {
+		Test.startTest();
+		String errorMessage = '';
+		
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS - Change of Address or Contact Details';
+		String applicationsettings;
+		String reason='';
+		readObjectsId();
+		Case tidscase = new Case();
+		tidscase.Status = TIDS_Constant.IS_DRAFT;
+		tidscase.AccountId = accountId;
+		tidscase.ContactId = contactId;
+		tidscase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
+		tidscase.CaseArea__c = TIDS_Constant.CASE_AREA;
+		tidscase.Reason1__c=TIDS_Constant.CASE_REASON_RELINQUISH;
+		tidscase.Subject=TIDS_Constant.CASE_SUBJECT_RELINQUISH;
+		tidscase.Priority = TIDS_Constant.CASE_PRIORITY;
+		insert tidscase;
+		
+		ApexPages.StandardController sc2 = new ApexPages.standardController(tidscase);
+		TIDSVetting newvetting2 = new TIDSVetting(sc2);
+		newvetting2.getRequestCase();
+		
+		newvetting2.isRelinquishRequest=true;
+		newvetting2.approveRequest();
+		newvetting2.rejectRequest();
+		
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}
+	@IsTest
+	private static void saveandVettingPart3() {
+		Test.startTest();
+		String errorMessage = '';
+		
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS - Change of Address or Contact Details';
+		String applicationsettings;
+		String reason='';
+		readObjectsId();
+		Case tidscase = new Case();
+		tidscase.Status = TIDS_Constant.IS_DRAFT;
+		tidscase.AccountId = accountId;
+		tidscase.ContactId = contactId;
+		tidscase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
+		tidscase.CaseArea__c = TIDS_Constant.CASE_AREA;
+		tidscase.Reason1__c=TIDS_Constant.CASE_REASON_RELINQUISH;
+		tidscase.Subject=TIDS_Constant.CASE_REASON_REINSTATEMENT;
+		tidscase.Priority = TIDS_Constant.CASE_PRIORITY;
+		insert tidscase;
+		
+		ApexPages.StandardController sc2 = new ApexPages.standardController(tidscase);
+		TIDSVetting newvetting2 = new TIDSVetting(sc2);
+		newvetting2.getRequestCase();
+		
+		newvetting2.isRelinquishRequest=true;
+		newvetting2.approveRequest();
+		newvetting2.rejectRequest();
+		
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}
+	
+	@IsTest
+	private static void saveandVettingPart4() {
+		Test.startTest();
+		String errorMessage = '';
+		
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS - Change of Address or Contact Details';
+		String applicationsettings;
+		String reason='';
+		readObjectsId();
+		Case tidscase = new Case();
+		tidscase.Status = TIDS_Constant.IS_DRAFT;
+		tidscase.AccountId = accountId;
+		tidscase.ContactId = contactId;
+		tidscase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
+		tidscase.CaseArea__c = TIDS_Constant.CASE_AREA;
+		tidscase.Reason1__c=TIDS_Constant.CASE_REASON_REINSTATEMENT;
+		tidscase.Priority = TIDS_Constant.CASE_PRIORITY;
+		insert tidscase;
+		
+		ApexPages.StandardController sc3 = new ApexPages.standardController(tidscase);
+		TIDSVetting newvetting3 = new TIDSVetting(sc3);
+		newvetting3.getRequestCase();
+		
+		newvetting3.isReinstateRequest=true;
+		newvetting3.approveRequest();
+		newvetting3.rejectRequest();
+		
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}
+	@IsTest
+	private static void TIDSobject() {
 
-	    Test.startTest();
-    	TIDS_Controller.vTIDS tids = new TIDS_Controller.vTIDS();
+		Test.startTest();
+		TIDS_Controller.vTIDS tids = new TIDS_Controller.vTIDS();
 		tids.userInfo = new TIDS_Controller.vuserInfo();
 		tids.sections = new TIDS_Controller.vsections();
 		tids.sectionsDone = new List<TIDS_Controller.vsectionsDone>();
@@ -944,7 +998,7 @@ public with sharing class TIDS_Test {
 		tids.tidscase = new TIDS_Controller.vcase();
 		tids.applicationType='New HO';
 		tids.userType='';
-		TIDS_Controller.vslabel nl = new TIDS_Controller.vslabel('TIDS','TIDS');
+		TIDS_Controller.vslabel nl = new TIDS_Controller.vslabel(TIDS_Constant.TIDSVALUE ,TIDS_Constant.TIDSVALUE );
 		TIDS_Controller.verror nv = new TIDS_Controller.verror();
 		nv.fieldLabel='';
 		nv.fieldName='';
@@ -979,7 +1033,7 @@ public with sharing class TIDS_Test {
 		tids.sections.BusinessSpecialization.values.marketSpecialties = new TIDS_Controller.smarketSpecialties();
 		tids.sections.BusinessSpecialization.values.destinationSpecialties = new TIDS_Controller.sdestinationSpecialties();
 
-		TIDS_Controller.vslabel vsl = new TIDS_Controller.vslabel('TIDS', 'TIDS');
+		TIDS_Controller.vslabel vsl = new TIDS_Controller.vslabel(TIDS_Constant.TIDSVALUE , TIDS_Constant.TIDSVALUE );
 		TIDS_Controller.vsfields vsf = new TIDS_Controller.vsfields();
 		vsf.fieldName='';
 		vsf.values = new List<TIDS_Controller.vslabel>{vsl};
@@ -1170,11 +1224,11 @@ public with sharing class TIDS_Test {
 		
 	}
 	@IsTest
-    private static void TIDSHelperFunction1() {
-	    Test.startTest();
-    	String applicationType='ho';
+	private static void TIDSHelperFunctionPart1() {
+		Test.startTest();
+		String applicationType='ho';
 		String reason='TIDS is a good reason';
-		String payload='TIDS';
+		String payload=TIDS_Constant.TIDSVALUE ;
 	
 		readObjectsId();
 	
@@ -1193,11 +1247,11 @@ public with sharing class TIDS_Test {
 			
 	}
 	@IsTest
-    private static void TIDSHelperFunction2() {
-	    Test.startTest();
-    	String applicationType='ho';
+	private static void TIDSHelperFunctionPart2() {
+		Test.startTest();
+		String applicationType='ho';
 		String reason='TIDS is a good reason';
-		String payload='TIDS';
+		String payload=TIDS_Constant.TIDSVALUE ;
 	
 		readObjectsId();
 	
@@ -1225,7 +1279,7 @@ public with sharing class TIDS_Test {
 	}
 
 	@IsTest
-    private static void sendEmail(){
+	private static void sendEmail(){
 		Test.startTest();
 		
 		String applicationDecision;
@@ -1243,14 +1297,14 @@ public with sharing class TIDS_Test {
 		caseId= errmgt.caseId;
 		String noreplyemail= 'noreply@iata.org';
 		String emailto = 'nobody@iata.org';
-        EmailMessageWrapper ew = new EmailMessageWrapper(noreplyemail,
+		EmailMessageWrapper ew = new EmailMessageWrapper(noreplyemail,
 											emailto,
-                                            null,
-                                            null,
-                                            null,
-                                            new map<string,string>(),
-                                            null,
-                                            new Map<String,String>()
+											null,
+											null,
+											null,
+											new map<string,string>(),
+											null,
+											new Map<String,String>()
 											);
 		TIDSUtil.getPicklistValues('LGLTYP','Code__c');
 		TIDSUtil.saveFile(String.ValueOf(caseId),'data.json','json','erer',true);
@@ -1268,10 +1322,10 @@ public with sharing class TIDS_Test {
 		TIDSUtil.principalDestination();
 		TIDSUtil.salesVolume();
 		TIDSUtil.mainActivity();
-        TIDSUtil.ComposeMessage(null);
+		TIDSUtil.ComposeMessage(null);
 		TIDSUtil.deleteFiles(String.ValueOf(caseId));
-		TIDSUtil.saveTidsConfiguration('TIDS', 'erer');
-		TIDSUtil.getTidsConfiguration('TIDS');
+		TIDSUtil.saveTidsConfiguration(TIDS_Constant.TIDSVALUE , 'erer');
+		TIDSUtil.getTidsConfiguration(TIDS_Constant.TIDSVALUE );
 		TIDSUtil.getTidsCases(String.ValueOf(caseId), true);
 		
 		System.assertEquals(true,caseId!=null,false);
@@ -1279,30 +1333,9 @@ public with sharing class TIDS_Test {
 	}
 
 	@IsTest
-    private static void TidsBatchHelper() {
+	private static void TidsBatchHelper() {
 		Test.startTest();
-    	String applicationDecision;
-		String userType='client';
-		String applicationType='TIDS - Change of Address or Contact Details';
-		String applicationsettings;
-		String reason='';
-		readObjectsId();
-		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
-		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
-								accountId,
-								applicationsettings,
-								applicationtype,
-								null);
-	    caseId= errmgt.caseId;
-		TidsBatchHelper.testbatch(caseId);
-		
-		System.assertEquals(true,caseId!=null,false);
-		Test.stopTest();
-	}
-	@IsTest
-    private static void TidsConditions() {
-		Test.startTest();
-    	String applicationDecision;
+		String applicationDecision;
 		String userType='client';
 		String applicationType='TIDS - Change of Address or Contact Details';
 		String applicationsettings;
@@ -1315,15 +1348,13 @@ public with sharing class TIDS_Test {
 								applicationtype,
 								null);
 		caseId= errmgt.caseId;
-		TidsHelper.conditiontest(userId);
+		TidsBatchHelper.testbatch(caseId);
 		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
 	}
-
-	
 	@IsTest
-    private static void TidsRunBatchCleanse() {
+	private static void TidsConditions() {
 		Test.startTest();
 		String applicationDecision;
 		String userType='client';
@@ -1331,6 +1362,154 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+		List<IATA_ISO_Country__c> todelete = new List<IATA_ISO_Country__c>();
+		todelete = [SELECT Id, Sanctioned_Country__c FROM IATA_ISO_Country__c WHERE ISO_Code__c='CA'];
+		if (todelete.size()>0) {delete todelete;}
+		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
+		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
+								accountId,
+								applicationsettings,
+								applicationtype,
+								null);
+		caseId= errmgt.caseId;
+		TIDSHelper.getUserInfo(userId);
+		System.assertEquals(true,caseId!=null,false);
+		Test.stopTest();
+	}
+	@IsTest
+	private static void TidsTermsandConditions() {
+		Test.startTest();
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS - Change of Address or Contact Details';
+		String applicationsettings;
+		String reason='';
+		Portal_Applications__c service = [ SELECT Id
+				FROM Portal_Applications__c
+				WHERE Name=:TIDS_Constant.TIDSVALUE 
+				LIMIT 1];
+		TIDSUtil.saveFile(String.ValueOf(service.Id),'TIDS_Terms_and_Conditions.pdf','pdf','erer',true);
+		TIDSUtil.getTermsAndConditions();
+		System.assertEquals(true,service.Id!=null,false);
+		Test.stopTest();
+	}
+	private static Case createCase(Integer casetype){
+	    Case tidscase = new Case();
+		tidscase.Status = TIDS_Constant.IS_DRAFT;
+		tidscase.AccountId = accountId;
+		tidscase.ContactId = contactId;
+		tidscase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
+		tidscase.CaseArea__c = TIDS_Constant.CASE_AREA;
+		tidscase.Priority = TIDS_Constant.CASE_PRIORITY;
+		insert tidscase;
+		switch on casetype{
+			when 1 {
+				tidscase.Status=TIDS_Constant.IS_CUSTOMER;
+				tidscase.Decision__c='';
+				tidscase.Subject='TIDS - Change of';
+			}
+			when 2 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_REJECTED;
+				tidscase.Subject='TIDS - Change of';
+			}
+			when 3 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_APPROVED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_RELINQUISH;
+			}
+			when 4 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_APPROVED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_BRANCH_RELINQUISH;
+			}
+			when 5 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_APPROVED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_REINSTATE;
+			}
+			when 6 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_APPROVED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_BRANCH_REINSTATE;
+			}
+			when 7 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_APPROVED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_VIRTUAL_REINSTATE;
+			}
+			when 8 {
+				tidscase.Status=TIDS_Constant.IS_CUSTOMER;
+				tidscase.Decision__c='';
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_BRANCH;
+			}
+			when 9 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_REJECTED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_BRANCH;	
+			}
+			when 10 {
+				tidscase.Status=TIDS_Constant.IS_CUSTOMER;
+				tidscase.Decision__c='';
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH;
+			}
+			when 11 {
+				tidscase.Status=TIDS_Constant.IS_CLOSED;
+				tidscase.Decision__c=TIDS_Constant.DECISION_REJECTED;
+				tidscase.Subject=TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH;
+			}
+		}
+		update tidscase;
+		return tidscase;
+	}
+
+	@IsTest
+	private static void TidsClosedCaseForNotificationsPart1() {
+		Test.startTest();
+		readObjectsId();
+		Case tidscase =createCase(1);
+		tidscase =createCase(2);
+		tidscase =createCase(3);
+		tidscase =createCase(4);
+		tidscase =createCase(5);
+		tidscase =createCase(6);		
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}
+
+	@IsTest
+	private static void TidsClosedCaseForNotificationsPart2() {
+		Test.startTest();
+		readObjectsId();
+		Case tidscase =createCase(7);
+		tidscase =createCase(8);
+		tidscase =createCase(9);
+		tidscase =createCase(10);
+		tidscase =createCase(11);
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}
+    
+	
+	@IsTest
+	private static void TidsRunBatchCleansePart1() {
+		Test.startTest();
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS - Change of Address or Contact Details';
+		String applicationsettings;
+		String reason='';
+		readObjectsId();
+		
+		Case tidscase = new Case();
+		tidscase.AccountId=accountId;
+		tidscase.Reason1__c='TIDS - Case To Delete';
+		tidscase.Status=TIDS_Constant.IS_DRAFT;
+		tidscase.Origin=TIDS_Constant.CASE_ORIGIN;
+		tidscase.CaseArea__c=TIDS_Constant.TIDSVALUE;
+
+		insert tidscase;
+	
 		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 								accountId,
@@ -1346,7 +1525,84 @@ public with sharing class TIDS_Test {
 	}
 
 	@IsTest
-    private static void TidsRunBatchCleanse2() {
+	private static void TidsRunBatchCleansePart2() {
+		Test.startTest();
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS - Change of Address or Contact Details';
+		String applicationsettings;
+		String reason='';
+		readObjectsId();
+
+		Case tidscase = new Case();
+		tidscase.AccountId=accountId;
+		tidscase.Reason1__c='TIDS - Case To Delete';
+		tidscase.Status=TIDS_Constant.IS_DRAFT;
+		tidscase.Origin=TIDS_Constant.CASE_ORIGIN;
+		tidscase.CaseArea__c=TIDS_Constant.TIDSVALUE;
+
+		insert tidscase;
+		
+		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
+		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
+								accountId,
+								applicationsettings,
+								applicationtype,
+								null);
+		caseId= errmgt.caseId;
+		TidsBatchCleanseCases obj = new  TidsBatchCleanseCases();
+		String chron = '0 0 23 * * ?';        
+		String jobid = System.schedule('testScheduledApex', chron, obj);
+		CronTrigger ct = [Select id , CronExpression from CronTrigger where id = :jobId];
+		System.assertEquals(chron,ct.CronExpression);
+		Test.stopTest();
+		
+	}
+	 
+	@IsTest
+	private static void TidsRunBatchRelinquish() {
+		Test.startTest();
+		String applicationDecision;
+		String userType='client';
+		String applicationType='TIDS – Head Office Relinquishment';
+		String applicationsettings;
+		String reason='';
+		readObjectsId();
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		List<Account> accountsToInsert = new List<Account>();
+
+		acc = new Account();
+		acc.ParentId = accountId;
+		acc.Name = 'TIDS account';
+		acc.BillingCity = 'Montreal';
+		acc.BillingCountry = 'Canada';
+		acc.BillingStreet = 'some street';
+		acc.Location_Type__c = 'VB';
+		acc.IATACode__c = null;
+		acc.Location_Class__c='T';
+		acc.Type = 'Agency';
+		acc.Status__c = 'Approved';
+		acc.RecordTypeId = agencyRT;
+		accountsToInsert.add(acc);
+
+		insert accountsToInsert;
+
+		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
+		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
+								accountId,
+								applicationsettings,
+								applicationtype,
+								null);
+		caseId= errmgt.caseId;
+		TidsBatchRelinquishment obj  =new TidsBatchRelinquishment();
+		obj.caseId = caseId;
+		DataBase.executeBatch(obj,200);
+		System.assertEquals(true,obj!=null,false); 
+		Test.stopTest();
+	}	
+	
+	@IsTest
+	private static void TidsCaseInProgress(){
 		Test.startTest();
 		String applicationDecision;
 		String userType='client';
@@ -1361,21 +1617,9 @@ public with sharing class TIDS_Test {
 								applicationtype,
 								null);
 		caseId= errmgt.caseId;
-		TidsBatchCleanseCases obj = new  TidsBatchCleanseCases();
-		String chron = '0 0 23 * * ?';        
-        String jobid = System.schedule('testScheduledApex', chron, obj);
-        CronTrigger ct = [Select id , CronExpression from CronTrigger where id = :jobId];
-        System.assertEquals(chron,ct.CronExpression);
+		TIDSHelper.setCaseInProgress(caseId, userId);
+		Case tidscase = TIDSUtil.searchCase(TIDSUtil.cases[0].accountId, TIDS_Constant.IS_INPROGRESS);
+		System.assertEquals(tidscase.Status,TIDS_Constant.IS_INPROGRESS,false); 
 		Test.stopTest();
-		
 	}
-	 
-	@IsTest
-    private static void TidsRunBatchRelinquish() {
-		Test.startTest();
-		TidsBatchRelinquishment obj  =new TidsBatchRelinquishment();
-		DataBase.executeBatch(obj);
-		System.assertEquals(true,obj!=null,false); 
-		Test.stopTest();
-	}		
 }
