@@ -244,6 +244,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Preferred_Language__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Accreditation__c.Termination_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -255,6 +260,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Accreditation__c.Virtual_Branch_Enabled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Decision_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Decision__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -302,4 +317,8 @@
         <recordType>Accreditation__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>TIDSVetting</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
