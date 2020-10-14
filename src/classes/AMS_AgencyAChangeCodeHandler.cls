@@ -405,8 +405,6 @@ public class AMS_AgencyAChangeCodeHandler {
 
 		if(!oscarsToCopyData.isEmpty()){
 
-			System.debug('JR Debug oscarsToCopyData Start - FIN change code oscarsToCopyData: ' + oscarsToCopyData);
-
 			AMS_Utils.copyDataToAccount(oscarsToCopyData);
 
 			//NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code FIN
