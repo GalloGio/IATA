@@ -1,0 +1,14 @@
+<template>
+    <c-portal-page-container class="slds-no-print">
+        <lightning-layout slot="componentContent" multiple-rows="true">
+			<lightning-layout-item size="12" class={formContainerClass}>
+				<c-iata-dependent-picklist
+					fields={fields}
+					variant="cols"
+					onchange={handleChange}
+					onclick={handleClick}>
+				</c-iata-dependent-picklist>
+			</lightning-layout-item>
+		</lightning-layout>
+    </c-portal-page-container>
+</template>

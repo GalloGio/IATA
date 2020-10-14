@@ -1,0 +1,17 @@
+<template>
+	<fieldset class="slds-form-element" if:true={displayBase}>
+		<legend class="slds-form-element__legend slds-form-element__label" if:false={hideLabel}>{label}</legend>
+		<div class={formElementControlClass}>
+			<template for:each={options} for:item="option">
+				<span key={option.value} class={radioButtonContainerClass}>
+					<input type="radio" id={option.value} value={option.value} name={name} checked={option.selected} onchange={handleChange} />
+					<label class="slds-radio__label" for={option.value}>
+					  <span class="slds-radio_faux"></span>
+					  <span class="slds-form-element__label" data-checked={option.selected}>{option.label}</span>
+					</label>
+				  </span>						
+			</template>
+		</div>
+	</fieldset>
+	<c-iata-tab-bar if:true={displayTabBar} name={name} tabs={tabItems} full-width={tabFullWidth} onchange={handleChange}></c-iata-tab-bar>
+</template>

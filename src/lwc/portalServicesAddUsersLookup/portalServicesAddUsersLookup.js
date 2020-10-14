@@ -36,7 +36,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     @track getContainerClass;
     @track checkedIds = [];
 
-    cleanSearchTerm;
+    cleanSearchTerm = '';
     blurTimeout;
     searchThrottlingTimeout;
 

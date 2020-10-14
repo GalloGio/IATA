@@ -211,6 +211,19 @@
         <unique>false</unique>
     </fields>
     <label>Contact Tracking History</label>
+    <listViews>
+        <fullName>Email_changes</fullName>
+        <columns>What__c</columns>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>New_Value__c</columns>
+        <columns>Old_Value__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>Email changes</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>CONTH-{00000000}</displayFormat>
         <label>Contact Tracking History Name</label>

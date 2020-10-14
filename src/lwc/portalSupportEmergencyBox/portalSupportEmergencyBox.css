@@ -1,0 +1,17 @@
+.tooltip .tooltiptext {  
+    width: 226px;
+    z-index: 1;
+    visibility: hidden;/* 
+    bottom: 21%; */
+    left: 50%;
+    margin-left: -113px
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .outerboarder{
+    border: 1px solid lightgray;
+  }

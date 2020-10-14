@@ -1,23 +1,14 @@
-/**
- * Created by bkaya01 on 28/08/2019.
- */
-
 public without sharing class PortalResetPasswordController {
 
 	public class resultWrapper{
-		@AuraEnabled
-		public boolean success{get;set;}
-		@AuraEnabled
-		public String message{get;set;}
+		@AuraEnabled public boolean success{get;set;}
+		@AuraEnabled public String message{get;set;}
 	}
 
 	public class getUserWrapper{
-		@AuraEnabled
-		public User user{get;set;}
-		@AuraEnabled
-		public Boolean isExpired{get;set;}
-		@AuraEnabled
-		public String password{get;set;}
+		@AuraEnabled public User user{get;set;}
+		@AuraEnabled public Boolean isExpired{get;set;}
+		@AuraEnabled public String password{get;set;}
 	}
 
 	@AuraEnabled
@@ -68,9 +59,9 @@ public without sharing class PortalResetPasswordController {
 	}
 
 	@AuraEnabled
-	public static boolean resendEmail(String userInfo, String password){
+	public static boolean resendEmail(String userInfo, String password, Map<String,String> params){
 		User user = (User)JSON.deserialize(userInfo, user.class);
-		String link                  = PortalPasswordHandler.generateUrl(user, password, 'resetPassword');
+		String link                  = PortalPasswordHandler.generateUrl(user, password, 'resetPassword', params);
 		Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(user, link);
 
 		boolean success = PortalPasswordHandler.sendEmail(user.id, 'CSP_Forgot_Password_Email_VF', emailMap);

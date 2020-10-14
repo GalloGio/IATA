@@ -360,8 +360,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 									  FROM AMS_Account_Role__c
 									  WHERE Account__c = :currentAccount.account.Id
 									  AND Active__c = true
-									  AND RecordTypeId = :ownershipId]) {
-										  percentage += ar.Percentage__c;
+									  AND RecordTypeId = :ownershipId 
+									  AND Percentage__c>0]) {
+											percentage += ar.Percentage__c;
 									  }
 
 		return percentage == 100;
@@ -1067,7 +1068,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			};
 
 		for (String accountApiName : mapAccountToAccrFormFields.keyset()) {
-			newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+			if(accountApiName == 'GDS__c' && String.valueOf(sourceAccount.get(accountApiName)) != null){
+				List<String> gdsList = String.valueOf(sourceAccount.get(accountApiName)).split(';');
+				String gdsValues = '';
+				for(String gds : gdsList){
+					gdsValues = gdsValues + AMS_AgencyHelper.transformGDS(gds) + ';';
+				}
+				newForm.put(mapAccountToAccrFormFields.get(accountApiName), gdsValues.removeEnd(';'));
+			}
+			else{
+				newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+			}
 		}
 	}
 

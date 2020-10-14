@@ -166,24 +166,32 @@ public class ANG_PermissionSetHelper {
 	}
 
 	public void removePermission(String permissionSet, Id contact, Connected_App_Roles__c role) {
+		removePermission(permissionSet, contact, role.Connected_App_Provisioning_Name__c, role.Provisioning_Id__c);
+	}
+
+	public void removePermission(String permissionSet, Id contact, String provisioningAppName, String provisioningAppId) {
 		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
 
 		changes.get(permissionSet).operation = 'Deactivate';
 		changes.get(permissionSet).needsProvisioning = true;
 		permissionsChanged = true;
-		changes.get(permissionSet).provisioningAppName = role.Connected_App_Provisioning_Name__c;
-		changes.get(permissionSet).provisioningAppId = role.Provisioning_Id__c;
+		changes.get(permissionSet).provisioningAppName = provisioningAppName;
+		changes.get(permissionSet).provisioningAppId = provisioningAppId;
 
 		changes.get(permissionSet).contactsToRemove.add(contact);
 	}
 
 	public void setProvisioning(String permissionSet, Connected_App_Roles__c role) {
+		setProvisioning(permissionSet, role.Connected_App_Provisioning_Name__c, role.Provisioning_Id__c);
+	}
+
+	public void setProvisioning(String permissionSet, String provisioningAppName, String provisioningAppId) {
 		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
 
 		changes.get(permissionSet).needsProvisioning = true;
 		changes.get(permissionSet).operation = 'Create';
-		changes.get(permissionSet).provisioningAppName = role.Connected_App_Provisioning_Name__c;
-		changes.get(permissionSet).provisioningAppId = role.Provisioning_Id__c;
+		changes.get(permissionSet).provisioningAppName = provisioningAppName;
+		changes.get(permissionSet).provisioningAppId = provisioningAppId;
 	}
 
 	public Boolean isChanged(){

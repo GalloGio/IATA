@@ -167,16 +167,14 @@ global class ISSP_Ctrl_AccountStatements {
 			Where id = :UserInfo.getUserId()];
 
 		// check account status before doing anything to allow or reject access to info
-		if (this.currentUser.Contact.Account.Status__c != 'Approved' &&
-			this.currentUser.Contact.Account.Status__c != 'Changes Processed' &&
-			this.currentUser.Contact.Account.Status__c != 'Listed') {
+		if (this.currentUser.Contact.Account.Status__c == 'Terminated') {
 			this.listMessages.add(Label.ISSP_Account_not_approved);
 			return;
 		}
 
 		// get HQ account
 		this.account = this.currentUser.Contact.Account;
-		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
+		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.Account);
 		this.headquarter = this.account.Top_Parent__r == null? this.account: this.account.Top_Parent__r;
 		
 		// get Account Statements related with all accounts in the hierarchy
@@ -305,12 +303,13 @@ global class ISSP_Ctrl_AccountStatements {
 	/**
 	 * Get a list containing all account in the input account hirarchy
 	 */
-	private list<Account> getAllHierarchy(Id AccountId) {
+	private list<Account> getAllHierarchy(Account account) {
+		Id topParentId = account.Top_Parent__c == null? account.Id: account.Top_Parent__c;
 		return [
 			Select id, Name, ParentId
 			From Account
-			Where Id =:AccountId
-			Or Top_Parent__c = :AccountId
+			Where Id =:topParentId
+			Or Top_Parent__c = :topParentId
 		];
 	}
 

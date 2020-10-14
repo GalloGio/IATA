@@ -453,7 +453,7 @@
         <label>Main Currency</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -465,7 +465,7 @@
         <label>Secondary Currency</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1292,7 +1292,7 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
     </validationRules>
     <validationRules>
         <fullName>Restrict_IAC_request</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Internal users must not be able to assign an IATA Accreditation &amp; Changes portal service with Access Status = Access Requested to a contact under accounts registered as Freight Forwarders in a CNS country.</description>
         <errorConditionFormula>AND(
     OR(
@@ -1369,7 +1369,10 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
     ),
     AND(
       Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c,
-      Contact__r.Account.RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+      OR(
+        Contact__r.Account.RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+        Contact__r.Account.RecordType.DeveloperName = &apos;Standard_Account&apos;
+      ),
       NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
       NOT($Permission.Grant_SIS_Service),
       $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;
@@ -1377,6 +1380,7 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
     AND(
       Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c,
       Contact__r.Account.RecordType.DeveloperName != &apos;IATA_Agency&apos;,
+      Contact__r.Account.RecordType.DeveloperName != &apos;Standard_Account&apos;,
       NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
       $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;
     )

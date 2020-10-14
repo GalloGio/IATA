@@ -1,6 +1,8 @@
 @isTest
 public class ams2gdp_TestDataGenerator
 {
+	public static Integer counter = 0;
+
 	public static List<Account> generateAccounts(Integer nb, Boolean doInsert)
 	{
 		List<Account> accounts = new List<Account>();
@@ -9,7 +11,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer i = 0; i < nb; i++)
 		{
 			accounts.add(new Account(
-				Name = 'test account ' + i ,
+				Name = 'test account ' + counter ,
 				Sector__c = 'IATA',
 				Category__c = 'IATA HEAD OFFICE',
 				CurrencyIsoCode = 'USD',
@@ -25,15 +27,16 @@ public class ams2gdp_TestDataGenerator
 				ShippingState='Quebec',
 				ShippingCountry='Canada',
 				Customer_Type__c = 'Member Airline',
-				Location_Class__c = 'C'+i,
-				Phone_Number__c = '+1-888-123-456'+i,
-				Phone = '+1-888-123-456'+i,
-				Fax = '+1-999-123-45'+i,
+				Location_Class__c = 'C'+counter,
+				Phone_Number__c = '+1-888-123-456'+counter,
+				Phone = '+1-888-123-456'+counter,
+				Fax = '+1-999-123-45'+counter,
 				GDS__c = 'ABAC;UALA',
 				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
-				IATACode__c = 'I'+i,
+				IATACode__c = 'I'+counter,
 				IATA_ISO_Country__c=countries[0].Id
 			));
+			counter++;
 		}
 
 		//Each Account should have at least one accreditation
@@ -74,7 +77,7 @@ public class ams2gdp_TestDataGenerator
 		for(Integer i = 0; i < nb; i++)
 		{
 			accounts.add(new Account(
-				Name = 'test account -new ' + i ,
+				Name = 'test account -new ' + counter ,
 				Sector__c = 'IATA',
 				Category__c = 'IATA HEAD OFFICE',
 				CurrencyIsoCode = 'USD',
@@ -89,13 +92,14 @@ public class ams2gdp_TestDataGenerator
 				ShippingState='Quebec',
 				ShippingCountry='Canada',
 				Customer_Type__c = 'Member Airline',
-				Location_Class__c = 'C'+i,
-				Phone_Number__c = '+1-888-123-456'+i,
-				Fax = '+1-999-123-45'+i,
+				Location_Class__c = 'C'+counter,
+				Phone_Number__c = '+1-888-123-456'+counter,
+				Fax = '+1-999-123-45'+counter,
 				GDS__c = 'Ref 1;Ref 2',
-				AIMS_Id__c='1234'+i,
-				Webstar_Id__c='123'+i
+				AIMS_Id__c='1234'+counter,
+				Webstar_Id__c='123'+counter
 			));
+			counter++;
 		}
 		if(doInsert)
 			insert accounts;

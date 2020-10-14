@@ -198,12 +198,32 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Top_Account__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>IsSCIMIFG__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>New_Role_Requested__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Last_Visit_Date__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Currency2__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Terms_Acceptance_Version__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
@@ -241,6 +261,92 @@
             <field>Currency1__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Is_Favorite__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Access_Pending_Detail__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account_Airline_Prefix__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Favourite_Service__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastActivityDate</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
         <masterLabel>Portal Service Access</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Email</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.ISSP_Contact_Name__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Title</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.User_Portal_Status__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Id</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <masterLabel>Contact Information</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Id</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Category__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Name</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.RecordType.DeveloperName</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Sector__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.IATACode__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <masterLabel>Account Information</masterLabel>
     </sections>
 </ReportType>

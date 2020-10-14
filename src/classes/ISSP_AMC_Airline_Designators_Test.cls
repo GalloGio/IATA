@@ -170,18 +170,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -191,7 +192,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -242,18 +242,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_CARGO).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -263,7 +264,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -313,18 +313,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_NON_SCHEDULED_PASSENGER).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -334,7 +335,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -384,18 +384,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_NON_SCHEDULED_CARGO).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -405,7 +406,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -455,18 +455,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_FERRY_COMPANY).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -476,7 +477,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -526,18 +526,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_CRS).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -547,7 +548,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -597,18 +597,19 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_ULD).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -618,7 +619,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -668,18 +668,20 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
+		
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_BUS_COMPANY).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					controller.init();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
@@ -689,7 +691,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 	/*
@@ -739,19 +740,20 @@ public class ISSP_AMC_Airline_Designators_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
 			System.runAs(myUser)
 			{
 				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Airline_Designators;
 					Test.setCurrentPageReference(pageRef);
+					Test.StartTest();
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_RAILWAY_COMPANY).Id);
 					ISSP_AMC_Airline_Designators controller = new ISSP_AMC_Airline_Designators();
 					controller.step = '1';
 					controller.saveParticipation();
 					controller.init();
 					ISSP_AMC_ParticipationFactory.testDesignatorUploadFiles(controller);
+					Test.StopTest();
 					String testLanguage = controller.displayLanguage;
 					String testComName = controller.communityName;
 					List <SelectOption> testCountry = controller.countryList;
@@ -760,7 +762,6 @@ public class ISSP_AMC_Airline_Designators_Test {
 					controller.isSaved = true;
 				}
 			}
-		Test.StopTest();
 	}
 
 }

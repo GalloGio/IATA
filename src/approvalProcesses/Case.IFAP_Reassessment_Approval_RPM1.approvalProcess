@@ -22,10 +22,6 @@
                 <type>user</type>
             </approver>
             <approver>
-                <name>martinyuks@iata.org</name>
-                <type>user</type>
-            </approver>
-            <approver>
                 <name>sarrie@iata.org</name>
                 <type>user</type>
             </approver>
@@ -46,11 +42,15 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>praban@iata.org</name>
+                <name>shaikhn@iata.org</name>
                 <type>user</type>
             </approver>
             <approver>
                 <name>thamoh@iata.org</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>widjajan@iata.org</name>
                 <type>user</type>
             </approver>
             <approver>
@@ -77,7 +77,7 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>xuj@iata.org</name>
+                <name>dengww@iata.org</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

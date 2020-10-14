@@ -153,6 +153,7 @@ global class ANG_RME_Alert_Service {
 			List<Account> accs = [
 				SELECT Id, IATACode__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
 					 FROM RHC_Informations__r)
 				FROM Account
@@ -168,7 +169,7 @@ global class ANG_RME_Alert_Service {
 				Account acct = accs[0];
 
 				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
-					if(isEligibleForRhcExceptionalMonitoring(eventType, req)){
+					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
 						saveAlert(req, acct.Id, null);
 					} else {
 						//Ignore the request
@@ -225,9 +226,8 @@ global class ANG_RME_Alert_Service {
 		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
 	}
 
-	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request) {
-		return eventType == RHC_ALERT_EVENT_TYPE && request.direction == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
-			&& request.thresholdLevel == ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100;
+	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
+		return eventType == RHC_ALERT_EVENT_TYPE && (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel + request.direction));
 	}
 
 	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {
@@ -411,19 +411,19 @@ global class ANG_RME_Alert_Service {
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				result.isSuccess = false;
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW3', acc.IATACode__c, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD3', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
 				log.Error_Code__c = 'Currency Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW4', acc.IATACode__c, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD4', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedRHCValue != rounded){
 				result.isSuccess = false;
 				log.Error_Code__c = 'RHC Value Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW5', acc.IATACode__c, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD5', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else
@@ -459,13 +459,13 @@ global class ANG_RME_Alert_Service {
 			if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
 				if(ProvisionalIsAppliedImmediately){
 					log.Error_Code__c = 'Iata Code Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					ServiceNow_Helper.sendRequestToSNOWRME('JSD6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
 				}
 			}
 			else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
 				if(ProvisionalIsAppliedImmediately){
 					log.Error_Code__c = 'Currency Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					ServiceNow_Helper.sendRequestToSNOWRME('JSD7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
 				}
 			}
 			else{
@@ -496,7 +496,7 @@ global class ANG_RME_Alert_Service {
 
 			if(result.res.iataCode != iataCode){
 				log.Error_Code__c = 'Iata Code Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD19',iataCode, log, result);
 			}
 
 			if(String.isNotEmpty(log.Error_Code__c)) update log;
@@ -562,9 +562,9 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
 				log.Error_Message__c = res.getBody();
 				if(mappingName == 'ENDORS_CERT' && res.getStatusCode() >= 400)
-					ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
+					ServiceNow_Helper.sendRequestToSNOWRME('JSD21',iataCode, log, result);
 				else if(res.getStatusCode() >= 400)
-					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'SNOW9': 'SNOW9.1'), iataCode, log, result);
+					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'JSD9': 'JSD20'), iataCode, log, result);
 				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
 		} catch(Exception e) {

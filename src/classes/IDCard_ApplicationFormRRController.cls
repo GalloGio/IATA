@@ -1,4 +1,4 @@
-public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbstractController {
+public without sharing class IDCard_ApplicationFormRRController extends  IDCardAbstractController {
 
 	private String part;
 	private final String sectionOne = '1';
@@ -54,6 +54,10 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
 	public String IDCard_BSP_Essentials_for_Travel_Agents{get; set;}
 	public String IDCard_BSP_Standard_Documents_Procedures{get; set;}
 	public String IDCard_Intro_to_the_BSP_System_Language{get; set;}
+
+	//RJ-ENHC0013702 add more 1 course
+	public String Distribution_Airlines_Retailing_with_NDC{get; set;}
+
 
 	private String IATA_Code;
 	private Account theAccount;
@@ -318,6 +322,10 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
 		IDCard_BSP_Essentials_for_Travel_Agents = Label.IDCard_BSP_Essentials_for_Travel_Agents;
 		IDCard_BSP_Standard_Documents_Procedures = Label.IDCard_BSP_Standard_Documents_Procedures;
 		IDCard_Intro_to_the_BSP_System_Language = Label.IDCard_Intro_to_the_BSP_System_Language;
+
+		//RJ-ENHC0013702
+		Distribution_Airlines_Retailing_with_NDC = Label.Distribution_Airlines_Retailing_with_NDC;
+		
 
 		//knows what part of page to load
 		part = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PAGE_PART));

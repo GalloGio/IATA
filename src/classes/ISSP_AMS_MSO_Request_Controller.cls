@@ -339,15 +339,16 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 		try {
 			// try to generate IATA Code
 			Boolean success = generateMsoIataCode(msoAccount.Id, accreditationForm.Id, oscar.Id, oscarCase.Id);
-
 			if (!success) sendConfirmationEmail(oscarCase.Id, currentUser.ContactId, false); // for success update the case with the IATA code and send confirmation after, to have the code in the email
 		} catch (Exception ex){
 			system.debug('error processing the OSCAR: ' + ex.getMessage());
 			// don't block, as the OSCAR has been correctly created at this point
 			// it just fails to be automatically processed, so it will have to be processed manually
 		}
-
-		//return new PageReference('/ISSP_AMS_MSO_Request?step=success&caseId=' + oscarCase.Id);
+		if (generatedIATACODE==null) {
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,Label.ISSP_AMS_MSO_Submit_Case_error));
+			return null;
+		}
 		return new PageReference('/ISSP_AMS_MSO_Request?step=success&iatacode='+generatedIATACODE+'&caseId=' + oscarCase.Id);
 	}
 

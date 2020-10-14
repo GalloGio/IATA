@@ -1,0 +1,15 @@
+:host>div {
+	height: 184px;
+	background-color: rgba(30, 50, 250, 0.69);
+}
+
+c-portal-breadcrumbs {
+    left: 0;
+    top: calc(50% - 26px/2);
+}
+
+h1 {
+    height: 40px;
+    font-weight: 500;
+    font-size: 2rem;
+}

@@ -1,0 +1,25 @@
+.slds-col {
+	/*flex-grow: 1;*/
+}
+
+.slds-radio_faux {
+	border-color: #1E32FA;
+	margin-right: 0.825em;
+}
+
+.slds-radio_faux:after {
+	background-color: #1E32FA;
+}
+
+.slds-form-element__label {
+	font-style: normal;
+	font-weight: normal;
+	color: #999999;
+	font-size: inherit;
+	padding-right: 1.5em;
+    padding-top: 0;
+}
+
+.slds-form-element__label[data-checked=true] {
+	color: #333333;
+}

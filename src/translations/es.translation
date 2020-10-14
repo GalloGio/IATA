@@ -161,6 +161,10 @@
         <name>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</name>
     </customLabels>
     <customLabels>
+        <label><!-- ADSR_Description --></label>
+        <name>ADSR_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Automated Process Profile Name used in the AIMS Account Trigger (BU) --></label>
         <name>AIMSAccountBeforeUpdate_AutoProcess</name>
     </customLabels>
@@ -1671,6 +1675,10 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
         <label>Todas las notificaciones</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -1701,6 +1709,50 @@
     <customLabels>
         <label><!-- Attention --></label>
         <name>Attention</name>
+    </customLabels>
+    <customLabels>
+        <label>El siguiente comentario fue publicado sobre su caso</label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>ayer.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Por favor, háganos saber si su consulta ha sido resuelta o si hay algo más en lo que podamos ayudarle en este caso. Puede usar los botones de abajo o acceder al caso desde</label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede hacérnoslo saber accediendo a la consulta en el Portal de Clientes de la IATA.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Cerraremos el caso automáticamente en caso de que no recibir información adicional de usted en 24 horas.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Estamos cerrando el caso</label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>ya que no hemos recibido información adicional de usted en las últimas 48 horas.</label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Si necesita más ayuda en este caso, puede añadir un comentario o contactarnos a través de un nuevo caso en</label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Acabamos de añadir una respuesta a su caso, con el número</label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede ir a los detalles del caso para ver la respuesta.</label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede hacérnoslo saber accediendo a la consulta en el Portal del Cliente de IATA.</label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
     </customLabels>
     <customLabels>
         <label><!-- Auto renew payment method error --></label>
@@ -2896,6 +2948,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
+        <label>Llámanos.</label>
+        <name>CSP_Call_Tile_SubLabel</name>
+    </customLabels>
+    <customLabels>
         <label>Cancelar</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -2980,6 +3036,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
+        <label>Chat en $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Revise el correo electrónico para conseguir los datos de acceso.</label>
         <name>CSP_Check_Email</name>
     </customLabels>
@@ -3012,6 +3072,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>Una queja tarda hasta 5 días hábiles para ser resuelta. Si tiene una pregunta o solicitud, por favor use la opción &lt;b&gt; Crear un caso &lt;/b&gt; para que podamos responderle más rápido.</label>
+        <name>CSP_Complaint_Select_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Complete su perfil</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
@@ -3032,12 +3096,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Confirmed_Requested_Service_EFApps_Message --></label>
+        <name>CSP_Confirmed_Requested_Service_EFApps_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Su {0} solicitud de acceso se ha entregado a los administradores del portal. Si tiene alguna pregunta o petición sobre el proceso, puede ponerse en contacto con un administrador a continuación:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
         <label>Cambir su nombre de perfil afectará la validez de su documento de identidad. Comuníquese con nuestro equipo de atención al cliente para cambiar su nombre de perfil.</label>
         <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Message --></label>
+        <name>CSP_Contact_Us_Banner_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Us Banner Title --></label>
+        <name>CSP_Contact_Us_Banner_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
@@ -3102,6 +3178,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Denegar acceso</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Escribanos un comentario breve sobre su experiencia</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Documento añadido a mis marcadores</label>
@@ -3284,6 +3364,50 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
+        <label>Esto es una &lt;b&gt;Emergencia &lt;/b&gt;</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>El apoyo de emergencia es 24/7 y sólo se ofrece en inglés.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Tenga en cuenta que el apoyo proporcionado a través del canal de Emergencia se ofrece en &lt;b&gt; Inglés &lt;/b&gt; y para las siguientes situaciones críticas:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Si su consulta no está relacionada con una de estas situaciones, por favor pulse &lt;b&gt; Enviar como consulta &lt;/b&gt; abajo para crear un caso.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Ha seleccionado la opción de Emergencia</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tenga en cuenta que el apoyo proporcionadoa través del canal de Emergencia es sólo para las siguientes situaciones críticas:</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Problema de acceso al sistema o interrupción de la plataforma</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Problemas con la facturación (discrepancias importantes)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Suspensión del sistema</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Sospecha de actividad fraudulenta</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Por favor, no solicite apoyo de emergencia a menos que sea sobre fraude, problemas con la emisión de billetes o asuntos financieros.</label>
+        <name>CSP_Emergency_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
         <name>CSP_ErrorMsg_Flow4_Logout_LMS</name>
     </customLabels>
@@ -3428,6 +3552,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
+        <label>Exprese su opinión...</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>En la IATA, estamos constantemente mejorando nuestros productos y servicios para poder ofrecerle una experiencia excepcional. Sus experiencia y opiniones nos ayudan a mejorar. Haga clic en el botón de abajo para compartir su opinión.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Su opinión es importante para nosotros</label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Esto es un(a)</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Go to Webstar --></label>
         <name>CSP_Go_to_Webstar</name>
     </customLabels>
@@ -3448,8 +3588,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label>Atentamente, IATA Customer Service Center</label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal del Cliente de IATA</label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -4200,6 +4348,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LeadCreator_AfterSubmitMessage --></label>
+        <name>CSP_LeadCreator_AfterSubmitMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ContactPreference_label --></label>
+        <name>CSP_LeadCreator_ContactPreference_label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_SubTitle --></label>
+        <name>CSP_LeadCreator_SubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_ThankYou --></label>
+        <name>CSP_LeadCreator_ThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LeadCreator_Title --></label>
+        <name>CSP_LeadCreator_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Aprender más</label>
         <name>CSP_Learn_More</name>
     </customLabels>
@@ -4394,6 +4562,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Informacion personal</label>
         <name>CSP_Personal_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -4709,8 +4881,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_SelectPortalStatus</name>
     </customLabels>
     <customLabels>
+        <label>Seleccione el asunto aquí</label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_ADSR --></label>
+        <name>CSP_Service_ADSR</name>
+    </customLabels>
+    <customLabels>
         <label>Acceso al servicio</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -4837,6 +5025,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Compartir</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Se ha copiado el enlace directo de preguntas frecuentes!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
         <label>Omitir por ahora</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -4845,12 +5041,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Por favor, introduzca una línea de asunto breve</label>
+        <name>CSP_SubjectSubtitleCC</name>
+    </customLabels>
+    <customLabels>
         <label>Enviar</label>
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmitApproval --></label>
         <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Enviar como emergencia</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Enviar como consulta</label>
+        <name>CSP_SubmitAsQuery</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
@@ -4889,6 +5097,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>Todos los asuntos</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Sus asuntos recientes</label>
+        <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Seguimiento</label>
         <name>CSP_Track</name>
     </customLabels>
@@ -4907,6 +5123,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Treasury Dashboard --></label>
         <name>CSP_Treasury_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
     </customLabels>
     <customLabels>
         <label>resolución de problemas</label>
@@ -5153,6 +5373,106 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
+        <label>Este caso no puede ser cerrado o ya está cerrado.</label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>El enlace ha caducado.</label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir al Portal del Cliente</label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Gracias, tu respuesta ha sido guardada.</label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>No en este momento</label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Está siendo redirigido a la encuesta.</label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>Hemos cerrado el siguente caso:</label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Como no hemos tenido noticias de usted en 48 horas, ya hemos cerrado el siguiente caso:</label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label>¡Gracias por la confirmación!</label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ha ocurrido un error al redirigirle a la encuesta.</label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>En la IATA, estamos constantemente mejorando nuestros servicios para poder ofrecerle una experiencia excepcional. Por eso nos gustaría pedirle su opinión sobre algunos puntos que consideramos cruciales. No debería tardar más de dos minutos.</label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Haga la encuesta</label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>La respuesta no fue clara</label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede cerrar este caso ahora</label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir a Contactar con nosotros</label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label>Tengo una nueva consulta</label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Se ha resuelto su consulta?</label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label>En caso de que no tengamos noticias suyas en las próximas 48 horas, consideraremos que ya no necesita ayuda y cerraremos el caso.</label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Por favor, háganos saber cómo podemos seguir ayudándole con esta consulta.</label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label>Como tiene una nueva consulta, hemos cerrado el caso {arg0} y puede crear la nueva consulta haciendo clic en el botón de abajo para que le respondamos lo antes posible.</label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Gracias por su confirmación.</label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Por favor, facilite información adicional para que podamos seguir trabajando en este caso.</label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label>esta encuesta</label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Valoramos su opinión. Por favor, háganos saber su opinión sobre la asistencia de IATA&amp;apos en</label>
+        <name>Case_Comment_Survey_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
     </customLabels>
@@ -5321,10 +5641,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_All_Other_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- CurrencyCenter_All_Others --></label>
-        <name>CurrencyCenter_All_Others</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
     </customLabels>
@@ -5365,6 +5681,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_BSP_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_Launch_Date --></label>
+        <name>CurrencyCenter_BSP_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -5401,6 +5721,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_CASS_Launch_Date --></label>
+        <name>CurrencyCenter_CASS_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
@@ -5417,6 +5741,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -5425,12 +5757,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CurrencyCenter_Countries_Map</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Country_Heat_Map --></label>
+        <name>CurrencyCenter_Country_Heat_Map</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Country_Profiles --></label>
         <name>CurrencyCenter_Country_Profiles</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Currency_Exchange_Rate --></label>
+        <name>CurrencyCenter_Currency_Exchange_Rate</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
@@ -5603,6 +5943,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CurrencyCenter_Search_Additional_Information --></label>
         <name>CurrencyCenter_Search_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_See_World_Map --></label>
+        <name>CurrencyCenter_See_World_Map</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Select_Country --></label>
@@ -7373,6 +7717,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Discounted_Amount</name>
     </customLabels>
     <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Documents POP --></label>
         <name>Documents_POP</name>
     </customLabels>
@@ -7405,6 +7753,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>EFComplianceReview</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Account --></label>
+        <name>EF_Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -7413,8 +7765,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>EF_Currency_Not_In_Contract_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Invitation Sent --></label>
+        <name>EF_Invitation_Sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invite --></label>
+        <name>EF_Invite</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF_Select --></label>
+        <name>EF_Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E&amp;F Welcome Email Body --></label>
+        <name>EF_Welcome_Email_Body</name>
     </customLabels>
     <customLabels>
         <label><!-- E-Bulletin Service Description --></label>
@@ -7911,6 +8279,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- IATA Acr Changes Service Description --></label>
         <name>IATA_Acr_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Acr Changes Service Description CNS --></label>
+        <name>IATA_Acr_Changes_Service_Description_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Airl Location Codes Service Description --></label>
@@ -12746,6 +13118,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMC_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CNS endorsement HO --></label>
+        <name>ISSP_AMSCNS_Endorsement_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_ACCR_Alert1 --></label>
         <name>ISSP_AMS_ACCR_Alert1</name>
     </customLabels>
@@ -12768,6 +13144,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Acepte los términos y condiciones antes de enviar su solicitud de acreditación de agencia a la IATA.</label>
         <name>ISSP_AMS_Accept_TOS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Accept TOS CNS --></label>
+        <name>ISSP_AMS_Accept_TOS_CNS</name>
     </customLabels>
     <customLabels>
         <label>Añadir empresa</label>
@@ -12804,6 +13184,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Acreditación de agencia</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Agency_Endorsement --></label>
+        <name>ISSP_AMS_Agency_Endorsement</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Agency Type --></label>
@@ -12880,6 +13264,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AMS_Business_Activities_Field_Label --></label>
         <name>ISSP_AMS_Business_Activities_Field_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CASS Commercial Account HO --></label>
+        <name>ISSP_AMS_CASS_Commercial_Account_HO</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_CASS_Contact --></label>
@@ -13206,6 +13594,46 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CNS CASS Contact --></label>
+        <name>ISSP_AMS_CNS_CASS_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Contact Required --></label>
+        <name>ISSP_AMS_CNS_Contact_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS DGR Trained Staff Members Alert --></label>
+        <name>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS DGR Trained Staff Members Alert BR --></label>
+        <name>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CNS_ENDORSEMENT --></label>
+        <name>ISSP_AMS_CNS_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Error Message Section 3 Ownership --></label>
+        <name>ISSP_AMS_CNS_Error_Message_Section_3_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS FIN Contact Help --></label>
+        <name>ISSP_AMS_CNS_FIN_Contact_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Office Alert --></label>
+        <name>ISSP_AMS_CNS_Office_Alert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Portal Admin Help --></label>
+        <name>ISSP_AMS_CNS_Portal_Admin_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS warehouse Alert --></label>
+        <name>ISSP_AMS_CNS_warehouse_Alert</name>
+    </customLabels>
+    <customLabels>
         <label>¿Seguro que desea cancelar?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
@@ -13288,6 +13716,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_New --></label>
@@ -13458,6 +13890,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Click here CNS --></label>
+        <name>ISSP_AMS_Click_here_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Comparativa de tipos de acreditación</label>
         <name>ISSP_AMS_Compare_Accreditation_Types</name>
     </customLabels>
@@ -13518,6 +13954,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Download_PDF_Copy_CNS --></label>
+        <name>ISSP_AMS_Download_PDF_Copy_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Download PDF NOC --></label>
         <name>ISSP_AMS_Download_PDF_NOC</name>
     </customLabels>
@@ -13548,6 +13988,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Elija tipo de ubicación</label>
         <name>ISSP_AMS_Empty_Location_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Endorsement CNS --></label>
+        <name>ISSP_AMS_Endorsement_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Expiry_date --></label>
@@ -13790,6 +14234,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Facility_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Federal EIN Error Message --></label>
+        <name>ISSP_AMS_Federal_EIN_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label>La subida de su archivo no pudo realizarse. Se conoce problemas de compatibilidad con Internet Explorer 10. Por favor, intente subir el archivo de nuevo usando Explorer 11 o Chrome. Si continuan sus problemas, por favor contacte con Support y cree un query para notificarlo.</label>
         <name>ISSP_AMS_File_Upload_Issue</name>
     </customLabels>
@@ -13824,6 +14272,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Formulario de acreditación:</label>
         <name>ISSP_AMS_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Form CNS --></label>
+        <name>ISSP_AMS_Form_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Form_Missing_Signed_File --></label>
@@ -14108,6 +14560,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section6_Cargo --></label>
         <name>ISSP_AMS_LeftNav_Section6_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section6_Financial_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section6_Financial_Cargo</name>
     </customLabels>
     <customLabels>
         <label>7. Declaración de Ventas Internacionales</label>
@@ -14422,6 +14878,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_MSO_StepFinal_Thanks</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Submit_Case_error --></label>
+        <name>ISSP_AMS_MSO_Submit_Case_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Termination_Confirmation_Text --></label>
         <name>ISSP_AMS_MSO_Termination_Confirmation_Text</name>
     </customLabels>
@@ -14514,6 +14974,18 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Multicountry_Submit_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NEW_BR --></label>
+        <name>ISSP_AMS_NEW_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NEW_HO --></label>
+        <name>ISSP_AMS_NEW_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NEW_INDEPENDENT_BR --></label>
+        <name>ISSP_AMS_NEW_INDEPENDENT_BR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NOC_All_Countries --></label>
         <name>ISSP_AMS_NOC_All_Countries</name>
     </customLabels>
@@ -14532,6 +15004,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Para cada sección siguiente: Confirme que los datos de la agencia son correctos O avise a la IATA del cambio y actualice los datos de su agencia</label>
         <name>ISSP_AMS_NOC_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Instructions CNS --></label>
+        <name>ISSP_AMS_NOC_Instructions_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NOC Instructions New --></label>
@@ -14568,6 +15044,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS Name of employer --></label>
         <name>ISSP_AMS_Name_of_employer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CASS Commercial Account BR --></label>
+        <name>ISSP_AMS_New_Commercial_Account_BR</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS New HO details --></label>
@@ -14970,6 +15450,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_TC</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_CNS_Only --></label>
+        <name>ISSP_AMS_NoC_TC_CNS_Only</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change CASS --></label>
         <name>ISSP_AMS_NoC_TC_Change_CASS</name>
     </customLabels>
@@ -14998,6 +15482,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_TC_Change_CGO_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_CNS --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_CNS2 --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CNS2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP --></label>
         <name>ISSP_AMS_NoC_TC_Change_EACP</name>
     </customLabels>
@@ -15008,6 +15500,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP3 --></label>
         <name>ISSP_AMS_NoC_TC_Change_EACP3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_First_CNS --></label>
+        <name>ISSP_AMS_NoC_TC_Change_First_CNS</name>
     </customLabels>
     <customLabels>
         <label>Cesionario:</label>
@@ -15050,8 +15546,16 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_CNS --></label>
+        <name>ISSP_AMS_NoC_error_message2_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Confirme que los datos de propiedad de la agencia son correctos o avise a la IATA de cualquier cambio.</label>
         <name>ISSP_AMS_NoC_error_message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
+        <name>ISSP_AMS_NoC_error_message3_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -15108,6 +15612,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Como organización cuyas acciones no cotizan en bolsa, debe introducir a continuación los datos de los accionistas en las secciones de personal y empresa.</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Notify_Change_Legal_Details_CNS --></label>
+        <name>ISSP_AMS_Notify_Change_Legal_Details_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Number_of_Years_Traded_Field_Label --></label>
@@ -15310,6 +15818,54 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_PDF_Initials_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS PDF NoC Authorized Signature for and on behalf of Transferee-Buye --></label>
+        <name>ISSP_AMS_PDF_NoC_Authorized_Signature_for_and_on_behalf_of_Transferee_Buye</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Authorized signature for and on behalf of  Agent --></label>
+        <name>ISSP_AMS_PDF_NoC_Authorized_signature_for_and_on_behalf_of_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address1 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address2 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address3 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address4 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name Title or capacity of Person signing --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_Title_or_capacity_of_Person_signing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name of Agent Transferor-Seller --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_of_Agent_Transferor_Seller</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name of Transferee-Buyer --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_of_Transferee_Buyer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Witness --></label>
+        <name>ISSP_AMS_PDF_NoC_Witness</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Witness 2 --></label>
+        <name>ISSP_AMS_PDF_NoC_Witness_2</name>
+    </customLabels>
+    <customLabels>
         <label>Página</label>
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
@@ -15336,6 +15892,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Suba el siguiente archivo antes de realizar el envío a la IATA:</label>
         <name>ISSP_AMS_Please_Upload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Please Upload CNS --></label>
+        <name>ISSP_AMS_Please_Upload_CNS</name>
     </customLabels>
     <customLabels>
         <label>Administrador&lt;br/&gt;del portal</label>
@@ -15406,6 +15966,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Branch Title CNS --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_1 Branch Title New --></label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title_New</name>
     </customLabels>
@@ -15452,6 +16020,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Sección 2.2</label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Security Contact --></label>
+        <name>ISSP_AMS_Security_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Security Contact Message Popup --></label>
+        <name>ISSP_AMS_Security_Contact_Message_Popup</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Select AEs --></label>
@@ -15506,6 +16082,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 CNS NEW HO BR --></label>
+        <name>ISSP_AMS_Step0_CNS_NEW_HO_BR</name>
+    </customLabels>
+    <customLabels>
         <label>Cambio de datos bancarios</label>
         <name>ISSP_AMS_Step0_Change_Bank_Details</name>
     </customLabels>
@@ -15548,6 +16128,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro CNS --></label>
         <name>ISSP_AMS_Step0_Intro_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Intro New --></label>
@@ -15696,6 +16280,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 Title CNS BR --></label>
+        <name>ISSP_AMS_Step1_Title_CNS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title CNS HO --></label>
+        <name>ISSP_AMS_Step1_Title_CNS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step1 Title New --></label>
         <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
@@ -15792,6 +16384,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_4_Branch_People_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_CNS_Agency_Title --></label>
+        <name>ISSP_AMS_Step3_4_CNS_Agency_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
         <name>ISSP_AMS_Step3_4_Cargo_Agent_Title</name>
     </customLabels>
@@ -15834,6 +16430,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Si su agencia pertenece parcial o totalmente a una o más personas, introduzca aquí los datos de los propietarios, socios o accionistas (salvo si su organización es una entidad jurídica cuyas acciones cotizan en una bolsa de valores o se negocian en un mercado extrabursátil).&lt;br/&gt;&lt;br/&gt;Introduzca los nombres y cargos de los directores y directivos de una empresa, y los datos de los gerentes de la agencia.&lt;br/&gt;&lt;br/&gt;Seleccione al menos un signatario autorizado y elija el contacto de evaluación financiera y el administrador del portal.</label>
         <name>ISSP_AMS_Step3_4_People</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 4 People CNS --></label>
+        <name>ISSP_AMS_Step3_4_People_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People Intermediary --></label>
@@ -15900,6 +16500,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_4_Q19</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q19_CNS --></label>
+        <name>ISSP_AMS_Step3_4_Q19_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q19 New --></label>
         <name>ISSP_AMS_Step3_4_Q19_New</name>
     </customLabels>
@@ -15918,6 +16522,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Agency New --></label>
         <name>ISSP_AMS_Step3_4_Q1_Agency_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- +        &lt;fullName&gt;ISSP_AMS_Step3_4_Q1_CNS&lt;/fullName&gt; --></label>
+        <name>ISSP_AMS_Step3_4_Q1_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Intermediary --></label>
@@ -15986,6 +16594,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>SECCIÓN 5 - Ubicación de las instalaciones de la agencia para las que se solicita la aprobación</label>
         <name>ISSP_AMS_Step3_5_Premises_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_5_Warehouse --></label>
+        <name>ISSP_AMS_Step3_5_Warehouse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_6_Financial --></label>
+        <name>ISSP_AMS_Step3_6_Financial</name>
     </customLabels>
     <customLabels>
         <label>SECCIÓN 6 - Otra información</label>
@@ -16086,6 +16702,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>&lt;strong&gt;Ubicación de la oficina de la sucursal&lt;/strong&gt; del siguiente agente aprobado de la IATA:</label>
         <name>ISSP_AMS_Step3_Branch_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 Branch Location CASS Commercial --></label>
+        <name>ISSP_AMS_Step3_Branch_Location_CASS_Commercial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 Branch Location CNS --></label>
+        <name>ISSP_AMS_Step3_Branch_Location_CNS</name>
     </customLabels>
     <customLabels>
         <label>&lt;strong&gt;Entidad central: GoStandard&lt;/strong&gt; (mencionado anteriormente en la SECCIÓN 1)</label>
@@ -16286,6 +16910,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo CASS Associate Title --></label>
         <name>ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo CNS Agency Title --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo EACP Intermediary Title --></label>
@@ -17424,8 +18052,40 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AP_Cases</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Countries_Territories --></label>
+        <name>ISSP_AP_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Countries_to_optin --></label>
+        <name>ISSP_AP_Countries_to_optin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Countries_available --></label>
+        <name>ISSP_AP_Error_No_Countries_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Country_selected --></label>
+        <name>ISSP_AP_Error_No_Country_selected</name>
+    </customLabels>
+    <customLabels>
         <label>Formulario de acreditación de aerolíneas</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Form_of_Payment --></label>
+        <name>ISSP_AP_Form_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_IATA_EasyPay_Section_Description --></label>
+        <name>ISSP_AP_IATA_EasyPay_Section_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Address --></label>
+        <name>ISSP_AP_Israel_Submit_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Disclaimer --></label>
+        <name>ISSP_AP_Israel_Submit_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
@@ -17462,6 +18122,50 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Add_Emails --></label>
+        <name>ISSP_AP_Report_Options_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Excel_Selected --></label>
+        <name>ISSP_AP_Report_Options_Excel_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_HOT_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_HOT_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Header --></label>
+        <name>ISSP_AP_Report_Options_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_PDF_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_PDF_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Remove_Emails --></label>
+        <name>ISSP_AP_Report_Options_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Countries_Territories --></label>
+        <name>ISSP_AP_Select_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Form_of_Payment_in_HOT --></label>
+        <name>ISSP_AP_Select_Form_of_Payment_in_HOT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Add_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Remove_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AP Voluntary Withdrawal Disclaimer --></label>
+        <name>ISSP_AP_Voluntary_Withdrawal_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label>Al conceder al usuario acceso al Servicio de acreditación de aerolíneas</label>
@@ -19234,6 +19938,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_General_enquiries</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_GoGlobal --></label>
+        <name>ISSP_GoGlobal</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GoTo_Homepage --></label>
         <name>ISSP_GoTo_Homepage</name>
     </customLabels>
@@ -19834,8 +20542,56 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_MIR_Rates_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Mita Add Contact --></label>
+        <name>ISSP_MITA_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP MITA Agreements Service Name --></label>
         <name>ISSP_MITA_Agreements_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Edit Contact message --></label>
+        <name>ISSP_MITA_EditContactMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Edit Contact Success --></label>
+        <name>ISSP_MITA_EditContactSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Remove Contact message --></label>
+        <name>ISSP_MITA_RemoveContactMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Active MITA Contacts --></label>
+        <name>ISSP_MITA_SUBTAB_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Airline Available Contacts --></label>
+        <name>ISSP_MITA_SUBTAB_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search At Least 3 Chars --></label>
+        <name>ISSP_MITA_Search_At_Least3Chars</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search by email or name --></label>
+        <name>ISSP_MITA_Search_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Text Above button --></label>
+        <name>ISSP_MITA_Search_Text01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Text Below button --></label>
+        <name>ISSP_MITA_Search_Text02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Check Valid Input --></label>
+        <name>ISSP_MITA_Search_ValidInput</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Airline Contacts --></label>
+        <name>ISSP_MITA_TAB</name>
     </customLabels>
     <customLabels>
         <label>Aprobar como administrador</label>
@@ -20426,6 +21182,18 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_PASS_Users</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP PAX Federal EIN --></label>
+        <name>ISSP_PAX_Federal_EIN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Federal EIN Title --></label>
+        <name>ISSP_PAX_Federal_EIN_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating Federal EIN --></label>
+        <name>ISSP_PAX_Validating_Federal_EIN</name>
+    </customLabels>
+    <customLabels>
         <label>Comprobando número…</label>
         <name>ISSP_PAX_Validating_VAT_Number</name>
     </customLabels>
@@ -20578,6 +21346,10 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
     <customLabels>
         <label>Aprobación pendiente</label>
         <name>ISSP_Pending_Approval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
     </customLabels>
     <customLabels>
         <label>Documentos pendientes</label>
@@ -20798,6 +21570,10 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
     <customLabels>
         <label><!-- ISSP Public --></label>
         <name>ISSP_Public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
     </customLabels>
     <customLabels>
         <label>Cantidad</label>
@@ -22302,6 +23078,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Tracking_ID</name>
     </customLabels>
     <customLabels>
+        <label><!-- Trade Name (D/B/A) --></label>
+        <name>ISSP_Trade_Name_DBA</name>
+    </customLabels>
+    <customLabels>
         <label>Nombre comercial de la empresa</label>
         <name>ISSP_Trade_name_of_Company</name>
     </customLabels>
@@ -23054,6 +23834,16 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Si el chat para su idioma no está disponible en este momento, por favor &lt;b&gt; crear un
+            caso &lt;/b&gt; o contactarnos por &lt;b&gt; teléfono &lt;/b&gt;.
+        </label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Sólo marca:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23068,6 +23858,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label>Puede usar el siguiente número para hablar con un representante de IATA:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>La ventana de chat se ha abierto</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Chatee con nosotros</label>
@@ -25385,6 +26179,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
+        <label><!-- SSP AMS Step5 ReviewBeforeSubmit CNS --></label>
+        <name>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Salutation --></label>
         <name>Salutation</name>
     </customLabels>
@@ -25803,6 +26601,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- Treasury Dashboard Premium Dashboard --></label>
         <name>Treasury_Dashboard_Premium_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
@@ -26301,7 +27107,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Servicio de acceso</label>
+        <label>Los canales de soporte disponibles aparecen una vez que ha seleccionado el tema de su pregunta</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26361,7 +27167,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Obtenga asistencia directamente a través del portal IATA, por teléfono o chat.</label>
+        <label>Pongámonos en contacto. Empieza por seleccionar el tema de tu pregunta</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26509,7 +27315,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Contactar con Asistencia</label>
+        <label>Contáctanos</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
@@ -27411,6 +28217,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -31701,6 +32511,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>PKB_2_Settings</name>
     </customTabs>
     <customTabs>
+        <label><!-- Portal Invitation --></label>
+        <name>Portal_Invitation</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
     </customTabs>
@@ -31882,6 +32696,23 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- IATA ISO Countries --></label>
             <name>IATA ISO Countries</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- AMS Online Accreditation with OSCAR with Case --></description>
+        <label><!-- AMS Online Accreditation with OSCAR with Case --></label>
+        <name>AMS_Online_Accreditation_with_OSCAR_with_Case</name>
+        <sections>
+            <label><!-- AMS Online Accreditations --></label>
+            <name>AMS Online Accreditations</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- OSCARs --></label>
+            <name>OSCARs</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -32217,6 +33048,31 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account relationship with airport information --></description>
+        <label><!-- Account relationship with airport information --></label>
+        <name>Account_relationship_with_airport_information</name>
+        <sections>
+            <columns>
+                <label><!-- Parent Account ID --></label>
+                <name>Parent Account ID</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <label><!-- Airport account info --></label>
+            <name>Airport account info</name>
+        </sections>
+        <sections>
+            <label><!-- Manages / Operates --></label>
+            <name>Manages / Operates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account w cases and results --></description>
         <label><!-- Account w cases and results --></label>
         <name>Account_w_cases_and_results</name>
@@ -32257,6 +33113,27 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Agency Authorizations --></label>
             <name>Agency Authorizations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Account with addresses roles and context or not --></description>
+        <label><!-- Account with addresses roles and context or not --></label>
+        <name>Account_with_addresses_roles_and_context_or_not</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses --></label>
+            <name>Addresses</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses Role --></label>
+            <name>Addresses Role</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -32456,8 +33333,8 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -32530,12 +33407,38 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Account Roles (Owners) --></description>
         <label><!-- Accounts with AMS Account Roles (Owners) --></label>
         <name>Accounts_with_AMS_Account_Roles_Owners</name>
         <sections>
             <label><!-- AMS Account Roles --></label>
             <name>AMS Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -32664,6 +33567,23 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Account Roles --></label>
             <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with Account Statements with Account Statement Transactions --></description>
+        <label><!-- Accounts with Account Statements with Account Statement Transactions --></label>
+        <name>Accounts_with_Account_Statements_with_Account_Statement_Transactions</name>
+        <sections>
+            <label><!-- Account Statement Transactions --></label>
+            <name>Account Statement Transactions</name>
+        </sections>
+        <sections>
+            <label><!-- Account Statements --></label>
+            <name>Account Statements</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -33247,6 +34167,22 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34055,8 +34991,16 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Cases with created by user --></label>
         <name>Cases_with_created_by_user</name>
         <sections>
+            <label><!-- Account information --></label>
+            <name>Account information</name>
+        </sections>
+        <sections>
             <label><!-- Cases --></label>
             <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- Contact information --></label>
+            <name>Contact information</name>
         </sections>
         <sections>
             <label><!-- Created by user --></label>
@@ -34215,6 +35159,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -34372,8 +35320,8 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Contacts without Cases --></description>
-        <label><!-- Contacts without Cases --></label>
+        <description><!-- Contacts with or without Cases --></description>
+        <label><!-- Contacts with or without Cases --></label>
         <name>Contacts_without_Cases</name>
         <sections>
             <label><!-- Cases --></label>
@@ -34507,6 +35455,23 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34726,6 +35691,15 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- GDP Accounts --></description>
         <label><!-- GDP Accounts --></label>
         <name>GDP_Accounts</name>
@@ -34767,6 +35741,19 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- GDP Products - Accounts View --></label>
             <name>GDP Products - Accounts View</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35778,7 +36765,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Informes</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
@@ -35822,7 +36809,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Oscars with cc --></label>
         <name>Oscars_with_cc</name>
         <sections>
-            <label><!-- Agencies Applied Change codes --></label>
+            <label>Informes</label>
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
@@ -35847,6 +36834,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <description>Acceso al servicio del portal</description>
         <label>Acceso al servicio del portal</label>
         <name>Portal_Service_Access</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <name>Contact Information</name>
+        </sections>
         <sections>
             <label>Informes</label>
             <name>Portal Service Access</name>
@@ -36527,6 +37522,15 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

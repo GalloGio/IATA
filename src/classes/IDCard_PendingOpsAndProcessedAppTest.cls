@@ -258,6 +258,21 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 		promo.Type_of_Application__c = 'New;Reissue';
 		insert promo;
 
+		CanadianTax__c tax = new CanadianTax__c();
+		tax.Name = 'Tx';
+		tax.Tax_Name__c = 'Tx';
+		tax.Tax_Percentage__c = 10.000;
+		tax.Country__c = 'Australia';
+		tax.Province__c =  null;
+		insert tax;
+		tax = new CanadianTax__c();
+		tax.Name = 'Tx2';
+		tax.Tax_Name__c = 'Tx2';
+		tax.Tax_Percentage__c = 5.000;
+		tax.Country__c = 'Australia';
+		tax.Province__c = null;
+		insert tax;
+
 		List<ID_Card_Application__c> apps = new List<ID_Card_Application__c>();
 		for (integer i = 0; i < 10; i++) {
 			apps.add(new ID_Card_Application__c(VER_Number__c = cs[i].VER_Number_2__c,

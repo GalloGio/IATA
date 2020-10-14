@@ -29,7 +29,7 @@ public class FRED_UserProvisioningRequestHandler{
 		// We are considering here that we'll have maximum one invitation per email and in the invitation__c object, there is no mention of the service or a status
 		// This would deserve additional dev to make a cleaner solution, but as usual, lack of time...
 		Map<String, String> rolePerEmail = new Map<String, String>();
-		for(Invitation__c invitation : [select Email__c, Role__c from Invitation__c where Email__c in : userEmails.values()]){
+		for(Invitation__c invitation : [select Email__c, Role__c from Invitation__c where Email__c in : userEmails.values() AND ServiceId__c = null]){
 			rolePerEmail.put(invitation.Email__c, invitation.Role__c);
 		}
 

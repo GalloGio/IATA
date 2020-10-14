@@ -1643,8 +1643,8 @@ global class ANG_OscarProcessHelper {
 			notificationTemplate = notificationTemplates.get(0);
 		//Case:
 
-		Map<Id,List<Contact>> keyContactMap = new Map<Id,List<Contact>>();
-
+		Map<Id,List<Contact>> keyAccContactMap = new Map<Id,List<Contact>>();
+		Map<Id,Contact> keyContactMap = new Map<Id,Contact>();
 
 		for(Account acc : accs){
 
@@ -1654,8 +1654,11 @@ global class ANG_OscarProcessHelper {
 
 
 			List<Contact> keyContactLst = fetchKeyContacts(acc, contactsAcc.get(acc.Id));
+			for(Contact c : keyContactLst){
+				keyContactMap.put(c.Id, c);
+			}
 
-			keyContactMap.put(acc.Id, keyContactLst);
+			keyAccContactMap.put(acc.Id, keyContactLst);
 
 			fieldsOfObject = new Map<String,Object>();
 			fieldsOfObject.put('Account_Concerned__c',acc.Id);
@@ -1767,7 +1770,7 @@ global class ANG_OscarProcessHelper {
 
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
-				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments, false);
+				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyAccContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments, false);
 				mailsToSend.put(accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, mailListAux);
 				emailsToSend.addAll(mailListAux);
 
@@ -1776,10 +1779,10 @@ global class ANG_OscarProcessHelper {
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
 		}
 
-		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea);
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea, keyContactMap);
 		
 		if(notificationTemplate <> null)
-			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
+			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyAccContactMap);
 
 		return casesToUpdate;
 	}
@@ -2083,7 +2086,7 @@ global class ANG_OscarProcessHelper {
 		}
 
 		//Bulkified process to send emails and create SingleEmailMessage
-		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea);
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea, contacts);
 
 	}
 
@@ -2091,7 +2094,7 @@ global class ANG_OscarProcessHelper {
 	 * Bulkified process to send email 
 	 * PCI Renewal Cases & Annual Revalidation notifications
 	 */
-	public static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea){
+	public static void sendEmailAndCreateSingleEmailMessage(Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend, List<Messaging.SingleEmailMessage> emailsToSend, OrgWideEmailAddress[] owea, Map<Id,Contact> contactsMap){
 		//Send Emails - Group all the emails to be sent, and just call Messaging.sendEmail once
 		if(!mailsToSend.isEmpty()) {
 			Set<Id> failedContacts = new Set<Id>();
@@ -2122,6 +2125,8 @@ global class ANG_OscarProcessHelper {
 					emailMsg.FromName = owea[0].DisplayName;
 					if(mail.getToAddresses() != null && !mail.getToAddresses().isEmpty()) {
 						emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					} else if(mail.getTargetObjectId() != null & contactsMap.get(mail.getTargetObjectId()) != null){
+						emailMsg.ToAddress = (String.isNotBlank(contactsMap.get(mail.getTargetObjectId()).Email) ? contactsMap.get(mail.getTargetObjectId()).Email : '');
 					}
 					if(!String.isBlank(mail.getTargetObjectId())) {
 						emailMsg.toIds = new List<Id>{ mail.getTargetObjectId() };
