@@ -211,18 +211,45 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 
 				if (!IFAPaccountIds.isEmpty()) {
-					Map<Id, Account> accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type,
-																		  a.RecordType.DeveloperName, a.CNS_Account__c,
-																		  (SELECT Id, Status, IFAP_Financial_Year__c, IFAP_Financial_Month__c,
-																			   Financial_Review_Type__c, AccountId, RecordTypeId, CaseNumber
-																		   FROM Cases
-																		   WHERE RecordTypeId = :IFAPcaseRecordTypeID
-																			   AND ((Account.ANG_Accreditation_Model__c != :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
-																					 AND Status = :AMS_Utils.CASE_STATUS_CLOSED)
-																					OR Account.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
-																		   ORDER BY CreatedDate DESC)
-																	  FROM Account a
-																	  WHERE Id IN :IFAPaccountIds]);
+					Map<Id, Account> accounts = new Map<Id, Account> ([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c,
+																		(SELECT Id, Status, IFAP_Financial_Year__c, IFAP_Financial_Month__c, Account.ANG_Accreditation_Model__c,
+																			Financial_Review_Type__c, AccountId, RecordTypeId, CaseNumber, ParentId, Parent.Status
+																			FROM Cases
+																			WHERE RecordTypeId = :IFAPcaseRecordTypeID
+																			AND ((
+																				(Account.ANG_Accreditation_Model__c != :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
+																					AND Status = :AMS_Utils.CASE_STATUS_CLOSED)
+																				OR Account.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
+																			)
+																			OR (
+																				(Financial_Review_Type__c = :AMS_Utils.FINANCIAL_REVIEW_ANNUAL OR Financial_Review_Type__c = :AMS_Utils.FINANCIAL_REVIEW_MAJOR_CHANGES)
+																				AND Status NOT IN :AMS_Utils.IFAP_CLOSED_STATUS
+																			))
+																			ORDER BY CreatedDate DESC
+																		)
+																	FROM Account a WHERE Id IN :IFAPaccountIds]);
+
+					List <Case> multicountryCasesList = new List <Case>();
+					List <Case> validationCasesList = new List <Case>();
+					Set<String> financialReviewTypeCount = new Set<String>();
+					Set<String> parentStatus = new Set<String>{AMS_Utils.CASE_STATUS_ASSESSMENT_PERFORMED, AMS_Utils.CASE_STATUS_FINANCIAL_ASSESSMENT_CHALLENGED, AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
+					Set<String> fRTypes = new Set<String>{AMS_Utils.FINANCIAL_REVIEW_ANNUAL, AMS_Utils.FINANCIAL_REVIEW_MAJOR_CHANGES};
+
+					for (Account frtAccount : accounts.values()) {
+
+						for(Case cse : frtAccount.Cases){
+						
+							if((cse.Account.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && cse.Status == AMS_Utils.CASE_STATUS_CLOSED)
+								|| cse.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+								multicountryCasesList.add(cse);
+							}
+							if (fRTypes.contains(cse.Financial_Review_Type__c) && !AMS_Utils.IFAP_CLOSED_STATUS.contains(cse.Status)){
+								validationCasesList.add(cse);
+								financialReviewTypeCount.add(cse.Financial_Review_Type__c);
+							}
+						}
+					}
+
 
 					// Store for each account a wrapper that counts the number of IFAP open cases for multicountry agents 
 					Map<Id, ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper> nbrOfOpenCasesPerReviewTypeMap = new Map<Id, ANG_MulticountryHelper.AccountOpenIFAPPerReviewTypeWrapper>();
@@ -236,9 +263,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 						Account aAccount = accounts.get(aCase.AccountId);
 						if(aAccount != null){
 							accountMap.put(aCase.id, aAccount);
+							if(!validationCasesList.isEmpty() && aCase.Account.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && 
+								(Trigger.isInsert || aCase.Financial_Review_Type__c != Trigger.oldMap.get(aCase.Id).Financial_Review_Type__c ) &&
+								!(aCase.ParentId != null && parentStatus.contains(aCase.Parent.Status)) &&
+								(financialReviewTypeCount.contains(aCase.Financial_Review_Type__c) || !fRTypes.contains(aCase.Financial_Review_Type__c))){
+									aCase.addError('The selected account already has open IFAP cases. An account can only have two IFAP cases if they are Annual and Major Changes.');
+							}
+
 							if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){ aCase.CNSCase__c = true; }
 
-							for(Case currentCase : aAccount.Cases){
+							for(Case currentCase : multicountryCasesList){
 								if (currentCase.Status == AMS_Utils.CASE_STATUS_CLOSED) {
 									if (!mapAccountIFAPClosedCases.containsKey(currentCase.AccountId)) {
 										mapAccountIFAPClosedCases.put(currentCase.AccountId, new List<Case>());
