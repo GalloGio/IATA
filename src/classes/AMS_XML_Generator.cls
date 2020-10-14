@@ -1108,6 +1108,10 @@ public with sharing class AMS_XML_Generator {
 					getElementNode(countryNode, 'bsp', Null);
 					getElementNode(countryNode, 'cass', sBSP);
 				}
+				else{
+					getElementNode(countryNode, 'bsp', Null);
+					getElementNode(countryNode, 'cass', Null);
+				}
 
 				getElementNode(countryNode, 'dpc_system', sDPC);
 

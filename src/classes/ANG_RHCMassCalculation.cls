@@ -142,7 +142,7 @@ public class ANG_RHCMassCalculation {
 			String query = '' // 
 					+ ' SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, ' // 
 					+ '	ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount_Provisional__c, ANG_RHC_Effective_Date__c, ANG_ConsumedRHC_Percent__c, ' // 
-					+ '	ANG_Forecasted_RHC_Effective_date__c, ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, ANG_Financial_Security__c ' // 
+					+ '	ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, ANG_Financial_Security__c ' // 
 					+ ' FROM ANG_RHC_Information__c' // 
 					+ ' WHERE ANG_CashCondition__c = false' // 
 					+ ' 	AND ANG_AccountId__r.IATACode__c <> \'\' ' // 
@@ -251,7 +251,7 @@ public class ANG_RHCMassCalculation {
 
 		ANG_RHC_Information__c theRHC = [SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, 
 											ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount_Provisional__c, ANG_RHC_Effective_Date__c,ANG_Financial_Security__c,
-											ANG_Forecasted_RHC_Effective_date__c, ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, RHC_Amount_Equals_FS_Percent__c,
+											ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, RHC_Amount_Equals_FS_Percent__c,
 											ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c, ANG_RME_Amount__c, ANG_Account_Country_ISO_Code__c, ANG_ConsumedRHC_Percent__c, ANG_Consumed_RHC_Date__c,
 											ANG_ConsumedRHC_Last_Update__c, ANG_Enable_Calculation__c, ANG_Exceeding_Financial_Security__c, ANG_IATA_Code__c, ANG_Minimum_Financial_Security__c, 
 											ANG_Provisional_RHC_Last_Update__c, ANG_RME_Amount_Provisional__c, ANG_RME_Amount_Last_Update__c

@@ -44,6 +44,8 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
 				System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] params - ' + params);
 				System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] deleteParams - ' + SCIMUsersUtility.deleteParams);
 
+				if(SCIMUsersUtility.deleteParams.values().contains('EFAPPS')) upa.externalUserId = String.valueOf(upa.externalUserId).left(15);
+
 				Map<String, Object> callResult = SCIMUsersUtility.deleteUser(upa.externalUserId);
 				userProvUtils.debug('HTTP call result was ' + callResult);
 

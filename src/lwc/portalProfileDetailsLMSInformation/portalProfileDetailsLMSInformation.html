@@ -1,7 +1,5 @@
 <template>
-	<lightning-record-edit-form name="addressForm" record-id={recordId} object-api-name="Training_Contact_Role_Details__c"
-			onsuccess={handleSucess} onsubmit={handleSubmit}
-			onerror={handleError}>
+	
 	
 		<template if:true={isSaving}>
 			<div class="modalSpinnerContainer">
@@ -19,6 +17,7 @@
 		</template>
 
 		<lightning-layout multiple-rows vertical-align="stretch" horizontal-align="stretch">
+			
 			
 			<lightning-messages size="12" >
 			</lightning-messages>
@@ -46,6 +45,32 @@
 					</div>
 				</div>
 				
+				</br>
+
+				<div class="formLabelContainer">
+					<div class="text-xxsmall">
+						{labels.CSP_L_WorkPhone_LMS}
+					</div>
+				</div>
+				<lightning-record-edit-form name="contactForm" record-id={contactId} object-api-name="Contact"
+					onsuccess={handleSucessContact} onsubmit={handleSubmit}
+					onerror={handleError}>
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								data-id="OtherPhone"
+								class="slds-input"
+								placeholder=" "
+								data-fieldname="OtherPhone"
+								value={localOtherPhone} 
+								autocomplete="no"
+								onkeyup={changeOtherPhone}
+								maxlength="255"/>
+						</div>
+					</div>
+				</lightning-record-edit-form>
+								
 			</lightning-layout-item>
 
 			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
@@ -120,7 +145,9 @@
 			</lightning-layout-item>
 
 		</lightning-layout>
-
+		<lightning-record-edit-form name="addressForm" record-id={recordId} object-api-name="Training_Contact_Role_Details__c"
+			onsuccess={handleSucess} onsubmit={handleSubmit}
+			onerror={handleError}>
 		<c-portal-address-form-l-m-s
 			is-i-e={isIE}
 			country-id={countryId}
@@ -129,6 +156,7 @@
 			onstartloading={startLoading}
 			onstoploading={stopLoading}>
 		</c-portal-address-form-l-m-s>
+		</lightning-record-edit-form>
 
 		<lightning-layout multiple-rows vertical-align="stretch">
 
@@ -151,7 +179,7 @@
 			<lightning-layout-item padding="around-small" size="12">
 			</lightning-layout-item>
 		</lightning-layout>
-	</lightning-record-edit-form>
+	
 
 	<template if:true={openVerificationMailSuccessModal}>
 		<c-portal-registration-generic-modal icon={successIcon} title={verificationModalTitle} message={verificationModalMessage}

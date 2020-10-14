@@ -1,20 +1,8 @@
 global with sharing class FREDSCIMUser extends SCIMUser {
 
 /***
-	Some of attributes are commented to be compliant to Mulesoft specs for FRED
+	Some of attributes were removed to be compliant to Mulesoft specs for FRED
 */
-
-	/*
-	public class Addresses {
-		public String streetAddress;
-		public String locality;
-		public String region;
-		public String postalCode;
-
-		public String country;
-		public string type;
-		public Boolean primary;
-	}*/
 
 	public class Entitlements {
 		public String type;
@@ -31,27 +19,6 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 		public String honorificPrefix;
 	}
 
-	/*
-	public class Emails { //OK
-		public String type;
-		public String display;
-		public Boolean primary;
-		public String value;
-	}
-	*/
-
-	/*
-	public class PhoneNumbers {
-		public String type;
-		public String value;
-	}
-	*/
-	/*
-	public class Photos {
-		public String type;
-		public String value;
-	}*/
-
 	public class enterpriseExtension{
 		public String employeeNumber;
 		public String costCenter;
@@ -65,32 +32,15 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 		public String managerId;
 		public String displayName;
 	}
-	//private String enterprise;
-
-	// Public fields to serialize / deserialize
 	public List<String> schemas;
-	//public String id;
-	//public String userName;
 	public String externalId; //OK
 	public Name name;
 	public String displayName;
-	//public String nickName;
-	//public List<SCIMUser.Emails> emails;
-	//public List<PhoneNumbers> phoneNumbers;
-	//public List<Photos> photos;
 	public String userType;
 	public String preferredLanguage;
-	//public String locale;
-	//public Boolean active;
-	//public String title;
 	public List<Entitlements> entitlements;
 	public List<Groups> groups;
 	public List<Roles> roles;
-	//public String timezone;
-
-	//public enterpriseExtension enx;
-
-	//public List<Addresses> addresses;
 
 
 	public FREDSCIMUser(String userName, String familyName, String givenName, String externalid, String email) {
@@ -115,7 +65,6 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
 
 	private void fillUpSCIMMessage(String email){
-		//basto1p added new required field for IFG
 		User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.X8585_Code__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Contact.Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
 
 
@@ -123,7 +72,7 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
 		// If there is an Invitation__c related to this provisioning request, retrieve the role from the Invitation__c record
 		// This query will have to be updated when developing One Id generics as the Invitation__c object will have an additional field for the service and the same user could receive several invitations for different services
-		List<Invitation__c> invitations = [select Role__c from Invitation__c where Email__c =: email limit 1];
+		List<Invitation__c> invitations = [SELECT Role__c FROM Invitation__c WHERE Email__c =: email AND ServiceId__c = null LIMIT 1];
 
 		if(!invitations.isEmpty()){
 			isPrimaryUser = invitations[0].Role__c == 'Primary';
@@ -136,10 +85,6 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 
 
 		if(userIn != null){
-			//this.id = userIn.id;
-
-			//this.nickName = userIn.CommunityNickname;
-
 			this.name.honorificPrefix = userIn.contact.Salutation;
 
 			PhoneNumbers mobile = new PhoneNumbers();
@@ -159,8 +104,6 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 			this.title = userIn.Contact.title;
 
 			this.preferredLanguage = userIn.LanguageLocaleKey;
-			//this.active = true;
-			//this.timezone = userIn.TimeZoneSidKey;
 
 			if(this.entitlements == null) {
 				this.entitlements = new List<Entitlements>();
@@ -188,11 +131,11 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 			enAccountType.type = 'ACCOUNT_TYPE';
 
 			if(userIn.contact.account.RecordType.DeveloperName == 'IATA_Airline' || userIn.contact.account.RecordType.DeveloperName == 'Operator') {
-				 enAccountType.value = 'AIRCRAFT_OPERATOR';
+				enAccountType.value = 'AIRCRAFT_OPERATOR';
 
-				 enIcaoCode.type = 'ICAO_CODE';
-				 enIcaoCode.value = userIn.contact.account.X8585_Code__c;
-				 this.entitlements.add(enIcaoCode);
+				enIcaoCode.type = 'ICAO_CODE';
+				enIcaoCode.value = userIn.contact.account.X8585_Code__c;
+				this.entitlements.add(enIcaoCode);
 
 			} else if(userIn.contact.account.RecordType.DeveloperName == 'ICAO_Member_State') {
 				enAccountType.value = 'ICAO_MEMBER_STATE';
@@ -201,7 +144,7 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 				enCountryCode.value = userIn.contact.account.Country_ISO_Code__c;
 				this.entitlements.add(enCountryCode);
 			} else if(userIn.contact.account.RecordType.DeveloperName == 'Verifiers') {
-				 enAccountType.value = 'VERIFIER';
+				enAccountType.value = 'VERIFIER';
 			}
 			this.entitlements.add(enAccountType);
 
@@ -211,31 +154,9 @@ global with sharing class FREDSCIMUser extends SCIMUser {
 			this.entitlements.add(enExtSystem);
 
 
-			/*
-			Photos aPhoto = new Photos();
-			aPhoto.type = 'photo';
-			aPhoto.value = userIn.SmallPhotoUrl;
-			this.photos = new List<Photos>();
-			this.photos.add(aPhoto);
-			*/
-
 			this.displayName = userIn.name;
 
-			//this.locale = userIn.LanguageLocaleKey;
-
-			/*this.addresses = new List<Addresses>();
-			Addresses address = new Addresses();
-			address.country = '';
-			address.region = '';
-			this.addresses.add(address);
-			*/
-
-			/*enterpriseExtension anEx = new enterpriseExtension();
-			anEx.organization = userIn.contact.account.name;
-			this.enx = anEx;
-			*/
-
-		  if (email != null) {
+		if (email != null) {
 			SCIMUser.Emails e = new SCIMUser.Emails();
 			e.value = email;
 			e.type = 'home';

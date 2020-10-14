@@ -1,0 +1,28 @@
+<div style="font-family: Arial;">
+<p>{!$Label.ISSP_Email_Dear_Pre} {!Case.Contact},</p>
+<p>{!$Label.Auto_Case_Comment_24Hours_Notification_1} <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!Case.Id}">{!Case.CaseNumber}</a> {!$Label.Auto_Case_Comment_24Hours_Notification_2}. {!$Label.Auto_Case_Comment_24Hours_Notification_3} <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}">{!$Label.CSP_IATA_Customer_Portal}</a><br/>
+</p>
+<p>
+------<br/>
+{!Case.E2CP__Most_Recent_Public_Comment__c}<br/>
+------
+</p>
+<p>{!$Label.Case_Comment_Have_Been_Resolved_1}</p>
+<table border="0" cellpadding="0" cellspacing="10" style="text-align: center;" role="presentation">
+  <tr>
+    <td style="width: 160px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #1e32fa; background-color: #ffffff;">
+      <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}case-details?caseId={!relatedTo.Id}&replyComment=No" style="text-decoration:none; cursor: pointer; display: inline-block; color: #33f; font-weight: 500; font-size: 16px; text-align: center; cursor: pointer;">
+        {!$Label.ISSP_No}
+      </a>
+    </td>
+    <td style="width: 160px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #33f; background-color: #33f; box-shadow: 0 6px 16px 0 rgba(56,86,235,.24), 0 1px 2px 0 rgba(56,86,235,.16);">
+      <a href="{!$Label.CSP_PortalBaseURL}{!$Label.CSP_PortalPath}{!relatedTo.Portal_Closure_Link__c}" style="text-decoration:none; cursor: pointer; display: inline-block; color: #fff; font-weight: 500; font-size: 16px; text-align: center; cursor: pointer;">
+        {!$Label.ISSP_Yes}
+      </a>
+    </td>
+  </tr>
+</table>
+<p>{!$Label.Auto_Case_Comment_24Hours_Notification_4}</p>
+<p>{!$Label.Auto_Case_Comment_24Hours_Notification_5}</p>
+<p>{!$Label.CSP_IATA_CSC_Email_Greetings}</p>
+</div>

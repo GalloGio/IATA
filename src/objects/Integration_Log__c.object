@@ -260,7 +260,8 @@
         <columns>CREATED_DATE</columns>
         <columns>object_type__c</columns>
         <columns>RecordId__c</columns>
-        <columns>Record_Id__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>RECORDTYPE</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>

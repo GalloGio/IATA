@@ -82,7 +82,7 @@
 
                       <!-- basto1p -->
                      <apex:outputpanel rendered="{!IF(f.label!='Account ID' && f.fieldPath!='Portal_Case_Status__c' && f.label!='Contact ID' && f.label!='Case Number' && f.Label!='Owner ID' ,true,false)}"> <!-- && f.label!='Account Name' -->
-                        <apex:outputfield value="{!item[f.fieldPath]}" />
+                        <apex:outputText value="{!IF(AND(isCNSAgency, f.fieldPath == 'Type_of_case_Portal__c'), SUBSTITUTE(item[f.fieldPath], 'Accreditation', $Label.ISSP_AMS_Endorsement_CNS), item[f.fieldPath])}" />
                      </apex:outputpanel>
 
                      <apex:outputpanel rendered="{!IF( f.Label=='Owner ID' ,true,false)}"> <!-- && f.label!='Account Name' -->

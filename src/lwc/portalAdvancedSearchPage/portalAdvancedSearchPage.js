@@ -56,11 +56,11 @@ export default class PortalAdvancedSearchPage extends LightningElement {
 
         this.pageParams = getParamsFromPage();
         if (this.pageParams.searchText !== undefined) {
-            this.searchText = decodeURIComponent((this.pageParams.searchText+'').replace(/\+/g, '%20'));
+            this.searchText = this.pageParams.searchText;
         }
-        if (this.pageParams.highlight !== undefined && 
-                (this.pageParams.highlight === 'servicesComponent' || this.pageParams.highlight === 'casesComponent' || 
-                 this.pageParams.highlight === 'faqsComponent' || this.pageParams.highlight === 'documentsComponent' || 
+        if (this.pageParams.highlight !== undefined &&
+                (this.pageParams.highlight === 'servicesComponent' || this.pageParams.highlight === 'casesComponent' ||
+                 this.pageParams.highlight === 'faqsComponent' || this.pageParams.highlight === 'documentsComponent' ||
                  this.pageParams.highlight === 'profileComponent')) {
             hightlightComponent = this.pageParams.highlight;
         }
@@ -214,11 +214,11 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             this.emptySearchStringClass = '';
         }else{
             if(this.searchText.length > 2 &&
-                
+
                 ((filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
-                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0 && 
+                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0 &&
                 filteringObjectAux.profileComponent.nrResults === 0) ||
-                
+
                 (filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.servicesComponent.highlight ) ||
                 (filteringObjectAux.casesComponent.nrResults === 0 && filteringObjectAux.casesComponent.highlight ) ||
                 (filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.faqsComponent.highlight ) ||

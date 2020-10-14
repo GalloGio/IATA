@@ -152,6 +152,12 @@ private class CSP_UtilsTest {
 		CSP_Utils.changeUserLanguage('en_US');
 		Test.stopTest();
 	}
+	
+	@IsTest
+	static void testGetCurrentUserInfo(){
+		User testuser = CSP_Utils.getCurrentUserInfo();
+		System.assertEquals(Userinfo.getUserId(), testuser.id);
+	}
 
 	@IsTest
 	static void testCSPortalRedirectExists(){

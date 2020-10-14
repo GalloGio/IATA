@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>fred_icaomemberstate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_Regional_Office__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

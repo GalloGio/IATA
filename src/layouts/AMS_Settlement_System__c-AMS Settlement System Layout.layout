@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>RHC_Exceptional_Monitoring__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exc_RHC_Monitoring_Alert__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -15,7 +15,8 @@
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
 	                        <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
-	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
+	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}" rendered="{!NOT(isCNSAgency)}"/>
+	                    	<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(newForm.Agent_Type__c, 'HO', 'Head Office'),'BR', 'Branch')}" rendered="{!isCNSAgency}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
 	                    	<apex:outputText value="{!amsAllLangCountryLabel}"/> 
 	    			</apex:panelGrid>
@@ -25,7 +26,9 @@
 	          <apex:pageBlockSection columns="1" collapsible="false">
 	              <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+	                            {!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
+									IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial,
+										IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)))}
 	                        </apex:outputpanel>                       
 	                    </apex:facet>
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
@@ -50,7 +53,7 @@
 					    <apex:outputField value="{!hqAccount.Fax}"/>
 					    <apex:outputText value="{!$ObjectType.Account.fields.IATACode__c.Label}" />
 	                    <apex:outputField value="{!hqAccount.IATACode__c}" rendered="{!amsOfficeType != 'HO'}"/>
-	                    <apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
+	                    <apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(AND(isCNSAgency, newCase.Reason1__c == 'New Independent BR'), $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c))}" />
 	                	<apex:outputField rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!hqAccount.VAT_Number__c}"/>
 	                    
 	                </apex:panelGrid>
@@ -170,17 +173,34 @@
 	        </apex:dataTable>
 	        <br/>
 	        </apex:panelGrid>
-	        <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+	        <apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rendered="{!!isCNSAgency}">
 		        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Separate_user_access}" />
 		        <apex:outputField value="{!newForm.Separate_user_access__c}"/>
 		        <apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Head_Office_have_access}" />
 		        <apex:outputField value="{!newForm.Head_Office_have_access__c}"/>
 	        </apex:panelGrid>
 	      </apex:pageBlockSection>
-	    </div>
+		</div>
+		
+		<div style="page-break-after:always;">
+			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isCNSAgency}">
+				<apex:facet name="header">
+					<apex:outputpanel >
+						{!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4}
+						<apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section6" style="float:right"/>
+						</apex:outputpanel>                       
+					</apex:facet>
+				<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
+					<apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Separate_user_access}" />
+					<apex:outputField value="{!newForm.Separate_user_access__c}"/>
+					<apex:outputText value="{!$Label.ISSP_AMS_CGO_BR_ReadOnly_Head_Office_have_access}" />
+					<apex:outputField value="{!newForm.Head_Office_have_access__c}"/>
+				</apex:panelGrid>
+	  		</apex:pageBlockSection>
+	   </div>
 	   
 	   	 <div style="page-break-after:always;">
-	         <apex:pageBlockSection columns="1" collapsible="false">
+	         <apex:pageBlockSection columns="1" collapsible="false" rendered="{!!isCNSAgency}">
 	        <apex:facet name="header">
 	                        <apex:outputpanel >
 	                           {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION4}
@@ -212,7 +232,7 @@
 	   </apex:pageBlockSection>
 	    </div>
 
-	        <apex:pageBlockSection columns="1" collapsible="false" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary')}">
+	        <apex:pageBlockSection columns="1" collapsible="false" rendered="{!OR(amsAgentType=='IATA Cargo Agent',amsAgentType=='EACP Intermediary', AND(isCNSAgency, newCase.Reason1__c = 'New BR / IP'))}">
 	        <apex:facet name="header">
 	                        <apex:outputpanel >
 	                           {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION5}

@@ -62,7 +62,7 @@ private class AMS_OSCAR_RollbackTest {
 		acc.Name = 'Agency Name ' + code;
 		acc.Legal_name__c = 'Agency Legal Name ' + code;
 		acc.TradeName__c = 'Agency Trade Name ' + code;
-		acc.IATACode__c = '1233456';
+		acc.IATACode__c = '11' + code;
 		acc.Company_Type__c = 'A';
 		acc.Short_Name__c = 'Agency Short Name ' + code;
 		acc.Location_Type__c = locationType;

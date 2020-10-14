@@ -70,31 +70,31 @@
                                 <td>
                                     <!-- AIRLINE DESIGNATORS -->
                                         <!-- DRAFT -->
-                                        <apex:commandLink action="{!navigateAirlineDesignators}"  rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateAirlineDesignators}"  rendered="{!AND(caseItem.Status == 'Draft', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: AIRLINE DESIGNATORS -->
                                     <!-- ACCOUNTING OR PREFIX CODE -->
                                         <!-- DRAFT -->
-                                        <apex:commandLink action="{!navigateAccountingOrPrefixCode}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateAccountingOrPrefixCode}" rendered="{!AND(caseItem.Status == 'Draft', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: ACCOUNTING OR PREFIX CODE -->
                                     <!-- LOCATION IDENTIFIER value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home"-->
-                                        <apex:commandLink action="{!navigateLocationIdentifier}" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateLocationIdentifier}" rendered="{!AND(caseItem.Status == 'Draft',caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
                                             <apex:param name="locationCaseNumber" value="{!caseItem.CaseNumber}"/>
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: LOCATION IDENTIFIER -->
                                     <!-- BAGGAGE TAG RANGE -->
                                         <!-- DRAFT -->
-                                        <apex:commandLink action="{!navigateBaggageTagRange}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateBaggageTagRange}" rendered="{!AND(caseItem.Status == 'Draft', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: BAGGAGE TAG RANGE -->
 
                                     <!-- NOT OPEN /ISSP_Case?caseId={!caseItem.Id}&mid=M1S2&retURL=%2FISSP_AMC_Home -->
-                                    <apex:commandLink action="{!navigateToManageCases}" rendered="{!OR(caseItem.Status != 'Open', NOT(OR(caseItem.Reason1__c == 'Designator Form', caseItem.Reason1__c == '3 Digit Form', caseItem.Reason1__c == 'Location ID Form', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')) )}" onclick="startLoading();">
+                                    <apex:commandLink action="{!navigateToManageCases}" rendered="{!OR(caseItem.Status != 'Draft', NOT(OR(caseItem.Reason1__c == 'Designator Form', caseItem.Reason1__c == '3 Digit Form', caseItem.Reason1__c == 'Location ID Form', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')) )}" onclick="startLoading();">
                                         {!caseItem.CaseNumber}
                                         <apex:param name="caseId" value="{!caseItem.Id}" assignTo="{!caseManageId}" />
                                     </apex:commandLink>

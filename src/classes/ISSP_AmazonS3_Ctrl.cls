@@ -6,10 +6,10 @@ global class ISSP_AmazonS3_Ctrl {
 
 	public String policy {get; set;}
 	public String signedPolicy {get; set;}
-	public String actionStatus {get; set;}
-	public String accessid {get; set;}
-	public String allowedExtensions {get; set;}  //Regular expression
-	public String maxFileSize {get; set;}
+	public transient String actionStatus {get{return '201';} set;}
+	public transient String accessid {get{return CREDENTIALS.AWSAccessKeyId;} set;}
+	public transient String allowedExtensions {get{return ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;} set;}
+	public transient String maxFileSize {get{return ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;} set;}
 	public String caseStatus;
 
 	String storageFolder;
@@ -33,6 +33,7 @@ global class ISSP_AmazonS3_Ctrl {
 	public String uploadedFileIdentifier {get; set;}
 	public string message {get; private set;}
 	public boolean archived {get; private set;}
+	public boolean canUploadAndDelete {get{return true;} set;}
 
 	private static List<String> AMAZON_FILES_QUERY_FIELDS = new List<String>{
 		'Id',
@@ -84,7 +85,9 @@ global class ISSP_AmazonS3_Ctrl {
 	private Case cse;
 	private Account acc {get;set;}
 
-	public string AMAZONURL{get; private set;}
+	public transient string AMAZONURL {get{
+		return AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL + AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
+	} private set;}
 
 	public static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME);
 
@@ -92,10 +95,6 @@ global class ISSP_AmazonS3_Ctrl {
 	public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
 	public ISSP_AmazonS3_Ctrl(){
-		AMAZONURL  =
-				AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
-			 +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
-		system.debug('aqui ApexPages.currentPage() ' + ApexPages.currentPage());
 		if(ApexPages.currentPage().getParameters().containsKey('caseId')){
 			id = ApexPages.currentPage().getParameters().get('caseId');
 		}
@@ -103,8 +102,6 @@ global class ISSP_AmazonS3_Ctrl {
 		if(ApexPages.currentPage().getParameters().containsKey('formId')){
 			formId = ApexPages.currentPage().getParameters().get('formId');
 		}
-
-		system.debug('ON 1 ID: ' + id);
 
 		if(id== null)
 		 return;
@@ -115,22 +112,13 @@ global class ISSP_AmazonS3_Ctrl {
 				 Reason1__c, CaseArea__c, Owner.Name
 				 from Case where id = : this.id];
 
-		allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
-		maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
-
-		this.actionStatus = '201';
-		accessid =  CREDENTIALS.AWSAccessKeyId;
 		calculePolicy('');
-
-		//this.refreshListDoc();
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
 	 }
 
 	 public ISSP_AmazonS3_Ctrl(ApexPages.StandardController stdController) {
-		AMAZONURL  =
-				AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
-			 +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
+		
 		this.cse = (Case)stdController.getRecord();
 		this.Id = this.cse.Id;
 
@@ -143,14 +131,7 @@ global class ISSP_AmazonS3_Ctrl {
 				 Reason1__c, CaseArea__c, Owner.Name
 				 from Case where id = : this.id];
 
-		allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
-		maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
-
-		this.actionStatus = '201';
-		accessid =  CREDENTIALS.AWSAccessKeyId;
 		calculePolicy('');
-
-		//this.refreshListDoc();
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
 	 }
@@ -169,24 +150,12 @@ global class ISSP_AmazonS3_Ctrl {
 				 Reason1__c, CaseArea__c, Owner.Name
 				 from Case where id = : this.id];
 
-		AMAZONURL  =
-				AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
-			 +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
-
-		allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
-		maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
-
-		this.actionStatus = '201';
-		accessid =  CREDENTIALS.AWSAccessKeyId;
 		calculePolicy('');
-
-		//this.refreshListDoc();
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
 	}
 
 	public ISSP_AmazonS3_Ctrl(ISSP_ANG_PCI pciCtrl){
-		system.debug('aqui ISSP_AmazonS3_Ctrl pci ' + pciCtrl.newCase.Id);
 		this.Id = pciCtrl.newCase.Id;
 
 		if(this.id== null)
@@ -198,22 +167,12 @@ global class ISSP_AmazonS3_Ctrl {
 				 Reason1__c, CaseArea__c, Owner.Name
 				 from Case where id = : this.id];
 
-		AMAZONURL  =
-				AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
-			 +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
-
-		allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
-		maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
-
-		this.actionStatus = '201';
-		accessid =  CREDENTIALS.AWSAccessKeyId;
 		calculePolicy('');
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
 	}
 
 	public ISSP_AmazonS3_Ctrl(ISSP_ModelA_Onboarding modelACtrl){
-		//system.debug('aqui ISSP_AmazonS3_Ctrl pci ' + modelACtrl.onBoardingOSCARCase.Id);
 		this.Id = modelACtrl.onBoardingOSCARCase.Id;
 
 		if (this.id == null) return;
@@ -224,14 +183,6 @@ global class ISSP_AmazonS3_Ctrl {
 				 Reason1__c, CaseArea__c, Owner.Name
 				 from Case where id = : this.id];
 
-		AMAZONURL = AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
-			 + AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
-
-		allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
-		maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
-
-		this.actionStatus = '201';
-		accessid =  CREDENTIALS.AWSAccessKeyId;
 		calculePolicy('');
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
@@ -249,23 +200,12 @@ global class ISSP_AmazonS3_Ctrl {
 				 Reason1__c, CaseArea__c, Owner.Name
 				 from Case where id = : this.id];
 
-		AMAZONURL  =
-				AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
-			 +  AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
-
-		allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
-		maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
-
-		this.actionStatus = '201';
-		accessid =  CREDENTIALS.AWSAccessKeyId;
 		calculePolicy('');
-		//this.refreshListDoc();
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
 	}
 
 	public String getStorageFolder() {
-		system.debug('aqui getStorageFolder ...');
 		String FOLDER = FOLDER_STEM;
 
 		String idVal = String.valueOf(cse.Id);
@@ -314,7 +254,6 @@ global class ISSP_AmazonS3_Ctrl {
 		}
 
 	public map<String, List<AmazonFileAMS>> refreshAmazonFileMap() {
-
 		Id caseId = this.cse.Id;
 		Id formId = this.formId;
 
@@ -356,7 +295,6 @@ global class ISSP_AmazonS3_Ctrl {
 	}
 
 	public map<String, Boolean> refreshReviewStatusMap() {
-
 		reviewStatusMap = new Map<String, Boolean>();
 
 		for ( String identifier: amazonFileMap.keySet()) {
@@ -385,15 +323,12 @@ global class ISSP_AmazonS3_Ctrl {
 		if (!fileToDelete.isEmpty()){
 			delete fileToDelete;
 		}
-
-		//refreshListDoc();
 	}
 
 	public void refreshAfterDelete(){
 		AmazonRest.deleteFile(currentFileName,CREDENTIALS );
 		refreshAmazonFileMap();
 		refreshReviewStatusMap();
-		//refreshListDoc();
 	}
 
 	@remoteAction
@@ -402,7 +337,6 @@ global class ISSP_AmazonS3_Ctrl {
 	}
 
 	private static string genPublicExpiringAWSLinkIFAP(string path, string filename){
-
 		string  stringToSplit = '/'+filename;
 		list<string> splittedName = stringToSplit.split('/');
 		splittedName.remove(0);
@@ -430,31 +364,13 @@ global class ISSP_AmazonS3_Ctrl {
 		params.put('Expires', String.ValueOf(timeOut));
 		params.put('Signature', signature);
 
-		String result = page.getUrl();
-		 //  throw new transformationexception(''+result);
-		system.debug('stringToSign  '+  stringToSign + '  queryString  ' + queryString + '   result '  + result );
-
-		return   result ;
-	 }
-
-	public boolean canUploadAndDelete {
-		get {
-			Case thiscse = [Select id, Status from Case where id = :cse.id];
-			/*return (thiscse.Status.equals('Agent Notified (Mail)') ||
-					thiscse.Status.equals('Agent Notified (Email)') ||
-					thiscse.Status.equals('Financial Statements Uploaded') ||
-					thiscse.Status.equals('Sanity Check Failure'));*/
-			return true;
-			}
-		set;
-		 }
+		return page.getUrl();
+	}
 
 	public String getUniqueFileNames() {
-		 String ufn;
-
+		String ufn;
 		Id caseId = this.cse.Id;
 		Id formId = this.formId;
-
 		String query = AMAZON_FILES_QUERY + ' Case__c = :caseId';
 
 		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && String.isNotBlank(formId)){
@@ -468,14 +384,12 @@ global class ISSP_AmazonS3_Ctrl {
 
 		for ( AmazonFile__c amazonFile: listAmazonFile) {
 			String name = amazonFile.Name;
-			SYSTEM.DEBUG('REMOTE File Name:' + name);
 				if(ufn==null) {
 					ufn = name;
 				} else {
 					ufn = ufn + ',' + name;
 				}
 		}
-
 		return ufn;
 	}
 
@@ -532,8 +446,8 @@ global class ISSP_AmazonS3_Ctrl {
 				update cse;
 			}
 			return true;
-		} catch ( Exception e) {
-			System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
+		} catch ( Exception ex) {
+			TransformationHelper.sendEmailSupport('FATAL: ISSP_AmazonS3_Ctrl constructor createAmazonFileObject ' , '   STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
 			return false;
 		}
 	}
@@ -542,8 +456,6 @@ global class ISSP_AmazonS3_Ctrl {
 		String FOLDER = getStorageFolder();
 		String folderName = '';
 		String fullName;
-
-		System.DEBUG('Storage FOLDER: ' + FOLDER);
 
 		try {
 
@@ -579,8 +491,6 @@ global class ISSP_AmazonS3_Ctrl {
 	}
 
 	public class AmazonFileAMS {
-
-		//private AmazonRest.S3File s3File;
 		public AmazonFile__c amazonFile;
 
 		public AmazonFileAMS(AmazonFile__c aFile ) {

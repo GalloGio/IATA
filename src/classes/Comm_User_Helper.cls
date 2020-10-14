@@ -271,7 +271,7 @@ global without sharing class Comm_User_Helper {
 						list<Contact> listOtherContacts = [
 								SELECT Id FROM Contact
 								WHERE AccountId = :account.Id
-								AND Id != :contact.Id];
+								AND Id != :contact.Id LIMIT 1];
 						//if the account has no other contacts it means that current contact is the first one
 						// so we try to add permission to the applications (if needed)
 						if (listOtherContacts.isEmpty()) {

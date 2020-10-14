@@ -113,7 +113,7 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 		if (!userList.isEmpty()){
 			User thisUser = userList[0];
 			thisUser.ProfileId = profileId;
-			update thisUser;
+			WithoutSharingOperations.updateUser(thisUser);
 		}
 		}
 
@@ -135,7 +135,7 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 			for (User thisUser : userList){
 				thisUser.ProfileId = profileId;
 			}
-			update userList;
+			WithoutSharingOperations.updateUserList(userList);
 		}
 		}
 }

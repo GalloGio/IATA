@@ -1,0 +1,19 @@
+<template>
+	<div class={tooltipContainerClass} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
+		<a href="javascript:void(0)" aria-describedby="help" if:true={displayIcon}>
+			<span class="slds-icon_container slds-icon-utility-info">
+				<svg class="slds-icon slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true">
+					<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#info"></use>
+				</svg>
+			</span>
+		</a>
+		<div class={tooltipClass} role="tooltip" if:false={activator} style={tooltipStyle}>
+			<div class="slds-popover__body">
+				<lightning-formatted-rich-text class="slds-grow slds-cell-wrap" value={content}></lightning-formatted-rich-text>
+			</div>
+		</div>
+		<div if:true={displayLabel}>
+			<slot></slot>
+		</div>
+	</div>
+</template>

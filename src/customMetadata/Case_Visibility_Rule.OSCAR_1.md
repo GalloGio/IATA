@@ -69,6 +69,9 @@ Change of Trade Name
 Change of Hierarchy
 Annual revalidation
 PCI DSS Compliant
+New Commercial HO
+New Commercial BR
+New Independent BR
 Onboarding IEP Model A
 IEP Bank account setup
 Major Changes

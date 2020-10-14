@@ -1,0 +1,48 @@
+<messaging:emailTemplate subject="IATA Customer Portal - Invitation E&F" recipientType="User" language="{!recipient.languagelocalekey}">
+<messaging:plainTextEmailBody >
+    <html>
+    
+    <head>
+        <meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />
+        <meta HTTP-EQUIV="Expires" content="Mon, 01 Jan 1990 12:00:00 GMT" />
+    
+         <style>
+              body{
+            font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            color:#004577;
+              }
+
+              div.main{
+                  margin:auto;
+                  width:90%;
+              }
+              hr{
+              color:#0A4279;
+              }
+          </style>
+    </head>
+    
+    <body>
+        <div class="main">
+            <table width="640px">
+                <tr>
+                    <td colspan="3"><img src="!!HeaderUrl!" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>{!$Label.CSP_Dear}</p>
+                        <p>{!$Label.EF_Welcome_Email_Body}</p>
+                            <p>{!$Label.CSP_Email_Signature_Part_1}</p>
+                            <p>{!$Label.CSP_Email_Signature_Part_2}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><img src="!!FooterUrl!" /></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    
+    </html>
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

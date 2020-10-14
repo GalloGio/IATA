@@ -106,7 +106,6 @@ public class ISSP_AP_FieldLists {
 
 	//Mandatory BSP fields specific to Italy
 	public static final Map<String,String> bsp_IT_MandatoryFields = new Map<String,String>{
-		'Other_TAX_Identification__c'     		=> ''
 	};
 
 	//Mandatory BSP fields specific to Canada
@@ -175,7 +174,6 @@ public class ISSP_AP_FieldLists {
 
 	//Mandatory CASS fields specific to Italy
 	public static final Map<String,String> cass_IT_MandatoryFields = new Map<String,String>{
-		'Other_TAX_Identification__c'     		=> ''
 	};
 
 	public static final Map<String,Map<String,String>> cass_MandatoryFieldsbyCountry = new Map<String,Map<String,String>>{
@@ -193,7 +191,7 @@ public class ISSP_AP_FieldLists {
 	};
 
 	public static final Map<String,String> changeMandatoryFields = new Map<String,String>{
-			'Desired_commencment_date__c'				=> 'Desired commencment date',
+			'Desired_commencment_date__c'				=> 'DKesired commencement date',
 			'Type_of_Change_Requested__c'				=> 'Type of change requested',
 			'Contact_Resp_Job_Title__c'     			=> 'Contact Job Title',
 			'Contact_Resp_F_Name__c'                    => '',

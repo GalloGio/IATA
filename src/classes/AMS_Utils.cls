@@ -161,6 +161,9 @@ public without sharing class AMS_Utils {
 	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
 	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
+	public static final Set<String> setAMS = new Set<String> {HO, BR, SA, AO};
+	public static final Set<String> setNewGen = new Set<String> {HE, AE, GE};
+
 	public static final Set<String> IEP_VENDORS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
 	//AMSU-125
 	public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
@@ -286,13 +289,16 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE Multicountry';
 	public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
 	public static final String CASE_REASON_NEW_HO = 'New HO';
+	public static final String CASE_REASON_NEW_COMMERCIAL_HO = 'New Commercial HO';
 	public static final String CASE_REASON_NEW_BR = 'New BR';
 	public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
 	public static final String CASE_REASON_AE_LITE = 'New AE lite';
 	public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE Multicountry';
 
 	public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
+	public static final String CASE_REASON_BR_INDEPENDENT = 'New Independent BR';
 	public static final String CASE_REASON_BR_IP = 'New BR / IP';
+	public static final String CASE_REASON_BR_COMERCIAL = 'New Commercial BR';
 	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
 	public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
 	public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
@@ -364,13 +370,15 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_IMPORT_AGENT = 'Import Agent';
 	public static final String CATEGORY_COURIER = 'Courier';
 	public static final String CATEGORY_IATA_CARGO_AGENT = 'IATA Cargo Agent';
+	public static final String CATEGORY_NON_IATA_FREIGHT_FORWARDER = 'Non-IATA Cargo Agent';
 	public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
 	public static final String CATEGORY_ANSP = 'ANSP';
 	public static final String CATEGORY_AIRPORT_AUTHORITY = 'Airport Authority';
 	public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
 	public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
-		public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+	public static final String CATEGORY_CNS_ENDORSEMENT = 'CNS Endorsement';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -413,9 +421,25 @@ public without sharing class AMS_Utils {
 	public static final String TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY = 'Travel Service Intermediaries-TSI (USA Only)';
 
 	public static final String SECTOR_TRAVEL_AGENT = 'Travel_Agent';
+	public static final String SECTOR_CARGO_AGENT = 'Cargo_Agent';
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
+
+	//CNS new PROCESS Location Type requested
+	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';
+	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_EENDORSEMENT_NEW_INDEPENDENT_BRANCH = 'New Independent BR - CNS Endorsement';
+	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO = 'New HO - CNS Endorsement';
+	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO = 'New Commercial HO - CNS Endorsement';
+	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR = 'New Commercial BR - CNS Endorsement';
+
+	//CNS new PROCESS AGENT Type requested
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'CNS Endorsement BR';
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_EENDORSEMENT_NEW_INDEPENDENT_BRANCH = 'CNS Endorsement Independent BR';
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO = 'CNS Endorsement HO';
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO = 'CASS Commercial Account HO';
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_CASS_COMMERCIAL_BR = 'CASS Commercial Account BR';
+	public static final String CNS_AGENT_TYPE_REQUESTED_CNS_NOTICE_OF_CHANGES = 'CNS Notice Of Change';
 
 	//officeTypes
 	public static final String TYPE_EACP_HO = buildOfficeType(CASE_REASON_NEW_HO, 'EACP Intermediary');
@@ -442,7 +466,11 @@ public without sharing class AMS_Utils {
 	public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,MCAE,NGCHANGES,NGCONVERSIONTOMULTICOUNTRY,NGCONVERSIONMCTOST};
 	public static final String TYPE_PAX_AE_MULTICOUNTRY = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, AGENTTYPE_MULTICOUNTRY);
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
-
+	public static final String TYPE_CNS_HO = buildOfficeType(CASE_REASON_NEW_HO, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_HO_COMMERCIAL = buildOfficeType(CASE_REASON_NEW_COMMERCIAL_HO, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_BR = buildOfficeType(CASE_REASON_BR_IP, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_BR_INDEPEND = buildOfficeType(CASE_REASON_BR_INDEPENDENT, CATEGORY_CNS_ENDORSEMENT);
+	public static final String TYPE_CNS_BR_COMMERCIAL= buildOfficeType(CASE_REASON_BR_COMERCIAL, CATEGORY_CNS_ENDORSEMENT);
 
 	public static final String OPEN = 'Open';
 	public static final String NO_IEP_ACCOUNT = 'No IEP Account';
@@ -540,7 +568,7 @@ public without sharing class AMS_Utils {
 		'Import Agent' =>   'IATA Cargo Agent',
 		'CASS Associate' => 'CASS Associates',
 		'Courier' =>    'IATA Cargo Agent',
-		'Handling Agent' => 'IATA Travel Agent',
+		'Airport Handling Agent' => 'IATA Travel Agent',
 		'MSO Member Sales Office' => 'IATA Travel Agent',
 		'TIDS Agent' => 'TIDS',
 		'GSA General Sales Agent' =>    'General Sales Agent (GSA)',
