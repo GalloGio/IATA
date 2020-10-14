@@ -1371,8 +1371,6 @@ public without sharing class AMS_Utils {
 
 		try {
 
-			System.debug('JR Debug runOwnershipMigration: ' + runOwnershipMigration);
-
 			if(!stagingToAccount.isEmpty() && runOwnershipMigration){
 
 				Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
