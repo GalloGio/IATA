@@ -164,4 +164,18 @@ private class ANG_IEP_CalloutHelperTest {
 
 	}
 
+	@isTest	static void testEnqueueJobs(){
+		test.StartTest();
+		test.enqueueBatchJobs(100);
+
+		system.assertNotEquals(null, ANG_CalloutIEPMasterdata.fetchEndPoint(ANG_CalloutMapping__c.getInstance('IEP_1')));
+
+		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+		ANG_CalloutIEPMasterdata.runTheQueableTest = true;
+		Account acct = [Select Id, ANG_IEP_Status__c, IATACode__c, Location_Type__c from Account LIMIT 1];
+		Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Account__c = acct.Id, Change_Code__c = 'IEP',  Sent_to_external_system__c = false);
+
+		insert aacc1;
+		Test.stopTest();
+	}
 }
