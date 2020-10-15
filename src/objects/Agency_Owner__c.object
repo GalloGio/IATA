@@ -295,46 +295,6 @@
         <unique>true</unique>
     </fields>
     <label>Agency Owner</label>
-    <recordTypes>
-        <fullName>GDP</fullName>
-        <active>true</active>
-        <label>GDP</label>
-        <picklistValues>
-            <picklist>Owner_Category__c</picklist>
-            <values>
-                <fullName>Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Person</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publicly Traded</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Live</fullName>
-        <active>true</active>
-        <label>Live</label>
-        <picklistValues>
-            <picklist>Owner_Category__c</picklist>
-            <values>
-                <fullName>Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Person</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publicly Traded</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -378,6 +338,46 @@
     </nameField>
     <pluralLabel>Agency Owners</pluralLabel>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>GDP</fullName>
+        <active>true</active>
+        <label>GDP</label>
+        <picklistValues>
+            <picklist>Owner_Category__c</picklist>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publicly Traded</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Live</fullName>
+        <active>true</active>
+        <label>Live</label>
+        <picklistValues>
+            <picklist>Owner_Category__c</picklist>
+            <values>
+                <fullName>Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Person</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publicly Traded</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

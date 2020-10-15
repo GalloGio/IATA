@@ -1107,6 +1107,26 @@ TIDS_VB_ISO - ISO Code of Dematerialized Operations</description>
                 </value>
             </valueSetDefinition>
             <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L1</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L2</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L3</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L4</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>SS</controllingFieldValue>
                 <valueName>S1</valueName>
             </valueSettings>
@@ -1668,26 +1688,6 @@ TIDS_VB_ISO - ISO Code of Dematerialized Operations</description>
             <valueSettings>
                 <controllingFieldValue>SV</controllingFieldValue>
                 <valueName>7</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L1</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L2</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L3</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L4</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>FC</controllingFieldValue>
