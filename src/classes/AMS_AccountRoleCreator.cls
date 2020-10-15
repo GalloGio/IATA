@@ -398,7 +398,6 @@ public with sharing class AMS_AccountRoleCreator
 		//update accreditation contacts
 		update accreditationContactsToUpdate.values();
 
-		//throw new AMS_ApplicationException('Owners process - Failing owners copy - what the process is doing');
 		return oldAndNewOwnersMap;
 
 	}
