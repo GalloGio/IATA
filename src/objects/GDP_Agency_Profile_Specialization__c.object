@@ -242,6 +242,186 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>New_In_Operation_Since__c</fullName>
+        <description>TIDS Specific. Date since the business is in operation.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Date since the business is in operation. GR Code &quot;DIBS&quot;</inlineHelpText>
+        <label>New - In Operation Since</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>New_Market_Focus_Corporate__c</fullName>
+        <description>TIDS specific. Corporate Market Focus expressed as percentage value</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS specific. Corporate Market Focus expressed as percentage value. GR Code &quot;FC&quot;</inlineHelpText>
+        <label>New - Market Focus - Corporate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Market_Focus_Leisure__c</fullName>
+        <description>TIDS specific. Leisure Market Focus expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS specific. Leisure Market Focus expressed as percentage value. GR Code &quot;FL&quot;</inlineHelpText>
+        <label>New - Market Focus - Leisure</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Number_Of_Employees__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>TIDS Specific. Number of employees under the TIDS office.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Number of employees under the TIDS office. GR Code &quot;NU_EMPL&quot;</inlineHelpText>
+        <label>New - Number Of Employees</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>GDP_Reference_Table__c.Table__c</field>
+                <operation>equals</operation>
+                <value>APEMP</value>
+            </filterItems>
+            <infoMessage>Displays records under &quot;APEMP&quot; table</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>GDP Agency Profiles and Specializations (GDP Reference Table)</relationshipLabel>
+        <relationshipName>GDP_Agency_Profiles_and_Specializati7lMU</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Number_Of_Offices__c</fullName>
+        <description>TIDS Specific. Number of offices this Seller has in this country.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Number of offices this Seller has in this country.. GR Code &quot;NU_OFFI&quot;</inlineHelpText>
+        <label>New - Number Of Offices</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Accomodation__c</fullName>
+        <description>TIDS Specific. Sales Breakdown Accommodation expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Breakdown Accommodation expressed as percentage value. GR Code &quot;TIDS_SH&quot;</inlineHelpText>
+        <label>New - Sales % - Accomodation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Air__c</fullName>
+        <description>TIDS Specific. Sales Breakdown Air expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Breakdown Air expressed as percentage value. GR Code &quot;TIDS_SA&quot;</inlineHelpText>
+        <label>New - Sales % - Air Transportation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Land__c</fullName>
+        <description>TIDS Specific. Sales Breakdown Land expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Breakdown Land Transportation expressed as percentage value. GR Code &quot;TIDS_SL&quot;</inlineHelpText>
+        <label>New - Sales % - Land Transportation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Meetings__c</fullName>
+        <description>TIDS Specific. Sales Breakdown Meetings &amp; Events expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Breakdown Meetings &amp; Events expressed as percentage value. GR Code &quot;TIDS_ME&quot;</inlineHelpText>
+        <label>New - Sales % - Meetings &amp; Events</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Mix_Offline__c</fullName>
+        <description>TIDS Specific. Sales Mix - Offline expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Mix - Offline expressed as percentage value. GR Code &quot;SMOF&quot;</inlineHelpText>
+        <label>New - Sales Mix - Offline</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Mix_Online__c</fullName>
+        <description>TIDS Specific. Sales Mix - Online expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Mix - Online expressed as percentage value. GR Code &quot;SMOL&quot;</inlineHelpText>
+        <label>New - Sales Mix - Online</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Sea__c</fullName>
+        <description>TIDS Specific. Sales Breakdown Meetings &amp; Events expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Breakdown Sea Transportation expressed as percentage value. GR Code &quot;TIDS_SS&quot;</inlineHelpText>
+        <label>New - Sales % - Sea Transportation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>New_Sales_Tour__c</fullName>
+        <description>TIDS Specific. Sales Breakdown Tours &amp; Packages expressed as percentage value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TIDS Specific. Sales Breakdown Tours &amp; Packages expressed as percentage value.. GR Code &quot;TIDS_TR&quot;</inlineHelpText>
+        <label>New - Sales % - Tours &amp; Packages</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Related_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
