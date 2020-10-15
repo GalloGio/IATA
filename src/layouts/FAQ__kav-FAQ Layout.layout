@@ -16,6 +16,9 @@
                 <field>Title</field>
             </layoutItems>
             <layoutItems>
+                <field>Summary</field>
+            </layoutItems>
+            <layoutItems>
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
