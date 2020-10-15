@@ -978,7 +978,7 @@ public class ams2gdp_BusinessLogic {
 				when 'NU_EMPL' {
 					//APEMP
 					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APEMP' + agencies.GR_Item__c);
-					if (agencies.GR_Item__c!=null) {gdpAgencies.New_Number_Of_Employees__c = tempRef1.Id;}
+					if (agencies.GR_Item__c!=null && tempRef1!=null) {gdpAgencies.New_Number_Of_Employees__c = tempRef1.Id;}
 			 	}
 				when 'DIBS' {
 					if (agencies.GR_Item__c!=null || agencies.GR_Item__c!=''){
@@ -1029,23 +1029,23 @@ public class ams2gdp_BusinessLogic {
 				when 'AT' {
 					//gdpAgencies.Main_Activity__c = ref1.Id;
 					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APPRAC' + agencies.GR_Item__c);
-					gdpAgencies.Main_Activity__c  = tempRef1.Id;
+					if (tempRef1!=null) gdpAgencies.Main_Activity__c  = tempRef1.Id;
 				}
 				when 'SV' {
 					GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APSALE' + grItemSplit[0]);
-					gdpAgencies.Sales_Volume__c = tempRef1.Id;
+					if (tempRef1!=null) gdpAgencies.Sales_Volume__c = tempRef1.Id;
 				}
 				when 'DS'{
 					Iterator<String> iter = grItemSplit.iterator();
 					//GR item needs to be split into 3, one each for main market, secondary market and tertiary market
 					GDP_Reference_Table__c tempRef = descriptionsMapwithTable1.get('APDEST' + iter.next());
-					gdpAgencies.Main_Destination_Specialization__c = tempRef.Id;
+					if (tempRef!=null) gdpAgencies.Main_Destination_Specialization__c = tempRef.Id;
 					if (iter.hasNext()) {
 						GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APDEST' + iter.next());
-						gdpAgencies.Secondary_Destination_Specialization__c = tempRef1.Id;
+						if (tempRef1!=null) gdpAgencies.Secondary_Destination_Specialization__c = tempRef1.Id;
 						if (iter.hasNext()) {
 							GDP_Reference_Table__c tempRef2 = descriptionsMapwithTable1.get('APDEST' + iter.next());
-							gdpAgencies.Tertiary_Destination_Specialization__c = tempRef2.Id;
+							if (tempRef2!=null) gdpAgencies.Tertiary_Destination_Specialization__c = tempRef2.Id;
 						}
 					}
 				}
@@ -1053,13 +1053,13 @@ public class ams2gdp_BusinessLogic {
 					Iterator<String> iter = grItemSplit.iterator();
 					//GR item needs to be split into 3, one each for main market, secondary market and tertiary market
 					GDP_Reference_Table__c tempRef = descriptionsMapwithTable1.get('APSPEC' + iter.next());
-					gdpAgencies.Main_Market_Specialization__c = tempRef.Id;
+					if (tempRef!=null) gdpAgencies.Main_Market_Specialization__c = tempRef.Id;
 					if (iter.hasNext()) {
 						GDP_Reference_Table__c tempRef1 = descriptionsMapwithTable1.get('APSPEC' + iter.next());
-						gdpAgencies.Secondary_Market_Specialization__c = tempRef1.Id;
+						if (tempRef1!=null) gdpAgencies.Secondary_Market_Specialization__c = tempRef1.Id;
 						if (iter.hasNext()) {
 							GDP_Reference_Table__c tempRef2 = descriptionsMapwithTable1.get('APSPEC' + iter.next());
-							gdpAgencies.Tertiary_Market_Specialization__c = tempRef2.Id;
+							if (tempRef2!=null) gdpAgencies.Tertiary_Market_Specialization__c = tempRef2.Id;
 						}
 					}
 				}

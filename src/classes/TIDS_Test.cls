@@ -21,6 +21,15 @@ public with sharing class TIDS_Test {
 	@TestSetup
 	private static void setup() {
 		Id headquarters = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
+        
+        //Id rttids = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'TIDS') ;
+        
+        // insert a value in Custom Setting (required for pre-existing attachmentTrigger logic)
+		Apex_Setting__c apexSetting = new Apex_Setting__c();
+		apexSetting.Name = 'RT valid to reopen attachment trigger';
+		apexSetting.Text_1__c = 'TIDS,';
+		insert apexSetting;
+        
 		country = new IATA_ISO_Country__c();
 		country.Name = 'Canada';
 		country.ISO_Code__c = 'CA';
@@ -383,6 +392,9 @@ public with sharing class TIDS_Test {
 							applicationtype,
 							null);
 		caseId= errmgt.caseId;
+		Case tidscase = [Select AccountId, ContactId From Case Where Id=:caseId Limit 1];
+		tidscase.ContactId=contactId;
+		update tidscase;
 		applicationsettings=applicationReplace(applicationsettings);
 		TIDS_Controller.applicationSubmitted(caseId, applicationsettings,applicationType );
 		TIDS_Controller.autoApproved(new List<String>{String.ValueOf(caseId)});
@@ -422,7 +434,7 @@ public with sharing class TIDS_Test {
 		applicationDecision='Approved';
 		applicationsettings ='{\"applicationDecision\":\"Application_Approved\",\"userType\":\"vetting\",\"applicationType\":\"chg-name-company\",\"userInfo\":{\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"@accountId\"}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"@accountId\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"sectionName\":\"Welcome\",\"cmpName\":\"new-applicant\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"Bottas Wins Barcelona\",\"companyType\":\"L\",\"taxIdVATNumber1\":\"GST/1456784\",\"taxIdVATNumber2\":\"QST/96314-993\",\"businessRegistration\":\"123\",\"inOperationsSince\":\"2014-08-01\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"sectionName\":\"Ownership Details\",\"cmpName\":\"shareholder-details\",\"values\":[{\"percentage\":\"90\",\"type\":\"Company\",\"name\":\"Bottas Limited Partnership\",\"email\":\"bottas@tids.iata.org\",\"id\":\"@accountId\"},{\"percentage\":\"10\",\"type\":\"Person\",\"name\":\"Bottas Family\",\"email\":\"bottasfamily@tids.iata.org\",\"id\":\"@accountId\"}],\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Address\":{},\"Mailing\":{},\"Contact\":{},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"new-applicant\",\"next\":\"agency-legal-status\"},{\"id\":1,\"sectionName\":\"agency-legal-status\",\"next\":\"shareholder-details\"},{\"id\":2,\"sectionName\":\"shareholder-details\",\"next\":\"supporting-documents\"},{\"id\":3,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';  
 		applicationsettings=applicationReplace(applicationsettings);
-		reason='Last TIDS Application has been Approved and this case is now Closed';
+		reason='';
 		TIDS_Controller.updateCaseStatus(
 			applicationDecision,
 			userType,
@@ -467,7 +479,7 @@ public with sharing class TIDS_Test {
 		applicationDecision='Approved';
 		applicationsettings ='{\"applicationDecision\":\"Application_Approved\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"@accountId\"}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"@accountId\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"@cityId\",\"state\":{\"Id\":\"@stateId\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"@cityId\",\"state\":{\"Id\":\"@stateId\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888666\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
 		applicationsettings=applicationReplace(applicationsettings);
-		reason='Last TIDS Application has been Approved and this case is now Closed';
+		reason='';
 		TIDS_Controller.updateCaseStatus(
 			applicationDecision,
 			userType,
@@ -538,7 +550,7 @@ public with sharing class TIDS_Test {
 		applicationDecision='Approved';
 		applicationsettings='{\"applicationDecision\":\"Application_Approved\",\"userType\":\"vetting\",\"applicationType\":\"NEW_HO\",\"userInfo\":{\"UserName\":\"Abdellah Abdellah Bellahssan\",\"UserId\":\"@userId\",\"ContactId\":\"@contactId\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"sectionName\":\"Welcome\",\"cmpName\":\"new-applicant\",\"values\":{\"companyLegalName\":\"New HO Application - For Test Classes\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"Test Classes Application\",\"companyType\":\"C\",\"taxIdVATNumber1\":\"123456\",\"taxIdVATNumber2\":\"987654\",\"businessRegistration\":\"852963\",\"inOperationsSince\":\"2020-05-04\"},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"ShareholderDetails\":{\"sectionName\":\"Ownership Details\",\"cmpName\":\"shareholder-details\",\"values\":[{\"percentage\":\"50\",\"name\":\"Test\",\"email\":\"test@testclasses.com\",\"type\":\"Person\",\"id\":\"efba\"},{\"percentage\":\"50\",\"type\":\"Company\",\"name\":\"Class\",\"email\":\"class@testclasses.com\",\"id\":\"c6ab\"}],\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"10 Test Class Street\",\"city\":\"Laval\",\"citygeonameId\":6050610,\"state\":{\"Id\":\"@stateId\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H1H2H3\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"10 Mailing Street\",\"city\":\"Seattle\",\"citygeonameId\":5809844,\"state\":{\"Id\":\"@stateId\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98162\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"15148743636\",\"businessEmail\":\"debonol@iata.org\",\"webSite\":\"www.testclasses.com\",\"omFirstName\":\"Test\",\"omLastName\":\"Classes\"},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Online Travel Agency\",\"value\":\"OL\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"67\"},{\"label\":\"Corporate\",\"value\":\"33\"}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"39\"},{\"label\":\"Offline\",\"value\":\"61\"}]},\"travelSales\":{\"fieldName\":\"travelSales\",\"values\":\"3\"},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Farelogix\",\"value\":\"FLGX\"},{\"label\":\"Travelsky\",\"value\":\"MINS\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"2\"},\"numberOffices\":{\"fieldName\":\"numberOffices\",\"values\":\"8\"}},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"12\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"18\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":\"33\",\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":\"13\",\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":\"14\",\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":\"10\",\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Inbound\",\"value\":\"IB\"},{\"label\":\"Adventure\",\"value\":\"AD\"},{\"label\":\"Conference/Exhibitions\",\"value\":\"CF\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"France\",\"value\":\"FR\"},{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Mexico\",\"value\":\"MX\"}]}},\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Section_Confirmed\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"new-applicant\",\"next\":\"agency-legal-status\"},{\"id\":1,\"sectionName\":\"agency-legal-status\",\"next\":\"shareholder-details\"},{\"id\":2,\"sectionName\":\"shareholder-details\",\"next\":\"address\"},{\"id\":3,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":4,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":5,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":6,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":7,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":8,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		applicationsettings=applicationReplace(applicationsettings);
-		reason='Last TIDS Application has been Approved and this case is now Closed';
+		reason='';
 		TIDS_Controller.updateCaseStatus(
 			applicationDecision,
 			userType,
@@ -768,7 +780,7 @@ public with sharing class TIDS_Test {
 		applicationDecision='Approved';
 		applicationsettings='{\"userType\":\"client\",\"applicationType\":\"NEW_BR\",\"userInfo\":{\"UserName\":\"Valteri Bottas\",\"UserId\":\"@userId\",\"ContactId\":\"@contactId\",\"role\":\"TIDS Admin HO Primary\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":\"Agency\",\"Id\":\"@accountId\"}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"@accountId\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"BR Application for Test Classes\",\"companyType\":\"L\",\"taxIdVATNumber1\":\"GST/1456784\",\"taxIdVATNumber2\":\"QST/96314-778\",\"businessRegistration\":\"123\",\"inOperationsSince\":\"2020-09-09\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"cmpName\":\"shareholder-details\",\"target\":\"NA\",\"values\":[{\"percentage\":90,\"type\":\"Company\",\"name\":\"Bottas Limited Partnership\",\"email\":\"bottas@tids.iata.org\",\"id\":\"a7B4E0000001ZdHUAU\"},{\"percentage\":10,\"type\":\"Person\",\"name\":\"Bottas Family\",\"email\":\"bottasfamily@tids.iata.org\",\"id\":\"a7B4E0000001ZdIUAU\"}],\"sectionDecision\":\"NA\"},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"10 King Street\",\"city\":\"Toronto\",\"citygeonameId\":6167865,\"state\":{\"Id\":\"@stateId\",\"label\":\"Ontario\",\"value\":\"CA-ON\"},\"postalCode\":\"M4M4J4\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"true\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"14186365241\",\"businessEmail\":\"tids@iata.org\",\"webSite\":\"www.iata.org/tids\",\"omFirstName\":\"Mr\",\"omLastName\":\"Freeze\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Consolidator\",\"value\":\"CN\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"64\"},{\"label\":\"Corporate\",\"value\":\"36\"}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"93\"},{\"label\":\"Offline\",\"value\":\"7\"}]},\"travelSales\":{},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Sabre\",\"value\":\"SABR\"},{\"label\":\"Amadeus\",\"value\":\"AGTD\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"1\"},\"numberOffices\":{}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"75\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"3\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":\"4\",\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":\"5\",\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":\"6\",\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":\"7\",\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Adventure\",\"value\":\"AD\"},{\"label\":\"Inbound\",\"value\":\"IB\"},{\"label\":\"Cruises\",\"value\":\"CR\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Europe\",\"value\":\"EU\"},{\"label\":\"Caribbean\",\"value\":\"CB\"}]}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"agency-legal-status\",\"next\":\"address\"},{\"id\":1,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":2,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":3,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":4,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":5,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":6,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		applicationsettings=applicationReplace(applicationsettings);
-		reason='Last TIDS Application has been Approved and this case is now Closed';
+		reason='';
 		TIDS_Controller.updateCaseStatus(
 			applicationDecision,
 			userType,
@@ -806,7 +818,7 @@ public with sharing class TIDS_Test {
 		applicationDecision='Approved';
 		applicationsettings='{\"userType\":\"client\",\"applicationType\":\"NEW_VB\",\"userInfo\":{\"UserName\":\"Valteri Bottas\",\"UserId\":\"@userId\",\"ContactId\":\"@contactId",\"role\":\"TIDS Admin HO Primary\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":\"Agency\",\"Id\":\"@accountId\"}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"@accountId\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"VB Application for Test Classes\",\"companyType\":\"L\",\"taxIdVATNumber1\":\"GST/1456784\",\"taxIdVATNumber2\":\"QST/96314-778\",\"businessRegistration\":\"123\",\"inOperationsSince\":\"2020-06-01\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"cmpName\":\"shareholder-details\",\"target\":\"NA\",\"values\":[{\"percentage\":90,\"type\":\"Company\",\"name\":\"Bottas Limited Partnership\",\"email\":\"bottas@tids.iata.org\",\"id\":\"a7B4E0000001ZdHUAU\"},{\"percentage\":10,\"type\":\"Person\",\"name\":\"Bottas Family\",\"email\":\"bottasfamily@tids.iata.org\",\"id\":\"a7B4E0000001ZdIUAU\"}],\"sectionDecision\":\"NA\"},\"Address\":{\"values\":{\"address\":\"15 Rue Papineau West\",\"city\":\"Montréal\",\"state\":{\"label\":\"Quebec\"},\"postalCode\":\"H2V4T8\",\"countryIsoCode\":\"Canada\",\"virtualCountryOfOperations\":{\"Id\":\"@countryId\",\"label\":\"Australia\",\"value\":\"AU\"}}},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"true\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"1574301895\",\"fax\":\"154115615\",\"businessEmail\":\"vb@tids.iata.org\",\"webSite\":\"www.iata.org/tids/vb\",\"omFirstName\":\"Mr\",\"omLastName\":\"VB\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Online Travel Agency\",\"value\":\"OL\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"100\"},{\"label\":\"Corporate\",\"value\":null}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"100\"},{\"label\":\"Offline\",\"value\":null}]},\"travelSales\":{},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Abacus\",\"value\":\"ABAC\"},{\"label\":\"Worldspan\",\"value\":\"WSPN\"},{\"label\":\"Travelsky\",\"value\":\"MINS\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"1\"},\"numberOffices\":{}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"50\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"50\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":null,\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":null,\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":null,\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":null,\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Conference/Exhibitions\",\"value\":\"CF\"},{\"label\":\"Educational\",\"value\":\"ED\"},{\"label\":\"Ethnic\",\"value\":\"ET\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"France\",\"value\":\"FR\"},{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Caribbean\",\"value\":\"CB\"}]}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"agency-legal-status\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":3,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":4,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":5,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		applicationsettings=applicationReplace(applicationsettings);
-		reason='Last TIDS Application has been Approved and this case is now Closed';
+		reason='';
 		TIDS_Controller.updateCaseStatus(
 			applicationDecision,
 			userType,
@@ -1233,11 +1245,27 @@ public with sharing class TIDS_Test {
 		readObjectsId();
 	
 		TIDSHelper.getAdmin(String.ValueOf(accountId));
-		TIDSHelper.createTidsRequestReinstate(String.ValueOf(accountId),reason, applicationType);
-		TIDSHelper.createTidsRequestRelinquish(String.ValueOf(accountId),reason, applicationType);
 		TIDSHelper.createTidsRequestVirtualBranch(String.ValueOf(accountId),payload);
 		TIDSHelper.createTidsCaseNewBranch(String.ValueOf(accountId),payload);
-		TIDSHelper.createTidsCaseVirtualBranch(String.ValueOf(accountId),payload); 
+		final String result = TIDSHelper.createTidsCaseVirtualBranch(String.ValueOf(accountId),payload);
+		TIDSUtil.createCaseComment(true, result , 'thank you');
+        //will improve the assert
+		System.assertEquals(true,result!='');
+		Test.stopTest();
+			
+	}
+	@IsTest
+	private static void TIDSHelperFunctionPart2() {
+		Test.startTest();
+		String applicationType='ho';
+		String reason='TIDS is a good reason';
+		String payload=TIDS_Constant.TIDSVALUE ;
+	
+		readObjectsId();
+	
+		TIDSHelper.getAdmin(String.ValueOf(accountId));
+		TIDSHelper.createTidsRequestReinstate(String.ValueOf(accountId),reason, applicationType);
+		TIDSHelper.createTidsRequestRelinquish(String.ValueOf(accountId),reason, applicationType);
 		
 		TIDSHelper.isTidsRequestPending(String.ValueOf(accountId), 'TIDS – Relinquishment');
 		final String result=TIDSHelper.isTidsRequestPending(String.ValueOf(accountId), 'TIDS – Reinstatement');
@@ -1247,7 +1275,7 @@ public with sharing class TIDS_Test {
 			
 	}
 	@IsTest
-	private static void TIDSHelperFunctionPart2() {
+	private static void TIDSHelperFunctionPart3() {
 		Test.startTest();
 		String applicationType='ho';
 		String reason='TIDS is a good reason';
@@ -1470,7 +1498,14 @@ public with sharing class TIDS_Test {
 		Case tidscase =createCase(1);
 		tidscase =createCase(2);
 		tidscase =createCase(3);
-		tidscase =createCase(4);
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}
+	@IsTest
+	private static void TidsClosedCaseForNotificationsPart2() {
+		Test.startTest();
+		readObjectsId();
+		Case tidscase =createCase(4);
 		tidscase =createCase(5);
 		tidscase =createCase(6);		
 		System.assertEquals(true,tidscase.Id!=null,false);
@@ -1478,7 +1513,7 @@ public with sharing class TIDS_Test {
 	}
 
 	@IsTest
-	private static void TidsClosedCaseForNotificationsPart2() {
+	private static void TidsClosedCaseForNotificationsPart3() {
 		Test.startTest();
 		readObjectsId();
 		Case tidscase =createCase(7);
