@@ -28,6 +28,22 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	chevrondown = this.icons + "chevrondown.svg";
 	chevronup = this.icons + "chevronup.svg";
 
+	@api
+	register(){
+		pubsub.register('capabilitiesupdate', this.capabilitiesUpdateCallback); 
+	}
+
+	connectedCallback(){
+		this.capabilitiesUpdateCallback = this.capabilitiesUpdate.bind(this);
+		this.register();
+	}
+
+	capabilitiesUpdateCallback;
+	capabilitiesUpdate(payload) {
+		this.getCapabilitiesFromCertification(this.recordId, null, null);
+	}
+
+
 	@api recordId = "";
 	@api certificationMode = false;
 	@api certificationName = "";
@@ -901,6 +917,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	closeCapabilitiesTab() {
 		let p1 = new Promise(function(resolve, reject) {
 			resolve(pubsub.fire("certificationupdate"));
+		});
+		let p2 = new Promise(function(resolve, reject) {
+			resolve(pubsub.fire("capabilitiesupdate"));
 		});
 		this.dispatchEvent(new CustomEvent("closecapabilitiestab", {}));
 	}

@@ -26,7 +26,7 @@
 									<td class="align-cell-start">
 										<p if:false={notification.isRedirection} class="padding-header" title={notification.Body__c}>{notification.Short_Description__c}</p>
 										<template if:true={notification.isRedirection}>
-											<p class="padding-header cursor-pt" title={notification.Body__c} onclick={handleNavigate} data-id={notification.Station__c} data-read={notification.Read__c} data-description={notification.Short_Description__c} data-destiny={notification.destiny}>{notification.Short_Description__c}</p>
+											<p class="padding-header cursor-pt" title={notification.Body__c} onclick={handleNavigate} data-id={notification.Station__c} data-read={notification.Read__c} data-description={notification.Short_Description__c} data-destiny={notification.destiny} data-is-owner={notification.isOwner}>{notification.Short_Description__c}</p>
 										</template>
 									</td> 
 									<td class="align-cell-start">
@@ -37,7 +37,7 @@
 									<td class="align-cell-start background-cell-not-read">
 										<p if:false={notification.isRedirection} class="padding-header" title={notification.Body__c}>{notification.Short_Description__c}</p>
 										<template if:true={notification.isRedirection}>
-											<p class="padding-header cursor-pt" title={notification.Body__c} onclick={handleNavigate} data-key={notification.Id} data-position={notificationIndex}  data-id={notification.Station__c} data-read={notification.Read__c} data-description={notification.Short_Description__c} data-destiny={notification.destiny}>{notification.Short_Description__c}</p>
+											<p class="padding-header cursor-pt" title={notification.Body__c} onclick={handleNavigate} data-key={notification.Id} data-position={notificationIndex}  data-id={notification.Station__c} data-read={notification.Read__c} data-description={notification.Short_Description__c} data-destiny={notification.destiny} data-is-owner={notification.isOwner}>{notification.Short_Description__c}</p>
 										</template>
 									</td>
 									<td class="align-cell-start background-cell-not-read">

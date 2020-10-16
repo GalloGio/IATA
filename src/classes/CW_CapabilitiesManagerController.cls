@@ -33,7 +33,8 @@ public without sharing class CW_CapabilitiesManagerController {
 				asgmtGroupToAdd.src = '/resource/ICG_Resources/icons/remote_validation_icon.svg';
 				if (currentGroup.ICG_Certification__c != null) {
 					asgmtGroupToAdd.order = currentGroup.ICG_Certification__r.Order__c;
-					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Label__c;
+					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
+					asgmtGroupToAdd.label = currentGroup.ICG_Certification__r.Label__c;
 					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
 				}
 				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
@@ -834,6 +835,8 @@ public without sharing class CW_CapabilitiesManagerController {
 		public String type;
 		@AuraEnabled
 		public String name;
+		@AuraEnabled
+		public String label;
 		@AuraEnabled
 		public Date expirationDate;
 		@AuraEnabled

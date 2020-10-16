@@ -153,6 +153,7 @@ export default class CwPrivateNotifications extends LightningElement {
 
 				if(elem.isRedirection){
 					elem.destiny = this.generateNotificationDestiny(elem, description);
+					elem.isOwner = (elem.CreatedById === this.userInfo.Id) ? true : false;					
 				}
 
 				//parse Dates
@@ -219,8 +220,18 @@ export default class CwPrivateNotifications extends LightningElement {
 
 	handleNavigate(event){
 		let destiny = event.currentTarget.getAttribute("data-destiny").toLowerCase();
-		let url = this.generateUrl(event, destiny); 
-		if(url){
+		let isOwner = event.currentTarget.getAttribute("data-is-owner");
+		let url = this.generateUrl(event, destiny);
+		if(isOwner){
+
+			const selectedItemEvent = new CustomEvent("menuitemselection", {
+				detail: url.replace('#','')
+			});
+	
+			// Dispatches the event.
+			this.dispatchEvent(selectedItemEvent);
+		}
+		else{
 			window.open(url, "_blank");
 		}
 
