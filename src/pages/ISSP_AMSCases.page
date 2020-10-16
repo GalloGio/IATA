@@ -466,9 +466,9 @@
                                             value="{!IF(IsPostalOperator, $Label.ISSP_AMS_Step0_Changes, $Label.ISSP_AMS_Step0_Other_Changes)}" />
                                         <br/>
                                         <div style="padding-top: 20px; {!IF(!revCaseOpen, 'display:block', 'display:none')}">
-                                            <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
+                                            <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!IF(IsPostalOperator,$Label.ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator,$Label.ISSP_AMS_Step0_Other_Changes_Msg)}"/>
 
-                                            <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
+                                            <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!IF(IsPostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent)}"/><br/><br/>
 
                                             <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin,!IsPostalOperator)}"/>
 

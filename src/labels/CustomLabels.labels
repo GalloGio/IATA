@@ -24008,6 +24008,14 @@ For each section below either:&lt;br/&gt;
 You will be required to upload a scanned copy of this document in the next step (STEP D).</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Change_Ownership_Legal_Status</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Ownership_Legal_Status</shortDescription>
+        <value>3. Legal Status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Change_Ownership_Shareholding</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -24117,6 +24125,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Confirm_details</shortDescription>
         <value>I confirm the agency details below are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Confirm_Type_of_Entity</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Confirm_Type_of_Entity</shortDescription>
+        <value>Confirm Type of entity is correct</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Curr_Company_Owner</fullName>
@@ -24248,7 +24264,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC IATA Admin Company</shortDescription>
-        <value>IATA Company Administrator</value>
+        <value>IATA Administrator</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_IATA_Only</fullName>
@@ -26112,6 +26128,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
         <value>For changes to your Location, Company Name, Legal Status or Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg PostalOperator</shortDescription>
+        <value>For changes to your Location, Company Name or Legal Status</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -29540,6 +29564,14 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator</shortDescription>
+        <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name or Legal Status.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</fullName>

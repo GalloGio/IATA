@@ -376,9 +376,9 @@
         <apex:pageBlockSection columns="1" collapsible="false">
                 <apex:facet name="header">
                     <apex:outputpanel >
-                        <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+                        <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
                         <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-                            {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+                            {!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
                         </apex:outputText>
                         <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
                     </apex:outputpanel>                    
@@ -388,7 +388,7 @@
                 <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Legal_Status_After_Change}</apex:outputPanel>   
                 
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" /><!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}-->
+                    <apex:outputLabel style="float:right" value="{!IF(IsPostalOperator,$Label.ISSP_AMS_NoC_Confirm_Type_of_Entity,$Label.ISSP_AMS_NoC_Confirm_Ownership_details)}" /><!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}-->
                     <apex:outputText ><img src="{!IF(newForm.Confirm_Ownership_details_are_correct__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                         
@@ -606,7 +606,7 @@
         </apex:pageBlockSection>
              </div>
             <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_bank_account_details__c==false,'','none')}">
-                    <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false}">
+                    <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false && !isPostalOperator}">
                             <apex:facet name="header">
                               <apex:outputpanel >
                                 <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>

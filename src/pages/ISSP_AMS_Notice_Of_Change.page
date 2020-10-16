@@ -636,13 +636,13 @@
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
 			<p><a href="#nav_four">
-				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+					{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
 				</apex:outputText>
 			</a></p>
 		</apex:outputText>
-		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
+		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c) && !isPostalOperator}">
 			<p><a href="#nav_five">
 				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
@@ -1178,9 +1178,9 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+							<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
 							<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-								{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+								{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
 							</apex:outputText>
 						</apex:outputpanel>
 					</apex:facet>
@@ -1191,7 +1191,7 @@
 					<apex:outputPanel >
 						<apex:pageBlockSection columns="1">
 		                   	<apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Ownership_details_are_correct__c==false,newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
-								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/> <!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}"-->
+								<apex:outputLabel value="{!IF(IsPostalOperator,$Label.ISSP_AMS_NoC_Confirm_Type_of_Entity,$Label.ISSP_AMS_NoC_Confirm_Ownership_details)}" style="color:black;font-size:110%"/> <!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}"-->
 								<apex:inputCheckbox html-data-group="agencyOwnership" onchange="resetLegalStatus();" value="{!newForm.Confirm_Ownership_details_are_correct__c}"/>
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
@@ -1543,7 +1543,7 @@
 				<span id="nav_five"></span>	
                 </apex:pageBlockSection>
                 
-						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false}">
+						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false && !isPostalOperator}">
 							<apex:facet name="header">
 								<apex:outputpanel >
 									<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
@@ -1554,7 +1554,7 @@
 							</apex:facet>
 
 
-							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true && NOT(isPostalOperator && newForm.Scope_of_Change__c == 'Selected Branches Only')}">
+							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true && NOT(newForm.Scope_of_Change__c == 'Selected Branches Only')}">
 								<apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');" disabled="{!newForm.Scope_of_Change__c == 'Selected Branches Only'}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
