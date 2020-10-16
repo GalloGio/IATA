@@ -712,7 +712,7 @@ Previously it was done only for ACLI process but now it applies always, includin
             <name>Copy_IATACode</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Used only for Agencies.
 It copies the value of IATAcode field to an auxiliary unique field. It allows us to have the IATA code unique but only for Agency Recordtype</description>
         <formula>AND(   OR(     ISNEW(),     ISCHANGED(IATACode__c)   ),   RecordType.DeveloperName = &apos;IATA_Agency&apos; )</formula>
