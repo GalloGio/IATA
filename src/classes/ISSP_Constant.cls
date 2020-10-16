@@ -18,7 +18,7 @@ Constant Class
 	public static Map<String,String> customSetingMap;
 	static{
 		customSetingMap = new Map<String,String>();
-		for(ISSP_CS__c cs : [select Name,value__c from ISSP_CS__c]){
+		for(ISSP_CS__c cs : ISSP_CS__c.getall().values()){
 			customSetingMap.put(cs.Name.trim(),cs.Value__c);
 		}
 
@@ -145,8 +145,18 @@ Constant Class
 			};
 
 	//New Test Portal User Profile Id
-	public final static string TEST_User_ProfileID = [select Id from profile where Name=:'ISS Portal Delegated Admin User'].Id;
-	public final static string TEST_Basic_Airline_User_ProfileID = [select Id from profile where Name=:'ISS Portal Airline User (Partner)'].Id;
+	public final static string TEST_User_ProfileID{
+		get{
+			if(Test.isRunningTest()) return [select Id from profile where Name=:'ISS Portal Delegated Admin User'].Id;
+			return null;
+		}
+	} 
+	public final static string TEST_Basic_Airline_User_ProfileID{
+		get{
+			if(Test.isRunningTest()) return [select Id from profile where Name=:'ISS Portal Airline User (Partner)'].Id;
+			return null;
+		}
+	}
 	public final static string Standard_Contact_Record_Type = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
 	// owner for new account created by the ISSP Portal registration
