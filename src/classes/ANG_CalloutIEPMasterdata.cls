@@ -8,8 +8,10 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		sendCallout(JSON.serialize(obj), mappingObj.Action__c, mappingObj.Named_Credential__c, changeCodeId, agencyUpdateId, iataCode, isRunningBatch);
 	}
 
+	public static boolean runTheQueableTest = false;
+
 	private static void sendCallout(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode,Boolean isRunningBatch){
-		if((System.isBatch() || System.isFuture()) && trigger.isExecuting){
+		if(((System.isBatch() || System.isFuture()) && trigger.isExecuting) || (test.isRunningTest() && runTheQueableTest)){
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0)
 				System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode));
 			else
