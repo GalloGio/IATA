@@ -59,7 +59,7 @@ public with sharing class PortalLoginCtrl {
 
 		try{
 
-			List<User> userList = DAL_WithoutSharing.getUserListByNameOrEmail(username);
+			List<User> userList = getUserListByNameOrEmail(username);
 
 			// If no user is found return generic message
 			if(userList.isEmpty()) throw new LoginException('User not found');
@@ -71,12 +71,8 @@ public with sharing class PortalLoginCtrl {
 			if(psa.size()==0){
 				LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
 			}
-						
-			integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
-			
-			boolean pwdExpired = string.isNotEmpty(oneUser.UID__c) || (oneUser.LastPasswordChangeDate != null && oneUser.LastPasswordChangeDate.addDays(passwordDays) < system.now());
 			//reactivate User or password expired
-			if (oneUser.Portal_User_Frozen_Checkbox__c || pwdExpired){
+			if (DAL_WithoutSharing.reactivateUser(oneUser.Id)){
 				result.userIsFrozen = true;
 				reactivateUser(oneUser, params);
 				return result;
@@ -135,6 +131,21 @@ public with sharing class PortalLoginCtrl {
 		}
 
 		return result;
+	}
+
+	public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
+		return
+		[SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
+				IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
+				Profile.Name, CNS_Account_or_Agency__c,
+				ANG_Sector__c, ANG_Category__c, Customer_Type__c, ANG_Is_Accredited_Agent__c,
+				ANG_Customer_Country_ISO__c, Contact.User_Portal_Status__c
+		FROM User
+		WHERE (Username=: nameOrEmail
+		OR email =: nameOrEmail)
+		AND (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
+		AND ContactId != ''
+		limit 1];
 	}
 
 	@TestVisible
