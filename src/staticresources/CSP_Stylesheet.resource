@@ -967,7 +967,9 @@ lightning-datatable .slds-th__action {
 .text-bold{
     font-weight: 500;
 }
-
+.text-bolder{
+    font-weight: 700;
+}
 /* ############################################## */
 /* Text Colors */
 
@@ -2117,7 +2119,7 @@ visibility: hidden;
     display: inline-block;
 }
 
-.custTextInput input{
+.custTextInput input, .custTextInput textarea{
     border-radius: 1px;
     border: solid 1px #e6e6e6;
     background-color: #ffffff;
@@ -2601,6 +2603,9 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 .rotateIcon45Deg{
   transform: rotate(45deg);
 }
+.rotateIcon180Deg{
+  transform: rotate(180deg);
+}
 
 /* ############################################## */
 .showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
@@ -2825,4 +2830,24 @@ html {
 	background: #D8D8D8;
 	border-radius: 1px;
 	width: 6px;
+}
+
+
+/* Troubleshooting page article overrides*/
+.richtextlinks a{
+    color: #3333ff !important;
+    
+}
+
+.richtextlinks ul{
+    list-style: none;
+  }
+  
+.richtextlinks ul li::before{
+    content: "\2022";
+    color: #7884FC;
+    font-weight: bolder;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
 }

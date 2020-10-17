@@ -32,11 +32,7 @@ public with sharing class PortalLoginCtrl {
 		config.isSelfRegistrationEnabled = authConfig.getSelfRegistrationEnabled();
 		config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
 		config.forgotPasswordUrl = authConfig.getForgotPasswordUrl();
-		config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
-		ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
-		if(cs != null){
-			config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
-		}
+		config.troubleShootingUrl = '/faq/s/troubleshooting';
 		return config;
 	}
 

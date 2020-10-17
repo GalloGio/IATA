@@ -6583,6 +6583,14 @@ You can easily create a company account in two steps</value>
         <value>Log Out</value>
     </labels>
     <labels>
+        <fullName>CSP_Login</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login</shortDescription>
+        <value>Login</value>
+    </labels>
+    <labels>
         <fullName>CSP_Login_Now</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7121,6 +7129,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Record Deleted</shortDescription>
         <value>Account Domain is Deleted</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration</shortDescription>
+        <value>Registration</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Complete</fullName>
@@ -8069,6 +8085,54 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting</shortDescription>
         <value>troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingForm</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Form</shortDescription>
+        <value>Troubleshooting Form</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingMSG</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting message</shortDescription>
+        <value>If these steps do not fix the problem, click below to contact us:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingSbtitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting subtitle</shortDescription>
+        <value>You can fill the form below and one of our Customer Service representatives will be assisting you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting</shortDescription>
+        <value>Login &amp; Registration Troubleshooting </value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Type label</shortDescription>
+        <value>I need help with:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingDesc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Issue description label</shortDescription>
+        <value>Description of Issue</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting_Info</fullName>
