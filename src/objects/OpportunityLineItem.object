@@ -194,6 +194,9 @@
         <fullName>ListPrice</fullName>
     </fields>
     <fields>
+        <fullName>Name</fullName>
+    </fields>
+    <fields>
         <fullName>OSCAR_GDI__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
