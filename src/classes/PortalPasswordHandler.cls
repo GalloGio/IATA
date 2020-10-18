@@ -98,21 +98,24 @@ public without sharing class PortalPasswordHandler {
 
 		String headerImageName = Label.CSP_Email_Header_Image;
 		String footerImageName = Label.CSP_Email_Footer_Image;
+		String buttonImageName = Label.CSP_Email_Link_Button_Image;
 
 		String headerImageUrl;
 		String footerImageUrl;
-
+		
 		Map<String,Id> docNameIdMap = new Map<String,Id>();
-		for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+		for(Document doc : [Select id, name From Document Where name in (:headerImageName,:footerImageName,:buttonImageName)]){
 			docNameIdMap.put(doc.name,doc.id);
 		}
-
+		
 		if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
 		if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
+		String buttonImageUrl=URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(buttonImageName)+'&oid='+userinfo.getorganizationid();
 
 		Map<String, String> mapBodyParams = new map<String, String>{
 				'{!HeaderUrl}'                                   => headerImageUrl,
 				'{!FooterUrl}'                                   => footerImageUrl,
+				'{!BtnUrl}'                                      => buttonImageUrl,
 				'{!Receiving_User.FirstName}'                    => contactInfo.Firstname,
 				'{!Community_Url}'                               => link,
 				'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,
