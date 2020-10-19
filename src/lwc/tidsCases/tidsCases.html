@@ -1,0 +1,31 @@
+<template>
+	<section class="block activity">
+		<header>
+			<h1>TIDS Cases</h1>
+			<form action="" id="search-branch-activity" class="search-branch-activity active">
+				<div class="input-field">
+					<lightning-input variant="label-hidden" name="search" onchange={handlesearchCases} type="text" class="input-search" placeholder="Search by number or subject" value={newsearch}></lightning-input>
+					<template if:false={isSearchOn}>
+						<button class="search-submit far fa-search no-style"  onclick={handlegetCases}></button>
+					</template>
+					<template if:true={isSearchOn}>
+						<button class="search-submit far fa-times-circle no-style"  onclick={handlevoidCases}></button>
+					</template>
+				</div>
+			</form>
+		</header>
+		<main>
+			<ul class="no-list">
+				<template for:each={cases} for:item="tcase">
+					<li key={tcase.Id}>
+						<p title={tcase.CaseNumber}><a href={tcase.url}  id={tcase.newId} target="_blank">{tcase.CaseNumber}</a> - {tcase.Status}</p>
+						<p title={tcase.Subject}>{tcase.Subject}</p>
+					</li>
+				</template>
+			</ul>
+		</main>
+		<footer>
+			<a href="#" onclick={handleAllCases}>View all cases</a>
+		</footer>
+	</section>
+</template>

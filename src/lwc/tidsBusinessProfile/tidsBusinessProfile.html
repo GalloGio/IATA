@@ -1,0 +1,346 @@
+<template>
+	<div class="vetting-menu">
+		<c-tids-vetting-menu></c-tids-vetting-menu>
+	</div>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<h1 class="icon">Business Profile</h1>
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			Please provide the information requested below.<br/>
+			<em>Remember, all fields preceded by a (*) are mandatory.</em>
+		</p>
+		<h2 class="h3">
+			Business profile of the office for which this application is made
+		</h2>
+
+		<!-- Start Number of offices -->
+		<template if:true={numberOfficesRules.visible}>
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-number-offices"
+							checked={numberOfficesError.show}
+							data-name="error-number-offices"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={numberOfficesRules}></c-tids-tooltip>
+					<lightning-input 
+						type="number" 
+						name="numberOffices"
+						data-name="numberOffices"
+						class="col s6"
+						label={numberOfficesQuestion}
+						value={numberOfficesValue} 
+						placeholder="Number of offices" 
+						min="1"
+						onchange={handleChangeNumberOffices}
+						disabled={numberOfficesRules.disabled}
+						required={numberOfficesRules.required}
+						pattern={numberOfficesRules.regex}
+						variant="label-hidden"
+					></lightning-input>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-number-offices"
+							label="Error Description"
+							if:true={numberOfficesError.show}
+							data-name="error-number-offices-desc"
+							value={numberOfficesError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End Number of offices -->
+
+		<!-- Start Total Annual Sales -->
+		<template if:true={travelSalesRules.visible}>
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-travelsales"
+							checked={travelSalesError.show}
+							data-name="error-travel-sales"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={travelSalesRules}></c-tids-tooltip>
+					<lightning-combobox
+						name="travelSales"
+						label={travelSalesQuestion}
+						value={travelSalesSelected}
+						placeholder="Choose an activity"
+						options={travelSalesValues}
+						onchange={handleChange}
+						disabled={travelSalesRules.disabled}
+						required={travelSalesRules.required}
+						variant="label-hidden"
+					>
+					</lightning-combobox>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-heldsince"
+							label="Error Description"
+							if:true={travelSalesError.show}
+							data-name="error-travel-sales-desc"
+							value={travelSalesError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End Total Annual Sales -->
+
+		<!-- Start Number of Employees -->
+		<template if:true={numberEmployeesRules.visible}>
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-number-employees"
+							checked={numberEmployeesError.show}
+							data-name="error-number-employees"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={numberEmployeesRules}></c-tids-tooltip>
+					<lightning-combobox
+						name="numberEmployees"
+						label={numberEmployeesQuestion}
+						value={numberEmployeesSelected}
+						placeholder="Choose number of employees"
+						options={numberEmployeesValues}
+						onchange={handleChangeNumberEmployees}
+						disabled={numberEmployeesRules.disabled}
+						required={numberEmployeesRules.required}
+						variant="label-hidden"
+					>
+					</lightning-combobox>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-number-employees"
+							label="Error Description"
+							if:true={numberEmployeesError.show}
+							data-name="error-number-employees-desc"
+							value={numberEmployeesError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End Number of Employees -->
+
+		<!-- Start GDS (a41 AIRSYS)-->
+		<template if:true={gdsRules.visible}>
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-gds"
+							checked={gdsError.show}
+							data-name="error-gds"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					
+					<c-tids-badges
+						options={gdsValues}
+						field-name="GDS"
+						maximum="4"
+						rule={gdsRules}
+					></c-tids-badges>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-gds"
+							label="Error Description"
+							if:true={gdsError.show}
+							data-name="error-gds-desc"
+							value={gdsError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End GDS (a41 AIRSYS)-->
+
+		<!-- Start Principal Activities -->
+		<template if:true={principalActivitiesRules.visible}>
+			<div class="row">
+				<div class="col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-principal-activities"
+							checked={principalActivitiesError.show}
+							data-name="error-principal-activities"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+
+					<c-tids-badges
+						options={principalActivityValues}
+						field-name="principalActivities"
+						rule={principalActivitiesRules}
+					 ></c-tids-badges>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea 
+							class="comment-area-heldsince"
+							label="Error Description"
+							if:true={principalActivitiesError.show}
+							data-name="error-principal-activities-desc"
+							value={principalActivitiesError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End Principal Activities -->
+
+		<!-- Start Market Focus -->
+		<template if:true={marketFocusRules.visible}>
+			<div class="row">
+				<div class="col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-marketfocus"
+							checked={marketFocusError.show}
+							data-name="error-market-focus"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+
+					<c-tids-percentage
+						options={marketFocusValues}
+						field-name="marketFocus"
+						rule={marketFocusRules}
+					></c-tids-percentage>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-heldsince"
+							label="Error Description"
+							if:true={marketFocusError.show}
+							data-name="error-market-focus-desc"
+							value={marketFocusError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End Market Focus -->
+
+		<!-- Start Online / Offline Sales mix -->
+		<template if:true={salesMixRules.visible}>
+			<div class="row">
+				<div class="col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-salesmix"
+							checked={salesMixError.show}
+							data-name="error-sales-mix"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+
+					<c-tids-percentage
+						options={salesMixValues}
+						rule={salesMixRules}
+						field-name="salesMix"
+					 ></c-tids-percentage>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-heldsince"
+							label="Error Description"
+							if:true={salesMixError.show}
+							data-name="error-sales-mix-desc"
+							value={salesMixError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- End Online / Offline Sales mix -->
+
+		
+		<footer>
+			<template if:false={vettingMode}>
+				<template if:true={showSaveAndQuitButton}>
+					<button
+						class="transparent"
+						data-next="save-quit"
+						onclick={handleSaveAndQuit}>
+						Save &amp; quit
+					</button>
+				</template>
+
+				<button
+					name="supporting-documents"
+					onclick={handleNextSection}
+					disabled={disableButton}
+				>
+					Next section
+				</button>
+			</template>
+
+			<template if:true={vettingMode}>
+				<button
+					if:false={vettingErrorOptions}
+					onclick={handleProceed}
+					data-name="confirm-review-status"
+				>
+					Confirm Review and Proceed
+				</button>
+				<button
+					if:true={vettingErrorOptions}
+					onclick={handleProceed}
+					data-name="report-errors-and-proceed"
+					class="button-error"
+					disabled={reportErrorButtonDisabled}
+				>
+					Report Errors and Proceed
+				</button>
+			</template>
+		</footer>
+	</form>
+	<c-tids-modal
+		if:true={openModal}
+		open={openModal}
+		field-error-selected={fieldErrorSelected}
+		default-message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal>
+</template>

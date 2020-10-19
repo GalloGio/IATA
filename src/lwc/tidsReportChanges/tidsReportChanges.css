@@ -1,0 +1,10 @@
+.spinnerHolder lightning-spinner.slds-spinner_container {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+
+.errorMessage {
+  color: red;
+}
