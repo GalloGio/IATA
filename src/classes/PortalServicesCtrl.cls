@@ -98,7 +98,7 @@ public with sharing class PortalServicesCtrl {
 							'   Portal_Application__r.Hide_on_Homepage__c = false)' +
 							' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \'' + PORTAL_EXTERNAL_ACCESS_GRANTED + '\' ))';
 
-		finalQuery += ' ORDER BY Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
+		finalQuery += ' ORDER BY Is_Favorite__c DESC NULLS LAST, Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
 
 		List<Portal_Application_Right__c> appsGrantedList = Database.query(finalQuery);
 

@@ -35994,6 +35994,19 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Identity Provider Event Log --></description>
+        <label><!-- Identity Provider Event Log --></label>
+        <name>Identity_Provider_Event_Log</name>
+        <sections>
+            <label><!-- Identity Event Logs (User) --></label>
+            <name>Identity Event Logs (User)</name>
+        </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Individuals --></description>
         <label><!-- Individuals --></label>
         <name>Individuals</name>

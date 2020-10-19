@@ -179,21 +179,36 @@
     </fields>
     <fields>
         <fullName>GR_Code__c</fullName>
-        <description>AT - Activity; DS - Destination Specialisation; MK - Market Specialities; TS - TIDS Sponsors; AS - Airline Sponsor; SV - Annual sales travel industry; FL - Market Focus Leisure; FC - Market Focus Corporate; SA - Percentage Air Travel; SL - Percentage Land Travel; SS - Percentage Sea Travel; SH - Percentage Accomodation; TR - Percentage Tour Packages</description>
+        <description>AT - Activity
+DS - Destination Spec.
+MK - Market Spec.
+TS - TIDS Sponsors
+AS - Airline Sponsor
+SV - Annual sales
+FL - Focus Leisure
+FC - Focus Corporate
+SA - Sales Air
+SL - Sales Land
+SS - Sales Sea Travel
+SH - Sales Accomodation
+SM - Sales Meetings
+TR - Sales Tour Packages
+DIBS - Date in Business Since
+SMOL - Sales Mix Online
+SMOF - Sales Mix Offline
+TIDS_FL - TIDS Focus Leisure
+TIDS_FC - TIDS Focus Corporate
+TIDS_SA - TIDS Sales Air
+TIDS_SL - TIDS Sales Land
+TIDS_SS - TIDS Sales Sea
+TIDS_SH - TIDS Sales Hotel
+TIDS_TR - TIDS Sales Tour
+TIDS_ME - TIDS Sales Meeting
+NU_EMPL - Number of Employees at Location
+NU_OFFI - Number of Offices in the Country
+TIDS_VB_ISO - ISO Code of Dematerialized Operations</description>
         <externalId>false</externalId>
-        <inlineHelpText>AT- Activity
-DS- Dest. Specialisation
-MK- Market Speciality
-TS- TIDS Sponsor
-AS- Airline Sponsor
-SV- Annual sales travel industry
-FL- Focus Leisure
-FC- Focus Corporate
-SA- % Air
-SL- % Land
-SS- % Sea
-SH- % Accomodation
-TR- % Tour Packages</inlineHelpText>
+        <inlineHelpText>See Field Description</inlineHelpText>
         <label>GR Code</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -202,9 +217,19 @@ TR- % Tour Packages</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>AS</fullName>
+                    <default>false</default>
+                    <label>AS</label>
+                </value>
+                <value>
                     <fullName>AT</fullName>
                     <default>false</default>
                     <label>AT</label>
+                </value>
+                <value>
+                    <fullName>DIBS</fullName>
+                    <default>false</default>
+                    <label>DIBS</label>
                 </value>
                 <value>
                     <fullName>DS</fullName>
@@ -212,24 +237,9 @@ TR- % Tour Packages</inlineHelpText>
                     <label>DS</label>
                 </value>
                 <value>
-                    <fullName>MK</fullName>
+                    <fullName>FC</fullName>
                     <default>false</default>
-                    <label>MK</label>
-                </value>
-                <value>
-                    <fullName>TS</fullName>
-                    <default>false</default>
-                    <label>TS</label>
-                </value>
-                <value>
-                    <fullName>AS</fullName>
-                    <default>false</default>
-                    <label>AS</label>
-                </value>
-                <value>
-                    <fullName>SV</fullName>
-                    <default>false</default>
-                    <label>SV</label>
+                    <label>FC</label>
                 </value>
                 <value>
                     <fullName>FL</fullName>
@@ -237,9 +247,19 @@ TR- % Tour Packages</inlineHelpText>
                     <label>FL</label>
                 </value>
                 <value>
-                    <fullName>FC</fullName>
+                    <fullName>MK</fullName>
                     <default>false</default>
-                    <label>FC</label>
+                    <label>MK</label>
+                </value>
+                <value>
+                    <fullName>NU_EMPL</fullName>
+                    <default>false</default>
+                    <label>NU_EMPL</label>
+                </value>
+                <value>
+                    <fullName>NU_OFFI</fullName>
+                    <default>false</default>
+                    <label>NU_OFFI</label>
                 </value>
                 <value>
                     <fullName>SA</fullName>
@@ -247,9 +267,29 @@ TR- % Tour Packages</inlineHelpText>
                     <label>SA</label>
                 </value>
                 <value>
+                    <fullName>SH</fullName>
+                    <default>false</default>
+                    <label>SH</label>
+                </value>
+                <value>
                     <fullName>SL</fullName>
                     <default>false</default>
                     <label>SL</label>
+                </value>
+                <value>
+                    <fullName>SM</fullName>
+                    <default>false</default>
+                    <label>SM</label>
+                </value>
+                <value>
+                    <fullName>SMOF</fullName>
+                    <default>false</default>
+                    <label>SMOF</label>
+                </value>
+                <value>
+                    <fullName>SMOL</fullName>
+                    <default>false</default>
+                    <label>SMOL</label>
                 </value>
                 <value>
                     <fullName>SS</fullName>
@@ -257,14 +297,64 @@ TR- % Tour Packages</inlineHelpText>
                     <label>SS</label>
                 </value>
                 <value>
-                    <fullName>SH</fullName>
+                    <fullName>SV</fullName>
                     <default>false</default>
-                    <label>SH</label>
+                    <label>SV</label>
+                </value>
+                <value>
+                    <fullName>TIDS_FC</fullName>
+                    <default>false</default>
+                    <label>TIDS_FC</label>
+                </value>
+                <value>
+                    <fullName>TIDS_FL</fullName>
+                    <default>false</default>
+                    <label>TIDS_FL</label>
+                </value>
+                <value>
+                    <fullName>TIDS_ME</fullName>
+                    <default>false</default>
+                    <label>TIDS_ME</label>
+                </value>
+                <value>
+                    <fullName>TIDS_SA</fullName>
+                    <default>false</default>
+                    <label>TIDS_SA</label>
+                </value>
+                <value>
+                    <fullName>TIDS_SH</fullName>
+                    <default>false</default>
+                    <label>TIDS_SH</label>
+                </value>
+                <value>
+                    <fullName>TIDS_SL</fullName>
+                    <default>false</default>
+                    <label>TIDS_SL</label>
+                </value>
+                <value>
+                    <fullName>TIDS_SS</fullName>
+                    <default>false</default>
+                    <label>TIDS_SS</label>
+                </value>
+                <value>
+                    <fullName>TIDS_TR</fullName>
+                    <default>false</default>
+                    <label>TIDS_TR</label>
                 </value>
                 <value>
                     <fullName>TR</fullName>
                     <default>false</default>
                     <label>TR</label>
+                </value>
+                <value>
+                    <fullName>TS</fullName>
+                    <default>false</default>
+                    <label>TS</label>
+                </value>
+                <value>
+                    <fullName>TIDS_VB_ISO</fullName>
+                    <default>false</default>
+                    <label>TIDS_VB_ISO</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1010,7 +1100,32 @@ TR- % Tour Packages</inlineHelpText>
                     <default>false</default>
                     <label>S4</label>
                 </value>
+                <value>
+                    <fullName>OL</fullName>
+                    <default>false</default>
+                    <label>OL</label>
+                </value>
             </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L1</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L2</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L3</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SL</controllingFieldValue>
+                <controllingFieldValue>FL</controllingFieldValue>
+                <valueName>L4</valueName>
+            </valueSettings>
             <valueSettings>
                 <controllingFieldValue>SS</controllingFieldValue>
                 <valueName>S1</valueName>
@@ -1078,6 +1193,10 @@ TR- % Tour Packages</inlineHelpText>
                 <controllingFieldValue>AT</controllingFieldValue>
                 <controllingFieldValue>AS</controllingFieldValue>
                 <valueName>MC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AT</controllingFieldValue>
+                <valueName>OL</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>DS</controllingFieldValue>
@@ -1569,26 +1688,6 @@ TR- % Tour Packages</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>SV</controllingFieldValue>
                 <valueName>7</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L1</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L2</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L3</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>FL</controllingFieldValue>
-                <controllingFieldValue>SL</controllingFieldValue>
-                <valueName>L4</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>FC</controllingFieldValue>
