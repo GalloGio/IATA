@@ -56,15 +56,23 @@ public without sharing class PortalServiceAccessTriggerHandler {
 		Map<id, boolean> requestByUserMap = new Map<id, boolean>();
 		Set<Id> accountIDsIepAux = new Set<Id>();
 
-		Map<ID,Portal_Application_Right__c> parMapAux = new Map<ID,Portal_Application_Right__c>([Select id, Right__c, Contact__c, Application_Name__c, Account__c, Portal_Application__r.Cannot_be_managed_by_portal_admin__c, Contact__r.User_Portal_Status__c from Portal_Application_Right__c  where id in :ids]);
+		Map<ID,Portal_Application_Right__c> parMapAux = 
+		new Map<ID,Portal_Application_Right__c>([Select id, Right__c, Contact__c, Application_Name__c, Account__c, Contact__r.Account.ANG_IEP_Status_FF__c, Portal_Application__r.Cannot_be_managed_by_portal_admin__c, Contact__r.User_Portal_Status__c 
+		from Portal_Application_Right__c  where id in :ids]);
 
 		User currentUser = [Select contactId from User where id =: UserInfo.getUserId() limit 1];
+
+		// Get account's IEP Status to supress mails from beeing send.
+		Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
 
 		//for(Portal_Application_Right__c par : newPortalApplicationRightList) {
 		for(Portal_Application_Right__c par : parMapAux.values()) {
 			if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
 				if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
-					if(par.Account__c != null) accountIDsIepAux.add(par.Account__c);
+					if(par.Account__c != null){
+						accountIDsIepAux.add(par.Account__c);
+						iepAccountStatusMap.put(String.valueOf(par.Account__c).substring(0, 15), par.Contact__r.Account.ANG_IEP_Status_FF__c);
+					} 
 				} else {
 					if(par.Account__c != null) accountIDs.add(par.Account__c);
 				}
@@ -76,17 +84,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
 		Map<String, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
 
 		System.debug('PortalServiceAccessTriggerHandler__SendEmailToPortalAdminToValidateRequest   accIdToUserIdMapIep-->' + accIdToUserIdMapIep);
-
-		//
-		// Get account's IEP Status to supress mails from beeing send.
-		//
-		Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
-
-		List<Account> accountStatusList = [Select Id, ANG_IEP_Status_FF__c From Account Where Id in : accountIDsIepAux];
-
-		for(Account a : accountStatusList) {
-			iepAccountStatusMap.put(String.valueOf(a.Id).substring(0, 15), a.ANG_IEP_Status_FF__c);
-		}
 
 		//
 		// Get the users by account.

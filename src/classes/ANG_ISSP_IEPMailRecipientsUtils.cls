@@ -120,22 +120,12 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
 	private static Set<String> dynamicIEPRoles(IEPRoleEnum paramCode) {
 		Set<String> iepVendors = AMS_Utils.IEP_VENDORS;
 
-		String query = 'SELECT Role__c FROM Connected_App_Roles__c WHERE Connected_App__c IN :iepVendors ';
-
-		switch on paramCode {
-			when DEFAULT_USER_ROLE {
-				query += 'AND Default_User_Role__c = true';
+		for(Connected_App_Roles__c r: Connected_App_Roles__c.getall().values()){
+			if(iepVendors.contains(r.Connected_App__c)){
+				if((paramCode == DEFAULT_USER_ROLE && r.Connected_App__c.Default_User_Role__c ) || (paramCode == MANAGE_USER_ACCESS && r.Connected_App__c.Manage_User_Access__c)){
+					roles.add(r.Role__c);
+				}
 			}
-
-			when MANAGE_USER_ACCESS {
-				query += 'AND Manage_User_Access__c = true';
-			}
-		}
-
-		Set<String> roles = new Set<String>();
-
-		for(Connected_App_Roles__c r: Database.query(query)) {
-			roles.add(r.Role__c);
 		}
 
 		return roles;
