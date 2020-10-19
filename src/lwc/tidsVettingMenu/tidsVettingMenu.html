@@ -1,0 +1,24 @@
+<template>
+	<lightning-button-stateful
+		if:true={vettingMode}
+		label-when-off=" "
+		label-when-on=" "
+		icon-name-when-on="utility:open_folder"
+		icon-name-when-off="utility:open_folder"
+		data-option="vetting-documents"
+		class="vetting-documents"
+		selected={documents}
+		onclick={handleDocuments}>
+	</lightning-button-stateful>
+	<lightning-button-stateful
+		if:true={vettingMode}
+		label-when-off=" "
+		label-when-on=" "
+		icon-name-when-on="utility:warning"
+		icon-name-when-off="utility:warning"
+		data-option="vetting-errors"
+		class="vetting-errors"
+		selected={errors}
+		onclick={handleOnErrors}>
+	</lightning-button-stateful>
+</template>

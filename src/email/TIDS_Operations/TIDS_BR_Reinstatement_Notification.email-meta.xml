@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - Branch Office Reinstatement Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_BR_Reinstatement_Notification</name>
+    <style>none</style>
+    <subject>Your TIDS Branch Reinstatement is Approved</subject>
+    <textOnly>Your TIDS Reinstatement is Approved
+
+Congratulations!
+
+Dear {!Contact.Name},
+
+The reinstatement of your TIDS Branch Office under IATA TIDS Code {!Account.IATACode__c} has been approved.
+
+Kindly take a moment to review your office details to ensure they are correct:
+
+Legal Name:
+{!Account.Name}
+
+Trading Name:
+{!Account.TradeName__c}
+
+Business Email:
+{!Account.Email__c}
+
+Address:
+{!Account.BillingAddress}
+
+Phone Number:
+{!Account.Phone}
+
+Your branch details will be re-included in the IATA Agency List which industry suppliers reply upon. If any of these details are incorrect, please report the applicable changes through the TIDS Service on the IATA Customer Portal at the earliest.
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+You Might Also Need
+
+IATA Travel &amp; Tourism Training
+
+IATA Travel Agent ID Card
+
+IATA Timatic Solutions
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,92 @@
+.tidsVetting {
+    padding-top: 85px;
+    background: #fff;
+  }
+  
+.tidsAttachments .slds-table th,
+.tidsAttachments .slds-table td {
+      white-space: normal;
+  }
+  
+.slds {
+      font:100%/1.5 "Salesforce Sans",Arial,sans-serif;
+      color:#16325c;
+      -webkit-tap-highlight-color:transparent
+  }
+  
+.slds body,
+.slds:not(html) {
+      font-size: .875rem;
+      background: 0 0;
+  }
+  
+.slds-col,
+ [class*=slds-col--padded] {
+      flex: 1 1 auto;
+  }
+  
+.slds-page-header {
+      z-index: 9000;
+      top: 0;
+      width: 100%;
+         padding: 1.5rem 1.5rem .75rem;
+      border-bottom: 1px solid #d8dde6;
+      background: #f4f6f9;
+  }
+  
+.slds-text-heading--x-large {
+      font-weight: 300;
+      font-size: 2.5rem;
+      line-height: 1.25;
+  }
+  
+.slds-grid {
+      position: relative;
+  }
+  
+.slds-box--border {
+      background-clip: padding-box;
+      border: 1px solid #d8dde6;
+  }
+  
+.slds-card {
+      background-color: #f4f6f9;
+      border: 1px solid #d8dde6;
+  }
+  
+.slds-card__header {
+      padding: .75rem .75rem .25rem;
+  }
+.slds-text-heading--small {
+      font-weight: 300;
+      font-size: 1.125rem;
+      line-height: 1.25;
+  }
+  
+.slds-card__body {
+      padding: .5rem 0;
+  }
+  
+.slds-table--bordered {
+      border-top: 1px solid #d8dde6;
+      border-bottom: 1px solid #d8dde6;
+  }
+  
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+      margin: 0;
+      padding: 0;
+  }
+  
+.slds-table th {
+      font-weight:400
+  }
+  
+.slds-table tr>td:first-child,
+.slds-table tr>th:first-child {
+      padding-left: 1.5rem;
+  }
