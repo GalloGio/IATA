@@ -14350,6 +14350,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>BulkMessageContacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.PHONE3</columns>
+        <columns>CONTACT.LAST_ACTIVITY</columns>
+        <filterScope>Everything</filterScope>
+        <label>Bulk_SMS_Contacts</label>
+    </listViews>
+    <listViews>
         <fullName>CFOairlinelist</fullName>
         <columns>ACCOUNT.SITE</columns>
         <columns>ACCOUNT.NAME</columns>
