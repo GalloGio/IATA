@@ -176,11 +176,6 @@
             <field>PreferredUser</field>
             <table>AgentWork</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CapacityModel</field>
-            <table>AgentWork</table>
-        </columns>
         <masterLabel>Agent Work</masterLabel>
     </sections>
 </ReportType>
