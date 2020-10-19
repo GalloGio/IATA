@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Equipment__c;TCHA_Temperature_Range__c;CRSTR_Import_Export__c;Number__c;TSWA_Storage_Space__c;CRSTR_Storage_Room_Dimensions_L__c;CRSTR_Storage_Room_Dimensions_W__c;CRSTR_Storage_Room_Dimensions_H__c;CRSTR_Positions_AKE__c;CRSTR_Positions_10ft_ULDs__c;CRSTR_Positions_20ft_ULDs__c;CRSTR_Max_Height_Per_Position__c;CRSTR_Pharma_Dedicated_Formula__c;CRSTR_DGR_Dedicated_Formula__c;CRSTR_Sensors_Calibrated__c;CRSTR_Temperature_Mapped__c;CRSTR_Temperature_Control_Alarm_System__c;CRSTR_Temperature_Readouts_Available__c;CRSTR_BUProcedure_In_Malfunction__c</value>
+        <value xsi:type="xsd:string">Equipment__c;TCHA_Temperature_Range__c;CRSTR_Import_Export__c;TSWA_Storage_Space__c;CRSTR_Storage_Room_Dimensions_L__c;CRSTR_Storage_Room_Dimensions_W__c;CRSTR_Storage_Room_Dimensions_H__c;CRSTR_Positions_AKE__c;CRSTR_Positions_10ft_ULDs__c;CRSTR_Positions_20ft_ULDs__c;CRSTR_Max_Height_Per_Position__c;CRSTR_Pharma_Dedicated_Formula__c;CRSTR_DGR_Dedicated_Formula__c;CRSTR_Sensors_Calibrated__c;CRSTR_Temperature_Mapped__c;CRSTR_Temperature_Control_Alarm_System__c;CRSTR_Temperature_Readouts_Available__c;CRSTR_BUProcedure_In_Malfunction__c</value>
     </values>
     <values>
         <field>Extra_Data__c</field>
