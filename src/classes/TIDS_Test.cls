@@ -1527,8 +1527,11 @@ public with sharing class TIDS_Test {
 		Test.startTest();
 		readObjectsId();
 		Case tidscase =createCase(1);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(2);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(3);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		System.assertEquals(true,tidscase.Id!=null,false);
 		Test.stopTest();
 	}
@@ -1537,8 +1540,11 @@ public with sharing class TIDS_Test {
 		Test.startTest();
 		readObjectsId();
 		Case tidscase =createCase(4);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(5);
-		tidscase =createCase(6);		
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
+		tidscase =createCase(6);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		System.assertEquals(true,tidscase.Id!=null,false);
 		Test.stopTest();
 	}
@@ -1548,10 +1554,15 @@ public with sharing class TIDS_Test {
 		Test.startTest();
 		readObjectsId();
 		Case tidscase =createCase(7);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(8);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(9);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(10);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(11);
+		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		System.assertEquals(true,tidscase.Id!=null,false);
 		Test.stopTest();
 	}    
