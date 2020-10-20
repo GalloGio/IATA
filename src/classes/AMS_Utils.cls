@@ -2826,7 +2826,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
 	/*** AMSU-173 ***/
-	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G', 'L'};
 
 
 	/*** AMSU-195 Start ***/
