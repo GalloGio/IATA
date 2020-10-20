@@ -141,6 +141,10 @@
         <name>Service_l1l2</name>
     </customApplications>
     <customApplications>
+        <label><!-- TIDS --></label>
+        <name>TIDS</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIP --></label>
         <name>TIP</name>
     </customApplications>
@@ -32517,6 +32521,14 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customTabs>
         <label><!-- Settlement &amp; Operation --></label>
         <name>Settlement_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TIDS Vetting --></label>
+        <name>TIDSVetting</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TIDS Setup --></label>
+        <name>TIDS_Setup</name>
     </customTabs>
     <customTabs>
         <label><!-- Projects Calendar --></label>
