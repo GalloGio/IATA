@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Account_Sector__c</field>
-        <value xsi:type="xsd:string">Equipment Manufacturer</value>
+        <value xsi:type="xsd:string">Aviation Equipment Manufacturer</value>
     </values>
     <values>
         <field>CategoryExceptions__c</field>

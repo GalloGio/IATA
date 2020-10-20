@@ -141,6 +141,10 @@
         <name>Service_l1l2</name>
     </customApplications>
     <customApplications>
+        <label><!-- TIDS --></label>
+        <name>TIDS</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIP --></label>
         <name>TIP</name>
     </customApplications>
@@ -32513,6 +32517,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customTabs>
         <label><!-- Settlement &amp; Operation --></label>
         <name>Settlement_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TIDS Vetting --></label>
+        <name>TIDSVetting</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TIDS Setup --></label>
+        <name>TIDS_Setup</name>
     </customTabs>
     <customTabs>
         <label><!-- Projects Calendar --></label>
