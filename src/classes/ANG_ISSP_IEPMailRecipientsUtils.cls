@@ -119,10 +119,11 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
 
 	private static Set<String> dynamicIEPRoles(IEPRoleEnum paramCode) {
 		Set<String> iepVendors = AMS_Utils.IEP_VENDORS;
+		Set<String> roles = new Set<String>();
 
 		for(Connected_App_Roles__c r: Connected_App_Roles__c.getall().values()){
 			if(iepVendors.contains(r.Connected_App__c)){
-				if((paramCode == DEFAULT_USER_ROLE && r.Connected_App__c.Default_User_Role__c ) || (paramCode == MANAGE_USER_ACCESS && r.Connected_App__c.Manage_User_Access__c)){
+				if((paramCode == IEPRoleEnum.DEFAULT_USER_ROLE && r.Default_User_Role__c ) || (paramCode == IEPRoleEnum.MANAGE_USER_ACCESS && r.Manage_User_Access__c)){
 					roles.add(r.Role__c);
 				}
 			}

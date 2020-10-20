@@ -57,8 +57,8 @@ public class ANG_PortalApplicationRightHandler {
 		for(Portal_Application_Right__c portalApp : [SELECT ID, Portal_Application__r.Name FROM Portal_Application_Right__c 
 													WHERE ID IN: newMap.keyset()]){
 
-			newMap.get(portalApp.ID).Application_Name_Text_Field__c = Portal_Application__r.Name;
-			newMap.get(portalApp.ID).Application_uniqueness_for_contact__c = portalApp.Contact__c + portalApp.Portal_Application__c;
+			newMap.get(portalApp.ID).Application_Name_Text_Field__c = portalApp.Portal_Application__r.Name;
+			newMap.get(portalApp.ID).Application_uniqueness_for_contact__c = String.valueOf(portalApp.Contact__c) + String.valueOf(portalApp.Portal_Application__c);
 
 			if(portalApp.Portal_Application__r.Name == 'Biller Direct')	newMap.get(portalApp.ID).RecordtypeID = billerDirectRT;
 		}
