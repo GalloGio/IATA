@@ -1,0 +1,93 @@
+.THIS.tidsVetting {
+  padding-top: 85px;
+  background: #fff;
+}
+
+.THIS .tidsAttachments .slds-table th,
+.THIS .tidsAttachments .slds-table td {
+    white-space: normal;
+}
+
+.THIS.slds {
+    font:100%/1.5 "Salesforce Sans",Arial,sans-serif;
+    color:#16325c;
+    -webkit-tap-highlight-color:transparent
+}
+
+.THIS.slds body,
+.THIS.slds:not(html) {
+    font-size: .875rem;
+    background: 0 0;
+}
+
+.THIS .slds-col,
+.THIS [class*=slds-col--padded] {
+    flex: 1 1 auto;
+}
+
+.THIS .slds-page-header {
+    z-index: 9000;
+    top: 0;
+    width: 100%;
+   	padding: 1.5rem 1.5rem .75rem;
+    border-bottom: 1px solid #d8dde6;
+    background: #f4f6f9;
+}
+
+.THIS .slds-text-heading--x-large {
+    font-weight: 300;
+    font-size: 2.5rem;
+    line-height: 1.25;
+}
+
+.THIS .slds-grid {
+    position: relative;
+}
+
+.THIS .slds-box--border {
+    background-clip: padding-box;
+    border: 1px solid #d8dde6;
+}
+
+.THIS .slds-card {
+    background-color: #f4f6f9;
+    border: 1px solid #d8dde6;
+}
+
+.THIS .slds-card__header {
+    padding: .75rem .75rem .25rem;
+}
+
+.THIS .slds-text-heading--small {
+    font-weight: 300;
+    font-size: 1.125rem;
+    line-height: 1.25;
+}
+
+.THIS .slds-card__body {
+    padding: .5rem 0;
+}
+
+.THIS .slds-table--bordered {
+    border-top: 1px solid #d8dde6;
+    border-bottom: 1px solid #d8dde6;
+}
+
+.THIS h1,
+.THIS h2,
+.THIS h3,
+.THIS h4,
+.THIS h5,
+.THIS h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.THIS .slds-table th {
+    font-weight:400
+}
+
+.THIS .slds-table tr>td:first-child,
+.THIS .slds-table tr>th:first-child {
+    padding-left: 1.5rem;
+}

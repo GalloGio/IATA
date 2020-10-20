@@ -29,6 +29,20 @@
         </criteriaItems>
     </sharingGuestRules>
     <sharingGuestRules>
+        <fullName>Share_users_with_IATA_Portal_Site_Guest_User_CNS</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Share users with IATA Portal Site Guest User (CNS)</description>
+        <label>Share users with IATA Portal Site Guest User (CNS)</label>
+        <sharedTo>
+            <guestUser>IATA_Portal</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>LastName</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+    </sharingGuestRules>
+    <sharingGuestRules>
         <fullName>Share_users_with_identity_Site_Guest_User</fullName>
         <accessLevel>Read</accessLevel>
         <description>share all users with identity Site Guest User for login</description>
