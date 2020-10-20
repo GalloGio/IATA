@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Equipment Manufacturer</value>
+        <value xsi:type="xsd:string">Aviation Equipment Manufacturer</value>
     </values>
     <values>
         <field>Display_Country__c</field>
@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Equipment_Manufacturer</value>
+        <value xsi:type="xsd:string">Aviation_Equipment_Manufacturer</value>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
