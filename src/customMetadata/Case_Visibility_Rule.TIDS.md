@@ -40,6 +40,9 @@
     </values>
     <values>
         <field>Status__c</field>
-        <value xsi:type="xsd:string">Closed,Pending Review,Pending Customer,Review In Progress</value>
+        <value xsi:type="xsd:string">Closed
+Pending Review
+Pending Customer
+Review In Progress</value>
     </values>
 </CustomMetadata>
