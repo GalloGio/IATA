@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - Change Reporting Approval Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_CR_Approved_Notification</name>
+    <style>none</style>
+    <subject>{!Case.Subject} | Changes Processed</subject>
+    <textOnly>TIDS Changes Processed
+
+Dear {!Contact.Name},
+
+Please be advised that the changes reported for TIDS {!Case.IFAP_Agent_Code__c} have now been processed.
+
+Change(s) Reported:
+{!Case.Subject}
+
+Supporting Case Number:
+{!Case.CaseNumber}
+
+Request Status:
+{!Case.Status}
+
+These changes will be reflected in the IATA Agency List which industry suppliers reply upon.
+
+Please take a moment to log in to the TIDS Service via the IATA Customer Portal to review your agency details and ensure the information is correct.
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+You Might Also Need
+
+IATA Travel &amp; Tourism Training
+
+IATA Travel Agent ID Card
+
+IATA Timatic Solutions
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
