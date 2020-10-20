@@ -13437,7 +13437,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
+            <value>Republic of North Macedonia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SIDRA_Lite_Reason__c</field>

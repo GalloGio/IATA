@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Creating a Task AP</label>
+    <label>Creating a Call Task China</label>
     <protected>false</protected>
     <values>
         <field>Action__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Case_Record_Type__c</field>
-        <value xsi:type="xsd:string">ExternalCasesIDFSglobal</value>
+        <value xsi:type="xsd:string">Cases_China_North_Asia</value>
     </values>
     <values>
         <field>Field_API_Name__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Type_of_Task__c</field>
-        <value xsi:type="xsd:string">Task</value>
+        <value xsi:type="xsd:string">Call</value>
     </values>
     <values>
         <field>Value_From__c</field>
