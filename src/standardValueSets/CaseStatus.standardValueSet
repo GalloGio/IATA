@@ -493,4 +493,22 @@
         <label>Pending Closure</label>
         <closed>false</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Draft</fullName>
+        <default>false</default>
+        <label>Draft</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Review</fullName>
+        <default>false</default>
+        <label>Pending Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Review in Progress</fullName>
+        <default>false</default>
+        <label>Review in Progress</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>

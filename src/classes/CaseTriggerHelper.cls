@@ -21,13 +21,20 @@ public with sharing class CaseTriggerHelper {
 	public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
 
 	public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
-	public static List<String> caseStatuses = new List<String>{CASE_STATUS_CLOSED, CASE_STATUS_ESCALATED_INTERNALLY, CASE_STATUS_REOPEN};
+	public static List<String> bypassReasons = new List<String>{'Thank you', 'No Action'};
 
 	public static final Set<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new set<String> {
 		'CasesMENA', 'CasesAmericas', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ExternalCasesIDFSglobal'
 	};
 	private static Map<Id, RecordType> portalPendingClosureRecordTypes;
 
+	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
+		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+			System.enqueueJob(new PlatformEvents_Helper(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete));
+		} else {
+			PlatformEvents_Helper.publishEvents(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete);
+		}
+	}
 	public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
 			if(isDone) return;
 			Map<String, Map<String, ISSP_KPI_Reporting__mdt>> configsMap = new Map<String, Map<String, ISSP_KPI_Reporting__mdt>>();
@@ -85,41 +92,50 @@ public with sharing class CaseTriggerHelper {
 							configsMap.get(CASE_ACTION_SEND_NOI).put(cfg.Case_Record_Type__c, cfg);
 					}
 			}
-
+			List<String> closure_fromStatus;
+			List<String> closure_toStatus;
+			List<String> escalation_fromStatus;
+			List<String> escalation_toStatus;
+			List<String> reopening_fromStatus;
+			List<String> reopening_toStatus;
+			List<String> noi_fromStatus;
+			List<String> noi_toStatus;
 
 			// filter out the cases that need to be treated
 			for(Case c: newList) {
+				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
+				//Exclude All TIDS Cases from KPI processing 
+				if (cRTDevName=='TIDS'){ continue;}
+				if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
+					closure_fromStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
+					closure_toStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_To__c.split(',');
+				}
+				if(configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
+					escalation_fromStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
+					escalation_toStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_To__c.split(',');
+				}
+				if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
+					reopening_fromStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_From__c.split(',');
+					reopening_toStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_To__c.split(',');
+				}
+				
+				// case closure
+				if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName) && closure_fromStatus.contains(oldMap.get(c.Id).Status) && closure_toStatus.contains(newMap.get(c.Id).Status)) {
+					consideredForClosure.add(c.Id);
+					allConsidered.add(c.Id);
+				}
 
-					String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
+				// escalation
+				if(configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName) && escalation_fromStatus.contains(oldMap.get(c.Id).Status) && escalation_toStatus.contains(newMap.get(c.Id).Status)) {
+					consideredForEscInt.add(c.Id);
+					allConsidered.add(c.Id);
+				}
 
-					// case closure
-					if(newMap.get(c.Id).Status == CASE_STATUS_CLOSED &&
-						 configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
-								 List<String> oldStatuses = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
-								 if(oldStatuses.contains(oldMap.get(c.Id).Status)){
-
-										 consideredForClosure.add(c.Id);
-										 allConsidered.add(c.Id);
-								 }
-						 }
-
-					// escalation
-					if((newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_EXTERNALLY || newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_INTERNALLY) &&
-						 configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
-
-								 List<String> oldStatuses = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
-								 if(oldStatuses.contains(oldMap.get(c.Id).Status)){
-										 consideredForEscInt.add(c.Id);
-										 allConsidered.add(c.Id);
-								 }
-						 }
-
-					// NOI sent
-					if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null
-						 && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)) {
-								 consideredForNOI.add(c.Id);
-								 allConsidered.add(c.Id);
-						 }
+				// NOI sent
+				if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)){
+					consideredForNOI.add(c.Id);
+					allConsidered.add(c.Id);
+				}
 			}
 
 			if(allConsidered.size() == 0) {
@@ -139,31 +155,37 @@ public with sharing class CaseTriggerHelper {
 
 			// closure
 			for(Id cId: consideredForClosure) {
-					String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
 
-					// sprint6 if a case is close as part of same query
-					// substract from original user while awarding the new one
+				// sprint6 if a case is close as part of same query
+				// substract from original user while awarding the new one
 
-					KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId),
-																															 configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue(),
-																															 kpiReportingClosureId);
-					kpiValuesToInsert.add(valueToInsert);
-					// if points were awarded to someone else substract them from original
-					if(newMap.get(cId).Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(cId) != null
-						 && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen') {
-								 KPI_Value__c valueToAdd = new KPI_Value__c();
+				Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
+				if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen'){
+					for(String str : bypassReasons){
+						if(newMap.get(cId).Reopening_reason__c.toUpperCase() == str.toUpperCase()){
+							points = 0;
+						}
+					}
+				}
+					
+				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId);
+				kpiValuesToInsert.add(valueToInsert);
+				// if points were awarded to someone else substract them from original
+				if(newMap.get(cId).Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(cId) != null
+					 && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen') {
+					
+					KPI_Value__c valueToAdd = new KPI_Value__c();
+					valueToAdd.Responsible__c = typeOfActionClosureMap.get(cId).Responsible__c;
+					valueToAdd.Name = 'Value_' + cId + '_' + System.now().format('hh_mm_ss');
+					valueToAdd.FDS_KPI_Reporting__c = kpiReportingReopeningId;
+					valueToAdd.CaseNumber__c = cId;
+					valueToAdd.Month__c = System.now().format('MMMM');
+					valueToAdd.Year__c = String.valueOf(Date.today().year());
+					valueToAdd.KPI_Value__c = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue();
+					kpiValuesToInsert.add(valueToAdd);
 
-
-								 valueToAdd.Responsible__c = typeOfActionClosureMap.get(cId).Responsible__c;
-								 valueToAdd.Name = 'Value_' + cId + '_' + System.now().format('hh_mm_ss');
-								 valueToAdd.FDS_KPI_Reporting__c = kpiReportingReopeningId;
-								 valueToAdd.CaseNumber__c = cId;
-								 valueToAdd.Month__c = System.now().format('MMMM');
-								 valueToAdd.Year__c = String.valueOf(Date.today().year());
-								 valueToAdd.KPI_Value__c = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue();
-								 kpiValuesToInsert.add(valueToAdd);
-
-						 }
+				}
 			}
 
 			// case internal escalation

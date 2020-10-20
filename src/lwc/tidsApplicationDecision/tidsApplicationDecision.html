@@ -1,0 +1,194 @@
+<template>
+	<template if:true={loading}>
+		<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+	</template>
+	<header>
+		<h1 class="icon">Application decision</h1>
+	</header>
+	<form>
+		<template if:true={notStartedApplication}>
+			<br />
+			<h3>
+				Please make sure to review all the sections before accepting the
+				application to ensure you are not accepting an incorrect form.
+				Application Decision Not Started.
+			</h3>
+		</template>
+		<template if:true={approveApplicationButtonDisplay}>
+			<br />
+			<p>
+				The form has no reported errors, you can now accept the application to
+				the TIDS service
+			</p>
+			<h3>
+				Please make sure to review all the sections before accepting the
+				application to ensure you are not accepting an incorrect form.
+			</h3>
+		</template>
+		<template if:true={contactApplicationButtonDisplay}>
+			<div class="row">
+				<div class="col s12">
+					<p class="application-decision__title">
+						In order to accept the application, all errors should be corrected
+						with the help of the client. Please contact the client and review
+						the incorrect sections before accepting the application.
+					</p>
+				</div>
+			</div>
+			<!-- for:each #1 start -->
+			<template for:each={sections} for:item="section">
+				<div class="row" key={section.cmpName}>
+					<div class="col s12">
+						<h3 class="application-decision__section-title">
+							{section.sectionName}
+						</h3>
+					</div>
+				</div>
+				<template for:each={section.errors} for:item="error">
+					<!-- for:each #2 start -->
+					<div class="application-decision__error-item" key={error.cmpName}>
+						<p class="application-decision__field-name">
+							<lightning-icon
+								icon-name="utility:warning"
+								alternative-text="Warning"
+							></lightning-icon>
+							{error.fieldLabel}
+						</p>
+						<div class="application-decision__error-description">
+							<p class="application-decision__error-content">
+								{error.description}
+							</p>
+						</div>
+					</div>
+					<!-- for:each #2 end -->
+				</template>
+				<br key={section.cmpName} />
+			</template>
+			<!-- for:each #1 end -->
+			<h3>
+				Once all the errors have been corrected, please make sure to review all
+				the sections before accepting the application to ensure your are not
+				accepting an incorrect form.
+			</h3>
+		</template>
+		<footer>
+			<div class="row">
+				<div class="col s6">
+					<button class="button-error" onclick={handleRejectApplication}>
+						Reject Application
+					</button>
+				</div>
+				<div class="col s6">
+					<button
+						if:true={approveApplicationButtonDisplay}
+						onclick={handleApproveApplication}
+						disabled={disabledButton}>
+						Approve Application
+					</button>
+					<button
+						if:true={contactApplicationButtonDisplay}
+						onclick={handleContactApplication}
+						disabled={disabledButton}>
+						Contact Applicant
+					</button>
+				</div>
+			</div>
+		</footer>
+	</form>
+	<!-- Error Catch Modal Window -->
+	<template if:true={showErrorModal}>
+		<section
+			role="dialog"
+			tabindex="-1"
+			aria-label="Meaningful description of the modal content"
+			aria-modal="true"
+			aria-describedby="modal-content-id-2"
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<!-- Popup Header -->
+				<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle">
+					<span>Error</span>
+					<span class="slds-float_right slds-m-horizontal_x-small close-mark"
+							onclick={handleCloseModal}>+</span>
+				</div>  
+				<div class="slds-modal__content slds-p-around_medium">
+						<p> 
+							Oops! Something happened. because of the following error: {showErrorMsg}
+							We were unable to complete the vetting transaction, please retry again.
+						</p>
+				</div>
+				<footer class="slds-modal__footer">
+					<button
+						class="slds-button slds-button_success"
+						onclick={handleCloseModal}>
+						Close
+					</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- Start Rejection Modal Application -->
+	<template if:true={rejectDialogOpen}>
+		<section
+			role="dialog"
+			tabindex="-1"
+			aria-label="Meaningful description of the modal content"
+			aria-modal="true"
+			aria-describedby="modal-content-id-2"
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<div
+					class="slds-modal__content slds-p-around_medium"
+					id="modal-content-id-2">
+					<lightning-progress-indicator
+						current-step={step}
+						type="path"
+						variant="base">
+						<lightning-progress-step
+							label="Step 1"
+							value="step1"
+							onstepfocus={handleStep}
+						></lightning-progress-step>
+						<lightning-progress-step
+							label="Step 2"
+							value="step2"
+							onstepfocus={handleStep}></lightning-progress-step>
+					</lightning-progress-indicator>
+					<template if:true={step1}>
+						<lightning-textarea
+							data-name="reject-description"
+							name="reject-description"
+							label="Reject Description"
+							value={rejectionReason}
+							onchange={handleRejectionReason}
+							required
+						></lightning-textarea>
+					</template>
+					<template if:true={step2}>
+						<p>Are you sure?</p>
+					</template>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_destructive" onclick={handleClose}>
+						Cancel
+					</button>
+					<button
+						class="slds-button slds-button_neutral"
+						onclick={handleNext}
+						if:true={step1}>
+						Next
+					</button>
+					<button
+						class="slds-button slds-button_success"
+						onclick={handleConfirmRejection}
+						if:true={step2}>
+						Confirm
+					</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- End Rejection Modal Application -->
+</template>

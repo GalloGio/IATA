@@ -49,7 +49,7 @@ public without sharing class IsraelDisputesCreateNewCaseCtrl {
 							+ 'WHERE RecordTypeId = \'' + recordTypeId + '\' '
 							+ 'AND Sector__c = \'Airline\' '
 							+ 'AND (Category__c = \'Passenger and Cargo\' OR Category__c = \'Passenger only\') '
-							+ 'AND (Membership_status__c = \'IATA Member\' OR Membership_status__c = \'Non-IATA member\') '
+							+ 'AND (Membership_status__c = \'IATA Member\' OR Membership_status__c = \'Non-IATA member\' OR Membership_status__c = \'Ex-IATA Member\') '
 							+ 'AND ACLI_Status__c = \'Active Company\'';
 
 		if(searchTerm != null) {

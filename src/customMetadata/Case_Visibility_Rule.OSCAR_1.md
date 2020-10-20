@@ -28,7 +28,8 @@
 Voicemail
 Phone
 Chat
-IATA Internal User</value>
+IATA Internal User
+Screening IEP Model B</value>
     </values>
     <values>
         <field>OwnerID__c</field>
