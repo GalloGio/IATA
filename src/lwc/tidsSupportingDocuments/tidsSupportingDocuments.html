@@ -1,0 +1,193 @@
+<template>
+	<div class="vetting-menu">
+		<c-tids-vetting-menu></c-tids-vetting-menu>
+	</div>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={showSpinner}></lightning-spinner>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<h1 class="icon">Supporting Documents</h1>
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			<template if:true={istext1}>
+				To complete your TIDS application, please provide the following documents:
+			</template>
+			<template if:true={istext2}>
+				To complete your TIDS Branch application, please provide the following documents:
+			</template>
+			<template if:true={istext3}>
+				To complete your TIDS Virtual Branch application, please provide the following documents:
+			</template>	
+			<template if:true={istext4}>
+				Please provide supporting documentation as evidence of the changes reported
+				<br/>In the case of a change of Ownership or Company Legal Type, we ask that you attach all the following documents:		
+			</template>	
+		</p>
+		<template if:true={vettingErrorOptions}>
+			<lightning-textarea
+				class="comment-area-documents"
+				label="Error Description"
+				if:true={documentsError.show}
+				data-name="error-documents-desc"
+				value={documentsError.description}
+				onchange={changeErrorFields}
+			></lightning-textarea>
+		</template>
+		<ul class="style-icon">
+			<template if:true={istext1}>
+				<li>Documentation supporting the legal form of the business and ownership of the business entity</li>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>Bank letter of statement of account in the name of the business</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the&nbsp;
+					<a data-id={documentid}
+						label='TIDS Terms and Conditions'
+						target="_blank"
+						href={documentfilepath}
+						title='TIDS Terms and Conditions'>
+						TIDS Terms and Conditions
+					</a>
+				</li>
+			</template>
+			<template if:true={istext2}>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the&nbsp;
+					<a data-id={documentid}
+						label='TIDS Terms and Conditions'
+						target="_blank"
+						href={documentfilepath}
+						title='TIDS Terms and Conditions'>
+						TIDS Terms and Conditions
+					</a>
+				</li>
+			</template>
+			<template if:true={istext3}>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the&nbsp;
+					<a data-id={documentid}
+						label='TIDS Terms and Conditions'
+						target="_blank"
+						href={documentfilepath}
+						title='TIDS Terms and Conditions'>
+						TIDS Terms and Conditions
+					</a>
+				</li>	
+			</template>
+			<template if:true={istext4}>
+				<li>Documentation supporting the legal form of the business and ownership of the business entity</li>
+				<li>Copy of the business registration, including tax registration or applicable business registration number</li>
+				<li>Bank letter of statement of account in the name of the business</li>
+				<li>One letter of recommendation from an IATA Airline, GDS or other major industry supplier</li>
+				<li>Government-issued license for sale of travel-related services (where applicable)</li>
+				<li>Signed copy of the&nbsp;
+					<a data-id={documentid}
+						label='TIDS Terms and Conditions'
+						target="_blank"
+						href={documentfilepath}
+						title='TIDS Terms and Conditions'>
+						TIDS Terms and Conditions
+					</a>
+				</li>	
+			</template>
+		</ul>
+		<template if:true={vettingErrorOptions}>
+			<lightning-input
+				type="checkbox"
+				class="comment-documents"
+				checked={documentsError.show}
+				data-name="error-documents"
+				onclick={handleError}
+			>
+			</lightning-input>
+		</template>
+
+		<lightning-input
+			type="file"
+			data-name="addDocuments"
+			label="Attachments"
+			accept={acceptFormat}
+			multiple
+			onchange={handleUploadFiles}
+		></lightning-input>
+
+		<ul class="documents">
+			<template if:true={documentsView} for:each={documentsView} for:item="document">
+				<li key={document.id}>
+					<lightning-icon icon-name={document.iconName} alternative-text="Approved" ></lightning-icon>
+					{document.name}
+					<lightning-icon
+						icon-name="action:remove"
+						alternative-text="Remove document"
+						data-name={document.name}
+						onclick={handleUploadRemove}
+						size="xx-small"
+					></lightning-icon>
+				</li>
+			</template>
+			<template if:true={filedocuments} for:each={filedocuments} for:item="document">
+				<li key={document.id}>
+					<lightning-icon icon-name={document.iconName} alternative-text="Approved" ></lightning-icon>
+					{document.name}
+					<lightning-icon
+						icon-name="action:remove"
+						alternative-text="Remove document"
+						data-name={document.id}
+						onclick={handleUploadFileRemove}
+						size="xx-small"
+					></lightning-icon>
+				</li>
+			 </template>
+		</ul>
+
+		<footer>
+			<template if:false={vettingMode}>
+				<template if:true={showSaveAndQuitButton}>
+					<button 
+						class="transparent"
+						data-name="save-quit" 
+						data-next="save-quit" 
+						onclick={handleSaveAndQuit}>
+						Save &amp; quit
+					</button>
+				</template>
+				<button 
+					data-name="next-section"
+					name="submit-application" 
+					onclick={handleNextSection} 
+					disabled={disableButton}>
+					Next section
+				</button>
+			</template>
+
+			<template if:true={vettingMode}>
+				<button name="agency-legal-status" data-name="confirm-review-status" onclick={handleProceed} if:false={vettingErrorOptions}>
+					Confirm Review and Proceed
+				</button>
+				<button if:true={vettingErrorOptions}
+					class="button-error"
+					data-next="submit-application"
+					data-name="report-errors-and-proceed"
+					onclick={handleProceed}
+					disabled={reportErrorButtonDisabled}
+				>
+					Report Errors and Proceed
+				</button>
+			</template>
+		</footer>
+	</form>
+	<c-tids-modal
+		if:true={openModal}
+		open={openModal}
+		field-error-selected={fieldErrorSelected}
+		default-message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal>
+</template>

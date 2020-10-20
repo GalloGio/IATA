@@ -201,7 +201,7 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-
+	@isTest
 	static void testPreview() {
 
 		// create a shopping cart with an item
@@ -214,7 +214,7 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-	
+	@isTest
 	static void testCreditCardSubscribe() {
 		Test.startTest();
 		//setupData(false);
@@ -270,7 +270,7 @@ public with sharing class IECSubscriptionManager_tst {
 	}
 
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
-	
+	@isTest
 	static void testICHSubscribe() {
 		//setupData(false);
 		Test.startTest();
@@ -302,7 +302,7 @@ public with sharing class IECSubscriptionManager_tst {
 		system.assert(lstPM != null && lstPM.size() > 0, 'The dummy payment methods should be returned');
 	}
 
-	
+	@isTest
 	static void testInvoicesPayments() {
 		setupInvoicesAndPayments();
 

@@ -2,14 +2,17 @@
 public class ams2gdp_TestDataGenerator
 {
 	public static Integer counter = 0;
-
-	public static List<Account> generateAccounts(Integer nb, Boolean doInsert)
+	public static List<Account> generateAccounts(Integer nb, Boolean doInsert){
+		return generateAccounts(nb, doInsert, false);
+	}
+		
+	public static List<Account> generateAccounts(Integer nb, Boolean doInsert, boolean isClassT)
 	{
 		List<Account> accounts = new List<Account>();
 		List<IATA_ISO_Country__c> countries = generateISOCountryState();
+		
 
-		for(Integer i = 0; i < nb; i++)
-		{
+		for(Integer i = 0; i < nb; i++){
 			accounts.add(new Account(
 				Name = 'test account ' + counter ,
 				Sector__c = 'IATA',
@@ -37,6 +40,37 @@ public class ams2gdp_TestDataGenerator
 				IATA_ISO_Country__c=countries[0].Id
 			));
 			counter++;
+		}    
+		if (isClassT){
+			for(Integer i = 0; i < nb; i++){
+				accounts.add(new Account(
+					Name = 'TIDS test account ' + counter ,
+					Sector__c = 'IATA',
+					Category__c = 'IATA HEAD OFFICE',
+					CurrencyIsoCode = 'USD',
+					BillingStreet ='42 Edmond',
+					BillingCity= 'Montreal',
+					BillingPostalCode ='h1v1f8',
+					BillingState='Quebec',
+					BillingCountry='Canada',
+					ShippingStreet ='42 Edmond',
+					ShippingCity= 'Montreal',
+					Status__c = 'Terminated',
+					ShippingPostalCode ='h1v1f8',
+					ShippingState='Quebec',
+					ShippingCountry='Canada',
+					Customer_Type__c = 'Member Airline',
+					Location_Class__c='T',
+					Phone_Number__c = '+1-888-123-455'+counter,
+					Phone = '+1-888-123-455'+counter,
+					Fax = '+1-999-123-46'+counter,
+					GDS__c = 'ABAC;UALA',
+					RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+					IATACode__c = 'A'+counter,
+					IATA_ISO_Country__c=countries[0].Id                
+				));
+				counter++;
+			}
 		}
 
 		if(doInsert){
@@ -402,19 +436,27 @@ public class ams2gdp_TestDataGenerator
 	public static List<AMS_Agency_Profile__c> generateAMS_AgencyProfiles(Integer nb, Boolean doInsert)
 	{
 		List<AMS_Agency_Profile__c> result= new List<AMS_Agency_Profile__c>();
-		List<Account> accounts = generateAccounts(nb,true);
-		//List<String> GRItems=new List<String>{'APENL2','APEN2C','APSALE','APEN4A','APEN4A','APSPEC','APDEST','APPRAC','APEN4H'};
+		List<Account> accounts = generateAccounts(nb,true,true);
 		List<String> GRItems=new List<String>{'L1','L2','A1','4','AD','A2','C1','S1','RT','H1'};
 		List<String> GRCodes=new List<String>{'FL','SL','SA','SV','MK','DS','FC','SS','AT','SH'};
-
-		for(Integer x=0;x<nb;x++)
-		{
+		List<String> ClassTGRItems=new List<String>{'1','K','2020-01-01','4','5','6','7','8','9','10','11','12','13','A','B','H','R','T','Y'};
+		List<String> ClassTGRCodes=new List<String>{'NU_OFFI','NU_EMPL','DIBS','FL','FC','SMOL','SMOF','TIDS_SH','TIDS_SA','TIDS_SL','TIDS_ME','TIDS_SS','TIDS_TR','AT','SV','DS','MK','TIDS_VB_ISO'};
+		for(Integer x=0;x<nb;x++){
 			result.add(new AMS_Agency_Profile__c(
 				Account__c = accounts[x].Id,
-				GR_Item__c=GRItems[x],
-				GR_Code__c=GRCodes[x]
-				));
-
+				GR_Item__c= GRItems[x],
+				GR_Code__c= GRCodes[x]
+			));    
+		}
+		for(Account a:accounts){
+			if (a.Location_Class__c!='T') {continue;}
+			for(Integer x=0;x<18;x++){
+				result.add(new AMS_Agency_Profile__c(
+					Account__c = a.Id,
+					GR_Item__c= ClassTGRItems[x],
+					GR_Code__c= ClassTGRCodes[x]
+				));    
+			}
 		}
 
 		if(doInsert)
