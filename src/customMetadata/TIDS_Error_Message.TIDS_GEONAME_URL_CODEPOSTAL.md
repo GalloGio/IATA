@@ -56,7 +56,7 @@
     </values>
     <values>
         <field>Visit_URL__c</field>
-        <value xsi:type="xsd:string">http://api.geonames.org/findNearbyPostalCodesJSON?lat={0}&amp;lng={1}&amp;username=akatia1</value>
+        <value xsi:type="xsd:string">https://ba-secure.geonames.net/findNearbyPostalCodesJSON?lat={0}&lng={1}&username=iata_globaldata</value>
     </values>
     <values>
         <field>Yellow_Section_Header__c</field>
