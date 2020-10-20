@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Type_of_Task__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Call</value>
     </values>
     <values>
         <field>Value_From__c</field>

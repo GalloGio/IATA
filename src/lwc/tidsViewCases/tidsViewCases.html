@@ -1,0 +1,112 @@
+<template>
+	<div class="block cases">
+		<template if:true={allRecords}>
+			<header>
+				<h1>You are viewing all the Cases under your Office</h1>
+			</header>
+		</template>
+		<header>
+			<div class="row">
+				<div class="col s12 l7">
+					<h1>TIDS Cases</h1>
+				</div>
+				<div class="col s12 l5 tright">
+					<form action="" id="search-branch" class="search-branch">
+						<div class="input-field">
+							<lightning-input variant="label-hidden" name="search" onchange={handlesearchCases} type="text" class="input-search" placeholder="Search by number or subject" value={newsearch}></lightning-input>
+							<template if:false={isSearchOn}>
+								<button class="search-submit far fa-search no-style"  onclick={handlegetCases}></button>
+							</template>
+							<template if:true={isSearchOn}>
+								<button class="search-submit far fa-times-circle no-style"  onclick={handlevoidCases}></button>
+							</template>
+						</div>
+					</form>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<table class="responsive-table" aria-describedby="case list">
+					<thead>
+						<tr>
+							<th id="name">Number<span>
+								<button class="no-style transparent order-desc" onclick={sortCaseList} id='CaseNumberDesc'>
+									<i class="fas fa-sort-up"></i>
+								</button>
+								<button class="no-style transparent order-asc active" onclick={sortCaseList} id='CaseNumberAsc'>
+									<i class="fas fa-sort-down"></i>
+								</button>
+							</span></th>
+							<th id="subject">Subject<span>
+								<button class="no-style transparent order-desc" onclick={sortCaseList} id="SubjectDesc">
+									<i class="fas fa-sort-up"></i>
+								</button>
+								<button class="no-style transparent order-asc" onclick={sortCaseList} id="SubjectAsc">
+									<i class="fas fa-sort-down"></i>
+								</button>
+							</span></th>
+							<th id="date">Date<span>
+								<button class="no-style transparent order-desc" onclick={sortCaseList} id="CreatedDateDesc">
+									<i class="fas fa-sort-up"></i>
+								</button>
+								<button class="no-style transparent order-asc" onclick={sortCaseList} id="CreatedDateAsc">
+									<i class="fas fa-sort-down"></i>
+								</button>
+							</span></th>
+							<th id="status">Status<span>
+								<button class="no-style transparent order-desc" onclick={sortCaseList} id="StatusDesc">
+									<i class="fas fa-sort-up"></i>
+								</button>
+								<button class="no-style transparent order-asc" onclick={sortCaseList} id="StatusAsc">
+									<i class="fas fa-sort-down"></i>
+								</button>
+							</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={cases} for:item="tcase">
+							<template if:true={tcase.visible}>
+								<tr key={tcase.newId}>
+									<td><a href={tcase.url}  id={tcase.newId} target="_blank">{tcase.CaseNumber}</a></td>
+									<td>{tcase.Subject}</td>
+									<td>
+										<lightning-formatted-date-time
+											value={tcase.CreatedDate}
+											year="numeric"
+											month="numeric"
+											day="numeric"
+										>
+										</lightning-formatted-date-time>
+									</td>
+									<td>{tcase.Status}</td>
+								</tr>
+							</template>
+						</template>
+					</tbody>
+					<template if:false={allRecords}>
+						<template if:true={morethanzero}>
+							<tfoot>
+								<tr>
+									<td colspan="5" class="tcenter"><a href="#" onclick={handleAllCases}>View all cases</a></td>
+								</tr>
+							</tfoot>
+						</template>
+					</template>
+					<template if:false={morethanzero}>
+						<tfoot>
+							<tr>
+								<td colspan="5" class="tcenter"><p>No TIDS Cases to display</p></td>
+							</tr>
+						</tfoot>
+					</template>
+				</table>
+			</div> 
+			<template if:true={allRecords}>
+				<div class="row">
+					<div class="office-back-home"><button onclick={handleBackToHOClick}>Back to Dashboard</button></div>
+				</div>
+			</template>     
+		</main>    
+	</div>  
+</template>

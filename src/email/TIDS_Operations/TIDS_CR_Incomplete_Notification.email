@@ -1,0 +1,103 @@
+<html style="overflow-y: hidden;">
+<head>
+	<title></title>
+</head>
+<body style="margin: 0; padding: 0; height: auto; min-height: auto;">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; font-family: Verdana, Geneva, sans-serif;" width="100%">
+	<tbody>
+		<tr>
+			<td width="100%">
+      <table border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; padding: 20px;" width="100%">
+        <tbody>
+          <tr>
+            <td style="text-align: center;">
+              <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; max-width: 768px;" width="100%">
+                <tr>
+                  <td style="margin: 0; padding: 0; text-align: left; font-family: Verdana, Geneva, sans-serif;">
+                    <h1 style="margin: 0; padding: 0; font-size: 26px;">Your TIDS Change Request is Incomplete</h1>
+                  </td>
+                  <td style="margin: 0; padding: 0 0 0 20px; text-align: center; vertical-align: middle;"><a href="https://www.iata.org/tids" title="IATA TIDS Program"><img alt="IATA TIDS Program" height="150" src="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000kus6&oid=00D2000000008TF&lastMod=1602425300000" width="150" /></a></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+			<table border="0" cellpadding="0" cellspacing="0" style="background: #f2f2f2; padding: 20px;" width="100%">
+				<tbody>
+					<tr>
+						<td style="text-align: center;">
+						<table border="0" cellpadding="0" cellspacing="0" style="background: #ffffff; margin: 0 auto; max-width: 768px;" width="100%">
+							<tbody>
+								<tr>
+									<td style="margin: 0; padding: 40px; text-align: left; font-family: Verdana, Geneva, sans-serif; font-size: 14px; line-height: 25px; border-top: 10px solid #fac832;">
+									<p style="margin: 0 0 30px 0"><b>Your attention is required.</b></p>
+
+									<p style="margin: 0 0 10px 0">Dear {!Contact.Name},</p>
+
+									<p style="margin: 0 0 30px 0">We have reviewed Case Number {!Case.CaseNumber} for a <b>{!Case.Subject}</b>
+										<br />In order to proceed with your request, additional information is required.<br>Please take a moment to review the comments below which explain where clarifications are needed.</p>
+
+				                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+				                    <tr>
+				                      <td style="width: 50%; padding: 0 0 20px 0; vertical-align: top;">
+				                        <p style="margin: 0;"><b>Supporting Case Number</b><br />
+				                        {!Case.CaseNumber}</p>
+				                      </td>
+				                      <td style="width: 50%; padding: 0 0 20px 0; vertical-align: top;">
+				                        <p style="margin: 0;"><b>Request Status</b><br />
+				                        {!Case.Status}</p>
+				                      </td>
+				                    </tr>
+				                    <tr>
+				                      <td colspan="2" style="padding: 10px; border: 2px solid #fac832; background: #fac832;"><b>Information Requested</b></td>
+				                    </tr>
+				                    <tr>
+				                      <td colspan="2" style="padding: 10px; border: 2px solid #fac832;">
+				                        <p style="margin: 0 0 10px 0">{!Case.Last_Case_Comment}</p>
+				                      </td>
+				                    </tr>
+				                  </table>
+					                  <p style="margin: 30px 0 20px;">Kindly provide your response at your earliest directly through Case Number {!Case.CaseNumber}, accessible via the <a href="https://portal.iata.org/s/login/">IATA Customer Portal</a>.</p>
+					                 
+					                 <p style="margin: 0 0 10px 0">If we do not receive your response within 30 days, you will be required to submit a new change request.</p>
+                 					
+									<p style="margin: 0 0 10px 0">Please do not reply to this email as this inbox is not monitored.</p>
+
+                 					<p style="margin: 0 0 10px 0">Thank you for choosing TIDS, IATA&#39;s program for standard identification of non-accredited travel sellers.</p>
+                  					<p style="margin: 0;">The IATA TIDS Team</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table border="0" cellpadding="0" cellspacing="0" style="background: #525252; padding: 20px;" width="100%">
+				<tbody>
+					<tr>
+						<td style="text-align: center;">
+						<table border="0" cellpadding="0" cellspacing="0" style="max-width: 768px; margin: 0 auto;" width="100%">
+							<tbody>
+								<tr>
+									<td style="margin: 0; padding: 0; text-align: left; font-family: Verdana, Geneva, sans-serif; font-size: 12px; line-height: 25px; color: #fff;">
+									<p>This email was sent to <a href="mailto:{!Contact.Email}" style="color: #fff;">{!Contact.Email}</a>. Please do not reply to this email as this address is not monitored.<br />
+									International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada<br />
+									&copy; Copyright 2020. All rights reserved.<br />
+									<a href="https://www.iata.org" style="color: #fff;">https://www.iata.org</a></p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
