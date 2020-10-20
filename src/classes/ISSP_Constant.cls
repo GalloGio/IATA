@@ -151,12 +151,7 @@ Constant Class
 			return null;
 		}
 	} 
-	public final static string TEST_Basic_Airline_User_ProfileID{
-		get{
-			if(Test.isRunningTest()) return [select Id from profile where Name=:'ISS Portal Airline User (Partner)'].Id;
-			return null;
-		}
-	}
+	
 	public final static string Standard_Contact_Record_Type = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
 	// owner for new account created by the ISSP Portal registration
