@@ -1,0 +1,359 @@
+<template>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<h1 class="icon">Mailing Address</h1>
+			</div>
+			<div class="col s3 vetting-menu">
+				<c-tids-vetting-menu></c-tids-vetting-menu>
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			Please provide the information requested below.<br/>
+			<em>Remember, all fields preceded by a (*) are mandatory.</em>
+		</p>
+		<!-- First section -->
+		<section class="b-address-question">
+			<template if:true={istext1}>
+				<h2 class="h3">
+					Mailing address of the office for which this application is made
+				</h2>
+				<p>Is the mailing address the same as the physical address below?</p>	
+			</template>
+			<template if:true={istext2}>
+				<h2 class="h3">
+					Mailing address of the Virtual Branch for which this application is made
+				</h2>
+				<p>Your Virtual Branch will have the same physical address as your Head Office. You may however designate a different mailing address.<br/>The below is the physical address of your Head Office on record.</p>	
+			</template>
+			<br/>
+			<template if:true={vettingErrorOptions}>
+				<lightning-input if:false={showMailingAddressFields}
+					type="checkbox"
+					class="comment-physical-address"
+					checked={physicalAddressError.show}
+					data-name="error-physical-address"
+					onclick={handleError}>
+				</lightning-input>
+			</template>
+			<div class="physical-address">
+				<p>{physicalAddressStreet}</p>
+				<p>{physicalAddressCityState}</p>
+				<p>{physicalAddressPostalZipCode}</p>
+			</div>
+			<br/>
+			<template if:true={vettingErrorOptions}>
+				<template if:false={showMailingAddressFields}>
+					<lightning-textarea
+						class="comment-area-physical-address"
+						label="Error Description"
+						if:true={physicalAddressError.show}
+						data-name="error-physical-address-desc"
+						value={physicalAddressError.description}
+						onchange={changeErrorFields}
+					></lightning-textarea>
+				</template>
+			</template>
+			<lightning-radio-group
+				name="isMailingSameAsPhysicalAddress"
+				label="Mailing Address Options"
+				options={mailingOptions}
+				value={isMailingSameAsPhysicalAddress}
+				onchange={changeField}
+				type="radio">
+			</lightning-radio-group>
+		</section>
+		<!-- if address needs to change -->
+		<section class="b-address-change" if:true={showMailingAddressFields}>
+			<!-- Country field begin -->
+			<template if:true={countryRules.visible}>
+				<div class="row">
+					<div class="input-field col s12">
+						<template if:true={vettingErrorOptions}>
+							<lightning-input
+								type="checkbox"
+								class="comment-country"
+								checked={countryError.show}
+								data-name="error-country"
+								onclick={handleError}>
+							</lightning-input>
+						</template>
+						<c-tids-tooltip rules={countryRules}></c-tids-tooltip> 
+						<lightning-combobox
+							name="country"
+							data-name="country"
+							label="Country"
+							message-when-value-missing="Your must be selected a country."
+							value={country}
+							placeholder="Select a country"
+							options={countries}
+							onchange={changeField}
+							required={countryRules.required}
+							disabled={countryRules.disabled}
+							variant="label-hidden"
+						></lightning-combobox>
+						<div if:true={countryChanges.display}>
+							<p><mark>Previous Value: {countryChanges.sfValue}</mark></p>
+						</div>
+						<template if:true={vettingErrorOptions}>
+							<lightning-textarea
+								class="comment-area-country"
+								label="Error Description"
+								if:true={countryError.show}
+								data-name="error-country-desc"
+								value={countryError.description}
+								onchange={changeErrorFields}
+							></lightning-textarea>
+						</template>
+					</div>
+				</div>
+			</template>
+			<!--  Country field end -->
+
+			<!-- State field begin -->
+			<template if:true={stateRules.visible}>
+				<div class="row b-select-wrapper">
+					<div class="input-field col m12">
+						<template if:true={vettingErrorOptions}>
+							<lightning-input
+								type="checkbox"
+								class="comment-state"
+								checked={stateError.show}
+								data-name="error-state"
+								onclick={handleError}>
+							</lightning-input>
+						</template>
+						<c-tids-tooltip rules={stateRules}></c-tids-tooltip> 
+						<lightning-combobox
+							name="state"
+							data-name="state"
+							label="State / Province"
+							value={state}
+							placeholder="Select a state or province"
+							options={states}
+							onchange={changeField}
+							required={stateRules.required}
+							disabled={stateRules.disabled}
+							variant="label-hidden">
+						</lightning-combobox>
+						<div if:true={stateChanges.display}>
+							<p><mark>Previous Value: {stateChanges.sfValue}</mark></p>
+						</div>
+						<template if:true={vettingErrorOptions}>
+							<lightning-textarea
+								class="comment-area-state"
+								label="Error Description"
+								if:true={stateError.show}
+								data-name="error-state-desc"
+								value={stateError.description}
+								onchange={changeErrorFields}
+							></lightning-textarea>
+						</template>
+					</div>
+				</div>
+			</template>
+			<!-- State field end -->
+			<!-- City field begin -->
+			<template if:true={cityRules.visible}>
+				<div class="row">
+					<div class="input-field col s12">
+						<template if:true={vettingErrorOptions}>
+							<lightning-input
+								type="checkbox"
+								class="comment-city"
+								checked={cityError.show}
+								data-name="error-city"
+								onclick={handleError}>
+							</lightning-input>
+						</template>
+						<c-tids-tooltip rules={cityRules}></c-tids-tooltip> 
+						<lightning-input
+							type="text"
+							label="City"
+							name="city"
+							data-name="city"
+							value={city}
+							onchange={changeField}
+							max-length="30"
+							autocomplete="false"
+							required={cityRules.required}
+							disabled={cityRules.disabled}
+							onfocus={setCitySearchOn}
+							onblur={setCitySearchOff}
+							pattern={cityRules.regex}
+							data-regex={cityRules.regex}
+							variant="label-hidden"
+						>
+						</lightning-input>
+						<span>{cityCounter} / 30</span>
+						<div if:true={cityChanges.display}>
+							<p><mark>Previous Value: {cityChanges.sfValue}</mark></p>
+						</div>
+						<template if:true={citysearch}>
+							<template if:true={isPostalCodesAvailable}>
+								<div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid col tids-city-choice" role="listbox">
+									<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+										<template for:each={postalcodes} for:item="item">
+											<li role="presentation" class="slds-listbox__item" key={item.geonameId}>
+												<div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" id={item.geonameId} onclick={selectCity} onmousedown={setCitySearchPrevent}>
+													<span class="slds-media__body">
+														<span class="slds-listbox__option-text slds-listbox__option-text_entity">{item.toponymName}</span>
+														<span class="slds-listbox__option-meta slds-listbox__option-meta_entity">State: {item.adminName1}</span>
+													</span>
+												</div>
+											</li>
+									</template>
+									</ul>
+								</div>
+							</template>
+						</template>
+						<template if:true={vettingErrorOptions}>
+							<lightning-textarea
+								class="comment-area-city"
+								label="Error Description"
+								if:true={cityError.show}
+								data-name="error-city-desc"
+								value={cityError.description}
+								onchange={changeErrorFields}
+							></lightning-textarea>
+						</template>
+					</div>
+				</div>
+			</template>
+			<!-- City field end -->
+			<!-- Mailing Address field begin -->
+			<template if:true={mailingAddressRules.visible}>
+				<div class="row">
+					<div class="input-field col s12">
+						<template if:true={vettingErrorOptions}>
+							<lightning-input
+								type="checkbox"
+								class="comment-mailingaddress"
+								checked={mailingAddressError.show}
+								data-name="error-mailing-address"
+								onclick={handleError}>
+							</lightning-input>
+						</template>
+						<c-tids-tooltip rules={mailingAddressRules}></c-tids-tooltip> 
+						<lightning-input
+							type="text"
+							label="Address"
+							name="mailingAddress"
+							data-name="mailingAddress"
+							value={mailingAddress}
+							onchange={changeField}
+							max-length="90"
+							pattern={mailingAddressRules.regex}
+							data-regex={mailingAddressRules.regex}
+							variant="label-hidden"
+							required={mailingAddressRules.required}
+							disabled={mailingAddressRules.disabled}>
+						</lightning-input>
+						<span>{mailingAddressCounter} / 90</span>
+						<div if:true={mailingAddressChanges.display}>
+							<p><mark>Previous Value: {mailingAddressChanges.sfValue}</mark></p>
+						</div>
+						<template if:true={vettingErrorOptions}>
+							<lightning-textarea
+								class="comment-area-companylegalname"
+								label="Error Description"
+								if:true={mailingAddressError.show}
+								data-name="error-mailing-address-desc"
+								value={mailingAddressError.description}
+								onchange={changeErrorFields}
+							></lightning-textarea>
+						</template>
+					</div>
+				</div>
+			</template>
+			<!-- Mailing Address field begin -->
+			<!-- Postal Code field begin -->
+			<template if:true={postalCodeRules.visible}>
+				<div class="row">
+					<div class="input-field col s12 l6">
+						<template if:true={vettingErrorOptions}>
+							<lightning-input
+								type="checkbox"
+								class="comment-postalcode"
+								checked={postalCodeError.show}
+								data-name="error-postal-code"
+								onclick={handleError}>
+							</lightning-input>
+						</template>
+						<c-tids-tooltip rules={postalCodeRules}></c-tids-tooltip> 
+						<lightning-input
+							type="text"
+							placeholder={postalCodePlaceHolder}
+							label="Postal Code"
+							name="postalCode"
+							data-name="postalCode"
+							value={postalCode}
+							onchange={changeField}
+							max-length="10"
+							pattern={postalCodeRules.regex}
+							data-regex={postalCodeRules.regex}
+							variant="label-hidden"
+							required={postalCodeRules.required}
+							disabled={postalCodeRules.disabled}>
+						</lightning-input>
+						<span>{postalCodeCounter} / 10</span>
+						<div if:true={postalCodeChanges.display}>
+							<p><mark>Previous Value: {postalCodeChanges.sfValue}</mark></p>
+						</div>
+						<template if:true={vettingErrorOptions}>
+							<lightning-textarea
+								class="comment-area-postalcode"
+								label="Error Description"
+								if:true={postalCodeError.show}
+								data-name="error-postal-code-desc"
+								value={postalCodeError.description}
+								onchange={changeErrorFields}
+							></lightning-textarea>
+						</template>
+					</div>
+				</div>
+			</template>
+			<!-- Postal Code field end -->
+		</section>
+
+		<footer>
+			<template if:false={vettingMode}>
+				<template if:true={showSaveAndQuitButton}>
+					<button
+						class="transparent"
+						data-next="save-quit"
+						onclick={handleSaveAndQuit}>
+						Save &amp; quit
+					</button>
+				</template>
+				<button
+					name="contact"
+					onclick={handleNextSection}
+					disabled={disableButton}>
+					Next section
+				</button>
+			</template>
+
+			<template if:true={vettingMode}>
+				<button if:false={vettingErrorOptions}
+					data-name="confirm-review-status"
+					onclick={handleProceed}>
+					Confirm Review and Proceed
+				</button>
+				<button
+					if:true={vettingErrorOptions}
+					onclick={handleProceed}
+					data-next="contact"
+					data-name="report-errors-and-proceed"
+					class="button-error">
+					Report Errors and Proceed
+				</button>
+			</template>
+		</footer>
+	</form>
+	<template if:true={openModal} >
+		 <c-tids-modal open={openModal} private-message={modalprivateMessage} field-error-selected={fieldErrorSelected} default-message={modalDefaultMessage} action={modalAction}></c-tids-modal>
+	</template>
+</template>
