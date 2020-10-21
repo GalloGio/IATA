@@ -25,7 +25,7 @@
 							
 								<template if:false={showAlertsAndEvents}>	
 									<div class="pb-3">								
-										<c-cw-private-notifications label={label} user-info={userInfo} company-info={userCompanyInfo} ongotohome={goToHome} company-admins={companyAdmins} gxa-url={gxaUrl} view-alerts-events=false onrefresh={refreshData}> </c-cw-private-notifications>
+										<c-cw-private-notifications label={label} user-info={userInfo} company-info={userCompanyInfo} ongotohome={goToHome} company-admins={companyAdmins} gxa-url={gxaUrl} view-alerts-events=false onrefresh={refreshData} onmenuitemselection={selectMenuItem}> </c-cw-private-notifications>
 									</div>
 								</template>		
 							
@@ -43,7 +43,7 @@
 										<hr class="yellow-underline">
 									</div>	
 								</div>								
-								<c-cw-private-notifications label={label} user-info={userInfo} company-info={userCompanyInfo} ongotohome={goToHome} company-admins={companyAdmins} view-alerts-events=true gxa-url={gxaUrl} onrefresh={refreshData}> </c-cw-private-notifications>
+								<c-cw-private-notifications label={label} user-info={userInfo} company-info={userCompanyInfo} ongotohome={goToHome} company-admins={companyAdmins} view-alerts-events=true gxa-url={gxaUrl} onrefresh={refreshData} onmenuitemselection={selectMenuItem}> </c-cw-private-notifications>
 							</template>	
 							<template if:true={showFacilityDetail}>
 								<c-cw-facility-page-container label={label} facilityid={selectedFacility} areatype="private" overlay-color="#FFF" spinner-position="position-absolute" onloading={sectionLoadingJS} onloaded={sectionLoadedJS}> </c-cw-facility-page-container>

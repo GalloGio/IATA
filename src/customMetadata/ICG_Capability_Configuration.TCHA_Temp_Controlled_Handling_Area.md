@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Equipment__c;TCHA_Temperature_Range__c;Number__c;TCHA_Total_Processing_Space__c;CRSTR_Sensors_Calibrated__c;CRSTR_Temperature_Mapped__c;CRSTR_Temperature_Control_Alarm_System__c;CRSTR_Temperature_Readouts_Available__c;CRSTR_BUProcedure_In_Malfunction__c</value>
+        <value xsi:type="xsd:string">Equipment__c;TCHA_Temperature_Range__c;TCHA_Total_Processing_Space__c;CRSTR_Sensors_Calibrated__c;CRSTR_Temperature_Mapped__c;CRSTR_Temperature_Control_Alarm_System__c;CRSTR_Temperature_Readouts_Available__c;CRSTR_BUProcedure_In_Malfunction__c</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

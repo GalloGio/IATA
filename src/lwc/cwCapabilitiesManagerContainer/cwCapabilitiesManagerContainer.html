@@ -319,7 +319,7 @@
 																				onmouseover={showHideStampHover}
 																				onmousemove={showHideStampHover}
 																				onmouseout={showHideStampHover}
-																				data-name={cert.name}
+																				data-name={cert.label}
 																				data-issue-date={cert.issueDate}
 																				data-expiration-date={cert.expirationDate}>
 																		</template>
@@ -471,13 +471,13 @@
 							for:item="cert">
 								<div key={cert.id} class="slds-col">
 								<template if:false={cert.isDeleted}>
-									<img key={cert.id} width="55px" src={cert.src} title={cert.name} style="cursor: pointer;"
+									<img key={cert.id} width="55px" src={cert.src} title={cert.label} style="cursor: pointer;"
 										onclick={certiSelectedToRemove}
 										data-id={cert.id}
 										data-name={cert.name}>
 								</template>
 								<template if:true={cert.isDeleted}>
-									<img key={cert.id} width="55px" src={cert.src} title={cert.name} class="certifications-disabled">
+									<img key={cert.id} width="55px" src={cert.src} title={cert.label} class="certifications-disabled">
 								</template>
 								</div>
 							</template>

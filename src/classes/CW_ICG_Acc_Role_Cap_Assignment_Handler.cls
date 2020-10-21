@@ -69,11 +69,12 @@ public with sharing class CW_ICG_Acc_Role_Cap_Assignment_Handler {
 	private void getPreviousAssignments(List<String> affectedEquipments, List<String> capabilityFields){
 		String query = String.format(
 			'SELECT Id, ICG_Account_Role_Detail__c, ICG_Capability_Assignment_Group__r.RecordType.DeveloperName, {0} FROM ICG_Account_Role_Capability_Assignment__c ' + 
-			'WHERE ICG_Account_Role_Detail__c IN {1} AND Account_Role_Detail_Capability__r.Equipment__c IN {2}', 
+			'WHERE ICG_Capability_Assignment_Group__r.Status__c IN {3} AND ICG_Account_Role_Detail__c IN {1} AND Account_Role_Detail_Capability__r.Equipment__c IN {2}', 
 			new List<String>{
 				'Account_Role_Detail_Capability__r.' + String.join(capabilityFields, ', Account_Role_Detail_Capability__r.'),
 				'(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(affectedStations), List<String>.class), '\',\'') + '\')',
-				'(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(affectedEquipments), List<String>.class), '\',\'') + '\')'});
+				'(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(affectedEquipments), List<String>.class), '\',\'') + '\')',
+				'(\'' + String.join((List<String>) JSON.deserialize(JSON.serialize(new List<String>{'Active'}), List<String>.class), '\',\'') + '\')'});
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(query)) {
 			asgmtsData.put(currentAssignment.Id, currentAssignment);
 			asgmtGroupsData.put(currentAssignment.ICG_Capability_Assignment_Group__c, currentAssignment.ICG_Capability_Assignment_Group__r);
