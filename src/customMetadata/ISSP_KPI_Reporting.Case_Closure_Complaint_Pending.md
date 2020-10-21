@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Action__c</field>
-        <value xsi:type="xsd:string">Case Closure</value>
+        <value xsi:type="xsd:string">Pending Closure</value>
     </values>
     <values>
         <field>Case_Record_Type__c</field>
