@@ -288,7 +288,7 @@
   </target>
 
   <target name="deployLayouts">
-    <printlist list="${layout}" message="Deploying LAYOUT" />
+    <printlist list="${layout}" message="Deploying Layout, Custom Apps, Tabs, Custom Metadata" />
 
     <createDirectories folderList="${layout}" />
     <fecthFiles folderList="${layout}" packageName="layoutPackage" />
@@ -297,7 +297,7 @@
   </target>
 
   <target name="deployFlows">
-    <printlist list="${flow}" message="Deploying Flow" />
+    <printlist list="${flow}" message="Deploying Flow, Data Categories, Sharing Rules" />
 
     <createDirectories folderList="${flow}" />
     <fecthFiles folderList="${flow}" packageName="flowPackage" />

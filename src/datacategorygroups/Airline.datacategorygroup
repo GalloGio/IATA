@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Passenger Airline</label>
+            <name>Passenger_Airline</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Cargo Airline</label>
+            <name>Cargo_Airline</name>
+        </dataCategory>
+        <dataCategory>
+            <label>ADM/ACM</label>
+            <name>ADM_ACM</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Air Waybills</label>
+            <name>Air_Waybills</name>
+        </dataCategory>
+        <dataCategory>
+            <label>BSP Participation</label>
+            <name>BSP_Participation</name>
+        </dataCategory>
+        <dataCategory>
+            <label>CASS Participation</label>
+            <name>CASS_Participation</name>
+        </dataCategory>
+        <dataCategory>
+            <label>EMD</label>
+            <name>EMD</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Joining Fees</label>
+            <name>Joining_Fees</name>
+        </dataCategory>
+        <dataCategory>
+            <label>VMPD</label>
+            <name>VMPD</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Category for articles applicable to Airlines ONLY</description>
+    <label>Airline</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>
