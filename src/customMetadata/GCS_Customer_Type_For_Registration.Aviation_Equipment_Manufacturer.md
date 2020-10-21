@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Equipment Manufacturer</label>
+    <label>Aviation Equipment Manufacturer</label>
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>

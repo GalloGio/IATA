@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Coordinator</label>
+    <label>Theme Park</label>
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>
@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:type="xsd:string">Coordinator</value>
+        <value xsi:type="xsd:string">Theme Park</value>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Training</value>
+        <value xsi:type="xsd:string">Recreational</value>
     </values>
     <values>
         <field>Display_Country__c</field>
@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Training</value>
+        <value xsi:type="xsd:string">Recreational</value>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
