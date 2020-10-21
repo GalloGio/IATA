@@ -684,6 +684,20 @@
             <value>MSO Member Sales Office</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingGuestRules>
+        <fullName>IDCard_Account_Share_guest_permissions</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>IDCard_Account_Share_guest_permissions</description>
+        <label>IDCard Account Share guest permissions</label>
+        <sharedTo>
+            <guestUser>IATA_IDCard</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+    </sharingGuestRules>
     <sharingOwnerRules>
         <fullName>Timba_Survey_Account_Sharing_Rule</fullName>
         <accessLevel>Read</accessLevel>

@@ -392,6 +392,26 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>FOCUSVALUES</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>FOCUSVALUES</value>
+        </filters>
+        <label>000_FOCUSVALUES</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>LOCTYP</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
@@ -587,6 +607,8 @@
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
         <columns>Valid_for_GDP__c</columns>
+        <columns>Is_Displayed_Last__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>
         <columns>System_ID__c</columns>
@@ -605,6 +627,7 @@
         <columns>NAME</columns>
         <columns>Definition__c</columns>
         <columns>Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
         <columns>Valid_for_GDP__c</columns>
         <columns>System__c</columns>
         <columns>Table__c</columns>

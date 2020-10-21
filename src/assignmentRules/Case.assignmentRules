@@ -13135,7 +13135,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>jiangx@iata.org</assignedTo>
+            <assignedTo>sahuck@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>

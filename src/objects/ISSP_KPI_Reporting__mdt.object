@@ -140,6 +140,11 @@
                     <default>false</default>
                     <label>Send Email</label>
                 </value>
+                <value>
+                    <fullName>Task</fullName>
+                    <default>false</default>
+                    <label>Task</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
