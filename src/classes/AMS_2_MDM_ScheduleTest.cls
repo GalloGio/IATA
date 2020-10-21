@@ -42,7 +42,8 @@ private class AMS_2_MDM_ScheduleTest{
 																														REGION3_CRON_EXP__c = '0 0 0 15 3 ? 2022',
 																														REGION4_CRON_EXP__c = '0 0 0 15 3 ? 2022',
 																														REGION5_CRON_EXP__c = '0 0 0 15 3 ? 2022',
-																														Web_Service_endpoint__c = 'https://pixid.iata.org/XISOAPAdapter/MessageServlet');
+																														Web_Service_endpoint__c = 'https://pixid.iata.org/XISOAPAdapter/MessageServlet',
+																														Change_Code_Created_Date__c = 'LAST_N_DAYS:90');
 			insert sapSett;
 
 			AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(Name = 'test', Change_Code__c = 'TST', Billable__c = true, Integration_RecId__c='C');
