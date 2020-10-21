@@ -56,7 +56,7 @@
     </values>
     <values>
         <field>Visit_URL__c</field>
-        <value xsi:type="xsd:string">https://ba-secure.geonames.net/searchJSON?name_startsWith={0}&featureClass=P&cities=cities1000&country={1}&style=MEDIUM&maxRows=100&username=iata_globaldata</value>
+        <value xsi:type="xsd:string">https://ba-secure.geonames.net/searchJSON?name_startsWith={0}&amp;featureClass=P&amp;cities=cities1000&amp;country={1}&amp;style=MEDIUM&amp;maxRows=100&amp;username=iata_globaldata</value>
     </values>
     <values>
         <field>Yellow_Section_Header__c</field>
