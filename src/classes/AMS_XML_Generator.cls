@@ -1875,7 +1875,8 @@ public with sharing class AMS_XML_Generator {
 				getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
 
 			}else{
-				Set<String> changeCodeSet = new Set<String>{'NEW','FIN','TER','CLO'};
+				Set<String> changeCodeSetNoParticipation = new Set<String>{'TER','CLO'};
+				Set<String> changeCodeSetParticipation = new Set<String>{'NEW','FIN'};
 				for(Agency_Authorization__c aaElem: agencyAuthl){
 
 					if(aaElem.RecordTypeId == formOfPaymentRTId && aaElem.Status__c == 'Active'){
@@ -1887,7 +1888,9 @@ public with sharing class AMS_XML_Generator {
 									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'Yes');
 								}else if(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c == 'GSD' && aaElem.Status__c == 'Non-Active'){
 									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'No');
-								}else if(!changeCodeSet.contains(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c) && aaElem.Status__c == 'Active'){
+								}else if(changeCodeSetNoParticipation.contains(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c)){
+									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'No');
+								}else if(!changeCodeSetParticipation.contains(mAg_VS_AgChangeCode.get(aaElem.Account__c).Change_Code__c) && aaElem.Status__c == 'Active'){
 									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation', 'Yes');
 								}else{
 									getElementNode(nodeAauthorizationsNode, 'gsa_bsp_participation',null);
