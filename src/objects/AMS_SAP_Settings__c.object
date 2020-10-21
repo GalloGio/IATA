@@ -61,6 +61,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Change_Code_Created_Date__c</fullName>
+        <description>Used on the query to define the scope on the class AMS_2_MDM_Schedule</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used on the query to define the scope on the class AMS_2_MDM_Schedule
+Example: LAST_N_DAYS:90</inlineHelpText>
+        <label>Change Code Created Date</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Copy_Right_Message__c</fullName>
         <description>Copy Right Message</description>
         <externalId>false</externalId>
