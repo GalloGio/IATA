@@ -91,7 +91,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 				if (String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IsEmailBounced && String.isNotBlank(c.Contact__r.Email) && !c.Contact__r.Email.endsWithIgnoreCase('.inactive')) {
 					Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 					email.setTargetObjectId(c.Contact__r.Id);
-					email.setToAddresses(new List<String>{c.Contact__r.Email});
+					email.setToAddresses(new List<String>{c.Contact__r.IDcard_Email__c});
 					email.setWhatId(idCardApplication.Id);
 					email.setTreatTargetObjectAsRecipient(false);
 					email.setTemplateId(et.Id);
