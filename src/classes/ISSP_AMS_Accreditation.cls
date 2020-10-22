@@ -6728,6 +6728,9 @@ public without sharing class ISSP_AMS_Accreditation {
 	private boolean validateForm(boolean includeErrorMsgs) {
 		Boolean errorFound = false;
 
+		if (getIsPostalOperator()) {
+			return validatePostalOperatorForm();
+		}
 
 		Integer cntAuthorisedSig = [SELECT COUNT()
 									FROM AMS_Accreditation_Contact__c
@@ -7797,6 +7800,57 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 		} //EO Local Agency details e.g. for China, validation
 
+		return !errorFound;
+	}
+
+	/**
+	 * Validate input fields in step 2 only for postal operator (getIportalOperator() = true)
+	 */
+	private boolean validatePostalOperatorForm() {
+		Boolean errorFound = false;
+
+		if (!newform.Confirm_Legal_Details_are_correct__c && !newForm.Notify_Change_Legal_Details__c) {
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message1_company));
+			errorFound = true;
+		}
+		if (!newform.Confirm_Location_Details_are_correct__c && !newForm.Notify_Change_Location__c) {
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message2_company));
+			errorFound = true;
+		}
+		if (!newform.Confirm_Ownership_Details_are_correct__c && !newForm.Notify_Change_Ownership__c) {
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_message3_company));
+			errorFound = true;
+		}
+		if (newForm.Notify_Change_Legal_Details__c) {
+			if (accountConcerned.Name==null) {
+				accountConcerned.Name.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+		}
+		if (newForm.Notify_Change_Location__c) {
+			if (newForm.branch_office_street_name_number__c==null) {
+				newForm.branch_office_street_name_number__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if (newForm.branch_office_city__c==null) {
+				newForm.branch_office_city__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if (newForm.Branch_Office_Email__c==null) {
+				newForm.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+			if (newForm.Branch_Office_Phone_National__c==null) {
+				newForm.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+		}
+		if (newForm.Notify_Change_Ownership__c) {
+			if (newForm.ISSP_AMS_Paidup_capital__c==null && newForm.ISSP_AMS_Legal_Status__c == 'Corporation') {
+				newForm.ISSP_AMS_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
+		}
 		return !errorFound;
 	}
 
