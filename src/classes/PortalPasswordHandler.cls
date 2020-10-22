@@ -94,7 +94,7 @@ public without sharing class PortalPasswordHandler {
 
 	public static Map<String, String> forgotPasswordEmailMap(User user, String link){
 		//get contact information
-		Contact contactInfo = [SELECT Id,Email, firstName FROM Contact WHERE ID = :user.contactid limit 1];
+		Contact contactInfo = [SELECT Id,Email, firstName,Preferred_Language__c FROM Contact WHERE ID = :user.contactid limit 1];
 
 		String headerImageName = Label.CSP_Email_Header_Image;
 		String footerImageName = Label.CSP_Email_Footer_Image;
@@ -102,15 +102,18 @@ public without sharing class PortalPasswordHandler {
 
 		String headerImageUrl;
 		String footerImageUrl;
-		
+		String docLangName=buttonImageName+' '+contactInfo.Preferred_Language__c;
+
 		Map<String,Id> docNameIdMap = new Map<String,Id>();
-		for(Document doc : [Select id, name From Document Where name in (:headerImageName,:footerImageName,:buttonImageName)]){
+		for(Document doc : [Select id, name From Document Where name in (:headerImageName,:footerImageName,:docLangName,:buttonImageName)]){
 			docNameIdMap.put(doc.name,doc.id);
 		}
+		String docKey =docNameIdMap.containsKey((buttonImageName+' '+contactInfo.Preferred_Language__c))?(buttonImageName+' '+contactInfo.Preferred_Language__c):buttonImageName;
+
 		
 		if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
 		if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
-		String buttonImageUrl=URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(buttonImageName)+'&oid='+userinfo.getorganizationid();
+		String buttonImageUrl=URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(docKey)+'&oid='+userinfo.getorganizationid();
 
 		Map<String, String> mapBodyParams = new map<String, String>{
 				'{!HeaderUrl}'                                   => headerImageUrl,
