@@ -18,10 +18,15 @@ Constant Class
 	public static Map<String,String> customSetingMap;
 	static{
 		customSetingMap = new Map<String,String>();
-		for(ISSP_CS__c cs : ISSP_CS__c.getall().values()){
-			customSetingMap.put(cs.Name.trim(),cs.Value__c);
+		if(!Test.isRunningTest()){ //PRB41889 avoid regression testing 
+			for(ISSP_CS__c cs : ISSP_CS__c.getall().values()){
+				customSetingMap.put(cs.Name.trim(),cs.Value__c);
+			}
+		}else{
+			for(ISSP_CS__c cs : [select Name,value__c from ISSP_CS__c]){
+				customSetingMap.put(cs.Name.trim(),cs.Value__c);
+			}
 		}
-
 	}
 
 	//Static Map Profile name,ID
