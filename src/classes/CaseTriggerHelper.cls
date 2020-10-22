@@ -28,6 +28,14 @@ public with sharing class CaseTriggerHelper {
 	};
 	private static Map<Id, RecordType> portalPendingClosureRecordTypes;
 
+	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
+		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+			System.enqueueJob(new PlatformEvents_Helper(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete));
+		} else {
+			PlatformEvents_Helper.publishEvents(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete);
+		}
+	}
+
 	public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
 			if(isDone) return;
 			Map<String, Map<String, ISSP_KPI_Reporting__mdt>> configsMap = new Map<String, Map<String, ISSP_KPI_Reporting__mdt>>();
@@ -96,6 +104,8 @@ public with sharing class CaseTriggerHelper {
 			// filter out the cases that need to be treated
 			for(Case c: newList) {
 				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
+				//Exclude All TIDS Cases from KPI processing
+				if (cRTDevName=='TIDS'){ continue;}
 
 				if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
 					closure_fromStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
