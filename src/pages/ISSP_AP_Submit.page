@@ -39,7 +39,7 @@
             isPassAirline="{!isPassAirline}"
             managePASS="{!managePASS}"
             strAreaType="{!strAreaType}"
-            strChangeType="{!strChangeType}" />
+            strChangeType="{!strChangeType}" rendered="{! NOT(newCase.Verification__c=='PASS' && newCase.Reason1__c=='PASS Country Aggregator')}"/>
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
@@ -57,7 +57,7 @@
             </style>
             <apex:pageBlockButtons location="bottom">
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus" />
-                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" rendered="{! NOT(isPassAirline && managePASS)}"/>
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" rendered="{! NOT(newCase.Verification__c=='PASS' && newCase.Reason1__c=='PASS Country Aggregator')}"/>
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
             </apex:pageBlockButtons>
             
@@ -66,7 +66,7 @@
             <!-- BASP/CASS Submit section -->
             <apex:outputPanel rendered="{!OR(isBSP,isCASS,isPassAirline,managePASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
-                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false" rendered="{! NOT(isPassAirline && managePASS)}">
+                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false" rendered="{! NOT(newCase.Verification__c=='PASS' && newCase.Reason1__c=='PASS Country Aggregator')}">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,$Label.ISSP_AP_PASS_FieldsFilled,'You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Settlement instructions & Bank Accounts information" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions') && !isPassAirline}" collapsible="false">
@@ -91,6 +91,8 @@
                         <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}">
                             As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order activate your Participation please complete the package in the link below, once validated by us, you will be requested to send the originals to our office.<br/>
                         </apex:outputPanel>
+                        <apex:iframe scrolling="false" height="180px" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
                         <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size>0}">
                             <p>
                                 Kindly note the bank mandate must be issued from your Company's Head Office and signed by two (2) officers that are authorized as per your company's IATA FDS Authorized Signatories Package (ASP).
@@ -113,6 +115,9 @@
                                 <li><a href="{!URLFOR($Resource.PASS_Airline_Joining_Checklist)}" target="_blank">{!$Label.ISSP_PASS_Airline_Checklist}</a></li>
                                 <li><a href="{!URLFOR($Resource.PASS_Participation_Aggrement)}" target="_blank">{!$Label.ISSP_PASS_Participation_Agreement}</a></li>
                                 <li><a href="{!URLFOR($Resource.PASS_TermsOfUse)}" target="_blank">{!$Label.ISSP_PASS_Terms_Use}</a></li>
+                                <li style="{!IF(isGSSAUser && !isSISActive, '', 'display: none')}">
+                                    <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_blank" download="SIS_Membership_Application_Form.pdf">{!$Label.ISSP_SIS_Membership_Download_PDF}</a>
+                                </li>
                             </ul>
                         </div>
                         
@@ -181,7 +186,7 @@
 
                         <apex:outputPanel layout="block" rendered="{!showUploadPASSAuthorizationForm}">
                             <apex:iframe scrolling="false" height="180px"
-                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=16&reqRequired=Mandatory&reqName=PASS Authotization Form&reqDescription={!$Label.ISSP_AP_Authorization_Form_Description}&reqIdentifier=PASSAuthorizationForm"/>
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=16&reqRequired=Mandatory&reqName=PASS Authorization Form&reqDescription={!$Label.ISSP_AP_Authorization_Form_Description}&reqIdentifier=PASSAuthorizationForm"/>
                         </apex:outputPanel>
 
                         <apex:repeat value="{!wrapperPassCountries}" var="passCountry" >
@@ -416,13 +421,6 @@
                             <p>
                                 I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
                             </p>
-                        </apex:outputPanel>
-
-                        <apex:outputPanel layout="block" rendered="{! isPassAirline && isGSSAUser && !isSISActive}">
-                            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                            <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_new" class="link-highlighted">
-                                {!$Label.ISSP_SIS_Membership_Download_PDF}
-                            </a>
                         </apex:outputPanel>
 
                         <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">

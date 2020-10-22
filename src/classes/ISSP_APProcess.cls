@@ -342,11 +342,6 @@ global without sharing class ISSP_APProcess {
 			isPassAirline=false;
 			passParam='';
 		}
-		if(managePASS){
-			newForm.Airline_wish_to_join_ICCS__c = 'No';
-			isPassAirline=true;
-			strOperationType=AMS_Utils.passParticipation;
-		}
 		credentialName='GenericAttach';
 		OTHERS= 'OTHERS';
 
@@ -1301,8 +1296,12 @@ global without sharing class ISSP_APProcess {
 			dupeDraft = [
 				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
 				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
-				AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Joining'];
+				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
+				AND Case.RecordTypeId=:RECORD_TYPE_ID
+				AND Case.Account_Concerned__c = :vAccountConcerned
+				AND Case.Verification__c = : joiningType
+				AND Case.CaseArea__c = 'Airline Joining'
+				AND Case.Case_Group__c!='Recycle Bin'];
 		}
 
 		if(dupeDraft.size()>0) {
@@ -1314,14 +1313,24 @@ global without sharing class ISSP_APProcess {
 				dupeDraft = [
 				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
 				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
-				AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Change' AND Case.Reason1__c = 'Minor database changes'];
+				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
+				AND Case.RecordTypeId=:RECORD_TYPE_ID
+				AND Case.Account_Concerned__c = :vAccountConcerned
+				AND Case.Verification__c = : joiningType
+				AND Case.CaseArea__c = 'Airline Change'
+				AND Case.Reason1__c = 'Minor database changes'
+				AND Case.Case_Group__c!='Recycle Bin'];
 			} else {
 				dupeDraft = [
 				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
 				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
-				AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Change' AND Case.Reason1__c = 'Bank Account Instructions'];
+				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
+				AND Case.RecordTypeId=:RECORD_TYPE_ID
+				AND Case.Account_Concerned__c = :vAccountConcerned
+				AND Case.Verification__c = : joiningType
+				AND Case.CaseArea__c = 'Airline Change'
+				AND Case.Reason1__c = 'Bank Account Instructions'
+				AND Case.Case_Group__c!='Recycle Bin'];
 			}
 
 			 if(dupeDraft.size()>0) {
@@ -1378,7 +1387,10 @@ global without sharing class ISSP_APProcess {
 			newCase.IFAP_Country_ISO__c='WW';
 			newCase.Type= 'ICH Membership';
 		}
-		
+		if(managePASS && strOperationType==AMS_Utils.passParticipation){
+			newForm.Airline_wish_to_join_ICCS__c = 'No';
+			isPassAirline=true;
+		}
 		if( !(isPassAirline  && strAreaType=='Airline Joining' && selectedPASSCountries.size() > 1) ){
 			apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
 		}
@@ -1710,7 +1722,7 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Pagereference goToStep3(){
-		if(managePASS){
+		if(managePASS && isPassAirline){
 			return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 		}else{
 			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
@@ -1834,7 +1846,7 @@ global without sharing class ISSP_APProcess {
 				copyAttachmentsToChildCases(vCaseId,childCaseIdIsoCodeMap);
 
 			}
-			if(isPassAirline && !newForm.Accept_terms_and_conditions__c) {
+			if(!newForm.Accept_terms_and_conditions__c) {
 				newForm.addError('Please Accept our Terms and Conditions.');
 				return null;
 			}
@@ -1932,6 +1944,9 @@ global without sharing class ISSP_APProcess {
 			if (getShowICCSJoinMarket()) {
 				//check ICCS_Join_market
 				listMandatoryFiles.add('ICCS_Join_market');
+			}
+			if (getShowUploadBankMandate() && !isGSSAUser && getAuthorizedSignatories().isEmpty()) {
+				listMandatoryFiles.add('ASP');
 			}
 			if (getShowUploadBankMandate()) {
 				//check Bank_Mandate
@@ -2160,9 +2175,7 @@ global without sharing class ISSP_APProcess {
 		if(category <> 'IBCS consolidator'){
 			setTypes.add('CASS Export');
 			setTypes.add('CASS Import');
-			if(strAreaType == 'Airline Joining' || APprocess == 'bnk'){
-				setTypes.add(AMS_Utils.passParticipation);
-			}
+			setTypes.add(AMS_Utils.passParticipation);
 		}
 
 		if (!getICHSubtypes().isEmpty()) {
@@ -2280,6 +2293,7 @@ global without sharing class ISSP_APProcess {
 	// list option for the input box Type_of_Settlement__c
 	public List<SelectOption> getListTypesOfSettlement() {
 		List<SelectOption> listOption = new List<SelectOption>();
+		listOption.add(new SelectOption('','-- Select an option --'));
 		for( Schema.PicklistEntry pickListVal : AP_Process_Form__c.Type_of_Settlement__c.getDescribe().getPicklistValues()){
 			if (this.ICCSProductCountry!=null || pickListVal.getValue()=='Local Bank') {
 				listOption.add(new SelectOption(pickListVal.getValue(), pickListVal.getLabel()));
@@ -3117,7 +3131,7 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show Upload ASP (Authorized Signatories Package)
 	**/
 	public Boolean getShowUploadASPForPASS() {
-		return this.isPassAirline && getAuthorizedSignatories().isEmpty() && !isGSSAUser;
+		return this.isPASS && getAuthorizedSignatories().isEmpty() && !isGSSAUser;
 	}
 
 	/**
