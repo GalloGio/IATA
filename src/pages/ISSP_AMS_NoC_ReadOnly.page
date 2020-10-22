@@ -426,7 +426,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel ><!-- LHS --></apex:outputPanel>
-                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c)}">
+                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c, NOT(IsPostalOperator))}">
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" />
@@ -437,8 +437,8 @@
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>                             
                   </apex:panelGrid>
 
-                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</apex:outputPanel>
-                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)" rendered="{!!IsPostalOperator}">{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</apex:outputPanel>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2" rendered="{!!IsPostalOperator}">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent_Code}"/>
                     <apex:outputfield value="{!newForm.IATA_Cargo_Code__c}" />
                   </apex:panelGrid>
@@ -474,7 +474,7 @@
                         </apex:dataTable>
                 </apex:outputPanel>
                 
-                <apex:outputPanel style="display:{!IF(newform.Notify_Change_Ownership__c,'','none')}"  rendered="{!newForm.Notify_Change_Ownership__c}">
+                <apex:outputPanel style="display:{!IF(newform.Notify_Change_Ownership__c,'','none')}"  rendered="{!newForm.Notify_Change_Ownership__c && !IsPostalOperator}">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Updated_Owners_Managers}</apex:outputPanel>
                         <apex:dataTable value="{!List_CurrentOwners}" var="agencycon" width="100%"  cellpadding="3px" columnsWidth="25%,45%,30%">                            
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
@@ -526,7 +526,7 @@
                     <apex:outputPanel layout="block" rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"><!--In case no new companies--></apex:outputPanel>
 
                     <apex:outputPanel ><!-- LHS--></apex:outputPanel>
-                    <apex:outputPanel rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c)}">
+                    <apex:outputPanel rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c, NOT(IsPostalOperator))}">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Other_Owner}</apex:outputPanel>
 
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
