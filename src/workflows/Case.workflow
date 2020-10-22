@@ -160,7 +160,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,B&amp;R_GDC_SIN@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -13437,7 +13437,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
+            <value>Republic of North Macedonia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SIDRA_Lite_Reason__c</field>
