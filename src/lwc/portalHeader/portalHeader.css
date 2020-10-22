@@ -589,9 +589,12 @@
   line-height: 26px;
 }
 
-.loginBtn:hover, .signUpBtn:hover{
+.loginBtn:hover{
   
-  border: 0.5px solid #fac832;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)), #1E32FA;
+}
+.signUpBtn:hover{  
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08)), #FFFFFF;
 }
 
 .grayline{
