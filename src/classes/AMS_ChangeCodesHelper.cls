@@ -160,7 +160,7 @@ public class AMS_ChangeCodesHelper {
 		Account agency = !oscarAgencies.isEmpty() ? oscarAgencies[0] : null;
 
 		Boolean isNewGen = isNewGen(oscar, agency);
-        Boolean isNewChangeCode = changeCodes != null && !changeCodes.isEmpty() && changeCodes[0].name == AMS_Utils.NEW_CHANGE_CODE;
+		Boolean isNewChangeCode = changeCodes != null && !changeCodes.isEmpty() && changeCodes[0].name == AMS_Utils.NEW_CHANGE_CODE;
 		
 		if(isNewChangeCode) System.debug('JR Debugg: changeCodes[0].name ' + changeCodes[0].name);
 		if (isNewGen && !isNewChangeCode) 
