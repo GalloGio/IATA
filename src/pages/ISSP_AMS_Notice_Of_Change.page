@@ -226,7 +226,16 @@
 			if($j(this).prop('checked')) $form.show();
 			else $form.hide();
 		});
+		showCoporateDetails();
 	} 
+
+	function showCoporateDetails() {
+		if ($j('[id	$=UpdatedLegalStatus]').is(":visible") && $j('[id $=UpdatedLegalStatus]').val() == 'Corporation') {
+			$j('[id$=currcorporatedetails]').show();
+		} else {
+			$j('[id$=currcorporatedetails]').hide();
+		}
+	}
 
 	function closeModal() {
 		$j(function() {
@@ -447,14 +456,10 @@
                 $j('[id$=updated-owner-summary]').hide();
             }
             
-			if(theValue=='Corporation')
-				$j('[id$=currcorporatedetails]').show();
-			else
-				$j('[id$=currcorporatedetails]').hide();
 		} else {
             $j('[id$=addCompany]').hide();
 		}	
-		
+		showCoporateDetails();
         setHeaderLabelsAfterChange(theValue.toLowerCase());
 	}
 
@@ -1226,7 +1231,7 @@
                     
                     <apex:outputPanel style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}"></apex:outputPanel>
                     
-                    <apex:outputPanel id="currcorporatedetails" layout="block" style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}" styleClass="agencyOwnershipComponent">
+                    <apex:outputPanel id="currcorporatedetails" layout="block" style="display:'none'" styleClass="agencyOwnershipComponent">
 	                    
 						<apex:pageBlockSection columns="1">
 							<apex:pageblocksectionitem >
@@ -2226,12 +2231,6 @@
 	<c:ISSP_CustomFooter communityName="{!communityName}"/>
 	
 	<script>
-		//NEWGEN-1885
-		$j ( document ).ready(function() {
-			$j('[id$=UpdatedLegalStatus]').val() !== 'Corporation' && $j('[id$=currcorporatedetails]').hide();
-		});
-		//END - NEWGEN-1885
-		
 		//NoC Changes
 		var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
 				lScopeOfChange = '{!newForm.Scope_of_Change__c}',
