@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>SIDRA Lite</label>
+            <name>SIDRA_Lite</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Key Accounts</label>
+                <name>Key_Accounts</name>
+            </dataCategory>
+            <dataCategory>
+                <label>ISO Country</label>
+                <name>ISO_Country</name>
+            </dataCategory>
+            <label>Accounts</label>
+            <name>Accounts</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Contacts</label>
+            <name>Contacts</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Automatic Case Assignment</label>
+                <name>Automatic_Case_Assignment</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Internal Cases</label>
+                <name>Internal_Cases</name>
+            </dataCategory>
+            <label>Case Management</label>
+            <name>Case_Management</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Customer Portal</label>
+            <name>Customer_Portal</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Queries</label>
+                <name>Queries</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Log a phone call</label>
+                <name>Phone_loggin</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Customer Service Satisfaction</label>
+                <name>Customer_Service_Satisfaction</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Customer Recovery Process</label>
+                <name>Customer_Recovery_Process</name>
+            </dataCategory>
+            <label>Customer Service</label>
+            <name>Customer_Service</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Dashboard/ Report</label>
+            <name>Dashboard_Report</name>
+        </dataCategory>
+        <dataCategory>
+            <label>DPC Management</label>
+            <name>DPC_Management</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Instant Surveys</label>
+            <name>Instant_Surveys</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Invoicing and collection</label>
+            <name>Invoicing_and_collection</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Reporting and KPIs</label>
+            <name>KPIs</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Manuals</label>
+            <name>Manuals</name>
+        </dataCategory>
+        <dataCategory>
+            <label>SAAM</label>
+            <name>SAAM</name>
+        </dataCategory>
+        <dataCategory>
+            <label>SARA</label>
+            <name>SARA</name>
+        </dataCategory>
+        <dataCategory>
+            <label>SEDA</label>
+            <name>SEDA</name>
+        </dataCategory>
+        <dataCategory>
+            <label>SIDRA</label>
+            <name>SIDRA</name>
+        </dataCategory>
+        <dataCategory>
+            <label>sMAP</label>
+            <name>sMAP</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Login</label>
+                <name>Login</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Personal Setting</label>
+                <name>Personal_Setting</name>
+            </dataCategory>
+            <label>SF General Information</label>
+            <name>SF_General_Information</name>
+        </dataCategory>
+        <dataCategory>
+            <label>User Management</label>
+            <name>User_Management</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Category for articles applicable to internal users ONLY</description>
+    <label>Internal FAQ</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>
