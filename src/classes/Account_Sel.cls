@@ -55,7 +55,7 @@ public without sharing class Account_Sel extends Selector {
 			', Parent.Name, Parent.SoldTo_Location__c, Parent.Default_Payment_Type__c, Parent.SoldTo_Location__r.SAP_Id__c, SoldTo_Location__r.SAP_Id__c ' +
 			'FROM {1} ' +
 			'WHERE Id = :accountId ' +
-			'FOR UPDATE' ,
+			'FOR UPDATE ' ,
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
