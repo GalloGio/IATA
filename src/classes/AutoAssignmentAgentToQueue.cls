@@ -67,7 +67,7 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 			// limited by case status, record type and case area
 			casesToReturn = [SELECT Id FROM Case
 							 WHERE status in ('Open', 'Action Needed', 'Reopen', 'In progress')
-							 AND RecordTypeId IN :recordTypes
+							 AND (RecordTypeId IN :recordTypes OR owner.userrole.developername IN :setBPORoles) //reassign cases belonging to BPO Role, which do not use above recordtypes
 							 AND OwnerId in :agentsToUsers
 							];
 		} catch (Exception ex)   {
@@ -77,14 +77,23 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 		return casesToReturn;
 	}
 
+	private static set<string> setBPORoles = new set<string>{'BU_WH_CS_Team_Leader', 'BU_WH_CS_Staff', 'KL_WH_CS_Staff', 'KL_WH_CS_Team_Leader'};
+
 	public static void assignCaseBackToQueue(string idCase) {
 		try {
 
 			System.debug('+++ starting assigning back...');
-			Case currentCase = [SELECT Id, CaseArea__c, Topic__c FROM Case WHERE Id=:idCase];
+			Case currentCase = [SELECT Id, CaseArea__c, Topic__c, owner.userrole.developername FROM Case WHERE Id=:idCase];
 			GCS_Product_to_Queue_Assignment__mdt[] areaToQueue;
 			System.debug('+++ case Id: '+currentCase.Id);
-			if(currentCase.CaseArea__c != null) {
+			//when case is assigned to a BPO User, reassign it using standard assignment rules
+			if(string.isNotEmpty(currentCase.owner.userrole.developername) && setBPORoles.contains(currentCase.owner.userrole.developername)){
+				Database.DMLOptions dmo = new Database.DMLOptions();
+				dmo.assignmentRuleHeader.useDefaultRule = true;
+				currentCase.setOptions(dmo);
+				update currentCase;
+			}
+			else if(currentCase.CaseArea__c != null) {
 				System.debug('Case Area on case found: '+ currentCase.CaseArea__c);
 				areaToQueue= [SELECT Queue_API_Name__c FROM GCS_Product_to_Queue_Assignment__mdt
 							  WHERE GCS_Product_Topic__c=:currentCase.CaseArea__c LIMIT 1];
