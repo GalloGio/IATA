@@ -3117,6 +3117,14 @@ BSPlink is an innovative, internet-based system, which facilitates these interac
         <value>You can choose this change code with Agency of location class G and category GSA only!</value>
     </labels>
     <labels>
+        <fullName>BSPParticipationPopupAlertActiveGSAOnly</fullName>
+        <categories>Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Popup Alert Active GSA Only</shortDescription>
+        <value>You can choose this change code on active GSA only</value>
+    </labels>
+    <labels>
         <fullName>BSPParticipationPopupTitle</fullName>
         <language>en_US</language>
         <protected>false</protected>

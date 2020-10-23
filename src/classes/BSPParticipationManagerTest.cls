@@ -138,4 +138,15 @@ private class BSPParticipationManagerTest {
 		BSPParticipationManager.enableBSPParticipationAura(acc.id);
 		Test.stopTest();
 	}
+
+	@isTest
+	static void isValidAgencyAppliedChangeCodeTest() {
+		Account acc = [SELECT id,Status__c FROM Account LIMIT 1];
+
+		Test.startTest();
+		try {
+			BSPParticipationManager.isValidAgencyAppliedChangeCode(acc.id);
+		} catch (BSPParticipationManager.BSPException e) {}
+		Test.stopTest();
+	}
 }

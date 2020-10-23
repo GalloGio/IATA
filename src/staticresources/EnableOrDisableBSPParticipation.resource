@@ -21,6 +21,9 @@ function displayKeyCustomerAlert(popupTitle, disableText, enableText, userText, 
 			jQuery('body').append(html);
 		}
 
+		// validate account, if not valid it will throw an exception with a message
+		sforce.apex.execute("BSPParticipationManager","isValidAgencyAppliedChangeCode",{accountID:mYAccountID})
+
 		var userPermission = sforce.apex.execute("BSPParticipationManager","checkUserPermissionsBSPParticipation",{accountID:mYAccountID});
 		if(userPermission[0] == 'true'){	
 			var enableOrDisable = sforce.apex.execute("BSPParticipationManager","checkEnableOrDisableBSPParticipation",{accountID:mYAccountID});

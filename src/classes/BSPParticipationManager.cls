@@ -1,5 +1,7 @@
 global with sharing class BSPParticipationManager {
 	
+	public class BSPException extends Exception {}
+
 	webservice static Agency_Applied_Change_code__c disableBSPParticipation(String accountID) {
 		// Disable BSP participation - Create Agencies Applied Change code GSD (to stop GSA participation in BSP);
 		// Take bulletin text from ams_change_code__c where change_code__c='GSD'
@@ -76,6 +78,25 @@ global with sharing class BSPParticipationManager {
 		} else {
 			return true;
 		}
+	}
+
+	/**
+	 * validate account for the button "GSA BSP Participation" in the account layout
+	 */
+	webservice static Boolean isValidAgencyAppliedChangeCode(String accountID) {
+		Account acc = [
+			SELECT Id, Location_Class__c, Category__c, RecordType.DeveloperName, Status__c
+			FROM Account
+			WHERE ID = :accountID];
+
+		if (acc.RecordType.DeveloperName != 'IATA_Agency' || acc.Location_Class__c != 'G' || acc.Category__c != 'GSA General Sales Agent') {
+			throw new BSPException(Label.BSPParticipationPopupAlert);
+		}
+		String iataStatus = AMS_Utils.getIATANumericStatus(acc.Status__c);
+		if (iataStatus==null || Integer.ValueOf(iataStatus) < 4) {
+			throw new BSPException(Label.BSPParticipationPopupAlertActiveGSAOnly);
+		}
+		return true;
 	}
 	
 	@AuraEnabled
