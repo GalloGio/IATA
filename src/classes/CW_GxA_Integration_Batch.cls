@@ -123,7 +123,7 @@ global class CW_GxA_Integration_Batch implements Database.Batchable<sObject>, Da
 			currentScope.GxA_Error_StackTrace__c = e.getStackTraceString();
 		} finally {
 			Integer answersNotMappedMaxLength = SObjectType.ICG_Capability_Assignment_Group__c.Fields.GxA_Answers_Not_Mapped_Json__c.Length;
-			String answersNotMapped = JSON.serialize((List<CW_GxA_Wrappers.SurveyAnswers>) dataFromQuestions.get('answersNotMapped'));
+			String answersNotMapped = JSON.serialize((List<Object>) dataFromQuestions.get('answersNotMapped'));
 			if (answersNotMapped.length() > answersNotMappedMaxLength){
 				answersNotMapped = answersNotMapped.substring(0, answersNotMappedMaxLength);
 			}

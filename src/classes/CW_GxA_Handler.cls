@@ -6,12 +6,12 @@ global without sharing class CW_GxA_Handler {
 	public static Map<String, Object> convertAnswersJsonToData(List<String> answerFilesContent) {
 		ICG_Account_Role_Detail__c stationConverted = new ICG_Account_Role_Detail__c();
 		Map<String, List<Account_Role_Detail_Capability__c>> capabilitiesConverted = new Map<String, List<Account_Role_Detail_Capability__c>>();
-		List<CW_GxA_Wrappers.SurveyAnswers> answersNotMapped = new List<CW_GxA_Wrappers.SurveyAnswers>();
+		List<Object> answersNotMapped = new List<Object>();
 
 		Map<String, Object> convertedData = new Map<String, Object>{ 'ICG_Account_Role_Detail__c' => stationConverted, 'Account_Role_Detail_Capability__c' => capabilitiesConverted, 'answersNotMapped' => answersNotMapped };
 
 		Map<String, ICG_GxA_Integration_Mapping__c> integrationMapping = getIntegrationMapping();
-		Map<String, Boolean> picturesVisibility = new Map<String, Boolean>();
+		Map<String, Boolean> picturesVisibility;
 
 		// Generate Map that contains Category by Equipment and Recordtype by category(removing duplicated categories)
 		Map<String, String> categoriesByEquipment = getCategoriesByEquipment();
@@ -23,23 +23,40 @@ global without sharing class CW_GxA_Handler {
 		// Get all answers
 		for (String answerFileContent : answerFilesContent) {
 			CW_GxA_Wrappers.Survey currentItem = CW_GxA_Wrappers.parseSurvey(answerFileContent);
+			picturesVisibility = new Map<String, Boolean>();
 			List<CW_GxA_Wrappers.SurveyAnswers> answers = new List<CW_GxA_Wrappers.SurveyAnswers>();
 			// First loop required to get: correct mappings, visibility pictures, ...
 			for (CW_GxA_Wrappers.SurveyAnswers currentAnswer : currentItem.SurveyAnswers) {
 				ICG_GxA_Integration_Mapping__c mapFound = integrationMapping.get(currentAnswer.QuestionID);
-				if (mapFound == null) {
+				if (mapFound == null || (mapFound.SF_Process_Question__c.toLowerCase() == 'yes' && mapFound.SF_Is_Mapping_Ok__c == false)) {
 					answersNotMapped.add(currentAnswer);
-				} else if (mapFound.SF_Is_Mapping_Ok__c) {
-					if (mapFound.SF_Specific_Processing__c == 'Fileupload.Json.Visible' && integrationMapping.containsKey(mapFound.GxA_Question_Parent_Id__c)) {
+				} else if (mapFound.SF_Specific_Processing__c == 'Fileupload.Json.Visible') {
+					if (integrationMapping.containsKey(mapFound.GxA_Question_Parent_Id__c)) {
 						picturesVisibility.put(mapFound.GxA_Question_Parent_Id__c, ('yes' == currentAnswer.Response.toLowerCase()));
-					} else if (mapFound.SF_Specific_Processing__c == 'Fileupload.Json.Visible') {
-						picturesVisibility.put(mapFound.SF_Equipment__c, ('yes' == currentAnswer.Response.toLowerCase()));
 					} else {
-						answers.add(currentAnswer);
+						picturesVisibility.put(mapFound.SF_Equipment__c, ('yes' == currentAnswer.Response.toLowerCase()));
+					}
+				} else {
+					answers.add(currentAnswer);
+				}
+
+				if (currentAnswer.SubSurvey.size() > 0) {
+					// Loop SubSurvey
+					for (CW_GxA_Wrappers.SubSurvey currentSubSurvey : currentAnswer.SubSurvey) {
+						ICG_GxA_Integration_Mapping__c subSurveyMapFound = integrationMapping.get(currentSubSurvey.QuestionID);
+
+						if (subSurveyMapFound == null || (mapFound.SF_Process_Question__c.toLowerCase() == 'yes' && subSurveyMapFound.SF_Is_Mapping_Ok__c == false)) {
+							answersNotMapped.add(currentSubSurvey);
+						} else if (subSurveyMapFound.SF_Specific_Processing__c == 'Fileupload.Json.Visible') {
+							if (integrationMapping.containsKey(subSurveyMapFound.GxA_Question_Parent_Id__c)) {
+								picturesVisibility.put(currentSubSurvey.SubSurveySessionId + '_' + subSurveyMapFound.GxA_Question_Parent_Id__c, ('yes' == currentSubSurvey.Response.toLowerCase()));
+							} else {
+								picturesVisibility.put(subSurveyMapFound.SF_Equipment__c, ('yes' == currentSubSurvey.Response.toLowerCase()));
+							}
+						}
 					}
 				}
 			}
-
 			for (CW_GxA_Wrappers.SurveyAnswers currentAnswer : answers) {
 				if (integrationMapping.containsKey(currentAnswer.QuestionID) && integrationMapping.get(currentAnswer.QuestionID).SF_Process_Question__c.toLowerCase() == 'yes') {
 					ICG_GxA_Integration_Mapping__c surveyMapping = integrationMapping.get(currentAnswer.QuestionID);
@@ -84,7 +101,7 @@ global without sharing class CW_GxA_Handler {
 											subSurveysMap.get(currentSubSurvey.SubSurveySessionId).put(subSurveyMapping.SF_Target_Field__c, convertAnswerResponse(objectsFieldsDescribe, subSurveyMapping.SF_Target_Object__c, subSurveyMapping.SF_Target_Field__c, currentSubSurvey.Response));
 										} else {
 											if (subSurveyMapping.SF_Specific_Processing__c == 'Fileupload.Json.Url') {
-												currentSubSurvey.Response = String.valueOf(getDefaultPictureVisibility(picturesVisibility, currentSubSurvey.QuestionID, surveyMapping.SF_Equipment__c)) + ':' + currentSubSurvey.Response;
+												currentSubSurvey.Response = String.valueOf(getDefaultPictureVisibility(picturesVisibility, currentSubSurvey.SubSurveySessionId + '_' + currentSubSurvey.QuestionID, surveyMapping.SF_Equipment__c)) + ':' + currentSubSurvey.Response;
 											}
 											specificProcessing(subSurveysMap.get(currentSubSurvey.SubSurveySessionId), currentSubSurvey.Response, subSurveyMapping, objectsFieldsDescribe);
 										}
