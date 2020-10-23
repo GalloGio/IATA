@@ -51212,9 +51212,9 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     <labels>
         <fullName>pkb2_lang_tr</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Turkish</shortDescription>
-        <value>Türk</value>
+        <value>Türkçe</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ur</fullName>
