@@ -151,6 +151,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CNS_Agency__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Area_of_Operation__c</field>
             <table>Account</table>
         </columns>

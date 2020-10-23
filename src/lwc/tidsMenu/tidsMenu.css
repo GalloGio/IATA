@@ -1,0 +1,17 @@
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+}
+
+.menu-container {
+  background-color: violet;
+}
+
+.temp {
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.selected {
+  background-color: #FFF;
+}

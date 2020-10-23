@@ -26,4 +26,18 @@
             <value>True</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingGuestRules>
+        <fullName>IDCard_Share_guest_permissions_for_ISO_Country</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>IDCard Share guest permissions for ISO Country</description>
+        <label>IDCard Share guest permissions for ISO Country</label>
+        <sharedTo>
+            <guestUser>IATA_IDCard</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+    </sharingGuestRules>
 </SharingRules>

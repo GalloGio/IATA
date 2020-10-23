@@ -25,6 +25,10 @@
         <literalValue>Internal Case</literalValue>
     </fieldOverrides>
     <fieldOverrides>
+        <field>Priority</field>
+        <formula>TEXT(Case.Priority)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Reason1__c</field>
         <formula>IF(Case.RecordType.Name = &apos;Cases - Global&apos;, TEXT(Case.Reason1__c), &apos;&apos;)</formula>
     </fieldOverrides>

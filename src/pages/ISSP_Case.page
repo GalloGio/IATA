@@ -775,7 +775,8 @@
                                             <apex:outputPanel >
                                             <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_AMS_Form_CNS, $Label.ISSP_AMS_Form)}" for="amsFormLink" rendered="{!OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management')}"/>
 
-                                            <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZH76&oid=00D2000000008TF" width="40" height="35" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management'))}"/>
+                                            <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZH76&oid=00D2000000008TF" width="40" height="35" rendered="{!AND(NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='FoP Management')),IF(communityName=='CNS', false, true))}"/>
+                                            <apex:image value="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF&lastMod=1486482381000" width="40" height="35" rendered="{!IF(communityName=='CNS', true, false)}"/>
                                             </apex:outputPanel>
                                             <apex:outputText >
                                             <apex:outputLink value="{!IF(isCNSAgency, '/ISSP_AMS_Accreditation?caseId='+newCase.Id+'&step=2&CommunityName=CNS', '/ISSP_AMS_Accreditation?caseId='+newCase.Id+'&step=2')}" rendered="{!BEGINS(newCase.Reason1__c, 'New')}" id="amsFormLink">{!IF(isCNSAgency, $Label.ISSP_AMS_Click_here_CNS, $Label.ISSP_AMS_Click_here)}</apex:outputLink>
@@ -784,10 +785,10 @@
 
                                             <apex:outputLink value="/ISSP_ANG_VoluntaryRelinquishment?caseId={!newCase.Id}&step=1" rendered="{!newCase.Reason1__c=='CLO - Closure'}">{!$Label.ISSP_ANG_Click_Here_VR}</apex:outputLink>
 
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
 
 
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
                   
