@@ -1,0 +1,113 @@
+<apex:page standardController="Case" lightningStylesheets="true" extensions="TIDSVetting">
+    <apex:form id="formcase">
+        <apex:actionFunction name="doapprove" action="{!approveRequest}"  rerender="formcase"></apex:actionFunction>
+        <apex:actionFunction name="doreject"  action="{!rejectRequest}" rerender="formcase"></apex:actionFunction>
+        <apex:outputText rendered="{!isOpen}">
+            <apex:outputText rendered="{!isVirtualBranchRequest}">
+                <div id="pagewait1" style="display:none;">Process in progress...</div>
+                <div id="pagerequest1">
+                <table border="0"  width="350px">
+                    <tr>
+                        <td cols="2"  width="100%">Request For Virtual Branch Service</td>
+                    </tr>
+                    <tr>
+                        <td width="30%"><apex:commandButton id="AcceptButton1" value="Approve" disabled="{!Case.Status == 'Closed'}" action="{!approveRequest}" rerender="formcase" onclick="return abuttonClicked(this);"/></td>
+                        <td width="70%"><div style="align-text:left"><apex:commandButton id="RejectButton1" value="Reject" disabled="{!Case.Status == 'Closed'}" action="{!rejectRequest}" rerender="formcase" onclick="return rbuttonClicked(this);"/></div></td>
+                    </tr>
+                    <tr>
+                        <td cols="2"  width="100%">{!messageError}</td>
+                    </tr>
+                </table>
+                </div>
+                <script> 
+                function abuttonClicked(myButton) { 
+                    document.getElementById("pagewait1").style.display = "block";
+                    document.getElementById("pagerequest1").style.display = "none";
+                    doapprove(); 
+                    return false; 
+                    } 
+                function rbuttonClicked(myButton) { 
+                    document.getElementById("pagewait1").style.display = "block";
+                    document.getElementById("pagerequest1").style.display = "none"; 
+                    doreject();
+                    return false; 
+                    } 
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!isRelinquishRequest}">
+                <div id="pagewait2" style="display:none;">Process in progress...</div>
+                <div id="pagerequest2">
+                <table border="0"  width="350px">
+                    <tr>
+                        <td cols="2"  width="100%">Request For Relinquishment</td>
+                    </tr>
+                    <tr>
+                        <td width="30%"><apex:commandButton id="AcceptButton2" value="Approve" disabled="{!Case.Status == 'Closed'}" action="{!approveRequest}" rerender="formcase" onclick="return abuttonClicked(this);"/></td>
+                        <td width="70%"><div style="align-text:left"><apex:commandButton id="RejectButton2" value="Reject" disabled="{!Case.Status == 'Closed'}" action="{!rejectRequest}" rerender="formcase" onclick="return rbuttonClicked(this);"/></div></td>
+                    </tr>
+                    <tr>
+                        <td cols="2"  width="100%">{!messageError}</td>
+                    </tr>
+                </table>
+                </div>
+                <script> 
+                function abuttonClicked(myButton) { 
+                    document.getElementById("pagewait2").style.display = "block";
+                    document.getElementById("pagerequest2").style.display = "none";
+                    doapprove(); 
+                    return false; 
+                    } 
+                function rbuttonClicked(myButton) { 
+                    document.getElementById("pagewait2").style.display = "block";
+                    document.getElementById("pagerequest2").style.display = "none"; 
+                    doreject();
+                    return false; 
+                    } 
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!isReinstateRequest}">
+                <div id="pagewait3" style="display:none;">Process in progress...</div>
+                <div id="pagerequest3">
+                <table border="0"  width="350px">
+                    <tr>
+                        <td cols="2"  width="100%">Request For Reinstatement</td>
+                    </tr>
+                    <tr>
+                        <td width="30%"><apex:commandButton id="AcceptButton3" value="Approve" disabled="{!Case.Status == 'Closed'}" action="{!approveRequest}" rerender="formcase" onclick="return abuttonClicked(this);"/></td>
+                        <td width="70%"><div style="align-text:left"><apex:commandButton id="RejectButton3" value="Reject" disabled="{!Case.Status == 'Closed'}" action="{!rejectRequest}" rerender="formcase" onclick="return rbuttonClicked(this);"/></div></td>
+                    </tr>
+                    <tr>
+                        <td cols="2"  width="100%">{!messageError}</td>
+                    </tr>
+                </table>
+                </div>
+                <script> 
+                function abuttonClicked(myButton) { 
+                    document.getElementById("pagewait3").style.display = "block";
+                    document.getElementById("pagerequest3").style.display = "none";
+                    doapprove(); 
+                    return false; 
+                    } 
+                function rbuttonClicked(myButton) { 
+                    document.getElementById("pagewait3").style.display = "block";
+                    document.getElementById("pagerequest3").style.display = "none"; 
+                    doreject();
+                    return false; 
+                    } 
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!isStartVetting}">
+                <apex:commandLink action="/c/tids.app?caseId={!Id}" target="_blank">
+                    <apex:commandButton id="startvettingButton" value="Start vetting" disabled="{!Case.Status != 'Pending Review'}"/>
+                </apex:commandLink>
+            </apex:outputText>
+        </apex:outputText>
+        <apex:outputText rendered="{!!isOpen}">
+            <table border="0"  width="400px">
+                <tr>
+                    <td width="100%"><b>{!messageError}</b></td>
+                </tr>
+            </table>
+        </apex:outputText>
+    </apex:form>
+</apex:page>

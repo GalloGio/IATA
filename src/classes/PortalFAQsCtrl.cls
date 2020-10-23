@@ -81,7 +81,7 @@ public with sharing class PortalFAQsCtrl {
 	//language - FAQ Article language
 	//expectionsSet - set of articles that should be excluded from the search- used for when searching articles in english to remove the articles in the local language
 	public static List<FAQ__kav> getArticles(String selectedParams, Integer limitParam,String language,Set<String> expectionsSet) {
-		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c,ArticleTotalViewCount FROM FAQ__kav WHERE PublishStatus=\'Online\'';
+		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c,ArticleTotalViewCount, UrlName, CS_Portal_link__c  FROM FAQ__kav WHERE PublishStatus=\'Online\'';
 		String queryTwo = String.isNotBlank(language) ? ' AND Language = \'' + language + '\'' : '';
 		string queryException = expectionsSet!=null?' AND ArticleNumber NOT IN :expectionsSet ':'';		
 		String queryThree =selectedParams==''?'':' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC ';
@@ -134,11 +134,13 @@ public with sharing class PortalFAQsCtrl {
 		@param datacategories - Categories that the user has access to
 	*/
 	public static CSP_Utils.PagedResult getFAQbyURLName(String urlName,string lang,string datacategories){
+		 //decodes in case urlname contains special chars
+		 urlname = EncodingUtil.urlDecode(urlName, 'UTF-8');
 
 		//Get the articles being referenced
 		set<id> articleIdSet=new set<id>();
-		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language FROM faq__kav WHERE publishstatus =\'Online\' ';
-		String soqlTransl=' AND KnowledgeArticleid=:articleIdSet AND language=:lang';
+		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language, CS_Portal_link__c FROM faq__kav WHERE publishstatus =\'Online\' ';
+		String soqlTransl=' AND language=:lang AND (UrlName=:urlName OR KnowledgeArticleid=:articleIdSet) ';
 		String soqlEng=' AND language=\'en_US\' AND UrlName=:urlName';
 		String soqlDat=' WITH DATA CATEGORY FAQs__c BELOW '+datacategories;
 		
@@ -154,10 +156,9 @@ public with sharing class PortalFAQsCtrl {
 		//Iterate over the translations based on the users language
 		list<faq__kav> translatedArticles=Database.query(soqlGen+soqlTransl);
 		for(faq__kav faq:translatedArticles){
-			if(articleMap.containsKey(faq.KnowledgeArticleid)){ // if version available in the user language, replace for that one
+			// if version available in the user language, replace for that one, or adds it if the url providade was for the translated one
 				articleMap.put(faq.KnowledgeArticleid,faq);
 			}
-		}
 
 		CSP_Utils.PagedResult result= new CSP_Utils.PagedResult();
 		result.records=articleMap.values();
@@ -225,7 +226,7 @@ public with sharing class PortalFAQsCtrl {
 			}
 			 
 			String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c, urlName, CS_Portal_link__c WHERE PublishStatus = \'online\'';
 			
 			
 			
@@ -381,5 +382,25 @@ public with sharing class PortalFAQsCtrl {
 	public static void submitArticleForApproval(String approvalNameOrId, Id recordId, Id userId, String comments) {
 		// Contains generic methods related to Approval Process, which can be used just passing params
 		AMS_OSCAR_ApprovalHelper.submit(approvalNameOrId, recordId, userId, comments);
+	}
+
+	/*
+	* @description Returns the shareable link for the article
+	* @params String articleId
+	* @return
+	*/
+	@AuraEnabled
+	public static string getShareableLink(String articleId) {
+
+		//Retrieve the article parent id, its not possible to have it all in one query
+		Id pkId=[select knowledgeArticleId from FAQ__KAV where id =:articleId].knowledgeArticleId;
+
+		//only the english publish version contains the shareable link
+		 return [
+			SELECT CS_Portal_link__c 
+			FROM faq__kav 
+			WHERE Language ='en_US' 
+			AND PublishStatus ='Online' 
+			AND KnowledgeArticleId =:pkId limit 1].CS_Portal_link__c;
 	}
 }

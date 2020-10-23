@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - VB Service Request Approval Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_VB_Service_Request_Approved_Notification</name>
+    <style>none</style>
+    <subject>Access to the TIDS Virtual Branch Service Granted</subject>
+    <textOnly>TIDS Virtual Branch Service
+Access Granted
+
+Dear {!Contact.Name},
+
+You now have access to the TIDS Virtual Branch Service and may apply for a Virtual Branch under your Head Office {!Account.IATACode__c}.
+
+With a TIDS Virtual Branch, your online business activities can be identified and recognized with a distinct IATA TIDS Numeric Code.
+
+Note that Virtual Branches should not be used to identify physical office locations. For such need, please apply for a regular Branch Office.
+
+To initiate an application for a Virtual Branch, simply access the TIDS Service on the IATA Customer Portal and select &quot;Add a Virtual Branch Office&quot; from your TIDS Head Office Dashboard.
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+You Might Also Need
+
+IATA Travel &amp; Tourism Training
+
+IATA Travel Agent ID Card
+
+IATA Timatic Solutions
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

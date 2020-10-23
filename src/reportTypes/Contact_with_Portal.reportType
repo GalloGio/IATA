@@ -1425,16 +1425,6 @@
             <field>Zuora_Billing_Acount_Id__c</field>
             <table>Contact</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account.Region__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Account.Region_formula__c</field>
-            <table>Contact</table>
-        </columns>
         <masterLabel>Contacts</masterLabel>
     </sections>
     <sections>
@@ -1618,6 +1608,84 @@
             <field>ANG_Portal_Service_Role__c</field>
             <table>Contact.Portal_Application_Rights__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.UserRole</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.Department</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.PPD_Department__c</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.Division</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.PPD_Division__c</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.Customer_type__c</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.PPD_Country__c</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.Country</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.Area__c</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy.Area_PPD__c</field>
+            <table>Contact.Portal_Application_Rights__r</table>
+        </columns>
         <masterLabel>Portal Application Rights</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Category__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Region_formula__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Sector__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Region__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Id</field>
+            <table>Contact</table>
+        </columns>
+        <masterLabel>Account</masterLabel>
     </sections>
 </ReportType>

@@ -394,6 +394,67 @@ Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</descrip
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>TIDS_Reinstatement_Deadline__c</fullName>
+        <description>TIDS Specific - Time period during which Reinstatement is permitted, calculated by formula (Termination Date + 90 days)</description>
+        <externalId>false</externalId>
+        <formula>IF(Class__r.Code__c = &apos;T&apos;,Termination_Date__c + 90,null)</formula>
+        <inlineHelpText>TIDS Specific - Time period during which Reinstatement is permitted, calculated by formula (Termination Date + 90 days)</inlineHelpText>
+        <label>TIDS Reinstatement Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Termination_Date__c</fullName>
+        <description>Termination date of the agency participation - Driven by Process Builder &quot;Update Termination Date - GDP&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Termination date (driven by Process Builder &quot;Update Termination Date - GDP&quot;)</inlineHelpText>
+        <label>Termination Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Termination_Reason__c</fullName>
+        <description>Reason for Termination - Maintained for TIDS Agent through the TIDS Service Portal</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Reason for Termination - Maintained for TIDS Agent through the TIDS Service Portal</inlineHelpText>
+        <label>Reason For Termination (TIDS)</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Termination by IATA</fullName>
+                    <default>false</default>
+                    <label>Termination by IATA</label>
+                </value>
+                <value>
+                    <fullName>Voluntary Relinquishment</fullName>
+                    <default>false</default>
+                    <label>Voluntary Relinquishment</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Virtual_Branch_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag indicating if the Virtual Branch Feature is Enabled on the TIDS Service Portal</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag indicating if the Virtual Branch Feature is Enabled on the TIDS Service Portal</inlineHelpText>
+        <label>Virtual Branch Enabled</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>WebStar_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
@@ -462,6 +523,17 @@ Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</descrip
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Termination_Reason__c</picklist>
+            <values>
+                <fullName>Termination by IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voluntary Relinquishment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Live</fullName>
@@ -483,6 +555,17 @@ Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</descrip
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Termination_Reason__c</picklist>
+            <values>
+                <fullName>Termination by IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voluntary Relinquishment</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

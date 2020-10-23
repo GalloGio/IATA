@@ -1,0 +1,61 @@
+<template>
+	<lightning-spinner
+		alternative-text="Loading"
+		size="large"
+		if:true={showSpinner}
+	></lightning-spinner>
+	<template if:true={isMode1}>
+		<template if:true={hasError}>
+			<c-tids-conditions message={errorData}></c-tids-conditions>
+		</template>
+		<template if:true={showDashboard}>
+			<c-tids-dashboard></c-tids-dashboard>
+		</template>
+		<template if:true={showForm}>
+			<lightning-spinner
+				alternative-text="Loading"
+				size="large"
+				if:true={showSpinner}
+			></lightning-spinner>
+			<c-tids-form></c-tids-form>
+		</template>
+	</template>
+	<template if:true={isMode2}>
+		<div class="slds tidsVetting" style="background: #fff">
+			<!-- PAGE HEADER -->
+			<div class="slds-page-header slds-is-fixed" role="banner">
+				<div class="slds-grid slds-grid_pull-padded">
+					<div class="slds-size_1-of-1 slds-col--padded slds-align-middle">
+						<div class="slds-media">
+							<div class="slds-media__figure">
+								<span class="slds-icon__container">
+									<img src={iata_logo} alt="IATA Logo" width="50" />
+								</span>
+							</div>
+							<div class="slds-media__body slds-align-bottom">
+								<h1 class="slds-text-heading--x-large">TIDS Vetting</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- PAGE CONTENT -->
+			<div class="slds-grid slds-p-around--medium">
+				<!-- TIDS Content -->
+				<div
+					data-id="divblock1"
+					class="slds-col slds-size--9-of-12 slds-box--border"
+				>
+					<c-tids-form></c-tids-form>
+				</div>
+				<!-- TIDS Attachments -->
+				<div
+					data-id="divblock2"
+					class="slds-col slds-size--3-of-12 tidsAttachmentsContainer"
+				>
+					<c-tids-documents tids-case-id={tidsCaseId}></c-tids-documents>
+				</div>
+			</div>
+		</div>
+	</template>
+</template>
