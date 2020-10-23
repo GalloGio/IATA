@@ -232,7 +232,7 @@ public class CaseIFAPHandler {
 			response.setBody(body);
 		}
 		else{
-			//response = http.send(request);
+			response = http.send(request);
 		}
 	}
 
