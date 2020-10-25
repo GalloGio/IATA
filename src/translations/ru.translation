@@ -4668,6 +4668,10 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Регистрация</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>Регистрация прошла успешно</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>

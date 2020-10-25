@@ -4661,6 +4661,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>등록</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>등록이 성공적으로 완료되었습니다</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>

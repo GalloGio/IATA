@@ -4657,6 +4657,10 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Kaydol</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>Kayıt başarıyla tamamlandı</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>

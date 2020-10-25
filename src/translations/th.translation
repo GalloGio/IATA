@@ -4658,6 +4658,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>การลงทะเบียน</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>การลงทะเบียนเสร็จสมบูรณ์แล้ว</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>

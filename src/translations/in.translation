@@ -4662,6 +4662,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Registrasi</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>Pendaftaran selesai dengan sukses</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>

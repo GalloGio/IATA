@@ -4661,6 +4661,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Registro</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>Cadastro concluído com sucesso</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>
