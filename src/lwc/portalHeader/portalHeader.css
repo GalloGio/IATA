@@ -21,6 +21,7 @@
 .headerContainer { 
   background-color: #1e32fa;
   border-bottom: 29px solid #fff;
+
 }
 @media only screen and (max-width: 767px) {
   .headerContainer {
@@ -69,6 +70,16 @@
 .headerBar {
   height: 40px;
 }
+.headerBarMobile {
+  height: 60px; 
+}
+
+.stickyHeader{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10010;
+}
 
 .headerBarLeft {
   display: inline-block;
@@ -113,7 +124,7 @@
 }
 
 .headerBarLeftRightWidth {
-  width: 3%;
+  width: 8%;
 }
 
 .floatRight {
@@ -126,7 +137,7 @@
 
 .headerBarButton {
   position: relative;
-  max-height: 37px;
+  max-height: 40px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -289,6 +300,10 @@
   background-color: white;
 }
 
+.openNotifications.mobileOpenContainer,.openSearch.mobileOpenContainer{
+  top: 60px;
+}
+
 .openNotifications {
   display: none;
   position: absolute;
@@ -298,7 +313,7 @@
   max-width: 500px;
   height: 550px;
   max-height: 550px;
-  right: calc(10% + 1.5rem + 22px);
+  right: calc(10% + 1.5rem + 21.5px);
 }
 
 .openSearch {
@@ -310,7 +325,7 @@
   max-width: 480px;
   height: auto;
   max-height: 730px;
-  right: calc(10% - 1.5rem + 6px);
+  right: calc(10% - 1.5rem + 5.5px);
   background-color:#fff;
 }
 
@@ -465,13 +480,14 @@
   min-width: 40px;
 }
 
-.whiteBackground {
-  background-color: white;
-  z-index: 10010;
+.sideMenuBottomcover {
+  height:100%;
+  width: 0%;
+  background: rgba(51, 51, 51, 0.4);
 }
 
 .sideBar {
-  height: 100%;
+  width: 100%;
   position: fixed;
   overflow-y: auto;
   overflow-x: hidden;
@@ -480,36 +496,20 @@
   color: white;
 }
 
-.sideBar::-webkit-scrollbar-track
-{
-	background-color: transparent;
+.sideBar,.sideMenuBottomcover {
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  z-index: 10011;
 }
 
-.sideBar::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #1e32fa;
-}
-
-.sideBar::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	background-image: -webkit-gradient(linear,
-									   left bottom,
-									   left top,
-									   color-stop(0.44, #1a29d3),
-									   color-stop(0.86, #1422b3));
-}
-
-.sideBar.topMenu {
+.whiteBackground .topMenu{
   width: 0px;
 }
 
-.sideBar img {
-  width: 30px;
-  min-width: 30px;
-  height: 30px;
-  min-height: 30px;
+.sideBar.topMenu {
+  height: 0px;
 }
 
 .sideMenuOpacity {
@@ -525,6 +525,12 @@
 .sideBarContainer .spacer-border .headerBarButton {
   border-bottom: 1px solid rgba(255, 255, 255, .19);
 }
+
+.publicSideBarBtnMenu .spacer-border .headerBarButton {
+  border-bottom: 0.3px solid rgba(30, 50, 250, 0.6);
+}
+
+
 
 .sideBarContainer .language-picker {
   border-top: 1px solid rgba(255, 255, 255, .19);
@@ -567,7 +573,7 @@
     max-height: 255px;
   }
   .mobileLogoWhite {
-    max-height: 85%;
+    max-height: 75%;
     width: auto;
   }
 }
@@ -583,7 +589,7 @@
 
 .signUpBtn{
   background: #FFFFFF;
-  border: 0.5px solid #FFFFFF;
+  border: 0.5px solid #1E32FA;
   width: 104px;
   color: #1E32FA;
   line-height: 26px;
@@ -614,4 +620,21 @@
   border-left: 20px solid transparent;
   border-right: 22px solid transparent;
   border-top: 20px solid rgb(250, 250, 250);
+}
+
+.mobilebackground{
+  background:#F0F2F5;
+  height: 75%;
+}
+
+.publicSideBarBtnMenu .loginBtn,.publicSideBarBtnMenu .signUpBtn{
+  line-height: 34px;
+  border: 0.5px solid #1E32FA;
+}
+
+.mobileLayout .headerSection{
+  height:100px;
+}
+.mobileLayout .contentSection{
+  height:375px;
 }

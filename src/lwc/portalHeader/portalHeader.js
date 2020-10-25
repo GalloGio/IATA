@@ -192,9 +192,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //links for images
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
-    logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/logo-group-white.svg';
+    logoMobileIcon = CSP_PortalPath + 'CSPortal/Images/Logo/logo_min-blue.svg';
+    logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/logo_min-white.svg';
     servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
+    servicesBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
     supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    storeBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/store-icon-blue.svg';
+    servicesBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-icon-blue.svg';
+    supportBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-icon-blue.svg';
     profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
     profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
@@ -266,11 +271,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track mainBackground = 'z-index: 9999;';
 
-    @track mobileMenuStyle = 'headerBarButton';
     @track buttonServiceStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonService';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
-    @track buttonSideMenuServiceStyle = 'headerBarButton buttonService';
-    @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport';
+    @track buttonSideMenuServiceStyle = 'headerBarButton buttonService slds-p-bottom--xxx-small';
+    @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport slds-p-bottom--xxx-small';
     @track buttonSideMenuSearchStyle = 'headerBarButton buttonSearch';
     @track buttonSideMenuProfileStyle = 'headerBarButton buttonProfile';
     @track buttonSideMenuCompanyStyle = 'headerBarButton buttonCompany';
@@ -607,7 +611,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openNotifications = !this.openNotifications;
 
         if (this.openNotifications) {
-            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000;';
             this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
             this.headerButtonNotificationsStyle = 'display: none;';
             this.notificationNumberStyle = 'display: none;';
@@ -653,11 +657,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     toggleSideMenu()
     {
         this.openSideBarMenu = ! this.openSideBarMenu;
-
+        document.querySelector('body').classList.toggle('lockScroll');
+        
         if (this.openSideBarMenu) {
-            this.sideMenuBarStyle = 'display: block; width: 300px;';
+            this.sideMenuCoverStyle = 'width: 100%;';
+            this.sideMenuBarStyle = 'height: 75%;';
         } else {
-            this.sideMenuBarStyle = 'width: 0px;';
+            this.sideMenuCoverStyle = 'width: 0%;';
+            this.sideMenuBarStyle = 'height: 0%;';
+            //document.querySelector('body').classList.remove('lockScroll');
         }
     }
 
