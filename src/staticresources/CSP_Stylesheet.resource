@@ -1816,7 +1816,7 @@ lightning-datatable .slds-th__action {
 
 /* Footer select language styles */
 .portalFooter .langSelect input[role="textbox"], .portalFooter .langSelect div[role="listbox"] {
-    background-color: #333333;
+    background-color: #00000000;
     border-radius: 0;
 }
 
@@ -1942,7 +1942,8 @@ visibility: hidden;
 .sideBar .langSelect,
 .sideBar .langSelect input[role="textbox"],
 .sideBar .langSelect div[role="listbox"] {
-    background-color: #1e32fa;
+    background-color: #f0f2f5;
+    font-weight:500;
     border-radius: 0;
 }
 
@@ -2850,4 +2851,8 @@ html {
     display: inline-block; 
     width: 1em;
     margin-left: -1em;
+}
+
+.lockScroll{
+    overflow: hidden;
 }
