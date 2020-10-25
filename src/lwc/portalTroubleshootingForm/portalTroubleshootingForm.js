@@ -29,6 +29,8 @@ import CSP_TroubleshootingDesc                  from '@salesforce/label/c.CSP_Tr
 import CSP_Password                             from '@salesforce/label/c.CSP_Password';
 import CSP_Login                                from '@salesforce/label/c.CSP_Login';
 import CSP_Registration                         from '@salesforce/label/c.CSP_Registration';
+import CSP_Go_to_FAQ                            from '@salesforce/label/c.CSP_Go_to_FAQ';
+import CSP_Submit                               from '@salesforce/label/c.CSP_Submit';
 
 import PhoneFormatter16                         from '@salesforce/resourceUrl/PhoneFormatter16';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
@@ -60,7 +62,9 @@ export default class PortalTroubleshootingForm extends NavigationMixin(Lightning
         CSP_TroubleshootingDesc,
         CSP_Password,
         CSP_Login,
-        CSP_Registration
+        CSP_Registration,
+        CSP_Go_to_FAQ,
+        CSP_Submit
     }
 
     @track form={

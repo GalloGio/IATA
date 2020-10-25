@@ -4984,6 +4984,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>This is a</value>
     </labels>
     <labels>
+        <fullName>CSP_Go_to_FAQ</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Go to Iata org</shortDescription>
+        <value>Go to FAQ</value>
+    </labels>
+    <labels>
         <fullName>CSP_Go_to_IataOrg</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
