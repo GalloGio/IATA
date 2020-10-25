@@ -47,7 +47,7 @@
 <div class="slds-show_small slds-grid slds-grid--align-end slds-grid--vertical-align-center slds-size--1-of-1 topsection">
     <span class="cursorPointer text-bold slds-float_right text-blue" onclick={goToIATAOrg}>
         <span>
-            Go to iata.org
+            {labels.CSP_Go_to_IataOrg}
         </span>
         <img src={arrowRightIcon} />
     </span>
@@ -386,7 +386,7 @@
                         <div if:false={internalUser} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
                             <div class={buttonSideMenuServiceStyle} onclick={goToStore}>
                                 <img class="slds-m-right_small" src={storeBlueIcon} />
-                                    <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">Store</span>
+                                    <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">{labels.CSP_Store}</span>
                             </div>
                         </div>
                         <!-- services link -->
@@ -455,12 +455,12 @@
                     <div class="slds-col"> </div>                           
                     <div if:false={internalUser} class="slds-col publicSideBarBtnMenu" onclick={goToLogin}>
                         <span
-                        class="text-xsmall text-white text-bold tabText cursorPointer slds-text-align_center loginBtn">Login</span>
+                        class="text-xsmall text-white text-bold tabText cursorPointer slds-text-align_center loginBtn">{labels.CSP_Login}</span>
                     </div>
                     <!-- service tab -->
                     <div if:false={internalUser} class="slds-col publicSideBarBtnMenu" onclick={goToRegistration}>
                         <span
-                        class="text-xsmall tabText cursorPointer text-bold slds-text-align_center signUpBtn">Sign Up</span>
+                        class="text-xsmall tabText cursorPointer text-bold slds-text-align_center signUpBtn">{labels.CSP_Sign_Up}</span>
                     </div>
 
 
@@ -746,12 +746,12 @@
                             <div class="slds-col"> </div>                           
                             <div class="slds-col" onclick={goToLogin}>
                                 <span
-                                class="text-xsmall text-bold tabText text-white slds-text-align_center cursorPointer loginBtn">Login</span>
+                                class="text-xsmall text-bold tabText text-white slds-text-align_center cursorPointer loginBtn">{labels.CSP_Login}</span>
                             </div>
                             <!-- service tab -->
                             <div class="slds-col" onclick={goToRegistration}>
                                 <span
-                                class="text-xsmall text-bold tabText slds-text-align_center cursorPointer signUpBtn">Sign Up</span>
+                                class="text-xsmall text-bold tabText slds-text-align_center cursorPointer signUpBtn">{labels.CSP_Sign_Up}</span>
                             </div>
                         </div>    
                     </div>
