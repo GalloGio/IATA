@@ -1816,7 +1816,7 @@ lightning-datatable .slds-th__action {
 
 /* Footer select language styles */
 .portalFooter .langSelect input[role="textbox"], .portalFooter .langSelect div[role="listbox"] {
-    background-color: #00000000;
+    background-color: #333333;
     border-radius: 0;
 }
 
