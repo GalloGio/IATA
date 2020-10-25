@@ -4465,6 +4465,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>here</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Link_Button_Image</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Link button Image</shortDescription>
+        <value>CSP Email Btn Image</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email_Password_Reset_Body_Part_1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

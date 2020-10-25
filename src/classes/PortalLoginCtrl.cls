@@ -67,8 +67,8 @@ public with sharing class PortalLoginCtrl {
 			if(psa.size()==0){
 				LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
 			}
-
-			if (oneUser.Portal_User_Frozen_Checkbox__c){
+			//reactivate User or password expired
+			if (DAL_WithoutSharing.reactivateUser(oneUser.Id)){
 				result.userIsFrozen = true;
 				reactivateUser(oneUser, params);
 				return result;

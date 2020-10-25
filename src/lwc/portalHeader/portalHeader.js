@@ -17,7 +17,6 @@ import showIATAInvoices from '@salesforce/apex/PortalHeaderCtrl.showIATAInvoices
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
-import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
@@ -386,7 +385,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			this.triggerThirdLevelRegistrationLMS();
 		}
 	}
-	this.redirectChangePassword();
 
         getNotifications().then(result => {
             this.baseURL = window.location.href;
