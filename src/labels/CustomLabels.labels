@@ -4949,7 +4949,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
-        <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
+        <value>For security reasons, we have sent you an email to set a new password.</value>
     </labels>
     <labels>
         <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
