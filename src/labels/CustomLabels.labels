@@ -8100,7 +8100,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting message</shortDescription>
-        <value>If these steps do not fix the problem, click below to contact us:</value>
+        <value>If the above steps do not fix the problem, click below to contact us:</value>
     </labels>
     <labels>
         <fullName>CSP_TroubleshootingSbtitle</fullName>
@@ -8108,7 +8108,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting subtitle</shortDescription>
-        <value>You can fill the form below and one of our Customer Service representatives will be assisting you.</value>
+        <value>Complete the form and we will contact you to help you access our platform.</value>
     </labels>
     <labels>
         <fullName>CSP_TroubleshootingTitle</fullName>
@@ -8132,7 +8132,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting Issue description label</shortDescription>
-        <value>Description of Issue</value>
+        <value>Description of the issue:</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting_Info</fullName>
