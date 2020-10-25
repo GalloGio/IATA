@@ -58,7 +58,10 @@ import AllNotifications from '@salesforce/label/c.All_Notifications_Notification
 import CSP_You_Dont_Have_Notifications from '@salesforce/label/c.CSP_You_Dont_Have_Notifications';
 import CSP_You_Dont_Have_Announcements from '@salesforce/label/c.CSP_You_Dont_Have_Announcements';
 import CSP_You_Dont_Have_Tasks from '@salesforce/label/c.CSP_You_Dont_Have_Tasks';
-
+import CSP_Store from '@salesforce/label/c.CSP_Store';
+import CSP_Sign_Up from '@salesforce/label/c.CSP_Sign_Up';
+import CSP_Login from '@salesforce/label/c.CSP_Login';
+import CSP_Go_to_IataOrg from '@salesforce/label/c.CSP_Go_to_IataOrg';
 
 // Accept Terms
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -180,7 +183,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         CSP_You_Dont_Have_Notifications,
         CSP_You_Dont_Have_Announcements,
         CSP_You_Dont_Have_Tasks,
+        CSP_Store,
+        CSP_Sign_Up,
+        CSP_Login,
+        CSP_Go_to_IataOrg,
         CSP_IATA_Invoices //WMO-627 - ACAMBAS
+        
     };
 
     get labels() {
