@@ -3548,7 +3548,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Como no ha iniciado sesión en los últimos 90 días, le hemos enviado un correo electrónico con una nueva contraseña.</label>
+        <label>Por razones de seguridad, le hemos enviado un correo electrónico para establecer una nueva contraseña.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3566,6 +3566,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Esto es un(a)</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir a iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4372,6 +4376,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
+        <label>Ingresa en</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Desconectar</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -5033,6 +5041,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Inscríbase</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Omitir por ahora</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -5131,6 +5143,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>resolución de problemas</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Descripción de la cuestión:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Si los pasos anteriores no solucionan el problema, haga clic abajo para ponerse en contacto con nosotros:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Complete el formulario y nos pondremos en contacto con usted para ayudarle a acceder a nuestra plataforma.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Solución de problemas de registro e inicio de sesión</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Necesito ayuda con:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Si necesita más ayuda, consulte la sección de</label>

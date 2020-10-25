@@ -3546,7 +3546,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>เนื่องจากคุณไม่ได้ลงชื่อเข้าใช้ใน 90 วันที่ผ่านมา เราจึงส่งอีเมลพร้อมรหัสผ่านใหม่ให้คุณ</label>
+        <label>ด้วยเหตุผลด้านความปลอดภัยเราได้ส่งอีเมลถึงคุณเพื่อตั้งรหัสผ่านใหม่</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3564,6 +3564,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>มันคือ</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่ iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4374,6 +4378,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>เข้าสู่ระบบ</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>ลงชื่อเข้าใช้ทันที</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -5026,6 +5034,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_ShareLink</name>
     </customLabels>
     <customLabels>
+        <label>ลงชื่อ</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>ลิงค์ FAQ ได้ถูกคัดลอกแล้ว</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
@@ -5128,6 +5140,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>การแก้ไขปัญหา</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>คำอธิบายปัญหา:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>หากขั้นตอนข้างต้นไม่สามารถแก้ไขปัญหาได้ โปรดคลิกด้านล่างเพื่อติดต่อเรา:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกแบบฟอร์มแล้วเราจะติดต่อคุณเพื่อช่วยให้คุณเข้าถึงแพลตฟอร์มของเรา</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>การแก้ไขปัญหาการเข้าสู่ระบบและการลงทะเบียน</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ฉันต้องการความช่วยเหลือเกี่ยวกับ:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>สำหรับความช่วยเหลือเพิ่มเติม กรุณาดูที่</label>

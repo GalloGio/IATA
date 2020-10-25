@@ -3549,7 +3549,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>過去90日間ログインしていないため、新しいパスワードをメールでお送りしました。</label>
+        <label>セキュリティ上の理由から、新しいパスワードを設定するためのメールを送信しました。</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3567,6 +3567,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>これは</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>iata.orgにアクセス</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4373,6 +4377,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
+        <label>ログイン</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>ログアウト</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -5034,6 +5042,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>登録</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>飛ばして進む</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -5132,6 +5144,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>トラブルシューティングをご確認ください</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>問題の詳細</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>上記にて問題が解決しない場合は、以下をクリックしてお問い合わせください。</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>フォームに必要事項を入力してください。</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ログイン登録のトラブルシューティング</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>サポートが必要</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>その他のヘルプは</label>

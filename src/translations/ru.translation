@@ -3554,7 +3554,7 @@
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Поскольку Вы не входили в систему в течение последних 90 дней, мы отправили Вам электронное письмо с новым паролем.</label>
+        <label>В целях безопасности мы отправили вам е-мейл с просьбой установить новый пароль.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3572,6 +3572,10 @@
     <customLabels>
         <label>Это</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Зайти на iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4378,9 +4382,13 @@
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
+        <label>Вход</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Выйти</label>
         <name>CSP_LogOut</name>
-    </customLabels>
+    </customLabels>    
     <customLabels>
         <label>Войти сейчас</label>
         <name>CSP_Login_Now</name>
@@ -5040,6 +5048,10 @@
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Зарегистрироваться</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Пропустить на данном этапе</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -5138,6 +5150,26 @@
     <customLabels>
         <label>поиск решений проблемы</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Описание проблемы:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Если вышеприведенные шаги не устранили проблему, нажмите ниже, чтобы связаться с нами:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Заполните форму и мы свяжемся с вами, чтобы помочь вам получить доступ к нашей платформе.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Устранение неполадок при регистрации и входе в систему</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Мне нужна помощь:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Для получения дополнительной помощи проверьте</label>

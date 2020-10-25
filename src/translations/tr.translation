@@ -3545,7 +3545,7 @@
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Son 90 gün içerisinde giriş yapmadığınızdan, size yeni şifre içeren bir e-posta gönderdik.</label>
+        <label>Güvenlik nedeniyle, yeni bir şifre belirlemeniz için size bir e-posta gönderdik.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3563,6 +3563,10 @@
     <customLabels>
         <label>Bu bir</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>iata.org'a gidin</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4373,6 +4377,10 @@
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>Oturum aç</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Şimdi giriş yapın</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -5029,6 +5037,10 @@
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Kaydol</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Şimdilik Atla</label>
         <name>CSP_Skip</name>
     </customLabels>
@@ -5127,6 +5139,26 @@
     <customLabels>
         <label>sorun giderme</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorunun açıklaması:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Yukarıdaki adımlar sorunu çözmezse bizimle iletişime geçmek için aşağıyı tıklayın:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Formu doldurun, platformumuza erişmenize yardımcı olmak için sizinle iletişime geçelim.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Oturum Açma ve Kayıt Sorunlarını Giderme</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu konuyla ilgili yardıma ihtiyacım var:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Daha fazla yardım için şuraya bakın</label>
