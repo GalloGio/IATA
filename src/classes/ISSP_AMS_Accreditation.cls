@@ -6728,8 +6728,8 @@ public without sharing class ISSP_AMS_Accreditation {
 	private boolean validateForm(boolean includeErrorMsgs) {
 		Boolean errorFound = false;
 
-		if (getIsPostalOperator()) {
-			return validatePostalOperatorForm();
+		if (getIsPostalOperator() && isNoticeOfChange) {
+			return validatePostalOperatorChangeForm();
 		}
 
 		Integer cntAuthorisedSig = [SELECT COUNT()
@@ -7806,7 +7806,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	/**
 	 * Validate input fields in step 2 only for postal operator (getIportalOperator() = true)
 	 */
-	private boolean validatePostalOperatorForm() {
+	private boolean validatePostalOperatorChangeForm() {
 		Boolean errorFound = false;
 
 		if (!newform.Confirm_Legal_Details_are_correct__c && !newForm.Notify_Change_Legal_Details__c) {
