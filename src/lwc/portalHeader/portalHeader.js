@@ -280,8 +280,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track buttonServiceStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonService';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
-    @track buttonSideMenuServiceStyle = 'headerBarButton buttonService slds-p-bottom--xxx-small';
-    @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport slds-p-bottom--xxx-small';
+    @track buttonSideMenuServiceStyle = 'headerBarButton buttonService slds-p-vertical_xx-small ';
+    @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport slds-p-vertical_xx-small ';
     @track buttonSideMenuSearchStyle = 'headerBarButton buttonSearch';
     @track buttonSideMenuProfileStyle = 'headerBarButton buttonProfile';
     @track buttonSideMenuCompanyStyle = 'headerBarButton buttonCompany';
@@ -560,11 +560,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     navigateToServices() {
+        this.toggleSideMenu();
         this.navigationCheck("services", "services");
         //this.navigateToOtherPage("services");
     }
 
     navigateToSupport() {
+        this.toggleSideMenu();
         this.navigationCheck("support", "support");
         //this.navigateToOtherPage("support");
     }
@@ -667,7 +669,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         
         if (this.openSideBarMenu) {
             this.sideMenuCoverStyle = 'width: 100%;';
-            this.sideMenuBarStyle = 'height: 75%;';
+            this.sideMenuBarStyle = 'min-height: 75%;';
         } else {
             this.sideMenuCoverStyle = 'width: 0%;';
             this.sideMenuBarStyle = 'height: 0%;';
@@ -969,6 +971,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     goToStore(){
+        this.toggleSideMenu();
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
@@ -978,10 +981,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     goToLogin(){
+        this.toggleSideMenu();
         navigateToPage(this.config.prefix);
     }
 
     goToRegistration(){
+        this.toggleSideMenu();
         navigateToPage(this.config.selfRegistrationUrl);
     }
 

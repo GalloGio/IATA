@@ -156,7 +156,7 @@
   height: 4px;
   background-color: #fac832;
   position: absolute;
-  bottom: 1px;
+  bottom: 0;
   right: 0;
   left: 0;
 }
@@ -196,6 +196,10 @@
 
 .headerButtonNotificationsContainer {
   white-space: nowrap;
+}
+
+.mobileMenu .headerButtonNotificationsContainer img,.mobileMenu .headerButtonSearchContainer img{
+  width:28px;
 }
 
 

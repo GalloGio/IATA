@@ -123,7 +123,7 @@
                         <img src={logoWhiteIcon} class="mobileLogoWhite" />
                     </div>
 
-                    <div class="slds-col slds-grid slds-size_2-of-6 slds-grid_align-end">
+                    <div class="slds-col slds-grid slds-size_2-of-6 slds-grid_align-end mobileMenu">
                         <!-- notifications tab -->
                         <div if:true={internalUser} class="slds-col slds-size_1-of-3 headerButtonNotificationsContainer slds-text-align_center slds-grid_align-center slds-grid slds-grid_vertical-align-center"
                             style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
@@ -383,21 +383,21 @@
                             </div>
                         </div>
                         <!-- Store link -->
-                        <div if:false={internalUser} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                        <div if:false={internalUser} class="slds-col slds-size_1-of-1 spacer-border">
                             <div class={buttonSideMenuServiceStyle} onclick={goToStore}>
                                 <img class="slds-m-right_small" src={storeBlueIcon} />
                                     <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">{labels.CSP_Store}</span>
                             </div>
                         </div>
                         <!-- services link -->
-                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                        <div class="slds-col slds-size_1-of-1 spacer-border">
                             <div class={buttonSideMenuServiceStyle} onclick={navigateToServices}>
                                 <img class="slds-m-right_small" src={servicesBlueIcon} />
                                     <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">{labels.ISSP_Services}</span>
                             </div>
                         </div>
                         <!-- support link -->
-                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                        <div class="slds-col slds-size_1-of-1 spacer-border">
                             <div class={buttonSideMenuSupportStyle} onclick={navigateToSupport}>
                                 <img class="slds-m-right_small" src={supportBlueIcon} />
                                     <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">{labels.CSP_Support}</span>
@@ -534,7 +534,7 @@
                             <img style={headerButtonNotificationsStyle} src={notificationIcon} />
                             <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray slds-m-bottom_medium"
                                 style={notificationNumberStyle}>{numberOfNotifications}</div>
-                            <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
+                            <div class="headerButtonNotificationsCloseIcon slds-m-horizontal_small" style={headerButtonNotificationsCloseIconStyle}>
                                 <div class="closeButton"> + </div>
                             </div>
                         </div>
