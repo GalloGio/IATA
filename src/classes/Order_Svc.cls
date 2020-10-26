@@ -1099,7 +1099,7 @@ public without sharing class Order_Svc
 				lstmails.add(clientMail);*/
 
 			//Send notification for Special instructions for shipping and delivery
-			if(order.Has_Shipping_Instruction__c){
+			/*if(order.Has_Shipping_Instruction__c){
 				Mail_DTO specialShippingInstruction = new Mail_DTO();
 				specialShippingInstruction.whatId = order.Id;
 				specialShippingInstruction.templateId = Utility.getTextSetting('Order templateId for special shipping');
@@ -1108,7 +1108,7 @@ public without sharing class Order_Svc
 				List<String> specialShippingInstructionEmails = Utility.getTextSettingToArray('Special shipping instruction Emails',',');
 				specialShippingInstruction.recipients.addAll(specialShippingInstructionEmails);
 				lstmails.add(specialShippingInstruction);
-			}
+			}*/
 
 			//Send email to the product manager and alternate manager if the product is sold
 			if(isSold)
