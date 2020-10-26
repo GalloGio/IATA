@@ -3568,6 +3568,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>Đi tới Câu hỏi thường gặp</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>Truy cập iata.org</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5056,6 +5060,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Cửa hàng</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>Vui lòng nhập một dòng tiêu đề ngắn</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5150,6 +5158,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Mô tả vấn đề:</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Biểu mẫu khắc phục sự cố</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>Nếu các bước trên không khắc phục được sự cố, hãy nhấp vào bên dưới để liên hệ với chúng tôi:</label>

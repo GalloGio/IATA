@@ -3569,6 +3569,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>Pergi ke instruksinya</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>Buka iata.org</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5058,6 +5062,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Toko</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>Mohon di isi Subjek secara singkat</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5152,6 +5160,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Deskripsi masalah:</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Formulir pemecahan masalah</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>Jika langkah-langkah di atas tidak menyelesaikan masalah, klik di bawah ini untuk menghubungi kami:</label>

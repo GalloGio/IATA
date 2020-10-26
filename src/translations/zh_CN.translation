@@ -3566,6 +3566,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>转到常见问题</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>前往iata.org</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5054,6 +5058,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>商店</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>请输入简短的主题</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5148,6 +5156,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>问题的描述。</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>故障排除表</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>如果以上步骤不能解决问题，请点击下面的步骤联系我们。</label>

@@ -3569,6 +3569,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>자주 묻는 질문으로 이동</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>iata.org로 이동</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5057,6 +5061,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>저장</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>간단한 제목을 작성하세요</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5151,6 +5159,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>문제에 대한 설명</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>문제 해결 양식</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>위 경로를 통해 문제가 해결되지 않은 경우, 아래를 클릭하여 문의바랍니다.</label>

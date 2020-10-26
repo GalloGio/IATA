@@ -3574,6 +3574,10 @@
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>Перейти к часто задаваемым вопросам</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>Зайти на iata.org</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5064,6 +5068,10 @@
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Магазин</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>Пожалуйста, введите тему</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5158,6 +5166,10 @@
     <customLabels>
         <label>Описание проблемы:</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Форма устранения неисправностей</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>Если вышеприведенные шаги не устранили проблему, нажмите ниже, чтобы связаться с нами:</label>

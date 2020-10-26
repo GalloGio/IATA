@@ -3565,6 +3565,10 @@
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>SSS'ye git</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>iata.org'a gidin</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5053,6 +5057,10 @@
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Mağaza</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>Lütfen kısa bir başlık girin</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5147,6 +5155,10 @@
     <customLabels>
         <label>Sorunun açıklaması:</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorun giderme formu</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>Yukarıdaki adımlar sorunu çözmezse bizimle iletişime geçmek için aşağıyı tıklayın:</label>

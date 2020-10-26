@@ -3571,6 +3571,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>Aller aux questions fréquemment posées</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>Aller à iata.org</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5060,6 +5064,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Boutique</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>Veuillez indiquer un sujet court</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5154,6 +5162,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Description de la question :</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Formulaire de dépannage</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>Si les étapes ci-dessus ne permettent pas de résoudre le problème, cliquez ci-dessous pour nous contacter :</label>

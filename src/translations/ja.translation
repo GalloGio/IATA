@@ -3569,6 +3569,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>よくある質問へ</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>iata.orgにアクセス</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5058,6 +5062,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>店舗</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>短い件名を入力してください</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5152,6 +5160,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>問題の詳細</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>トラブルシューティングフォーム</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>上記にて問題が解決しない場合は、以下をクリックしてお問い合わせください。</label>

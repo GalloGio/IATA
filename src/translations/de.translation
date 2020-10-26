@@ -3570,6 +3570,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
+        <label>Zu häufig gestellten Fragen</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
         <label>Gehe zu iata.org</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
@@ -5060,6 +5064,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Status</name>
     </customLabels>
     <customLabels>
+        <label>Laden</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
         <label>Bitte geben Sie eine kurze Betreffzeile ein</label>
         <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
@@ -5154,6 +5162,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Beschreibung des Problems:</label>
         <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Formular zur Fehlerbehebung</label>
+        <name>CSP_TroubleshootingForm</name>
     </customLabels>
     <customLabels>
         <label>Wenn die oben genannten Schritte das Problem nicht beheben, klicken Sie unten, um uns zu kontaktieren:</label>
