@@ -454,7 +454,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
                         checkLatestTermsAndConditionsAccepted({contactId:this.userInfo.Id, portalServiceId: gcsPortalServiceId}).then(result3 => {
                             let isLatestAccepted = JSON.parse(JSON.stringify(result3));
-                            console.log('latestAccepted :' + isLatestAccepted);
 
                             if(isLatestAccepted){
                                 this.displayAcceptTerms = false;
