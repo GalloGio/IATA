@@ -43,6 +43,7 @@ export default class CwPersonalSettings extends LightningElement {
 		this.initialized = true;
 	}
 	displayMenu() {
+		this.template.querySelector('.chevron').classList.toggle('inverted');
 		this.showMenu = !this.showMenu;
 	}
 

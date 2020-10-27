@@ -9,34 +9,44 @@ public without sharing class CW_AccountDetailCarousel {
 	*/
 	@AuraEnabled
 	public static List<Carousel> getFacilityFiles(String recordId) {
-		Set<Id> listId = new Set<Id>();
+		List<String> listId = new List<String>();
 		List<Carousel> listImages = new List<Carousel>();
-
-		for (ContentDocumentLink currentItem : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId =: recordId]) {
-			listId.add(currentItem.ContentDocumentId);
-		}
 		Integer index = 0;
-		for (ContentVersion doc : [SELECT Id, VersionData, FileExtension
-									FROM ContentVersion 
-									WHERE ContentDocumentId in :listId 
-										AND IsLatest = true 
-										AND Is_Company_Logo__c = false
-									LIMIT 5]) {
-			Carousel car = new Carousel();
-			car.id = doc.Id;
-			car.image= EncodingUtil.base64Encode(doc.VersionData);
-			car.tabindex = index == 0 ? '0' : '-1';
-			car.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
-			car.hidden =  index == 0 ? true : false;
-			String indicatorClass = 'slds-carousel__indicator-action';
-			indicatorClass = index == 0 ? indicatorClass + ' slds-is-active' : indicatorClass;
-			car.indicatorClass = indicatorClass;
-			String panelClass = 'slds-carousel__panel carousel-size';
-			panelClass = index == 0 ? panelClass + ' panelSelected' : panelClass;
-			car.panelClass = panelClass;
-			car.fileExtension = doc.FileExtension;
-			listImages.add(car);
-			index++;
+
+		try{
+
+			for (ContentDocumentLink currentItem : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId =: recordId]) {
+				listId.add(currentItem.ContentDocumentId);
+			}
+			
+			for (ContentVersion doc : [SELECT Id, VersionData, FileExtension, ContentDocumentId
+										FROM ContentVersion 
+										WHERE ContentDocumentId in :listId 
+											AND IsLatest = true 
+											AND Is_Company_Logo__c = false]) {
+				Carousel car = new Carousel();
+				car.id = doc.Id;
+				car.image= EncodingUtil.base64Encode(doc.VersionData);
+				car.tabindex = index == 0 ? '0' : '-1';
+				car.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
+				car.hidden =  index == 0 ? true : false;
+				String indicatorClass = 'slds-carousel__indicator-action';
+				indicatorClass = index == 0 ? indicatorClass + ' slds-is-active' : indicatorClass;
+				car.indicatorClass = indicatorClass;
+				String panelClass = 'slds-carousel__panel carousel-size';
+				panelClass = index == 0 ? panelClass + ' panelSelected' : panelClass;
+				car.panelClass = panelClass;
+				car.fileExtension = doc.FileExtension;
+				car.urlImage = CW_AccountDetailCarousel.generateImageURL(doc.ContentDocumentId);
+				listImages.add(car);
+				index++;
+			}
+
+			//Read capabilities photos from the station
+			listImages.addAll(CW_CapabilitiesUtilities.getCapabilitiesPhotosFromStation(listId,recordId));
+		}
+		catch(Exception e){
+			system.debug('Error: '+e.getMessage() + ' Trace:' + e.getStackTraceString());			
 		}
 
 		return listImages;
@@ -63,22 +73,37 @@ public without sharing class CW_AccountDetailCarousel {
 		return JSON.serialize(res);
 	}
 
+	private static String generateImageURL(Id conDoc) {
+		String URL_Base = ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
+		return URL_Base.removeEnd('/s/') + '/sfc/servlet.shepherd/document/download/' + conDoc;
+	}
+
 	/*
 	* @Description: wrapper Carousel
 	*/
 	public class Carousel{
-		@AuraEnabled String id {set;get;}
-		@AuraEnabled String image {set;get;}
-		@AuraEnabled String tabindex {set;get;}
-		@AuraEnabled Boolean hidden {set;get;}
-		@AuraEnabled String indicatorClass {set;get;}
-		@AuraEnabled String panelClass {set;get;}
-		@AuraEnabled String fileExtension {set;get;}
-		@AuraEnabled String position {set;get;}
+		@AuraEnabled 
+		public String id {set;get;}
+		@AuraEnabled 
+		public String image {set;get;}
+		@AuraEnabled 
+		public String tabindex {set;get;}
+		@AuraEnabled 
+		public Boolean hidden {set;get;}
+		@AuraEnabled 
+		public String indicatorClass {set;get;}
+		@AuraEnabled 
+		public String panelClass {set;get;}
+		@AuraEnabled 
+		public String fileExtension {set;get;}
+		@AuraEnabled 
+		public String position {set;get;}
+		@AuraEnabled 
+		public String urlImage {set;get;}
 	}
 	
 	public class Result{
-		public Boolean success;
-		public String message;
+		public Boolean success { get; set; }
+		public String message { get; set; }
 	}
 }

@@ -550,7 +550,12 @@ export default class CwPrivateAreaContainer extends LightningElement {
 	refreshAudits(event) {
 		this.goToHome(event);
 		this.getUserAudits(this.managedFacilitiesIds);
-	}
+    }
+    
+    get isUserManagedFacilities()
+    {
+        return this.userManagedFacilities.length > 0;
+    }
 
 	get userManagedFacilities() {
 		let userManagedFacilities = [];

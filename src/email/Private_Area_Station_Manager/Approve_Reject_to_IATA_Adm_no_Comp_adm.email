@@ -10,7 +10,8 @@
                     <p style="line-height: 1.8rem;">A new Station Manager request is pending approval.</p>   
                                     
                     <c:CW_RequestedBy contactRoleDetailData="{!relatedTo.Id}" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_RequestedBy>  
-                    <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>                                  
+                    <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>    
+                    <c:CW_ManageRequest contactRoleDetailData="{!relatedTo.Id}"></c:CW_ManageRequest>                              
                     <c:CW_NoCompanyAdminForOpeHierGroup stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_NoCompanyAdminForOpeHierGroup>                   
                     <c:CW_LinkManageRequest contactRoleDetailData="{!relatedTo.Id}"></c:CW_LinkManageRequest>
                     

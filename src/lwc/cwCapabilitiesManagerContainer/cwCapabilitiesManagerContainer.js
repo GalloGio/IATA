@@ -103,6 +103,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	listPositionsRow = [];
 	rowIndexSelected;
 	equipmentSelected;
+	@track equipmentSelectedLabel;
 	isKeepPhotos = false;
 	listDeleteRows = [];
 	listDataRow = [];
@@ -205,6 +206,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 		this.rowIndexSelected = rowIndex;
 		this.equipmentSelected = this.rowSelected.equipment_value;
+		this.equipmentSelectedLabel = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c;
 		this.rowSelected.isKeepPhotos = this.rowSelected.photosAvailable;
 	}
 
@@ -254,7 +256,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	handleUploadFinished(event) {
 		// Get the list of uploaded files
 		const uploadedFiles = event.detail.files;
-		let fileName = this.equipmentSelected + "-";
+		let fileName = this.equipmentSelectedLabel + "-";
 		let indexFileName = this.rowSelected.photos.length;
 
 		if (uploadedFiles.length > 0) {
@@ -490,8 +492,14 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let capabilityIndex = event.target.dataset.capabilityIndex;
 		let categoryIndex = event.target.dataset.categoryIndex;
 		let rowIndex = event.target.dataset.rowIndex;
-
+		let currentEquipmentPhoto = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c
 		this.photosRow = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
+
+		let indexFileName = 1;
+		this.photosRow.photos.forEach(element => {
+			element.label = currentEquipmentPhoto + "-" + indexFileName;
+			indexFileName++;
+		});
 		this.modalEditPhotos = true;
 	}
 

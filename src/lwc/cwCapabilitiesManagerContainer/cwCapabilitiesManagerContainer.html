@@ -290,11 +290,11 @@
 																multiple>
 															</lightning-file-upload>
 															
-
-															   <button if:true={row.photosAvailable}
+															<template if:true={editMode}>
+															   <button if:true={row.photosAvailableEdit}
 																	class="p-0 bg-transp border-0 cursor-pt"
 																	data-tosca="edit_photos" title="Edit photos" disabled={row.isNotEditable}>
-																	<img src={infoIcon} width="20px"
+																	<img src={infoIcon} width="20px" class="cursor-pt"
 																	data-super-categories-index={superCategoryIndex}
 																		data-section-index={sectionIndex}
 																		data-capability-index={capabilityIndex}
@@ -303,11 +303,29 @@
 																		onclick={openModalEditPhotos}/>
 																</button>
 																
-																<button if:false={row.photosAvailable} disabled
+																<button if:false={row.photosAvailableEdit} disabled
 																	class="p-0 bg-transp border-0 disabled-filter">
 																	<img src={infoIcon} width="20px" />
 																</button>
-															
+															</template>
+															<template if:false={editMode}>
+																<button if:true={row.photosAvailable}
+																	 class="p-0 bg-transp border-0 cursor-pt"
+																	 data-tosca="edit_photos" title="Edit photos" disabled={row.isNotEditable}>
+																	 <img src={infoIcon} width="20px" class="cursor-pt"
+																	 data-super-categories-index={superCategoryIndex}
+																		 data-section-index={sectionIndex}
+																		 data-capability-index={capabilityIndex}
+																		 data-category-index={categoryIndex}
+																		 data-row-index={rowIndex}
+																		 onclick={openModalEditPhotos}/>
+																 </button>
+																 
+																 <button if:false={row.photosAvailable} disabled
+																	 class="p-0 bg-transp border-0 disabled-filter">
+																	 <img src={infoIcon} width="20px" />
+																 </button>
+															 </template>
 														</td>
 
 														<td class="certifications-stamp cert-colum">
@@ -427,9 +445,16 @@
 										<lightning-button-icon if:true={isSaveOption} key={photo.id} data-id={photo.id} data-position="photoIndex" icon-name="utility:delete" onclick={deletePhotoCarousel}
 											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">
 										</lightning-button-icon>
-										<lightning-carousel-image if:true={photo.visible} key={photo.id}
-											src={photo.url} header={photo.label}>
-										</lightning-carousel-image>
+										<template if:true={editMode}>
+											<lightning-carousel-image  key={photo.id}
+												src={photo.url} header={photo.label}>
+											</lightning-carousel-image>
+										</template>
+										<template if:false={editMode}>
+											<lightning-carousel-image if:true={photo.visible} key={photo.id}
+												src={photo.url} header={photo.label}>
+											</lightning-carousel-image>
+										</template>
 									</template>
 								</lightning-carousel>
 							</div>
@@ -471,7 +496,7 @@
 							for:item="cert">
 								<div key={cert.id} class="slds-col">
 								<template if:false={cert.isDeleted}>
-									<img key={cert.id} width="55px" src={cert.src} title={cert.label} style="cursor: pointer;"
+									<img key={cert.id} width="55px" src={cert.src} title={cert.label} class="cursor-pt"
 										onclick={certiSelectedToRemove}
 										data-id={cert.id}
 										data-name={cert.name}>

@@ -936,6 +936,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 		public String url { get; set; }
 		@AuraEnabled
 		public String label { get; set; }
+		@AuraEnabled
+		public String id { get; set; }
 	}
 
 	public class CapabilityWrapper {

@@ -1,16 +1,25 @@
 public without sharing class CW_EmailTemplateData {
 	public String stationId {get; set;}
+	public String notificationId {get; set;}
 	public String contactRoleDetailId {get; set;}
 	public String orderItemId {get; set;}
 	public Boolean isRemove {get;set;}
 	public Boolean isToIata {get;set;}
 	List<ICG_Account_Role_Detail__c> station;
+	List<ICG_Notification__c> notifications;
 	List<ICG_Contact_Role_Detail__c> contactRoleDetail;
 	List<OrderItem> orderItem;
 	List<User> userRequestor;
 	List<Account> accountDetail;
 	public Boolean isPurchaseRemoteValidation {get;set;}
 	List<ICG_Capability_Assignment_Group__c> ICGCapabilityAssignmentGroups{get; set;}
+
+	public ICG_Notification__c getnotificationDetails(){
+		if(notifications == null && notificationId != null){
+			notifications = [SELECT Id, Certification_Name__c, Contact_Email__c, Contact_Name__c, Preferable_Audit_Date__c FROM ICG_Notification__c WHERE Id = :notificationId LIMIT 1];
+		}
+		return listHasValues(notifications) ? notifications[0] : null;
+	}
 
 	public ICG_Account_Role_Detail__c getStationDetails(){
 		if(station == null && stationId != null){
@@ -40,6 +49,14 @@ public without sharing class CW_EmailTemplateData {
 			orderItem = [SELECT Id, OrderId, (Select Id FROM ICG_Capability_Assignment_Groups__r), CreatedById FROM OrderItem where Id =:orderItemId];
 		} 
 		return listHasValues(orderItem) ? orderItem[0] : null;
+	}
+
+	public Order getOrderDetails(){
+		Order orderDetails;
+		if(orderItem == null && orderItemId != null){
+			orderDetails = [SELECT Id, OrderNumber FROM Order where Id =:getOrderItemDetails().OrderId LIMIT 1];
+		} 
+		return orderDetails;
 	}
 
 
@@ -134,6 +151,11 @@ public without sharing class CW_EmailTemplateData {
 		return opsHierarchy;
 	}
 
+	public String getOperationalHierarchyGroupFromRequestor(){
+		String opsHierarchy = getRequestedBy() != null ? CW_Utilities.getOpsHierarchyGroupFromUserId(getRequestedBy().Id) : 'N/A';
+		return opsHierarchy;
+	}
+
 	public List<ICG_Account_Role_Detail__c> getDuplicatedStations(){
 		List<ICG_Account_Role_Detail__c> duplicatedStations;
 		if (getStationDetails() != null){
@@ -161,6 +183,16 @@ public without sharing class CW_EmailTemplateData {
 			}
 		}
 		return approveUrl;
+	}
+
+	public Contact getContactRoleDetailContact(){
+
+		List<Contact> crdUser;
+		if(getContactRoleDetails() != null){
+			crdUser = queryContactById(contactRoleDetail[0].ContactId__c);
+		}
+
+		return listHasValues(crdUser) ? crdUser[0] : null;
 	}
 
 	public User getContactRoleDetailUser(){
@@ -309,25 +341,33 @@ public without sharing class CW_EmailTemplateData {
 			opsHierarchy = CW_Utilities.getOpsHierarchyNameFromAccountId(u.accountId);
 		}
 
-		return opsHierarchy;
+		return opsHierarchy; 
 	}
 
-	public String buildAddress(User u){
+	public String buildAddress(Object userOrContact){
+		User u = userOrContact instanceOf User ? (User)userOrContact : null;
+		Contact c = userOrContact instanceOf Contact ? (Contact)userOrContact : null;
+
 		String address='';
-		if( u!= null && u.AccountId != null){
-			address += u.Account.Business_Street__c;
+		if( (u!= null && u.AccountId != null) || (c!= null && c.AccountId != null)){
+			address += u!= null ? u.Account.Business_Street__c : c.Account.Business_Street__c;
 			if(address != ''){
 				address+=', ';
 			}
-			address +=  u.Account.Business_Postal_Code__c;
+			address += u!= null ? u.Account.Business_Postal_Code__c : c.Account.Business_Postal_Code__c;
 			if(address != '' && !address.endsWith(', ')){
 				address+=', ';
 			}
-			address +=  u.Account.Business_City__c != null ? u.Account.Business_City__r.Name : u.Account.Business_City_Name__c;
+			if(u != null){
+				address +=  u.Account.Business_City__c != null ? u.Account.Business_City__r.Name : u.Account.Business_City_Name__c;
+			}else{
+				address +=  c.Account.Business_City__c != null ? c.Account.Business_City__r.Name : c.Account.Business_City_Name__c;
+			}
+
 			if(address != '' && !address.endsWith(', ')){
 				address+=', ';
 			}
-			address +=  u.Account.IATA_ISO_Country__r.Name;
+			address += u!= null ? u.Account.IATA_ISO_Country__r.Name : c.Account.IATA_ISO_Country__r.Name;
 			address = address.replaceAll('null, ','');
 		}
 		return address;
@@ -367,6 +407,10 @@ public without sharing class CW_EmailTemplateData {
 	
 	public List<User> queryUserById(String id){
 		return [SELECT FirstName, LastName, Name, Email, Account.Name, AccountId, Account.Business_Street__c, Account.Business_Postal_Code__c, Account.Business_City__c, Account.Business_City__r.Name, Account.Business_City_Name__c, Account.IATA_ISO_Country__r.Name FROM User WHERE Id = :id LIMIT 1];
+	}
+
+	public List<Contact> queryContactById(String id){
+		return [SELECT FirstName, LastName, Name, Email, Account.Name, AccountId, Account.Business_Street__c, Account.Business_Postal_Code__c, Account.Business_City__c, Account.Business_City__r.Name, Account.Business_City_Name__c, Account.IATA_ISO_Country__r.Name FROM Contact WHERE Id = :id LIMIT 1];
 	}
 
 }

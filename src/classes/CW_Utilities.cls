@@ -422,7 +422,7 @@ public without sharing class CW_Utilities {
 					}
 
 					res.success = true;
-					res.message = Label.icg_thank_you_iata_contact;
+					res.message = Label.icg_station_manager_request_sent;
 					if (submitted != true) {
 						res.message += ' ' + Label.icg_something_went_wrong_emails;
 					}
@@ -573,16 +573,23 @@ public without sharing class CW_Utilities {
 		try {
 			insert crd;
 			Contact con = [Select id, email from contact where id = :contactId];
-
+			
+			
 			List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Comp_Adm_req_conf_to_requestor_sent', crd.Id, new Set<Id> {con.id}));
+			String subject = 'Company Admin request sent';
+			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', new List<String> {con.id}, cRd.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 			
 			Set<Id> companyAdminIds = new Set<Id>();
+			List<String> lstCompanyAdminIds = new List<String>();
 			for (Contact cadmn : getCompanyadminContactsFromGroupName(groupName)) {
 				companyAdminIds.add(cadmn.Id);
+				lstCompanyAdminIds.add(cadmn.Id);
 			}
 			if(!companyAdminIds.isEmpty()) {
+				subject = 'Company Admin request sent';
 				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_existing_Comp_Adm', crd.Id, companyAdminIds));
+				CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', lstCompanyAdminIds, cRd.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 			}
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_IATA_admin_CA', crd.Id, CW_EmailManager.getIataAdminsIds()));
 
@@ -771,6 +778,37 @@ public without sharing class CW_Utilities {
 		}
 		return opsHierarchy;
 	}
+
+	/*
+	 * @description		Get the global company group
+	 * @param			accountId <Account Id>
+	 * @return			Company group
+	*/
+	@AuraEnabled
+	public static String getOpsHierarchyGroupFromAccountId (String accountId) {
+		String opsHierarchy;
+		List<Account_Role__c> accRole = [Select Id, (Select Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from From_Relationships__r) from Account_Role__c Where Account__c = :accountId AND Functional_Role__c = 'One Source'];
+		if (!accRole.isEmpty()) {
+			if(!accRole[0].From_Relationships__r.isEmpty()) {
+				if(accRole[0].From_Relationships__r[0].To__c != null && accRole[0].From_Relationships__r[0].To__c != accRole[0].From_Relationships__r[0].From__c) {
+					List<Account_Role_Relationship__c> rel = [Select Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c where From__c = :accRole[0].From_Relationships__r[0].To__c];
+					if(!rel.isEmpty()) {
+						if (rel[0].Ops_Hierarchy_Group__c != null) {
+							opsHierarchy = rel[0].Ops_Hierarchy_Group__c;
+						}
+					}
+				}
+				if(opsHierarchy == null) {
+					if (accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c != null) {
+						opsHierarchy = accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c;
+					}
+				}
+			}
+		}
+		
+		return opsHierarchy;
+	}
+
 	public static String getOpsHierarchyNameFromUserId (String userId) {
 		String opsHierarchy;
 		List<User> u = [Select id, AccountId from User where id=:userId];
@@ -779,6 +817,16 @@ public without sharing class CW_Utilities {
 		}
 		return opsHierarchy;
 	}
+
+	public static String getOpsHierarchyGroupFromUserId (String userId) {
+		String opsHierarchy;
+		List<User> u = [Select id, AccountId from User where id=:userId];
+		if(!u.isEmpty() && u[0].AccountId != null) {
+			opsHierarchy = getOpsHierarchyGroupFromAccountId(u[0].AccountId);
+		}
+		return opsHierarchy;
+	}
+
 	@AuraEnabled
 	public static String getOpsHierarchyNameFromStationId (String stationId) {
 		String opsHierarchy;
@@ -964,7 +1012,7 @@ public without sharing class CW_Utilities {
 				templateNameIata = 'Notification_approved_to_IATA';
 				templateNameContact = 'Notification_approved_to_User';
 				templateNameCompAdmStationManagers = 'Notification_appr_to_Sta_Man_Comp_Adm';
-				subject = 'Facility manager approved';
+				subject = 'Station Manager request approved';
 				for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
 					whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
 					notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
@@ -974,13 +1022,13 @@ public without sharing class CW_Utilities {
 				templateNameIata = 'Notification_Com_Adm_Req_appr_to_IATA';
 				templateNameContact = 'Notification_CA_Approv_to_Requestor';
 				templateNameCompAdmStationManagers = 'Notification_CA_Appro_to_Comp_Adm';
-				subject = 'Company admin approved';
+				subject = 'Company admin request approved';
 
 			}
 		} else if (newContactRole.Status__c == 'Rejected' && oldContactRole.Status__c != 'Rejected') {
 			if(newContactRole.ICG_Role__c == FACILITY_MANAGER) {
 				templateNameContact = 'Notification_rejected_to_User';
-				subject = 'Station manager rejected';
+				subject = 'Station manager request rejected';
 				for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
 					whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
 					notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
@@ -989,7 +1037,7 @@ public without sharing class CW_Utilities {
 				templateNameIata = 'Notification_CA_Rejected_to_IATA';
 				templateNameContact = 'Notification_CA_Rejected_to_Requestor';
 				templateNameCompAdmStationManagers = 'Notification_CA_Rejected_to_Comp_Adm';
-				subject = 'Company admin rejected';
+				subject = 'Company admin request rejected';
 			}
 		} else if (newContactRole.Status__c == 'Removed' && oldContactRole.Status__c != 'Removed') {
 			templateNameContact = 'Remove_notification_to_removed_stat_man';

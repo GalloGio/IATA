@@ -9,6 +9,10 @@ import getCompanyAdmins from "@salesforce/apex/CW_Utilities.getCompanyAdminConta
 import getFacilityManagers from "@salesforce/apex/CW_Utilities.getStationManagersContactRoleDetails";
 import becomeFacilityAdmin from "@salesforce/apex/CW_Utilities.becomeFacilityAdmin";
 import becomeCompanyAdmin from "@salesforce/apex/CW_Utilities.becomeCompanyAdminFromStation";
+
+import getOpsHierarchyNameFromStationId from '@salesforce/apex/CW_Utilities.getOpsHierarchyNameFromStationId';
+import getOpsHierarchyNameFromAccountId from '@salesforce/apex/CW_Utilities.getOpsHierarchyNameFromAccountId';
+
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
 import saveAirlinesHandled from "@salesforce/apex/CW_HandledAirlinesController.saveAirlinesHandled";
 import saveHiddenOperatingStations from "@salesforce/apex/CW_HandledAirlinesController.saveHiddenOperatingStations";
@@ -65,6 +69,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track userRole;
 	@track companyAdmins = [];
 	@track companyAdminsChecked = false;
+	@track hierarchyChecked = false;
+	@track sameHierarchyGroup = false;
 	@track facilityManagers = [];
 	@track userInfo;
 	@track showModal = false;
@@ -79,7 +85,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track modalImage = this.CHECKED_IMAGE;
 	@track editAirlines = true;
 	@track editCargoHandling = true;
-	@track editRampHandlers = true
+	@track editRampHandlers = true;
 	checkedImage = this.CHECKED_IMAGE;
 	@track loaded;
 	@track overviewValid = true;
@@ -185,7 +191,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	renderedCallback() {
 		if (!this.initialized) {
-
+			
 			this.initialized = true;
 			let id = this._facilityid;
 			if (!id) {
@@ -198,11 +204,16 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					id = urlParams.eid.replace(/[^a-zA-Z0-9]/g, "");
 					this.getData(id);
 					this.getUserRoleJS(id);
+					
+
 				}
 			} else {
 				this.getUserRoleJS(this._facilityid);
 			}
+			this.opsHierarchyUser(this._facilityid);
+			
 		}
+		
 	}
 
 	get getStyleListAir() {
@@ -333,6 +344,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					this.getCompanyAdminsFromDB(this.facility.companyId);
 					this.getFacilityManagersFromDB(this.facility.Id);
 					this.setLoadedStatus();
+					
 					this.rawFacility = JSON.parse(JSON.stringify(this.facility));
 				} else {
 					this.setLoadedStatus();
@@ -696,9 +708,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 	
 	get showCompanyAdminsButton() {		
-		if(this.companyAdminsChecked === true){
+		if(this.companyAdminsChecked === true && this.hierarchyChecked === true){
 			let showCompanyBtn = false;
-			if (!this.isCompanyAdmin && !this.isFacilityManager && this.companyAdmins.length < 1){
+			if (!this.isCompanyAdmin && !this.isFacilityManager && this.companyAdmins.length < 1 && this.sameHierarchyGroup === true){
 				showCompanyBtn = true
 			}
 			return showCompanyBtn;
@@ -706,7 +718,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	get showFacilityManagersButton() {		
-		if(this.companyAdminsChecked === true){
+		if(this.companyAdminsChecked === true && this.hierarchyChecked === true){
 			let showFaciManBtn = false;
 			if (!this.isCompanyAdmin && !this.isFacilityManager && this.companyAdmins.length > 0){
 				showFaciManBtn = true;
@@ -715,8 +727,35 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 	}
 
+	opsHierarchyUser(faciId){
+		getOpsHierarchyNameFromStationId({ stationId: faciId }).then(data => {
+			if (data) {
+				getOpsHierarchyNameFromAccountId({ accountId: this.userInfo.AccountId }).then(data2 => {
+					if (data2) {
+						this.hierarchyChecked = true;
+						console.log('data : ' + data);
+						console.log('data2 : ' + data2);
+						if(data == data2){
+							this.sameHierarchyGroup = true;
+						}	
+					}
+				})
+				.catch(err => {
+					console.log('getOpsHierarchyNameFromAccountId Error : ' +  err);
+				});	
+			}
+		})
+		.catch(err => {
+			console.log('getOpsHierarchyNameFromStationId Error : ' + err);
+		});
+		
+
+
+	}
+	
+
 	get shouldShowBecomeButton(){
-		if(this.companyAdminsChecked === true){
+		if(this.companyAdminsChecked === true  && this.hierarchyChecked === true){
 			return (this.showFacilityManagersButton || this.showCompanyAdminsButton);
 		}
 	}

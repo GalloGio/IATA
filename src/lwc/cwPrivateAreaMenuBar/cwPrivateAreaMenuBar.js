@@ -16,6 +16,7 @@ export default class CwPrivateAreaMenuBar extends LightningElement {
     remotevalidation = this.icons + "ic-remote-validation-icon.svg";
 
     @api userInfo;
+    @api isUserManagedFacilities;
     @track mnuIsOpen = true;
     @api companyAdminSectionText;
     @api label;
@@ -126,6 +127,6 @@ export default class CwPrivateAreaMenuBar extends LightningElement {
         }
     }
     goToPublicArea() {
-        window.location.href = this.urlPublicArea;
+        window.open(this.urlPublicArea);
     }
 }

@@ -11,6 +11,7 @@
                     
                     <c:CW_StationManagerRightRemoved contactRoleDetailData="{!relatedTo.Id}" ></c:CW_StationManagerRightRemoved>
                     <c:CW_RequestedBy contactRoleDetailData="{!relatedTo.Id}" ></c:CW_RequestedBy>
+                    <c:CW_StationDetails stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_StationDetails>
                     <c:CW_ListStationManager nameList="Current Station Managers" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" ></c:CW_ListStationManager>   
                     <c:CW_ManageRequest isRemoveData="true" contactRoleDetailData="{!relatedTo.Id}" stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_ManageRequest>
     

@@ -20,6 +20,7 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	@track positionCarousel = "slds-carousel__panels translate-x-0";
 	@track modalCarouselOpen = false;
 	@track urlImageModal = null;
+	@track positionMiniatureMap = new Map();
 	isLoading = false;
 
 	isRenderedCallback = false;
@@ -29,7 +30,9 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	@track currentImagePosition = 0;
 	@api editMode = false;
 	@track showFileUploadCarousel = false;
-    @track showFileHideCarousel=false;
+	@track showFileHideCarousel=false;
+	indexMap = 1;
+	lastIndexMap = 0;
     
     get showAsCreateStation() {
 		return this.localRecordId == "";
@@ -66,6 +69,10 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	initializedswipe = false;
 	initializedswipepopup = false;
 
+	get listImagesLength(){
+		return this.listImages.length;
+	}
+
 	getFacilityFiles(id) {
 		this.isLoading = true;
 		getFacilityFiles_({ recordId: id })
@@ -74,21 +81,37 @@ export default class CwAccountDetailCarousel extends LightningElement {
 				if (this.data) {
 					let imagesList = JSON.parse(JSON.stringify(this.data));
 					let listMiniature = [];
-					let index = 0;
-					imagesList.forEach(img => {
-						img.url = "data:image/" + img.fileExtension + ";base64," + img.image;
-						if (index < 4) {
+					let index = 1;
+					let indexMap = 1;
+					imagesList.forEach(img => {						
+						img.url = img.urlImage;
+						//img.url = "data:image/" + img.fileExtension + ";base64," + img.image;
+						// if (index < 4) {
+						// 	listMiniature.push(img);
+						// }
+
+						if(index !== 4*indexMap ){
 							listMiniature.push(img);
+							if(index === imagesList.length){
+								this.positionMiniatureMap.set(indexMap,listMiniature);
+							}
+						}
+						else{
+							listMiniature.push(img);
+							this.positionMiniatureMap.set(indexMap,listMiniature);
+							indexMap++;
+							listMiniature = [];
 						}
 						index++;
 					});
+					this.lastIndexMap = indexMap;
 
 					if (imagesList !== undefined && imagesList.length > 0) {
 						this.urlImageModal = imagesList[0].url;
 					}
 
 					this.listImages = imagesList;
-					this.listMiniature = listMiniature;
+					this.listMiniature = this.positionMiniatureMap.get(1);
 					this.index = index;
 					this.error = undefined;
 					this.initializeSwipe();
@@ -102,7 +125,7 @@ export default class CwAccountDetailCarousel extends LightningElement {
 					this.dispatchEvent(newEvent);
 				}
 			})
-			.catch(err => alert(err.message))
+			.catch(err => console.log(err.message))
 			.finally(() => {
 				this.isLoading = false;
 			});
@@ -196,6 +219,7 @@ export default class CwAccountDetailCarousel extends LightningElement {
 			}
 			i++;
 		});
+
 	}
 
 	openModal() {
@@ -235,43 +259,45 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	moveListMiniature(event) {
 		let arrow = event.target.dataset.item;
 		if (arrow === "upArrow") {
-			this.listMiniature.pop();
-			let auxLIst = [];
-			auxLIst.push(this.listImages[0]);
-			this.listMiniature.forEach(element => {
-				auxLIst.push(element);
-			});
-			this.listMiniature = auxLIst;
-			this.template.querySelector(".chevronup").hidden = true;
-			this.template.querySelector(".div-chevronup").hidden = true;
+			this.indexMap = this.indexMap - 1;
+			this.listMiniature = this.positionMiniatureMap.get(this.indexMap);
+			if(this.indexMap === 1){
+				this.template.querySelector(".chevronup").hidden = true;
+				this.template.querySelector(".div-chevronup").hidden = true;
+			}			
 			this.template.querySelector(".chevrondown").hidden = false;
 			this.template.querySelector(".div-chevrondown").hidden = false;
 		} else {
-			this.listMiniature.splice(0, 1);
-			this.listMiniature.push(this.listImages[4]);
+			this.indexMap = this.indexMap + 1;
+			this.listMiniature = this.positionMiniatureMap.get(this.indexMap);
 			this.template.querySelector(".chevronup").hidden = false;
 			this.template.querySelector(".div-chevronup").hidden = false;
-			this.template.querySelector(".chevrondown").hidden = true;
-			this.template.querySelector(".div-chevrondown").hidden = true;
+			if(this.indexMap === this.lastIndexMap){
+				this.template.querySelector(".chevrondown").hidden = true;
+				this.template.querySelector(".div-chevrondown").hidden = true;
+			}
+			
 		}
 	}
 
 	moveList(event) {
 		let arrow = event && event.target ? event.target.dataset.item : event;
 		let position = this.currentImagePosition;
+
 		if (arrow === "rightArrow") {
-			if (this.currentImagePosition < 4) {
+			if (position < this.listImagesLength-1) {
 				this.indicatorClicked = this.listImages[position + 1].id;
 			} else {
 				this.indicatorClicked = this.listImages[0].id;
 			}
 		} else {
-			if (this.currentImagePosition > 0) {
+			if (position > 0) {
 				this.indicatorClicked = this.listImages[position - 1].id;
 			} else {
-				this.indicatorClicked = this.listImages[4].id;
+				this.indicatorClicked = this.listImages[this.listImagesLength-1].id;
 			}
 		}
+
 		this.updateContentList();
 	}
 

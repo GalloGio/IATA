@@ -5,7 +5,7 @@
 		<div class="container container-search">
 			<div class="row">
 				<div class="col-xl-2 col-lg-2 col-md-12 col-xs-12 filter-panel">
-					<c-cw-private-area-menu-bar label={label} onmenuitemselection={selectMenuItem} onexpandmenu={expandMnu} oncollapsemenu={collapseMnu} selected-element={menuItemSelected} class="height-100" ongotohome={goToHome} user-info={userInfo} company-admin-section-text={getCompanyAdminSectionText}> </c-cw-private-area-menu-bar>
+					<c-cw-private-area-menu-bar label={label} onmenuitemselection={selectMenuItem} onexpandmenu={expandMnu} oncollapsemenu={collapseMnu} selected-element={menuItemSelected} class="height-100" ongotohome={goToHome} user-info={userInfo} company-admin-section-text={getCompanyAdminSectionText} isser-managed-facilities={isUserManagedFacilities}> </c-cw-private-area-menu-bar>
 				</div>
 				<div class="col-xl-10 col-lg-10 col-md-12 col-xs-12 maincol marginbottom">
 					<div class="col-12">
@@ -137,7 +137,7 @@
 										<hr class="yellow-underline">
 									</div>
 								</div>
-								<c-cw-purchase-remote-validation text-filter={selectedFacilityName} label={label} user-managed-facilities={userManagedFacilities} remote-validations={userRemoteValidations} is-production={isProductionEnv} onstationclicked={selectFacility}> </c-cw-purchase-remote-validation>
+								<c-cw-purchase-remote-validation text-filter={selectedFacilityName} label={label} user-managed-facilities={userManagedFacilities} remote-validations={userRemoteValidations} is-production={isProductionEnv} onstationclicked={selectFacility} onmenuitemselection={selectMenuItem}> </c-cw-purchase-remote-validation>
 							</template>
 
 							<template if:true={showOpenRemoteValidations}>

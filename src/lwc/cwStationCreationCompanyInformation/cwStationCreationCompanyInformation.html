@@ -299,12 +299,17 @@
 									<lightning-combobox
 										name="opsHierarchy"
 										options={opsHierarchies}
-										value={account.opsHierarchy}
+										value={localAccount.opsHierarchy}
 										class="cursorPointerComboBox text-xxsmall"
 										dropdown-alignment="auto"
 										variant="label-hidden"
-										onchange={handleInputValueChange}>
+										onchange={handleInputValueChange}
+										placeholder={label.icg_select_an_existing_hierarchy}
+										if:false={localAccount.isNewOpsHierarchy}>
 									</lightning-combobox>
+									<input type="text" if:true={localAccount.isNewOpsHierarchy} class="slds-input" name="opsHierarchy" data-tosca="opsHierarchytext" id="opsHierarchytext" value={localAccount.opsHierarchy} onkeyup={handleInputValueChange}>
+									<a href="javascript:void(0)" class="hint" if:false={localAccount.isNewOpsHierarchy} onclick={newOpshierarchy}>{label.icg_or_create_a_new_hierarchy}</a>
+									<a href="javascript:void(0)" class="hint" if:true={localAccount.isNewOpsHierarchy} onclick={cancelNewOpsHierarchy}>{label.cancel}</a>
 								</div>
 							</div>
 						</div>

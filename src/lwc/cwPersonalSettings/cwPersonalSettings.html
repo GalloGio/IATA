@@ -1,22 +1,21 @@
 <template>
     <div class="wrapperSettings" if:true={UserInfo}>
-        <div class="row align-items-center justify-content-end">
-            <img src={UserInfo.photolinkfull} alt=" " class="mainPicture" onclick={displayMenu}>
+        <div class="row align-items-center justify-content-end cursor-pt m-0 pr-2" onclick={displayMenu}>
+            <lightning-icon icon-name="utility:user" variant="inverse" size="small" ></lightning-icon>
+            <p class="pl-2 text-white">{UserInfo.name}</p>
+            <lightning-icon icon-name="utility:chevrondown" variant="inverse" size="x-small" class="pl-2 pr-2 chevron"></lightning-icon>
         </div>
         <div if:true={showMenu}
-            class="row slds-popover slds-nubbin_top-right align-items-center justify-content-center cardContent">
-            <div class="col-md-2 p-0 align-middle">
-                <img src={UserInfo.photolinksmall} alt=" " class="detailPicture">
-            </div>
-            <div class="col-md-10 p-0 row detailSettings">
+            class="row slds-popover align-items-center justify-content-center cardContent">
+            <div class="col-md-12 p-0 row detailSettings text-left">
                 <div class="col-md-12">
                     <h3>{UserInfo.name}</h3>
                 </div>
                 <div class="col-md-12">
-                    {UserInfo.email}
+                    {UserInfo.companyname}                  
                 </div>
                 <div class="col-md-6">
-                    <a onclick={goToPrivateArea}><span class="text-blue">{label.private_area}</span></a>
+                    <a onclick={goToPrivateArea} class="underline"><span class="text-blue">{label.private_area}</span></a>
                 </div>
             </div>
         </div>

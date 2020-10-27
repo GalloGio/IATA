@@ -111,15 +111,16 @@ public class CW_CreateFacilityControllerTest {
 		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
 
 		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
-		geoLocations.companyId = accRole.Id;
+		geoLocations.companyId = acc.Id;
 		geoLocations.latitude = 1.32;
 		geoLocations.longitude = 2.45;
 		String geoLocationsJSON = JSON.serialize(geoLocations);
 
 		Test.startTest();
-
-		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), JSON.serialize(geoLocationsJSON), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), JSON.serialize(geoLocationsJSON), accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		
+		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, false,false, false,'[]','[]');
 	
 		Test.stopTest();
 	}
@@ -133,7 +134,7 @@ public class CW_CreateFacilityControllerTest {
 		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
 		
 		Test.startTest();
-		Map <String, Object> result = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test'));
+		Map <String, Object> result = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test',true));
 		System.assert(result.get('success') == true, 'Test: CreateDummyCompany FAILED');
 		Test.stopTest();
 	}

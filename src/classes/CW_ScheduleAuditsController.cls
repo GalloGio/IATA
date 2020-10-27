@@ -57,16 +57,22 @@ public without sharing class CW_ScheduleAuditsController {
 		if (!auditsToInsert.isEmpty()){
 			insert auditsToInsert;
 
-			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_Conf_to_User', auditsToInsert[0].Station__c, new Set<Id> {UserInfo.getUserId()}));
-
+			String subject = 'Audit request sent';
+			List<String> notificationReceivers = new List<String>();
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_Conf_to_User', auditsToInsert[0].Id, new Set<Id> {UserInfo.getUserId()}));
+			notificationReceivers.add(UserInfo.getUserId());
+			
 			for(ICG_Notification__c nt : auditsToInsert){
-				if(Limits.getLimitEmailInvocations()>0){
-					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {
+				if(Limits.getLimitEmailInvocations()>0){					
+					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {						
 						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Station__c, managersPerQueueId.get(nt.OwnerId)));
+						for(Id currentReceiver: managersPerQueueId.get(nt.OwnerId)){	
+							notificationReceivers.add(currentReceiver);
+						}
 					}
 				}
 			}
-
+			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', notificationReceivers, auditsToInsert[0].Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 
 		CW_EmailManager.sendInternalEmails(emailsToBeSent);

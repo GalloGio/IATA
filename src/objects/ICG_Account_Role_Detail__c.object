@@ -247,26 +247,16 @@
         <type>MultiselectPicklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>false</sorted>
+                <sorted>true</sorted>
                 <value>
-                    <fullName>Mandarin</fullName>
+                    <fullName>Akan</fullName>
                     <default>false</default>
-                    <label>Mandarin</label>
+                    <label>Akan</label>
                 </value>
                 <value>
-                    <fullName>Spanish</fullName>
+                    <fullName>Amharic</fullName>
                     <default>false</default>
-                    <label>Spanish</label>
-                </value>
-                <value>
-                    <fullName>English</fullName>
-                    <default>false</default>
-                    <label>English</label>
-                </value>
-                <value>
-                    <fullName>Hindi</fullName>
-                    <default>false</default>
-                    <label>Hindi</label>
+                    <label>Amharic</label>
                 </value>
                 <value>
                     <fullName>Arabic</fullName>
@@ -274,9 +264,34 @@
                     <label>Arabic</label>
                 </value>
                 <value>
-                    <fullName>Portuguese</fullName>
+                    <fullName>Assamese</fullName>
                     <default>false</default>
-                    <label>Portuguese</label>
+                    <label>Assamese</label>
+                </value>
+                <value>
+                    <fullName>Austrian</fullName>
+                    <default>false</default>
+                    <label>Austrian</label>
+                </value>
+                <value>
+                    <fullName>Awadhi</fullName>
+                    <default>false</default>
+                    <label>Awadhi</label>
+                </value>
+                <value>
+                    <fullName>Azerbaijani</fullName>
+                    <default>false</default>
+                    <label>Azerbaijani</label>
+                </value>
+                <value>
+                    <fullName>Balochi</fullName>
+                    <default>false</default>
+                    <label>Balochi</label>
+                </value>
+                <value>
+                    <fullName>Belarusian</fullName>
+                    <default>false</default>
+                    <label>Belarusian</label>
                 </value>
                 <value>
                     <fullName>Bengali</fullName>
@@ -284,54 +299,89 @@
                     <label>Bengali</label>
                 </value>
                 <value>
-                    <fullName>Russian</fullName>
+                    <fullName>Bhojpuri</fullName>
                     <default>false</default>
-                    <label>Russian</label>
+                    <label>Bhojpuri</label>
                 </value>
                 <value>
-                    <fullName>Japanese</fullName>
+                    <fullName>Burmese</fullName>
                     <default>false</default>
-                    <label>Japanese</label>
+                    <label>Burmese</label>
                 </value>
                 <value>
-                    <fullName>Punjabi</fullName>
+                    <fullName>Cantonese</fullName>
                     <default>false</default>
-                    <label>Punjabi</label>
+                    <label>Cantonese</label>
                 </value>
                 <value>
-                    <fullName>German</fullName>
+                    <fullName>Catalan</fullName>
                     <default>false</default>
-                    <label>German</label>
+                    <label>Catalan</label>
                 </value>
                 <value>
-                    <fullName>Javanese</fullName>
+                    <fullName>Cebuano</fullName>
                     <default>false</default>
-                    <label>Javanese</label>
+                    <label>Cebuano</label>
                 </value>
                 <value>
-                    <fullName>Wu</fullName>
+                    <fullName>Chewa</fullName>
                     <default>false</default>
-                    <label>Wu</label>
+                    <label>Chewa</label>
                 </value>
                 <value>
-                    <fullName>Malay</fullName>
+                    <fullName>Chhattisgarhi</fullName>
                     <default>false</default>
-                    <label>Malay</label>
+                    <label>Chhattisgarhi</label>
                 </value>
                 <value>
-                    <fullName>Telugu</fullName>
+                    <fullName>Chinese</fullName>
                     <default>false</default>
-                    <label>Telugu</label>
+                    <label>Chinese</label>
                 </value>
                 <value>
-                    <fullName>Vietnamese</fullName>
+                    <fullName>Chittagonian</fullName>
                     <default>false</default>
-                    <label>Vietnamese</label>
+                    <label>Chittagonian</label>
                 </value>
                 <value>
-                    <fullName>Korean</fullName>
+                    <fullName>Czech</fullName>
                     <default>false</default>
-                    <label>Korean</label>
+                    <label>Czech</label>
+                </value>
+                <value>
+                    <fullName>Danish</fullName>
+                    <default>false</default>
+                    <label>Danish</label>
+                </value>
+                <value>
+                    <fullName>Deccan</fullName>
+                    <default>false</default>
+                    <label>Deccan</label>
+                </value>
+                <value>
+                    <fullName>Dhundhari</fullName>
+                    <default>false</default>
+                    <label>Dhundhari</label>
+                </value>
+                <value>
+                    <fullName>Dutch</fullName>
+                    <default>false</default>
+                    <label>Dutch</label>
+                </value>
+                <value>
+                    <fullName>Eastern Min</fullName>
+                    <default>false</default>
+                    <label>Eastern Min</label>
+                </value>
+                <value>
+                    <fullName>English</fullName>
+                    <default>false</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>Flemish</fullName>
+                    <default>false</default>
+                    <label>Flemish</label>
                 </value>
                 <value>
                     <fullName>French</fullName>
@@ -339,39 +389,24 @@
                     <label>French</label>
                 </value>
                 <value>
-                    <fullName>Marathi</fullName>
+                    <fullName>Fula</fullName>
                     <default>false</default>
-                    <label>Marathi</label>
+                    <label>Fula</label>
                 </value>
                 <value>
-                    <fullName>Tamil</fullName>
+                    <fullName>Gan</fullName>
                     <default>false</default>
-                    <label>Tamil</label>
+                    <label>Gan</label>
                 </value>
                 <value>
-                    <fullName>Urdu</fullName>
+                    <fullName>German</fullName>
                     <default>false</default>
-                    <label>Urdu</label>
+                    <label>German</label>
                 </value>
                 <value>
-                    <fullName>Turkish</fullName>
+                    <fullName>Greek</fullName>
                     <default>false</default>
-                    <label>Turkish</label>
-                </value>
-                <value>
-                    <fullName>Italian</fullName>
-                    <default>false</default>
-                    <label>Italian</label>
-                </value>
-                <value>
-                    <fullName>Yue</fullName>
-                    <default>false</default>
-                    <label>Yue</label>
-                </value>
-                <value>
-                    <fullName>Thai</fullName>
-                    <default>false</default>
-                    <label>Thai</label>
+                    <label>Greek</label>
                 </value>
                 <value>
                     <fullName>Gujarati</fullName>
@@ -379,14 +414,189 @@
                     <label>Gujarati</label>
                 </value>
                 <value>
+                    <fullName>Haitian Creole</fullName>
+                    <default>false</default>
+                    <label>Haitian Creole</label>
+                </value>
+                <value>
+                    <fullName>Hakka</fullName>
+                    <default>false</default>
+                    <label>Hakka</label>
+                </value>
+                <value>
+                    <fullName>Haryanvi</fullName>
+                    <default>false</default>
+                    <label>Haryanvi</label>
+                </value>
+                <value>
+                    <fullName>Hausa</fullName>
+                    <default>false</default>
+                    <label>Hausa</label>
+                </value>
+                <value>
+                    <fullName>Hiligaynon/Ilonggo</fullName>
+                    <default>false</default>
+                    <label>Hiligaynon/Ilonggo</label>
+                </value>
+                <value>
+                    <fullName>Hindi</fullName>
+                    <default>false</default>
+                    <label>Hindi</label>
+                </value>
+                <value>
+                    <fullName>Hmong</fullName>
+                    <default>false</default>
+                    <label>Hmong</label>
+                </value>
+                <value>
+                    <fullName>Hungarian</fullName>
+                    <default>false</default>
+                    <label>Hungarian</label>
+                </value>
+                <value>
+                    <fullName>Igbo</fullName>
+                    <default>false</default>
+                    <label>Igbo</label>
+                </value>
+                <value>
+                    <fullName>Ilocano</fullName>
+                    <default>false</default>
+                    <label>Ilocano</label>
+                </value>
+                <value>
+                    <fullName>Italian</fullName>
+                    <default>false</default>
+                    <label>Italian</label>
+                </value>
+                <value>
+                    <fullName>Japanese</fullName>
+                    <default>false</default>
+                    <label>Japanese</label>
+                </value>
+                <value>
+                    <fullName>Javanese</fullName>
+                    <default>false</default>
+                    <label>Javanese</label>
+                </value>
+                <value>
                     <fullName>Jin</fullName>
                     <default>false</default>
                     <label>Jin</label>
                 </value>
                 <value>
-                    <fullName>Southern Min</fullName>
+                    <fullName>Kannada</fullName>
                     <default>false</default>
-                    <label>Southern Min</label>
+                    <label>Kannada</label>
+                </value>
+                <value>
+                    <fullName>Kazakh</fullName>
+                    <default>false</default>
+                    <label>Kazakh</label>
+                </value>
+                <value>
+                    <fullName>Khmer</fullName>
+                    <default>false</default>
+                    <label>Khmer</label>
+                </value>
+                <value>
+                    <fullName>Kinyarwanda</fullName>
+                    <default>false</default>
+                    <label>Kinyarwanda</label>
+                </value>
+                <value>
+                    <fullName>Kirundi</fullName>
+                    <default>false</default>
+                    <label>Kirundi</label>
+                </value>
+                <value>
+                    <fullName>Konkani</fullName>
+                    <default>false</default>
+                    <label>Konkani</label>
+                </value>
+                <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
+                    <fullName>Kurdish</fullName>
+                    <default>false</default>
+                    <label>Kurdish</label>
+                </value>
+                <value>
+                    <fullName>Madurese</fullName>
+                    <default>false</default>
+                    <label>Madurese</label>
+                </value>
+                <value>
+                    <fullName>Magahi</fullName>
+                    <default>false</default>
+                    <label>Magahi</label>
+                </value>
+                <value>
+                    <fullName>Maithili</fullName>
+                    <default>false</default>
+                    <label>Maithili</label>
+                </value>
+                <value>
+                    <fullName>Malagasy</fullName>
+                    <default>false</default>
+                    <label>Malagasy</label>
+                </value>
+                <value>
+                    <fullName>Malay</fullName>
+                    <default>false</default>
+                    <label>Malay</label>
+                </value>
+                <value>
+                    <fullName>Malayalam</fullName>
+                    <default>false</default>
+                    <label>Malayalam</label>
+                </value>
+                <value>
+                    <fullName>Mandarin</fullName>
+                    <default>false</default>
+                    <label>Mandarin</label>
+                </value>
+                <value>
+                    <fullName>Marathi</fullName>
+                    <default>false</default>
+                    <label>Marathi</label>
+                </value>
+                <value>
+                    <fullName>Marwari</fullName>
+                    <default>false</default>
+                    <label>Marwari</label>
+                </value>
+                <value>
+                    <fullName>Mossi</fullName>
+                    <default>false</default>
+                    <label>Mossi</label>
+                </value>
+                <value>
+                    <fullName>Nepali</fullName>
+                    <default>false</default>
+                    <label>Nepali</label>
+                </value>
+                <value>
+                    <fullName>Northern Min</fullName>
+                    <default>false</default>
+                    <label>Northern Min</label>
+                </value>
+                <value>
+                    <fullName>Odia</fullName>
+                    <default>false</default>
+                    <label>Odia</label>
+                </value>
+                <value>
+                    <fullName>Oromo</fullName>
+                    <default>false</default>
+                    <label>Oromo</label>
+                </value>
+                <value>
+                    <fullName>Pashto</fullName>
+                    <default>false</default>
+                    <label>Pashto</label>
                 </value>
                 <value>
                     <fullName>Persian</fullName>
@@ -399,294 +609,14 @@
                     <label>Polish</label>
                 </value>
                 <value>
-                    <fullName>Pashto</fullName>
+                    <fullName>Portuguese</fullName>
                     <default>false</default>
-                    <label>Pashto</label>
+                    <label>Portuguese</label>
                 </value>
                 <value>
-                    <fullName>Kannada</fullName>
+                    <fullName>Punjabi</fullName>
                     <default>false</default>
-                    <label>Kannada</label>
-                </value>
-                <value>
-                    <fullName>Xiang</fullName>
-                    <default>false</default>
-                    <label>Xiang</label>
-                </value>
-                <value>
-                    <fullName>Malayalam</fullName>
-                    <default>false</default>
-                    <label>Malayalam</label>
-                </value>
-                <value>
-                    <fullName>Sundanese</fullName>
-                    <default>false</default>
-                    <label>Sundanese</label>
-                </value>
-                <value>
-                    <fullName>Hausa</fullName>
-                    <default>false</default>
-                    <label>Hausa</label>
-                </value>
-                <value>
-                    <fullName>Odia</fullName>
-                    <default>false</default>
-                    <label>Odia</label>
-                </value>
-                <value>
-                    <fullName>Burmese</fullName>
-                    <default>false</default>
-                    <label>Burmese</label>
-                </value>
-                <value>
-                    <fullName>Hakka</fullName>
-                    <default>false</default>
-                    <label>Hakka</label>
-                </value>
-                <value>
-                    <fullName>Ukrainian</fullName>
-                    <default>false</default>
-                    <label>Ukrainian</label>
-                </value>
-                <value>
-                    <fullName>Bhojpuri</fullName>
-                    <default>false</default>
-                    <label>Bhojpuri</label>
-                </value>
-                <value>
-                    <fullName>Tagalog</fullName>
-                    <default>false</default>
-                    <label>Tagalog</label>
-                </value>
-                <value>
-                    <fullName>Yoruba</fullName>
-                    <default>false</default>
-                    <label>Yoruba</label>
-                </value>
-                <value>
-                    <fullName>Maithili</fullName>
-                    <default>false</default>
-                    <label>Maithili</label>
-                </value>
-                <value>
-                    <fullName>Uzbek</fullName>
-                    <default>false</default>
-                    <label>Uzbek</label>
-                </value>
-                <value>
-                    <fullName>Sindhi</fullName>
-                    <default>false</default>
-                    <label>Sindhi</label>
-                </value>
-                <value>
-                    <fullName>Amharic</fullName>
-                    <default>false</default>
-                    <label>Amharic</label>
-                </value>
-                <value>
-                    <fullName>Fula</fullName>
-                    <default>false</default>
-                    <label>Fula</label>
-                </value>
-                <value>
-                    <fullName>Romanian</fullName>
-                    <default>false</default>
-                    <label>Romanian</label>
-                </value>
-                <value>
-                    <fullName>Oromo</fullName>
-                    <default>false</default>
-                    <label>Oromo</label>
-                </value>
-                <value>
-                    <fullName>Igbo</fullName>
-                    <default>false</default>
-                    <label>Igbo</label>
-                </value>
-                <value>
-                    <fullName>Azerbaijani</fullName>
-                    <default>false</default>
-                    <label>Azerbaijani</label>
-                </value>
-                <value>
-                    <fullName>Awadhi</fullName>
-                    <default>false</default>
-                    <label>Awadhi</label>
-                </value>
-                <value>
-                    <fullName>Gan</fullName>
-                    <default>false</default>
-                    <label>Gan</label>
-                </value>
-                <value>
-                    <fullName>Cebuano</fullName>
-                    <default>false</default>
-                    <label>Cebuano</label>
-                </value>
-                <value>
-                    <fullName>Dutch</fullName>
-                    <default>false</default>
-                    <label>Dutch</label>
-                </value>
-                <value>
-                    <fullName>Kurdish</fullName>
-                    <default>false</default>
-                    <label>Kurdish</label>
-                </value>
-                <value>
-                    <fullName>Serbo-Croatian</fullName>
-                    <default>false</default>
-                    <label>Serbo-Croatian</label>
-                </value>
-                <value>
-                    <fullName>Malagasy</fullName>
-                    <default>false</default>
-                    <label>Malagasy</label>
-                </value>
-                <value>
-                    <fullName>Saraiki</fullName>
-                    <default>false</default>
-                    <label>Saraiki</label>
-                </value>
-                <value>
-                    <fullName>Nepali</fullName>
-                    <default>false</default>
-                    <label>Nepali</label>
-                </value>
-                <value>
-                    <fullName>Sinhala</fullName>
-                    <default>false</default>
-                    <label>Sinhala</label>
-                </value>
-                <value>
-                    <fullName>Chittagonian</fullName>
-                    <default>false</default>
-                    <label>Chittagonian</label>
-                </value>
-                <value>
-                    <fullName>Zhuang</fullName>
-                    <default>false</default>
-                    <label>Zhuang</label>
-                </value>
-                <value>
-                    <fullName>Khmer</fullName>
-                    <default>false</default>
-                    <label>Khmer</label>
-                </value>
-                <value>
-                    <fullName>Turkmen</fullName>
-                    <default>false</default>
-                    <label>Turkmen</label>
-                </value>
-                <value>
-                    <fullName>Assamese</fullName>
-                    <default>false</default>
-                    <label>Assamese</label>
-                </value>
-                <value>
-                    <fullName>Madurese</fullName>
-                    <default>false</default>
-                    <label>Madurese</label>
-                </value>
-                <value>
-                    <fullName>Somali</fullName>
-                    <default>false</default>
-                    <label>Somali</label>
-                </value>
-                <value>
-                    <fullName>Marwari</fullName>
-                    <default>false</default>
-                    <label>Marwari</label>
-                </value>
-                <value>
-                    <fullName>Magahi</fullName>
-                    <default>false</default>
-                    <label>Magahi</label>
-                </value>
-                <value>
-                    <fullName>Haryanvi</fullName>
-                    <default>false</default>
-                    <label>Haryanvi</label>
-                </value>
-                <value>
-                    <fullName>Hungarian</fullName>
-                    <default>false</default>
-                    <label>Hungarian</label>
-                </value>
-                <value>
-                    <fullName>Chhattisgarhi</fullName>
-                    <default>false</default>
-                    <label>Chhattisgarhi</label>
-                </value>
-                <value>
-                    <fullName>Greek</fullName>
-                    <default>false</default>
-                    <label>Greek</label>
-                </value>
-                <value>
-                    <fullName>Chewa</fullName>
-                    <default>false</default>
-                    <label>Chewa</label>
-                </value>
-                <value>
-                    <fullName>Deccan</fullName>
-                    <default>false</default>
-                    <label>Deccan</label>
-                </value>
-                <value>
-                    <fullName>Akan</fullName>
-                    <default>false</default>
-                    <label>Akan</label>
-                </value>
-                <value>
-                    <fullName>Kazakh</fullName>
-                    <default>false</default>
-                    <label>Kazakh</label>
-                </value>
-                <value>
-                    <fullName>Northern Min</fullName>
-                    <default>false</default>
-                    <label>Northern Min</label>
-                </value>
-                <value>
-                    <fullName>Sylheti</fullName>
-                    <default>false</default>
-                    <label>Sylheti</label>
-                </value>
-                <value>
-                    <fullName>Zulu</fullName>
-                    <default>false</default>
-                    <label>Zulu</label>
-                </value>
-                <value>
-                    <fullName>Czech</fullName>
-                    <default>false</default>
-                    <label>Czech</label>
-                </value>
-                <value>
-                    <fullName>Kinyarwanda</fullName>
-                    <default>false</default>
-                    <label>Kinyarwanda</label>
-                </value>
-                <value>
-                    <fullName>Dhundhari</fullName>
-                    <default>false</default>
-                    <label>Dhundhari</label>
-                </value>
-                <value>
-                    <fullName>Haitian Creole</fullName>
-                    <default>false</default>
-                    <label>Haitian Creole</label>
-                </value>
-                <value>
-                    <fullName>Eastern Min</fullName>
-                    <default>false</default>
-                    <label>Eastern Min</label>
-                </value>
-                <value>
-                    <fullName>Ilocano</fullName>
-                    <default>false</default>
-                    <label>Ilocano</label>
+                    <label>Punjabi</label>
                 </value>
                 <value>
                     <fullName>Quechua</fullName>
@@ -694,19 +624,24 @@
                     <label>Quechua</label>
                 </value>
                 <value>
-                    <fullName>Kirundi</fullName>
+                    <fullName>Romanian</fullName>
                     <default>false</default>
-                    <label>Kirundi</label>
+                    <label>Romanian</label>
                 </value>
                 <value>
-                    <fullName>Swedish</fullName>
+                    <fullName>Russian</fullName>
                     <default>false</default>
-                    <label>Swedish</label>
+                    <label>Russian</label>
                 </value>
                 <value>
-                    <fullName>Hmong</fullName>
+                    <fullName>Saraiki</fullName>
                     <default>false</default>
-                    <label>Hmong</label>
+                    <label>Saraiki</label>
+                </value>
+                <value>
+                    <fullName>Serbo-Croatian</fullName>
+                    <default>false</default>
+                    <label>Serbo-Croatian</label>
                 </value>
                 <value>
                     <fullName>Shona</fullName>
@@ -714,19 +649,104 @@
                     <label>Shona</label>
                 </value>
                 <value>
+                    <fullName>Sindhi</fullName>
+                    <default>false</default>
+                    <label>Sindhi</label>
+                </value>
+                <value>
+                    <fullName>Sinhala</fullName>
+                    <default>false</default>
+                    <label>Sinhala</label>
+                </value>
+                <value>
+                    <fullName>Somali</fullName>
+                    <default>false</default>
+                    <label>Somali</label>
+                </value>
+                <value>
+                    <fullName>Southern Min</fullName>
+                    <default>false</default>
+                    <label>Southern Min</label>
+                </value>
+                <value>
+                    <fullName>Spanish</fullName>
+                    <default>false</default>
+                    <label>Spanish</label>
+                </value>
+                <value>
+                    <fullName>Sundanese</fullName>
+                    <default>false</default>
+                    <label>Sundanese</label>
+                </value>
+                <value>
+                    <fullName>Swedish</fullName>
+                    <default>false</default>
+                    <label>Swedish</label>
+                </value>
+                <value>
+                    <fullName>Sylheti</fullName>
+                    <default>false</default>
+                    <label>Sylheti</label>
+                </value>
+                <value>
+                    <fullName>Tagalog</fullName>
+                    <default>false</default>
+                    <label>Tagalog</label>
+                </value>
+                <value>
+                    <fullName>Tamil</fullName>
+                    <default>false</default>
+                    <label>Tamil</label>
+                </value>
+                <value>
+                    <fullName>Telugu</fullName>
+                    <default>false</default>
+                    <label>Telugu</label>
+                </value>
+                <value>
+                    <fullName>Thai</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
+                    <fullName>Turkish</fullName>
+                    <default>false</default>
+                    <label>Turkish</label>
+                </value>
+                <value>
+                    <fullName>Turkmen</fullName>
+                    <default>false</default>
+                    <label>Turkmen</label>
+                </value>
+                <value>
+                    <fullName>Ukrainian</fullName>
+                    <default>false</default>
+                    <label>Ukrainian</label>
+                </value>
+                <value>
+                    <fullName>Urdu</fullName>
+                    <default>false</default>
+                    <label>Urdu</label>
+                </value>
+                <value>
                     <fullName>Uyghur</fullName>
                     <default>false</default>
                     <label>Uyghur</label>
                 </value>
                 <value>
-                    <fullName>Hiligaynon/Ilonggo</fullName>
+                    <fullName>Uzbek</fullName>
                     <default>false</default>
-                    <label>Hiligaynon/Ilonggo</label>
+                    <label>Uzbek</label>
                 </value>
                 <value>
-                    <fullName>Mossi</fullName>
+                    <fullName>Vietnamese</fullName>
                     <default>false</default>
-                    <label>Mossi</label>
+                    <label>Vietnamese</label>
+                </value>
+                <value>
+                    <fullName>Wu</fullName>
+                    <default>false</default>
+                    <label>Wu</label>
                 </value>
                 <value>
                     <fullName>Xhosa</fullName>
@@ -734,49 +754,29 @@
                     <label>Xhosa</label>
                 </value>
                 <value>
-                    <fullName>Belarusian</fullName>
+                    <fullName>Xiang</fullName>
                     <default>false</default>
-                    <label>Belarusian</label>
+                    <label>Xiang</label>
                 </value>
                 <value>
-                    <fullName>Balochi</fullName>
+                    <fullName>Yoruba</fullName>
                     <default>false</default>
-                    <label>Balochi</label>
+                    <label>Yoruba</label>
                 </value>
                 <value>
-                    <fullName>Konkani</fullName>
+                    <fullName>Yue</fullName>
                     <default>false</default>
-                    <label>Konkani</label>
+                    <label>Yue</label>
                 </value>
                 <value>
-                    <fullName>Chinese</fullName>
+                    <fullName>Zhuang</fullName>
                     <default>false</default>
-                    <label>Chinese</label>
+                    <label>Zhuang</label>
                 </value>
                 <value>
-                    <fullName>Cantonese</fullName>
+                    <fullName>Zulu</fullName>
                     <default>false</default>
-                    <label>Cantonese</label>
-                </value>
-                <value>
-                    <fullName>Austrian</fullName>
-                    <default>false</default>
-                    <label>Austrian</label>
-                </value>
-                <value>
-                    <fullName>Flemish</fullName>
-                    <default>false</default>
-                    <label>Flemish</label>
-                </value>
-                <value>
-                    <fullName>Catalan</fullName>
-                    <default>false</default>
-                    <label>Catalan</label>
-                </value>
-                <value>
-                    <fullName>Danish</fullName>
-                    <default>false</default>
-                    <label>Danish</label>
+                    <label>Zulu</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

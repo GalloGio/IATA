@@ -377,6 +377,7 @@ public with sharing class CW_CapabilitiesUtilities {
 
 	public static Map<String, Object> generateCurrentObject(Map<String, Object> currentObject, String currentDetailId, Account_Role_Detail_Capability__c currentDetail, List<Object> certifications, String currentAssignmentRT, Map<String, Object> capabilityFound, Map<String, List<String>> mapFieldsByRecordTypeAndCategory, String rtDevNameLC, Map<String, Schema.PicklistEntry> mapEquipments, Map<String, List<String>> mapTooltipFieldsByField, Map<String, Schema.SObjectField> fieldsMap, Boolean isMultiRecordCapabilities, Boolean isAssigned, Boolean contains) {
 		// Set data for summary
+		Boolean emptyPhotos = false;
 		Map<String, Object> capabilitySummaryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get('summary'), 'value', currentDetail.Equipment__c.toLowerCase());
 		if (capabilitySummaryFound != null && (Boolean) capabilitySummaryFound.get('contains') == false) {
 			capabilitySummaryFound.put('contains', contains);
@@ -401,6 +402,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentObject.put('tooltips', tooltips);
 
 		if (String.isBlank(currentDetail.Photos__c)) {
+			emptyPhotos = true;
 			currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
 		}
 		try {
@@ -411,6 +413,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		}
 		currentObject.put('remotevalidation', currentAssignmentRT == RT_REMOTE_VALIDATION);
 		currentObject.put('photosAvailable', ((String) currentDetail.Photos__c).remove(' ').toLowerCase().countMatches('"visible":true') > 0);
+		currentObject.put('photosAvailableEdit', !emptyPhotos);
 		currentObject.put('customClass', '');
 		currentObject.put('isAssigned', isAssigned);
 		currentObject.put('isNotEditable', true);
@@ -443,5 +446,45 @@ public with sharing class CW_CapabilitiesUtilities {
 			lstCertiAllowed.add(c.Name);
 		}
 		return lstCertiAllowed;
+	}
+
+	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(List<String> listId, String recordId){
+		List<CW_CapabilitiesManagerController.CapabilityPhoto> photosCapab = new List<CW_CapabilitiesManagerController.CapabilityPhoto>();
+		List<CW_AccountDetailCarousel.Carousel> photosCarousel = new List<CW_AccountDetailCarousel.Carousel>();
+
+		for(ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c 
+		FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = : recordId
+		AND ICG_Capability_Assignment_Group__r.Status__c = 'Active'])
+		{
+			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
+				CW_CapabilitiesManagerController.CapabilityPhoto photo = (CW_CapabilitiesManagerController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_CapabilitiesManagerController.CapabilityPhoto.class);
+			
+				if(photo.visible){
+					photosCapab.add(photo);
+				}
+			}
+			
+		}
+
+		Integer index = listId.size();
+		for(CW_CapabilitiesManagerController.CapabilityPhoto photoParse : photosCapab){
+			CW_AccountDetailCarousel.Carousel car = new CW_AccountDetailCarousel.Carousel();
+			car.id = ''+(index+1);
+			car.tabindex = index == 0 ? '0' : '-1';
+			car.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
+			car.hidden =  index == 0 ? true : false;
+			String indicatorClass = 'slds-carousel__indicator-action';
+			indicatorClass = index == 0 ? indicatorClass + ' slds-is-active' : indicatorClass;
+			car.indicatorClass = indicatorClass;
+			String panelClass = 'slds-carousel__panel carousel-size';
+			panelClass = index == 0 ? panelClass + ' panelSelected' : panelClass;
+			car.panelClass = panelClass;
+			car.urlImage = photoParse.url;
+
+			photosCarousel.add(car);
+			index++;
+		}
+
+		return photosCarousel;
 	}
 }

@@ -77,12 +77,18 @@
                 <div class="sectionText">
                     <p class="pItem" onclick={selectItem} data-action="Become Company Admin">{companyAdminSectionText}</p>
                 </div>
-                <div class="sectionText">
-                    <p class="pItem" onclick={selectItem} data-action="Pending Facility Approvals">{label.pending_station_approvals}</p>
-                </div>
-                <div class="sectionText">
-                    <p class="pItem" onclick={selectItem} data-action="Manager User Permission">{label.icg_manager_user_permission}</p>
-                </div>
+
+				<template if:true={userInfo.isCompanyAdmin}>
+                    <div class="sectionText">
+                        <p class="pItem" onclick={selectItem} data-action="Pending Facility Approvals">{label.pending_station_approvals}</p>
+                    </div>
+                </template>
+                
+				<template if:true={isUserManagedFacilities}>
+                    <div class="sectionText">
+                        <p class="pItem" onclick={selectItem} data-action="Manager User Permission">{label.icg_manager_user_permission}</p>
+                    </div>
+                </template>
             </div>
 
             <div class="separator"></div>
@@ -169,7 +175,7 @@
             </div>
             <div class="pl-special">
                 <div class="sectionText">
-                    <p class="pItem" onclick={goToPublicArea} data-action="Pending User Approvals">{label.go_to_public_area}</p>
+                    <p class="pItem" onclick={goToPublicArea} >{label.go_to_public_area}</p>
                 </div>
             </div>
         </div>

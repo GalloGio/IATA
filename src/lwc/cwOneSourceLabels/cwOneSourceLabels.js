@@ -435,6 +435,13 @@ import icg_dangerousGoods from "@salesforce/label/c.icg_dangerousGoods";
 import icg_airmail from "@salesforce/label/c.icg_airmail";
 import icg_perishables from "@salesforce/label/c.icg_perishables";
 import icg_pharmaceuticals from "@salesforce/label/c.icg_pharmaceuticals";
+import icg_overall_facility_size from "@salesforce/label/c.icg_overall_facility_size";
+import icg_station_manager_request_sent from "@salesforce/label/c.icg_station_manager_request_sent";
+import icg_overall_aiport_size from "@salesforce/label/c.icg_overall_aiport_size";
+import icg_fleet from "@salesforce/label/c.icg_fleet";
+import icg_or_create_a_new_hierarchy from "@salesforce/label/c.icg_or_create_a_new_hierarchy";
+import icg_select_an_existing_hierarchy from "@salesforce/label/c.icg_select_an_existing_hierarchy";
+
 
 export function labels() {
 	let labels = {
@@ -875,7 +882,13 @@ export function labels() {
 		icg_dangerousGoods,
 		icg_airmail,
 		icg_perishables,
-		icg_pharmaceuticals
+        icg_pharmaceuticals,
+		icg_overall_facility_size,
+        icg_station_manager_request_sent,
+        icg_overall_aiport_size,
+		icg_fleet,
+		icg_or_create_a_new_hierarchy,
+		icg_select_an_existing_hierarchy
 	};
 
 	return labels;

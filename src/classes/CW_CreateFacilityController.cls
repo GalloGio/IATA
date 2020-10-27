@@ -6,15 +6,17 @@ public without sharing class CW_CreateFacilityController {
 		Savepoint sp;
 		try {
 			sp = CW_DBTransactionHandler.setSavepoint();
-
-			ICG_Account_Role_Detail__c ard = (ICG_Account_Role_Detail__c) JSON.deserialize(station, ICG_Account_Role_Detail__c.class);
+			
+			ICG_Account_Role_Detail__c ard = (ICG_Account_Role_Detail__c) JSON.deserialize(station, ICG_Account_Role_Detail__c.class);			
 			ard.Account_Role__c = CW_CreateFacilityController.getAccountRoleForAccount(accountId);
+			
 			if(ard.Account_Role__c == null) {
 				res.success = false;
 				res.message = 'This account has no available Role to be parent of a station';
 				return JSON.serialize(res);
-			}
-			ard = CW_CreateFacilityController.handleGeoLocations(ard, geoLocationInfo);
+			}            
+			
+			ard = CW_CreateFacilityController.handleGeoLocations(ard, geoLocationInfo);            
 			ard.Nearest_Airport__c = CW_CreateFacilityController.getNearestAirportForFacility(nearestAirportCode);
 			
 			insert ard;
@@ -64,11 +66,13 @@ public without sharing class CW_CreateFacilityController {
 
 	private static Boolean handleEmailsAndNotifications(Boolean isInternalUser, ICG_Account_Role_Detail__c facility, List<Contact> companyAdmins, Boolean isCompanyAdmin, Boolean isNewAccount) {
 
-		ICG_Account_Role_Detail__c createdArd = [Select id, Status__c,CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email from ICG_Account_Role_Detail__c where id = :facility.Id];
+		ICG_Account_Role_Detail__c createdArd = [Select id, Status__c,CreatedById, CreatedBy.Email, CreatedBy.ContactId, CreatedBy.Contact.Email, Account_Role__r.Account__r.RecordType.DeveloperName from ICG_Account_Role_Detail__c where id = :facility.Id];
 		Set<Id> whoIdsRequestor = new Set<Id>();
 		String whoId = createdArd.CreatedBy.ContactId != null ? createdArd.CreatedBy.ContactId : createdArd.CreatedById;
 		whoIdsRequestor.add(whoId);
 		String templateName;
+		//If the user is company admin of station and status os "Pending for Approval", the status mut change and the approver/rejector will be the user
+		Boolean accountAlreadyApproved = createdArd.Account_Role__r.Account__r.RecordType.DeveloperName != 'Standard_Account';
 
 		//Send email to approvers
 		Set<Id> whoIdsAdmins = new Set<Id>();
@@ -79,7 +83,7 @@ public without sharing class CW_CreateFacilityController {
 		}
 		if(hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)){
 			whoIdsAdmins = CW_EmailManager.getIataAdminsIds();
-			templateName = isNewAccount == true ? 'Approve_Reject_to_IATA_Admin_account' : 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
+			templateName = (isNewAccount || !accountAlreadyApproved) ? 'Approve_Reject_to_IATA_Admin_account' : 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
 		}else{
 			templateName = 'Approve_Reject_to_company_admin';
 		}
@@ -88,10 +92,10 @@ public without sharing class CW_CreateFacilityController {
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 
 		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsAdmins));
-		templateName = isNewAccount == true ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
+		templateName = (isNewAccount || !accountAlreadyApproved) ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
 		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsRequestor));
 		
-		String subject = 'New Station is pending approval';
+		String subject = 'Station Creation request submitted';
 		String body = subject;
 		contactIds.add(createdArd.CreatedBy.ContactId);
 		notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, facility, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
@@ -174,7 +178,7 @@ public without sharing class CW_CreateFacilityController {
 	}
 
 	@AuraEnabled
-	public static string createDummyCompany(String account, String opsHierarchy) {
+	public static string createDummyCompany(String account, String opsHierarchy, Boolean isNewHierarchy) {
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		Savepoint sp;
 		try {
@@ -191,6 +195,8 @@ public without sharing class CW_CreateFacilityController {
 			//Create Ops Hierarchy
 			if(opsHierarchy != null && opsHierarchy != ''){
 				List<Account_Role_Relationship__c> arrs = [Select id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c Where Relationship_Name__c =:opsHierarchy OR Ops_Hierarchy_Group__c =:opsHierarchy];
+				Account_Role_Relationship__c newArr = new Account_Role_Relationship__c();
+				newArr.From__c = ar.Id;
 				if(!arrs.isEmpty()){
 					Account_Role_Relationship__c parentArr;
 					Boolean existsOpsGroupName = false;
@@ -199,17 +205,44 @@ public without sharing class CW_CreateFacilityController {
 						if(arr.Ops_Hierarchy_Group__c == opsHierarchy) existsOpsGroupName = true;
 					}
 					if(parentArr != null){
-						Account_Role_Relationship__c newArr = new Account_Role_Relationship__c();
-						newArr.From__c = ar.Id;
 						newArr.To__c = parentArr.From__c;
 						newArr.Ops_Hierarchy_Group__c = parentArr.Ops_Hierarchy_Group__c;
 						insert newArr;
 					}else if(existsOpsGroupName){
-						Account_Role_Relationship__c newArr = new Account_Role_Relationship__c();
-						newArr.From__c = ar.Id;
 						newArr.Ops_Hierarchy_Group__c = opsHierarchy;
 						insert newArr;
 					}
+				}
+				else{
+					String accountId = [Select Id, AccountId from User where Id = :UserInfo.getUserId() limit 1].AccountId;
+					Id userAccRole = getAccountRoleForAccount(accountId);
+					List<Account_Role_Relationship__c> userarr = [Select id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c Where From__r.Account__c =:accountId];
+					String userGroup;
+					for(Account_Role_Relationship__c arr : userarr){
+						userGroup = arr.Ops_Hierarchy_Group__c;
+					}
+					if(isNewHierarchy == true){
+						newArr.To__c = ar.Id;
+						newArr.Relationship_Name__c = opsHierarchy;
+						newArr.Ops_Hierarchy_Group__c = userGroup;
+						insert newArr;
+					}else{
+						//If user account has no account role relationships means is an single account
+						//Relate new account and single account with ops hierarchy group
+						newArr.Ops_Hierarchy_Group__c = opsHierarchy;
+						insert newArr;
+						if(userGroup == null){
+							if(userAccRole == null) {
+								Account_Role__c arol = createOneSourceAccRole(accountId);
+								insert arol;
+								userAccRole = arol.Id;
+							}
+							newArr.Id = null;
+							newArr.From__c = userAccRole;
+							insert newArr;
+						}
+					}
+
 				}
 			}
 			res.success = true;
@@ -261,26 +294,28 @@ public without sharing class CW_CreateFacilityController {
 
 	private static ICG_Account_Role_Detail__c handleGeoLocations(ICG_Account_Role_Detail__c facilityToUpdate, String geoLocationInfo) {
 		GeoLocationInfo geoLocation;
-		if (!String.isBlank(geoLocationInfo) && geoLocationInfo.length() > 4){
+		
+		if (!String.isBlank(geoLocationInfo) && geoLocationInfo.length() > 4){			
 			geoLocation = (GeoLocationInfo) JSON.deserialize(geoLocationInfo, GeoLocationInfo.class);
 		}
-
-		if(geoLocation != null && geoLocation.companyId != null) {
-			Account acc = [Select id, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s from Account where Id =:geoLocation.companyId];
-			Boolean accountCoordinatesAreDifferent = acc != null && (acc.Business_Geo_Coordinates__Latitude__s != geoLocation.latitude || acc.Business_Geo_Coordinates__Longitude__s != geoLocation.longitude);
+		
+		if(geoLocation != null && geoLocation.companyId != null) {            
+			Account acc = [Select id, Business_Geo_Coordinates__Latitude__s, Business_Geo_Coordinates__Longitude__s from Account where Id =:geoLocation.companyId];			
+			Boolean accountCoordinatesAreDifferent = acc != null && (acc.Business_Geo_Coordinates__Latitude__s != geoLocation.latitude || acc.Business_Geo_Coordinates__Longitude__s != geoLocation.longitude);			
 			Boolean newCoordinatesAreValid = geoLocation.latitude != null && geoLocation.longitude != null;
+			
 			if(accountCoordinatesAreDifferent && newCoordinatesAreValid){
 				facilityToUpdate.Station_Geo_Coordinates__Latitude__s = geoLocation.latitude;
 				facilityToUpdate.Station_Geo_Coordinates__Longitude__s = geoLocation.longitude;
 			}
 
 			Boolean accountCoordinatesAreNotSet = acc != null && acc.Business_Geo_Coordinates__Latitude__s == null || acc.Business_Geo_Coordinates__Longitude__s == null;
-
+			
 			if (accountCoordinatesAreNotSet && newCoordinatesAreValid){
 				CW_CreateFacilityController.updateGeoLocationsForAccount(acc, geoLocation.latitude, geoLocation.longitude);
 			}
 		}
-
+		
 		return facilityToUpdate;
 	}
 

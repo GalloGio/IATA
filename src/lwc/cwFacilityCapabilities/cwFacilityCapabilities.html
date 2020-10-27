@@ -351,12 +351,6 @@
 																						</template>	
 																					</template>
 																					<template if:false={isPrivateArea}>
-																						<th if:true={currentfield.first}
-																							key={currentfield.value.name}
-																							class="first-column"
-																							>
-								
-																						</th>
 																						<th if:false={currentfield.first}
 																							key={currentfield.value.name}
 																							scope="col"
@@ -593,7 +587,7 @@
 																					data-row-index={rowIndex}
 																					onclick={setRowClicked}>
 
-																					<button if:true={row.photosAvailable}
+																					<button if:true={row.photosAvailableEdit}
 																						class="p-0 bg-transp border-0"
 																						data-tosca="edit_photos">
 																						<img src={infoIcon} width="20px"
@@ -604,8 +598,8 @@
 																							data-row-index={rowIndex}
 																							onclick={openModalEditPhotos} />
 																					</button>
-
-																					<button if:false={row.photosAvailable}
+																			
+																					<button if:false={row.photosAvailableEdit}
 																						disabled
 																						class="p-0 bg-transp border-0 disabled-filter">
 																						<img src={infoIcon} width="20px" />
@@ -632,7 +626,7 @@
 																								data-row-index={rowIndex}
 																								onclick={openModalEditPhotos} />
 																						</button>
-
+																
 																						<button if:false={row.photosAvailable}
 																							disabled
 																							class="p-0 bg-transp border-0 disabled-filter">
@@ -651,7 +645,7 @@
 																					data-row-index={rowIndex}
 																					onclick={setRowClicked}>
 
-																						<button if:true={row.photosAvailable}
+																						<button if:true={row.photosAvailableEdit}
 																							class="p-0 bg-transp border-0"
 																							data-tosca="edit_photos">
 																							<img src={infoIcon} width="20px"
@@ -662,8 +656,8 @@
 																								data-row-index={rowIndex}
 																								onclick={openModalEditPhotos} />
 																						</button>
-
-																						<button if:false={row.photosAvailable}
+																	
+																						<button if:false={row.photosAvailableEdit}
 																							disabled
 																							class="p-0 bg-transp border-0 disabled-filter">
 																							<img src={infoIcon} width="20px" />
@@ -681,23 +675,23 @@
 																				data-row-index={rowIndex}
 																				onclick={setRowClicked}>
 
-																					<button if:true={row.photosAvailable}
-																						class="p-0 bg-transp border-0"
-																						data-tosca="edit_photos">
-																						<img src={infoIcon} width="20px"
-																							data-super-category-index={currentsupercategory.index}
-																							data-section-index={currentsection.index}
-																							data-capability-index={currentcapability.index}
-																							data-category-index={categoryIndex}
-																							data-row-index={rowIndex}
-																							onclick={openModalEditPhotos} />
-																					</button>
-
-																					<button if:false={row.photosAvailable}
-																						disabled
-																						class="p-0 bg-transp border-0 disabled-filter">
-																						<img src={infoIcon} width="20px" />
-																					</button>
+																				<button if:true={row.photosAvailable}
+																					class="p-0 bg-transp border-0"
+																					data-tosca="edit_photos">
+																					<img src={infoIcon} width="20px"
+																						data-super-category-index={currentsupercategory.index}
+																						data-section-index={currentsection.index}
+																						data-capability-index={currentcapability.index}
+																						data-category-index={categoryIndex}
+																						data-row-index={rowIndex}
+																						onclick={openModalEditPhotos} />
+																				</button>
+																			
+																				<button if:false={row.photosAvailable}
+																					disabled
+																					class="p-0 bg-transp border-0 disabled-filter">
+																					<img src={infoIcon} width="20px" />
+																				</button>
 																			</td>
 																		</template>
 																		<td class="certifications-stamp">
@@ -716,32 +710,28 @@
 																				</template>
 																			</div>
 																		</td>
-
 																		<template if:true={editMode}>
 																			<template if:true={row.isEditableRecordType}>
-																			<td class="cell-buttons">
-																				
-																					<template if:true={row.isAssigned}>
-										
-																						<button title={label.remove} hidden={disableOptions} class="btn btn-primary ml-1" data-action="Remove"
+																			<td class="cell-buttons">																				
+																				<template if:true={row.isAssigned}>
+									
+																					<button title={label.remove} hidden={disableOptions} class="btn btn-primary ml-1" data-action="Remove"
+																					data-super-categories-index={currentsupercategory.index}
+																					data-section-index={currentsection.index}
+																					data-capability-index={currentcapability.index}
+																					data-category-index={categoryIndex}
+																					data-row-index={rowIndex}
+																					onclick={actionsCapability}>{label.remove}</button>
+																				</template>				
+																				<template if:false={row.isAssigned}>
+																					<button title="Add capability" hidden={disableOptions} class="btn btn-primary-blue" data-action="Certify"
 																						data-super-categories-index={currentsupercategory.index}
 																						data-section-index={currentsection.index}
 																						data-capability-index={currentcapability.index}
 																						data-category-index={categoryIndex}
 																						data-row-index={rowIndex}
-																						onclick={actionsCapability}>{label.remove}</button>
-																					</template>
-					
-																					<template if:false={row.isAssigned}>
-																						<button title="Add capability" hidden={disableOptions} class="btn btn-primary-blue" data-action="Certify"
-																							data-super-categories-index={currentsupercategory.index}
-																							data-section-index={currentsection.index}
-																							data-capability-index={currentcapability.index}
-																							data-category-index={categoryIndex}
-																							data-row-index={rowIndex}
-																						onclick={actionsCapability}>{label.add}</button>
-																					</template>
-
+																					onclick={actionsCapability}>{label.add}</button>
+																				</template>
 																			</td>
 																			</template>
 																		</template>
@@ -781,15 +771,33 @@
 								</lightning-button-icon>
 							</header>
 
-							<div class="slds-modal__content text-center overflow-hidden" id="modal-edit-photos">
-
-								<div class="row">
+							<div class="slds-modal__content text-center" id="modal-edit-photos">
+								<div class="col-8 offset-2 mt-3 slds-col">
+									<div class="slds-box slds-box_medium slds-text-align_center sliderbox">
+										<template if:false={adminMode}>
+											<lightning-carousel disable-auto-scroll class="m-auto">
+												<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
+													<template if:false={editMode}>
+														<lightning-carousel-image if:true={photo.visible} key={photo.id}
+															src={photo.url} description={photo.label} >
+														</lightning-carousel-image>
+													</template>
+													<template if:true={editMode}>
+														<lightning-carousel-image key={photo.id}
+															src={photo.url} description={photo.label} >
+														</lightning-carousel-image>
+													</template>
+												</template>
+											</lightning-carousel>
+										</template>
+									</div>
+								</div>
+								<div class="row mt-3 mb-3">
 									<template if:true={editMode}>
 										<table class="m-auto table table-striped">
 											<thead>
 												<tr>
 													<th>{label.display_publicly}</th>
-													<th>{label.description}</th>
 													<th>{label.file_name}</th>
 												</tr>
 											</thead>
@@ -797,51 +805,28 @@
 												<template for:each={photosRow.photos} for:item="photo"
 													for:index="photoIndex">
 													<tr key={photo.url}>
+														
 														<td>
-
 															<div if:true={photo.visible} class="commodity-active">
-																<img src={checkedBlueIcon} width="20px"
+																<img src={checkedBlueIcon} width="20px" class="cursor-pt"
 																	onclick={toggleVisibilityPhoto} data-src={photo.url}
 																	data-id={photo.id}>
 															</div>
 
 															<div if:false={photo.visible}
 																class="disabled-filter commodity-inactive">
-																<img src={checkedBlueIcon} width="20px"
+																<img src={checkedBlueIcon} width="20px" class="cursor-pt"
 																	onclick={toggleVisibilityPhoto} data-src={photo.url}
 																	data-id={photo.id}>
 															</div>
 														</td>
 														<td>{photo.label}</td>
-														<td class="certifications-stamp">
-															<div>
-																<ul class="enlarge">
-																	<li>
-																		{label.photo} {photoIndex}
-																		<span class="tooltip-img">
-																			<img src={photo.url}>
-																		</span>
-																	</li>
-																</ul>
-															</div>
-														</td>
 													</tr>
 												</template>
 											</tbody>
 										</table>
 									</template>
-
-									<template if:false={adminMode}>
-										<lightning-carousel disable-auto-scroll class="m-auto">
-											<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
-												<lightning-carousel-image if:true={photo.visible} key={photo.id}
-													src={photo.url} description={photo.label}>
-												</lightning-carousel-image>
-											</template>
-										</lightning-carousel>
-									</template>
 								</div>
-
 							</div>
 						</div>
 					</section>

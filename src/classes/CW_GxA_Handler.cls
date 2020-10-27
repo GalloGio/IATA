@@ -190,6 +190,7 @@ global without sharing class CW_GxA_Handler {
 					currentPhoto.visible = isPublic;
 					currentPhoto.url = currentUrl;
 					currentPhoto.label = mappingData.SF_Data_Extra__c;
+					currentPhoto.id = EncodingUtil.convertToHex(Crypto.generateDigest('SHA-256', Blob.valueOf(currentUrl)));
 					photos.add(currentPhoto);
 				}
 				inputObject.put(mappingData.SF_Target_Field__c, convertAnswerResponse(objectsFieldsDescribe, mappingData.SF_Target_Object__c, mappingData.SF_Target_Field__c, JSON.serialize(photos)));

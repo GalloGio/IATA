@@ -15,6 +15,7 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	exportExcel;
 
 	@track mapRemValAlreadyPurchased;
+	@track stationsWithOpenRemoteValidations;
 	@track facilitiesToPurchase;
 	@api textFilter = '';
 	
@@ -53,9 +54,13 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	set remoteValidations(value) {
 		if (value) {
 			this.mapRemValAlreadyPurchased = new Map();
+			this.stationsWithOpenRemoteValidations = [];
 			value.forEach(remVal => {
 				if (remVal.Order.Remote_Validation_Status__c === "RV_Complete" || remVal.Order.Remote_Validation_Status__c === "Cancelled") {
 					this.mapRemValAlreadyPurchased.set(remVal.Station__c, remVal);
+				}
+				if (remVal.Order.Remote_Validation_Status__c !== "RV_Complete" && remVal.Order.Remote_Validation_Status__c !== "Cancelled") {
+					this.stationsWithOpenRemoteValidations.push(remVal.Station__r.Id);
 				}
 			});
 		}
@@ -99,16 +104,20 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	_setListToPurchase() {
 		if(this.lstProductsRemoteVal && this._userManagedFacilities && !this.facilitiesToPurchase && this.mapRemValAlreadyPurchased) {
 			this.facilitiesToPurchase = [];
-			
+
 			this._userManagedFacilities.forEach(potPurchase => {
 				if(potPurchase.isApproved__c === true && !this.mapRemValAlreadyPurchased.has(potPurchase.Id) && availablerecordtypes && availablerecordtypes.split(',').includes(potPurchase.RecordType.DeveloperName) && this.lstProductsRemoteVal[0]) {
 					const domain = this.isProdsandbox ? this.prodOrg : this.preprodOrg;
 					let potPur = JSON.parse(JSON.stringify(potPurchase));
-					potPur.linkToPurchase = this.lstProductsRemoteVal[0].SAP_Material_Number__c
-											? domain 
-												+ 'IEC_ProductDetails?id=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c
-												+ '&fid=' + potPurchase.Id
-											: 'Product not available';
+					if (this.stationsWithOpenRemoteValidations.indexOf(potPurchase.Id) > -1) {
+						potPur.openRemoteValidations = true;
+					} else {
+						potPur.linkToPurchase = this.lstProductsRemoteVal[0].SAP_Material_Number__c
+												? domain 
+													+ 'IEC_ProductDetails?id=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c
+													+ '&fid=' + potPurchase.Id
+												: 'Product not available';
+					}
 					this.facilitiesToPurchase.push(potPur);
 				}
 			})
@@ -160,5 +169,11 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 			detail: idStation
 		});
 		this.dispatchEvent(selectedFacilityEvent);
+	}
+	goTo(event){
+		const selectedItemEvent = new CustomEvent("menuitemselection", {
+			detail: event.currentTarget.dataset.action
+		});
+		this.dispatchEvent(selectedItemEvent);
 	}
 }

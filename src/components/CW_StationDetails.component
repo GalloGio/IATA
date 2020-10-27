@@ -3,6 +3,7 @@
     <apex:attribute name="nameList" type="String" description="title for table" access="global" default="Station Details"/>
     <apex:attribute name="nameList2" type="String" description="title for table 2" access="global" default=":"/>
     <apex:attribute name="nameList3" type="String" description="title for table 3" access="global" default=""/>
+    <apex:attribute name="showGroup" type="Boolean" description="Show group info" access="global" default="false"/>
     
     <p style="margin-top: 25px; line-height: 1.8rem;">{!nameList}{!nameList2}{!nameList3}</p>
     <table style="border-collapse: collapse; width: max-content">
@@ -29,7 +30,13 @@
         <tr>
             <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Operational Hierarchy</th>
             <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!operationalHierarchyFromStation}</td>
-        </tr>
+        </tr>        
+        <apex:outputPanel rendered="{!showGroup == true}">
+            <tr style="background-color: #d9e2f3">
+                <th style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">User Operational Hierarchy Group</th>
+                <td style="border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!OperationalHierarchyGroupFromRequestor}</td>
+            </tr>
+        </apex:outputPanel>
     </table>
 
 </apex:component>

@@ -12,16 +12,26 @@
 }
 
 .cardContent {
-    margin: 8px;
-    padding: 20px 15px 20px 10px !important;
-    background-color: white;
-    min-width: 400px;
+    padding: 10px 5px !important;
+    background-color: #ffc90d;
+    position: absolute;
+    right: 15px;
+    top: 45px;
 }
 
 .wrapperSettings {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .detailSettings {
     padding: 5px !important;
+}
+
+.underline{
+    text-decoration: underline !important;
+}
+
+.inverted{
+    transition: transform 1s;
+    transform: rotate(-180deg);
 }

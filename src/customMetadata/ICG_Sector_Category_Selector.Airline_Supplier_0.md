@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Category__c</field>
-        <value xsi:type="xsd:string">Ground Service Provider,System Solutions Provider</value>
+        <value xsi:type="xsd:string">Ground Service Provider,System Solution Provider,System Solutions Provider</value>
     </values>
     <values>
         <field>ONE_Source_Account_Role_Detail_Type__c</field>

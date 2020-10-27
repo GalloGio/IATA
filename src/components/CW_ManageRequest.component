@@ -3,21 +3,29 @@
     <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
     <apex:attribute name="isRemoveData" type="Boolean" description="Buttons to approve or remove record" assignTo="{!isRemove}" access="global" default="false"/>
 
-    <p style="margin-top: 25px; line-height: 1.8rem;">Manage Request:</p>
+    <p style="margin-top: 25px; line-height: 1.8rem;">Manage Request:</p>    
     <table border="0" cellpadding="10" cellspacing="10">
-        <tr>
-            <td><a href="{!approveUrl}" style="cursor: pointer;"><img src="{!communityUrlForResources}resource/ICG_Resources/img/approve.PNG" /></a></td>
+        <tr>            
             <td>
-                <a href="{!rejectUrl}" style="cursor: pointer;"><img src="{!communityUrlForResources}resource/ICG_Resources/img/reject.PNG" /></a>
+                <a href="{!approveUrl}" target="_blank" style="cursor: pointer;">
+                    <img alt="APPROVE" src="{!communityUrlForResources}resource/ICG_Resources/img/approve.PNG"/>
+                </a>
             </td>
         </tr>
-    </table>
-    <table border="0" cellpadding="10" cellspacing="10">
-        <tr>
+        <tr>  
             <td>
-                <a style="cursor: pointer;"><img src="{!communityUrlForResources}resource/ICG_Resources/img/replytorequest.PNG" /></a>
+                <a href="{!rejectUrl}" target="_blank" title="REJECT" >
+                    <img alt="REJECT" src="{!communityUrlForResources}resource/ICG_Resources/img/reject.PNG"/>
+                </a>
             </td>
         </tr>
-    </table>
+        <tr>
+            <td>
+                <a href="mailto:{!RequestedBy.Email}" target="_blank" title="REPLAY">
+                    <img alt="REPLAY" src="{!communityUrlForResources}resource/ICG_Resources/img/replytorequest.PNG"/>
+                </a>
+            </td>
+        </tr>
+    </table>       
 
 </apex:component>

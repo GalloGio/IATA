@@ -6,7 +6,7 @@
                 <c:CW_EmailHeader ></c:CW_EmailHeader>
                 <div style="padding: 30px; font-size: 0.9rem;">
                     <c:CW_HelloUser text="Hello" > </c:CW_HelloUser>     
-                    <c:CW_StationDetails nameList="Please be informed that the Smart Facility Remote Validation " nameList2="information for the below station is expiring in " nameList3="{!ROUND(relatedTo.Days_Until_Expiration__c, 0)} Days:" stationData="{!relatedTo.ICG_Account_Role_Detail__c}"></c:CW_StationDetails>
+                    <c:CW_StationDetails nameList="Please be informed that the {!relatedTo.Order_Product__r.Product_Name__c} " nameList2="information for the below station is expiring in " nameList3="{!ROUND(relatedTo.Days_Until_Expiration__c, 0)} Days:" stationData="{!relatedTo.ICG_Account_Role_Detail__c}" showGroup="true"></c:CW_StationDetails>
  
                     <p style="line-height: 1.8rem;">Thank you</p>
                 </div>

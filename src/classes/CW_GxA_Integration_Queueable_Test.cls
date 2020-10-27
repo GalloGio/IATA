@@ -112,5 +112,23 @@ global with sharing class CW_GxA_Integration_Queueable_Test {
 			System.enqueueJob(queuable);                 		
 		Test.stopTest();        
 	}
-	
+
+	/*********************************************************************************************************
+	 * @name			The name of your class or method
+	 * @author			Bea <beatriz.menendez@next-link.ch>
+	 * @created			23 / 09 / 2020
+	 * @description		Test  integrationQueueable class
+	 * @param			
+	 * @return			-
+	**********************************************************************************************************/
+	@IsTest
+	static void integrationQueueableNoOrdersTest(){   
+		List<Order> orderLst = new List<Order>([SELECT Id FROM Order]);
+		Delete orderLst;             
+		// Set mock callout class	
+		CW_GxA_Integration_Queueable queuable = new CW_GxA_Integration_Queueable(new List<Id>());		
+		Test.startTest();            
+			System.enqueueJob(queuable);                 		
+		Test.stopTest();        
+	}	
 }

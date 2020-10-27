@@ -66,6 +66,13 @@
     <flexiPageRegions>
         <componentInstances>
             <componentName>cwCreateRemoteValidationInternalUsers</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.RecordType.Name}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Cargo Handling Facility</rightValue>
+                </criteria>
+            </visibilityRule>
         </componentInstances>
         <name>Facet-7ffdee3d-fb33-414c-a5ff-c65690b63eb3</name>
         <type>Facet</type>

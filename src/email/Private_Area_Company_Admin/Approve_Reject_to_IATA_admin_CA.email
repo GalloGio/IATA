@@ -14,6 +14,7 @@
                     <c:CW_ListCompanyAdmins nameList="The request was sent to" contactRoleDetailData="{!relatedTo.Id}" ></c:CW_ListCompanyAdmins>   
                     <c:CW_UserDifferentOperationalHierarchy contactRoleDetailData="{!relatedTo.Id}"></c:CW_UserDifferentOperationalHierarchy>                         
                     <c:CW_NoCompanyAdminForOpeHierGroup contactRoleDetailData="{!relatedTo.Id}"></c:CW_NoCompanyAdminForOpeHierGroup>
+                    <c:CW_ManageRequest contactRoleDetailData="{!relatedTo.Id}"></c:CW_ManageRequest>
                     <c:CW_LinkManageRequest contactRoleDetailData="{!relatedTo.Id}"></c:CW_LinkManageRequest>
                     
                     <p style="line-height: 1.8rem;">Thank you</p>

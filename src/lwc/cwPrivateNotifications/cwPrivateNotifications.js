@@ -18,6 +18,7 @@ const PENDING_USER_APPROVAL = 'pending user approval';
 const MY_REQUESTS = 'my requests';
 const PENDING_STATION_APPROVAL = 'pending station approval';
 const CONFLICT = 'conflict';
+const STATION_CREATION = 'creation';
 export default class CwPrivateNotifications extends LightningElement {
 	initialized = false;
 
@@ -107,7 +108,7 @@ export default class CwPrivateNotifications extends LightningElement {
 	generateNotificationDestiny(elem, description) {
 
 		let destiny; 
-		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem)){
+		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem) || description.includes(STATION_CREATION)){
 			if (elem.CreatedById === this.userInfo.Id){
 				destiny = MY_REQUESTS;
 			}
@@ -222,17 +223,17 @@ export default class CwPrivateNotifications extends LightningElement {
 		let destiny = event.currentTarget.getAttribute("data-destiny").toLowerCase();
 		let isOwner = event.currentTarget.getAttribute("data-is-owner");
 		let url = this.generateUrl(event, destiny);
-		if(isOwner){
 
+		if(destiny === STATION || destiny === REMOTE){
+			window.location.href = url;
+		}
+		else{
 			const selectedItemEvent = new CustomEvent("menuitemselection", {
 				detail: url.replace('#','')
 			});
 	
 			// Dispatches the event.
 			this.dispatchEvent(selectedItemEvent);
-		}
-		else{
-			window.open(url, "_blank");
 		}
 
 		if(event.currentTarget.getAttribute("data-read") === 'false'){

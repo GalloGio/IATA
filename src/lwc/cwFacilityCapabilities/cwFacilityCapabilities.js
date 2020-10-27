@@ -341,9 +341,14 @@ export default class CwFacilityCapabilities extends LightningElement {
 		let capabilityIndex = event.target.dataset.capabilityIndex;
 		let categoryIndex = event.target.dataset.categoryIndex;
 		let rowIndex = event.target.dataset.rowIndex;
-
+		let currentEquipmentPhoto = this.data.superCategories[superCategoryIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c
 		this.photosRow = this.data.superCategories[superCategoryIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
+		let indexFileName = 1;
+		this.photosRow.photos.forEach(element => {
+			element.label = currentEquipmentPhoto + "-" + indexFileName;
+			indexFileName++;
+		});
 		this.modalEditPhotos = true;
 	}
 
@@ -431,22 +436,24 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 	toggleVisibilityPhoto(event) {
 		this.isLoading = true;
-		let src = event.target.dataset.src;
+		let photoid = event.target.dataset.id;
+
 		let capabilityId = null;
 		let photosAvailable = false;
 
 		this.photosRow.photos.forEach(element => {
-			if (element.url === src) {
-				capabilityId = element.id;
-				element.visible = !element.visible;
-
-				if (!photosAvailable && element.visible) {
+			if (element.id === photoid) {
+				capabilityId = this.photosRow.id;
+				element.visible = !element.visible;	
+				if (element.visible) {
 					photosAvailable = true;
 				}
 			}
 		});
-		this.photosRow.photosAvailable = photosAvailable;
-
+		if(this.editMode && this.photosRow.photos.length > 0){
+			photosAvailable = true;
+		}			
+		this.photosRow.photosAvailable = photosAvailable;		
 		this.setVisibilityPhotos(capabilityId, JSON.stringify(this.photosRow.photos));
 	}
 

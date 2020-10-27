@@ -305,4 +305,17 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 	getCompanyInformation(){
 		return this.localAccount;
 	}
+
+	newOpshierarchy(){
+		this.localAccount.opsHierarchy = null;
+		this.isNextButtonDisabled = true;
+		this.localAccount.isNewOpsHierarchy = true;
+	}
+
+	cancelNewOpsHierarchy(){
+		this.localAccount.opsHierarchy = null;
+		this.isNextButtonDisabled = true;
+		this.localAccount.isNewOpsHierarchy = false;
+		
+	}
 }
