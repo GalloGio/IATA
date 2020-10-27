@@ -84,6 +84,7 @@ public with sharing class CaseTriggerHelper {
 		List<String> escalation_toStatus;
 		List<String> reopening_fromStatus;
 		List<String> reopening_toStatus;
+		List<String> reopening_reasons;
 		List<String> noi_fromStatus;
 		List<String> noi_toStatus;
 
@@ -122,6 +123,7 @@ public with sharing class CaseTriggerHelper {
 			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
 				reopening_fromStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_From__c.split(',');
 				reopening_toStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_To__c.split(',');
+				reopening_reasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
 			}
 			
 			// case closure
@@ -133,6 +135,12 @@ public with sharing class CaseTriggerHelper {
 			// case pending closure
 			if(configsMap.get(CASE_STATUS_PENDING_CLOSURE).keySet().contains(cRTDevName) && pendingclosure_fromStatus.contains(oldMap.get(c.Id).Status) && pendingclosure_toStatus.contains(newMap.get(c.Id).Status)) {
 				consideredForPendingClosure.add(c.Id);
+				allConsidered.add(c.Id);
+			}
+
+			// case reopening
+			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName) && reopening_fromStatus.contains(oldMap.get(c.Id).Status) && reopening_toStatus.contains(newMap.get(c.Id).Status) && reopening_reasons.contains(oldMap.get(c.Id).Reopening_Reason__c)) {
+				consideredForReopen.add(c.Id);
 				allConsidered.add(c.Id);
 			}
 
@@ -185,34 +193,13 @@ public with sharing class CaseTriggerHelper {
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
-			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen'){
-				for(String str : bypassReasons){
-					if(newMap.get(cId).Reopening_reason__c.toUpperCase() == str.toUpperCase()){
-						points = 0;
-					}
-				}
-			}
 			
-			if(typeOfActionPendingClosureMap.get(cId) != null){
+			if(typeOfActionClosureMap.get(cId) != null)
 				points = 0;
-			}
 
 			if(points != 0) {
 				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId);
 				kpiValuesToInsert.add(valueToInsert);
-			}
-
-			// if points were awarded to someone else substract them from original
-			if(newMap.get(cId).Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(cId) != null && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen') {
-				KPI_Value__c valueToAdd = new KPI_Value__c();
-				valueToAdd.Responsible__c = typeOfActionClosureMap.get(cId).Responsible__c;
-				valueToAdd.Name = 'Value_' + cId + '_' + System.now().format('hh_mm_ss');
-				valueToAdd.FDS_KPI_Reporting__c = kpiReportingReopeningId;
-				valueToAdd.CaseNumber__c = cId;
-				valueToAdd.Month__c = System.now().format('MMMM');
-				valueToAdd.Year__c = String.valueOf(Date.today().year());
-				valueToAdd.KPI_Value__c = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue();
-				kpiValuesToInsert.add(valueToAdd);
 			}
 		}
 
