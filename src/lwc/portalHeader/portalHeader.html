@@ -45,7 +45,7 @@
     </c-portal-registration-third-level-l-m-s>
 </template>
 <div class="slds-show_small slds-grid slds-grid--align-end slds-grid--vertical-align-center slds-size--1-of-1 topsection">
-    <span class="cursorPointer text-bold slds-float_right text-blue" onclick={goToIATAOrg}>
+    <span if:false={internalUser} class="cursorPointer text-bold slds-float_right text-blue" onclick={goToIATAOrg}>
         <span>
             {labels.CSP_Go_to_IataOrg}
         </span>
