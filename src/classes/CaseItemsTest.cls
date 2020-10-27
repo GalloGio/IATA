@@ -51,17 +51,6 @@ private class CaseItemsTest {
 		System.assertEquals(false, caseItemList.isEmpty(), 'Expected non empty Case Item list');
 	}
 
-	@IsTest static void testOnAfterUpdate(){
-		Test.startTest();
-		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Open' LIMIT 1];
-		caseItem.Status__c = 'Closed';
-		update caseItem;
-		Test.stopTest();
-
-		caseItem = [SELECT Id, Status__c FROM Case_Item__c WHERE Id = :caseItem.Id];
-		System.assertEquals('Closed', caseItem.Status__c);
-	}
-
 	@IsTest static void testOnAfterDelete(){
 		Test.startTest();
 		Case_Item__c caseItem = [SELECT Id FROM Case_Item__c WHERE Status__c = 'Closed' LIMIT 1];
@@ -89,17 +78,24 @@ private class CaseItemsTest {
 		List<Case_Item__c> caseItemList = [SELECT Id FROM Case_Item__c];
 		Database.delete(caseItemList, false);
 		caseItemList = [SELECT Id FROM Case_Item__c];
-		System.assertEquals(0, caseItemList.size(), 'Expected 1 Case Item to be deleted and 0 to remain. Instead there are ' + caseItemList.size());
+		System.assertEquals(1, caseItemList.size(), 'Expected 1 Case Item to be deleted and 1 to remain. Instead there are ' + caseItemList.size());
 	}
 
 	@IsTest static void testOnBeforeUpdate(){
+		// non integration user cannot change case item status to anything other than closed
 		Case_Item__c caseItem = [SELECT Id, Status__c FROM Case_Item__c LIMIT 1];
 		caseItem.Status__c = 'Completed';
-		Database.SaveResult saveResult = Database.update(caseItem, false);
-		caseItem = [SELECT Id, Status__c FROM Case_Item__c WHERE Id = :caseItem.Id];
-		System.assertEquals('Completed', caseItem.Status__c);
+		try{
+			Database.SaveResult saveResult = Database.update(caseItem, false);
+		} catch(Exception e){
+			System.assert(true);
+		}
 
+		// integration user can change case item status to closed
+		caseItem = [SELECT Id, Status__c FROM Case_Item__c LIMIT 1];
+		caseItem.Status__c = 'Completed';
 		User user = [SELECT Id FROM User WHERE IsActive = TRUE AND Profile.Name = :CaseItems.integrationUserProfileName LIMIT 1];
+		Database.SaveResult saveResult;
 		System.runAs(user){
 			saveResult = Database.update(caseItem, false);
 		}
