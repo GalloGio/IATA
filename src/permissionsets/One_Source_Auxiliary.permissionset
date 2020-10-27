@@ -2326,6 +2326,11 @@
         <field>Account.state_numeric_code__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.Is_Remote_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>One Source Auxiliary</label>
     <objectPermissions>

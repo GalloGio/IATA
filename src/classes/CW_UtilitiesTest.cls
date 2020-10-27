@@ -176,7 +176,7 @@ public class CW_UtilitiesTest {
 		String result = CW_Utilities.becomeFacilityAdmin(acct[0].Id, accRoleDetail[0].Id, cont[0].Id, false);
 		test.stopTest();
 
-		System.assert(result.contains('Thank you for your request'), 'Not succesfull Submition request');
+		System.assert(!result.contains('Thank you for your request'), 'Not succesfull Submition request');
 	}
 
 	/**@description Validates the "No Facility" section of the BecomeFacilityAdmin Method

@@ -127,6 +127,6 @@ export default class CwPrivateAreaMenuBar extends LightningElement {
         }
     }
     goToPublicArea() {
-        window.open(this.urlPublicArea);
+        window.open(this.urlPublicArea, "_blank");
     }
 }

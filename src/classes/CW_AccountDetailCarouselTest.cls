@@ -9,6 +9,9 @@ public class CW_AccountDetailCarouselTest {
 	 */
 	@isTest
 	public static void carrouselOK() {
+		ISSP_CS__c icgid = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
+		insert icgid;
+
 		IATA_ISO_Country__c isoCode = CW_TestDataFactory.newISOCountry();
 		insert isoCode;
 

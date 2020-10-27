@@ -22,7 +22,6 @@ public without sharing class CW_StationManagers {
 				List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 
 				String templateName;
-				String subject = 'New request to REMOVE Station Manager rights pending approval';
 
 				//Send remove confirmation to removed station manager
 				String subject = 'Station Manager removal request sent';
