@@ -18,6 +18,7 @@ public with sharing class PortalApplications_Sel extends Selector {
 			Portal_Applications__c.Not_ICH_Airline__c,
 			Portal_Applications__c.Record_type_for_App_Rigth__c,
 			Portal_Applications__c.Requestable__c,
+			Portal_Applications__c.Requires_Level2_Registration__c,
 			Portal_Applications__c.Restricted_App__c,
 			Portal_Applications__c.Visible__c,
 			Portal_Applications__c.Service_Description__c,
