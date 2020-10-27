@@ -211,7 +211,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 		contactList = new List<Contact>();
 		for (Account acct : accountList)
 		{
-			contactList.add(createContact(ctcIdx, acct.Id, contactRecTypeDevName ) );
+			contactList.add(createContact(ctcIdx, acct, contactRecTypeDevName ));
 			ctcIdx++;
 		}
 		insert contactList;
@@ -263,6 +263,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, BillingState = 'Quebec'
 					, BillingCountry = 'Canada'
 					, BillingPostalCode = 'H3G 1T4'
+					, IATACode__c = '000'+ acctNumber
 					);
 		if (accountRecTypeId!=null) {
 			newAccount.RecordTypeId = accountRecTypeId;
@@ -273,7 +274,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 	// =======================================================================
 	// create contact record, populate the required field here.
 	private static Contact createContact( Integer ctcNumber
-				, Id accountId
+				, Account account
 				, String recTypeDevName
 				)
 	{
@@ -289,9 +290,10 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, MailingState = 'Quebec'
 					, MailingCountry = 'Canada'
 					, MailingPostalCode = 'H3G 1T4' );
-		if ( accountId != null)
+		if ( account != null)
 		{ // only set AccountId if it exists
-			newContact.AccountId = accountId;
+			newContact.AccountId = account.Id;
+			newContact.Account = account;
 		}
 		if (contactRecTypeId!=null) {
 			newContact.RecordTypeId = contactRecTypeId;
@@ -312,7 +314,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, Last_Name__c = relatedContact.LastName
 					, AgencyShare_Confirmation__c = true
 					, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application')
-					//, Agency_IATA_Code__c = '00000001'
+					, IATA_Code__c = relatedContact.Account.IATACode__c
 					);
 		return newIdApplicationCard;
 	} // createIdCard
@@ -329,11 +331,13 @@ private class GDP_REST_FilePayloadIdCardTest {
 					FirstName__c = relatedContact.FirstName
 					, LastName__c = relatedContact.LastName
 					, Name_on_ID_Card__c = 'Test ' + String.valueOf(idx).trim()
-					//, Agency_IATA_Code__c = '00000001'
+					, WebStar_ID__c = 'Webstar' + String.valueOf(idx).trim()
+					, Agency_IATA_Code__c = relatedContact.Account.IATACode__c
 					, Related_Contact__c = relatedContact.Id
 					, Card_Status__c = 'Sent ID Card'
 					, Blacklisted__c = false
 					, Valid_To_Date__c = Date.today().addMonths(5).addDays(idx)
+					, Date_of_Birth__c = DateTime.now().AddYears(-30).Date()
 					);
 		return newIdCard;
 	} // createIdCard

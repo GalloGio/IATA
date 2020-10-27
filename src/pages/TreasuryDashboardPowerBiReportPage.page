@@ -1,0 +1,123 @@
+<apex:page id="TreasuryDashboardPowerBiReportPage" controller="TreasuryDashboardPowerBiReportPageCtrl" showHeader="false" showChat="false" sideBar="false" action="{!redirect}">
+    <apex:includeScript value="{!$Resource.PBIJS}"/>
+
+    <div>
+        <div id="paginatedReport" style="position:absolute; height:100%; width:100%"></div>
+    </div>
+
+    <style type="text/css">
+
+            iframe {
+                border:none;
+            }
+
+    </style>
+
+    <script>
+
+        let element = document.getElementById('paginatedReport');
+
+        let models = window['powerbi-client'].models;
+        let obj = "{!objectId}";
+        let token = "{!accessToken}";
+        let type = "{!tokenType}";
+        let embedUrl = "{!embedUrl}";
+        let groupId = "{!groupId}";
+        let expiration = "{!expiration}";
+
+        let typeOfToken = 0;
+        if(type === 'Aad') {
+            typeOfToken = models.TokenType.Aad;
+        }
+        if(type === 'Embed') {
+            typeOfToken = models.TokenType.Embed;
+        }
+
+        var embedConfiguration = {
+            id: "{!objectId}",
+            type: "report",
+            embedUrl: "{!embedUrl}",
+            tokenType: typeOfToken,
+            accessToken: "{!accessToken}",
+            settings : {
+                filterPaneEnabled: false,
+                navContentPaneEnabled: false
+            }
+        };
+
+        var report = powerbi.embed(element, embedConfiguration);
+
+        var expDate = new Date(expiration);
+
+        window.addEventListener("DOMContentLoaded",
+        function() {
+            setTokenExpirationListener(expDate, 3, obj, groupId);
+        });
+
+
+
+        function setTokenExpirationListener(tokenExpiration, minutesToRefresh, reportId, groupId){
+            // get current time
+            var currentTime = Date.now();
+            var expiration = Date.parse(tokenExpiration);
+            var safetyInterval = minutesToRefresh* 60 * 1000;
+
+            // time until token refresh in milliseconds
+            var timeout = expiration - currentTime - safetyInterval;
+
+            // if token already expired, generate new token and set the access token
+            if (timeout<=0) {
+                updateEmbedToken(reportId, groupId);
+            }
+            // set timeout so minutesToRefresh minutes before token expires, token will be updated
+            else {
+                setTimeout(function() {
+                    updateEmbedToken(reportId, groupId);
+                }, timeout);
+            }
+
+
+            function updateEmbedToken(reportId, groupId) {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.TreasuryDashboardPowerBiReportPageCtrl.refreshEmbedToken}', reportId, groupId,
+                    function(result, event){
+                        if (event.status) {
+                            setNewEmbedToken(result, groupId, reportId);
+                            //response OK
+                        } else if (event.type === 'exception') {
+                            //exception
+                            console.error('Unable to update embed token - exception: ', event.message);
+                        } else {
+                            //exception
+                            console.error('Unable to update embed token - error: ', event.message);
+                        }
+                    },
+                    {escape: true}
+                );
+            }
+
+
+            function setNewEmbedToken(result, groupId, reportId) {
+                // Get a reference to the embedded report HTML element
+                var embedContainer = document.getElementById('paginatedReport');
+
+                // Get a reference to the embedded report.
+                var report = powerbi.get(embedContainer);
+
+                var resultArray = result.split('expiration=');
+
+                var newToken = resultArray[0];
+                var newExpDate = new Date(resultArray[1]);
+
+                report.setAccessToken(newToken)
+                    .then(function() {
+                        // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId)
+                        setTokenExpirationListener(newExpDate, 3, reportId, groupId);
+                    });
+            }
+    }
+
+    </script>
+
+
+</apex:page>

@@ -2492,8 +2492,10 @@
                                 </td></tr>
                                 
                             <tr><td class="modalrow"><!-- FM 19-07-2017 - AMSU-20-->
-                                <apex:outputText value="Training Type" />
-                                <apex:inputField id="TrainingType" required="true" value="{!trainedStaffContact.Type_Of_Certificate__c}" onchange="togglePointA(this.value,'point_a');togglePointB(this.value,'point_b');" />
+                                <apex:outputText value="Training Type" /><br/>
+                                <apex:selectList id="TrainingType" value="{!trainedStaffContact.Type_Of_Certificate__c}" label="Training Type" required="true" onchange="togglePointA(this.value,'point_a');togglePointB(this.value,'point_b');" size="1">
+                                        <apex:selectOptions value="{!TrainingTypes}"/>
+                                    </apex:selectList>
                                 </td>
                                 <td class="modalrow">
                                 <apex:outputText value="{!$Label.ISSP_AMS_Position}" />

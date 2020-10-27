@@ -110,6 +110,21 @@ NOT_NULL</description>
         <visibleLines>3</visibleLines>
     </fields>
     <label>Case Visibility Rule</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>CaseArea__c</columns>
+        <columns>DPC_Software__c</columns>
+        <columns>Field_Filter__c</columns>
+        <columns>Origin__c</columns>
+        <columns>Reason1__c</columns>
+        <columns>RecordTypeId__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>Case Visibility Rules</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

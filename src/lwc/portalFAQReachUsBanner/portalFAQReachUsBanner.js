@@ -3,6 +3,7 @@ import { LightningElement, track, api } from 'lwc';
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
+import getAuthConfig from '@salesforce/apex/CSP_Utils.getAuthConfig';
 
 //custom labels
 import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
@@ -28,13 +29,14 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
-    connectedCallback() {        
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "support-reach-us"
-            }})
-        .then(url => this.supportReachUsURL = url);
+    connectedCallback() {    
+        
+        
+        getAuthConfig()
+            .then(results => {
+                //constructs support contact us link
+                this.supportReachUsURL = results.selfRegistrationUrl.substring(0, results.selfRegistrationUrl.indexOf(CSP_PortalPath)+CSP_PortalPath.length)+'support-reach-us';
+        });
     }
 
     redirectToSupport(event) {
@@ -44,25 +46,13 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
         let params = {};
 
         if (this.redirectObject !== undefined) {
-            if (this.redirectObject.category !== undefined && this.redirectObject.category !== null && this.redirectObject.category !== '') {
-                params.category = this.redirectObject.category;
-            }
             if (this.redirectObject.topic !== undefined && this.redirectObject.topic !== null && this.redirectObject.topic !== '') {
                 params.topic = this.redirectObject.topic;
-            }
-            if (this.redirectObject.subtopic !== undefined && this.redirectObject.subtopic !== null && this.redirectObject.subtopic !== '') {
-                params.subtopic = this.redirectObject.subtopic;
-            }
-        } else {
-            if (this.category !== undefined && this.category !== null && this.category !== '') {
-                params.category = this.category;
-            }
+            }           
+        } else {           
             if (this.topic !== undefined && this.topic !== null && this.topic !== '') {
                 params.topic = this.topic;
-            }
-            if (this.subTopic !== undefined && this.subTopic !== null && this.subTopic !== '') {
-                params.subtopic = this.subTopic;
-            }
+            }            
         }
 
         navigateToPage(this.supportReachUsURL, params);

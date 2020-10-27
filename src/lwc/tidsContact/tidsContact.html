@@ -1,0 +1,425 @@
+<template>
+	<div class="vetting-menu">
+		<c-tids-vetting-menu></c-tids-vetting-menu>
+	</div>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<h1 class="icon">Contact</h1>
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			Please enter your agency's contact information below.<br/>IATA and industry suppliers rely on this information to communicate with TIDS agents.
+			<br/><em>Remember, all fields preceded by a (*) are mandatory.</em>
+		</p>
+		<h2 class="h3">
+			Contact details of the office for which this application is made
+		</h2>
+		<!--Phone Start -->
+		<template if:true={phoneRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-telephone"
+							checked={phoneError.show}
+							data-name="error-phone"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={phoneRules}></c-tids-tooltip>
+					<lightning-input
+						type="tel"
+						label="Phone Number"
+						required={phoneRules.required}
+						disabled={phoneRules.disabled}
+						name="phone"
+						data-name="phone"
+						value={phone}
+						onchange={changeField}
+						max-length="24"
+						pattern={phoneRules.regex}
+						data-regex={phoneRules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					<span>{phoneCounter} / 24</span>
+
+					<div if:true={phoneChanges.display}>
+						<p><mark>Previous Value: {phoneChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-telephone"
+							label="Error Description"
+							if:true={phoneError.show}
+							data-name="error-phone-desc"
+							value={phoneError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!--Phone End -->
+
+		<!--Fax Start -->
+		<template if:true={faxRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-fax"
+							checked={faxError.show}
+							data-name="error-fax"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={faxRules}></c-tids-tooltip>
+					<lightning-input
+						type="tel"
+						label="Fax Number"
+						name="fax"
+						data-name="fax"
+						value={fax}
+						required={faxRules.required}
+						disabled={faxRules.disabled}
+						onchange={changeField}
+						max-length="24"
+						pattern={faxRules.regex}
+						data-regex={faxRules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					<span>{faxCounter} / 24</span>
+
+					<div if:true={faxChanges.display}>
+						<p><mark>Previous Value: {faxChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-fax"
+							label="Error Description"
+							if:true={faxError.show}
+							data-name="error-fax-desc"
+							value={faxError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!--Fax End -->
+
+		<!-- Business Email Start -->
+		<template if:true={businessEmailRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-businessemail"
+							checked={businessEmailError.show}
+							data-name="error-business-email"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={businessEmailRules}></c-tids-tooltip>
+					<lightning-input
+						type="email"
+						placeholder="email@domain.com"
+						label="Business Email address"
+						required={businessEmailRules.required}
+						disabled={businessEmailRules.disabled}
+						name="businessEmail"
+						data-name="businessEmail"
+						value={businessEmail}
+						onchange={changeField}
+						max-length="64"
+						pattern={businessEmailRules.regex}
+						data-regex={businessEmailRules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					<span>{businessEmailCounter} / 64</span>
+
+					<div if:true={businessEmailChanges.display}>
+						<p><mark>Previous Value: {businessEmailChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-businessemail"
+							label="Error Description"
+							if:true={businessEmailError.show}
+							data-name="error-business-email-desc"
+							value={businessEmailError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Business Email End -->
+
+		<!-- Website Start -->
+		<template if:true={websiteRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-website"
+							checked={websiteError.show}
+							data-name="error-website"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={websiteRules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						label="Web Site"
+						name="website"
+						data-name="website"
+						value={webSite}
+						onchange={changeField}
+						max-length="96"
+						required={websiteRules.required}
+						disabled={websiteRules.disabled}
+						pattern={websiteRules.regex}
+						data-regex={websiteRules.regex}
+						variant="label-hidden"
+					></lightning-input>
+
+					<span>{webSiteCounter} / 96</span>
+
+					<div if:true={webSiteChanges.display}>
+						<p><mark>Previous Value: {webSiteChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-website"
+							label="Error Description"
+							if:true={websiteError.show}
+							data-name="error-website-desc"
+							value={websiteError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Website End -->
+
+		<!-- Office Manager First Name Start -->
+		<template if:true={omFirstNameRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-omfirstname"
+							checked={omFirstNameError.show}
+							data-name="error-om-firstname"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={omFirstNameRules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						label="Office Manager - First Name"
+						name="omFirstName"
+						data-name="omFirstName"
+						value={omFirstName}
+						onchange={changeField}
+						required={omFirstNameRules.required}
+						disabled={omFirstNameRules.disabled}
+						max-length="20"
+						pattern={omFirstNameRules.regex}
+						data-regex={omFirstNameRules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					
+					<span>{omFirstNameCounter} / 20</span>
+
+					<div if:true={omFirstNameChanges.display}>
+						<p><mark>Previous Value: {omFirstNameChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-omfirstname"
+							label="Error Description"
+							if:true={omFirstNameError.show}
+							data-name="error-om-firstname-desc"
+							value={omFirstNameError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Office Manager First Name End -->
+
+		<!-- Office Manager Last Name Start -->
+		<template if:true={omLastNameRules.visible}>
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-omlastname"
+							checked={omLastNameError.show}
+							data-name="error-om-lastname"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={omLastNameRules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						label="Office Manager - Last Name"
+						name="omLastName"
+						data-name="omLastName"
+						value={omLastName}
+						onchange={changeField}
+						required={omLastNameRules.required}
+						disabled={omLastNameRules.disabled}
+						max-length="20"
+						pattern={omLastNameRules.regex}
+						data-regex={omLastNameRules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					<span>{omLastNameCounter} / 20</span>
+
+					<div if:true={omLastNameChanges.display}>
+						<p><mark>Previous Value: {omLastNameChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-omlastname"
+							label="Error Description"
+							if:true={omLastNameError.show}
+							data-name="error-om-lastname-desc"
+							value={omLastNameError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Office Manager Last Name End -->
+
+		<!-- Prefered Language Start -->
+		<template if:true={preferedLanguageRules.visible}>
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							class="comment-languages"
+							checked={preferedLanguageError.show}
+							data-name="error-prefered-language"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={preferedLanguageRules}></c-tids-tooltip>
+					<lightning-combobox
+						name="preferedLanguage"
+						data-name="preferedLanguage"
+						label="Prefered language of correspondance"
+						value={preferedLanguage}
+						required={preferedLanguageRules.required}
+						disabled={preferedLanguageRules.disabled}
+						placeholder="Select a language"
+						options={languages}
+						onchange={changeField}
+						variant="label-hidden"
+					>
+					</lightning-combobox>
+
+					<div if:true={preferedLanguageChanges.display}>
+						<p><mark>Previous Value: {preferedLanguageChanges.sfValue}</mark></p>
+					</div>
+
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							class="comment-area-languages"
+							label="Error Description"
+							if:true={preferedLanguageError.show}
+							data-name="error-prefered-language-desc"
+							value={preferedLanguageError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+		</template>
+		<!-- Prefered Language End -->
+
+		<footer>
+			<template if:false={vettingMode}>
+				<template if:true={showSaveAndQuitButton}>
+					<button
+						class="transparent"
+						data-next="save-quit"
+						onclick={handleSaveAndQuit}>
+						Save &amp; quit
+					</button>
+				</template>
+
+				<button
+					name="business-profile"
+					onclick={handleNextSection}
+					disabled={disableButton}
+				>
+					Next section
+				</button>
+				
+			</template>
+
+			<template if:true={vettingMode}>
+				<button
+					if:false={vettingErrorOptions}
+					data-name="confirm-review-status"
+					onclick={handleProceed}
+				>
+					Confirm Review and Proceed
+				</button>
+				<button
+					if:true={vettingErrorOptions}
+					class="button-error"
+					onclick={handleProceed}
+					data-next="business-profile"
+					data-name="report-errors-and-proceed"
+					disabled={reportErrorButtonDisabled}
+				>
+					Report Errors and Proceed
+				</button>
+			</template>
+		</footer>
+	</form>
+	<c-tids-modal
+		if:true={openModal}
+		open={openModal}
+		field-error-selected={fieldErrorSelected}
+		default-message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal>
+</template>

@@ -161,6 +161,9 @@ public without sharing class AMS_Utils {
 	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
 	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
+	public static final Set<String> setAMS = new Set<String> {HO, BR, SA, AO};
+	public static final Set<String> setNewGen = new Set<String> {HE, AE, GE};
+
 	public static final Set<String> IEP_VENDORS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
 	//AMSU-125
 	public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
@@ -305,6 +308,9 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_EDS = 'EDS';
 	public static final String CASE_REASON_NONNEWGEN_RHC = 'NonNewGen RHC';
 
+	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
+	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
+
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_QUARTERLY = 'Multicountry Quarterly';
@@ -342,6 +348,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_STATUS_RE_OPENED = 'Re-open/ed';
 	public static final String CASE_STATUS_SUBMITTED = 'Submitted';
 	public static final String CASE_STATUS_ASSESSMENT_CANCELED = 'Assessment Cancelled';
+	public static final String CASE_STATUS_FINANCIAL_ASSESSMENT_CHALLENGED = 'Financial Assessment Challenged';
 
 	public static final Set<String> IFAP_CLOSED_STATUS = new Set<String>{
 		CASE_STATUS_CLOSED,
@@ -565,7 +572,7 @@ public without sharing class AMS_Utils {
 		'Import Agent' =>   'IATA Cargo Agent',
 		'CASS Associate' => 'CASS Associates',
 		'Courier' =>    'IATA Cargo Agent',
-		'Handling Agent' => 'IATA Travel Agent',
+		'Airport Handling Agent' => 'IATA Travel Agent',
 		'MSO Member Sales Office' => 'IATA Travel Agent',
 		'TIDS Agent' => 'TIDS',
 		'GSA General Sales Agent' =>    'General Sales Agent (GSA)',
@@ -1248,12 +1255,12 @@ public without sharing class AMS_Utils {
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
 				,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c, IATA_ISO_State__r.Valid_for_Address__c,
-				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Transactions__c
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Transactions__c, SAAM_Case__r.Origin
 				FROM AMS_Pax_Accreditation_Form__c
 				WHERE Id IN :oscarOnlineAccredIds]);
 
 		List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
-
+		Map<ID,String> mapOscarOrigin = new Map<ID,String>();
 		for (AMS_OSCAR__c oscar : oscars) {
 
 			Boolean accountHasChanges = false;
@@ -1261,7 +1268,7 @@ public without sharing class AMS_Utils {
 			Account acc = accounts.get(oscar.Account__c);
 
 			AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
-
+			mapOscarOrigin.put(oscar.ID, onlineAcc.SAAM_Case__r.Origin);
 			Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
 			if (acc != null && onlineAcc != null) {
@@ -1374,8 +1381,7 @@ public without sharing class AMS_Utils {
 
 				for(AMS_OSCAR__c oscar : oscarsToCopy)
 					mapOscars.put(oscar.Id, oscar);
-
-				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
+				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar, mapOscarOrigin);
 			}
 
 			for(Id accountID : AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.keySet()){

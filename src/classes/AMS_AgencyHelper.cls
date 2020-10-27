@@ -27,7 +27,7 @@ public class AMS_AgencyHelper {
 		if(locationClass.equalsIgnoreCase('T'))
 		  return 'TIDS Agent';
 		if(locationClass.equalsIgnoreCase('X'))
-		  return 'Handling Agent';
+		  return 'Airport Handling Agent';
 		if(locationClass.equalsIgnoreCase('M'))
 		  return 'MSO Member Sales Office';
 		if(locationClass.equalsIgnoreCase('I'))

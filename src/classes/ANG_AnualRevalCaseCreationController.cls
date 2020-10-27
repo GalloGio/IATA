@@ -130,12 +130,12 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 	public class AccountWrapper {
 		public Account account {get; set;}
-		public Case oscarCase {get; set;}
+		public String lastARVCreated{get; set;}
 		public Boolean selected {get; set;}
 
-		public AccountWrapper(Account acct, Case oscarCase, Boolean selected) {
+		public AccountWrapper(Account acct, Datetime arvCreated, Boolean selected) {
 			this.account = acct;
-			this.oscarCase = oscarCase;
+			this.lastARVCreated = arvCreated == null ? '' : arvCreated.format();
 			this.selected = selected;
 		}
 	}
@@ -144,7 +144,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		get; set;
 	}
 
-	private Map<Id, Case> annualRevalidationCaseOscar{get;set;}
+	private Map<Id, Datetime> annualRevalidationCaseOscar{get;set;}
 
 	public Boolean batchStatusBool { get; set; }
 	public Id batchId { get; set; }
@@ -188,6 +188,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		get; set;
 	}
 
+	public List<SelectOption> selectedStates{get; set;}
+
 	public Boolean multicountryAccreditationModelSelected {
 		get {
 			return multicountryAccreditationModelSelected == null ? false : multicountryAccreditationModelSelected;
@@ -209,11 +211,12 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	public ANG_AnualRevalCaseCreationController() {
 		countriesLst = new List<String>();
 		accountsToCreate = new List<AccountWrapper>();
-		annualRevalidationCaseOscar = new Map<Id, Case>();
+		annualRevalidationCaseOscar = new Map<Id, Datetime>();
 		batchStatusBool = false;
 		getBatchStatus = 0;
 		size = 5;
 		selectedAccreditations = new List<SelectOption>();
+		selectedStates = new List<SelectOption>();
 		disableLaunchButton = true;
 	}
 
@@ -282,15 +285,30 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		return options;
 	}
 
+	public void resetCountryState(){
+		this.country = null;
+	}
+
+	public void resetSelectState(){
+		this.selectedStates = new List<SelectOption>();
+	}
+
 	public List<SelectOption> getcountryobj() {
 		List<SelectOption> options = new List<SelectOption>{
 			new SelectOption(SELECT_COUNTRY, SELECT_COUNTRY)
 		};
 
-		for (IATA_ISO_Country__c c: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name')){
+		for (IATA_ISO_Country__c c: [SELECT id, name FROM IATA_ISO_Country__c WHERE Region__c =:region ORDER BY Name])
 			options.add(new SelectOption(c.Id, c.name));
-		}
 
+		return options;
+	}
+
+	public List<SelectOption> getstateobj() {
+		List<SelectOption> options = new List<SelectOption>();
+		if(country != null)
+			for(IATA_ISO_State__c state : [SELECT Id, Name FROM IATA_ISO_State__c WHERE IATA_ISO_Country__c =: country ORDER BY Name])
+				options.add(new SelectOption(state.Id, state.Name));
 		return options;
 	}
 
@@ -317,7 +335,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	}
 
 	private String getOscarCasesSubquery() {
-		return '(SELECT Id, OSCAR__r.Name, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
+		return '(SELECT Id, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
 		'FROM Cases ' +
 		'WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
 		'	OR (OSCAR__r.Process__c = :MAJOR_CHANGES_PROCESS ' +
@@ -340,12 +358,9 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 						if (INVALID_OSCAR_STATUS.contains(cse.Oscar__r.Status__c)){ 
 							if(!foundAnnualRevalidation) {
 								foundAnnualRevalidation = true;
-								annualRevalidationCaseOscar.put(acct.Id, cse);
+								annualRevalidationCaseOscar.put(acct.Id, cse.CreatedDate);
 							}
 						} else {
-							if (annualRevalidationCaseOscar.get(acct.Id) != null) {
-								annualRevalidationCaseOscar.get(acct.Id).clear();
-							}
 							return true;
 						}
 					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
@@ -368,14 +383,19 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		noResultsFound = false;
 
 		Set<String> selectedAccreditationsSet = new Set<String>();
+		Set<String> selectedStateSet = new Set<String>();
 
 		for (SelectOption accred: selectedAccreditations) {
 			selectedAccreditationsSet.add(accred.getValue());
 		}
 
+		for (SelectOption state: selectedStates) {
+			selectedStateSet.add(state.getValue());
+		}
+
 		String queryAccount =
-			'SELECT Id, IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, ' + 
-			'   Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c, ' +
+			'SELECT Id, IATACode__c, Name, RecordType.Name, ' + 
+			'   Location_Type__c, Status__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Iso_State__r.name, Financial_Year_End__c, ' +
 			getOscarCasesSubquery() +
 			'FROM Account ' +
 			'WHERE RecordType.DeveloperName = \'IATA_Agency\' ' + 
@@ -395,7 +415,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Financial year end with value: '+ month);
 		} else if (mode == MODE_COUNTRY) {
 			queryAccount += 'AND IATA_ISO_Country__c = :country ';
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country);
+			if(!selectedStateSet.isEmpty()) queryAccount += 'AND Iso_State__c IN :selectedStateSet ';
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for Country with value: '+ country +(!selectedStateSet.isEmpty()? ' with the states: ' + selectedStateSet : '.'));
 		} else if (mode == MODE_IATA_CODE) {
 			queryAccount += 'AND IATACode__c = :iataCode ';
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_AnualRevalCaseCreationController - searchAgencies] Running for IATA Code with value: '+ account.IATACode__c);

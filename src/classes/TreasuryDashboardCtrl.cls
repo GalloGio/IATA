@@ -1,6 +1,10 @@
 
 public without sharing class TreasuryDashboardCtrl {
 
+	public static String POWERBI_ACCESS_TOKEN = 'PowerBIaccessToken';
+	public static String POWERBI_EXPIERS_ON = 'PowerBIexpiersOn';
+	public static String POWERBI_REFRESH_TOKEN = 'PowerBIrefreshToken';
+
 	public class UserInformation {
 		@AuraEnabled
 		public User user {get; set;}
@@ -12,6 +16,18 @@ public without sharing class TreasuryDashboardCtrl {
 		public Boolean isPremiumUser {get; set;}
 		@AuraEnabled
 		public Portal_Applications__c tdPremium {get; set;}
+	}
+
+
+	@AuraEnabled
+	public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
+		return PowerBiCtrl.getPowerBICredentials(configurationName);
+	}
+
+
+	@AuraEnabled
+	public static PowerBiCtrl.ReportDetails getReportConfigDetails(String reportName) {
+		return PowerBiCtrl.getReportConfigDetails(reportName);
 	}
 
 
@@ -56,6 +72,16 @@ public without sharing class TreasuryDashboardCtrl {
 
 			}
 
+			/* Check for Bypass_TD_2FA permission set
+			This permission set is used for automation testing user to bypass the 2FA check on Treasury Dashboard page.
+			 */
+			List<String> resultList = hasBypass2FA(new List<String>{users[0].Id});
+			if(! resultList.isEmpty()) {
+				if('true'.equals(resultList[0])) {
+					userInfoToReturn.hasTwoFactor = true;
+				}
+			}
+
 			//get is standard user
 			List <Portal_Application_Right__c> accessList = [
 					SELECT Id, Portal_Application__r.TD_Access_Level__c,
@@ -98,14 +124,7 @@ public without sharing class TreasuryDashboardCtrl {
 
 	}
 
-	/* USE THIS AS GCS PORTAL DOES*/
-	/*@AuraEnabled
-	public static String premiumAccessRequest(String applicationId, String applicationName, String contactId) {
-		return PortalServicesCtrl.newAppsRequestICCS(applicationId, applicationName, contactId);
-	}*/
 
-
-	/*FROM ORIGINAL PAGE*/
 	@AuraEnabled
 	public static String premiumAccessRequest(String applicationId, String contactId) {
 		return requestTreasuryDashboardPremium(applicationId, contactId);
@@ -131,5 +150,50 @@ public without sharing class TreasuryDashboardCtrl {
 
 		return caseRecordTypeId;
 	}
+
+
+	@AuraEnabled
+	public static PowerBiCtrl.OAuthResult getAccessToken(PowerBI_Config__c conf) {
+		Integer refreshSecondsToExpire = 360;
+		return PowerBiCtrl.retrieveAccessToken(conf, POWERBI_ACCESS_TOKEN, POWERBI_EXPIERS_ON, POWERBI_REFRESH_TOKEN, refreshSecondsToExpire);
+	}
+
+	@AuraEnabled
+	public static PowerBiCtrl.DatasetDetailResult getDataset(String accessToken, String datasetId, PowerBI_Config__c conf) {
+		return PowerBiCtrl.getDataset(accessToken, datasetId, conf);
+	}
+
+	@AuraEnabled
+	public static PowerBiCtrl.ReportDetailResult getReportsDetails(String accessToken, String reportId, PowerBI_Config__c conf) {
+		return PowerBiCtrl.getReportsDetails(accessToken, reportId, conf);
+	}
+
+
+	@AuraEnabled
+	public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
+		Integer refreshMinutesToExpire = 10;
+		return PowerBiCtrl.retrieveEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf, refreshMinutesToExpire);
+	}
+
+
+	/*
+	This method is used in Accept Terms and 2FA 2 login flow and Treasury Dashboard page for bypassing 2FA for users
+	that have Bypass_TD_2FA permission set assigned.
+	 */
+	@InvocableMethod
+	public static List<String> hasBypass2FA(List<String> userId) {
+		List<String> resultList = new List<String>();
+		List<PermissionSetAssignment> permissionsList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :userId[0] AND PermissionSet.Name = 'Bypass_TD_2FA'];
+		if(! permissionsList.isEmpty()) {
+			resultList.add('true');
+		}else{
+			resultList.add('false');
+		}
+
+		return resultList;
+	}
+
+
+
 
 }

@@ -3251,6 +3251,16 @@ public class AMS_OSCARTriggerHandler {
 
 			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
+				if (oscar.Process__c != AMS_Utils.NGCHINACONVERSION){
+					if (oscar.Is_NewGen__c && AMS_Utils.setAMS.contains(oscar.Location_Type__c)) {
+						oscar.addError('Cannot pass the sanity check if the Location Type is non NewGen.');
+						return;
+					}else if (!oscar.Is_NewGen__c && AMS_Utils.setNewGen.contains(oscar.Location_Type__c)) {
+						oscar.addError('Cannot pass the sanity check if the Location Type is NewGen.');
+						return;
+					}
+				}
+
 				if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
 					if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
 						if((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_PCI_compliant__c == null) && oscar.ANG_PCI_compliance_expiry_date__c <> null){
@@ -4525,7 +4535,8 @@ public class AMS_OSCARTriggerHandler {
 			statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
 		else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
-			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
+			//Removed validation oscar.STEP35__c == AMS_Utils.PASSED - For NEW HE LITE no need to submit Financial Security
+			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c)
 				statusForCC = 'Active';
 			else
 				statusForCC = 'Non-Active';

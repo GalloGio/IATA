@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to notify stakeholders upon reception of RHC Alert 100% UP on a BSP under RHC exceptional monitoring</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>RHC Exceptional Monitoring 100 Notification</name>
+    <style>none</style>
+    <subject>NonNewGen RHC Monitoring – ##COUNTRY## – ##AGENT_NAME## – ##IATA_CODE##</subject>
+    <textOnly>##COUNTRY## ##AGENT_NAME## ##IATA_CODE## all amounts owing are exceeding FS ##RHC_AMOUNT## ##RHC_CURRENCY##.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

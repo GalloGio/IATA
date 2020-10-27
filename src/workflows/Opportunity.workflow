@@ -20,7 +20,7 @@
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
+        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org, CountrymanagersAME@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
         <protected>false</protected>
         <recipients>

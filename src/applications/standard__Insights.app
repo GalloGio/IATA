@@ -37,9 +37,7 @@
     <tabs>EmailTemplate__c</tabs>
     <tabs>IATA_ISO_Country__c</tabs>
     <tabs>standard-Dashboard</tabs>
-    <tabs>IntelliMail__Analytic_Management</tabs>
     <tabs>Priority_Mapping__c</tabs>
-    <tabs>IntelliMail__Configuration</tabs>
     <tabs>Licenses__c</tabs>
     <tabs>AMS_OSCAR__c</tabs>
     <tabs>standard-Campaign</tabs>

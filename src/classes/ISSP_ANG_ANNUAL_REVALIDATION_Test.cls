@@ -1029,7 +1029,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		sector__c = Ams_Utils.SECTOR_PASSENGER,
 		Location_Type__c = AMS_Utils.HE,
 		RecordTypeId = rtAgency ,
-		IATACode__c = '12345678',
+		IATACode__c = '12345670',
 		status__c = Ams_Utils.ACC_S9_APPROVED,
 		IATA_ISO_Country__c = country.Id,
 		Location_Class__c = 'P');
@@ -1069,7 +1069,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 			ISSP_ANG_ANNUAL_REVALIDATION.setCaseVisibleInPortal(testcase);
 
-			ctrl.currentIataCode = '12345678';
+			ctrl.currentIataCode = '12345670';
 			ctrl.loadIataCode();
 			ctrl.confirmDetails();
 			ctrl.newCase.Region__c = 'Europe';

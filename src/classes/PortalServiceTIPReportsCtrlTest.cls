@@ -51,7 +51,7 @@ public class PortalServiceTIPReportsCtrlTest {
 
 		Test.startTest();
 		System.runAs(user) {
-			PortalServiceTIPReportsCtrl.TIPReportPageWrapper pageWrapper = PortalServiceTIPReportsCtrl.getTIPReportPageWrapper();
+			PortalServiceTIPReportsCtrl.TIPReportPageWrapper pageWrapper = PortalServiceTIPReportsCtrl.getTIPReportPageWrapper(PortalServiceTIPReportsCtrl.SERVICE_TIP_REPORTS);
 
 			PortalServiceTIPReportsCtrl.TIPReportWrapperObject tipwrapperObjectAux = new PortalServiceTIPReportsCtrl.TIPReportWrapperObject();
 			tipwrapperObjectAux.lastModifiedDate = Date.today();
@@ -74,7 +74,7 @@ public class PortalServiceTIPReportsCtrlTest {
 
 			PortalServiceTIPReportsCtrl.getExpiringLinkIfap('testname');
 
-			PortalServiceTIPReportsCtrl.createDocumentTrackerRecord(file1.getId(), er.Id);
+			PortalServiceTIPReportsCtrl.createDocumentTrackerRecord(file1.getId(), er.Id, PortalServiceTIPReportsCtrl.SERVICE_TIP_REPORTS);
 			System.assertEquals(1, [select count() from ISSP_Document_Tracker__c where Type__c = 'TIP Report']);
 		}
 		Test.stopTest();

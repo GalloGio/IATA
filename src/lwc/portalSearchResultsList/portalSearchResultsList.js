@@ -365,7 +365,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "title": this.faqsResults[i].Title,
                     "description": "",
                     "class": "categId-2",
-                    "url": 'q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id
+                    "url": this.faqsResults[i].UrlName
                 };
                 aggregateResults.push(faq);
             }
@@ -457,46 +457,55 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
     }
 
     renderArticle(event) {
+        event.preventDefault();
+        event.stopPropagation();
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         let url = event.target.attributes.getNamedItem('data-url').value;
         let category = event.target.attributes.getNamedItem('data-category').value;
-        let thePage;
+        let thePage=CSP_PortalPath;
         let params = {};
-        if (category === this.label.CSP_Cases) {
-            thePage = 'case-details'
-            params.caseId = url.replace('case-details?caseId=', '');
-        }
+      
         if (category === this.label.CSP_Breadcrumb_FAQ_Title) {
-            thePage = filteringObjectAux.advancedSearch ? 'support-view-article' : 'faq-article';
-            params.q = filteringObjectAux.searchText;
-            params.id1 = url.replace('q=' + filteringObjectAux.searchText + '&id1=', '');
-        }
-        if (category === this.label.CSP_Documents) {
-            thePage = 'documents-search'
-            params.searchText = filteringObjectAux.searchText;
-            params.docId = url.replace("documents-search?searchText=" + filteringObjectAux.searchText + "&docId=", '');
-        }
-        if (category === this.label.ISSP_AvailableServices_Service) {
-            thePage = 'manage-service';
-            params.serviceId = url.replace('manage-service?serviceId=', '');
-        }
-        if (category === this.label.ICCS_Profile) {
-            if (url.includes('company-profile?account=')) {
-                thePage = 'company-profile';
-                params.account = url.replace(this.label.CSP_PortalPath + 'company-profile?account=', '');
+             this[NavigationMixin.Navigate]({
+                type: 'standard__knowledgeArticlePage',
+                attributes: {
+                    urlName: url
+                } 
+            }); 
+        }else{
+            
+            if (category === this.label.CSP_Cases) {
+                thePage += 'case-details'
+                params.caseId = url.replace('case-details?caseId=', '');
             }
-            else if (url.includes('company-profile?tab=contact&contact=')) {
-                thePage = 'company-profile';
-                params.contact = url.replace(this.label.CSP_PortalPath + 'company-profile?tab=contact&contact=', '');
-                params.tab = 'contact';
+
+            if (category === this.label.CSP_Documents) {
+                thePage += 'documents-search'
+                params.searchText = filteringObjectAux.searchText;
+                params.docId = url.replace("documents-search?searchText=" + filteringObjectAux.searchText + "&docId=", '');
             }
-            else if (url.includes('company-profile')) {
-                thePage = 'company-profile';
+            if (category === this.label.ISSP_AvailableServices_Service) {
+                thePage += 'manage-service';
+                params.serviceId = url.replace('manage-service?serviceId=', '');
             }
-            else if (url.includes('my-profile')) {
-                thePage = 'my-profile';
+            if (category === this.label.ICCS_Profile) {
+                if (url.includes('company-profile?account=')) {
+                    thePage += 'company-profile';
+                    params.account = url.replace(this.label.CSP_PortalPath + 'company-profile?account=', '');
+                }
+                else if (url.includes('company-profile?tab=contact&contact=')) {
+                    thePage += 'company-profile';
+                    params.contact = url.replace(this.label.CSP_PortalPath + 'company-profile?tab=contact&contact=', '');
+                    params.tab = 'contact';
+                }
+                else if (url.includes('company-profile')) {
+                    thePage += 'company-profile';
+                }
+                else if (url.includes('my-profile')) {
+                    thePage += 'my-profile';
+                }
             }
+            navigateToPage(thePage, params);
         }
-        navigateToPage(CSP_PortalPath+thePage, params);
     }
 }

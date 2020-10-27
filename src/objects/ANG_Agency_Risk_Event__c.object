@@ -537,6 +537,25 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Inactive_Revoked_Inactive</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_AccountId__c</columns>
+        <columns>ANG_Event_Status__c</columns>
+        <columns>ANG_Expired__c</columns>
+        <columns>ANG_Source__c</columns>
+        <columns>ANG_CaseId__c</columns>
+        <columns>ANG_Remarks__c</columns>
+        <columns>ANG_Risk_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Event_Status__c</field>
+            <operation>equals</operation>
+            <value>Inactive_Revoked,Inactive</value>
+        </filters>
+        <label>Inactive Revoked and Inactive</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
         <label>Name</label>

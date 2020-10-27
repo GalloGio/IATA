@@ -102,6 +102,7 @@ private class ISSP_AMS_Accreditation_Test {
 
 		Account mcbranchAcc = new Account(
 			Name = 'MultiBranch',
+			RecordTypeId = rtIdBr,
 			Location_Type__c = 'HE',
 			Location_Class__c = 'P',
 			Sector__c = AMS_Utils.SECTOR_PASSENGER,
@@ -116,7 +117,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Location_Type__c = 'HO',
 			IATA_ISO_Country__c = country.Id,
 			RecordTypeId = rtIdBr,
-			IATACode__c = '100',
+			IATACode__c = '000001',
 			ANG_FA_Opt_out__c = true,
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
 			Email__c = 'qwe@dse.pt',
@@ -129,7 +130,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = AMS_Utils.SECTOR_PASSENGER,
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '1000000',
+			IATACode__c = '000002',
 			IATA_ISO_Country__c = country.Id);
 
 		Account parentAccountCargo = new Account(
@@ -138,7 +139,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = 'Cargo_Agent',
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '1000000',
+			IATACode__c = '000003',
 			IATA_ISO_Country__c = country.Id);
 
 		Account parentAccIcc = new Account(
@@ -147,7 +148,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = AMS_Utils.SECTOR_PASSENGER,
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '100',
+			IATACode__c = '000004',
 			Status__c = 'Terminated'
 		);
 
@@ -157,7 +158,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Sector__c = 'Travel Agent',
 			Location_Type__c = 'HO',
 			RecordTypeId = rtIdBr,
-			IATACode__c = '100'
+			IATACode__c = '000005'
 		);
 
 		Account cashParentAcc = new Account(
@@ -177,6 +178,7 @@ private class ISSP_AMS_Accreditation_Test {
 		Account accountParentAccreditation = new Account(
 			BillingCity = 'test',
 			Name = 'accountParentAccreditation',
+			RecordTypeId = rtIdBr,
 			Sector__c = AMS_Utils.SECTOR_PASS,
 			Category__c=AMS_Utils.categoryPass,
 			IATA_ISO_Country__c = country3.Id,
@@ -744,6 +746,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.editContactId = newContact.Id;
 
 			ctrl.getIATAMemberAirlines();
+			ctrl.getTrainingTypes();
 			ctrl.getOfficeTypes();
 			ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
 			ctrl.Save();
@@ -1670,7 +1673,6 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.saveAMSFormAndGoForward();
 			ctrl.saveAMSFormAndGoBack();
 			ctrl.saveAMSFormAndLeave();
-			Test.stopTest();
 			ctrl.setPageLegalStatusAfterChangeLabels();
 
 			ctrl.legalStatusAfterChange = 'association';
@@ -1686,6 +1688,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 			ctrl.goToFinalStep();
 			ctrl.validateDangerousGoods(5);
+			Test.stopTest();
 		}
 	}
 
@@ -3706,21 +3709,13 @@ Location_Type__c = 'BR');
 		System.runAs(fetchUser('conChildIcc@test11.com')) {
 			String invalidISOsample = '∌';
 			ISSP_AMS_Accreditation accr = icc_initialize();
-
+			
 			accr.noCLocationType = 'xpto';
 
 			String str = accr.noCLocationType;
 
 			accr.txtHelpCurrency = 'xpto';
 			str = accr.txtHelpCurrency;
-
-			List<SelectOption> selectOptionList = new List<SelectOption>();
-
-			accr.isGSAList = selectOptionList;
-			accr.itemsYesNo = selectOptionList;
-
-			selectOptionList = accr.isGSAList;
-			selectOptionList = accr.itemsYesNo;
 
 			accr.fileName = 'xpto';
 			str = accr.fileName;
@@ -4834,6 +4829,7 @@ Location_Type__c = 'BR');
 
 			insert new List<AMS_Facility__c>{facility1, facility2};
 
+			Test.startTest();
 			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
 
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
@@ -4853,6 +4849,7 @@ Location_Type__c = 'BR');
 
 			ctrl = new ISSP_AMS_Accreditation();
 			List<SelectOption> testListOpp = ctrl.legalStatusList;
+			Test.stopTest();
 
 			System.assert(ctrl.facilityList.isEmpty(), 'Facility list must NOT have records');
 		}
