@@ -543,7 +543,7 @@
 }
 
 .sideBarProfileContainer .headerBarButton {
-  margin-left: 2.7em;
+  margin-left: 4em;
 }
 
 .sideMenuBackIcon {
@@ -641,4 +641,8 @@
 }
 .mobileLayout .contentSection{
   height:375px;
+}
+.mobileCloseBtn{
+  bottom: 3%;
+  left: 45%;
 }

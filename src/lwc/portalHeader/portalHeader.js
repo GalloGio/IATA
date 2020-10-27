@@ -668,7 +668,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         
         if (this.openSideBarMenu) {
             this.sideMenuCoverStyle = 'width: 100%;';
-            this.sideMenuBarStyle = 'min-height: 75%;';
+            this.sideMenuBarStyle = 'height: 75%';
         } else {
             this.sideMenuCoverStyle = 'width: 0%;';
             this.sideMenuBarStyle = 'height: 0%;';

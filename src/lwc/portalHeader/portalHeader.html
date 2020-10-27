@@ -357,10 +357,10 @@
                         <img src={logoMobileIcon}  class="mobileLogoWhite"/>
                     </div>
                 </div>
-                <div class="slds-grid slds-wrap slds-m-vertical_x-large contentSection">                        
+                <div class="slds-grid slds-wrap contentSection">                        
                     <div class="slds-col slds-grid slds-wrap publicSideBarBtnMenu ">
                         <!-- language link -->
-                        <div if:true={internalUser} class="slds-col slds-size_1-of-1 slds-p-bottom_xx-large language-picker">
+                        <div if:true={internalUser} class="slds-col slds-size_1-of-1 slds-p-bottom_large language-picker">
                             <div class="slds-grid slds-grid_horizontal">
                                 <div if:true={chagingLang} class="changingLangSpinner slds-size_1-of-1">
                                     <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
@@ -467,7 +467,7 @@
                 </div>
                 
                 <!-- close button -->
-                <div onclick={toggleSideMenu} class="slds-col slds-grid slds-grid--align-center slds-size_1-of-1">
+                <div onclick={toggleSideMenu} class="slds-grid slds-is-absolute mobileCloseBtn">
                     <span class="text-large text-blue text-bold rotateIcon45Deg">+</span>
                 </div>
             </div>
