@@ -498,6 +498,11 @@ IF( ISPICKVAL(Language,&apos;en_US&apos;),
             <operation>equals</operation>
             <value>1</value>
         </filters>
+        <filters>
+            <field>PUBLISH_STATUS</field>
+            <operation>equals</operation>
+            <value>2</value>
+        </filters>
         <label>Published Articles</label>
     </listViews>
     <pluralLabel>Knowledge</pluralLabel>
