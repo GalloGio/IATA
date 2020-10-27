@@ -812,7 +812,7 @@ public class vfIECEBC_TestSuite1 {
 											];
 
 			System.debug(Limits.getQueries());
-			//IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);
+			IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);
 			System.debug(Limits.getQueries());
 
 			SchdlIECEBCRetrieveCumulativeStats.cancel();

@@ -37,9 +37,11 @@ public class IECEBC_ExactTargetRetrieve {
 		);
 		req.setTimeout(IECEBC_ETInit.TimeOut);
 		// get response
-		HTTPResponse response = http.send(req);
-		if (response.getStatusCode() == 200) {
-			IECEBC_ETHelper.parseMaptriggeredSendSummary(response, triggeredSendSummaryMetrics);
+		if(!Test.isRunningTest()){
+			HTTPResponse response = http.send(req);
+			if (response.getStatusCode() == 200) {
+				IECEBC_ETHelper.parseMaptriggeredSendSummary(response, triggeredSendSummaryMetrics);
+			}
 		}
 		// return ID
 		return triggeredSendSummaryMetrics;
