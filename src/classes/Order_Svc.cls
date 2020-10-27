@@ -1098,7 +1098,8 @@ public without sharing class Order_Svc
 			if(order.ShipToContact_Email__c != null)
 				lstmails.add(clientMail);*/
 
-			//Send notification for Special instructions for shipping and delivery
+			//Send notification for Special instructions for shipping and delivery 
+			//27/10/20 AG asked for temporary disable this feature on JIRASP-6666
 			/*if(order.Has_Shipping_Instruction__c){
 				Mail_DTO specialShippingInstruction = new Mail_DTO();
 				specialShippingInstruction.whatId = order.Id;
