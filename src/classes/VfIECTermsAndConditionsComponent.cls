@@ -26,9 +26,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				}
 				return bAllTnCChecked;
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return false;
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return false;
 			}
 		}
 		private set;
@@ -41,10 +39,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 					lstTnCsToDisplay = getTermsAndConditions();
 				return lstTnCsToDisplay;
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return null;
-			}
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return null;}
 		}
 		private set;
 	}
@@ -59,9 +54,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				}
 				return lstTnC;
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return null;
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return null;
 			}
 		}
 		private set;
@@ -72,9 +65,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			try {
 				return (listTermsAndConditionsToDisplay != null && !listTermsAndConditionsToDisplay.isEmpty());
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return false;
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return false;
 			}
 		}
 		private set;
@@ -88,8 +79,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			lstTnCsToDisplay = null;
 			hasAcceptedAllTCs = false;
 		}
-		catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+		catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 		}
 	}
 
@@ -112,9 +102,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			}
 			return listTCToDisplay;
 		}
-		catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-			return null;
+		catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return null;
 		}
 	}
 
@@ -124,9 +112,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			List<UITermsAndConditions> lst = this.listTermsAndConditionsToDisplay;
 			return;
 		}
-		catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-			return;
+		catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return;
 		}
 	}
 
