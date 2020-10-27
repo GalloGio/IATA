@@ -29,11 +29,13 @@ export default class PortalTroubleshootingPage extends NavigationMixin(Lightning
         }
     }
 
-    @wire(getCommunityAvailableLanguages,{ })
-    wiredLanguageResult(results){
-        if(results.data) {
-            this.langOptions = results.data;                    
-        }
+    
+    getLangOptions(){
+
+        getCommunityAvailableLanguages().then(val=>{
+            this.langOptions = val; 
+        });
+        
     }
 
     connectedCallback(){
@@ -44,6 +46,7 @@ export default class PortalTroubleshootingPage extends NavigationMixin(Lightning
         }
         
         this.paramstr=JSON.stringify(this.paramsObj);
+        this.getLangOptions();
 
     }
     

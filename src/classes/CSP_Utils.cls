@@ -277,7 +277,7 @@ public with sharing class CSP_Utils {
 
 
 	//* Retrieves available lanaguages for the community*/
-	@AuraEnabled(cacheable=true)
+	@AuraEnabled
 	public static List<PickListWrapper> getCommunityAvailableLanguages(string sobj,string field){
 		List<PickListWrapper> options = new List<PickListWrapper>();
 
