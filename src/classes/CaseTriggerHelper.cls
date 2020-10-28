@@ -20,8 +20,7 @@ public with sharing class CaseTriggerHelper {
 	public static final String CASE_ACTION_CASE_REOPENING = 'Case Reopening';
 	public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
 
-	public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_STATUS_PENDING_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
-	public static List<String> bypassReasons = new List<String>{'Thank you', 'No Action'};
+	public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
 
 	public static final Set<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new set<String> {
 		'CasesMENA', 'CasesAmericas', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ExternalCasesIDFSglobal'
@@ -64,22 +63,18 @@ public with sharing class CaseTriggerHelper {
 		}
 
 		String kpiReportingClosureId = actionToKPIReportingMap.get(CASE_ACTION_CASE_CLOSURE).Id;
-		String kpiReportingPendingClosureId = actionToKPIReportingMap.get(CASE_STATUS_PENDING_CLOSURE).Id;
 		String kpiReportingEscalationId = actionToKPIReportingMap.get(CASE_ACTION_CASE_ESCALATION).Id;
 		String kpiReportingReopeningId = actionToKPIReportingMap.get(CASE_ACTION_CASE_REOPENING).Id;
 		String kpiReportingNOIId = actionToKPIReportingMap.get(CASE_ACTION_SEND_NOI).Id;
 
 		Set<Id> allConsidered = new Set<Id>();
 		Set<Id> consideredForClosure = new Set<Id>();
-		Set<Id> consideredForPendingClosure = new Set<Id>();
 		Set<Id> consideredForEscInt = new Set<Id>();
 		Set<Id> consideredForReopen = new Set<Id>();
 		Set<Id> consideredForNOI = new Set<Id>();
 
 		List<String> closure_fromStatus;
 		List<String> closure_toStatus;
-		List<String> pendingclosure_fromStatus;
-		List<String> pendingclosure_toStatus;
 		List<String> escalation_fromStatus;
 		List<String> escalation_toStatus;
 		List<String> reopening_fromStatus;
@@ -91,8 +86,6 @@ public with sharing class CaseTriggerHelper {
 		for(ISSP_KPI_Reporting__mdt cfg : configs) {
 			if(cfg.Action__c == CASE_ACTION_CASE_CLOSURE) {
 				configsMap.get(CASE_ACTION_CASE_CLOSURE).put(cfg.Case_Record_Type__c, cfg);
-			} else if(cfg.Action__c == CASE_STATUS_PENDING_CLOSURE) {
-				configsMap.get(CASE_STATUS_PENDING_CLOSURE).put(cfg.Case_Record_Type__c, cfg);
 			}else if(cfg.Action__c == CASE_ACTION_CASE_ESCALATION) {
 				configsMap.get(CASE_ACTION_CASE_ESCALATION).put(cfg.Case_Record_Type__c, cfg);
 			} else if(cfg.Action__c == CASE_ACTION_CASE_REOPENING) {
@@ -112,10 +105,6 @@ public with sharing class CaseTriggerHelper {
 				closure_fromStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
 				closure_toStatus = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_To__c.split(',');
 			}
-			if(configsMap.get(CASE_STATUS_PENDING_CLOSURE).keySet().contains(cRTDevName)) {
-				pendingclosure_fromStatus = configsMap.get(CASE_STATUS_PENDING_CLOSURE).get(cRTDevName).Status_From__c.split(',');
-				pendingclosure_toStatus = configsMap.get(CASE_STATUS_PENDING_CLOSURE).get(cRTDevName).Status_To__c.split(',');
-			}
 			if(configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
 				escalation_fromStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
 				escalation_toStatus = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_To__c.split(',');
@@ -131,15 +120,9 @@ public with sharing class CaseTriggerHelper {
 				consideredForClosure.add(c.Id);
 				allConsidered.add(c.Id);
 			}
-			
-			// case pending closure
-			if(configsMap.get(CASE_STATUS_PENDING_CLOSURE).keySet().contains(cRTDevName) && pendingclosure_fromStatus.contains(oldMap.get(c.Id).Status) && pendingclosure_toStatus.contains(newMap.get(c.Id).Status)) {
-				consideredForPendingClosure.add(c.Id);
-				allConsidered.add(c.Id);
-			}
 
 			// case reopening
-			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName) && reopening_fromStatus.contains(oldMap.get(c.Id).Status) && reopening_toStatus.contains(newMap.get(c.Id).Status) && reopening_reasons.contains(oldMap.get(c.Id).Reopening_Reason__c)) {
+			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName) && reopening_fromStatus.contains(oldMap.get(c.Id).Status) && reopening_toStatus.contains(newMap.get(c.Id).Status) && reopening_reasons.contains(newMap.get(c.Id).Reopening_Reason__c)) {
 				consideredForReopen.add(c.Id);
 				allConsidered.add(c.Id);
 			}
@@ -163,26 +146,13 @@ public with sharing class CaseTriggerHelper {
 		}
 
 		Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
-		Map<Id, KPI_Value__c> typeOfActionPendingClosureMap = new Map<Id, KPI_Value__c>();
 
 		if(!consideredForClosure.isEmpty()) {
 			// find registered case closures from past
-			List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c, FDS_KPI_Reporting__c, FDS_KPI_Reporting__r.Type_Of_Action__c FROM KPI_Value__c WHERE (CaseNumber__c IN :consideredForClosure OR CaseNumber__c IN :consideredForPendingClosure) AND (FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE OR FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_STATUS_PENDING_CLOSURE)];
+			List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c, FDS_KPI_Reporting__c, FDS_KPI_Reporting__r.Type_Of_Action__c FROM KPI_Value__c WHERE CaseNumber__c IN :consideredForClosure AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
 			
 			for(KPI_Value__c cc: claimingClosures) {
-				if(cc.FDS_KPI_Reporting__r.Type_Of_Action__c == CASE_ACTION_CASE_CLOSURE)
-					typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
-				else
-					typeOfActionPendingClosureMap.put(cc.CaseNumber__c, cc);
-			}
-		}
-
-		if(!consideredForPendingClosure.isEmpty()) {
-			// find registered case pending closures from past
-			List<KPI_Value__c> claimingPendingClosures = [SELECT Id, Responsible__c, CaseNumber__c, FDS_KPI_Reporting__c, FDS_KPI_Reporting__r.Type_Of_Action__c FROM KPI_Value__c WHERE CaseNumber__c IN :consideredForPendingClosure AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_STATUS_PENDING_CLOSURE];
-
-			for(KPI_Value__c cc: claimingPendingClosures) {
-				typeOfActionPendingClosureMap.put(cc.CaseNumber__c, cc);						
+				typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
 			}
 		}
 
@@ -193,26 +163,14 @@ public with sharing class CaseTriggerHelper {
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
-			
-			if(typeOfActionClosureMap.get(cId) != null)
+			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen'){
 				points = 0;
+			} else if(newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status!='Reopen' && typeOfActionClosureMap.get(cId) != null){
+				points = 0;
+			}
 
 			if(points != 0) {
 				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId);
-				kpiValuesToInsert.add(valueToInsert);
-			}
-		}
-
-		// pending closure
-		for(Id cId: consideredForPendingClosure) {
-			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
-			Integer points = configsMap.get(CASE_STATUS_PENDING_CLOSURE).get(cRTDevName).Points__c.intValue();
-			if(typeOfActionPendingClosureMap.get(cId) != null){
-				points = 0;
-			}
-
-			if(points != 0) {
-				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingPendingClosureId);
 				kpiValuesToInsert.add(valueToInsert);
 			}
 		}
