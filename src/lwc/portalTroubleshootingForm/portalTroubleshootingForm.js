@@ -204,9 +204,8 @@ export default class PortalTroubleshootingForm extends NavigationMixin(Lightning
         this.template.querySelector("[data-form]").classList.toggle('slds-hide');
         this.showForm=!this.showForm;
         if(this.showForm){
-
-            let divToTop = this.template.querySelectorAll("[data-form]")[0].offsetTop;
-		    window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
+            let offset= window.pageYOffset+this.template.querySelector("[data-form]").getBoundingClientRect().top;
+            window.scrollTo(0,offset);
             this._initializePhoneInput();
         }
     } 
