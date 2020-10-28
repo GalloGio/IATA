@@ -85,10 +85,6 @@ export default class CwAccountDetailCarousel extends LightningElement {
 					let indexMap = 1;
 					imagesList.forEach(img => {						
 						img.url = img.urlImage;
-						//img.url = "data:image/" + img.fileExtension + ";base64," + img.image;
-						// if (index < 4) {
-						// 	listMiniature.push(img);
-						// }
 
 						if(index !== 4*indexMap ){
 							listMiniature.push(img);
@@ -125,7 +121,7 @@ export default class CwAccountDetailCarousel extends LightningElement {
 					this.dispatchEvent(newEvent);
 				}
 			})
-			.catch(err => console.log(err.message))
+			.catch(err => console.error(err))
 			.finally(() => {
 				this.isLoading = false;
 			});

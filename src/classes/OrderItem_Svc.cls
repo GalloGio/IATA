@@ -303,7 +303,6 @@ public without sharing class OrderItem_Svc {
 
 	@future
 	public static void sendRemoteValidationConfirmationEmails(String orderItemId, String whoId){
-		try{
 			List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 			
 			//Send email to who purchased
@@ -313,9 +312,6 @@ public without sharing class OrderItem_Svc {
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Purchase_to_IATA', orderItemId, CW_EmailManager.getIataAdminsIds()));
 
 			CW_EmailManager.sendInternalEmails(emailsToBeSent);
-		}catch(Exception e){
-			System.debug('#### EXCEPTION send internal emails: ' + e.getMessage());
-		}
 	}
 	// End of Smart Facilities Remote Validations methods
 

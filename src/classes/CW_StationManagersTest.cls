@@ -78,5 +78,18 @@ public class CW_StationManagersTest {
 		List<Contact> contactList = (List<Contact>) JSON.deserialize(returnValue, List<Contact>.class);
 		System.assertEquals(2, contactList.size(), 'Unable to retrieve the other account contact');
 	}
+
+	@isTest 
+	public static void exceptionPathTest(){
+		
+		Test.startTest();
+		try{
+			String returnValue = CW_StationManagers.deleteAccountContactRole(null, false);
+			System.assert(false, 'Excetion must be launched');
+		}catch(Exception e){
+			System.assert(true, 'Exception must be launched');
+		}
+		Test.stopTest();				
+	}
 	
 }

@@ -307,35 +307,35 @@ public with sharing class CW_GxA_Handler_Test {
 
 		ICG_GxA_Integration_Mapping__c imap12 = new ICG_GxA_Integration_Mapping__c(Version__c= RT_NEW_VERSION,GxA_Group__c='Question',GxA_Is_Mandatory__c = true);
 		imap12.GxA_Options__c = '';
-		imap12.GxA_Question_Id__c = '12';
-		imap12.GxA_Question_Parent_Id__c = '111';
-		imap12.GxA_Question_Text__c = 'to C';
+		imap12.GxA_Question_Id__c = '4421';
+		imap12.GxA_Question_Parent_Id__c = '4419';
+		imap12.GxA_Question_Text__c = 'Total Storage Space (m2)';
 		imap12.GxA_Question_Type_Id__c = '2';
-		imap12.GxA_Sub_Survey_Id__c = '';
+		imap12.GxA_Sub_Survey_Id__c = '4130';
 		imap12.GxA_Validation__c = 'number';
 		imap12.SF_Data_Extra__c = '';
-		imap12.SF_Equipment__c = '2_To_8_C';
+		imap12.SF_Equipment__c = 'Freezer';
 		imap12.SF_Options_Mapping__c = '';
 		imap12.SF_Process_Question__c = 'yes';
-		imap12.SF_Specific_Processing__c = 'Fileupload.Json.Visible';
-		imap12.SF_Target_Field__c = 'TCHA_Alarm_Range__c';
+		imap12.SF_Specific_Processing__c = '';
+		imap12.SF_Target_Field__c = 'CRSTR_Total_Storage_Space__c';
 		imap12.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
 		listImap.add(imap12);
 
 		ICG_GxA_Integration_Mapping__c imap13 = new ICG_GxA_Integration_Mapping__c(Version__c= RT_NEW_VERSION,GxA_Group__c='Question',GxA_Is_Mandatory__c = true);
 		imap13.GxA_Options__c = '';
-		imap13.GxA_Question_Id__c = '13';
-		imap13.GxA_Question_Parent_Id__c = '112';
-		imap13.GxA_Question_Text__c = 'to C';
-		imap13.GxA_Question_Type_Id__c = '2';
+		imap13.GxA_Question_Id__c = '4169';
+		imap13.GxA_Question_Parent_Id__c = '4167';
+		imap13.GxA_Question_Text__c = 'Planned to be implemented by';
+		imap13.GxA_Question_Type_Id__c = '11';
 		imap13.GxA_Sub_Survey_Id__c = '';
-		imap13.GxA_Validation__c = 'Date';
+		imap13.GxA_Validation__c = '';
 		imap13.SF_Data_Extra__c = '';
-		imap13.SF_Equipment__c = '2_To_8_C';
+		imap13.SF_Equipment__c = 'Vacuum_Cooling';
 		imap13.SF_Options_Mapping__c = '';
 		imap13.SF_Process_Question__c = 'yes';
-		imap13.SF_Specific_Processing__c = 'Fileupload.Json.Visible';
-		imap13.SF_Target_Field__c = 'Expiry_Date__c';
+		imap13.SF_Specific_Processing__c = '';
+		imap13.SF_Target_Field__c = 'Planned_To_Implement_By__c';
 		imap13.SF_Target_Object__c = 'Account_Role_Detail_Capability__c';
 		listImap.add(imap13);
 
@@ -354,8 +354,11 @@ public with sharing class CW_GxA_Handler_Test {
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "9","Question": "Availability","Response": "180,181","SubSurvey": [{"QuestionTypeId": "2","QuestionID": "6321","Question": "Name","SubSurveySessionId": "180","Response": "34"},{"QuestionTypeId": "13","QuestionID": "6323","Question": "System self- or carrier owned?","SubSurveySessionId": "181","Response": "Carrier owned"}]},';
 		bodyMock += '{"QuestionTypeId": "14","QuestionID": "10","Question": "Availability","Response": "No","SubSurvey": []},';
 		bodyMock += '{"QuestionTypeId": "13","QuestionID": "11","Question": "Availability","Response": "No","SubSurvey": []},';
-		bodyMock += '{"QuestionTypeId": "13","QuestionID": "12","Question": "Availability","Response": "No","SubSurvey": []},';
-		bodyMock += '{"QuestionTypeId": "13","QuestionID": "100","Question": "Availability","Response": "No","SubSurvey": []}';
+		bodyMock += '{"QuestionTypeId": "2","QuestionID": "4421","Question": "Total Storage Space (m2)","Response": "123.4","SubSurvey": []},';
+		bodyMock += '{"QuestionTypeId": "2","QuestionID": "4421","Question": "Total Storage Space (m2)","Response": "123","SubSurvey": []},';
+		bodyMock += '{"QuestionTypeId": "11","QuestionID": "4169","Question": "Planned to be implemented by","Response": "2020-12-31T00:00:00","SubSurvey": []},';
+		bodyMock += '{"QuestionTypeId": "11","QuestionID": "4169","Question": "Planned to be implemented by","Response": "2020-14-41T00:00:00","SubSurvey": []},';
+		bodyMock += '{"QuestionTypeId": "11","QuestionID": "9999","Question": "Not exist","Response": "2020-12-31T00:00:00","SubSurvey": []}';
 		bodyMock += ']}';
 		anwsersJsonContent.add(bodyMock);
 

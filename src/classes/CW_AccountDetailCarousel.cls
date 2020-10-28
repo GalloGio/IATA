@@ -46,7 +46,7 @@ public without sharing class CW_AccountDetailCarousel {
 			listImages.addAll(CW_CapabilitiesUtilities.getCapabilitiesPhotosFromStation(listId,recordId));
 		}
 		catch(Exception e){
-			system.debug('Error: '+e.getMessage() + ' Trace:' + e.getStackTraceString());			
+            System.debug(LoggingLevel.FINE, '____[CW_AccountDetailCarousel - getFacilityFiles] Error: ' + e.getMessage() + ' Trace:' + e.getStackTraceString());
 		}
 
 		return listImages;

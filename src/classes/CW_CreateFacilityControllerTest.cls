@@ -136,6 +136,13 @@ public class CW_CreateFacilityControllerTest {
 		Test.startTest();
 		Map <String, Object> result = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test',true));
 		System.assert(result.get('success') == true, 'Test: CreateDummyCompany FAILED');
+
+		Map <String, Object> resultEmpty = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test2',true));
+		System.assert(resultEmpty.get('success') == true, 'Test: CreateDummyCompany FAILED');
+		
+		Map <String, Object> resultNotHerarchy = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test2',false));
+		System.assert(resultNotHerarchy.get('success') == true, 'Test: CreateDummyCompany FAILED');
+		
 		Test.stopTest();
 	}
 

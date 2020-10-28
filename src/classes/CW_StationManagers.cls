@@ -60,7 +60,7 @@ public without sharing class CW_StationManagers {
 			}
 
 			return status;
-		} catch (DmlException  exc) {
+		} catch (Exception  exc) {
 			throw new AuraHandledException('exception: ' + exc);
 		} 
 	}

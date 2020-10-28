@@ -1705,7 +1705,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	showOfficeHours() {
-		return this.companyType !== "Airport_Operator";
+		return !(this.companyType === "Airport_Operator" || this.companyType === "Cargo_Handling_Facility");
 	}
 
 	showOperatingHours() {

@@ -21,6 +21,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String ROWS = 'rows';
 	public static final String HAS_ROWS = 'hasRows';
 	public static final String CONTAINS_DATA = 'containsData';
+	public static final String ACTIVE = 'Active';
 
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 
@@ -454,7 +455,7 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		for(ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c 
 		FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = : recordId
-		AND ICG_Capability_Assignment_Group__r.Status__c = 'Active'])
+		AND ICG_Capability_Assignment_Group__r.Status__c = CW_CapabilitiesUtilities.ACTIVE])
 		{
 			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
 				CW_CapabilitiesManagerController.CapabilityPhoto photo = (CW_CapabilitiesManagerController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_CapabilitiesManagerController.CapabilityPhoto.class);

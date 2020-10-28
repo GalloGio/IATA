@@ -882,10 +882,10 @@ export function labels() {
 		icg_dangerousGoods,
 		icg_airmail,
 		icg_perishables,
-        icg_pharmaceuticals,
+		icg_pharmaceuticals,
 		icg_overall_facility_size,
-        icg_station_manager_request_sent,
-        icg_overall_aiport_size,
+		icg_station_manager_request_sent,
+		icg_overall_aiport_size,
 		icg_fleet,
 		icg_or_create_a_new_hierarchy,
 		icg_select_an_existing_hierarchy

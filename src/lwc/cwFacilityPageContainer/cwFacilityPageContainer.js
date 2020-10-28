@@ -733,20 +733,18 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				getOpsHierarchyNameFromAccountId({ accountId: this.userInfo.AccountId }).then(data2 => {
 					if (data2) {
 						this.hierarchyChecked = true;
-						console.log('data : ' + data);
-						console.log('data2 : ' + data2);
 						if(data == data2){
 							this.sameHierarchyGroup = true;
 						}	
 					}
 				})
 				.catch(err => {
-					console.log('getOpsHierarchyNameFromAccountId Error : ' +  err);
+					console.error('getOpsHierarchyNameFromAccountId Error : ' +  err);
 				});	
 			}
 		})
 		.catch(err => {
-			console.log('getOpsHierarchyNameFromStationId Error : ' + err);
+			console.error('getOpsHierarchyNameFromStationId Error : ' + err);
 		});
 		
 

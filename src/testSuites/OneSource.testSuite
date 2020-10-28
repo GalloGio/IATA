@@ -3,6 +3,7 @@
     <testClassName>CW_AccountDetailCarouselTest</testClassName>
     <testClassName>CW_AccountDetailCertificationListTest</testClassName>
     <testClassName>CW_AdvancedSearchTest</testClassName>
+    <testClassName>CW_AmazonMockHttpResponseGenerator</testClassName>
     <testClassName>CW_AmazonS3Connector_Test</testClassName>
     <testClassName>CW_BatchNotifyCertificationExpiryTest</testClassName>
     <testClassName>CW_BatchRemoveOldNotificationsTest</testClassName>
@@ -19,16 +20,16 @@
     <testClassName>CW_GxA_Handler_Test</testClassName>
     <testClassName>CW_GxA_Integration_BatchTest</testClassName>
     <testClassName>CW_GxA_Integration_Queueable_Test</testClassName>
+    <testClassName>CW_GxA_MockHttpResponseGenerator</testClassName>
     <testClassName>CW_GxA_WrappersTest</testClassName>
     <testClassName>CW_HandledAirlinesControllerTEST</testClassName>
-    <testClassName>CW_IATA_ISO_City_Handler</testClassName>
-    <testClassName>CW_ICG_Facility_Queuable</testClassName>
-    <testClassName>CW_ICGAccountRoleDetail_Handler_Test</testClassName>
     <testClassName>CW_ICGAccountRoleDetailCertTriggerTest</testClassName>
+    <testClassName>CW_ICGAccountRoleDetail_Handler_Test</testClassName>
+    <testClassName>CW_ICGContactRoleDetailHandler_Test</testClassName>
+    <testClassName>CW_ICG_Capability_Asgmt_Group_Test</testClassName>
     <testClassName>CW_LandingSearchBarControllerTest</testClassName>
     <testClassName>CW_LoginControllerTest</testClassName>
     <testClassName>CW_NotificationsControllerTest</testClassName>
-    <testClassName>CW_OneSourceGxAProvision</testClassName>
     <testClassName>CW_PersonalSettingsControllerTest</testClassName>
     <testClassName>CW_PrivateAreaControllerTest</testClassName>
     <testClassName>CW_RemoteValidationsControllerTest</testClassName>

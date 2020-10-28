@@ -51658,7 +51658,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>icg_pharmaceuticals</shortDescription>
         <value>Pharmaceuticals</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>icg_overall_facility_size</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
