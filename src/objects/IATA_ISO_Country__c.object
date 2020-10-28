@@ -3213,6 +3213,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <columns>BSP_Country_free_text__c</columns>
         <columns>BSP__c</columns>
         <columns>AMS_Settlement_System_CASS__c</columns>
+        <columns>Sanctioned_Country__c</columns>
         <filterScope>Everything</filterScope>
         <label>All Countries</label>
         <language>en_US</language>
