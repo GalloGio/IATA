@@ -1285,8 +1285,8 @@ global without sharing class ISSP_APProcess {
 				FROM Case
 				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID
 				AND Case.Verification__c = : joiningType
-				AND Case.CaseArea__c = 'Airline Joining'
-				AND Case.Reason1__c!=:AMS_Utils.passCountryCaseReason
+				AND Case.CaseArea__c = :strAreaType
+				AND Case.Reason1__c = :newcase.Reason1__c
 				AND Case.Case_Group__c!='Recycle Bin'
 				AND (Case.Account_Concerned__c = :vAccountConcerned OR Case.Account_Concerned__r.Top_Parent__c=:vAccountConcerned OR
 				((Case.Account_Concerned__c = :accountConcernedTopParentList[0].Top_Parent__c OR
@@ -1302,44 +1302,37 @@ global without sharing class ISSP_APProcess {
 				AND Case.Verification__c = : joiningType
 				AND Case.CaseArea__c = 'Airline Joining'
 				AND Case.Case_Group__c!='Recycle Bin'];
-		}
 
-		if(dupeDraft.size()>0) {
-			  dupeDraftExists = true;
-			  return true;
-		} else {
-			//No Joining Process, so check for ongoing Minor DB or Bank details Change
-			if(changeType=='Minor database changes') {
-				dupeDraft = [
-				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
-				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
-				AND Case.RecordTypeId=:RECORD_TYPE_ID
-				AND Case.Account_Concerned__c = :vAccountConcerned
-				AND Case.Verification__c = : joiningType
-				AND Case.CaseArea__c = 'Airline Change'
-				AND Case.Reason1__c = 'Minor database changes'
-				AND Case.Case_Group__c!='Recycle Bin'];
-			} else {
-				dupeDraft = [
-				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
-				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
-				AND Case.RecordTypeId=:RECORD_TYPE_ID
-				AND Case.Account_Concerned__c = :vAccountConcerned
-				AND Case.Verification__c = : joiningType
-				AND Case.CaseArea__c = 'Airline Change'
-				AND Case.Reason1__c = 'Bank Account Instructions'
-				AND Case.Case_Group__c!='Recycle Bin'];
+			if(dupeDraft.isEmpty()) {
+				//No Joining Process, so check for ongoing Minor DB or Bank details Change
+				if(changeType=='Minor database changes') {
+					dupeDraft = [
+					SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
+					FROM Case
+					WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
+					AND Case.RecordTypeId=:RECORD_TYPE_ID
+					AND Case.Account_Concerned__c = :vAccountConcerned
+					AND Case.Verification__c = : joiningType
+					AND Case.CaseArea__c = 'Airline Change'
+					AND Case.Reason1__c = 'Minor database changes'
+					AND Case.Case_Group__c!='Recycle Bin'];
+				} else {
+					dupeDraft = [
+					SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
+					FROM Case
+					WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance')
+					AND Case.RecordTypeId=:RECORD_TYPE_ID
+					AND Case.Account_Concerned__c = :vAccountConcerned
+					AND Case.Verification__c = : joiningType
+					AND Case.CaseArea__c = 'Airline Change'
+					AND Case.Reason1__c = 'Bank Account Instructions'
+					AND Case.Case_Group__c!='Recycle Bin'];
+				}
 			}
-
-			 if(dupeDraft.size()>0) {
-			  dupeDraftExists = true;
-			  return true;
-			 }
 		}
-		dupeDraftExists = false;
-		return false;
+
+		this.dupeDraftExists = dupeDraft.size()>0;
+		return this.dupeDraftExists;
 	}
 
 	public boolean isSameAPCase() {
