@@ -162,8 +162,7 @@ public class AMS_ChangeCodesHelper {
 		Boolean isNewGen = isNewGen(oscar, agency);
 		Boolean isNewChangeCode = changeCodes != null && !changeCodes.isEmpty() && changeCodes[0].name == AMS_Utils.NEW_CHANGE_CODE;
 		
-		if(isNewChangeCode) System.debug('JR Debugg: changeCodes[0].name ' + changeCodes[0].name);
-		if (isNewGen && !isNewChangeCode) 
+		if (isNewGen && !isNewChangeCode)
 			fOPs = fetchFormsOfPayment(accountIds);
 
 		ObjectChangesStruct objectChangesByChangeCode = null;
