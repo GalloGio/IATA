@@ -22,6 +22,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String HAS_ROWS = 'hasRows';
 	public static final String CONTAINS_DATA = 'containsData';
 	public static final String ACTIVE = 'Active';
+	public static final String SYSTEM_ADMINISTRADOR = 'System Administrator';
 
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 
@@ -435,7 +436,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin')];
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
 
-		if(result || profileName == 'System Administrator'){
+		if(result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR){
 			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c includes (:stationRT)];
 		}
 		else{
