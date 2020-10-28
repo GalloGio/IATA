@@ -605,8 +605,9 @@
              </apex:panelGrid>
         </apex:pageBlockSection>
              </div>
-            <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_bank_account_details__c==false,'','none')}">
-                    <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false && !isPostalOperator}">
+
+            <apex:outputPanel layout="block" style="page-break-after:always;margin-top:30px;" rendered="{! !newform.Is_change_bank_account_details__c && !isPostalOperator}">
+                    <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false}">
                             <apex:facet name="header">
                               <apex:outputpanel >
                                 <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
@@ -674,7 +675,7 @@
                             <apex:outputfield value="{!newForm.Effective_Date_Of_Change__c}" />
                         </apex:panelGrid>
                      </apex:pageBlockSection>
-            </div>
+            </apex:outputPanel>
     </apex:pageBlock>    
     </apex:form>
     </html>
