@@ -2014,7 +2014,12 @@ global without sharing class ISSP_APProcess {
 		if(dupeDraft[0].CaseArea__c=='Airline Joining') {
 			APprocess='jng';
 		} else {
-			APprocess='chg';
+			if(dupeDraft[0].Reason1__c=='Minor database changes') {
+				APprocess='chg';
+			}
+			if(dupeDraft[0].Reason1__c=='Bank Account Instructions') {
+				APprocess='bnk';
+			}
 		}
 		return new Pagereference('/ISSP_APCases?proc=' + APprocess + '&cdupetype=' + strOperationType + '&caseId=' + dupeDraft[0].Id + '&retURL=/ISSP_HomePage');
 	}
@@ -3644,8 +3649,6 @@ global without sharing class ISSP_APProcess {
 	**/
 	public String getPageTitle() {
 		if( this.newCase.CaseArea__c=='Airline Joining') {
-			if (isBSP) return 'Airline Participation Joining Application';
-			if (isCASS) return 'Airline Participation Joining Application';
 			if (isICH) {
 				String title = 'ICH Joining Process';
 				if (!String.isBlank(this.newCase.Classification_SIS__c)) {
@@ -3653,13 +3656,14 @@ global without sharing class ISSP_APProcess {
 				}
 				return title;
 			}
+			return Label.ISSP_Join_BSP_CASS;
 		}
 		if( this.newCase.CaseArea__c=='Airline Change') {
 			if(this.newCase.Reason1__c=='Minor database changes') {
-				return 'Airline Participation Change Request';
+				return Label.ISSP_Change_Request;
 			}
 			if(this.newCase.Reason1__c=='Bank Account Instructions') {
-				return 'Change of Bank Account details';
+				return Label.ISSP_AP_Bank_Details_Change;
 			}
 		}
 		return '';

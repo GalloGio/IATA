@@ -29686,7 +29686,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>Bank Detail Changes</value>
+        <value>Joining Change of Bank details</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -31122,7 +31122,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>BSP / CASS Changes</value>
+        <value>Settlement Joining Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
