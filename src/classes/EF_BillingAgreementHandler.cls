@@ -360,15 +360,15 @@ public class EF_BillingAgreementHandler
 					}
 			}
 
-			if(!basNoti.isEmpty()){
+			/*if(!basNoti.isEmpty()){
 				notifyOnCriticalFields(basNoti, oldMap, criticalBAFieldList);
 
-			}
+			}*/
 		}
 
 	}
 
-	public static void notifyOnCriticalFields (Map <Id, EF_Billing_Agreement__c> newBAs, Map <Id,EF_Billing_Agreement__c> oldBAMap, List <String> criticalFieldList ) {
+/*	public static void notifyOnCriticalFields (Map <Id, EF_Billing_Agreement__c> newBAs, Map <Id,EF_Billing_Agreement__c> oldBAMap, List <String> criticalFieldList ) {
 
 		Set <Id> contractIdSet = new Set <Id>();
 		for(EF_Billing_Agreement__c ba: newBAs.values()){
@@ -437,7 +437,7 @@ public class EF_BillingAgreementHandler
 			Messaging.sendEmail(mails);
 		}
 
-	}
+	}*/
 
 	public static void deactivateBillingAgreement(List<EF_Billing_Agreement__c> agreementList){
 		for(EF_Billing_Agreement__c ba : agreementList){
