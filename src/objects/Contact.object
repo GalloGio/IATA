@@ -9033,7 +9033,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Invoicing Contact</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -14348,6 +14348,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BulkMessageContacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.PHONE3</columns>
+        <columns>CONTACT.LAST_ACTIVITY</columns>
+        <filterScope>Everything</filterScope>
+        <label>Bulk_SMS_Contacts</label>
     </listViews>
     <listViews>
         <fullName>CFOairlinelist</fullName>

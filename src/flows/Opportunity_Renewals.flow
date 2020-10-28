@@ -34,6 +34,13 @@
             <targetReference>RenewalCreator</targetReference>
         </faultConnector>
         <filters>
+            <field>Type</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>renewal</stringValue>
+            </value>
+        </filters>
+        <filters>
             <field>IsClosed</field>
             <operator>EqualTo</operator>
             <value>
@@ -45,13 +52,6 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Type</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>renewal</stringValue>
             </value>
         </filters>
         <object>Opportunity</object>

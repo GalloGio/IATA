@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - Change Reporting Rejected Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_CR_Rejected_Notification</name>
+    <style>none</style>
+    <subject>{!Case.Subject} | Your Request Cannot be Approved</subject>
+    <textOnly>TIDS Changes Not Approved
+
+Dear {!Contact.Name},
+
+We have reviewed Case Number {!Case.CaseNumber} for a {!Case.Subject}.
+
+We regret to advise that we are unable to proceed with your request at this time, for the following reason:
+{!Case.Last_Case_Comment}
+
+Should you have any questions, please contact us via the IATA Customer Portal
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

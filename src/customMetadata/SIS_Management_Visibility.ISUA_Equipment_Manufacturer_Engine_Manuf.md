@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Sector__c</field>
-        <value xsi:type="xsd:string">Equipment Manufacturer</value>
+        <value xsi:type="xsd:string">Aviation Equipment Manufacturer</value>
     </values>
 </CustomMetadata>

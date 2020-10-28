@@ -203,9 +203,9 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
             </conditions>
             <conditions>
                 <leftValueReference>Account.Clearance_level__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>1</stringValue>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>

@@ -5,6 +5,7 @@ Each record stands for a combination of values (account sector and category) whe
     <fields>
         <fullName>Auto_grant_service__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>This will allow the first Contact on the Account to access the Service by creating a Portal Service Access record in Status Granted. This is for Company Admins to be granted access to the Service and assumes they are the first Contact to register.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Auto-grant service</label>

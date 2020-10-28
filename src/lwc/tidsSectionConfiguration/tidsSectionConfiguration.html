@@ -1,0 +1,208 @@
+<template>
+	<div class="slds-page-header">
+		<!-- Loading spinner Start-->
+		<lightning-spinner if:true={loadingSpinner} alternative-text="Loading" size="small"></lightning-spinner>
+		<!-- Loading spinner Start-->
+		<div class="slds-grid">
+			<div class="slds-col slds-has-flexi-truncate">
+				<header class="slds-media slds-media_center slds-has-flexi-truncate">
+					<div class="slds-media__figure">
+						<span class="slds-icon_container" title="TIDS Forms - Configuration">
+							<lightning-icon icon-name="custom:custom67"></lightning-icon>
+							<span class="slds-assistive-text">TIDS Forms - Configuration</span>
+						</span>
+					</div>
+					<div class="slds-media__body">
+						<h2 class="slds-card__header-title">TIDS Forms - Configuration</h2>
+					</div>
+				</header>
+			</div>
+		</div>
+		<div class="slds-grid slds-page-header__detail-row slds-scrollable">
+			<table class="slds-table slds-table--bordered slds-table--cell-buffer" id="table_wherelist">
+				<thead>
+					<tr class="slds-text-title--caps">
+						<th scope="col">
+							<div class="slds-truncate" title="Form Name">Form Name</div>
+						</th>
+						<th scope="col">
+							<div class="slds-truncate slds-text-align--center" title="Client Form">Client Form</div>
+						</th>
+						<th scope="col">
+							<div class="slds-truncate slds-text-align--center" title="Vetting Form">Vetting Form</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={forms} for:item="form">
+						<tr key={form.label}>
+							<td>
+								<div class="slds-truncate">
+									<p>{form.label}</p>
+								</div>
+							</td>
+							<td class="slds-align-top slds-text-align--center">
+								<div class="slds-truncate">
+									<lightning-button-icon name={form.value} data-form-api-name={form.value} data-form-type="client"
+										icon-name="utility:settings" variant="container" onclick={handleModifyConfiguration}>
+									</lightning-button-icon>
+								</div>
+							</td>
+							<td class="slds-align-top slds-text-align--center">
+								<div class="slds-truncate">
+									<lightning-button-icon name={form.value} data-form-api-name={form.value} data-form-type="vetting"
+										icon-name="utility:settings" variant="container" onclick={handleModifyConfiguration}>
+									</lightning-button-icon>
+								</div>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Start Modal -->
+	<template if:true={openModal}>
+		<section role="dialog" tabindex="-1" class="slds-modal slds-modal--large slds-fade-in-open">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header">
+					<h2 class="slds-text-heading--medium">
+						<lightning-icon icon-name="custom:custom67"></lightning-icon> TIDS Forms - Configuration
+					</h2>
+				</div>
+				<div class="slds-modal__content slds-p-around--medium">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control">
+							<h2 class="slds-text-heading--small">Api Name: {formAPI}</h2>
+							<h2 class="slds-text-heading--small">Form Name: {formSelected.name}</h2>
+							<h3 class="slds-text-heading--small">Form Type: {formType}</h3>
+							<template for:each={sections} for:item="section">
+								<lightning-layout key={section.sectionName} horizontal-align="spread" vertical-align="center"
+									class="slds-m-top--medium">
+									<lightning-layout-item padding="around-small">
+										<h2 class="slds-text-heading--small">{section.sectionName}</h2>
+									</lightning-layout-item>
+									<lightning-layout-item padding="around-small">
+										<lightning-input type="toggle" label={section.sectionName} checked={section.display}
+											name={section.apiSectionName} onchange={handleChangeFormSectionDisplay} variant="label-hidden">
+										</lightning-input>
+									</lightning-layout-item>
+								</lightning-layout>
+								<table class="slds-table slds-table_bordered" key={section.sectionName}>
+									<template if:true={section.display}>
+										<thead>
+											<tr key={section.apiName}>
+												<th scope="col" style="white-space: normal;">
+													<div class="slds-truncate" title="Action">Action</div>
+												</th>
+												<th scope="col" style="white-space: normal; width: 60%;">
+													<div class="slds-truncate" title="Field Name">Field Name</div>
+												</th>
+												<th scope="col" style="white-space: normal; width: 20%;">
+													<div class="slds-truncate" title="Field Name">Regex</div>
+												</th>
+												<th scope="col" style="white-space: normal; width: 20%;">
+													<div class="slds-truncate" title="Field Name">Translation</div>
+												</th>
+												<th scope="col">
+													<div class="slds-truncate slds-text-align--center" title="Visible">Visible</div>
+												</th>
+												<th scope="col">
+													<div class="slds-truncate slds-text-align--center" title="Required">Required</div>
+												</th>
+												<th scope="col">
+													<div class="slds-truncate slds-text-align--center" title="Disabled">Read Only</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<template for:each={section.fields} for:item="field">
+												<tr key={field.apiName}>
+													<td data-label="Field Edit" style="width:20px;">
+														<template if:true={field.isEdit}>
+															<lightning-button-icon name="hide"  id={field.id} 
+																icon-name="utility:hide" variant="container" onclick={hideRowFields}>
+															</lightning-button-icon>
+														</template>
+														<template if:false={field.isEdit}>  
+														</template>
+													</td>
+													<td data-label="Field Name"  style="white-space: normal;" class="slds-align-top" onclick={rowEdit} id={field.id}>
+														<template if:false={field.isEdit}>  
+															{field.name}
+														</template>
+														<template if:true={field.isEdit}>
+															<lightning-input name="name" id={field.id}  style="width:350px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" value={field.name}>
+															</lightning-input>
+														</template>
+													</td>
+													<td data-label="Regex"  style="white-space: normal;" class="slds-align-top" onclick={rowEdit} id={field.id}>
+														<template if:false={field.isEdit}>
+															{field.regex}
+														</template>
+														<template if:true={field.isEdit}>
+															<lightning-input name="regex" id={field.id}  style="width:250px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" value={field.regex}>
+															</lightning-input>
+														</template>
+													</td>
+													<td data-label="Translation"  style="white-space: normal;" class="slds-align-top" onclick={rowEdit} id={field.id}>
+														<template if:false={field.isEdit}>
+															{field.translation_english}
+														</template>
+														<template if:true={field.isEdit}>
+															<lightning-input name="english" id={field.id} style="width:250px" onchange={handleFieldOnChange}
+															type="text" variant="label-hidden" placeholder="English Help Text" value={field.translation_english} >
+															</lightning-input>
+															<lightning-input name="japanese" id={field.id} style="width:250px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" placeholder="Japanese version" value={field.translation_japanese}>
+															</lightning-input>
+															<lightning-input name="spanish" id={field.id}  style="width:250px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" placeholder="Spanish version" value={field.translation_spanish}>
+															</lightning-input>
+															<lightning-input name="french" id={field.id}  style="width:250px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" placeholder="French version" value={field.translation_french} >
+															</lightning-input>
+															<lightning-input name="portuguese" id={field.id}  style="width:250px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" placeholder="Portuguese version" value={field.translation_portuguese}>
+															</lightning-input>
+															<lightning-input name="chinese" id={field.id}  style="width:250px" onchange={handleFieldOnChange}
+																type="text" variant="label-hidden" placeholder="Chinese version" value={field.translation_chinese} >
+															</lightning-input>
+														</template> 
+													</td>
+													<td data-label="Visible" class="slds-align-top">
+														<lightning-input id={field.id} data-section={section.apiSectionName} data-field={field.apiName}
+															name="visible" type="checkbox" label="Visible" variant="label-hidden"
+															checked={field.visible} onchange={handleFieldOnChange}></lightning-input>
+													</td>
+													<td data-label="Required" class="slds-align-top">
+														<lightning-input id={field.id} data-section={section.apiSectionName} data-field={field.apiName}
+															name="required" type="checkbox" label="Required" variant="label-hidden"
+															checked={field.required} onchange={handleFieldOnChange}></lightning-input>
+													</td>
+													<td data-label="Disabled" class="slds-align-top">
+														<lightning-input id={field.id} data-section={section.apiSectionName} data-field={field.apiName}
+															name="disabled" type="checkbox" label="Read Only" variant="label-hidden"
+															checked={field.disabled} onchange={handleFieldOnChange}></lightning-input>
+													</td>
+												</tr>
+											</template>
+										</tbody>
+									</template>
+								</table>
+							</template>
+						</div>
+					</div>
+				</div>
+				<div class="slds-modal__footer">
+					<button onclick={handleClose} class="slds-button slds-button_neutral">Cancel</button>
+					<button onclick={handleSave} class="slds-button slds-button_brand">Save</button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop fadein slds-backdrop_open"></div>
+	</template>
+	<!-- End Modal -->
+</template>
