@@ -429,10 +429,13 @@ public with sharing class CW_CapabilitiesUtilities {
 		List<String> lstCertiAllowed = new List<String>();
 		List<ICG_Certification__c> lstCerti;
 		Boolean result;
+		
+		String profileName=[Select Id,Name from Profile where Id =: UserInfo.getProfileId()].Name;
+
 		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin')];
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
 
-		if(result){
+		if(result || profileName == 'System Administrator'){
 			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c includes (:stationRT)];
 		}
 		else{
@@ -455,7 +458,7 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		for(ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c 
 		FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = : recordId
-		AND ICG_Capability_Assignment_Group__r.Status__c = CW_CapabilitiesUtilities.ACTIVE])
+		AND ICG_Capability_Assignment_Group__r.Status__c =: CW_CapabilitiesUtilities.ACTIVE])
 		{
 			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
 				CW_CapabilitiesManagerController.CapabilityPhoto photo = (CW_CapabilitiesManagerController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_CapabilitiesManagerController.CapabilityPhoto.class);
