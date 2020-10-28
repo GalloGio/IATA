@@ -64,6 +64,7 @@ public class IECEBC_ETPortfolioCreate {
 		req.setBody(xml);
 
 		string bodyRes = '';
+		if (Test.isRunningTest()) return;
 		HttpResponse res = http.send(req);
 		bodyRes = res.getBody();
 		System.debug(bodyRes);
