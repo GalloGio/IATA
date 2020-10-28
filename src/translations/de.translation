@@ -3554,7 +3554,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Da Sie sich in den letzten 90 Tagen nicht eingeloggt haben, haben wir Ihnen eine E-Mail mit einem neuen Passwort gesendet.</label>
+        <label>Aus Sicherheitsgründen haben wir Ihnen eine E-Mail geschickt, um ein neues Passwort festzulegen.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3572,6 +3572,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Dies ist</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Zu häufig gestellten Fragen</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Gehe zu iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4378,6 +4386,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
+        <label>Anmeldung</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Logout</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -4658,6 +4670,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Anmeldung</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>Registrierung erfolgreich abgeschlossen</label>
@@ -5040,12 +5056,20 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Anmelden</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Erstmal überspringen</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Status --></label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Laden</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>Bitte geben Sie eine kurze Betreffzeile ein</label>
@@ -5138,6 +5162,30 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Fehlerbehebung</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Beschreibung des Problems:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Formular zur Fehlerbehebung</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>Wenn die oben genannten Schritte das Problem nicht beheben, klicken Sie unten, um uns zu kontaktieren:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Füllen Sie das Formular aus und wir werden Sie kontaktieren, um Ihnen den Zugang zu unserer Plattform zu gewähren.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Fehlerbehebung bei Anmeldung &amp; Registrierung</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Ich brauche Hilfe:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Weitere Hilfe finden Sie unter</label>

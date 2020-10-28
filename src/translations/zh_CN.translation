@@ -3550,7 +3550,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>由于您在过去 90 天内未登录，我们已向您发送一封包含新密码的电子邮件。</label>
+        <label>出于安全考虑，我们已经向您发送了一封电子邮件来设置新密码。</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3568,6 +3568,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>这是个</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>转到常见问题</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>前往iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4374,6 +4382,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
+        <label>登入</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>登出</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -4652,6 +4664,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>注册</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>注册成功完成</label>
@@ -5034,12 +5050,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>报名</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>现在跳过</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>状态</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>商店</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>请输入简短的主题</label>
@@ -5132,6 +5156,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>故障排除</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>问题的描述。</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>故障排除表</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>如果以上步骤不能解决问题，请点击下面的步骤联系我们。</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>请填写表格，我们会联系您，帮助您进入我们的平台。</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>登录和注册故障排除</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>我需要帮助。</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>如需更多帮助，请查看</label>
