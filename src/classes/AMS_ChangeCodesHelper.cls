@@ -154,14 +154,15 @@ public class AMS_ChangeCodesHelper {
 		List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
 
 		// get the forms of payment for all accounts involved in the changes to display on eBulletin
-		Map<Id,List<Agency_Authorization__c>> fOPs = null;
+		Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
 
 		AMS_OSCAR__c oscar = (oscars != null && !oscars.isEmpty()) ? oscars[0] : null;
 		Account agency = !oscarAgencies.isEmpty() ? oscarAgencies[0] : null;
 
 		Boolean isNewGen = isNewGen(oscar, agency);
+		Boolean isNewChangeCode = changeCodes != null && !changeCodes.isEmpty() && changeCodes[0].name == AMS_Utils.NEW_CHANGE_CODE;
 		
-		if (isNewGen)
+		if (isNewGen && !isNewChangeCode)
 			fOPs = fetchFormsOfPayment(accountIds);
 
 		ObjectChangesStruct objectChangesByChangeCode = null;

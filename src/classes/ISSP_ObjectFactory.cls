@@ -19,6 +19,12 @@ public with sharing class ISSP_ObjectFactory {
 		return newCase;
 	}
 
+	public final static string TEST_Basic_Airline_User_ProfileID{
+		get{
+			return [select Id from profile where Name=:'ISS Portal Airline User (Partner)'].Id;
+		}
+	}
+
 	public static boolean FillAllFields = false;
 
 	// Key : SobjectAPIName  For ex. Account
@@ -315,7 +321,7 @@ public with sharing class ISSP_ObjectFactory {
 								Username = username,
 								PortalRole = 'Manager',
 								CommunityNickname = con.email.substring(0, con.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-								ProfileId = ISSP_Constant.TEST_Basic_Airline_User_ProfileID,
+								ProfileId = TEST_Basic_Airline_User_ProfileID,
 								IsActive = true);
 		insert newUser;
 		return newUser;
