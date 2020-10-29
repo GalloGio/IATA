@@ -552,6 +552,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //WMO-627 - ACAMBAS: End
 
     navigateToHomePage() {
+        this.closeSideMenu();
         if(this.trackedIsInOldPortal)
             this.navigationCheck("home", "");
         else
@@ -618,6 +619,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openNotifications = !this.openNotifications;
 
         if (this.openNotifications) {
+            this.closeSearch();
             this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000;';
             this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
             this.headerButtonNotificationsStyle = 'display: none;';
@@ -627,6 +629,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.displayBodyStyle = '';
             this.displayNotificationStyle = 'width: 100%'
             this.closeSideMenu();
+            
         } else {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
@@ -642,6 +645,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openSearch = !this.openSearch;
 
         if (this.openSearch) {
+            this.closeNotifications();
             this.headerButtonSearchContainerStyle = 'background-color: #ffffff; z-index: 10000;';
             this.headerButtonSearchCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
             this.headerButtonSearchStyle = 'display: none;';
@@ -669,6 +673,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if (this.openSideBarMenu) {
             this.sideMenuCoverStyle = 'width: 100%;';
             this.sideMenuBarStyle = 'height: 75%';
+            this.closeSearch();
+            this.closeNotifications();
+            
         } else {
             this.sideMenuCoverStyle = 'width: 0%;';
             this.sideMenuBarStyle = 'height: 0%;';
@@ -684,6 +691,18 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.sideMenuBarProfileStyle = 'display: block; height: 240px;';
         } else {
             this.sideMenuBarProfileStyle = 'height: 1px;';
+        }
+    }
+    closeSearch()
+    {
+        if (this.openSearch) {
+            this.toggleSearch();
+        }
+    }
+    closeNotifications()
+    {
+        if (this.openNotifications) {
+            this.toggleNotifications();
         }
     }
 

@@ -353,7 +353,7 @@
                 
                 <div class="slds-col slds-size_1-of-1 slds-grid slds-grid_align-center headerSection">
                     <!-- side menu tab -->
-                    <div class='headerBarMobile slds-col slds-grid slds-grid_align-center slds-grid_vertical-align-center slds-size_1-of-1' onclick={toggleSideMenu}>
+                    <div class='headerBarMobile slds-col slds-grid slds-grid_align-center slds-grid_vertical-align-center slds-size_1-of-1' onclick={navigateToHomePage}>
                         <img src={logoMobileIcon}  class="mobileLogoWhite"/>
                     </div>
                 </div>
@@ -386,7 +386,7 @@
                         <div if:false={internalUser} class="slds-col slds-size_1-of-1 spacer-border">
                             <div class={buttonSideMenuServiceStyle} onclick={goToStore}>
                                 <img class="slds-m-right_small" src={storeBlueIcon} />
-                                    <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">{labels.CSP_Store}</span>
+                                <span class="text-xsmall text-blue text-bold slds-p-right_x-small tabText">{labels.CSP_Store}</span>
                             </div>
                         </div>
                         <!-- services link -->
@@ -405,7 +405,7 @@
                         </div>
 
                         <div if:true={internalUser} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
-                            <div class="slds-grid slds-grid_vertical">
+                            <div class="slds-grid slds-grid_vertical mobileSubMenu">
                                 <div class="slds-col slds-grid slds-grid_horizontal slds-grid_align-spread" onclick={toggleSideMenuProfile}>
                                     <div class="slds-col slds-grid slds-size_3-of-4">
                                         <img class="slds-m-right_small" src={profileIconBlue} />
