@@ -81,6 +81,11 @@
                     <label>Andorra</label>
                 </value>
                 <value>
+                    <fullName>Angola</fullName>
+                    <default>false</default>
+                    <label>Angola</label>
+                </value>
+                <value>
                     <fullName>Antigua and Barbuda</fullName>
                     <default>false</default>
                     <label>Antigua and Barbuda</label>
@@ -89,6 +94,11 @@
                     <fullName>Argentina</fullName>
                     <default>false</default>
                     <label>Argentina</label>
+                </value>
+                <value>
+                    <fullName>Armenia</fullName>
+                    <default>false</default>
+                    <label>Armenia</label>
                 </value>
                 <value>
                     <fullName>Aruba</fullName>
@@ -129,6 +139,11 @@
                     <fullName>Barbados</fullName>
                     <default>false</default>
                     <label>Barbados</label>
+                </value>
+                <value>
+                    <fullName>Belarus</fullName>
+                    <default>false</default>
+                    <label>Belarus</label>
                 </value>
                 <value>
                     <fullName>Belgium</fullName>
@@ -354,6 +369,11 @@
                     <fullName>Ethiopia</fullName>
                     <default>false</default>
                     <label>Ethiopia</label>
+                </value>
+                <value>
+                    <fullName>Falkland Islands (Malvinas)</fullName>
+                    <default>false</default>
+                    <label>Falkland Islands (Malvinas)</label>
                 </value>
                 <value>
                     <fullName>Fiji</fullName>
@@ -589,6 +609,11 @@
                     <fullName>Liberia</fullName>
                     <default>false</default>
                     <label>Liberia</label>
+                </value>
+                <value>
+                    <fullName>Libya</fullName>
+                    <default>false</default>
+                    <label>Libya</label>
                 </value>
                 <value>
                     <fullName>Libyan Arab Jamahiriya</fullName>
@@ -976,6 +1001,11 @@
                     <label>Syrian Arab Republic</label>
                 </value>
                 <value>
+                    <fullName>Tajikistan</fullName>
+                    <default>false</default>
+                    <label>Tajikistan</label>
+                </value>
+                <value>
                     <fullName>Tanzania</fullName>
                     <default>false</default>
                     <label>Tanzania</label>
@@ -1079,6 +1109,11 @@
                     <fullName>Zimbabwe</fullName>
                     <default>false</default>
                     <label>Zimbabwe</label>
+                </value>
+                <value>
+                    <fullName>Uzbekistan</fullName>
+                    <default>false</default>
+                    <label>Uzbekistan</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -2568,11 +2603,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Antigua and Barbuda</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Argentina</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Armenia</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2605,6 +2648,10 @@
             </values>
             <values>
                 <fullName>Barbados</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belarus</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2792,6 +2839,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Falkland Islands %28Malvinas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fiji</fullName>
                 <default>false</default>
             </values>
@@ -2973,6 +3024,10 @@
             </values>
             <values>
                 <fullName>Liberia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Libya</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3280,6 +3335,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tanzania</fullName>
                 <default>false</default>
             </values>
@@ -3337,6 +3396,10 @@
             </values>
             <values>
                 <fullName>Uruguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uzbekistan</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4355,11 +4418,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Antigua and Barbuda</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Argentina</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Armenia</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4392,6 +4463,10 @@
             </values>
             <values>
                 <fullName>Barbados</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belarus</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4579,6 +4654,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Falkland Islands %28Malvinas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fiji</fullName>
                 <default>false</default>
             </values>
@@ -4760,6 +4839,10 @@
             </values>
             <values>
                 <fullName>Liberia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Libya</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5067,6 +5150,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tanzania</fullName>
                 <default>false</default>
             </values>
@@ -5124,6 +5211,10 @@
             </values>
             <values>
                 <fullName>Uruguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uzbekistan</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6117,6 +6208,34 @@
                 <fullName>All - Globally</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Armenia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belarus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falkland Islands %28Malvinas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Libya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uzbekistan</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Country_visibilty__c</picklist>
@@ -6268,11 +6387,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Antigua and Barbuda</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Argentina</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Armenia</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6305,6 +6432,10 @@
             </values>
             <values>
                 <fullName>Barbados</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belarus</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6492,6 +6623,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Falkland Islands %28Malvinas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fiji</fullName>
                 <default>false</default>
             </values>
@@ -6673,6 +6808,10 @@
             </values>
             <values>
                 <fullName>Liberia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Libya</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6980,6 +7119,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Tanzania</fullName>
                 <default>false</default>
             </values>
@@ -7037,6 +7180,10 @@
             </values>
             <values>
                 <fullName>Uruguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uzbekistan</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8026,6 +8173,18 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Armenia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belarus</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burundi</fullName>
                 <default>false</default>
             </values>
@@ -8062,6 +8221,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Falkland Islands %28Malvinas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Guinea</fullName>
                 <default>false</default>
             </values>
@@ -8079,6 +8242,10 @@
             </values>
             <values>
                 <fullName>Liberia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Libya</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8114,7 +8281,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>United States</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uzbekistan</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
