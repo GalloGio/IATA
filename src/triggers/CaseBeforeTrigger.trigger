@@ -244,6 +244,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 								multicountryCasesList.add(cse);
 							}
 							if (fRTypes.contains(cse.Financial_Review_Type__c) && !AMS_Utils.IFAP_CLOSED_STATUS.contains(cse.Status)){
+								if(Trigger.isUpdate && Trigger.newMap.containsKey(cse.Id)) continue;
 								validationCasesList.add(cse);
 								financialReviewTypeCount.add(cse.Financial_Review_Type__c);
 							}
