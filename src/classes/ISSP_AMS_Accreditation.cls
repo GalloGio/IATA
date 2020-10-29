@@ -3519,6 +3519,8 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference goToStep2() {
+		if (getIsPostalOperator() && isNoticeOfChange) return goToStep1();
+
 		String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam;
 
 		if (isNoticeOfChange) {
