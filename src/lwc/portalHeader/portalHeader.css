@@ -153,7 +153,7 @@
 .buttonSupport.selectedButton:after {
   content: "";
   width: 100%;
-  height: 4px;
+  height: 3px;
   background-color: #fac832;
   position: absolute;
   bottom: 0;
@@ -161,14 +161,22 @@
   left: 0;
 }
 
-.sideBarContainer .headerBarButton:hover:after,
-.sideBarContainer .headerBarButton.selectedButton:after {
+.publicSideBarBtnMenu .buttonService:hover:after,
+.publicSideBarBtnMenu .buttonSupport:hover:after,
+.publicSideBarBtnMenu .buttonService.selectedButton:after,
+.publicSideBarBtnMenu .buttonSupport.selectedButton:after {
+  height: 2px;
+
+}
+
+.mobileSubMenu .headerBarButton:hover:after,
+.mobileSubMenu .headerBarButton.selectedButton:after {
   content: "";
   width: 100%;
   height: 2px;
   background-color: #fac832;
   position: absolute;
-  bottom: 0px;
+  bottom: -2px;
   right: 0;
   left: 0;
 }
@@ -214,8 +222,8 @@
 .headerButtonNotificationsCloseIcon,
 .headerButtonSearchCloseIcon {
   display: none;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
 .notificationNumber {
@@ -351,8 +359,8 @@
 }
 
 .closeButton {
-  font-size: 30px;
-  line-height: 30px;
+  font-size: 35px;
+  line-height: 35px;
   transform: rotate(45deg);
   color: #1e32fa;
   font-family: Arial;
@@ -532,6 +540,10 @@
 
 .publicSideBarBtnMenu .spacer-border .headerBarButton {
   border-bottom: 0.3px solid rgba(30, 50, 250, 0.6);
+}
+
+.publicSideBarBtnMenu .spacer-border .headerBarButton.selectedButton {
+  border-bottom: none;
 }
 
 
