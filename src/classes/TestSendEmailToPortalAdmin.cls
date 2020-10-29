@@ -66,16 +66,6 @@ private class TestSendEmailToPortalAdmin {
 		Database.insert(lpar);
 		PortalServiceAccessTriggerHandler.privetTrigger = stopTrigger;
 		Test.stopTest();
-		//list<ID> appIds = new list<ID>{lpar[0].ID, lpar[1].Id};
-
-		//lpar = getPortalApplicationRight(appIds);
-
-		//System.debug(LoggingLevel.ERROR, '--------------->' + lpar);
-
-		//Database.insert(lpar);
-
-		//PortalServiceAccessTriggerHandler.SendEmailToPortalAdminToValidateRequest(lpar);
-
 	}
 
 	static testMethod void test002() {
