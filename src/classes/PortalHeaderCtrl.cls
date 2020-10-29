@@ -193,8 +193,8 @@ public without sharing class PortalHeaderCtrl {
 
 
 	@AuraEnabled
-	public static String goToManageService(){
-		return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.CSP, 's/manage-service');
+	public static String goToManageService(String startUrl){
+		return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.CSP, startUrl);
 	}
 
 	/*

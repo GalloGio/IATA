@@ -1,0 +1,8 @@
+<apex:page controller="ADSRExportController" contentType="text/csv#ADSRExport.csv" language="en-US">
+	<apex:repeat value="{!fields}" var="fieldset">
+		{!fieldset}
+	</apex:repeat>
+	<apex:repeat value="{!data}" var="record">
+		{!record}
+	</apex:repeat>
+</apex:page>

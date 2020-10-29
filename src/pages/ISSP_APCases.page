@@ -60,6 +60,10 @@
       position: relative;
       left: 50%;
     }
+
+    .bootstrap-select .text {
+        color: black;
+    }
   </style>
   <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
 
@@ -71,92 +75,125 @@
     }
 
     function toggleCountryLists() {
-        optinOut = $("[Id$='optInOutSelected']").val();
-        $('.selectpicker').selectpicker('render');
+      optinOut = $("[Id$='optInOutSelected']").val();
+      $('.selectpicker').selectpicker('render');
       var daysIn = "{!airlineOptInDays}";
       var daysOut = "{!airlineOptOutDays}";
-                
-        if (optinOut == 'IN') {
-                var countriesIn = "{!hasCountriesIn}";
-                document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
-                        if (countriesIn === 'true') {
-                                document.querySelector("[Id$='countryDatePanel']").style.display = '';
-                        document.querySelector("[Id$='coutriesIn']").style.display = '';
-                        document.querySelector("[Id$='coutriesInLabel']").style.display = '';
-                        document.querySelector("[Id$='coutriesOut']").style.display = 'none';
-                        document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
-                  document.querySelector("[Id$='dateInfo']").style.display = 'none';
-                        $("#datepicker").datepicker("destroy");
-                        $("#datepicker").datepicker({minDate: daysIn});
-                        document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
-                        } else {
-                                document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
-                                document.querySelector("[Id$='noCountriesInMsg']").style.display = '';
-                                document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
-                        }  
+
+      hideAllPanels()
+      if (optinOut == 'IN') {
+        var countriesIn = "{!hasCountriesIn}";
+        if (countriesIn === 'true') {
+          document.querySelector("[Id$='countryDatePanel']").style.display = '';
+          document.querySelector("[Id$='coutriesIn']").style.display = '';
+          document.querySelector("[Id$='coutriesInLabel']").style.display = '';
+          document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+          document.querySelector("[Id$='optPayment']").style.display = '';
+          $("#datepicker").datepicker("destroy");
+          $("#datepicker").datepicker({minDate: daysIn});
+        } else {
+          document.querySelector("[Id$='noCountriesInMsg']").style.display = '';
+        }
       } else if (optinOut == 'OUT') {
-            var countriesOut = "{!hasCountriesOut}";
-            document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
-                    if (countriesOut === 'true') {
-                        document.querySelector("[Id$='countryDatePanel']").style.display = '';
-                        document.querySelector("[Id$='coutriesIn']").style.display = 'none';
-                        document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
-                        document.querySelector("[Id$='coutriesOut']").style.display = '';
-                        document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
-                  document.querySelector("[Id$='dateInfo']").style.display = '';
-                        $("#datepicker").datepicker("destroy");
-                        $("#datepicker").datepicker({minDate: daysOut});
-                        document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
-                } else {
-                        document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
-                                document.querySelector("[Id$='noCountriesOutMsg']").style.display = '';
-                                document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
-                }
-            } else {
-                    document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
-                    document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
-                document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
-                document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
-      }
+          var countriesOut = "{!hasCountriesOut}";
+          if (countriesOut === 'true') {
+            document.querySelector("[Id$='countryDatePanel']").style.display = '';
+            document.querySelector("[Id$='coutriesOut']").style.display = '';
+            document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
+            document.querySelector("[Id$='dateInfo']").style.display = '';
+            document.querySelector("[Id$='optPayment']").style.display = '';
+            $("#datepicker").datepicker("destroy");
+            $("#datepicker").datepicker({minDate: daysOut});
+            document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+          } else {
+            document.querySelector("[Id$='noCountriesOutMsg']").style.display = '';
+          }
+        } else if (optinOut == 'HOT') {
+          var hotCountries = "{!HOTCountries.size>0}";
+          if (hotCountries === 'true') {
+            document.querySelector("[Id$='hotPaymentPanel']").style.display = '';
+            document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+          } else {
+            document.querySelector("[Id$='HOTPaymentMsg']").style.display = '';
+          }
+        }
 
       $("#datepicker").datepicker("option", $.datepicker.regional[ 'en' ]);
       $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd" );
+    }
+
+    function hideAllPanels() {
+      document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+      document.querySelector("[Id$='coutriesIn']").style.display = 'none';
+      document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
+      document.querySelector("[Id$='coutriesOut']").style.display = 'none';
+      document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
+      document.querySelector("[Id$='optPayment']").style.display = 'none';
+      document.querySelector("[Id$='dateInfo']").style.display = 'none';
+      document.querySelector("[Id$='HOTPaymentMsg']").style.display = 'none';
+      document.querySelector("[Id$='hotPaymentPanel']").style.display = 'none';
+      document.querySelector("[Id$='hotTypeErrorMsg']").style.display = 'none';
+      document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
+      document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
+      document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+      document.querySelector("[Id$='countriesErrorMsg']").style.display = 'none';
     }
 
     function submitOptInOut() {
         var countries;
 
         var effectiveDate = $('#datepicker').val();
-        
+
+        var hotTypePayment = "";
+
         if (optinOut == 'IN') {
-                countries = $("[id$='countriesInList']").val();
+          countries = $("[id$='countriesInList']").val();
+        } else if (optinOut == 'OUT') {
+          countries = $("[id$='countriesOutList']").val();
+        } else if (optinOut == 'HOT') {
+          countries = $("[id$='countriesHotList']").val();
         } else {
-                countries = $("[id$='countriesOutList']").val();
+          return false;
         }
 
         var ok = 1;
 
-        if(effectiveDate == undefined || effectiveDate == null || effectiveDate == "") {
-                document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = '';
-                ok = 0;
-        } else if (!effectiveDate.match(/(\d{4})-(\d{2})-(\d{2})/)) {
-            document.querySelector("[Id$='dateFormatErrorMsg']").style.display = '';
+        // check Dates, only OPT-IN and OPT-OUT
+        if (optinOut == 'IN' || optinOut == 'OUT') {
+          if(effectiveDate == undefined || effectiveDate == null || effectiveDate == "") {
+              document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = '';
+              ok = 0;
+          } else if (!effectiveDate.match(/(\d{4})-(\d{2})-(\d{2})/)) {
+              document.querySelector("[Id$='dateFormatErrorMsg']").style.display = '';
+              ok = 0;
+          } else {
+              document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = 'none';
+              document.querySelector("[Id$='dateFormatErrorMsg']").style.display = 'none';
+              document.querySelector("[Id$='incorrectDateErrorMsg']").style.display = 'none';
+          }
+          // check Type of Payment, for OPT in/out
+          hotTypePayment = $("[id$='optPaymentSelect']").val();
+        }
+        // check Type of Payment, only HOT
+        if (optinOut == 'HOT') {
+          hotTypePayment = $("[id$='HotTypePaymentSelect']").val();
+          if(hotTypePayment == undefined || hotTypePayment == null || hotTypePayment == "") {
+            document.querySelector("[Id$='hotTypeErrorMsg']").style.display = '';
             ok = 0;
-        } else {
-                document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = 'none';
-            document.querySelector("[Id$='dateFormatErrorMsg']").style.display = 'none';
-            document.querySelector("[Id$='incorrectDateErrorMsg']").style.display = 'none';
+          } else {
+            document.querySelector("[Id$='hotTypeErrorMsg']").style.display = 'none';
+          }
         }
-
+        // check country values
         if(countries == undefined || countries == null || countries == "") {
-                document.querySelector("[Id$='countriesErrorMsg']").style.display = '';
-                ok = 0;
-        } else {
-                document.querySelector("[Id$='countriesErrorMsg']").style.display = 'none';
-        }
+              document.querySelector("[Id$='countriesErrorMsg']").style.display = '';
+              ok = 0;
+          } else {
+              document.querySelector("[Id$='countriesErrorMsg']").style.display = 'none';
+          }
 
         if(ok == 1) {
-                submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
+            submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate, hotTypePayment);
             document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
             document.querySelector("[Id$='cancelBtn']").disabled = true;
             document.querySelector("[Id$='modalClose']").style.display = 'none';
@@ -206,7 +243,7 @@
             <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="iatabtn iatabtn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Joining_App}" style="margin-right: 30px;"/>
             <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="iatabtn iatabtn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Req}" style="margin-right: 30px;"/>
             <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="iatabtn iatabtn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Bank_Details}"/>
-            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="iatabtn iatabtn-default" onClick="optInOut();return false;" value="IATA EasyPay Opt-In / Opt-Out"/>
+            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="iatabtn iatabtn-default" onClick="optInOut();return false;" value="IATA EasyPay Changes"/>
           </center>
         </apex:form>
       </apex:pageBlockButtons><br />
@@ -240,7 +277,7 @@
               	 	<apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="iatabtn iatabtn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_APCases','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Joining_App}" style="margin-right: 30px;"/>
 		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="iatabtn iatabtn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_APCases','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Req}" style="margin-right: 30px;"/>
 		          	<apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="iatabtn iatabtn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_APCases','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Bank_Details}"/>
-		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="iatabtn iatabtn-default" onClick="optInOut();return false;" value="IATA EasyPay Opt-In / Opt-Out"/>
+		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="iatabtn iatabtn-default" onClick="optInOut();return false;" value="IATA EasyPay Changes"/>
 	          	</center>
 	        </apex:form>
         </div>
@@ -258,7 +295,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button id='modalClose' type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">IATA EasyPay Opt-In / Out</h4>
+          <h4 class="modal-title">IATA EasyPay Changes</h4>
         </div>
         <div class="modal-body">
           <p/>
@@ -272,13 +309,19 @@
             <strong>The effective date is incorrect.</strong>
           </div>
           <div class="alert alert-danger" id="countriesErrorMsg" style ="display: none">
-            <strong>One or more countries must be selected.</strong>
+            <strong>{!$Label.ISSP_AP_Error_No_Country_selected}</strong>
+          </div>
+          <div class="alert alert-danger" id="hotTypeErrorMsg" style ="display: none">
+            <strong>You must select a type of payment.</strong>
           </div>
           <div class="alert alert-warning" id="noCountriesInMsg" style="display: none">
             <strong>You have currently Opted-In to IATA EasyPay in all your BSP Operations.</strong>
           </div>
           <div class="alert alert-warning" id="noCountriesOutMsg" style="display: none">
             <strong>You have currently Opted-Out from IATA EasyPay in all your BSP Operations.</strong>
+          </div>
+          <div class="alert alert-warning" id="HOTPaymentMsg" style="display: none">
+            <strong>{!$Label.ISSP_AP_Error_No_Countries_available}</strong>
           </div>
           <div class="alert alert-success" id="requestSentMsg" style="display: none">
             <strong>Your request has been sent.</strong>
@@ -291,6 +334,7 @@
               <apex:param id="optInOutParamId" name="optInOutParam" value="" />
               <apex:param id="countriesId" name="countriesParam" value="" />
               <apex:param id="effectiveDateId" name="effectiveDateParam" value="" />
+              <apex:param id="hotTypePayment" name="hotTypePaymentParam" value="" />
             </apex:actionFunction>
 
             <div class="row">
@@ -306,15 +350,15 @@
               </div>
             </div>
 
+            <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
             <apex:pageBlock id="servicesRenderedPanel">
               <apex:outputPanel id="countryDatePanel" style="display: none">
                 <hr/>
-                <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
                 <div class="row">
                   <div class="customTable" style="margin-left: 15px;">
                     <div>
                         <apex:outputPanel id="coutriesInLabel" style="display: none">
-                        <apex:outputLabel value="Countries to Opt-In: "/>
+                        <apex:outputLabel value="{!$Label.ISSP_AP_Countries_to_optin}"/>
                         </apex:outputPanel>
                         <apex:outputPanel id="coutriesOutLabel" style="display: none">
                         <apex:outputLabel value="Countries to Opt-Out: "/>
@@ -324,7 +368,7 @@
                         <apex:outputPanel id="coutriesIn" style="display: none">
                         <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
-                        title="Countries to Opt-In: ">
+                        title="{!$Label.ISSP_AP_Countries_Territories}">
                             <apex:selectOptions value="{!countriesIn}" />
                         </apex:selectList>
                         </apex:outputPanel>
@@ -332,7 +376,7 @@
                                             <apex:outputPanel id="coutriesOut" style="display: none">
                         <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
                         value="{!selectedCountries}" required="true" multiselect="true" size="5"
-                        title="Countries to Opt-Out: ">
+                        title="{!$Label.ISSP_AP_Countries_Territories}">
                                                     <apex:selectOptions value="{!countriesOut}" />
                         </apex:selectList>
                         </apex:outputPanel>
@@ -347,6 +391,53 @@
                       <apex:image id="dateInfo" value="/img/msg_icons/info16.png" style="padding: 4px; display: none" styleClass="selector" title="{!$Label.ISSP_ANG_OptIn_OptOut_DateInfo}" html-data-placement="top" html-data-toggle="tooltip"/>
                     </div>
                     <div id="datepicker"></div>
+                  </div>
+                </div>
+                <div class="row" id="optPayment" style="display: none">
+                  <div class="customTable" style="margin-left: 15px;">
+                    <div>
+                      <apex:outputLabel value="{!$Label.ISSP_AP_Select_Form_of_Payment_in_HOT}"/>
+                    </div>
+                    <div>
+                      <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" id="optPaymentSelect">
+                        <apex:selectOption itemValue="" itemLabel="--None--"/>
+                        <apex:selectOption itemValue="CC" itemLabel="CC"/>
+                        <apex:selectOption itemValue="EP" itemLabel="EP"/>
+                      </apex:selectList>
+                    </div>
+                  </div>
+                </div>
+
+
+              </apex:outputPanel>
+              <!-- Inputs for Hot payment -->
+              <apex:outputPanel id="hotPaymentPanel" style="display: none">
+                <hr/>
+                <div class="row">
+                  <div class="customTable" style="margin-left: 15px;">
+                    <div>
+                      <apex:outputLabel value="{!$Label.ISSP_AP_Select_Countries_Territories}"/>
+                    </div>
+                    <div>
+                      <apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesHotList"
+                        value="{!selectedCountries}" required="true" multiselect="true" size="5"
+                        title="{!$Label.ISSP_AP_Countries_Territories}">
+                        <apex:selectOptions value="{!HOTCountries}" />
+                      </apex:selectList>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="customTable" style="margin-left: 15px;">
+                    <div>
+                      <apex:outputLabel value="{!$Label.ISSP_AP_Select_Form_of_Payment_in_HOT}"/>
+                    </div>
+                    <div>
+                      <apex:selectList styleClass="iatainputbox, selectpicker" required="true" size="3" title="{!$Label.ISSP_AP_Form_of_Payment}" id="HotTypePaymentSelect">
+                        <apex:selectOption itemValue="CC" itemLabel="CC"/>
+                        <apex:selectOption itemValue="EP" itemLabel="EP"/>
+                      </apex:selectList>
+                    </div>
                   </div>
                 </div>
               </apex:outputPanel>

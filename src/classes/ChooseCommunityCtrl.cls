@@ -25,14 +25,10 @@ public class ChooseCommunityCtrl {
 		if(community =='--None--') {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.Error,'Please select a community'));
 			return null;
-		}
-		else{
-			if(community != Comm_User_Helper.ISSP){
-				Comm_User_Helper.resetPasswordComm(cID ,community, bccCS);
-			}
-			else{
-				PortalForgotPasswordController.handleResetPassword(contact.email);
-			}
+		} else if(community != Comm_User_Helper.ISSP){
+			Comm_User_Helper.resetPasswordComm(cID ,community, bccCS);
+		} else{
+			PortalForgotPasswordController.handleResetPassword(contact.email, null);
 		}
 
 		return controller.view();
@@ -40,25 +36,21 @@ public class ChooseCommunityCtrl {
 
 	@AuraEnabled
 	public static void SendEmailAura(String contactId,String community){
-	   sendAssinc(contactId,community);
+		sendAssinc(contactId,community);
 	}
 
 	@future
 	private static void sendAssinc(String contactId,String community){
-		 try{
-			 if(community != Comm_User_Helper.ISSP) {
-				 comm_User_Helper.resetPasswordComm(Id.valueOf(contactId), community, false);
-			 }
-			 else{
-				 List<contact> contactList = [Select email from contact where id =: contactId Limit 1];
-				 if(!contactList.isEmpty()) PortalForgotPasswordController.handleResetPassword(contactList.get(0).email);
-			 }
-		}catch(Exception e){
-			throw e;
+		if(community != Comm_User_Helper.ISSP) {
+			comm_User_Helper.resetPasswordComm(Id.valueOf(contactId), community, false);
+		}
+		else{
+			List<Contact> contactList = [SELECT email FROM contact WHERE id =: contactId LIMIT 1];
+			if(!contactList.isEmpty()) PortalForgotPasswordController.handleResetPassword(contactList.get(0).email, null);
 		}
 	}
 
-	 @AuraEnabled(cacheable=true)
+	@AuraEnabled(cacheable=true)
 	public static boolean hasValidUser(String contactId){
 		list<user> userList=[Select id from User where ContactID =: Id.valueOf(contactId) and isactive = true];
 		return !userList.isEmpty();
@@ -77,7 +69,7 @@ public class ChooseCommunityCtrl {
 	@AuraEnabled(cacheable=true)
 	public static List<SelectOptionWrapper> getAvalaibleCommunities() {
 		List<SelectOptionWrapper> options = new List<SelectOptionWrapper>();
-	   // options.add(new SelectOptionWrapper('--None--','--None--'));
+	  // options.add(new SelectOptionWrapper('--None--','--None--'));
 		options.add(new SelectOptionWrapper(Comm_User_Helper.IEC,'E-commerce'));
 		options.add(new SelectOptionWrapper(Comm_User_Helper.ISSP,'ISS Customer Portal'));
 		options.add(new SelectOptionWrapper(Comm_User_Helper.CNS,'CNS Customer Portal'));

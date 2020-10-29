@@ -1,0 +1,18 @@
+Dear All,
+
+A new SIDRA case has been created for a key account that should be managed according to the new Key account management procedure. 
+
+The case has been automatically assigned to AGM Non Compliance queue. 
+
+Here are the details: 
+
+outstanding amount: {!Case.Outstanding_Amount__c} {!Case.Currency__c} 
+
+IATA code: {!Account.Site}
+Account name: {!Account.Name}
+Country: {!Case.BSPCountry__c}
+BSP/CASS: {!Case.BSP_CASS__c}
+Case number: {!Case.CaseNumber}
+Case subject: {!Case.Subject}
+
+click here to access the case: {!Case.Link}

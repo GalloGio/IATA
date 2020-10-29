@@ -28,7 +28,8 @@
 Voicemail
 Phone
 Chat
-IATA Internal User</value>
+IATA Internal User
+Screening IEP Model B</value>
     </values>
     <values>
         <field>OwnerID__c</field>
@@ -69,6 +70,9 @@ Change of Trade Name
 Change of Hierarchy
 Annual revalidation
 PCI DSS Compliant
+New Commercial HO
+New Commercial BR
+New Independent BR
 Onboarding IEP Model A
 IEP Bank account setup
 Major Changes

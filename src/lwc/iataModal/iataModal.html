@@ -1,0 +1,44 @@
+<template>
+	<section role="panel" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+		aria-describedby="modal-content-id-1" class={modalPanelClass}>
+                <div class={modalContainerBox}>
+                    <header if:false={hideHeader} class="slds-modal__header">
+                        <button if:true={showhomebutton} class="slds-button slds-button_icon oss-modal-button_home"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:home" size="x-small" variant="inverse">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <button if:true={showclosebutton} class="slds-button slds-button_icon slds-modal__close"
+                            title="Close" onclick={closeModal}>
+                            <c-iata-icon icon="utility:close" size="x-small" fill="#999999"></c-iata-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+						<slot name="header" class="slds-hyphenate">&nbsp;</slot>
+					</header>
+					<div if:true={displayIcon} class={variant}>
+						<div data-icon class="slds-align_absolute-center slds-col slds-grid slds-size--3-of-4 slds-wrap slds-icon">
+							<span class="circleOutter slds-grid">
+								<span class="circleInner slds-align--absolute-center slds-grid">
+									<img class="slds-col slds-align_absolute-center iconSize" src={icon}/>
+								</span>
+							</span>
+						</div>
+						<button if:true={showclosebutton}
+							class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closePosition"
+							onclick={closeModal}>
+							<lightning-icon icon-name="utility:close" alternative-text="">
+							</lightning-icon>
+						</button>
+					</div>
+                    <div class={bodyClass} id="bodyDiv1" data-item="bodyDiv" name="bodyDiv">
+						<slot id="bodyDiv" name="body">&nbsp;</slot>
+                    </div>
+                    <footer if:false={hideFooter} class="slds-modal__footer">
+                        <slot name="footer">&nbsp;</slot>
+                    </footer>
+                </div>
+
+            </section>
+            <div class={backdropClass}></div>
+</template>

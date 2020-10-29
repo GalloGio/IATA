@@ -260,7 +260,7 @@ public class AmazonFile {
 	/**
 		Returns a map of all AmazonFile__c related to an object with Full_Name_Unique__c as key
 	**/
-	private static map<String,AmazonFile__c> getMapAmazonFiles(Id sobjectId) {
+	public static map<String,AmazonFile__c> getMapAmazonFiles(Id sobjectId) {
 		//the sObjectId received in input is 15 digits
 		//However, the sObject_Id__c field value might be 15 or 18.. when is 18, records are not found
 		//this trick queries for both 15 and 18 digits value
@@ -278,7 +278,7 @@ public class AmazonFile {
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
 				File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
 				Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
-				Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
+				Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c, Size_MB__c
 				From AmazonFile__c
 				Where Case__c = :sobjectId
 			];
@@ -289,9 +289,21 @@ public class AmazonFile {
 				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
 				File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
 				Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
-				Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
+				Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c, Size_MB__c
 				From AmazonFile__c
 				Where sObject_Id__c in :setIds
+			];
+		}
+
+		// for Accounts
+		if (String.ValueOf(sobjectId.getSObjectType()) == 'Account') {
+			listFiles = [
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+				File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
+				Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
+				Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c, Size_MB__c
+				From AmazonFile__c
+				Where Account__c = :sobjectId
 			];
 		}
 

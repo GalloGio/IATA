@@ -204,14 +204,11 @@ private class Product_Svc_Test
 			Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
 			List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
 			 //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
-
 		}
 
-
-
 		Test.StopTest();
-
 	}
+
 	/****************************************************************************************************
 	Created by CGI, Kevin 2015-08-26
 		Cover code of method "test_getProductStatusFromSAP"
@@ -227,7 +224,6 @@ private class Product_Svc_Test
 		System.assertEquals(lstProdToExcl.size(), 1);
 		Test.stopTest();
 	}
-
 
 	/****************************************************************************************************
 		Created by CGI, Thai 2015-08-21
@@ -360,30 +356,6 @@ private class Product_Svc_Test
 		Test.stopTest();
 	}
 
-	@isTest(seeAllData=true)
-	static void test_IsProductAndCountryCompliant()
-	{
-		setup();
-
-		Map<Id, Boolean> mapCheck;
-		List<Product2> lstProduct = [select Id from Product2 limit 2];
-		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
-		lstCountry[0].Is_Non_Compliant__c = false;
-		lstCountry[1].Is_Non_Compliant__c = true;
-		update lstCountry;
-		insert new Non_Compliant_Country__c(Product__c=lstProduct[1].Id, IATA_ISO_Country__c=lstCountry[0].Id);
-
-		system.assertEquals(Product_Svc.IsProductAndCountryCompliant(lstProduct[0].Id, null), true);
-
-		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[0].ISO_Code__c});
-		system.assertEquals(mapCheck.get(lstProduct[0].Id), true);
-		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
-
-		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[1].ISO_Code__c});
-		system.assertEquals(mapCheck.get(lstProduct[0].Id), false);
-		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
-	} //*** end of "test_IsProductAndCountryCompliant"
-
 	@isTest(seeAllData=false)
 	static void test_Miscellaneous()
 	{
@@ -460,7 +432,6 @@ private class Product_Svc_Test
 
 		Product_Svc.setRecordType(new List<Product2> { thirdProduct }, new List<Product2> { oldThirdProduct }, false);
 
-
 		try {
 			thirdProduct.Accepted_Payment_Methods__c = null;
 
@@ -474,6 +445,5 @@ private class Product_Svc_Test
 			update childProduct;
 		} catch (Exception e) {
 		}
-
 	} //*** end of "test_Miscellaneous2"
 }

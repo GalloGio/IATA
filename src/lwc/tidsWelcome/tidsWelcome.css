@@ -1,0 +1,5 @@
+button:disabled, button[disabled] {
+  background-color: rgb(255, 255, 255);
+  cursor: default;
+  color: rgb(217, 219, 221);
+}

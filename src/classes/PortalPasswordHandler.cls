@@ -85,28 +85,11 @@ public without sharing class PortalPasswordHandler {
 		return result;
 	}
 
-	public static string generateUrl (User user, String password, String pageName){
+	public static string generateUrl (User user, String password, String pageName, Map<String,String> params){
 		String cleanUsername = user.userName.replace('+', plusReplacer);
-		String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now())), 'UTF-8');
+		String encodedPart = cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now());
 
-		String languageParam = '';
-
-		if(user.contact.Preferred_Language__c != null){
-			for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
-				if(user.contact.Preferred_Language__c == portalLang.language__c){
-					languageParam = 'language=' + portalLang.languageLocalKey__c + '&';
-					break;
-				}
-			}
-		}
-
-		String prefix = '';
-		List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
-		if(!test.isRunningTest()){
-			if(!networkList.isEmpty()) prefix = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).lastIndexOf('/'));
-		}
-		String link = prefix + '/' + pageName + '?' + languageParam + encodedPart;
-		return link;
+		return CSP_Utils.generateURl(pageName, encodedPart, user.contact.Preferred_Language__c, params);
 	}
 
 	public static Map<String, String> forgotPasswordEmailMap(User user, String link){

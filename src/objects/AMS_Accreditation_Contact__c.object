@@ -441,6 +441,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Contact belonging to an accredited CNS account</description>
+        <externalId>false</externalId>
+        <label>CNS Contact</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Certificate_Issued_on__c</fullName>
         <externalId>false</externalId>
         <label>Certificate Issued on</label>
@@ -1043,6 +1053,16 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Security_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Contact marked as Security Contact</description>
+        <externalId>false</externalId>
+        <label>Security Contact</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Time_devoted_to_Agency_business__c</fullName>

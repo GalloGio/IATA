@@ -6,10 +6,8 @@
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
 import { LightningElement, track, wire}         from 'lwc';
-import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
-import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
 
 import getRegistrationConfirmationConfig        from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getRegistrationConfirmationConfig';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';

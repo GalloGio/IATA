@@ -1,0 +1,29 @@
+<template>
+	<div class={pillsBlockContainerClass}>
+		<div class={pillsBlockClass}>
+			<template for:each={value} for:item="item">
+				<span key={item.value}  class="slds-pill slds-pill_link">
+					<a href="javascript:void(0);" class="slds-pill__action" title={item.label}>
+						<span class="slds-pill__label">{item.label}</span>
+					</a>
+					<button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove" data-value={item.value} onclick={removePill}>
+						<svg class="slds-button__icon" aria-hidden="true">
+							<use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+						</svg>
+						<span class="slds-assistive-text">Remove</span>
+					</button>
+				</span>
+			</template>
+		</div>
+        <div if:true={displayButton} class={buttonClass}>
+            <a href="javascript:void(0);" class="slds-button slds-text-link_reset" onclick={toggleShowAll}>
+                <span class="slds-icon slds-icon-text-default slds-is-sortable__icon">
+                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                        <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                    </svg>
+                </span>
+                {buttonLabel}
+            </a>
+        </div>
+	</div>
+</template>

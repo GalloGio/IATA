@@ -2323,9 +2323,10 @@ public class AMS_OSCARTriggerHandler {
 
 		try {
 			List<Case> lsCaseToUpdate = new List<Case>();
-			for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c from Case where OSCAR__c in:mapOscars.keySet() AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )]){
+			for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c, Account.CNS_Account__c, Account.IATA_ISO_Country__r.CNS_Country__c, Account.Sector__c from Case where OSCAR__c in:mapOscars.keySet() AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )]){
+				Boolean isCNSAgency = ca.Account.Sector__c == AMS_Utils.SECTOR_CARGO && ca.Account.IATA_ISO_Country__r.CNS_Country__c && ca.Account.CNS_Account__c;
 				lsCaseToUpdate.add(new case(id = ca.id
-											, Reason1__c = mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c != null ? mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c : ca.Reason1__c
+											, Reason1__c = (mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c != null && !isCNSAgency) ? mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c : ca.Reason1__c
 											, Process_Start_Date__c = mapOscars.get(ca.OSCAR__C).Process_Start_Date__c
 											, BSPCountry__c = ca.Account.IATA_ISO_Country__r.Name
 											, Region__c = ca.Account.Region_formula__c
@@ -3249,6 +3250,16 @@ public class AMS_OSCARTriggerHandler {
 		for(AMS_Oscar__c oscar: oscars){
 
 			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+
+				if (oscar.Process__c != AMS_Utils.NGCHINACONVERSION){
+					if (oscar.Is_NewGen__c && AMS_Utils.setAMS.contains(oscar.Location_Type__c)) {
+						oscar.addError('Cannot pass the sanity check if the Location Type is non NewGen.');
+						return;
+					}else if (!oscar.Is_NewGen__c && AMS_Utils.setNewGen.contains(oscar.Location_Type__c)) {
+						oscar.addError('Cannot pass the sanity check if the Location Type is NewGen.');
+						return;
+					}
+				}
 
 				if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
 					if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
@@ -4524,7 +4535,8 @@ public class AMS_OSCARTriggerHandler {
 			statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
 		else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
-			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c && oscar.STEP35__c == AMS_Utils.PASSED)
+			//Removed validation oscar.STEP35__c == AMS_Utils.PASSED - For NEW HE LITE no need to submit Financial Security
+			if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.Is_using_credit_card__c)
 				statusForCC = 'Active';
 			else
 				statusForCC = 'Non-Active';

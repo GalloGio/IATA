@@ -84,12 +84,8 @@ export default class FavoriteServicesLWC extends LightningElement {
                 }
 
 
-                //Inverts returned List in order to keep the unrequestable links
                 //Slices the List in 15 members as a limit (3 pages with 5 tiles each)                
-                this.auxResult = this.auxResult.reverse().slice(0, 16);
-
-                //Inverts the list again so the external links go to the end of the list.
-                this.auxResult = this.auxResult.reverse();
+                this.auxResult = this.auxResult.slice(0, 16);
 
                 //builds the pages collumns and rows/tiles
                 this.pageTileBuilder();
@@ -277,7 +273,7 @@ export default class FavoriteServicesLWC extends LightningElement {
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
         const recordName = event.target.attributes.getNamedItem('data-recordname');
-        if (recordId !== null) {
+        if (recordId !== null && recordId.value !== null && recordId.value !== 'undefined') {
             // update Last Visit Date on record only if portal application right exists
             // Create the recordInput object
             const fields = {};

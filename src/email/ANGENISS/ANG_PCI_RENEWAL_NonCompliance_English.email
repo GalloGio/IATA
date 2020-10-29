@@ -4,32 +4,36 @@
 <![CDATA[<p class="MsoNormal" style="text-align: justify;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Dear {!Contact.Name}</span><span style="font-family: Arial, sans-serif; font-size: 13.3333px;">,</span></p><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><br></div><div style="font-size: 12pt; text-align: justify;"><p class="MsoNormal" style=""><span style="color: rgb(0, 0, 0); font-family: Arial, sans-serif; font-size: 12pt;">IATA
 Code:&nbsp;</span><font face="Arial, sans-serif">{!Account.IATACode__c}</font></p><p class="MsoNormal" style=""><font face="Arial, sans-serif"><br></font></p>
 
-<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">Under
-the Passenger Sales Agency Rules, all IATA Accredited Agents must ensure its
-full compliance with the Payment Card Industry Data Security Standards (PCI
-DSS) on annual basis.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
+<p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">Under the Passenger Sales
+Agency Rules, all IATA Accredited Agents must ensure its full compliance with
+the Payment Card Industry Data Security Standards (PCI DSS).<o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">With reference to
+communication sent earlier reminding you to renew your compliance certification
+for Payment Card Industry (PCI) Data Security Standard (DSS), please note we
+have still&nbsp;<b>not</b>&nbsp;received your new Attestation of Compliance
+(AoC).&nbsp; If you have submitted the evidence already, please disregard this
+message.<u1:p></u1:p><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span><span lang="EN-GB" style="font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">We would like to remind you
+again that the deadline for submission of&nbsp; your renewed compliance
+certification is: {!Account.ANG_PCI_compliance_expiry_date__c}<u1:p></u1:p><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">In light of the above,
+please note you are kindly requested to provide us with your new Attestation of
+Compliance to indicate your company’s compliance as soon as possible.&nbsp;
+Please note that Approved Scanning Vendor report may be required where
+applicable.&nbsp;&nbsp; You can visit our PCI DSS compliance dedicated page for
+more information on the process.</span><span lang="EN-GB" style="font-family:
+&quot;Arial&quot;,sans-serif;color:#1F4E79">&nbsp;</span><span lang="EN-GB" style="font-family: Arial, sans-serif;"><a href="http://www.iata.org/services/finance/Pages/pci-dss.aspx">http://www.iata.org/services/finance/Pages/pci-dss.aspx</a><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">If you fail to submit your
+renewed compliance certification and in accordance with the provisions of the
+IATA Passenger Sales Agency Rules, we have no alternative but to send you the
+Administrative of Non-Compliance. &nbsp;In addition, Credit Card form of
+payment will be disabled for your agency. &nbsp;Such restriction will remain in
+place until valid and accepted by IATA evidence of your agency PCI compliance
+has been received by IATA.In case you are currently not processing any
+transactions through BSP utilizing credit card form of payment or not intending
+to continue using credit card form of payment, you can submit the Nil Credit
+Card Self-Declaration, attached to this communication. However, please note
+credit card form of payment will be disabled for your agency.<u1:p></u1:p><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-GB" style="font-family: Arial, sans-serif;">Please do not hesitate to
+contact us if you have any queries on this matter via our Customer Service
+Portal at&nbsp;<a href="http://www.iata.org/cs">http://www.iata.org/cs</a></span><i><span lang="ES-TRAD" style="font-family: Arial, sans-serif;">&nbsp;</span></i><span lang="EN-GB" style="font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal">
 
-<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">Despite
-several reminders, we regret to inform you that according to our records we
-have not received evidence of your agency’s compliance with PCI DSS.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
 
-<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">In
-accordance with the provisions of the IATA Passenger Sales Agency Rules, we
-have no alternative but to send you this Administrative of Non-Compliance. We
-urge you to remedy the situation within 30 days of this notice.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
-
-<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">In
-case the evidence of PCI compliance is not submitted within the timeframe
-specified above, IATA will in those cases where the form of payment feature in
-the Electronic Ticketing System is enabled, immediately restrict the Agent’s
-use of the Customer Card Payment Method; such restriction will remain in place
-until the Agent has demonstrated to IATA’s satisfaction that the reason for the
-Administrative Non-Compliance has been remedied and the Agent is compliant with
-all applicable requirements for authorization to use the Customer Card Payment
-Method.<o:p></o:p></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;"><br></span></p>
-
-<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Arial, sans-serif;">Please
-do not hesitate to contact us if you have any queries on this matter via our
-Customer Service Portal at <a href="http://www.iata.org/cs">http://www.iata.org/cs</a><o:p></o:p></span></p></div><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><i style="font-size: 12pt;"><span lang="ES-TRAD" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></i></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><span style="font-family: Arial, sans-serif;">Yours sincerely,</span></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><br></p><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>Agency Management</b></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>International Air Transport Association</b></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif">-----------------------------------------------------------------------------</font><font face="Arial,sans-serif" color="navy">&nbsp;</font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="navy">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</font><font face="Arial,sans-serif"><a href="http://www.iata.org/cs" target="_blank">Customer Portal</a></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><br></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri, sans-serif"><span style="font-size: 14.6667px;">{!AMS_OSCAR__c.Emails_reference_Id__c}</span></font></div>]]></td>
+</p><p class="MsoNormal"><br></p></div><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><span style="font-family: Arial, sans-serif;">Yours sincerely,</span></p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;"><br></p><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>Agency Management</b></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: white; margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="#333399"><b>International Air Transport Association</b></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif">-----------------------------------------------------------------------------</font><font face="Arial,sans-serif" color="navy">&nbsp;</font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><font face="Arial,sans-serif" color="navy">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</font><font face="Arial,sans-serif"><a href="http://www.iata.org/cs" target="_blank">Customer Portal</a></font></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri,sans-serif" size="2"><span style="font-size: 11pt;"><br></span></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; background-color: rgb(255, 255, 255); margin: 0px;"><font face="Calibri, sans-serif"><span style="font-size: 14.6667px;">{!AMS_OSCAR__c.Emails_reference_Id__c}</span></font></div>]]></td>
 </tr>
 </table>

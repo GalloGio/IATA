@@ -9033,7 +9033,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Invoicing Contact</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -9386,24 +9386,24 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>CGO Billing</fullName>
+                    <fullName>Interline Passenger Agreement Manager</fullName>
                     <default>false</default>
-                    <label>CGO Billing</label>
+                    <label>Interline Passenger Agreement Manager</label>
                 </value>
                 <value>
-                    <fullName>CGO Corresp.</fullName>
+                    <fullName>Passenger Protection Agreement</fullName>
                     <default>false</default>
-                    <label>CGO Corresp.</label>
+                    <label>Passenger Protection Agreement</label>
                 </value>
                 <value>
-                    <fullName>PAX Billing</fullName>
+                    <fullName>Interline Airline Generic Contact</fullName>
                     <default>false</default>
-                    <label>PAX Billing</label>
+                    <label>Interline Airline Generic Contact</label>
                 </value>
                 <value>
-                    <fullName>PAX Corresp.</fullName>
+                    <fullName>Interline Cargo Agreement Manager</fullName>
                     <default>false</default>
-                    <label>PAX Corresp.</label>
+                    <label>Interline Cargo Agreement Manager</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -14043,15 +14043,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
     <listViews>
         <fullName>AllContacts</fullName>
         <columns>FULL_NAME</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.TITLE</columns>
-        <columns>CONTACT.PHONE1</columns>
         <columns>CONTACT.EMAIL</columns>
-        <columns>CORE.USERS.ALIAS</columns>
         <columns>CONTACT.CREATED_DATE</columns>
-        <columns>PARENT.NAME</columns>
         <columns>Status__c</columns>
+        <columns>CONTACT.FIRST_NAME</columns>
+        <columns>CONTACT.LAST_NAME</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTACT.EMAIL</field>
+            <operation>contains</operation>
+            <value>mariolaszpynda</value>
+        </filters>
         <label>All Contacts</label>
         <language>en_US</language>
         <sharedTo>
@@ -14346,6 +14348,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>BulkMessageContacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.PHONE3</columns>
+        <columns>CONTACT.LAST_ACTIVITY</columns>
+        <filterScope>Everything</filterScope>
+        <label>Bulk_SMS_Contacts</label>
     </listViews>
     <listViews>
         <fullName>CFOairlinelist</fullName>
@@ -19615,19 +19626,19 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>MITA_Contact_Type__c</picklist>
             <values>
-                <fullName>CGO Billing</fullName>
+                <fullName>Interline Airline Generic Contact</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>CGO Corresp%2E</fullName>
+                <fullName>Interline Cargo Agreement Manager</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PAX Billing</fullName>
+                <fullName>Interline Passenger Agreement Manager</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PAX Corresp%2E</fullName>
+                <fullName>Passenger Protection Agreement</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20475,6 +20486,16 @@ or(
 $User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
 $UserRole.Name &lt;&gt; &quot;GDP&quot; 
 )	,	
+or(
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;,
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot; 
+) ,	
+
+or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;,
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot; 
+) ,	
+
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;
 
 )</errorConditionFormula>
@@ -20495,6 +20516,17 @@ $UserRole.Name &lt;&gt; &quot;GDP&quot;
 $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;,
 $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot; 
 ) ,	
+
+                or(
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;,
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot; 
+) ,	
+
+                or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;,
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot; 
+) ,	
+
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,
 				
 	Or(			
@@ -20616,6 +20648,16 @@ $UserRole.Name &lt;&gt; &quot;GDP&quot;
 or( 
 $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
 $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+), 
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IATAN Manager&quot;, 
+$UserRole.Name &lt;&gt; &quot;IATAN Manager&quot;	
+), 
+
+or(
+$User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;, 
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot;	
 ), 
 
 $User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="contentContactUsBanner">
+    <apiVersion>48.0</apiVersion>
+    <description>Contact Us Banner for Content Pages</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Content Contact Us Banner</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+</LightningComponentBundle>

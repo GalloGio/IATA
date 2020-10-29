@@ -73,7 +73,7 @@ export default class PortalSupportPageHeader extends NavigationMixin(LightningEl
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: 'faq'
+                pageName: 'home'
             }})
         .then(url => navigateToPage(url, params));
         

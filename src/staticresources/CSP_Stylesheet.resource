@@ -443,7 +443,7 @@ lightning-datatable .slds-th__action {
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
 .Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
-.Closed span, .AcceptedFutureDate span, .Submitted span {
+.Closed span, .AcceptedFutureDate span, .Submitted span, .PendingClosure span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -995,6 +995,9 @@ lightning-datatable .slds-th__action {
     color: #999999;
 }
 
+.text-superLightGray{
+    color-color: #f0f2f5;
+}
 .text-linkBlue{
     color: #1e32fa;
 }
@@ -2774,3 +2777,52 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 
 /*RS - END - Needed for IFTP app */
+
+/* Override image padding on content Page : important required without possible work around*/
+.comm-page-managed-content-PortalRecommendationContent .slds-large-size_6-of-12
+{
+ padding: 0px !important;
+
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.maxContentWidth{
+    max-width:512px;
+}
+
+.maxContainerWidth{
+    max-width:928px;
+}
+
+
+.specialPickList .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: white;
+}
+
+.specialPickList .slds-combobox_container input[role="textbox"]{
+  border-color:#1e32fa;
+}
+.MaxModalContainerDim{
+    max-width:596px;
+}
+
+/* Re styling scrollbars*/
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 1px;
+	width: 6px;
+}

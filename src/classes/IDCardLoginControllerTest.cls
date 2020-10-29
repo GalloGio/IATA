@@ -72,7 +72,6 @@ public class IDCardLoginControllerTest {
 		idCardLoginController = new IDCardLoginController();
 		idCardLoginController.getLangItems();
 		idCardLoginController.findLocation();
-		idCardLoginController.fakemethod();
 	}
 
 	@isTest
@@ -288,4 +287,92 @@ public class IDCardLoginControllerTest {
 		}
 		return false;
 	}
+
+	@isTest
+	public static void TestAcccountType() {
+		IdCardLoginController idCardLoginController = new IdCardLoginController();
+		idCardLoginController.IATACodeLocation2 = '55535671';
+		idCardLoginController.FNAME = 'John';
+		idCardLoginController.LNAME = 'Doe';
+		idCardLoginController.DOB = '02/06/2003';
+		
+		IATA_ISO_Country__c aCountry = new IATA_ISO_Country__c();
+		aCountry.Name = 'Canada';
+		aCountry.AIMS_Area_Name__c = 'CANADA';
+		aCountry.ISO_Code_Numeric__c = 990;
+		aCountry.AIMS_Area_ID__c = '1';
+		aCountry.ISO_Code__c = 'CA';
+		insert aCountry; 
+		
+		Account theAccount = new Account();
+		theAccount.RecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		theAccount.Name = 'UnitTest Account';
+		theAccount.IATACode__c = '55535671';
+		theAccount.Industry = 'Cargo Agent';
+		theAccount.Type = 'TIDS Agent';
+		theAccount.BillingCity = 'Montreal';
+		theAccount.BillingCountry = 'Canada';
+		theAccount.BillingPostalCode = 'H0H 0H0';       
+		theAccount.Status__c = IDCardUtil.ACCOUNT_STATUS_APPROVED;
+		theAccount.Location_Class__c = 'D';
+		theAccount.IATA_ISO_Country__c = aCountry.Id;
+		insert theAccount;
+		
+		Price_Table__c priceTables = new Price_Table__c();
+		priceTables.Type_Class_of_Agent__c = 'TIDS';
+		priceTables.Expedite__c = 25;       
+		priceTables.ISO_Country__c = aCountry.Id;
+		insert priceTables;
+
+		try{
+			Test.startTest();   
+				idCardLoginController.verifyAlternative();
+			Test.stopTest();
+		}catch(Exception e){
+			
+			System.assert(checkMessages(ApexPages.getMessages(), 'Please Contact IDCard Support with the following message: Price Table not found for the following Country:'  + aCountry.Name + ' ISO search from ' + aCountry.Id));
+		}
+
+	}
+  
+	@isTest
+	public static void TestAcccountTypeException() {
+		IdCardLoginController idCardLoginController = new IdCardLoginController();
+		idCardLoginController.IATACodeLocation2 = '55535671';
+		idCardLoginController.FNAME = 'John';
+		idCardLoginController.LNAME = 'Doe';
+		idCardLoginController.DOB = '02/06/2003';
+		
+		IATA_ISO_Country__c aCountry = new IATA_ISO_Country__c();
+		aCountry.Name = 'Canada';
+		aCountry.ISO_Code_Numeric__c = 990;
+		aCountry.AIMS_Area_ID__c = '1';
+		aCountry.ISO_Code__c = 'CA';
+		insert aCountry; 
+		
+		Account theAccount = new Account();
+		theAccount.RecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		theAccount.Name = 'UnitTest Account';
+		theAccount.IATACode__c = '55535671';
+		theAccount.Industry = 'Cargo Agent';
+		theAccount.Type = 'TIDS Agent';
+		theAccount.BillingCity = 'Montreal';
+		theAccount.WebStar_ID__c = null;
+		theAccount.BillingCountry = 'Canada';
+		theAccount.BillingPostalCode = 'H0H 0H0';       
+		theAccount.Status__c = IDCardUtil.ACCOUNT_STATUS_APPROVED;
+		theAccount.Location_Class__c = 'D';
+		theAccount.IATA_ISO_Country__c = aCountry.Id;
+		insert theAccount;
+
+		try{
+			Test.startTest();   
+				idCardLoginController.verifyAlternative();
+			Test.stopTest();
+		}catch(Exception e){
+			System.assert(checkMessages(ApexPages.getMessages(), 'Please Contact IDCard Support with the following message: ISO Country not found for the following Account:'));
+		}
+
+	}
+	
 }
