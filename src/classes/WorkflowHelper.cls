@@ -20,6 +20,22 @@ public without sharing class WorkflowHelper {
 
 	private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
+	private static Map<String,Account> accountPerContact = new Map<String,Account>();
+
+	private static Map<String,Account> getAccountPerContact() {
+		if(accountPerContact.isEmpty()){
+			Set<Id> acctIds = new Set<Id>();
+			for(Contact con : (List<Contact>)Trigger.new){
+				acctIds.add(con.AccountId);
+			}
+			Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, CNS_Account__c FROM Account WHERE Id IN:acctIds]);
+			for(Contact con : (List<Contact>)Trigger.new){
+				accountPerContact.put(con.Email, mapAccounts.get(con.AccountId));
+			}
+		}
+		return accountPerContact;
+	}
+
 	public static void performActions(String objectType){
 
 		switch on objectType {
@@ -101,6 +117,7 @@ public without sharing class WorkflowHelper {
 			updateRecordSharingCriteria(oldCon, newCon);
 			keyContactOptOut(oldCon, newCon);
 			updateIDCardContactCheckbox(oldCon, newCon);
+			updateCNSContactCheckbox(oldCon, newCon);
 		}
 	}
 
@@ -398,6 +415,12 @@ public without sharing class WorkflowHelper {
 
 		if(newContact.VER_Number__c != null && !newContact.ID_Card_Holder__c)
 			newContact.ID_Card_Holder__c = true;
+	}
+
+	public static void updateCNSContactCheckbox(Contact oldContact , Contact newContact){
+
+		if(getAccountPerContact().get(newContact.Email).CNS_Account__c && (oldContact == null || newContact.CNS_Contact__c != null && !newContact.CNS_Contact__c))
+			newContact.CNS_Contact__c = true;
 	}
 
 	/*CONTACT ACTIONS END*/
