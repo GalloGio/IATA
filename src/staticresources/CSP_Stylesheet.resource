@@ -2152,7 +2152,9 @@ visibility: hidden;
     height: 52px;
 }
 
-.custTextInput input:focus{
+.custTextInput input:focus, 
+.custTextInput textarea:focus, 
+.firstLevelRegistrationCombobox [role="combobox"] input[readonly]:focus{
     border: solid 2px rgba(30, 50, 250, 0.6);
 }
 	
