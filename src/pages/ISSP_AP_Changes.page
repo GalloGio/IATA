@@ -126,7 +126,6 @@
                         <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField required="{!isMandatory}" value="{!newForm.Contact_Resp_Salutation__c}" />
                     </apex:pageBlockSectionItem>
-                    <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* First Name" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField value="{!newForm.Contact_Resp_F_Name__c}" />

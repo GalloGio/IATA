@@ -1985,6 +1985,9 @@ global without sharing class ISSP_APProcess {
 		}
 		if (isPASS && strChangeType=='Bank Account Instructions') {
 			listMandatoryFiles.add('Bank_Mandate');
+			if (getShowUploadASPForPASS()) {
+				listMandatoryFiles.add('ASP');
+			}
 		}
 		System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
 		return listMandatoryFiles;

@@ -196,6 +196,10 @@
                     </apex:pageBlockSection>
 
                     <apex:pageBlockSection title="{!$Label.ISSP_Supporting_Documents}" columns="1" rendered="{!isPassAirline && strChangeType=='Bank Account Instructions'}" collapsible="false">
+                        <apex:outputPanel layout="block" rendered="{!showUploadASPForPASS}">
+                            <apex:iframe scrolling="false" height="180px"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
+                        </apex:outputPanel>
                         <apex:outputPanel layout="block">
                             <apex:iframe scrolling="false" height="180px"
                                 src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription={!$Label.ISSP_PASS_BankMandate_Changes_Description}.&reqIdentifier=Bank_Mandate"/>
