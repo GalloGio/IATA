@@ -1525,7 +1525,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>Được xác định bởi lịch sử rủi ro của đại lý và kết quả đánh giá tài chính của họ</label>
+        <label>Trạng thái rủi ro của bạn dựa trên kết quả của cả đánh giá tài chính lần gần nhất và đánh giá lịch sử rủi ro.
+Để biết thêm chi tiết, vui lòng tham khảo Nghị quyết 812 (phần 5.2 và 5.3) có thể được truy cập bằng cách tìm kiếm &quot;Nghị quyết 812&quot; trong Cổng thông tin khách hàng.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -36721,7 +36722,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Các báo cáo</label>
             <name>Opportunities</name>
         </sections>
         <sections>

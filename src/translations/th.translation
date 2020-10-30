@@ -1525,7 +1525,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>พิจารณาจากประวัติความเสี่ยงต่อเนื่องและผลของการตรวจสอบทางการเงินของตัวแทน</label>
+        <label>สถานะความเสี่ยงของคุณขึ้นอยู่กับผลของการประเมินทางการเงินครั้งล่าสุดและการประเมินประวัติความเสี่ยง
+สำหรับรายละเอียดเพิ่มเติมโปรดดูข้อมูลได้จาก Resolution  812 (ส่วนที่ 5.2 และ 5.3) ซึ่งสามารถเข้าถึงได้โดยค้นหาที่ &apos;Resolution 812&apos; ในพอร์ทัลลูกค้าของท่าน</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -36724,7 +36725,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>รายงาน</label>
             <name>Opportunities</name>
         </sections>
         <sections>
