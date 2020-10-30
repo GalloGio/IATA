@@ -50,11 +50,16 @@ global class ANG_RME_Alert_Service {
 		public List<String> triggeredRules;
 		public List<AgentStates> agentStates;
 
-		//INT_XXX: GDS FailSafe alert
-		public string GDS;
+		//INT_032: GDS FailSafe alert
+		public string gds;
 		public string ticketNumber;
-		public list<string> FOP;
+		public list<fopValues> fop;
 
+	}
+
+	public class fopValues{
+		public string type; //Valid values: CC, CA, EP
+		public string status;
 	}
 
 	//INT_032: reception of EDS Alerts
@@ -174,6 +179,15 @@ global class ANG_RME_Alert_Service {
 			}
 			else {
 				Account acct = accs[0];
+
+				/*switch on req.eventType {
+					when RTS_ALERT_EVENT_TYPE{
+						
+					}
+					when else {
+						
+					}
+				}*/
 
 				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
 					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
