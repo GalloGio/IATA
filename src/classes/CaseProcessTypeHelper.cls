@@ -98,7 +98,6 @@ public with sharing class CaseProcessTypeHelper {
 	 */
 	public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
 		Datetime x1stDate = Datetime.newInstance(2019, 1, 1);
-		Set<Id> accountIds = new Set<Id>();
 		Set<Id> oscarIds = new Set<Id>(); //WMO-564 - ACAMBAS
 		List<Case> casesToProcess = new List<Case>();
 
@@ -109,7 +108,6 @@ public with sharing class CaseProcessTypeHelper {
 			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
 			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
 				casesToProcess.add(cse);
-				accountIds.add(cse.AccountId);
 				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
 			}
 		}
@@ -118,8 +116,8 @@ public with sharing class CaseProcessTypeHelper {
 			return;
 		}
 
-		Map<Id,Account> mapAccounts = getMapAccount(accountIds);
 		Map<Id, AMS_OSCAR__c> mapOscars = getMapOscar(oscarIds);
+		Map<Id,Account> mapAccounts = getMapAccount(mapOscars.values());
 
 		for(Case cse : casesToProcess) {
 			Account acc = mapAccounts.get(cse.AccountId);
@@ -145,8 +143,9 @@ public with sharing class CaseProcessTypeHelper {
 	 */
 	private static map<Id,AMS_OSCAR__c> getMapOscar(Set<Id> oscarIds) {
 		if (oscarIds.isEmpty()) return new map<Id,AMS_OSCAR__c>();
-		set<String> setOscarFields = new set<String>(getRelatedFields().get('OSCAR__r'));
+		set<String> setOscarFields = new set<String>(getRelatedFields().get('OSCAR__r')); //adding oscar records
 		setOscarFields.add('Id');
+		setOscarFields.addAll(getRelatedAccountFields()); // adding account records from the Account__r lookup
 		List<String> listFields = new List<String>(setOscarFields);
 		String query = 'SELECT ' + String.join(listFields,',') + ' FROM AMS_OSCAR__c';
 		query += ' WHERE Id IN (\'' + String.join(new list<Id>(oscarIds),'\',\'') + '\')';
@@ -155,22 +154,31 @@ public with sharing class CaseProcessTypeHelper {
 	}
 
 	/**
-	* Creates a map of Account records based on the input Ids
-	* Fields in the SELECT are based on those used in the Custom metadata Case_Process_Type__mdt
+	 * Returns the list of meaningful fields required from Account but adding the related
+	 * lookup field to be used inside an OSCAR query
+	 */
+	private static list<String> getRelatedAccountFields() {
+		list<String> listAccountFields = new list<String>();
+		for (String fieldname: getRelatedFields().get('Account')) {
+			listAccountFields.add('Account__r.' + fieldname);
+		}
+		listAccountFields.add('Account__r.Id');
+		listAccountFields.add('Account__r.IATA_ISO_Country__c');
+		listAccountFields.add('Account__r.IATA_ISO_Country__r.ISO_Code__c');
+		listAccountFields.add('Account__r.Recordtype.DeveloperName');
+		listAccountFields.add('Account__r.CNS_Agency__c');
+		return listAccountFields;
+	}
+
+	/** 
+	 * Makes the map account based on the input list of oscar records
 	*/
-	private static map<Id,Account> getMapAccount(Set<Id> accountIds) {
-		if (accountIds.isEmpty()) return new map<Id,Account>();
-		set<String> setAccountFields = new set<String>(getRelatedFields().get('Account'));
-		setAccountFields.add('Id');
-		setAccountFields.add('IATA_ISO_Country__c');
-		setAccountFields.add('IATA_ISO_Country__r.ISO_Code__c');
-		setAccountFields.add('Recordtype.DeveloperName');
-		setAccountFields.add('CNS_Agency__c');
-		List<String> listFields = new List<String>(setAccountFields);
-		String query = 'SELECT ' + String.join(listFields,',') + ' FROM Account';
-		query += ' WHERE Id IN (\'' + String.join(new list<Id>(accountIds),'\',\'') + '\')';
-		list<Account> listAccount = Database.query(query);
-		return new map<Id,Account>(listAccount);
+	private static map<Id,Account> getMapAccount(list<AMS_OSCAR__c> listOscar) {
+		map<Id,Account> mapAccount = new map<Id,Account>();
+		for (AMS_OSCAR__c oscar: listOscar) {
+			mapAccount.put(oscar.Account__r.Id, oscar.Account__r);
+		}
+		return mapAccount;
 	}
 
 	/**
