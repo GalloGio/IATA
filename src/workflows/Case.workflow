@@ -5499,6 +5499,9 @@ IF(
 IF(
   CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
   &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
 IF( 
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
   &quot;DPC External&quot;, 
@@ -5584,7 +5587,7 @@ IF(
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7472,6 +7475,9 @@ IF(
   CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
   &quot;WH Agency Management&quot;,
 IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF(
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
   &quot;DPC External&quot;,
 (IF(
@@ -7545,7 +7551,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
