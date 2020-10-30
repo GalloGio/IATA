@@ -1525,7 +1525,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>Acentelerin mevcut risk geçmişine ve mali değerlendirme sonuçlarına göre belirlenir</label>
+        <label>Risk durumunuz, hem son mali değerlendirmenin hem de risk geçmişi değerlendirmesinin sonuçlarına dayanmaktadır.
+Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quot; aratarak erişilebilen Resolution 812&apos;ye (bölüm 5.2 ve 5.3) bakabilirsiniz.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -36531,7 +36532,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Network Members --></label>
         <name>Network_Members</name>
         <sections>
-            <label><!-- Network Members --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Network Members</name>
         </sections>
         <sections>
@@ -36728,7 +36729,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Opportunities</name>
         </sections>
         <sections>
