@@ -81,6 +81,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 		if ( ets.size() > 0 ) {
 			EmailTemplate et = ets.get(0);
 			List<Messaging.SingleEmailMessage> lstEmails = new List<Messaging.SingleEmailMessage>();
+			Set<String> setEmails = new Set<String>();
 			system.debug('[IDCard_CheckoutSingleApplication]Emailing');
 
 			for (Managed_agency__c c : managedAccountList ) {
