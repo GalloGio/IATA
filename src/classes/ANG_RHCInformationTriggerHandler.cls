@@ -80,7 +80,8 @@ public class ANG_RHCInformationTriggerHandler{
 			Case c = new Case();
 				c.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
 				c.AccountId = AccntId;
-				c.ContactId = rhcContacts.containsKey(AccntId) ? new List<Id>(rhcContacts.get(AccntId))[0] : null;
+				c.ContactId = rhcContacts.containsKey(AccntId) ? new List<Id>(rhcContacts.get(AccntId))[0] :
+							  (rhcContacts.containsKey(string.valueOf(AccntId).left(15)) ? new List<Id>(rhcContacts.get(string.valueOf(AccntId).left(15)))[0] : null);
 				c.Subject = 'RHC Tier change ' + (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20));
 				c.Region__c = acc.Region_formula__c;
 				c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
