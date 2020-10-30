@@ -1097,20 +1097,22 @@ public without sharing class Order_Svc
 			/*clientMail.recipients.add(order.ShipToContact_Email__c);
 			if(order.ShipToContact_Email__c != null)
 				lstmails.add(clientMail);*/
-
+			IEC_Functionality__c sSN;
+			sSN = IEC_Functionality__c.getValues('Special Shipping Notification');
+			if(sSN.functionality_value__c=='1'){
 			//Send notification for Special instructions for shipping and delivery 
 			//27/10/20 AG asked for temporary disable this feature on JIRASP-6666
-			/*if(order.Has_Shipping_Instruction__c){
-				Mail_DTO specialShippingInstruction = new Mail_DTO();
-				specialShippingInstruction.whatId = order.Id;
-				specialShippingInstruction.templateId = Utility.getTextSetting('Order templateId for special shipping');
-				specialShippingInstruction.recipients = new List<String>();
-				//Add the email addresses to be notified
-				List<String> specialShippingInstructionEmails = Utility.getTextSettingToArray('Special shipping instruction Emails',',');
-				specialShippingInstruction.recipients.addAll(specialShippingInstructionEmails);
-				lstmails.add(specialShippingInstruction);
-			}*/
-
+				if(order.Has_Shipping_Instruction__c){
+					Mail_DTO specialShippingInstruction = new Mail_DTO();
+					specialShippingInstruction.whatId = order.Id;
+					specialShippingInstruction.templateId = Utility.getTextSetting('Order templateId for special shipping');
+					specialShippingInstruction.recipients = new List<String>();
+					//Add the email addresses to be notified
+					List<String> specialShippingInstructionEmails = Utility.getTextSettingToArray('Special shipping instruction Emails',',');
+					specialShippingInstruction.recipients.addAll(specialShippingInstructionEmails);
+					lstmails.add(specialShippingInstruction);
+				}
+		}
 			//Send email to the product manager and alternate manager if the product is sold
 			if(isSold)
 			{
