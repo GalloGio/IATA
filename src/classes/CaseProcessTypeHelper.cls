@@ -117,19 +117,11 @@ public with sharing class CaseProcessTypeHelper {
 		}
 
 		Map<Id, AMS_OSCAR__c> mapOscars = getMapOscar(oscarIds);
-		Map<Id,Account> mapAccounts = getMapAccount(mapOscars.values());
 
 		for(Case cse : casesToProcess) {
-			Account acc = mapAccounts.get(cse.AccountId);
-			/* US Accounts must be excluded */
-			if(String.isNotBlank(acc.IATA_ISO_Country__c) && acc.IATA_ISO_Country__r.ISO_Code__c == 'US' &&
-				acc.Recordtype.DeveloperName == 'IATA_Agency' && acc.CNS_Agency__c == false) {
-				continue;
-			}
-
 			AMS_OSCAR__c oscar = mapOscars.get(cse.OSCAR__c); //WMO-564 - ACAMBAS
 			cse.OSCAR__r = oscar;
-			cse.Account = acc;
+			cse.Account = oscar.Account__r;
 			Case_Process_Type__mdt process = getRightProcess(cse);
 			if (process!=null) {
 				calculateKPI(cse, oscar, process);
@@ -162,23 +154,7 @@ public with sharing class CaseProcessTypeHelper {
 		for (String fieldname: getRelatedFields().get('Account')) {
 			listAccountFields.add('Account__r.' + fieldname);
 		}
-		listAccountFields.add('Account__r.Id');
-		listAccountFields.add('Account__r.IATA_ISO_Country__c');
-		listAccountFields.add('Account__r.IATA_ISO_Country__r.ISO_Code__c');
-		listAccountFields.add('Account__r.Recordtype.DeveloperName');
-		listAccountFields.add('Account__r.CNS_Agency__c');
 		return listAccountFields;
-	}
-
-	/** 
-	 * Makes the map account based on the input list of oscar records
-	*/
-	private static map<Id,Account> getMapAccount(list<AMS_OSCAR__c> listOscar) {
-		map<Id,Account> mapAccount = new map<Id,Account>();
-		for (AMS_OSCAR__c oscar: listOscar) {
-			mapAccount.put(oscar.Account__r.Id, oscar.Account__r);
-		}
-		return mapAccount;
 	}
 
 	/**
