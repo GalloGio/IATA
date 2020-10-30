@@ -3,6 +3,8 @@ public with sharing class CaseCommentHandler {
 	
 	List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
 	List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+
+	public Boolean caseCommentKPI = false;
 	
 	public CaseCommentHandler(){}
 
@@ -66,6 +68,7 @@ public with sharing class CaseCommentHandler {
 		}
 		
 		if(kpiValuesToInsert.size() > 0 ) {
+			caseCommentKPI = true;
 			insert kpiValuesToInsert;
 		}
 	}
