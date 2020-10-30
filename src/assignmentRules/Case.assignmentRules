@@ -4002,7 +4002,8 @@ ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
 OR (		
 ISPICKVAL(Reason1__c, &quot;Contract Query/Setup&quot;),		
 ISPICKVAL(Reason1__c, &quot;Annual Fees&quot;),		
-ISPICKVAL(Reason1__c, &quot;Pre-sales&quot;)		
+ISPICKVAL(Reason1__c, &quot;Pre-sales&quot;),
+ISPICKVAL(Reason1__c, &quot;Training Partner Accreditation&quot;)		
 )		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
