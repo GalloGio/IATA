@@ -305,6 +305,7 @@
         <columns>Stack_Trace__c</columns>
         <columns>Type__c</columns>
         <columns>Errror_Message__c</columns>
+        <columns>Extra_Information__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>

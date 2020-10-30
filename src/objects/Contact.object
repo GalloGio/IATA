@@ -9033,7 +9033,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Invoicing Contact</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>

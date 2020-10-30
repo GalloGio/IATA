@@ -23,10 +23,10 @@ public with sharing class CaseTriggerHelper {
 	public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
 	public static List<String> bypassReasons = new List<String>{'Thank you', 'No Action'};
 
-	public static final Set<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new set<String> {
+	public static final List<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new List<String> {
 		'CasesMENA', 'CasesAmericas', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ExternalCasesIDFSglobal'
 	};
-	private static Map<Id, RecordType> portalPendingClosureRecordTypes;
+	private static List<Id> portalPendingClosureRecordTypes;
 
 	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
 		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
@@ -266,7 +266,7 @@ public with sharing class CaseTriggerHelper {
 
 	public static void handleClosureStatus(List<Case> cases, Map<Id, Case> oldCases) {
 		for (Case current : cases) {
-			if(getPortalCaseClosureAvailableRecordTypes().keySet().contains(current.RecordTypeId)) {
+			if(getPortalCaseClosureAvailableRecordTypes().contains(current.RecordTypeId)) {
 				Case old = oldCases == null ? null : oldCases.get(current.Id);
 				
 				if ((old == null || old.Status != current.Status)
@@ -291,7 +291,7 @@ public with sharing class CaseTriggerHelper {
 		List<Id> casesToGenerateComments = new List<Id>();
 		for (Id caseId : cases.keySet()) {
 			Case current = cases.get(caseId);
-			if(getPortalCaseClosureAvailableRecordTypes().keySet().contains(current.RecordTypeId)) {
+			if(getPortalCaseClosureAvailableRecordTypes().contains(current.RecordTypeId)) {
 				Case old = oldCases == null ? null : oldCases.get(caseId);
 				if (((old == null && current.Status == CASE_STATUS_PENDING_CLOSURE) ||
 					(old != null && (old.Status != current.Status || old.Portal_Closure_Status__c != current.Portal_Closure_Status__c) &&
@@ -314,9 +314,9 @@ public with sharing class CaseTriggerHelper {
 		}
 	}
 
-	public static Map<Id, RecordType> getPortalCaseClosureAvailableRecordTypes() {
+	public static List<Id> getPortalCaseClosureAvailableRecordTypes() {
 		if(portalPendingClosureRecordTypes == null) {
-			portalPendingClosureRecordTypes = new Map<Id, RecordType>([SELECT Id, DeveloperName, Name FROM RecordType WHERE DeveloperName IN :PORTAL_PENDING_CLOSURE_RECORD_TYPES]);
+			portalPendingClosureRecordTypes = RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames('Case', PORTAL_PENDING_CLOSURE_RECORD_TYPES);
 		}
 		return portalPendingClosureRecordTypes;
 	}

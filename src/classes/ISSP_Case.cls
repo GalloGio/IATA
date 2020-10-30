@@ -1711,7 +1711,13 @@ public without sharing class ISSP_Case {
 	/**
 		Add a new CC Other Contact to current Case
 	**/
-	public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+	public static final Id PARTNER_USER_ROLE{
+		get{
+			if(PARTNER_USER_ROLE == null) PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+			return PARTNER_USER_ROLE;
+		}
+	}
+
 	public String inputccotheremail{get; set;}
 	public void addCCOther() {
 		String findEmail = this.inputccotheremail.trim();

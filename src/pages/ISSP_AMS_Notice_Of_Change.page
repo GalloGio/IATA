@@ -1696,19 +1696,19 @@
 								<apex:pageBlockSection columns="1">
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 										<apex:outputLabel value="{!IF(newLabels, $Label.ISSP_AMS_Trade_Reg_Number_PASS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label)}"/>
-										<apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}"/>
+										<apex:inputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}"/>
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 										<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}"/>
-										<apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}"/>
+										<apex:inputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}"/>
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 										<apex:outputLabel value="{!IF(newLabels, $Label.ISSP_AMS_License_No_Company, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label)}"/>
-										<apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.ISSP_AMS_License_No__c}"/>
+										<apex:inputfield value="{!newForm.ISSP_AMS_License_No__c}"/>
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 										<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}"/>
-										<apex:inputfield required="{!IF(isCNSAgency, true, false)}" value="{!newForm.ISSP_AMS_Date_license_granted__c}"/>
+										<apex:inputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}"/>
 									</apex:pageBlockSectionItem>
 								</apex:pageBlockSection>
 							</apex:pageBlockSectionItem>

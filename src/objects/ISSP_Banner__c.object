@@ -279,6 +279,11 @@
                     <label>Andorra</label>
                 </value>
                 <value>
+                    <fullName>Angola</fullName>
+                    <default>false</default>
+                    <label>Angola</label>
+                </value>
+                <value>
                     <fullName>Antigua and Barbuda</fullName>
                     <default>false</default>
                     <label>Antigua and Barbuda</label>
@@ -287,6 +292,11 @@
                     <fullName>Argentina</fullName>
                     <default>false</default>
                     <label>Argentina</label>
+                </value>
+                <value>
+                    <fullName>Armenia</fullName>
+                    <default>false</default>
+                    <label>Armenia</label>
                 </value>
                 <value>
                     <fullName>Aruba</fullName>
@@ -327,6 +337,11 @@
                     <fullName>Barbados</fullName>
                     <default>false</default>
                     <label>Barbados</label>
+                </value>
+                <value>
+                    <fullName>Belarus</fullName>
+                    <default>false</default>
+                    <label>Belarus</label>
                 </value>
                 <value>
                     <fullName>Belgium</fullName>
@@ -387,6 +402,11 @@
                     <fullName>Burkina Faso</fullName>
                     <default>false</default>
                     <label>Burkina Faso</label>
+                </value>
+                <value>
+                    <fullName>Burundi</fullName>
+                    <default>false</default>
+                    <label>Burundi</label>
                 </value>
                 <value>
                     <fullName>Cambodia</fullName>
@@ -517,6 +537,11 @@
                     <fullName>Ethiopia</fullName>
                     <default>false</default>
                     <label>Ethiopia</label>
+                </value>
+                <value>
+                    <fullName>Falkland Islands (Malvinas)</fullName>
+                    <default>false</default>
+                    <label>Falkland Islands (Malvinas)</label>
                 </value>
                 <value>
                     <fullName>Fiji</fullName>
@@ -722,6 +747,11 @@
                     <fullName>Lesotho</fullName>
                     <default>false</default>
                     <label>Lesotho</label>
+                </value>
+                <value>
+                    <fullName>Libya</fullName>
+                    <default>false</default>
+                    <label>Libya</label>
                 </value>
                 <value>
                     <fullName>Liechtenstein</fullName>
@@ -1024,6 +1054,11 @@
                     <label>Slovenia</label>
                 </value>
                 <value>
+                    <fullName>Somalia</fullName>
+                    <default>false</default>
+                    <label>Somalia</label>
+                </value>
+                <value>
                     <fullName>South Africa</fullName>
                     <default>false</default>
                     <label>South Africa</label>
@@ -1067,6 +1102,11 @@
                     <fullName>Syria</fullName>
                     <default>false</default>
                     <label>Syria</label>
+                </value>
+                <value>
+                    <fullName>Tajikistan</fullName>
+                    <default>false</default>
+                    <label>Tajikistan</label>
                 </value>
                 <value>
                     <fullName>Tanzania</fullName>
@@ -1167,6 +1207,11 @@
                     <fullName>Zimbabwe</fullName>
                     <default>false</default>
                     <label>Zimbabwe</label>
+                </value>
+                <value>
+                    <fullName>Uzbekistan</fullName>
+                    <default>false</default>
+                    <label>Uzbekistan</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
