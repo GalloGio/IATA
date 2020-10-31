@@ -3958,7 +3958,7 @@ ISPICKVAL(Reason1__c, &quot;Invoicing&quot;),
 ISPICKVAL(Reason1__c, &quot;Sign Up / Join&quot;),	
 ISPICKVAL(Reason1__c, &quot;Payments&quot;),	
 ISPICKVAL(Reason1__c, &quot;Product Delivery Issue&quot;),	
-ISPICKVAL(Reason1__c, &quot;Orders/Subscriptions request&quot;)	
+ISPICKVAL(Reason1__c, &quot;Order / Subscription request&quot;)	
 )	
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -3982,7 +3982,7 @@ RecordType.Name = &quot;IATA Training&quot;
 
 ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
 OR (
-ISPICKVAL(Reason1__c, &quot;Exam/Certificate&quot;)
+ISPICKVAL(Reason1__c, &quot;Exam / Certificate&quot;)
 )
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
