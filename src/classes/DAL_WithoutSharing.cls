@@ -320,4 +320,19 @@ public static Map<String, String> getUserOptions(String portalUser){
 
 		return result;
 	}
+
+	//method needs to be in a without sharing class in order to access the field LastPasswordChangeDate
+	public static boolean reactivateUser(String userid) {
+		
+						
+		integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
+			
+		User u=[select id, uid__C,LastPasswordChangeDate from user where id=:userid];
+		return  string.isNotEmpty(u.UID__c) || (u.LastPasswordChangeDate != null && u.LastPasswordChangeDate.addDays(passwordDays) < system.now());
+			
+	}
+
+
+
+
 }

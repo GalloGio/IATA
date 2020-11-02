@@ -8,6 +8,7 @@ public with sharing class CSP_Email_Controller {
 	public string FirstName;
 	public string CommunityUrl;
 	public string FooterUrl;
+	public string BtnUrl;
 	public string ExistingContactName;
 	public string ExistingContactEmail;
 	public string ExistingContactAdditionalEmail;
@@ -53,6 +54,9 @@ public with sharing class CSP_Email_Controller {
 
 	public String getExistingContactUrl(){
 		return '{!ExistingContactUrl}';
+	}
+	public String getBtnUrl(){
+		return '{!BtnUrl}';
 	}
 
 }

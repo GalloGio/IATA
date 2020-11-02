@@ -142,7 +142,7 @@ public with sharing class PortalFAQsCtrl {
 		String soqlGen='SELECT Id,KnowledgeArticleid, ArticleNumber, Title, Answer__c,language, CS_Portal_link__c FROM faq__kav WHERE publishstatus =\'Online\' ';
 		String soqlTransl=' AND language=:lang AND (UrlName=:urlName OR KnowledgeArticleid=:articleIdSet) ';
 		String soqlEng=' AND language=\'en_US\' AND UrlName=:urlName';
-		String soqlDat=' WITH DATA CATEGORY FAQs__c BELOW '+datacategories;
+		String soqlDat=!String.isEmpty(datacategories)?' WITH DATA CATEGORY FAQs__c BELOW '+datacategories:'';
 		
 		Map<id,faq__kav> articleMap= new map<id,faq__kav>(); // fetch the english version of the article(s) 
 		
@@ -402,5 +402,22 @@ public with sharing class PortalFAQsCtrl {
 			WHERE Language ='en_US' 
 			AND PublishStatus ='Online' 
 			AND KnowledgeArticleId =:pkId limit 1].CS_Portal_link__c;
+	}
+
+
+	/*
+	* @description Returns the shareable link for the article
+	* @params String articleId
+	* @return
+	*/
+	@AuraEnabled(cacheable=true)
+	public static CSP_Utils.PagedResult getTroubleshootingArticle(String lang) {
+		CSP_Utils.PagedResult result= null;
+		ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+		if(cs != null){
+			result = getFAQbyURLName(cs.value__c,lang,null);
+		}
+
+		return result;
 	}
 }
