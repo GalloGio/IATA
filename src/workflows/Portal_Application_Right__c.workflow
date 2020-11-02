@@ -408,7 +408,7 @@
             <name>Application_Name_Text_Field_Update</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Updates application name text field to be used in roll-up fields.</description>
         <formula>true</formula>
         <triggerType>onAllChanges</triggerType>
@@ -419,7 +419,7 @@
             <name>Application_uniqueness_for_contact</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.OwnerId</field>
             <operation>notEqual</operation>
@@ -432,7 +432,7 @@
             <name>Biller_Direct_Rights</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Applications__c.Name</field>
             <operation>equals</operation>

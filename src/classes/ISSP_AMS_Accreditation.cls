@@ -6751,6 +6751,24 @@ public without sharing class ISSP_AMS_Accreditation {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR));
 				errorFound = true;
 			}
+			if (isNoticeOfChange && !isBankAccountChange) {
+				if (String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c)) {
+					newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
+					newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if (String.isBlank(newForm.ISSP_AMS_License_No__c)) {
+					newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+				if (newForm.ISSP_AMS_Date_license_granted__c == null) {
+					newForm.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+			}
 		}						
 
 		if (isNoticeOfChange && !isBankAccountChange) {
