@@ -56,20 +56,4 @@ private class PortalHeaderCtrlTest {
 
 	}
 
-	@IsTest
-	static void testCheckExpiredPassword(){
-		ISSP_CS__c cs= new ISSP_CS__c();
-		cs.name='PasswordResetPeriod';
-		cs.value__c='1';
-		insert cs;
-
-		User usr = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-		System.runAs(usr){
-			Test.startTest();
-			string url =PortalHeaderCtrl.redirectChangePassword();
-			Test.stopTest();
-		}
-
-	}
-
 }
