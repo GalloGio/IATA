@@ -1423,8 +1423,6 @@ private class WorkflowHelperTest {
 	@isTest static void isCnsContact() {
 
 		IATA_ISO_Country__c ctry = [SELECT Id from IATA_ISO_Country__c];
-		//ctry.CNS_Country__c = true;
-		//update ctry;
 		
 		Account account = [SELECT Id, CNS_Account__c FROM Account];
 		account.IATA_ISO_Country__c = ctry.Id;
@@ -1435,15 +1433,12 @@ private class WorkflowHelperTest {
 		c1.LastName = 'test.test';
 		c1.Email = 'test@test.com';
 		c1.AccountId = account.Id;
-		//c1.Record_Sharing_Criteria__c = 'IFG Active Users';
 		
 		Test.startTest();
 			insert c1;
 		Test.stopTest();
-
 		
 		Contact updateContact = [SELECT id, CNS_Contact__c FROM Contact WHERE Id =: c1.Id LIMIT 1];
-
 		System.assert(updateContact.CNS_Contact__c);
 
 	}
@@ -1451,8 +1446,6 @@ private class WorkflowHelperTest {
 	@isTest static void isNotCnsContact() {
 
 		IATA_ISO_Country__c ctry = [SELECT Id from IATA_ISO_Country__c];
-		//ctry.CNS_Country__c = true;
-		//update ctry;
 		
 		Account account = [SELECT Id, CNS_Account__c FROM Account];
 		account.IATA_ISO_Country__c = ctry.Id;
@@ -1463,16 +1456,14 @@ private class WorkflowHelperTest {
 		c1.LastName = 'test.test';
 		c1.Email = 'test2@test.com';
 		c1.AccountId = account.Id;
-		//c1.Record_Sharing_Criteria__c = 'IFG Active Users';
 		
 		Test.startTest();
 			insert c1;
 		Test.stopTest();
-
 		
 		Contact updateContact = [SELECT id, CNS_Contact__c FROM Contact WHERE Id =: c1.Id LIMIT 1];
-
 		System.assert(!updateContact.CNS_Contact__c);
 
 	}
+
 }
