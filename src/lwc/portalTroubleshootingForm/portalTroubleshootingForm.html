@@ -1,0 +1,153 @@
+<template>
+    <div class="slds-grid slds-wrap slds-grid_align-center slds-m-vertical_medium">
+        <div class="slds-col slds-size_full slds-align_absolute-center">
+            <span class="text-medium text-blue cursorPointer text-bolder" onclick={toggleForm}>{labels.CSP_TroubleshootingForm}</span>
+        </div>
+        <div class="slds-align_absolute-center slds-col slds-m-vertical_medium slds-size_full" >
+            <lightning-icon data-arrow class="darkBlueIcon slds-align-middle cursorPointer"
+            icon-name="utility:switch" size="xx-small" onclick={toggleForm}></lightning-icon>
+        </div>
+    </div>
+
+    <div data-form class="slds-hide">
+        <span  class="slds-align_absolute-center slds-wrap form slds-grid slds-is-relative">
+            <div if:true={isLoading} class="slds-align--absolute-center slds-col slds-grid slds-size--1-of-1 slds-spinner_container">
+                <lightning-spinner  alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+            <div data-formstart class="slds-col slds-size_full slds-text-align_center slds-p-around_small text-large ">
+                <h3 class="text-bold">{labels.CSP_TroubleshootingForm}</h3>
+            </div>
+            <div class="slds-col slds-size_full slds-text-align_center text-xsmall slds-text-align_center slds-align_absolute-center slds-var-m-bottom_small">
+                <p class="slds-size_4-of-5 slds-small-size_3-of-5">{labels.CSP_TroubleshootingFormSubtitle}</p>
+            </div>
+            
+            <div class="slds-col slds-grid slds-wrap slds-size--5-of-6 slds-small-size--1-of-2 slds-large-size--1-of-3">
+
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                        {labels.CSP_L1_First_Name}
+                    </div> 
+                    <input type="text" data-id="firstName" name="firstName" value={form.firstName} placeholder=" " class="slds-input" onchange={handleInputValueChange}/>                               
+                </div>
+
+                <!------------------------------------------      Last Name      ------------------------------------------- -->
+                
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                        {labels.CSP_L1_Last_Name}
+                    </div> 
+                    <input type="text" data-id="lastName" name="lastName" value={form.lastName}  placeholder=" " class="slds-input" onchange={handleInputValueChange}/>                            
+                </div>
+                <!------------------------------------------      Email      ------------------------------------------- -->
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput ">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                    {labels.CSP_Email}
+                    </div> 
+                    <input data-id="email" name="email" class="slds-input" value={form.email} placeholder=" " type="email" onchange={handleInputValueChange} />                            
+                </div>
+
+                <!------------------------------------------      Phone      ------------------------------------------- -->
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput ">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                        {labels.Phone}
+                    </div> 
+                    <input data-id="phone" name="phone" value={form.phone} placeholder=" " class="phoneFormat slds-input" type="tel" onchange={handlePhoneInputChange}/>                            
+                </div>
+
+                
+                <!------------------------------------------      Country      ------------------------------------------- -->
+                
+                <div class="slds-col slds-size_full slds-m-vertical--medium">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small registrationComboBox custTextInputSmall">
+                        {labels.CSP_L2_Country}
+                    </div> 
+                    <lightning-combobox class="firstLevelRegistrationCombobox"                    
+                        name="country"
+                        dropdown-alignment="auto"
+                        placeholder=" "
+                        variant="label-hidden"                    
+                        value={form.country} 
+                        options={countryOptions}
+                        onchange={handleInputValueChange}
+                    >
+                    </lightning-combobox>
+                </div>
+
+                <!------------------------------------------      Issue Type      ------------------------------------------- -->
+                
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                        {labels.CSP_TroubleshootingType}
+                    </div> 
+                        <span class="slds-grid slds-size--1-of-1 text-small">
+                            <c-iata-radio-group 
+                            options={issueTypeOptions}                        
+                            name='type'
+                            value={form.type}
+                            onchange={handleInputValueChange}
+                            display-horizontal=true></c-iata-radio-group>
+                        </span>
+                </div>
+
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">                    
+                    <div  class="slds-size_full text-xxsmall slds-m-bottom_x-small">
+                    {labels.CSP_TroubleshootingDesc}
+                    </div>
+                    <textarea 
+                        name="descr" 
+                        maxlength="1000" 
+                        placeholder=" " 
+                        class="slds-textarea txtArea"
+                        value={form.descr}
+                        onblur={handleInputValueChange}
+                        >
+                    </textarea>
+                </div>
+
+                <div class="slds-col slds-size_full slds-m-vertical--medium custTextInput">
+                    <lightning-button data-submitbtn disabled class="containedButtonDisabled" label={labels.CSP_Submit} onclick={handleSubmit} title='Please select fill in all fields.'></lightning-button>
+                </div>
+            </div>
+        </span>
+    </div>
+
+    <span if:true={showConfirmBox}>
+
+        <c-portal-generic-popup-window variant="success">
+            <span slot="bodycontent">
+                <div class="MaxModalContainerDim text-xxsmall">
+                    
+                    <h2 id="modal-heading-01"
+                        class="slds-text-heading_medium slds-hyphenate slds-align_absolute-center slds-p-top_xx-large text-medium text-bold">
+                        {labels.csp_CaseCreatedSuccess}
+                    </h2>                            
+                    <h2 class=" slds-p-top_small slds-align_absolute-center text-gray">
+                        {labels.csp_CaseBeingWorked}
+                    </h2>                            
+                    <h2 class=" slds-p-top_small slds-align_absolute-center text-gray">
+                        {labels.csp_CaseResponseGuarantee}
+                    </h2>
+                    
+                    <div class="slds-p-vertical_x-large">
+                        <p class="slds-align_absolute-center slds-p-bottom_xx-small ">
+                            {labels.CSP_CaseNumber}
+                        </p>
+                        <div
+                            class="slds-box slds-theme_shade slds-align_absolute-center greybox-noborder background-anotherGray">
+                            <p class="slds-text-align_center text-xsmall text-gray">
+                                {caseNumber}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slds-align_absolute-center  slds-p-top_small">
+                        <div class="slds-m-vertical_medium custTextInput">
+                            <lightning-button class="containedButton" label={labels.CSP_Go_to_FAQ} onclick={navigateToPkb} title='Please select fill in all fields.'></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </c-portal-generic-popup-window>    
+    </span>
+
+
+</template>
