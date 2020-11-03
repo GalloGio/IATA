@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>IATAカスタマーポータルのパスワードをリセットするためのリクエストを受け取りました。</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4385,12 +4389,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>ログイン</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>ログアウト</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>ログイン</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>ログインする</label>

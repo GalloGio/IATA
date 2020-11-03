@@ -3318,6 +3318,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>wir haben Ihre Anfrage zum Zurücksetzen Ihres International Air Transport Association (IATA)-Kundenportal-Passworts erhalten.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4386,12 +4390,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>Anmeldung</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>Logout</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Anmeldung</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>Jetzt anmelden</label>
@@ -36810,7 +36814,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Berichte</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

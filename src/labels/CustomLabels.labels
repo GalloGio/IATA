@@ -8128,6 +8128,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>troubleshooting</value>
     </labels>
     <labels>
+        <fullName>CSP_TroubleshootingDesc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Issue description label</shortDescription>
+        <value>Description of the issue:</value>
+    </labels>
+    <labels>
         <fullName>CSP_TroubleshootingForm</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8157,7 +8165,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting</shortDescription>
-        <value>Login &amp; Registration Troubleshooting </value>
+        <value>Login &amp; Registration Troubleshooting</value>
     </labels>
     <labels>
         <fullName>CSP_TroubleshootingType</fullName>
@@ -8166,14 +8174,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting Type label</shortDescription>
         <value>I need help with:</value>
-    </labels>
-    <labels>
-        <fullName>CSP_TroubleshootingDesc</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Troubleshooting Issue description label</shortDescription>
-        <value>Description of the issue:</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting_Info</fullName>

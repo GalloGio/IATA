@@ -3316,6 +3316,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Recibimos su solicitud para restablecer la contraseña del Portal del cliente de IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4384,12 +4388,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>Ingresa en</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>Desconectar</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Ingresa en</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>Iniciar sesión ahora</label>
@@ -36804,7 +36808,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Informes</label>
             <name>Opportunities</name>
         </sections>
         <sections>

@@ -3314,6 +3314,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>我们已收到您重置 IATA 客户门户密码的请求。</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4382,12 +4386,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>登入</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>登出</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>登入</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>现在登录</label>
@@ -36799,7 +36803,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>报告/报表</label>
             <name>Orders</name>
         </sections>
     </reportTypes>

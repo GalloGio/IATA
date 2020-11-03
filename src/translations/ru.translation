@@ -3323,6 +3323,10 @@
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Мы получили Ваш запрос на сброс Вашего пароля клиентского портала Международной ассоциации воздушного транспорта (ИАТА).</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4391,13 +4395,13 @@
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
+        <label>Выйти</label>
+        <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
         <label>Вход</label>
         <name>CSP_Login</name>
     </customLabels>
-    <customLabels>
-        <label>Выйти</label>
-        <name>CSP_LogOut</name>
-    </customLabels>    
     <customLabels>
         <label>Войти сейчас</label>
         <name>CSP_Login_Now</name>
