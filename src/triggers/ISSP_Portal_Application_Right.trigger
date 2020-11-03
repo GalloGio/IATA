@@ -446,6 +446,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
 		if (!ISSP_UserTriggerHandler.preventTrigger){
 			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+			UserProvisioningUtils.CreateUPRs(contactIdPASSAccreditationSet, 'PASS');
 			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_SSO', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
 			PASS_UserProvisioningRequestHandler.createPassUserProvAccounts(contactIdPASSAccreditationSet);
 		}
