@@ -124,8 +124,7 @@ public with sharing class PortalDocumentsController {
 		queryConditions = ' WHERE IsLatest = true AND ' + searchKey;
 
 		if(String.isNotBlank(category)){
-			category = category.replace(' ','%');
-			queryConditions += ' AND Document_Category__c like \''+ String.escapeSingleQuotes(category) +'\'';			
+			queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';			
 		}else{
 			List<CSP_Utils.PickListWrapper> lstAllCats = CSP_Utils.getPickListValues('ContentVersion','Document_Category__c');
 			

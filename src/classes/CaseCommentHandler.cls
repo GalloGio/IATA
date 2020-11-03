@@ -3,6 +3,8 @@ public with sharing class CaseCommentHandler {
 	
 	List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
 	List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+
+	public static Boolean caseCommentKPI = false;
 	
 	public CaseCommentHandler(){}
 
@@ -38,38 +40,35 @@ public with sharing class CaseCommentHandler {
 		
 		config = getKPIConfig(CASE_COMMENT_ACTION);
 
-		if(config.size() == 0) {
-			return;
-		}
+		if(config.isEmpty()) {return;}
+
+		List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c 
+												   FROM FDS_KPI_Reporting__c 
+												   WHERE Name =: CASE_COMMENT_ACTION 
+												   AND Type_Of_Action__c =: CASE_COMMENT_ACTION];
+		if(kpiReporting.isEmpty()) {return;}
 
 		for(ISSP_KPI_Reporting__mdt cfg : config){
 			recordTypesToProcess.add(RecordTypeSingleton.getInstance().getRecordType('Case', cfg.Case_Record_Type__c).Id);
 			rtToConfigMap.put(cfg.Case_Record_Type__c, cfg);
 		}
 		
-		List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.RecordType.DeveloperName
+		List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.Portal_Closure_Status__c, Parent.RecordType.DeveloperName
 											  FROM CaseComment WHERE ID IN: listOfComments AND isPublished=True
 											  AND Parent.RecordTypeId IN :recordTypesToProcess];
 		
 		if(fullCaseComments.isEmpty()) return;
 		
-		List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c 
-												   FROM FDS_KPI_Reporting__c 
-												   WHERE Name =: CASE_COMMENT_ACTION 
-												   AND Type_Of_Action__c =: CASE_COMMENT_ACTION];
-		if(kpiReporting.size() == 0) {
-			return;
-		}
-		
 		Id kpiReportingId = kpiReporting.get(0).Id;
 		
 		for (CaseComment cc : fullCaseComments) {
-			if (UserInfo.getUserType() == 'Standard' && rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName)) {
+			if (UserInfo.getUserType() == 'Standard' && rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName) && !(cc.Parent.Portal_Closure_Status__c != null && CaseCommentAutoReply.AUTO_REPLY_ELIGIBLE_STATUS.contains(cc.Parent.Portal_Closure_Status__c))) {
 				createKPIReportingValue(cc, Integer.valueOf(rtToConfigMap.get(cc.Parent.RecordType.DeveloperName).Points__c), kpiReportingId);
 			}
 		}
 		
 		if(kpiValuesToInsert.size() > 0 ) {
+			caseCommentKPI = true;
 			insert kpiValuesToInsert;
 		}
 	}
