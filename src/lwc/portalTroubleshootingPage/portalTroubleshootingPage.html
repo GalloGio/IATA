@@ -1,0 +1,35 @@
+<template>
+    <div class="slds-m-vertical_x-large slds-p-bottom_large">            
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-grid slds-grid_align-end slds-size_1-of-1">
+                        <div class="languageSelection borderlessCombobox languageSelectWrapper slds-p-bottom_x-small">
+                            <lightning-combobox 
+                                name="userLang" 
+                                dropdown-alignment="auto"
+                                value={language} 
+                                options={langOptions}
+                                onchange={handleChangeLang}
+                            >
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-large customBorderlessCardWhite">
+                        
+                        <p class="slds-text-align_center text-bold text-large">{labels.CSP_TroubleshootingTitle}</p>
+                        <div class="slds-grid slds-grid_align-center slds-m-vertical_large">
+                            <div class="slds-col slds-size_4-of-5 slds-small-size_3-of-5">
+                                
+                                <lightning-formatted-rich-text value={articleValue} class="text-xsmall richtextlinks"></lightning-formatted-rich-text>
+                            </div>
+                        </div>
+                        <p class="slds-text-align_center text-xsmall text-bolder">{labels.CSP_TroubleshootingMsg}</p>
+                        
+                        <c-portal-troubleshooting-form></c-portal-troubleshooting-form>
+                    </div>
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+</template>

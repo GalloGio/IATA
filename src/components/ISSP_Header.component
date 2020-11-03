@@ -63,7 +63,7 @@
             .sideBar .langSelect,
             .sideBar .langSelect input[role="textbox"],
             .sideBar .langSelect div[role="listbox"] {
-                background-color: #1e32fa;
+                background-color: #f0f2f5;
                 border-radius: 0;
             }
             
@@ -119,7 +119,7 @@
             }
             
             .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
-                fill: #fff;
+                fill:  #3333ff;
             }
 
             .slds-scope .slds-input ,.slds-scope .slds-input:focus, .slds-scope .slds-input:active{
@@ -165,6 +165,17 @@
                 color: #3333ff;
             }
 
+            .text-bold{
+                font-weight: 500;
+            }
+            .text-bolder{
+                font-weight: 700;
+            }
+            
+            .rotateIcon45Deg{
+                transform: rotate(45deg);
+            }
+
             .spinnerContainer{
                 position: relative;
                 display: inline-block;
@@ -197,6 +208,20 @@
             .buttonMinHeightMedium button {
                 min-height: 40px;
             }
+
+            
+            .fullHeight{
+                height: 100%;
+            }
+
+            .text-large{
+                font-size: 32px;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+
         </style>
         
     </head>

@@ -411,7 +411,7 @@ private class FDSKPIReportingTest {
 		System.assertEquals(CASE_ACTION_CASE_CLOSURE, kpiReportings.get(0).Type_Of_Action__c);
 
 		//verify child
-		System.assertEquals(1, kpiValues.size());
+		System.assertEquals(2, kpiValues.size());
 		System.assertEquals(kpiValues.get(0).Responsible__c, UserInfo.getUserId());
 		System.assertEquals(kpiValues.get(0).CaseNumber__c, caseToProcess.Id);
 		System.assertEquals(kpiValues.get(0).FDS_KPI_Reporting__c, kpiReportings.get(0).Id);
@@ -470,7 +470,7 @@ private class FDSKPIReportingTest {
 		List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
 		//verify child
-		System.assertEquals(2, kpiValues.size());
+		System.assertEquals(3, kpiValues.size());
 		System.assertEquals(kpiValues.get(0).Responsible__c, UserInfo.getUserId());
 		//System.assertEquals(kpiValues.get(0).FDS_KPI_Reporting__c, kpiReportings.get(0).Id);
 		System.assertEquals(true, kpiValues.get(0).KPI_Value__c != null );

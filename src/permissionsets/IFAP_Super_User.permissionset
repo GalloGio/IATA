@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bypass_IFAP_Deadline_Date</name>
+    </customPermissions>
+    <description>Permission set to be added to users who should have permission to update the IFAP Dealine date field when cases are mass created.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IFAP Super User</label>
+</PermissionSet>

@@ -1354,5 +1354,60 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}
 		}
 	}
+
+	/*
+	* @description Method to submit troubleshooting cases
+	* @params String Case info- Serialized object containing all info for the object
+	* @returns the case number
+	*/
+	@AuraEnabled
+	public static String submitTroubleshootingCase(String CaseInfo) {
+		Map<String,String> inputMap = (Map<String,String>)JSON.deserialize(CaseInfo, Map<String,String>.class);
+		String country = inputMap.get('country');
+		string subject= Label.ISSP_Registration_Subject_Default;
+
+		//if case subject not empty override
+		
+		subject +=' - '+inputMap.get('type');
+			if (subject.length() > 255) subject = subject.substring(0,254);
+		
+		String reason = 'Registration process';
+
+		String contactId = null;		
+		List <Contact> searchContactList = [SELECT Id FROM Contact WHERE Email = :inputMap.get('email')];
+		if (searchContactList.size() == 1){
+			contactId = searchContactList[0].Id;
+		}
+ 
+
+		//Fetching the assignment rules
+		AssignmentRule AR = new AssignmentRule();
+		AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+
+		//create Flag to run the assignment rules
+		Database.DMLOptions dmlOpts = new Database.DMLOptions();
+		dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+	
+	
+		Case cas = new Case(
+			CaseArea__c = 'Customer Portal Enquiry',
+			Subject  = subject,
+			SuppliedName = inputMap.get('firstName') + ' ' + inputMap.get('lastName'),
+			SuppliedEmail = inputMap.get('email'),
+			SuppliedPhone = inputMap.get('phone'),
+			Description = inputMap.get('descr'),
+			Country_concerned_by_the_query__c = country,
+			IATAcode__c = inputMap.get('IATACode'),
+			Origin = 'Portal',
+			Reason1__c = reason,
+			ContactId = contactId
+		);
+
+		//Setting the DMLOption on Case instance
+		cas.setOptions(dmlOpts);
+		insert cas;
+
+		return [select caseNumber from case where id =:cas.id].caseNumber;
+	 }
 	
 }
