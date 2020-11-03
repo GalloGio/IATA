@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Recebemos sua solicitação para redefinir sua senha do Portal do Cliente IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4385,12 +4389,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>Login</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>Sair</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Login</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>Conecte-se agora</label>
@@ -36772,7 +36776,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Relatorios / Reportes</label>
             <name>Opportunities</name>
         </sections>
         <sections>

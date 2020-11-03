@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Nous avons reçu votre demande de réinitialisation de mot de passe pour accéder au portail client IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4387,12 +4391,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>Connexion</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>Se déconnecter</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Connexion</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>Connectez-vous maintenant</label>
@@ -5056,7 +5060,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
-        <label>S'inscrire</label>
+        <label>S&apos;inscrire</label>
         <name>CSP_Sign_Up</name>
     </customLabels>
     <customLabels>
@@ -5180,11 +5184,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_TroubleshootingSbtitle</name>
     </customLabels>
     <customLabels>
-        <label>Résolution des problèmes de connexion et d'enregistrement</label>
+        <label>Résolution des problèmes de connexion et d&apos;enregistrement</label>
         <name>CSP_TroubleshootingTitle</name>
     </customLabels>
     <customLabels>
-        <label>J'ai besoin d'aide :</label>
+        <label>J&apos;ai besoin d&apos;aide :</label>
         <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
@@ -36815,7 +36819,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Fichiers</label>
             <name>Opportunities</name>
         </sections>
         <sections>

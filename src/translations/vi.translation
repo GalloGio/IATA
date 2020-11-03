@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Chúng tôi đã nhận được truy vấn yêu cầu đặt lại mật khẩu cho tài khoản của quý khách trên Cổng thông tin Khách hàng IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -5180,7 +5184,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <label>Đăng nhập &amp; Đăng ký Gỡ rối</label>
         <name>CSP_TroubleshootingTitle</name>
     </customLabels>
-     <customLabels>
+    <customLabels>
         <label>Tôi cần sự giúp đỡ:</label>
         <name>CSP_TroubleshootingType</name>
     </customLabels>
@@ -36736,7 +36740,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Các báo cáo</label>
             <name>Accounts</name>
         </sections>
         <sections>
