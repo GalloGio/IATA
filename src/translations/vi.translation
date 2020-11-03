@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Chúng tôi đã nhận được truy vấn yêu cầu đặt lại mật khẩu cho tài khoản của quý khách trên Cổng thông tin Khách hàng IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3553,7 +3557,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Vì bạn đã không đăng nhập trong 90 ngày qua, chúng tôi đã gửi cho bạn một email với mật khẩu mới.</label>
+        <label>Vì lý do bảo mật, chúng tôi đã gửi cho bạn một email để đặt mật khẩu mới.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3571,6 +3575,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Đây là một</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Đi tới Câu hỏi thường gặp</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4381,6 +4393,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>Đăng nhập</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Đăng nhập ngay bây giờ</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4655,6 +4671,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng ký</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>Đăng ký thành công.</label>
@@ -5037,12 +5057,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Tạm thời bỏ qua</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>Trạng thái</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Cửa hàng</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>Vui lòng nhập một dòng tiêu đề ngắn</label>
@@ -5135,6 +5163,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>xử lý sự cố</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Mô tả vấn đề:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Biểu mẫu khắc phục sự cố</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>Nếu các bước trên không khắc phục được sự cố, hãy nhấp vào bên dưới để liên hệ với chúng tôi:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thành biểu mẫu và chúng tôi sẽ liên hệ với bạn để giúp bạn truy cập vào nền tảng của chúng tôi.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng nhập &amp; Đăng ký Gỡ rối</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Tôi cần sự giúp đỡ:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Để được trợ giúp kiểm tra thêm</label>
@@ -36688,7 +36740,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Các báo cáo</label>
             <name>Accounts</name>
         </sections>
         <sections>
