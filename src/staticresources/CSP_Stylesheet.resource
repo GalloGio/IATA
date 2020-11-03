@@ -2858,3 +2858,10 @@ html {
 .lockScroll{
     overflow: hidden;
 }
+
+/* LWC Tokens*/
+:root{
+
+  --lwc-colorBorderInputActive :#3333ff;
+  --lwc-shadowButtonFocus: 0 0 3px #7884FC;
+}
