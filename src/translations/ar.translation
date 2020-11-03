@@ -3314,6 +3314,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>.لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -4382,12 +4386,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>تسجيل الدخول</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>تسجيل الخروج</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>تسجيل الدخول</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>تسجيل الدخول الآن</label>
@@ -35792,7 +35796,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- IATA ISO States with Geoname cities --></label>
         <name>IATA_ISO_States_with_Geoname_cities</name>
         <sections>
-            <label><!-- IATA Geonames Cities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>IATA Geonames Cities</name>
         </sections>
         <sections>
@@ -36581,7 +36585,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Network Members</name>
         </sections>
         <sections>
-            <label><!-- Networks --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Networks</name>
         </sections>
     </reportTypes>
@@ -36783,7 +36787,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Orders Products &amp; Charges --></label>
         <name>Orders_Products_Charges</name>
         <sections>
-            <label><!-- Order Item Charges --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Order Item Charges</name>
         </sections>
         <sections>
@@ -36791,7 +36795,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>التقارير</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
@@ -36891,7 +36895,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contacts</name>
         </sections>
         <sections>

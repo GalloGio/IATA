@@ -3318,6 +3318,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>abbiamo ricevuto la sua richiesta di reimpostazione della password del Portale Clienti IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3554,7 +3558,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Per motivi di sicurezza, ti abbiamo inviato un'e-mail per impostare una nuova password.</label>
+        <label>Per motivi di sicurezza, ti abbiamo inviato un&apos;e-mail per impostare una nuova password.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -4386,12 +4390,12 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Learn_More</name>
     </customLabels>
     <customLabels>
-        <label>Accesso</label>
-        <name>CSP_Login</name>
-    </customLabels>
-    <customLabels>
         <label>Uscire</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Accesso</label>
+        <name>CSP_Login</name>
     </customLabels>
     <customLabels>
         <label>Accedi ora</label>

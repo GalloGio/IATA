@@ -3314,6 +3314,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>IATA Müşteri Portalı şifrenizi sıfırlama isteğiniz bize ulaştı.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3570,11 +3574,11 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Give_Feedback_Type_Title</name>
     </customLabels>
     <customLabels>
-        <label>SSS'ye git</label>
+        <label>SSS&apos;ye git</label>
         <name>CSP_Go_to_FAQ</name>
     </customLabels>
     <customLabels>
-        <label>iata.org'a gidin</label>
+        <label>iata.org&apos;a gidin</label>
         <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
@@ -36505,7 +36509,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Identity Event Logs (User)</name>
         </sections>
         <sections>
-            <label><!-- Users --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Users</name>
         </sections>
     </reportTypes>
@@ -36743,7 +36747,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Accounts</name>
         </sections>
         <sections>
