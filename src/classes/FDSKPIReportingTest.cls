@@ -220,16 +220,6 @@ private class FDSKPIReportingTest {
 			System.assert(false);
 		}
 
-		try {
-			CaseComment caseComment = new CaseComment(
-					ParentId=caseId,
-					IsPublished = true
-			);
-			insert caseComment;
-		} catch(Exception e) {
-			System.assert(false);
-		}
-
 		Test.stopTest();
 
 		//for verification
