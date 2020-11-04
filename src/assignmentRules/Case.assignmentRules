@@ -4,6 +4,297 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Vietnam</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Turkish</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Turkey</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Thai</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Japanese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Japan</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_German</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Germany</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Indonesian</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Indonesia</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Italian</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Italy</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Arabic</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Egypt,Jordan,Kuwait,Saudi Arabia,Somalia,Sudan,Syrian Arab Republic,Yemen</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Portuguese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Angola,Cape Verde,Mozambique,Portugal,Brazil</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Chinese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>People&apos;s Republic of China,Chinese Taipei,&quot;Hong Kong (SAR), China&quot;,&quot;Macau SAR, China&quot;</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Spanish</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Argentina,Bolivia,Chile,Colombia,Costa Rica,Cuba,Curacao,Dominica,Dominican Republic,Ecuador,El Salvador,Guatemala,Jamaica,Mexico,Paraguay,Peru,Spain &amp; Andorra,Venezuela</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Korean</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>&quot;Korea, Democratic People’s Republic of&quot;,&quot;Korea, Republic of&quot;</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Russian</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Armenia,Azerbaijan,Belarus,Georgia,Kazakhstan,Kyrgyzstan,Tajikistan,Ukraine,Uzbekistan</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_French</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>France,Algeria,Benin,Burkina Faso,Cameroon,Central African Republic,Chad,Côte d&apos;Ivoire,Equatorial Guinea,Gabon,Guinea,Guinea-Bissau,Madagascar,Mali</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Mauritania,Morocco,Niger,Senegal,Sierra Leone,Togo,Tunisia,Canada,French Polynesia,Papua New Guinea,Lebanon,Switzerland &amp; Liechtenstein</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_English</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>notEqual</operation>
+                <value>Israel,Russian Federation</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>AirlineParticipationHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -3958,7 +4249,7 @@ ISPICKVAL(Reason1__c, &quot;Invoicing&quot;),
 ISPICKVAL(Reason1__c, &quot;Sign Up / Join&quot;),	
 ISPICKVAL(Reason1__c, &quot;Payments&quot;),	
 ISPICKVAL(Reason1__c, &quot;Product Delivery Issue&quot;),	
-ISPICKVAL(Reason1__c, &quot;Orders/Subscriptions request&quot;)	
+ISPICKVAL(Reason1__c, &quot;Order / Subscription request&quot;)	
 )	
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -3982,7 +4273,7 @@ RecordType.Name = &quot;IATA Training&quot;
 
 ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
 OR (
-ISPICKVAL(Reason1__c, &quot;Exam/Certificate&quot;)
+ISPICKVAL(Reason1__c, &quot;Exam / Certificate&quot;)
 )
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -4002,7 +4293,8 @@ ISPICKVAL(CaseArea__c, &quot;Distance Learning&quot;),
 OR (		
 ISPICKVAL(Reason1__c, &quot;Contract Query/Setup&quot;),		
 ISPICKVAL(Reason1__c, &quot;Annual Fees&quot;),		
-ISPICKVAL(Reason1__c, &quot;Pre-sales&quot;)		
+ISPICKVAL(Reason1__c, &quot;Pre-sales&quot;),
+ISPICKVAL(Reason1__c, &quot;Training Partner Accreditation&quot;)		
 )		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>

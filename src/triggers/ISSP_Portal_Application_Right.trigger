@@ -57,6 +57,10 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
 
+	//Logic migrated from WF - Application uniqueness for contact | Biller Direct Rights -> to trigger 
+	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
+	if(Trigger.isBefore && Trigger.isUpdate) handler.onBeforeUpdate();
+
 	//E&F APPS
 	EF_PortalApplicationRightHandler EF_handler = new EF_PortalApplicationRightHandler();
 	if (Trigger.isAfter && Trigger.isInsert) EF_handler.onAfterInsert();

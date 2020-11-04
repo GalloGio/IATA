@@ -573,7 +573,35 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		result = PortalRegistrationFirstLevelCtrl.updateContactInfo(registrationJson, customerTypeJson, true);
 		System.assert(!result.isSuccess);
 
+	}
+	
+	@isTest
+	static void testGenerateTroubleshootingCase(){
+		String userEmail='contact4@buckethotel.com';
+
+		Test.StartTest();
+
+	
+		IATA_ISO_Country__c country = [SELECT Name FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'CZ' LIMIT 1];
+
+		Map<String,String> caseInfoMap = new Map<String,String>{
+				'firstName'=> 'John',
+				'lastName'=> 'Smith',
+				'email'=> userEmail,
+				'phone'=> '123123123',
+				'descr'=> 'This is a test description',
+				'country'=> country.Name,
+				'type'=> 'Registration'
+			};
+
+		String caseNumber=PortalRegistrationFirstLevelCtrl.submitTroubleshootingCase(JSON.serialize(caseInfoMap));
+		system.assertNotEquals(null,caseNumber);
 		Test.stopTest();
+
+		Case cs=[Select contactId from case where casenumber=:caseNumber];
+		Contact relatedContact= [Select id from contact where email=:userEmail];
+		system.assertEquals(cs.contactId,relatedContact.id,'The contact should be populated and match the contact provided');
+
 
 	}
 
