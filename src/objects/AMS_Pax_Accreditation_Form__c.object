@@ -31644,7 +31644,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     </validationRules>
     <validationRules>
         <fullName>CassNumberCannotBeChanged</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>CASS Number cannot be changed if IATA Code is already generated.</description>
         <errorConditionFormula>AND(ISCHANGED( CASS_Number__c ) , NOT(ISBLANK(IATACode__c)))</errorConditionFormula>
         <errorMessage>CASS Number cannot be changed if IATA Code is already filled.</errorMessage>
