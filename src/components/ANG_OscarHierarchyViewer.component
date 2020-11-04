@@ -158,8 +158,9 @@
 <apex:outputPanel rendered="{!AND(parentAccount != null, currentAccount != null)}">
 	<apex:form >
 	    <div class="tree well">
+	        <apex:pageMessages/> 
 	        <ul>
-				<li>
+				<li>               
 					<apex:outputPanel >{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})</apex:outputPanel>
 
                     <apex:image styleClass="verificationIcon" value="{!IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'OK', URLFOR($Resource.AMS_Icons, 'passed.png') , IF(accreditationAreasOKNOK[parentAccount.IATACode__c] == 'NOK',URLFOR($Resource.AMS_Icons, 'failed.png') , URLFOR($Resource.AMS_Icons, 'in_progress.png') )) }" width="17" height="17"/>
