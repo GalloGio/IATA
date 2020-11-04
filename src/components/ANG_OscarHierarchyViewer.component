@@ -158,6 +158,7 @@
 <apex:outputPanel rendered="{!AND(parentAccount != null, currentAccount != null)}">
 	<apex:form >
 	    <div class="tree well">
+	        <apex:pageMessages/> 
 	        <ul>
 				<li>
 					<apex:outputPanel >{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})</apex:outputPanel>
