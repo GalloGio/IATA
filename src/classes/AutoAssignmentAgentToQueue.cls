@@ -9,16 +9,14 @@
 // implemented functionalities
 global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 
-		global Iterable<sObject> start(Database.BatchableContext bc) {
-			System.debug('+++ the batch just ran');
-			Iterable<sObject> cases = getPendingCasesWithOfflineOwner();
-			System.debug('+++ pending cases: '+ cases);
-			return cases;
-		}
+	global Iterable<sObject> start(Database.BatchableContext bc) {
+		Iterable<sObject> cases = getPendingCasesWithOfflineOwner();
+		return cases;
+	}
 
 	global void execute(Database.BatchableContext BC, list<sObject> scope) {
 		for (sObject c : scope)
-			assignCaseBackToQueue(c.Id);
+			assignCaseBackToQueue((case)c);
 	}
 
 	global void finish(Database.BatchableContext BC) {
@@ -28,25 +26,23 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 			//schedule the next batch
 			System.scheduleBatch(assignBatch, 'AutoAssignmentAgentToQueueBatch', 10, 10);
 
-			AsyncApexJob a = [SELECT Id, Status, CompletedDate, JobItemsProcessed FROM AsyncApexJob WHERE Id = :BC.getJobId()];
+			AsyncApexJob a = [SELECT Id, Status, CompletedDate, JobItemsProcessed, ExtendedStatus, NumberOfErrors FROM AsyncApexJob WHERE Id = :BC.getJobId()];
 
 			if (a != null && a.Status == 'Failed') {
-				String mailSubject = 'AutoAssignmentAgentToQueueBatch: Job failed!';
-				String errorMessage = 'CompletedDate: ' + a.CompletedDate + 'Number of Cases processed: ' + a.JobItemsProcessed;
-
-				//Todo: test coverage not met for this method so avoid using it for now
-				//emailAlert(mailSubject, errorMessage, getUserIds(getSupportEmails()));
-				System.debug('AutoAssignmentAgentToQueueBatch: Job failed!');
+				TransformationHelper.sendEmailSupport('AutoAssignmentAgentToQueueBatch: Job failed!', 'Job Id: ' + a.Id
+																									+ '. CompletedDate: ' + a.CompletedDate
+																									+ '. Number of Cases processed: ' + a.JobItemsProcessed 
+																									+ '. Number of errors: ' + a.NumberOfErrors 
+																									+ '. Error: ' + a.ExtendedStatus);
 			}
 
 		} catch (Exception ex) {
-			//emailAlert('AutoAssignmentAgentToQueueBatch', ex.getMessage() + ' ' + ex.getStackTraceString(), null, getUserIds(getSupportEmails()));
-			System.debug('AutoAssignmentAgentToQueueBatch: Job failed! '+ ex.getMessage());
+			TransformationHelper.sendEmailSupport('AutoAssignmentAgentToQueueBatch: Job failed!', ex.getMessage());
 		}
 
 	}
 
-	/**
+/*
 * Returns a list of cases that have a record type: Cases_Global and have their owner agent offline
 */
 	public static List<Case> getPendingCasesWithOfflineOwner() {
@@ -59,15 +55,14 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 			Id[] agentsToUsers = new List<Id>();
 			Id[] recordTypes = new List<Id>();
 			recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','Cases_Global'));
-			recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','ComplaintIDFS'));
+			//recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','ComplaintIDFS'));
 			for(Agents__c agent: agents)
 				agentsToUsers.add(agent.User__c);
-			System.debug('+++ Agent users: '+agentsToUsers);
 			// get all the cases that these agents / users own
 			// limited by case status, record type and case area
 			casesToReturn = [SELECT Id FROM Case
-							 WHERE status in ('Open', 'Action Needed', 'Reopen', 'In progress')
-							 AND (RecordTypeId IN :recordTypes OR owner.userrole.developername IN :setBPORoles) //reassign cases belonging to BPO Role, which do not use above recordtypes
+							 WHERE status in ('Open', 'Action Needed', 'Reopen')
+							 AND RecordTypeId IN :recordTypes
 							 AND OwnerId in :agentsToUsers
 							];
 		} catch (Exception ex)   {
@@ -77,53 +72,15 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 		return casesToReturn;
 	}
 
-	private static set<string> setBPORoles = new set<string>{'BU_WH_CS_Team_Leader', 'BU_WH_CS_Staff', 'KL_WH_CS_Staff', 'KL_WH_CS_Team_Leader'};
-
-	public static void assignCaseBackToQueue(string idCase) {
+	public static void assignCaseBackToQueue(case currentCase) {
 		try {
-
-			System.debug('+++ starting assigning back...');
-			Case currentCase = [SELECT Id, CaseArea__c, Topic__c, owner.userrole.developername FROM Case WHERE Id=:idCase];
-			GCS_Product_to_Queue_Assignment__mdt[] areaToQueue;
-			System.debug('+++ case Id: '+currentCase.Id);
 			//when case is assigned to a BPO User, reassign it using standard assignment rules
-			if(string.isNotEmpty(currentCase.owner.userrole.developername) && setBPORoles.contains(currentCase.owner.userrole.developername)){
-				Database.DMLOptions dmo = new Database.DMLOptions();
-				dmo.assignmentRuleHeader.useDefaultRule = true;
-				currentCase.setOptions(dmo);
-				update currentCase;
-			}
-			else if(currentCase.CaseArea__c != null) {
-				System.debug('Case Area on case found: '+ currentCase.CaseArea__c);
-				areaToQueue= [SELECT Queue_API_Name__c FROM GCS_Product_to_Queue_Assignment__mdt
-							  WHERE GCS_Product_Topic__c=:currentCase.CaseArea__c LIMIT 1];
-
-				System.debug('Metadata assignemnts found (first try): '+areaToQueue);
-			} else if(currentCase.Topic__c != null) {
-				System.debug('Queue not found based on case area, not falling back to topic: '+currentCase.Topic__c);
-				areaToQueue = [SELECT Queue_API_Name__c FROM GCS_Product_to_Queue_Assignment__mdt
-							   WHERE Product_Topic__c =:currentCase.Topic__c LIMIT 1];
-
-			} else
-				System.debug('Failed to match by case area or topic...');
-
-			if(areaToQueue.size() > 0) {
-				System.debug('found a coresponding product queue '+ areaToQueue);
-				Group[] queue = [SELECT Id FROM
-								 Group WHERE Type='Queue'
-								 AND DeveloperName=:areaToQueue[0].Queue_API_Name__c];
-				System.debug('+++ Queue found by API Name: '+queue);
-				if(queue.size() > 0) {
-					currentCase.OwnerId = queue[0].Id;
-					update currentCase;
-				} else
-					System.debug('Found Queue not active, not assigning!');
-			}
-			else {
-				System.debug('Area to Queue entry is null');
-			}
+			Database.DMLOptions dmo = new Database.DMLOptions();
+			dmo.assignmentRuleHeader.useDefaultRule = true;
+			currentCase.setOptions(dmo);
+			update currentCase;
 		} catch (Exception e) {
-			TransformationHelper.sendEmailSupport('AutoAssignmentEngineSF', e.getMessage() + '   '  + e.getStacktraceString());
+			TransformationHelper.sendEmailSupport('AutoAssignmentAgentToQueueBatch: Failed!', e.getMessage() + '   '  + e.getStacktraceString());
 		}
 	}
 }
