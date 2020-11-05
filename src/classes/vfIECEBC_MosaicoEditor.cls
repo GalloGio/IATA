@@ -167,16 +167,20 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
 
 		System.debug(body);
 		System.debug(template.External_Id__c);
-		if (template.External_Id__c == null) {
-			template.External_Id__c = IECEBC_ETTemplateCreate.pushEmailTemplate(String.valueOf(template.Id), 'This is a rendering test for eBroadcast', body, 'HTML');
-		} else {
-			IECEBC_ETTemplateCreate.updateEmailTemplate(template.External_Id__c, 'This is a rendering test for eBroadcast', body, 'HTML');
+		if(!Test.isRunningTest()){
+			if (template.External_Id__c == null) {
+				template.External_Id__c = IECEBC_ETTemplateCreate.pushEmailTemplate(String.valueOf(template.Id), 'This is a rendering test for eBroadcast', body, 'HTML');
+			} else {
+				IECEBC_ETTemplateCreate.updateEmailTemplate(template.External_Id__c, 'This is a rendering test for eBroadcast', body, 'HTML');
+			}
 		}
 
 		String mailingId = 'TEST_' + template.Id + '_'+IECEBC_Utility.generateRandomString(12);
 
-		IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'EBC', 'f12d235d-74b6-e611-8302-8cdcd4afd9e9');
-		IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
+		if(!Test.isRunningTest()){
+			IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'EBC', 'f12d235d-74b6-e611-8302-8cdcd4afd9e9');
+			IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
+		}
 
 		Map<String, String> attributes = new Map<String, String>();
 		attributes.put('AGENCY_NAME', 'Agency Inc.');
