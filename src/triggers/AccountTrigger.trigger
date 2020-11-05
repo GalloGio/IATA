@@ -36,7 +36,11 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 	} else if (Trigger.isAfter && Trigger.isUpdate) {
 		AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
 		//Custom history tracking
-		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Account', 'ANG_Account_Tracking_History__c');
+		if(system.isBatch() || system.isFuture() || system.isQueueable())
+			ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Account', 'ANG_Account_Tracking_History__c');
+		else {
+			ANG_TrackingHistory.futureTrackHistory(JSON.serialize(Trigger.oldMap), JSON.serialize(Trigger.newMap), 'Account', 'ANG_Account_Tracking_History__c');
+		}
 
 	}
 

@@ -21,6 +21,13 @@ public class ANG_TrackingHistory {
 		return trackedFieldsNames;
 	}
 	//ACAMBAS - WMO-390 - End
+	@future
+	public static void futureTrackHistory(string oldTrigger, string newTrigger, String trackedObjectApiName, String trackingObjectApiName){
+		trackHistory((Map<id, sObject>)JSON.deserialize(newTrigger, map<id, sObject>.class)
+					,(Map<id, sObject>)JSON.deserialize(oldTrigger, map<id, sObject>.class)
+					, trackedObjectApiName
+					, trackingObjectApiName);
+	}
 
 	public static void trackHistory(Map<Id, SObject> newMap, Map<Id, SObject> oldMap, String trackedObjectApiName, String trackingObjectApiName){
 
