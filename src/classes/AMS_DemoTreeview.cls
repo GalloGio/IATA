@@ -134,10 +134,13 @@ public class AMS_DemoTreeview {
 			if (fullHierarchy == null) {
 				Map<Account, List<Account>> m = getHierchyChilds();
 				fullHierarchy = new List<HierarchyWrapper>();
-				for (Account a : m.keySet())
+				for (Account a : m.keySet()){
 					fullHierarchy.add(new HierarchyWrapper(a, m.get(a)));
+					If(fullHierarchy.size() == 500){
+						return fullHierarchy;
+					}
+				}
 			}
-
 			return fullHierarchy;
 		}
 		set;
@@ -166,6 +169,10 @@ public class AMS_DemoTreeview {
 		Map<Id,String> toReturn = new Map<Id,String>();
 
 		Map <Account,List<Account>> mapHierarchy = getHierchyChilds();
+		
+		If(mapHierarchy.size() >= 500){
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.WARNING,'The hierarchy displays the first 500 accounts. Additional accounts are not displayed'));
+		}
 
 		List<List<Account>> allAccountsMap = mapHierarchy.values();
 

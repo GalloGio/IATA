@@ -1525,7 +1525,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>พิจารณาจากประวัติความเสี่ยงต่อเนื่องและผลของการตรวจสอบทางการเงินของตัวแทน</label>
+        <label>สถานะความเสี่ยงของคุณขึ้นอยู่กับผลของการประเมินทางการเงินครั้งล่าสุดและการประเมินประวัติความเสี่ยง
+สำหรับรายละเอียดเพิ่มเติมโปรดดูข้อมูลได้จาก Resolution  812 (ส่วนที่ 5.2 และ 5.3) ซึ่งสามารถเข้าถึงได้โดยค้นหาที่ &apos;Resolution 812&apos; ในพอร์ทัลลูกค้าของท่าน</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -3314,6 +3315,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>เราได้รับคำขอของคุณเพื่อรีเซ็ตรหัสผ่านสำหรับพอร์ทัลสำหรับลูกค้าของ IATA</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3550,7 +3555,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>เนื่องจากคุณไม่ได้ลงชื่อเข้าใช้ใน 90 วันที่ผ่านมา เราจึงส่งอีเมลพร้อมรหัสผ่านใหม่ให้คุณ</label>
+        <label>ด้วยเหตุผลด้านความปลอดภัยเราได้ส่งอีเมลถึงคุณเพื่อตั้งรหัสผ่านใหม่</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3568,6 +3573,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>มันคือ</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่คำถามที่พบบ่อย</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่ iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4378,6 +4391,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>เข้าสู่ระบบ</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>ลงชื่อเข้าใช้ทันที</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4652,6 +4669,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>การลงทะเบียน</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>การลงทะเบียนเสร็จสมบูรณ์แล้ว</label>
@@ -5034,12 +5055,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>ลงชื่อ</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>ข้ามการดำเนินการในตอนนี้</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>สถานะ</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>เก็บ</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>กรุณาใส่หัวเรื่องสั้น ๆ</label>
@@ -5132,6 +5161,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>การแก้ไขปัญหา</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>คำอธิบายปัญหา:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>แบบฟอร์มการแก้ไขปัญหา</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>หากขั้นตอนข้างต้นไม่สามารถแก้ไขปัญหาได้ โปรดคลิกด้านล่างเพื่อติดต่อเรา:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกแบบฟอร์มแล้วเราจะติดต่อคุณเพื่อช่วยให้คุณเข้าถึงแพลตฟอร์มของเรา</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>การแก้ไขปัญหาการเข้าสู่ระบบและการลงทะเบียน</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ฉันต้องการความช่วยเหลือเกี่ยวกับ:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>สำหรับความช่วยเหลือเพิ่มเติม กรุณาดูที่</label>
@@ -36523,6 +36576,27 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Network Members --></description>
         <label><!-- Network Members --></label>
         <name>Network_Members</name>
@@ -36690,7 +36764,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>รายงาน</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -36724,7 +36798,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>รายงาน</label>
             <name>Opportunities</name>
         </sections>
         <sections>

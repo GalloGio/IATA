@@ -261,16 +261,16 @@ public class EF_AccountTriggerHandler {
 				}
 			}
 
-			if(!accsAirlineNoti.isEmpty()){
+			/*if(!accsAirlineNoti.isEmpty()){
 				notifyOnCriticalFields(accsAirlineNoti, oldMap, criticalAirlineFieldList);
 			}
 			if(!accsClientNoti.isEmpty()){
 				notifyOnCriticalFields(accsClientNoti, oldMap, criticalClientFieldList);
-			}
+			}*/
 		}
 	}
 
-	private static void notifyOnCriticalFields (Map <Id, Account> newAccs, Map <Id,Account> oldAccMap, List <String> criticalFieldList ) {
+	/*private static void notifyOnCriticalFields (Map <Id, Account> newAccs, Map <Id,Account> oldAccMap, List <String> criticalFieldList ) {
 
 		Map<String, Schema.SobjectField> fields = newAccs.getSObjectType().getDescribe().fields.getMap();
 				String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
@@ -330,7 +330,7 @@ public class EF_AccountTriggerHandler {
 					Messaging.sendEmail(mails);
 				}
 
-		}
+		}*/
 		 public class AccountException extends Exception {}
 
 }

@@ -4,6 +4,9 @@ public with sharing class PortalLoginCtrlTest {
 	@isTest
 	static void unitTest() {
 
+		ISSP_CS__c cs=new ISSP_CS__c(name='PasswordResetPeriod',value__C='60');
+		insert cs;
+
 		IATA_ISO_Country__c israel = new IATA_ISO_Country__c(Name = 'Israel', ISO_Code__c = 'IL');
 		insert israel;
 
