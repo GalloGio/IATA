@@ -36573,6 +36573,27 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Network Members --></description>
         <label><!-- Network Members --></label>
         <name>Network_Members</name>

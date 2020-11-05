@@ -14,7 +14,7 @@ export default class PortalTroubleshootingPage extends NavigationMixin(Lightning
 
     @track language ='en_US';
     @track articleValue;    
-    @track langOptions = [];
+    @track langOptions;
 
     @track labels={
         CSP_TroubleshootingMsg,
