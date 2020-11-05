@@ -23,7 +23,7 @@ public without sharing class WorkflowHelper {
 	private static Map<String,Account> accountPerContact = new Map<String,Account>();
 
 	private static Map<String,Account> getAccountPerContact() {
-		if(accountPerContact.isEmpty()){
+		if(accountPerContact.isEmpty() || Test.isRunningTest()){
 			Set<Id> acctIds = new Set<Id>();
 			for(Contact con : (List<Contact>)Trigger.new){
 				acctIds.add(con.AccountId);
@@ -419,9 +419,16 @@ public without sharing class WorkflowHelper {
 
 	public static void updateCNSContactCheckbox(Contact oldContact , Contact newContact){
 
-		if(getAccountPerContact().get(newContact.Email).CNS_Account__c && (oldContact == null || newContact.CNS_Contact__c != null && !newContact.CNS_Contact__c))
-			newContact.CNS_Contact__c = true;
-	}
+		if(!getAccountPerContact().isEmpty() 
+
+			&& newContact.Email != null
+			&& getAccountPerContact().get(newContact.Email) != null
+			&& getAccountPerContact().get(newContact.Email).CNS_Account__c
+			&& (oldContact == null || newContact.CNS_Contact__c != null
+			&& !newContact.CNS_Contact__c)
+			
+			)	newContact.CNS_Contact__c = true;
+	}	
 
 	/*CONTACT ACTIONS END*/
 
