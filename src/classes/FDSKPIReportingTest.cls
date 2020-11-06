@@ -220,16 +220,6 @@ private class FDSKPIReportingTest {
 			System.assert(false);
 		}
 
-		try {
-			CaseComment caseComment = new CaseComment(
-					ParentId=caseId,
-					IsPublished = true
-			);
-			insert caseComment;
-		} catch(Exception e) {
-			System.assert(false);
-		}
-
 		Test.stopTest();
 
 		//for verification
@@ -241,7 +231,7 @@ private class FDSKPIReportingTest {
 		System.assertEquals(CASE_COMMENT_ACTION, kpiReportings.get(0).Type_Of_Action__c);
 
 		//verify child
-		System.assertEquals(2, kpiValues.size());
+		System.assertEquals(1, kpiValues.size());
 		System.assertEquals(kpiValues.get(0).Responsible__c, UserInfo.getUserId());
 		System.assertEquals(kpiValues.get(0).CaseNumber__c, caseId);
 		System.assertEquals(kpiValues.get(0).FDS_KPI_Reporting__c, kpiReportings.get(0).Id);

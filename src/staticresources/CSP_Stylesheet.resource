@@ -2152,7 +2152,9 @@ visibility: hidden;
     height: 52px;
 }
 
-.custTextInput input:focus{
+.custTextInput input:focus, 
+.custTextInput textarea:focus, 
+.firstLevelRegistrationCombobox [role="combobox"] input[readonly]:focus{
     border: solid 2px rgba(30, 50, 250, 0.6);
 }
 	
@@ -2855,4 +2857,11 @@ html {
 
 .lockScroll{
     overflow: hidden;
+}
+
+/* LWC Tokens*/
+:root{
+
+  --lwc-colorBorderInputActive :#3333ff;
+  --lwc-shadowButtonFocus: 0 0 3px #7884FC;
 }
