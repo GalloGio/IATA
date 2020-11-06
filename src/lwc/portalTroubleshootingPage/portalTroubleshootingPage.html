@@ -4,7 +4,7 @@
             <span slot="componentContent">
                 <div class="slds-grid slds-wrap">
                     <div class="slds-col slds-grid slds-grid_align-end slds-size_1-of-1">
-                        <div class="languageSelection borderlessCombobox languageSelectWrapper slds-p-bottom_x-small">
+                        <div if:true={langOptions} class="languageSelection borderlessCombobox languageSelectWrapper slds-p-bottom_x-small">
                             <lightning-combobox 
                                 name="userLang" 
                                 dropdown-alignment="auto"
