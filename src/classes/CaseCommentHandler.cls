@@ -115,7 +115,7 @@ public with sharing class CaseCommentHandler {
 	* @return List<ISSP_KPI_Reporting__mdt> - list of configs
 	*/
 	private static List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
-		return [SELECT Action__c, Case_Record_Type__c, DeveloperName, Id, Points__c, KPI_Reporting__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c =: actionType];
+		return [SELECT Action__c, Case_Record_Type__c, DeveloperName, Id, Points__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c =: actionType];
 	}
 
 	/**
