@@ -9,8 +9,7 @@ trigger EmailMessageTrigger on EmailMessage (after delete, after insert, after u
 			EmailMessageHandler.sendEmailToSenderWhenCaseOpened(Trigger.new); //ACAMBAS - WMO-395
 
 			// sprint6 kpi value creation on email send action
-			if(!CaseCommentHandler.caseCommentKPI)
-				EmailMessageKPIHandler.createKPIValues(Trigger.new);
+			EmailMessageKPIHandler.createKPIValues(Trigger.new);
 		}
 
 
