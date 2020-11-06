@@ -5,7 +5,52 @@ public without sharing class TIDSHelper {
 	private static List<IATAISOStateDTO> isoStateDto {get;set;}
 	private static Portal_Applications__c tidsConfiguration {get;set;}
 	private static Id agencyRecordTypeId {get;set;}
-		
+
+	//Verify if the account exists and is valid, if the contact exists and is contact under the account
+	//Verify if there is or not a valid HO Administrator
+	@AuraEnabled(cacheable=false)
+	public static TIDSUtil.ErrorWrapper verifyRole(Id accountId, Id contactId){
+		//Account and Contact verification
+
+		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
+		List<Contact> contacts = new List<Contact>();
+		contacts = [SELECT Id, Account.Name, FirstName, LastName 
+					FROM Contact 
+					WHERE AccountId=:accountId
+						AND Id=:contactId
+						AND Email!=null
+						AND Status__c='Active'
+						AND (account.Location_Type__c='HO' 
+							and account.RecordType.DeveloperName='IATA_Agency' 
+							and account.Status__c='Approved'
+							and account.Location_Class__c='T')
+					Limit 1];
+		if (contacts.size()==0){TIDSUtil.setError(TIDS_Constant.MSG40,false);return TIDSUtil.iataCodeError;}
+		List<User> users = new List<User>();
+		users = [Select Id,contactId 
+					From User 
+					Where isActive=true 
+					and contactId=:contactId
+					Limit 1];
+		if (users.size()==0){TIDSUtil.setError(TIDS_Constant.MSG42,false);return TIDSUtil.iataCodeError;}
+		//Account has already HOP
+		List<Portal_Application_Right__c> appusers  =getPortalRight(accountId, 
+			' (Access_Status_Reason__c=\''+TIDS_Constant.ADM_HOP+'\')',
+			' LIMIT 1');
+		if (appusers.size()==1){TIDSUtil.setError(TIDS_Constant.MSG41,false);return TIDSUtil.iataCodeError;}
+		TIDSUtil.iataCodeError.info = '{"accountname":"'+contacts[0].Account.Name +'","firstname":"'+contacts[0].FirstName+'","lastname":"'+contacts[0].LastName+'"}';
+		return TIDSUtil.iataCodeError;
+	}
+	// Creates the HO Administrator Role
+	@AuraEnabled(cacheable=false)
+	public static TIDSUtil.ErrorWrapper createRole(Id accountId, Id contactId){
+		//Account and Contact verification again in case something happen in between
+		TIDSUtil.iataCodeError = verifyRole(accountId, contactId);
+		if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
+		TIDSUtil.grantTIDSPortalAccess(contactId);
+		return TIDSUtil.iataCodeError;
+	}
+
 	//Checks if the vetting has been completed if true then redirects to the condition page
 	//with merged fields
 	@AuraEnabled

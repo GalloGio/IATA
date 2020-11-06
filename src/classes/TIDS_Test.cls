@@ -1344,6 +1344,22 @@ public with sharing class TIDS_Test {
 	}
 
 	@IsTest
+	private static void TIDSHelperFunctionPart4() {
+		Test.startTest();
+		String applicationType='ho';
+		String reason='TIDS is a good reason';
+		String payload=TIDS_Constant.TIDSVALUE ;
+	
+		readObjectsId();	
+		TIDSUtil.ErrorWrapper t1 = TIDSHelper.verifyRole(accountId,contactId);
+		TIDSUtil.ErrorWrapper t2 = TIDSHelper.createRole(accountId,contactId);
+
+		System.assertEquals(false,t1.hasAnError,true);
+		Test.stopTest();
+	}
+
+	
+	@IsTest
 	private static void sendEmail(){
 		Test.startTest();
 		

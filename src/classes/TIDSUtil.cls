@@ -1,6 +1,5 @@
-
 public without sharing class TIDSUtil{
-   
+
 	private static Id tidsrecordtypeId {get;set;} 
 	public static ErrorWrapper iataCodeError {get;set;}
 	public static List<String> replaceby {get;set;}
@@ -8,12 +7,13 @@ public without sharing class TIDSUtil{
 	public static List<Case> cases {get;set;}
 	 
 	public class ErrorWrapper {
-		@AuraEnabled public String caseId = '';
-		@AuraEnabled public String reason = '';
-		@AuraEnabled public Boolean hasAnError = false;
-		@AuraEnabled public TIDS_Error_Message__mdt error = new TIDS_Error_Message__mdt();
-		@AuraEnabled public Date reinstamentDeadline = null;
-		@AuraEnabled public Boolean hasReinstatementDeadline = false;
+		@AuraEnabled public String caseId='';
+		@AuraEnabled public String reason='';
+		@AuraEnabled public String info='';
+		@AuraEnabled public Boolean hasAnError=false;
+		@AuraEnabled public TIDS_Error_Message__mdt error= new TIDS_Error_Message__mdt();
+		@AuraEnabled public Date reinstamentDeadline=null;
+		@AuraEnabled public Boolean hasReinstatementDeadline=false;
 	}
 	//Gets the RecordtypeId for TIDS case
 	public static Id getTidsRecordTypeId(){
@@ -22,7 +22,7 @@ public without sharing class TIDSUtil{
 	}
 	//Updates the case status 
 	//if the update fails it is catch by calling function 
-   public static void changeCaseStatus(String caseStatus, String userId){
+	public static void changeCaseStatus(String caseStatus, String userId){
 		if (cases.size()==0){return;}
 		Case tidsCase = new Case();
 		tidsCase = cases[0];
@@ -44,7 +44,7 @@ public without sharing class TIDSUtil{
 			Case mycase = searchCase(objectId, TIDS_Constant.IS_DRAFT);
 			if (mycase==null){return;}
 			objectId= mycase.Id;
-		}   
+		}
 		cases = [SELECT Id
 			  ,CreatedDate
 			  ,CaseNumber
@@ -147,8 +147,8 @@ public without sharing class TIDSUtil{
 		return getAttachment(services.Id, TIDS_Constant.TIDSCONFIGURATIONFILE);
 	}
    //reads the tids configuration
-   @AuraEnabled(cacheable=false)
-   public static Attachment  getTermsAndConditions(){
+	@AuraEnabled(cacheable=false)
+	public static Attachment  getTermsAndConditions(){
 		Portal_Applications__c services = getTIDSService();
 		List<Attachment> attachments = getAttachments(false,' WHERE parentId=\''+services.id+'\' AND name=\''+TIDS_Constant.TIDSTERMSANDCONDITIONS+'\'',' LIMIT 1');
 		if (attachments.size()>0) {return attachments[0];}
@@ -170,7 +170,7 @@ public without sharing class TIDSUtil{
 	public static String getSettings(String parentid, string type){
 		if (String.isEmpty(parentid)){return null;}
 		parentid = String.escapeSingleQuotes(parentid.trim());
-	   //read the settings file
+		//read the settings file
 		List<Attachment> newsettings = getAttachments(true,' WHERE parentId=\''+parentid+'\' AND name=\''+type+'\'',' LIMIT 1');
 		if (newsettings.size() > 0){Blob body = newsettings[0].Body;return body.toString();}
 		// return the Body Content
@@ -226,7 +226,7 @@ public without sharing class TIDSUtil{
 		Blob attachmentBody = Blob.valueOf(payload);
 		newAttachment.Body = attachmentBody;
 		upsert newAttachment;
-	}    
+	}
 
 	//Save the upload file from the supporting document lwc interface
 	@AuraEnabled(cacheable=false)
@@ -280,7 +280,7 @@ public without sharing class TIDSUtil{
 	public static List<ValueLabel> getFocusValues(){
 		return getPicklistValues('FOCUSVALUES', 'Name');
 	}
-   
+
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> companyTypes(){
 		return getPicklistValues('LGLTYP', 'Name');
@@ -472,7 +472,7 @@ public without sharing class TIDSUtil{
 	
 		email.setTemplateId(emailtemp[0].Id);
 		email.setTargetObjectId(refId);
-		email.setWhatId(whatId);    
+		email.setWhatId(whatId);
 		Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
 	}
 	

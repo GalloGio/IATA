@@ -3,6 +3,8 @@ import { NavigationMixin } from "lightning/navigation";
 import Id from "@salesforce/user/Id";
 import allMyTidsCases from "@salesforce/apex/TIDSHelper.allMyTidsCases";
 import actionApplication from "@salesforce/apex/TIDSHelper.actionApplication";
+import verifyRole from "@salesforce/apex/TIDSHelper.verifyRole";
+import createRole from "@salesforce/apex/TIDSHelper.createRole";
 import assignToCaseOwner from "@salesforce/apex/TIDSHelper.assignToCaseOwner";
 import USER_ID from "@salesforce/user/Id";
 
@@ -14,6 +16,15 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	@track selectedTab;
 	@track url = "/c/tids.app?caseId=";
 	@track tidsCase;
+	@track reasoncreaterole;
+	@track infocreaterole={accountname:'',firstname:'', lastname:''};
+	@track verifybutton=true;
+	@track createbutton=true;
+	@track accountid;
+	@track contactid;
+	@track isissue=false;
+	@track issucess=false;
+	@track isverification=false;
 
 	//Modal Window
 	@track modalAction;
@@ -29,6 +40,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	//Pagination Code
 
 	connectedCallback() {
+		this.resetValues();
 		this.init();
 	}
 
@@ -136,7 +148,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 			})
 			.catch((error) => {
 				this.oops(error);
-			});
+		});
 	}
 	runVetting(caseid) {
 		this.spinner = true;
@@ -266,5 +278,90 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 
 	get currentPageData() {
 		return this.pageData();
+	}
+
+	//Assign Admin HO Role
+	changeField(event){
+		if (event.target.name === "accountid"){
+			this.accountid = event.target.value;
+		} else if (event.target.name === "contactid"){
+			this.contactid  = event.target.value;
+		}
+		if (this.accountid==='' || this.contactid===''){
+			this.verifybuttonDisabled();
+		} else {
+			this.verifybuttonEnabled();
+		}
+	}
+	handleVerifcationClick(event){
+		//get info
+		this.isissue=false;
+		this.isverification=false;
+		this.issucess=false;
+		this.spinner = true;
+		verifyRole({ accountId: this.accountid, contactId: this.contactid })
+			.then((result) => {
+				console.log("result", JSON.stringify(result));
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.isissue=true;
+					this.reasoncreaterole=result.reason;
+				} else {
+					this.isverification=true;
+					this.reasoncreaterole=result.reason;
+					this.infocreaterole=JSON.parse(result.info);
+					this.verifybuttonDisabled();
+					this.createbuttonEnabled();
+				}
+			})
+			.catch((error) => {
+				this.oops(error);
+		});
+	}
+	handleCreateClick(event){
+		this.spinner = true;
+		this.isissue=false;
+		this.issucess=false;
+		this.isverification=false;
+		createRole({ accountId: this.accountid, contactId: this.contactid })
+			.then((result) => {
+				console.log("result", JSON.stringify(result));
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.isissue=true;
+					this.reasoncreaterole=result.reason;
+				} else {
+					this.issucess=true;
+					this.isverification=true;
+					this.reasoncreaterole=result.reason;
+					this.infocreaterole=JSON.parse(result.info);
+					this.resetValues();
+					this.createbuttonDisabled();
+				}
+			})
+			.catch((error) => {
+				this.oops(error);
+		});		
+	}
+	handleResetClick(event){
+		this.resetValues();
+		this.createbuttonDisabled();
+		this.verifybuttonDisabled();
+	}
+	verifybuttonDisabled(){
+		this.verifybutton=true;
+	}
+	verifybuttonEnabled(){
+		this.verifybutton=false;
+	}
+	createbuttonDisabled(){
+		this.createbutton=true;
+	}
+	createbuttonEnabled(){
+		this.createbutton=false;
+	}
+	resetValues(){
+		this.accountid='';
+		this.contactid='';
 	}
 }

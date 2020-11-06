@@ -127,4 +127,7 @@ public without sharing class TIDS_Constant {
 	public final static String MSG33='TIDS_MSG33';
 	public final static String MSG34='TIDS_MSG34';
 	public final static String MSG35='TIDS_MSG35';
+	public final static String MSG40='TIDS_MSG40';
+	public final static String MSG41='TIDS_MSG41';
+	public final static String MSG42='TIDS_MSG42';
 }
