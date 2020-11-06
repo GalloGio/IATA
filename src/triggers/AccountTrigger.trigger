@@ -39,9 +39,8 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 		if(system.isBatch() || system.isFuture() || system.isQueueable())
 			ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Account', 'ANG_Account_Tracking_History__c');
 		else {
-			ANG_TrackingHistory.futureTrackHistory(JSON.serialize(Trigger.oldMap), JSON.serialize(Trigger.newMap), 'Account', 'ANG_Account_Tracking_History__c');
+			ANG_TrackingHistory.futureTrackHistory(JSON.serialize(Trigger.newMap), JSON.serialize(Trigger.oldMap), 'Account', 'ANG_Account_Tracking_History__c');
 		}
-
 	}
 
 
