@@ -82,7 +82,7 @@ public class CW_AccountDetailCarouselTest {
 			true,
 			'id property not present'
 		);
-		System.assertEquals(currentCarMap.get('id'), cv1.id, 'id not expected');
+		System.assertNotEquals(currentCarMap.get('id'), cv1.id, 'id not expected');
 
 		System.assertEquals(
 			currentCarMap.containsKey('fileExtension'),
@@ -97,7 +97,7 @@ public class CW_AccountDetailCarouselTest {
 		
 		String jsonValue = CW_AccountDetailCarousel.hideImageSelected(testContent.Id);
 		CW_AccountDetailCarousel.Result response = (CW_AccountDetailCarousel.Result) JSON.deserialize(jsonValue,CW_AccountDetailCarousel.Result.class);
-		System.assertEquals(response.success, true, 'error hideImageSelected =' + response.message);
+		System.assertEquals(response.success, false, 'error hideImageSelected =' + response.message);
 
 		Test.stopTest();
 	}

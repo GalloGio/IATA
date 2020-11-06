@@ -1162,7 +1162,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <fullName>Overall_Facility_Size_m2__c</fullName>
         <description>Describe the facility size in m2</description>
         <externalId>false</externalId>
-        <label>Total Facility Space (m2)</label>
+        <label>Overall Facility Space (m2)</label>
         <precision>18</precision>
         <required>false</required>
         <scale>1</scale>

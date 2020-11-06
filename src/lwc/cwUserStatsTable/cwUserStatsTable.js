@@ -75,7 +75,8 @@ export default class CwUserStatsTable extends LightningElement {
 
     handleMoreInfo(event) {
         let url = '#ID:' + event.currentTarget.getAttribute("data-id");
-        window.open(url, "_blank");
+        window.location.href = url;
+        window.location.reload();
     }
 
     prepareToExcelList(){

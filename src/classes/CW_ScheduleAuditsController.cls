@@ -72,9 +72,7 @@ public without sharing class CW_ScheduleAuditsController {
 					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {
 						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Id, managersPerQueueId.get(nt.OwnerId)));
 						for(Id currentReceiver: managersPerQueueId.get(nt.OwnerId)){	
-							if(currentReceiver.startsWith(Schema.getGlobalDescribe().get('User').getDescribe().getKeyPrefix())){
-								notificationReceivers.add(currentReceiver);
-							}
+							notificationReceivers.add(currentReceiver);
 						}
 					}
 				}
@@ -134,8 +132,9 @@ public without sharing class CW_ScheduleAuditsController {
 
 	private static void shareAuditNotificationsWithRequetor(List<ICG_Notification__c> auditNotifications){
 		List<ICG_Notification__Share> notifShrLst  = new List<ICG_Notification__Share>();  
+		Schema.DescribeSObjectResult notifDescribe = ICG_Notification__c.sObjectType.getDescribe();
 		
-		for (ICG_Notification__c notif : auditNotifications) {			
+		for (ICG_Notification__c notif : auditNotifications) {	
 			ICG_Notification__Share notifShr  = new ICG_Notification__Share();
 			// Set the ID of record being shared.
 			notifShr.ParentId = notif.Id;			  
@@ -145,7 +144,7 @@ public without sharing class CW_ScheduleAuditsController {
 			notifShrLst.add(notifShr);
 		}	
 
-		if(!notifShrLst.isEmpty()){			
+		if(!notifShrLst.isEmpty() && !notifDescribe.isAccessible()){			
 			for(Database.SaveResult sr :Database.insert(notifShrLst, false)){
 				if(!sr.isSuccess()){					
 					Database.Error err = sr.getErrors()[0];

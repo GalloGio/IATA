@@ -5,6 +5,7 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import swipe from "c/cwSwipe";
 import {refreshApex} from '@salesforce/apex';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import pubsub from "c/cwPubSub";
 
 export default class CwAccountDetailCarousel extends LightningElement {
 	localRecordId = "";
@@ -56,6 +57,21 @@ export default class CwAccountDetailCarousel extends LightningElement {
 			variant: variant
 		});
 		this.dispatchEvent(event);
+	}
+
+	@api
+	register(){
+		pubsub.register('photosequipmentupdate', this.photosUpdateCallback); 
+	}
+
+	connectedCallback(){
+		this.photosUpdateCallback = this.photosUpdate.bind(this);
+		this.register();
+	}
+
+	photosUpdateCallback;
+	photosUpdate(payload) {
+		this.getFacilityFiles(this.recordId);
 	}
 
 	//icons

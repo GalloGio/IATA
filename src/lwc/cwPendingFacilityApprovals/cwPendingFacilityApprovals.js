@@ -29,7 +29,8 @@ export default class CwPendingFacilityApprovals extends LightningElement {
     handleMoreInfo(event) {
         let url = window.location.pathname + '?pending=true#ID:' +
             event.currentTarget.getAttribute("data-id");
-        window.open(url, "_blank");
+        window.location.href = url;
+        window.location.reload();
     }
 
     setFilterValue(event){

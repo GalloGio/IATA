@@ -232,6 +232,7 @@ export default class CwMyRequests extends LightningElement {
 		var pending = (type === 'Station Manager Requests') ? '#' : '?pending=true#';
 
         let url =  window.location.pathname + pending + 'ID:' + event.currentTarget.getAttribute("data-id");
-        window.open(url, "_blank");
+		window.location.href = url;
+		window.location.reload();
     }
 }

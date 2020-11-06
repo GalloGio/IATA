@@ -13,6 +13,8 @@ public without sharing class CW_AccountDetailCarousel {
 		List<String> listId = new List<String>();
 		List<String> listCapabPhotoId = new List<String>();
 		List<Carousel> listImages = new List<Carousel>();
+		List<Carousel> listImagesVisible = new List<Carousel>();
+
 		Integer index = 0;
 
 		try{
@@ -30,7 +32,14 @@ public without sharing class CW_AccountDetailCarousel {
 				}
 			}
 
-			index = listCapabPhotoId.size();
+			//Read only visible photos
+			for(Carousel capabPhoto : listImages){
+				if(capabPhoto.visible){
+					listImagesVisible.add(capabPhoto);
+				}
+			}
+
+			index = listImagesVisible.size();
 			
 			for (ContentVersion doc : [SELECT Id, VersionData, FileExtension, ContentDocumentId, Title
 										FROM ContentVersion 
@@ -54,7 +63,7 @@ public without sharing class CW_AccountDetailCarousel {
 				car.urlImage = CW_AccountDetailCarousel.generateImageURL(doc.ContentDocumentId);
 				car.isInternal = true;
 				car.isDocument = acceptFormats.contains(doc.FileExtension);
-				listImages.add(car);
+				listImagesVisible.add(car);
 				index++;
 			}
 
@@ -64,7 +73,7 @@ public without sharing class CW_AccountDetailCarousel {
 			System.debug(LoggingLevel.FINE, '____[CW_AccountDetailCarousel - getFacilityFiles] Error: ' + e.getMessage() + ' Trace:' + e.getStackTraceString());
 		}
 
-		return listImages;
+		return listImagesVisible;
 	}
 /*
 	* @Description: getFacilityFiles: generate a list of wrapper (Carousel) with the needed info to be displayed in frontside
@@ -120,6 +129,8 @@ public without sharing class CW_AccountDetailCarousel {
 		public Boolean isInternal {set;get;}
 		@AuraEnabled 
 		public Boolean isDocument {set;get;}
+		@AuraEnabled 
+		public Boolean visible {set;get;}
 	}
 	
 	public class Result{

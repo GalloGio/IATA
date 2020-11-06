@@ -226,6 +226,7 @@ export default class CwPrivateNotifications extends LightningElement {
 
 		if(destiny === STATION || destiny === REMOTE){
 			window.location.href = url;
+			window.location.reload();
 		}
 		else{
 			const selectedItemEvent = new CustomEvent("menuitemselection", {

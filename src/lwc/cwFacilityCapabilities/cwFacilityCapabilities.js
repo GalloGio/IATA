@@ -9,6 +9,7 @@ import getPublicLinkToFiles_ from "@salesforce/apex/CW_CapabilitiesManagerContro
 import createRelationshipsForNewCapabilities_ from "@salesforce/apex/CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities";
 import { createKey } from "c/cwUtilities";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import pubsub from "c/cwPubSub";
 
 export default class CwFacilityCapabilities extends LightningElement {
 	initialized = false;
@@ -312,6 +313,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 			})
 			.finally(() => {
 				this.isLoading = false;
+
+				let p1 = new Promise(function(resolve, reject) {
+					resolve(pubsub.fire("photosequipmentupdate"));
+				});
+
 			});
 	}
 

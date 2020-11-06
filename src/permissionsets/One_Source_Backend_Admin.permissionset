@@ -3459,7 +3459,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>ICG_Account_Role_Detail__c.State_Province_FOR__c</field>
         <readable>true</readable>
     </fieldPermissions>

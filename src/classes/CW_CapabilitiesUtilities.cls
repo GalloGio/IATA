@@ -464,10 +464,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		{
 			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
 				CW_CapabilitiesManagerController.CapabilityPhoto photo = (CW_CapabilitiesManagerController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_CapabilitiesManagerController.CapabilityPhoto.class);
-			
-				if(photo.visible){
 					photosCapab.add(photo);
-				}
 			}
 			
 		}
@@ -491,6 +488,7 @@ public with sharing class CW_CapabilitiesUtilities {
 			car.urlImage = photoParse.url;
 			car.isInternal = false;
 			car.isDocument = acceptFormats.contains(fileExtension);
+			car.visible = photoParse.visible;
 			photosCarousel.add(car);
 			index++;
 		}

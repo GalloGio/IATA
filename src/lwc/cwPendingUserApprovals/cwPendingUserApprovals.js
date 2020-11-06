@@ -32,7 +32,8 @@ export default class CwPendingUserApprovals extends LightningElement {
 	handleMoreInfo(event) {
 		let url = window.location.pathname + '?#ID:' +
 			event.currentTarget.getAttribute("data-id");
-		window.open(url, "_blank");
+		window.location.href = url;
+		window.location.reload();
 	}
 
 	setStationManagersFilterValue(event){

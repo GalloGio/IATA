@@ -194,7 +194,8 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
 
     handleMoreClicked() {
         let url = this.urlFacilityage + '?eid=' + encodeURI(this.selectedAccCertification.detailId);
-        window.open(url, "_blank");
+        window.location.href = url;
+        window.location.reload();
     }
 
     //Indicator clicked

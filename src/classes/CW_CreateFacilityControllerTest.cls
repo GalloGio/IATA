@@ -129,6 +129,27 @@ public class CW_CreateFacilityControllerTest {
 	 */    
 	@isTest
 	private static void createDummyCompanyTest(){
+		Profile pf= [Select Id from profile where Name LIKE '%ISS Portal (Partner)%' limit 1]; 
+
+		Account acc2 = [SELECT Id FROM Account WHERE Name ='Account02' LIMIT 1 ][0];
+
+		Contact con2 = new Contact(FirstName = 'Test2', LastName='Test2', Email = 'Test2@Test.com',AccountId = acc2.id);
+		insert con2;	
+
+		User uu2=new User(firstname = 'IATAICGABCUnique2', 
+			lastName = 'IATAICGXYZUnique2', 
+			email = 'test2@test.com', 
+			Username = 'test2@test.com', 
+			EmailEncodingKey = 'ISO-8859-1', 
+			Alias = 'testA2', 
+			TimeZoneSidKey = 'America/Los_Angeles', 
+			LocaleSidKey = 'en_US', 
+			LanguageLocaleKey = 'en_US', 
+			ProfileId = pf.Id,
+			contactId = con2.id
+		);
+		insert uu2;
+
 		List <IATA_ISO_Country__c> isoCodes = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 		Account acc = new Account (Name = 'Account03', IATA_ISO_Country__c = isoCodes[0].Id);
 		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
@@ -137,12 +158,14 @@ public class CW_CreateFacilityControllerTest {
 		Map <String, Object> result = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test',true));
 		System.assert(result.get('success') == true, 'Test: CreateDummyCompany FAILED');
 
-		Map <String, Object> resultEmpty = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test2',true));
-		System.assert(resultEmpty.get('success') == true, 'Test: CreateDummyCompany FAILED');
-		
-		Map <String, Object> resultNotHerarchy = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test2',false));
-		System.assert(resultNotHerarchy.get('success') == true, 'Test: CreateDummyCompany FAILED');
-		
+		System.runAs(uu2) {
+			Map <String, Object> resultEmpty = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test2',true));
+			System.assert(resultEmpty.get('success') == true, 'Test: CreateDummyCompany FAILED');
+			
+			Map <String, Object> resultNotHerarchy = (Map <String, Object>)JSON.deserializeUntyped(CW_CreateFacilityController.createDummyCompany(JSON.serialize(acc), 'Test2',false));
+			System.assert(resultNotHerarchy.get('success') == true, 'Test: CreateDummyCompany FAILED');
+		}
+
 		Test.stopTest();
 	}
 
