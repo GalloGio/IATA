@@ -70,9 +70,10 @@
                                                     aria-hidden={indicator.hidden}>
                                                     <a href="javascript:void(0);"
                                                         class="slds-carousel__panel-action slds-text-link_reset width-100"
-                                                        tabindex={indicator.tabindex} onclick={openModal}>
+                                                        tabindex={indicator.tabindex} data-item={indicator.id} onclick={openModal}>
                                                         <div class="swipediv slds-carousel__image">
                                                             <img src={indicator.url} alt="Show images" class="maximum-size-panel" />
+                                                            <label if:true={indicator.isDocument}>{indicator.name}</label>
                                                         </div>
                                                     </a>                                               
                                                 </div> 
@@ -150,9 +151,10 @@
                                                             aria-hidden={indicator.hidden}>
                                                             <a href="javascript:void(0);"
                                                                 class="slds-carousel__panel-action slds-text-link_reset width-100"
-                                                                tabindex={indicator.tabindex} onclick={openModal}>
+                                                                tabindex={indicator.tabindex} data-item={indicator.id} onclick={openModal}>
                                                                 <div class="swipedivpopup slds-carousel__image slds-grid_align-center">
                                                                     <img src={indicator.url} alt="Show images" />
+                                                                    <label class="slds-col" if:true={indicator.isDocument}>{indicator.name}</label>
                                                                 </div>
                                                             </a>
                                                         </div>

@@ -3,12 +3,10 @@
     <apex:attribute name="notificationData" type="String" description="Notification ID" assignTo="{!notificationId}" access="global" />
 
     <p style="margin-top: 25px; line-height: 1.8rem;"></p>
-    <apex:repeat value="{!ICGCapabilityAssignmentGroups}" var="CapabilityGroup">
-        <br />
         <table style="border-collapse: collapse; width: 70%">        
             <tr style="background-color: #d9e2f3">
                 <th style="width: 25%; border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Certification/s</th>
-                <td style="width: 75%; border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!CapabilityGroup.ICG_Certification__r.Label__c}</td>
+                <td style="width: 75%; border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">{!notificationDetails.ICG_Certification__r.Label__c}</td>
             </tr>
             <tr>
                 <th style="width: 40%; border: 1px solid #8eaadb; text-align: left; padding: 5px; font-size: 0.8rem">Requested Audit Date</th>
@@ -19,6 +17,5 @@
                 </td>
             </tr>        
         </table>
-    </apex:repeat>
 
 </apex:component>

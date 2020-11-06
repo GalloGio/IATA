@@ -133,7 +133,11 @@ export default class CwHeader extends LightningElement {
 
         getOneSourceServiceId().then(serviceId => {
             if (serviceId) {
-                let loginUrl = this.label.CSP_PortalPath +'login/SelfRegister' + '?sourceService=' + serviceId;
+                let csportalPath = (this.label.CSP_PortalPath.indexOf('/csportal') === -1) 
+                    ? '/csportal' + this.label.CSP_PortalPath 
+                    : this.label.CSP_PortalPath;
+
+                let loginUrl = csportalPath +'login/SelfRegister' + '?sourceService=' + serviceId;
                 location.href = loginUrl;
             }
         });

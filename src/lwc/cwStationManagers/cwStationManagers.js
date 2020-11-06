@@ -119,29 +119,24 @@ export default class CwStationManagers extends LightningElement {
             this.totalAccountContactRoles = [];
             data = JSON.parse(data);
             data.forEach(contactRoleDetail =>{
-                let nameAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Name ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Name : 'N/A';
-                let phoneAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone : 'N/A';
+                let nameAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Name ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Name : '';
+                let phoneAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone : '';
                 let phoneLinkAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone ? "tel:" + contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone : '';
-                let emailAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Email ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Email : 'N/A';
+                let emailAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Email ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Email : '';
                 let emailLinkAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Email ? "mailto:" + contactRoleDetail.Account_Contact_Role__r.Contact__r.Email : '';
-                let addressAux = 'N/A';
-                if (contactRoleDetail.Account_Contact_Role__r.Contact__r.OtherState) {
-                    addressAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.OtherState;
-                    if (contactRoleDetail.Account_Contact_Role__r.Contact__r.OtherCountry) {
-                        addressAux = addressAux + ', ' + contactRoleDetail.Account_Contact_Role__r.Contact__r.OtherCountry;
-                    }
-                } else if (contactRoleDetail.Account_Contact_Role__r.Contact__r.OtherCountry) {
-                    addressAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.OtherCountry;
-                }
+                let functionTitle = contactRoleDetail.Account_Contact_Role__r.Contact__r.Membership_Function__c ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Membership_Function__c : '';
+
                 let accountContactRoleInfo = {
                     id : contactRoleDetail.Id,
                     idAccountContactRole : contactRoleDetail.Account_Contact_Role__r.Id,
                     name : nameAux,
                     phone : phoneAux,
+                    showPhoneBar : phoneAux !== '',
                     phoneLink : phoneLinkAux,
                     email: emailAux,
                     emailLink: emailLinkAux,
-                    otherAddress : addressAux,
+                    functionTitle : functionTitle,
+                    showFunctionTitleBar: functionTitle !== '',
                     showDelete : this.isCompanyAdmin || this.userInfo.ContactId === contactRoleDetail.Account_Contact_Role__r.Contact__r.Id,
                     contactId: contactRoleDetail.Account_Contact_Role__r.Contact__c, 
                     companyId: contactRoleDetail.Account_Contact_Role__r.Account__c, 

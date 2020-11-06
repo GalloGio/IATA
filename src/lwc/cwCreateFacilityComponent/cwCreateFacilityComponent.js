@@ -368,6 +368,12 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		let formu = this.template.querySelector(".additionaldataform");
 		if(formu && formu.elements){
 			this.additionalData = this.formToJSON(formu.elements);
+		}
+	}
+	beforeSummaryAction() {
+		let formu = this.template.querySelector(".additionaldataform");
+		if(formu && formu.elements){
+			this.additionalData = this.formToJSON(formu.elements);
 			this.additionalData.openingHours = JSON.stringify(this.openingHours);
 			this.additionalData.generalCargo = this.cargoCommodities[0].checked;
 			this.additionalData.liveAnimals = this.cargoCommodities[1].checked;
@@ -427,6 +433,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			this.getRtAndNameFormData();
 		} else if (this.step === 3) {
 			this.getAdditionalFormData();
+		}else if (this.step === 4) {
+			this.beforeSummaryAction();
 		}
 	}
 	renderedCallback() {
@@ -820,7 +828,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			RecordTypeId : this.formData.recordtype,
 			Number_of_Employees__c : parseInt(this.additionalData.noemployees || 0,10),
 			Number_of_Facilities__c : parseInt(this.additionalData.nofacilities || 0,10),
-            Overall_Facility_Size_m2__c : parseInt(this.additionalData.overallFacilitySizeM2 || 0,10),
+            Overall_Facility_Size_m2__c : (this.companyType === "Cargo_Handling_Facility") ? parseInt(this.additionalData.overallFacilitySizeM2 || 0,10) : 0,
+            Overall_Airport_Size__c : (this.companyType === "Airport_Operator") ? parseInt(this.additionalData.overallFacilitySizeM2 || 0,10) : 0,
             Fleet__c : parseInt(this.additionalData.fleet || 0,10),
 			Customer_Service_Email__c : this.additionalData.email,
 			Customer_Service_Phone_Number__c : this.additionalData.phone,
@@ -1705,7 +1714,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	showOfficeHours() {
-		return !(this.companyType === "Airport_Operator" || this.companyType === "Cargo_Handling_Facility");
+		return true;
 	}
 
 	showOperatingHours() {
@@ -1764,7 +1773,10 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 	get showOnAiport() {
 		return this.companyType === "Cargo_Handling_Facility";
-	}
+    }
+    get showNearestAirport() {
+        return this.companyType !== "Trucker";
+    }
 
 	registerNewAccount(){
 		// The event data needs to indicate if the creation form is fine. Let's say that if data is null, it means the form is invalid
@@ -1944,7 +1956,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get showDirectRampAccess(){
-		return this.isInternalUser && this.companyType === 'Cargo_Handling_Facility';
+		return false;
 	}
 
 	get addressGeo(){

@@ -52,9 +52,9 @@
             <div key={currentAccCtoRol.id} class="row ml-0 mt-2 mb-2 pt-2 pb-2 bg-light-grey">
                 <div class="col-11">
                     <p class="font-size-sm text-truncate display-inline">{currentAccCtoRol.name} | 
-                        <a href={currentAccCtoRol.phoneLink}><span class="text-blue pl-2">{currentAccCtoRol.phone}</span></a> | 
-                        <a href={currentAccCtoRol.emailLink}><span class="text-blue pl-2">{currentAccCtoRol.email}</span></a> | 
-                        {currentAccCtoRol.otherAddress}
+                        <span if:true={currentAccCtoRol.functionTitle}><a href={currentAccCtoRol.phoneLink}><span class="text-blue pl-2">{currentAccCtoRol.phone}</span></a> |</span> 
+                        <a href={currentAccCtoRol.emailLink}><span class="text-blue pl-2">{currentAccCtoRol.email}</span></a> <span if:true={currentAccCtoRol.showFunctionTitleBar}> | </span> 
+                        {currentAccCtoRol.functionTitle}
                     </p>
                 </div>
                 <div class="col-1 font-size-sm cursor-pt">

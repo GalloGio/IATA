@@ -812,7 +812,6 @@ It must be in the same order and the same number of items than the field &apos;G
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
-            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>

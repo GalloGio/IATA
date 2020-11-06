@@ -32,14 +32,14 @@ export default class CwAccountDetailOverview extends LightningElement {
 	@api label;
 
 	//Record types of sections
-	numberEmployeesRT = ["Cargo_Handling_Facility", "Freight_Forwarder", "Airline", "Airport_Operator", "Trucker", "Ramp_Handler"];
+	numberEmployeesRT = ["Cargo_Handling_Facility", "Freight_Forwarder", "Airline", "Airport_Operator", "Trucker", "Ramp_Handler", "Shipper"];
 	roadFeederRT = ["Airline"];
-	facilitySpaceRT = ["Cargo_Handling_Facility","Freight_Forwarder"];
-	onAirportRT = ["Cargo_Handling_Facility", "Freight_Forwarder", "Trucker"];
+	facilitySpaceRT = ["Cargo_Handling_Facility"];
+	onAirportRT = ["Cargo_Handling_Facility"];
 	trucksRT = ["Trucker"];
-	directRampAccessRT = ["Cargo_Handling_Facility"];
+	directRampAccessRT = [""];
 	overallAirportSizeRT = ["Airport_Operator"];
-	hideAll = ["Shipper"];
+	hideAll = [""];
 
 	get shouldHideAll() {
 		return this.hideAll.includes(this.facility.recordTypeDevName);
@@ -90,7 +90,11 @@ export default class CwAccountDetailOverview extends LightningElement {
 
 	get overallSizeFormatted() {
 		return this.numberToString(this.facility.overallAirportSize);
-	}
+    }
+    
+    get showLabelFacilityAirportSizeM2() {
+        return this.facility.recordTypeDevName === "Airport_Operator" ? this.label.icg_overall_aiport_size : this.label.icg_overall_facility_size;
+    }
 
 	renderedCallback() {
 		if (this.initialized) {

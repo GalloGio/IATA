@@ -430,7 +430,7 @@ export function getIataSrc(recordTypeDevName, location, locationClass, resources
 
 	if (freightForwarderValid && locationIsUS) {
 		src = resources + "/img/cns-endorsed-agent.png";
-	} else if (freightForwarderValid || recordTypeDevName === "Airline") {
+	} else if (freightForwarderValid) {
 		src = resources + "/img/iata-logo-cut.png";
 	}
 
@@ -447,8 +447,6 @@ export function getIataTooltip(recordTypeDevName, location, locationClass, label
 		tooltip = label.icg_cns_endorsed_agent;
 	} else if (freightForwarderValid) {
 		tooltip = label.icg_accredited_agent;
-	} else if (recordTypeDevName === "Airline") {
-		tooltip = label.icg_accredited_airline;
 	}
 
 	return tooltip;

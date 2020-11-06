@@ -16,7 +16,7 @@ public without sharing class CW_EmailTemplateData {
 
 	public ICG_Notification__c getnotificationDetails(){
 		if(notifications == null && notificationId != null){
-			notifications = [SELECT Id, Certification_Name__c, Contact_Email__c, Contact_Name__c, Preferable_Audit_Date__c FROM ICG_Notification__c WHERE Id = :notificationId LIMIT 1];
+			notifications = [SELECT Id, Certification_Name__c, Contact_Email__c, Contact_Name__c, Preferable_Audit_Date__c, ICG_Certification__r.Label__c FROM ICG_Notification__c WHERE Id = :notificationId LIMIT 1];
 		}
 		return listHasValues(notifications) ? notifications[0] : null;
 	}
@@ -187,12 +187,12 @@ public without sharing class CW_EmailTemplateData {
 
 	public Contact getContactRoleDetailContact(){
 
-		List<Contact> crdUser;
+		List<Contact> crdContact;
 		if(getContactRoleDetails() != null){
-			crdUser = queryContactById(contactRoleDetail[0].ContactId__c);
+			crdContact = queryContactById(contactRoleDetail[0].ContactId__c);
 		}
 
-		return listHasValues(crdUser) ? crdUser[0] : null;
+		return listHasValues(crdContact) ? crdContact[0] : null;
 	}
 
 	public User getContactRoleDetailUser(){
@@ -207,9 +207,9 @@ public without sharing class CW_EmailTemplateData {
 
 	public String getContactRoleDetailContactAccountAddress(){
 		String address='';
-		User u = getContactRoleDetailUser();
-		if ( u != null){
-		   address = buildAddress(u);
+		Contact c = getContactRoleDetailContact();
+		if ( c != null){
+		   address = buildAddress(c);
 		}
 
 		return address;

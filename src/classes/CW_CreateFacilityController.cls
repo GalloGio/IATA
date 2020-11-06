@@ -14,7 +14,7 @@ public without sharing class CW_CreateFacilityController {
 				res.success = false;
 				res.message = 'This account has no available Role to be parent of a station';
 				return JSON.serialize(res);
-			}            
+			}
 			
 			ard = CW_CreateFacilityController.handleGeoLocations(ard, geoLocationInfo);            
 			ard.Nearest_Airport__c = CW_CreateFacilityController.getNearestAirportForFacility(nearestAirportCode);
@@ -28,9 +28,7 @@ public without sharing class CW_CreateFacilityController {
 
 			List<Contact> companyAdmins = CW_Utilities.getCompanyAdminContactsFromAccountId(accountId);
 
-			if(isInternalUser != true && hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin) && !isCompanyAdmin) {
-				ard.Status__c = 'Pending for IATA Approval';
-			}
+			ard.Status__c = 'Pending for IATA Approval';
 
 			update ard;
 
@@ -40,16 +38,11 @@ public without sharing class CW_CreateFacilityController {
 
 			res.success = true;
 
-			if(isInternalUser == true || isCompanyAdmin){
-				res.message = Label.icg_registration_auto_approved;
-			}
-			else {
-				Boolean addEmailFailureMessage = !CW_CreateFacilityController.handleEmailsAndNotifications(isInternalUser, ard, companyAdmins, isCompanyAdmin, isNewAccount);
-				res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;	
+			Boolean addEmailFailureMessage = !CW_CreateFacilityController.handleEmailsAndNotifications(isInternalUser, ard, companyAdmins, isCompanyAdmin, isNewAccount);
+			res.message = Label.icg_registration_request_submitted1 + ' ' + Label.icg_registration_request_submitted2;	
 
-				if (addEmailFailureMessage == true) {
-					res.message += ' ' + Label.icg_something_went_wrong_emails;
-				}
+			if (addEmailFailureMessage == true) {
+				res.message += ' ' + Label.icg_something_went_wrong_emails;
 			}
 			res.obj = ard;
 		} catch (Exception ex) {
@@ -214,34 +207,35 @@ public without sharing class CW_CreateFacilityController {
 					}
 				}
 				else{
-					String accountId = [Select Id, AccountId from User where Id = :UserInfo.getUserId() limit 1].AccountId;
+					User usr = [Select Id, AccountId, Account.Name from User where Id = :UserInfo.getUserId() limit 1];
+					String accountId = usr.AccountId;
 					Id userAccRole = getAccountRoleForAccount(accountId);
 					List<Account_Role_Relationship__c> userarr = [Select id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c Where From__r.Account__c =:accountId];
 					String userGroup;
 					for(Account_Role_Relationship__c arr : userarr){
 						userGroup = arr.Ops_Hierarchy_Group__c;
 					}
+					/////////
+					//If user account has no account role relationships means is an single account
+					//Relate new account and single account with ops hierarchy group
+					if(userGroup == null){
+						userGroup = usr.Account.Name;
+						if(userAccRole == null) {
+							Account_Role__c arol = createOneSourceAccRole(accountId);
+							insert arol;
+							userAccRole = arol.Id;
+						}
+						Account_Role_Relationship__c newUserArr = new Account_Role_Relationship__c();
+						newUserArr.From__c = userAccRole;
+						newUserArr.Ops_Hierarchy_Group__c = userGroup;
+						insert newUserArr;
+					}
+					newArr.Ops_Hierarchy_Group__c = userGroup;
 					if(isNewHierarchy == true){
 						newArr.To__c = ar.Id;
 						newArr.Relationship_Name__c = opsHierarchy;
-						newArr.Ops_Hierarchy_Group__c = userGroup;
-						insert newArr;
-					}else{
-						//If user account has no account role relationships means is an single account
-						//Relate new account and single account with ops hierarchy group
-						newArr.Ops_Hierarchy_Group__c = opsHierarchy;
-						insert newArr;
-						if(userGroup == null){
-							if(userAccRole == null) {
-								Account_Role__c arol = createOneSourceAccRole(accountId);
-								insert arol;
-								userAccRole = arol.Id;
-							}
-							newArr.Id = null;
-							newArr.From__c = userAccRole;
-							insert newArr;
-						}
 					}
+					insert newArr;
 
 				}
 			}

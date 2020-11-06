@@ -2,7 +2,7 @@ public without sharing class CW_LoginController {
 	public String portalUrl {get;set;}
 	public String serviceId {get;set;}
 	public CW_LoginController() {
-		portalUrl = ISSP_CS__c.getValues('HostCSP').Value__c;
+		portalUrl = ISSP_Constant.customSetingMap.get('HostCSP');
 		if(portalUrl != null) portalUrl = portalUrl.removeEnd('/');
 		serviceId = getOneSourceServiceId();
 	}

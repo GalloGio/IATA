@@ -97,21 +97,22 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 
 	get showSupportedLanguages() {
-		return !(this.facility.recordTypeDevName === "Airline" || this.facility.recordTypeDevName === "Airport_Operator");
+		return !(this.facility.recordTypeDevName === "Airline" || this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Trucker");
 	}
 
 	renderedCallback() {
 		if (this.initialized) {
 			return;
 		}
-
-		this.initialized = true;
-		let inputs = this.template.querySelectorAll(".input");
-		let validated = checkInputValidation(inputs);
-		this.updateDataValid(validated);
 		//PredictiveBox Languages Listener
 		let langbox = this.template.querySelector('[data-tosca="languagesinput"]');
 		if (langbox && !this.languageSelectorEventListenersAdded) {
+
+            this.initialized = true;
+            let inputs = this.template.querySelectorAll(".input");
+            let validated = checkInputValidation(inputs);
+            this.updateDataValid(validated);
+
 			langbox.addEventListener("focus", event => {
 				this.langPredictiveSearch();
 				this.islangboxfocus = true;

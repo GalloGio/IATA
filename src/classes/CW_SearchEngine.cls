@@ -581,7 +581,7 @@ public without sharing class CW_SearchEngine {
 				this.airmail = acr.Airmail__c;
 				this.companyId = acr.Account_Role__r.Account__c;
 				this.locationClass = acr.Account_Role__r.Account__r.Location_Class__c;
-				this.IATA_icon = ((acr.RecordType.DeveloperName == 'Freight_Forwarder' && acr.Account_Role__r.Account__r.Location_Class__c == 'C') || (((acr.Account_Role__r.Account__r.RecordType.Name == 'Airline Headquarters') || (acr.Account_Role__r.Account__r.RecordType.Name == 'Operator')) && (acr.RecordType.Name == 'Airline')));
+				this.IATA_icon = (acr.RecordType.DeveloperName == 'Freight_Forwarder' && acr.Account_Role__r.Account__r.Location_Class__c == 'C');
 				this.CargoCom_icon = acr.RecordType.DeveloperName == 'Airline';
 				this.ListAir_icon = acr.RecordType.DeveloperName == 'Cargo_Handling_Facility';
 				this.listAccCert = acr.ICG_Capability_Assignment_Groups__r.isEmpty() ? null : acr.ICG_Capability_Assignment_Groups__r;

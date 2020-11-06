@@ -441,6 +441,8 @@ import icg_overall_aiport_size from "@salesforce/label/c.icg_overall_aiport_size
 import icg_fleet from "@salesforce/label/c.icg_fleet";
 import icg_or_create_a_new_hierarchy from "@salesforce/label/c.icg_or_create_a_new_hierarchy";
 import icg_select_an_existing_hierarchy from "@salesforce/label/c.icg_select_an_existing_hierarchy";
+import icg_carousel_info_external_image from "@salesforce/label/c.icg_carousel_info_external_image";
+import icg_please_contact_iata from "@salesforce/label/c.icg_please_contact_iata";
 
 
 export function labels() {
@@ -888,7 +890,9 @@ export function labels() {
 		icg_overall_aiport_size,
 		icg_fleet,
 		icg_or_create_a_new_hierarchy,
-		icg_select_an_existing_hierarchy
+		icg_select_an_existing_hierarchy,
+		icg_carousel_info_external_image,
+		icg_please_contact_iata
 	};
 
 	return labels;

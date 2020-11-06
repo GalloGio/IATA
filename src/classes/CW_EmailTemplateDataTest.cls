@@ -78,6 +78,10 @@ public with sharing class CW_EmailTemplateDataTest {
  
 		ICG_Capability_Assignment_Group__c capabilityGroup = CW_TestDataFactory.createIcgCapabilityAssignmentGroupCertification(accRoleDetail.Id, certi.Id);
 		insert capabilityGroup;
+
+		String RT_NOTIFICATION_PRIVATE_AREA = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Notification__c', 'PrivateArea');
+		ICG_Notification__c notification = new ICG_Notification__c(RecordTypeId = RT_NOTIFICATION_PRIVATE_AREA, Read__c = true, CreatedDate = Date.today() - 32);
+		insert notification;
 	}
 
 	/*********************************************************************************************************
@@ -157,7 +161,7 @@ public with sharing class CW_EmailTemplateDataTest {
 			String contactAccountAddress = emailCtrl.getContactRoleDetailContactAccountAddress();
 		Test.stopTest();
 
-		System.assertEquals('', contactAccountAddress,'CW_EmailTemplateDataTest wrong contactAccountAddress: ' + contactAccountAddress);        
+		System.assert(contactAccountAddress.contains('Test Street'),'CW_EmailTemplateDataTest wrong contactAccountAddress: ' + contactAccountAddress);        
 	}
 
 	/*********************************************************************************************************
@@ -528,5 +532,45 @@ public with sharing class CW_EmailTemplateDataTest {
 		Test.stopTest();
 		
 		System.assert(!ICGCapabilityGroups.isEmpty(),'CW_EmailTemplateDataTest list cannot be null: ' + ICGCapabilityGroups);        
+	}
+
+	/*********************************************************************************************************
+	 * @name			getOrderDetails
+	 * @author			Bea <beatriz.menendez@next-link.ch>
+	 * @created			30 / 10 / 2020
+	 * @description		Test CW_EmailTemplateData.getOrderDetails 
+	 * @param			
+	 * @return			-
+	**********************************************************************************************************/
+	@IsTest
+	static void getOrderDetails(){        
+		CW_EmailTemplateData emailCtrl = new CW_EmailTemplateData();
+		emailCtrl.orderItemId = [SELECT Id FROM OrderItem LIMIT 1].Id;
+
+		Test.startTest();
+			Order testOrder = emailCtrl.getOrderDetails();
+		Test.stopTest();
+		
+		System.assert(testOrder != null,'CW_EmailTemplateDataTest order cannot be null: ' + testOrder);        
+	}
+
+	/*********************************************************************************************************
+	 * @name			getnotificationDetails
+	 * @author			Bea <beatriz.menendez@next-link.ch>
+	 * @created			30 / 10 / 2020
+	 * @description		Test CW_EmailTemplateData.getnotificationDetails 
+	 * @param			
+	 * @return			-
+	**********************************************************************************************************/
+	@IsTest
+	static void getNotificationDetails(){        
+		CW_EmailTemplateData emailCtrl = new CW_EmailTemplateData();
+		emailCtrl.notificationId = [SELECT Id FROM ICG_Notification__c LIMIT 1].Id;
+
+		Test.startTest();
+			ICG_Notification__c testNotification = emailCtrl.getnotificationDetails();
+		Test.stopTest();
+		
+		System.assert(testNotification != null,'CW_EmailTemplateDataTest notification cannot be null: ' + testNotification);        
 	}
 }

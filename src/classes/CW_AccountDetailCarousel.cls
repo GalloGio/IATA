@@ -9,23 +9,37 @@ public without sharing class CW_AccountDetailCarousel {
 	*/
 	@AuraEnabled
 	public static List<Carousel> getFacilityFiles(String recordId) {
+		List<String> acceptFormats = new List<String>{'pdf'};
 		List<String> listId = new List<String>();
+		List<String> listCapabPhotoId = new List<String>();
 		List<Carousel> listImages = new List<Carousel>();
 		Integer index = 0;
 
 		try{
 
-			for (ContentDocumentLink currentItem : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId =: recordId]) {
-				listId.add(currentItem.ContentDocumentId);
+			//Read capabilities photos from the station
+			listImages.addAll(CW_CapabilitiesUtilities.getCapabilitiesPhotosFromStation(recordId));
+			for(Carousel capabPhoto : listImages){
+				listCapabPhotoId.add(capabPhoto.id);
 			}
+
+			//Read photos alocated in salesforce
+			for (ContentDocumentLink currentItem : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId =: recordId]) {
+				if(!listCapabPhotoId.contains(currentItem.ContentDocumentId)){
+					listId.add(currentItem.ContentDocumentId);
+				}
+			}
+
+			index = listCapabPhotoId.size();
 			
-			for (ContentVersion doc : [SELECT Id, VersionData, FileExtension, ContentDocumentId
+			for (ContentVersion doc : [SELECT Id, VersionData, FileExtension, ContentDocumentId, Title
 										FROM ContentVersion 
 										WHERE ContentDocumentId in :listId 
 											AND IsLatest = true 
 											AND Is_Company_Logo__c = false]) {
 				Carousel car = new Carousel();
-				car.id = doc.Id;
+				car.id = doc.ContentDocumentId;
+				car.name = doc.Title;
 				car.image= EncodingUtil.base64Encode(doc.VersionData);
 				car.tabindex = index == 0 ? '0' : '-1';
 				car.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
@@ -38,15 +52,16 @@ public without sharing class CW_AccountDetailCarousel {
 				car.panelClass = panelClass;
 				car.fileExtension = doc.FileExtension;
 				car.urlImage = CW_AccountDetailCarousel.generateImageURL(doc.ContentDocumentId);
+				car.isInternal = true;
+				car.isDocument = acceptFormats.contains(doc.FileExtension);
 				listImages.add(car);
 				index++;
 			}
 
-			//Read capabilities photos from the station
-			listImages.addAll(CW_CapabilitiesUtilities.getCapabilitiesPhotosFromStation(listId,recordId));
+			
 		}
 		catch(Exception e){
-            System.debug(LoggingLevel.FINE, '____[CW_AccountDetailCarousel - getFacilityFiles] Error: ' + e.getMessage() + ' Trace:' + e.getStackTraceString());
+			System.debug(LoggingLevel.FINE, '____[CW_AccountDetailCarousel - getFacilityFiles] Error: ' + e.getMessage() + ' Trace:' + e.getStackTraceString());
 		}
 
 		return listImages;
@@ -60,8 +75,7 @@ public without sharing class CW_AccountDetailCarousel {
 	public static String hideImageSelected(String imageId) {
 		Result res = new Result();
 		try{
-			ContentVersion contentV = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :imageId];
-			ContentDocument contentD = [SELECT Id FROM ContentDocument WHERE Id = :contentV.ContentDocumentId];
+			ContentDocument contentD = [SELECT Id FROM ContentDocument WHERE Id = :imageId];
 			delete contentD;
 			res.success = true;
 		}
@@ -85,6 +99,8 @@ public without sharing class CW_AccountDetailCarousel {
 		@AuraEnabled 
 		public String id {set;get;}
 		@AuraEnabled 
+		public String name {set;get;}
+		@AuraEnabled 
 		public String image {set;get;}
 		@AuraEnabled 
 		public String tabindex {set;get;}
@@ -100,6 +116,10 @@ public without sharing class CW_AccountDetailCarousel {
 		public String position {set;get;}
 		@AuraEnabled 
 		public String urlImage {set;get;}
+		@AuraEnabled 
+		public Boolean isInternal {set;get;}
+		@AuraEnabled 
+		public Boolean isDocument {set;get;}
 	}
 	
 	public class Result{

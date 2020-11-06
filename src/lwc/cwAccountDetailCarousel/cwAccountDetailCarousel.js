@@ -33,6 +33,7 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	@track showFileHideCarousel=false;
 	indexMap = 1;
 	lastIndexMap = 0;
+	acceptFormat = 'pdf';
     
     get showAsCreateStation() {
 		return this.localRecordId == "";
@@ -61,7 +62,8 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	icon = {
 		bluearrow: resources + "/icons/single_arrow_left.svg",
 		plus: resources + "/icons/icon-plus.svg",
-		minus: resources + "/icons/icon-minus.svg"
+		minus: resources + "/icons/icon-minus.svg",
+		download: resources + "/icons/icg-document-download.png",
 	};
 
 	initialized = false;
@@ -83,8 +85,13 @@ export default class CwAccountDetailCarousel extends LightningElement {
 					let listMiniature = [];
 					let index = 1;
 					let indexMap = 1;
-					imagesList.forEach(img => {						
-						img.url = img.urlImage;
+					imagesList.forEach(img => {	
+						if(img.fileExtension.includes(this.acceptFormat)){
+							img.url = this.icon.download;
+						}
+						else{
+							img.url = img.urlImage;
+						}
 
 						if(index !== 4*indexMap ){
 							listMiniature.push(img);
@@ -157,16 +164,23 @@ export default class CwAccountDetailCarousel extends LightningElement {
 	}
 
 	evaluateHideImage(){
-		if (this.showFileHideCarousel === false) {
-			this.showFileHideCarousel = true;
+		let img = this.listImages[this.currentImagePosition];
+		if(img.isInternal){
+			if (this.showFileHideCarousel === false) {
+				this.showFileHideCarousel = true;
+			}
+			else{
+				this.showFileHideCarousel = false;
+			}
 		}
 		else{
-			this.showFileHideCarousel = false;
+			this.showToast("Error", this.label.icg_carousel_info_external_image,"error");
 		}
+		
 	}
 
 	makeActionToImage(){
-		let img = this.listImages[this.currentImagePosition]
+		let img = this.listImages[this.currentImagePosition];
 		this.hideImageSelected(img.id);
 
 		this.showFileHideCarousel = false;
@@ -218,8 +232,13 @@ export default class CwAccountDetailCarousel extends LightningElement {
 
 	}
 
-	openModal() {
-		this.modalCarouselOpen = true;
+	openModal(event) {
+		let imageId = event.currentTarget.dataset.item;
+		let imageSelected = this.listImages.filter(img => img.id === imageId);
+		if(imageSelected.length > 0){
+			imageSelected[0].fileExtension === this.acceptFormat ? window.open(imageSelected[0].urlImage,'_blank') : this.modalCarouselOpen = true;
+		}
+		
 	}
 
 	closeModal() {

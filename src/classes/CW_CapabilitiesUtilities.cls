@@ -453,7 +453,8 @@ public with sharing class CW_CapabilitiesUtilities {
 		return lstCertiAllowed;
 	}
 
-	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(List<String> listId, String recordId){
+	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(String recordId){
+		List<String> acceptFormats = new List<String>{'pdf'};
 		List<CW_CapabilitiesManagerController.CapabilityPhoto> photosCapab = new List<CW_CapabilitiesManagerController.CapabilityPhoto>();
 		List<CW_AccountDetailCarousel.Carousel> photosCarousel = new List<CW_AccountDetailCarousel.Carousel>();
 
@@ -471,10 +472,11 @@ public with sharing class CW_CapabilitiesUtilities {
 			
 		}
 
-		Integer index = listId.size();
+		Integer index = 0;
 		for(CW_CapabilitiesManagerController.CapabilityPhoto photoParse : photosCapab){
 			CW_AccountDetailCarousel.Carousel car = new CW_AccountDetailCarousel.Carousel();
-			car.id = ''+(index+1);
+			car.id = photoParse.id;
+			car.name = photoParse.label;
 			car.tabindex = index == 0 ? '0' : '-1';
 			car.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
 			car.hidden =  index == 0 ? true : false;
@@ -484,8 +486,11 @@ public with sharing class CW_CapabilitiesUtilities {
 			String panelClass = 'slds-carousel__panel carousel-size';
 			panelClass = index == 0 ? panelClass + ' panelSelected' : panelClass;
 			car.panelClass = panelClass;
+			String fileExtension = photoParse.url.substringAfter('.');
+			car.fileExtension = fileExtension;
 			car.urlImage = photoParse.url;
-
+			car.isInternal = false;
+			car.isDocument = acceptFormats.contains(fileExtension);
 			photosCarousel.add(car);
 			index++;
 		}

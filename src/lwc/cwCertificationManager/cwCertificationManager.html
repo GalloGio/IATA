@@ -81,7 +81,7 @@
 			<template if:false={isEditMode}>
 				<button class="slds-col slds-button slds-button_outline-brand bt-marine" data-origin="Active-Cert" onclick={handleHistory} disabled={hideButton}>{label.icg_history}</button>
 				<button class="slds-col slds-button slds-button_outline-brand bt-green" onclick={handleRenewCertification} disabled={hideButton}>{label.renew}</button>
-				<button class="slds-col slds-button slds-button_outline-brand bt-yellow" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCertification} disabled={disableButtonsEdit}>{label.icg_capab_magmnt_edit}</button>
+				<button class="slds-col slds-button slds-button_outline-brand bt-yellow" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCertification}>{label.icg_capab_magmnt_edit}</button>
 				<button class="slds-col slds-button slds-button_outline-brand bt-blue" data-id={certificationInfo.id} data-origin="Active-Cert" onclick={handleEditCapabilities} disabled={disableButtonEditCapab}>{label.icg_capab_magmnt_edit_capab}</button>
 				<button if:true={showActivateButton} class="slds-col slds-button slds-button-brand" title="Activate group" data-id={certificationInfo.id} onclick={handleActivateGroup} >{label.icg_activate}</button>
 			</template>

@@ -49,29 +49,37 @@ public without sharing class CW_ScheduleAuditsController {
 
 	private static void handleEmailsAndNotifications(Id stakeHoldersId, List<ICG_Notification__c> auditsToInsert, Map<Id,Set<Id>> managersPerQueueId, Map<Id, Id> mapCertIdQueueId) {
 		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
-		
+
 		for (ICG_Notification__c notif : auditsToInsert) {
-			notif.OwnerId = mapCertIdQueueId.get(notif.ICG_Certification__c) != null ? mapCertIdQueueId.get(notif.ICG_Certification__c) : stakeHoldersId;
+			notif.OwnerId = mapCertIdQueueId.get(notif.ICG_Certification__c) != null ? mapCertIdQueueId.get(notif.ICG_Certification__c) : stakeHoldersId;			
 		}
 
 		if (!auditsToInsert.isEmpty()){
 			insert auditsToInsert;
 
+			//Share inserted notification records to Requestor
+			shareAuditNotificationsWithRequetor(auditsToInsert);			
+
 			String subject = 'Audit request sent';
-			List<String> notificationReceivers = new List<String>();
-			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_Conf_to_User', auditsToInsert[0].Id, new Set<Id> {UserInfo.getUserId()}));
+			List<String> notificationReceivers = new List<String>();			
 			notificationReceivers.add(UserInfo.getUserId());
 			
 			for(ICG_Notification__c nt : auditsToInsert){
-				if(Limits.getLimitEmailInvocations()>0){					
-					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {						
-						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Station__c, managersPerQueueId.get(nt.OwnerId)));
+				if(Limits.getLimitEmailInvocations() > 0){
+					//Prepare emails to requestor					
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_Conf_to_User', nt.Id, new Set<Id> {UserInfo.getUserId()}));
+					//Prepare emails to IATA admis
+					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {
+						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Id, managersPerQueueId.get(nt.OwnerId)));
 						for(Id currentReceiver: managersPerQueueId.get(nt.OwnerId)){	
-							notificationReceivers.add(currentReceiver);
+							if(currentReceiver.startsWith(Schema.getGlobalDescribe().get('User').getDescribe().getKeyPrefix())){
+								notificationReceivers.add(currentReceiver);
+							}
 						}
 					}
 				}
 			}
+			//Add Community notification to email receivers
 			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', notificationReceivers, auditsToInsert[0].Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 
@@ -122,6 +130,30 @@ public without sharing class CW_ScheduleAuditsController {
 			}
 		}
 		return queuesToGet;
+	}
+
+	private static void shareAuditNotificationsWithRequetor(List<ICG_Notification__c> auditNotifications){
+		List<ICG_Notification__Share> notifShrLst  = new List<ICG_Notification__Share>();  
+		
+		for (ICG_Notification__c notif : auditNotifications) {			
+			ICG_Notification__Share notifShr  = new ICG_Notification__Share();
+			// Set the ID of record being shared.
+			notifShr.ParentId = notif.Id;			  
+			// Set the ID of user or group being granted access.
+			notifShr.UserOrGroupId = UserInfo.getUserId();
+			notifShr.AccessLevel = 'Read';			 
+			notifShrLst.add(notifShr);
+		}	
+
+		if(!notifShrLst.isEmpty()){			
+			for(Database.SaveResult sr :Database.insert(notifShrLst, false)){
+				if(!sr.isSuccess()){					
+					Database.Error err = sr.getErrors()[0];
+					System.debug(LoggingLevel.FINE, '____[CW_ScheduleAuditsController - shareAuditNotificationsWithRequetor] Error sharing audit notifications with requestor: ' + err.getMessage());
+					throw new AuraHandledException('Error sharing audit notifications with requestor: ' + err.getMessage());
+				}
+			}			
+		}
 	}
 
 	private static Set<Id> generateSelectedCertificationsIds(List<CertData> certListDeserialized) {

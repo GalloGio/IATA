@@ -959,8 +959,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 		let objToSave = {
 			Number_of_Employees__c: this.facility.NumberEmployees,
-			Overall_Facility_Size_m2__c: this.facility.FacilitySize,
-			Overall_Airport_Size__c: this.facility.overallAirportSize,
+			Overall_Facility_Size_m2__c: this.facility.recordTypeDevName === 'Cargo_Handling_Facility' ? this.facility.overallAirportSize : 0,
+			Overall_Airport_Size__c: this.facility.recordTypeDevName === 'Airport_Operator' ? this.facility.overallAirportSize : 0,
 			Fleet__c: this.facility.fleet,
 			Is_On_Airport__c: this.facility.IsOnAirport,
 			Is_Direct_Ramp_Access__c: this.facility.DirectRampAccess,

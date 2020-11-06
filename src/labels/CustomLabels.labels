@@ -51811,4 +51811,20 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>icg select an existing hierarchy</shortDescription>
         <value>Select an existing Hierarchy</value>
     </labels>
+    <labels>
+        <fullName>icg_carousel_info_external_image</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>text for information</shortDescription>
+        <value>This image is associated to a validated Equipment/Infrastructure. Click on the “Manage Photos“ button in the respective sections below and de-select “Display publicly“</value>
+    </labels>
+    <labels>
+        <fullName>icg_please_contact_iata</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg please contact iata</shortDescription>
+        <value>Please contact IATA.</value>
+    </labels>
 </CustomLabels>

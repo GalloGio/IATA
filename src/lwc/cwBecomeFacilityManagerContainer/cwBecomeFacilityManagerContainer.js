@@ -40,6 +40,9 @@ export default class CwBecomeFacilityManagerContainer extends LightningElement {
 				this.dispatchEvent( new CustomEvent('refresh'));
                 this.requesting= false;
                 this.showModal = true;
+                if (!parsedRes.success){
+                    this.modalImage = this.ERROR_IMAGE;
+                }
             }).catch(err => {
 				console.error('Error ', err);
                 this.modalMessage = this.label.icg_error_message;

@@ -4,7 +4,7 @@ export default class CwFileUploadCarousel extends LightningElement {
 	@api recordId;
 
 	get acceptedFormats() {
-		return [".png", ".jpg", ".jpeg"];
+		return [".png", ".jpg", ".jpeg", ".pdf"];
 	}
 
 	handleUploadFinished(event) {
