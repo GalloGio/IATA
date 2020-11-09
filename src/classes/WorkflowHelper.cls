@@ -419,11 +419,15 @@ public without sharing class WorkflowHelper {
 
 	public static void updateCNSContactCheckbox(Contact oldContact , Contact newContact){
 
-		if(!getAccountPerContact().isEmpty() 
+		Map<String,Account> newMap = new Map<String,Account>();
+		
+		newMap = getAccountPerContact();
+		
+		if(!newMap.isEmpty() 
 
 			&& newContact.Email != null
-			&& getAccountPerContact().get(newContact.Email) != null
-			&& getAccountPerContact().get(newContact.Email).CNS_Account__c
+			&& newMap.get(newContact.Email) != null
+			&& newMap.get(newContact.Email).CNS_Account__c
 			&& (oldContact == null || newContact.CNS_Contact__c != null
 			&& !newContact.CNS_Contact__c)
 			
