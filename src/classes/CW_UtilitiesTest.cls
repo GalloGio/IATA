@@ -36,12 +36,18 @@ public class CW_UtilitiesTest {
 		Account_Role__c accRole2 = CW_TestDataFactory.testAccountRole(acc.Id, 'Test2');
 		insert accRole2;
 
+		Account_Role__c accRole3 = CW_TestDataFactory.testAccountRole(acc.Id, 'Test3');
+		insert accRole3;
+
 		ICG_Account_Role_Detail__c accRoleDetail = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		insert accRoleDetail;
 
 		ICG_Account_Role_Detail__c accRoleDetail2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole2.Id, airport);
 		insert accRoleDetail2;
 
+		ICG_Account_Role_Detail__c accRoleDetail3 = CW_TestDataFactory.testICGAccountRoleDetailPendingForApproval(accRole3.Id, airport);
+		insert accRoleDetail3;
+		
 		User uu = CW_TestDataFactory.testUser('IATAICGACB', 'IATAICGXYZ', uniqueName, orgId, pf.Id, con1.id);
 		insert uu;
 
@@ -193,6 +199,17 @@ public class CW_UtilitiesTest {
 		System.assert(result.contains('Please, select at least one facility'), 'Null Facility validation');
 	}
 
+	
+	@isTest
+	static void getOpsHierarchyGroupFromAccountId() {
+		List<Account> acct = [SELECT Id FROM Account WHERE Name = 'Account01'];
+
+		test.startTest();
+		String result = CW_Utilities.getOpsHierarchyGroupFromAccountId(acct[0].Id);
+		test.stopTest();
+		System.assertEquals(result, 'Test');
+
+	}
 	/**@description Validates the "submitted == true " section of the BecomeCompanyAdmin Method
 	 */
 	@isTest
@@ -297,6 +314,8 @@ public class CW_UtilitiesTest {
 			System.assertEquals(false, aux, 'The process run correctly');
 			aux = CW_Utilities.rejectStationAutomaticProcess(ard[0].Id, 'the reason');
 			System.assertEquals(false, aux, 'The process run correctly');
+			aux = CW_Utilities.rejectStationAutomaticProcess(ard[2].Id, 'the reason');
+			System.assertEquals(true, aux, 'The process run correctly');
 			aux = CW_Utilities.rejectStationAutomaticProcess('notId', 'the reason');
 			System.assertEquals(false, aux, 'The process run correctly');
 			test.stopTest();

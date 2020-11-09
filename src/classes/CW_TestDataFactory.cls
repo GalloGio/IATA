@@ -39,6 +39,10 @@ public class CW_TestDataFactory {
 		return new ICG_Account_Role_Detail__c(Airmail__c = true, Account_Role__c = acctRoleId, IATA_ISO_Country__c = airport.IATA_ISO_Country__c, Nearest_Airport__c = airport.Id, Status__c = 'Approved', Name = 'Test', Available_Languages__c = 'ESP;GER', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Account_Role_Detail__c', 'Airline'));
 	}
 
+    public static ICG_Account_Role_Detail__c testICGAccountRoleDetailPendingForApproval(String acctRoleId, Airport_Detail__c airport) {
+		return new ICG_Account_Role_Detail__c(Airmail__c = true, Account_Role__c = acctRoleId, IATA_ISO_Country__c = airport.IATA_ISO_Country__c, Nearest_Airport__c = airport.Id, Status__c = 'Pending for Approval', Name = 'Test', Available_Languages__c = 'ESP;GER', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Account_Role_Detail__c', 'Airline'));
+	}
+
 	public static Account_Contact_Role__c testAccountContactRole(String acctRolId, String acctId, String contactId) {
 		return new Account_Contact_Role__c(Account_Role__c = acctRolId, Account__c = acctId, Contact__c = contactId, Functional_Role__c = 'One Source', Service_Rendered__c = 'TIP');
 	}
