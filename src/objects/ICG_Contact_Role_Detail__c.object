@@ -387,13 +387,6 @@
         </valueSet>
     </fields>
     <validationRules>
-        <fullName>Accounts_Correspond</fullName>
-        <active>false</active>
-        <description>When the role is Facility Manager, the account of the Account Contact Role and the station must coincide.</description>
-        <errorConditionFormula>AND(  ISPICKVAL(ICG_Role__c,&quot;Facility Manager&quot;) ,   Account_Contact_Role__r.Account__c  &lt;&gt;  ICG_Account_Role_Detail__r.Account_Role__r.Account__c  )</errorConditionFormula>
-        <errorMessage>The Account of the Account Contact Role and the Station must be the same.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Station_Role_Company_Admin</fullName>
         <active>true</active>
         <description>When the role is &quot;Company Admin&quot;, then the account role needs to be filled out.</description>

@@ -215,10 +215,10 @@ public without sharing class CW_CreateFacilityController {
 					for(Account_Role_Relationship__c arr : userarr){
 						userGroup = arr.Ops_Hierarchy_Group__c;
 					}
-					/////////
+					
 					//If user account has no account role relationships means is an single account
 					//Relate new account and single account with ops hierarchy group
-					if(userGroup == null){
+					if(String.isBlank(userGroup)){
 						userGroup = usr.Account.Name;
 						if(userAccRole == null) {
 							Account_Role__c arol = createOneSourceAccRole(accountId);

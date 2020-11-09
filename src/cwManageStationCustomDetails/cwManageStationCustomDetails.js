@@ -138,7 +138,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.loaded = true;
 			})
 			.catch(error => {
-				console.error("error", error);
 				this.setLoadedStatus();
 			});
 	}
@@ -192,7 +191,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			})
 			.catch(error => {
 				this.loaded = true;
-				console.error("error", error);
 			});
 
 		this.template.querySelectorAll(".cmpEditable").forEach(elem => {
@@ -536,7 +534,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			})
 			.catch(exception => {
 				this.showToast("Error", "Something went wrong while updating the facility", "error");
-				console.error(exception);
 			});
 	}
 
