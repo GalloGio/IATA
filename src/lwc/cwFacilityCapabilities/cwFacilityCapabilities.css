@@ -361,3 +361,11 @@ ul.enlarge li:hover .tooltip-img img {
 .cell-buttons{
 	background-color: #ffffff !important;
 }
+
+.zui-sticky-col {
+    left: 0;
+    position: sticky;
+    width: 25%;
+    z-index: 20;
+    background-color: white;
+  }

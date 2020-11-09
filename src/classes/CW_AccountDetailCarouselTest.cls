@@ -37,6 +37,20 @@ public class CW_AccountDetailCarouselTest {
 		);
 		insert accRoleDetail;
 
+		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
+		ardCap.Photos__c = '[{"visible":true,"url":"https://iata--nextlink6--c.documentforce.com/sfc/dist/version/download/?oid=00D1X000000278m&ids=0681X000000EdCq&d=%2Fa%2F1X000000Ckhe%2FezuTbdb14gd0yv_y8ApOdMKVbXBrylSNamQCPl2L.QM&asPdf=false","label":"Dollies / Tub Carts-1","id":"0691X000000EXIpQAO"}]';
+		insert ardCap;
+
+		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
+		capvalcert.Issue_Date__c = Date.today().addDays(-1);
+		capvalcert.Expiration_Date__c = Date.today().addDays(1);
+		capvalcert.ICG_Account_Role_Detail__c = accRoleDetail.Id;
+		insert capvalcert;
+
+		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(accRoleDetail.Id, ardCap.Id);
+		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
+		insert assignment;
+
 		final Blob beforeblob = Blob.valueOf('Unit Test Attachment Body');
 		final List<ContentVersion> lstCV = new List<ContentVersion>();
 		final ContentVersion cv1 = new ContentVersion();
@@ -91,7 +105,7 @@ public class CW_AccountDetailCarouselTest {
 		);
 		System.assertEquals(
 			currentCarMap.get('fileExtension'),
-			'txt',
+			'documentforce.com/sfc/dist/version/download/?oid=00D1X000000278m&ids=0681X000000EdCq&d=%2Fa%2F1X000000Ckhe%2FezuTbdb14gd0yv_y8ApOdMKVbXBrylSNamQCPl2L.QM&asPdf=false',
 			'fileExtension expected: .txt'
 		);
 		

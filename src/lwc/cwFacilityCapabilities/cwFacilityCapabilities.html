@@ -279,13 +279,25 @@
 																			iterator:currentfield={currentheader.value}>
 																			
 																			<template if:false={currentheader.last}>
+																				
 																				<template
 																					if:false={currentfield.value.label.length}>
-																					<th key={currentfield.value.name}
+
+
+																					<th if:true={currentfield.first}
+																						key={currentfield.value.name}
+																						scope="col"
+																						colspan={currentfield.value.colspan}
+																						class="box-shadow-none zui-sticky-col">
+																					</th>
+
+																					<th if:false={currentfield.first}
+																						key={currentfield.value.name}
 																						scope="col"
 																						colspan={currentfield.value.colspan}
 																						class="box-shadow-none">
 																					</th>
+																					
 																				</template>
 																				<template
 																					if:true={currentfield.value.label.length}>
