@@ -4,23 +4,250 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
-            <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
+            <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Portal</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Vietnam</value>
-            </criteriaItems>
+            <formula>AND(
+  OR(
+  ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+  AND(
+  ISPICKVAL(Origin,&quot;Escalation&quot;),
+  OR(
+  Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+  ISPICKVAL(Priority,&quot;High&quot;)
+  )
+  )
+  ),
+  OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+  AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
+  TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;00:00:00.000&quot;),
+  TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;)
+  )</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+AND(
+OR(RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;))),
+
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
+)
+),
+AND(
+OR(
+RecordType.DeveloperName = &quot;CasesEurope&quot;,
+RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+RecordType.DeveloperName = &quot;CasesMENA&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;Americas&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;)))
+
+),
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
+)
+),
+AND(
+OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
+
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
+)
+)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+AND(
+OR(
+RecordType.DeveloperName = &quot;CasesEurope&quot;,
+RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+RecordType.DeveloperName = &quot;CasesMENA&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;Americas&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;)))
+
+),
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
+)
+),
+AND(
+OR(
+RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+AND(RecordType.DeveloperName = &quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;)))
+),
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
+)
+)
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Turkish</assignedTo>
@@ -39,6 +266,25 @@
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Turkey</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Vietnam</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -919,252 +1165,6 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
 
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>AND(
-  OR(
-  ISPICKVAL(Priority , &quot;Emergency&quot;),
-AND(
-OR(
-CONTAINS(Subject,&quot;Emergency&quot;),
-CONTAINS(Subject,&quot;emergency&quot;),
-CONTAINS(Subject,&quot;EMERGENCY&quot;),
-CONTAINS(Subject,&quot;Urgent&quot;),
-CONTAINS(Subject,&quot;urgent&quot;),
-CONTAINS(Subject,&quot;URGENT&quot;),
-CONTAINS(Subject,&quot;Very important&quot;),
-CONTAINS(Subject,&quot;Very Important&quot;),
-CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
-CONTAINS(Subject,&quot;very important&quot;),
-CONTAINS(Subject,&quot;IMPORTANT&quot;),
-CONTAINS(Subject,&quot;Critical&quot;),
-CONTAINS(Subject,&quot;critical&quot;),
-CONTAINS(Subject,&quot;CRITICAL&quot;)
-),
- ISPICKVAL(Origin,&quot;Portal&quot;)
-),
-  AND(
-  ISPICKVAL(Origin,&quot;Escalation&quot;),
-  OR(
-  Key_Customer_Case__c &lt;&gt; &quot; &quot;,
-  ISPICKVAL(Priority,&quot;High&quot;)
-  )
-  )
-  ),
-  OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
-  AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
-  TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;00:00:00.000&quot;),
-  TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;)
-  )</formula>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>OR(
-AND(
-OR(RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
-AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;))),
-
-OR(
-ISPICKVAL(Priority , &quot;Emergency&quot;),
-AND(
-OR(
-CONTAINS(Subject,&quot;Emergency&quot;),
-CONTAINS(Subject,&quot;emergency&quot;),
-CONTAINS(Subject,&quot;EMERGENCY&quot;),
-CONTAINS(Subject,&quot;Urgent&quot;),
-CONTAINS(Subject,&quot;urgent&quot;),
-CONTAINS(Subject,&quot;URGENT&quot;),
-CONTAINS(Subject,&quot;Very important&quot;),
-CONTAINS(Subject,&quot;Very Important&quot;),
-CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
-CONTAINS(Subject,&quot;very important&quot;),
-CONTAINS(Subject,&quot;IMPORTANT&quot;),
-CONTAINS(Subject,&quot;Critical&quot;),
-CONTAINS(Subject,&quot;critical&quot;),
-CONTAINS(Subject,&quot;CRITICAL&quot;)
-),
-ISPICKVAL(Origin,&quot;Portal&quot;)
-),
-AND(
-ISPICKVAL(Origin,&quot;Escalation&quot;),
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
-ISPICKVAL(Priority,&quot;High&quot;)
-)
-)
-),
-OR(
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
-)
-),
-AND(
-OR(
-RecordType.DeveloperName = &quot;CasesEurope&quot;,
-RecordType.DeveloperName = &quot;CasesAmericas&quot;,
-RecordType.DeveloperName = &quot;CasesMENA&quot;,
-AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;Americas&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;)))
-
-),
-OR(
-ISPICKVAL(Priority , &quot;Emergency&quot;),
-AND(
-OR(
-CONTAINS(Subject,&quot;Emergency&quot;),
-CONTAINS(Subject,&quot;emergency&quot;),
-CONTAINS(Subject,&quot;EMERGENCY&quot;),
-CONTAINS(Subject,&quot;Urgent&quot;),
-CONTAINS(Subject,&quot;urgent&quot;),
-CONTAINS(Subject,&quot;URGENT&quot;),
-CONTAINS(Subject,&quot;Very important&quot;),
-CONTAINS(Subject,&quot;Very Important&quot;),
-CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
-CONTAINS(Subject,&quot;very important&quot;),
-CONTAINS(Subject,&quot;IMPORTANT&quot;),
-CONTAINS(Subject,&quot;Critical&quot;),
-CONTAINS(Subject,&quot;critical&quot;),
-CONTAINS(Subject,&quot;CRITICAL&quot;)
-),
-ISPICKVAL(Origin,&quot;Portal&quot;)
-),
-AND(
-ISPICKVAL(Origin,&quot;Escalation&quot;),
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
-ISPICKVAL(Priority,&quot;High&quot;)
-)
-)
-),
-OR(
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
-)
-),
-AND(
-OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
-AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
-
-OR(
-ISPICKVAL(Priority , &quot;Emergency&quot;),
-AND(
-OR(
-CONTAINS(Subject,&quot;Emergency&quot;),
-CONTAINS(Subject,&quot;emergency&quot;),
-CONTAINS(Subject,&quot;EMERGENCY&quot;),
-CONTAINS(Subject,&quot;Urgent&quot;),
-CONTAINS(Subject,&quot;urgent&quot;),
-CONTAINS(Subject,&quot;URGENT&quot;),
-CONTAINS(Subject,&quot;Very important&quot;),
-CONTAINS(Subject,&quot;Very Important&quot;),
-CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
-CONTAINS(Subject,&quot;very important&quot;),
-CONTAINS(Subject,&quot;IMPORTANT&quot;),
-CONTAINS(Subject,&quot;Critical&quot;),
-CONTAINS(Subject,&quot;critical&quot;),
-CONTAINS(Subject,&quot;CRITICAL&quot;)
-),
-ISPICKVAL(Origin,&quot;Portal&quot;)
-),
-AND(
-ISPICKVAL(Origin,&quot;Escalation&quot;),
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
-ISPICKVAL(Priority,&quot;High&quot;)
-)
-)
-),
-OR(
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
-)
-)
-)</formula>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>OR(
-AND(
-OR(
-RecordType.DeveloperName = &quot;CasesEurope&quot;,
-RecordType.DeveloperName = &quot;CasesAmericas&quot;,
-RecordType.DeveloperName = &quot;CasesMENA&quot;,
-AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;Americas&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;)))
-
-),
-OR(
-ISPICKVAL(Priority , &quot;Emergency&quot;),
-AND(
-OR(
-CONTAINS(Subject,&quot;Emergency&quot;),
-CONTAINS(Subject,&quot;emergency&quot;),
-CONTAINS(Subject,&quot;EMERGENCY&quot;),
-CONTAINS(Subject,&quot;Urgent&quot;),
-CONTAINS(Subject,&quot;urgent&quot;),
-CONTAINS(Subject,&quot;URGENT&quot;),
-CONTAINS(Subject,&quot;Very important&quot;),
-CONTAINS(Subject,&quot;Very Important&quot;),
-CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
-CONTAINS(Subject,&quot;very important&quot;),
-CONTAINS(Subject,&quot;IMPORTANT&quot;),
-CONTAINS(Subject,&quot;Critical&quot;),
-CONTAINS(Subject,&quot;critical&quot;),
-CONTAINS(Subject,&quot;CRITICAL&quot;)
-),
-ISPICKVAL(Origin,&quot;Portal&quot;)
-),
-AND(
-ISPICKVAL(Origin,&quot;Escalation&quot;),
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
-ISPICKVAL(Priority,&quot;High&quot;)
-)
-)
-),
-OR(
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
-)
-),
-AND(
-OR(
-RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
-RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
-AND(RecordType.DeveloperName = &quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;)))
-),
-OR(
-ISPICKVAL(Priority , &quot;Emergency&quot;),
-AND(
-OR(
-CONTAINS(Subject,&quot;Emergency&quot;),
-CONTAINS(Subject,&quot;emergency&quot;),
-CONTAINS(Subject,&quot;EMERGENCY&quot;),
-CONTAINS(Subject,&quot;Urgent&quot;),
-CONTAINS(Subject,&quot;urgent&quot;),
-CONTAINS(Subject,&quot;URGENT&quot;),
-CONTAINS(Subject,&quot;Very important&quot;),
-CONTAINS(Subject,&quot;Very Important&quot;),
-CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
-CONTAINS(Subject,&quot;very important&quot;),
-CONTAINS(Subject,&quot;IMPORTANT&quot;),
-CONTAINS(Subject,&quot;Critical&quot;),
-CONTAINS(Subject,&quot;critical&quot;),
-CONTAINS(Subject,&quot;CRITICAL&quot;)
-),
-ISPICKVAL(Origin,&quot;Portal&quot;)
-),
-AND(
-ISPICKVAL(Origin,&quot;Escalation&quot;),
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
-ISPICKVAL(Priority,&quot;High&quot;)
-)
-)
-),
-OR(
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
-)
-)
-)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>

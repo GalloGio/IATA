@@ -1,8 +1,7 @@
 public with sharing class CaseCommentHandler {
 	public static final String CASE_COMMENT_ACTION = 'Public Case Comment';
 	
-	List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
-	List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
 
 	public static Boolean caseCommentKPI = false;
 	
@@ -69,7 +68,7 @@ public with sharing class CaseCommentHandler {
 		
 		if(kpiValuesToInsert.size() > 0 ) {
 			caseCommentKPI = true;
-			insert kpiValuesToInsert;
+			insertKPIReportingValue();
 		}
 	}
 
@@ -137,6 +136,11 @@ public with sharing class CaseCommentHandler {
 		valueToAdd.Responsible__c = UserInfo.getUserId();
 		
 		kpiValuesToInsert.add(valueToAdd);
+	}
+
+	@future
+	private static void insertKPIReportingValue(){
+		insert kpiValuesToInsert;
 	}
 
 	/**
