@@ -130,12 +130,7 @@ public class TransformationHelper {
 
 
 	public static void sendEmailSupport( string subject, string message ) {
-		if (Test.isRunningTest()) {
-			System.debug('SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
-			return;
-		}
-
-		List<ID> userIDs = getUserIds(getSupportEmails());
+		List<ID> userIDs = getSupportEmails();
 		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 
 		try {
@@ -150,9 +145,7 @@ public class TransformationHelper {
 				mail.setPlainTextBody(message);
 				emailsToSend.add(mail);
 			}
-
 			Messaging.sendEmail(emailsToSend);
-
 		} catch (Exception  e) {
 			system.debug('Failed to send email to users');
 		}
@@ -160,46 +153,11 @@ public class TransformationHelper {
 	}
 
 	private static List<String> getSupportEmails() {
-		List<String> emails = new List<String>();
-
-		String supportEmails = UtilityCS__c.getInstance('Emails').value__c;
-		System.debug('SupportEmails: ' + supportEmails );
-
-		if (supportEmails != null)
-			for (String email : supportEmails.split(',', 0)) {
-				if (validateEmail(email))
-					emails.add(email);
+		List<ID> emails = new List<ID>();
+			for(SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
+					emails.add(supportEmail.Support_User_Id__c);
 			}
-
 		return emails;
-	}
-
-	public static Boolean validateEmail(String email) {
-
-		Boolean res = true;
-
-		String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$';
-		// source: <a href="http://www.regular-expressions.info/email.html" target="_blank">http://www.regular-expressions.info/email.html</a>
-		Pattern MyPattern = Pattern.compile(emailRegex);
-
-		Matcher MyMatcher = MyPattern.matcher(email);
-
-		if (!MyMatcher.matches())
-			res = false;
-		return res;
-	}
-
-	//Get the internal user IDs
-	private static List<ID> getUserIds(List<String> users) {
-		List<ID> userIDs = new List<ID>();
-
-		if (users != null && users.size() > 0) {
-			User[] userList = [select ID from User where Email in : users];
-			for (User user : userList)
-				userIDs.add(user.Id);
-		}
-
-		return userIDs;
 	}
 
 	/**
