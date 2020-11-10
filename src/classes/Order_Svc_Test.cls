@@ -1331,6 +1331,9 @@ private class Order_Svc_Test
 		if (cs == null) cs = new Apex_Setting__c(Name='ContactId to populate email Template');
 		cs.Text_1__c = lstContact[0].Id;
 		upsert cs;
+		IEC_Functionality__c sSN = IEC_Functionality__c.getValues('Special Shipping Notification');
+		sSN.Functionality_Value__c = '1';
+		upsert sSN;
 		lstOrder[0].Status = IECConstants.ORDER_STATUS_READY_FOR_SAP;
 		lstOrder[0].Payment_Type__c = 'Bank Transfer';
 		update lstOrder[0];
