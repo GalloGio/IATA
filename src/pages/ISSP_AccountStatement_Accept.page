@@ -1,196 +1,305 @@
-<apex:page controller="ISSP_Ctrl_AccountStatements_Accept" showHeader="false" standardStylesheets="false" sidebar="false" >
+<apex:page controller="ISSP_Ctrl_AccountStatements_Accept"
+	cache="false"
+	sidebar="false"
+	showHeader="false"
+	applyBodyTag="false"
+	applyHtmlTag="false"
+	docType="html-5.0"
+	standardStylesheets="false"
+	id="page">
 
-<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+	<style>
+		:root {
+			--ice-add-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/add.png')}");
+			--ice-attachment-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachment.png')}");
+			--ice-attachmenthover-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachmenthover.png')}");
+			--ice-close-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/close.png')}");
+			--ice-download-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/download.png')}");
+			--ice-print-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/print.png')}");
+			--ice-searchColored-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/searchColored.png')}");
+		}
+		@font-face {
+			font-family: 'Aktiv Grotesk';
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
+		}
+		p {
+			font-size: small;
+			text-align: justify;
+			text-justify: inter-word;
+		}
+		.ICE-Button-grey{
+			margin-top: 7% !important;
+			border-width: 0px !important;
+			border-radius: 3px !important;
+			background-color: #e5e5e5 !important;
+			color: #333333 !important;
+			width: 35% !important;
+			max-width: 35% !important;
+			min-width: 25% !important;
+			height: 40px !important;
+			background-image: none !important;
+		}
+		.ICE-Button-blue{
+			margin-top: 7% !important;
+			border-width: 0px !important;
+			border-radius: 3px !important;
+			background-color: #1e32fa !important;
+			color: #ffffff !important;
+			width: 35% !important;
+			max-width: 35% !important;
+			min-width: 25% !important;
+			height: 40px !important;
+			background-image: none !important;
+			float: right;
+		}
+	</style>
 
-<style>
-  p {
-    font-size: small;
-    text-align: justify;
-    text-justify: inter-word;
-  }
-</style>
+<html>
+	<c:ISSP_Header/>
 
-<div class="container">
+	<style>
+		:root {
+			--ice-add-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/add.png')}");
+			--ice-attachment-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachment.png')}");
+			--ice-attachmenthover-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachmenthover.png')}");
+			--ice-close-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/close.png')}");
+			--ice-download-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/download.png')}");
+			--ice-print-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/print.png')}");
+			--ice-searchColored-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/searchColored.png')}");
+		}
+		@font-face {
+			font-family: 'Aktiv Grotesk';
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
+		}
+	</style>
 
-  <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.ISSP_AccountStatements, 'css/main.min.css')}"/>
 
-  <div class="row">
-    <div class="col-md-3"></div>
+	<script>
+		const startLoading = function() {
+			document.getElementById('spinner').style.display = 'block';
+		}
+		const stopLoading = function() {
+			document.getElementById('spinner').style.display = 'none';
+		}
+		const checkInput = function() {
+			if(document.getElementsByClassName("terms")[0].checked) {
+				acceptTerms();
+			} else {
+				stopLoading();
+				showAlertModal('errorMsg','{!$Label.ISSP_Accept_Terms_Warning}','','');
+			}
+		}
+	</script>
 
-    <div class="col-md-6">
-      <div class="panel panel-primary">
+	<body>
+		<div class="ICE-Body">
+			<c:ISSP_CustomNavigation />
 
-        <div class="panel-heading">
-          TERMS OF USE FOR THE ICE PORTAL
-        </div>
+			<apex:slds />
+			<c:ISSP_AlertModal />
+			
+			<!-- Spinner -->
+			<div class="slds-scope">
+				<div id="spinner" style="display: none;">
+					<div class="slds-spinner_container">
+						<div role="status" class="slds-spinner slds-spinner_large">
+							<div class="slds-spinner__dot-a"></div>
+							<div class="slds-spinner__dot-b"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<apex:actionStatus id="loadingStatus" onStart="startLoading();" onStop="stopLoading();" />
 
-        <div class="panel-body">
-          <apex:form id="formLogin" forceSSL="true">
+			<apex:pageBlock>
+				<apex:pagemessages />
 
-            <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
-              <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
-                <p><apex:outputText value="{!er}" escape="false" /></p>
-              </apex:repeat>
-            </div>
+				<div class="container ICE-TableContainer" style="padding: 30px 40px 30px 40px;">
+					<div class="row">
+						<apex:outputText styleclass="ICE-TableTitle" value="TERMS OF USE FOR THE ICE PORTAL"/>&nbsp;
+					</div>
 
-            <div class="input-group ">
-              <p>
-              The Web portal granting access to ICE (the "<strong>Portal</strong>") is operated by the International Air Transport Association (referred to herein as "    <strong>IATA</strong>", "<strong>us</strong>", "<strong>we</strong>" or "<strong>our</strong>", as the case may be).
-              </p>
-              <p>
-                  Access to the products and services available on the Portal (the "<strong>ICE Tools</strong>") is restricted to users individually authorized by IATA
-                  (collectively, "<strong>Authorized Users</strong>") and to which IATA has provided a username and password (the "<strong>Access Codes</strong>").
-              </p>
-              <p>
-                  The Access Codes are granted on a strictly individual basis and cannot be transferred, sold, lent, leased or otherwise made accessible to any third party.
-                  As a holder of the Access Codes, you are responsible for using them in accordance with these Terms of Use and ensuring that they are never used by any
-                  person but you.
-              </p>
-              <p>
-                  By accessing the Portal, <u>you consent to be bound by these Terms of Use</u> and agree that they constitute a binding contract between you and IATA.
-              </p>
-              <p>
-                  <strong>ADMINISTRATIVE STAFF OF ACCREDITED TRAVEL AGENCIES</strong>
-              </p>
-              <p>
-                  When used herein, the term "Administrative Staff" means all persons who habitually perform primarily administrative tasks for the accredited travel agency
-                  (hereinafter "Travel Agency") or travel agent to whom they are subordinated when performing such tasks, whether that relationship of subordination results
-                  from an employment agreement, a services contract or some other type of agreement.
-              </p>
-              <p>
-                  The Travel Agency's executive officer or the travel agent (as the case may be) and the Administrative Staff subordinated thereto are solidarily responsible
-                  for the use of the Portal and the ICE Tools by such Administrative Staff.
-              </p>
-              <p>
-                  If you are an Administrative Staff member having access to the ICE Tools through the Access Codes of the Travel Agency or the travel agent for whom you
-                  work, please note that you may only use the ICE Tools for the benefit of such agency or agent, that you are personally bound by these Terms of Use and that
-                  you are prohibited from disclosing the Access Codes to anyone else.
-              </p>
-              <strong>
-                  AUTHORIZED USE
-              </strong>
-              <p>
-                  The Content (as defined below) is for the internal professional use only of Travel agencies and travel agents. No fee can be charged in relation to such
-                  use by any Authorized User.
-              </p>
-              <p>
-                  Any other use of the Content is strictly prohibited. In particular, but without limitation, you may not reproduce or distribute any Data, in whole or in
-                  part for the purpose of reselling it, as part of your own commercial products or as the basis of any investment advice.
-              </p>
-              <p>
-                  You may, subject to these Terms of Use, print or by other means save pages of the Portal for the purposes of carrying on your travel agency's activities.
-                  The Content cannot be changed or altered in any way, merged with other information or published in any form whatsoever, in whole or in part or. Prohibited
-                  uses include "screen scraping", "database scraping" and any other activity, whether automated or not, whose intended purpose is to collect, store,
-                  reorganize or manipulate the Content. Any exemption from the foregoing is subject to the prior written consent of IATA.
-              </p>
-              <strong>
-                  COPYRIGHT AND TRADEMARKS
-              </strong>
-              <p>
-                  <strong>Copyright in the Portal and the Content.</strong>
-                  The Portal is a work protected by the copyright of IATA or its partners. Subject to the paragraph below, the components of the Portal - including the ICE
-                  Tools and the Data (as defined below), the text, images and software - are also protected by such copyright and are the property of IATA or are reproduced
-                  on the Portal under licence (the entirety of the components of the Portal is collectively referred to as the "<strong>Content</strong>").
-              </p>
-              <p>
-                  By accessing the Portal or the Content, you thereby grant IATA a perpetual, non-exclusive and unlimited licence in all intellectual property associated
-                  with the information pertaining to your BSP transactions or that you upload into a BSP (collectively, the "<strong>Data</strong>"). IATA may share the Data
-                  with the community of Authorized Users and with service providers located in Canada or abroad for the purpose of operating and improving the functioning of
-                  the ICE Tools and the Portal.
-              </p>
-              <p>
-                  <strong>Trademarks.</strong>
-                  The trademarks used on the Portal, including but not limited to IATA and ICE, are the property of IATA. No right or licence in these trademarks is granted
-                  to you unless authorized in writing by IATA.
-              </p>
-              <strong>
-                  HYPERLINKS
-              </strong>
-              <p>
-                  All links to the Portal or to the Content must be accompanied by a conspicuous message making it self-evident to any person surfing the Web that such link
-                  leads to the Portal and must contain a reference to the "IATA ICE".
-              </p>
-              <strong>
-                  LIMITATION OF LIABILITY AND WARRANTY
-              </strong>
-              <p>
-                  IATA makes no representation regarding the availability or relevance of the Content or the Portal. The Content, including the information generated by the
-                  ICE Tools, is presumed to be reliable, but we cannot guarantee that it is exhaustive, accurate or up-to-date. To the full extent authorized by applicable
-                  law, the Content and the Portal are provided to you "as is", without any warranty whatsoever. None of IATA or any of its members or partners can be held
-                  liable for any direct, incidental, secondary, indirect or punitive damages flowing from your access to or use of the Content or the Portal. Interruptions
-                  of service, errors or defects in the Portal or the Content, including the Data, shall not be interpreted as a waiver to pay any amount due as per your
-                  billings and billing calendar.
-              </p>
-              <p>
-                  <strong>RESPONSIBILITY OF BALANCES</strong>
-              </p>
-              <p>
-                  In the event of any inaccuracy in any billing amounts, balances or other Data displayed in the ICE Tools, it is the responsibility of the Travel Agency or
-                  travel agent to report same to IATA as early as possible. IATA is not responsible for any such discrepancies nor for any consequences or damages resulting
-                  directly or indirectly from such inaccuracies.
-              </p>
-              <strong>
-                  NO WAIVER
-              </strong>
-              <p>
-                  No failure or delay on the part of IATA to ensure compliance with the terms and conditions of these Terms of Use shall be construed as the waiving of its
-                  right to ensure compliance with any right or privilege that it may have hereunder.
-              </p>
-              <strong>
-                  CONTROL MEASURES
-              </strong>
-              <p>
-                  In order to prevent unlawful or illicit use of the Portal or the Content, we reserve the right, in our entire discretion and at any time, to ask Authorized
-                  Users to substantiate their compliance with these Terms of Use. In that regard, we may ask you to communicate with us orally and to provide us with any
-                  document or information substantiating your use (or that of the Administrative Staff you are responsible for) of the Portal or the Content. You must
-                  respond to such requests without delay. IATA will then take whatever measures it, in its entire discretion, deems justified in light of your response, and
-                  may in particular temporarily or permanently interrupt your access (or that of the Administrative Staff you are responsible for) to the Portal and the
-                  Content.
-              </p>
-              <strong>
-                  DENIAL OF ACCESS
-              </strong>
-              <p>
-                  IATA retains the right, in its entire discretion, to cancel, limit or suspend your access to the Portal or to any portion of the Content without prior
-                  notice and without thereby incurring any liability, for any reason whatsoever, including any breach of these Terms of Use.
-              </p>
-              <strong>
-                  REVISIONS
-              </strong>
-              <p>
-                  IATA may at any time revise these Terms of Use by placing an updated version thereof on the Portal. All users of the Portal are bound by these Terms of Use
-                  and therefore must periodically consult this page in order to review any changes to their terms. If any change to these Terms of Use is substantial, we
-                  will highlight the change.
-              </p>
-              <strong>
-                  APPLICABLE LAW
-              </strong>
-              <p>
-                  These Terms of Use are governed by the laws of the province of Qu&#233;bec, Canada. The courts in Montr&#233;al, Qu&#233;bec shall have exclusive
-                  jurisdiction to hear and resolve any dispute in connection with these Terms of Use.
-              </p>
-              <p>
-                  These Terms of Use were last updated on May 2016.
-              </p>
-              <p>
-                  In the event of any inconsistency between the English and another version of these Terms of Use, the English version shall prevail.
-              </p>
-              <apex:inputCheckbox value="{!appRight.Terms_Acceptance__c}"/>
-              {!$Label.ISSP_Registration_acceptGeneralConditions}
-            </div>
-            <hr />
-            <div class="form-group">
-              <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_cancel" action="{!rejectTerms}" value="{!$Label.ISSP_Back}" id="back"/>
-              <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_success" action="{!acceptTerms}" value="{!$Label.ISSP_Next}" id="next"/>
-            </div>
-          </apex:form>
-        </div>
+					<div class="row">
+						<p></p>
+						<p>
+							The Web portal granting access to ICE (the "<strong>Portal</strong>") is operated by the International Air Transport Association (referred to herein as "    <strong>IATA</strong>", "<strong>us</strong>", "<strong>we</strong>" or "<strong>our</strong>", as the case may be).
+						</p>
+						<p>
+							Access to the products and services available on the Portal (the "<strong>ICE Tools</strong>") is restricted to users individually authorized by IATA
+							(collectively, "<strong>Authorized Users</strong>") and to which IATA has provided a username and password (the "<strong>Access Codes</strong>").
+						</p>
+						<p>
+							The Access Codes are granted on a strictly individual basis and cannot be transferred, sold, lent, leased or otherwise made accessible to any third party.
+							As a holder of the Access Codes, you are responsible for using them in accordance with these Terms of Use and ensuring that they are never used by any
+							person but you.
+						</p>
+						<p>
+							By accessing the Portal, <u>you consent to be bound by these Terms of Use</u> and agree that they constitute a binding contract between you and IATA.
+						</p>
+						<p>
+							<strong>ADMINISTRATIVE STAFF OF ACCREDITED TRAVEL AGENCIES</strong>
+						</p>
+						<p>
+							When used herein, the term "Administrative Staff" means all persons who habitually perform primarily administrative tasks for the accredited travel agency
+							(hereinafter "Travel Agency") or travel agent to whom they are subordinated when performing such tasks, whether that relationship of subordination results
+							from an employment agreement, a services contract or some other type of agreement.
+						</p>
+						<p>
+							The Travel Agency's executive officer or the travel agent (as the case may be) and the Administrative Staff subordinated thereto are solidarily responsible
+							for the use of the Portal and the ICE Tools by such Administrative Staff.
+						</p>
+						<p>
+							If you are an Administrative Staff member having access to the ICE Tools through the Access Codes of the Travel Agency or the travel agent for whom you
+							work, please note that you may only use the ICE Tools for the benefit of such agency or agent, that you are personally bound by these Terms of Use and that
+							you are prohibited from disclosing the Access Codes to anyone else.
+						</p>
+						<strong>
+							AUTHORIZED USE
+						</strong>
+						<p>
+							The Content (as defined below) is for the internal professional use only of Travel agencies and travel agents. No fee can be charged in relation to such
+							use by any Authorized User.
+						</p>
+						<p>
+							Any other use of the Content is strictly prohibited. In particular, but without limitation, you may not reproduce or distribute any Data, in whole or in
+							part for the purpose of reselling it, as part of your own commercial products or as the basis of any investment advice.
+						</p>
+						<p>
+							You may, subject to these Terms of Use, print or by other means save pages of the Portal for the purposes of carrying on your travel agency's activities.
+							The Content cannot be changed or altered in any way, merged with other information or published in any form whatsoever, in whole or in part or. Prohibited
+							uses include "screen scraping", "database scraping" and any other activity, whether automated or not, whose intended purpose is to collect, store,
+							reorganize or manipulate the Content. Any exemption from the foregoing is subject to the prior written consent of IATA.
+						</p>
+						<strong>
+							COPYRIGHT AND TRADEMARKS
+						</strong>
+						<p>
+							<strong>Copyright in the Portal and the Content.</strong>
+							The Portal is a work protected by the copyright of IATA or its partners. Subject to the paragraph below, the components of the Portal - including the ICE
+							Tools and the Data (as defined below), the text, images and software - are also protected by such copyright and are the property of IATA or are reproduced
+							on the Portal under licence (the entirety of the components of the Portal is collectively referred to as the "<strong>Content</strong>").
+						</p>
+						<p>
+							By accessing the Portal or the Content, you thereby grant IATA a perpetual, non-exclusive and unlimited licence in all intellectual property associated
+							with the information pertaining to your BSP transactions or that you upload into a BSP (collectively, the "<strong>Data</strong>"). IATA may share the Data
+							with the community of Authorized Users and with service providers located in Canada or abroad for the purpose of operating and improving the functioning of
+							the ICE Tools and the Portal.
+						</p>
+						<p>
+							<strong>Trademarks.</strong>
+							The trademarks used on the Portal, including but not limited to IATA and ICE, are the property of IATA. No right or licence in these trademarks is granted
+							to you unless authorized in writing by IATA.
+						</p>
+						<strong>
+							HYPERLINKS
+						</strong>
+						<p>
+							All links to the Portal or to the Content must be accompanied by a conspicuous message making it self-evident to any person surfing the Web that such link
+							leads to the Portal and must contain a reference to the "IATA ICE".
+						</p>
+						<strong>
+							LIMITATION OF LIABILITY AND WARRANTY
+						</strong>
+						<p>
+							IATA makes no representation regarding the availability or relevance of the Content or the Portal. The Content, including the information generated by the
+							ICE Tools, is presumed to be reliable, but we cannot guarantee that it is exhaustive, accurate or up-to-date. To the full extent authorized by applicable
+							law, the Content and the Portal are provided to you "as is", without any warranty whatsoever. None of IATA or any of its members or partners can be held
+							liable for any direct, incidental, secondary, indirect or punitive damages flowing from your access to or use of the Content or the Portal. Interruptions
+							of service, errors or defects in the Portal or the Content, including the Data, shall not be interpreted as a waiver to pay any amount due as per your
+							billings and billing calendar.
+						</p>
+						<p>
+							<strong>RESPONSIBILITY OF BALANCES</strong>
+						</p>
+						<p>
+							In the event of any inaccuracy in any billing amounts, balances or other Data displayed in the ICE Tools, it is the responsibility of the Travel Agency or
+							travel agent to report same to IATA as early as possible. IATA is not responsible for any such discrepancies nor for any consequences or damages resulting
+							directly or indirectly from such inaccuracies.
+						</p>
+						<strong>
+							NO WAIVER
+						</strong>
+						<p>
+							No failure or delay on the part of IATA to ensure compliance with the terms and conditions of these Terms of Use shall be construed as the waiving of its
+							right to ensure compliance with any right or privilege that it may have hereunder.
+						</p>
+						<strong>
+							CONTROL MEASURES
+						</strong>
+						<p>
+							In order to prevent unlawful or illicit use of the Portal or the Content, we reserve the right, in our entire discretion and at any time, to ask Authorized
+							Users to substantiate their compliance with these Terms of Use. In that regard, we may ask you to communicate with us orally and to provide us with any
+							document or information substantiating your use (or that of the Administrative Staff you are responsible for) of the Portal or the Content. You must
+							respond to such requests without delay. IATA will then take whatever measures it, in its entire discretion, deems justified in light of your response, and
+							may in particular temporarily or permanently interrupt your access (or that of the Administrative Staff you are responsible for) to the Portal and the
+							Content.
+						</p>
+						<strong>
+							DENIAL OF ACCESS
+						</strong>
+						<p>
+							IATA retains the right, in its entire discretion, to cancel, limit or suspend your access to the Portal or to any portion of the Content without prior
+							notice and without thereby incurring any liability, for any reason whatsoever, including any breach of these Terms of Use.
+						</p>
+						<strong>
+							REVISIONS
+						</strong>
+						<p>
+							IATA may at any time revise these Terms of Use by placing an updated version thereof on the Portal. All users of the Portal are bound by these Terms of Use
+							and therefore must periodically consult this page in order to review any changes to their terms. If any change to these Terms of Use is substantial, we
+							will highlight the change.
+						</p>
+						<strong>
+							APPLICABLE LAW
+						</strong>
+						<p>
+							These Terms of Use are governed by the laws of the province of Qu&#233;bec, Canada. The courts in Montr&#233;al, Qu&#233;bec shall have exclusive
+							jurisdiction to hear and resolve any dispute in connection with these Terms of Use.
+						</p>
+						<p>
+							These Terms of Use were last updated on May 2016.
+						</p>
+						<p>
+							In the event of any inconsistency between the English and another version of these Terms of Use, the English version shall prevail.
+						</p>
+						<p></p>
+					</div>
 
-      </div>
-    </div>
+					<apex:form id="mainForm" styleclass="form-inline">
+						<apex:actionFunction name="acceptTerms" action="{!acceptTerms}" rerender="mainForm" status="loadingStatus"/>
+						<apex:actionFunction name="rejectTerms" action="{!rejectTerms}" rerender="mainForm" status="loadingStatus"/>
 
-  </div>
+						<div class="row center">
+							<apex:inputCheckbox styleclass="terms" value="{!appRight.Terms_Acceptance__c}"/>
+							{!$Label.ISSP_Registration_acceptGeneralConditions}
+						</div>
+					</apex:form>
 
-  <c:ISSP_CustomFooter communityName="{!communityName}"/>
-</div>
+					<div class="row">
+						<button class="ICE-Button-grey" onclick="rejectTerms();">{!$Label.ISSP_Back}</button>
+						<button class="ICE-Button-blue" onclick="checkInput();">{!$Label.ISSP_Next}</button>
+					</div>
+				</div>
+
+			</apex:pageBlock>
+
+			<c:ISSP_CustomFooter />
+		</div>
+	</body>
+</html>
 </apex:page>

@@ -801,4 +801,56 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 			}
 		Test.StopTest();
 	}
+
+	public static testMethod void cloneSurvey(){
+
+		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+		Currency_Center_Survey__c parentSubmitted;
+		Currency_Center_Survey__c parentDraft;
+		User user1;
+
+		System.runAs(myUser) {
+			user1 = portalSetup();
+
+			//insert the annual survey as Submitted
+			parentSubmitted = createParentSurvey(user1.Contact.Account.Id);
+			parentSubmitted.RecordTypeId = ISSP_CurrencyCenterUtil.rtIdMonthlySurvey;
+			parentSubmitted.Status__c = 'Submitted';
+			parentSubmitted.Reporting_Date__c = DateTime.now().addDays(-1).Date();
+			insert parentSubmitted;
+
+			//insert the country survey
+			Currency_Center_Survey__C country = createCountry(parentSubmitted.Id);
+			insert country;
+
+			Country_Profile__c countryProfileSF = [SELECT Name, Currency__c FROM Country_Profile__c WHERE Name = :country.Country_Name__c LIMIT 1];
+
+			//insert the report type survey
+			Currency_Center_Survey__C reportType = createReportType(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
+			insert reportType;
+
+			//insert the bank survey
+			Currency_Center_Survey__C bank = createBank(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
+			insert bank;
+
+			// Create a second survey in the next month to test the clone action
+			parentDraft = createParentSurvey(user1.Contact.Account.Id);
+			parentDraft.RecordTypeId = ISSP_CurrencyCenterUtil.rtIdMonthlySurvey;
+			parentDraft.Status__c = 'Draft';
+			parentDraft.Month_Survey__c = '2';
+			parentDraft.Reporting_Date__c = DateTime.now().Date();
+			insert parentDraft;
+
+			Test.StartTest();
+			Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterReportingActionsMonth?id='+parentDraft.Id));
+			ISSP_CurrencyCenterMonthSurveyCtrl monthlySurvey = new ISSP_CurrencyCenterMonthSurveyCtrl();
+
+			//monthlySurvey.surveyToClone = parentSubmitted;
+			System.assertEquals(true, monthlySurvey.getShowCloneButton());
+			monthlySurvey.cloneSurvey();
+			Test.StopTest();
+
+		}
+	}
 }

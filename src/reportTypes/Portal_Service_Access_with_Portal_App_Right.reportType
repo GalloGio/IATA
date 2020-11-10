@@ -131,6 +131,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Last_Visit_Date__c</field>
+            <table>Account.Contacts.Portal_Application_Rights__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Right__c</field>
             <table>Account.Contacts.Portal_Application_Rights__r</table>
         </columns>
@@ -203,6 +208,16 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Anti_Money_Laundering_Compliance__c</field>
             <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Service_TD_Premium__c</field>
+            <table>Account.Contacts</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Service_TD_Basic__c</field>
+            <table>Account.Contacts</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>

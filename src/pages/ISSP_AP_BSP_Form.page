@@ -339,10 +339,14 @@
                             <apex:outputLabel value="Please specify other TAX Identification" />
                             <apex:inputField value="{!newForm.Other_TAX_Identification__c}" />
                         </apex:pageBlockSectionItem>
-                    
-                        <apex:pageBlockSectionItem rendered="{!OR(apcountryisocode='IT',apcountryisocode='CR')}">
-                            <!-- <apex:outputLabel value="{!CASE(apcountryisocode, 'IT', '* Italian Fiscal code', '* Please indicate your airline&apos;s Fiscal ID c?dula juridica')}" for="othertaxid" style="color:#a31717; font-weight: bold !important;"/> -->
-                            <apex:outputLabel value="{!CASE(apcountryisocode, 'IT', '* Italian Fiscal code', '* Please indicate your airline\'s Fiscal ID c?dula juridica')}" for="othertaxid" style="color:#a31717; font-weight: bold !important;"/>
+
+                        <apex:pageBlockSectionItem rendered="{!apcountryisocode='IT'}">
+                            <apex:outputLabel value="Italian Fiscal code" for="othertaxid"/>
+                            <apex:inputText id="othertaxid" value="{!newForm.Other_TAX_Identification__c}" />
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem rendered="{!apcountryisocode='CR'}">
+                            <apex:outputLabel value="{!'* Please indicate your airline\'s Fiscal ID c?dula juridica'}" for="othertaxid" style="color:#a31717; font-weight: bold !important;"/>
                             <apex:inputText id="othertaxid" value="{!newForm.Other_TAX_Identification__c}" />
                         </apex:pageBlockSectionItem>
                         
@@ -396,6 +400,7 @@
                             <apex:outputLabel for="city" value="City" styleclass="{!IF(localAddressMandatory,'ap-required','')}"/>
                             <apex:inputField id="city" value="{!newForm.BSP_Local_City__c}" />
                         </apex:pageBlockSectionItem>
+                        <script>$('[data-toggle="tooltip"]').tooltip();</script>
                     </apex:pageBlockSection>
                     
                 <span id="nav_three"></span>
@@ -562,6 +567,7 @@
                             <apex:image value="/img/msg_icons/info16.png" title="If YES please contact IATA for details" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
+                    <script>$('[data-toggle="tooltip"]').tooltip();</script>
                 </apex:pageBlockSection>
                 
                 <span id="commision-section" style="{!IF(newForm.Participate_in_any_Commission_Control__c=='Yes','','display:none')}">

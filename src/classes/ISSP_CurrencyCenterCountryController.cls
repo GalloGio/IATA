@@ -635,8 +635,7 @@ public with sharing class ISSP_CurrencyCenterCountryController {
 
 	public void PopulateSelectedCountries(){
 		selectedCountries = new list<countryWrapper>();
-		System.debug('cp.Listed_In__c: ' + cp.Listed_In__c);
-		for (Country_Profile__c cp1 : [SELECT Id, Name, Country_Name__r.ISO_Code__c, Country_Name__r.Name, Actual_Amount_Blocked__c, Issue_Started__c, Number_of_Airlines_Reporting_Issues__c FROM Country_Profile__c WHERE Listed_In__c = :cp.Listed_In__c]) {
+		for (Country_Profile__c cp1 : [SELECT Id, Name, Country_Name__r.ISO_Code__c, Country_Name__r.Name, Actual_Amount_Blocked__c, Issue_Started__c, Number_of_Airlines_Reporting_Issues__c, Listed_In__c FROM Country_Profile__c WHERE Listed_In__c IN ('Blocked Funds','Watch List','All others')]) {
 			boolean selected = false;
 			if(cp1.Id == cp.Id){
 				selected = true;

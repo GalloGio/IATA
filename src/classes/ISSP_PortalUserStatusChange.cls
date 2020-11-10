@@ -189,10 +189,11 @@ public with sharing class ISSP_PortalUserStatusChange {
 	@future
 	public static void futureDisabelUser(string conId) {
 
-		list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:conId];
+		list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Portal_User_Frozen_Checkbox__c from User u where contactId =:conId];
 		for(User u : usersToUpdate){
 			if(u.IsActive || u.IsPortalEnabled ){
 				u.IsActive = false;
+				u.Portal_User_Frozen_Checkbox__c = false;
 			}
 		}
 		try{
@@ -412,10 +413,11 @@ public with sharing class ISSP_PortalUserStatusChange {
 	}
 
 	public static void disabelUser(string contactId) {
-		list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled from User u where contactId =:contactId];
+		list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Portal_User_Frozen_Checkbox__c from User u where contactId =:contactId];
 		for(User u : usersToUpdate){
 			if(u.IsActive || u.IsPortalEnabled ){
 				u.IsActive = false;
+				u.Portal_User_Frozen_Checkbox__c = false;
 			}
 		}
 		try{

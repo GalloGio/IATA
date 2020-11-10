@@ -100,7 +100,7 @@ public with sharing class IDCardTestData{
 		Account account6 = new Account();
 		account6.RecordTypeId = rtidca;
 		account6.Name = 'KeyAccount unLimited.';
-		account6.IATACode__c = '01254785';
+		account6.IATACode__c = '01254786';
 		account6.Industry = 'Travel Agent';
 		account6.IDCard_Key_Account__c = true;
 		account6.ID_Card_Key_Account_Discount__c = 0;
@@ -268,10 +268,10 @@ public with sharing class IDCardTestData{
 		// Change of Agencey ID Application
 		ID_Card_Application__c IDCardApplication2 = new ID_Card_Application__c();
 		IDCardApplication2.Approving_Manager_s_Name__c = 'Manager Name';
-		IDCardApplication2.Approving_Manager_s_Email__c = 'manager@email.com';
+		IDCardApplication2.Approving_Manager_s_Email__c = 'manager2@email.com';
 		IDCardApplication2.Date_of_Birth__c = date.newInstance(1971, 10, 16);
 		IDCardApplication2.Duties_in_Current_Agency__c = 'Administration';
-		IDCardApplication2.Email_admin__c = 'johnsonk@iata.org';
+		IDCardApplication2.Email_admin__c = 'johnsonk2@iata.org';
 		IDCardApplication2.First_Name__c = 'MARWA';
 		IDCardApplication2.Gender__c = 'F';
 		IDCardApplication2.Hours_worked__c = '35h or more';

@@ -1,0 +1,48 @@
+.spinner-container {
+	min-height: 10rem;
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
+.spinner-container lightning-spinner {
+	display: block;
+	background-color: transparent;
+}
+
+.slds-form-element__label {
+	max-width: unset;
+	width: calc(45%);
+}
+
+.slds-size_5-of-12 .slds-form-element__label {
+	width: calc(33%);
+}
+
+.results-section {
+	background-color: #FFFFFF;
+}
+
+h2 {
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	line-height: 32px;
+	/* identical to box height, or 145% */
+	color: #333333;
+}
+
+c-iata-popup-form {
+	position: relative;
+}
+
+c-iata-popup-form.filtered::after {
+	background: blue;
+    border-radius: 50%;
+    width: 0.5rem;
+    content: " ";
+    height: 0.5rem;
+    position: absolute;
+    top: 1.5rem;
+	right: 1rem;
+}

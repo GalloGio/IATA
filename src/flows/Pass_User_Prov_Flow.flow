@@ -401,12 +401,12 @@
     <formulas>
         <name>client_id</name>
         <dataType>String</dataType>
-        <expression>&apos;6235b6a786ae4e6c88526cd20fd3d2d0&apos;</expression>
+        <expression>&apos;691343569caf4c80aa09d835fc3b700e&apos;</expression>
     </formulas>
     <formulas>
         <name>client_secret</name>
         <dataType>String</dataType>
-        <expression>&apos;d629863C84E5458dB25778e8f7351d02&apos;</expression>
+        <expression>&apos;3787a2F55B8c4c39aEA11a36ad69d66e&apos;</expression>
     </formulas>
     <formulas>
         <name>EnableUser</name>

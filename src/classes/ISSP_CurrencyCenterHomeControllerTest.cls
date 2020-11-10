@@ -18,9 +18,7 @@ private class ISSP_CurrencyCenterHomeControllerTest {
 		Test.startTest();
 
 		ISSP_CurrencyCenterHomeController ctrl = new ISSP_CurrencyCenterHomeController();
-		PageReference pr = ctrl.GoToBlockedFunds();
-		pr = ctrl.GoToWatchList();
-		pr = ctrl.GoToAllOthers();
+		PageReference pr = ctrl.GoToCountryHeatMap();
 		pr = ctrl.GoToManageNotifications();
 		pr = ctrl.GoToHeatMap();
 		pr = ctrl.GoToReportingActions();

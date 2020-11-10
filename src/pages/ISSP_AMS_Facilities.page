@@ -232,6 +232,18 @@
 								datePickerYearsAdded = true;
 							}
 					    }
+
+						
+						$( document ).ready(function() {
+							if({!isCNSAgency}){
+								var e = document.querySelectorAll('[id$="CNSChangeLabels"]')[0];
+								for(var i = e.options.length-1; i >0 ; i--){
+									if (e[i].value == 'Office to be Investigated' || e[i].value == 'Warehouse to be Investigated') {
+										e[i].label = e[i].label.replace("Investigated", "inspected");
+									}
+								}
+							}
+						});
 					  
 				    </script>   
 			    </div>
@@ -266,7 +278,7 @@
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
 				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Type_of_Premises}" styleClass="col-md-6"/>
-										<apex:inputField value="{!facilityInContext.Type_of_Premises__c}" styleClass="col-md-6" required="true"/>
+										<apex:inputField id="CNSChangeLabels" value="{!facilityInContext.Type_of_Premises__c}" styleClass="col-md-6" required="true"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 							</apex:pageBlockSection>

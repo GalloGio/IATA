@@ -1,0 +1,36 @@
+<template>
+	<div class="container shadow tids-form">
+		<lightning-spinner alternative-text="Loading"  size="large" if:true={spinner}></lightning-spinner>
+		<template if:true={isLoadingFinished}>
+			<div class="row">
+				<aside class="col l4 s3">
+					<c-tids-menu></c-tids-menu>
+				</aside>
+				<main class="col l8 s9">
+					<div class="content-wrapper">
+						<template if:true={visibleNewApplicant}>
+							<c-tids-new-applicant></c-tids-new-applicant>
+						</template>
+						<c-tids-agency if:true={visibleAgency}></c-tids-agency>
+						<c-tids-shareholder-details if:true={visibleShareholder}></c-tids-shareholder-details>
+						<c-tids-address if:true={visibleAddress}></c-tids-address>
+						<c-tids-mailing if:true={visibleMailing}></c-tids-mailing>
+						<c-tids-contact if:true={visibleContact}></c-tids-contact>
+						<c-tids-business-profile if:true={visibleBusinessProfile}></c-tids-business-profile>
+						<c-tids-business-specialization if:true={visibleBusinessSpecialization}></c-tids-business-specialization>
+						<c-tids-supporting-documents if:true={visibleSupportingDocuments}></c-tids-supporting-documents>
+						<template if:true={visibleSubmitApplication}>
+							<c-tids-submit-application></c-tids-submit-application>
+						</template>
+					</div>
+				</main>
+			</div>
+		</template>  
+	</div>
+	<c-tids-modal-msg
+	  if:true={showConfimationModal}
+	  open={showConfimationModal}
+	  message={modalDefaultMessage}
+	  action={modalAction}
+	></c-tids-modal-msg>
+</template>

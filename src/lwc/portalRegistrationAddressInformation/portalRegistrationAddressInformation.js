@@ -12,6 +12,7 @@ import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message';
 import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
 import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
+import OPTIONAL_Label  from '@salesforce/label/c.ISSP_Optional';
 
 export default class PortalRegistrationAddressInformation extends LightningElement {
 
@@ -28,7 +29,7 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
     @track isConfirmationButtonDisabled;
 
     // labels
-    _labels = {
+    @track _labels = {
         CSP_L2_Business_Address_Information,
         CSP_L2_Create_New_Account,
         CSP_L2_Company_Information_Message,
@@ -36,7 +37,8 @@ export default class PortalRegistrationAddressInformation extends LightningEleme
         ISSP_MyProfile_CATEGORY,
         CSP_L2_Website,
         CSP_L2_Back_to_Company_Information,
-        CSP_L2_Next_Step
+        CSP_L2_Next_Step,
+        OPTIONAL_Label
     }
     get labels() {
         return this._labels;

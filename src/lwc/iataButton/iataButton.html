@@ -1,0 +1,7 @@
+<template>
+    <button class={renderedClass} onclick={handleClick} disabled={disabled}>
+		<c-iata-icon if:true={iconLeft} icon={icon} size={iconSize} icon-class="slds-button__icon slds-button__icon_left" fill={iconColor}></c-iata-icon>
+		{label}
+		<c-iata-icon if:true={iconRight} icon={icon} size={iconSize} icon-class="slds-button__icon slds-button__icon_right" fill={iconColor}></c-iata-icon>
+    </button>
+</template>

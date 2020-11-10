@@ -548,7 +548,40 @@ public class ISSP_Portal_Application_RightTest {
 				System.assertEquals(contact.Available_Services__c,sisApp.Name);
 		}
 
-		static testMethod void testParentContactDeleteService() {
+		@isTest
+		static void testParentContactDeleteService_part1() {
+				Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+				insert sisApp;
+
+				Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
+				Account acc = ISSP_ObjectFactory.createNewAccount();
+				acc.RecordTypeId = recordtypeAgency;
+				insert acc;
+
+				Contact contact = ISSP_WS_Utilities.createContact('firstName', 'lastname', 'email@email.com', acc.Id, false);
+				contact.ID_Card_Holder__c = true;
+				insert contact;
+
+				contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+				System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME,contact.Available_Services__c);
+
+				Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+				appRight.Portal_Application__c = sisApp.Id;
+				appRight.Right__c = 'Access Granted';
+				appRight.Contact__c = contact.Id;
+				Test.startTest();
+				insert appRight;
+				Test.stopTest();
+
+				contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
+				System.assertEquals(sisApp.Name + ';' + IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+
+				//the delete will be done in the method testParentContactDeleteService_part2
+				//reason commented there
+		}
+
+		@isTest
+		static void testParentContactDeleteService_part2() {
 				Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
 				insert sisApp;
 
@@ -570,8 +603,8 @@ public class ISSP_Portal_Application_RightTest {
 				appRight.Contact__c = contact.Id;
 				insert appRight;
 
-				contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
-				System.assertEquals(sisApp.Name + ';' + IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
+				//the result of this first code is on testParentContactDeleteService_part1
+				//we had to separate the asserts in 2 methods due to the update of the field being done on a queueable job
 
 				Test.startTest();
 				delete appRight;

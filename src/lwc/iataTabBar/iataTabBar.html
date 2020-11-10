@@ -1,0 +1,17 @@
+<template>
+	<div class="tab-bar-background slds-is-absolute" if:true={fullWidth}></div>
+	<div class="slds-tabs_default">
+		<ul class="slds-tabs_default__nav" role="tablist">
+			<template for:each={tabs} for:item="tab">
+				<c-iata-tab-item
+					key={tab.name}
+					name={tab.name}
+					label={tab.label}
+					selected={tab.active}
+					ontabselected={handleSelectedTab}
+					class="slds-var-p-horizontal_small"
+				></c-iata-tab-item>
+			</template>
+		</ul>
+	</div>
+</template>

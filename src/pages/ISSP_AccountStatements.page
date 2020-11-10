@@ -1,498 +1,709 @@
 <apex:page controller="ISSP_Ctrl_AccountStatements"
-           cache="false"
-           sidebar="false"
-           showHeader="false"
-           standardStylesheets="false"
-           action="{!initActions}"
-           id="page">
+	cache="false"
+	sidebar="false"
+	showHeader="false"
+	applyBodyTag="false"
+	applyHtmlTag="false"
+	docType="html-5.0"
+	standardStylesheets="false"
+	action="{!initActions}"
+	id="page">
 
-<c:ISSP_Header ></c:ISSP_Header>
-<apex:stylesheet value="{!URLFOR($Resource.ISSP_AccountStatements,'css/style.css')}"/>
-<apex:stylesheet value="{!URLFOR($Resource.bootstraptoggle,'css/bootstrap-toggle.min.css')}"/>
-<script src="{!URLFOR($Resource.bootstraptoggle,'js/bootstrap-toggle.min.js')}"></script>
-<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+<html>
+	<c:ISSP_Header/>
 
-    <!--WMO358 Start 2018/11/02-->
-    <style>
-        /* The Modal (background) */
-        .modal {
-            position: fixed; 
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgb(0,0,0); 
-            background-color: rgba(0,0,0,0.4);
-        }
+	<style>
+		:root {
+			--ice-add-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/add.svg')}");
+			--ice-attachment-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachment.svg')}");
+			--ice-attachmenthover-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/attachmenthover.svg')}");
+			--ice-close-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/close.svg')}");
+			--ice-download-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/download.svg')}");
+			--ice-print-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/print.svg')}");
+			--ice-searchColored-png: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/searchColored.svg')}");
+		}
+		@font-face {
+			font-family: 'Aktiv Grotesk';
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
+		}
+	</style>
 
-        .showModal {
-            display: block; /* Hidden by default */
-        }
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.ISSP_AccountStatements, 'css/main.min.css')}"/>
 
-        .notShowModal {
-            display: none; /* Hidden by default */
-        }
+	<script>
+		//download content to file
+		const download = function(text, fileName) {
+			const link = document.createElement('a');
+			link.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`);
+			link.setAttribute('download', fileName);
 
-        /* Modal Content/Box */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            border-radius: 0px;
-            /*height: 55%;*/
-        }
+			link.style.display = 'none';
+			document.body.appendChild(link);
 
-        /* The Close Button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
+			link.click();
 
-        .close:hover,
-        .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-        }
+			document.body.removeChild(link);
+		};
 
-        .imageButton {
-            width:20px; 
-            height:20px;
-        }
+		// export header table to CSV
+		const headercsv = function(table) {
+			const rows = table.querySelectorAll('tr.toexportheader');
 
-        .iataBlue {
-            background-color: rgb(0, 66, 124);
-        }
+			return [].slice.call(rows,0,1)
+				.map(function(row) {
+					const cells = row.querySelectorAll('th.toexportheader');
+					return [].slice.call(cells)
+						.map(function(cell) {
+							return '"' + cell.textContent.trim() + '"';
+						})
+						.join(',');
+				})
+				.join('\n');
+		};
 
-        .modalTitle {
-            color: white;
-            font-weight: bold;
-        }
+		// export detail table to CSV
+		const detailcsv = function(table) {
+			const rows = table.querySelectorAll('tr.toexport');
 
-    </style>
-    <!--WMO358 End-->
+			return [].slice.call(rows)
+				.map(function(row) {
+					const cells = row.querySelectorAll('td.toexport');
+					return [].slice.call(cells)
+						.map(function(cell) {
+							return '"' + cell.textContent.trim() + '"';
+						})
+						.join(',');
+				})
+				.join('\n');
+		};
 
-<script>
-  $(document).ready( function () {
-    collapseAll();
+		const downloadDetailCSV = function(filename) {
+			const table = document.getElementById("tab-per-location");
+			const content = headercsv(table) + '\n' + detailcsv(table);
+			download(content, filename);
+		}
 
-    // init pagination
-    $('.table-pagination').dataTable({
-      "language": {
-              "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
-              "zeroRecords": "{!$Label.ISSP_Nothing_found}",
-              "info": "{!$Label.ISSP_Showing_page}",
-              "infoEmpty": "{!$Label.ISSP_No_records_available}",
-              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
-              "search": "{!$Label.ISSP_Search}",
-              "paginate": {
-                "next": "{!$Label.ISSP_Next}",
-                "previous": "{!$Label.ISSP_Previous}"
-              }
-          }
-    });
+		const modalOnComplete = function(overflow) {
+			document.body.style.overflow = overflow;
+		}
 
-    // collpase detail tables
-    $('#maintable .accordion-toggle').on('click', function () {
-      var dataTarget = $(this).attr('data-target');
-      var targetId = dataTarget.replace('#','');
-      collapseAll(targetId);
-      // set plus and minus signs visibility
-      if($(dataTarget).hasClass('in')) {
-        $(this).find('.plus-sign').addClass('in');
-        $(this).find('.minus-sign').removeClass('in');
-      } else {
-        $(this).find('.plus-sign').removeClass('in');
-        $(this).find('.minus-sign').addClass('in');
-      }
-    });
+		const onChangeNotification = function(obj) {
+			obj.setAttribute("disabled", "disabled");
+			document.getElementById("notif-slider").style.cursor="progress";
+			var switchBtn = document.getElementById("notif-switch");
+			if (switchBtn.classList.contains('switched')) {
+				switchBtn.classList.remove('switched');
+			} else {
+				switchBtn.classList.add('switched');
+			}
+			updateAppRight();
+		}
 
-    // filter by currency
-    $('#currencyFilter').on('change', function () {
-      filterCurrency($(this).val());
-    });
-  });
+		const startLoading = function() {
+			document.getElementById('spinner').style.display = 'block';
+		}
+		const stopLoading = function() {
+			document.getElementById('spinner').style.display = 'none';
+		}
+	</script>
 
-  function collapseAll(currentId) {
-    $(".plus-sign").each(function() {
-      $(this).addClass("in");
-    });
-    $(".minus-sign").each(function() {
-      $(this).removeClass("in");
-    });
-    $(".accordion-body").each(function() {
-      if ($(this).attr('id')!=currentId) {
-        $(this).removeClass("in");
-      }
-    });
-  }
+	<body>
+		<apex:slds />
+		<c:ISSP_AlertModal />
 
-  function filterCurrency(filter) {
-    collapseAll();
-    $(".accordion-toggle").each(function() {
-      var value = $(this).attr('data-filter');
-      if (filter==''||filter==value) {
-        $(this).addClass('in');
-      } else {
-        $(this).removeClass('in');
-      }
-    });
-  }
-//WMO 358 Start 2018/11/02
-
-    function startLoading(){
-
-    }
-
-    function refreshList(){
-        callrefreshList();
-    }
-
-    function attFuntion(objectId, fileName, amazonRecordTypeId, accountStatementPeriod, amazonFileStartName, amazonFileNameIdentifier)
-    {
-         console.log('start call' + objectId);
-
-         let amazonFileModel = {
-            RecordTypeId: amazonRecordTypeId,
-            Name: fileName,
-            Remittance_Period__c: accountStatementPeriod,
-            Category__c: amazonFileStartName,
-            File_Identifier_picklist__c: amazonFileNameIdentifier};
-
-        runClickAction(objectId, "{!credentialName}", amazonFileModel, false);
-        console.log('after call');
-
-    }
-
-    function onStart(){
-        startLoading();
-    }
-
-    function onStop(){
-        //stopLoading();
-    }
-
-    function onAfterUpload(amazonfileid) {
-        //alert(amazonfileid);
-        //closeModal();
-        //stopLoading();
-        callrefreshList();
-    }
-
-
-
-
-    //WMO 358 End
-</script>
-
-    <apex:variable var="currencyTreeValuesList" value="[{!''}{!treePlacesCurrency}" />
-
-    <c:Loading />
-
-    <div class="container">
-        <c:ISSP_CustomNavigation />
-        <apex:pageMessages />
-
-       <!--WMO358 Start 2018/11/02-->
-        <!-- Modal popuo to allow the user to add attachments-->
-        <apex:outputPanel id="myModal" >
-            <apex:outputPanel rendered="{!showPopUp}">
-                <apex:form >
-                    <c:UploadFileToAmazonButton />
-                    <apex:actionFunction name="callrefreshList" action="{!refreshList}"  rerender="myModal"  status="loading" oncomplete="stopLoading();"/>
-                    <apex:actionFunction name="closeModal" action="{!saveAttachment}"  rerender="myModal" />
-                    <div class="{!IF(showPopUp==true, 'modal showModal', 'modal notShowModal')}">
-                        <div class="{!IF(showPopUp==true, 'modal-content', 'notShowModal modal-content')}" >
-                             <div class="modal-header iataBlue">
-                                <span class="close" onclick="closeModal(); return false;">&times;</span>
-                                <h4 class="modal-title modalTitle">{!$Label.Account} {!accountSelectedName}</h4>
-                                <h5 class="modal-title modalTitle">{!$Label.Period} {!accountStatementPeriod}</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row" >
-                                            <apex:pageBlock > <!--rendered="{!listAttachments.empty}"-->
-                                                <h4 >{!$Label.Add_an_attachment}</h4>
-
-                                                <apex:variable var="cnt" value="{!0}" />
-
-                                                <button onclick="attFuntion('{!accountSelectedId}','{!amazonFileName}','{!amazonRecordTypeId}','{!accountStatementPeriod}','{!amazonFileStartName}','{!amazonFileNameIdentifier}'); return false;" >{!$Label.Add_attachment_Action}</button>
-
-                                            </apex:pageBlock>
-                                        </div>
-                                        <br/>
-                                        <div class="row">
-                                            <apex:pageBlock rendered="{!listAttachments.size>0}">
-                                                <div class="table">
-                                                    <table id="tableAttachments" class="table table-hover table-condensed">
-                                                        <thead>
-                                                        <tr>
-                                                            <th colspan="3">{!$Label.Documents_POP}</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>{!$Label.File_Name}</th>
-                                                            <th>{!$Label.Created_Date}</th>
-                                                        </tr>
-                                                        </thead>
-
-                                                        <tbody>
-                                                        <apex:repeat value="{!listAttachments}" var="attach">
-                                                            <tr>
-                                                                <td>{!attach.name}</td>
-                                                                <td>{!attach.Full_Name_Unique__c}</td>
-                                                                <td>{!attach.createdDate}</td>
-                                                            </tr>
-                                                        </apex:repeat>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </apex:pageBlock>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="modal-footer">
-                                  <div class="row">
-                                     <div class="col-md-6">
-                                            <apex:commandButton value="{!$Label.Done}" styleclass="btn btn-blue btn-sm" action="{!saveAttachment}" reRender="myModal" status="loading" oncomplete="stopLoading();" rendered="{!listAttachments.size>0}"/>
-                                            <apex:commandButton value="{!$Label.Cancel}" styleclass="btn btn-sm" action="{!saveAttachment}" reRender="myModal" status="loading" oncomplete="stopLoading();" rendered="{!listAttachments.empty}"/>
-                                     </div>
-                                  </div>
-                            </div>
-                        </div>
-                    </div>
-                </apex:form>
-            </apex:outputPanel>
-        </apex:outputPanel>
-            <!-- WMO 358 End-->
-  <apex:form id="mainForm" styleclass="form-inline">
-    <apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
-
-    <div class="alert alert-danger" style="display:{!if(listMessages.size==0,'none','')}">
-      <apex:repeat value="{!listMessages}" var="er" id="theRepeat">
-        <p><apex:outputText value="{!er}" escape="false" /></p>
-      </apex:repeat>
-    </div>
-
-    <!-- PAGE BLOCK for Account Statements when Terms And Conditions are accepted -->
-    <apex:pageBlock rendered="{!listMessages.size==0}">
-        <div class="jumbotron main-title">
-          <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/AccStatementsIcon.png')}" />
-          <span>{!$Label.ISSP_Account_Statements_Title}</span>
-        </div>
-        <div class="undertitle">
-          <div class="undertitleLeft">
-            <!--<apex:outputLink styleclass="link" value="/faq_home?q=ICE">FAQ</apex:outputLink>-->
-            <apex:outputLink styleclass="link" value="{!instance}/sfc/servlet.shepherd/version/download/{!faq.id}" target="_document" rendered="{!faq!=null}">
-              FAQ
-            </apex:outputLink>
-            <!--<apex:outputLink styleclass="link" value="/ISSP_ContentPage">{!$Label.ISSP_Documents}</apex:outputLink>-->
-            <apex:outputLink styleclass="link" value="{!instance}/sfc/servlet.shepherd/version/download/{!document.id}" target="_document" rendered="{!document!=null}">
-              {!$Label.ISSP_Documents}
-            </apex:outputLink>
-          </div>
-          <div class="undertitleRight">
-            <apex:outputText styleclass="label normal" value="{!$Label.ISSP_Agency_Head_Office_code}"/>
-            <apex:outputText styleclass="label strong" value="{!headofficeAccount.IATACode__c}"/>
-            <apex:outputText styleclass="label normal" value="{!$Label.ISSP_Last_Updated_on}"/>
-            <apex:outputText styleclass="label strong" value="{0,date,dd MMM yyyy HH:mm z}">
-              <apex:param value="{!lastUpdatedOn}" />
-            </apex:outputText>
-          </div>
-        </div>
-
-			<div class="row">
-				<div class="col-xs-12">
-          <div styleclass="main-filters">
-            <div class="form-group form-group-sm">
-              <apex:outputPanel rendered="{!listCurrency.size>1}">
-                  <label class="control-label" for="currencyFilter">{!$Label.ISSP_Currency_filter}</label>
-                  <select class="form-control" id="currencyFilter">
-                    <option></option>
-                    <apex:repeat var="currency" value="{!listCurrency}">
-                      <option>{!currency}</option>
-                    </apex:repeat>
-                  </select>
-              </apex:outputPanel>
-            </div>
-            <apex:outputPanel id="notificationsSwitch" layout="block" style="float:right;">
-                <script>$('.toggle').bootstrapToggle();</script>
-                <label class="control-label">{!$Label.ISSP_Account_Statement_Notifications_Button}&nbsp;</label>
-                <apex:inputfield styleclass="toggle" value="{!appRight.Enable_Notifications__c}" html-data-toggle="toggle" html-data-onstyle="blue" html-data-offstyle="default" html-data-size="small" onchange="updateAppRight();"/>
-            </apex:outputPanel>
-        </div>
-
-          <div class="table">
-          <table id="maintable" class="table table-hover table-condensed">
-            <thead>
-              <tr>
-                <th></th>
-                <th>{!$ObjectType.Account_Statement__c.fields.Period__c.label}</th>
-                <th>{!$ObjectType.Account_Statement__c.fields.Remittance_Date__c.label}</th>
-                <th class="text-width">{!$Label.ISSP_Account_Statement_Location}</th>
-                <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Billing_Amount__c.label}</th>
-                <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Billing_Adjustment__c.label}</th>
-                <th class="currency-width">{!$ObjectType.Account_Statement__c.fields.Amount_to_be_Paid__c.label}</th>
-                <th class="hidden-xs hidden-sm currency-width">{!$ObjectType.Account_Statement__c.fields.Paid__c.label}</th>
-                <th class="currency-width">{!$ObjectType.Account_Statement__c.fields.Balance__c.label}</th>
-                <th class="hidden-xs"></th>
-                <th>{!$ObjectType.Account_Statement__c.fields.Status__c.label}</th>
-		<th><!--Payment--></th> <!--WMO358 2018/11/02-->
-              </tr>
-            </thead>
-            <tbody>
-						<apex:repeat var="wrapper" value="{!listWrapper}">
-              <tr class="{!IF(wrapper.showSeparation,'','hidden')}">
-                <td colspan="12" class="separation-row"><div>{!$Label.ISSP_Past_Periods}</div></td>
-              </tr>
-              <tr class="accordion-toggle collapse in" data-toggle="collapse" data-target="#{!wrapper.parent.Period__c}-{!wrapper.parent.CurrencyISOCode}-period" data-filter="{!wrapper.parent.CurrencyIsoCode}">
-                <td class="hidden-xs">
-                  <apex:image styleClass="plus-sign collapse" value="{!URLFOR($Resource.ISSP_AccountStatements,'img/plus_sign.png')}" width="13" height="13"/>
-                  <apex:image styleClass="minus-sign collapse" value="{!URLFOR($Resource.ISSP_AccountStatements,'img/minus_sign.png')}" width="13" height="13"/>
-                </td>
-                <td>
-                  <apex:outputField value="{!wrapper.parent.Period__c}"/>
-                </td>
-                <td>
-                  <apex:outputText value="{0,date,dd MMM yyyy}">
-                    <apex:param value="{!wrapper.parent.Remittance_Date__c}" />
-                  </apex:outputText>
-                </td>
-                <td>
-                  <apex:outputText value="{!$Label.ISSP_Consolidated}" />
-                </td>
-                <td class="hidden-xs hidden-sm">
-                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                  <apex:param value="{!wrapper.parent.Billing_Amount__c}"/>
-                </apex:outputText>
-              </td>
-                <td class="hidden-xs hidden-sm">
-                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                    <apex:param value="{!wrapper.ParentBillingAdjustment}"/>
-                  </apex:outputText>
-                </td>
-                <td class="">
-                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                    <apex:param value="{!wrapper.parent.Amount_to_be_Paid__c}"/>
-                  </apex:outputText>
-                </td>
-                <td class="hidden-xs hidden-sm">
-                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                    <apex:param value="{!wrapper.parent.Paid__c}"/>
-                  </apex:outputText>
-                </td>
-                <td>
-                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                    <apex:param value="{!wrapper.parent.Balance__c}"/>
-                  </apex:outputText>
-                </td>
-                <td class="hidden-xs">
-                  <apex:image value="{!URLFOR($Resource.ISSP_AccountStatements,'img/clock.png')}" title="{!$Label.ISSP_Last_updated_statement}" width="16" height="16" rendered="{!wrapper.lastUpdatedMark}"/>
-                </td>
-                <td class="{!IF(wrapper.ParentStatus==$Label.ISSP_Fullpayment,'success','')}{!IF(wrapper.ParentStatus==$Label.ISSP_Excess,'warning','')}{!IF(wrapper.ParentStatus==$Label.ISSP_Pending,'danger','')}">
-                  <apex:outputText value="{!wrapper.ParentStatus}"/>
-                </td>
-                                            <!-- WMO358 Start 2018/11/02-->
-                                            <td class="hidden-xs" >
-                                                <!--Add proof of payment image from: "www.iconmonstr.com/paperclip-8-png/" -->
-                                                <div >
-                                                    <apex:commandbutton action="{!addAttachment}"
-                                                                        image="{!URLFOR($Resource.AttachmentIcon)}"
-                                                                        id="addAttachement"
-                                                                        reRender="myModal"
-                                                                        disabled="{!NOT(wrapper.ParentPaymentProof)}"
-                                                                        rendered="{!wrapper.ParentPaymentProof}"
-                                                                        onmouseup="startLoading(); return false;"
-                                                                        oncomplete="stopLoading(); return false;"
-                                                                        title="{!$Label.Add_an_attachment}">
-                                                                            <apex:param name="account" value="{!wrapper.parent.Account__c}" assignTo="{!accountSelectedId}"/>
-                                                                            <apex:param name="accountStatement" value="{!wrapper.accountSatementId}" assignTo="{!accountStatementSelectedId}"/>
-                                                                            <apex:param name="accountName" value="{!wrapper.accountName}" assignTo="{!accountSelectedName}"/>
-                                                                            <apex:param name="accountStatementPeriod" value="{!wrapper.parent.Period__c}" assignTo="{!accountStatementPeriod}"/>
-                                                                            <apex:param name="accountStatementBillingAmount" value="{!wrapper.parent.Billing_Amount__c}" assignTo="{!billingAmount}"/>
-                                                    </apex:commandbutton>
-                                               </div>
-                                            </td>
-                                            <!--WMO358 End-->
-              </tr>
-              <!-- DETAIL TABLE-->
-              <tr class="accordion-body collapse" id="{!wrapper.parent.Period__c}-{!wrapper.parent.CurrencyISOCode}-period">
-                <td colspan="1" class="hidden-xs"></td>
-                <td colspan="2"></td>
-                <td colspan="6">
-                  <apex:outputPanel rendered="{!wrapper.listStatements.size>0}">
-                    <div>
-                      <apex:pageBlockTable value="{!wrapper.listStatements}" var="statement" styleClass="table table-condensed table-pagination" headerClass="hidden">
-                        <apex:column styleclass="text-width-xs">
-                          <apex:outputField value="{!statement.Account__r.Site}"/>
-                        </apex:column>
-
-                        <apex:column styleclass="hidden-xs currency-width">
-                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                            <apex:param value="{!statement.Billing_Amount__c}"/>
-                          </apex:outputText>
-                        </apex:column>
-
-                        <apex:column styleclass="hidden-xs currency-width">
-                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                            <apex:param value="{!statement.Billing_Amount__c-statement.Amount_to_be_Paid__c}"/>
-                          </apex:outputText>
-                        </apex:column>
-
-                        <apex:column styleclass="hidden-xs currency-width">
-                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                            <apex:param value="{!statement.Amount_to_be_Paid__c}"/>
-                          </apex:outputText>
-                        </apex:column>
-
-                        <apex:column styleclass="hidden-xs currency-width">
-                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                            <apex:param value="{!statement.Paid__c}"/>
-                          </apex:outputText>
-                        </apex:column>
-
-                        <apex:column styleclass="currency-width">
-                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
-                            <apex:param value="{!statement.Balance__c}"/>
-                          </apex:outputText>
-                        </apex:column>
-                      </apex:pageBlockTable>
-
-                    </div>
-                    <td colspan="1" class="hidden-xs"></td>
-                    <td colspan="1"></td>
-                  </apex:outputPanel>
-                </td>
-              </tr>
-              <!-- END DETAIL TABLE -->
-            </apex:repeat>
-          </tbody>
-          </table>
-          </div>
-
-          <apex:variable value="{!AND(account.Country_ISO_Code__c=='CN',account.Sector__c = 'Travel Agent')}" var="ChinaDisclaimer" />
-          <div class="col-xs-12 small text-left">
-            <p><apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer}"></apex:outputText></p>
-          </div>
-          <div class="col-xs-12 small text-left">
-            <p><apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent}" rendered="{!ChinaDisclaimer}"></apex:outputText></p>
-          </div>
-
+		<apex:actionStatus id="loadingStatus" onStart="startLoading();" onStop="stopLoading();" />
+		<!-- Spinner -->
+		<div class="slds-scope">
+			<div id="spinner" style="display: none;">
+				<div class="slds-spinner_container">
+					<div role="status" class="slds-spinner slds-spinner_large">
+						<div class="slds-spinner__dot-a"></div>
+						<div class="slds-spinner__dot-b"></div>
+					</div>
 				</div>
 			</div>
+		</div>
 
-		</apex:pageBlock>
+		<div class="ICE-Body">
+			<c:ISSP_CustomNavigation />
 
-  </apex:form>
+			<apex:pageMessages />
 
-  <c:ISSP_CustomFooter />
-</div>
+			<!-- MODAL Attachments -->
+			<apex:outputPanel id="modalAttachments" styleclass="ICE-modalAttach">
+				<apex:outputPanel rendered="{!showAttachPopup}">
+					<apex:form>
+						<apex:actionFunction name="closeAttachModal" action="{!closeAttachModalPopup}" rerender="modalAttachments" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
+
+						<div class="modal showModal modalBackgound">
+							<div class="modal-dialog modal-dialog-scrollable" role="document">
+								<div class="ICE-AttachModal modal-content">
+									<div class="modal-header">
+										<div class="row">
+											<apex:outputText styleclass="ICE-TableTitle" value="{!$Label.ISSP_Account_Statement_Add_Proof_Payment}"/>&nbsp;
+											<span class="ICE-Close" onclick="closeAttachModal(); return false;"></span>
+										</div>
+									</div>
+									<!-- Attachments body -->
+									<div class="modal-body">
+										<div style="margin-bottom: 40px;">{!$Label.ISSP_Account_Statement_Add_Proof_Payment_Description}</div>
+										<c:DragAndDropFile
+											sobjectId="{!selectedWrapperStatement.parent.Account__c}"
+											amazonFileName="{!selectedWrapperStatement.amazonFileName}"/>
+									</div>
+									<!-- /Attachments body -->
+									<div class="modal-footer">
+										<div class="ICE-button-box row">
+											<button type="button" class="ICE-button" onclick="closeAttachModal(); return false;">{!$Label.ISSP_Account_Statement_Done}</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</apex:form>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<!-- /MODAL Attachments -->
+
+			<!-- MODAL Detail -->
+			<apex:outputPanel id="modalDetail" styleclass="ICE-modalDetail">
+				<apex:outputPanel rendered="{!showDetailPopUp}">
+					<apex:form >
+						<apex:variable var="detailModalCurrencyFormat" value="{!mapCurrencyFormat[selectedWrapperStatement.parent.CurrencyIsoCode]}"/>
+						<apex:actionFunction name="closeDetailModal" action="{!closeDetailModalPopup}" rerender="modalDetail" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
+
+						<script>
+							function toggleTabLocation() {
+								document.getElementById("tab-summary").style.display = 'block';
+								document.getElementById("tab-per-location").style.display = 'none';
+								document.getElementById("summary-tab-header").childNodes[0].classList.add('ICE-TabSelected');
+								document.getElementById("location-tab-header").childNodes[0].classList.remove('ICE-TabSelected');
+							}
+							function toggleSumLocation() {
+								document.getElementById("tab-summary").style.display = 'none';
+								document.getElementById("tab-per-location").style.display = 'block';
+								document.getElementById("summary-tab-header").childNodes[0].classList.remove('ICE-TabSelected');
+								document.getElementById("location-tab-header").childNodes[0].classList.add('ICE-TabSelected');
+							}
+						</script>
+						<div class="modal showModal modalBackgound">
+							<div class="modal-dialog modal-dialog-scrollable" role="document">
+								<div class="ICE-DetailModal modal-content" >
+									<div class="ICE-DetailModalHeader modal-header">
+										<div class="row" >
+											<span class="ICE-TableTitle">
+												<apex:outputText value="{!selectedWrapperStatement.parent.Period__c}"/>&nbsp;
+												<apex:outputText value="{!$ObjectType.Account_Statement__c.fields.Period__c.label}"/>
+											</span>
+											<span class="ICE-Close" onclick="closeDetailModal(); return false;"></span>
+										</div>
+										<div class="row">
+											<span class="ICE-TableSubtitle">
+												<apex:outputText value="{!$Label.ISSP_Last_Updated_on}"/>&nbsp;
+												<apex:outputText value="{0,date,dd MMM yyyy HH:mm z}">
+													<apex:param value="{!lastUpdatedOn}" />
+												</apex:outputText>
+											</span>
+										</div>
+										<div class="ICE-TabHeader">
+											<span id="summary-tab-header" class="col-1 ICE-Tab" onclick="toggleTabLocation();">
+												<span class="ICE-TabSelected">{!$Label.ISSP_Account_Statements_Summary}</span>
+											</span>
+											<span id="location-tab-header" class="col-1 ICE-Tab" onclick="toggleSumLocation();">
+												<span>{!$Label.ISSP_Account_Statements_Per_Location}</span>
+											</span>
+											<span class="ICE-Links">
+												<label>CSV</label>
+												<button class="ICE-ActionIcon ICE-download" onclick="downloadDetailCSV('{!selectedWrapperStatement.parent.Period__c}.csv'); return false;"/>
+											</span>
+										</div>
+									</div>
+									<!-- Summary Tab -->
+									<div id="tab-summary" class="modal-body" style="padding-top: 0px; display: block;">
+										<div class="row ICE-TabDetail">
+											<apex:outputPanel>
+												<div class="table" style="padding-left: 15px; padding-right: 15px;">
+													<table id="table-summary" class="table table-hover table-condensed">
+														<thead>
+															<tr>
+																<th class="ICE-TableHeader arrowwidth width"></th>
+																<th class="ICE-TableHeader textwidth ICE-strong">{!$Label.ISSP_Account_Statements_Item}</th>
+																<th class="ICE-TableHeader datewidth"></th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader detailwidth"></th>
+															</tr>
+														</thead>
+														<tbody>
+															<apex:repeat var="wrapperSummary" value="{!listWrapperSummary}">
+																<tr class="ICE-selectable" data-toggle="collapse" data-target=".collapse-{!wrapperSummary.ref}" >
+																	<td class="ICE-TableBody">
+																		<div class="ICE-expand collapse-{!wrapperSummary.ref} collapse"/>
+																	</td>
+																	<td class="ICE-TableBody ICE-strong">
+																		<apex:outputText value="{!wrapperSummary.item}"/>
+																	</td>
+																	<td class="ICE-TableBody"></td>
+																	<td class="ICE-TableBody ICE-currency-col">
+																		<apex:outputText value="{!detailModalCurrencyFormat}">
+																			<apex:param value="{!wrapperSummary.billing}"/>
+																		</apex:outputText>
+																	</td>
+																	<td class="ICE-TableBody ICE-currency-col">
+																		<apex:outputText value="{!detailModalCurrencyFormat}">
+																			<apex:param value="{!wrapperSummary.payment}"/>
+																		</apex:outputText>
+																	</td>
+																	<td class="ICE-TableBody"></td>
+																</tr>
+																<tr class="ICE-expanded-detail collapse-{!wrapperSummary.ref} collapse">
+																	<td colspan="1"></td>
+																	<td colspan="5" style="padding: 0px;">
+																		<table class="table table-hover table-condensed ICE-expanded-table">
+																			<thead>
+																				<tr>
+																					<th class="ICE-TableHeader textwidth">{!$ObjectType.Account.fields.IATACode__c.label}</th>
+																					<th class="ICE-TableHeader datewidth">{!$ObjectType.Account_Statement_Transaction__c.fields.Value_Date__c.label}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader detailwidth">{!$ObjectType.Account_Statement_Transaction__c.fields.Details__c.label}</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<apex:repeat var="transaction" value="{!wrapperSummary.listTransaction}">
+																					<tr>
+																						<td class="ICE-TableBody">
+																							<apex:outputText value="{!transaction.Parent__r.Account__r.IATAcode__c}"/>
+																						</td>
+																						<td class="ICE-TableBody">
+																							<apex:outputText value="{0,date,dd MMM yyyy}">
+																								<apex:param value="{!transaction.Value_Date__c}" />
+																							</apex:outputText>
+																						</td>
+																						<td class="ICE-TableBody ICE-currency-col">
+																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!!transaction.Is_Payment__c}">
+																								<apex:param value="{!transaction.Amount__c}"/>
+																							</apex:outputText>
+																							<apex:outputText value="-" rendered="{!transaction.Is_Payment__c}"/>
+																						</td>
+																						<td class="ICE-TableBody ICE-currency-col">
+																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!transaction.Is_Payment__c}">
+																								<apex:param value="{!transaction.Amount__c}"/>
+																							</apex:outputText>
+																							<apex:outputText value="-" rendered="{!!transaction.Is_Payment__c}"/>
+																						</td>
+																						<td class="ICE-TableBody">
+																							<apex:outputText value="{!transaction.Details__c}"/>
+																						</td>
+																					</tr>
+																				</apex:repeat>
+																			</tbody>
+																		</table>
+																	</td>
+																</tr>
+															</apex:repeat>
+														</tbody>
+														<tfoot>
+															<tr>
+																<th class="ICE-TableBody"></th>
+																<th class="ICE-TableBody ICE-strong" colspan="2">
+																	<apex:outputText value="Sum"/>
+																</th>
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
+																	<apex:outputText value="{!detailModalCurrencyFormat}">
+																		<apex:param value="{!selectedWrapperStatement.parent.Billing_Amount__c}"/>
+																	</apex:outputText>
+																</th>
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
+																	<apex:outputText value="{!detailModalCurrencyFormat}">
+																		<apex:param value="{!selectedWrapperStatement.parent.Paid__c}"/>
+																	</apex:outputText>
+																</th>
+																<th class="ICE-TableBody">
+																</th>
+															</tr>
+															<tr>
+																<th colspan="5"></th>
+																<th colspan="1">
+																	<div class="row ICE-BalanceTop">
+																		<apex:outputText value="{!$ObjectType.Account_Statement__c.fields.Balance__c.label}"/>
+																	</div>
+																	<div class="row ICE-BalanceBottom">
+																		<span>
+																			<apex:outputText value="{!selectedWrapperStatement.parent.CurrencyIsoCode} {!detailModalCurrencyFormat}">
+																				<apex:param value="{!selectedWrapperStatement.parent.Balance__c}"/>
+																			</apex:outputText>
+																		</span>
+																		<span>
+																			<span class="ICE-TableOutputInfo ICE-{!selectedWrapperStatement.ParentStatus}">
+																				{!$Label['ISSP_'+selectedWrapperStatement.ParentStatus]}
+																			</span>
+																			<apex:outputPanel style="width:90px;" rendered="{! !selectedWrapperStatement.ShowPaymentProof && !selectedWrapperStatement.ShowSettlementInfo}"></apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowPaymentProof}">
+																				<span>{!$Label.ISSP_Account_Statement_Add_Proof_Payment}</span>
+																				<div class="ICE-Attachment" onclick="event.stopPropagation(); showModalAttach('{!selectedWrapperStatement.key}'); return false;"/>
+																			</apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowSettlementInfo}">
+																				<apex:outputText value="{!$Label.ISSP_Account_Statement_Settlement_Info}" style="width: 140px;">
+																					<apex:param value="{!selectedWrapperStatement.calendar.Settlement_Day__c}" />
+																				</apex:outputText>
+																				<div class="ICE-SettlementInfo"><div>i</div></div>
+																			</apex:outputPanel>
+																		</span>
+																	</div>
+																</th>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+											</apex:outputPanel>
+										</div>
+									</div>
+									<!-- /Summary Tab -->
+									<!-- Per Location Tab -->
+									<div id="tab-per-location" class="modal-body" style="padding-top: 0px; display: none;">
+										<script>
+											var $rows = $('#table-location>tbody>tr.ICE-selectable');
+											var $rowscollapse = $('#table-location>tbody>tr.collapse');
+											$('#searchIATACodesDetail').keyup(function() {
+												searchFilter(this);
+											});
+											$('#searchIATACodesDetailClean').click(function() {
+												$("#searchIATACodesDetail").val("");
+												searchFilter($("#searchIATACodesDetail"));
+											});
+											function searchFilter(table){
+												var val = $.trim($(table).val()).replace(/ +/g, ' ').toLowerCase();
+
+												if (val>"") {
+													$("div.ICE-expand.collapse.in").removeClass("in");
+													$rowscollapse.collapse("hide");
+												}
+												var rowcount = 0;
+												$("#ICE-TableNoResult").hide();
+												$rows.show().filter(function() {
+													var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+													var result = !~text.indexOf(val);
+													if (!result) rowcount++;
+													return result;
+												}).hide();
+												if (rowcount==0) $("#ICE-TableNoResult").show();
+											}
+										</script>
+										<div class="row ICE-TabDetail">
+											<div class="row">
+												<div class="ICE-SearchContainer col-lg-4">
+													<input id="searchIATACodesDetail" class="ICE-SearchInput" placeholder="{!$Label.ISSP_Account_Statements_Search}"/>
+													<span id="searchIATACodesDetailClean" class="ICE-SearchInputClean"/>
+												</div>
+											</div>
+											<apex:outputPanel>
+												<div class="table" style="padding-left: 15px; padding-right: 15px;">
+													<table id="table-location" class="table table-hover table-condensed">
+														<thead>
+															<tr>
+																<th class="ICE-TableHeader arrowwidth"></th>
+																<th class="ICE-TableHeader textwidth ICE-strong">{!$ObjectType.Account.fields.IATACode__c.label}</th>
+																<th class="ICE-TableHeader datewidth">{!$Label.ISSP_Account_Statement_Location}</th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader currencywidth ICE-currency-col">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																<th class="ICE-TableHeader detailwidth"></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr id="ICE-TableNoResult" style="display: none;">
+																<td colspan="6">{!$Label.ISSP_Account_Statements_No_Results}</td>
+															</tr>
+															<apex:repeat var="wrapperLocation" value="{!listWrapperLocation}">
+																<tr class="ICE-selectable" data-toggle="collapse" data-target=".collapse-{!wrapperLocation.code}" >
+																	<td class="ICE-TableBody">
+																		<div class="ICE-expand collapse-{!wrapperLocation.code} collapse"/>
+																	</td>
+																	<td class="ICE-TableBody ICE-strong">
+																		<apex:outputText value="{!wrapperLocation.code}"/>
+																	</td>
+																	<td class="ICE-TableBody">
+																		<apex:outputText value="{!wrapperLocation.location}"/>
+																	</td>
+																	<td class="ICE-TableBody ICE-currency-col">
+																		<apex:outputText value="{!detailModalCurrencyFormat}">
+																			<apex:param value="{!wrapperLocation.billing}"/>
+																		</apex:outputText>
+																	</td>
+																	<td class="ICE-TableBody ICE-currency-col">
+																		<apex:outputText value="{!detailModalCurrencyFormat}">
+																			<apex:param value="{!wrapperLocation.payment}"/>
+																		</apex:outputText>
+																	</td>
+																	<td class="ICE-TableBody"></td>
+																</tr>
+																<tr class="ICE-expanded-detail collapse-{!wrapperLocation.code} collapse">
+																	<td colspan="1"></td>
+																	<td colspan="5" style="padding: 0px;">
+																		<table class="table table-hover table-condensed ICE-expanded-table">
+																			<thead>
+																				<tr class="toexportheader">
+																					<th class="ICE-TableHeader hidden toexportheader">{!$ObjectType.Account.fields.IATACode__c.label}</th>
+																					<th class="ICE-TableHeader textwidth toexportheader">{!$Label.ISSP_Account_Statements_Item}</th>
+																					<th class="ICE-TableHeader datewidth toexportheader">{!$ObjectType.Account_Statement_Transaction__c.fields.Value_Date__c.label}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col toexportheader">{!$Label.ISSP_Account_Statements_Billing} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader currencywidth ICE-currency-col toexportheader">{!$Label.ISSP_Account_Statements_Payment} {!selectedWrapperStatement.parent.CurrencyIsoCode}</th>
+																					<th class="ICE-TableHeader detailwidth toexportheader">{!$ObjectType.Account_Statement_Transaction__c.fields.Details__c.label}</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<apex:repeat var="transaction" value="{!wrapperLocation.listTransaction}">
+																					<tr class="toexport">
+																						<td class="ICE-TableBody toexport hidden">
+																							<apex:outputText value="{!wrapperLocation.code}"/>
+																						</td>
+																						<td class="ICE-TableBody toexport">
+																							<apex:outputText value="{!transaction.Internal_Type__c}"/>
+																						</td>
+																						<td class="ICE-TableBody toexport">
+																							<apex:outputText value="{0,date,dd MMM yyyy}">
+																								<apex:param value="{!transaction.Value_Date__c}" />
+																							</apex:outputText>
+																						</td>
+																						<td class="ICE-TableBody ICE-currency-col toexport">
+																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!!transaction.Is_Payment__c}">
+																								<apex:param value="{!transaction.Amount__c}"/>
+																							</apex:outputText>
+																							<apex:outputText value="-" rendered="{!transaction.Is_Payment__c}"/>
+																						</td>
+																						<td class="ICE-TableBody ICE-currency-col toexport">
+																							<apex:outputText value="{!detailModalCurrencyFormat}" rendered="{!transaction.Is_Payment__c}">
+																								<apex:param value="{!transaction.Amount__c}"/>
+																							</apex:outputText>
+																							<apex:outputText value="-" rendered="{!!transaction.Is_Payment__c}"/>
+																						</td>
+																						<td class="ICE-TableBody toexport">
+																							<apex:outputText value="{!transaction.Details__c}"/>
+																						</td>
+																					</tr>
+																				</apex:repeat>
+																			</tbody>
+																		</table>
+																	</td>
+																</tr>
+															</apex:repeat>
+														</tbody>
+														<tfoot>
+															<tr>
+																<th class="ICE-TableBody">
+																</th>
+																<th class="ICE-TableBody ICE-strong">
+																	<apex:outputText value="Sum"/>
+																</th>
+																<th class="ICE-TableBody">
+																</th>
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
+																	<apex:outputText value="{!detailModalCurrencyFormat}">
+																		<apex:param value="{!selectedWrapperStatement.parent.Billing_Amount__c}"/>
+																	</apex:outputText>
+																</th>
+																<th class="ICE-TableBody ICE-strong ICE-currency-col">
+																	<apex:outputText value="{!detailModalCurrencyFormat}">
+																		<apex:param value="{!selectedWrapperStatement.parent.Paid__c}"/>
+																	</apex:outputText>
+																</th>
+																<th class="ICE-TableBody ">
+																</th>
+															</tr>
+															<tr>
+																<th colspan="5"></th>
+																<th colspan="1">
+																	<div class="row ICE-BalanceTop">
+																		<apex:outputText value="{!$ObjectType.Account_Statement__c.fields.Balance__c.label}"/>
+																	</div>
+																	<div class="row ICE-BalanceBottom">
+																		<span>
+																			<apex:outputText value="{!selectedWrapperStatement.parent.CurrencyIsoCode} {!detailModalCurrencyFormat}">
+																				<apex:param value="{!selectedWrapperStatement.parent.Balance__c}"/>
+																			</apex:outputText>
+																		</span>
+																		<span>
+																			<span class="ICE-TableOutputInfo ICE-{!selectedWrapperStatement.ParentStatus}">
+																				{!$Label['ISSP_'+selectedWrapperStatement.ParentStatus]}
+																			</span>
+																			<apex:outputPanel style="width:90px;" rendered="{! !selectedWrapperStatement.ShowPaymentProof && !selectedWrapperStatement.ShowSettlementInfo}"></apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowPaymentProof}">
+																				<span>{!$Label.ISSP_Account_Statement_Add_Proof_Payment}</span>
+																				<div class="ICE-Attachment" onclick="event.stopPropagation(); showModalAttach('{!selectedWrapperStatement.key}'); return false;"/>
+																			</apex:outputPanel>
+																			<apex:outputPanel styleclass="ICE-tooltip" rendered="{!selectedWrapperStatement.ShowSettlementInfo}">
+																				<apex:outputText value="{!$Label.ISSP_Account_Statement_Settlement_Info}" style="width: 140px;">
+																					<apex:param value="{!selectedWrapperStatement.calendar.Settlement_Day__c}" />
+																				</apex:outputText>
+																				<div class="ICE-SettlementInfo"><div>i</div></div>
+																			</apex:outputPanel>
+																		</span>
+																	</div>
+																</th>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+											</apex:outputPanel>
+										</div>
+									</div>
+									<!-- /Per Location Tab -->
+								</div>
+							</div>
+						</div>
+					</apex:form>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<!-- /MODAL Detail -->
+
+			<!-- MAIN Form -->
+			<apex:form id="mainForm" styleclass="form-inline">
+				<apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
+				<apex:actionFunction name="showModalAttach" action="{!showAttachModalPopup}" rerender="modalAttachments" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+					<apex:param name="wrapperKey" value="" assignTo="{!selectedKey}"/>
+				</apex:actionFunction>
+				<apex:actionFunction name="showModalDetail" action="{!showDetailModalPopup}" rerender="modalDetail" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+					<apex:param name="wrapperKey" value="" assignTo="{!selectedKey}"/>
+				</apex:actionFunction>
+
+				<div class="alert alert-danger" style="display:{!if(listMessages.size==0,'none','')}">
+					<apex:repeat value="{!listMessages}" var="er" id="theRepeat">
+						<p><apex:outputText value="{!er}" escape="false" /></p>
+					</apex:repeat>
+				</div>
+
+				<!-- MAIN PAGE BLOCK for Account Statements when Terms And Conditions are accepted -->
+				<apex:pageBlock rendered="{!listMessages.size==0}">
+					<!-- HEADER -->
+					<div class="ICE-Header">
+						<div class="container">
+							<div class="ICE-Breadcrumb">
+								<a href="/ISSP_Homepage?mid=M0S1">{!$Label.ISSP_Home}</a>
+								<span> &gt; </span>
+								<a href="/csportal/s/services">{!$Label.ISSP_Services}</a>
+								<span> &gt; </span>
+								<a href="#">ICE</a>
+							</div>
+							<div class="row">
+								<span>
+									<apex:image styleclass="ICE-ICElogo" value="{!URLFOR($Resource.ISSP_AccountStatements, 'img/AccStatementsIcon.svg')}"/>
+								</span>
+								<span class="ICE-MainTitle">{!$Label.ISSP_Account_Statements_Title}</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="container ICE-TableContainer">
+						<div class="ICE-TableTitleHeader" >
+							<div class="row">
+								<span class="ICE-TableTitle" >
+									<apex:outputText value="{!headquarter.Name + ' - ' + $Label.ISSP_Consolidated}"/>
+								</span>
+							</div>
+							<div class="row" >
+								<span class="col ICE-TableSubtitle" >
+									<apex:outputText value="{!$Label.ISSP_Last_Updated_on}"/>&nbsp;
+									<apex:outputText value="{0,date,dd MMM yyyy HH:mm z}">
+										<apex:param value="{!lastUpdatedOn}" />
+									</apex:outputText>
+								</span>
+								<apex:outputPanel id="notificationsSwitch" styleclass="ICE-SwitchSection">
+									<label class="ICE-SwitchLabel">{!$Label.ISSP_Account_Statement_Notifications_Button}&nbsp;</label>
+									<label id="notif-switch" class="switch {!IF(appRight.Enable_Notifications__c,'switched','')}">
+										<apex:inputCheckbox value="{!appRight.Enable_Notifications__c}" onchange="onChangeNotification(this);"/>
+										<span id="notif-slider" class="slider round"></span>
+									</label>
+								</apex:outputPanel>
+							</div>
+						</div>
+						<div class="row ICE-Table" >
+							<div class="table">
+								<table id="maintable" class="table table-hover table-condensed">
+									<thead>
+										<tr>
+											<th class="ICE-TableHeader ICE-strong">{!$ObjectType.Account_Statement__c.fields.Period__c.label}</th>
+											<th class="ICE-TableHeader currencywidth">{!$ObjectType.Account_Statement__c.fields.Remittance_Date__c.label}</th>
+											<th class="ICE-TableHeader currencywidth">{!$ObjectType.Account_Statement__c.fields.Amount_to_be_Paid__c.label}</th>
+											<th class="ICE-TableHeader currencywidth">{!$ObjectType.Account_Statement__c.fields.Paid__c.label}</th>
+											<th class="ICE-TableHeader currencywidth">{!$ObjectType.Account_Statement__c.fields.Balance__c.label}</th>
+											<th class="ICE-TableHeader statuswidth">{!$ObjectType.Account_Statement__c.fields.Status__c.label}</th>
+											<th class="ICE-TableHeader attachwidth"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<apex:repeat var="wrapper" value="{!listWrapper}">
+											<tr onclick="showModalDetail('{!wrapper.key}'); return false;" class="ICE-selectable">
+												<td class="ICE-TableBody ICE-strong">
+													<apex:outputField value="{!wrapper.parent.Period__c}"/>
+												</td>
+												<td class="ICE-TableBody">
+													<apex:outputText value="{0,date,dd MMM yyyy}">
+														<apex:param value="{!wrapper.parent.Remittance_Date__c}" />
+													</apex:outputText>
+												</td>
+												<td class="ICE-TableBody">
+													<apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!mapCurrencyFormat[wrapper.parent.CurrencyIsoCode]}">
+														<apex:param value="{!wrapper.parent.Amount_to_be_Paid__c}"/>
+													</apex:outputText>
+												</td>
+												<td class="ICE-TableBody">
+													<apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!mapCurrencyFormat[wrapper.parent.CurrencyIsoCode]}">
+														<apex:param value="{!wrapper.parent.Paid__c}"/>
+													</apex:outputText>
+												</td>
+												<td class="ICE-TableBody">
+													<apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!mapCurrencyFormat[wrapper.parent.CurrencyIsoCode]}">
+													<apex:param value="{!wrapper.parent.Balance__c}"/>
+												</apex:outputText>
+												</td>
+												<td class="ICE-TableBody">
+													<div class="ICE-TableOutputInfo ICE-{!wrapper.ParentStatus}">{!$Label['ISSP_'+wrapper.ParentStatus]}</div>
+												</td>
+												<td class="ICE-TableBody">
+													<apex:outputPanel styleclass="ICE-tooltip" rendered="{!wrapper.ShowPaymentProof}">
+														<span>{!$Label.ISSP_Account_Statement_Add_Proof_Payment}</span>
+														<div class="ICE-Attachment" onclick="event.stopPropagation(); showModalAttach('{!wrapper.key}'); return false;"/>
+													</apex:outputPanel>
+													<apex:outputPanel styleclass="ICE-tooltip" rendered="{!wrapper.ShowSettlementInfo}">
+														<apex:outputText value="{!$Label.ISSP_Account_Statement_Settlement_Info}" style="width: 140px;">
+															<apex:param value="{!wrapper.calendar.Settlement_Day__c}" />
+														</apex:outputText>
+														<div class="ICE-SettlementInfo"><div>i</div></div>
+													</apex:outputPanel>
+												</td>
+											</tr>
+										</apex:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row ICE-TableFooter">
+							<apex:variable value="{!AND(account.Country_ISO_Code__c=='CN',account.Sector__c = 'Travel Agent')}" var="ChinaDisclaimer" />
+							<div class="col-xs-12 small text-left">
+								<p><apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer}"></apex:outputText></p>
+							</div>
+							<div class="col-xs-12 small text-left">
+								<p><apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent}" rendered="{!ChinaDisclaimer}"></apex:outputText></p>
+							</div>
+						</div>
+					</div>
+
+				</apex:pageBlock>
+				<!-- /MAIN PAGE BLOCK -->
+
+			</apex:form>
+			<!-- /MAIN Form -->
+
+			<c:ISSP_CustomFooter />
+		</div>
+	</body>
+
+</html>
 </apex:page>

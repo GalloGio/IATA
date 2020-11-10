@@ -75,7 +75,8 @@ public with sharing class SidraLiteHelperForIFAP {
 						FROM Account
 						WHERE Id = :parentCase.accountId];
 
-		if(IFAP_WebService.isAssessmentPerformed(parentCase) && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c){
+		//INC516821 - add condition to avoid the error when processing a IFAP with status Financial Security Requested -> !isFS(parentCase)
+		if(IFAP_WebService.isAssessmentPerformed(parentCase) && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c && !isFS(parentCase)){  
 			throw new SidraLiteException(INVALID_ACTION_CLICK_REMOVE_CASH_CONDITION);
 		}
 

@@ -147,6 +147,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>IATA_ISO_Country__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>IATA_Member__c</field>
             <table>Account</table>
         </columns>
@@ -1962,6 +1967,11 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Financial_Security_Provider_chkbx__c</field>
             <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IATA_Iso_Country_Name__c</field>
+            <table>Account</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>

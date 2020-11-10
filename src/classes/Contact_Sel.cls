@@ -39,7 +39,7 @@ public without sharing class Contact_Sel extends Selector {
 		return (contacts != null && contacts.size() > 0)  ? contacts[0]  : null; */
 
 		String query = String.format(
-			'SELECT {0}, Account.Name, Account.CurrencyIsoCode ' +
+			'SELECT {0}, Account.Name, Account.CurrencyIsoCode, Account.SoldTo_Location__c ' +
 			'   ,BillTo_Location__r.Address__c, BillTo_Location__r.Street__c, BillTo_Location__r.City__c, BillTo_Location__r.ZipCode__c' +
 			'   ,BillTo_Location__r.ISO_Country_Name__c, BillTo_Location__r.ISO_Country_Code__c' +
 			'   ,BillTo_Location__r.ISO_State_Name__c, BillTo_Location__r.ISO_State_Code_SAP__c' +
@@ -102,7 +102,7 @@ public without sharing class Contact_Sel extends Selector {
 										ShipTo_Location__r.ISO_State_Name__c,ShipTo_Location__r.ISO_State_Code__c,ShipTo_Location__r.ISO_State_Code_SAP__c,
 										ShipTo_Location__r.Contact_First_Name__c,ShipTo_Location__r.Contact_Last_Name__c,ShipTo_Location__r.Contact_Phone__c,
 										ShipTo_Location__r.Contact_Email__c,ShipTo_Location__r.Contact_Salutation__c,ShipTo_Location__r.Country__c,
-										ShipTo_Location__r.State__c,ShipTo_Location__r.Email__c,ShipTo_Location__r.Phone__c ,ShipTo_Location__r.Contact__c
+										ShipTo_Location__r.State__c,ShipTo_Location__r.Email__c,ShipTo_Location__r.Phone__c ,ShipTo_Location__r.Contact__c,VAT_Country_Code__c
 									from Contact
 									where id in : contactIds
 								]);

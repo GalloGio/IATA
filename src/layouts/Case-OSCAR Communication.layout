@@ -151,6 +151,10 @@
                 <behavior>Readonly</behavior>
                 <field>Case_Email_Domain_Validation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -213,6 +217,10 @@
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -241,6 +249,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Thread_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -1,0 +1,212 @@
+.slds-table_resizable-cols thead th a,
+.slds-table--resizable-cols thead th a {
+	height: 3rem;
+}
+
+.slds-resizable__divider::before {
+	background-color: transparent;
+}
+
+.slds-table_bordered {
+	border: 0;
+}
+
+.border-top tr th:not(:last-child)
+.slds-table_col-bordered tr th:not(:last-child) {
+	border-top: 1px solid rgb(212, 212, 212);
+}
+
+.slds-table_col-bordered tr th:first-child,
+.slds-table_col-bordered tr:not(:last-child) td:first-child {
+	border-left: 1px solid rgb(212, 212, 212);
+}
+
+.slds-table_col-bordered tr th:nth-last-child(2),
+.slds-table_col-bordered tr:not(:last-child) td:nth-last-child(2) {
+	border-right: 1px solid rgb(212, 212, 212);
+}
+
+.slds-table_bordered:not(.slds-no-row-hover) tbody tr:last-child:hover > td:not(.slds-has-focus),
+.slds-table_bordered:not(.slds-no-row-hover) tbody tr:last-child:hover > td,
+.slds-table_bordered:not(.slds-no-row-hover) tbody tr:last-child > td:hover,
+.slds-table:not(.slds-no-row-hover) tbody tr:last-child:hover > td,
+.slds-table:not(.slds-no-row-hover) tbody tr:last-child > td:hover,
+.slds-table_bordered:not(.slds-no-row-hover) tbody tr:last-child th[scope=row],
+.slds-table:not(.slds-no-row-hover) tbody tr:last-child th[scope=row],
+.slds-table tbody tr td:last-child {
+	box-shadow: unset;
+	background-color: unset;
+}
+
+/*.slds-table:not(.slds-no-row-hover) tbody tr:last-child > td:not(:empty):hover {
+	background-color: rgba(30, 50, 250, 0.05);
+}*/
+
+.slds-table_col-bordered tr:nth-last-child(2) td {
+	border-bottom: 1px solid rgb(212, 212, 212);
+}
+
+.slds-table_col-bordered tr:last-child td {
+	border: 0;
+}
+
+.slds-table_col-bordered  tr:last-child td:not(:empty) {
+	border-style: solid;
+	border-color: rgb(212, 212, 212);
+	border-width: 0 1px 1px 1px;
+}
+
+.slds-table_bordered tr th:last-child,
+.slds-table_bordered tr td:last-child {
+	border: 0;
+}
+
+/** Hightlights */
+.hightlight-first-column tr td:first-child,
+.highlight-totals tr:last-child td {
+	font-weight: 600;
+	color: rgb(81, 79, 77);
+}
+
+.body-container .clickable-rows tbody tr {
+	cursor: pointer;
+}
+
+/** IATA Specific */
+.slds-table thead th, .slds-table tbody td {
+	color: #525252;
+	font-weight: normal;
+	font-style: normal;
+}
+
+.hightlight-first-column tr th:first-child,
+.hightlight-first-column tr td:first-child {
+	color: #333333;
+	font-weight: 500;
+}
+
+.body-container thead tr th,
+.header-container thead tr th {
+	font-size: 0.875rem;
+}
+
+.body-container tbody tr th,
+.body-container tbody tr td {
+	font-size: 1rem;
+}
+
+.footer-container {
+	display: none;
+}
+
+.highlight-totals tr:last-child td:not(:first-child) {
+	font-weight: bold;
+}
+
+.slds-table_bordered, .slds-table_col-bordered {
+	border-color: #E6E6E6;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 2px;
+	width: 7px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	/*background: #555;*/
+}
+
+/** Fixed Headers */
+.wrap {
+	position: relative;
+	overscroll-behavior: contain;
+}
+
+.header-container {
+	top: 0;
+	position: relative;
+	z-index: 1;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: 3rem;
+	margin-bottom: -3rem;
+}
+
+.header-container.fixed-header {
+	position: -webkit-sticky;
+	position: sticky;
+}
+
+.header-container table {
+	margin: 0;
+	height: 3rem;
+}
+
+.header-container table, .body-container {
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+
+.body-container {
+	scroll-snap-type: x mandatory;
+}
+
+.header-container::-webkit-scrollbar,
+.header-container>table::-webkit-scrollbar {
+  display: none;
+}
+
+/** Fixed First Column */
+
+.header-container.fixed-first-column thead th:first-child,
+.body-container.fixed-first-column thead th:first-child,
+.body-container.fixed-first-column tbody th[scope=row] {
+	position: -webkit-sticky;
+	position: sticky;
+	left: 0;
+	z-index: 1;
+}
+
+.header-container.fixed-first-column thead th:first-child,
+.body-container.fixed-first-column .slds-table tbody th[scope=row],
+.body-container.fixed-first-column .slds-table_bordered:not(.slds-no-row-hover) tbody tr:last-child th[scope=row] {
+	background-color: #FFFFFF;
+}
+
+.body-container.fixed-first-column tbody tr:not(:last-child):hover th[scope=row] {
+    box-shadow: rgb(212, 212, 212) 0px -1px 0px inset, rgb(212, 212, 212) 0px 1px 0px inset;
+    background-color: #F4F5FF;
+}
+
+/** Fixed Footer */
+.body-container.fixed-scrollbar::-webkit-scrollbar,
+.body-container.fixed-scrollbar>table::-webkit-scrollbar {
+  display: none;
+}
+
+.footer-container.fixed-scrollbar {
+	display: block;
+	bottom: 0;
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 1;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+.footer-container.fixed-scrollbar .sticky-scrollbar {
+	height: 1px;
+}

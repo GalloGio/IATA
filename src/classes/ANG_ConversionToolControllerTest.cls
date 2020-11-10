@@ -42,7 +42,7 @@ private class ANG_ConversionToolControllerTest {
 
 		Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='HO',Name='Test5 Agency OK',Short_Name__c='Test5 Agency OK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
-		Account a6 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='BR',Name='Test6 Agency OK',Short_Name__c='Test6 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		Account a6 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234566',Location_Type__c='BR',Name='Test6 Agency OK',Short_Name__c='Test6 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
 		insert new List<Account>{a4, a5, a6};
 
@@ -58,16 +58,16 @@ private class ANG_ConversionToolControllerTest {
 
 	   	// wrong accounts !
 
-		Account aw1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Test1 Agency NOK',Short_Name__c='Test1 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		Account aw1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234567',Location_Type__c='HO',Name='Test1 Agency NOK',Short_Name__c='Test1 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
 		insert aw1;
 
-		Account aw2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Test2 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
-		Account aw3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Test3 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent',  Location_Class__c = 'P');
+		Account aw2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234568',Location_Type__c='BR',Name='Test2 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		Account aw3 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw1.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234569',Location_Type__c='BR',Name='Test3 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent',  Location_Class__c = 'P');
 
 		insert new List<Account>{aw2, aw3};
 
-		Account aw4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw3.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test4 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'C');
+		Account aw4 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw3.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234510',Location_Type__c='SA',Name='Test4 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'C');
 
 
 
@@ -83,11 +83,11 @@ private class ANG_ConversionToolControllerTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{relw1, relw2, relw3};
 
-		Account aw5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test5 Agency NOK',Short_Name__c='Test5 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		Account aw5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234511',Location_Type__c='SA',Name='Test5 Agency NOK',Short_Name__c='Test5 Agency NOK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
 		insert aw5;
 
-		Account aw6 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw5.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='SA',Name='Test6 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent', Location_Class__c = 'P');
+		Account aw6 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = aw5.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234512',Location_Type__c='SA',Name='Test6 Agency NOK',Short_Name__c='Test1 Agency', Sector__c = 'Cargo Agent', Location_Class__c = 'P');
 
 		insert aw6;
 

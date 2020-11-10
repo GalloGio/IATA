@@ -601,7 +601,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 			//check if the general public account have contacts
 			if(acc.Sector__c == 'General Public'){
-				List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id];
+				List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id LIMIT 1];
 				if(gpContact.isEmpty()) //in this case the Portal Status will be Pending Approval
 					con.User_Portal_Status__c = 'Active';
 			}

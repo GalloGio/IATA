@@ -44,6 +44,8 @@ public class AMS_AccountTriggerHandler {
 
 		}
 
+		copyIATACOdeForDuplicationControl(accs, new Map<ID, Account>());
+
 	}
 
 	public static void handleAfterInsert(List<Account> accs){
@@ -98,6 +100,7 @@ public class AMS_AccountTriggerHandler {
 		 }else{
 			System.debug('Not Handling minor changes');
 		 }
+		 copyIATACOdeForDuplicationControl(accs, oldMap);
 
 		 AMS_Utils.startIntegration(accs,oldMap);
 
@@ -130,6 +133,20 @@ public class AMS_AccountTriggerHandler {
 			ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
 		}
 
+	}
+
+	/**
+	 * Migrate workflow Rule 
+	 * Copy IATACode for duplication control to Before update
+	 */
+	private static void copyIATACOdeForDuplicationControl(List<Account> newAccs, Map<Id,Account> oldMap){
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		for(Account acc : newAccs){
+			if((!oldMap.containskey(acc.ID) || acc.IATACode__c != oldMap.get(acc.ID).IATACode__c) && agencyRT == acc.RecordTypeId){
+				acc.IATA_Code_duplicate_blocker__c = acc.IATACode__c;
+			}
+				
+		}
 	}
 
 	public static void validateCharacters(Account acc) {
@@ -234,7 +251,8 @@ public class AMS_AccountTriggerHandler {
 		for(Account acct: accts){
 
 			//only accredited agencies can generate minor change codes
-			if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null)
+			//Exclude all TIDS accounts with location class = T
+			if(acct.recordTypeId == standardRT && acct.Accreditation_date__c != null && acct.Location_Class__c!='T')
 				toReturn.add(acct);
 
 		}

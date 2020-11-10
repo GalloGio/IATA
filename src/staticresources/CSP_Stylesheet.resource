@@ -443,7 +443,7 @@ lightning-datatable .slds-th__action {
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
 .Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
-.Closed span, .AcceptedFutureDate span, .Submitted span {
+.Closed span, .AcceptedFutureDate span, .Submitted span, .PendingClosure span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -967,7 +967,9 @@ lightning-datatable .slds-th__action {
 .text-bold{
     font-weight: 500;
 }
-
+.text-bolder{
+    font-weight: 700;
+}
 /* ############################################## */
 /* Text Colors */
 
@@ -995,6 +997,9 @@ lightning-datatable .slds-th__action {
     color: #999999;
 }
 
+.text-superLightGray{
+    color-color: #f0f2f5;
+}
 .text-linkBlue{
     color: #1e32fa;
 }
@@ -1937,7 +1942,8 @@ visibility: hidden;
 .sideBar .langSelect,
 .sideBar .langSelect input[role="textbox"],
 .sideBar .langSelect div[role="listbox"] {
-    background-color: #1e32fa;
+    background-color: #f0f2f5;
+    font-weight:500;
     border-radius: 0;
 }
 
@@ -2114,7 +2120,7 @@ visibility: hidden;
     display: inline-block;
 }
 
-.custTextInput input{
+.custTextInput input, .custTextInput textarea{
     border-radius: 1px;
     border: solid 1px #e6e6e6;
     background-color: #ffffff;
@@ -2146,7 +2152,9 @@ visibility: hidden;
     height: 52px;
 }
 
-.custTextInput input:focus{
+.custTextInput input:focus, 
+.custTextInput textarea:focus, 
+.firstLevelRegistrationCombobox [role="combobox"] input[readonly]:focus{
     border: solid 2px rgba(30, 50, 250, 0.6);
 }
 	
@@ -2598,6 +2606,9 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 .rotateIcon45Deg{
   transform: rotate(45deg);
 }
+.rotateIcon180Deg{
+  transform: rotate(180deg);
+}
 
 /* ############################################## */
 .showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
@@ -2774,3 +2785,83 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 
 /*RS - END - Needed for IFTP app */
+
+/* Override image padding on content Page : important required without possible work around*/
+.comm-page-managed-content-PortalRecommendationContent .slds-large-size_6-of-12
+{
+ padding: 0px !important;
+
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.maxContentWidth{
+    max-width:512px;
+}
+
+.maxContainerWidth{
+    max-width:928px;
+}
+
+
+.specialPickList .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: white;
+}
+
+.specialPickList .slds-combobox_container input[role="textbox"]{
+  border-color:#1e32fa;
+}
+.MaxModalContainerDim{
+    max-width:596px;
+}
+
+/* Re styling scrollbars*/
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #D8D8D8;
+	border-radius: 1px;
+	width: 6px;
+}
+
+
+/* Troubleshooting page article overrides*/
+.richtextlinks a{
+    color: #3333ff !important;
+    
+}
+
+.richtextlinks ul{
+    list-style: none;
+  }
+  
+.richtextlinks ul li::before{
+    content: "\2022";
+    color: #7884FC;
+    font-weight: bolder;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+.lockScroll{
+    overflow: hidden;
+}
+
+/* LWC Tokens*/
+:root{
+
+  --lwc-colorBorderInputActive :#3333ff;
+  --lwc-shadowButtonFocus: 0 0 3px #7884FC;
+}

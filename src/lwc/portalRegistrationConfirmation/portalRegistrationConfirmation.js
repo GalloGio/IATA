@@ -474,7 +474,7 @@ export default class PortalRegistrationConfirmation extends LightningElement {
         let category = 'Platforms';
         let topic = 'Customer_Portal';
         let subtopic = 'Customer_Portal_Support';
-        var page = "support-reach-us?tile=question&category=" + category + "&topic=" + topic + "&subtopic=" + subtopic;
+        var page = "support-reach-us?topic=" + topic;
         navigateToPage(page);
     }
 

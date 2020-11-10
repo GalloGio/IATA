@@ -1,0 +1,224 @@
+<template>
+	<div class="vetting-menu">
+		<c-tids-vetting-menu></c-tids-vetting-menu>
+	</div>
+	<header>
+		<div class="row">
+			<div class="col s9">
+				<template if:true={istext1}>
+					<h1 class="icon">New TIDS Application</h1>
+				</template>
+				<template if:true={istext2}>
+					<h1 class="icon">Change of Company Details</h1>
+				</template>				
+			</div>
+		</div>
+	</header>
+	<form>
+		<p>
+			<template if:true={istext1}>
+				Your progression will be saved after each section of this form. You can resume your application at any time.<br />
+			</template>
+			<template if:true={istext2}>
+				The below is the information currently on record. Please amend all applicable fields.<br />
+			</template>	
+			<em>All questions preceded by a (*) are mandatory.</em>
+		</p>
+		<!-- Company Legal Name Start -->
+		<template if:true={companyLegalNameRules.visible}>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<template if:true={vettingErrorOptions}>
+						<lightning-input
+							type="checkbox"
+							checked={companyLegalNameError.show}
+							data-name="error-companylegal"
+							class="comment-companylegalname"
+							onclick={handleError}
+						>
+						</lightning-input>
+					</template>
+					<c-tids-tooltip rules={companyLegalNameRules}></c-tids-tooltip>
+					<lightning-input
+						type="text"
+						name="companyLegalName"
+						data-name="companyLegalName"
+						disabled={companyLegalNameRules.disabled}
+						required={companyLegalNameRules.required}
+						value={companyLegalName}
+						max-length="90"
+						onchange={changeField}
+						message-when-value-missing="Your must entry a Company Legal Name."
+						message-when-pattern-mismatch="Special characters are not allowed"
+						label="Company Legal Name"
+						pattern={companyLegalNameRules.regex}
+						data-regex={companyLegalNameRules.regex}
+						variant="label-hidden"
+					>
+					</lightning-input>
+					
+					<span>{companyLegalNameCounter} / {companyLegalNameMaxLength}</span>
+
+					<div if:true={companyLegalNameChanges.display}>
+						<p><mark>Previous Value: {companyLegalNameChanges.sfValue}</mark></p>
+					</div>
+					
+					<template if:true={vettingErrorOptions}>
+						<lightning-textarea
+							if:true={companyLegalNameError.show}
+							data-fieldname="companyLegalName"
+							data-name="error-companylegalname-desc"
+							class="comment-area-companylegalname"
+							name="companyLegalNameComments"
+							label="Error Description"
+							value={companyLegalNameError.description}
+							onchange={changeErrorFields}
+						></lightning-textarea>
+					</template>
+				</div>
+			</div>
+
+		</template>
+		<!-- Company Legal Name End -->
+
+		<!-- Country Start -->
+		<template if:true={countryRules.visible}>
+
+			<div class="row b-select-wrapper">
+				<div class="input-field col m12">
+					<c-tids-tooltip rules={countryRules}></c-tids-tooltip>
+					<lightning-combobox
+						name="country"
+						data-name="country"
+						label="Country"
+						required={countryRules.required}
+						disabled={countryRules.disabled}
+						message-when-value-missing="Your must be selected a country."
+						value={country}
+						placeholder="Select a country"
+						options={countries}
+						onchange={handleChange}
+						variant="label-hidden"
+					></lightning-combobox>
+
+					<div if:true={countryChanges.display}>
+						<p><mark>Previous Value: {countryChanges.sfValue}</mark></p>
+					</div>
+
+				</div>
+			</div>
+		
+		</template>
+		<!-- Country End -->
+
+		<footer>
+			<template if:false={vettingMode}>
+				<button
+					disabled={disableButton}
+					onclick={handleNextSection}>
+					Next section
+				</button>
+			</template>
+
+			<template if:true={vettingMode}>
+				
+				<button if:true={vettingErrorOptions}
+					name="report-errors-and-proceed"
+					data-next="agency-legal-status"
+					data-name="report-errors-and-proceed"
+					onclick={handleVettingAction}
+					disabled={reportErrorButtonDisabled}
+					class="button-error">
+					Report Errors and Proceed
+				</button>
+				
+				<button if:false={vettingErrorOptions}
+					data-name="confirm-review-status"
+					onclick={handleVettingAction}>
+					Confirm Review and Proceed
+				</button>
+			
+			</template>
+		</footer>
+	</form>
+	<c-tids-modal
+		if:true={openModal}
+		open={openModal}
+		field-error-selected={fieldErrorSelected}
+		default-message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal>
+
+	<!-- Start Confirmation Modal Legal Name and Country -->
+	<template if:true={showConfimationModal}>
+		<section 
+			role="dialog" 
+			tabindex="-1" 
+			aria-labelledby="Confirmation Information" 
+			aria-modal="true" 
+			aria-describedby="confirmation-data" 
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Attention</h2>
+					<p class="slds-m-top_x-small">The information shown here cannot be modified during a later step.</p>
+					<p>Please confirm that the below information is correct.</p>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="confirmation-data">
+					<template if:false={showDeduplication}>
+						<h3>Current information</h3>
+						<ul class="style-icon">
+							<li>Company Legal Name: {companyLegalName}</li>
+							<li>Country: {countrySelected.label}</li>
+						</ul>
+					</template>
+					<template if:true={showDeduplication}>
+						<span>Sorry another company was found with the same name, therefore your request was not processed.</span>
+					</template>
+				</div>
+				<footer class="slds-modal__footer">
+					<template if:false={showDeduplication}>
+						<button class="slds-button slds-button_neutral transparent" onclick={handleReviewInformation}>Review Information</button>
+						<button class="slds-button slds-button_brand" onclick={handleConfirmationInformation}>Confirm</button>  
+					</template>
+					<template if:true={showDeduplication}>
+						<button class="slds-button slds-button_brand" onclick={handleOk}>Return to Dashboard</button>  
+					</template>
+				 </footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- End Confirmation Modal Legal Name and Country -->
+
+	<!-- Start Confirmation Modal Legal Name Vetting -->
+	<template if:true={openVettingConfirmationModal}>
+		<section 
+			role="dialog" 
+			tabindex="-1" 
+			aria-labelledby="Confirmation Information" 
+			aria-modal="true" 
+			aria-describedby="confirmation-data-vetting" 
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<h2 id="modal-heading-vetting" class="slds-modal__title slds-hyphenate">Attention</h2>
+					<p>Duplicate TIDS Account Found</p>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="confirmation-data-vetting">
+					<h3>Application cannot proceed - Please instruct applicant to either:</h3>
+					<ul class="style-icon">
+						<li>Apply for a TIDS Branch Office if currently active</li>
+						<li>Reinstate TIDS Code if participation is Terminated</li>
+					</ul>
+				</div>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_brand" onclick={handleVettingConfirmation}>Close</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+	<!-- End Confirmation Modal Legal Name and Country -->
+</template>

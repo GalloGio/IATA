@@ -86,8 +86,21 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		);
 		insert con;
 
+		String cspath = PortalRegistrationSecondLevelCtrl.getCSPortalPath();
+		
 		/** USER */
 		User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+	}
+
+	@IsTest
+	static void testcheckAddress(){
+		Test.startTest();
+		Test.setMock(HttpCalloutMock.class, new OneId_AddressDoctorMockImpl());
+		List<OneId_AddressDoctor.AddressInfo> ADaddresses = OneId_AddressDoctor.quickSearch('Avenue avant-poste 5; 1005; Lausanne', 'CH');
+		ADaddresses[0].countryCode = 'CH';
+
+		List<OneId_AddressDoctor.AddressInfo> addressInfo = PortalRegistrationSecondLevelCtrl.checkAddress(JSON.serialize(ADaddresses[0]));
+		Test.stopTest(); 
 	}
 
 	@IsTest

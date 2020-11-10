@@ -96,6 +96,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 			con.AccountId = acc2.Id;
 			con.User_Portal_Status__c = 'Pending Approval';
+			con.Community__c = 'ISS Customer Portal';
 			update con;
 
 			PortalFAQsSharingCtrl.validateUserFAQsPermissions(UserInfo.getUserId());

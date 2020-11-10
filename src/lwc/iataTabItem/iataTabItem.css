@@ -1,0 +1,43 @@
+:host {
+	position: relative;
+	height: 4rem;
+}
+
+.slds-tabs_default__item {
+	height: 100%;
+	padding: 0;
+}
+
+.slds-tabs_default__item .slds-tabs_default__link {
+	color: #333333;
+	font-weight: 400;
+	font-size: 1.125rem;
+    height: 100%;
+    line-height: 100%;
+}
+
+.slds-tabs_default__item .slds-tabs_default__link span {
+	position: relative;
+    line-height: 2rem;
+    top: 1rem;
+}
+
+.slds-tabs_default__item:hover .slds-tabs_default__link,
+.slds-tabs_default__item.slds-is-active .slds-tabs_default__link {
+	color: #F04632;
+}
+
+.slds-tabs_default__item.slds-is-active:after,
+.slds-tabs_default__item:hover:after {
+	background-color: #F04632;
+	height: 5px;
+	font-weight: normal;
+}
+
+/*.slds-tabs_default__item.slds-is-active .slds-tabs_default__link {
+	font-weight: 500;
+}*/
+
+.slds-tabs_default__link[tabindex="0"]:focus {
+	text-decoration: none;
+}

@@ -42,6 +42,14 @@ public without sharing class WithoutSharingOperations {
 		update usrList;
 	}
 
+	public static void updateContact(Contact con){
+		update con;
+	}
+
+	public static void updateContactList(List<Contact> conList){
+		update conList;
+	}
+
 	public static List<User> getPowerPartnerUserFromContactId(Id contactId){
 		return [select Id, ContactId, UserType from User where ContactId = :contactId AND UserType = 'PowerPartner'];
 	}

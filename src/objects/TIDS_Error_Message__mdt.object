@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Metadata type created to handle the custom error message for TIDS application.</description>
+    <fields>
+        <fullName>Business_Conditions__c</fullName>
+        <description>Business Conditions driving the TIDS Accessibility Condition</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Business Conditions driving the TIDS Accessibility Condition</inlineHelpText>
+        <label>Business Conditions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Cancel_Application__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Presented to customers to allow them to recall their submitted application (TIDS COND 7.2)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Presented to customers to allow them to recall their submitted application (TIDS COND 7.2)</inlineHelpText>
+        <label>Cancel Application</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Close_Vetting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Button allowing to close the Vetting Window</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Button allowing to close the Vetting Window</inlineHelpText>
+        <label>Close Vetting</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Create_a_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Presented to customers to allow them to contact IATA via Case</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Presented to customers to allow them to contact IATA via Case</inlineHelpText>
+        <label>Contact IATA</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description_P2__c</fullName>
+        <description>Second description paragraph displayed on the TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Second description paragraph displayed on the TIDS Condition Page</inlineHelpText>
+        <label>Description Paragraph 2</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Description_P3__c</fullName>
+        <description>Third description paragraph displayed on the TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Third description paragraph displayed on the TIDS Condition Page</inlineHelpText>
+        <label>Description Paragraph 3</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <description>First description paragraph displayed on the TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>First description paragraph displayed on the TIDS Condition Page</inlineHelpText>
+        <label>Description Paragraph 1</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Discard_Application__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Presented to customers to allow them to delete their current application (TIDS COND 7.1)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Presented to customers to allow them to delete their current application (TIDS COND 7.1)</inlineHelpText>
+        <label>Discard Application</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Open_A_Case_Text__c</fullName>
+        <description>Text Displayed in the &quot;Open a case&quot; component on the TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Text Displayed in the &quot;Open a case&quot; component on the TIDS Condition Page</inlineHelpText>
+        <label>Open A Case Text</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Recall_Application__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>The user can Recall a TIDS Application submitted. Change Status from Pending Review to Draft</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>The user can Recall a TIDS Application. Change Status from Pending Review to Draft</inlineHelpText>
+        <label>Recall Application</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Resume_Application__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Presented to customers to allow them to continue their application (TIDS COND 7.1)</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Presented to customers to allow them to continue their application (TIDS COND 7.1)</inlineHelpText>
+        <label>Resume Application</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Subtitle__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Subtitle</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Visit_A_Website_Text__c</fullName>
+        <description>Text Displayed in the &quot;Visit a Website&quot; component on the TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Text Displayed in the &quot;Visit a Website&quot; component on the TIDS Condition Page</inlineHelpText>
+        <label>Visit A Website Text</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Visit_URL__c</fullName>
+        <description>Presented to customers to redirect them to an applicable web site</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Presented to customers to redirect them to an applicable web site</inlineHelpText>
+        <label>Visit URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Yellow_Section_Header__c</fullName>
+        <description>Header Text in Yellow Section on TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Header Text in Yellow Section on TIDS Condition Page</inlineHelpText>
+        <label>Yellow_Section_Header</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Yellow_Section_Text__c</fullName>
+        <description>Description Text in Yellow Section on TIDS Condition Page</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Description Text in Yellow Section on TIDS Condition Page</inlineHelpText>
+        <label>Yellow_Section_Text</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>TIDS Error Message</label>
+    <listViews>
+        <fullName>TIDS_Conditions_with_All_Details</fullName>
+        <columns>MasterLabel</columns>
+        <columns>Subtitle__c</columns>
+        <columns>Description__c</columns>
+        <columns>Description_P2__c</columns>
+        <columns>Description_P3__c</columns>
+        <columns>Business_Conditions__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>TIDS Conditions with All Front-End Detai</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TIDS_Conditions_with_Buttons</fullName>
+        <columns>MasterLabel</columns>
+        <columns>Subtitle__c</columns>
+        <columns>Recall_Application__c</columns>
+        <columns>Resume_Application__c</columns>
+        <columns>Discard_Application__c</columns>
+        <columns>Create_a_Case__c</columns>
+        <columns>Visit_URL__c</columns>
+        <columns>Close_Vetting__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>TIDS Conditions with Buttons</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TIDS_Conditions_with_Descriptiions</fullName>
+        <columns>MasterLabel</columns>
+        <columns>Subtitle__c</columns>
+        <columns>Business_Conditions__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>TIDS Conditions with Descriptiions</label>
+        <language>en_US</language>
+    </listViews>
+    <pluralLabel>TIDS Error Messages</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
