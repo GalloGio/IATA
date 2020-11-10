@@ -1280,17 +1280,32 @@ global without sharing class ISSP_APProcess {
 
 			accountConcernedTopParentList=[SELECT Top_Parent__c FROM Account WHERE id=:vAccountConcerned Limit 1];
 
-			dupeDraft = [
-				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c,Account_Concerned__c,Account_Concerned__r.Top_Parent__c
-				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID
-				AND Case.Verification__c = : joiningType
-				AND Case.CaseArea__c = :strAreaType
-				AND Case.Reason1__c = :newcase.Reason1__c
-				AND Case.Case_Group__c!='Recycle Bin'
-				AND (Case.Account_Concerned__c = :vAccountConcerned OR Case.Account_Concerned__r.Top_Parent__c=:vAccountConcerned OR
-				((Case.Account_Concerned__c = :accountConcernedTopParentList[0].Top_Parent__c OR
-				Case.Account_Concerned__r.Top_Parent__c =:accountConcernedTopParentList[0].Top_Parent__c) AND Case.Account_Concerned__r.Top_Parent__c !=null))];
+			if (this.strAreaType == 'Airline Joining') {
+				dupeDraft = [
+					SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c,Account_Concerned__c,Account_Concerned__r.Top_Parent__c
+					FROM Case
+					WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID
+					AND Case.Verification__c = : joiningType
+					AND Case.CaseArea__c = :strAreaType
+					AND Case.Reason1__c = :newcase.Reason1__c
+					AND Case.Case_Group__c!='Recycle Bin'
+					AND (Case.Account_Concerned__c = :vAccountConcerned OR Case.Account_Concerned__r.Top_Parent__c=:vAccountConcerned OR
+					(Case.Account_Concerned__c = :accountConcernedTopParentList[0].Top_Parent__c OR
+					Case.Account_Concerned__r.Top_Parent__c =:accountConcernedTopParentList[0].Top_Parent__c))];
+			} else {
+				dupeDraft = [
+					SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c,Account_Concerned__c,Account_Concerned__r.Top_Parent__c
+					FROM Case
+					WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID
+					AND Case.Verification__c = : joiningType
+					AND Case.CaseArea__c = :strAreaType
+					AND Case.Reason1__c = :newcase.Reason1__c
+					AND Case.Case_Group__c!='Recycle Bin'
+					AND Case.IFAP_Country_ISO__c = :apcountryisocode
+					AND (Case.Account_Concerned__c = :vAccountConcerned OR Case.Account_Concerned__r.Top_Parent__c=:vAccountConcerned OR
+					(Case.Account_Concerned__c = :accountConcernedTopParentList[0].Top_Parent__c OR
+					Case.Account_Concerned__r.Top_Parent__c =:accountConcernedTopParentList[0].Top_Parent__c))];
+			}
 
 		} else {
 			dupeDraft = [
