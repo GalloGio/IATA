@@ -19,25 +19,34 @@ public without sharing class TIDSHelper {
 					WHERE AccountId=:accountId
 						AND Id=:contactId
 						AND Email!=null
-						AND Status__c='Active'
-						AND (account.Location_Type__c='HO' 
-							and account.RecordType.DeveloperName='IATA_Agency' 
-							and account.Status__c='Approved'
-							and account.Location_Class__c='T')
+						AND Status__c=:TIDS_Constant.IS_ACTIVE
+						AND (account.Location_Type__c=:TIDS_Constant.TIDS_HO 
+							and account.RecordType.DeveloperName=:TIDS_Constant.RT_AGENCY
+							and account.Status__c=:TIDS_Constant.IS_APPROVED
+							and account.Location_Class__c=:TIDS_Constant.TIDS_T)
 					Limit 1];
-		if (contacts.size()==0){TIDSUtil.setError(TIDS_Constant.MSG40,false);return TIDSUtil.iataCodeError;}
+		if (contacts.size()==0){
+			TIDSUtil.setError(TIDS_Constant.MSG40,false);
+			return TIDSUtil.iataCodeError;
+		}
 		List<User> users = new List<User>();
 		users = [Select Id,contactId 
 					From User 
 					Where isActive=true 
 					and contactId=:contactId
 					Limit 1];
-		if (users.size()==0){TIDSUtil.setError(TIDS_Constant.MSG42,false);return TIDSUtil.iataCodeError;}
+		if (users.size()==0){
+			TIDSUtil.setError(TIDS_Constant.MSG42,false);
+			return TIDSUtil.iataCodeError;
+		}
 		//Account has already HOP
 		List<Portal_Application_Right__c> appusers  =getPortalRight(accountId, 
 			' (Access_Status_Reason__c=\''+TIDS_Constant.ADM_HOP+'\')',
 			' LIMIT 1');
-		if (appusers.size()==1){TIDSUtil.setError(TIDS_Constant.MSG41,false);return TIDSUtil.iataCodeError;}
+		if (appusers.size()==1){
+			TIDSUtil.setError(TIDS_Constant.MSG41,false);
+			return TIDSUtil.iataCodeError;
+		}
 		TIDSUtil.iataCodeError.info = '{"accountname":"'+contacts[0].Account.Name +'","firstname":"'+contacts[0].FirstName+'","lastname":"'+contacts[0].LastName+'"}';
 		return TIDSUtil.iataCodeError;
 	}
@@ -46,7 +55,9 @@ public without sharing class TIDSHelper {
 	public static TIDSUtil.ErrorWrapper createRole(Id accountId, Id contactId){
 		//Account and Contact verification again in case something happen in between
 		TIDSUtil.iataCodeError = verifyRole(accountId, contactId);
-		if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
+		if (TIDSUtil.iataCodeError.hasAnError){
+			return TIDSUtil.iataCodeError;
+		}
 		TIDSUtil.grantTIDSPortalAccess(contactId);
 		return TIDSUtil.iataCodeError;
 	}
@@ -61,8 +72,7 @@ public without sharing class TIDSHelper {
 			if (TIDSUtil.cases.size()>0){
 				Case tidscase =  TIDSUtil.cases[0];
 				string email = '';
-				String portalType=TIDS_Constant.ADM_HOP;
-				if (tidscase.Account.Location_Type__c!='HO'){portalType=TIDS_Constant.ADM_BRA;}
+				final String portalType=(tidscase.Account.Location_Type__c!=TIDS_Constant.TIDS_HO) ? TIDS_Constant.ADM_BRA : TIDS_Constant.ADM_HOP;
 				List<Portal_Application_Right__c> applicationRights =[SELECT Contact__r.Email
 					FROM Portal_Application_Right__c
 					WHERE Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED 
@@ -70,10 +80,14 @@ public without sharing class TIDSHelper {
 						AND Access_Status_Reason__c=:portalType
 						AND Application_Name__c=:TIDS_Constant.TIDSVALUE
 						LIMIT 1];
-				if (applicationRights.size()>0) {email=applicationRights[0].Contact__r.Email;}
+				if (applicationRights.size()>0) {
+					email=applicationRights[0].Contact__r.Email;
+				}
 				String formattedDate = tidscase.createdDate.format('yyyy-MM-mm');
 				TIDSUtil.replaceby = new List<String>{email, tidscase.CaseNumber,tidscase.Status,tidscase.Decision__c,formattedDate};
-				if (!(tidscase.Status==TIDS_Constant.IS_CLOSED || tidscase.Status==TIDS_Constant.IS_ABANDONED  || tidscase.Status==TIDS_Constant.IS_CUSTOMER)){return null;}
+				if (!(tidscase.Status==TIDS_Constant.IS_CLOSED || tidscase.Status==TIDS_Constant.IS_ABANDONED  || tidscase.Status==TIDS_Constant.IS_CUSTOMER)){
+					return null;
+				}
 			}
 		}    
 		return TIDSUtil.getTIDSMetadata(TIDS_Constant.VETTING_DONE);
@@ -86,7 +100,8 @@ public without sharing class TIDSHelper {
 		List<Account> listreturned = new List<Account>();
 		if (accountIds==null){ return listvalues;}
 		//find out if a branch or head office
-		string queryWhere = ' Where RecordType.DeveloperName=\'IATA_Agency\' and Location_Class__c=\'T\' And ParentId=:accountIds';
+		string queryWhere = ' Where RecordType.DeveloperName=\''+TIDS_Constant.RT_AGENCY+
+							'\' and Location_Class__c=\''+TIDS_Constant.TIDS_T+'\' And ParentId=:accountIds';
 		string queryFields = 'Id, Name, Location_Type__c, IATACode__c, Email__c, TradeName__c, Phone, Fax, BillingAddress, BillingCity, BillingCountry, BillingStreet, BillingState, BillingPostalCode, ShippingAddress, ShippingCity, ShippingCountry, ShippingStreet, ShippingState, ShippingPostalCode, Status__c, ParentId, Parent.Status__c, ';
 		queryFields += 'VAT_Number__c,'
 		+ 'VAT_Number_2__c,'
@@ -115,9 +130,13 @@ public without sharing class TIDSHelper {
 			queryWhere += ' And (Name Like :search or TradeName__c like :search or IATACode__c Like :search or BillingCity Like :search)';
 		}
 		string accred = ',(Select Id, Virtual_Branch_Enabled__c,TIDS_Reinstatement_DeadLine__c From  Accreditation__r  Limit 1)';
-		string rights = ',(SELECT Contact__r.Firstname, Contact__r.Lastname FROM Portal_Application_Right__c WHERE Right__c=\''+AMS_Utils.PORTAL_APP_ACCESS_GRANTED+'\' and Contact__r.AccountId=:accountIds Limit 2) ';
+		string rights = ',(SELECT Contact__r.Firstname, Contact__r.Lastname FROM Portal_Application_Right__c WHERE Right__c=\''+
+						AMS_Utils.PORTAL_APP_ACCESS_GRANTED+
+						'\' and Contact__r.AccountId=:accountIds Limit 2) ';
 		string query ='SELECT  ' +queryFields +accred +' FROM Account' +
-		queryWhere +' Order By ' +name +' ' +order +' Limit 100';
+				queryWhere +' Order By ' +
+				name +' ' +order +
+				' Limit 100';
 
 		listvalues = Database.query(query);
 		if (listvalues.size()>0){
@@ -125,7 +144,9 @@ public without sharing class TIDSHelper {
 				boolean isadded=true;
 				if (a.Status__c==TIDS_Constant.IS_TERMINATED){
 					for(Accreditation__c c:a.Accreditation__r){
-						if (c.TIDS_Reinstatement_DeadLine__c<System.today()){isadded=false;}
+						if (c.TIDS_Reinstatement_DeadLine__c<System.today()){
+							isadded=false;
+						}
 					}
 				}
 				if (isadded){listreturned.add(a);}
@@ -139,7 +160,9 @@ public without sharing class TIDSHelper {
 		Id userId = UserInfo.getUserId();
 		List<User> users = new List<User>();
 		users = [Select Id, Contact.Account.country_ISO_Code__c From User Where Id=:userId Limit 1];
-		if (users.size()>0){ return users[0].Contact.Account.country_ISO_Code__c;}
+		if (users.size()>0){ 
+			return users[0].Contact.Account.country_ISO_Code__c;
+		}
 		return null;     
 	}
 	@AuraEnabled
@@ -168,9 +191,13 @@ public without sharing class TIDSHelper {
 		tidsConfiguration = TIDSUtil.getTIDSService();
 		
 		string excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Location_Countries__c;
-		if (type==TIDS_Constant.ACTION_MAILING) {excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Mailing_Countries__c;}
-		if (excludedcountriescode==null) {excludedcountriescode='';}
-		String nonEligiblesCountries ='\'' +excludedcountriescode.replace(',', '\',\'') +'\'';
+		if (type==TIDS_Constant.ACTION_MAILING) {
+			excludedcountriescode=tidsConfiguration.TIDS_Non_Eligible_Mailing_Countries__c;
+		}
+		if (excludedcountriescode==null) {
+			excludedcountriescode='';
+		}
+		final String nonEligiblesCountries ='\'' +excludedcountriescode.replace(',', '\',\'') +'\'';
 		String query ='SELECT Id ,Name,ISO_Code__c,State_Province_Mandatory__c FROM IATA_ISO_Country__c';
 		query +=' WHERE ISO_Code__c NOT IN (' +nonEligiblesCountries +')';
 		query +=' ORDER BY Name Limit 10000';
@@ -196,10 +223,14 @@ public without sharing class TIDSHelper {
 		tidsConfiguration = TIDSUtil.getTIDSService();
 		List<String> neligible = new List<String>();
 		string nelist = tidsConfiguration.TIDS_Countries_with_Invalid_ISO_States__c;
-		if (!String.isEmpty(nelist)){neligible = nelist.split(',');}
+		if (!String.isEmpty(nelist)){
+			neligible = nelist.split(',');
+		}
 		if (!String.isEmpty(countryIsoCode) && neligible.size()>0){
 			for(String c:neligible){
-				if (c==countryIsoCode){ return isoStateDto;}
+				if (c==countryIsoCode){ 
+					return isoStateDto;
+				}
 			}
 		}
 		//read the states
@@ -222,10 +253,12 @@ public without sharing class TIDSHelper {
 		String countryIsoCode){
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		Boolean isUnique;
-		Id agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AGENCY);
 	 
-		String companyNameTrimmed = companyName.trim();
-		if (accountid=='') {accountid=null;}
+		final String companyNameTrimmed = companyName.trim();
+		if (String.isEmpty(accountid)) {
+			accountid=null;
+		}
 		List<Account> accounts = [SELECT Id
 			 ,Name
 			 ,Status__c
@@ -235,20 +268,26 @@ public without sharing class TIDSHelper {
 			FROM Account
 			WHERE Name=:companyNameTrimmed
 				AND Id!=:accountid
-				AND Location_Class__c = 'T'
-				AND (Status__c =:TIDS_Constant.IS_APPROVED or Status__c=:TIDS_Constant.IS_TERMINATED)
-				AND Location_Type__c = 'HO'
-				AND IATA_ISO_Country__r.ISO_Code__c = :countryIsoCode];
+				AND Location_Class__c=:TIDS_Constant.TIDS_T
+				AND (Status__c=:TIDS_Constant.IS_APPROVED or Status__c=:TIDS_Constant.IS_TERMINATED)
+				AND Location_Type__c=:TIDS_Constant.TIDS_HO
+				AND IATA_ISO_Country__r.ISO_Code__c=:countryIsoCode];
 
 		if (accounts.size() > 0){
 			TIDSUtil.replaceby = new List<String> {'','','','',''};
 			boolean isdeduplicate=false;
 			for(Account a:accounts){
-				if (a.Status__c==TIDS_Constant.IS_APPROVED) {isdeduplicate=true; break;}
+				if (a.Status__c==TIDS_Constant.IS_APPROVED) {
+					isdeduplicate=true;
+					break;
+				}
 				for(Accreditation__c c:a.Accreditation__r){
 					//Check Date Reinstam
 					Date rdate =c.TIDS_Reinstatement_DeadLine__c;
-					if (rdate==null || rdate>=System.today()){isdeduplicate=true; break;}
+					if (rdate==null || rdate>=System.today()){
+						isdeduplicate=true;
+						break;
+					}
 				}
 			}
 			if (isdeduplicate){
@@ -268,7 +307,7 @@ public without sharing class TIDSHelper {
 		String companyName,
 		String countryIsoCode){
 		Accreditation__c account;
-		String companyNameTrimmed = companyName.trim();
+		final String companyNameTrimmed = companyName.trim();
 		List<Accreditation__c> accountsAccredited = [SELECT Id,
 				Status__r.Code__c,
 				Related_Account__r.Name,
@@ -276,12 +315,15 @@ public without sharing class TIDSHelper {
 				TIDS_Reinstatement_DeadLine__c,
 				Termination_date__c
 			FROM Accreditation__c
-			WHERE Status__r.Code__c='0' AND Class__r.Code__c='T'
+			WHERE Status__r.Code__c='0' 
+				AND Class__r.Code__c=:TIDS_Constant.TIDS_T
 				AND Related_Account__r.Name=:companyNameTrimmed
 				AND Related_Account__r.IATA_ISO_Country__r.ISO_Code__c=:countryIsoCode
 				AND TIDS_Reinstatement_DeadLine__c>=TODAY
 			ORDER BY Termination_Date__c DESC];    
-		if (accountsAccredited.size() > 0){account = accountsAccredited.get(0);}
+		if (accountsAccredited.size() > 0){
+			account = accountsAccredited.get(0);
+		}
 		return account;
 	}
 
@@ -324,7 +366,7 @@ public without sharing class TIDSHelper {
  
 	@AuraEnabled(cacheable=false)
 	public static TidsWrapper getUserInfo(Id userId){
-		agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');  
+		agencyRecordTypeId =RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AGENCY);  
 			
 		tidsWrapper = new TidsWrapper();
 		try {
@@ -339,8 +381,8 @@ public without sharing class TIDSHelper {
 			tidsWrapper.currentUser =TIDSUtil.getUserData(userId);      
 			String caseNumber='';
 			String email='';
-			String portalType=TIDS_Constant.ADM_HOP;
-			if (tidsWrapper.currentUser.Account.Location_Type__c!='HO'){portalType=TIDS_Constant.ADM_BRA;}
+			final String portalType=(tidsWrapper.currentUser.Account.Location_Type__c!=TIDS_Constant.TIDS_HO) ? TIDS_Constant.ADM_BRA : TIDS_Constant.ADM_HOP;
+			
 			List<Portal_Application_Right__c> applicationRights =[SELECT 
 					 Id, Right__c, Contact__r.Id, Access_Status_Reason__c,Application_Name__c,Contact__r.Email
 				FROM Portal_Application_Right__c
@@ -349,7 +391,9 @@ public without sharing class TIDSHelper {
 					AND Access_Status_Reason__c=:portalType
 					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
 					LIMIT 1];
-			if (applicationRights.size()>0) {email=applicationRights[0].Contact__r.Email;}
+			if (applicationRights.size()>0) {
+				email=applicationRights[0].Contact__r.Email;
+			}
 			TIDSUtil.replaceby = new List<String>{email, caseNumber,'','',''};
 			
 			if (applicationRights.size()==0){
@@ -366,7 +410,9 @@ public without sharing class TIDSHelper {
 				LIMIT 1];
 			}
 		
-			if (applicationRights.size() > 0){tidsWrapper.profile = applicationRights.get(0);}
+			if (applicationRights.size() > 0){
+				tidsWrapper.profile = applicationRights.get(0);
+			}
 
 			// TIDS Case
 			Id recordname=tidsWrapper.currentUser.Account.RecordType.Id;
@@ -377,7 +423,9 @@ public without sharing class TIDSHelper {
 			// Country validation rules
 			List<String> neligible = new List<String>();
 			string nelist = tidsConfiguration.TIDS_Non_Eligible_Location_Countries__c;
-			if (!String.isEmpty(nelist)){neligible = nelist.split(',');}
+			if (!String.isEmpty(nelist)){
+				neligible = nelist.split(',');
+			}
 			if (!String.isEmpty(countryiso) && neligible.size()>0){
 				//Load the country codes from Portal_Applications__c.TIDS_Non_Eligible_Location_Countries__c 
 				//Condition 2: Related Account “Country_ISO_Code__c” cannot be “AS, GU, MP, PR, US, VI”
@@ -385,7 +433,9 @@ public without sharing class TIDSHelper {
 				if (countries.size()>0) {
 					String econdition = TIDS_Constant.ERROR_CON2_1;
 					// Sanctioned country
-					if (countries[0].Sanctioned_Country__c==true){econdition=TIDS_Constant.ERROR_CON2_2;}
+					if (countries[0].Sanctioned_Country__c==true){
+						econdition=TIDS_Constant.ERROR_CON2_2;
+					}
 					tidsWrapper.error = TIDSUtil.getTIDSMetadata(econdition);
 					return tidsWrapper;
 				}
@@ -409,22 +459,35 @@ public without sharing class TIDSHelper {
 			string c3=tidsWrapper.currentUser.Account.Location_Class__c;
 			//Condition 3: Related Account Record Type cannot be “Agency”  WHERE Account “Location_Class__c“ = “D, P“
 			if (!String.isEmpty(c3)){
-				if (condition3(c3, recordname)) {return tidsWrapper;}
+				if (condition3(c3, recordname)) {
+					return tidsWrapper;
+				}
 			}
 			Date rdate=System.today();
 			if (!String.isEmpty(status)){
-				if (c3==null) {c3='';}
+				if (c3==null) {
+					c3='';
+				}
 				if (status==TIDS_Constant.IS_TERMINATED){
 					rdate = isReinstated(tidsWrapper.currentUser.AccountId);
-					if (rdate==null) {rdate=System.today();}
+					if (rdate==null) {
+						rdate=System.today();
+					}
 				}  
 				//Condition 4: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c = “Approved”
-				if (recordname==agencyRecordTypeId && c3=='T' && (status==TIDS_Constant.IS_APPROVED || (status==TIDS_Constant.IS_TERMINATED && rdate>=System.today()))){
+				if (recordname==agencyRecordTypeId 
+					&& c3==TIDS_Constant.TIDS_T 
+					&& (status==TIDS_Constant.IS_APPROVED 
+					|| (status==TIDS_Constant.IS_TERMINATED && rdate>=System.today()))){
 					//Access Grated or Access Denied
-					if (condition4(applicationRights)) {return tidsWrapper;}
+					if (condition4(applicationRights)) {
+						return tidsWrapper;
+					}
 				}
 				//Condition 5: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c = “Terminated”
-				if (recordname==agencyRecordTypeId && c3=='T' && status==TIDS_Constant.IS_TERMINATED){
+				if (recordname==agencyRecordTypeId 
+					&& c3==TIDS_Constant.TIDS_T 
+					&& status==TIDS_Constant.IS_TERMINATED){
 					rdate = isReinstated(tidsWrapper.currentUser.AccountId);
 					if (rdate!=null){
 						if (rdate<System.today()){
@@ -435,13 +498,19 @@ public without sharing class TIDSHelper {
 				}
 				//Condition 6: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c!=“Approved, Terminated”
 				//c3 is null to be taken in consideration check c3 null in above code
-				if (condition6(c3, recordname, status)) {return tidsWrapper;}          
+				if (condition6(c3, recordname, status)) {
+					return tidsWrapper;
+				}          
 			}else{
-				if (condition6b(c3, recordname)) {return tidsWrapper;}
+				if (condition6b(c3, recordname)) {
+					return tidsWrapper;
+				}
 			}
 			// Condition 7: Related Account cannot have an ongoing New TIDS HO Application
 			// Case open for HO Application
-			if (condition7(email, status)) {return tidsWrapper;}
+			if (condition7(email, status)) {
+				return tidsWrapper;
+			}
 			
 		} catch (DmlException e){
 			System.debug(loggingLevel.FINE, '____ [TIDSHelper -  getUserInfo] e.getMessage() - ' + e.getMessage());
@@ -452,27 +521,33 @@ public without sharing class TIDSHelper {
 	
 	private static boolean condition4(List<Portal_Application_Right__c>  applicationRights){
 		//Access Grated or Access Denied
-		boolean isparentadmin = false;
-	
+		boolean isparentadmin = false;	
 		List<Portal_Application_Right__c> adminrights = new List<Portal_Application_Right__c>();
-		adminrights = [
-		SELECT Id, Right__c, Contact__r.email
-		FROM Portal_Application_Right__c
-		WHERE (Contact__r.AccountId=:tidsWrapper.currentUser.Account.ParentId
-			Or Contact__r.AccountId=:tidsWrapper.currentUser.AccountId)
-			AND Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
-			AND Access_Status_Reason__c!=null
-			AND Application_Name__c=:TIDS_Constant.TIDSVALUE 
-			Order by Access_Status_Reason__c Desc LIMIT 1];
-		if (adminrights.size()>0) {isparentadmin=true;}    
+		adminrights = [SELECT Id, Right__c, Contact__r.email
+							FROM Portal_Application_Right__c
+							WHERE (Contact__r.AccountId=:tidsWrapper.currentUser.Account.ParentId
+								Or Contact__r.AccountId=:tidsWrapper.currentUser.AccountId)
+								AND Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
+								AND Access_Status_Reason__c!=null
+								AND Application_Name__c=:TIDS_Constant.TIDSVALUE 
+								Order by Access_Status_Reason__c Desc LIMIT 1];
+		if (adminrights.size()>0) {
+			isparentadmin=true;
+		}    
 		boolean isdenied=true;
-		if (applicationRights.size()>0){if (tidsWrapper.profile.Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED){isdenied=false;}}
+		if (applicationRights.size()>0){
+			if (tidsWrapper.profile.Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED){
+				isdenied=false;
+			}
+		}
 		if (isdenied){
 			//mettre un mask sur l'email
 			//Access denied but there is admin
 			String econdition=TIDS_Constant.ERROR_CON4_1;
 			//Access denied but there is no admin
-			if (!isparentadmin){econdition=TIDS_Constant.ERROR_CON4_2;}
+			if (!isparentadmin){
+				econdition=TIDS_Constant.ERROR_CON4_2;
+			}
 			tidsWrapper.error = TIDSUtil.getTIDSMetadata(econdition);
 			//Parent Case
 			tidsWrapper.tidsCase = TIDSUtil.searchCase(tidsWrapper.currentUser.AccountId,TIDS_Constant.IS_CLOSED);
@@ -483,7 +558,10 @@ public without sharing class TIDSHelper {
 	}
 	private static boolean condition6(string c3, Id recordname, string status){
 		string c6=tidsWrapper.currentUser.Account.Location_Type__c;
-		if (recordname==agencyRecordTypeId && ((c3=='T' && !(c6=='BR' || c6=='HO' || c6=='VB')) || (c3=='T' && !(status==TIDS_Constant.IS_TERMINATED || status==TIDS_Constant.IS_APPROVED)) || c3=='') ){
+		if (recordname==agencyRecordTypeId && ((c3==TIDS_Constant.TIDS_T 
+			&& !(c6==TIDS_Constant.TIDS_BR || c6==TIDS_Constant.TIDS_HO || c6==TIDS_Constant.TIDS_VB)) 
+			|| (c3==TIDS_Constant.TIDS_T 
+				&& !(status==TIDS_Constant.IS_TERMINATED || status==TIDS_Constant.IS_APPROVED)) || String.isEmpty(c3)) ){
 			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON6);
 			return true;
 		}
@@ -499,9 +577,11 @@ public without sharing class TIDSHelper {
 		return false;
 	}
 	private static boolean condition6b(string c3, Id recordname){
-		if (c3==null) {c3='';}
+		if (c3==null) {
+			c3='';
+		}
 		c3=c3.toUpperCase();
-		if (recordname==agencyRecordTypeId && c3=='T'){
+		if (recordname==agencyRecordTypeId && c3==TIDS_Constant.TIDS_T){
 			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON6);
 			return true;
 		}
@@ -519,7 +599,9 @@ public without sharing class TIDSHelper {
 	}
 	private static boolean condition7(String email, string status){		
 		List<Case> cases =getTidsCaseNewApplication(tidsWrapper.currentUser.AccountId);
-		if (cases.size()==0){return false;}
+		if (cases.size()==0){
+			return false;
+		}
 		condition7b(cases[0],email, status);
 		return true;
 	}
@@ -539,7 +621,9 @@ public without sharing class TIDSHelper {
 			tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON7_2);
 		}          
 		final String result = TIDSUtil.getAttachment(tidscase.Id, TIDS_Constant.DATAJSONFILENAME);
-		if (result!=''){tidsWrapper.tidsAttachment = result;}
+		if (!String.isEmpty(result)){
+			tidsWrapper.tidsAttachment = result;
+		}
 		return true;
 	}
 
@@ -562,16 +646,24 @@ public without sharing class TIDSHelper {
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		TIDSUtil.iataCodeError.hasAnError=true;
 		TIDSUtil.getTidsCases(caseId,false);
-		if (TIDSUtil.cases.size()==0) {return TIDSUtil.iataCodeError;}
+		if (TIDSUtil.cases.size()==0) {
+			return TIDSUtil.iataCodeError;
+		}
 		Case tidscase = TIDSUtil.cases[0];
 		Savepoint sp = Database.setSavepoint();
 		try {
 			if (action==TIDS_Constant.ACTION_VETTING){
-				if (tidscase.Status!=TIDS_Constant.IS_REVIEWED) {return TIDSUtil.iataCodeError;}
+				if (tidscase.Status!=TIDS_Constant.IS_REVIEWED) {
+					return TIDSUtil.iataCodeError;
+				}
 			}else if (action==TIDS_Constant.ACTION_RESUME || action==TIDS_Constant.ACTION_DISCARD){
-				if (tidscase.Status!=TIDS_Constant.IS_DRAFT) {return TIDSUtil.iataCodeError;}
+				if (tidscase.Status!=TIDS_Constant.IS_DRAFT) {
+					return TIDSUtil.iataCodeError;
+				}
 			}else if (action==TIDS_Constant.ACTION_RECALL){
-				if (tidscase.Status!=TIDS_Constant.IS_REVIEWED) {return TIDSUtil.iataCodeError;}
+				if (tidscase.Status!=TIDS_Constant.IS_REVIEWED) {
+					return TIDSUtil.iataCodeError;
+				}
 				TIDSUtil.changeCaseStatus(TIDS_Constant.IS_DRAFT,null);
 			}
 			TIDSUtil.iataCodeError.hasAnError=false;
@@ -623,16 +715,26 @@ public without sharing class TIDSHelper {
 				TIDSUtil.getTidsCases(caseId,false);
 			}else if (tidsCaseSubject!=null){
 				List<Case> todelete = new List<Case>();
-				todelete = [SELECT Id, Status  FROM Case WHERE AccountId=:accountId AND Subject=:tidsCaseSubject AND Status=:TIDS_Constant.IS_DRAFT];
-				if (todelete.size() > 0) {delete todelete;}
+				todelete = [SELECT Id, Status  
+								FROM Case 
+								WHERE AccountId=:accountId 
+								AND Subject=:tidsCaseSubject 
+								AND Status=:TIDS_Constant.IS_DRAFT];
+				if (todelete.size() > 0) {
+					delete todelete;
+				}
 				TIDSUtil.cases = [SELECT Id FROM Case WHERE AccountId=:accountId 
 					AND Subject=:tidsCaseSubject
 					AND Status!=:TIDS_Constant.IS_CLOSED
 					ORDER BY CreatedDate Desc LIMIT 1];
-				if (TIDSUtil.cases.size() > 0){TIDSUtil.getTidsCases(TIDSUtil.cases[0].Id,false);}
+				if (TIDSUtil.cases.size() > 0){
+					TIDSUtil.getTidsCases(TIDSUtil.cases[0].Id,false);
+				}
 			}
 			if (TIDSUtil.cases!=null){
-				if (TIDSUtil.cases.size() > 0){tidsCase = TIDSUtil.cases[0];}
+				if (TIDSUtil.cases.size() > 0){
+					tidsCase = TIDSUtil.cases[0];
+				}
 			}
 			tidsCase = createTidsCase(tidsCase.Id,
 				accountId,
@@ -654,9 +756,17 @@ public without sharing class TIDSHelper {
 		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
 		Id userId = UserInfo.getUserId();
 		TIDSUtil.getTidsCases(caseId,false);
-		if (TIDSUtil.cases.size() == 0){TIDSUtil.setError('Case Not Found.',true); return TIDSUtil.iataCodeError;}
-		if (TIDSUtil.cases[0].status == TIDS_Constant.IS_REVIEWED && userId!=TIDSUtil.cases[0].OwnerId){TIDSUtil.setError('Case already assigned to a different user agent.',true); return TIDSUtil.iataCodeError;}
-		if (TIDSUtil.cases[0].status == TIDS_Constant.IS_REVIEWED){return TIDSUtil.iataCodeError;}
+		if (TIDSUtil.cases.size() == 0){
+			TIDSUtil.setError(TIDS_Constant.MSG43,false); 
+			return TIDSUtil.iataCodeError;
+		}
+		if (TIDSUtil.cases[0].status == TIDS_Constant.IS_REVIEWED && userId!=TIDSUtil.cases[0].OwnerId){
+			TIDSUtil.setError(TIDS_Constant.MSG44,false); 
+			return TIDSUtil.iataCodeError;
+		}
+		if (TIDSUtil.cases[0].status == TIDS_Constant.IS_REVIEWED){
+			return TIDSUtil.iataCodeError;
+		}
 		TIDSUtil.cases[0].status = TIDS_Constant.IS_REVIEWED;
 		TIDSUtil.cases[0].OwnerId = userId;
 		Savepoint sp = Database.setSavepoint();
@@ -709,7 +819,9 @@ public without sharing class TIDSHelper {
 			// Supporting Documents section
 			errorsCompilation += tidsCompileErrors(tids.sections.SupportingDocuments.errors,'Supporting Documents',false);
 			
-			if (!String.isBlank(errorsCompilation)){TIDSUtil.createCaseComment(true, caseId, errorsCompilation);}
+			if (!String.isBlank(errorsCompilation)){
+				TIDSUtil.createCaseComment(true, caseId, errorsCompilation);
+			}
 			update tidscase;
 		
 		}catch (Exception e){
@@ -733,7 +845,9 @@ public without sharing class TIDSHelper {
 			tidsCase.Id=caseId;
 		}else{
 			tidsCase.Status = TIDS_Constant.IS_DRAFT;
-			if (apptypes.Contains(applicationType)){tidsCase.Status = TIDS_Constant.IS_REVIEWED;}
+			if (apptypes.Contains(applicationType)){
+				tidsCase.Status = TIDS_Constant.IS_REVIEWED;
+			}
 			tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
 			tidsCase.AccountId = accountId;
 			tidsCase.recordtypeid =TIDSUtil.getTidsRecordTypeId();
@@ -744,8 +858,10 @@ public without sharing class TIDSHelper {
 		tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
 		upsert tidsCase;
 		if (apptypes.Contains(applicationType)){
-			if (!String.isBlank(applicationsettings)){TIDSUtil.createCaseComment(true,tidsCase.Id, applicationsettings);}
-				//applicationsettings is the reason why the request is made
+			if (!String.isBlank(applicationsettings)){
+				TIDSUtil.createCaseComment(true,tidsCase.Id, applicationsettings);
+			}
+			//applicationsettings is the reason why the request is made
 		}else{
 			TIDSUtil.addAttachment(tidsCase.Id, applicationsettings,TIDS_Constant.DATAJSONFILENAME);
 		}
@@ -768,7 +884,9 @@ public without sharing class TIDSHelper {
 		types.put('request-reinstate-ho','TIDS – Head Office Reinstatement');
 		types.put('request-reinstate-br','TIDS – Branch Office Reinstatement');
 		types.put('request-reinstate-vb','TIDS – Virtual Branch Reinstatement');
-		if (types.ContainsKey(applicationType)){subject = (String) types.get(applicationType);}
+		if (types.ContainsKey(applicationType)){
+			subject = (String) types.get(applicationType);
+		}
 		return subject;
 	}
 
@@ -782,14 +900,15 @@ public without sharing class TIDSHelper {
 		types.put('chg-address-contact','TIDS - Change of Address or Contact Details');
 		types.put('chg-name-company','TIDS - Change of Name or Company Details');
 		types.put('request-virtual-branch-service','TIDS – VB Service Request');
-		types.put('request-relinquish-ho','TIDS – Relinquishment');
-		types.put('request-relinquish-br','TIDS – Relinquishment');
-		types.put('request-relinquish-vb','TIDS – Relinquishment');
-		types.put('request-reinstate-ho','TIDS – Reinstatement');
-		types.put('request-reinstate-br','TIDS – Reinstatement');
-		types.put('request-reinstate-vb','TIDS – Reinstatement');
-		
-		if (types.ContainsKey(applicationType)){subject = (String) types.get(applicationType);}
+		types.put('request-relinquish-ho',TIDS_Constant.CASE_REASON_RELINQUISH);
+		types.put('request-relinquish-br',TIDS_Constant.CASE_REASON_RELINQUISH);
+		types.put('request-relinquish-vb',TIDS_Constant.CASE_REASON_RELINQUISH);
+		types.put('request-reinstate-ho',TIDS_Constant.CASE_REASON_REINSTATEMENT);
+		types.put('request-reinstate-br',TIDS_Constant.CASE_REASON_REINSTATEMENT);
+		types.put('request-reinstate-vb',TIDS_Constant.CASE_REASON_REINSTATEMENT);		
+		if (types.ContainsKey(applicationType)){
+			subject = (String) types.get(applicationType);
+		}
 		return subject;
 	}
 
@@ -797,7 +916,6 @@ public without sharing class TIDSHelper {
 	@AuraEnabled(cacheable=false)
 	public static TIDSSFInfo newBranch(String contactId){
 		TIDSSFInfo tids = new TIDSSFInfo();
-		final String LOCATION_CLASS = 'T';
 		
 		List<Portal_Application_Right__c> plist = new List<Portal_Application_Right__c>();
 		plist= [SELECT Contact__r.AccountId FROM Portal_Application_Right__c WHERE Contact__c=:contactId Limit 1];
@@ -860,10 +978,12 @@ public without sharing class TIDSHelper {
 			FROM Account
 			WHERE Id=:plist[0].Contact__r.AccountId
 				AND Location_Type__c in ('HO', 'VB', 'BR')
-				AND Location_Class__c=:LOCATION_CLASS
+				AND Location_Class__c=:TIDS_Constant.TIDS_T
 			LIMIT 1];
 		 
-		if (accounts.size()==0){return tids;}
+		if (accounts.size()==0){
+			return tids;
+		}
 		tids.tidsAccount = accounts.get(0);
 		tids.shareholders = TIDSUtil.tidsShareholders(tids.tidsAccount.Id);
 		tids.businessProfile = TIDSUtil.tidsBusinessProfile(tids.tidsAccount.Id);
@@ -878,7 +998,7 @@ public without sharing class TIDSHelper {
 		List<Contact> contacts = [SELECT Id, FirstName, LastName FROM Contact
 		WHERE AccountId=:accountId and (FirstName like :name  Or LastName like :name) 
 			And Email!=null
-			And Status__c='Active'
+			And Status__c=:TIDS_Constant.IS_ACTIVE
 			And Id not in (SELECT Contact__c
 										FROM Portal_Application_Right__c
 										WHERE Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
@@ -896,7 +1016,9 @@ public without sharing class TIDSHelper {
 						Where isActive=true 
 						and contactId=:contactmap.KeySet()
 						Limit 20];
-			if (users.size()==0) {return null;}
+			if (users.size()==0) {
+				return null;
+			}
 			for(User u:users){
 				if (contactmap.ContainsKey(u.contactId)){
 					newcontacts.add((Contact)contactmap.get(u.contactId));
@@ -919,12 +1041,17 @@ public without sharing class TIDSHelper {
 		tidsConfiguration = TIDSUtil.getTIDSService();
 		List<Portal_Application_Right__c> myrights = new List<Portal_Application_Right__c>();
 		List<Portal_Application_Right__c> apprights = new List<Portal_Application_Right__c>();
-		if (tidsConfiguration==null){ return apprights;}
-		if (actiontype=='add' || actiontype=='swap'){
+		if (tidsConfiguration==null){ 
+			return apprights;
+		}
+		if (actiontype==TIDS_Constant.TIDS_ACTION_ADD
+			|| actiontype==TIDS_Constant.TIDS_ACTION_SWAP){
 			string originid=accountId;
 			if (isbranch){ 
 				List<Account> parents = [SELECT parentId FROM Account WHERE Id=:accountId LIMIT 1];
-				if (parents.size()>0){originid=parents[0].parentId;}
+				if (parents.size()>0){
+					originid=parents[0].parentId;
+				}
 			}
 			//Portal_Application_Right__c
 			apprights =getPortalRight(originid, 
@@ -933,9 +1060,13 @@ public without sharing class TIDSHelper {
 		}
 	 	//TIDS Admin HO Primary
 	 	String type=TIDS_Constant.ADM_BRA;
-	 	if (!isbranch){type=TIDS_Constant.ADM_HOP;}
-	 	if (actiontype=='add'){
-			if (apprights.size()>0 && isbranch==false){type=TIDS_Constant.ADM_HOS;}
+	 	if (!isbranch){
+			 type=TIDS_Constant.ADM_HOP;
+		}
+	 	if (actiontype==TIDS_Constant.TIDS_ACTION_ADD){
+			if (apprights.size()>0 && isbranch==false){
+				type=TIDS_Constant.ADM_HOS;
+			}
 			List<Portal_Application_Right__c> appusers  =getPortalRight(accountId, 
 			' Contact__c=\''+contactId+'\' AND (Access_Status_Reason__c=\''+type+'\' Or Access_Status_Reason__c=null)',
 			' LIMIT 1');
@@ -951,14 +1082,16 @@ public without sharing class TIDSHelper {
 				appusers[0].Right__c=AMS_Utils.PORTAL_APP_ACCESS_GRANTED;        
 				myrights.add(appusers[0]);
 			}       
-		}else if (actiontype=='remove'){
-			if (!isbranch){type=TIDS_Constant.ADM_HOS;}
+		}else if (actiontype==TIDS_Constant.TIDS_ACTION_REMOVE){
+			if (!isbranch){
+				type=TIDS_Constant.ADM_HOS;
+			}
 			apprights=getPortalRight(accountId, 
 			' Contact__c=\''+contactId+'\' AND Access_Status_Reason__c=\''+TIDS_Constant.ADM_HOS+'\'',
 			' LIMIT 1');
-			apprights[0].Right__c='Access Denied';        
+			apprights[0].Right__c=AMS_Utils.PORTAL_APP_ACCESS_DENIED;       
 			myrights.add(apprights[0]);      
-		}else if (actiontype=='swap'){
+		}else if (actiontype==TIDS_Constant.TIDS_ACTION_SWAP){
 			List<Portal_Application_Right__c> appsec=getPortalRight(accountId,
 			' Access_Status_Reason__c=\''+TIDS_Constant.ADM_HOS+'\'',
 		 	'LIMIT 1');
@@ -967,19 +1100,21 @@ public without sharing class TIDSHelper {
 			apprights[0].Access_Status_Reason__c=TIDS_Constant.ADM_HOS;
 			myrights.add(apprights[0]);
 		}
-		if (myrights.size()>0){ upsert myrights;}
+		if (myrights.size()>0){ 
+			upsert myrights;
+		}
 		//get the list
 		List<String> rlist = new List<String>{TIDS_Constant.ADM_HOS,TIDS_Constant.ADM_HOP};
 		if (isbranch){rlist = new List<String>{TIDS_Constant.ADM_BRA};}
 		apprights = new List<Portal_Application_Right__c>();
 		apprights = [SELECT Id,Contact__c,Contact__r.FirstName,Contact__r.LastName,
-					Access_Status_Reason__c
-				FROM Portal_Application_Right__c
-				WHERE Contact__r.AccountId=:accountId
-					AND Access_Status_Reason__c=:rlist
-					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
-					AND Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
-					Order by Access_Status_Reason__c LIMIT 2];
+						Access_Status_Reason__c
+						FROM Portal_Application_Right__c
+						WHERE Contact__r.AccountId=:accountId
+							AND Access_Status_Reason__c=:rlist
+							AND Application_Name__c=:TIDS_Constant.TIDSVALUE
+							AND Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
+							Order by Access_Status_Reason__c LIMIT 2];
 		return apprights;
 	}
 
@@ -1022,9 +1157,11 @@ public without sharing class TIDSHelper {
 	public static String isTidsRequestPending(String accountId, String type){
 		String tidsstatus=TIDS_Constant.IS_REVIEWED;
 		id parentId=accountId;
-		if (type=='TIDS – Relinquishment' || type=='TIDS – Reinstatement') { 
+		if (type==TIDS_Constant.CASE_REASON_RELINQUISH || type==TIDS_Constant.CASE_REASON_REINSTATEMENT) { 
 			List<Account> accounts = [Select ParentId From Account Where Id=:AccountId Limit 1];
-			if (accounts.size()>0){parentId=accounts[0].ParentId;}
+			if (accounts.size()>0){
+				parentId=accounts[0].ParentId;
+			}
 		}else if (type==TIDS_Constant.IS_TERMINATED) {
 			//Is it inside the periode of reinstatement
 			List<Account> accounts = [Select Id From Account Where Id=:accountId and Status__c=:type Limit 1];
@@ -1037,7 +1174,9 @@ public without sharing class TIDSHelper {
 					msgtype = TIDS_Constant.MSG6;
 				}
 				string message= TIDSUtil.getTIDSMetadataError(msgtype);
-				if (rdate==null) {message = String.format(message, new List<String> {String.ValueOf(rdate)});}
+				if (rdate==null) {
+					message = String.format(message, new List<String> {String.ValueOf(rdate)});
+				}
 				return message;
 			}
 			return '';
@@ -1047,7 +1186,9 @@ public without sharing class TIDSHelper {
 					AND (subject=:type or Reason1__c=:type)
 					AND (AccountId=:AccountId or AccountId=:parentId)
 					AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() Limit 1];
-		if (cases.size()>0){return 'exists';}
+		if (cases.size()>0){
+			return 'exists';
+		}
 		return '';
 	}
 	//Returns the account reinstatement date if any
@@ -1057,7 +1198,9 @@ public without sharing class TIDSHelper {
 		accreditations= [SELECT id,TIDS_Reinstatement_DeadLine__c
 						FROM Accreditation__c
 						WHERE Related_Account__c=:accountId Limit 1];
-		if (accreditations.size()>0){rdate = accreditations[0].TIDS_Reinstatement_DeadLine__c;}
+		if (accreditations.size()>0){
+			rdate = accreditations[0].TIDS_Reinstatement_DeadLine__c;
+		}
 		return rdate;
 	}
 
@@ -1098,7 +1241,7 @@ public without sharing class TIDSHelper {
 		}
 		final string queryFields = 'Id,CaseNumber,Subject,Reason1__c,Account.Name,Status,Owner.Name,OwnerId,Previous_case_owner__c,Last_Status_Change__c ';
 		final string query ='SELECT ' +queryFields+' FROM Case '+queryWhere
-		 +' Order By CaseNumber DESC Limit 100';
+					+' Order By CaseNumber DESC Limit 100';
 		List<Case> listvalues = new List<Case>();
 		listvalues = Database.query(query);
 		return listvalues;
@@ -1134,8 +1277,12 @@ public without sharing class TIDSHelper {
 	//Compiles the error collected during the vetting process to create an unique case comment
 	private static String tidsCompileErrors(List<TIDS_Controller.verror> errors, String errorType, boolean isfirst){
 		String textErrors = '';
-		if (errors==null) {return textErrors;}
-		if (errors.size()==0){return textErrors;}
+		if (errors==null) {
+			return textErrors;
+		}
+		if (errors.size()==0){
+			return textErrors;
+		}
 		textErrors = (isfirst ? '':'\n') + 'Section Name :' + errorType+'\n';
 		for (TIDS_Controller.verror tidsError : errors){
 			textErrors +='Field: ' +tidsError.fieldLabel +'\n' +'Description: ' +tidsError.description +'\n';
@@ -1143,14 +1290,6 @@ public without sharing class TIDSHelper {
 		return textErrors;
 	}
 
-	public class ValueLabel {
-		@AuraEnabled public String value;
-		@AuraEnabled public String label;
-		public ValueLabel(String xvalue, String xlabel){
-			this.value = xvalue;
-			this.label = xlabel;
-		}
-	}
 	//Reads the ISO Country Code 
 	public static List<IATAISOCountryDTO> IATAISOCountryToDto(
 		List<IATA_ISO_Country__c> iataIsoCountries){

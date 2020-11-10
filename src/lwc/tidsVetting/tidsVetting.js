@@ -53,7 +53,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		//let caseid = event.currentTarget.key;
 		event.preventDefault();
 		let caseid = event.target.dataset.targetId;
-		console.log("case Id", caseid);
 		this[NavigationMixin.Navigate]({
 			type: "standard__recordPage",
 			attributes: {
@@ -67,7 +66,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		//let caseid = event.currentTarget.key;
 		event.preventDefault();
 		let caseid = event.target.dataset.targetId;
-		console.log("case Id", caseid);
 		this[NavigationMixin.Navigate]({
 			type: "standard__recordPage",
 			attributes: {
@@ -80,7 +78,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	pickVetting(event) {
 		event.preventDefault();
 		this.spinner = true;
-		console.log("My");
 		this.showConfimationModal = false;
 		let caseid = event.target.dataset.targetId;
 		assignToCaseOwner({ caseId: caseid })
@@ -104,7 +101,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	//Select the tab and do the rest
 	tabselect(evt) {
 		this.selectedTab = evt.target.label;
-		console.log(this.selectedTab);
 		this.page = 1;
 		this.perpage = 50;
 		this.pages = [];
@@ -116,7 +112,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	getFilteredTidsCases(myfilter) {
 		this.showConfimationModal = false;
 		this.spinner = true;
-		console.log("My");
 		allMyTidsCases({ filter: myfilter })
 			.then((results) => {
 				this.cases = this.mappingCases(results);
@@ -134,7 +129,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		let caseid = event.target.dataset.targetId;
 		actionApplication({ caseId: caseid, action: "vetting" })
 			.then((result) => {
-				console.log("result", JSON.stringify(result));
 				this.spinner = false;
 				if (result.hasAnError) {
 					this.oops(result.reason);
@@ -196,10 +190,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 				caseStatus === "pending customer"
 			) {
 				item.startvetting = false;
-				//console.log('item.Status',item.Status);
 			} else {
-				//console.log('USER_ID',USER_ID,item.OwnerId);
-				//console.log('item',JSON.stringify(item));
 				//make sure it is the same ownerid
 				if (caseStatus === "review in progress") {
 					item.startvetting = false;
@@ -218,7 +209,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 
 	oops(error) {
 		this.spinner = false;
-		console.log(" fetchRoles error", error);
 		this.modalDefaultMessage = "Oops! something happened, please retry.";
 		this.modalAction = "OK";
 		this.showConfimationModal = true;
@@ -301,7 +291,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		this.spinner = true;
 		verifyRole({ accountId: this.accountid, contactId: this.contactid })
 			.then((result) => {
-				console.log("result", JSON.stringify(result));
 				this.spinner = false;
 				if (result.hasAnError) {
 					this.isissue=true;
@@ -325,7 +314,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		this.isverification=false;
 		createRole({ accountId: this.accountid, contactId: this.contactid })
 			.then((result) => {
-				console.log("result", JSON.stringify(result));
 				this.spinner = false;
 				if (result.hasAnError) {
 					this.isissue=true;

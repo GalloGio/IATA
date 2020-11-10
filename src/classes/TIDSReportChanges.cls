@@ -12,14 +12,17 @@ public without sharing class TIDSReportChanges {
 
 	@AuraEnabled(cacheable=false)
 	public static Boolean accountHasChangeReportCase(String accountId, String changeReport) {
+		final Set<String> lstatus = new Set<String> {TIDS_Constant.IS_DRAFT,  TIDS_Constant.IS_CLOSED};
 		Boolean result = false;
 		String filter = '%'+changeReport+'%';
 		List<Case> cases = new List<Case>();
-		cases = [SELECT Id  FROM Case
-			WHERE AccountId = :accountId AND Subject LIKE :filter
-			AND Status NOT IN ('Draft', 'Closed') ];
-
-		if (cases.size() > 0) {result = true;}
+		cases = [SELECT Id  
+					FROM Case
+					WHERE AccountId = :accountId AND Subject LIKE :filter
+					AND Status NOT IN:lstatus ];
+		if (cases.size() > 0) {
+			result = true;
+		}
 		return result;
 	}
 
@@ -31,7 +34,6 @@ public without sharing class TIDSReportChanges {
 		nameCompany.mappingAccount(account, isLabel);
 		nameCompany.mappingAgencyProfile(agencyProfile);
 		nameCompany.accountRoles = TIDSUtil.tidsShareholders(accountId);
-		System.debug(nameCompany.country);
 		return nameCompany;
 	}
 
@@ -83,7 +85,9 @@ public without sharing class TIDSReportChanges {
 					GDS__c
 				FROM Account
 				WHERE Id = :accountId];
-			if (accounts.size() > 0) {tidsAccount = accounts.get(0);}
+			if (accounts.size() > 0) {
+				tidsAccount = accounts.get(0);
+			}
 			return tidsAccount;
 	}
 
@@ -120,7 +124,9 @@ public without sharing class TIDSReportChanges {
 			this.name = account.Name;
 			this.tradeName = account.TradeName__c;
 			this.companyType = account.Company_Type__c;
-			if (isLabel) {this.companyType = getLabelBasedOnCode('LGLTYP', this.companyType);}
+			if (isLabel) {
+				this.companyType = getLabelBasedOnCode('LGLTYP', this.companyType);
+			}
 	 
 			this.vatNumber1 = account.VAT_Number__c;
 			this.vatNumber2 = account.VAT_Number_2__c;
@@ -142,7 +148,6 @@ public without sharing class TIDSReportChanges {
 		addressContactDetails.mappingMailingAddress(account);
 		addressContactDetails.mappingContact(account);
 		addressContactDetails.setGeonames();
-		System.debug(addressContactDetails);
 		return addressContactDetails;
 	}
 	
@@ -176,8 +181,12 @@ public without sharing class TIDSReportChanges {
 		public void setGeonames(){
 			geonameids = new Map<String, Id>();
 			// Make sure we can update the database before even trying
-			if (!String.isEmpty(this.mailingcitygeonameId)){geonameids.put(this.mailingcitygeonameId, null);}
-			if (!String.isEmpty(this.citygeonameId)){geonameids.put(this.citygeonameId, null);}
+			if (!String.isEmpty(this.mailingcitygeonameId)){
+				geonameids.put(this.mailingcitygeonameId, null);
+			}
+			if (!String.isEmpty(this.citygeonameId)){
+				geonameids.put(this.citygeonameId, null);
+			}
 			List<IATA_ISO_City__c> geonames = new List<IATA_ISO_City__c>();
 			geonames = [SELECT Id
 							,GeonameId__c
@@ -191,7 +200,6 @@ public without sharing class TIDSReportChanges {
 			}
 			this.mailingcitygeonameId=(String) geonameids.get(this.mailingcitygeonameId);
 			this.citygeonameId=(String) geonameids.get(this.citygeonameId);
-			System.Debug('geonameids>>>' + geonameids);
 		}
 		public void mappingAddress(Account account) {
 			this.name = account.Name;
@@ -247,22 +255,29 @@ public without sharing class TIDSReportChanges {
 			AND Valid_For_TIDS__c = true
 		]) {
 			String key=item.Code__c;
-			if (!iscode) {key=item.Corresponding_AMS_Code__c;}
+			if (!iscode) {
+				key=item.Corresponding_AMS_Code__c;
+			}
 			List<String> values= new List<String>{item.Name,key};
 			key = item.Table__c+key;
-			System.debug('key>>>'+key+'  item.Name>>>'+item.Name);
 			gdpMap.put(key,values);
 		}
 		return gdpMap;
 	}
 	
 	private static String getLabelBasedOnCode(String criteria, String code){
-		if (code==null) {return '';}
+		if (code==null) {
+			return '';
+		}
 		List<GDP_Reference_Table__c> names = new List<GDP_Reference_Table__c>();
 		names = [SELECT Name
-		FROM GDP_Reference_Table__c
-		WHERE Table__c=:criteria AND Valid_For_TIDS__c = true and Code__c=:code Limit 1];
-		if (names.size()==0) {return '';}
+					FROM GDP_Reference_Table__c
+					WHERE Table__c=:criteria 
+					AND Valid_For_TIDS__c=true 
+					AND Code__c=:code Limit 1];
+		if (names.size()==0) {
+			return '';
+		}
 		return names[0].Name;
 	}
 
@@ -312,8 +327,8 @@ public without sharing class TIDSReportChanges {
 			 * FL (Focus Leisure), FC (Focus Corporate) - Market Focus: Indicate the approximate % of your Leisure and Corporate business.
 			 * SMOF (Sales Mix Offline), SMON (Sales Mix Online) - Online / Offline Sales Mix
 			*/
-			string gritem=agencyProfile.GR_Item__c;
-			if (String.isEmpty(agencyProfile.GR_Item__c)) {gritem='';}
+			string gritem= String.isEmpty(agencyProfile.GR_Item__c) ? '': agencyProfile.GR_Item__c;
+			
 			switch on (agencyProfile.GR_Code__c) {
 				when 'NU_OFFI' {
 					businessProfile.values.numberOffices.values = gritem;
@@ -398,13 +413,18 @@ public without sharing class TIDSReportChanges {
 
 	public static List<vslabel> getSpecialties(String values,Map<String, List<String>> gdpReferenceValues, String table) {
 		List<vslabel> result = new List<vslabel>();
-		if (values==null){return result;}
+		if (values==null){
+			return result;
+		}
 		List<String> parts = values.split(';');
 		for(String item : parts) {
-			System.debug(item);
-			if(item == 'null') {item=null;}
+			if (item == 'null') {
+				item=null;
+			}
 			List<String> gvalues= (List<String>) gdpReferenceValues.get(table+item);
-			if (gvalues==null || gvalues.size()<1){continue;}
+			if (gvalues==null || gvalues.size()<1){
+				continue;
+			}
 			vslabel itm = new vslabel(gvalues[0],gvalues[1]);
 			result.add(itm);
 		}
