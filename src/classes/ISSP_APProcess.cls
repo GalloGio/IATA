@@ -1715,7 +1715,7 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Pagereference goToStep3(){
-		if(managePASS && isPassAirline){
+		if(managePASS && isPassAirline && this.strAreaType=='Airline Joining'){
 			return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 		}else{
 			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
