@@ -137,6 +137,7 @@ public with sharing class CaseProcessTypeHelper {
 		if (oscarIds.isEmpty()) return new map<Id,AMS_OSCAR__c>();
 		set<String> setOscarFields = new set<String>(getRelatedFields().get('OSCAR__r')); //adding oscar records
 		setOscarFields.add('Id');
+		setOscarFields.add('Account__r.Id');
 		setOscarFields.addAll(getRelatedAccountFields()); // adding account records from the Account__r lookup
 		List<String> listFields = new List<String>(setOscarFields);
 		String query = 'SELECT ' + String.join(listFields,',') + ' FROM AMS_OSCAR__c';
