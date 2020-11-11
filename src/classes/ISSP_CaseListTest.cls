@@ -8,6 +8,7 @@ public class ISSP_CaseListTest {
 		cs.Name = 'Test';
 		cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
 		cs.Field_Set_API_Name__c = 'ISSP_AllClosedCases';
+		cs.Permission_set__c = '0PS200000004CryGAE';
 		insert cs;
 		cttr.initialization();
 		cttr.getCases();
@@ -92,6 +93,7 @@ public class ISSP_CaseListTest {
 		cs.Name = 'Test';
 		cs.Profiles_Id__c = Userinfo.getProfileId().substring(0,15);
 		cs.Field_Set_API_Name__c = 'ISSP_AllClosedCases';
+		cs.Permission_set__c = '0PS200000004CryGAE';
 		insert cs;
 		cttr.initialization();
 		cttr.getCases();
