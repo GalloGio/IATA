@@ -21,8 +21,25 @@ public class ANG_TrackingHistory {
 		return trackedFieldsNames;
 	}
 	//ACAMBAS - WMO-390 - End
+	@future
+	public static void futureTrackHistory(string newTrigger, string oldTrigger, String trackedObjectApiName, String trackingObjectApiName){
+		trackHistory((Map<id, Account>)JSON.deserialize(newTrigger, map<id, Account>.class)
+					,(Map<id, Account>)JSON.deserialize(oldTrigger, map<id, Account>.class)
+					, trackedObjectApiName
+					, trackingObjectApiName
+					, true);
+	}
 
 	public static void trackHistory(Map<Id, SObject> newMap, Map<Id, SObject> oldMap, String trackedObjectApiName, String trackingObjectApiName){
+		trackHistory(newMap, oldMap, trackedObjectApiName, trackingObjectApiName, false);
+	}
+	
+	public static void trackHistory(Map<Id, SObject> newMap, Map<Id, SObject> oldMap, String trackedObjectApiName, String trackingObjectApiName, boolean isFromFutureTrackHistory){
+		set<id> setExistingAccount = new set<id>();
+		if(isFromFutureTrackHistory){
+			for(Account accnt:[select id from account where id in:newMap.keySet()])
+				setExistingAccount.add(accnt.id);
+		}
 
 		System.debug('____ [ANG_TrackingHistory - trackHistory] trackedObjectApiName - ' + trackedObjectApiName);
 
@@ -64,14 +81,14 @@ public class ANG_TrackingHistory {
 					Object oldValue = oldMap.get(sobjId).get(fieldAPIName);
 
 					if(newValue != oldValue) {
-						SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
-						recordsToInsert.add(newHistRecord);
+						if(!isFromFutureTrackHistory || (isFromFutureTrackHistory && setExistingAccount.contains(sobjId))){
+							SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
+							recordsToInsert.add(newHistRecord);
+						}
 					}
 				}
 			}
 		}
-
-
 
 		//ACAMBAS - WMO-390 - End
 		System.debug('____ [ANG_TrackingHistory - trackHistory] recordsToInsert - ' + recordsToInsert);
