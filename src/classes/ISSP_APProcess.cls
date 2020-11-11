@@ -2430,7 +2430,8 @@ global without sharing class ISSP_APProcess {
 			return null;
 		}
 
-		retrieveHQAccountDetails(vHQAccountId);
+		Id accountId = false? vGSSAAccountId: vHQAccountId;
+		retrieveHQAccountDetails(accountId);
 
 		Map<Id, IATA_ISO_Country__c> isoCountriesMap = new Map<Id, IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countryParam));
 
@@ -2450,7 +2451,7 @@ global without sharing class ISSP_APProcess {
 			Region__c = isoCountriesMap.get(countriesParam[0]).Region__c,
 			Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
 			con.Account.IATACode__c,
-			isoCountriesMap.get(countriesParam[0]).ISO_Code__c, con.Account.Name, vHqAccountId),
+			isoCountriesMap.get(countriesParam[0]).ISO_Code__c, con.Account.Name, accountId),
 			Origin = 'Portal',
 			Subject = 'Airline Participation - IATA EasyPay ' + subjectInfo + ' - ' + isoCountriesMap.get(countriesParam[0]).Name,
 			Provider__c = con.AccountId,
@@ -2493,7 +2494,7 @@ global without sharing class ISSP_APProcess {
 					Region__c = isoCountriesMap.get(countriesParam[i]).Region__c,
 					Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
 					con.Account.IATACode__c,
-					isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, vHqAccountId),
+					isoCountriesMap.get(countriesParam[i]).ISO_Code__c, con.Account.Name, accountId),
 					Origin = 'Portal',
 					Subject = 'Airline Participation - IATA EasyPay ' + subjectInfo + ' - ' + isoCountriesMap.get(countriesParam[i]).Name,
 					Provider__c = con.AccountId,
