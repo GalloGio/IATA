@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Function assigned to a contact towars a facility (ICG_Account_Role_Detail__c)</description>
+    <description>One Source  Function assigned to a contact towars a facility (ICG_Account_Role_Detail__c)</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,14 +154,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Read</externalSharingModel>
-    <label>ONE Source Contact Role Detail</label>
+    <label>OS Contact Role Detail</label>
     <nameField>
         <displayFormat>CID-{0000}</displayFormat>
         <label>ONE Source Contact Role Detail Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>ONE Source Contact Role Details</pluralLabel>
+    <pluralLabel>OS Contact Role Details</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

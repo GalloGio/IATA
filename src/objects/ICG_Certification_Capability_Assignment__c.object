@@ -154,6 +154,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <label>OS Certification Capability Assignment</label>
+    <description>One Source Certification Capability Assignment</description>
     <nameField>
         <label>OS Certification Capability Assignment</label>
         <trackHistory>false</trackHistory>

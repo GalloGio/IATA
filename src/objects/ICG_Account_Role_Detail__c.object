@@ -143,7 +143,7 @@
     <allowInChatterGroups>true</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Facilities</description>
+    <description>One Source Facilities</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,13 +154,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>ONE Source Account Role Detail</label>
+    <label>OS Account Role Detail</label>
     <nameField>
         <label>ONE Source Station Name</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>ONE Source Account Role Detail</pluralLabel>
+    <pluralLabel>OS Account Role Detail</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
@@ -817,7 +817,7 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
     </fields>
     <fields>
         <fullName>Company_Admin_Approver_Rejector__c</fullName>
-        <description>Who has Approved or Rejected the station </description>
+        <description>Who has Approved or Rejected the station</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Company Admin Approver/Rejector</label>
@@ -1162,7 +1162,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <fullName>Overall_Facility_Size_m2__c</fullName>
         <description>Describe the facility size in m2</description>
         <externalId>false</externalId>
-        <label>Overall Facility Space (m2)</label>
+        <label>Overall Facility Space (in m2)</label>
         <precision>18</precision>
         <required>false</required>
         <scale>1</scale>

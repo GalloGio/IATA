@@ -153,13 +153,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>ONE Source Notification</label>
+    <label>OS Notification</label>
+    <description>One Source Account Role Detail Relationship</description>
     <nameField>
         <displayFormat>ICGNOTIF{000000}</displayFormat>
         <label>ONE Source Notification Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>ONE Source Notifications</pluralLabel>
+    <pluralLabel>OS Notifications</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
