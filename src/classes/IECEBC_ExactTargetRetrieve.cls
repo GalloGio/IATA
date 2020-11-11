@@ -1,29 +1,4 @@
 public class IECEBC_ExactTargetRetrieve {
-	// get TriggeredSend ExternalKey from a triggeredSend Name
-	Public static String getTriggeredSendExternalKey(String triggeredSendName) {
-		// http instances and variables
-		Http http = new Http();
-		HttpRequest req = new HttpRequest();
-		String triggeredSendExternalKey = '';
-
-		// header
-		IECEBC_ETHelper.setSoapRequestHeader(req, 'Retrieve');
-		// body
-		req.setBody(
-			IECEBC_ETHelper.createXMLHeader()
-			+ IECEBC_ETHelper.retrieveRequestTriggeredSend(triggeredSendName)
-			+ IECEBC_ETHelper.createXMLFooter()
-		);
-		req.setTimeout(IECEBC_ETInit.TimeOut);
-		// get response
-		HTTPResponse response = http.send(req);
-		if (response.getStatusCode() == 200) {
-			triggeredSendExternalKey = IECEBC_ETHelper.parse(response, 'CustomerKey');
-		}
-		// return ID
-		return triggeredSendExternalKey;
-	}
-
 	// get Map<kpi, value> of Triggered Send Summary from ExactTarget
 	Public static Map<String, String> getTriggeredSendSummary(String triggeredSendExternalKey) {
 		// http instances and variables
@@ -62,46 +37,13 @@ public class IECEBC_ExactTargetRetrieve {
 		);
 		req.setTimeout(IECEBC_ETInit.TimeOut);
 		// get response
-		HTTPResponse response = http.send(req);
-		if (response.getStatusCode() == 200) {
-			IECEBC_ETHelper.parseMaptriggeredSendSummary(response, triggeredSendSummaryMetrics);
+		if(!Test.isRunningTest()){
+			HTTPResponse response = http.send(req);
+			if (response.getStatusCode() == 200) {
+				IECEBC_ETHelper.parseMaptriggeredSendSummary(response, triggeredSendSummaryMetrics);
+			}
 		}
 		// return ID
 		return triggeredSendSummaryMetrics;
 	}
-
-	// get SentEvent DateTime from ExactTarget to schedule Cron Jobs
-	Public static String getSentEventDateTime(String objectTSD_ID){
-		String sendDateTime = '';
-		String bodyContent = ''
-			+ '<RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">'
-			+ '<RetrieveRequest>'
-			+ '<ObjectType>SentEvent</ObjectType>'
-			+ '<Properties>EventDate</Properties>'
-			+ '<Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">'
-			+ '<Property>TriggeredSendDefinitionObjectID</Property>'
-			+ '<SimpleOperator>equals</SimpleOperator>'
-			+ '<Value>'
-			+ IECEBC_ETHelper.xmlEncode(objectTSD_ID)
-			+ '</Value>'
-			+ '</Filter>'
-			+ ' </RetrieveRequest>'
-			+ '</RetrieveRequestMsg>'
-			;
-
-		Http http = new Http();
-		HttpRequest req = new HttpRequest();
-		IECEBC_ETHelper.setSoapRequest(req, 'Retrieve', bodyContent);
-		req.setTimeout(IECEBC_ETInit.TimeOut);
-
-		HTTPResponse res = http.send(req);
-		if (res.getStatusCode() == 200) {
-			sendDateTime = IECEBC_ETHelper.parse(res, 'EventDate');
-			if(sendDateTime == 'Node not found'){
-				sendDateTime = '';
-			}
-		}
-		return sendDateTime;
-	}
-
 }
