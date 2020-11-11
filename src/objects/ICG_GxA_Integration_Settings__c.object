@@ -3,8 +3,6 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <description>ONE Source Object to host all the params needed for the GxA Integration, that can change between environments and do not have to be deployed.</description>
     <enableFeeds>false</enableFeeds>
-    <label>OS GxA Integration Settings</label>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Base_Path__c</fullName>
         <defaultValue>&quot;SmartFacilityRemoteValidations/&quot;</defaultValue>
@@ -125,4 +123,6 @@ If the value is undefined or not mismatch with the field Version__c in the recor
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>OS GxA Integration Settings</label>
+    <visibility>Public</visibility>
 </CustomObject>

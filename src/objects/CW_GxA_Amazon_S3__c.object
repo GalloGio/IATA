@@ -3,12 +3,10 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <description>Custom Setting used for the Gxa Integration Connection to Amazon S3</description>
     <enableFeeds>false</enableFeeds>
-    <label>CW GxA Amazon S3</label>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Base_Path__c</fullName>
-        <description>Base Path</description>
         <defaultValue>&quot;SmartFacilityRemoteValidations/&quot;</defaultValue>
+        <description>Base Path</description>
         <externalId>false</externalId>
         <label>Base Path</label>
         <length>255</length>
@@ -30,8 +28,8 @@
     </fields>
     <fields>
         <fullName>Index_File__c</fullName>
-        <description>Index File</description>
         <defaultValue>&quot;Result.json&quot;</defaultValue>
+        <description>Index File</description>
         <externalId>false</externalId>
         <label>Index File</label>
         <length>255</length>
@@ -42,8 +40,8 @@
     </fields>
     <fields>
         <fullName>Named_Credential__c</fullName>
-        <description>Named Credential</description>
         <defaultValue>&quot;CW_AWS_S3_REMOTE_VALIDATIONS&quot;</defaultValue>
+        <description>Named Credential</description>
         <externalId>false</externalId>
         <label>Named Credential</label>
         <length>255</length>
@@ -100,4 +98,6 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>CW GxA Amazon S3</label>
+    <visibility>Public</visibility>
 </CustomObject>

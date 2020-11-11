@@ -3,8 +3,6 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <description>One Source Object to host all the params needed for ICG project, that can change between environments and do not have to be deployed.</description>
     <enableFeeds>false</enableFeeds>
-    <label>OS Environment Variables</label>
-    <visibility>Public</visibility>
     <fields>
         <fullName>EXPIRING_VALIDATION_DAYS__c</fullName>
         <description>Days to consider that a Certification for a facility is going to expire. If we write 60, then all the certifications that expire in less than 60 days are considered expiring validations.</description>
@@ -53,8 +51,8 @@
     </fields>
     <fields>
         <fullName>Max_Filters_Allowed__c</fullName>
-        <description>Indicate the max filters allowed in query</description>
         <defaultValue>25</defaultValue>
+        <description>Indicate the max filters allowed in query</description>
         <externalId>false</externalId>
         <label>max filters allowed</label>
         <precision>18</precision>
@@ -64,4 +62,6 @@
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <label>OS Environment Variables</label>
+    <visibility>Public</visibility>
 </CustomObject>

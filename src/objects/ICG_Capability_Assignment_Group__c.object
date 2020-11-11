@@ -154,18 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>OS Capability Assignment Group</label>
-    <nameField>
-        <displayFormat>OSC-{0000000}</displayFormat>
-        <label>ONE Source Capability Assignment Group</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>OS Capability Assignment Groups</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>CEIV_Scope_List__c</fullName>
         <description>Picklist of possible values for ceiv scope</description>
@@ -448,16 +436,6 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Issue_Date__c</fullName>
-        <description>Show the issue date of the validation</description>
-        <externalId>false</externalId>
-        <label>Issue Date</label>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>Is_Active__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Checkbox to specify if the record is active</description>
@@ -486,6 +464,16 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Issue_Date__c</fullName>
+        <description>Show the issue date of the validation</description>
+        <externalId>false</externalId>
+        <label>Issue Date</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Order_Product__c</fullName>
@@ -624,6 +612,20 @@
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <label>OS Capability Assignment Group</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>OSC-{0000000}</displayFormat>
+        <label>ONE Source Capability Assignment Group</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>OS Capability Assignment Groups</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Certification</fullName>
         <active>true</active>
@@ -864,9 +866,7 @@
             </values>
         </picklistValues>
     </recordTypes>
-    <listViews>
-        <fullName>All</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

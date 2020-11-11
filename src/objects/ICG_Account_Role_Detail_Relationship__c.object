@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>One Source Account Role Detail Relationship</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -153,18 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>OS Account Role Detail Relationship</label>
-    <description>One Source Account Role Detail Relationship</description>
-    <nameField>
-        <displayFormat>ARDRelationship-{000000000}</displayFormat>
-        <label>OS Account Role Detail Relationship</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>OS Account Role Detail Relationships</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
-    <startsWith>Vowel</startsWith>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Handled_Airline__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -174,6 +163,19 @@
         <referenceTo>Account</referenceTo>
         <relationshipLabel>ONE Source Account Role Detail Relationships</relationshipLabel>
         <relationshipName>ICG_Account_Role_Detail_Relationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ICG_ARD__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to Account Role Detail</description>
+        <externalId>false</externalId>
+        <label>ONE Source ARD Linked</label>
+        <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
+        <relationshipLabel>ONE Source Account Role Detail Relationships (ICG ARD Linked)</relationshipLabel>
+        <relationshipName>ICG_Account_Role_Detail_Relationships1</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -192,17 +194,15 @@
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
-    <fields>
-        <fullName>ICG_ARD__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Lookup to Account Role Detail</description>
-        <externalId>false</externalId>
-        <label>ONE Source ARD Linked</label>
-        <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipLabel>ONE Source Account Role Detail Relationships (ICG ARD Linked)</relationshipLabel>
-        <relationshipName>ICG_Account_Role_Detail_Relationships1</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
+    <label>OS Account Role Detail Relationship</label>
+    <nameField>
+        <displayFormat>ARDRelationship-{000000000}</displayFormat>
+        <label>OS Account Role Detail Relationship</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>OS Account Role Detail Relationships</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

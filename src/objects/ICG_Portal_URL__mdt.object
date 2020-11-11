@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>ONE Source The object stores information about the links for One Source Pages</description>
-    <label>OS Portal URL</label>
-    <pluralLabel>OS Portal URLs</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Description__c</fullName>
         <description>Describes the description of the portal URL</description>
@@ -24,6 +21,7 @@
         <required>false</required>
         <type>Url</type>
     </fields>
+    <label>OS Portal URL</label>
     <listViews>
         <fullName>All</fullName>
         <columns>MasterLabel</columns>
@@ -35,4 +33,6 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <pluralLabel>OS Portal URLs</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>

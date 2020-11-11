@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>One Source Account Role Capability Assignment</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -153,17 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>OS Account Role Capability Assignment</label>
-    <description>One Source Account Role Capability Assignment</description>
-    <nameField>
-        <label>OS Account Role Capability Assignement</label>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>OS Account Role Capability Assignments</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Role_Detail_Capability__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
@@ -229,4 +219,14 @@ Format: Array of strings as JSON Objects</description>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <label>OS Account Role Capability Assignment</label>
+    <nameField>
+        <label>OS Account Role Capability Assignement</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>OS Account Role Capability Assignments</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>[DEPRECATED One Source] Account Role Detail Capability</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -153,29 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>Account Role Detail Capability</label>
-    <description>Account Role Detail Capability</description>
-    <nameField>
-        <label>Account Role Detail Capability</label>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>Account Role Detail Capability</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
-    <fields>
-        <fullName>Applied_Measurement_System__c</fullName>
-        <description>Applied Measurement System</description>
-        <externalId>false</externalId>
-        <label>Applied Measurement System</label>
-        <length>1000</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
     <fields>
         <fullName>AULD_Number_Plug_in_Points__c</fullName>
         <description>Discribe the number of ULD Plugin points</description>
@@ -188,6 +166,17 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Applied_Measurement_System__c</fullName>
+        <description>Applied Measurement System</description>
+        <externalId>false</externalId>
+        <label>Applied Measurement System</label>
+        <length>1000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Availability__c</fullName>
@@ -219,21 +208,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Category__c</fullName>
-        <description>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</description>
-        <externalId>false</externalId>
-        <inlineHelpText>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</inlineHelpText>
-        <label>Category</label>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>ICG_Category</valueSetName>
-        </valueSet>
     </fields>
     <fields>
         <fullName>CRSTR_Actions_Taken__c</fullName>
@@ -277,28 +251,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>CRSTR_Deviation_Reported__c</fullName>
-        <description>Deviation Reported</description>
-        <externalId>false</externalId>
-        <label>Deviation Reported</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-        <fullName>CRSTR_Devices_Calibrated__c</fullName>
-        <description>Devices Calibrated</description>
-        <externalId>false</externalId>
-        <label>Devices Calibrated</label>
-        <length>40000</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>CRSTR_DGR_Dedicated_Formula__c</fullName>
@@ -345,6 +297,28 @@ FALSE
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>CRSTR_Deviation_Reported__c</fullName>
+        <description>Deviation Reported</description>
+        <externalId>false</externalId>
+        <label>Deviation Reported</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CRSTR_Devices_Calibrated__c</fullName>
+        <description>Devices Calibrated</description>
+        <externalId>false</externalId>
+        <label>Devices Calibrated</label>
+        <length>40000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>CRSTR_Explain_BUProcedure__c</fullName>
@@ -553,16 +527,6 @@ FALSE
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>CRSTR_Sensors_Calibrated__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Describe if the sensors are calibrated</description>
-        <externalId>false</externalId>
-        <label>Sensors Calibrated</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>CRSTR_Sensor_Calibration_Records__c</fullName>
         <description>Store private pictures url (Amazon S3) separated by \n</description>
         <externalId>false</externalId>
@@ -572,6 +536,16 @@ FALSE
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CRSTR_Sensors_Calibrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Describe if the sensors are calibrated</description>
+        <externalId>false</externalId>
+        <label>Sensors Calibrated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>CRSTR_Spots_Identified__c</fullName>
@@ -638,6 +612,17 @@ FALSE
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CRSTR_Temp_Monitored_247__c</fullName>
+        <description>Temp Monitored</description>
+        <externalId>false</externalId>
+        <label>Temp Monitored 247</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>CRSTR_Temperature_Control_Alarm_System__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Describes if there is a Temperature Control Alarm System</description>
@@ -668,17 +653,6 @@ FALSE
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>CRSTR_Temp_Monitored_247__c</fullName>
-        <description>Temp Monitored</description>
-        <externalId>false</externalId>
-        <label>Temp Monitored 247</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
         <fullName>CRSTR_Total_Storage_Space__c</fullName>
         <description>Decribes the total storage space in m2</description>
         <externalId>false</externalId>
@@ -703,15 +677,19 @@ FALSE
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Description__c</fullName>
-        <description>Describes the description of the capabilities</description>
+        <fullName>Category__c</fullName>
+        <description>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</description>
         <externalId>false</externalId>
-        <label>Description</label>
-        <length>32768</length>
+        <inlineHelpText>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</inlineHelpText>
+        <label>Category</label>
+        <required>true</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ICG_Category</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>DPI_Explain_Delivery_Pickup_Procedure__c</fullName>
@@ -783,6 +761,126 @@ FALSE
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <description>Describes the description of the capabilities</description>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ESC_Name__c</fullName>
+        <description>Describe the name</description>
+        <externalId>false</externalId>
+        <label>Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ESC_System_Provider__c</fullName>
+        <description>Describe the system provider</description>
+        <externalId>false</externalId>
+        <label>System Provider</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ESC_System_Self_Carrier_Owned__c</fullName>
+        <description>System Self Carrier Owned</description>
+        <externalId>false</externalId>
+        <label>System Self Carrier Owned</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>System_Self_Owned</fullName>
+                    <default>false</default>
+                    <label>System self-owned</label>
+                </value>
+                <value>
+                    <fullName>Carrier_Owned</fullName>
+                    <default>false</default>
+                    <label>Carrier owned</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ESC_Type_Commodity__c</fullName>
+        <description>Describe the type of commodity</description>
+        <externalId>false</externalId>
+        <label>Type of Commodity</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>General_Cargo</fullName>
+                    <default>false</default>
+                    <label>General Cargo</label>
+                </value>
+                <value>
+                    <fullName>Airmail</fullName>
+                    <default>false</default>
+                    <label>Airmail</label>
+                </value>
+                <value>
+                    <fullName>Live_Animals</fullName>
+                    <default>false</default>
+                    <label>Live Animals</label>
+                </value>
+                <value>
+                    <fullName>Perishables</fullName>
+                    <default>false</default>
+                    <label>Perishables</label>
+                </value>
+                <value>
+                    <fullName>Dangerous</fullName>
+                    <default>false</default>
+                    <label>Dangerous</label>
+                </value>
+                <value>
+                    <fullName>Pharmaceuticals</fullName>
+                    <default>false</default>
+                    <label>Pharmaceuticals</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ESC_Version__c</fullName>
+        <description>Describe the version</description>
+        <externalId>false</externalId>
+        <label>Version</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Equipment__c</fullName>
@@ -878,14 +976,6 @@ FALSE
                 <valueName>Emissions_Obligations</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Temperature_Controlled_Dollies_Trucks</controllingFieldValue>
-                <valueName>Temperature_Controlled_Dollies_Trucks</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>K9_Dogs</controllingFieldValue>
-                <valueName>K9_Dogs</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>GSE_In_Facility_2</controllingFieldValue>
                 <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
                 <valueName>Live_Animals_Vehicles</valueName>
@@ -894,6 +984,10 @@ FALSE
                 <controllingFieldValue>GSE_In_Facility_2</controllingFieldValue>
                 <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
                 <valueName>Valuable_Vehicles</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>K9_Dogs</controllingFieldValue>
+                <valueName>K9_Dogs</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other_Screening_Equipment</controllingFieldValue>
@@ -1276,6 +1370,10 @@ FALSE
                 <valueName>Other_Temperature_Control_Equipment</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Temperature_Controlled_Dollies_Trucks</controllingFieldValue>
+                <valueName>Temperature_Controlled_Dollies_Trucks</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Build_Up_Break_Down_Areas</controllingFieldValue>
                 <valueName>Build_Up_Break_Down_Station_General</valueName>
             </valueSettings>
@@ -1292,115 +1390,6 @@ FALSE
                 <valueName>Build_Up_Break_Down_Stations_For_Special_Loads</valueName>
             </valueSettings>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>ESC_Name__c</fullName>
-        <description>Describe the name</description>
-        <externalId>false</externalId>
-        <label>Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ESC_System_Provider__c</fullName>
-        <description>Describe the system provider</description>
-        <externalId>false</externalId>
-        <label>System Provider</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ESC_System_Self_Carrier_Owned__c</fullName>
-        <description>System Self Carrier Owned</description>
-        <externalId>false</externalId>
-        <label>System Self Carrier Owned</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>System_Self_Owned</fullName>
-                    <default>false</default>
-                    <label>System self-owned</label>
-                </value>
-                <value>
-                    <fullName>Carrier_Owned</fullName>
-                    <default>false</default>
-                    <label>Carrier owned</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>ESC_Type_Commodity__c</fullName>
-        <description>Describe the type of commodity</description>
-        <externalId>false</externalId>
-        <label>Type of Commodity</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>General_Cargo</fullName>
-                    <default>false</default>
-                    <label>General Cargo</label>
-                </value>
-                <value>
-                    <fullName>Airmail</fullName>
-                    <default>false</default>
-                    <label>Airmail</label>
-                </value>
-                <value>
-                    <fullName>Live_Animals</fullName>
-                    <default>false</default>
-                    <label>Live Animals</label>
-                </value>
-                <value>
-                    <fullName>Perishables</fullName>
-                    <default>false</default>
-                    <label>Perishables</label>
-                </value>
-                <value>
-                    <fullName>Dangerous</fullName>
-                    <default>false</default>
-                    <label>Dangerous</label>
-                </value>
-                <value>
-                    <fullName>Pharmaceuticals</fullName>
-                    <default>false</default>
-                    <label>Pharmaceuticals</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-        <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
-        <fullName>ESC_Version__c</fullName>
-        <description>Describe the version</description>
-        <externalId>false</externalId>
-        <label>Version</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Expiry_Date__c</fullName>
@@ -1470,8 +1459,8 @@ FALSE
     </fields>
     <fields>
         <fullName>Is_Planned_To_Implement__c</fullName>
-        <description>Answer of the question, Do you plan to implement it?</description>
         <defaultValue>false</defaultValue>
+        <description>Answer of the question, Do you plan to implement it?</description>
         <externalId>false</externalId>
         <label>Do you plan to implement it?</label>
         <trackHistory>false</trackHistory>
@@ -1827,6 +1816,16 @@ url: url where is stored the photo</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SC_TSA_ACSTL_Approved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Describes if TSA ACSTL is Approved</description>
+        <externalId>false</externalId>
+        <label>TSA ACSTL Approved</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>SC_Trained_For_Drugs__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Describes if there is trained for drugs</description>
@@ -1862,16 +1861,6 @@ url: url where is stored the photo</inlineHelpText>
         <description>Describes if there is trained for money</description>
         <externalId>false</externalId>
         <label>Trained for Money</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>SC_TSA_ACSTL_Approved__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Describes if TSA ACSTL is Approved</description>
-        <externalId>false</externalId>
-        <label>TSA ACSTL Approved</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2433,6 +2422,24 @@ url: url where is stored the photo</inlineHelpText>
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <label>Account Role Detail Capability</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Category__c</columns>
+        <columns>Equipment__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Account Role Detail Capability</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Account Role Detail Capability</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Active_ULD_Equipment</fullName>
         <active>true</active>
@@ -21973,14 +21980,7 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
     </recordTypes>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Category__c</columns>
-        <columns>Equipment__c</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

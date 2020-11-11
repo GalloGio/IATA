@@ -3,9 +3,6 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Platform event published when a Remote Validation (Order with a Smart Facility Remote Validation product) is purchased.</description>
     <eventType>HighVolume</eventType>
-    <label>Remote Validation</label>
-    <pluralLabel>Remote Validations</pluralLabel>
-    <publishBehavior>PublishAfterCommit</publishBehavior>
     <fields>
         <fullName>EventType__c</fullName>
         <externalId>false</externalId>
@@ -42,4 +39,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>Remote Validation</label>
+    <pluralLabel>Remote Validations</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>

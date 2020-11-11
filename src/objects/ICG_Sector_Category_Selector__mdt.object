@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>ONE Source Specific Sector/Categories elegible for accessing to the ONE Source Private Portal</description>
-    <label>OS Sector Category Selector</label>
-    <pluralLabel>OS Sector Category Selector</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Category__c</fullName>
         <description>Indicates the Account.Category__c picklist API Name separated by comma (,) in which applies this record.
@@ -36,4 +33,7 @@ If the values is &apos;*&apos;, it applies to all categories.</description>
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>OS Sector Category Selector</label>
+    <pluralLabel>OS Sector Category Selector</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>

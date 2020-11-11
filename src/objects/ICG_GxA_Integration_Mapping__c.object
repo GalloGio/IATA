@@ -154,15 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>OS GxA Integration Mapping</label>
-    <nameField>
-        <label>Name</label>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>OS GxA Integration Mapping</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>GxA_Group__c</fullName>
         <externalId>false</externalId>
@@ -832,6 +823,7 @@ It must be in the same order and the same number of items than the field &apos;G
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <label>OS GxA Integration Mapping</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -845,4 +837,12 @@ It must be in the same order and the same number of items than the field &apos;G
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <nameField>
+        <label>Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>OS GxA Integration Mapping</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>One Source Account Role Detail Relationship</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -153,18 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>OS Notification</label>
-    <description>One Source Account Role Detail Relationship</description>
-    <nameField>
-        <displayFormat>ICGNOTIF{000000}</displayFormat>
-        <label>ONE Source Notification Name</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>OS Notifications</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <startsWith>Vowel</startsWith>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Body__c</fullName>
         <description>Body for save the notification information</description>
@@ -374,75 +363,7 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <recordTypes>
-        <fullName>Audit</fullName>
-        <active>true</active>
-        <label>Audit</label>
-        <picklistValues>
-            <picklist>Status__c</picklist>
-            <values>
-                <fullName>Accepted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Complete</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Requested</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>PrivateArea</fullName>
-        <active>true</active>
-        <description>Record Type used for notifications of private area</description>
-        <label>Private Area</label>
-        <picklistValues>
-            <picklist>Status__c</picklist>
-            <values>
-                <fullName>Accepted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Complete</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>News</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remote validation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Requested</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
+    <label>OS Notification</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -532,7 +453,7 @@
         <label>OneSource Stakeholders</label>
         <queue>ICG_Stakeholders</queue>
         <sharedTo>
-            <allInternalUsers/>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -583,4 +504,83 @@
             <group>United_for_Wildlife_Managers</group>
         </sharedTo>
     </listViews>
+    <nameField>
+        <displayFormat>ICGNOTIF{000000}</displayFormat>
+        <label>ONE Source Notification Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>OS Notifications</pluralLabel>
+    <recordTypes>
+        <fullName>Audit</fullName>
+        <active>true</active>
+        <label>Audit</label>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Requested</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>PrivateArea</fullName>
+        <active>true</active>
+        <description>Record Type used for notifications of private area</description>
+        <label>Private Area</label>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>News</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remote validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Requested</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

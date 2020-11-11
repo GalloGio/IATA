@@ -154,17 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Read</externalSharingModel>
-    <label>OS Contact Role Detail</label>
-    <nameField>
-        <displayFormat>CID-{0000}</displayFormat>
-        <label>ONE Source Contact Role Detail Name</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>OS Contact Role Details</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Contact_Role__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
@@ -299,28 +288,6 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>isApproved__c</fullName>
-        <description>Checkbox to determine if the request is approved</description>
-        <externalId>false</externalId>
-        <formula>ISPICKVAL( Status__c ,&quot;Approved&quot;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>isApproved</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>isPendingApproval__c</fullName>
-        <description>Checkbox to determine if the request is pending for approval</description>
-        <externalId>false</externalId>
-        <formula>ISPICKVAL( Status__c , &quot;Pending for Approval&quot;) || ISPICKVAL( Status__c , &quot;Pending for IATA Approval&quot;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>isPendingApproval</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Reject_Reason__c</fullName>
         <description>Reason of the request was rejected</description>
         <externalId>false</externalId>
@@ -386,6 +353,52 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>isApproved__c</fullName>
+        <description>Checkbox to determine if the request is approved</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL( Status__c ,&quot;Approved&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>isApproved</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>isPendingApproval__c</fullName>
+        <description>Checkbox to determine if the request is pending for approval</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL( Status__c , &quot;Pending for Approval&quot;) || ISPICKVAL( Status__c , &quot;Pending for IATA Approval&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>isPendingApproval</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>OS Contact Role Detail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>ICG_Stakeholders_ICG_Contact_Role_Detail</fullName>
+        <filterScope>Queue</filterScope>
+        <label>OneSource Stakeholders</label>
+        <queue>ICG_Stakeholders</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <displayFormat>CID-{0000}</displayFormat>
+        <label>ONE Source Contact Role Detail Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>OS Contact Role Details</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Station_Role_Company_Admin</fullName>
         <active>true</active>
@@ -402,18 +415,5 @@
         <errorDisplayField>ICG_Account_Role_Detail__c</errorDisplayField>
         <errorMessage>With the role &quot;Facility Manager&quot;, the station has to be filled</errorMessage>
     </validationRules>
-    <listViews>
-        <fullName>All</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
-    <listViews>
-        <fullName>ICG_Stakeholders_ICG_Contact_Role_Detail</fullName>
-        <filterScope>Queue</filterScope>
-        <label>OneSource Stakeholders</label>
-        <queue>ICG_Stakeholders</queue>
-        <sharedTo>
-            <allInternalUsers/>
-        </sharedTo>
-    </listViews>
+    <visibility>Public</visibility>
 </CustomObject>

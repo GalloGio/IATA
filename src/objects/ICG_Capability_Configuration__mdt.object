@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>OS Capability Configuration</label>
     <description>One Source Capability Configuration</description>
-    <pluralLabel>OS Capability Configuration</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Data__c</fullName>
         <description>Capabilities&apos; data separated by ;.</description>
@@ -122,6 +119,7 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <label>OS Capability Configuration</label>
     <listViews>
         <fullName>Categories_By_Account_Role_Detail_Record_Type</fullName>
         <columns>MasterLabel</columns>
@@ -151,20 +149,6 @@
             <value>Categories_By_Record_Type</value>
         </filters>
         <label>L2 - Categories By Record Type</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Extra_Config</fullName>
-        <columns>DeveloperName</columns>
-        <columns>Key__c</columns>
-        <columns>Data__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Config</value>
-        </filters>
-        <label>EXTRA - Config</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -207,6 +191,20 @@
             <value>Scopes_by_AccRoleDet_RT</value>
         </filters>
         <label>EXTRA - Scopes by AccRoleDet RT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Extra_Config</fullName>
+        <columns>DeveloperName</columns>
+        <columns>Key__c</columns>
+        <columns>Data__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Config</value>
+        </filters>
+        <label>EXTRA - Config</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -296,4 +294,6 @@
         <label>EXTRA - Tooltip Fields By Field</label>
         <language>en_US</language>
     </listViews>
+    <pluralLabel>OS Capability Configuration</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>

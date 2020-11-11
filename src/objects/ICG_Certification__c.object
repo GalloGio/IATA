@@ -154,16 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>OS Certification</label>
-    <nameField>
-        <label>Certification Name</label>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>OS Certifications</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Alias__c</fullName>
         <description>Alternative name for the certification. Used in predictive search box</description>
@@ -394,16 +384,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>link__c</fullName>
-        <description>Describes the link of the certification</description>
-        <externalId>false</externalId>
-        <label>link</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Url</type>
-    </fields>
-    <fields>
         <fullName>Order__c</fullName>
         <description>Represents the order for the result cards.</description>
         <externalId>false</externalId>
@@ -429,9 +409,29 @@
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>link__c</fullName>
+        <description>Describes the link of the certification</description>
+        <externalId>false</externalId>
+        <label>link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <label>OS Certification</label>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <nameField>
+        <label>Certification Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>OS Certifications</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
