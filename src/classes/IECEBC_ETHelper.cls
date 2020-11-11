@@ -171,16 +171,15 @@ public class IECEBC_ETHelper {
 
 		List<Map<String, String>> MyListMap = new List<Map<String, String>>();
 		DOM.Document doc = new DOM.Document();
-		  try {
+			try {
 			doc.load(res.getBody());
 			DOM.XMLNode root = doc.getRootElement();
-				return   walkThrough(root, elts, MyListMap);
+			return   walkThrough(root, elts, MyListMap);
 
-		  } catch (System.XMLException e) {  // invalid XML
-			  System.debug(e.getMessage());
-
-		  }
-				return null;
+		} catch (System.XMLException e) {  // invalid XML
+			System.debug(e.getMessage());
+		}
+		return null;
 	}
 
 
@@ -193,35 +192,32 @@ public class IECEBC_ETHelper {
 
 	 if (node.getNodeType() == DOM.XMLNodeType.ELEMENT) {
 
-		 result += 'Element: ' + node.getName();
+		result += 'Element: ' + node.getName();
 
-		 if (node.getText().trim() != '') {
-			 result += ', text=' + node.getText().trim();
-		 }
-
-		 for (Dom.XMLNode child: node.getChildElements()) {
-
-			 walkThrough(child, elts, myListMap);
-
-				 for(String n: elts){
-					if(child.getName() == n){
-
-					   myResult1.put(n, child.getText()); //Add new item element in the Map
-
-					}
-			 	}
+		if (node.getText().trim() != '') {
+		result += ', text=' + node.getText().trim();
 		}
-			 if(myResult1.size() > 0){
-				 MyListMap.add(myResult1); // add a Map in the List of Nap
 
-				 //system.debug('le size du map est : '+ MyListMap.size());
-				//system.debug('le resultat final est : '+ MyListMap);
-			  }
+		for (Dom.XMLNode child: node.getChildElements()) {
+
+			walkThrough(child, elts, myListMap);
+
+				for(String n: elts){
+				if(child.getName() == n){
+
+					myResult1.put(n, child.getText()); //Add new item element in the Map
+
+				}
+			}
+	}
+			if(myResult1.size() > 0){
+				MyListMap.add(myResult1); // add a Map in the List of Nap
+			}
 
 		return MyListMap;
-	  }
+		}
 
-	  return null;  //should never reach here
+		return null;  //should never reach here
 	}
 	// parse xml response to get map<nodename, value> of TS Summary
 	public static void parseMapTriggeredSendSummary(HttpResponse res, Map<String, String> tssMap) {
@@ -262,19 +258,4 @@ public class IECEBC_ETHelper {
 		}
 		return 'Node not found';  //should never reach here
 	}
-
-
-
-	// convert ET dateTime to GMT Time zone
-
-	public static DateTime ConvertETDate (String dateT){
-
-		DateTime myDate = DateTime.Parse(dateT.substring(5,7)+'/'+dateT.substring(8,10)+'/'+dateT.substring(0,4)+' '+dateT.substring(11,16)+' AM');
-
-
-		return myDate;
-
-	}
-
-
 }

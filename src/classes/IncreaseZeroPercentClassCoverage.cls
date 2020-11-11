@@ -2,99 +2,70 @@
 private class IncreaseZeroPercentClassCoverage{
 
 
-		static testMethod void  test1() {
-
-						IFAP_EmailTemplatePreviewController t = new IFAP_EmailTemplatePreviewController();
-						AccountTypeDetailsController t2 = new AccountTypeDetailsController();
-
-		}
+	static testMethod void  test1() {
+		IFAP_EmailTemplatePreviewController t = new IFAP_EmailTemplatePreviewController();
+		AccountTypeDetailsController t2 = new AccountTypeDetailsController();
+	}
 
 
-		static testMethod void  test2() {
-
-				AcliSchedule a = new AcliSchedule();
-				/*
-				Test.startTest();
-						String CRON_EXP = '0 0 0 15 3 ? 2022';
-						String jobId = System.schedule('AcliSchedule', CRON_EXP, new AcliSchedule());
-							// Get the information from the CronTrigger API object
-						CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
-					 Test.stopTest();
-					 */
-		}
+	static testMethod void  test2() {
+		AcliSchedule a = new AcliSchedule();
+	}
 
 
-		static testMethod void  test3() {
+	static testMethod void  test3() {
+		AirlineBranchController temp = new AirlineBranchController();
+		String t = temp.parentAccountId;
+		List<Services_Rendered__c> servicesList = temp.servicesList;
+		t = temp.sortDir;
+		t = temp.sortField;
 
-				AirlineBranchController temp = new AirlineBranchController();
-				String t = temp.parentAccountId;
-				List<Services_Rendered__c> servicesList = temp.servicesList;
-				t = temp.sortDir;
-				t = temp.sortField;
-
-				temp.AirlineBranchController();
-
-		}
+		temp.AirlineBranchController();
+	}
 
 
-		static testMethod void test4(){
+	static testMethod void test4(){
+		ArchiveAttachmentListController temp = new ArchiveAttachmentListController();
+		ArchivedAttachmentControllerExtension t;
+	}
 
+	static testMethod void ArchiveMessageExtensionControllerCoverage(){
+		Account acc = IECTestUtil.createSampleAccount();
+		Contact cont = IECTestUtil.createSampleContact(acc);
+		Case ca = new Case();
+		ca.Subject = 'test 1';
+		ca.Status = 'Open';
+		ca.AccountId = acc.id;
+		ca.ContactId = cont.id;
+		ca.CaseArea__c = 'test';
+		ca.Reason1__c = 'test';
+		insert ca;
+		
+		EmailMessage am = new EmailMessage();
+		am.ParentId = ca.Id;
+		am.ToAddress = 'test@test.com';
+		am.CcAddress = 'test@test.com';
+		am.TextBody = 'hello';
+		am.Subject= 'Test';
+		am.MessageDate = datetime.now();
+		insert am;
+		
+		Archived_Message__c archived = new Archived_Message__c(name = 'testCoverage', EmailMessage__c = am.Id, Case__c = ca.Id);
+		insert archived;
+		
+		ArchiveMessageExtensionController t = new ArchiveMessageExtensionController();	
+		t.setArchivedMessageId(String.valueOf(archived.id));
+		String archivedMessageId = t.getArchivedMessageId();
+		Archived_Message__c archivedMessage = t.getArchivedMessage();
+	}
 
-				ArchiveAttachmentListController temp = new ArchiveAttachmentListController();
-				//List<Archived_Attachment__c> getArchivedAttachments = temp.getArchivedAttachments();
+	static testMethod void test6(){
+		ChatterAnswersAuthProviderRegistration aa = new  ChatterAnswersAuthProviderRegistration();
+		ChatterAnswersRegistration aaa = new ChatterAnswersRegistration();
+	}
 
-				ArchivedAttachmentControllerExtension t;
-			 // t.awsCredential = null;
-			 // t.ArchivedAttachmentControllerExtension(new ApexPages.StandardController);
-
-		}
-
-
-		static testMethod void test5(){
-
-
-				ArchiveMessageExtensionController t = new ArchiveMessageExtensionController();
-			 // t.archivedMessage = null;
-				t.originalMessage = null;
-				string t1= t.archivedMessageId;
-			 // t.setArchivedMessageId('1');
-				t1 = t.getArchivedMessageId();
-				//t.setArchivedMessage(t.getArchivedMessage());
-
-				//t.deleteAction();
-
-
-		}
-
-		 static testMethod void test6(){
-
-				 ChatterAnswersAuthProviderRegistration aa = new  ChatterAnswersAuthProviderRegistration();
-
-				// aa.updateUser(null,null,null);
-
-				 ChatterAnswersRegistration aaa = new ChatterAnswersRegistration();
-			 //  String t = aaa.createAccount('a','a',null);
-
-		 }
-
-
-
-
-
-
-		 static testMethod void test8(){
-
-				 ifap_reminderScheduler ifa = new ifap_reminderScheduler();
-
-
-		 }
-
-
-
-
-
-
-
-
+	static testMethod void test8(){
+		ifap_reminderScheduler ifa = new ifap_reminderScheduler();
+	}
 
 }

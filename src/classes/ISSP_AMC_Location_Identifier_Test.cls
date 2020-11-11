@@ -41,14 +41,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = '1';
 				controller.saveParticipation();
-				/*ID accId = [SELECT Id,AccountId FROM Contact WHERE Id=:portalUser.contactId][0].AccountId;
-				Account portalAcc = [SELECT Id FROM Account WHERE ID=:accId];
-				portalAcc.SIS_Status__c = 'Terminated';
-				update portalAcc;
-				controller.saveParticipation();*/
-
-
-				//ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
 			}
 
 			Test.stopTest();
@@ -87,9 +79,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = '1';
 				controller.saveParticipation();
-
-
-				//ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
 			}
 
 			Test.stopTest();
@@ -106,9 +95,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Airport', false);
-
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -152,7 +138,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Airport', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -191,7 +176,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Heliport', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -212,7 +196,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 				String testComName = controller.communityName;
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
-				//controller.participation = ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Heliport', false);
 				Test.StartTest();
 				controller.saveParticipation();
 
@@ -234,7 +217,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Heliport', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -275,7 +257,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'OfflinePoint', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -313,7 +294,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Off-line Point', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -353,7 +333,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'RailwayStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -395,7 +374,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'RailwayStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -435,7 +413,6 @@ private class ISSP_AMC_Location_Identifier_Test {
                                            +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'BusStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -472,7 +449,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'BusStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -512,7 +488,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'BusStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -550,7 +525,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'BusStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -589,7 +563,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'BusStation', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -628,7 +601,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'MetropolitanArea', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -664,7 +636,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'MetropolitanArea', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -769,7 +740,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'MetropolitanArea', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -808,7 +778,6 @@ private class ISSP_AMC_Location_Identifier_Test {
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'MetropolitanArea', false);
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 

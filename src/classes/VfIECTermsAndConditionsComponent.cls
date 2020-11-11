@@ -10,16 +10,6 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 	// component parameters
 	public String[] listProductInformationIDs { get; set; }
 	public String componentIdToRerender { get; set; }
-	/*// Commented to rollback override acceptance
-	public Boolean overrideExistingAcceptance {
-		get {
-			return (overrideExistingAcceptance == null) ? true : overrideExistingAcceptance;
-		}
-		set {
-			overrideExistingAcceptance = value;
-		}
-	}
-	*/
 
 	// member variables
 	public List<UITermsAndConditions> lstTnCsToDisplay;
@@ -36,9 +26,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				}
 				return bAllTnCChecked;
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return false;
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return false;
 			}
 		}
 		private set;
@@ -51,10 +39,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 					lstTnCsToDisplay = getTermsAndConditions();
 				return lstTnCsToDisplay;
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return null;
-			}
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return null;}
 		}
 		private set;
 	}
@@ -69,9 +54,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				}
 				return lstTnC;
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return null;
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return null;
 			}
 		}
 		private set;
@@ -82,9 +65,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			try {
 				return (listTermsAndConditionsToDisplay != null && !listTermsAndConditionsToDisplay.isEmpty());
 			}
-			catch (Exception ex) {
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-				return false;
+			catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return false;
 			}
 		}
 		private set;
@@ -98,8 +79,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			lstTnCsToDisplay = null;
 			hasAcceptedAllTCs = false;
 		}
-		catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+		catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 		}
 	}
 
@@ -115,19 +95,14 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				// for each product information id passed as component parameter
 				for (String productInformationID : listProductInformationIDs) {
 					Terms_and_Conditions__c oTC = IECProductManager.getCurrentTermsAndConditionForProduct(productInformationID);
-					if (oTC != null
-						// Commented to rollback override acceptance
-						/*&& (overrideExistingAcceptance
-							|| !IECProductManager.hasTnCBeenAcceptedByCustomer(oTC.Id, pageController.loggedCustomer.RelatedContact.Id))*/) {
+					if (oTC != null) {
 						listTCToDisplay.add(new UITermsAndConditions(oTC));
 					}
 				}
 			}
 			return listTCToDisplay;
 		}
-		catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-			return null;
+		catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return null;
 		}
 	}
 
@@ -137,9 +112,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			List<UITermsAndConditions> lst = this.listTermsAndConditionsToDisplay;
 			return;
 		}
-		catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-			return;
+		catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));return;
 		}
 	}
 
