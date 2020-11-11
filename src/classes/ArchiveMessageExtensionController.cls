@@ -30,12 +30,6 @@ global  class  ArchiveMessageExtensionController{
 		return this.archivedMessage;
 	}
 
-
-	public void deleteAction(){
-		delete originalMessage;
-		delete archivedMessage;
-	}
-
 	/**
 	* Constructor.
 	*
