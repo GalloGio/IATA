@@ -13,5 +13,4 @@ trigger AMS_VoucherInformationTrigger on AMS_Voucher_Information__c ( after inse
 	if (Trigger.isAfter && Trigger.isUndelete) {
 		AMS_VoucherInformationTriggerHandler.handleAfterUndelete(Trigger.new);
 	}
-
 }
