@@ -165,17 +165,6 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-	<fields>
-        <fullName>Ops_Hierarchy_Group__c</fullName>
-        <description>The name of the Operation Hierarchy Group that can vary from the legal name of the parent company if required. The name can be set to whatever is required.</description>
-        <externalId>false</externalId>
-        <label>Ops Hierarchy Group</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <fields>
         <fullName>Ops_Hierarchy_Group__c</fullName>
         <description>The name of the Operation Hierarchy Group that can vary from the legal name of the parent company if required. The name can be set to whatever is required.</description>
@@ -198,17 +187,6 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-	<fields>
-        <fullName>Relationship_Name__c</fullName>
-        <description>It describes the Name of Operational Hierarchy</description>
-        <externalId>false</externalId>
-        <label>Relationship Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Relationship_Name__c</fullName>
