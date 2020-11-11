@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Facility Manager</fullName>
+        <default>false</default>
+        <label>Facility Manager</label>
+    </customValue>
+    <customValue>
+        <fullName>Company Admin</fullName>
+        <default>false</default>
+        <label>Company Admin</label>
+    </customValue>
+    <description>Diferent roles in ICG Portal</description>
+    <masterLabel>ONE Source Contact Role Details</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
