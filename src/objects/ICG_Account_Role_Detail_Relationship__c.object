@@ -154,6 +154,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>OS Account Role Detail Relationship</label>
+    <description>One Source Account Role Detail Relationship</description>
     <nameField>
         <displayFormat>ARDRelationship-{000000000}</displayFormat>
         <label>OS Account Role Detail Relationship</label>

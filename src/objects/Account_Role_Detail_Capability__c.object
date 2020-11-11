@@ -154,6 +154,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Account Role Detail Capability</label>
+    <description>Account Role Detail Capability</description>
     <nameField>
         <label>Account Role Detail Capability</label>
         <trackHistory>false</trackHistory>

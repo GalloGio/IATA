@@ -154,6 +154,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>OS Account Role Capability Assignment</label>
+    <description>One Source Account Role Capability Assignment</description>
     <nameField>
         <label>OS Account Role Capability Assignement</label>
         <trackHistory>false</trackHistory>

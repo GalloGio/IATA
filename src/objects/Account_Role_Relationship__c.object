@@ -167,7 +167,7 @@
     </fields>
 	<fields>
         <fullName>Ops_Hierarchy_Group__c</fullName>
-        <description>The Ops Hierarchy Group name, to avoid modifying Legal Hierarchy but still be able to group companies for One Source purposes.</description>
+        <description>The name of the Operation Hierarchy Group that can vary from the legal name of the parent company if required. The name can be set to whatever is required.</description>
         <externalId>false</externalId>
         <label>Ops Hierarchy Group</label>
         <length>255</length>
@@ -190,7 +190,7 @@
     </fields>
 	<fields>
         <fullName>Relationship_Name__c</fullName>
-        <description>Name of relationship, used in filters in onesource project. It describes the Name of Operational Hierarchy</description>
+        <description>It describes the Name of Operational Hierarchy</description>
         <externalId>false</externalId>
         <label>Relationship Name</label>
         <length>255</length>

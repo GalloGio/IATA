@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>InDevelopment</deploymentStatus>
-    <description>Object used for mapping the integration GxA</description>
+    <description>ONE Source Object used for mapping the integration GxA</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,12 +154,12 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>ONE Source GxA Integration Mapping</label>
+    <label>OS GxA Integration Mapping</label>
     <nameField>
         <label>Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>ONE Source GxA Integration Mapping</pluralLabel>
+    <pluralLabel>OS GxA Integration Mapping</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

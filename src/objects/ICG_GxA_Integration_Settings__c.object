@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>Hierarchy</customSettingsType>
-    <description>Object to host all the params needed for the GxA Integration, that can change between environments and do not have to be deployed.</description>
+    <description>ONE Source Object to host all the params needed for the GxA Integration, that can change between environments and do not have to be deployed.</description>
     <enableFeeds>false</enableFeeds>
-    <label>ONE Source GxA Integration Settings</label>
+    <label>OS GxA Integration Settings</label>
     <visibility>Public</visibility>
     <fields>
         <fullName>Base_Path__c</fullName>
