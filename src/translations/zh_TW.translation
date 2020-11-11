@@ -3313,6 +3313,10 @@
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Password Reset Body Part 1 --></label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3567,6 +3571,14 @@
     <customLabels>
         <label><!-- Give Feedback Type title --></label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Go to Iata org --></label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Go to Iata org --></label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4377,6 +4389,10 @@
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Login --></label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Login Now --></label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4651,6 +4667,10 @@
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Registration --></label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Registration Complete --></label>
@@ -5033,12 +5053,20 @@
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Sign Up Header label --></label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Skip --></label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Status --></label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Store Button Label --></label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label><!-- Subject subtitle for complaint/compliment --></label>
@@ -5131,6 +5159,30 @@
     <customLabels>
         <label><!-- CSP Troubleshooting --></label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Troubleshooting Issue description label --></label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Troubleshooting Form --></label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Troubleshooting message --></label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Troubleshooting subtitle --></label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Troubleshooting --></label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Troubleshooting Type label --></label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Troubleshooting Info --></label>
@@ -36474,6 +36526,27 @@
         <sections>
             <label><!-- Objectives --></label>
             <name>Objectives</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
         </sections>
     </reportTypes>
     <reportTypes>

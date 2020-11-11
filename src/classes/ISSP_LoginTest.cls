@@ -18,7 +18,6 @@ private class ISSP_LoginTest {
 
 	public static testMethod void testLanguage() {
 	 	ISSP_Login controller = new ISSP_Login();
-		// 	ApexPages.currentPage().getParameters().put('Accept-Language','es');
 		String lang = controller.lang;
 		System.assertEquals('en_US', lang, 'The language should be en_US');
 	 	ApexPages.currentPage().getHeaders().put('Accept-Language','es');

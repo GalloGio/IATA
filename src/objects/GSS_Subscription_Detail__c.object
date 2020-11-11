@@ -674,7 +674,7 @@
         <filters>
             <field>NAME</field>
             <operation>equals</operation>
-            <value>A-S00001256</value>
+            <value>A-S00013941</value>
         </filters>
         <label>01-Search by Subscription Number</label>
         <language>en_US</language>
@@ -788,7 +788,7 @@
         <filters>
             <field>NAME</field>
             <operation>equals</operation>
-            <value>A-S00003333</value>
+            <value>A-S00067100</value>
         </filters>
         <label>10-Search by File Subscription Details</label>
         <language>en_US</language>

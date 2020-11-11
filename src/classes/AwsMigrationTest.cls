@@ -77,6 +77,14 @@ private class AwsMigrationTest {
 			ids.add(a.Id);
 		system.assert(ids.size()==3);
 
+		for(Case c: cases){
+			if(c.Status == 'Reopen'){
+				c.Status = 'Closed';
+			}
+		}
+
+		update cases;
+
 
 		system.debug('[TEST AWS] NB element created : '+att.size());
 		//call the Job monitor to process threatment : only Attachment 2 should have been migrated
@@ -93,6 +101,8 @@ private class AwsMigrationTest {
 		system.debug('[TEST AWS] test if there is one archive Attachement linked to case '+aa.AWS_S3_URL__c);
 		system.assert(aa!=null);
 		system.debug(aa.Name);
+
+		AWSTools.DeleteAttachment(atts[0].id);
 	}
 
 

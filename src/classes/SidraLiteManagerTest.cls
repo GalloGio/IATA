@@ -17,16 +17,8 @@ public class SidraLiteManagerTest {
 		return createParentCase(SidraLiteManager.RECORDTYPE_SMAP, PASSENGER);
 	}
 
-	public static Case createSMAPCargo() {
-		return createParentCase(SidraLiteManager.RECORDTYPE_SMAP, CARGO);
-	}
-
 	public static Case createOSCARPassenger() {
 		return createParentCase(SidraLiteManager.RECORDTYPE_OSCAR, PASSENGER);
-	}
-
-	public static Case createOSCARCargo() {
-		return createParentCase(SidraLiteManager.RECORDTYPE_OSCAR, CARGO);
 	}
 
 	public static Case createSAAMPassenger() {
@@ -1184,7 +1176,7 @@ public class SidraLiteManagerTest {
 
 		List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
 		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = cnsPermissionSet.Id,
-																  AssigneeId = testUser.Id);
+																	AssigneeId = testUser.Id);
 		permissionSetList.add(psa);
 		upsert permissionSetList;
 	}
