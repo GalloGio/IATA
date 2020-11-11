@@ -1353,7 +1353,7 @@ global without sharing class ISSP_APProcess {
 	public boolean isSameAPCase() {
 			List<Case> dupeCases = [
 				SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-				  Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c, Contact.IsEmailBounced, Contact.Email
+				  Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c, Contact.IsEmailBounced, Contact.Email, Country_concerned__c
 					FROM Case WHERE RecordType.DeveloperName = 'IDFS_Airline_Participation_Process' AND Id = :vCaseId
 			];
 			if(dupeCases.size()>0) {
