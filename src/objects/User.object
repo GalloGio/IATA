@@ -2611,6 +2611,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.ACTIVE</columns>
         <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>License_Cost_Center__c</columns>
+        <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>CORE.PROFILE.NAME</field>
