@@ -4,6 +4,7 @@ import { getPageName }    from 'c/navigationUtils';
 //import labels
 import CSP_Service_TIPReports_Title from '@salesforce/label/c.CSP_Service_TIPReports_Title';
 import CSP_Service_AirlineDailySales_Title from '@salesforce/label/c.CSP_Service_AirlineDailySales_Title';
+import CSP_Service_SmartLite_Title from '@salesforce/label/c.CSP_Service_SmartLite_Title';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalServicesTIPReportsPageHeader extends LightningElement {
@@ -22,6 +23,9 @@ export default class PortalServicesTIPReportsPageHeader extends LightningElement
         }
         if (this.pageName==='airline-daily-sales') {
             return this.label.CSP_Service_AirlineDailySales_Title;
+        }
+        if (this.pageName==='smart-lite') {
+            return this.label.CSP_Service_SmartLite_Title;
         }
         return '';
     }

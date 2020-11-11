@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Configuration details for PowerBI reports: groupId, reportId and other relevant parameters.</description>
     <fields>
         <fullName>Group_Id_Dev__c</fullName>
         <externalId>false</externalId>
@@ -79,6 +78,11 @@
                     <fullName>Airline Daily Sales</fullName>
                     <default>false</default>
                     <label>Airline Daily Sales</label>
+                </value>
+                <value>
+                    <fullName>SMART_Lite</fullName>
+                    <default>false</default>
+                    <label>SMART Lite</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
