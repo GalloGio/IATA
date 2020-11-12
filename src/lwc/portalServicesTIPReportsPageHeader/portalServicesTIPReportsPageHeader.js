@@ -10,7 +10,8 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class PortalServicesTIPReportsPageHeader extends LightningElement {
     label = { 
         CSP_Service_TIPReports_Title,
-        CSP_Service_AirlineDailySales_Title
+        CSP_Service_AirlineDailySales_Title,
+        CSP_Service_SmartLite_Title
     };
     backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/CasesBackground.jpg';
     @track imageInfo = '';

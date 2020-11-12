@@ -46,7 +46,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Treasury_Dashboard,
         CSP_Breadcrumb_Service_TIPReports,
         CSP_Breadcrumb_AirlineDailySales,
-        CSP_Service_SmartLite_Title,
+        CSP_Breadcrumb_SmartLite,
 		CSP_Deduction_Notice,
         CSP_Treasury_Dashboard_Report
     };
