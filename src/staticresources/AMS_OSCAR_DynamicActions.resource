@@ -21,6 +21,12 @@ var dyn_functions = {
             }
         }
 
+        if(records[0].AMS_Online_Accreditation__r.Location_Class__c == 'L' && records[0].Account__r.Sector__c == 'Postal Service' && records[0].AMS_Online_Accreditation__r.Link_agent_name__c == null ){
+            alert("The “Link Agent Name” field must be filled.");
+            sResult = 'Please fill the Link Agent Name before proceding';
+            return 'false';
+        }
+
         resultExecution = sforce.apex.execute("ANG_OscarProcessHelper", "processIATACodeGeneration", {accountId: argList[0], onlineAccreditationId: argList[1],oscarId :argList[2]});
 
         if(resultExecution[2] == '0'){ // Due Diligence Case created
