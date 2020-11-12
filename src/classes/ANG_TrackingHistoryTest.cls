@@ -28,13 +28,16 @@ private class ANG_TrackingHistoryTest {
 	}
 
 	@isTest static void testAccountChange() {
+		test.startTest();
 
 		Account acc = [SELECT Id FROM Account];
-
+		
 		acc.VAT_Number_2__c = '999';
 		acc.Abbreviated_address__c = 'Leiria';
 
 		update acc;
+		
+		test.stopTest();
 
 		List<ANG_Account_Tracking_History__c> historyRecords = new List<ANG_Account_Tracking_History__c>([SELECT Id, Old_Value__c, New_Value__c, What__c FROM ANG_Account_Tracking_History__c]);
 
@@ -56,6 +59,7 @@ private class ANG_TrackingHistoryTest {
 		}
 
 		system.assertEquals(count, 2);
+		
 	}
 
 

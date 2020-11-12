@@ -4,7 +4,9 @@
     <name>L3 ICCS Finance</name>
     <queueMembers>
         <users>
+            <user>chanshonc@iata.org.prod</user>
             <user>siddiqig@iata.org</user>
+            <user>daous@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

@@ -1,0 +1,2835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Abkhazian</fullName>
+        <default>false</default>
+        <label>Abkhazian</label>
+    </customValue>
+    <customValue>
+        <fullName>Achinese</fullName>
+        <default>false</default>
+        <label>Achinese</label>
+    </customValue>
+    <customValue>
+        <fullName>Acoli</fullName>
+        <default>false</default>
+        <label>Acoli</label>
+    </customValue>
+    <customValue>
+        <fullName>Adangme</fullName>
+        <default>false</default>
+        <label>Adangme</label>
+    </customValue>
+    <customValue>
+        <fullName>Adygei</fullName>
+        <default>false</default>
+        <label>Adygei</label>
+    </customValue>
+    <customValue>
+        <fullName>Adyghe</fullName>
+        <default>false</default>
+        <label>Adyghe</label>
+    </customValue>
+    <customValue>
+        <fullName>Afar</fullName>
+        <default>false</default>
+        <label>Afar</label>
+    </customValue>
+    <customValue>
+        <fullName>Afrihili</fullName>
+        <default>false</default>
+        <label>Afrihili</label>
+    </customValue>
+    <customValue>
+        <fullName>Afrikaans</fullName>
+        <default>false</default>
+        <label>Afrikaans</label>
+    </customValue>
+    <customValue>
+        <fullName>Afro-Asiatic languages</fullName>
+        <default>false</default>
+        <label>Afro-Asiatic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Ainu</fullName>
+        <default>false</default>
+        <label>Ainu</label>
+    </customValue>
+    <customValue>
+        <fullName>Akan</fullName>
+        <default>false</default>
+        <label>Akan</label>
+    </customValue>
+    <customValue>
+        <fullName>Akkadian</fullName>
+        <default>false</default>
+        <label>Akkadian</label>
+    </customValue>
+    <customValue>
+        <fullName>Albanian</fullName>
+        <default>false</default>
+        <label>Albanian</label>
+    </customValue>
+    <customValue>
+        <fullName>Alemannic</fullName>
+        <default>false</default>
+        <label>Alemannic</label>
+    </customValue>
+    <customValue>
+        <fullName>Aleut</fullName>
+        <default>false</default>
+        <label>Aleut</label>
+    </customValue>
+    <customValue>
+        <fullName>Algonquian languages</fullName>
+        <default>false</default>
+        <label>Algonquian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Alsatian</fullName>
+        <default>false</default>
+        <label>Alsatian</label>
+    </customValue>
+    <customValue>
+        <fullName>Altaic languages</fullName>
+        <default>false</default>
+        <label>Altaic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Amharic</fullName>
+        <default>false</default>
+        <label>Amharic</label>
+    </customValue>
+    <customValue>
+        <fullName>Angika</fullName>
+        <default>false</default>
+        <label>Angika</label>
+    </customValue>
+    <customValue>
+        <fullName>Apache languages</fullName>
+        <default>false</default>
+        <label>Apache languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Arabic</fullName>
+        <default>false</default>
+        <label>Arabic</label>
+    </customValue>
+    <customValue>
+        <fullName>Aragonese</fullName>
+        <default>false</default>
+        <label>Aragonese</label>
+    </customValue>
+    <customValue>
+        <fullName>Arapaho</fullName>
+        <default>false</default>
+        <label>Arapaho</label>
+    </customValue>
+    <customValue>
+        <fullName>Arawak</fullName>
+        <default>false</default>
+        <label>Arawak</label>
+    </customValue>
+    <customValue>
+        <fullName>Armenian</fullName>
+        <default>false</default>
+        <label>Armenian</label>
+    </customValue>
+    <customValue>
+        <fullName>Aromanian</fullName>
+        <default>false</default>
+        <label>Aromanian</label>
+    </customValue>
+    <customValue>
+        <fullName>Artificial languages</fullName>
+        <default>false</default>
+        <label>Artificial languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Arumanian</fullName>
+        <default>false</default>
+        <label>Arumanian</label>
+    </customValue>
+    <customValue>
+        <fullName>Assamese</fullName>
+        <default>false</default>
+        <label>Assamese</label>
+    </customValue>
+    <customValue>
+        <fullName>Asturian</fullName>
+        <default>false</default>
+        <label>Asturian</label>
+    </customValue>
+    <customValue>
+        <fullName>Asturleonese</fullName>
+        <default>false</default>
+        <label>Asturleonese</label>
+    </customValue>
+    <customValue>
+        <fullName>Athapascan languages</fullName>
+        <default>false</default>
+        <label>Athapascan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Australian languages</fullName>
+        <default>false</default>
+        <label>Australian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Austronesian languages</fullName>
+        <default>false</default>
+        <label>Austronesian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Avaric</fullName>
+        <default>false</default>
+        <label>Avaric</label>
+    </customValue>
+    <customValue>
+        <fullName>Avestan</fullName>
+        <default>false</default>
+        <label>Avestan</label>
+    </customValue>
+    <customValue>
+        <fullName>Awadhi</fullName>
+        <default>false</default>
+        <label>Awadhi</label>
+    </customValue>
+    <customValue>
+        <fullName>Aymara</fullName>
+        <default>false</default>
+        <label>Aymara</label>
+    </customValue>
+    <customValue>
+        <fullName>Azerbaijani</fullName>
+        <default>false</default>
+        <label>Azerbaijani</label>
+    </customValue>
+    <customValue>
+        <fullName>Bable</fullName>
+        <default>false</default>
+        <label>Bable</label>
+    </customValue>
+    <customValue>
+        <fullName>Balinese</fullName>
+        <default>false</default>
+        <label>Balinese</label>
+    </customValue>
+    <customValue>
+        <fullName>Baltic languages</fullName>
+        <default>false</default>
+        <label>Baltic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Baluchi</fullName>
+        <default>false</default>
+        <label>Baluchi</label>
+    </customValue>
+    <customValue>
+        <fullName>Bambara</fullName>
+        <default>false</default>
+        <label>Bambara</label>
+    </customValue>
+    <customValue>
+        <fullName>Bamileke languages</fullName>
+        <default>false</default>
+        <label>Bamileke languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Banda languages</fullName>
+        <default>false</default>
+        <label>Banda languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Bantu languages</fullName>
+        <default>false</default>
+        <label>Bantu languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Basa</fullName>
+        <default>false</default>
+        <label>Basa</label>
+    </customValue>
+    <customValue>
+        <fullName>Bashkir</fullName>
+        <default>false</default>
+        <label>Bashkir</label>
+    </customValue>
+    <customValue>
+        <fullName>Basque</fullName>
+        <default>false</default>
+        <label>Basque</label>
+    </customValue>
+    <customValue>
+        <fullName>Batak languages</fullName>
+        <default>false</default>
+        <label>Batak languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Bedawiyet</fullName>
+        <default>false</default>
+        <label>Bedawiyet</label>
+    </customValue>
+    <customValue>
+        <fullName>Beja</fullName>
+        <default>false</default>
+        <label>Beja</label>
+    </customValue>
+    <customValue>
+        <fullName>Belarusian</fullName>
+        <default>false</default>
+        <label>Belarusian</label>
+    </customValue>
+    <customValue>
+        <fullName>Bemba</fullName>
+        <default>false</default>
+        <label>Bemba</label>
+    </customValue>
+    <customValue>
+        <fullName>Bengali</fullName>
+        <default>false</default>
+        <label>Bengali</label>
+    </customValue>
+    <customValue>
+        <fullName>Berber languages</fullName>
+        <default>false</default>
+        <label>Berber languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Bhojpuri</fullName>
+        <default>false</default>
+        <label>Bhojpuri</label>
+    </customValue>
+    <customValue>
+        <fullName>Bihari languages</fullName>
+        <default>false</default>
+        <label>Bihari languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Bikol</fullName>
+        <default>false</default>
+        <label>Bikol</label>
+    </customValue>
+    <customValue>
+        <fullName>Bilin</fullName>
+        <default>false</default>
+        <label>Bilin</label>
+    </customValue>
+    <customValue>
+        <fullName>Bini</fullName>
+        <default>false</default>
+        <label>Bini</label>
+    </customValue>
+    <customValue>
+        <fullName>Bislama</fullName>
+        <default>false</default>
+        <label>Bislama</label>
+    </customValue>
+    <customValue>
+        <fullName>Blin</fullName>
+        <default>false</default>
+        <label>Blin</label>
+    </customValue>
+    <customValue>
+        <fullName>Bliss</fullName>
+        <default>false</default>
+        <label>Bliss</label>
+    </customValue>
+    <customValue>
+        <fullName>Blissymbolics</fullName>
+        <default>false</default>
+        <label>Blissymbolics</label>
+    </customValue>
+    <customValue>
+        <fullName>Blissymbols</fullName>
+        <default>false</default>
+        <label>Blissymbols</label>
+    </customValue>
+    <customValue>
+        <fullName>Bokmål, Norwegian</fullName>
+        <default>false</default>
+        <label>Bokmål, Norwegian</label>
+    </customValue>
+    <customValue>
+        <fullName>Bosnian</fullName>
+        <default>false</default>
+        <label>Bosnian</label>
+    </customValue>
+    <customValue>
+        <fullName>Braj</fullName>
+        <default>false</default>
+        <label>Braj</label>
+    </customValue>
+    <customValue>
+        <fullName>Breton</fullName>
+        <default>false</default>
+        <label>Breton</label>
+    </customValue>
+    <customValue>
+        <fullName>Buginese</fullName>
+        <default>false</default>
+        <label>Buginese</label>
+    </customValue>
+    <customValue>
+        <fullName>Bulgarian</fullName>
+        <default>false</default>
+        <label>Bulgarian</label>
+    </customValue>
+    <customValue>
+        <fullName>Buriat</fullName>
+        <default>false</default>
+        <label>Buriat</label>
+    </customValue>
+    <customValue>
+        <fullName>Burmese</fullName>
+        <default>false</default>
+        <label>Burmese</label>
+    </customValue>
+    <customValue>
+        <fullName>Caddo</fullName>
+        <default>false</default>
+        <label>Caddo</label>
+    </customValue>
+    <customValue>
+        <fullName>Castilian</fullName>
+        <default>false</default>
+        <label>Castilian</label>
+    </customValue>
+    <customValue>
+        <fullName>Catalan</fullName>
+        <default>false</default>
+        <label>Catalan</label>
+    </customValue>
+    <customValue>
+        <fullName>Caucasian languages</fullName>
+        <default>false</default>
+        <label>Caucasian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Cebuano</fullName>
+        <default>false</default>
+        <label>Cebuano</label>
+    </customValue>
+    <customValue>
+        <fullName>Celtic languages</fullName>
+        <default>false</default>
+        <label>Celtic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Central American Indian languages</fullName>
+        <default>false</default>
+        <label>Central American Indian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Central Khmer</fullName>
+        <default>false</default>
+        <label>Central Khmer</label>
+    </customValue>
+    <customValue>
+        <fullName>Chagatai</fullName>
+        <default>false</default>
+        <label>Chagatai</label>
+    </customValue>
+    <customValue>
+        <fullName>Chamic languages</fullName>
+        <default>false</default>
+        <label>Chamic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Chamorro</fullName>
+        <default>false</default>
+        <label>Chamorro</label>
+    </customValue>
+    <customValue>
+        <fullName>Chechen</fullName>
+        <default>false</default>
+        <label>Chechen</label>
+    </customValue>
+    <customValue>
+        <fullName>Cherokee</fullName>
+        <default>false</default>
+        <label>Cherokee</label>
+    </customValue>
+    <customValue>
+        <fullName>Chewa</fullName>
+        <default>false</default>
+        <label>Chewa</label>
+    </customValue>
+    <customValue>
+        <fullName>Cheyenne</fullName>
+        <default>false</default>
+        <label>Cheyenne</label>
+    </customValue>
+    <customValue>
+        <fullName>Chibcha</fullName>
+        <default>false</default>
+        <label>Chibcha</label>
+    </customValue>
+    <customValue>
+        <fullName>Chichewa</fullName>
+        <default>false</default>
+        <label>Chichewa</label>
+    </customValue>
+    <customValue>
+        <fullName>Chinese</fullName>
+        <default>false</default>
+        <label>Chinese</label>
+    </customValue>
+    <customValue>
+        <fullName>Chinook jargon</fullName>
+        <default>false</default>
+        <label>Chinook jargon</label>
+    </customValue>
+    <customValue>
+        <fullName>Chipewyan</fullName>
+        <default>false</default>
+        <label>Chipewyan</label>
+    </customValue>
+    <customValue>
+        <fullName>Choctaw</fullName>
+        <default>false</default>
+        <label>Choctaw</label>
+    </customValue>
+    <customValue>
+        <fullName>Chuang</fullName>
+        <default>false</default>
+        <label>Chuang</label>
+    </customValue>
+    <customValue>
+        <fullName>Church Slavic</fullName>
+        <default>false</default>
+        <label>Church Slavic</label>
+    </customValue>
+    <customValue>
+        <fullName>Church Slavonic</fullName>
+        <default>false</default>
+        <label>Church Slavonic</label>
+    </customValue>
+    <customValue>
+        <fullName>Chuukese</fullName>
+        <default>false</default>
+        <label>Chuukese</label>
+    </customValue>
+    <customValue>
+        <fullName>Chuvash</fullName>
+        <default>false</default>
+        <label>Chuvash</label>
+    </customValue>
+    <customValue>
+        <fullName>Classical Nepal Bhasa</fullName>
+        <default>false</default>
+        <label>Classical Nepal Bhasa</label>
+    </customValue>
+    <customValue>
+        <fullName>Classical Newari</fullName>
+        <default>false</default>
+        <label>Classical Newari</label>
+    </customValue>
+    <customValue>
+        <fullName>Classical Syriac</fullName>
+        <default>false</default>
+        <label>Classical Syriac</label>
+    </customValue>
+    <customValue>
+        <fullName>Cook Islands Maori</fullName>
+        <default>false</default>
+        <label>Cook Islands Maori</label>
+    </customValue>
+    <customValue>
+        <fullName>Coptic</fullName>
+        <default>false</default>
+        <label>Coptic</label>
+    </customValue>
+    <customValue>
+        <fullName>Cornish</fullName>
+        <default>false</default>
+        <label>Cornish</label>
+    </customValue>
+    <customValue>
+        <fullName>Corsican</fullName>
+        <default>false</default>
+        <label>Corsican</label>
+    </customValue>
+    <customValue>
+        <fullName>Cree</fullName>
+        <default>false</default>
+        <label>Cree</label>
+    </customValue>
+    <customValue>
+        <fullName>Creek</fullName>
+        <default>false</default>
+        <label>Creek</label>
+    </customValue>
+    <customValue>
+        <fullName>Creoles and pidgins</fullName>
+        <default>false</default>
+        <label>Creoles and pidgins</label>
+    </customValue>
+    <customValue>
+        <fullName>Creoles and pidgins, English based</fullName>
+        <default>false</default>
+        <label>Creoles and pidgins, English based</label>
+    </customValue>
+    <customValue>
+        <fullName>Creoles and pidgins, French-based</fullName>
+        <default>false</default>
+        <label>Creoles and pidgins, French-based</label>
+    </customValue>
+    <customValue>
+        <fullName>Creoles and pidgins, Portuguese-based</fullName>
+        <default>false</default>
+        <label>Creoles and pidgins, Portuguese-based</label>
+    </customValue>
+    <customValue>
+        <fullName>Crimean Tatar</fullName>
+        <default>false</default>
+        <label>Crimean Tatar</label>
+    </customValue>
+    <customValue>
+        <fullName>Crimean Turkish</fullName>
+        <default>false</default>
+        <label>Crimean Turkish</label>
+    </customValue>
+    <customValue>
+        <fullName>Croatian</fullName>
+        <default>false</default>
+        <label>Croatian</label>
+    </customValue>
+    <customValue>
+        <fullName>Cushitic languages</fullName>
+        <default>false</default>
+        <label>Cushitic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Czech</fullName>
+        <default>false</default>
+        <label>Czech</label>
+    </customValue>
+    <customValue>
+        <fullName>Dakota</fullName>
+        <default>false</default>
+        <label>Dakota</label>
+    </customValue>
+    <customValue>
+        <fullName>Danish</fullName>
+        <default>false</default>
+        <label>Danish</label>
+    </customValue>
+    <customValue>
+        <fullName>Dargwa</fullName>
+        <default>false</default>
+        <label>Dargwa</label>
+    </customValue>
+    <customValue>
+        <fullName>Delaware</fullName>
+        <default>false</default>
+        <label>Delaware</label>
+    </customValue>
+    <customValue>
+        <fullName>Dene Suline</fullName>
+        <default>false</default>
+        <label>Dene Suline</label>
+    </customValue>
+    <customValue>
+        <fullName>Dhivehi</fullName>
+        <default>false</default>
+        <label>Dhivehi</label>
+    </customValue>
+    <customValue>
+        <fullName>Dimili</fullName>
+        <default>false</default>
+        <label>Dimili</label>
+    </customValue>
+    <customValue>
+        <fullName>Dimli</fullName>
+        <default>false</default>
+        <label>Dimli</label>
+    </customValue>
+    <customValue>
+        <fullName>Dinka</fullName>
+        <default>false</default>
+        <label>Dinka</label>
+    </customValue>
+    <customValue>
+        <fullName>Divehi</fullName>
+        <default>false</default>
+        <label>Divehi</label>
+    </customValue>
+    <customValue>
+        <fullName>Dogri</fullName>
+        <default>false</default>
+        <label>Dogri</label>
+    </customValue>
+    <customValue>
+        <fullName>Dogrib</fullName>
+        <default>false</default>
+        <label>Dogrib</label>
+    </customValue>
+    <customValue>
+        <fullName>Dravidian languages</fullName>
+        <default>false</default>
+        <label>Dravidian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Duala</fullName>
+        <default>false</default>
+        <label>Duala</label>
+    </customValue>
+    <customValue>
+        <fullName>Dutch</fullName>
+        <default>false</default>
+        <label>Dutch</label>
+    </customValue>
+    <customValue>
+        <fullName>Dutch, Middle (ca.1050-1350)</fullName>
+        <default>false</default>
+        <label>Dutch, Middle (ca.1050-1350)</label>
+    </customValue>
+    <customValue>
+        <fullName>Dyula</fullName>
+        <default>false</default>
+        <label>Dyula</label>
+    </customValue>
+    <customValue>
+        <fullName>Dzongkha</fullName>
+        <default>false</default>
+        <label>Dzongkha</label>
+    </customValue>
+    <customValue>
+        <fullName>Eastern Frisian</fullName>
+        <default>false</default>
+        <label>Eastern Frisian</label>
+    </customValue>
+    <customValue>
+        <fullName>Edo</fullName>
+        <default>false</default>
+        <label>Edo</label>
+    </customValue>
+    <customValue>
+        <fullName>Efik</fullName>
+        <default>false</default>
+        <label>Efik</label>
+    </customValue>
+    <customValue>
+        <fullName>Egyptian (Ancient)</fullName>
+        <default>false</default>
+        <label>Egyptian (Ancient)</label>
+    </customValue>
+    <customValue>
+        <fullName>Ekajuk</fullName>
+        <default>false</default>
+        <label>Ekajuk</label>
+    </customValue>
+    <customValue>
+        <fullName>Elamite</fullName>
+        <default>false</default>
+        <label>Elamite</label>
+    </customValue>
+    <customValue>
+        <fullName>English</fullName>
+        <default>false</default>
+        <label>English</label>
+    </customValue>
+    <customValue>
+        <fullName>English, Middle (1100-1500)</fullName>
+        <default>false</default>
+        <label>English, Middle (1100-1500)</label>
+    </customValue>
+    <customValue>
+        <fullName>English, Old (ca.450-1100)</fullName>
+        <default>false</default>
+        <label>English, Old (ca.450-1100)</label>
+    </customValue>
+    <customValue>
+        <fullName>Erzya</fullName>
+        <default>false</default>
+        <label>Erzya</label>
+    </customValue>
+    <customValue>
+        <fullName>Esperanto</fullName>
+        <default>false</default>
+        <label>Esperanto</label>
+    </customValue>
+    <customValue>
+        <fullName>Estonian</fullName>
+        <default>false</default>
+        <label>Estonian</label>
+    </customValue>
+    <customValue>
+        <fullName>Ewe</fullName>
+        <default>false</default>
+        <label>Ewe</label>
+    </customValue>
+    <customValue>
+        <fullName>Ewondo</fullName>
+        <default>false</default>
+        <label>Ewondo</label>
+    </customValue>
+    <customValue>
+        <fullName>Fang</fullName>
+        <default>false</default>
+        <label>Fang</label>
+    </customValue>
+    <customValue>
+        <fullName>Fanti</fullName>
+        <default>false</default>
+        <label>Fanti</label>
+    </customValue>
+    <customValue>
+        <fullName>Faroese</fullName>
+        <default>false</default>
+        <label>Faroese</label>
+    </customValue>
+    <customValue>
+        <fullName>Fijian</fullName>
+        <default>false</default>
+        <label>Fijian</label>
+    </customValue>
+    <customValue>
+        <fullName>Filipino</fullName>
+        <default>false</default>
+        <label>Filipino</label>
+    </customValue>
+    <customValue>
+        <fullName>Finnish</fullName>
+        <default>false</default>
+        <label>Finnish</label>
+    </customValue>
+    <customValue>
+        <fullName>Finno-Ugrian languages</fullName>
+        <default>false</default>
+        <label>Finno-Ugrian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Flemish</fullName>
+        <default>false</default>
+        <label>Flemish</label>
+    </customValue>
+    <customValue>
+        <fullName>Fon</fullName>
+        <default>false</default>
+        <label>Fon</label>
+    </customValue>
+    <customValue>
+        <fullName>French</fullName>
+        <default>false</default>
+        <label>French</label>
+    </customValue>
+    <customValue>
+        <fullName>French, Middle (ca.1400-1600)</fullName>
+        <default>false</default>
+        <label>French, Middle (ca.1400-1600)</label>
+    </customValue>
+    <customValue>
+        <fullName>French, Old (842-ca.1400)</fullName>
+        <default>false</default>
+        <label>French, Old (842-ca.1400)</label>
+    </customValue>
+    <customValue>
+        <fullName>Friulian</fullName>
+        <default>false</default>
+        <label>Friulian</label>
+    </customValue>
+    <customValue>
+        <fullName>Fulah</fullName>
+        <default>false</default>
+        <label>Fulah</label>
+    </customValue>
+    <customValue>
+        <fullName>Ga</fullName>
+        <default>false</default>
+        <label>Ga</label>
+    </customValue>
+    <customValue>
+        <fullName>Gaelic</fullName>
+        <default>false</default>
+        <label>Gaelic</label>
+    </customValue>
+    <customValue>
+        <fullName>Galibi Carib</fullName>
+        <default>false</default>
+        <label>Galibi Carib</label>
+    </customValue>
+    <customValue>
+        <fullName>Galician</fullName>
+        <default>false</default>
+        <label>Galician</label>
+    </customValue>
+    <customValue>
+        <fullName>Ganda</fullName>
+        <default>false</default>
+        <label>Ganda</label>
+    </customValue>
+    <customValue>
+        <fullName>Gayo</fullName>
+        <default>false</default>
+        <label>Gayo</label>
+    </customValue>
+    <customValue>
+        <fullName>Gbaya</fullName>
+        <default>false</default>
+        <label>Gbaya</label>
+    </customValue>
+    <customValue>
+        <fullName>Geez</fullName>
+        <default>false</default>
+        <label>Geez</label>
+    </customValue>
+    <customValue>
+        <fullName>Georgian</fullName>
+        <default>false</default>
+        <label>Georgian</label>
+    </customValue>
+    <customValue>
+        <fullName>German</fullName>
+        <default>false</default>
+        <label>German</label>
+    </customValue>
+    <customValue>
+        <fullName>German, Low</fullName>
+        <default>false</default>
+        <label>German, Low</label>
+    </customValue>
+    <customValue>
+        <fullName>German, Middle High (ca.1050-1500)</fullName>
+        <default>false</default>
+        <label>German, Middle High (ca.1050-1500)</label>
+    </customValue>
+    <customValue>
+        <fullName>German, Old High (ca.750-1050)</fullName>
+        <default>false</default>
+        <label>German, Old High (ca.750-1050)</label>
+    </customValue>
+    <customValue>
+        <fullName>Germanic languages</fullName>
+        <default>false</default>
+        <label>Germanic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Gikuyu</fullName>
+        <default>false</default>
+        <label>Gikuyu</label>
+    </customValue>
+    <customValue>
+        <fullName>Gilbertese</fullName>
+        <default>false</default>
+        <label>Gilbertese</label>
+    </customValue>
+    <customValue>
+        <fullName>Gondi</fullName>
+        <default>false</default>
+        <label>Gondi</label>
+    </customValue>
+    <customValue>
+        <fullName>Gorontalo</fullName>
+        <default>false</default>
+        <label>Gorontalo</label>
+    </customValue>
+    <customValue>
+        <fullName>Gothic</fullName>
+        <default>false</default>
+        <label>Gothic</label>
+    </customValue>
+    <customValue>
+        <fullName>Grebo</fullName>
+        <default>false</default>
+        <label>Grebo</label>
+    </customValue>
+    <customValue>
+        <fullName>Greek, Ancient (to 1453)</fullName>
+        <default>false</default>
+        <label>Greek, Ancient (to 1453)</label>
+    </customValue>
+    <customValue>
+        <fullName>Greek, Modern (1453-)</fullName>
+        <default>false</default>
+        <label>Greek, Modern (1453-)</label>
+    </customValue>
+    <customValue>
+        <fullName>Greenlandic</fullName>
+        <default>false</default>
+        <label>Greenlandic</label>
+    </customValue>
+    <customValue>
+        <fullName>Guarani</fullName>
+        <default>false</default>
+        <label>Guarani</label>
+    </customValue>
+    <customValue>
+        <fullName>Gujarati</fullName>
+        <default>false</default>
+        <label>Gujarati</label>
+    </customValue>
+    <customValue>
+        <fullName>Gwich&apos;in</fullName>
+        <default>false</default>
+        <label>Gwich&apos;in</label>
+    </customValue>
+    <customValue>
+        <fullName>Haida</fullName>
+        <default>false</default>
+        <label>Haida</label>
+    </customValue>
+    <customValue>
+        <fullName>Haitian</fullName>
+        <default>false</default>
+        <label>Haitian</label>
+    </customValue>
+    <customValue>
+        <fullName>Haitian Creole</fullName>
+        <default>false</default>
+        <label>Haitian Creole</label>
+    </customValue>
+    <customValue>
+        <fullName>Hausa</fullName>
+        <default>false</default>
+        <label>Hausa</label>
+    </customValue>
+    <customValue>
+        <fullName>Hawaiian</fullName>
+        <default>false</default>
+        <label>Hawaiian</label>
+    </customValue>
+    <customValue>
+        <fullName>Hebrew</fullName>
+        <default>false</default>
+        <label>Hebrew</label>
+    </customValue>
+    <customValue>
+        <fullName>Herero</fullName>
+        <default>false</default>
+        <label>Herero</label>
+    </customValue>
+    <customValue>
+        <fullName>Hiligaynon</fullName>
+        <default>false</default>
+        <label>Hiligaynon</label>
+    </customValue>
+    <customValue>
+        <fullName>Himachali languages</fullName>
+        <default>false</default>
+        <label>Himachali languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Hindi</fullName>
+        <default>false</default>
+        <label>Hindi</label>
+    </customValue>
+    <customValue>
+        <fullName>Hiri Motu</fullName>
+        <default>false</default>
+        <label>Hiri Motu</label>
+    </customValue>
+    <customValue>
+        <fullName>Hittite</fullName>
+        <default>false</default>
+        <label>Hittite</label>
+    </customValue>
+    <customValue>
+        <fullName>Hmong</fullName>
+        <default>false</default>
+        <label>Hmong</label>
+    </customValue>
+    <customValue>
+        <fullName>Hungarian</fullName>
+        <default>false</default>
+        <label>Hungarian</label>
+    </customValue>
+    <customValue>
+        <fullName>Hupa</fullName>
+        <default>false</default>
+        <label>Hupa</label>
+    </customValue>
+    <customValue>
+        <fullName>Iban</fullName>
+        <default>false</default>
+        <label>Iban</label>
+    </customValue>
+    <customValue>
+        <fullName>Icelandic</fullName>
+        <default>false</default>
+        <label>Icelandic</label>
+    </customValue>
+    <customValue>
+        <fullName>Ido</fullName>
+        <default>false</default>
+        <label>Ido</label>
+    </customValue>
+    <customValue>
+        <fullName>Igbo</fullName>
+        <default>false</default>
+        <label>Igbo</label>
+    </customValue>
+    <customValue>
+        <fullName>Ijo languages</fullName>
+        <default>false</default>
+        <label>Ijo languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Iloko</fullName>
+        <default>false</default>
+        <label>Iloko</label>
+    </customValue>
+    <customValue>
+        <fullName>Imperial Aramaic (700-300 BCE)</fullName>
+        <default>false</default>
+        <label>Imperial Aramaic (700-300 BCE)</label>
+    </customValue>
+    <customValue>
+        <fullName>Inari Sami</fullName>
+        <default>false</default>
+        <label>Inari Sami</label>
+    </customValue>
+    <customValue>
+        <fullName>Indic languages</fullName>
+        <default>false</default>
+        <label>Indic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Indo-European languages</fullName>
+        <default>false</default>
+        <label>Indo-European languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Indonesian</fullName>
+        <default>false</default>
+        <label>Indonesian</label>
+    </customValue>
+    <customValue>
+        <fullName>Ingush</fullName>
+        <default>false</default>
+        <label>Ingush</label>
+    </customValue>
+    <customValue>
+        <fullName>Interlingua (International Auxiliary Language Association)</fullName>
+        <default>false</default>
+        <label>Interlingua (International Auxiliary Language Association)</label>
+    </customValue>
+    <customValue>
+        <fullName>Interlingue</fullName>
+        <default>false</default>
+        <label>Interlingue</label>
+    </customValue>
+    <customValue>
+        <fullName>Inuktitut</fullName>
+        <default>false</default>
+        <label>Inuktitut</label>
+    </customValue>
+    <customValue>
+        <fullName>Inupiaq</fullName>
+        <default>false</default>
+        <label>Inupiaq</label>
+    </customValue>
+    <customValue>
+        <fullName>Iranian languages</fullName>
+        <default>false</default>
+        <label>Iranian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Irish</fullName>
+        <default>false</default>
+        <label>Irish</label>
+    </customValue>
+    <customValue>
+        <fullName>Irish, Middle (900-1200)</fullName>
+        <default>false</default>
+        <label>Irish, Middle (900-1200)</label>
+    </customValue>
+    <customValue>
+        <fullName>Irish, Old (to 900)</fullName>
+        <default>false</default>
+        <label>Irish, Old (to 900)</label>
+    </customValue>
+    <customValue>
+        <fullName>Iroquoian languages</fullName>
+        <default>false</default>
+        <label>Iroquoian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Italian</fullName>
+        <default>false</default>
+        <label>Italian</label>
+    </customValue>
+    <customValue>
+        <fullName>Japanese</fullName>
+        <default>false</default>
+        <label>Japanese</label>
+    </customValue>
+    <customValue>
+        <fullName>Javanese</fullName>
+        <default>false</default>
+        <label>Javanese</label>
+    </customValue>
+    <customValue>
+        <fullName>Jingpho</fullName>
+        <default>false</default>
+        <label>Jingpho</label>
+    </customValue>
+    <customValue>
+        <fullName>Judeo-Arabic</fullName>
+        <default>false</default>
+        <label>Judeo-Arabic</label>
+    </customValue>
+    <customValue>
+        <fullName>Judeo-Persian</fullName>
+        <default>false</default>
+        <label>Judeo-Persian</label>
+    </customValue>
+    <customValue>
+        <fullName>Kabardian</fullName>
+        <default>false</default>
+        <label>Kabardian</label>
+    </customValue>
+    <customValue>
+        <fullName>Kabyle</fullName>
+        <default>false</default>
+        <label>Kabyle</label>
+    </customValue>
+    <customValue>
+        <fullName>Kachin</fullName>
+        <default>false</default>
+        <label>Kachin</label>
+    </customValue>
+    <customValue>
+        <fullName>Kalaallisut</fullName>
+        <default>false</default>
+        <label>Kalaallisut</label>
+    </customValue>
+    <customValue>
+        <fullName>Kalmyk</fullName>
+        <default>false</default>
+        <label>Kalmyk</label>
+    </customValue>
+    <customValue>
+        <fullName>Kamba</fullName>
+        <default>false</default>
+        <label>Kamba</label>
+    </customValue>
+    <customValue>
+        <fullName>Kannada</fullName>
+        <default>false</default>
+        <label>Kannada</label>
+    </customValue>
+    <customValue>
+        <fullName>Kanuri</fullName>
+        <default>false</default>
+        <label>Kanuri</label>
+    </customValue>
+    <customValue>
+        <fullName>Kapampangan</fullName>
+        <default>false</default>
+        <label>Kapampangan</label>
+    </customValue>
+    <customValue>
+        <fullName>Karachay-Balkar</fullName>
+        <default>false</default>
+        <label>Karachay-Balkar</label>
+    </customValue>
+    <customValue>
+        <fullName>Kara-Kalpak</fullName>
+        <default>false</default>
+        <label>Kara-Kalpak</label>
+    </customValue>
+    <customValue>
+        <fullName>Karelian</fullName>
+        <default>false</default>
+        <label>Karelian</label>
+    </customValue>
+    <customValue>
+        <fullName>Karen languages</fullName>
+        <default>false</default>
+        <label>Karen languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Kashmiri</fullName>
+        <default>false</default>
+        <label>Kashmiri</label>
+    </customValue>
+    <customValue>
+        <fullName>Kashubian</fullName>
+        <default>false</default>
+        <label>Kashubian</label>
+    </customValue>
+    <customValue>
+        <fullName>Kawi</fullName>
+        <default>false</default>
+        <label>Kawi</label>
+    </customValue>
+    <customValue>
+        <fullName>Kazakh</fullName>
+        <default>false</default>
+        <label>Kazakh</label>
+    </customValue>
+    <customValue>
+        <fullName>Khasi</fullName>
+        <default>false</default>
+        <label>Khasi</label>
+    </customValue>
+    <customValue>
+        <fullName>Khoisan languages</fullName>
+        <default>false</default>
+        <label>Khoisan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Khotanese</fullName>
+        <default>false</default>
+        <label>Khotanese</label>
+    </customValue>
+    <customValue>
+        <fullName>Kikuyu</fullName>
+        <default>false</default>
+        <label>Kikuyu</label>
+    </customValue>
+    <customValue>
+        <fullName>Kimbundu</fullName>
+        <default>false</default>
+        <label>Kimbundu</label>
+    </customValue>
+    <customValue>
+        <fullName>Kinyarwanda</fullName>
+        <default>false</default>
+        <label>Kinyarwanda</label>
+    </customValue>
+    <customValue>
+        <fullName>Kirdki</fullName>
+        <default>false</default>
+        <label>Kirdki</label>
+    </customValue>
+    <customValue>
+        <fullName>Kirghiz</fullName>
+        <default>false</default>
+        <label>Kirghiz</label>
+    </customValue>
+    <customValue>
+        <fullName>Kirmanjki</fullName>
+        <default>false</default>
+        <label>Kirmanjki</label>
+    </customValue>
+    <customValue>
+        <fullName>Klingon</fullName>
+        <default>false</default>
+        <label>Klingon</label>
+    </customValue>
+    <customValue>
+        <fullName>Komi</fullName>
+        <default>false</default>
+        <label>Komi</label>
+    </customValue>
+    <customValue>
+        <fullName>Kongo</fullName>
+        <default>false</default>
+        <label>Kongo</label>
+    </customValue>
+    <customValue>
+        <fullName>Konkani</fullName>
+        <default>false</default>
+        <label>Konkani</label>
+    </customValue>
+    <customValue>
+        <fullName>Korean</fullName>
+        <default>false</default>
+        <label>Korean</label>
+    </customValue>
+    <customValue>
+        <fullName>Kosraean</fullName>
+        <default>false</default>
+        <label>Kosraean</label>
+    </customValue>
+    <customValue>
+        <fullName>Kpelle</fullName>
+        <default>false</default>
+        <label>Kpelle</label>
+    </customValue>
+    <customValue>
+        <fullName>Kru languages</fullName>
+        <default>false</default>
+        <label>Kru languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Kuanyama</fullName>
+        <default>false</default>
+        <label>Kuanyama</label>
+    </customValue>
+    <customValue>
+        <fullName>Kumyk</fullName>
+        <default>false</default>
+        <label>Kumyk</label>
+    </customValue>
+    <customValue>
+        <fullName>Kurdish</fullName>
+        <default>false</default>
+        <label>Kurdish</label>
+    </customValue>
+    <customValue>
+        <fullName>Kurukh</fullName>
+        <default>false</default>
+        <label>Kurukh</label>
+    </customValue>
+    <customValue>
+        <fullName>Kutenai</fullName>
+        <default>false</default>
+        <label>Kutenai</label>
+    </customValue>
+    <customValue>
+        <fullName>Kwanyama</fullName>
+        <default>false</default>
+        <label>Kwanyama</label>
+    </customValue>
+    <customValue>
+        <fullName>Kyrgyz</fullName>
+        <default>false</default>
+        <label>Kyrgyz</label>
+    </customValue>
+    <customValue>
+        <fullName>Ladino</fullName>
+        <default>false</default>
+        <label>Ladino</label>
+    </customValue>
+    <customValue>
+        <fullName>Lahnda</fullName>
+        <default>false</default>
+        <label>Lahnda</label>
+    </customValue>
+    <customValue>
+        <fullName>Lamba</fullName>
+        <default>false</default>
+        <label>Lamba</label>
+    </customValue>
+    <customValue>
+        <fullName>Land Dayak languages</fullName>
+        <default>false</default>
+        <label>Land Dayak languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Lao</fullName>
+        <default>false</default>
+        <label>Lao</label>
+    </customValue>
+    <customValue>
+        <fullName>Latin</fullName>
+        <default>false</default>
+        <label>Latin</label>
+    </customValue>
+    <customValue>
+        <fullName>Latvian</fullName>
+        <default>false</default>
+        <label>Latvian</label>
+    </customValue>
+    <customValue>
+        <fullName>Leonese</fullName>
+        <default>false</default>
+        <label>Leonese</label>
+    </customValue>
+    <customValue>
+        <fullName>Letzeburgesch</fullName>
+        <default>false</default>
+        <label>Letzeburgesch</label>
+    </customValue>
+    <customValue>
+        <fullName>Lezghian</fullName>
+        <default>false</default>
+        <label>Lezghian</label>
+    </customValue>
+    <customValue>
+        <fullName>Limburgan</fullName>
+        <default>false</default>
+        <label>Limburgan</label>
+    </customValue>
+    <customValue>
+        <fullName>Limburger</fullName>
+        <default>false</default>
+        <label>Limburger</label>
+    </customValue>
+    <customValue>
+        <fullName>Limburgish</fullName>
+        <default>false</default>
+        <label>Limburgish</label>
+    </customValue>
+    <customValue>
+        <fullName>Lingala</fullName>
+        <default>false</default>
+        <label>Lingala</label>
+    </customValue>
+    <customValue>
+        <fullName>Lithuanian</fullName>
+        <default>false</default>
+        <label>Lithuanian</label>
+    </customValue>
+    <customValue>
+        <fullName>Lojban</fullName>
+        <default>false</default>
+        <label>Lojban</label>
+    </customValue>
+    <customValue>
+        <fullName>Lower Sorbian</fullName>
+        <default>false</default>
+        <label>Lower Sorbian</label>
+    </customValue>
+    <customValue>
+        <fullName>Low German</fullName>
+        <default>false</default>
+        <label>Low German</label>
+    </customValue>
+    <customValue>
+        <fullName>Low Saxon</fullName>
+        <default>false</default>
+        <label>Low Saxon</label>
+    </customValue>
+    <customValue>
+        <fullName>Lozi</fullName>
+        <default>false</default>
+        <label>Lozi</label>
+    </customValue>
+    <customValue>
+        <fullName>Luba-Katanga</fullName>
+        <default>false</default>
+        <label>Luba-Katanga</label>
+    </customValue>
+    <customValue>
+        <fullName>Luba-Lulua</fullName>
+        <default>false</default>
+        <label>Luba-Lulua</label>
+    </customValue>
+    <customValue>
+        <fullName>Luiseno</fullName>
+        <default>false</default>
+        <label>Luiseno</label>
+    </customValue>
+    <customValue>
+        <fullName>Lule Sami</fullName>
+        <default>false</default>
+        <label>Lule Sami</label>
+    </customValue>
+    <customValue>
+        <fullName>Lunda</fullName>
+        <default>false</default>
+        <label>Lunda</label>
+    </customValue>
+    <customValue>
+        <fullName>Luo (Kenya and Tanzania)</fullName>
+        <default>false</default>
+        <label>Luo (Kenya and Tanzania)</label>
+    </customValue>
+    <customValue>
+        <fullName>Lushai</fullName>
+        <default>false</default>
+        <label>Lushai</label>
+    </customValue>
+    <customValue>
+        <fullName>Luxembourgish</fullName>
+        <default>false</default>
+        <label>Luxembourgish</label>
+    </customValue>
+    <customValue>
+        <fullName>Macedonian</fullName>
+        <default>false</default>
+        <label>Macedonian</label>
+    </customValue>
+    <customValue>
+        <fullName>Macedo-Romanian</fullName>
+        <default>false</default>
+        <label>Macedo-Romanian</label>
+    </customValue>
+    <customValue>
+        <fullName>Madurese</fullName>
+        <default>false</default>
+        <label>Madurese</label>
+    </customValue>
+    <customValue>
+        <fullName>Magahi</fullName>
+        <default>false</default>
+        <label>Magahi</label>
+    </customValue>
+    <customValue>
+        <fullName>Maithili</fullName>
+        <default>false</default>
+        <label>Maithili</label>
+    </customValue>
+    <customValue>
+        <fullName>Makasar</fullName>
+        <default>false</default>
+        <label>Makasar</label>
+    </customValue>
+    <customValue>
+        <fullName>Malagasy</fullName>
+        <default>false</default>
+        <label>Malagasy</label>
+    </customValue>
+    <customValue>
+        <fullName>Malay</fullName>
+        <default>false</default>
+        <label>Malay</label>
+    </customValue>
+    <customValue>
+        <fullName>Malayalam</fullName>
+        <default>false</default>
+        <label>Malayalam</label>
+    </customValue>
+    <customValue>
+        <fullName>Maldivian</fullName>
+        <default>false</default>
+        <label>Maldivian</label>
+    </customValue>
+    <customValue>
+        <fullName>Maltese</fullName>
+        <default>false</default>
+        <label>Maltese</label>
+    </customValue>
+    <customValue>
+        <fullName>Manchu</fullName>
+        <default>false</default>
+        <label>Manchu</label>
+    </customValue>
+    <customValue>
+        <fullName>Mandar</fullName>
+        <default>false</default>
+        <label>Mandar</label>
+    </customValue>
+    <customValue>
+        <fullName>Mandingo</fullName>
+        <default>false</default>
+        <label>Mandingo</label>
+    </customValue>
+    <customValue>
+        <fullName>Manipuri</fullName>
+        <default>false</default>
+        <label>Manipuri</label>
+    </customValue>
+    <customValue>
+        <fullName>Manobo languages</fullName>
+        <default>false</default>
+        <label>Manobo languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Manx</fullName>
+        <default>false</default>
+        <label>Manx</label>
+    </customValue>
+    <customValue>
+        <fullName>Maori</fullName>
+        <default>false</default>
+        <label>Maori</label>
+    </customValue>
+    <customValue>
+        <fullName>Mapuche</fullName>
+        <default>false</default>
+        <label>Mapuche</label>
+    </customValue>
+    <customValue>
+        <fullName>Mapudungun</fullName>
+        <default>false</default>
+        <label>Mapudungun</label>
+    </customValue>
+    <customValue>
+        <fullName>Marathi</fullName>
+        <default>false</default>
+        <label>Marathi</label>
+    </customValue>
+    <customValue>
+        <fullName>Mari</fullName>
+        <default>false</default>
+        <label>Mari</label>
+    </customValue>
+    <customValue>
+        <fullName>Marshallese</fullName>
+        <default>false</default>
+        <label>Marshallese</label>
+    </customValue>
+    <customValue>
+        <fullName>Marwari</fullName>
+        <default>false</default>
+        <label>Marwari</label>
+    </customValue>
+    <customValue>
+        <fullName>Masai</fullName>
+        <default>false</default>
+        <label>Masai</label>
+    </customValue>
+    <customValue>
+        <fullName>Mayan languages</fullName>
+        <default>false</default>
+        <label>Mayan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Mende</fullName>
+        <default>false</default>
+        <label>Mende</label>
+    </customValue>
+    <customValue>
+        <fullName>Mi&apos;kmaq</fullName>
+        <default>false</default>
+        <label>Mi&apos;kmaq</label>
+    </customValue>
+    <customValue>
+        <fullName>Micmac</fullName>
+        <default>false</default>
+        <label>Micmac</label>
+    </customValue>
+    <customValue>
+        <fullName>Minangkabau</fullName>
+        <default>false</default>
+        <label>Minangkabau</label>
+    </customValue>
+    <customValue>
+        <fullName>Mirandese</fullName>
+        <default>false</default>
+        <label>Mirandese</label>
+    </customValue>
+    <customValue>
+        <fullName>Mohawk</fullName>
+        <default>false</default>
+        <label>Mohawk</label>
+    </customValue>
+    <customValue>
+        <fullName>Moksha</fullName>
+        <default>false</default>
+        <label>Moksha</label>
+    </customValue>
+    <customValue>
+        <fullName>Moldavian</fullName>
+        <default>false</default>
+        <label>Moldavian</label>
+    </customValue>
+    <customValue>
+        <fullName>Moldovan</fullName>
+        <default>false</default>
+        <label>Moldovan</label>
+    </customValue>
+    <customValue>
+        <fullName>Mong</fullName>
+        <default>false</default>
+        <label>Mong</label>
+    </customValue>
+    <customValue>
+        <fullName>Mongo</fullName>
+        <default>false</default>
+        <label>Mongo</label>
+    </customValue>
+    <customValue>
+        <fullName>Mongolian</fullName>
+        <default>false</default>
+        <label>Mongolian</label>
+    </customValue>
+    <customValue>
+        <fullName>Mon-Khmer languages</fullName>
+        <default>false</default>
+        <label>Mon-Khmer languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Montenegrin</fullName>
+        <default>false</default>
+        <label>Montenegrin</label>
+    </customValue>
+    <customValue>
+        <fullName>Mossi</fullName>
+        <default>false</default>
+        <label>Mossi</label>
+    </customValue>
+    <customValue>
+        <fullName>Multiple languages</fullName>
+        <default>false</default>
+        <label>Multiple languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Munda languages</fullName>
+        <default>false</default>
+        <label>Munda languages</label>
+    </customValue>
+    <customValue>
+        <fullName>N&apos;Ko</fullName>
+        <default>false</default>
+        <label>N&apos;Ko</label>
+    </customValue>
+    <customValue>
+        <fullName>Nahuatl languages</fullName>
+        <default>false</default>
+        <label>Nahuatl languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Nauru</fullName>
+        <default>false</default>
+        <label>Nauru</label>
+    </customValue>
+    <customValue>
+        <fullName>Navaho</fullName>
+        <default>false</default>
+        <label>Navaho</label>
+    </customValue>
+    <customValue>
+        <fullName>Navajo</fullName>
+        <default>false</default>
+        <label>Navajo</label>
+    </customValue>
+    <customValue>
+        <fullName>Ndebele, North</fullName>
+        <default>false</default>
+        <label>Ndebele, North</label>
+    </customValue>
+    <customValue>
+        <fullName>Ndebele, South</fullName>
+        <default>false</default>
+        <label>Ndebele, South</label>
+    </customValue>
+    <customValue>
+        <fullName>Ndonga</fullName>
+        <default>false</default>
+        <label>Ndonga</label>
+    </customValue>
+    <customValue>
+        <fullName>Neapolitan</fullName>
+        <default>false</default>
+        <label>Neapolitan</label>
+    </customValue>
+    <customValue>
+        <fullName>Nepal Bhasa</fullName>
+        <default>false</default>
+        <label>Nepal Bhasa</label>
+    </customValue>
+    <customValue>
+        <fullName>Nepali</fullName>
+        <default>false</default>
+        <label>Nepali</label>
+    </customValue>
+    <customValue>
+        <fullName>Newari</fullName>
+        <default>false</default>
+        <label>Newari</label>
+    </customValue>
+    <customValue>
+        <fullName>Nias</fullName>
+        <default>false</default>
+        <label>Nias</label>
+    </customValue>
+    <customValue>
+        <fullName>Niger-Kordofanian languages</fullName>
+        <default>false</default>
+        <label>Niger-Kordofanian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Nilo-Saharan languages</fullName>
+        <default>false</default>
+        <label>Nilo-Saharan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Niuean</fullName>
+        <default>false</default>
+        <label>Niuean</label>
+    </customValue>
+    <customValue>
+        <fullName>Nogai</fullName>
+        <default>false</default>
+        <label>Nogai</label>
+    </customValue>
+    <customValue>
+        <fullName>No linguistic content</fullName>
+        <default>false</default>
+        <label>No linguistic content</label>
+    </customValue>
+    <customValue>
+        <fullName>Norse, Old</fullName>
+        <default>false</default>
+        <label>Norse, Old</label>
+    </customValue>
+    <customValue>
+        <fullName>North American Indian languages</fullName>
+        <default>false</default>
+        <label>North American Indian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Northern Frisian</fullName>
+        <default>false</default>
+        <label>Northern Frisian</label>
+    </customValue>
+    <customValue>
+        <fullName>Northern Sami</fullName>
+        <default>false</default>
+        <label>Northern Sami</label>
+    </customValue>
+    <customValue>
+        <fullName>Northern Sotho</fullName>
+        <default>false</default>
+        <label>Northern Sotho</label>
+    </customValue>
+    <customValue>
+        <fullName>North Ndebele</fullName>
+        <default>false</default>
+        <label>North Ndebele</label>
+    </customValue>
+    <customValue>
+        <fullName>Norwegian</fullName>
+        <default>false</default>
+        <label>Norwegian</label>
+    </customValue>
+    <customValue>
+        <fullName>Norwegian Bokmål</fullName>
+        <default>false</default>
+        <label>Norwegian Bokmål</label>
+    </customValue>
+    <customValue>
+        <fullName>Norwegian Nynorsk</fullName>
+        <default>false</default>
+        <label>Norwegian Nynorsk</label>
+    </customValue>
+    <customValue>
+        <fullName>Not applicable</fullName>
+        <default>false</default>
+        <label>Not applicable</label>
+    </customValue>
+    <customValue>
+        <fullName>Nubian languages</fullName>
+        <default>false</default>
+        <label>Nubian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuosu</fullName>
+        <default>false</default>
+        <label>Nuosu</label>
+    </customValue>
+    <customValue>
+        <fullName>Nyamwezi</fullName>
+        <default>false</default>
+        <label>Nyamwezi</label>
+    </customValue>
+    <customValue>
+        <fullName>Nyanja</fullName>
+        <default>false</default>
+        <label>Nyanja</label>
+    </customValue>
+    <customValue>
+        <fullName>Nyankole</fullName>
+        <default>false</default>
+        <label>Nyankole</label>
+    </customValue>
+    <customValue>
+        <fullName>Nynorsk, Norwegian</fullName>
+        <default>false</default>
+        <label>Nynorsk, Norwegian</label>
+    </customValue>
+    <customValue>
+        <fullName>Nyoro</fullName>
+        <default>false</default>
+        <label>Nyoro</label>
+    </customValue>
+    <customValue>
+        <fullName>Nzima</fullName>
+        <default>false</default>
+        <label>Nzima</label>
+    </customValue>
+    <customValue>
+        <fullName>Occidental</fullName>
+        <default>false</default>
+        <label>Occidental</label>
+    </customValue>
+    <customValue>
+        <fullName>Occitan, Old (to 1500)</fullName>
+        <default>false</default>
+        <label>Occitan, Old (to 1500)</label>
+    </customValue>
+    <customValue>
+        <fullName>Occitan (post 1500)</fullName>
+        <default>false</default>
+        <label>Occitan (post 1500)</label>
+    </customValue>
+    <customValue>
+        <fullName>Official Aramaic (700-300 BCE)</fullName>
+        <default>false</default>
+        <label>Official Aramaic (700-300 BCE)</label>
+    </customValue>
+    <customValue>
+        <fullName>Oirat</fullName>
+        <default>false</default>
+        <label>Oirat</label>
+    </customValue>
+    <customValue>
+        <fullName>Ojibwa</fullName>
+        <default>false</default>
+        <label>Ojibwa</label>
+    </customValue>
+    <customValue>
+        <fullName>Old Bulgarian</fullName>
+        <default>false</default>
+        <label>Old Bulgarian</label>
+    </customValue>
+    <customValue>
+        <fullName>Old Church Slavonic</fullName>
+        <default>false</default>
+        <label>Old Church Slavonic</label>
+    </customValue>
+    <customValue>
+        <fullName>Old Newari</fullName>
+        <default>false</default>
+        <label>Old Newari</label>
+    </customValue>
+    <customValue>
+        <fullName>Old Slavonic</fullName>
+        <default>false</default>
+        <label>Old Slavonic</label>
+    </customValue>
+    <customValue>
+        <fullName>Oriya</fullName>
+        <default>false</default>
+        <label>Oriya</label>
+    </customValue>
+    <customValue>
+        <fullName>Oromo</fullName>
+        <default>false</default>
+        <label>Oromo</label>
+    </customValue>
+    <customValue>
+        <fullName>Osage</fullName>
+        <default>false</default>
+        <label>Osage</label>
+    </customValue>
+    <customValue>
+        <fullName>Ossetian</fullName>
+        <default>false</default>
+        <label>Ossetian</label>
+    </customValue>
+    <customValue>
+        <fullName>Ossetic</fullName>
+        <default>false</default>
+        <label>Ossetic</label>
+    </customValue>
+    <customValue>
+        <fullName>Otomian languages</fullName>
+        <default>false</default>
+        <label>Otomian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Pahlavi</fullName>
+        <default>false</default>
+        <label>Pahlavi</label>
+    </customValue>
+    <customValue>
+        <fullName>Palauan</fullName>
+        <default>false</default>
+        <label>Palauan</label>
+    </customValue>
+    <customValue>
+        <fullName>Pali</fullName>
+        <default>false</default>
+        <label>Pali</label>
+    </customValue>
+    <customValue>
+        <fullName>Pampanga</fullName>
+        <default>false</default>
+        <label>Pampanga</label>
+    </customValue>
+    <customValue>
+        <fullName>Pangasinan</fullName>
+        <default>false</default>
+        <label>Pangasinan</label>
+    </customValue>
+    <customValue>
+        <fullName>Panjabi</fullName>
+        <default>false</default>
+        <label>Panjabi</label>
+    </customValue>
+    <customValue>
+        <fullName>Papiamento</fullName>
+        <default>false</default>
+        <label>Papiamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Papuan languages</fullName>
+        <default>false</default>
+        <label>Papuan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Pashto</fullName>
+        <default>false</default>
+        <label>Pashto</label>
+    </customValue>
+    <customValue>
+        <fullName>Pedi</fullName>
+        <default>false</default>
+        <label>Pedi</label>
+    </customValue>
+    <customValue>
+        <fullName>Persian</fullName>
+        <default>false</default>
+        <label>Persian</label>
+    </customValue>
+    <customValue>
+        <fullName>Persian, Old (ca.600-400 B.C.)</fullName>
+        <default>false</default>
+        <label>Persian, Old (ca.600-400 B.C.)</label>
+    </customValue>
+    <customValue>
+        <fullName>Philippine languages</fullName>
+        <default>false</default>
+        <label>Philippine languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Phoenician</fullName>
+        <default>false</default>
+        <label>Phoenician</label>
+    </customValue>
+    <customValue>
+        <fullName>Pilipino</fullName>
+        <default>false</default>
+        <label>Pilipino</label>
+    </customValue>
+    <customValue>
+        <fullName>Pohnpeian</fullName>
+        <default>false</default>
+        <label>Pohnpeian</label>
+    </customValue>
+    <customValue>
+        <fullName>Polish</fullName>
+        <default>false</default>
+        <label>Polish</label>
+    </customValue>
+    <customValue>
+        <fullName>Portuguese</fullName>
+        <default>false</default>
+        <label>Portuguese</label>
+    </customValue>
+    <customValue>
+        <fullName>Prakrit languages</fullName>
+        <default>false</default>
+        <label>Prakrit languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Provençal, Old (to 1500)</fullName>
+        <default>false</default>
+        <label>Provençal, Old (to 1500)</label>
+    </customValue>
+    <customValue>
+        <fullName>Punjabi</fullName>
+        <default>false</default>
+        <label>Punjabi</label>
+    </customValue>
+    <customValue>
+        <fullName>Pushto</fullName>
+        <default>false</default>
+        <label>Pushto</label>
+    </customValue>
+    <customValue>
+        <fullName>Quechua</fullName>
+        <default>false</default>
+        <label>Quechua</label>
+    </customValue>
+    <customValue>
+        <fullName>Rajasthani</fullName>
+        <default>false</default>
+        <label>Rajasthani</label>
+    </customValue>
+    <customValue>
+        <fullName>Rapanui</fullName>
+        <default>false</default>
+        <label>Rapanui</label>
+    </customValue>
+    <customValue>
+        <fullName>Rarotongan</fullName>
+        <default>false</default>
+        <label>Rarotongan</label>
+    </customValue>
+    <customValue>
+        <fullName>Reserved for local use</fullName>
+        <default>false</default>
+        <label>Reserved for local use</label>
+    </customValue>
+    <customValue>
+        <fullName>Romance languages</fullName>
+        <default>false</default>
+        <label>Romance languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Romanian</fullName>
+        <default>false</default>
+        <label>Romanian</label>
+    </customValue>
+    <customValue>
+        <fullName>Romansh</fullName>
+        <default>false</default>
+        <label>Romansh</label>
+    </customValue>
+    <customValue>
+        <fullName>Romany</fullName>
+        <default>false</default>
+        <label>Romany</label>
+    </customValue>
+    <customValue>
+        <fullName>Rundi</fullName>
+        <default>false</default>
+        <label>Rundi</label>
+    </customValue>
+    <customValue>
+        <fullName>Russian</fullName>
+        <default>false</default>
+        <label>Russian</label>
+    </customValue>
+    <customValue>
+        <fullName>Sakan</fullName>
+        <default>false</default>
+        <label>Sakan</label>
+    </customValue>
+    <customValue>
+        <fullName>Salishan languages</fullName>
+        <default>false</default>
+        <label>Salishan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Samaritan Aramaic</fullName>
+        <default>false</default>
+        <label>Samaritan Aramaic</label>
+    </customValue>
+    <customValue>
+        <fullName>Sami languages</fullName>
+        <default>false</default>
+        <label>Sami languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Samoan</fullName>
+        <default>false</default>
+        <label>Samoan</label>
+    </customValue>
+    <customValue>
+        <fullName>Sandawe</fullName>
+        <default>false</default>
+        <label>Sandawe</label>
+    </customValue>
+    <customValue>
+        <fullName>Sango</fullName>
+        <default>false</default>
+        <label>Sango</label>
+    </customValue>
+    <customValue>
+        <fullName>Sanskrit</fullName>
+        <default>false</default>
+        <label>Sanskrit</label>
+    </customValue>
+    <customValue>
+        <fullName>Santali</fullName>
+        <default>false</default>
+        <label>Santali</label>
+    </customValue>
+    <customValue>
+        <fullName>Sardinian</fullName>
+        <default>false</default>
+        <label>Sardinian</label>
+    </customValue>
+    <customValue>
+        <fullName>Sasak</fullName>
+        <default>false</default>
+        <label>Sasak</label>
+    </customValue>
+    <customValue>
+        <fullName>Saxon, Low</fullName>
+        <default>false</default>
+        <label>Saxon, Low</label>
+    </customValue>
+    <customValue>
+        <fullName>Scots</fullName>
+        <default>false</default>
+        <label>Scots</label>
+    </customValue>
+    <customValue>
+        <fullName>Scottish Gaelic</fullName>
+        <default>false</default>
+        <label>Scottish Gaelic</label>
+    </customValue>
+    <customValue>
+        <fullName>Selkup</fullName>
+        <default>false</default>
+        <label>Selkup</label>
+    </customValue>
+    <customValue>
+        <fullName>Semitic languages</fullName>
+        <default>false</default>
+        <label>Semitic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Sepedi</fullName>
+        <default>false</default>
+        <label>Sepedi</label>
+    </customValue>
+    <customValue>
+        <fullName>Serbian</fullName>
+        <default>false</default>
+        <label>Serbian</label>
+    </customValue>
+    <customValue>
+        <fullName>Serer</fullName>
+        <default>false</default>
+        <label>Serer</label>
+    </customValue>
+    <customValue>
+        <fullName>Shan</fullName>
+        <default>false</default>
+        <label>Shan</label>
+    </customValue>
+    <customValue>
+        <fullName>Shona</fullName>
+        <default>false</default>
+        <label>Shona</label>
+    </customValue>
+    <customValue>
+        <fullName>Sichuan Yi</fullName>
+        <default>false</default>
+        <label>Sichuan Yi</label>
+    </customValue>
+    <customValue>
+        <fullName>Sicilian</fullName>
+        <default>false</default>
+        <label>Sicilian</label>
+    </customValue>
+    <customValue>
+        <fullName>Sidamo</fullName>
+        <default>false</default>
+        <label>Sidamo</label>
+    </customValue>
+    <customValue>
+        <fullName>Sign Languages</fullName>
+        <default>false</default>
+        <label>Sign Languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Siksika</fullName>
+        <default>false</default>
+        <label>Siksika</label>
+    </customValue>
+    <customValue>
+        <fullName>Sindhi</fullName>
+        <default>false</default>
+        <label>Sindhi</label>
+    </customValue>
+    <customValue>
+        <fullName>Sinhala</fullName>
+        <default>false</default>
+        <label>Sinhala</label>
+    </customValue>
+    <customValue>
+        <fullName>Sinhalese</fullName>
+        <default>false</default>
+        <label>Sinhalese</label>
+    </customValue>
+    <customValue>
+        <fullName>Sino-Tibetan languages</fullName>
+        <default>false</default>
+        <label>Sino-Tibetan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Siouan languages</fullName>
+        <default>false</default>
+        <label>Siouan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Skolt Sami</fullName>
+        <default>false</default>
+        <label>Skolt Sami</label>
+    </customValue>
+    <customValue>
+        <fullName>Slave (Athapascan)</fullName>
+        <default>false</default>
+        <label>Slave (Athapascan)</label>
+    </customValue>
+    <customValue>
+        <fullName>Slavic languages</fullName>
+        <default>false</default>
+        <label>Slavic languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Slovak</fullName>
+        <default>false</default>
+        <label>Slovak</label>
+    </customValue>
+    <customValue>
+        <fullName>Slovenian</fullName>
+        <default>false</default>
+        <label>Slovenian</label>
+    </customValue>
+    <customValue>
+        <fullName>Sogdian</fullName>
+        <default>false</default>
+        <label>Sogdian</label>
+    </customValue>
+    <customValue>
+        <fullName>Somali</fullName>
+        <default>false</default>
+        <label>Somali</label>
+    </customValue>
+    <customValue>
+        <fullName>Songhai languages</fullName>
+        <default>false</default>
+        <label>Songhai languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Soninke</fullName>
+        <default>false</default>
+        <label>Soninke</label>
+    </customValue>
+    <customValue>
+        <fullName>Sorbian languages</fullName>
+        <default>false</default>
+        <label>Sorbian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Sotho, Northern</fullName>
+        <default>false</default>
+        <label>Sotho, Northern</label>
+    </customValue>
+    <customValue>
+        <fullName>Sotho, Southern</fullName>
+        <default>false</default>
+        <label>Sotho, Southern</label>
+    </customValue>
+    <customValue>
+        <fullName>South American Indian languages</fullName>
+        <default>false</default>
+        <label>South American Indian languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Southern Altai</fullName>
+        <default>false</default>
+        <label>Southern Altai</label>
+    </customValue>
+    <customValue>
+        <fullName>Southern Sami</fullName>
+        <default>false</default>
+        <label>Southern Sami</label>
+    </customValue>
+    <customValue>
+        <fullName>South Ndebele</fullName>
+        <default>false</default>
+        <label>South Ndebele</label>
+    </customValue>
+    <customValue>
+        <fullName>Spanish</fullName>
+        <default>false</default>
+        <label>Spanish</label>
+    </customValue>
+    <customValue>
+        <fullName>Sranan Tongo</fullName>
+        <default>false</default>
+        <label>Sranan Tongo</label>
+    </customValue>
+    <customValue>
+        <fullName>Standard Moroccan Tamazight</fullName>
+        <default>false</default>
+        <label>Standard Moroccan Tamazight</label>
+    </customValue>
+    <customValue>
+        <fullName>Sukuma</fullName>
+        <default>false</default>
+        <label>Sukuma</label>
+    </customValue>
+    <customValue>
+        <fullName>Sumerian</fullName>
+        <default>false</default>
+        <label>Sumerian</label>
+    </customValue>
+    <customValue>
+        <fullName>Sundanese</fullName>
+        <default>false</default>
+        <label>Sundanese</label>
+    </customValue>
+    <customValue>
+        <fullName>Susu</fullName>
+        <default>false</default>
+        <label>Susu</label>
+    </customValue>
+    <customValue>
+        <fullName>Swahili</fullName>
+        <default>false</default>
+        <label>Swahili</label>
+    </customValue>
+    <customValue>
+        <fullName>Swati</fullName>
+        <default>false</default>
+        <label>Swati</label>
+    </customValue>
+    <customValue>
+        <fullName>Swedish</fullName>
+        <default>false</default>
+        <label>Swedish</label>
+    </customValue>
+    <customValue>
+        <fullName>Swiss German</fullName>
+        <default>false</default>
+        <label>Swiss German</label>
+    </customValue>
+    <customValue>
+        <fullName>Syriac</fullName>
+        <default>false</default>
+        <label>Syriac</label>
+    </customValue>
+    <customValue>
+        <fullName>Tagalog</fullName>
+        <default>false</default>
+        <label>Tagalog</label>
+    </customValue>
+    <customValue>
+        <fullName>Tahitian</fullName>
+        <default>false</default>
+        <label>Tahitian</label>
+    </customValue>
+    <customValue>
+        <fullName>Tai languages</fullName>
+        <default>false</default>
+        <label>Tai languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Tajik</fullName>
+        <default>false</default>
+        <label>Tajik</label>
+    </customValue>
+    <customValue>
+        <fullName>Tamashek</fullName>
+        <default>false</default>
+        <label>Tamashek</label>
+    </customValue>
+    <customValue>
+        <fullName>Tamil</fullName>
+        <default>false</default>
+        <label>Tamil</label>
+    </customValue>
+    <customValue>
+        <fullName>Tatar</fullName>
+        <default>false</default>
+        <label>Tatar</label>
+    </customValue>
+    <customValue>
+        <fullName>Telugu</fullName>
+        <default>false</default>
+        <label>Telugu</label>
+    </customValue>
+    <customValue>
+        <fullName>Tereno</fullName>
+        <default>false</default>
+        <label>Tereno</label>
+    </customValue>
+    <customValue>
+        <fullName>Tetum</fullName>
+        <default>false</default>
+        <label>Tetum</label>
+    </customValue>
+    <customValue>
+        <fullName>Thai</fullName>
+        <default>false</default>
+        <label>Thai</label>
+    </customValue>
+    <customValue>
+        <fullName>Tibetan</fullName>
+        <default>false</default>
+        <label>Tibetan</label>
+    </customValue>
+    <customValue>
+        <fullName>Tigre</fullName>
+        <default>false</default>
+        <label>Tigre</label>
+    </customValue>
+    <customValue>
+        <fullName>Tigrinya</fullName>
+        <default>false</default>
+        <label>Tigrinya</label>
+    </customValue>
+    <customValue>
+        <fullName>Timne</fullName>
+        <default>false</default>
+        <label>Timne</label>
+    </customValue>
+    <customValue>
+        <fullName>Tiv</fullName>
+        <default>false</default>
+        <label>Tiv</label>
+    </customValue>
+    <customValue>
+        <fullName>tlhIngan-Hol</fullName>
+        <default>false</default>
+        <label>tlhIngan-Hol</label>
+    </customValue>
+    <customValue>
+        <fullName>Tlingit</fullName>
+        <default>false</default>
+        <label>Tlingit</label>
+    </customValue>
+    <customValue>
+        <fullName>Tokelau</fullName>
+        <default>false</default>
+        <label>Tokelau</label>
+    </customValue>
+    <customValue>
+        <fullName>Tok Pisin</fullName>
+        <default>false</default>
+        <label>Tok Pisin</label>
+    </customValue>
+    <customValue>
+        <fullName>Tonga (Nyasa)</fullName>
+        <default>false</default>
+        <label>Tonga (Nyasa)</label>
+    </customValue>
+    <customValue>
+        <fullName>Tonga (Tonga Islands)</fullName>
+        <default>false</default>
+        <label>Tonga (Tonga Islands)</label>
+    </customValue>
+    <customValue>
+        <fullName>Tsimshian</fullName>
+        <default>false</default>
+        <label>Tsimshian</label>
+    </customValue>
+    <customValue>
+        <fullName>Tsonga</fullName>
+        <default>false</default>
+        <label>Tsonga</label>
+    </customValue>
+    <customValue>
+        <fullName>Tswana</fullName>
+        <default>false</default>
+        <label>Tswana</label>
+    </customValue>
+    <customValue>
+        <fullName>Tumbuka</fullName>
+        <default>false</default>
+        <label>Tumbuka</label>
+    </customValue>
+    <customValue>
+        <fullName>Tupi languages</fullName>
+        <default>false</default>
+        <label>Tupi languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Turkish</fullName>
+        <default>false</default>
+        <label>Turkish</label>
+    </customValue>
+    <customValue>
+        <fullName>Turkish, Ottoman (1500-1928)</fullName>
+        <default>false</default>
+        <label>Turkish, Ottoman (1500-1928)</label>
+    </customValue>
+    <customValue>
+        <fullName>Turkmen</fullName>
+        <default>false</default>
+        <label>Turkmen</label>
+    </customValue>
+    <customValue>
+        <fullName>Tuvalu</fullName>
+        <default>false</default>
+        <label>Tuvalu</label>
+    </customValue>
+    <customValue>
+        <fullName>Tuvinian</fullName>
+        <default>false</default>
+        <label>Tuvinian</label>
+    </customValue>
+    <customValue>
+        <fullName>Twi</fullName>
+        <default>false</default>
+        <label>Twi</label>
+    </customValue>
+    <customValue>
+        <fullName>Udmurt</fullName>
+        <default>false</default>
+        <label>Udmurt</label>
+    </customValue>
+    <customValue>
+        <fullName>Ugaritic</fullName>
+        <default>false</default>
+        <label>Ugaritic</label>
+    </customValue>
+    <customValue>
+        <fullName>Uighur</fullName>
+        <default>false</default>
+        <label>Uighur</label>
+    </customValue>
+    <customValue>
+        <fullName>Ukrainian</fullName>
+        <default>false</default>
+        <label>Ukrainian</label>
+    </customValue>
+    <customValue>
+        <fullName>Umbundu</fullName>
+        <default>false</default>
+        <label>Umbundu</label>
+    </customValue>
+    <customValue>
+        <fullName>Uncoded languages</fullName>
+        <default>false</default>
+        <label>Uncoded languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Undetermined</fullName>
+        <default>false</default>
+        <label>Undetermined</label>
+    </customValue>
+    <customValue>
+        <fullName>Upper Sorbian</fullName>
+        <default>false</default>
+        <label>Upper Sorbian</label>
+    </customValue>
+    <customValue>
+        <fullName>Urdu</fullName>
+        <default>false</default>
+        <label>Urdu</label>
+    </customValue>
+    <customValue>
+        <fullName>Uyghur</fullName>
+        <default>false</default>
+        <label>Uyghur</label>
+    </customValue>
+    <customValue>
+        <fullName>Uzbek</fullName>
+        <default>false</default>
+        <label>Uzbek</label>
+    </customValue>
+    <customValue>
+        <fullName>Vai</fullName>
+        <default>false</default>
+        <label>Vai</label>
+    </customValue>
+    <customValue>
+        <fullName>Valencian</fullName>
+        <default>false</default>
+        <label>Valencian</label>
+    </customValue>
+    <customValue>
+        <fullName>Venda</fullName>
+        <default>false</default>
+        <label>Venda</label>
+    </customValue>
+    <customValue>
+        <fullName>Vietnamese</fullName>
+        <default>false</default>
+        <label>Vietnamese</label>
+    </customValue>
+    <customValue>
+        <fullName>Volapük</fullName>
+        <default>false</default>
+        <label>Volapük</label>
+    </customValue>
+    <customValue>
+        <fullName>Votic</fullName>
+        <default>false</default>
+        <label>Votic</label>
+    </customValue>
+    <customValue>
+        <fullName>Wakashan languages</fullName>
+        <default>false</default>
+        <label>Wakashan languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Walloon</fullName>
+        <default>false</default>
+        <label>Walloon</label>
+    </customValue>
+    <customValue>
+        <fullName>Waray</fullName>
+        <default>false</default>
+        <label>Waray</label>
+    </customValue>
+    <customValue>
+        <fullName>Washo</fullName>
+        <default>false</default>
+        <label>Washo</label>
+    </customValue>
+    <customValue>
+        <fullName>Welsh</fullName>
+        <default>false</default>
+        <label>Welsh</label>
+    </customValue>
+    <customValue>
+        <fullName>Western Frisian</fullName>
+        <default>false</default>
+        <label>Western Frisian</label>
+    </customValue>
+    <customValue>
+        <fullName>Western Pahari languages</fullName>
+        <default>false</default>
+        <label>Western Pahari languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Wolaitta</fullName>
+        <default>false</default>
+        <label>Wolaitta</label>
+    </customValue>
+    <customValue>
+        <fullName>Wolaytta</fullName>
+        <default>false</default>
+        <label>Wolaytta</label>
+    </customValue>
+    <customValue>
+        <fullName>Wolof</fullName>
+        <default>false</default>
+        <label>Wolof</label>
+    </customValue>
+    <customValue>
+        <fullName>Xhosa</fullName>
+        <default>false</default>
+        <label>Xhosa</label>
+    </customValue>
+    <customValue>
+        <fullName>Yakut</fullName>
+        <default>false</default>
+        <label>Yakut</label>
+    </customValue>
+    <customValue>
+        <fullName>Yao</fullName>
+        <default>false</default>
+        <label>Yao</label>
+    </customValue>
+    <customValue>
+        <fullName>Yapese</fullName>
+        <default>false</default>
+        <label>Yapese</label>
+    </customValue>
+    <customValue>
+        <fullName>Yiddish</fullName>
+        <default>false</default>
+        <label>Yiddish</label>
+    </customValue>
+    <customValue>
+        <fullName>Yoruba</fullName>
+        <default>false</default>
+        <label>Yoruba</label>
+    </customValue>
+    <customValue>
+        <fullName>Yupik languages</fullName>
+        <default>false</default>
+        <label>Yupik languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Zande languages</fullName>
+        <default>false</default>
+        <label>Zande languages</label>
+    </customValue>
+    <customValue>
+        <fullName>Zapotec</fullName>
+        <default>false</default>
+        <label>Zapotec</label>
+    </customValue>
+    <customValue>
+        <fullName>Zaza</fullName>
+        <default>false</default>
+        <label>Zaza</label>
+    </customValue>
+    <customValue>
+        <fullName>Zazaki</fullName>
+        <default>false</default>
+        <label>Zazaki</label>
+    </customValue>
+    <customValue>
+        <fullName>Zenaga</fullName>
+        <default>false</default>
+        <label>Zenaga</label>
+    </customValue>
+    <customValue>
+        <fullName>Zhuang</fullName>
+        <default>false</default>
+        <label>Zhuang</label>
+    </customValue>
+    <customValue>
+        <fullName>Zulu</fullName>
+        <default>false</default>
+        <label>Zulu</label>
+    </customValue>
+    <customValue>
+        <fullName>Zuni</fullName>
+        <default>false</default>
+        <label>Zuni</label>
+    </customValue>
+    <masterLabel>Languages</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

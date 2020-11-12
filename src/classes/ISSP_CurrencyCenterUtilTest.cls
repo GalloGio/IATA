@@ -1,10 +1,5 @@
 @isTest
 private class ISSP_CurrencyCenterUtilTest {
-
-	private static void init(){
-
-	}
-
 	@isTest static void testCheckIfUserHasAccessToServiceWithoutUser() {
 		PageReference result = ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
 		System.assertNotEquals(new PageReference('/ISSP_Homepage'),result);

@@ -5492,14 +5492,23 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>(IF( 
+        <formula>(
+IF(
+  CONTAINS($UserRole.Name, &quot;WH CS&quot;),
+  &quot;WH Customer Service&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
+  &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF( 
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
   &quot;DPC External&quot;, 
   (IF( 
   OR( 
   CONTAINS( $Profile.Name,&quot;ISS Portal&quot;), 
-  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),
-  CONTAINS( $Profile.Name,&quot;CS Portal Profile&quot;),
+  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;), 
   CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;) 
   ), 
   &quot;IATA Partner&quot;, 
@@ -5578,7 +5587,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7459,8 +7468,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
-        <formula>IF(NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Pending Closure&quot;)),
-(IF(
+        <formula>(IF(
+  CONTAINS($UserRole.Name, &quot;WH CS&quot;),
+  &quot;WH Customer Service&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
+  &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF(
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
   &quot;DPC External&quot;,
 (IF(
@@ -7534,7 +7551,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))),Closed_by_Role__c)</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

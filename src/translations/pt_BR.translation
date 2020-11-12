@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Recebemos sua solicitação para redefinir sua senha do Portal do Cliente IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3553,7 +3557,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Como você não se conectou nos últimos 90 dias, enviamos um e-mail com uma nova senha.</label>
+        <label>Por razões de segurança, nós lhe enviamos um e-mail para definir uma nova senha.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3571,6 +3575,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Este é um</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir para as perguntas mais frequentes</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir para iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4381,6 +4393,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>Login</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Conecte-se agora</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4655,6 +4671,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Registro</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>Cadastro concluído com sucesso</label>
@@ -5037,12 +5057,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Cadastre-se</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Pular por enquanto</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Status --></label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Loja</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>Por favor, digite uma breve linha de assunto</label>
@@ -5135,6 +5163,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>solução de problemas</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Descrição da questão:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Formulário de Solução de Problemas</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>Se os passos descritos não resolverem o problema, clique abaixo para entrar em contato conosco:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Preencha o formulário e nós entraremos em contato com você para ajudá-lo a acessar nossa plataforma.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Solução de Problemas de Login e Registro</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Preciso de ajuda com:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Para obter mais ajuda, verifique</label>
@@ -36523,6 +36575,27 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Network Members --></description>
         <label><!-- Network Members --></label>
         <name>Network_Members</name>
@@ -36724,7 +36797,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Relatorios / Reportes</label>
             <name>Opportunities</name>
         </sections>
         <sections>

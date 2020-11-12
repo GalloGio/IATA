@@ -1,12 +1,12 @@
 /**
-  * Description: This class contains some utility functions to be used for test classes
-  * Author: Samy Saied
-  * Version: 1.0
-  * History:
-  *  - 20160227: issue fixing related to ecommerce 3a project
-  *  - 20160804-sl: merge change from eBroadcast branch (GDP81/campaign scheduling).
-  *
-  */
+	* Description: This class contains some utility functions to be used for test classes
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*  - 20160227: issue fixing related to ecommerce 3a project
+	*  - 20160804-sl: merge change from eBroadcast branch (GDP81/campaign scheduling).
+	*
+	*/
 //*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
 public without sharing class IECTestUtil {
 	public static Id PortalUserAccountId;
@@ -244,10 +244,6 @@ public without sharing class IECTestUtil {
 		return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
 	}
 
-	  public static User createSampleGuestUserAndLoginOlder() {
-		return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
-	}
-
 	public static User createSampleGuestUserAndLogin(String ClientType) {
 		// insert account
 		Account newAccount = createSampleAccount(ClientType);
@@ -318,20 +314,6 @@ public without sharing class IECTestUtil {
 		);
 
 		return u;
-	}
-
-	public static User createSampleStandardUser(){
-		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User'];
-		User testUser = New User(
-			Alias = 'standt', Email='standarduser@testorg.com',
-			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-			LocaleSidKey='en_US', ProfileId = testProfile.Id,
-			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-			License_Cost_Center__c = 'ISF005CH01'
-		);
-
-		return testUser;
-
 	}
 
 	private static String generateZuoraID() {
@@ -1034,10 +1016,10 @@ public without sharing class IECTestUtil {
 
 	public static GDP_File_Description__c CreateSampleGDPFileDescription(String sClass, String sFrequency, String sProductType) {
 		return new GDP_File_Description__c (
-		  Name = 'Test File Description-' + (Math.random()*1000000000)
-		  , Class__c = sClass
-		  , Frequency__c = sFrequency
-		  , Product_Type__c = sProductType
+			Name = 'Test File Description-' + (Math.random()*1000000000)
+			, Class__c = sClass
+			, Frequency__c = sFrequency
+			, Product_Type__c = sProductType
 		);
 	}
 

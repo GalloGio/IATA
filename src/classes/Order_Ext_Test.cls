@@ -73,51 +73,6 @@ private class Order_Ext_Test
 		insert sfPortalUsers;
 	} //*** end of "generateAccountsContacts"
 
-	private static void generateProducts()
-	{
-		//-- Products
-		List<Product2> products = TestDataGenerator.generateProducts(3,false);
-		List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
-		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		List<PricebookEntry> lst_pbe = new List<PricebookEntry>();
-
-		for(Integer x = 0; x < products.size(); x++)
-		{
-			Product2 prod = products[x];
-			zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
-			prod.SAP_Status_Code__c = 'A';
-			prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-		}
-
-		insert zRatePlans;
-
-		//Create Unit Price Charge & Discount for each Plan
-		for(zqu__ProductRatePlan__c rp : zRatePlans)
-		{
-			//Unit Price & Discount
-			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 2, false);
-			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
-			zCharges.addAll(charges);
-		}
-
-		insert zCharges;
-		insert products;
-
-		//-- Create PriceBookEntries for each product
-		for(Product2 p : products)
-		{
-			lst_pbe.add(new PricebookEntry(
-				Pricebook2Id = Test.getStandardPricebookId(),
-				Product2Id = p.Id,
-				UnitPrice = 20
-			));
-		}
-		insert lst_pbe;
-
-	}
-
-
 	static testMethod void test_Order_Header()
 	{
 		//-- Generate Test Data

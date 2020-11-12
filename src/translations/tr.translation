@@ -3314,6 +3314,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>IATA Müşteri Portalı şifrenizi sıfırlama isteğiniz bize ulaştı.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3550,7 +3554,7 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Son 90 gün içerisinde giriş yapmadığınızdan, size yeni şifre içeren bir e-posta gönderdik.</label>
+        <label>Güvenlik nedeniyle, yeni bir şifre belirlemeniz için size bir e-posta gönderdik.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3568,6 +3572,14 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
     <customLabels>
         <label>Bu bir</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>SSS&apos;ye git</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>iata.org&apos;a gidin</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4378,6 +4390,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>Oturum aç</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Şimdi giriş yapın</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4652,6 +4668,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Kaydol</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>Kayıt başarıyla tamamlandı</label>
@@ -5034,12 +5054,20 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Kaydol</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Şimdilik Atla</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>Durum</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Mağaza</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>Lütfen kısa bir başlık girin</label>
@@ -5132,6 +5160,30 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
     <customLabels>
         <label>sorun giderme</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorunun açıklaması:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Sorun giderme formu</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>Yukarıdaki adımlar sorunu çözmezse bizimle iletişime geçmek için aşağıyı tıklayın:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Formu doldurun, platformumuza erişmenize yardımcı olmak için sizinle iletişime geçelim.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Oturum Açma ve Kayıt Sorunlarını Giderme</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu konuyla ilgili yardıma ihtiyacım var:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Daha fazla yardım için şuraya bakın</label>
@@ -36457,7 +36509,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Identity Event Logs (User)</name>
         </sections>
         <sections>
-            <label><!-- Users --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Users</name>
         </sections>
     </reportTypes>
@@ -36525,6 +36577,27 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <sections>
             <label><!-- Objectives --></label>
             <name>Objectives</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -36695,7 +36768,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Accounts</name>
         </sections>
         <sections>
