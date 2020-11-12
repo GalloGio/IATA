@@ -83,14 +83,14 @@ public class EF_ContactHandler {
 					}
 			}
 
-			if(!contactsNoti.isEmpty()){
+		/*	if(!contactsNoti.isEmpty()){
 				notifyOnCriticalFields(contactsNoti, oldMap, criticalContactFieldList);
 
-			}
+			}*/
 		}
 	}
 
-	public static void notifyOnCriticalFields (Map <Id, Contact> newContacts, Map <Id,Contact> oldContactMap, List <String> criticalFieldList ) {
+/*	public static void notifyOnCriticalFields (Map <Id, Contact> newContacts, Map <Id,Contact> oldContactMap, List <String> criticalFieldList ) {
 
 		Map<String, Schema.SobjectField> fields = newContacts.getSObjectType().getDescribe().fields.getMap();
 		String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
@@ -132,7 +132,7 @@ public class EF_ContactHandler {
 				Messaging.sendEmail(mails);
 		}
 
-	}
+	}*/
 
 
 }

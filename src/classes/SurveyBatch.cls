@@ -555,6 +555,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				Set<String> rolesCanSendSurveysTo3Regions = new Set<String> {'Africa & ME CS Manager',
 					'Africa & ME First Level CS Staff','Africa & ME Second Level CS Staff',
 					'CSC Director', 'CSC Manager YMQ', 'CSC Staff YMQ',
+					'BU WH CS Team Leader','BU WH CS Staff','KL WH CS Team Leader','KL WH CS Staff',
 					'Americas Customer Service Manager','Americas Customer Service Staff','MAD Hub CS Manager','MAD Hub CS staff'};
 
 				if(RoleName.contains('Distribution - Airline Coding & MITA')){

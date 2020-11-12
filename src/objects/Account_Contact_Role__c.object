@@ -626,6 +626,10 @@
                 <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>One Source</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -689,6 +693,10 @@
             </values>
             <values>
                 <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Source</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -760,6 +768,10 @@
                 <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>One Source</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Integration_Status__c</picklist>
@@ -827,6 +839,10 @@
             </values>
             <values>
                 <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Source</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -900,6 +916,10 @@
             </values>
             <values>
                 <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Source</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

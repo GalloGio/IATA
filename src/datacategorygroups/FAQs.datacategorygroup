@@ -45,42 +45,6 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
-                    <label>General Information</label>
-                    <name>General_Information_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Sign Up / Join</label>
-                    <name>Sign_Up_Join_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Subscriptions and Orders</label>
-                    <name>Subscriptions_and_Orders_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Invoicing</label>
-                    <name>Invoicing_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Technical Issue</label>
-                    <name>Technical_Issue_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Product delivery</label>
-                    <name>Product_delivery_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>User Management</label>
-                    <name>User_Management_MITA_BIETA</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Closure / Cancellation</label>
-                    <name>Closure_Cancellation_MITA_BIETA</name>
-                </dataCategory>
-                <label>Interline Agreements (MITA/BIETA)</label>
-                <name>Interline_Agreements_MITA_BIETA</name>
-            </dataCategory>
-            <dataCategory>
-                <dataCategory>
                     <label>Watch List</label>
                     <name>Watch_List_PAX</name>
                 </dataCategory>
@@ -194,6 +158,14 @@
             <dataCategory>
                 <dataCategory>
                     <label>General Information</label>
+                    <name>General_Information_trv_annual</name>
+                </dataCategory>
+                <label>IATA Annual Fees (BSP/CASS)</label>
+                <name>IATA_Annual_Fees_BSP_CASS_trv</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
                     <name>General_Information_IATA_Codes</name>
                 </dataCategory>
                 <dataCategory>
@@ -282,6 +254,50 @@
                 </dataCategory>
                 <label>ID Card (Print/Digital)</label>
                 <name>ID_Card_Print_Digital</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Subscriptions and Orders</label>
+                    <name>Subscriptions_and_Orders_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Invoicing</label>
+                    <name>Invoicing_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Product delivery</label>
+                    <name>Product_delivery_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_MITA_BIETA</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Closure / Cancellation</label>
+                    <name>Closure_Cancellation_MITA_BIETA</name>
+                </dataCategory>
+                <label>Interline Agreements (MITA/BIETA)</label>
+                <name>Interline_Agreements_MITA_BIETA</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_trv_newbsp</name>
+                </dataCategory>
+                <label>New BSPlink</label>
+                <name>New_BSPlink_trv</name>
             </dataCategory>
             <dataCategory>
                 <dataCategory>
@@ -378,22 +394,6 @@
             <dataCategory>
                 <dataCategory>
                     <label>AWB Stock Management</label>
-                    <name>CNS_AWB_Stock_Management</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Calendars</label>
-                    <name>CNS_Calendars</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>CNS CASSLink/CASS-USA</label>
-                    <name>CNS_CASSLink_CASS_USA</name>
-                </dataCategory>
-                <label>CNS CASS Operations/Cargo</label>
-                <name>CNS_CASS_Operations_Cargo</name>
-            </dataCategory>
-            <dataCategory>
-                <dataCategory>
-                    <label>AWB Stock Management</label>
                     <name>AWB_Stock_Management</name>
                 </dataCategory>
                 <dataCategory>
@@ -437,6 +437,22 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>AWB Stock Management</label>
+                    <name>CNS_AWB_Stock_Management</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Calendars</label>
+                    <name>CNS_Calendars</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>CNS CASSLink/CASS-USA</label>
+                    <name>CNS_CASSLink_CASS_USA</name>
+                </dataCategory>
+                <label>CNS CASS Operations/Cargo</label>
+                <name>CNS_CASS_Operations_Cargo</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
                     <label>New Cargo Agency Application</label>
                     <name>CNS_New_Cargo_Agency_Application</name>
                 </dataCategory>
@@ -446,6 +462,14 @@
                 </dataCategory>
                 <label>Endorsement Cargo Agent</label>
                 <name>CNS_Endorsement_Cargo_Agent</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_crg_annual</name>
+                </dataCategory>
+                <label>IATA Annual Fees (BSP/CASS)</label>
+                <name>IATA_Annual_Fees_BSP_CASS_crg</name>
             </dataCategory>
             <dataCategory>
                 <dataCategory>

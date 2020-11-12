@@ -661,6 +661,27 @@
         <label>15 - APEN - Sales Focus</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>X16_APEMP_Number_of_Employees</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>Code__c</columns>
+        <columns>Corresponding_AMS_Code__c</columns>
+        <columns>Valid_for_TIDS__c</columns>
+        <columns>Valid_for_GDP__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System_ID__c</field>
+            <operation>startsWith</operation>
+            <value>APEMP</value>
+        </filters>
+        <label>16 - APEMP - Number of Employees</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Description</label>
         <trackHistory>true</trackHistory>
