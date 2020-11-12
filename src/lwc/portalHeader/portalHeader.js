@@ -457,7 +457,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
                             if(isLatestAccepted){
                                 this.displayAcceptTerms = false;
-                                if(result.users[0].Portal_Registration_Required__c === true){
+                                if(result.users && result.users[0].Portal_Registration_Required__c === true){
                                     this.displayRegistrationConfirmation = true;
                                 }else{
                                     if(this.firstLogin === true){
