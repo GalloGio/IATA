@@ -163,11 +163,11 @@ global class ANG_RME_Alert_Service {
 
 			//fetch current information
 			List<Account> accs = [
-				SELECT Id, IATACode__c, 
+				SELECT Id, IATACode__c, top_parent__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
-					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
-					 FROM RHC_Informations__r)
+					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
+					(SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE recordtype.developername ='FormOfPayment')  //Accelya Email + FOP
 				FROM Account
 				WHERE IATACode__c = :req.iataCode
 					AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
@@ -236,6 +236,18 @@ global class ANG_RME_Alert_Service {
 							else{
 								updateRHC(req, rhcInfo);
 							}
+						}
+					}
+					when 'CashlessGDSAlert'{
+						map<string, string> RMEFOPS = new map<string, string>();
+						for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+						if(acct.Agency_Authorizations__r.isEmpty()){
+							setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+						}else{
+							if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+								saveGDSAlert(req, acct.id, acct.top_parent__c);
+							}else
+								setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + acct.Agency_Authorizations__r + ') for agent ' +  req.iataCode,  400);
 						}
 					}
 					when else {
@@ -362,6 +374,34 @@ global class ANG_RME_Alert_Service {
 
 		return true;
 
+	}
+
+	//Validates that the FOPS received from RME matches FOPS in Salesforce 
+	private static boolean validateFOP(List<Agency_Authorization__c> agencyFOPs, map<string, string> RMEFOPs){
+		for(Agency_Authorization__c FOP:agencyFOPs){
+			if(!RMEFOPs.containsKey(FOP.ANG_FormOfPayment_ID__c))
+				return false;
+			else{
+				if(FOP.status__c <> RMEFOPs.get(FOP.ANG_FormOfPayment_ID__c))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	private static void saveGDSAlert(RHCMessage req, Id accountId, id TopParentAccntId){
+		ANG_Risk_Alert__c gdsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','RiskAlertGDS'),
+			ANG_Account__c = TopParentAccntId==null?accountId:TopParentAccntId,
+			GDS__c = req.gds,
+			GDS_Alert_Type__c = req.eventType,
+			Monitored_Account__c = accountId,
+			Ticket_Number__c = req.ticketNumber,
+			Additional_Alert_information__c = string.valueOf(req.fop),
+			ANG_EventId__c = req.eventId
+		);
+		insert gdsAlert;
+		setResponse(null, 202);
 	}
 
 	private static void saveEDSAlert(RHCMessage req, Id accountId){

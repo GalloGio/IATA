@@ -413,6 +413,57 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Additional_Alert_information__c</fullName>
+        <description>Used to store additional information related to the alert, such as FOP received by GDS alert</description>
+        <externalId>false</externalId>
+        <label>Additional Alert information</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GDS_Alert_Type__c</fullName>
+        <description>is the type of alert received  by GDS Failsafe interface</description>
+        <externalId>false</externalId>
+        <label>GDS Alert Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CashlessGDSAlert</fullName>
+                    <default>false</default>
+                    <label>Cashless GDS Alert</label>
+                </value>
+                <value>
+                    <fullName>CashGDSAlert</fullName>
+                    <default>false</default>
+                    <label>Cash GDS Alert</label>
+                </value>
+                <value>
+                    <fullName>TAGDSAlert</fullName>
+                    <default>false</default>
+                    <label>TA GDS Alert</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>GDS__c</fullName>
+        <description>Name of the GDS which raised the failsafe alert</description>
+        <externalId>false</externalId>
+        <label>GDS</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Monitored_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Reference to the previous account before the change of Hierarchy / Location Type / Location Type to Different Legal Entity</description>
@@ -424,6 +475,30 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_SAAM_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>the saam case created as part of the actions taken by the type of alert</description>
+        <externalId>false</externalId>
+        <label>Related SAAM Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Risk Alerts (Related SAAM Case)</relationshipLabel>
+        <relationshipName>Risk_Alerts1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Ticket_Number__c</fullName>
+        <description>Ticket number which raised the GDS Failsafe alert</description>
+        <externalId>false</externalId>
+        <label>Ticket Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>Risk Alert</label>
     <listViews>
@@ -442,6 +517,100 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Risk Alerts</pluralLabel>
+    <recordTypes>
+        <fullName>RiskAlertGDS</fullName>
+        <active>true</active>
+        <description>used by Cashless failsafe GDS Alerts</description>
+        <label>Risk Alert GDS</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Triggered_Rules__c</picklist>
+            <values>
+                <fullName>edsRule_cashSales_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_market_intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Risk_Alert</fullName>
         <active>true</active>
@@ -517,6 +686,21 @@
             </values>
             <values>
                 <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -599,6 +783,21 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Risk_Alert_RTS</fullName>
@@ -674,6 +873,21 @@
             </values>
             <values>
                 <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
