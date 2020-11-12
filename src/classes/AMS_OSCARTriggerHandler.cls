@@ -221,7 +221,6 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	public static void handleBeforeInsert() {
-		//assignOSCARToRegionalQueues();
 		prepopulateValues();
 
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
@@ -1042,18 +1041,6 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 		}
-	}
-
-	private static void assignOSCARToRegionalQueues(){
-
-		List<AMS_OSCAR__c> certificationOscars = new List<AMS_OSCAR__c>();
-
-		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New)
-			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT)
-				certificationOscars.add(oscar);
-
-		/*if(!certificationOscars.isEmpty())
-			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
