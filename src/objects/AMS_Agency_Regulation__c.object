@@ -540,7 +540,7 @@
     <validationRules>
         <fullName>ULD_Certificates_expire_limitation</fullName>
         <active>true</active>
-        <description>Users can&quot;t save an expiry date less than 90 days in ULC Certificates</description>
+        <description>Users can&quot;t save an expiry date less than 90 days in ULD Certificates</description>
         <errorConditionFormula>AND(
 OR(ISNEW(),ISCHANGED(Expiry_Date__c)),
 ISPICKVAL(Type_Of_Certificate__c,&quot;ULD&quot;),
