@@ -261,22 +261,26 @@ global class ANG_RME_Alert_Service {
 						}
 					}
 					when 'CashGDSAlert'{
-						if(acct.ANG_IsNewGenAgency__c){
-							map<string, string> RMEFOPS = new map<string, string>();
-							for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
-							if(acct.Agency_Authorizations__r.isEmpty()){
-								setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
-							}else{
-								if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
-									saveGDSAlert(req, acct.id, acct.top_parent__c);
-								}else{
-									map<string, string> SFDCFOPS = new map<string, string>();
-									for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
-									setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
-								}
-							}
+						if(req.fop == null || req.fop.size()==0){
+							setResponse('FOP attribute cannot be blank',  400);
 						}else{
-							setResponse('Agent '+req.iataCode+' is not a newgen agency', 404);
+							if(acct.ANG_IsNewGenAgency__c){
+								map<string, string> RMEFOPS = new map<string, string>();
+								for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+								if(acct.Agency_Authorizations__r.isEmpty()){
+									setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+								}else{
+									if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+										saveGDSAlert(req, acct.id, acct.top_parent__c);
+									}else{
+										map<string, string> SFDCFOPS = new map<string, string>();
+										for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+										setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+									}
+								}
+							}else{
+								setResponse('Agent '+req.iataCode+' is not a newgen agency', 404);
+							}
 						}
 					}
 					when 'TAGdsAlert'{
