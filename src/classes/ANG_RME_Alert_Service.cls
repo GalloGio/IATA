@@ -15,6 +15,8 @@ global class ANG_RME_Alert_Service {
 	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
 	@TestVisible
 	private static final String GDS_CASHLESSFOPALERT_EVENT_TYPE = 'CashlessGDSAlert';
+	@TestVisible
+	private static final String GDS_TA_ALERT_EVENT_TYPE = 'TAGdsAlert';
 
 	public class RHCMessage{
 		//Basic info
@@ -53,6 +55,7 @@ global class ANG_RME_Alert_Service {
 		//INT_032: GDS FailSafe alert
 		public string gds;
 		public string ticketNumber;
+		public string agentStatus;
 		public list<fopValues> fop;
 
 	}
@@ -163,7 +166,7 @@ global class ANG_RME_Alert_Service {
 
 			//fetch current information
 			List<Account> accs = [
-				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, 
+				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, status__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
@@ -270,6 +273,17 @@ global class ANG_RME_Alert_Service {
 							}
 						}else{
 							setResponse('Agent '+req.iataCode+' is not a newgen agency', 404);
+						}
+					}
+					when 'TAGdsAlert'{
+						if(string.isBlank(req.agentStatus)){
+							setResponse('agentStatus cannot be blank', 400);
+						}else{
+							if(acct.status__c == req.agentStatus){
+								saveGDSAlert(req, acct.id, acct.top_parent__c);
+							}else{
+								setResponse('Request agentStatus (' + req.agentStatus +  ') doesn\'t match Agent '+req.iataCode+' status (' + acct.status__c + ')', 400);
+							}
 						}
 					}
 					when else {
@@ -419,7 +433,7 @@ global class ANG_RME_Alert_Service {
 			GDS_Alert_Type__c = req.eventType,
 			Monitored_Account__c = accountId,
 			Ticket_Number__c = req.ticketNumber,
-			Additional_Alert_information__c = string.valueOf(req.fop),
+			Additional_Alert_information__c = (req.eventType==GDS_TA_ALERT_EVENT_TYPE?string.valueOf(req.agentStatus):string.valueOf(req.fop)),
 			ANG_EventId__c = req.eventId
 		);
 		insert gdsAlert;
