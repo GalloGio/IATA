@@ -163,7 +163,7 @@ global class ANG_RME_Alert_Service {
 
 			//fetch current information
 			List<Account> accs = [
-				SELECT Id, IATACode__c, top_parent__c, 
+				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
@@ -251,6 +251,25 @@ global class ANG_RME_Alert_Service {
 								for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
 								setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
 							}
+						}
+					}
+					when 'CashGDSAlert'{
+						if(acct.ANG_IsNewGenAgency__c){
+							map<string, string> RMEFOPS = new map<string, string>();
+							for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+							if(acct.Agency_Authorizations__r.isEmpty()){
+								setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+							}else{
+								if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+									saveGDSAlert(req, acct.id, acct.top_parent__c);
+								}else{
+									map<string, string> SFDCFOPS = new map<string, string>();
+									for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+									setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+								}
+							}
+						}else{
+							setResponse('Agent '+req.iataCode+' is not a newgen agency', 404);
 						}
 					}
 					when else {
