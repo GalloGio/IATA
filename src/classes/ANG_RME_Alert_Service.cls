@@ -246,12 +246,15 @@ global class ANG_RME_Alert_Service {
 						}else{
 							if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
 								saveGDSAlert(req, acct.id, acct.top_parent__c);
-							}else
-								setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + acct.Agency_Authorizations__r + ') for agent ' +  req.iataCode,  400);
+							}else{
+								map<string, string> SFDCFOPS = new map<string, string>();
+								for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+								setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+							}
 						}
 					}
 					when else {
-						setResponse('Invalid Event Type: '+eventType, 405);
+						setResponse('Invalid Event Type: '+req.eventType, 405);
 					}
 				}
 			}
