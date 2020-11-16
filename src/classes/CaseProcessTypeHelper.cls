@@ -120,11 +120,13 @@ public with sharing class CaseProcessTypeHelper {
 
 		for(Case cse : casesToProcess) {
 			AMS_OSCAR__c oscar = mapOscars.get(cse.OSCAR__c); //WMO-564 - ACAMBAS
-			cse.OSCAR__r = oscar;
-			cse.Account = oscar.Account__r;
-			Case_Process_Type__mdt process = getRightProcess(cse);
-			if (process!=null) {
-				calculateKPI(cse, oscar, process);
+			if (oscar!=null) {
+				cse.OSCAR__r = oscar;
+				cse.Account = oscar.Account__r;
+				Case_Process_Type__mdt process = getRightProcess(cse);
+				if (process!=null) {
+					calculateKPI(cse, oscar, process);
+				}
 			}
 		}
 	}
