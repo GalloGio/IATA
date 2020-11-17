@@ -545,12 +545,17 @@ public without sharing class CW_SearchEngine {
 		public Decimal overallAirportSize { get; set; }
 		public Decimal fleet { get; set; }
 		public NearestAirport nearestAirport { get; set; }
+		public String titleName { 
+			get { 
+				if (this.recordTypeDevName.containsIgnoreCase('Airport') && this.nearestAirport != null && this.nearestAirport.city != null) {
+					return this.name + ' [' + this.nearestAirport.city + ']';
+				}
+				return this.name;
+			}
+		}
 
 		public Facility(ICG_Account_Role_Detail__c acr, Boolean isMapQuery, Boolean getOpeningHours, Boolean getHandledAirlines, List<ICG_Account_Role_Detail_Relationship__c> operatingStations, List<ICG_Account_Role_Detail__c> onAirportStations) {
 			this.name = acr.Name;
-			if (acr.RecordType.DeveloperName.containsIgnoreCase('Airport') && acr.Nearest_Airport__c != null && acr.Nearest_Airport__r.Code__c != null) {
-				this.name += ' [' + acr.Nearest_Airport__r.Code__c + ']';
-			}
 			this.recordTypeName = acr.RecordType.name;
 			this.recordTypeDevName = acr.RecordType.DeveloperName;
 			this.accountName = acr.Company_FOR__c;

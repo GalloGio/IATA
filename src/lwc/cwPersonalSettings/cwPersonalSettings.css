@@ -23,6 +23,14 @@
     margin-top: 10px;
 }
 
+@media (max-width: 1025px) {
+    .wrapperSettings {
+        margin-top: 00px;
+    }
+}
+
+
+
 .detailSettings {
     padding: 5px !important;
 }

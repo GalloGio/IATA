@@ -7,6 +7,7 @@
                 <div style="padding: 30px; font-size: 0.9rem;">
                     <c:CW_HelloUser text="Hello" stationData="{!relatedTo.Station__c}"> </c:CW_HelloUser>     
                     <c:CW_StationDetails nameList="A new Certification Audit has been requested for the following station" stationData="{!relatedTo.Station__c}"></c:CW_StationDetails>
+                    <br/>
                     <c:CW_CertificationDetails stationData="{!relatedTo.Station__c}" notificationData="{!relatedTo.Id}"></c:CW_CertificationDetails>
                     <c:CW_LinkManageRequest stationData="{!relatedTo.Station__c}"></c:CW_LinkManageRequest>
                     <p style="line-height: 1.8rem;">Thank you</p>

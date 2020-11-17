@@ -9,13 +9,13 @@
             class="row slds-popover align-items-center justify-content-center cardContent">
             <div class="col-md-12 p-0 row detailSettings text-left">
                 <div class="col-md-12">
-                    <h3>{UserInfo.name}</h3>
+                    <h3 class="text-black">{UserInfo.name}</h3>
                 </div>
-                <div class="col-md-12">
-                    {UserInfo.companyname}                  
+                <div class="col-md-12 text-black">
+                    {UserInfo.accountname}                  
                 </div>
                 <div class="col-md-6">
-                    <a onclick={goToPrivateArea} class="underline"><span class="text-blue">{label.private_area}</span></a>
+                    <a onclick={goToPrivateArea} class="underline text-blue"><span class="text-blue">{label.private_area}</span></a>
                 </div>
             </div>
         </div>

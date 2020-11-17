@@ -16,7 +16,7 @@ public with sharing class CW_PersonalSettingsController {
 				userContainer = new UserWrapper(UserInfo.getUserType());
 			} else {
 				User user = [
-					SELECT SmallPhotoUrl, FullPhotoUrl, Email, CompanyName
+					SELECT SmallPhotoUrl, FullPhotoUrl, Email, CompanyName, Account.Name
 					FROM User
 					WHERE id = :UserInfo.getUserId()
 					LIMIT 1
@@ -40,6 +40,7 @@ public with sharing class CW_PersonalSettingsController {
 		public String userRole { get; set; }
 		public String email {get;set;}
 		public String companyname {get;set;}
+		public String accountname {get;set;}
 
 		public UserWrapper(User user) {
 			this.photolinkfull = user.FullPhotoUrl;
@@ -49,6 +50,7 @@ public with sharing class CW_PersonalSettingsController {
 			this.userRole = UserInfo.getUserType();
 			this.email = user.Email;
 			this.companyname = user.CompanyName;
+			this.accountname = user.Account.Name;
 		}
 		public UserWrapper(String usertype) {
 			this.userRole = usertype;

@@ -244,6 +244,27 @@ public with sharing class CW_EmailTemplateDataTest {
 	 * @name			The name of your class or method
 	 * @author			Bea <beatriz.menendez@next-link.ch>
 	 * @created			22 / 09 / 2020
+	 * @description		Test CW_EmailTemplateData.getApproveUrl 
+	 * @param			
+	 * @return			-
+	**********************************************************************************************************/
+	@IsTest
+	static void getApprovalUrlTest(){        
+		CW_EmailTemplateData emailCtrl = new CW_EmailTemplateData();
+		emailCtrl.contactRoleDetailId = [SELECT Id FROM ICG_Contact_Role_Detail__c LIMIT 1].Id;
+
+		Test.startTest();
+			String approvalUrl = emailCtrl.getApprovalUrl();
+		Test.stopTest();
+
+		System.assertEquals('https://theurl.com/s/private-area#Pending%20User%20Approvals', approvalUrl,'CW_EmailTemplateDataTest wrong approveUrl: ' + approvalUrl);        
+	}
+
+
+	/*********************************************************************************************************
+	 * @name			The name of your class or method
+	 * @author			Bea <beatriz.menendez@next-link.ch>
+	 * @created			22 / 09 / 2020
 	 * @description		Test CW_EmailTemplateData.getRejectUrl 
 	 * @param			
 	 * @return			-

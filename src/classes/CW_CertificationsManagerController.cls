@@ -70,12 +70,11 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled
 	public static string getFacilityCertifications(String facilityId, String stationRT) {
-		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
 		List<ICG_Capability_Assignment_Group__c> returnList = new List<ICG_Capability_Assignment_Group__c>();
 
 		List<ICG_Capability_Assignment_Group__c> groupList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName, Is_Active__c
 			FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
-			RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.Name IN: lstDepts ORDER BY Status__c ASC];
+			RecordTypeId =: RT_CERTIFICATION ORDER BY Status__c ASC];
 
 		List<ICG_Capability_Assignment_Group__c> orderedList = sortGroupListByStatus(groupList);
 		
@@ -172,10 +171,9 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled
 	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput, String stationRT) {
-		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
 		
 		String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
-			 'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND ICG_Certification__r.Name IN (\'' + String.join((lstDepts), '\', \'') + '\')' + ' AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
+			 'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
 		List<ICG_Capability_Assignment_Group__c> firtsList = (List<ICG_Capability_Assignment_Group__c>) Database.query(query);
 		
 		return (JSON.serialize(firtsList));

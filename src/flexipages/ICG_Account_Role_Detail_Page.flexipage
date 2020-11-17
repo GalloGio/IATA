@@ -79,6 +79,13 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>cwManageStationCustomDetails</componentName>
+        </componentInstances>
+        <name>Facet-e11987f5-95ea-41dc-abf6-100b01428615</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
             <componentInstanceProperties>
                 <name>active</name>
                 <value>false</value>
@@ -138,6 +145,17 @@
             <componentInstanceProperties>
                 <name>title</name>
                 <value>Create Remote Validation</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-e11987f5-95ea-41dc-abf6-100b01428615</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Edit Station Profile</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>

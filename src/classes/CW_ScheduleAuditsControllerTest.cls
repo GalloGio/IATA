@@ -48,6 +48,16 @@ public class CW_ScheduleAuditsControllerTest {
 
 		Group g1 = new Group(Name = 'TheTestQueue', type = 'Queue');
 		insert g1;
+
+		//Test create partner user 		
+		Profile partnerProfile = [Select Id from profile where Name LIKE '%ISS Portal%' limit 1];
+		PermissionSet privateAreaPS = [SELECT Id FROM PermissionSet WHERE Name = 'One_Source_Partner_User_Management' LIMIT 1];
+		Contact partnerContact = CW_TestDataFactory.testContact(acc.Id);
+		Insert partnerContact;
+		String orgId = UserInfo.getOrganizationId();
+		User partnerUser = CW_TestDataFactory.testUser('test', 'Audit', 'testaudit' + orgId, orgId, partnerProfile.Id, partnerContact.Id);
+		Insert partnerUser;
+
 		System.runAs(new User(Id = UserInfo.getUserId())) {
 			QueuesObject q1 = new QueueSObject(QueueID = g1.id, SobjectType = 'ICG_Notification__c');
 			insert q1;
@@ -55,27 +65,35 @@ public class CW_ScheduleAuditsControllerTest {
 			member.UserOrGroupId = UserInfo.getUserId();
 			member.GroupId = g1.Id;
 			insert member;
-		}
-
+			//Set user private area permission set		
+			insert new PermissionSetAssignment(AssigneeId = partnerUser.id, PermissionSetId = privateAreaPS.Id);	
+		}		
 	}
 
 	@isTest
 	public static void insertIcgNotifications() {
-		List<ICG_Certification__c> cert = [SELECT id, name FROM ICG_Certification__c];
-		Id stationId = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Test.startTest();
-		List<CW_ScheduleAuditsController.CertData> crtdatalist = new List<CW_ScheduleAuditsController.CertData>();
-		CW_ScheduleAuditsController.CertData crtdata = new CW_ScheduleAuditsController.CertData();
-		crtdata.id = cert[0].id;
-		crtdata.name = cert[0].name;
-		crtdatalist.add(crtdata);
-		ICG_Notification__c icgn = new ICG_Notification__c();
-		icgn.Preferable_Audit_Date__c = Date.today();
-		icgn.Station__c = stationId;
-		CW_ScheduleAuditsController.saveAudit(JSON.serialize(icgn), JSON.serialize(crtdatalist));
-		List<ICG_Notification__c> notificationsGet = (List<ICG_Notification__c>) JSON.deserialize(CW_ScheduleAuditsController.getUserRequestedAudits(new List<String>{ stationId }), List<ICG_Notification__c>.class);
-		system.assertEquals(1, notificationsGet.size());
-		Test.stopTest();
-		system.assertEquals(1, [SELECT id FROM ICG_Notification__c].size());
+		User partnerUser = [SELECT Id FROM User WHERE FirstName = 'test' AND LastName = 'Audit' LIMIT 1];
+		System.runAs(partnerUser){
+			List<ICG_Certification__c> cert = [SELECT id, name FROM ICG_Certification__c];
+			Id stationId = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
+			Group ownerQueue = [SELECT Id FROM Group WHERE Name = 'TheTestQueue' LIMIT 1];
+			List<CW_ScheduleAuditsController.CertData> crtdatalist = new List<CW_ScheduleAuditsController.CertData>();
+			CW_ScheduleAuditsController.CertData crtdata = new CW_ScheduleAuditsController.CertData();
+			crtdata.id = cert[0].id;
+			crtdata.name = cert[0].name;
+			crtdatalist.add(crtdata);
+			ICG_Notification__c icgn = new ICG_Notification__c();
+			icgn.Preferable_Audit_Date__c = Date.today();
+			icgn.Station__c = stationId;
+			icgn.OwnerId = ownerQueue.Id;
+
+			Test.startTest();			
+				CW_ScheduleAuditsController.saveAudit(JSON.serialize(icgn), JSON.serialize(crtdatalist));		
+			Test.stopTest();
+
+			List<ICG_Notification__c> notificationsGet = (List<ICG_Notification__c>) JSON.deserialize(CW_ScheduleAuditsController.getUserRequestedAudits(new List<String>{ stationId }), List<ICG_Notification__c>.class);
+			System.assertEquals(1, notificationsGet.size());
+			System.assertEquals(1, [SELECT id FROM ICG_Notification__c].size());
+		}
 	}
 }

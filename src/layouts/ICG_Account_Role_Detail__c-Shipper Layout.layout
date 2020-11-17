@@ -142,7 +142,7 @@
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Nearest_Airport__c</field>
             </layoutItems>
             <layoutItems>

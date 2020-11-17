@@ -50,7 +50,7 @@ export default class CwAddressSelectorMapContainer extends LightningElement {
 	}
 
 	get urlGMap(){
-		return  this._urlGMap ? this.isInternalUser ? 'https://'+location.host+'/apex'+this._urlGMap.substring(this._urlGMap.lastIndexOf('/'), this._urlGMap.length) :  this._urlGMap.replace('/s','') : null;
+		return  this._urlGMap ? this.isInternalUser ? this.label.icg_https_default_value + location.host+'/apex'+this._urlGMap.substring(this._urlGMap.lastIndexOf('/'), this._urlGMap.length) :  this._urlGMap.replace('/s','') : null;
 	}
 
 	prepareForEdit(){

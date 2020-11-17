@@ -111,6 +111,10 @@
                 <behavior>Edit</behavior>
                 <field>Road_Feeder_Services__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Direct_Ramp_Access__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -147,7 +151,7 @@
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Nearest_Airport__c</field>
             </layoutItems>
             <layoutItems>

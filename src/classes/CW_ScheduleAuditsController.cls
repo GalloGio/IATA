@@ -54,34 +54,33 @@ public without sharing class CW_ScheduleAuditsController {
 			notif.OwnerId = mapCertIdQueueId.get(notif.ICG_Certification__c) != null ? mapCertIdQueueId.get(notif.ICG_Certification__c) : stakeHoldersId;			
 		}
 
-		if (!auditsToInsert.isEmpty()){
-			insert auditsToInsert;
+		if (!auditsToInsert.isEmpty() && ICG_Notification__c.SObjectType.getDescribe().isAccessible()){			
+			insert auditsToInsert;			
 
-			//Share inserted notification records to Requestor
+			//Share inserted notification records to Requestor (current owner is the certification queue)
 			shareAuditNotificationsWithRequetor(auditsToInsert);			
 
 			String subject = 'Audit request sent';
 			List<String> notificationReceivers = new List<String>();			
-			notificationReceivers.add(UserInfo.getUserId());
-			
+		
 			for(ICG_Notification__c nt : auditsToInsert){
+				//notification requestor norification 
+				notificationReceivers.add(nt.Target_Contact__c);
 				if(Limits.getLimitEmailInvocations() > 0){
-					//Prepare emails to requestor					
+					//Prepare emails to requestor							
 					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_Conf_to_User', nt.Id, new Set<Id> {UserInfo.getUserId()}));
-					//Prepare emails to IATA admis
-					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {
-						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Id, managersPerQueueId.get(nt.OwnerId)));
-						for(Id currentReceiver: managersPerQueueId.get(nt.OwnerId)){	
-							notificationReceivers.add(currentReceiver);
-						}
+					if(nt.OwnerId != null && managersPerQueueId.get(nt.OwnerId) != null && !managersPerQueueId.get(nt.OwnerId).isEmpty()) {	
+						//Prepare emails to IATA admis								
+						emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Request_for_Audit_to_IATA_SME', nt.Id, managersPerQueueId.get(nt.OwnerId)));	
 					}
 				}
 			}
-			//Add Community notification to email receivers
+			
+			//Add Community notification to requestor
 			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', notificationReceivers, auditsToInsert[0].Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
+			//Send emails
+			CW_EmailManager.sendInternalEmails(emailsToBeSent);			
 		}
-
-		CW_EmailManager.sendInternalEmails(emailsToBeSent);
 	}
 
 	private static Id generateStakeholdersId(){
@@ -144,7 +143,7 @@ public without sharing class CW_ScheduleAuditsController {
 			notifShrLst.add(notifShr);
 		}	
 
-		if(!notifShrLst.isEmpty() && !notifDescribe.isAccessible()){			
+		if(!notifShrLst.isEmpty() && notifDescribe.isAccessible()){			
 			for(Database.SaveResult sr :Database.insert(notifShrLst, false)){
 				if(!sr.isSuccess()){					
 					Database.Error err = sr.getErrors()[0];

@@ -117,19 +117,22 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
 	}
 
-	isSectorCategoryAllowed(NameOrLabelProperty, sector, category){
+	isSectorCategoryAllowed(sector, category){
 		for (let sectorX = 0; sectorX < this.ctypesMapBySectorAndCategory.sectors.length; sectorX++){
-			if (this.ctypesMapBySectorAndCategory.sectors[sectorX]['sector' + NameOrLabelProperty].toLowerCase() === sector) {
+			if (
+				this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorName.toLowerCase() === sector ||
+				this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorLabel.toLowerCase() === sector
+			) {
 				if (!category) {
 					return true;
 				}
 				else if (this.ctypesMapBySectorAndCategory.sectors[sectorX].categories) {
 					for (let categoryX = 0; categoryX < this.ctypesMapBySectorAndCategory.sectors[sectorX].categories.length; categoryX++){
-						let categoryAllowed = this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX]['category' + NameOrLabelProperty].toLowerCase();
-						if (categoryAllowed === '*') {
-							categoryAllowed = category;
-						}
-						if ( categoryAllowed === category) {
+						if (
+							this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryName === '*' ||
+							this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryName.toLowerCase() === category ||
+							this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryLabel.toLowerCase() === category
+						){
 							return true;
 						}
 					}
@@ -197,7 +200,7 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 									selectedSector = result[i].picklistOptions[j];
 								}
 
-								if (this.isSectorCategoryAllowed('Label', label.toLowerCase(), null)) {
+								if (this.isSectorCategoryAllowed(label.toLowerCase(), null)) {
 									customerTypesOptions.push({
 										label: label,
 										value: result[i].picklistOptions[j].key
@@ -205,7 +208,7 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 								}
 							}
 							else if (result[i].picklistLabel.toLowerCase() === 'category') {
-								if (this.isSectorCategoryAllowed('Label', selectedSector.label.toLowerCase(), label.toLowerCase())) {	
+								if (this.isSectorCategoryAllowed(selectedSector.label.toLowerCase(), label.toLowerCase())) {	
 									customerTypesOptions.push({
 										label: label,
 										value: result[i].picklistOptions[j].key

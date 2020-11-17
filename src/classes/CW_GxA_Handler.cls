@@ -11,6 +11,7 @@ global without sharing class CW_GxA_Handler {
 		Map<String, Object> convertedData = new Map<String, Object>{ 'ICG_Account_Role_Detail__c' => stationConverted, 'Account_Role_Detail_Capability__c' => capabilitiesConverted, 'answersNotMapped' => answersNotMapped };
 
 		Map<String, ICG_GxA_Integration_Mapping__c> integrationMapping = getIntegrationMapping();
+		Map<String, Boolean> availabilityEquipment = new Map<String, Boolean>();
 		Map<String, Boolean> picturesVisibility;
 
 		// Generate Map that contains Category by Equipment and Recordtype by category(removing duplicated categories)
@@ -28,6 +29,11 @@ global without sharing class CW_GxA_Handler {
 			// First loop required to get: correct mappings, visibility pictures, ...
 			for (CW_GxA_Wrappers.SurveyAnswers currentAnswer : currentItem.SurveyAnswers) {
 				ICG_GxA_Integration_Mapping__c mapFound = integrationMapping.get(currentAnswer.QuestionID);
+				if (mapFound != null && currentAnswer.Question.toLowerCase() == 'availability') {
+					if (!availabilityEquipment.containsKey(mapFound.SF_Equipment__c)) {
+						availabilityEquipment.put(mapFound.SF_Equipment__c, (currentAnswer.Response.toLowerCase() == 'yes'));
+					}
+				}
 				if (mapFound == null || (mapFound.SF_Process_Question__c.toLowerCase() == 'yes' && mapFound.SF_Is_Mapping_Ok__c == false)) {
 					answersNotMapped.add(currentAnswer);
 				} else if (mapFound.SF_Specific_Processing__c == 'Fileupload.Json.Visible') {
@@ -111,13 +117,18 @@ global without sharing class CW_GxA_Handler {
 							}
 						}
 						when else {
-							System.debug(LoggingLevel.ERROR, 'SF_Target_Object__c - ' + surveyMapping.SF_Target_Object__c + ' - NOT SUPPORTED!!!');
+							System.debug(loggingLevel.ERROR, '____ [cls CW_GxA_Handler - convertAnswersJsonToData] SF_Target_Object__c - ' + surveyMapping.SF_Target_Object__c + ' - NOT SUPPORTED!!!');
 						}
 					}
 				}
 			}
 		}
 
+		for (String currentEquipment : availabilityEquipment.keySet()) {
+			if (availabilityEquipment.get(currentEquipment) == false && capabilitiesConverted.containsKey(currentEquipment)) {
+				capabilitiesConverted.remove(currentEquipment);
+			}
+		}
 		return convertedData;
 	}
 
@@ -152,9 +163,9 @@ global without sharing class CW_GxA_Handler {
 	private static Boolean getDefaultPictureVisibility(Map<String, Boolean> picturesVisibility, String questionId, String equipment) {
 		Boolean defaultVisibility = false;
 		if (picturesVisibility.containsKey(questionId)) {
-			defaultVisibility = picturesVisibility.containsKey(questionId);
+			defaultVisibility = picturesVisibility.get(questionId);
 		} else if (picturesVisibility.containsKey(equipment)) {
-			defaultVisibility = picturesVisibility.containsKey(equipment);
+			defaultVisibility = picturesVisibility.get(equipment);
 		}
 
 		return defaultVisibility;
@@ -249,7 +260,7 @@ global without sharing class CW_GxA_Handler {
 				}
 			}
 			when else {
-				System.debug(LoggingLevel.WARN, 'Specific processing TO-DO: ' + mappingData.SF_Specific_Processing__c + ' => ' + inputValue);
+				System.debug(loggingLevel.ERROR, '____ [cls CW_GxA_Handler - specificProcessing] Specific processing not supported: ' + mappingData.SF_Specific_Processing__c + ' => ' + inputValue);
 			}
 		}
 	}
@@ -287,7 +298,7 @@ global without sharing class CW_GxA_Handler {
 				if (response.contains('.')) {
 					return ((Decimal) JSON.deserialize(response, Decimal.class));
 				} else {
-					return ((Integer) JSON.deserialize(response, Integer.class));
+					return ((Integer) JSON.deserialize(String.valueOf(Integer.valueOf(response)), Integer.class));
 				}
 			}
 			when 'boolean' {
@@ -316,7 +327,7 @@ global without sharing class CW_GxA_Handler {
 				}
 			}
 			when else {
-				System.debug(LoggingLevel.WARN, 'type name to add in convertAnswerResponse: ' + objectsFieldsDescribe.get(objectName).get(fieldName).getDescribe().getType().name().toLowerCase() + ' (' + fieldName + ' => ' + response + ')');
+				System.debug(loggingLevel.ERROR, '____ [cls CW_GxA_Handler - convertAnswerResponse] Type name to add in convertAnswerResponse: ' + objectsFieldsDescribe.get(objectName).get(fieldName).getDescribe().getType().name().toLowerCase() + ' (' + fieldName + ' => ' + response + ')');
 				return null;
 			}
 		}

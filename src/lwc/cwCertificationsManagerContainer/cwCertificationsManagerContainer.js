@@ -37,6 +37,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	@track certificationsRemaining = [];
 	@track certificationDropdowOptions = [];
 	@track allcertificationDropdowOptions = [];
+	@track certificationsAllowedList;
 	@track ceivScope = [];
 	@track sofcScope = [];
 	@track ienvaScope = [];
@@ -243,6 +244,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				this.certificationsRemaining = [];
 				this.certificationDropdowOptions = [];
 				this.allcertificationDropdowOptions = [];
+				let certificationsAllowedList = [];
 				let dataParsed = JSON.parse(response);
 				dataParsed.forEach(cert =>{
 					let usedCert = [];
@@ -270,7 +272,10 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 						}
 						this.certificationDropdowOptions.push(option);
 					}
+
+					certificationsAllowedList.push(valueItems);
 				})
+				this.certificationsAllowedList = certificationsAllowedList;
 			}
 			this.initialized = true;
 		});
@@ -385,6 +390,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 		this.scopeToUse = '';
 		this.showScope = false;
 		this.isCapabCertiMode = false;
+		this.renewMode = false;
 		let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.selectedCert);
 		if(includeCapabilities.length === 0){
 			this.changeViewCapabilitiesCertifications();

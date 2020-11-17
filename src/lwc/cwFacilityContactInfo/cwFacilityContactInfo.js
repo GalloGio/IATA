@@ -97,7 +97,7 @@ export default class CwFacilityContactInfo extends LightningElement {
 	}
 
 	get showSupportedLanguages() {
-		return !(this.facility.recordTypeDevName === "Airline" || this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Trucker");
+		return true;
 	}
 
 	renderedCallback() {

@@ -276,6 +276,10 @@ export default class CwAccountDetailCarousel extends LightningElement {
 		return this.listImages.length > 4 ? true : false;
 	}
 
+	get hasMoreOnePictures() {
+		return this.listImages.length > 1 ? true : false;
+	}
+
 	get lisImagesSize() {
 		let lenghtResults = true;
 		if (this.initialized) {

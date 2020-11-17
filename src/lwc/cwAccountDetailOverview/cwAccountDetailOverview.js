@@ -7,6 +7,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	initialized = false;
 	isLoading = false;
 	mainCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3";
+	facilityAirportCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-4 col-xl-4";
 	//The darker filter version
 	disabledFilter = " disabled-filter-dark";
 	textInformationHover = "Information not verified by IATA";
@@ -36,8 +37,8 @@ export default class CwAccountDetailOverview extends LightningElement {
 	roadFeederRT = ["Airline"];
 	facilitySpaceRT = ["Cargo_Handling_Facility"];
 	onAirportRT = ["Cargo_Handling_Facility"];
-	trucksRT = ["Trucker"];
-	directRampAccessRT = [""];
+	trucksRT = ["Trucker", "Freight_Forwarder"];
+	directRampAccessRT = ["Airline"];
 	overallAirportSizeRT = ["Airport_Operator"];
 	hideAll = [""];
 
@@ -90,11 +91,11 @@ export default class CwAccountDetailOverview extends LightningElement {
 
 	get overallSizeFormatted() {
 		return this.numberToString(this.facility.overallAirportSize);
-    }
-    
-    get showLabelFacilityAirportSizeM2() {
-        return this.facility.recordTypeDevName === "Airport_Operator" ? this.label.icg_overall_aiport_size : this.label.icg_overall_facility_size;
-    }
+	}
+	
+	get showLabelFacilityAirportSizeM2() {
+		return this.facility.recordTypeDevName === "Airport_Operator" ? this.label.icg_overall_aiport_size : this.label.icg_overall_facility_size;
+	}
 
 	renderedCallback() {
 		if (this.initialized) {
@@ -174,7 +175,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	}
 
 	get facilitySpaceCss() {
-		return this.genericCSS(this.facility.FacilitySize);
+		return this.genericfacilityAirportCSS(this.facility.FacilitySize);
 	}
 
 	get onAirportCss() {
@@ -186,7 +187,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	}
 
 	get overallAirportCss() {
-		return this.genericCSS(this.facility.overallAirportSize);
+		return this.genericfacilityAirportCSS(this.facility.overallAirportSize);
 	}
 	get trucksCss() {
 		return this.genericCSS(this.facility.fleet);
@@ -200,6 +201,11 @@ export default class CwAccountDetailOverview extends LightningElement {
 	genericCSS(capability) {
 		return capability ? this.mainCssCapability : this.mainCssCapability + this.disabledFilter;
 	}
+
+	genericfacilityAirportCSS(capability) {
+		return capability ? this.facilityAirportCssCapability : this.facilityAirportCssCapability + this.disabledFilter;
+	}
+	
 
 	updateDataValid(validated) {
 		let customEvent = new CustomEvent("updatedatavalidoverview", { detail: validated });

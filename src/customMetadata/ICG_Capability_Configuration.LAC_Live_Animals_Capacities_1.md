@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Equipment__c;LAC_Handled__c;LAC_Dedicated_Temporary_Storage__c;LAC_Stalls__c;LAC_Total_Surface_Area__c;LAC_Temperature_Control__c</value>
+        <value xsi:type="xsd:string">Equipment__c;LAC_Handled__c;LAC_Dedicated_Temporary_Storage__c;LAC_Stalls__c;LAC_Total_Surface_Area__c;LAC_Temperature_Control__c;TCHA_Temperature_Range__c</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

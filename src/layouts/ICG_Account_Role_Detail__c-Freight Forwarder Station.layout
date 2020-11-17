@@ -106,7 +106,12 @@
                 <field>Number_of_Employees__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fleet__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -142,7 +147,7 @@
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Nearest_Airport__c</field>
             </layoutItems>
             <layoutItems>

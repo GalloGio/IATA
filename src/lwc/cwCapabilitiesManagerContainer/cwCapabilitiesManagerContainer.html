@@ -365,7 +365,7 @@
 																	</template>
 
 																	<template if:false={row.isAssigned}>
-																		<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
+																		<lightning-button if:true={row.isPermissionByDepartment} label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
 																			data-row={row} 
 																			data-super-categories-index={superCategoryIndex}
 																			data-section-index={sectionIndex}
@@ -392,7 +392,7 @@
 																	</template>
 
 																	<template if:false={row.isAssigned}>
-																		<lightning-button label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
+																		<lightning-button if:true={row.isPermissionByDepartment} label={label.icg_capab_magmnt_certify} title="Certify capability" variant="brand" data-action="Certify"
 																			data-row={row} 
 																			data-super-categories-index={superCategoryIndex}
 																			data-section-index={sectionIndex}
@@ -400,6 +400,7 @@
 																			data-category-index={categoryIndex}
 																			data-row-index={rowIndex}
 																		onclick={assigntCapability}></lightning-button>
+																		<label if:false={row.isPermissionByDepartment}>{label.icg_Data_Submission_no_access}</label>
 																	</template>
 																</td>
 															</template>

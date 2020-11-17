@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">Max. ULD Size Dimensions (in m)</value>
+        <value xsi:type="xsd:string">Max. ULD Size Dimensions (in cm)</value>
     </values>
     <values>
         <field>Order__c</field>

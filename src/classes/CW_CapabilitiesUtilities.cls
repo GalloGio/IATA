@@ -23,7 +23,9 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String CONTAINS_DATA = 'containsData';
 	public static final String ACTIVE = 'Active';
 	public static final String SYSTEM_ADMINISTRADOR = 'System Administrator';
-
+	public static final String SMART_FACILITY_REMOTE_VALIDATION = 'Smart Facility Remote Validation';
+	public static final String SFRV_MANAGERS = 'SFRV_MANAGERS';
+	
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 
 	/**
@@ -438,13 +440,21 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		if(result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR){
 			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c includes (:stationRT)];
+			lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
 		}
 		else{
 			List<Group> lstGroup = [SELECT Name FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];
+			Boolean existSFRM = false;
 			for (Group g : lstGroup) {
 				lstDepts.add(g.Name);
+				if(g.Name == SFRV_MANAGERS){
+					existSFRM=true;
+				}
 			}
 			lstCerti = [SELECT Name FROM ICG_Certification__c WHERE Department__c IN :lstDepts];
+			if(existSFRM){
+				lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
+			}
 		}
 		
 		for (ICG_Certification__c c : lstCerti) {
@@ -455,7 +465,7 @@ public with sharing class CW_CapabilitiesUtilities {
 
 	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(String recordId){
 		List<String> acceptFormats = new List<String>{'pdf'};
-		List<CW_CapabilitiesManagerController.CapabilityPhoto> photosCapab = new List<CW_CapabilitiesManagerController.CapabilityPhoto>();
+		Map<String,CW_CapabilitiesManagerController.CapabilityPhoto> photosCapab = new Map<String,CW_CapabilitiesManagerController.CapabilityPhoto>();
 		List<CW_AccountDetailCarousel.Carousel> photosCarousel = new List<CW_AccountDetailCarousel.Carousel>();
 
 		for(ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c 
@@ -464,13 +474,15 @@ public with sharing class CW_CapabilitiesUtilities {
 		{
 			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
 				CW_CapabilitiesManagerController.CapabilityPhoto photo = (CW_CapabilitiesManagerController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_CapabilitiesManagerController.CapabilityPhoto.class);
-					photosCapab.add(photo);
+				if(!photosCapab.containsKey(photo.id)){
+					photosCapab.put(photo.id, photo);
+				}	
 			}
 			
 		}
 
 		Integer index = 0;
-		for(CW_CapabilitiesManagerController.CapabilityPhoto photoParse : photosCapab){
+		for(CW_CapabilitiesManagerController.CapabilityPhoto photoParse : photosCapab.values()){
 			CW_AccountDetailCarousel.Carousel car = new CW_AccountDetailCarousel.Carousel();
 			car.id = photoParse.id;
 			car.name = photoParse.label;

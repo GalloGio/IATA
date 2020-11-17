@@ -1219,6 +1219,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.IEC_Is_Paid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.Is_Remote_Validation__c</field>
         <readable>true</readable>

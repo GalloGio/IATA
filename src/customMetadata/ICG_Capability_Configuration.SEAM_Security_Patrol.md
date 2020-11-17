@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Equipment__c;Availability__c</value>
+        <value xsi:type="xsd:string">Equipment__c;Availability__c;SEAM_Security_Patrol_Type__c</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

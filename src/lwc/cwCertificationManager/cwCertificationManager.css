@@ -17,6 +17,9 @@
 .bt-marine:hover{
     background-color: rgb(41, 57, 162) !important;
 }
+.bt-marine:disabled{
+    background-color: rgb(153, 154, 165) !important;
+}
 .bt-green{
     background-color: rgb(40, 177, 49) !important;
     color: white !important;
@@ -24,6 +27,9 @@
 }
 .bt-green:hover{
     background-color: rgb(32, 144, 39) !important;
+}
+.bt-green:disabled{
+    background-color: rgb(153, 154, 165) !important;
 }
 .bt-yellow{
     background-color: rgb(250,200,50) !important;

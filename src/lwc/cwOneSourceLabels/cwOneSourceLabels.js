@@ -443,6 +443,12 @@ import icg_or_create_a_new_hierarchy from "@salesforce/label/c.icg_or_create_a_n
 import icg_select_an_existing_hierarchy from "@salesforce/label/c.icg_select_an_existing_hierarchy";
 import icg_carousel_info_external_image from "@salesforce/label/c.icg_carousel_info_external_image";
 import icg_please_contact_iata from "@salesforce/label/c.icg_please_contact_iata";
+import contact_us from "@salesforce/label/c.icg_contact_us";
+import icg_nearest_airport_description from "@salesforce/label/c.icg_nearest_airport_description";
+import icg_error_update_facility from "@salesforce/label/c.icg_error_update_facility";
+import icg_successful_save_facility from "@salesforce/label/c.icg_successful_save_facility";
+import icg_facility_invalid_info from "@salesforce/label/c.icg_facility_invalid_info";
+import icg_https_default_value from "@salesforce/label/c.icg_https_default_value";
 
 
 export function labels() {
@@ -892,7 +898,13 @@ export function labels() {
 		icg_or_create_a_new_hierarchy,
 		icg_select_an_existing_hierarchy,
 		icg_carousel_info_external_image,
-		icg_please_contact_iata
+		icg_please_contact_iata,
+        contact_us,
+        icg_nearest_airport_description,
+        icg_error_update_facility,
+        icg_successful_save_facility,
+        icg_facility_invalid_info,
+        icg_https_default_value
 	};
 
 	return labels;

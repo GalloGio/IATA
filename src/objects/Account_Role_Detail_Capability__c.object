@@ -2535,10 +2535,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IATA_XML_Messages_Cargo_Handling_System_Capabilities</fullName>
                 <default>false</default>
             </values>
@@ -3312,10 +3308,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gse_In_Facility</fullName>
                 <default>false</default>
             </values>
@@ -4072,10 +4064,6 @@ url: url where is stored the photo</inlineHelpText>
                 <fullName>Cargo_Handling_System_Audit_Trail_Capacities</fullName>
                 <default>true</default>
             </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
@@ -4761,10 +4749,6 @@ url: url where is stored the photo</inlineHelpText>
                 <fullName>Cargo_Handling_System_Capacities</fullName>
                 <default>true</default>
             </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
@@ -5449,10 +5433,6 @@ url: url where is stored the photo</inlineHelpText>
             <values>
                 <fullName>Cargo_Handling_System_Interface_Capacities</fullName>
                 <default>true</default>
-            </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -6167,10 +6147,6 @@ url: url where is stored the photo</inlineHelpText>
                 <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
                 <default>true</default>
             </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
@@ -6857,10 +6833,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Temp_Controlled_Rooms</fullName>
                 <default>false</default>
             </values>
@@ -7537,10 +7509,6 @@ url: url where is stored the photo</inlineHelpText>
                 <fullName>2_To_8_C</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
@@ -8208,10 +8176,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Documentation_Counters</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8905,10 +8869,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Cargo_Handling_Warehouse_Management_System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9678,10 +9638,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Forklift</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10530,10 +10486,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Gse_In_Facility</fullName>
                 <default>false</default>
             </values>
@@ -11198,10 +11150,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>IATA_XML_Messages_Cargo_Handling_System_Capabilities</fullName>
                 <default>true</default>
@@ -11916,10 +11864,6 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Live_Animals_Capacities_1</fullName>
                 <default>false</default>
             </values>
@@ -12588,10 +12532,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
                 <default>false</default>
@@ -13262,10 +13202,6 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Pre_Cooling_Capacities</fullName>
                 <default>false</default>
             </values>
@@ -13930,10 +13866,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Safety_Personal_And_Protective_Equipment</fullName>
                 <default>false</default>
@@ -14604,10 +14536,6 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Scanners</fullName>
                 <default>false</default>
             </values>
@@ -15272,10 +15200,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>K9_Dogs</fullName>
                 <default>false</default>
@@ -15962,10 +15886,6 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Intruder_Alarm_System</fullName>
                 <default>false</default>
             </values>
@@ -16638,10 +16558,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
                 <default>true</default>
@@ -17328,10 +17244,6 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
                 <default>false</default>
             </values>
@@ -18001,10 +17913,6 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Temperature_Controlled_Handling_Areas</fullName>
                 <default>false</default>
             </values>
@@ -18669,10 +18577,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Temporary_Storage_And_Working_Areas_1</fullName>
                 <default>false</default>
@@ -19342,10 +19246,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Other_Temperature_Control_Equipment</fullName>
                 <default>false</default>
@@ -20024,10 +19924,6 @@ url: url where is stored the photo</inlineHelpText>
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ULD_Storage</fullName>
                 <default>false</default>
             </values>
@@ -20692,10 +20588,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Veterinary_Phytosanitary_And_Pest_Control_1</fullName>
                 <default>false</default>
@@ -21373,10 +21265,6 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
         <picklistValues>
             <picklist>Category__c</picklist>
-            <values>
-                <fullName>GSE_In_Facility_2</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Weight_Volume_And_Dimension_Equipment</fullName>
                 <default>false</default>

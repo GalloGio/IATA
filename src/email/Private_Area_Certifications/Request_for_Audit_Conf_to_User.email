@@ -6,8 +6,9 @@
                 <c:CW_EmailHeader ></c:CW_EmailHeader>
                 <div style="padding: 30px; font-size: 0.9rem;">                    
                     
-                    <c:CW_HelloUser text="Hello" stationData="{!relatedTo.Station__c}"> </c:CW_HelloUser>   
+                    <c:CW_HelloUser text="Hello"> </c:CW_HelloUser>   
                     <c:CW_StationDetails nameList="We confirm that your audit request was submitted  for the following station" stationData="{!relatedTo.Station__c}"></c:CW_StationDetails>
+                    <br/>
                     <c:CW_CertificationDetails stationData="{!relatedTo.Station__c}" notificationData="{!relatedTo.Id}"></c:CW_CertificationDetails>
                     
                     <p style="line-height: 1.8rem;"> An IATA representative will get in touch with you shortly.</p>

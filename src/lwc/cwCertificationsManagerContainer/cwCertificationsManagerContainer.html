@@ -87,7 +87,7 @@
 				</div>
 				<template for:each={certifications} for:item="item">
 					<c-cw-certification-manager label={label} key={item.value} record-id={recordId} station-r-t={valueStationType} refresh-data={getActionToRefresh} available-certifications={allcertificationDropdowOptions} certifications-without-capab={certificationsWithoutCapab}
-					 certification-info={item} lst-certifications={allCertifications} sfoc-scope={sofcScope} ceiv-scope={ceivScope} ienva-scope={ienvaScope}
+					 certification-info={item} lst-certifications-allowed={certificationsAllowedList} sfoc-scope={sofcScope} ceiv-scope={ceivScope} ienva-scope={ienvaScope}
 					  oncertificationdelete={refreshCertificationsAfterDelete} oncertificationrenewed={renewCertification} oneditonlycapabilitiesbycerti={editOnlyCapabilitiesByCerti}
 					   onrenew={renewCertification} oncertificationactivated={refreshAllComponent} ></c-cw-certification-manager>
 				</template>

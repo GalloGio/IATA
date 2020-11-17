@@ -6,7 +6,7 @@ import getNextCertificationID from "@salesforce/apex/CW_CertificationsManagerCon
 export default class CwCertificationManager extends LightningElement {
 	@api recordId;
 	@api certificationInfo;
-	@api lstCertifications;
+	@api lstCertificationsAllowed;
 	@api availableCertifications;
 	@api sfocScope = [];
 	@api ceivScope = [];
@@ -68,12 +68,12 @@ export default class CwCertificationManager extends LightningElement {
 	}
 
 	get hideButton() {
-		let availableButton = this.availableCertifications
-			? this.availableCertifications.filter(elem => {
-					return elem.value === this.certificationInfo.value;
-			  })
-			: [];
-		return availableButton.length < 1;
+			let availableButton = this.availableCertifications
+				? this.availableCertifications.filter(elem => {
+						return elem.value === this.certificationInfo.value;
+				})
+				: [];
+			return availableButton.length < 1;
 	}
 
 	get disableField() {
@@ -95,7 +95,7 @@ export default class CwCertificationManager extends LightningElement {
 	get disableButtonEditCapab() {
 		if (this.certificationsWithoutCapab != undefined && this.certificationsWithoutCapab != null) {
 			let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.certificationInfo.value);
-			if (includeCapabilities.length !== 0 || this.disableButtonsEdit) {
+			if (includeCapabilities.length !== 0  || this.disableCertiNotAllowed) {
 				return true;
 			} else {
 				return false;
@@ -111,11 +111,14 @@ export default class CwCertificationManager extends LightningElement {
 		}
 	}
 
-	get disableButtonsEdit() {
-		if (this.certificationInfo.status === "Expired") {
-			return true;
-		} else {
-			return false;
+	get disableCertiNotAllowed(){
+		if (this.lstCertificationsAllowed != undefined && this.lstCertificationsAllowed != null) {
+			let includeCapabilities = this.lstCertificationsAllowed.filter(cert => cert.value === this.certificationInfo.value);
+			if (includeCapabilities.length === 0) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 

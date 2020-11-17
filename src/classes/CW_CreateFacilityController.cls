@@ -113,7 +113,8 @@ public without sharing class CW_CreateFacilityController {
 		}
 	}
 
-	private static Id getNearestAirportForFacility(String nearestAirportCode) {
+	@AuraEnabled
+	public static Id getNearestAirportForFacility(String nearestAirportCode) {
 		if(nearestAirportCode != null && nearestAirportCode != ''){
 			List<Airport_Detail__c> airportDetail = [Select Id from Airport_Detail__c where Code__c =:nearestAirportCode];
 			if (!airportDetail.isEmpty()){
@@ -180,6 +181,10 @@ public without sharing class CW_CreateFacilityController {
 			Account acc = (Account) JSON.deserialize(account, Account.class);
 			acc.Reason_for_creation__c = 'Created by customer';
 			acc.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','Standard_Account');
+			//Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
+			if (!Test.isRunningTest()) {
+				acc.ownerid = ISSP_Constant.newAccountOwnerId;
+			}
 			insert acc;
 
 			Account_Role__c ar = createOneSourceAccRole(acc.Id);

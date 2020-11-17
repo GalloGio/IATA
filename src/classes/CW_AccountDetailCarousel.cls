@@ -35,7 +35,9 @@ public without sharing class CW_AccountDetailCarousel {
 			//Read only visible photos
 			for(Carousel capabPhoto : listImages){
 				if(capabPhoto.visible){
+					capabPhoto.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
 					listImagesVisible.add(capabPhoto);
+					index++;
 				}
 			}
 

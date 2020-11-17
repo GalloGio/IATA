@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="col-md-5">
                                             <div class="title mb-2-5">
-                                                <strong if:false={editOn}>{facility.name}</strong>
+                                                <strong if:false={editOn}>{facility.titleName}</strong>
                                                 <template if:true={editMode}>
                                                     <input if:true={editOn} name="name" value={facility.name} onblur={handleFacilityNameChange}/>
                                                 </template>
@@ -310,6 +310,45 @@
                                     <c-cw-facility-contact-info label={label} onupdatedatavalidcontactinfo={updateContactInfoValidData} onupdatefacility={updateFacility} facility={facility} edit-mode={editMode}>
                                     </c-cw-facility-contact-info>
                                 </div>
+                                
+                                <div class="row-home" if:true={showNearestAirport}>              
+                                    <div class="col-12">
+                                        <p class="title-airlines-handled">
+                                            <b>{label.nearest_airport}</b>
+                                            <template if:true={editMode}>
+                                                <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOnAirport} variant="error" title={label.close} onclick={showInputAirport} size="x-small"></lightning-icon>
+                                                <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOnAirport} title={label.icg_capab_magmnt_edit} onclick={showInputAirport} size="x-small"></lightning-icon>
+                                            </template>  
+                                        </p>
+                                        <hr class="yellow-underline mt-2">
+                                        <div class="form-row">
+                                            <div class="slds-form-element__control">
+                                                <div class="col-md-12 p-0" if:true={editOnAirport}>
+                                                    <label class="slds-form-element__label" for="nearestairportsearchbox">{label.icg_nearest_airport_description}</label>
+                                                    <div class="slds-form-element__control">
+                                                        <input id="nearestairportsearchbox" type="text" data-tosca="nearestairportinput" 
+                                                            class="slds-input searchbox mb-0 nearestairportsearchbox" value={airportSearchValue} onkeyup={airportPredictiveSearch}
+                                                            autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div data-tosca="predictiveContainer" class="col-xl-12 col-no-padding">
+                                                    <c-cw-predictive-values predictivevalues={predictiveValues}
+                                                    onpredictivevalueselected={setNearestAirport} display-the-box={isairportboxfocus}
+                                                    hide-bottom-section="true">
+                                                    </c-cw-predictive-values>
+                                                </div>
+                                                <div class="selectedAirport div-tags collapse-tags" if:true={selectedAirport}>
+                                                    <div if:true={editOnAirport}>
+                                                        <lightning-pill key={selectedAirport.value} label={selectedAirport.label} data-value={selectedAirport.value} onremove={removeSelectedAirport}></lightning-pill>
+                                                    </div>
+                                                    <div if:false={editOnAirport}>
+                                                        <lightning-pill key={selectedAirport.value} label={selectedAirport.label} data-value={selectedAirport.value} class="hideClosePill"></lightning-pill>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <!-- SHOW IF RT = RAMP HANDLER || CARGO || AIRPORT-->
                                 <template if:true={showAirlines}>
@@ -367,7 +406,7 @@
                                             <br />
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <c-cw-handled-airlines label={label}  filter-text={filterTextOperatingCHF} isreadonly={editCargoHandling} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
+                                                    <c-cw-handled-airlines class="cmpOperatingCHF" label={label}  filter-text={filterTextOperatingCHF} isreadonly={editCargoHandling} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
                                                 
                                                 </div>
                                             </div>
@@ -398,7 +437,7 @@
                                             <br />
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <c-cw-handled-airlines label={label} isreadonly={editRampHandlers} raw-data={onAirportRampH}
+                                                    <c-cw-handled-airlines class="cmpRampHandlers" label={label} isreadonly={editRampHandlers} raw-data={onAirportRampH}
                                                         filter-text={filterTextRampH} onselectairlines={hideRampHandlers}></c-cw-handled-airlines>
                                                 </div>
                                             </div>

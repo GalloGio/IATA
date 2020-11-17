@@ -78,7 +78,7 @@ public without sharing class CW_LandingSearchBarController {
 		valueMap = fetchAirports(valueMap);
 
 		for (ICG_Account_Role_Detail__c accd : [SELECT Id, City_FOR__c, Search_By_City__c, State_Province_FOR__c,
-												Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, 
+												Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c,
 												Nearest_Airport__r.City__c, Nearest_Airport__r.IATA_ISO_Country__r.Name, Country_FOR__c
 												FROM ICG_Account_Role_Detail__c
 												WHERE isApproved__c = true]) {
@@ -123,12 +123,21 @@ public without sharing class CW_LandingSearchBarController {
 			}
 
 			
-			// locCountry
+			/** locCountry key */
 			String locCountryKey = (accd.Country_FOR__c + '#' + COUNTRYSTR).toLowerCase();
+
 			if (valueMap.containsKey(locCountryKey)) {
 				valueMap.get(locCountryKey).value += 1;
-				valueMap.get(locCountryKey).stationsIds += '#'+accd.Id;				
-			} 
+				valueMap.get(locCountryKey).stationsIds += '#' + accd.Id;
+			}
+
+			/** Adding nearestAirport.Country to the predictive values */
+			String locNearestAirCountry = (accd.Nearest_Airport__r.IATA_ISO_Country__r.Name + '#' + COUNTRYSTR).toLowerCase();
+
+			if(!locCountryKey.equalsIgnoreCase(locNearestAirCountry) && valueMap.containsKey(locNearestAirCountry)) {
+				valueMap.get(locNearestAirCountry).value += 1;
+				valueMap.get(locNearestAirCountry).stationsIds += '#' + accd.Id;
+			}
 
 			// locAirport
 			String locAirportKey = (accd.Nearest_Airport__r.Airport_Name__c + '#' + AIRPORTSTR).toLowerCase();

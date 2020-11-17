@@ -296,7 +296,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		event.preventDefault();
 		this.closeFacilityNameAndTypeModal();
 		this.closeStationInNewAddressPrompt();
-		let validFields = this.checkFormFields();
+		let validFields = this.checkFormFields(true);
 		if (validFields) {
 			this.collectFormData();
 			this.step = event.currentTarget.dataset.substep ? Number((this.step + 0.1).toFixed(1)) : (~~this.step)+1;
@@ -310,7 +310,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			this.scrollToTop();
 		}
 	}
-	checkFormFields() {
+	checkFormFields(isNextCall) {
 		const inputValid = [...this.template.querySelectorAll("input")].reduce(
 			(validSoFar, inputCmp) => {
 				if (validSoFar) inputCmp.reportValidity();
@@ -325,7 +325,21 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			},
 			true
 		);
-		return inputValid && selectValid;
+		
+        let validNearestAirpot = this.step === 3 ? false : true;
+        validNearestAirpot = isNextCall ? validNearestAirpot : true;
+		
+		if (this.selectedAirport){
+			validNearestAirpot = true;
+		}
+		else{
+			let nearestAiport = this.template.querySelector('.nearestairportsearchbox');
+			if (nearestAiport){
+				nearestAiport.focus();
+			}
+		}
+
+		return inputValid && selectValid && validNearestAirpot;
 	}
 
 	back(event) {
@@ -684,8 +698,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				}
 				if(!this.existingStationTypeNotif){
 					this.selectRt = false;
-                    this.selectStationName = true;
-                    this.setFocusStationName();
+					this.selectStationName = true;
+					this.setFocusStationName();
 				} 
 			}else if(this.selectStationName){
 				if(this.selectedCompany && this.selectedCompany.stations){
@@ -708,8 +722,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		this.existingStationNotif = false;
 		if(event.currentTarget.dataset.continue){
 			this.selectRt = false;
-            this.selectStationName = true;
-            this.setFocusStationName();
+			this.selectStationName = true;
+			this.setFocusStationName();
 		}else{
 			this.selectRt = true;
 			this.selectStationName=false;
@@ -795,30 +809,34 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get onlinePlatform(){
-		return this.additionalData && this.additionalData.onlineplatform ? this.additionalData.onlineplatform : 'https://';
+		return this.additionalData && this.additionalData.onlineplatform ? this.additionalData.onlineplatform : this.label.icg_https_default_value;;
 	}
 
 	get websiteValue(){
-		return this.additionalData && this.additionalData.website ? this.additionalData.website : 'https://';
+		return this.additionalData && this.additionalData.website ? this.additionalData.website : this.label.icg_https_default_value;
     }
-    
+
+	get pilotInfoValue(){
+		return this.additionalData && this.additionalData.pilotinfo ? this.additionalData.pilotinfo : this.label.icg_https_default_value;
+    }
+	
 	get onlinePlatformSummaryValue(){
 		if (this.additionalData && this.additionalData.website){
-            return this.additionalData.website === 'https://' ? '' : this.additionalData.website;
-        } 
-        else{
-            return '';
-        }
-    }
-    
+			return this.additionalData.website === this.label.icg_https_default_value ? '' : this.additionalData.website;
+		} 
+		else{
+			return '';
+		}
+	}
+	
 	get websiteSummaryValue(){
 		if (this.additionalData && this.additionalData.onlineplatform){
-            return this.additionalData.onlineplatform === 'https://' ? '' : this.additionalData.onlineplatform;
-        } 
-        else{
-            return '';
-        }
-    }
+			return this.additionalData.onlineplatform === this.label.icg_https_default_value ? '' : this.additionalData.onlineplatform;
+		} 
+		else{
+			return '';
+		}
+	}
 
 	registerStation(){
 		this.objectBeingCreated = 'Station';
@@ -828,9 +846,9 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			RecordTypeId : this.formData.recordtype,
 			Number_of_Employees__c : parseInt(this.additionalData.noemployees || 0,10),
 			Number_of_Facilities__c : parseInt(this.additionalData.nofacilities || 0,10),
-            Overall_Facility_Size_m2__c : (this.companyType === "Cargo_Handling_Facility") ? parseInt(this.additionalData.overallFacilitySizeM2 || 0,10) : 0,
-            Overall_Airport_Size__c : (this.companyType === "Airport_Operator") ? parseInt(this.additionalData.overallFacilitySizeM2 || 0,10) : 0,
-            Fleet__c : parseInt(this.additionalData.fleet || 0,10),
+			Overall_Facility_Size_m2__c : (this.companyType === "Cargo_Handling_Facility") ? parseInt(this.additionalData.overallFacilitySizeM2 || 0,10) : 0,
+			Overall_Airport_Size__c : (this.companyType === "Airport_Operator") ? parseInt(this.additionalData.overallFacilitySizeM2 || 0,10) : 0,
+			Fleet__c : parseInt(this.additionalData.fleet || 0,10),
 			Customer_Service_Email__c : this.additionalData.email,
 			Customer_Service_Phone_Number__c : this.additionalData.phone,
 			Website__c : this.additionalData.website,
@@ -849,8 +867,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			Dangerous_Goods__c : this.additionalData.dangerousGoods,
 			Airmail__c : this.additionalData.airmail,
 			Perishables__c : this.additionalData.perishables,
-            Pharmaceuticals__c : this.additionalData.pharmaceuticals,
-            Road_Feeder_Services__c : this.additionalData.roadFeederServices
+			Pharmaceuticals__c : this.additionalData.pharmaceuticals,
+			Road_Feeder_Services__c : this.additionalData.roadFeederServices
 		}
 
 		let accountId = this.parentCompany
@@ -1212,8 +1230,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get showOperatingCHFandRampH() {
-		return ((this.companyType === 'Airport_Operator' ||
-			this.companyType === 'Airline') && this.selectedAirport && (this.onAirportOperatingCHF.length > 0 || this.onAirportRampH.length > 0));
+		return ((this.companyType === 'Airport_Operator' || this.companyType === 'Airline') && this.selectedAirport);
 	}
 
 	setLanguages(event) {
@@ -1379,7 +1396,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 
 		this.companyTypesRaw.forEach(ctype => {
 			if (sector && category && ctype.value) {
-				ctype.available = this.isCompanyTypeAvailable('Label', sector.toLowerCase(), category.toLowerCase(), ctype.value.toLowerCase());
+				ctype.available = this.isCompanyTypeAvailable(sector.toLowerCase(), category.toLowerCase(), ctype.value.toLowerCase());
 			} else {
 				ctype.available = false;
 			}
@@ -1387,11 +1404,17 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return this.companyTypesRaw;
 	}
 
-	isCompanyTypeAvailable(NameOrLabelProperty, sector, category, ctypeName) {
+	isCompanyTypeAvailable(sector, category, ctypeName) {
 		for (let sectorX = 0; sectorX < this.ctypesMapBySectorAndCategory.sectors.length; sectorX++){
-			if (this.ctypesMapBySectorAndCategory.sectors[sectorX]['sector' + NameOrLabelProperty].toLowerCase() === sector && this.ctypesMapBySectorAndCategory.sectors[sectorX].categories) {
+			if ((this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorName.toLowerCase() === sector || this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorLabel.toLowerCase() === sector )
+				&& this.ctypesMapBySectorAndCategory.sectors[sectorX].categories
+			) {
 				for (let categoryX = 0; categoryX < this.ctypesMapBySectorAndCategory.sectors[sectorX].categories.length; categoryX++){
-					if (this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX]['category' + NameOrLabelProperty] === '*' || this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX]['category' + NameOrLabelProperty].toLowerCase() === category) {
+					if (
+						this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryName === '*' ||
+						this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryName.toLowerCase() === category ||
+						this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].categoryLabel.toLowerCase() === category
+					) {
 						if (this.ctypesMapBySectorAndCategory.sectors[sectorX].categories[categoryX].allowedTypes.indexOf(ctypeName) > -1) {
 							return true;
 						}
@@ -1733,29 +1756,29 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return this.companyType === "Ramp_Handler";
 	}
 
-    get showRoadFeederServices() {
-        return this.companyType === "Airline";
-    }
+	get showRoadFeederServices() {
+		return this.companyType === "Airline";
+	}
 
-    get showOperatingCHFList() {
-        return this.companyType === "Airline";
-    }
+	get showOperatingCHFList() {
+		return this.companyType === "Airline";
+	}
 
-    get showOperatingRampHandlersList() {
-        return this.companyType === "Airline";
-    }
+	get showOperatingRampHandlersList() {
+		return this.companyType === "Airline";
+	}
 
-    get showOverallFacilitySizeM2() {
-        return this.companyType === "Cargo_Handling_Facility" || this.companyType === "Airport_Operator";
-    }
+	get showOverallFacilitySizeM2() {
+		return this.companyType === "Cargo_Handling_Facility" || this.companyType === "Airport_Operator";
+	}
 
-    get showFleet() {
-        return this.companyType === "Trucker";
-    }
+	get showFleet() {
+		return this.companyType === "Trucker" || this.companyType === "Freight_Forwarder";
+	}
 
-    get showLabelFacilityAirportSizeM2() {
-        return this.companyType === "Airport_Operator" ? this.label.icg_overall_aiport_size : this.label.icg_overall_facility_size;
-    }
+	get showLabelFacilityAirportSizeM2() {
+		return this.companyType === "Airport_Operator" ? this.label.icg_overall_aiport_size : this.label.icg_overall_facility_size;
+	}
 	get showOnlineBooking() {
 		return this.companyType !== "Airport_Operator";
 	}
@@ -1763,20 +1786,20 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return this.companyType === "Airport_Operator";
 	}
 	get showSupportedLanguages() {
-		return !(this.companyType === "Airline" || this.companyType === "Airport_Operator" || this.companyType === "Trucker");
-    }
-    get showAirlines(){
+		return true;
+	}
+	get showAirlines(){
 		return this.showListAirlines || this.showOperatingAirlines;
-    }
-    get getListAirIcon() {
+	}
+	get getListAirIcon() {
 		return resources + "/icons/company_type/cargo_com_airline.jpg";
 	}
 	get showOnAiport() {
 		return this.companyType === "Cargo_Handling_Facility";
-    }
-    get showNearestAirport() {
-        return this.companyType !== "Trucker";
-    }
+	}
+	get showNearestAirport() {
+		return true;
+	}
 
 	registerNewAccount(){
 		// The event data needs to indicate if the creation form is fine. Let's say that if data is null, it means the form is invalid
@@ -1956,7 +1979,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get showDirectRampAccess(){
-		return false;
+		return this.companyType === "Airline";
 	}
 
 	get addressGeo(){
@@ -1969,15 +1992,12 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		}
 		
 		return addressGeoObj;
-    }
-    
-    setFocusStationName(){
-        console.log('setFocusStationName');
-        let fieldToFocus = this.template.querySelector('[data-tosca="name"]');
-        if(fieldToFocus){
-            console.log('fieldFocus');
-            fieldToFocus.focus();
-        }
-    }
+	}
 	
+	setFocusStationName(){
+		let fieldToFocus = this.template.querySelector('.inputName');
+		if(fieldToFocus){
+			fieldToFocus.focus();
+		}
+	}
 }

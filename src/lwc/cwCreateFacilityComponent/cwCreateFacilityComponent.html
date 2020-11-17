@@ -325,7 +325,7 @@
                 </template>
             </div>
 
-            <div class="slds-form-element">
+            <div>
                 <p><b>{label.station_overview}</b></p>
                 <hr class="yellow-underline mb-2-5">
                 <div class="form-row">
@@ -386,10 +386,10 @@
                     </div>
                 </div>
             </div>
-
+<!--
             <div class="slds-form-element">
                 <div class="form-row">
-                    <!-- <div class="col">
+                     <div class="col">
                         <div class="slds-form-element">
                             <label class="slds-form-element__label" for="nofacilities">{label.number_of_facilities_at_station}</label>
                             <div class="slds-form-element__control">
@@ -397,19 +397,17 @@
                                     id="nofacilities" value={additionalData.nofacilities} />
                             </div>
                         </div>
-                    </div> -->
-                    <div class="col m-auto">
-                        <div class="slds-form-element" if:true={showOnAiport}>                       
-                            <div class="slds-form-element__control">
-                                <div class="slds-checkbox">
-                                    <input type="checkbox" name="onairport" data-tosca="onairport" id="onairport" value={additionalData.onairport}/>
-                                    <label class="slds-checkbox__label" for="onairport">
-                                        <span class="slds-checkbox_faux"></span>
-                                        <span class="slds-form-element__label">{label.on_airport}</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                    </div> 
+                </div>
+            </div>-->
+            <div class="slds-form-element" if:true={showOnAiport}>                       
+                <div class="slds-form-element__control">
+                    <div class="slds-checkbox">
+                        <input type="checkbox" name="onairport" data-tosca="onairport" id="onairport" value={additionalData.onairport}/>
+                        <label class="slds-checkbox__label" for="onairport">
+                            <span class="slds-checkbox_faux"></span>
+                            <span class="slds-form-element__label">{label.on_airport}</span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -439,7 +437,7 @@
                 <label class="slds-form-element__label" for="website">{label.icg_pilotInformation}</label>
                 <div class="slds-form-element__control">
                     <input type="text" name="pilotinfo" data-tosca="pilotinfo" class="slds-input" id="pilotinfo"
-                        value={additionalData.pilotinfo}>
+                        value={pilotInfoValue}>
                 </div>
             </div>
             <div class="slds-form-element" if:true={showOnlineBooking}>
@@ -452,7 +450,7 @@
             <div class="form-row">
                 <div class="col" if:true={showSupportedLanguages}>
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="languages">{label.languages_spoken}</label>
+                        <label class="slds-form-element__label" for="langsearchbox">{label.languages_spoken}</label>
                         <div class="slds-form-element__control">
                             <div class="col-md-12 p-0">
                                 <div class="slds-form-element__control">
@@ -479,12 +477,14 @@
             <div class="form-row" if:true={showNearestAirport}>              
                 <div class="col">
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="nearestairportsearchbox">{label.nearest_airport}</label>
+                        <label class="slds-form-element__label" for="nearestairportsearchbox">{label.nearest_airport}*</label>
+                        <br/>
+                        <label class="slds-form-element__label" for="nearestairportsearchbox">{label.icg_nearest_airport_description}</label>
                         <div class="slds-form-element__control">
                             <div class="col-md-12 p-0">
                                 <div class="slds-form-element__control">
-                                    <input id="nearestairportsearchbox" type="text" data-tosca="nearestairportinput"
-                                        class="slds-input searchbox mb-0" value={airportSearchValue} onkeyup={airportPredictiveSearch}
+                                    <input id="nearestairportsearchbox" type="text" data-tosca="nearestairportinput" 
+                                        class="slds-input searchbox mb-0 nearestairportsearchbox" value={airportSearchValue} onkeyup={airportPredictiveSearch}
                                         autocomplete="off">
                                 </div>
                             </div>
@@ -851,7 +851,7 @@
                         <label for="name">
                             <h3>{label.new_station_name}</h3>
                         </label>
-                        <input type="text" placeholder={label.enter_station_name} required class="form-control" name="name" data-tosca="name" id="name" value={formData.name}>
+                        <input type="text" placeholder={label.enter_station_name} required class="form-control inputName" name="name" data-tosca="name" id="name" value={formData.name}>
                     </div>
                 </div>
 

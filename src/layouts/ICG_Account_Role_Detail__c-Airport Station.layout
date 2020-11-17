@@ -53,6 +53,10 @@
                 <behavior>Edit</behavior>
                 <field>Available_Languages__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Pilot_Information__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -143,7 +147,7 @@
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Nearest_Airport__c</field>
             </layoutItems>
             <layoutItems>

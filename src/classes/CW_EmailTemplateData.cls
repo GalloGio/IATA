@@ -185,6 +185,17 @@ public without sharing class CW_EmailTemplateData {
 		return approveUrl;
 	}
 
+	public String getApprovalUrl(){		
+		String approvalUrl = getPrivateAreaUrl(); 
+		if(getContactRoleDetails() != null){
+			approvalUrl += '#Pending%20User%20Approvals';
+		}
+		else if (getStationDetails() != null){
+			approvalUrl += '#Pending%20Facility%20Approvals';
+		}
+		return approvalUrl;
+	}
+
 	public Contact getContactRoleDetailContact(){
 
 		List<Contact> crdContact;

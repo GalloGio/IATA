@@ -23,6 +23,9 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import labels from "c/cwOneSourceLabels";
 import { loadScript } from "lightning/platformResourceLoader";
 import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, connectTwitter, connectLinkedin, sendMail, concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, getImageString, getIataSrc, getIataTooltip, hideHover, compressQueryParams } from "c/cwUtilities";
+import fetchAirports from "@salesforce/apex/CW_LandingSearchBarController.fetchAirports";
+import getOnAirportStations from '@salesforce/apex/CW_CreateFacilityController.getOnAirportStations';
+import getNearestAirportForFacility from "@salesforce/apex/CW_CreateFacilityController.getNearestAirportForFacility";
 
 export default class CwFacilityPageContainer extends NavigationMixin(LightningElement) {
 	_facilityid;
@@ -84,6 +87,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track modalMessage = "When you perform an action, this modal appears with extra info.";
 	@track modalImage = this.CHECKED_IMAGE;
 	@track editAirlines = true;
+	@track editAirport = true;
 	@track editCargoHandling = true;
 	@track editRampHandlers = true;
 	checkedImage = this.CHECKED_IMAGE;
@@ -94,6 +98,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track editOnAirline = false;
 	@track editOnCargoHandling = false;
 	@track editOnRampHandlers = false;
+	@track editOnAirport = false;
 
 	//Handled Airlines tracks
 	@track toDeleteSelectedAirlines = [];
@@ -104,6 +109,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track toAddRampHandlers = [];
 	@track toDeleteRampHandlers = [];
 	
+	@track airportSearchValue = '';
+	@track predictiveValues;
+	@track hqSearchValue = '';
+	@track selectedAirport;
+	@track availableAirports = [];
+	airportsFetched = false;
+	@track isairportboxfocus;
 	
 	sendActionToSave = false;
 	isSaveCapabMangmn = false;
@@ -204,16 +216,21 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					id = urlParams.eid.replace(/[^a-zA-Z0-9]/g, "");
 					this.getData(id);
 					this.getUserRoleJS(id);
-					
-
 				}
 			} else {
 				this.getUserRoleJS(this._facilityid);
 			}
 			this.opsHierarchyUser(this._facilityid);
-			
 		}
 		
+		this.addEventListeners();
+            
+        if(this.availableAirports.length === 0 && !this.airportsFetched){
+            fetchAirports().then(data =>{
+                this.availableAirports = data;
+                this.airportsFetched = true;
+            })
+        }
 	}
 
 	get getStyleListAir() {
@@ -328,18 +345,20 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				if (this.results && this.results.length > 0) {
 					this.facility = this.results[0].facility;
 					this.facility.lstAvailableCertifications = this.results[0].lstAvailableCertifications;
-					this.detailCertFacility = this.results[0].lstAvailableCertifications;
-
+                    this.detailCertFacility = this.results[0].lstAvailableCertifications;
+                    
+                    if (this.facility.nearestAirport.name != null && this.facility.nearestAirport.city != null){
+                         this.selectedAirport = {value: this.facility.nearestAirport.name, label: this.facility.nearestAirport.city + ' ' +this.facility.nearestAirport.name};
+                    }
+                    
+                    this.onAirportOperatingCHF = [];
+                    this.onAirportRampH = [];
 					this.selectedAirlines = this.facility.handledAirlines;
 					if(this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
 							this.populateOperatingStations(facility);
 						});
-					}else{
-						this.facility.operatingStations.forEach(facility => {
-							this.populateOperatingStations(facility);
-						});
-					}					
+					}				
 					this.updateLocationValid();
 					this.getCompanyAdminsFromDB(this.facility.companyId);
 					this.getFacilityManagersFromDB(this.facility.Id);
@@ -672,12 +691,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	updateHiddenOperatingStations(){
 		let hiddenOperatingStations = this.hiddenCargoStations && this.hiddenCargoStations.length > 0 ? 'OperatingCargo:'+this.hiddenCargoStations.join(',')+'|': '';
 		hiddenOperatingStations += this.hiddenRampHandlers && this.hiddenRampHandlers.length > 0 ? 'OperatingRamp:'+this.hiddenRampHandlers.join(',')+'|':'';
-		saveHiddenOperatingStations({hiddenOperatingStations : hiddenOperatingStations,facilityId : this.facility.Id}).then(result => {
+        console.log('this.hiddenRampHandlers' + JSON.stringify(this.hiddenRampHandlers));
+        saveHiddenOperatingStations({hiddenOperatingStations : hiddenOperatingStations,facilityId : this.facility.Id}).then(result => {
 			if(!result){
-				this.showToast("Error", "Something went wrong while updating the facility", "error");
+				this.showToast("Error", this.label.icg_error_update_facility, "error");
 			}
 		}).catch(exception => { 
-			this.showToast("Error", "Something went wrong while updating the facility", "error");
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
 			console.error(exception);
 		});
 	}
@@ -880,7 +900,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	setFacilityInfo(id, key, value) {
 		this.loaded = false;
 		this.facility = JSON.parse(JSON.stringify(this.facility));
-		
 		if (this.saveOnTheFly) {
 			setFacilityInfo_({ id, key, value })
 				.then(response => {
@@ -945,7 +964,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		if(saveBtn){
 			const btnClasses = saveBtn.classList.value;
 			if (btnClasses.includes("disabled")) {
-				this.showToast("Warning", "Some information is missing or invalid", "warning");
+				this.showToast("Warning", this.label.icg_facility_invalid_info, "warning");
 				return;
 			}
 		}
@@ -980,16 +999,20 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			Secondary_Address__c: this.facility.secondAddress,
 			name: this.facility.name,
 			Id: this.facility.Id,
-			Pilot_Information__c: this.facility.pilotInformation
-		}
-
+            Pilot_Information__c: this.facility.pilotInformation
+        }
+               
+        if (this.facility.nearestAirportObj != null){
+            this.facility.Nearest_Airport__c = this.facility.nearestAirportObj;
+        }
+        
 		let jsonInput = JSON.stringify(objToSave);
 
 		this.loaded = false;
 		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject), geoLocationInfo: JSON.stringify(this.geoLocationInfoObject) })
 			.then(response => {
 				if (response.result.status == "OK") {
-					this.showToast("Success", "Facility information successfully saved", "success");
+					this.showToast("Success", this.label.icg_successful_save_facility, "success");
 
 					let facilityId = this.facilityid ? this.facilityid : this.facility.Id;
 					if(facilityId){
@@ -1002,7 +1025,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 						this.loaded = true;
 					}
 				} else if (response.result.status == "error") {
-					this.showToast("Error", "Something went wrong while updating the facility", "error");
+					this.showToast("Error", this.label.icg_error_update_facility, "error");
 					this.loaded = true;
 				}
 			})
@@ -1015,7 +1038,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		this.saveRampHandlers();
 		this.editOn = false;
 		this.editOnAirline = false;
-		this.editOnCargoHandling = false;
+        this.editOnCargoHandling = false;
+        this.editOnAirport = false;
 		this.editOnRampHandlers = false;
 		this.template.querySelectorAll('.cmpEditable').forEach(elem =>{
 			elem.editOff();
@@ -1153,10 +1177,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				reader.readAsDataURL(this.logoImage[0]);
 			}
 		}
-
-		
-
-		
 	}
 
 	showInputAirlines(event){
@@ -1166,7 +1186,15 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}else{
 			this.editAirlines = true;
 		}
+	}
 
+	showInputAirport(event){
+		this.editOnAirport = !this.editOnAirport;
+		if(this.editOnAirport){
+			this.editAirport = false;
+		}else{
+			this.editAirport = true;
+		}
 	}
 
 	showInputCargoHandling(event){
@@ -1212,13 +1240,105 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				latitude: updatedLatitude
 			}
 		}
-		
-		
-		
 	}
 
 	get addressGeo(){
 		return this.facility && this.facility.location && this.facility.location.location ? this.facility.location.location : null;
+    }
+
+	setNearestAirport(event){
+		event.preventDefault();
+		this.selectedAirport = {value: event.detail.item, label: event.detail.value}
+        this.getOnAirportStationsJS();
+
+        getNearestAirportForFacility({ nearestAirportCode: event.detail.item}).then(response => {
+            this.setFacilityInfo(this.facility.Id, 'nearestAirportObj', response);
+        })
+        .catch(error => {
+            console.error("error", error);
+            this.showToast("Error", this.label.icg_error_update_facility, "error");
+        });
+        
+        this.airportSearchValue = '';
+        this.isairportboxfocus = false;
+    }
+
+	getOnAirportStationsJS(){
+		this.onAirportOperatingCHF = [];
+        this.onAirportRampH = [];
+
+        getOnAirportStations({
+            rtype : this.facility.recordTypeDevName, 
+            accountName : this.facility.accountName, 
+            airportId : this.selectedAirport.value, 
+            accountId : null 
+        }).then(res => {
+            let parsedRes = JSON.parse(res);
+			parsedRes.forEach(station => {
+				station.originallySelected = station.selected;
+				this.populateOperatingStations(station);
+            })
+            
+            let cmpCHF = this.template.querySelector(".cmpOperatingCHF");
+            cmpCHF.rawData = this.onAirportOperatingCHF;
+            cmpCHF.RefreshData();
+            
+            let cmpRamp = this.template.querySelector(".cmpRampHandlers");
+            cmpRamp.rawData = this.onAirportRampH;
+            cmpRamp.RefreshData();
+		})
 	}
 
+	removeSelectedAirport(event){
+		event.preventDefault();
+		this.selectedAirport = null;
+		this.onAirportOperatingCHF = [];
+		this.onAirportRampH = [];
+	}
+    
+    airportPredictiveSearch(event) {
+		this.isairportboxfocus = true;
+		this.predictiveValues = [];
+		this.airportSearchValue = this.generateValueFromEvent(event, this.airportSearchValue);
+		if (this.invalidFilterValue(this.airportSearchValue)) {
+			return;
+		}
+
+		this.predictiveValues = Object.values(this.availableAirports).filter(entry => {
+			return entry.description.toLowerCase().indexOf(this.airportSearchValue.toLowerCase()) > -1 || entry.keyName.toLowerCase().indexOf(this.airportSearchValue.toLowerCase()) > -1;
+		})
+		.map(element => {
+			return {
+				value: element.code,
+				key: element.code,
+				label: element.description,
+			}
+		});
+	}
+
+	invalidFilterValue(value){
+		return !value || value.length < 3;
+	}
+
+	generateValueFromEvent(event, value){
+		return event && event.target ? event.target.value : value ? value : "";
+    }
+    
+	get showNearestAirport() {
+		return true;
+    }
+    
+    addEventListeners() {
+		//PredictiveBox NearestAiroprt Listener
+		let airportbox = this.template.querySelector('[data-tosca="nearestairportinput"]');
+		if (airportbox && !this.airportSelectorEventListenersAdded) {
+			airportbox.addEventListener("focus", event => {
+				this.airportPredictiveSearch();
+			});
+			airportbox.addEventListener("blur", event => {
+				this.isairportboxfocus = false;
+			});
+			this.airportSelectorEventListenersAdded = true;
+		}
+	}
 }

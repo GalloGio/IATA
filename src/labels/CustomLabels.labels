@@ -51862,4 +51862,52 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>icg please contact iata</shortDescription>
         <value>Please contact IATA.</value>
     </labels>
+    <labels>
+        <fullName>icg_contact_us</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg contact us</shortDescription>
+        <value>Contact Us</value>
+    </labels>
+    <labels>
+        <fullName>icg_nearest_airport_description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg nearest airport description</shortDescription>
+        <value>- Enter (nearest) Airport code where your Station is located</value>
+    </labels>
+    <labels>
+        <fullName>icg_error_update_facility</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg error update facility</shortDescription>
+        <value>Something went wrong while updating the facility</value>
+    </labels>
+    <labels>
+        <fullName>icg_successful_save_facility</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg successful save facility</shortDescription>
+        <value>Facility information successfully saved</value>
+    </labels>
+    <labels>
+        <fullName>icg_facility_invalid_info</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg facility invalid info</shortDescription>
+        <value>Some information is missing or invalid</value>
+    </labels>
+    <labels>
+        <fullName>icg_https_default_value</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg https default value</shortDescription>
+        <value>https://</value>
+    </labels>
 </CustomLabels>

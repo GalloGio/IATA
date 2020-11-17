@@ -311,6 +311,10 @@ export default class CwHandledAirlines extends LightningElement {
 	}
 
 	renderedCallback() {
+		this.LoadData();
+	}
+	
+	LoadData(){
 		if (!this.initialized) {
 			if (!this.rawData) {
 				getAllAirlines().then(data => {
@@ -339,5 +343,10 @@ export default class CwHandledAirlines extends LightningElement {
 			airline.selected = this.preselectedAirlines.some(preselected => airline.value === preselected.value);
 			return airline;
 		});
+	}
+	
+	@api RefreshData(){
+		this.initialized = false;
+		this.LoadData();
 	}
 }

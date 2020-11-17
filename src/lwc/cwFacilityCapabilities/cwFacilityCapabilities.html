@@ -325,14 +325,12 @@
 																						</p>
 																					</th>
 																				</template>
-
 																				<template if:true={editMode}>
-																					<template if:true={isPrivateArea}>
+																					<template if:true={isPrivateArea}>													
 																						<template if:true={currentCategory.isEditableRecordType}>
 																							<th if:true={currentfield.first}
 																								key={currentfield.value.name}
-																								class="first-column">
-														
+																								class="first-column">													
 																							</th>
 																							<template if:true={isStationManager}>
 																								<template if:false={currentfield.value.isformula}>
@@ -368,6 +366,10 @@
 																							scope="col"
 																							colspan={currentfield.value.colspan}>
 																							{currentfield.value.label}
+																						</th>
+																						<th if:true={currentfield.first}
+																							key={currentfield.value.name}
+																							class="first-column">													
 																						</th>
 																					</template>	
 																																								
@@ -416,15 +418,13 @@
 																				class="certifications-stamp"></th>
 
 																			<template if:true={editMode}>
-																				<th if:false={currentcapability.value.isEditableRecordType}
-																					key={currentheader.value.name} scope="col" class="photo-colum-head">
-																					{label.manage_photos}</th>
+																				<th key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
 																				<template if:true={isPrivateArea}>
 																					<template if:true={isStationManager}>
 																						<th if:true={currentcapability.value.isEditableRecordType}
 																							key={currentheader.value.name} scope="col" class="photo-colum-head">
 																							Upload obligation documentation</th>
-																						</template>
+																					</template>
 																				</template>	
 																				<th key={currentheader.value.name} scope="col"
 																					class="certifications-stamp"></th>
@@ -648,7 +648,7 @@
 																				</template>
 																			</template>	
 																			<template if:false={isPrivateArea}>
-																				<template if:false={currentCategory.isEditableRecordType}>
+																				
 																					<td  class="row-separator photo-colum" 
 																					data-super-categories-index={currentsupercategory.index}
 																					data-section-index={currentsection.index}
@@ -675,7 +675,7 @@
 																							<img src={infoIcon} width="20px" />
 																						</button>
 																					</td>
-																				</template>
+																				
 																			</template>															
 																		</template>
 																		<template if:false={editMode}>

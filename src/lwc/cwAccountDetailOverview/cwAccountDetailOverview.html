@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="facility-overview-item-content text-blue">
                                     <p class="text-truncate">
-                                        {showLabelFacilityAirportSizeM2}
+                                        {facilitySizeFormatted} {showLabelFacilityAirportSizeM2}
                                     </p>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                         <!--VISIBLE RESPONSIVE VERSION-->
                         <div class="visible-md text-left">
                             <div class="text-truncate width-100 text-blue">
-                                <img src={icon.airlines} />&nbsp; <b>{showLabelFacilityAirportSizeM2}</b>
+                                <img src={icon.airlines} />&nbsp; <b>{facilitySizeFormatted} {showLabelFacilityAirportSizeM2}</b>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="facility-overview-item-content text-blue">
                                     <p class="text-truncate" if:false={editOn}>
-                                        {showLabelFacilityAirportSizeM2}
+                                        {facilitySizeFormatted} {showLabelFacilityAirportSizeM2}
                                     </p>
                                     <lightning-input class="input mr-4" if:true={editOn} name="FacilitySize" type="number" value={facility.FacilitySize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                                 </div>
@@ -139,10 +139,8 @@
                         </div>
                     </div>
                 </div>
-                <div if:true={editMode} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">
-                    <div if:true={editOn}>
-                        <lightning-input type="checkbox" label={label.direct_ramp_access} name="DirectRampAccess" checked={facility.DirectRampAccess} onchange={handleInputChangeValue}></lightning-input>
-                    </div>
+                <div if:true={editOn} class="facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3">
+                    <lightning-input type="checkbox" label={label.direct_ramp_access} name="DirectRampAccess" checked={facility.DirectRampAccess} onchange={handleInputChangeValue}></lightning-input>
                 </div>
             </template>
 
@@ -185,7 +183,7 @@
                             </div>
                             <div class="facility-overview-item-content">
                                 <p class="text-truncate text-blue">
-                                    {showLabelFacilityAirportSizeM2}
+                                    {overallSizeFormatted} {showLabelFacilityAirportSizeM2}
                                 </p>
                             </div>
                         </div>
@@ -202,7 +200,7 @@
                                 </div>
                                 <div class="facility-overview-item-content">
                                     <p class="text-truncate text-blue" if:false={editOn}>
-                                        {showLabelFacilityAirportSizeM2}
+                                        {overallSizeFormatted} {showLabelFacilityAirportSizeM2}
                                     </p>
                                     
                                     <lightning-input class="input mr-4" if:true={editOn} name="overallAirportSize" type="number" value={facility.overallAirportSize} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
@@ -223,7 +221,7 @@
                         </div>
                         <div class="facility-overview-item-content text-blue">
                             <p class="text-truncate">
-                                <span if:false={editOn}>{numberTrucksFormatted} {label.trucks}</span>                   
+                                <span if:false={editOn}>{numberTrucksFormatted} {label.icg_fleet}</span>                   
                                 <lightning-input class="input mr-4" if:true={editOn} name="fleet" type="number" value={facility.fleet} variant="label-hidden" onblur={handleInputChangeValue}></lightning-input>
                             </p>
                         </div>

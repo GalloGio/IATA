@@ -57,7 +57,7 @@
             <div class="slds-grid slds-gutters slds-wrapper m-0">
                 <div class="slds-size_10-of-12 slds-col carousel-size">
                     <lightning-icon data-item="leftArrow" icon-name="utility:chevronleft" variant="inverse" alternative-text="Left"
-                    class="chevronleft" onclick={moveList}></lightning-icon>
+                    class="chevronleft" onclick={moveList}  if:true={hasMoreOnePictures}></lightning-icon>
                     <div class="slds-box slds-box_medium slds-text-align_center sliderbox">
                         <div class="slds-carousel">
                             <div class="slds-carousel__stage">
@@ -69,11 +69,11 @@
                                                     class={indicator.panelClass} role="tabpanel"
                                                     aria-hidden={indicator.hidden}>
                                                     <a href="javascript:void(0);"
-                                                        class="slds-carousel__panel-action slds-text-link_reset width-100"
+                                                        class="slds-carousel__panel-action slds-text-link_reset width-100 slds-align_absolute-center"
                                                         tabindex={indicator.tabindex} data-item={indicator.id} onclick={openModal}>
                                                         <div class="swipediv slds-carousel__image">
-                                                            <img src={indicator.url} alt="Show images" class="maximum-size-panel" />
-                                                            <label if:true={indicator.isDocument}>{indicator.name}</label>
+                                                            <img src={indicator.url} alt={indicator.name} class="maximum-size-panel" />
+                                                            <label if:true={indicator.isDocument} class="display-block text-center">{indicator.name}</label>
                                                         </div>
                                                     </a>                                               
                                                 </div> 
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <lightning-icon data-item="rightArrow" icon-name="utility:chevronright" variant="inverse" alternative-text="Right"
-                    class="chevronright" onclick={moveList}></lightning-icon>
+                    class="chevronright" onclick={moveList} if:true={hasMoreOnePictures}></lightning-icon>
                 </div>
 
                 <!-- Miniature Section -->
@@ -113,7 +113,7 @@
                         <template for:each={listMiniature} for:item="indicator">
                             <div data-item={indicator.id} key={indicator.id} class={indicator.panelClass}
                                 onclick={handleIndicator}>
-                                <img src={indicator.url} data-item={indicator.id} alt="Show images"
+                                <img src={indicator.url} data-item={indicator.id} alt={indicator.name}
                                     class="maximum-size-indicators cursor-pt"/>
                             </div>
                         </template>
@@ -138,7 +138,7 @@
                                 </lightning-button-icon>
                             </header>
                             <lightning-icon data-item="leftArrow" icon-name="utility:chevronleft" variant="inverse" alternative-text="Left"
-                            class="chevronleft" onclick={moveList}></lightning-icon>
+                            class="chevronleft" onclick={moveList} if:true={hasMoreOnePictures}></lightning-icon>
                             <div class="slds-modal__content" id="modal-content-id-1">
                                 <div class="slds-carousel">
                                     <div class="slds-carousel__stage  carousel-size">
@@ -149,14 +149,14 @@
                                                         <div data-item={indicator.id} key={indicator.id}
                                                             class={indicator.panelClass} role="tabpanel"
                                                             aria-hidden={indicator.hidden}>
-                                                            <a href="javascript:void(0);"
-                                                                class="slds-carousel__panel-action slds-text-link_reset width-100"
-                                                                tabindex={indicator.tabindex} data-item={indicator.id} onclick={openModal}>
+                                                            <div
+                                                                class="width-100 slds-align_absolute-center border-none"
+                                                                tabindex={indicator.tabindex} data-item={indicator.id}>
                                                                 <div class="swipedivpopup slds-carousel__image slds-grid_align-center">
-                                                                    <img src={indicator.url} alt="Show images" />
-                                                                    <label class="slds-col" if:true={indicator.isDocument}>{indicator.name}</label>
+                                                                    <img src={indicator.url} alt={indicator.name} class="max-height-600"/>
+                                                                    <label class="slds-col display-block text-center" if:true={indicator.isDocument}>{indicator.name}</label>
                                                                 </div>
-                                                            </a>
+                                                            </div>
                                                         </div>
                                                     </template>
                                                 </template>                                            
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <lightning-icon data-item="rightArrow" icon-name="utility:chevronright" variant="inverse" alternative-text="Right" class="chevronright" onclick={moveList}></lightning-icon>
+                            <lightning-icon data-item="rightArrow" if:true={hasMoreOnePictures} icon-name="utility:chevronright" variant="inverse" alternative-text="Right" class="chevronright" onclick={moveList}></lightning-icon>
                         </div>
                     </section>
                     <div class="slds-backdrop slds-backdrop_open"></div>
