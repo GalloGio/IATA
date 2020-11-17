@@ -23142,6 +23142,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>8. Sales &amp; Promotion</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_License_No_Company</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_License_No_Company</shortDescription>
+        <value>* License Number of the Company</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Link_Add_Office</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -24156,6 +24164,14 @@ For each section below either:&lt;br/&gt;
 You will be required to upload a scanned copy of this document in the next step (STEP D).</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Change_Ownership_Legal_Status</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Ownership_Legal_Status</shortDescription>
+        <value>3. Legal Status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Change_Ownership_Shareholding</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -24265,6 +24281,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Confirm_details</shortDescription>
         <value>I confirm the agency details below are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Confirm_Type_of_Entity</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Confirm_Type_of_Entity</shortDescription>
+        <value>Confirm Type of entity is correct</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Curr_Company_Owner</fullName>
@@ -24389,6 +24413,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC IATA Admin</shortDescription>
         <value>IATA Agency Administrator</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_IATA_Admin_Company</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC IATA Admin Company</shortDescription>
+        <value>IATA Administrator</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_IATA_Only</fullName>
@@ -24999,12 +25031,28 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>Please confirm the agency details below are correct</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_error_message1_Company</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message1_company</shortDescription>
+        <value>Please confirm the company details below are correct</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_error_message2</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_error_message2</shortDescription>
         <value>Please either confirm that the Agency Location details are correct or notify IATA of any changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message2_company</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message2_company</shortDescription>
+        <value>Please either confirm that the Company Location details are correct or notify IATA of any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_error_message2_CNS</fullName>
@@ -25021,6 +25069,14 @@ I certify that the preceding statements are true and correct to the best of my k
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_error_message3</shortDescription>
         <value>Please either confirm that the Agency Ownership details are correct or notify IATA of any changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message3_company</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message3_company</shortDescription>
+        <value>Please either confirm that the Company Ownership details are correct or notify IATA of any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_error_message3_CNS</fullName>
@@ -26174,6 +26230,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Minor_Changes_Company</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
+        <value>Minor changes to your Company details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -26220,6 +26284,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
         <value>For changes to your Location, Company Name, Legal Status or Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg PostalOperator</shortDescription>
+        <value>For changes to your Location, Company Name or Legal Status</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -28145,6 +28217,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Available Countries /Territories</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_CompanyChanges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_CompanyChanges</shortDescription>
+        <value>Company Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_CASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29641,6 +29720,14 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator</shortDescription>
+        <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name or Legal Status.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</fullName>
