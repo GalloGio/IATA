@@ -27,12 +27,13 @@ private class Product_Dom_Test {
 
 	@isTest (SeeAllData=true)
 	static void testProductDom() {
-		Test.startTest();
 
 		setup();
 
 		System.runAs(user) {
-			List<Product2> productList = TestDataGenerator.generateProducts(5, true);
+			Test.startTest();
+
+			List<Product2> productList = TestDataGenerator.generateProducts(1, true);
 
 			for (Product2 product : productList) {
 				product.Accepted_Payment_Methods__c = 'Credit Card';
@@ -47,8 +48,8 @@ private class Product_Dom_Test {
 			insert setting;
 
 			update productList;
+			
+			Test.stopTest();
 		}
-
-		Test.stopTest();
 	}
 }
