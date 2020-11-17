@@ -449,12 +449,14 @@ private class AMS_OscarCaseTriggerHelper_Test {
 
 		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__r.Abbreviated_name__c='Reset Dossier Reception Date' LIMIT 1];
 		oscar.Status__c = 'Closed_Rejected';
+		oscar.STEP18__c = 'Passed';
 		update oscar;
 
 		Case cse = new Case(
 			Id= oscar.AMS_Online_Accreditation__r.SAAM_Case__c,
 			Reason1__c= 'New HO',
-			Status= 'Closed_Rejected'
+			Status= 'Closed_Rejected',
+			OSCAR__c = oscar.Id
 		);
 		update cse;
 
