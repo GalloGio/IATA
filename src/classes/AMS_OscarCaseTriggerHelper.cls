@@ -164,7 +164,6 @@ public class AMS_OscarCaseTriggerHelper {
 			//WMO-564
 			if(oscar.Case_Reason__c != c.Reason1__c) {
 				oscar.Case_Reason__c = c.Reason1__c;
-				CaseProcessTypeHelper.populateOSCARAccProcess(oscar);
 				changed = true;
 			}
 			if(oscar.BusinessHours__c != c.BusinessHoursId){
