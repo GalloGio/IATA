@@ -790,6 +790,7 @@
         <fullName>ID_Card_Email_Templates</fullName>
         <columns>Email_Template_Number__c</columns>
         <columns>NAME</columns>
+        <columns>Subject__c</columns>
         <columns>Template_Language__c</columns>
         <columns>Template_Type__c</columns>
         <columns>OBJECT_ID</columns>
