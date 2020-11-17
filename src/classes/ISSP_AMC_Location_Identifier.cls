@@ -100,12 +100,7 @@ public without sharing class ISSP_AMC_Location_Identifier {
 		severity = '';
 		hasError = false;
 
-
-
-		//participation.ISSP_AMC_Submitted_Date__c = datetime.now();
-
 		ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
-		//ISSP_AMC_DAO.saveDesignatorCode(participation, appRequirementList, step);
 
 		List <Apexpages.Message> msgs = ApexPages.getMessages();
 		if(msgs != null && !msgs.isEmpty()){
@@ -141,7 +136,6 @@ public without sharing class ISSP_AMC_Location_Identifier {
 			}
 			displayMessage = true;
 		}
-		//calculateApplicationRequirementsToShow();
 		CalculateWhichComponentsToShow();
 		return null;
 	}
@@ -156,8 +150,6 @@ public without sharing class ISSP_AMC_Location_Identifier {
 			isSISUser = true;
 		}
 
-
-
 		displayMessage = false;
 		String participationId = Apexpages.currentPage().getParameters().get('participationId');
 		appRequirementList = new List <ISSP_AMC_DAO.AplicationRequirements>();
@@ -166,42 +158,16 @@ public without sharing class ISSP_AMC_Location_Identifier {
 
 		step = Apexpages.currentPage().getParameters().get('step');
 
-		/*if(participationId == null){
-			system.debug('ele entra aqui'+participationId);
-			participation = ISSP_AMC_DAO.getCompleteParticipation(ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
-			if(participation.Id == null){
-				system.debug('ele entra aqui2'+participation.Id);
-				participation.Location_Type__c = locationList.get(0).getValue();
-			}
-		}
-		else {*/
-			step = '1';
+		step = '1';
 
-			participation = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
-			//
+		participation = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
 
-			//participation = ISSP_AMC_DAO.getCompleteParticipation(ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
-			System.debug('DB : participation ' + participation);
-			System.debug('DB : appRequirementList' + appRequirementList);
+		System.debug('DB : participation ' + participation);
+		System.debug('DB : appRequirementList' + appRequirementList);
 
-			//ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
-
-		//}
-
-		//changeListReqs();
-		//participation = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
 
 		CalculateWhichComponentsToShow();
 		System.debug('DB : appRequirementList' + appRequirementList);
-
-		/*PageReference pr = new PageReference('/ISSP_AMC_Location_Identifier?' + 'participationId=' + location.participation.Id + '&mid=M3S1&retURL=/ISSP_AMC_Home');
-		pr.setRedirect(true);
-		return pr;*/
-
-		//if(participation.Case__c == null){
-		  //  ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
-		//}
-
 	}
 
 	public void changeListReqs(){
@@ -210,18 +176,6 @@ public without sharing class ISSP_AMC_Location_Identifier {
 		ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
 
 	}
-
-	/*public boolean validateForm(){
-		boolean errorFound = false;
-		if (participation.Has_the_airline_been_issued_an_AOC_Pick__c == null) {
-			participation.Has_the_airline_been_issued_an_AOC_Pick__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
-		if (errorFound)
-			return false;
-
-		return true;
-	}*/
 
 	/* STEP 2 */
 

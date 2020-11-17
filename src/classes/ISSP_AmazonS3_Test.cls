@@ -86,9 +86,7 @@ private class ISSP_AmazonS3_Test {
 																		Portal_Application__c = portalApp.Id,
 																		Right__c = 'Access Granted',
 																		ANG_Portal_Service_Role__c = 'IEP Admin');
-		insert par1;
-
-		Test.startTest();
+		insert par1;		
 
 		System.runAs(newUser)
 		{
@@ -143,7 +141,8 @@ private class ISSP_AmazonS3_Test {
 			key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
 			key.Secret__c = 'test';
 			insert key;
-
+			
+			Test.startTest();
 			ISSP_AmazonS3_Ctrl ctrlId = new ISSP_AmazonS3_Ctrl();
 
 			ApexPages.currentPage().getParameters().put('caseId',testCase.Id);

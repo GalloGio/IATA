@@ -805,47 +805,49 @@ public class vfIECEBC_TestSuite1 {
 		System.runAs(usr) {
 			initPostRunAs();
 
-			System.debug(Limits.getQueries());
+			
 			List<EBC_Campaign__c> camps = [SELECT Id, Name, Send_Datetime__c, External_Id__c, Status__c, is7dFollowUpCompleted__c
 											 FROM EBC_Campaign__c
 											 WHERE id = :camp.Id
 											];
 
-			System.debug(Limits.getQueries());
-			//IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);
-			System.debug(Limits.getQueries());
+			
+			IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);
+			
 
 			SchdlIECEBCRetrieveCumulativeStats.cancel();
-			System.debug(Limits.getQueries());
-
-			System.debug(Limits.getQueries());
+			
+			IECEBC_ETHelper.retrieveRequestTriggeredSend('Coverage');
+			CampaignTracking_Mock coverage = new CampaignTracking_Mock();
+			IECEBC_ETHelper.parseListMap(coverage.respond(new HTTPRequest()), new List<String>{'Coverage'});
+			
 			PageReference pageRef = Page.IECEBC_ManageReportsDetails;
 			pageRef.getParameters().put('id', camp.Id);
 			Test.setCurrentPage(pageRef);
 
-			System.debug(Limits.getQueries());
+			
 			ApexPages.StandardController sc = new ApexPages.StandardController(camp);
-			System.debug(Limits.getQueries());
+			
 			vfIECEBC_CampaignTracking campTrackExtCon = new vfIECEBC_CampaignTracking(sc);
 
-			System.debug(Limits.getQueries());
+			
 			System.assertNotEquals(null, campTrackExtCon.First24HOpensV3);
-			System.debug(Limits.getQueries());
+			
 			System.assertNotEquals(null, campTrackExtCon.First24HClicksV3);
-			System.debug(Limits.getQueries());
+			
 
 			System.assertNotEquals(null, campTrackExtCon.getFirst48HOpensV3());
-			System.debug(Limits.getQueries());
+			
 			System.assertNotEquals(null, campTrackExtCon.getFirst48HClicksV3());
-			System.debug(Limits.getQueries());
+			
 
 			System.assertNotEquals(null, campTrackExtCon.getFirst7DOpens());
-			System.debug(Limits.getQueries());
+			
 			System.assertNotEquals(null, campTrackExtCon.getFirst7DClicks());
-			System.debug(Limits.getQueries());
+			
 
 			System.assertNotEquals(null, campTrackExtCon.getXAxis7d());
-			System.debug(Limits.getQueries());
+			
 			System.assertNotEquals(null, campTrackExtCon.SentDate);
 
 			System.assertNotEquals(null, campTrackExtCon.Kpis.get('delivered7Days'));

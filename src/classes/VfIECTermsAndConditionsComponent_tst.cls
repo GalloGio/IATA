@@ -37,6 +37,8 @@ private class VfIECTermsAndConditionsComponent_tst {
 
 		controller.listProductInformationIDs = new String[] {myProdInfo.Id};
 
+		controller.componentIdToRerender = 'coverage';
+
 		List<Terms_and_Conditions__c> listTC = controller.listTermsAndConditions;
 		system.assert(controller.hasTermsAndConditions, 'The vf component should be able to retreive a Terms And Conditions');
 
